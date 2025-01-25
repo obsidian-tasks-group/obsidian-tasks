@@ -1,6 +1,7 @@
 import { Plugin } from 'obsidian';
 
 import type { Task } from 'Task/Task';
+import { i18n, initializeI18n } from './i18n/i18n';
 import { Cache } from './Obsidian/Cache';
 import { Commands } from './Commands';
 import { GlobalQuery } from './Config/GlobalQuery';
@@ -28,8 +29,10 @@ export default class TasksPlugin extends Plugin {
     }
 
     async onload() {
+        await initializeI18n();
+
         logging.registerConsoleLogger();
-        log('info', `loading plugin "${this.manifest.name}" v${this.manifest.version}`);
+        log('info', i18n.t('main.loadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
 
         await this.loadSettings();
 
@@ -69,7 +72,7 @@ export default class TasksPlugin extends Plugin {
     }
 
     onunload() {
-        log('info', `unloading plugin "${this.manifest.name}" v${this.manifest.version}`);
+        log('info', i18n.t('main.unloadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
         this.cache?.unload();
     }
 

@@ -21,6 +21,7 @@ Getting the most from this documentation:
 - See [[About Debugging]] for tips to debug the plugin
 - See [[About Code]] for descriptions of the project's source code
 - See [[About Documentation]] if you would like to improve and test the user docs
+- See [[About Translation]] if you are adding new text the plugin, and to help translate it
 
 ## For Maintainers
 

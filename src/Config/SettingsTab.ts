@@ -5,12 +5,12 @@ import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
 import type { StatusCollection } from '../Statuses/StatusCollection';
 import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
+import { i18n } from '../i18n/i18n';
 import * as Themes from './Themes';
 import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
-import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
@@ -51,21 +51,23 @@ export class SettingsTab extends PluginSettingTab {
 
         containerEl.createEl('p', {
             cls: 'tasks-setting-important',
-            text: 'Changing any settings requires a restart of obsidian.',
+            text: i18n.t('settings.changeRequiresRestart'),
         });
 
         new Setting(containerEl)
-            .setName('Task Format')
+            .setName(i18n.t('settings.format.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    '<p>The format that Tasks uses to read and write tasks.</p>' +
-                        '<p><b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>.</p>' +
-                        '<p>See the <a href="https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats">documentation</a>.</p>',
+                    `<p>${i18n.t('settings.format.description.line1')}</p>` +
+                        `<p>${i18n.t('settings.format.description.line2')}</p>` +
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
+                        ),
                 ),
             )
             .addDropdown((dropdown) => {
                 for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
-                    dropdown.addOption(key, TASK_FORMATS[key].displayName);
+                    dropdown.addOption(key, TASK_FORMATS[key].getDisplayName());
                 }
 
                 dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
@@ -75,27 +77,26 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Global task filter').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.globalFilter.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let globalFilterHidden: Setting | null = null;
 
         new Setting(containerEl)
-            .setName('Global filter')
+            .setName(i18n.t('settings.globalFilter.filter.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    '<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p>' +
-                        '<p>Use a global filter if you want Tasks to only act on a subset of your "<code>- [ ]</code>" checklist items, so that ' +
-                        'a checklist item must include the specified string in its description in order to be considered a task.<p>' +
-                        '<p>For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.</br>' +
-                        'Other checklist items will remain normal checklist items and not appear in queries or get a done date set.</p>' +
-                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Global+Filter">documentation</a>.</p>',
+                    `<p><b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
+                        `<p>${i18n.t('settings.globalFilter.filter.description.line2')}<p>` +
+                        `<p>${i18n.t('settings.globalFilter.filter.description.line3')}</br>` +
+                        `${i18n.t('settings.globalFilter.filter.description.line4')}</p>` +
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
                 ),
             )
             .addText((text) => {
                 // I wanted to make this say 'for example, #task or TODO'
                 // but wasn't able to figure out how to make the text box
                 // wide enough for the whole string to be visible.
-                text.setPlaceholder('e.g. #task or TODO')
+                text.setPlaceholder(i18n.t('settings.globalFilter.filter.placeholder'))
                     .setValue(GlobalFilter.getInstance().get())
                     .onChange(async (value) => {
                         updateSettings({ globalFilter: value });
@@ -106,10 +107,8 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         globalFilterHidden = new Setting(containerEl)
-            .setName('Remove global filter from description')
-            .setDesc(
-                'Enabling this removes the string that you set as global filter from the task description when displaying a task.',
-            )
+            .setName(i18n.t('settings.globalFilter.removeFilter.name'))
+            .setDesc(i18n.t('settings.globalFilter.removeFilter.description'))
             .addToggle((toggle) => {
                 const settings = getSettings();
 
@@ -122,23 +121,22 @@ export class SettingsTab extends PluginSettingTab {
         setSettingVisibility(globalFilterHidden, getSettings().globalFilter.length > 0);
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Global Query').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.globalQuery.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         makeMultilineTextSetting(
             new Setting(containerEl)
                 .setDesc(
                     SettingsTab.createFragmentWithHTML(
-                        '<p>A query that is automatically included at the start of every Tasks block in the vault.' +
-                            ' Useful for adding default filters, or layout options.</p>' +
-                            '<p>See the <a href="https://publish.obsidian.md/tasks/Queries/Global+Query">documentation</a>.</p>',
+                        `<p>${i18n.t('settings.globalQuery.query.description')}</p>` +
+                            this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Global+Query'),
                     ),
                 )
                 .addTextArea((text) => {
                     const settings = getSettings();
 
                     text.inputEl.rows = 4;
-                    text.setPlaceholder('# For example...\npath does not include _templates/\nlimit 300\nshow urgency')
+                    text.setPlaceholder('# ' + i18n.t('settings.globalQuery.query.placeholder'))
                         .setValue(settings.globalQuery)
                         .onChange(async (value) => {
                             updateSettings({ globalQuery: value });
@@ -149,11 +147,77 @@ export class SettingsTab extends PluginSettingTab {
         );
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Task Statuses').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         const { headingOpened } = getSettings();
 
+        // Directly define the JSON data as a constant object
+        const settingsJson = [
+            {
+                text: i18n.t('settings.statuses.coreStatuses.heading'),
+                level: 'h3',
+                class: '',
+                open: true,
+                notice: {
+                    class: 'setting-item-description',
+                    text: null,
+                    html:
+                        '<p>' +
+                        i18n.t('settings.statuses.coreStatuses.description.line1') +
+                        '</p><p>' +
+                        i18n.t('settings.statuses.coreStatuses.description.line2') +
+                        '</p>',
+                },
+                settings: [
+                    {
+                        name: '',
+                        description: '',
+                        type: 'function',
+                        initialValue: '',
+                        placeholder: '',
+                        settingName: 'insertTaskCoreStatusSettings',
+                        featureFlag: '',
+                        notice: null,
+                    },
+                ],
+            },
+            {
+                text: i18n.t('settings.statuses.customStatuses.heading'),
+                level: 'h3',
+                class: '',
+                open: true,
+                notice: {
+                    class: 'setting-item-description',
+                    text: null,
+                    html:
+                        '<p>' +
+                        i18n.t('settings.statuses.customStatuses.description.line1') +
+                        '</p><p>' +
+                        i18n.t('settings.statuses.customStatuses.description.line2') +
+                        '</p><p>' +
+                        i18n.t('settings.statuses.customStatuses.description.line3') +
+                        '</p><p></p><p>' +
+                        `<a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">${i18n.t(
+                            'settings.statuses.customStatuses.description.line4',
+                        )}</a></p>`,
+                },
+                settings: [
+                    {
+                        name: '',
+                        description: '',
+                        type: 'function',
+                        initialValue: '',
+                        placeholder: '',
+                        settingName: 'insertCustomTaskStatusSettings',
+                        featureFlag: '',
+                        notice: null,
+                    },
+                ],
+            },
+        ];
+
+        // Original usage remains unchanged
         settingsJson.forEach((heading) => {
             const initiallyOpen = headingOpened[heading.text] ?? true;
             const detailsContainer = this.addOneSettingsBlock(containerEl, heading, headingOpened);
@@ -161,15 +225,18 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Dates').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.dates.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName('Set created date on every added task')
+            .setName(i18n.t('settings.dates.createdDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.</br>" +
-                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date">documentation</a>.</p>',
+                    i18n.t('settings.dates.createdDate.description') +
+                        '</br>' +
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -181,11 +248,12 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Set done date on every completed task')
+            .setName(i18n.t('settings.dates.doneDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.</br>' +
-                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date">documentation</a>.</p>',
+                    i18n.t('settings.dates.doneDate.description') +
+                        '</br>' +
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date'),
                 ),
             )
             .addToggle((toggle) => {
@@ -197,11 +265,14 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Set cancelled date on every cancelled task')
+            .setName(i18n.t('settings.dates.cancelledDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.</br>' +
-                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date">documentation</a>.</p>',
+                    i18n.t('settings.dates.cancelledDate.description') +
+                        '</br>' +
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -213,20 +284,26 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Dates from file names').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.datesFromFileNames.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let scheduledDateExtraFormat: Setting | null = null;
         let scheduledDateFolders: Setting | null = null;
 
         new Setting(containerEl)
-            .setName('Use filename as Scheduled date for undated tasks')
+            .setName(i18n.t('settings.datesFromFileNames.scheduledDate.toggle.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Save time entering Scheduled (⏳) dates.</br>' +
-                        'If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.</br>' +
-                        'By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats.</br>' +
-                        'Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.</br>' +
-                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date">documentation</a>.</p>',
+                    i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1') +
+                        '</br>' +
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2') +
+                        '</br>' +
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3') +
+                        '</br>' +
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4') +
+                        '</br>' +
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -240,17 +317,20 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         scheduledDateExtraFormat = new Setting(containerEl)
-            .setName('Additional filename date format as Scheduled date for undated tasks')
+            .setName(i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.</br>' +
-                        '<p><a href="https://momentjs.com/docs/#/displaying/format/">Syntax Reference</a></p>',
+                    i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.description.line1') +
+                        '</br>' +
+                        `<p><a href="https://momentjs.com/docs/#/displaying/format/">${i18n.t(
+                            'settings.datesFromFileNames.scheduledDate.extraFormat.description.line2',
+                        )}</a></p>`,
                 ),
             )
             .addText((text) => {
                 const settings = getSettings();
 
-                text.setPlaceholder('example: MMM DD YYYY')
+                text.setPlaceholder(i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.placeholder'))
                     .setValue(settings.filenameAsScheduledDateFormat)
                     .onChange(async (value) => {
                         updateSettings({ filenameAsScheduledDateFormat: value });
@@ -259,10 +339,8 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         scheduledDateFolders = new Setting(containerEl)
-            .setName('Folders with default Scheduled dates')
-            .setDesc(
-                'Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.',
-            )
+            .setName(i18n.t('settings.datesFromFileNames.scheduledDate.folders.name'))
+            .setDesc(i18n.t('settings.datesFromFileNames.scheduledDate.folders.description'))
             .addText(async (input) => {
                 const settings = getSettings();
                 await this.plugin.saveSettings();
@@ -278,15 +356,16 @@ export class SettingsTab extends PluginSettingTab {
         setSettingVisibility(scheduledDateFolders, getSettings().useFilenameAsScheduledDate);
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Recurring tasks').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.recurringTasks.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName('Next recurrence appears on the line below')
+            .setName(i18n.t('settings.recurringTasks.nextLine.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.</br>' +
-                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks">documentation</a>.</p>',
+                    i18n.t('settings.recurringTasks.nextLine.description') +
+                        '</br>' +
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
                 ),
             )
             .addToggle((toggle) => {
@@ -298,17 +377,18 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Auto-suggest').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.autoSuggest.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let autoSuggestMinimumMatchLength: Setting | null = null;
         let autoSuggestMaximumSuggestions: Setting | null = null;
 
         new Setting(containerEl)
-            .setName('Auto-suggest task content')
+            .setName(i18n.t('settings.autoSuggest.toggle.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'Enabling this will open an intelligent suggest menu while typing inside a recognized task line.</br>' +
-                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest">documentation</a>.</p>',
+                    i18n.t('settings.autoSuggest.toggle.description') +
+                        '</br>' +
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
                 ),
             )
             .addToggle((toggle) => {
@@ -322,10 +402,8 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         autoSuggestMinimumMatchLength = new Setting(containerEl)
-            .setName('Minimum match length for auto-suggest')
-            .setDesc(
-                'If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.',
-            )
+            .setName(i18n.t('settings.autoSuggest.minLength.name'))
+            .setDesc(i18n.t('settings.autoSuggest.minLength.description'))
             .addSlider((slider) => {
                 const settings = getSettings();
                 slider
@@ -339,10 +417,8 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         autoSuggestMaximumSuggestions = new Setting(containerEl)
-            .setName('Maximum number of auto-suggestions to show')
-            .setDesc(
-                'How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).',
-            )
+            .setName(i18n.t('settings.autoSuggest.maxSuggestions.name'))
+            .setDesc(i18n.t('settings.autoSuggest.maxSuggestions.description'))
             .addSlider((slider) => {
                 const settings = getSettings();
                 slider
@@ -358,18 +434,18 @@ export class SettingsTab extends PluginSettingTab {
         setSettingVisibility(autoSuggestMaximumSuggestions, getSettings().autoSuggestInEditor);
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName('Dialogs').setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.dialogs.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName('Provide access keys in dialogs')
+            .setName(i18n.t('settings.dialogs.accessKeys.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    'If the access keys (keyboard shortcuts) for various controls' +
-                        ' in dialog boxes conflict with system keyboard shortcuts' +
-                        ' or assistive technology functionality that is important for you,' +
-                        ' you may want to deactivate them here.</br>' +
-                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts">documentation</a>.</p>',
+                    i18n.t('settings.dialogs.accessKeys.description') +
+                        '</br>' +
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -379,6 +455,10 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+    }
+
+    private seeTheDocumentation(url: string) {
+        return `<p><a href="${url}">${i18n.t('settings.seeTheDocumentation')}</a>.</p>`;
     }
 
     private addOneSettingsBlock(
@@ -540,7 +620,7 @@ export class SettingsTab extends PluginSettingTab {
 
         /* -------------------- 'Review and check your Statuses' button -------------------- */
         const createMermaidDiagram = new Setting(containerEl).addButton((button) => {
-            const buttonName = 'Review and check your Statuses';
+            const buttonName = i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.name');
             button
                 .setButtonText(buttonName)
                 .setCta()
@@ -562,9 +642,7 @@ export class SettingsTab extends PluginSettingTab {
                     const leaf = this.app.workspace.getLeaf(true);
                     await leaf.openFile(file);
                 });
-            button.setTooltip(
-                'Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings.',
-            );
+            button.setTooltip(i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.tooltip'));
         });
         createMermaidDiagram.infoEl.remove();
     }
@@ -596,7 +674,7 @@ export class SettingsTab extends PluginSettingTab {
         /* -------------------- 'Add New Task Status' button -------------------- */
         const setting = new Setting(containerEl).addButton((button) => {
             button
-                .setButtonText('Add New Task Status')
+                .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addNewStatus.name'))
                 .setCta()
                 .onClick(async () => {
                     StatusSettings.addStatus(
@@ -612,19 +690,22 @@ export class SettingsTab extends PluginSettingTab {
         type NamedTheme = [string, StatusCollection];
         const themes: NamedTheme[] = [
             // Light and Dark themes - alphabetical order
-            ['AnuPpuccin Theme', Themes.anuppuccinSupportedStatuses()],
-            ['Aura Theme', Themes.auraSupportedStatuses()],
-            ['Border Theme', Themes.borderSupportedStatuses()],
-            ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
-            ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
-            ['Minimal Theme', Themes.minimalSupportedStatuses()],
-            ['Things Theme', Themes.thingsSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.anuppuccinTheme'), Themes.anuppuccinSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.auraTheme'), Themes.auraSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.borderTheme'), Themes.borderSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.ebullientworksTheme'), Themes.ebullientworksSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.itsThemeAndSlrvbCheckboxes'), Themes.itsSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.minimalTheme'), Themes.minimalSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.thingsTheme'), Themes.thingsSupportedStatuses()],
             // Dark only themes - alphabetical order
-            ['LYT Mode Theme (Dark mode only)', Themes.lytModeSupportedStatuses()],
+            [i18n.t('settings.statuses.collections.lytModeTheme'), Themes.lytModeSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
-                const label = `${name}: Add ${collection.length} supported Statuses`;
+                const label = i18n.t('settings.statuses.collections.buttons.addCollection.name', {
+                    themeName: name,
+                    numberOfStatuses: collection.length,
+                });
                 button.setButtonText(label).onClick(async () => {
                     await addCustomStatesToSettings(collection, statusSettings, settings);
                 });
@@ -635,7 +716,7 @@ export class SettingsTab extends PluginSettingTab {
         /* -------------------- 'Add All Unknown Status Types' button -------------------- */
         const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {
             button
-                .setButtonText('Add All Unknown Status Types')
+                .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.name'))
                 .setCta()
                 .onClick(async () => {
                     const tasks = this.plugin.getTasks();
@@ -657,7 +738,7 @@ export class SettingsTab extends PluginSettingTab {
         /* -------------------- 'Reset Custom Status Types to Defaults' button -------------------- */
         const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
             button
-                .setButtonText('Reset Custom Status Types to Defaults')
+                .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.name'))
                 .setWarning()
                 .onClick(async () => {
                     StatusSettings.resetAllCustomStatuses(statusSettings);

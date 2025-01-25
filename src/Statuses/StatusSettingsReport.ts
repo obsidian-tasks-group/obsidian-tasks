@@ -1,5 +1,6 @@
 import { StatusSettings } from '../Config/StatusSettings';
 import { MarkdownTable } from '../lib/MarkdownTable';
+import { i18n } from '../i18n/i18n';
 import type { StatusConfiguration } from './StatusConfiguration';
 import { StatusType } from './StatusConfiguration';
 import { Status } from './Status';
@@ -31,22 +32,18 @@ function checkIfConventionalType(status: StatusConfiguration, problems: string[]
         return;
     }
 
-    problems.push(
-        `For information, the conventional type for status symbol ${getPrintableSymbol(
-            status.symbol,
-        )} is ${getPrintableSymbol(conventionalType)}: you may wish to review this type.`,
-    );
+    const symbol = getPrintableSymbol(status.symbol);
+    const type = getPrintableSymbol(conventionalType);
+    problems.push(i18n.t('reports.statusRegistry.messages.notConventionalType', { symbol, type }));
 }
 
 function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusConfiguration, problems: string[]) {
     // Check if next symbol is known
-    const indexOfNextSymbol = getFirstIndex(statuses, status.nextStatusSymbol);
+    const nextStatusSymbol = status.nextStatusSymbol;
+    const indexOfNextSymbol = getFirstIndex(statuses, nextStatusSymbol);
     if (indexOfNextSymbol === -1) {
-        problems.push(
-            `Next symbol ${getPrintableSymbol(
-                status.nextStatusSymbol,
-            )} is unknown: create a status with symbol ${getPrintableSymbol(status.nextStatusSymbol)}.`,
-        );
+        const printableSymbol = getPrintableSymbol(nextStatusSymbol);
+        problems.push(i18n.t('reports.statusRegistry.messages.nextSymbolUnknown', { symbol: printableSymbol }));
         return;
     }
 
@@ -61,30 +58,30 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
         if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
             const helpURL =
                 'https://publish.obsidian.md/tasks/Getting+Started/Statuses/Recurring+Tasks+and+Custom+Statuses';
+            const nextType = getPrintableSymbol(nextStatus.type);
             const message = [
-                `This \`DONE\` status is followed by ${getPrintableSymbol(
-                    nextStatus.type,
-                )}, not \`TODO\` or \`IN_PROGRESS\`.`,
-                'If used to complete a recurring task, it will instead be followed by `TODO` or `IN_PROGRESS`, to ensure the next task matches the `not done` filter.',
-                `See [Recurring Tasks and Custom Statuses](${helpURL}).`,
+                i18n.t('reports.statusRegistry.messages.wrongTypeAfterDone.line1', { nextType }),
+                i18n.t('reports.statusRegistry.messages.wrongTypeAfterDone.line2'),
+                i18n.t('reports.statusRegistry.messages.wrongTypeAfterDone.line3', { helpURL }),
             ].join('<br>');
             problems.push(message);
         }
     } else {
-        problems.push('Unexpected failure to find the next status.');
+        problems.push(i18n.t('reports.statusRegistry.messages.cannotFindNextStatus'));
     }
 }
 
 function getProblemsForStatus(statuses: StatusConfiguration[], status: StatusConfiguration, index: number) {
     const problems: string[] = [];
     if (status.symbol === Status.EMPTY.symbol) {
-        problems.push('Empty symbol: this status will be ignored.');
+        problems.push(i18n.t('reports.statusRegistry.messages.emptySymbol'));
         return problems;
     }
 
     const firstIndex = getFirstIndex(statuses, status.symbol);
     if (firstIndex != index) {
-        problems.push(`Duplicate symbol '${getPrintableSymbol(status.symbol)}': this status will be ignored.`);
+        const symbol = getPrintableSymbol(status.symbol);
+        problems.push(i18n.t('reports.statusRegistry.messages.duplicateSymbol', { symbol: symbol }));
         return problems;
     }
 
@@ -98,11 +95,11 @@ export function tabulateStatusSettings(statusSettings: StatusSettings) {
     //       Maybe try unifying the common code one day?
 
     const table = new MarkdownTable([
-        'Status Symbol',
-        'Next Status Symbol',
-        'Status Name',
-        'Status Type',
-        'Problems (if any)',
+        i18n.t('reports.statusRegistry.columnHeadings.statusSymbol'),
+        i18n.t('reports.statusRegistry.columnHeadings.nextStatusSymbol'),
+        i18n.t('reports.statusRegistry.columnHeadings.statusName'),
+        i18n.t('reports.statusRegistry.columnHeadings.statusType'),
+        i18n.t('reports.statusRegistry.columnHeadings.problems'),
     ]);
 
     const statuses: StatusConfiguration[] = StatusSettings.allStatuses(statusSettings);

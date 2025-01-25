@@ -3,6 +3,7 @@ import type { Plugin } from 'obsidian';
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
 import { StatusValidator } from '../Statuses/StatusValidator';
 import { Status } from '../Statuses/Status';
+import { i18n } from '../i18n/i18n';
 
 const validator = new StatusValidator();
 
@@ -49,10 +50,8 @@ export class CustomStatusModal extends Modal {
 
         let statusSymbolText: TextComponent;
         new Setting(settingDiv)
-            .setName('Task Status Symbol')
-            .setDesc(
-                'This is the character between the square braces. (It can only be edited for Custom statuses, and not Core statuses.)',
-            )
+            .setName(i18n.t('modals.customStatusModal.editStatusSymbol.name'))
+            .setDesc(i18n.t('modals.customStatusModal.editStatusSymbol.description'))
             .addText((text) => {
                 statusSymbolText = text;
                 text.setValue(this.statusSymbol).onChange((v) => {
@@ -68,8 +67,8 @@ export class CustomStatusModal extends Modal {
 
         let statusNameText: TextComponent;
         new Setting(settingDiv)
-            .setName('Task Status Name')
-            .setDesc('This is the friendly name of the task status.')
+            .setName(i18n.t('modals.customStatusModal.editStatusName.name'))
+            .setDesc(i18n.t('modals.customStatusModal.editStatusName.description'))
             .addText((text) => {
                 statusNameText = text;
                 text.setValue(this.statusName).onChange((v) => {
@@ -83,8 +82,8 @@ export class CustomStatusModal extends Modal {
 
         let statusNextSymbolText: TextComponent;
         new Setting(settingDiv)
-            .setName('Task Next Status Symbol')
-            .setDesc('When clicked on this is the symbol that should be used next.')
+            .setName(i18n.t('modals.customStatusModal.editNextStatusSymbol.name'))
+            .setDesc(i18n.t('modals.customStatusModal.editNextStatusSymbol.description'))
             .addText((text) => {
                 statusNextSymbolText = text;
                 text.setValue(this.statusNextSymbol).onChange((v) => {
@@ -100,8 +99,8 @@ export class CustomStatusModal extends Modal {
             });
 
         new Setting(settingDiv)
-            .setName('Task Status Type')
-            .setDesc('Control how the status behaves for searching and toggling.')
+            .setName(i18n.t('modals.customStatusModal.editStatusType.name'))
+            .setDesc(i18n.t('modals.customStatusModal.editStatusType.description'))
             .addDropdown((dropdown) => {
                 const types = [
                     StatusType.TODO,
@@ -119,11 +118,11 @@ export class CustomStatusModal extends Modal {
             });
 
         if (Status.tasksPluginCanCreateCommandsForStatuses()) {
+            // This feature is disabled as not-yet implemented.
+            // But we will apply the translation string now, for possible later use.
             new Setting(settingDiv)
-                .setName('Available as command')
-                .setDesc(
-                    'If enabled this status will be available as a command so you can assign a hotkey and toggle the status using it.',
-                )
+                .setName(i18n.t('modals.customStatusModal.editAvailableAsCommand.name'))
+                .setDesc(i18n.t('modals.customStatusModal.editAvailableAsCommand.description'))
                 .addToggle((toggle) => {
                     toggle.setValue(this.statusAvailableAsCommand).onChange(async (value) => {
                         this.statusAvailableAsCommand = value;
@@ -139,7 +138,8 @@ export class CustomStatusModal extends Modal {
                 .onClick(async () => {
                     const errors = validator.validate(this.statusConfiguration());
                     if (errors.length > 0) {
-                        const message = errors.join('\n') + '\n\n' + 'Fix errors before saving.';
+                        const message =
+                            errors.join('\n') + '\n\n' + i18n.t('modals.customStatusModal.fixErrorsBeforeSaving');
                         // console.debug(message);
                         new Notice(message);
                         return;
