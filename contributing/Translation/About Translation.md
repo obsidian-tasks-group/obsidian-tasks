@@ -45,6 +45,9 @@ Here, they are nested, for example:
       "editAvailableAsCommand": {  
         "name": "Available as command"  
       },
+    },
+  },
+}
 ```
 
 The value of that string is obtained in code with:
