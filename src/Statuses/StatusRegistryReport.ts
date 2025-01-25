@@ -1,4 +1,5 @@
 import type { StatusSettings } from '../Config/StatusSettings';
+import { i18n } from '../i18n/i18n';
 import type { StatusRegistry } from './StatusRegistry';
 import { tabulateStatusSettings } from './StatusSettingsReport';
 
@@ -18,32 +19,32 @@ export function createStatusRegistryReport(
     const mermaidText = statusRegistry.mermaidDiagram(detailed);
     return `# ${buttonName}
 
-## About this file
+## ${i18n.t('reports.statusRegistry.about.title')}
 
-This file was created by the Obsidian Tasks plugin (version ${versionString}) to help visualise the task statuses in this vault.
+${i18n.t('reports.statusRegistry.about.createdBy', { version: versionString })}
 
-If you change the Tasks status settings, you can get an updated report by:
+${i18n.t('reports.statusRegistry.about.updateReport.line1')}
 
-- Going to \`Settings\` -> \`Tasks\`.
-- Clicking on \`Review and check your Statuses\`.
+- ${i18n.t('reports.statusRegistry.about.updateReport.line2')}
+- ${i18n.t('reports.statusRegistry.about.updateReport.line3')}
 
-You can delete this file any time.
+${i18n.t('reports.statusRegistry.about.deleteFileAnyTime')}
 
-## Status Settings
+## ${i18n.t('reports.statusRegistry.statusSettings.title')}
 
 <!--
-Switch to Live Preview or Reading Mode to see the table.
-If there are any Markdown formatting characters in status names, such as '*' or '_',
-Obsidian may only render the table correctly in Reading Mode.
+${i18n.t('reports.statusRegistry.statusSettings.comment.line1')}
+${i18n.t('reports.statusRegistry.statusSettings.comment.line2')}
+${i18n.t('reports.statusRegistry.statusSettings.comment.line3')}
 -->
 
-These are the status values in the Core and Custom statuses sections.
+${i18n.t('reports.statusRegistry.statusSettings.theseAreStatusValues')}
 
 ${settingsTable}
-## Loaded Settings
+## ${i18n.t('reports.statusRegistry.loadedSettings.title')}
 
-<!-- Switch to Live Preview or Reading Mode to see the diagram. -->
+<!-- ${i18n.t('reports.statusRegistry.loadedSettings.switchToLivePreview')} -->
 
-These are the settings actually used by Tasks.
+${i18n.t('reports.statusRegistry.loadedSettings.settingsActuallyUsed')}
 ${mermaidText}`;
 }

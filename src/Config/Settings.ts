@@ -11,6 +11,7 @@ import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import type { SuggestionBuilder } from '../Suggestor';
 import type { LogOptions } from '../lib/logging';
 import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
+import { i18n } from '../i18n/i18n';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
@@ -29,8 +30,8 @@ export type HeadingState = {
  *
  */
 interface TaskFormat {
-    /** User facing name of the {@link TaskFormat} */
-    displayName: string;
+    /** Function that returns the user facing name of the {@link TaskFormat} */
+    getDisplayName: () => string;
     /** {@link TaskSerializer} responsible for reading Tasks from text and writing them back into text */
     taskSerializer: TaskSerializer;
     /** Function that generates Intellisense-like suggestions as a user is typing a Task */
@@ -40,12 +41,12 @@ interface TaskFormat {
 /** Map of all defined {@link TaskFormat}s */
 export const TASK_FORMATS = {
     tasksPluginEmoji: {
-        displayName: 'Tasks Emoji Format',
+        getDisplayName: () => i18n.t('settings.format.displayName.tasksEmojiFormat'),
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
         buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, false),
     },
     dataview: {
-        displayName: 'Dataview',
+        getDisplayName: () => i18n.t('settings.format.displayName.dataview'),
         taskSerializer: new DataviewTaskSerializer(),
         buildSuggestions: onlySuggestIfBracketOpen(
             makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, true),

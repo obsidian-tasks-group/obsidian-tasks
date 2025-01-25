@@ -3,6 +3,11 @@ import { tabulateStatusSettings } from '../../src/Statuses/StatusSettingsReport'
 import type { StatusCollection } from '../../src/Statuses/StatusCollection';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { coreStatusesData, createStatuses } from '../TestingTools/StatusesTestHelpers';
+import { initializeI18n } from '../../src/i18n/i18n';
+
+beforeAll(async () => {
+    await initializeI18n();
+});
 
 describe('StatusSettingsReport', () => {
     it('should tabulate StatusSettings', () => {
