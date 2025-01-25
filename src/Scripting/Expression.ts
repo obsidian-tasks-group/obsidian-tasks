@@ -20,7 +20,7 @@ export function parseExpression(paramsArgs: [string, any][], arg: string): Funct
             return FunctionOrError.fromObject(arg, expression);
         }
         // I have not managed to write a test that reaches here:
-        return FunctionOrError.fromError(arg, 'Error parsing group function');
+        return FunctionOrError.fromError(arg, `Problem parsing expression "${arg}"`);
     } catch (e) {
         return FunctionOrError.fromError(arg, errorMessageForException(`Failed parsing expression "${arg}"`, e));
     }
