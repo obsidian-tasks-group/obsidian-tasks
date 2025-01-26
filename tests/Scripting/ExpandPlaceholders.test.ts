@@ -221,3 +221,58 @@ The problem is in:
         });
     });
 });
+
+describe('experiments for new Placeholders implementation', () => {
+    // The failing new 'Two function calls' test shows that the current finding of placeholders
+    // is not robust if there is more than one function-like placeholder on a line.
+    // So I am starting to experiment with different implementations of
+    // ExpandPlaceholder's evaluateAnyFunctionCalls().
+    describe('should find non-nested placeholders', () => {
+        function findNonNestedMatches(str: string): string[] {
+            const regex = new RegExp(
+                [
+                    // Match the opening double braces `{{`
+                    '\\{\\{',
+
+                    // Lazily capture everything inside (.*?), ensuring it stops at the first `}}`
+                    '(.*?)',
+
+                    // Match the closing double braces `}}`
+                    '\\}\\}',
+                ].join(''), // Combine the parts into a single string
+                'g', // Global flag to find all matches
+            );
+
+            const matches: string[] = [];
+            let match;
+
+            while ((match = regex.exec(str)) !== null) {
+                const innerContent = match[1];
+
+                // Ensure there are no nested `{{` or `}}` in the inner content
+                if (!innerContent.includes('{{') && !innerContent.includes('}}')) {
+                    matches.push(match[0]); // Add the full match, including `{{` and `}}`
+                } else {
+                    console.log(`Skipping ${match[1]}`);
+                }
+            }
+
+            return matches;
+        }
+
+        it('sample 1 - no spaces', () => {
+            const input = 'text{{valid1}}more-text{{valid2}}and-more{{invalid{{nested}}}}';
+            expect(findNonNestedMatches(input)).toEqual(['{{valid1}}', '{{valid2}}']);
+        });
+
+        it('sample 2 - with spaces', () => {
+            const input = 'text {{valid}} text {{valid2}} {{invalid {{nested}} }}';
+            expect(findNonNestedMatches(input)).toEqual(['{{valid}}', '{{valid2}}']);
+        });
+
+        it('sample 3 - nested text is at the start', () => {
+            const input = '{{outer{{inner}}}} {{valid}}';
+            expect(findNonNestedMatches(input)).toEqual(['{{valid}}']);
+        });
+    });
+});
