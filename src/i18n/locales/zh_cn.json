@@ -25,7 +25,7 @@
         "description": "控制搜索和切换状态的行为.",
         "name": "任务状态类型"
       },
-      "fixErrorsBeforeSaving": ""
+      "fixErrorsBeforeSaving": "在保存前修复错误。"
     }
   },
   "reports": {
@@ -41,11 +41,11 @@
         }
       },
       "columnHeadings": {
-        "nextStatusSymbol": "",
-        "problems": "",
-        "statusName": "",
-        "statusSymbol": "",
-        "statusType": ""
+        "nextStatusSymbol": "下一个状态符号",
+        "problems": "问题 (如果存在)",
+        "statusName": "状态名称",
+        "statusSymbol": "状态符号",
+        "statusType": "状态类型"
       },
       "loadedSettings": {
         "settingsActuallyUsed": "这些是任务实际使用的设置.",
@@ -59,9 +59,9 @@
         "nextSymbolUnknown": "下一个符号 {{symbol}} 未知:请创建符号为 {{symbol}} 的状态.",
         "notConventionalType": "供参考,状态符号 {{symbol}} 的常规类型是 {{type}}:您可能希望查看此类型.",
         "wrongTypeAfterDone": {
-          "line1": "",
-          "line2": "",
-          "line3": ""
+          "line1": "此`完成`状态后跟随的是{{nextType}}，而不是`待办`或`进行中`。",
+          "line2": "如果用于完成一个重复任务，它后面会跟着待办`或`进行中`，以确保下一个任务符合“未完成”的筛选条件。",
+          "line3": "请参阅[重复任务和自定义状态]({{helpURL}})。"
         }
       },
       "statusSettings": {
@@ -126,8 +126,8 @@
           "description": {
             "line1": "输入计划 (⏳) 日期节省时间",
             "line2": "如果启用此选项,则任何未注明日期的任务都将获得从其文件名中提取的默认“计划日期”.",
-            "line3": "",
-            "line4": ""
+            "line3": "默认情况下，tasks 插件将匹配 <code>YYYY-MM-DD</code> 和 <code>YYYYMMDD</code> 两种日期格式。",
+            "line4": "未定日期的任务没有截止日期 (📅 ), 计划日期 (⏳) 和开始日期(🛫) 。"
           },
           "name": "将文件名用作未注明日期的任务的计划日期"
         }
@@ -185,19 +185,19 @@
     "seeTheDocumentation": "请参阅文档",
     "statuses": {
       "collections": {
-        "anuppuccinTheme": "",
-        "auraTheme": "",
-        "borderTheme": "",
+        "anuppuccinTheme": "AnuPpuccin 主题",
+        "auraTheme": "Aura 主题",
+        "borderTheme": "Border 主题",
         "buttons": {
           "addCollection": {
-            "name": ""
+            "name": "{{themeName}}: 添加 {{numberOfStatuses}} 种支持状态"
           }
         },
-        "ebullientworksTheme": "",
-        "itsThemeAndSlrvbCheckboxes": "",
-        "lytModeTheme": "",
-        "minimalTheme": "",
-        "thingsTheme": ""
+        "ebullientworksTheme": "Ebullientworks 主题",
+        "itsThemeAndSlrvbCheckboxes": "ITS 主题和 SlRvb 复选框",
+        "lytModeTheme": "LYT Mode 主题 (仅深色模式)",
+        "minimalTheme": "Minimal 主题",
+        "thingsTheme": "Things 主题"
       },
       "coreStatuses": {
         "buttons": {
@@ -228,7 +228,7 @@
           "line1": "您应该首先<b>选择并安装CSS代码段或主题<b>以设置自定义复选框的样式",
           "line2": "然后,使用下面的按钮设置您的自定义状态,以匹配您选择的CSS复选框.",
           "line3": "<b>注意</b>任何与任何早期状态具有相同符号的状态都将被忽略.您可以通过运行“创建或编辑任务”命令并查看“状态”下拉列表来确认实际加载的状态.",
-          "line4": ""
+          "line4": "查看文档以开始！"
         },
         "heading": "自定义状态"
       },
