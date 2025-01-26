@@ -1,238 +1,238 @@
 {
   "main": {
-    "loadingPlugin": "Loading plugin: {{name}} v{{version}}",
-    "unloadingPlugin": "Unloading plugin: {{name}} v{{version}}"
+    "loadingPlugin": "加载插件: {{name}} v{{version}}",
+    "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
   },
   "modals": {
     "customStatusModal": {
       "editAvailableAsCommand": {
-        "description": "If enabled this status will be available as a command so you can assign a hotkey and toggle the status using it.",
-        "name": "Available as command"
+        "description": "如果启用,此状态将作为命令可用,因此您可以指定热键并使用它切换状态.",
+        "name": "可用作命令"
       },
       "editNextStatusSymbol": {
-        "description": "When clicked on this is the symbol that should be used next.",
-        "name": "Task Next Status Symbol"
+        "description": "单击时,这是下一步应该使用的符号.",
+        "name": "任务下一个状态符号"
       },
       "editStatusName": {
-        "description": "This is the friendly name of the task status.",
-        "name": "Task Status Name"
+        "description": "这是任务状态的友好名称.",
+        "name": "任务状态名称"
       },
       "editStatusSymbol": {
-        "description": "This is the character between the square braces. (It can only be edited for Custom statuses, and not Core statuses.)",
-        "name": "Task Status Symbol"
+        "description": "这是方括号中的字符.(仅可编辑自定义状态,不可编辑核心状态.)",
+        "name": "任务状态符号"
       },
       "editStatusType": {
-        "description": "Control how the status behaves for searching and toggling.",
-        "name": "Task Status Type"
+        "description": "控制搜索和切换状态的行为.",
+        "name": "任务状态类型"
       },
-      "fixErrorsBeforeSaving": "Fix errors before saving."
+      "fixErrorsBeforeSaving": "在保存前修复错误。"
     }
   },
   "reports": {
     "statusRegistry": {
       "about": {
-        "createdBy": "This file was created by the Obsidian Tasks plugin (version {{version}}) to help visualise the task statuses in this vault.",
-        "deleteFileAnyTime": "You can delete this file any time.",
-        "title": "About this file",
+        "createdBy": "此文件由黑曜石任务插件(版本 ${n})创建,以帮助可视化此保管库中的任务状态.",
+        "deleteFileAnyTime": "您可以随时删除此文件.",
+        "title": "关于此文件",
         "updateReport": {
-          "line1": "If you change the Tasks status settings, you can get an updated report by:",
-          "line2": "Going to `Settings` -> `Tasks`.",
-          "line3": "Clicking on `Review and check your Statuses`."
+          "line1": "如果更改“任务”状态设置,则可以通过以下方式获取更新的报告:",
+          "line2": "去 \\`设置\\` -> \\`Tasks\\`.",
+          "line3": "点击 \\`查看并检查您的状态\\"
         }
       },
       "columnHeadings": {
-        "nextStatusSymbol": "Next Status Symbol",
-        "problems": "Problems (if any)",
-        "statusName": "Status Name",
-        "statusSymbol": "Status Symbol",
-        "statusType": "Status Type"
+        "nextStatusSymbol": "下一个状态符号",
+        "problems": "问题 (如果存在)",
+        "statusName": "状态名称",
+        "statusSymbol": "状态符号",
+        "statusType": "状态类型"
       },
       "loadedSettings": {
-        "settingsActuallyUsed": "These are the settings actually used by Tasks.",
-        "switchToLivePreview": "Switch to Live Preview or Reading Mode to see the diagram.",
-        "title": "Loaded Settings"
+        "settingsActuallyUsed": "这些是任务实际使用的设置.",
+        "switchToLivePreview": "切换到实时预览或阅读模式以查看图表.",
+        "title": "已加载设置"
       },
       "messages": {
-        "cannotFindNextStatus": "Unexpected failure to find the next status.",
-        "duplicateSymbol": "Duplicate symbol '{{symbol}}': this status will be ignored.",
-        "emptySymbol": "Empty symbol: this status will be ignored.",
-        "nextSymbolUnknown": "Next symbol {{symbol}} is unknown: create a status with symbol {{symbol}}.",
-        "notConventionalType": "For information, the conventional type for status symbol {{symbol}} is {{type}}: you may wish to review this type.",
+        "cannotFindNextStatus": "未能意外找到下一个状态.",
+        "duplicateSymbol": "重复的符号 '{{symbol}}':此状态将被忽略.",
+        "emptySymbol": "空符号:此状态将被忽略.",
+        "nextSymbolUnknown": "下一个符号 {{symbol}} 未知:请创建符号为 {{symbol}} 的状态.",
+        "notConventionalType": "供参考,状态符号 {{symbol}} 的常规类型是 {{type}}:您可能希望查看此类型.",
         "wrongTypeAfterDone": {
-          "line1": "This `DONE` status is followed by {{nextType}}, not `TODO` or `IN_PROGRESS`.",
-          "line2": "If used to complete a recurring task, it will instead be followed by `TODO` or `IN_PROGRESS`, to ensure the next task matches the `not done` filter.",
-          "line3": "See [Recurring Tasks and Custom Statuses]({{helpURL}})."
+          "line1": "此`完成`状态后跟随的是{{nextType}}，而不是`待办`或`进行中`。",
+          "line2": "如果用于完成一个重复任务，它后面会跟着待办`或`进行中`，以确保下一个任务符合“未完成”的筛选条件。",
+          "line3": "请参阅[重复任务和自定义状态]({{helpURL}})。"
         }
       },
       "statusSettings": {
         "comment": {
-          "line1": "Switch to Live Preview or Reading Mode to see the table.",
-          "line2": "If there are any Markdown formatting characters in status names, such as '*' or '_',",
-          "line3": "Obsidian may only render the table correctly in Reading Mode."
+          "line1": "切换到实时预览或阅读模式以查看表格.",
+          "line2": "如果状态名称中有任何Markdown格式字符,如 '*' 或 '_',",
+          "line3": "黑曜石只能在阅读模式下正确渲染表格."
         },
-        "theseAreStatusValues": "These are the status values in the Core and Custom statuses sections.",
-        "title": "Status Settings"
+        "theseAreStatusValues": "这些是核心和自定义状态部分中的状态值.",
+        "title": "状态设置"
       }
     }
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Auto-suggest",
+      "heading": "自动建议",
       "maxSuggestions": {
-        "description": "How many suggestions should be shown when an auto-suggest menu pops up (including the \"⏎\" option).",
-        "name": "Maximum number of auto-suggestions to show"
+        "description": "当自动建议菜单弹出时,应显示多少条建议 (包含 \"\\u23CE\" 选项).",
+        "name": "要显示的最大自动建议数"
       },
       "minLength": {
-        "description": "If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.",
-        "name": "Minimum match length for auto-suggest"
+        "description": "如果高于0,则只有在识别出任何支持的关键字的开头时才会触发自动建议.",
+        "name": "自动建议的最小匹配长度"
       },
       "toggle": {
-        "description": "Enabling this will open an intelligent suggest menu while typing inside a recognized task line.",
-        "name": "Auto-suggest task content"
+        "description": "启用此选项将打开一个智能建议菜单,同时在已识别的任务行中键入.",
+        "name": "自动建议任务内容"
       }
     },
-    "changeRequiresRestart": "Changing any settings requires a restart of obsidian.",
+    "changeRequiresRestart": "更改任何设置都需要重新启动Obsidian.",
     "dates": {
       "cancelledDate": {
-        "description": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
-        "name": "Set cancelled date on every cancelled task"
+        "description": "启用此功能将添加时间戳 ❌ YYYY-MM-DD 在结尾,当任务切换为取消时.",
+        "name": "为每个已取消的任务设置已取消的日期"
       },
       "createdDate": {
-        "description": "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.",
-        "name": "Set created date on every added task"
+        "description": "启用此功能将添加时间戳 ➕ YYYY-MM-DD 在其他日期值之前,当使用“创建或编辑任务”创建任务时,或通过完成定期任务创建任务时.",
+        "name": "设置每个添加任务的创建日期"
       },
       "doneDate": {
-        "description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
-        "name": "Set done date on every completed task"
+        "description": "启用此功能将添加时间戳 ✅ YYYY-MM-DD 在任务切换为已完成时结束.",
+        "name": "设置每个已完成任务的完成日期"
       },
-      "heading": "Dates"
+      "heading": "日期"
     },
     "datesFromFileNames": {
-      "heading": "Dates from file names",
+      "heading": "从文件名中提取日期",
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.",
-            "line2": "Syntax Reference"
+            "line1": "当使用文件名作为未注明日期的任务的计划日期时,任务插件将识别的另一种日期格式.",
+            "line2": "语法参考"
           },
-          "name": "Additional filename date format as Scheduled date for undated tasks",
-          "placeholder": "example: MMM DD YYYY"
+          "name": "为无日期任务添加文件名日期格式作为计划日期",
+          "placeholder": "示例:MMM DD YYYY"
         },
         "folders": {
-          "description": "Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.",
-          "name": "Folders with default Scheduled dates"
+          "description": "如果要处处使用默认的“计划日期”,请保留为空,或者输入以逗号分隔的文件夹列表",
+          "name": "具有默认计划日期的文件夹"
         },
         "toggle": {
           "description": {
-            "line1": "Save time entering Scheduled (⏳) dates.",
-            "line2": "If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.",
-            "line3": "By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats.",
-            "line4": "Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates."
+            "line1": "输入计划 (⏳) 日期节省时间",
+            "line2": "如果启用此选项,则任何未注明日期的任务都将获得从其文件名中提取的默认“计划日期”.",
+            "line3": "默认情况下，tasks 插件将匹配 <code>YYYY-MM-DD</code> 和 <code>YYYYMMDD</code> 两种日期格式。",
+            "line4": "未定日期的任务没有截止日期 (📅 ), 计划日期 (⏳) 和开始日期(🛫) 。"
           },
-          "name": "Use filename as Scheduled date for undated tasks"
+          "name": "将文件名用作未注明日期的任务的计划日期"
         }
       }
     },
     "dialogs": {
       "accessKeys": {
-        "description": "If the access keys (keyboard shortcuts) for various controls in dialog boxes conflict with system keyboard shortcuts or assistive technology functionality that is important for you, you may want to deactivate them here.",
-        "name": "Provide access keys in dialogs"
+        "description": "如果对话框中各种控件的访问键(键盘快捷键)与系统键盘快捷键或对您很重要的辅助技术功能相冲突,您可能需要在此处停用它们.",
+        "name": "在对话框中提供访问密钥"
       },
-      "heading": "Dialogs"
+      "heading": "对话框"
     },
     "format": {
       "description": {
-        "line1": "The format that Tasks uses to read and write tasks.",
-        "line2": "<b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>."
+        "line1": "任务用于读取和写入任务的格式.",
+        "line2": "<b>重点:</b> 任务当前一次只支持一种格式.选择数据视图当前将 <b>停止Tasks读取自己的表情符号</b>"
       },
       "displayName": {
-        "dataview": "Dataview",
-        "tasksEmojiFormat": "Tasks Emoji Format"
+        "dataview": "Dataview 格式",
+        "tasksEmojiFormat": "Tasks 表情格式"
       },
-      "name": "Task Format"
+      "name": "任务格式"
     },
     "globalFilter": {
       "filter": {
         "description": {
-          "line1": "Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.",
-          "line2": "Use a global filter if you want Tasks to only act on a subset of your \"<code>- [ ]</code>\" checklist items, so that a checklist item must include the specified string in its description in order to be considered a task.",
-          "line3": "For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.",
-          "line4": "Other checklist items will remain normal checklist items and not appear in queries or get a done date set."
+          "line1": "建议:如果您希望仓库中的所有检查表项目都是由此插件管理的任务,请保留为空",
+          "line2": "如果您希望“任务”仅作用于 \"<code>- [ ]</code>\" 检查表项的子集,请使用全局筛选器,以便检查表项必须在其描述中包含指定的字符串才能被视为任务.",
+          "line3": "例如,如果将全局筛选器设置为 <code>#task</code>,则Tasks插件将仅处理标记为 <code>#task</code> 的检查表项.",
+          "line4": "其他检查表项目将保持正常的检查表项目,不会出现在查询中或设置完成日期."
         },
-        "name": "Global filter",
-        "placeholder": "e.g. #task or TODO"
+        "name": "全局筛选器",
+        "placeholder": "例如:#task 或 TODO"
       },
-      "heading": "Global task filter",
+      "heading": "全局任务筛选器",
       "removeFilter": {
-        "description": "Enabling this removes the string that you set as global filter from the task description when displaying a task.",
-        "name": "Remove global filter from description"
+        "description": "启用此选项将在显示任务时从任务描述中删除设置为全局筛选器的字符串.",
+        "name": "从描述中删除全局筛选器"
       }
     },
     "globalQuery": {
-      "heading": "Global Query",
+      "heading": "全局查询",
       "query": {
-        "description": "A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.",
-        "placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "description": "自动包含在库中每个“任务”块开头的查询.用于添加默认过滤器或布局选项.",
+        "placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency"
       }
     },
     "recurringTasks": {
-      "heading": "Recurring tasks",
+      "heading": "重复性任务",
       "nextLine": {
-        "description": "Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.",
-        "name": "Next recurrence appears on the line below"
+        "description": "启用此选项将使任务的下一个重复出现在已完成任务下方的行中.否则,下一次重复将出现在已完成的重复之前.",
+        "name": "下一个重复出现在下一行"
       }
     },
-    "seeTheDocumentation": "See the documentation",
+    "seeTheDocumentation": "请参阅文档",
     "statuses": {
       "collections": {
-        "anuppuccinTheme": "AnuPpuccin Theme",
-        "auraTheme": "Aura Theme",
-        "borderTheme": "Border Theme",
+        "anuppuccinTheme": "AnuPpuccin 主题",
+        "auraTheme": "Aura 主题",
+        "borderTheme": "Border 主题",
         "buttons": {
           "addCollection": {
-            "name": "{{themeName}}: Add {{numberOfStatuses}} supported Statuses"
+            "name": "{{themeName}}: 添加 {{numberOfStatuses}} 种支持状态"
           }
         },
-        "ebullientworksTheme": "Ebullientworks Theme",
-        "itsThemeAndSlrvbCheckboxes": "ITS Theme & SlRvb Checkboxes",
-        "lytModeTheme": "LYT Mode Theme (Dark mode only)",
-        "minimalTheme": "Minimal Theme",
-        "thingsTheme": "Things Theme"
+        "ebullientworksTheme": "Ebullientworks 主题",
+        "itsThemeAndSlrvbCheckboxes": "ITS 主题和 SlRvb 复选框",
+        "lytModeTheme": "LYT Mode 主题 (仅深色模式)",
+        "minimalTheme": "Minimal 主题",
+        "thingsTheme": "Things 主题"
       },
       "coreStatuses": {
         "buttons": {
           "checkStatuses": {
-            "name": "Review and check your Statuses",
-            "tooltip": "Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings."
+            "name": "查看并检查您的状态",
+            "tooltip": "在库的根目录下创建一个新文件,包含当前状态设置的 Mermaid 图表."
           }
         },
         "description": {
-          "line1": "These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.",
-          "line2": "You can add edit and add your own custom statuses in the section below."
+          "line1": "这些是Tasks本机支持的核心状态,不需要自定义CSS样式或主题.",
+          "line2": "您可以在下面的部分中添加编辑和添加自己的自定义状态."
         },
-        "heading": "Core Statuses"
+        "heading": "核心状态"
       },
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "name": "Add All Unknown Status Types"
+            "name": "添加所有未知状态类型"
           },
           "addNewStatus": {
-            "name": "Add New Task Status"
+            "name": "添加新任务状态"
           },
           "resetCustomStatuses": {
-            "name": "Reset Custom Status Types to Defaults"
+            "name": "重置自定义状态类型为默认值"
           }
         },
         "description": {
-          "line1": "You should first <b>select and install a CSS Snippet or Theme</b> to style custom checkboxes.",
-          "line2": "Then, use the buttons below to set up your custom statuses, to match your chosen CSS checkboxes.",
-          "line3": "<b>Note</b> Any statuses with the same symbol as any earlier statuses will be ignored. You can confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down.",
-          "line4": "See the documentation to get started!"
+          "line1": "您应该首先<b>选择并安装CSS代码段或主题<b>以设置自定义复选框的样式",
+          "line2": "然后,使用下面的按钮设置您的自定义状态,以匹配您选择的CSS复选框.",
+          "line3": "<b>注意</b>任何与任何早期状态具有相同符号的状态都将被忽略.您可以通过运行“创建或编辑任务”命令并查看“状态”下拉列表来确认实际加载的状态.",
+          "line4": "查看文档以开始！"
         },
-        "heading": "Custom Statuses"
+        "heading": "自定义状态"
       },
-      "heading": "Task Statuses"
+      "heading": "任务状态"
     }
   }
 }
