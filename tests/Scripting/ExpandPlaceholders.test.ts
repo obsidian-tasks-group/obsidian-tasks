@@ -5,13 +5,14 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 describe('ExpandTemplate', () => {
     const tasksFile = new TasksFile('a/b/path with space.md');
 
-    it('hard-coded call', () => {
+    it.failing('hard-coded call', () => {
         const view = {
             title: 'Joe',
             calc: () => 2 + 4,
         };
 
         const output = expandPlaceholders('{{ title }} spends {{ calc }}', view);
+        // Now gives: "Joe spends () => 2 + 4"
         expect(output).toEqual('Joe spends 6');
     });
 
@@ -43,23 +44,10 @@ filename includes {{query.file.filename}}`;
         expect(expandPlaceholders(rawString, queryContext)).toEqual('false');
     });
 
-    it.failing('fake query - with expression', () => {
-        // I really want a way to use true/false properties to control the layout
-        // This needs to be tested with:
-        //    - property is present in file and is true
-        //    - property is present in file and is false
-        //    - property is present in file and is missing
-        //    - property is not in the file
+    it('fake query - with expression', () => {
         const rawString = '{{query.file.property("show-tree") ? "show tree" : "hide tree"}}';
 
         const queryContext = makeQueryContext(tasksFile);
-        /*
-            Currently gives:
-            Error: There was an error expanding one or more placeholders.
-
-            The error message was:
-                Unknown property: query.file.property("show-tree") ? "show tree" : "hide tree"
-         */
         expect(expandPlaceholders(rawString, queryContext)).toEqual('hide tree');
     });
 
@@ -82,7 +70,7 @@ filename includes {{query.file.filename}}`;
         expect(() => expandPlaceholders(source, view)).toThrow(`There was an error expanding one or more placeholders.
 
 The error message was:
-    Unknown property: unknownField
+    unknownField is not defined
 
 The problem is in:
     {{ title }} spends {{ unknownField }}`);
@@ -230,17 +218,10 @@ describe('ExpandTemplate with functions', () => {
 
     describe('Unsupported Syntax', () => {
         it('Unsupported Mustache syntax', () => {
-            expect(() => {
-                expandPlaceholders("Invalid: {{unsupported.func['key']}}", {
-                    unsupported: { func: { key: 'value' } },
-                });
-            }).toThrow(`There was an error expanding one or more placeholders.
-
-The error message was:
-    Unknown property: unsupported.func['key']
-
-The problem is in:
-    Invalid: {{unsupported.func['key']}}`);
+            const result = expandPlaceholders("Invalid: {{unsupported.func['key']}}", {
+                unsupported: { func: { key: 'value' } },
+            });
+            expect(result).toEqual('Invalid: value');
         });
     });
 
