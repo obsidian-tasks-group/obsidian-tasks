@@ -76,12 +76,10 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
         const functionOrError = parseExpression(paramsArgs, reconstructed);
         if (functionOrError.isValid()) {
             return evaluateExpression(functionOrError.queryComponent!, paramsArgs);
-        } else {
-            console.log('Problem:', functionOrError.error);
         }
 
         // Throw an error if the function does not exist or is invalid
-        throw new Error(`Unknown property or invalid function: ${functionPath}`);
+        throw new Error(`Unknown property or invalid function: ${functionPath}: ${functionOrError.error}`);
     });
 }
 
