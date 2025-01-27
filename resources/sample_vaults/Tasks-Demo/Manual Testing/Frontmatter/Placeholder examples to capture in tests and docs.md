@@ -1,5 +1,5 @@
 ---
-TQ-explain: true
+TQ-explain: false
 TQ-short-mode: false
 TQ-show-tree: true
 TQ-show-tags: true
@@ -58,7 +58,7 @@ path includes {{query.file.path}}
 # I would like to use the prefix 'tasks-query-' on the names, but it makes the names
 # too wide to be readable in the File Properties panel.
 
-{{query.file.hasProperty('TQ-explain') && (query.file.property('TQ-explain') ? 'explain' : '') || ''}}
+{{const prop = 'TQ-explain'; return query.file.hasProperty(prop) ? (query.file.property(prop) ? 'explain' : '') : '';}}
 
 {{query.file.hasProperty('TQ-short-mode') && (query.file.property('TQ-short-mode') ? 'short mode' : 'full mode') || ''}}
 
