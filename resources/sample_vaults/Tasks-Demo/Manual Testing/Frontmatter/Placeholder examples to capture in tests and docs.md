@@ -58,7 +58,7 @@ path includes {{query.file.path}}
 # I would like to use the prefix 'tasks-query-' on the names, but it makes the names
 # too wide to be readable in the File Properties panel.
 
-{{const prop = 'TQ-explain';                return query.file.hasProperty(prop) ? (query.file.property(prop) ? 'explain' : '') : '';}}
+{{const prop = 'TQ-explain';                return query.file.hasProperty(prop) ?  ( query.file.property(prop) ? 'explain' : '') : '';}}
 
 {{const prop = 'TQ-short-mode';             return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'short mode' : 'full mode') || ''}}
 
@@ -74,7 +74,7 @@ path includes {{query.file.path}}
 
 {{const prop = 'TQ-show-recurrence-rule';   return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' recurrence rule' || ''}}
 
-{{const prop = 'TQ-show-on completion';     return query.file.hasProperty(prop) && (query.file.property(prop) ? 'show' : 'hide') + ' on completion' || ''}}
+{{const prop = 'TQ-show-on completion';     return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' on completion' || ''}}
 
 {{const prop = 'TQ-show-created-date';      return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' created date' || ''}}
 
@@ -88,7 +88,7 @@ path includes {{query.file.path}}
 
 {{const prop = 'TQ-show-done-date';         return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' done date' || ''}}
 
-{{const prop = 'TQ-show-urgency' ;          return query.file.hasProperty(prop) && (query.file.property(prop) ? 'show' : 'hide') + ' urgency' || ''}}
+{{const prop = 'TQ-show-urgency' ;          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' urgency' || ''}}
 
 {{const prop = 'TQ-show-backlink';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' backlink' || ''}}
 
@@ -98,9 +98,9 @@ path includes {{query.file.path}}
 
 {{const prop = 'TQ-show-task-count';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' task count' || ''}}
 
-{{const prop = 'TQ-sort-by';                return query.file.hasProperty(prop) &&  query.file.property(prop).map((g) => 'sort by ' + g).join('\n') || ''}}
+{{const prop = 'TQ-sort-by';                return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'sort by ' + g).join('\n') || ''}}
 
-{{const prop = 'TQ-group-by';               return query.file.hasProperty(prop) &&  query.file.property(prop).map((g) => 'group by ' + g).join('\n') || ''}}
+{{const prop = 'TQ-group-by';               return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'group by ' + g).join('\n') || ''}}
 
 {{const prop = 'TQ-extra-instructions';     return query.file.hasProperty(prop) ? query.file.property(prop) || '' : '';}}
 ```
