@@ -1,5 +1,6 @@
 import Mustache from 'mustache';
 import proxyData from 'mustache-validator';
+import { type ExpressionParameter, evaluateExpression, parseExpression } from './Expression';
 
 // https://github.com/janl/mustache.js
 
@@ -138,10 +139,31 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
             const argValues = parseArgs(args);
 
             // Call the function with the parsed arguments and return the result
-            return obj[functionName](...argValues);
+            const originalResult = obj[functionName](...argValues);
+
+            const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
+            const reconstructed = `${functionPath}(${args})`;
+            const functionOrError = parseExpression(paramsArgs, reconstructed);
+            if (functionOrError.isValid()) {
+                const newResult = evaluateExpression(functionOrError.queryComponent!, paramsArgs);
+                if (originalResult != newResult) {
+                    console.log('Results differ:');
+                    console.log('old:', originalResult);
+                    console.log('new', newResult);
+                }
+                return originalResult;
+            } else {
+                console.log('Problem:', functionOrError.error);
+            }
+
+            return originalResult;
         }
 
         // Throw an error if the function does not exist or is invalid
         throw new Error(`Unknown property or invalid function: ${functionPath}`);
     });
+}
+
+function createExpressionParameters(view: any): ExpressionParameter[] {
+    return Object.entries(view) as ExpressionParameter[];
 }
