@@ -7,7 +7,7 @@ TQ-show-id: true
 TQ-show-depends-on: true
 TQ-show-priority: true
 TQ-show-recurrence-rule: true
-TQ-show-on completion: true
+TQ-show-on-completion: true
 TQ-show-created-date: true
 TQ-show-start-date: true
 TQ-show-scheduled-date: true
@@ -68,7 +68,7 @@ path includes {{query.file.path}}
 {{const prop = 'TQ-show-depends-on';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' depends on' || ''}}
 {{const prop = 'TQ-show-priority';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' priority' || ''}}
 {{const prop = 'TQ-show-recurrence-rule';   return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' recurrence rule' || ''}}
-{{const prop = 'TQ-show-on completion';     return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' on completion' || ''}}
+{{const prop = 'TQ-show-on-completion';     return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' on completion' || ''}}
 
 {{const prop = 'TQ-show-created-date';      return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' created date' || ''}}
 {{const prop = 'TQ-show-start-date';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' start date' || ''}}

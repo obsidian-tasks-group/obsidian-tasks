@@ -24,7 +24,7 @@
     "TQ-show-depends-on": "checkbox",
     "TQ-show-priority": "checkbox",
     "TQ-show-recurrence-rule": "checkbox",
-    "TQ-show-on completion": "checkbox",
+    "TQ-show-on-completion": "checkbox",
     "TQ-show-created-date": "checkbox",
     "TQ-show-start-date": "checkbox",
     "TQ-show-scheduled-date": "checkbox",
