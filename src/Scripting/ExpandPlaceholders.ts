@@ -51,31 +51,30 @@ The problem is in:
     }
 }
 
-// Regex to detect function calls in placeholders
+// Regex to detect placeholders
 const FUNCTION_REGEX = new RegExp(
     [
-        // Match opening double curly braces with optional whitespace
-        '{{\\s*',
+        // Match the opening double braces `{{`
+        '\\{\\{',
 
-        // Match and capture the function path (e.g., "object.path.toFunction")
-        '([\\w.]+)',
+        // Lazily capture everything inside (.*?), ensuring it stops at the first `}}`
+        '(.*?)',
 
-        // Match the opening parenthesis and capture arguments inside
-        '\\(([^)]*)\\)',
-
-        // Match optional whitespace followed by closing double curly braces
-        '\\s*}}',
-    ].join(''), // Combine all parts without additional separators
-    'g', // Global flag to match all instances in the template
+        // Match the closing double braces `}}`
+        '\\}\\}',
+    ].join(''), // Combine the parts into a single string
+    'g', // Global flag to find all matches
 );
 
 function evaluateAnyFunctionCalls(template: string, view: any) {
-    return template.replace(FUNCTION_REGEX, (_match, functionPath, args) => {
+    return template.replace(FUNCTION_REGEX, (_match, reconstructed) => {
         const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
-        const reconstructed = `${functionPath}(${args})`;
         const functionOrError = parseExpression(paramsArgs, reconstructed);
         if (functionOrError.isValid()) {
-            return evaluateExpression(functionOrError.queryComponent!, paramsArgs);
+            const result = evaluateExpression(functionOrError.queryComponent!, paramsArgs);
+            if (result !== undefined) {
+                return result;
+            }
         }
 
         // Fall back on returning the raw string, including {{ and }} - and get Mustache to report the error.
