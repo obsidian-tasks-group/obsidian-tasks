@@ -4,9 +4,9 @@ import { errorMessageForException } from '../lib/ExceptionTools';
 export class FunctionOrError extends QueryComponentOrError<Function> {}
 
 /**
- * The name and value of a parameter, for passing in to {@link parseExpression} and related functions.
+ * The name and value of a parameter, as a Tuple, for passing in to {@link parseExpression} and related functions.
  */
-export type ExpressionParameter = [string, any];
+export type ExpressionParameter = [name: string, value: any];
 
 /**
  * Parse a JavaScript expression, and return either a Function or an error message in a string.
@@ -18,7 +18,7 @@ export type ExpressionParameter = [string, any];
  */
 export function parseExpression(paramsArgs: ExpressionParameter[], arg: string): FunctionOrError {
     try {
-        const parameterNames = paramsArgs.map(([p]) => p);
+        const parameterNames = paramsArgs.map(([name]) => name);
         const input = arg.includes('return') ? arg : `return ${arg}`;
         const expression: '' | null | Function = arg && new Function(...parameterNames, input);
         if (expression instanceof Function) {
@@ -40,7 +40,7 @@ export function parseExpression(paramsArgs: ExpressionParameter[], arg: string):
  * @see evaluateExpressionOrCatch
  */
 export function evaluateExpression(expression: Function, paramsArgs: ExpressionParameter[]) {
-    const parameterValues = paramsArgs.map(([_, a]) => a);
+    const parameterValues = paramsArgs.map(([_, value]) => value);
     return expression(...parameterValues);
 }
 
