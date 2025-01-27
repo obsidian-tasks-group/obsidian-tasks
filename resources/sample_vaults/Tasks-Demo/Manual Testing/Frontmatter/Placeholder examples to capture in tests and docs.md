@@ -19,6 +19,10 @@ TQ-show-backlink: true
 TQ-show-edit-button: true
 TQ-show-postpone-button: true
 TQ-show-task-count: true
+TQ-group-by:
+  - status.type
+  - happens reverse
+  - function task.tags.sort().join(' ')
 ---
 # Placeholder examples to capture in tests and docs
 
@@ -135,6 +139,10 @@ path includes {{query.file.path}}
 {{query.file.hasProperty('TQ-show-task-count') \
  && (query.file.property('TQ-show-task-count') \
  ? 'show' : 'hide') +           ' task count'  \
+ || ''}}
+
+{{query.file.hasProperty('TQ-group-by') \
+ &&  query.file.property('TQ-group-by').map((g) => 'group by ' + g).join('\n') \
  || ''}}
 ```
 
