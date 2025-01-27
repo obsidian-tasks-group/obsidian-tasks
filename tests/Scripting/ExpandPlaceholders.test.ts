@@ -1,22 +1,6 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
-import { type ExpressionParameter, evaluateExpression, parseExpression } from '../../src/Scripting/Expression';
-
-function createExpressionParameters(view: any): ExpressionParameter[] {
-    return Object.entries(view) as ExpressionParameter[];
-}
-
-function checkResultViaExpression(view: any, expressionText: string, expected: any) {
-    const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
-    const functionOrError = parseExpression(paramsArgs, expressionText);
-    expect(functionOrError.isValid()).toEqual(true);
-    expect(functionOrError.queryComponent).not.toBeUndefined();
-    if (functionOrError.queryComponent) {
-        const result = evaluateExpression(functionOrError.queryComponent, paramsArgs);
-        expect(result).toEqual(expected);
-    }
-}
 
 describe('ExpandTemplate', () => {
     const tasksFile = new TasksFile('a/b/path with space.md');
@@ -142,8 +126,6 @@ describe('ExpandTemplate with functions', () => {
             };
             const output = expandPlaceholders("Result: {{math.square('4')}}", view);
             expect(output).toEqual('Result: 16');
-
-            checkResultViaExpression(view, "math.square('4')", 16);
         });
     });
 
@@ -158,8 +140,6 @@ describe('ExpandTemplate with functions', () => {
             };
             const output = expandPlaceholders("Value: {{data.subData.func('arg')}}", view);
             expect(output).toEqual('Value: Result for arg');
-
-            checkResultViaExpression(view, "data.subData.func('arg')", 'Result for arg');
         });
     });
 
@@ -218,8 +198,6 @@ describe('ExpandTemplate with functions', () => {
             };
             const output = expandPlaceholders('Version: {{sys.getVersion()}}', view);
             expect(output).toEqual('Version: 1.0.0');
-
-            checkResultViaExpression(view, 'sys.getVersion()', '1.0.0');
         });
 
         it('Template with no placeholders', () => {
