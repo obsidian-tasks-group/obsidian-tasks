@@ -1,24 +1,24 @@
 ---
-explain: true
-short-mode: false
-show-tree: true
-show-tags: true
-show-id: true
-show-depends-on: true
-show-priority: true
-show-recurrence-rule: true
-show-on completion: true
-show-created-date: true
-show-start-date: true
-show-scheduled-date: true
-show-due-date: true
-show-cancelled-date: true
-show-done-date: true
-show-urgency: true
-show-backlink: true
-show-edit-button: true
-show-postpone-button: true
-show-task-count: true
+TQ-explain: true
+TQ-short-mode: false
+TQ-show-tree: true
+TQ-show-tags: true
+TQ-show-id: true
+TQ-show-depends-on: true
+TQ-show-priority: true
+TQ-show-recurrence-rule: true
+TQ-show-on completion: true
+TQ-show-created-date: true
+TQ-show-start-date: true
+TQ-show-scheduled-date: true
+TQ-show-due-date: true
+TQ-show-cancelled-date: true
+TQ-show-done-date: true
+TQ-show-urgency: true
+TQ-show-backlink: true
+TQ-show-edit-button: true
+TQ-show-postpone-button: true
+TQ-show-task-count: true
 ---
 # Placeholder examples to capture in tests and docs
 
@@ -37,104 +37,104 @@ path includes {{query.file.path}}
 # I would like to use the prefix 'tasks-query-' on the names, but it makes the names
 # too wide to be readable in the File Properties panel.
 
-{{query.file.hasProperty('explain') \
- && (query.file.property('explain') \
+{{query.file.hasProperty('TQ-explain') \
+ && (query.file.property('TQ-explain') \
  ? 'explain' : '')  \
  || ''}}
 
-{{query.file.hasProperty('short-mode') \
- && (query.file.property('short-mode') \
+{{query.file.hasProperty('TQ-short-mode') \
+ && (query.file.property('TQ-short-mode') \
  ? 'short mode' : 'full mode')  \
  || ''}}
 
-{{query.file.hasProperty('show-tree') \
- && (query.file.property('show-tree') \
- ? 'show' : 'hide') +        ' tree'  \
+{{query.file.hasProperty('TQ-show-tree') \
+ && (query.file.property('TQ-show-tree') \
+ ? 'show' : 'hide') +           ' tree'  \
  || ''}}
 
-{{query.file.hasProperty('show-tags') \
- && (query.file.property('show-tags') \
- ? 'show' : 'hide') +        ' tags'  \
+{{query.file.hasProperty('TQ-show-tags') \
+ && (query.file.property('TQ-show-tags') \
+ ? 'show' : 'hide') +           ' tags'  \
  || ''}}
 
-{{query.file.hasProperty('show-id') \
- && (query.file.property('show-id') \
- ? 'show' : 'hide') +        ' id'  \
+{{query.file.hasProperty('TQ-show-id') \
+ && (query.file.property('TQ-show-id') \
+ ? 'show' : 'hide') +           ' id'  \
  || ''}}
 
-{{query.file.hasProperty('show-depends-on') \
- && (query.file.property('show-depends-on') \
- ? 'show' : 'hide') +        ' depends on'  \
+{{query.file.hasProperty('TQ-show-depends-on') \
+ && (query.file.property('TQ-show-depends-on') \
+ ? 'show' : 'hide') +           ' depends on'  \
  || ''}}
 
-{{query.file.hasProperty('show-priority') \
- && (query.file.property('show-priority') \
- ? 'show' : 'hide') +        ' priority'  \
+{{query.file.hasProperty('TQ-show-priority') \
+ && (query.file.property('TQ-show-priority') \
+ ? 'show' : 'hide') +           ' priority'  \
  || ''}}
 
-{{query.file.hasProperty('show-recurrence-rule') \
- && (query.file.property('show-recurrence-rule') \
- ? 'show' : 'hide') +        ' recurrence rule'  \
+{{query.file.hasProperty('TQ-show-recurrence-rule') \
+ && (query.file.property('TQ-show-recurrence-rule') \
+ ? 'show' : 'hide') +           ' recurrence rule'  \
  || ''}}
 
-{{query.file.hasProperty('show-on completion') \
- && (query.file.property('show-on completion') \
- ? 'show' : 'hide') +        ' on completion'  \
+{{query.file.hasProperty('TQ-show-on completion') \
+ && (query.file.property('TQ-show-on completion') \
+ ? 'show' : 'hide') +           ' on completion'  \
  || ''}}
 
-{{query.file.hasProperty('show-created-date') \
- && (query.file.property('show-created-date') \
- ? 'show' : 'hide') +        ' created date'  \
+{{query.file.hasProperty('TQ-show-created-date') \
+ && (query.file.property('TQ-show-created-date') \
+ ? 'show' : 'hide') +           ' created date'  \
  || ''}}
 
-{{query.file.hasProperty('show-start-date') \
- && (query.file.property('show-start-date') \
- ? 'show' : 'hide') +        ' start date'  \
+{{query.file.hasProperty('TQ-show-start-date') \
+ && (query.file.property('TQ-show-start-date') \
+ ? 'show' : 'hide') +           ' start date'  \
  || ''}}
 
-{{query.file.hasProperty('show-scheduled-date') \
- && (query.file.property('show-scheduled-date') \
- ? 'show' : 'hide') +        ' scheduled date'  \
+{{query.file.hasProperty('TQ-show-scheduled-date') \
+ && (query.file.property('TQ-show-scheduled-date') \
+ ? 'show' : 'hide') +           ' scheduled date'  \
  || ''}}
 
-{{query.file.hasProperty('show-due-date') \
- && (query.file.property('show-due-date') \
- ? 'show' : 'hide') +        ' due date'  \
+{{query.file.hasProperty('TQ-show-due-date') \
+ && (query.file.property('TQ-show-due-date') \
+ ? 'show' : 'hide') +           ' due date'  \
  || ''}}
 
-{{query.file.hasProperty('show-cancelled-date') \
- && (query.file.property('show-cancelled-date') \
- ? 'show' : 'hide') +        ' cancelled date'  \
+{{query.file.hasProperty('TQ-show-cancelled-date') \
+ && (query.file.property('TQ-show-cancelled-date') \
+ ? 'show' : 'hide') +           ' cancelled date'  \
  || ''}}
 
-{{query.file.hasProperty('show-done-date') \
- && (query.file.property('show-done-date') \
- ? 'show' : 'hide') +        ' done date'  \
+{{query.file.hasProperty('TQ-show-done-date') \
+ && (query.file.property('TQ-show-done-date') \
+ ? 'show' : 'hide') +           ' done date'  \
  || ''}}
 
-{{query.file.hasProperty('show-urgency' )  \
- && (query.file.property('show-urgency' )  \
- ? 'show' : 'hide') +        ' urgency'  \
+{{query.file.hasProperty('TQ-show-urgency' )  \
+ && (query.file.property('TQ-show-urgency' )  \
+ ? 'show' : 'hide') +           ' urgency'  \
  || ''}}
 
-{{query.file.hasProperty('show-backlink') \
- && (query.file.property('show-backlink') \
- ? 'show' : 'hide') +        ' backlink'  \
+{{query.file.hasProperty('TQ-show-backlink') \
+ && (query.file.property('TQ-show-backlink') \
+ ? 'show' : 'hide') +           ' backlink'  \
  || ''}}
 
-{{query.file.hasProperty('show-edit-button') \
- && (query.file.property('show-edit-button') \
- ? 'show' : 'hide') +        ' edit button'  \
+{{query.file.hasProperty('TQ-show-edit-button') \
+ && (query.file.property('TQ-show-edit-button') \
+ ? 'show' : 'hide') +           ' edit button'  \
  || ''}}
 
-{{query.file.hasProperty('show-postpone-button') \
- && (query.file.property('show-postpone-button') \
- ? 'show' : 'hide') +        ' postpone button'  \
+{{query.file.hasProperty('TQ-show-postpone-button') \
+ && (query.file.property('TQ-show-postpone-button') \
+ ? 'show' : 'hide') +           ' postpone button'  \
  || ''}}
 
-{{query.file.hasProperty('show-task-count') \
- && (query.file.property('show-task-count') \
- ? 'show' : 'hide') +        ' task count'  \
+{{query.file.hasProperty('TQ-show-task-count') \
+ && (query.file.property('TQ-show-task-count') \
+ ? 'show' : 'hide') +           ' task count'  \
  || ''}}
 ```
 
