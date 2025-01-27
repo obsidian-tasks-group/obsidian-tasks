@@ -151,7 +151,7 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
                     console.log('old:', originalResult);
                     console.log('new', newResult);
                 }
-                return originalResult;
+                return newResult;
             } else {
                 console.log('Problem:', functionOrError.error);
             }
