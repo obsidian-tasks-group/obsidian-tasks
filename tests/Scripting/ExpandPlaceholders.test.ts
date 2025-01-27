@@ -5,14 +5,13 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 describe('ExpandTemplate', () => {
     const tasksFile = new TasksFile('a/b/path with space.md');
 
-    it.failing('hard-coded call', () => {
+    it('hard-coded call', () => {
         const view = {
             title: 'Joe',
             calc: () => 2 + 4,
         };
 
-        const output = expandPlaceholders('{{ title }} spends {{ calc }}', view);
-        // Now gives: "Joe spends () => 2 + 4"
+        const output = expandPlaceholders('{{ title }} spends {{ calc() }}', view);
         expect(output).toEqual('Joe spends 6');
     });
 
