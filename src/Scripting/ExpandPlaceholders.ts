@@ -111,6 +111,15 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
         // Extract the function name (last part of the path)
         const functionName = pathParts.pop();
 
+        const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
+        const reconstructed = `${functionPath}(${args})`;
+        const functionOrError = parseExpression(paramsArgs, reconstructed);
+        if (functionOrError.isValid()) {
+            return evaluateExpression(functionOrError.queryComponent!, paramsArgs);
+        } else {
+            console.log('Problem:', functionOrError.error);
+        }
+
         // Traverse the view object to find the object containing the function.
         //
         // This is needed because JavaScript/TypeScript doesn’t provide a direct way
@@ -139,24 +148,7 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
             const argValues = parseArgs(args);
 
             // Call the function with the parsed arguments and return the result
-            const originalResult = obj[functionName](...argValues);
-
-            const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
-            const reconstructed = `${functionPath}(${args})`;
-            const functionOrError = parseExpression(paramsArgs, reconstructed);
-            if (functionOrError.isValid()) {
-                const newResult = evaluateExpression(functionOrError.queryComponent!, paramsArgs);
-                if (originalResult != newResult) {
-                    console.log('Results differ:');
-                    console.log('old:', originalResult);
-                    console.log('new', newResult);
-                }
-                return newResult;
-            } else {
-                console.log('Problem:', functionOrError.error);
-            }
-
-            return originalResult;
+            return obj[functionName](...argValues);
         }
 
         // Throw an error if the function does not exist or is invalid
