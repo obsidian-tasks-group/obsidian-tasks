@@ -27,11 +27,11 @@ export function expandPlaceholders(template: string, view: any): string {
         return text;
     };
 
-    // Preprocess the template to evaluate any placeholders that involve function calls
-    const evaluatedTemplate = evaluateAnyFunctionCalls(template, view);
-
-    // Render the preprocessed template
     try {
+        // Preprocess the template to evaluate any placeholders that involve function calls
+        const evaluatedTemplate = evaluateAnyFunctionCalls(template, view);
+
+        // Render the preprocessed template
         return Mustache.render(evaluatedTemplate, proxyData(view));
     } catch (error) {
         let message = '';
