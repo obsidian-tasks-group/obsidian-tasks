@@ -59,47 +59,31 @@ path includes {{query.file.path}}
 # too wide to be readable in the File Properties panel.
 
 {{const prop = 'TQ-explain';                return query.file.hasProperty(prop) ?  ( query.file.property(prop) ? 'explain' : '') : '';}}
-
 {{const prop = 'TQ-short-mode';             return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'short mode' : 'full mode') || ''}}
 
 {{const prop = 'TQ-show-tree';              return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tree' || ''}}
 
 {{const prop = 'TQ-show-tags';              return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tags' || ''}}
-
 {{const prop = 'TQ-show-id';                return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' id' || ''}}
-
 {{const prop = 'TQ-show-depends-on';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' depends on' || ''}}
-
 {{const prop = 'TQ-show-priority';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' priority' || ''}}
-
 {{const prop = 'TQ-show-recurrence-rule';   return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' recurrence rule' || ''}}
-
 {{const prop = 'TQ-show-on completion';     return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' on completion' || ''}}
 
 {{const prop = 'TQ-show-created-date';      return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' created date' || ''}}
-
 {{const prop = 'TQ-show-start-date';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' start date' || ''}}
-
 {{const prop = 'TQ-show-scheduled-date';    return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' scheduled date' || ''}}
-
 {{const prop = 'TQ-show-due-date';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' due date' || ''}}
-
 {{const prop = 'TQ-show-cancelled-date';    return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' cancelled date' || ''}}
-
 {{const prop = 'TQ-show-done-date';         return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' done date' || ''}}
 
 {{const prop = 'TQ-show-urgency' ;          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' urgency' || ''}}
-
 {{const prop = 'TQ-show-backlink';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' backlink' || ''}}
-
 {{const prop = 'TQ-show-edit-button';       return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' edit button' || ''}}
-
 {{const prop = 'TQ-show-postpone-button';   return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' postpone button' || ''}}
-
 {{const prop = 'TQ-show-task-count';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' task count' || ''}}
 
 {{const prop = 'TQ-sort-by';                return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'sort by ' + g).join('\n') || ''}}
-
 {{const prop = 'TQ-group-by';               return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'group by ' + g).join('\n') || ''}}
 
 {{const prop = 'TQ-extra-instructions';     return query.file.hasProperty(prop) ? query.file.property(prop) || '' : '';}}
