@@ -3,6 +3,8 @@ import { errorMessageForException } from '../lib/ExceptionTools';
 
 export class FunctionOrError extends QueryComponentOrError<Function> {}
 
+export type ExpressionParameter = [string, any];
+
 /**
  * Parse a JavaScript expression, and return either a Function or an error message in a string.
  * @param paramsArgs
@@ -11,7 +13,7 @@ export class FunctionOrError extends QueryComponentOrError<Function> {}
  * @see evaluateExpression
  * @see evaluateExpressionOrCatch
  */
-export function parseExpression(paramsArgs: [string, any][], arg: string): FunctionOrError {
+export function parseExpression(paramsArgs: ExpressionParameter[], arg: string): FunctionOrError {
     try {
         const parameterNames = paramsArgs.map(([p]) => p);
         const input = arg.includes('return') ? arg : `return ${arg}`;
@@ -34,7 +36,7 @@ export function parseExpression(paramsArgs: [string, any][], arg: string): Funct
  * @see parseExpression
  * @see evaluateExpressionOrCatch
  */
-export function evaluateExpression(expression: Function, paramsArgs: [string, any][]) {
+export function evaluateExpression(expression: Function, paramsArgs: ExpressionParameter[]) {
     const parameterValues = paramsArgs.map(([_, a]) => a);
     return expression(...parameterValues);
 }
@@ -48,7 +50,7 @@ export function evaluateExpression(expression: Function, paramsArgs: [string, an
  * @see parseExpression
  * @see evaluateExpression
  */
-export function evaluateExpressionOrCatch(expression: Function, paramsArgs: [string, any][], arg: string) {
+export function evaluateExpressionOrCatch(expression: Function, paramsArgs: ExpressionParameter[], arg: string) {
     try {
         return evaluateExpression(expression, paramsArgs);
     } catch (e) {
