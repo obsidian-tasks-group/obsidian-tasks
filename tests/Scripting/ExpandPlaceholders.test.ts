@@ -219,11 +219,8 @@ describe('ExpandTemplate with functions', () => {
             expect(output).toEqual('Alice: 25');
         });
 
-        it.failing('Two function calls', () => {
-            // This is currently interpreted as:
-            //  1. A single function call to math.square
-            //  2. With the parameter "'3'}} - and - {{math.square('5'"
-            const output = expandPlaceholders("{{math.square('3'}} - and - {{math.square('5')}}", {
+        it('Two function calls', () => {
+            const output = expandPlaceholders("{{math.square('3')}} - and - {{math.square('5')}}", {
                 math: { square: (x: string) => parseInt(x) ** 2 },
             });
             // Currently the result is just '9'
