@@ -211,9 +211,9 @@ It can be used in your query in two ways:
 1. An entire instruction controlled by front-matter value:
 
     ```javascript
-    {{query.file.hasProperty('explain')   && (query.file.property('explain')     ? 'explain' : '')            || ''}}
-    
-    {{query.file.hasProperty('show-tree') && (query.file.property('show-tree')   ? 'show' : 'hide') + ' tree' || ''}}
+    {{const prop = 'TQ-explain';    return query.file.hasProperty(prop) ?  ( query.file.property(prop) ? 'explain' : '') : '';}}
+
+    {{const prop = 'TQ-show-tree';  return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tree' || ''}}
     ```
 
 1. Scripting, which allows creation of a custom filter, which works when the search term is empty
