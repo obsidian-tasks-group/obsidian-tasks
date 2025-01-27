@@ -121,24 +121,22 @@ describe('ExpandTemplate with functions', () => {
         });
 
         it('Valid function call', () => {
-            const view = {
+            const output = expandPlaceholders("Result: {{math.square('4')}}", {
                 math: { square: (x: string) => parseInt(x) ** 2 },
-            };
-            const output = expandPlaceholders("Result: {{math.square('4')}}", view);
+            });
             expect(output).toEqual('Result: 16');
         });
     });
 
     describe('Complex Nested Paths', () => {
         it('Nested object function access', () => {
-            const view = {
+            const output = expandPlaceholders("Value: {{data.subData.func('arg')}}", {
                 data: {
                     subData: {
                         func: (x: string) => `Result for ${x}`,
                     },
                 },
-            };
-            const output = expandPlaceholders("Value: {{data.subData.func('arg')}}", view);
+            });
             expect(output).toEqual('Value: Result for arg');
         });
     });
@@ -193,10 +191,9 @@ describe('ExpandTemplate with functions', () => {
         });
 
         it('Function with no arguments', () => {
-            const view = {
+            const output = expandPlaceholders('Version: {{sys.getVersion()}}', {
                 sys: { getVersion: () => '1.0.0' },
-            };
-            const output = expandPlaceholders('Version: {{sys.getVersion()}}', view);
+            });
             expect(output).toEqual('Version: 1.0.0');
         });
 
