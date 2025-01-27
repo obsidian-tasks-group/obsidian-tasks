@@ -3,6 +3,9 @@ import { errorMessageForException } from '../lib/ExceptionTools';
 
 export class FunctionOrError extends QueryComponentOrError<Function> {}
 
+/**
+ * The name and value of a parameter, for passing in to {@link parseExpression} and related functions.
+ */
 export type ExpressionParameter = [string, any];
 
 /**
