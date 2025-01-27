@@ -35,8 +35,8 @@ export function parseExpression(paramsArgs: [string, any][], arg: string): Funct
  * @see evaluateExpressionOrCatch
  */
 export function evaluateExpression(expression: Function, paramsArgs: [string, any][]) {
-    const args = paramsArgs.map(([_, a]) => a);
-    return expression(...args);
+    const parameterValues = paramsArgs.map(([_, a]) => a);
+    return expression(...parameterValues);
 }
 
 /**
