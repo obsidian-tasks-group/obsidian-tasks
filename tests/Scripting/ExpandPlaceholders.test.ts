@@ -7,11 +7,7 @@ function createExpressionParameters(view: any): ExpressionParameter[] {
     return Object.entries(view) as ExpressionParameter[];
 }
 
-function checkResultViaExpression(
-    view: { sys: { getVersion: () => string } },
-    expressionText: string,
-    expected: string,
-) {
+function checkResultViaExpression(view: any, expressionText: string, expected: any) {
     const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
     const functionOrError = parseExpression(paramsArgs, expressionText);
     expect(functionOrError.isValid()).toEqual(true);
@@ -95,10 +91,13 @@ describe('ExpandTemplate with functions', () => {
         });
 
         it('Valid function call', () => {
-            const output = expandPlaceholders("Result: {{math.square('4')}}", {
+            const view = {
                 math: { square: (x: string) => parseInt(x) ** 2 },
-            });
+            };
+            const output = expandPlaceholders("Result: {{math.square('4')}}", view);
             expect(output).toEqual('Result: 16');
+
+            checkResultViaExpression(view, "math.square('4')", 16);
         });
     });
 
