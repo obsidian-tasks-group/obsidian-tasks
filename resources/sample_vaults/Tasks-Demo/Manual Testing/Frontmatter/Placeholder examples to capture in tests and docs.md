@@ -19,6 +19,8 @@ TQ-show-backlink: true
 TQ-show-edit-button: true
 TQ-show-postpone-button: true
 TQ-show-task-count: true
+TQ-sort-by:
+  - description
 TQ-group-by:
   - status.type
   - happens reverse
@@ -139,6 +141,10 @@ path includes {{query.file.path}}
 {{query.file.hasProperty('TQ-show-task-count') \
  && (query.file.property('TQ-show-task-count') \
  ? 'show' : 'hide') +           ' task count'  \
+ || ''}}
+
+{{query.file.hasProperty('TQ-sort-by') \
+ &&  query.file.property('TQ-sort-by').map((g) => 'sort by ' + g).join('\n') \
  || ''}}
 
 {{query.file.hasProperty('TQ-group-by') \

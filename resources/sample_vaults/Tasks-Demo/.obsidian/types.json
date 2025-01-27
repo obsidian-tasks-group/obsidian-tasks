@@ -36,6 +36,7 @@
     "TQ-show-edit-button": "checkbox",
     "TQ-show-postpone-button": "checkbox",
     "TQ-show-task-count": "checkbox",
+    "TQ-sort-by": "multitext",
     "TQ-group-by": "multitext"
   }
 }
