@@ -103,14 +103,17 @@ describe('ExpandTemplate with functions', () => {
 
     describe('Complex Nested Paths', () => {
         it('Nested object function access', () => {
-            const output = expandPlaceholders("Value: {{data.subData.func('arg')}}", {
+            const view = {
                 data: {
                     subData: {
                         func: (x: string) => `Result for ${x}`,
                     },
                 },
-            });
+            };
+            const output = expandPlaceholders("Value: {{data.subData.func('arg')}}", view);
             expect(output).toEqual('Value: Result for arg');
+
+            checkResultViaExpression(view, "data.subData.func('arg')", 'Result for arg');
         });
     });
 
