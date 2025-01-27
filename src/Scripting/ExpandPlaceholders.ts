@@ -52,7 +52,7 @@ The problem is in:
 }
 
 // Regex to detect placeholders
-const FUNCTION_REGEX = new RegExp(
+const PLACEHOLDER_REGEX = new RegExp(
     [
         // Match the opening double braces `{{`
         '\\{\\{',
@@ -67,7 +67,7 @@ const FUNCTION_REGEX = new RegExp(
 );
 
 function evaluateAnyFunctionCalls(template: string, view: any) {
-    return template.replace(FUNCTION_REGEX, (_match, reconstructed) => {
+    return template.replace(PLACEHOLDER_REGEX, (_match, reconstructed) => {
         const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
         const functionOrError = parseExpression(paramsArgs, reconstructed);
         if (functionOrError.isValid()) {
