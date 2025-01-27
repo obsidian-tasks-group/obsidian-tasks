@@ -137,7 +137,7 @@ describe('ExpandTemplate with functions', () => {
         it('Non-existent function', () => {
             expect(() => {
                 expandPlaceholders('Call: {{invalid.func()}}', { invalid: {} });
-            }).toThrow('Unknown property or invalid function: invalid.func');
+            }).toThrow('invalid.func is not a function');
         });
 
         it('Missing arguments', () => {
