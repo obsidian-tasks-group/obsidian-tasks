@@ -216,12 +216,12 @@ describe('ExpandTemplate with functions', () => {
         });
     });
 
-    describe('Unsupported Syntax', () => {
-        it('Unsupported Mustache syntax', () => {
-            const result = expandPlaceholders("Invalid: {{unsupported.func['key']}}", {
-                unsupported: { func: { key: 'value' } },
+    describe('More Supported Syntaxes', () => {
+        it('Object property access using key syntax', () => {
+            const result = expandPlaceholders("Valid: {{supported.func['key']}}", {
+                supported: { func: { key: 'value' } },
             });
-            expect(result).toEqual('Invalid: value');
+            expect(result).toEqual('Valid: value');
         });
     });
 
