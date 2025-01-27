@@ -1,5 +1,6 @@
 ---
 explain: true
+short-mode: false
 show-tree: true
 show-tags: true
 show-id: true
@@ -39,6 +40,11 @@ path includes {{query.file.path}}
 {{query.file.hasProperty('explain') \
  && (query.file.property('explain') \
  ? 'explain' : '')  \
+ || ''}}
+
+{{query.file.hasProperty('short-mode') \
+ && (query.file.property('short-mode') \
+ ? 'short mode' : 'full mode')  \
  || ''}}
 
 {{query.file.hasProperty('show-tree') \
