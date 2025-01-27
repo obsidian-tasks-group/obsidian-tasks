@@ -25,6 +25,10 @@ TQ-group-by:
   - status.type
   - happens reverse
   - function task.tags.sort().join(' ')
+TQ-extra-instructions: |-
+  # press shift-return to add new lines
+  # not done
+  # sort by done date
 ---
 # Placeholder examples to capture in tests and docs
 
@@ -161,6 +165,8 @@ path includes {{query.file.path}}
 {{query.file.hasProperty('TQ-group-by') \
  &&  query.file.property('TQ-group-by').map((g) => 'group by ' + g).join('\n') \
  || ''}}
+
+{{const prop = 'TQ-extra-instructions'; return query.file.hasProperty(prop) ? query.file.property(prop) || '' : '';}}
 ```
 
 ## Can now call functions inside placeholders
