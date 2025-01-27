@@ -12,7 +12,7 @@ describe('ExpandTemplate', () => {
         };
 
         const output = expandPlaceholders('{{ title }} spends {{ calc }}', view);
-        expect(output).toMatchInlineSnapshot('"Joe spends 6"');
+        expect(output).toEqual('Joe spends 6');
     });
 
     it('fake query - with file path', () => {
