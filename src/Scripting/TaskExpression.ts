@@ -10,11 +10,10 @@ import type { QueryContext } from './QueryContext';
  * @param queryContext - during parsing, this can be null. During evaluation, it must be a QueryContext or undefined.
  */
 export function constructArguments(task: Task | null, queryContext: QueryContext | null): [string, any][] {
-    const paramsArgs: [string, any][] = [
+    return [
         ['task', task],
         ['query', queryContext ? queryContext.query : null],
     ];
-    return paramsArgs;
 }
 
 /**
