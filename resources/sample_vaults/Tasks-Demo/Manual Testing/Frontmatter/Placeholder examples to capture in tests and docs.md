@@ -60,47 +60,47 @@ path includes {{query.file.path}}
 
 {{const prop = 'TQ-explain'; return query.file.hasProperty(prop) ? (query.file.property(prop) ? 'explain' : '') : '';}}
 
-{{query.file.hasProperty('TQ-short-mode') && (query.file.property('TQ-short-mode') ? 'short mode' : 'full mode') || ''}}
+{{const prop = 'TQ-short-mode'; return query.file.hasProperty(prop) && (query.file.property('TQ-short-mode') ? 'short mode' : 'full mode') || ''}}
 
-{{query.file.hasProperty('TQ-show-tree') && (query.file.property('TQ-show-tree') ? 'show' : 'hide') + ' tree' || ''}}
+{{const prop = 'TQ-show-tree'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-tree') ? 'show' : 'hide') + ' tree' || ''}}
 
-{{query.file.hasProperty('TQ-show-tags') && (query.file.property('TQ-show-tags') ? 'show' : 'hide') + ' tags' || ''}}
+{{const prop = 'TQ-show-tags'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-tags') ? 'show' : 'hide') + ' tags' || ''}}
 
-{{query.file.hasProperty('TQ-show-id') && (query.file.property('TQ-show-id') ? 'show' : 'hide') + ' id' || ''}}
+{{const prop = 'TQ-show-id'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-id') ? 'show' : 'hide') + ' id' || ''}}
 
-{{query.file.hasProperty('TQ-show-depends-on') && (query.file.property('TQ-show-depends-on') ? 'show' : 'hide') + ' depends on' || ''}}
+{{const prop = 'TQ-show-depends-on'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-depends-on') ? 'show' : 'hide') + ' depends on' || ''}}
 
-{{query.file.hasProperty('TQ-show-priority') && (query.file.property('TQ-show-priority') ? 'show' : 'hide') + ' priority' || ''}}
+{{const prop = 'TQ-show-priority'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-priority') ? 'show' : 'hide') + ' priority' || ''}}
 
-{{query.file.hasProperty('TQ-show-recurrence-rule') && (query.file.property('TQ-show-recurrence-rule') ? 'show' : 'hide') + ' recurrence rule' || ''}}
+{{const prop = 'TQ-show-recurrence-rule'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-recurrence-rule') ? 'show' : 'hide') + ' recurrence rule' || ''}}
 
-{{query.file.hasProperty('TQ-show-on completion') && (query.file.property('TQ-show-on completion') ? 'show' : 'hide') + ' on completion' || ''}}
+{{const prop = 'TQ-show-on completion'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-on completion') ? 'show' : 'hide') + ' on completion' || ''}}
 
-{{query.file.hasProperty('TQ-show-created-date') && (query.file.property('TQ-show-created-date') ? 'show' : 'hide') + ' created date' || ''}}
+{{const prop = 'TQ-show-created-date'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-created-date') ? 'show' : 'hide') + ' created date' || ''}}
 
-{{query.file.hasProperty('TQ-show-start-date') && (query.file.property('TQ-show-start-date') ? 'show' : 'hide') + ' start date' || ''}}
+{{const prop = 'TQ-show-start-date'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-start-date') ? 'show' : 'hide') + ' start date' || ''}}
 
-{{query.file.hasProperty('TQ-show-scheduled-date') && (query.file.property('TQ-show-scheduled-date') ? 'show' : 'hide') + ' scheduled date' || ''}}
+{{const prop = 'TQ-show-scheduled-date'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-scheduled-date') ? 'show' : 'hide') + ' scheduled date' || ''}}
 
-{{query.file.hasProperty('TQ-show-due-date') && (query.file.property('TQ-show-due-date') ? 'show' : 'hide') + ' due date' || ''}}
+{{const prop = 'TQ-show-due-date'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-due-date') ? 'show' : 'hide') + ' due date' || ''}}
 
-{{query.file.hasProperty('TQ-show-cancelled-date') && (query.file.property('TQ-show-cancelled-date') ? 'show' : 'hide') + ' cancelled date' || ''}}
+{{const prop = 'TQ-show-cancelled-date'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-cancelled-date') ? 'show' : 'hide') + ' cancelled date' || ''}}
 
-{{query.file.hasProperty('TQ-show-done-date') && (query.file.property('TQ-show-done-date') ? 'show' : 'hide') + ' done date' || ''}}
+{{const prop = 'TQ-show-done-date'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-done-date') ? 'show' : 'hide') + ' done date' || ''}}
 
-{{query.file.hasProperty('TQ-show-urgency' ) && (query.file.property('TQ-show-urgency' ) ? 'show' : 'hide') + ' urgency' || ''}}
+{{const prop = 'TQ-show-urgency' ; return query.file.hasProperty(prop) && (query.file.property('TQ-show-urgency' ) ? 'show' : 'hide') + ' urgency' || ''}}
 
-{{query.file.hasProperty('TQ-show-backlink') && (query.file.property('TQ-show-backlink') ? 'show' : 'hide') + ' backlink' || ''}}
+{{const prop = 'TQ-show-backlink'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-backlink') ? 'show' : 'hide') + ' backlink' || ''}}
 
-{{query.file.hasProperty('TQ-show-edit-button') && (query.file.property('TQ-show-edit-button') ? 'show' : 'hide') + ' edit button' || ''}}
+{{const prop = 'TQ-show-edit-button'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-edit-button') ? 'show' : 'hide') + ' edit button' || ''}}
 
-{{query.file.hasProperty('TQ-show-postpone-button') && (query.file.property('TQ-show-postpone-button') ? 'show' : 'hide') + ' postpone button' || ''}}
+{{const prop = 'TQ-show-postpone-button'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-postpone-button') ? 'show' : 'hide') + ' postpone button' || ''}}
 
-{{query.file.hasProperty('TQ-show-task-count') && (query.file.property('TQ-show-task-count') ? 'show' : 'hide') + ' task count' || ''}}
+{{const prop = 'TQ-show-task-count'; return query.file.hasProperty(prop) && (query.file.property('TQ-show-task-count') ? 'show' : 'hide') + ' task count' || ''}}
 
-{{query.file.hasProperty('TQ-sort-by') && query.file.property('TQ-sort-by').map((g) => 'sort by ' + g).join('\n') || ''}}
+{{const prop = 'TQ-sort-by'; return query.file.hasProperty(prop) && query.file.property('TQ-sort-by').map((g) => 'sort by ' + g).join('\n') || ''}}
 
-{{query.file.hasProperty('TQ-group-by') && query.file.property('TQ-group-by').map((g) => 'group by ' + g).join('\n') || ''}}
+{{const prop = 'TQ-group-by'; return query.file.hasProperty(prop) && query.file.property('TQ-group-by').map((g) => 'group by ' + g).join('\n') || ''}}
 
 {{const prop = 'TQ-extra-instructions'; return query.file.hasProperty(prop) ? query.file.property(prop) || '' : '';}}
 ```
