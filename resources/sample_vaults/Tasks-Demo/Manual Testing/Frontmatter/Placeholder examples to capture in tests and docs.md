@@ -35,7 +35,11 @@ path includes {{query.file.path}}
 # Instructions are listed in the order that items are displayed in Tasks search results
 # I would like to use the prefix 'tasks-query-' on the names, but it makes the names
 # too wide to be readable in the File Properties panel.
-{{query.file.hasProperty('explain')               && (query.file.property('explain')               ? 'explain' : '')                        || ''}}
+
+{{query.file.hasProperty('explain')  \
+ && (query.file.property('explain')  ? 'explain' : '') \
+ || ''}}
+
 {{query.file.hasProperty('show-tree')             && (query.file.property('show-tree')             ? 'show' : 'hide') + ' tree'             || ''}}
 {{query.file.hasProperty('show-tags')             && (query.file.property('show-tags')             ? 'show' : 'hide') + ' tags'             || ''}}
 {{query.file.hasProperty('show-id')               && (query.file.property('show-id')               ? 'show' : 'hide') + ' id'               || ''}}
