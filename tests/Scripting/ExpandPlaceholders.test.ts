@@ -42,6 +42,43 @@ filename includes {{query.file.filename}}`;
         `);
     });
 
+    it('fake query - with method call on path', () => {
+        // I discovered by chance that adding support for properties in query placeholders enabled the following to work
+        const rawString = 'path includes {{query.file.path.toUpperCase()}}';
+
+        const queryContext = makeQueryContext(tasksFile);
+        expect(expandPlaceholders(rawString, queryContext)).toEqual('path includes A/B/PATH WITH SPACE.MD');
+    });
+
+    it('fake query - with hasProperty', () => {
+        // TODO We really must prevent use of booleans as strings in property placeholders
+        const rawString = '{{query.file.hasProperty("no-such-property")}}';
+
+        const queryContext = makeQueryContext(tasksFile);
+        // I think converting a bool to a string is unhelpful here.
+        expect(expandPlaceholders(rawString, queryContext)).toEqual('false');
+    });
+
+    it.failing('fake query - with expression', () => {
+        // I really want a way to use true/false properties to control the layout
+        // This needs to be tested with:
+        //    - property is present in file and is true
+        //    - property is present in file and is false
+        //    - property is present in file and is missing
+        //    - property is not in the file
+        const rawString = '{{query.file.property("show-tree") ? "show tree" : "hide tree"}}';
+
+        const queryContext = makeQueryContext(tasksFile);
+        /*
+            Currently gives:
+            Error: There was an error expanding one or more placeholders.
+
+            The error message was:
+                Unknown property: query.file.property("show-tree") ? "show tree" : "hide tree"
+         */
+        expect(expandPlaceholders(rawString, queryContext)).toEqual('hide tree');
+    });
+
     it('should return the input string if no {{ in line', function () {
         const queryContext = makeQueryContext(tasksFile);
         const line = 'no braces here';
@@ -80,6 +117,15 @@ The error message was:
 The problem is in:
     {{ query.file.nonsense }}`,
         );
+    });
+
+    it.failing('should not treat absent property values as string ', () => {
+        // TODO We really must prevent use of null - and probably undefined - as strings from property placeholders
+        const rawString = '{{ query.file.property("non-existent")}}';
+
+        const queryContext = makeQueryContext(tasksFile);
+        const expanded = expandPlaceholders(rawString, queryContext);
+        expect(expanded).not.toContain('null');
     });
 });
 
