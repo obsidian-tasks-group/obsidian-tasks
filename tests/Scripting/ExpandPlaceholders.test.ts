@@ -1,6 +1,26 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { type ExpressionParameter, evaluateExpression, parseExpression } from '../../src/Scripting/Expression';
+
+function createExpressionParameters(view: any): ExpressionParameter[] {
+    return Object.entries(view) as ExpressionParameter[];
+}
+
+function checkResultViaExpression(
+    view: { sys: { getVersion: () => string } },
+    expressionText: string,
+    expected: string,
+) {
+    const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
+    const functionOrError = parseExpression(paramsArgs, expressionText);
+    expect(functionOrError.isValid()).toEqual(true);
+    expect(functionOrError.queryComponent).not.toBeUndefined();
+    if (functionOrError.queryComponent) {
+        const result = evaluateExpression(functionOrError.queryComponent, paramsArgs);
+        expect(result).toEqual(expected);
+    }
+}
 
 describe('ExpandTemplate', () => {
     const tasksFile = new TasksFile('a/b/path with space.md');
@@ -145,10 +165,13 @@ describe('ExpandTemplate with functions', () => {
         });
 
         it('Function with no arguments', () => {
-            const output = expandPlaceholders('Version: {{sys.getVersion()}}', {
+            const view = {
                 sys: { getVersion: () => '1.0.0' },
-            });
+            };
+            const output = expandPlaceholders('Version: {{sys.getVersion()}}', view);
             expect(output).toEqual('Version: 1.0.0');
+
+            checkResultViaExpression(view, 'sys.getVersion()', '1.0.0');
         });
 
         it('Template with no placeholders', () => {
