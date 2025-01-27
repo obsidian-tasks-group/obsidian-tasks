@@ -78,8 +78,8 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
             return evaluateExpression(functionOrError.queryComponent!, paramsArgs);
         }
 
-        // Throw an error if the function does not exist or is invalid
-        throw new Error(`Unknown property or invalid function: ${functionPath}: ${functionOrError.error}`);
+        // Fall back on returning the raw string, including {{ and }} - and get Mustache to report the error.
+        return _match;
     });
 }
 
