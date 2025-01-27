@@ -15,6 +15,25 @@
     "sample_link_property": "text",
     "creation date": "datetime",
     "project": "text",
-    "sample_text_multiline_property": "text"
+    "sample_text_multiline_property": "text",
+    "explain": "checkbox",
+    "show-tree": "checkbox",
+    "show-tags":  "checkbox",
+    "show-id": "checkbox",
+    "show-depends-on":  "checkbox",
+    "show-priority": "checkbox",
+    "show-recurrence-rule":  "checkbox",
+    "show-on completion": "checkbox",
+    "show-created-date":  "checkbox",
+    "show-start-date": "checkbox",
+    "show-scheduled-date":  "checkbox",
+    "show-due-date": "checkbox",
+    "show-cancelled-date":  "checkbox",
+    "show-done-date": "checkbox",
+    "show-urgency":  "checkbox",
+    "show-backlink": "checkbox",
+    "show-edit-button":  "checkbox",
+    "show-postpone-button": "checkbox",
+    "show-task-count":  "checkbox"
   }
 }
