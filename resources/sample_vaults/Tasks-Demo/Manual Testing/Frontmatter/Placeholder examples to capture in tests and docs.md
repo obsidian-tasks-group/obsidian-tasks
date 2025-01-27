@@ -35,7 +35,18 @@ TQ-group-by:
 
 So we can easily control the query interactively now, via Obsidian's File Properties panel!!!
 
+This search is a proof-of-concept. The `TQ-` prefix was chosen to stand for `Task Query`. It is not yet decided whether recognition of these properties will be built in to Tasks in future.
+
+To try this out:
+
+1. Switch to Reading or Live Preview modes.
+2. Run the `Files: Show file explorer` command.
+3. Modify the query via only editing file properties.
+
+For bonus points, you can copy the placeholder instructions to your Tasks global search, and then you can use these instructions to adjust *all* the searches in your vault that do not use `ignore global query`.
+
 ```tasks
+# We ignore the global query just to shorten the `explain` output.
 ignore global query
 path includes {{query.file.path}}
 
