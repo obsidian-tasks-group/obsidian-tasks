@@ -208,6 +208,14 @@ It can be used in your query in two ways:
     description includes {{query.file.property('search-text')}}
     ```
 
+1. An entire instruction controlled by front-matter value:
+
+    ```javascript
+    {{query.file.hasProperty('explain')   && (query.file.property('explain')     ? 'explain' : '')            || ''}}
+    
+    {{query.file.hasProperty('show-tree') && (query.file.property('show-tree')   ? 'show' : 'hide') + ' tree' || ''}}
+    ```
+
 1. Scripting, which allows creation of a custom filter, which works when the search term is empty
 
     ```javascript
