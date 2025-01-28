@@ -105,6 +105,15 @@ describe('list item tests', () => {
     });
 });
 
+describe('list items with checkbox', () => {
+    it.failing('should read a list item with checkbox', () => {
+        const item = new ListItem('- [ ] with checkbox', null);
+
+        expect(item.description).toEqual('with checkbox');
+        expect(item.originalMarkdown).toEqual('- [ ] with checkbox');
+    });
+});
+
 describe('related items', () => {
     it('should detect if no closest parent task', () => {
         const task = fromLine({ line: '- [ ] task' });
