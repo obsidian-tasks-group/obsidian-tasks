@@ -188,6 +188,7 @@ describe('EditableTask tests', () => {
                   "type": "TODO",
                 },
               },
+              "statusCharacter": " ",
               "tags": [
                 "#todo",
                 "#health",

@@ -8,12 +8,14 @@ export class ListItem {
     public readonly parent: ListItem | null = null;
     public readonly children: ListItem[] = [];
     public readonly description: string;
+    public readonly statusCharacter: string | null = null;
 
     constructor(originalMarkdown: string, parent: ListItem | null) {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         const nonTaskMatch = originalMarkdown.match(TaskRegularExpressions.nonTaskRegex);
         if (nonTaskMatch) {
             this.description = nonTaskMatch[5].trim();
+            this.statusCharacter = nonTaskMatch[4] ?? null;
         }
         this.originalMarkdown = originalMarkdown;
         this.parent = parent;
