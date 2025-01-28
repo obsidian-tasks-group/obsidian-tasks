@@ -210,7 +210,6 @@ describe('ExpandTemplate with functions', () => {
             const output = expandPlaceholders("{{math.square('3')}} - and - {{math.square('5')}}", {
                 math: { square: (x: string) => parseInt(x) ** 2 },
             });
-            // Currently the result is just '9'
             expect(output).toEqual('9 - and - 25');
         });
     });
