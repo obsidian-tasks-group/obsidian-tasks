@@ -106,11 +106,20 @@ describe('list item tests', () => {
 });
 
 describe('list items with checkbox', () => {
+    it('should read a list item without checkbox', () => {
+        const item = new ListItem('- without checkbox', null);
+
+        expect(item.description).toEqual('without checkbox');
+        expect(item.originalMarkdown).toEqual('- without checkbox');
+        expect(item.statusCharacter).toEqual(null);
+    });
+
     it('should read a list item with checkbox', () => {
         const item = new ListItem('- [ ] with checkbox', null);
 
         expect(item.description).toEqual('with checkbox');
         expect(item.originalMarkdown).toEqual('- [ ] with checkbox');
+        expect(item.statusCharacter).toEqual(' ');
     });
 
     it('should read a list item with checkbox', () => {
@@ -118,6 +127,7 @@ describe('list items with checkbox', () => {
 
         expect(item.description).toEqual('with checked checkbox');
         expect(item.originalMarkdown).toEqual('- [x] with checked checkbox');
+        expect(item.statusCharacter).toEqual('x');
     });
 });
 
