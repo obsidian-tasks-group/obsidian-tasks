@@ -105,6 +105,42 @@ describe('list item tests', () => {
     });
 });
 
+describe('list item parsing', () => {
+    it('should read a list item without checkbox', () => {
+        const item = new ListItem('- without checkbox', null);
+
+        expect(item.description).toEqual('without checkbox');
+        expect(item.originalMarkdown).toEqual('- without checkbox');
+        expect(item.statusCharacter).toEqual(null);
+    });
+
+    it('should read a list item with checkbox', () => {
+        const item = new ListItem('- [ ] with checkbox', null);
+
+        expect(item.description).toEqual('with checkbox');
+        expect(item.originalMarkdown).toEqual('- [ ] with checkbox');
+        expect(item.statusCharacter).toEqual(' ');
+    });
+
+    it('should read a list item with checkbox', () => {
+        const item = new ListItem('- [x] with checked checkbox', null);
+
+        expect(item.description).toEqual('with checked checkbox');
+        expect(item.originalMarkdown).toEqual('- [x] with checked checkbox');
+        expect(item.statusCharacter).toEqual('x');
+    });
+
+    it('should accept a non list item', () => {
+        // we tried making the constructor throw if given a non list item
+        // but it broke lots of normal Task uses in the tests (TaskBuilder)
+        const item = new ListItem('# Heading', null);
+
+        expect(item.description).toEqual('# Heading');
+        expect(item.originalMarkdown).toEqual('# Heading');
+        expect(item.statusCharacter).toEqual(null);
+    });
+});
+
 describe('related items', () => {
     it('should detect if no closest parent task', () => {
         const task = fromLine({ line: '- [ ] task' });
@@ -155,6 +191,13 @@ describe('identicalTo', () => {
 
         const item2 = new ListItem('- item', null);
         createChildListItem('- child of item2', item2);
+
+        expect(item2.identicalTo(item1)).toEqual(false);
+    });
+
+    it('should recognise different status characters', () => {
+        const item1 = new ListItem('- [1] item', null);
+        const item2 = new ListItem('- [2] item', null);
 
         expect(item2.identicalTo(item1)).toEqual(false);
     });

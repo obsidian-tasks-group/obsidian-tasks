@@ -26,6 +26,7 @@ import inheritance_2siblings from './__test_data__/inheritance_2siblings.json';
 import inheritance_listitem_listitem_task from './__test_data__/inheritance_listitem_listitem_task.json';
 import inheritance_listitem_task from './__test_data__/inheritance_listitem_task.json';
 import inheritance_listitem_task_siblings from './__test_data__/inheritance_listitem_task_siblings.json';
+import inheritance_non_task_child from './__test_data__/inheritance_non_task_child.json';
 import inheritance_rendering_sample from './__test_data__/inheritance_rendering_sample.json';
 import inheritance_task_2listitem_3task from './__test_data__/inheritance_task_2listitem_3task.json';
 import inheritance_task_listitem from './__test_data__/inheritance_task_listitem.json';
@@ -96,6 +97,7 @@ export function allCacheSampleData() {
         inheritance_listitem_listitem_task,
         inheritance_listitem_task,
         inheritance_listitem_task_siblings,
+        inheritance_non_task_child,
         inheritance_rendering_sample,
         inheritance_task_2listitem_3task,
         inheritance_task_listitem,

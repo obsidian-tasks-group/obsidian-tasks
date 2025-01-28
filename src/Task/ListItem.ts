@@ -8,9 +8,15 @@ export class ListItem {
     public readonly parent: ListItem | null = null;
     public readonly children: ListItem[] = [];
     public readonly description: string;
+    public readonly statusCharacter: string | null = null;
 
     constructor(originalMarkdown: string, parent: ListItem | null) {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
+        const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
+        if (nonTaskMatch) {
+            this.description = nonTaskMatch[5].trim();
+            this.statusCharacter = nonTaskMatch[4] ?? null;
+        }
         this.originalMarkdown = originalMarkdown;
         this.parent = parent;
 
@@ -86,6 +92,8 @@ export class ListItem {
         if (this.originalMarkdown !== other.originalMarkdown) {
             return false;
         }
+
+        // Not testing status character as it is implied from the original markdown
 
         return ListItem.listsAreIdentical(this.children, other.children);
     }

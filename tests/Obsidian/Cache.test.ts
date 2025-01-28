@@ -3,6 +3,7 @@
  */
 import moment from 'moment/moment';
 import type { CachedMetadata } from 'obsidian';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { ListItem } from '../../src/Task/ListItem';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import inheritance_1parent1child from './__test_data__/inheritance_1parent1child.json';
@@ -19,6 +20,7 @@ import inheritance_2siblings from './__test_data__/inheritance_2siblings.json';
 import inheritance_listitem_listitem_task from './__test_data__/inheritance_listitem_listitem_task.json';
 import inheritance_listitem_task from './__test_data__/inheritance_listitem_task.json';
 import inheritance_listitem_task_siblings from './__test_data__/inheritance_listitem_task_siblings.json';
+import inheritance_non_task_child from './__test_data__/inheritance_non_task_child.json';
 import inheritance_task_2listitem_3task from './__test_data__/inheritance_task_2listitem_3task.json';
 import inheritance_task_listitem from './__test_data__/inheritance_task_listitem.json';
 import inheritance_task_listitem_mixed_grandchildren from './__test_data__/inheritance_task_listitem_mixed_grandchildren.json';
@@ -94,6 +96,10 @@ function printRoots(listItems: ListItem[]) {
     });
     return rootHierarchies;
 }
+
+afterEach(() => {
+    GlobalFilter.getInstance().reset();
+});
 
 describe('cache', () => {
     it('should read one task', () => {
@@ -476,6 +482,35 @@ describe('cache', () => {
                     - grandchild list item 1 : ListItem
                     - [ ] grandchild task : Task
                     - grandchild list item 2 : ListItem
+            "
+        `);
+    });
+
+    it('should read non task check box when global filter is enabled', () => {
+        GlobalFilter.getInstance().set('#task');
+
+        const data = inheritance_non_task_child;
+        const tasks = readTasksFromSimulatedFile(data);
+        expect(data.fileContents).toMatchInlineSnapshot(`
+            "-  [ ] #task task parent
+                - [ ] #task task child
+                - [ ] non-task child
+                - list item child
+
+            \`\`\`tasks
+            filename includes {{query.file.filename}}
+            show tree
+            \`\`\`
+            "
+        `);
+
+        expect(tasks.length).toEqual(2);
+
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "-  [ ] #task task parent : Task
+                - [ ] #task task child : Task
+                - [ ] non-task child : ListItem
+                - list item child : ListItem
             "
         `);
     });
