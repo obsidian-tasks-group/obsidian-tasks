@@ -129,6 +129,16 @@ describe('list item parsing', () => {
         expect(item.originalMarkdown).toEqual('- [x] with checked checkbox');
         expect(item.statusCharacter).toEqual('x');
     });
+
+    it('should accept a non list item', () => {
+        // we tried making the constructor throw if given a non list item
+        // but it broke lots of normal Task uses in the tests (TaskBuilder)
+        const item = new ListItem('# Heading', null);
+
+        expect(item.description).toEqual('# Heading');
+        expect(item.originalMarkdown).toEqual('# Heading');
+        expect(item.statusCharacter).toEqual(null);
+    });
 });
 
 describe('related items', () => {
