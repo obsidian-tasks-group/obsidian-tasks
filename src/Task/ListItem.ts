@@ -12,7 +12,7 @@ export class ListItem {
 
     constructor(originalMarkdown: string, parent: ListItem | null) {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
-        const nonTaskMatch = originalMarkdown.match(TaskRegularExpressions.nonTaskRegex);
+        const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         if (nonTaskMatch) {
             this.description = nonTaskMatch[5].trim();
             this.statusCharacter = nonTaskMatch[4] ?? null;
