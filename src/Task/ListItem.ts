@@ -93,6 +93,8 @@ export class ListItem {
             return false;
         }
 
+        // Not testing status character as it is implied from the original markdown
+
         return ListItem.listsAreIdentical(this.children, other.children);
     }
 

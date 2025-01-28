@@ -185,6 +185,13 @@ describe('identicalTo', () => {
         expect(item2.identicalTo(item1)).toEqual(false);
     });
 
+    it('should recognise different status characters', () => {
+        const item1 = new ListItem('- [1] item', null);
+        const item2 = new ListItem('- [2] item', null);
+
+        expect(item2.identicalTo(item1)).toEqual(false);
+    });
+
     it('should recognise ListItem and Task as different', () => {
         const listItem = new ListItem('- [ ] description', null);
         const task = fromLine({ line: '- [ ] description' });
