@@ -31,6 +31,12 @@ export class TaskRegularExpressions {
     );
 
     // Used with the "Create or Edit Task" command to parse indentation and status if present
+    // It matches the following:
+    // - Indentation
+    // - List marker
+    // - Checkbox with status character
+    // - Status character
+    // - Rest of task after checkbox markdown
     public static readonly nonTaskRegex = new RegExp(
         TaskRegularExpressions.indentationRegex.source +
             TaskRegularExpressions.listMarkerRegex.source +
