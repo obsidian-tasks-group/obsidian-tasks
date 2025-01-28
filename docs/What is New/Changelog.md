@@ -12,6 +12,10 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
+- X.Y.Z:
+  - Add `query.file.hasProperty()` and `query.file.property()` in custom filters
+  - Add `{{query.file.hasProperty()}}` and `{{query.file.property()}}` in placeholders - see [[Obsidian Properties#Using Query Properties in Placeholders|Using Query Properties in Placeholders]].
+  - Add Chinese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]]
 - 7.14.0:
   - Add [[Editing Dates#Date-picker on task dates|date picker]] to Reading mode and Tasks query search results.
 - 7.13.0:
