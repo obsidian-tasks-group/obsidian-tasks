@@ -495,6 +495,12 @@ describe('cache', () => {
             "-  [ ] #task task parent
                 - [ ] #task task child
                 - [ ] non-task child
+                - list item child
+
+            \`\`\`tasks
+            filename includes {{query.file.filename}}
+            show tree
+            \`\`\`
             "
         `);
 
@@ -504,6 +510,7 @@ describe('cache', () => {
             "-  [ ] #task task parent : Task
                 - [ ] #task task child : Task
                 - [ ] non-task child : ListItem
+                - list item child : ListItem
             "
         `);
     });

@@ -48,15 +48,30 @@
           }
         },
         "task": " "
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 3,
+            "offset": 98
+          },
+          "start": {
+            "col": 3,
+            "line": 3,
+            "offset": 80
+          }
+        }
       }
     ],
     "sections": [
       {
         "position": {
           "end": {
-            "col": 24,
-            "line": 2,
-            "offset": 76
+            "col": 21,
+            "line": 3,
+            "offset": 98
           },
           "start": {
             "col": 0,
@@ -65,6 +80,21 @@
           }
         },
         "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 8,
+            "offset": 164
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 100
+          }
+        },
+        "type": "code"
       }
     ],
     "tags": [
@@ -100,7 +130,7 @@
       }
     ]
   },
-  "fileContents": "-  [ ] #task task parent\n    - [ ] #task task child\n    - [ ] non-task child\n",
+  "fileContents": "-  [ ] #task task parent\n    - [ ] #task task child\n    - [ ] non-task child\n    - list item child\n\n```tasks\nfilename includes {{query.file.filename}}\nshow tree\n```\n",
   "filePath": "Test Data/inheritance_non_task_child.md",
   "getAllTags": [
     "#task",
