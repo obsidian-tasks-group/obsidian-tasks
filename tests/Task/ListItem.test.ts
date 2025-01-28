@@ -105,7 +105,7 @@ describe('list item tests', () => {
     });
 });
 
-describe('list items with checkbox', () => {
+describe('list item parsing', () => {
     it('should read a list item without checkbox', () => {
         const item = new ListItem('- without checkbox', null);
 
