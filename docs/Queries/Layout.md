@@ -136,6 +136,7 @@ The `show tree` instruction enables us to see the parent/child relationships in 
 
 - For now, **all child tasks and list items are displayed**, regardless of whether they match the query.
   - In the screenshot above, `Decide who to invite` did not match the `not done` query, but it is still shown.
+  - If you are using the Global Filter, any child tasks without the Global Filter are rendered without their checkbox. We are tracking this in [issue #3170](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3170).
 - Any **sorting instructions only affect the sorting of the left-most tasks** in the results list.
   - Child tasks and list items are displayed in the order that they appear in the file. They are not affected by any `sort by` instructions.
 - For now, the **tree layout is turned off by default**, whilst we explore how it should interact with the filtering instructions.
