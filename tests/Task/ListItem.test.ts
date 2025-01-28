@@ -106,11 +106,18 @@ describe('list item tests', () => {
 });
 
 describe('list items with checkbox', () => {
-    it.failing('should read a list item with checkbox', () => {
+    it('should read a list item with checkbox', () => {
         const item = new ListItem('- [ ] with checkbox', null);
 
         expect(item.description).toEqual('with checkbox');
         expect(item.originalMarkdown).toEqual('- [ ] with checkbox');
+    });
+
+    it('should read a list item with checkbox', () => {
+        const item = new ListItem('- [x] with checked checkbox', null);
+
+        expect(item.description).toEqual('with checked checkbox');
+        expect(item.originalMarkdown).toEqual('- [x] with checked checkbox');
     });
 });
 
