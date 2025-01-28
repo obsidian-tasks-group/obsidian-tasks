@@ -11,6 +11,10 @@ export class ListItem {
 
     constructor(originalMarkdown: string, parent: ListItem | null) {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
+        const nonTaskMatch = originalMarkdown.match(TaskRegularExpressions.nonTaskRegex);
+        if (nonTaskMatch) {
+            this.description = nonTaskMatch[5].trim();
+        }
         this.originalMarkdown = originalMarkdown;
         this.parent = parent;
 
