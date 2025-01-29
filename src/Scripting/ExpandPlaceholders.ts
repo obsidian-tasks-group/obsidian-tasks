@@ -1,5 +1,6 @@
 import Mustache from 'mustache';
 import proxyData from 'mustache-validator';
+import { type ExpressionParameter, evaluateExpression, parseExpression } from './Expression';
 
 // https://github.com/janl/mustache.js
 
@@ -26,11 +27,11 @@ export function expandPlaceholders(template: string, view: any): string {
         return text;
     };
 
-    // Preprocess the template to evaluate any placeholders that involve function calls
-    const evaluatedTemplate = evaluateAnyFunctionCalls(template, view);
-
-    // Render the preprocessed template
     try {
+        // Preprocess the template to evaluate any placeholders that involve function calls
+        const evaluatedTemplate = evaluateAnyFunctionCalls(template, view);
+
+        // Render the preprocessed template
         return Mustache.render(evaluatedTemplate, proxyData(view));
     } catch (error) {
         let message = '';
@@ -50,98 +51,37 @@ The problem is in:
     }
 }
 
-const ARGUMENTS_REGEX = new RegExp(
+// Regex to detect placeholders
+const PLACEHOLDER_REGEX = new RegExp(
     [
-        // Match single-quoted arguments
-        "'((?:\\\\'|[^'])*)'",
+        // Match the opening double braces `{{`
+        '\\{\\{',
 
-        // Match double-quoted arguments
-        '"((?:\\\\"|[^"])*)"',
+        // Lazily capture everything inside (.*?), ensuring it stops at the first `}}`
+        '(.*?)',
 
-        // Match unquoted arguments (non-commas)
-        '([^,]+)',
-    ].join('|'), // Combine all parts with OR (|)
-    'g', // Global flag for multiple matches
-);
-
-function parseArgs(args: string): string[] {
-    const parsedArgs: string[] = [];
-    let match;
-
-    while ((match = ARGUMENTS_REGEX.exec(args)) !== null) {
-        if (match[1] !== undefined) {
-            // Single-quoted argument
-            parsedArgs.push(match[1].replace(/\\'/g, "'"));
-        } else if (match[2] !== undefined) {
-            // Double-quoted argument
-            parsedArgs.push(match[2].replace(/\\"/g, '"'));
-        } else if (match[3] !== undefined) {
-            // Unquoted argument
-            parsedArgs.push(match[3].trim());
-        }
-    }
-
-    return parsedArgs;
-}
-
-// Regex to detect function calls in placeholders
-const FUNCTION_REGEX = new RegExp(
-    [
-        // Match opening double curly braces with optional whitespace
-        '{{\\s*',
-
-        // Match and capture the function path (e.g., "object.path.toFunction")
-        '([\\w.]+)',
-
-        // Match the opening parenthesis and capture arguments inside
-        '\\(([^)]*)\\)',
-
-        // Match optional whitespace followed by closing double curly braces
-        '\\s*}}',
-    ].join(''), // Combine all parts without additional separators
-    'g', // Global flag to match all instances in the template
+        // Match the closing double braces `}}`
+        '\\}\\}',
+    ].join(''), // Combine the parts into a single string
+    'g', // Global flag to find all matches
 );
 
 function evaluateAnyFunctionCalls(template: string, view: any) {
-    return template.replace(FUNCTION_REGEX, (_match, functionPath, args) => {
-        // Split the function path (e.g., "query.file.property") into parts
-        const pathParts = functionPath.split('.');
-
-        // Extract the function name (last part of the path)
-        const functionName = pathParts.pop();
-
-        // Traverse the view object to find the object containing the function.
-        //
-        // This is needed because JavaScript/TypeScript doesn’t provide a direct way
-        // to access view['query']['file']['property'] based on such a dynamic path.
-        //
-        // So we need the loop to "walk" through the view object step by step,
-        // accessing each level as specified by the pathParts.
-        //
-        // Also, if any part of the path is missing (e.g., view.query.file exists,
-        // but view.query.file.property does not), the loop ensures the traversal
-        // stops early, and obj becomes undefined instead of throwing an error.
-        let obj = view; // Start at the root of the view object
-        for (const part of pathParts) {
-            if (obj == null) {
-                // Stop traversal if obj is null or undefined
-                obj = undefined;
-                break;
+    return template.replace(PLACEHOLDER_REGEX, (_match, reconstructed) => {
+        const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
+        const functionOrError = parseExpression(paramsArgs, reconstructed);
+        if (functionOrError.isValid()) {
+            const result = evaluateExpression(functionOrError.queryComponent!, paramsArgs);
+            if (result !== undefined) {
+                return result;
             }
-            obj = obj[part]; // Move to the next level of the object
-        }
-        // At the end of the loop, obj contains the resolved value or undefined if any part of the path was invalid
-
-        // Check if the function exists on the resolved object
-        if (obj && typeof obj[functionName] === 'function') {
-            // Parse the arguments from the placeholder, stripping quotes and trimming whitespace
-            const argValues = parseArgs(args);
-
-            // Call the function with the parsed arguments and return the result
-            return obj[functionName](...argValues);
         }
 
-        // Throw an error if the function does not exist or is invalid
-        throw new Error(`Unknown property or invalid function: ${functionPath}`);
+        // Fall back on returning the raw string, including {{ and }} - and get Mustache to report the error.
+        return _match;
     });
+}
+
+function createExpressionParameters(view: any): ExpressionParameter[] {
+    return Object.entries(view) as ExpressionParameter[];
 }

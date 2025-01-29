@@ -1,5 +1,11 @@
 import type { Task } from '../Task/Task';
-import { FunctionOrError, evaluateExpression, evaluateExpressionOrCatch, parseExpression } from './Expression';
+import {
+    type ExpressionParameter,
+    FunctionOrError,
+    evaluateExpression,
+    evaluateExpressionOrCatch,
+    parseExpression,
+} from './Expression';
 import type { QueryContext } from './QueryContext';
 
 /**
@@ -9,12 +15,11 @@ import type { QueryContext } from './QueryContext';
  * @param task - during parsing, this can be null. During evaluation, it must be a Task
  * @param queryContext - during parsing, this can be null. During evaluation, it must be a QueryContext or undefined.
  */
-export function constructArguments(task: Task | null, queryContext: QueryContext | null) {
-    const paramsArgs: [string, any][] = [
+export function constructArguments(task: Task | null, queryContext: QueryContext | null): ExpressionParameter[] {
+    return [
         ['task', task],
         ['query', queryContext ? queryContext.query : null],
     ];
-    return paramsArgs;
 }
 
 /**
@@ -30,7 +35,7 @@ export function constructArguments(task: Task | null, queryContext: QueryContext
  * See also {@link FunctionField} which exposes this facility to users.
  */
 export function parseAndEvaluateExpression(task: Task, arg: string, queryContext?: QueryContext) {
-    const paramsArgs = constructArguments(task, queryContext ? queryContext : null);
+    const paramsArgs = constructArguments(task, queryContext || null);
 
     const functionOrError = parseExpression(paramsArgs, arg);
     if (functionOrError.error) {
@@ -73,10 +78,7 @@ export class TaskExpression {
                 `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`,
             );
         }
-        return evaluateExpression(
-            this.functionOrError.queryComponent!,
-            constructArguments(task, queryContext ? queryContext : null),
-        );
+        return evaluateExpression(this.functionOrError.queryComponent!, constructArguments(task, queryContext || null));
     }
 
     /**

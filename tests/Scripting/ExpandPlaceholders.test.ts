@@ -11,8 +11,8 @@ describe('ExpandTemplate', () => {
             calc: () => 2 + 4,
         };
 
-        const output = expandPlaceholders('{{ title }} spends {{ calc }}', view);
-        expect(output).toMatchInlineSnapshot('"Joe spends 6"');
+        const output = expandPlaceholders('{{ title }} spends {{ calc() }}', view);
+        expect(output).toEqual('Joe spends 6');
     });
 
     it('fake query - with file path', () => {
@@ -24,6 +24,30 @@ filename includes {{query.file.filename}}`;
             "path includes a/b/path with space.md
             filename includes path with space.md"
         `);
+    });
+
+    it('fake query - with method call on path', () => {
+        // I discovered by chance that adding support for properties in query placeholders enabled the following to work
+        const rawString = 'path includes {{query.file.path.toUpperCase()}}';
+
+        const queryContext = makeQueryContext(tasksFile);
+        expect(expandPlaceholders(rawString, queryContext)).toEqual('path includes A/B/PATH WITH SPACE.MD');
+    });
+
+    it('fake query - with hasProperty', () => {
+        // TODO We really must prevent use of booleans as strings in property placeholders
+        const rawString = '{{query.file.hasProperty("no-such-property")}}';
+
+        const queryContext = makeQueryContext(tasksFile);
+        // I think converting a bool to a string is unhelpful here.
+        expect(expandPlaceholders(rawString, queryContext)).toEqual('false');
+    });
+
+    it('fake query - with expression', () => {
+        const rawString = '{{query.file.property("show-tree") ? "show tree" : "hide tree"}}';
+
+        const queryContext = makeQueryContext(tasksFile);
+        expect(expandPlaceholders(rawString, queryContext)).toEqual('hide tree');
     });
 
     it('should return the input string if no {{ in line', function () {
@@ -45,7 +69,7 @@ filename includes {{query.file.filename}}`;
         expect(() => expandPlaceholders(source, view)).toThrow(`There was an error expanding one or more placeholders.
 
 The error message was:
-    Unknown property: unknownField
+    unknownField is not defined
 
 The problem is in:
     {{ title }} spends {{ unknownField }}`);
@@ -64,6 +88,15 @@ The error message was:
 The problem is in:
     {{ query.file.nonsense }}`,
         );
+    });
+
+    it.failing('should not treat absent property values as string ', () => {
+        // TODO We really must prevent use of null - and probably undefined - as strings from property placeholders
+        const rawString = '{{ query.file.property("non-existent")}}';
+
+        const queryContext = makeQueryContext(tasksFile);
+        const expanded = expandPlaceholders(rawString, queryContext);
+        expect(expanded).not.toContain('null');
     });
 });
 
@@ -115,7 +148,7 @@ describe('ExpandTemplate with functions', () => {
         it('Non-existent function', () => {
             expect(() => {
                 expandPlaceholders('Call: {{invalid.func()}}', { invalid: {} });
-            }).toThrow('Unknown property or invalid function: invalid.func');
+            }).toThrow('invalid.func is not a function');
         });
 
         it('Missing arguments', () => {
@@ -172,21 +205,21 @@ describe('ExpandTemplate with functions', () => {
             });
             expect(output).toEqual('Alice: 25');
         });
+
+        it('Two function calls', () => {
+            const output = expandPlaceholders("{{math.square('3')}} - and - {{math.square('5')}}", {
+                math: { square: (x: string) => parseInt(x) ** 2 },
+            });
+            expect(output).toEqual('9 - and - 25');
+        });
     });
 
-    describe('Unsupported Syntax', () => {
-        it('Unsupported Mustache syntax', () => {
-            expect(() => {
-                expandPlaceholders("Invalid: {{unsupported.func['key']}}", {
-                    unsupported: { func: { key: 'value' } },
-                });
-            }).toThrow(`There was an error expanding one or more placeholders.
-
-The error message was:
-    Unknown property: unsupported.func['key']
-
-The problem is in:
-    Invalid: {{unsupported.func['key']}}`);
+    describe('More Supported Syntaxes', () => {
+        it('Object property access using key syntax', () => {
+            const result = expandPlaceholders("Valid: {{supported.func['key']}}", {
+                supported: { func: { key: 'value' } },
+            });
+            expect(result).toEqual('Valid: value');
         });
     });
 

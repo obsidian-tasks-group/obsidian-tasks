@@ -4,6 +4,11 @@ import { errorMessageForException } from '../lib/ExceptionTools';
 export class FunctionOrError extends QueryComponentOrError<Function> {}
 
 /**
+ * The name and value of a parameter, as a Tuple, for passing in to {@link parseExpression} and related functions.
+ */
+export type ExpressionParameter = [name: string, value: any];
+
+/**
  * Parse a JavaScript expression, and return either a Function or an error message in a string.
  * @param paramsArgs
  * @param arg
@@ -11,16 +16,16 @@ export class FunctionOrError extends QueryComponentOrError<Function> {}
  * @see evaluateExpression
  * @see evaluateExpressionOrCatch
  */
-export function parseExpression(paramsArgs: [string, any][], arg: string): FunctionOrError {
-    const params = paramsArgs.map(([p]) => p);
+export function parseExpression(paramsArgs: ExpressionParameter[], arg: string): FunctionOrError {
     try {
+        const parameterNames = paramsArgs.map(([name]) => name);
         const input = arg.includes('return') ? arg : `return ${arg}`;
-        const expression: '' | null | Function = arg && new Function(...params, input);
+        const expression: '' | null | Function = arg && new Function(...parameterNames, input);
         if (expression instanceof Function) {
             return FunctionOrError.fromObject(arg, expression);
         }
         // I have not managed to write a test that reaches here:
-        return FunctionOrError.fromError(arg, 'Error parsing group function');
+        return FunctionOrError.fromError(arg, `Problem parsing expression "${arg}"`);
     } catch (e) {
         return FunctionOrError.fromError(arg, errorMessageForException(`Failed parsing expression "${arg}"`, e));
     }
@@ -34,9 +39,9 @@ export function parseExpression(paramsArgs: [string, any][], arg: string): Funct
  * @see parseExpression
  * @see evaluateExpressionOrCatch
  */
-export function evaluateExpression(expression: Function, paramsArgs: [string, any][]) {
-    const args = paramsArgs.map(([_, a]) => a);
-    return expression(...args);
+export function evaluateExpression(expression: Function, paramsArgs: ExpressionParameter[]) {
+    const parameterValues = paramsArgs.map(([_, value]) => value);
+    return expression(...parameterValues);
 }
 
 /**
@@ -48,7 +53,7 @@ export function evaluateExpression(expression: Function, paramsArgs: [string, an
  * @see parseExpression
  * @see evaluateExpression
  */
-export function evaluateExpressionOrCatch(expression: Function, paramsArgs: [string, any][], arg: string) {
+export function evaluateExpressionOrCatch(expression: Function, paramsArgs: ExpressionParameter[], arg: string) {
     try {
         return evaluateExpression(expression, paramsArgs);
     } catch (e) {
