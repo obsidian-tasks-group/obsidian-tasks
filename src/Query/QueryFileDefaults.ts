@@ -14,10 +14,6 @@ export class QueryFileDefaults {
     }
 
     public query(tasksFile: OptionalTasksFile) {
-        return query(tasksFile);
+        return new Query(this.source(tasksFile), tasksFile);
     }
-}
-
-export function query(tasksFile: OptionalTasksFile) {
-    return new Query(new QueryFileDefaults().source(tasksFile), tasksFile);
 }
