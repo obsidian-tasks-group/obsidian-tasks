@@ -7,6 +7,8 @@ import { explainResults, getQueryForQueryRenderer } from '../../src/Query/QueryR
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import query_file_defaults_short_mode from '../Obsidian/__test_data__/query_file_defaults_short_mode.json';
 
 window.moment = moment;
 
@@ -153,6 +155,21 @@ describe('query used for QueryRenderer', () => {
 
         // Assert
         expect(query.source).toEqual('description includes from_block_query\nignore global query');
+        expect(query.tasksFile).toBe(tasksFile);
+    });
+
+    it('should add QueryFileDefaults', () => {
+        // Arrange
+        const globalQuery = new GlobalQuery('path includes from_global_query');
+        const tasksFile = getTasksFileFromMockData(query_file_defaults_short_mode);
+
+        // Act
+        const query = getQueryForQueryRenderer('description includes from_block_query', globalQuery, tasksFile);
+
+        // Assert
+        expect(query.source).toEqual(`path includes from_global_query
+short mode
+description includes from_block_query`);
         expect(query.tasksFile).toBe(tasksFile);
     });
 });
