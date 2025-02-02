@@ -16,7 +16,7 @@ import type { OptionalTasksFile } from '../Scripting/TasksFile';
 export class GlobalQuery {
     private static instance: GlobalQuery;
 
-    static empty = '';
+    static readonly empty = '';
     private _source;
 
     /**
