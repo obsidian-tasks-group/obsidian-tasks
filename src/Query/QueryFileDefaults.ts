@@ -12,6 +12,10 @@ export class QueryFileDefaults {
         const prop = 'TQ-short-mode';
         return (tasksFile.hasProperty(prop) && (tasksFile.property(prop) ? 'short mode' : 'full mode')) || '';
     }
+
+    public query(tasksFile: OptionalTasksFile) {
+        return query(tasksFile);
+    }
 }
 
 export function query(tasksFile: OptionalTasksFile) {
