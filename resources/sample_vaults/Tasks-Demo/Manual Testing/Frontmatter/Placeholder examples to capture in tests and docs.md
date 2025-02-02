@@ -59,7 +59,6 @@ path includes {{query.file.path}}
 # too wide to be readable in the File Properties panel.
 
 {{const prop = 'TQ-explain';                return query.file.hasProperty(prop) ?  ( query.file.property(prop) ? 'explain' : '') : '';}}
-{{const prop = 'TQ-short-mode';             return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'short mode' : 'full mode') || ''}}
 
 {{const prop = 'TQ-show-tree';              return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tree' || ''}}
 
