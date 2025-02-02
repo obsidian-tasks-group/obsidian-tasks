@@ -1,0 +1,127 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "TQ-short-mode": null
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 22
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "query_file_defaults_all_options_null",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 4,
+            "offset": 62
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 24
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 6,
+            "offset": 122
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 64
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 22
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 4,
+            "offset": 62
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 24
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 6,
+            "offset": 122
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 64
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 6,
+            "offset": 75
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 70
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\nTQ-short-mode:\n---\n\n# query_file_defaults_all_options_null\n\n- [ ] #task Task in 'query_file_defaults_all_options_null'\n",
+  "filePath": "Test Data/query_file_defaults_all_options_null.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.8.4",
+  "parseFrontMatterTags": null
+}
