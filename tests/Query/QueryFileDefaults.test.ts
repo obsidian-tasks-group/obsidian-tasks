@@ -10,8 +10,6 @@ function generateQueryFileDefaultsSource(data: any) {
 
 describe('QueryFileDefaults', () => {
     it('should give empty query if no relevant properties present', () => {
-        const data = query_file_defaults_all_options_null;
-        const source = generateQueryFileDefaultsSource(data);
-        expect(source).toEqual('');
+        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_null)).toEqual('');
     });
 });
