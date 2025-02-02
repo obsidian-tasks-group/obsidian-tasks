@@ -3,7 +3,7 @@ import type { GlobalQuery } from '../Config/GlobalQuery';
 import type { OptionalTasksFile } from '../Scripting/TasksFile';
 import { Query } from './Query';
 import { Explainer } from './Explain/Explainer';
-import { query } from './QueryFileDefaults';
+import { QueryFileDefaults } from './QueryFileDefaults';
 
 /**
  * @summary
@@ -70,7 +70,7 @@ export function getQueryForQueryRenderer(
     tasksFile: OptionalTasksFile,
 ): Query {
     // Construct query from any recognised properties:
-    const queryFileDefaultsQuery = query(tasksFile);
+    const queryFileDefaultsQuery: Query = new QueryFileDefaults().query(tasksFile);
 
     // Prepend the QueryFileDefaults query - from properties - to the tasks block source:
     const tasksBlockQuery = queryFileDefaultsQuery.append(new Query(source, tasksFile));
