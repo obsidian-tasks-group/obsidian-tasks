@@ -70,7 +70,7 @@ export function getQueryForQueryRenderer(
     tasksFile: OptionalTasksFile,
 ): Query {
     // Construct query from any recognised properties:
-    const queryFileDefaultsSource = tasksFile ? new QueryFileDefaults().source(tasksFile) : '';
+    const queryFileDefaultsSource = new QueryFileDefaults().source(tasksFile);
     const queryFileDefaultsQuery = new Query(queryFileDefaultsSource, tasksFile);
 
     // Prepend the QueryFileDefaults query - from properties - to the tasks block source:
