@@ -5,7 +5,8 @@ import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
 
 describe('QueryFileDefaults', () => {
     it('should give empty query if no relevant properties present', () => {
-        const tasksFile = getTasksFileFromMockData(query_file_defaults_all_options_null);
+        const data = query_file_defaults_all_options_null;
+        const tasksFile = getTasksFileFromMockData(data);
         const source = new QueryFileDefaults().source(tasksFile);
         expect(source).toEqual('');
     });
