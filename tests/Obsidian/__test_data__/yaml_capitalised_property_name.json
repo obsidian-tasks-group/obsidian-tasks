@@ -115,8 +115,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\nCAPITAL_property: some value\n---\n\n# yaml_capitalised_property_name\n\n- [ ] #task Task in 'yaml_capitalised_property_name'\n",
   "filePath": "Test Data/yaml_capitalised_property_name.md",

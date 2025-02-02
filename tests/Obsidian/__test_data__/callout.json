@@ -130,8 +130,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "# callout\n\n> [!todo]\n> - [ ] #task Task in 'callout'\n>     - [ ] #task Task indented in 'callout'\n\n```tasks\nnot done\npath includes {{query.file.path}}\n```\n",
   "filePath": "Test Data/callout.md",

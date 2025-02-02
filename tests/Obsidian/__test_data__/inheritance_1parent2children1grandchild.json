@@ -144,8 +144,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "- [ ] #task parent task\n    - [ ] #task child task 1\n    - [ ] #task child task 2\n        - [ ] #task grandchild 1\n",
   "filePath": "Test Data/inheritance_1parent2children1grandchild.md",

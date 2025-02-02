@@ -159,8 +159,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": " > [!Calendar]+ MONTH\n >> [!Check]+ GROUP\n >>> [!Attention]+ Correction TITLE\n >>> Some stuff goes here\n >>> - [ ] #task Correction1\n >>> - [ ] #task Correction2\n >>> - [ ] #task Correction3\n >>> - [ ] #task Correction4\n\n```tasks\nnot done\npath includes {{query.file.path}}\n```\n",
   "filePath": "Test Data/callouts_nested_issue_2890_labelled.md",

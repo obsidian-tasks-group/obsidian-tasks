@@ -118,8 +118,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "# link_in_file_body\n\nI link to [[yaml_tags_is_empty]]\n\n- [ ] #task Task in 'link_in_file_body'\n",
   "filePath": "Test Data/link_in_file_body.md",

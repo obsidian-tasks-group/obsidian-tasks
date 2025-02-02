@@ -118,8 +118,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\ntags:\n  - multiple1\n  - multiple2\n---\n\n# yaml_tags_has_multiple_values\n\n- [ ] #task Task in 'yaml_tags_has_multiple_values'\n",
   "filePath": "Test Data/yaml_tags_has_multiple_values.md",

@@ -113,8 +113,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "- [ ] #task parent task\n    - [ ] #task child task 1\n\n - [ ] #task sibling\n",
   "filePath": "Test Data/inheritance_1parent1child1sibling_emptystring.md",

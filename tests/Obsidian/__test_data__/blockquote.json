@@ -115,8 +115,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "# blockquote\n\n> - [ ] #task Task in 'blockquote'\n>     - [ ] #task Task indented in 'blockquote'\n",
   "filePath": "Test Data/blockquote.md",

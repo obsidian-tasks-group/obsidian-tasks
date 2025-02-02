@@ -51,8 +51,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "- [ ] #task the only task here\n\n",
   "filePath": "Test Data/one_task.md",

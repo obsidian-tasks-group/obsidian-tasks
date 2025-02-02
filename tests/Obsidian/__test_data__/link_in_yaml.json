@@ -122,8 +122,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\ntest-link: \"[[yaml_tags_is_empty]]\"\n---\n\n# link_in_yaml\n\n- [ ] #task Task in 'link_in_yaml'\n",
   "filePath": "Test Data/link_in_yaml.md",

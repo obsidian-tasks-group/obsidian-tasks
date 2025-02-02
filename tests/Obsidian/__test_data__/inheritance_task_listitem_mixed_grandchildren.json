@@ -95,8 +95,7 @@
         },
         "type": "list"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "- [ ] parent task\n    - child list item\n        - grandchild list item 1\n        - [ ] grandchild task\n        - grandchild list item 2\n",
   "filePath": "Test Data/inheritance_task_listitem_mixed_grandchildren.md",

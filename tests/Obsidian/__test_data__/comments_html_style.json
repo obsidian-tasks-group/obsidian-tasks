@@ -145,8 +145,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "# comments_html_style\n\nWhole task line is ignored by Obsidian's `cachedMetadata`:\n<!--\n- [ ] #task Whole task in 'comments_html_style'\n-->\n\n- [ ] #task Whole task in 'comments_html_style' - with commented-out tag: <!-- #i-am-ignored-by-obsidian  --> - is ignored by Obsidian's `cachedMetadata`, but Tasks recognises it\n- [ ] #task Whole task in 'comments_html_style' - with commented-out link: <!-- [[comments_markdown_style]]  --> - is ignored by Obsidian's `cachedMetadata`\n",
   "filePath": "Test Data/comments_html_style.md",

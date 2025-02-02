@@ -192,8 +192,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "# first header\n\n- [ ] #task parent task\n    - [ ] #task child task 1\n\n## second header\n\n- [ ] #task root task\n",
   "filePath": "Test Data/inheritance_1parent1child1newroot_after_header.md",

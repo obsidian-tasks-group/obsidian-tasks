@@ -118,8 +118,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "# link_in_file_body_with_custom_display_text\n\nI link to [[yaml_tags_is_empty|a file and use custom display text]]\n\n- [ ] #task Task in 'link_in_file_body_with_custom_display_text'\n",
   "filePath": "Test Data/link_in_file_body_with_custom_display_text.md",

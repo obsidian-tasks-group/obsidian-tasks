@@ -49,8 +49,7 @@
         },
         "type": "list"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "- list item\n- [ ] task\n",
   "filePath": "Test Data/inheritance_listitem_task_siblings.md",
