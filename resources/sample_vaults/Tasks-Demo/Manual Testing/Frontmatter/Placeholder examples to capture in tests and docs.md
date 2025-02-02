@@ -1,31 +1,31 @@
 ---
-tasks-query-explain: false
-tasks-query-short-mode: false
-tasks-query-show-tree: true
-tasks-query-show-tags: true
-tasks-query-show-id: true
-tasks-query-show-depends-on: true
-tasks-query-show-priority: true
-tasks-query-show-recurrence-rule: true
-tasks-query-show-on-completion: true
-tasks-query-show-created-date: true
-tasks-query-show-start-date: true
-tasks-query-show-scheduled-date: true
-tasks-query-show-due-date: true
-tasks-query-show-cancelled-date: true
-tasks-query-show-done-date: true
-tasks-query-show-urgency: true
-tasks-query-show-backlink: true
-tasks-query-show-edit-button: true
-tasks-query-show-postpone-button: true
-tasks-query-show-task-count: true
-tasks-query-sort-by:
+tasks_query_explain: false
+tasks_query_short_mode: false
+tasks_query_show_tree: true
+tasks_query_show_tags: true
+tasks_query_show_id: true
+tasks_query_show_depends_on: true
+tasks_query_show_priority: true
+tasks_query_show_recurrence_rule: true
+tasks_query_show_on_completion: true
+tasks_query_show_created_date: true
+tasks_query_show_start_date: true
+tasks_query_show_scheduled_date: true
+tasks_query_show_due_date: true
+tasks_query_show_cancelled_date: true
+tasks_query_show_done_date: true
+tasks_query_show_urgency: true
+tasks_query_show_backlink: true
+tasks_query_show_edit_button: true
+tasks_query_show_postpone_button: true
+tasks_query_show_task_count: true
+tasks_query_sort_by:
   - description
-tasks-query-group-by:
+tasks_query_group_by:
   - status.type
   - happens reverse
   - function task.tags.sort().join(' ')
-tasks-query-extra-instructions: |-
+tasks_query_extra_instructions: |-
   # press shift-return to add new lines
   # not done
   # sort by done date
@@ -39,7 +39,7 @@ tasks-query-extra-instructions: |-
 
 So we can easily control the query interactively now, via Obsidian's File Properties panel!!!
 
-This search is a proof-of-concept. The `tasks-query-` prefix was chosen to stand for `Task Query`. It is not yet decided whether recognition of these properties will be built in to Tasks in future.
+This search is a proof-of-concept. The `tasks_query_` prefix was chosen to stand for `Task Query`. It is not yet decided whether recognition of these properties will be built in to Tasks in future.
 
 To try this out:
 
@@ -55,37 +55,35 @@ ignore global query
 path includes {{query.file.path}}
 
 # Instructions are listed in the order that items are displayed in Tasks search results
-# I would like to use the prefix 'tasks-query-' on the names, but it makes the names
-# too wide to be readable in the File Properties panel.
 
-{{const prop = 'tasks-query-explain';                return query.file.hasProperty(prop) ?  ( query.file.property(prop) ? 'explain' : '') : '';}}
+{{const prop = 'tasks_query_explain';                return query.file.hasProperty(prop) ?  ( query.file.property(prop) ? 'explain' : '') : '';}}
 
-{{const prop = 'tasks-query-show-tree';              return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tree' || ''}}
+{{const prop = 'tasks_query_show_tree';              return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tree' || ''}}
 
-{{const prop = 'tasks-query-show-tags';              return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tags' || ''}}
-{{const prop = 'tasks-query-show-id';                return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' id' || ''}}
-{{const prop = 'tasks-query-show-depends-on';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' depends on' || ''}}
-{{const prop = 'tasks-query-show-priority';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' priority' || ''}}
-{{const prop = 'tasks-query-show-recurrence-rule';   return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' recurrence rule' || ''}}
-{{const prop = 'tasks-query-show-on-completion';     return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' on completion' || ''}}
+{{const prop = 'tasks_query_show_tags';              return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tags' || ''}}
+{{const prop = 'tasks_query_show_id';                return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' id' || ''}}
+{{const prop = 'tasks_query_show_depends_on';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' depends on' || ''}}
+{{const prop = 'tasks_query_show_priority';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' priority' || ''}}
+{{const prop = 'tasks_query_show_recurrence_rule';   return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' recurrence rule' || ''}}
+{{const prop = 'tasks_query_show_on_completion';     return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' on completion' || ''}}
 
-{{const prop = 'tasks-query-show-created-date';      return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' created date' || ''}}
-{{const prop = 'tasks-query-show-start-date';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' start date' || ''}}
-{{const prop = 'tasks-query-show-scheduled-date';    return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' scheduled date' || ''}}
-{{const prop = 'tasks-query-show-due-date';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' due date' || ''}}
-{{const prop = 'tasks-query-show-cancelled-date';    return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' cancelled date' || ''}}
-{{const prop = 'tasks-query-show-done-date';         return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' done date' || ''}}
+{{const prop = 'tasks_query_show_created_date';      return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' created date' || ''}}
+{{const prop = 'tasks_query_show_start_date';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' start date' || ''}}
+{{const prop = 'tasks_query_show_scheduled_date';    return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' scheduled date' || ''}}
+{{const prop = 'tasks_query_show_due_date';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' due date' || ''}}
+{{const prop = 'tasks_query_show_cancelled_date';    return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' cancelled date' || ''}}
+{{const prop = 'tasks_query_show_done_date';         return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' done date' || ''}}
 
-{{const prop = 'tasks-query-show-urgency' ;          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' urgency' || ''}}
-{{const prop = 'tasks-query-show-backlink';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' backlink' || ''}}
-{{const prop = 'tasks-query-show-edit-button';       return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' edit button' || ''}}
-{{const prop = 'tasks-query-show-postpone-button';   return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' postpone button' || ''}}
-{{const prop = 'tasks-query-show-task-count';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' task count' || ''}}
+{{const prop = 'tasks_query_show_urgency' ;          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' urgency' || ''}}
+{{const prop = 'tasks_query_show_backlink';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' backlink' || ''}}
+{{const prop = 'tasks_query_show_edit_button';       return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' edit button' || ''}}
+{{const prop = 'tasks_query_show_postpone_button';   return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' postpone button' || ''}}
+{{const prop = 'tasks_query_show_task_count';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' task count' || ''}}
 
-{{const prop = 'tasks-query-sort-by';                return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'sort by ' + g).join('\n') || ''}}
-{{const prop = 'tasks-query-group-by';               return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'group by ' + g).join('\n') || ''}}
+{{const prop = 'tasks_query_sort_by';                return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'sort by ' + g).join('\n') || ''}}
+{{const prop = 'tasks_query_group_by';               return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'group by ' + g).join('\n') || ''}}
 
-{{const prop = 'tasks-query-extra-instructions';     return query.file.hasProperty(prop) ? query.file.property(prop) || '' : '';}}
+{{const prop = 'tasks_query_extra_instructions';     return query.file.hasProperty(prop) ? query.file.property(prop) || '' : '';}}
 ```
 
 ## Can now call functions inside placeholders
