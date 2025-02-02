@@ -54,6 +54,10 @@ export function explainResults(
     return result;
 }
 
+function query(tasksFile: OptionalTasksFile) {
+    return new Query(new QueryFileDefaults().source(tasksFile), tasksFile);
+}
+
 /**
  * Creates the actual query that {@link QueryRenderChild} will actually execute against the task list.
  *
@@ -70,7 +74,7 @@ export function getQueryForQueryRenderer(
     tasksFile: OptionalTasksFile,
 ): Query {
     // Construct query from any recognised properties:
-    const queryFileDefaultsQuery = new Query(new QueryFileDefaults().source(tasksFile), tasksFile);
+    const queryFileDefaultsQuery = query(tasksFile);
 
     // Prepend the QueryFileDefaults query - from properties - to the tasks block source:
     const tasksBlockQuery = queryFileDefaultsQuery.append(new Query(source, tasksFile));
