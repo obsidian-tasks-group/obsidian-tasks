@@ -3,7 +3,7 @@ import type { GlobalQuery } from '../Config/GlobalQuery';
 import type { OptionalTasksFile } from '../Scripting/TasksFile';
 import { Query } from './Query';
 import { Explainer } from './Explain/Explainer';
-import { QueryFileDefaults } from './QueryFileDefaults';
+import { query } from './QueryFileDefaults';
 
 /**
  * @summary
@@ -52,10 +52,6 @@ export function explainResults(
     result += `Explanation of this Tasks code block query:\n\n${explainer.explainQuery(tasksBlockQuery)}`;
 
     return result;
-}
-
-function query(tasksFile: OptionalTasksFile) {
-    return new Query(new QueryFileDefaults().source(tasksFile), tasksFile);
 }
 
 /**
