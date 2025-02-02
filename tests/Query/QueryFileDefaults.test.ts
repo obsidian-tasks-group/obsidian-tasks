@@ -11,6 +11,10 @@ function generateQueryFileDefaultsSource(data: any) {
 }
 
 describe('QueryFileDefaults', () => {
+    it('should treat the TasksFile as optional', () => {
+        expect(new QueryFileDefaults().source(undefined)).toEqual('');
+    });
+
     it('should give empty query if no relevant properties present', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_null)).toEqual('');
     });
