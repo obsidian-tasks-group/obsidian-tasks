@@ -1,6 +1,8 @@
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
+import query_file_defaults_all_options_false from '../Obsidian/__test_data__/query_file_defaults_all_options_false.json';
 import query_file_defaults_all_options_null from '../Obsidian/__test_data__/query_file_defaults_all_options_null.json';
+import query_file_defaults_all_options_true from '../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
 
 function generateQueryFileDefaultsSource(data: any) {
@@ -11,5 +13,10 @@ function generateQueryFileDefaultsSource(data: any) {
 describe('QueryFileDefaults', () => {
     it('should give empty query if no relevant properties present', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_null)).toEqual('');
+    });
+
+    it('should generate "short mode" and "full mode" instructions', () => {
+        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toEqual('full mode');
+        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_true)).toEqual('short mode');
     });
 });
