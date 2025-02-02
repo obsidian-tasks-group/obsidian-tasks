@@ -1,5 +1,5 @@
 ---
-tasks-query-short-mode:
+tasks_query_short_mode:
 ---
 
 # query_file_defaults_all_options_null

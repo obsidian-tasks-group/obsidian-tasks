@@ -1,7 +1,7 @@
 {
   "cachedMetadata": {
     "frontmatter": {
-      "tasks-query-short-mode": true
+      "tasks_query_short_mode": true
     },
     "frontmatterLinks": [],
     "frontmatterPosition": {
@@ -117,7 +117,7 @@
       }
     ]
   },
-  "fileContents": "---\ntasks-query-short-mode: true\n---\n\n# query_file_defaults_all_options_true\n\n- [ ] #task Task in 'query_file_defaults_all_options_true'\n",
+  "fileContents": "---\ntasks_query_short_mode: true\n---\n\n# query_file_defaults_all_options_true\n\n- [ ] #task Task in 'query_file_defaults_all_options_true'\n",
   "filePath": "Test Data/query_file_defaults_all_options_true.md",
   "getAllTags": [
     "#task"
