@@ -99,8 +99,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\n---\n\n# empty_yaml\n\n- [ ] #task Task in 'empty_yaml'\n",
   "filePath": "Test Data/empty_yaml.md",

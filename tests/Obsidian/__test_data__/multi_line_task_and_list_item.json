@@ -114,8 +114,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "# multi_line_task_and_list_item\n\n- [ ] #task Task in 'multi_line_task_and_list_item'\n    task line 1\n    task line 2\n- muli-line list item in 'multi_line_task_and_list_item'\n    list item line 1\n    list item line 2\n\nSee: https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2061:\nMulti-line tasks (indented lines below a task items) are not shown in Reading mode and Tasks query results\n",
   "filePath": "Test Data/multi_line_task_and_list_item.md",

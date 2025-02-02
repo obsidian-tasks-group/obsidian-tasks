@@ -159,8 +159,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "`cachedMetadata.listItems` have a `task` field which is the single-character \"status symbol\".\n\n- [ ] #task Todo\n- [/] #task In Progress\n- [x] #task Done ✅ 2024-05-26\n- [-] #task Cancelled ❌ 2024-05-26\n",
   "filePath": "Test Data/list_statuses.md",

@@ -313,8 +313,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "- [ ] #task task 1 starting with a hyphen\n- [ ] #task task 2 starting with a hyphen\n\n* [ ] #task task 1 starting with an asterisk\n* [ ] #task task 2 starting with an asterisk\n\n+ [ ] #task task 1 starting with a plus sign\n+ [ ] #task task 2 starting with a plus sign\n\n1. [ ] #task task 1 in a numbered list\n2. [ ] #task task 2 in a numbered list\n",
   "filePath": "Test Data/list_styles.md",

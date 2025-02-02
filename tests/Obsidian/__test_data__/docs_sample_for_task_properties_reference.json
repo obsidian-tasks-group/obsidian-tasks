@@ -233,8 +233,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\nsample_checkbox_property: true\nsample_date_property: 2024-07-21\nsample_date_and_time_property: 2024-07-21T12:37:00\nsample_list_property:\n  - Sample\n  - List\n  - Value\nsample_number_property: 246\nsample_text_property: Sample Text Value\nsample_text_multiline_property: |\n  Sample\n  Text\n  Value\nsample_link_property: \"[[yaml_all_property_types_populated]]\"\nsample_link_list_property:\n  - \"[[yaml_all_property_types_populated]]\"\n  - \"[[yaml_all_property_types_empty]]\"\naliases:\n  - YAML All Property Types Populated\ntags:\n  - tag-from-file-properties\ncreation date: 2024-05-25T15:17:00\nproject: Secret Project\n---\n\n# docs_sample_for_task_properties_reference\n\n#tag-from-file-body\n\n- [ ] #task Task in 'docs_sample_for_task_properties_reference' #tag-from-task-line\n- [ ] #task Another task in 'docs_sample_for_task_properties_reference'\n",
   "filePath": "Test Data/docs_sample_for_task_properties_reference.md",

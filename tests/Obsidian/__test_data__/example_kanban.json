@@ -130,8 +130,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\n\nkanban-plugin: basic\n\n---\n\n## Backlog\n\n- [ ] #task Task in 'example_kanban'\n\n\n%% kanban:settings\n```\n{\"kanban-plugin\":\"basic\"}\n```\n%%\n",
   "filePath": "Test Data/example_kanban.md",

@@ -125,8 +125,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\nsample_checkbox_property: \nsample_date_property: \nsample_date_and_time_property: \nsample_list_property: \nsample_number_property: \nsample_text_property: \nsample_link_property: \nsample_link_list_property: \naliases: \ntags: \ncreation date:\n---\n# yaml_all_property_types_empty\n\n- [ ] #task Task in 'yaml_all_property_types_empty'\n",
   "filePath": "Test Data/yaml_all_property_types_empty.md",

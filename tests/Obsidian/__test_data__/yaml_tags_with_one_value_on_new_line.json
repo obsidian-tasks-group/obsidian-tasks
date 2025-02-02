@@ -117,8 +117,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\ntags:\n  - single-value-new-line\n---\n\n\n# yaml_tags_with_one_value_on_new_line\n\n- [ ] #task Task in 'yaml_tags_with_one_value_on_new_line'\n",
   "filePath": "Test Data/yaml_tags_with_one_value_on_new_line.md",

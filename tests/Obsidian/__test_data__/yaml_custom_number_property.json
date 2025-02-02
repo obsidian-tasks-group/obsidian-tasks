@@ -82,8 +82,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\ncustom_number_prop: 42\n---\n\n- [ ] #task Task in 'yaml_custom_number_property'\n",
   "filePath": "Test Data/yaml_custom_number_property.md",

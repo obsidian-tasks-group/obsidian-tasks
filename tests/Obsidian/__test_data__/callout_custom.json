@@ -130,8 +130,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "# callout_custom\n\n> [!callout_custom]\n> - [ ] #task Task in 'callout_custom'\n>     - [ ] #task Task indented in 'callout_custom'\n\n```tasks\nnot done\npath includes {{query.file.path}}\n```\n",
   "filePath": "Test Data/callout_custom.md",

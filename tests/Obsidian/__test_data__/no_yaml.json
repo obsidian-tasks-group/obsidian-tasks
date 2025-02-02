@@ -84,8 +84,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "# no_yaml\n\n- [ ] #task Task in 'no_yaml'\n",
   "filePath": "Test Data/no_yaml.md",

@@ -64,8 +64,7 @@
         },
         "type": "list"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "- parent list item\n    - child list item\n        - [ ] grandchild task\n",
   "filePath": "Test Data/inheritance_listitem_listitem_task.md",

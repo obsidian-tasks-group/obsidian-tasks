@@ -115,8 +115,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\ntags: []\n---\n\n\n# yaml_tags_had_value_then_was_emptied_by_obsidian\n\n- [ ] #task Task in 'yaml_tags_had_value_then_was_emptied_by_obsidian'\n",
   "filePath": "Test Data/yaml_tags_had_value_then_was_emptied_by_obsidian.md",

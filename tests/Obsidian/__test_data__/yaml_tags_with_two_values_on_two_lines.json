@@ -118,8 +118,7 @@
         },
         "tag": "#task"
       }
-    ],
-    "v": 1
+    ]
   },
   "fileContents": "---\ntags:\n  - value-1-of-2-on-two-lines\n  - value-2-of-2-on-two-lines\n---\n\n# yaml_tags_with_two_values_on_two_lines\n\n- [ ] #task Task in 'yaml_tags_with_two_values_on_two_lines'\n",
   "filePath": "Test Data/yaml_tags_with_two_values_on_two_lines.md",
