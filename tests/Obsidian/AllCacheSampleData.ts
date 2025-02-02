@@ -54,6 +54,7 @@ import one_task from './__test_data__/one_task.json';
 import query_file_defaults_all_options_false from './__test_data__/query_file_defaults_all_options_false.json';
 import query_file_defaults_all_options_null from './__test_data__/query_file_defaults_all_options_null.json';
 import query_file_defaults_all_options_true from './__test_data__/query_file_defaults_all_options_true.json';
+import query_file_defaults_short_mode from './__test_data__/query_file_defaults_short_mode.json';
 import query_using_properties from './__test_data__/query_using_properties.json';
 import yaml_1_alias from './__test_data__/yaml_1_alias.json';
 import yaml_2_aliases from './__test_data__/yaml_2_aliases.json';
@@ -128,6 +129,7 @@ export function allCacheSampleData() {
         query_file_defaults_all_options_false,
         query_file_defaults_all_options_null,
         query_file_defaults_all_options_true,
+        query_file_defaults_short_mode,
         query_using_properties,
         yaml_1_alias,
         yaml_2_aliases,
