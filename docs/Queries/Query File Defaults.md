@@ -103,7 +103,10 @@ tasks_query_extra_instructions:
 
 ### Creating a User Interface for the defaults
 
-You can use the [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind) plugin to create a User Interface to easily change your Tasks searches.
+You can use the [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind) plugin to create a User Interface to easily change your Tasks searches:
+
+![Meta Bind widgets to edit Query File Defaults](../images/query-file-defaults-meta-bind-controls.png)
+<span class="caption">Meta Bind widgets to edit Query File Defaults</span>
 
 Steps to do this, which assume you have already [turned off Obsidian's Restricted mode](https://help.obsidian.md/Extending+Obsidian/Plugin+security):
 
