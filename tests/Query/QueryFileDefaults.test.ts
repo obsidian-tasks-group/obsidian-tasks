@@ -24,7 +24,8 @@ describe('QueryFileDefaults', () => {
             "full mode
             hide tree
             hide tags
-            hide id"
+            hide id
+            hide depends on"
         `);
     });
 
@@ -34,7 +35,8 @@ describe('QueryFileDefaults', () => {
             short mode
             show tree
             show tags
-            show id"
+            show id
+            show depends on"
         `);
     });
 });
