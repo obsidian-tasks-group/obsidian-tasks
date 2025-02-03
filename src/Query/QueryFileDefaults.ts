@@ -38,6 +38,11 @@ export class QueryFileDefaults {
             this.showAndHide(tasksFile, 'tasks_query_show_postpone_button', 'postpone button'),
             this.showAndHide(tasksFile, 'tasks_query_show_task_count', 'task count'),
         ];
+
+        // Extra instructions
+        const prop = 'tasks_query_extra_instructions';
+        instructions.push(tasksFile.hasProperty(prop) ? tasksFile.property(prop) || '' : '');
+
         return instructions.filter((i) => i !== '').join('\n');
     }
 
