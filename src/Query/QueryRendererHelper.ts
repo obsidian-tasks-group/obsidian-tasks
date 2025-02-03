@@ -45,6 +45,7 @@ export function explainResults(
     }
 
     const tasksBlockQuery = new Query(source, tasksFile);
+    const queryFileDefaultsQuery = new QueryFileDefaults().query(tasksFile);
 
     const ignoreGlobalQuery = !tasksBlockQuery.ignoreGlobalQuery;
     if (ignoreGlobalQuery) {
@@ -54,7 +55,6 @@ export function explainResults(
         }
     }
 
-    const queryFileDefaultsQuery = new QueryFileDefaults().query(tasksFile);
     if (queryFileDefaultsQuery.source !== '') {
         const intro = "Explanation of the query file defaults (from properties/frontmatter in the query's file)";
         result += explainQuery(intro, queryFileDefaultsQuery) + '\n';
