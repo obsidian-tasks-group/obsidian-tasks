@@ -49,6 +49,13 @@ export function explainResults(
         }
     }
 
+    const queryFileDefaultsQuery = new QueryFileDefaults().query(tasksFile);
+    if (queryFileDefaultsQuery.source !== '') {
+        result += `Explanation of the query file defaults (from file properties/frontmatter):\n\n${explainer.explainQuery(
+            queryFileDefaultsQuery,
+        )}\n`;
+    }
+
     result += `Explanation of this Tasks code block query:\n\n${explainer.explainQuery(tasksBlockQuery)}`;
 
     return result;

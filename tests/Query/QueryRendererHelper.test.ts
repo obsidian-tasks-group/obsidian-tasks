@@ -9,6 +9,7 @@ import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import query_file_defaults_short_mode from '../Obsidian/__test_data__/query_file_defaults_short_mode.json';
+import query_file_defaults_all_options_true from '../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 
 window.moment = moment;
 
@@ -57,6 +58,40 @@ describe('explain', () => {
             "Explanation of the global query:
 
               description includes hello
+
+              No grouping instructions supplied.
+
+              No sorting instructions supplied.
+
+            Explanation of this Tasks code block query:
+
+              No filters supplied. All tasks will match the query.
+
+              No grouping instructions supplied.
+
+              No sorting instructions supplied.
+            "
+        `);
+    });
+
+    it('should explain a task with global query and query file defaults active', () => {
+        const globalQuery = new GlobalQuery('description includes hello');
+
+        const source = '';
+        const query = new Query(source);
+        const tasksFile = getTasksFileFromMockData(query_file_defaults_all_options_true);
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery, tasksFile)).toMatchInlineSnapshot(`
+            "Explanation of the global query:
+
+              description includes hello
+
+              No grouping instructions supplied.
+
+              No sorting instructions supplied.
+
+            Explanation of the query file defaults (from file properties/frontmatter):
+
+              not done
 
               No grouping instructions supplied.
 
