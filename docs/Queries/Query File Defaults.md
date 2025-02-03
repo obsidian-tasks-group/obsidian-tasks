@@ -105,12 +105,13 @@ tasks_query_extra_instructions:
 
 You can use the [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind) plugin to create a User Interface to easily change your Tasks searches.
 
-Steps to do this:
+Steps to do this, which assume you have already [turned off Obsidian's Restricted mode](https://help.obsidian.md/Extending+Obsidian/Plugin+security):
 
 1. Install and enable [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind)
-2. Click the Copy button to copy the markdown below.
-3. Paste the markdown in to a note in Obsidian that has one or more Tasks searches
+2. Click the Copy button to copy the Markdown below.
+3. Paste the markdown in to a note in Obsidian that has one or more Tasks searches.
 4. Switch to Live Preview or Reading modes, to see the widgets.
+5. After experimenting, delete any labels and widgets that you do not need.
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-snippet.approved.md -->
 ```md
