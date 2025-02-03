@@ -30,7 +30,8 @@ describe('QueryFileDefaults', () => {
             hide recurrence rule
             hide on completion
             hide created date
-            hide start date"
+            hide start date
+            hide scheduled date"
         `);
     });
 
@@ -46,7 +47,8 @@ describe('QueryFileDefaults', () => {
             show recurrence rule
             show on completion
             show created date
-            show start date"
+            show start date
+            show scheduled date"
         `);
     });
 });
