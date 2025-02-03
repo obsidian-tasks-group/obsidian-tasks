@@ -40,15 +40,14 @@ tasks_query_extra_instructions: |-
 
 So we can easily control the query interactively now, via Obsidian's File Properties panel!!!
 
-This search is a proof-of-concept. The `tasks_query_` prefix was chosen to stand for `Task Query`. It is not yet decided whether recognition of these properties will be built in to Tasks in future.
+The `tasks_query_` prefix was chosen to stand for `Task Query`. Interpretation of all of these except `tasks_query_sort_by` and `tasks_query_group_by` is now built in to Tasks.
 
 To try this out:
 
-1. Switch to Reading or Live Preview modes.
-2. Run the `Files: Show file explorer` command.
-3. Modify the query via only editing file properties.
-
-For bonus points, you can copy the placeholder instructions to your Tasks global search, and then you can use these instructions to adjust *all* the searches in your vault that do not use `ignore global query`.
+1. Enable the Obsidian core `Properties view` plugin.
+2. Switch to Reading or Live Preview modes.
+3. Run the `Properties view: Show file properties` command.
+4. Modify the query via only editing file properties.
 
 ```tasks
 # We ignore the global query just to shorten the `explain` output.
