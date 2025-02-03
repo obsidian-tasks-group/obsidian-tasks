@@ -35,7 +35,7 @@ To try this out:
 3. Run the Properties view: Show file properties command.
 4. Modify queries simply by editing file properties with names beginning `tasks_query_`.
 
-### Creating a User Interface for the defaults
+### Meta Bind User Interface
 
 You can use the [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind) plugin to create a User Interface to easily change your Tasks searches:
 
