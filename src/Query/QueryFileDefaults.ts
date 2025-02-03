@@ -35,6 +35,7 @@ export class QueryFileDefaults {
             this.showAndHide(tasksFile, 'tasks_query_show_urgency', 'urgency'),
             this.showAndHide(tasksFile, 'tasks_query_show_backlink', 'backlink'),
             this.showAndHide(tasksFile, 'tasks_query_show_edit_button', 'edit button'),
+            this.showAndHide(tasksFile, 'tasks_query_show_postpone_button', 'postpone button'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }
