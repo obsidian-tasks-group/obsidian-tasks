@@ -101,6 +101,20 @@ tasks_query_extra_instructions:
 > We hope in the future to add an Obsidian Command to add all supported Query
 > File Defaults properties to the current file automatically.
 
+### Obsidian-native User Interface
+
+You can use the Obsidian **File properties** view to customise Tasks searches:
+
+![Obsidian's 'File properties' widget, with checkboxes and a text box to modify query file defaults for a file containing Tasks searches.](../images/query-file-defaults-file-properties-controls.png)
+<span class="caption">Obsidian's **File properties** widget, with checkboxes and a text box to modify query file defaults for a file containing Tasks searches. See [[#Making the property names readable]] for the CSS snippet used to widen property names.</span>
+
+To try this out:
+
+1. Enable the Obsidian core Properties view plugin.
+2. Switch to Reading or Live Preview modes.
+3. Run the Properties view: Show file properties command.
+4. Modify queries simply by editing file properties with names beginning `tasks_query_`.
+
 ### Creating a User Interface for the defaults
 
 You can use the [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind) plugin to create a User Interface to easily change your Tasks searches:
