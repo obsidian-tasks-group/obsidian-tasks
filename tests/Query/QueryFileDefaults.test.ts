@@ -26,8 +26,9 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values true', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_true)).toMatchInlineSnapshot(
-            '"short mode"',
-        );
+        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_true)).toMatchInlineSnapshot(`
+            "explain
+            short mode"
+        `);
     });
 });

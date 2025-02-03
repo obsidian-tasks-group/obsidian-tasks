@@ -9,8 +9,11 @@ export class QueryFileDefaults {
         if (!tasksFile) {
             return '';
         }
-        const instructions = [this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode')];
-        return instructions.join('\n');
+        const instructions = [
+            this.instruction(tasksFile, 'tasks_query_explain', 'explain', ''),
+            this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
+        ];
+        return instructions.filter((i) => i !== '').join('\n');
     }
 
     private instruction(tasksFile: TasksFile, prop: string, trueValue: string, falseValue: string) {
