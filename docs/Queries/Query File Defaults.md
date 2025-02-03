@@ -70,7 +70,6 @@ You can paste these lines in the top of any file containing Tasks queries.
 > already had properties, just copy the text between the `---` lines.
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_supported-properties-empty.approved.yaml -->
-
 ```yaml
 ---
 tasks_query_explain:
@@ -96,7 +95,6 @@ tasks_query_show_task_count:
 tasks_query_extra_instructions:
 ---
 ```
-
 <!-- endSnippet -->
 
 > [!tip]
@@ -114,12 +112,10 @@ tasks_query_extra_instructions:
 The property names are
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/widen-property-labels.css -->
-
 ```css
 /* Make property labels wider, to fit the names of Tasks-specific properties */
 .metadata-content {
     --metadata-label-width: 18em;
 }
 ```
-
 <!-- endSnippet -->
