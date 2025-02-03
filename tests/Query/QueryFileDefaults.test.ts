@@ -31,7 +31,8 @@ describe('QueryFileDefaults', () => {
             hide on completion
             hide created date
             hide start date
-            hide scheduled date"
+            hide scheduled date
+            hide due date"
         `);
     });
 
@@ -48,7 +49,8 @@ describe('QueryFileDefaults', () => {
             show on completion
             show created date
             show start date
-            show scheduled date"
+            show scheduled date
+            show due date"
         `);
     });
 });
