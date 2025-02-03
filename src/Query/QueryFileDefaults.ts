@@ -14,6 +14,7 @@ export class QueryFileDefaults {
             this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
             this.showAndHide(tasksFile, 'tasks_query_show_tree', 'tree'),
             this.showAndHide(tasksFile, 'tasks_query_show_tags', 'tags'),
+            this.showAndHide(tasksFile, 'tasks_query_show_id', 'id'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }

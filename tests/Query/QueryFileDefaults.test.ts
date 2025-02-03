@@ -23,7 +23,8 @@ describe('QueryFileDefaults', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toMatchInlineSnapshot(`
             "full mode
             hide tree
-            hide tags"
+            hide tags
+            hide id"
         `);
     });
 
@@ -32,7 +33,8 @@ describe('QueryFileDefaults', () => {
             "explain
             short mode
             show tree
-            show tags"
+            show tags
+            show id"
         `);
     });
 });
