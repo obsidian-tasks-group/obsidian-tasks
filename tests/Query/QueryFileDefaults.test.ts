@@ -19,8 +19,11 @@ describe('QueryFileDefaults', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_null)).toEqual('');
     });
 
-    it('should generate "short mode" and "full mode" instructions', () => {
+    it('should generate instructions - all values false', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toEqual('full mode');
+    });
+
+    it('should generate instructions - all values true', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_true)).toEqual('short mode');
     });
 });
