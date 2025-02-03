@@ -12,8 +12,8 @@ export class QueryFileDefaults {
         const instructions = [
             this.instruction(tasksFile, 'tasks_query_explain', 'explain', ''),
             this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
-            this.showOrHide(tasksFile, 'tasks_query_show_tree', 'tree'),
-            this.showOrHide(tasksFile, 'tasks_query_show_tags', 'tags'),
+            this.showAndHide(tasksFile, 'tasks_query_show_tree', 'tree'),
+            this.showAndHide(tasksFile, 'tasks_query_show_tags', 'tags'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }
@@ -22,7 +22,7 @@ export class QueryFileDefaults {
         return (tasksFile.hasProperty(prop) && (tasksFile.property(prop) ? trueValue : falseValue)) || '';
     }
 
-    private showOrHide(tasksFile: TasksFile, prop: string, field: string) {
+    private showAndHide(tasksFile: TasksFile, prop: string, field: string) {
         return this.instruction(tasksFile, prop, 'show ' + field, 'hide ' + field);
     }
 
