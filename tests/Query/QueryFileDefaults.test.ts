@@ -26,7 +26,8 @@ describe('QueryFileDefaults', () => {
             hide tags
             hide id
             hide depends on
-            hide priority"
+            hide priority
+            hide recurrence rule"
         `);
     });
 
@@ -38,7 +39,8 @@ describe('QueryFileDefaults', () => {
             show tags
             show id
             show depends on
-            show priority"
+            show priority
+            show recurrence rule"
         `);
     });
 });
