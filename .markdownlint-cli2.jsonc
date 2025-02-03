@@ -1,0 +1,5 @@
+{
+    "globs": [
+        "!contributing/_meta"
+    ]
+}
