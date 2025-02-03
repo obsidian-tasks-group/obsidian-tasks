@@ -46,7 +46,8 @@ export function explainResults(
 
     const tasksBlockQuery = new Query(source, tasksFile);
 
-    if (!tasksBlockQuery.ignoreGlobalQuery) {
+    const ignoreGlobalQuery = !tasksBlockQuery.ignoreGlobalQuery;
+    if (ignoreGlobalQuery) {
         if (globalQuery.hasInstructions()) {
             const globalQueryQuery = globalQuery.query(tasksFile);
             result += explainQuery('Explanation of the global query', globalQueryQuery) + '\n';
