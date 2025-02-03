@@ -39,7 +39,9 @@ describe('QueryFileDefaults', () => {
             hide backlink
             hide edit button
             hide postpone button
-            hide task count"
+            hide task count
+            # press shift-return to add new lines
+            not done"
         `);
     });
 
@@ -64,7 +66,9 @@ describe('QueryFileDefaults', () => {
             show backlink
             show edit button
             show postpone button
-            show task count"
+            show task count
+            # press shift-return to add new lines
+            not done"
         `);
     });
 });
