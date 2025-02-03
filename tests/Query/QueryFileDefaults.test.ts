@@ -37,7 +37,8 @@ describe('QueryFileDefaults', () => {
             hide done date
             hide urgency
             hide backlink
-            hide edit button"
+            hide edit button
+            hide postpone button"
         `);
     });
 
@@ -60,7 +61,8 @@ describe('QueryFileDefaults', () => {
             show done date
             show urgency
             show backlink
-            show edit button"
+            show edit button
+            show postpone button"
         `);
     });
 });
