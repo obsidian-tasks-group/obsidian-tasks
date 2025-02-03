@@ -56,7 +56,6 @@ path includes {{query.file.path}}
 
 # Instructions are listed in the order that items are displayed in Tasks search results
 
-{{const prop = 'tasks_query_show_depends_on';        return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' depends on' || ''}}
 {{const prop = 'tasks_query_show_priority';          return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' priority' || ''}}
 {{const prop = 'tasks_query_show_recurrence_rule';   return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' recurrence rule' || ''}}
 {{const prop = 'tasks_query_show_on_completion';     return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' on completion' || ''}}
