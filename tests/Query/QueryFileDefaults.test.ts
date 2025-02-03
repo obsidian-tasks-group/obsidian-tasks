@@ -38,7 +38,8 @@ describe('QueryFileDefaults', () => {
             hide urgency
             hide backlink
             hide edit button
-            hide postpone button"
+            hide postpone button
+            hide task count"
         `);
     });
 
@@ -62,7 +63,8 @@ describe('QueryFileDefaults', () => {
             show urgency
             show backlink
             show edit button
-            show postpone button"
+            show postpone button
+            show task count"
         `);
     });
 });
