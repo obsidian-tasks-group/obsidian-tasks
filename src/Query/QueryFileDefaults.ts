@@ -9,7 +9,8 @@ export class QueryFileDefaults {
         if (!tasksFile) {
             return '';
         }
-        return this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode');
+        const instructions = [this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode')];
+        return instructions.join('\n');
     }
 
     private instruction(tasksFile: TasksFile, prop: string, trueValue: string, falseValue: string) {
