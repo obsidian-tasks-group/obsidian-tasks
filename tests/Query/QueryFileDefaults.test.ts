@@ -22,7 +22,8 @@ describe('QueryFileDefaults', () => {
     it('should generate instructions - all values false', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toMatchInlineSnapshot(`
             "full mode
-            hide tree"
+            hide tree
+            hide tags"
         `);
     });
 
@@ -30,7 +31,8 @@ describe('QueryFileDefaults', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_true)).toMatchInlineSnapshot(`
             "explain
             short mode
-            show tree"
+            show tree
+            show tags"
         `);
     });
 });

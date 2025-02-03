@@ -13,6 +13,7 @@ export class QueryFileDefaults {
             this.instruction(tasksFile, 'tasks_query_explain', 'explain', ''),
             this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
             this.showOrHide(tasksFile, 'tasks_query_show_tree', 'tree'),
+            this.showOrHide(tasksFile, 'tasks_query_show_tags', 'tags'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }
