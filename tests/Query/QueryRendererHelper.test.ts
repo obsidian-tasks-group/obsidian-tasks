@@ -10,6 +10,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import query_file_defaults_short_mode from '../Obsidian/__test_data__/query_file_defaults_short_mode.json';
 import query_file_defaults_all_options_true from '../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
+import query_file_defaults_ignore_global_query from '../Obsidian/__test_data__/query_file_defaults_ignore_global_query.json';
 
 window.moment = moment;
 
@@ -146,6 +147,33 @@ describe('explain', () => {
             "Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.
+
+              No grouping instructions supplied.
+
+              No sorting instructions supplied.
+            "
+        `);
+    });
+
+    it('should explain a search with global query set but ignored via tasks_query_extra_instructions saying to ignore it', () => {
+        const globalQuery = new GlobalQuery('description includes hello');
+
+        const source = 'description includes I came from the code block';
+        const queryFile = getTasksFileFromMockData(query_file_defaults_ignore_global_query);
+        expect(queryFile.property('tasks_query_extra_instructions')).toContain('ignore global query');
+        const query = new Query(source, queryFile);
+        expect(explainResults(query.source, new GlobalFilter(), globalQuery, queryFile)).toMatchInlineSnapshot(`
+            "Explanation of the query file defaults (from properties/frontmatter in the query's file):
+
+              description includes I came from the tasks_query_extra_instructions property
+
+              No grouping instructions supplied.
+
+              No sorting instructions supplied.
+
+            Explanation of this Tasks code block query:
+
+              description includes I came from the code block
 
               No grouping instructions supplied.
 

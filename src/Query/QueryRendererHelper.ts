@@ -47,7 +47,7 @@ export function explainResults(
     const tasksBlockQuery = new Query(source, tasksFile);
     const queryFileDefaultsQuery = new QueryFileDefaults().query(tasksFile);
 
-    const ignoreGlobalQuery = tasksBlockQuery.ignoreGlobalQuery;
+    const ignoreGlobalQuery = tasksBlockQuery.ignoreGlobalQuery || queryFileDefaultsQuery.ignoreGlobalQuery;
     if (!ignoreGlobalQuery) {
         if (globalQuery.hasInstructions()) {
             const globalQueryQuery = globalQuery.query(tasksFile);
