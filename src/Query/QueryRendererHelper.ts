@@ -56,10 +56,10 @@ export function explainResults(
     const queryFileDefaultsQuery = new QueryFileDefaults().query(tasksFile);
     if (queryFileDefaultsQuery.source !== '') {
         const intro = 'Explanation of the query file defaults (from file properties/frontmatter)';
-        result += `${intro}:\n\n${explainer.explainQuery(queryFileDefaultsQuery)}\n`;
+        result += explainQuery(intro, queryFileDefaultsQuery) + '\n';
     }
 
-    result += `Explanation of this Tasks code block query:\n\n${explainer.explainQuery(tasksBlockQuery)}`;
+    result += explainQuery('Explanation of this Tasks code block query', tasksBlockQuery);
 
     return result;
 }
