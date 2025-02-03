@@ -101,11 +101,35 @@ tasks_query_extra_instructions:
 > We hope in the future to add an Obsidian Command to add all supported Query
 > File Defaults properties to the current file automatically.
 
-### Dynamic editing of options
+### Creating a User Interface for the defaults
 
-> [!tip]
-> We plan to share here how to use the MetaBind plugin to easily edit your Query
-> File Defaults properties.
+You can use the [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind) plugin to create a User Interface to easily change your Tasks searches.
+
+Steps to do this:
+
+1. Install and enable [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind)
+2. Click the Copy button to copy the markdown below.
+3. Paste the markdown in to a note in Obsidian that has one or more Tasks searches
+4. Switch to Live Preview or Reading modes, to see the widgets.
+
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-snippet.approved.md -->
+```md
+explain: `INPUT[toggle:tasks_query_explain]`
+short mode: `INPUT[toggle:tasks_query_short_mode]`
+tree: `INPUT[toggle:tasks_query_show_tree]`
+tags: `INPUT[toggle:tasks_query_show_tags]`
+id: `INPUT[toggle:tasks_query_show_id]` depends on: `INPUT[toggle:tasks_query_show_depends_on]`
+priority: `INPUT[toggle:tasks_query_show_priority]`
+recurrence rule: `INPUT[toggle:tasks_query_show_recurrence_rule]` on completion: `INPUT[toggle:tasks_query_show_on_completion]`
+start date: `INPUT[toggle:tasks_query_show_start_date]` scheduled date: `INPUT[toggle:tasks_query_show_scheduled_date]` due date: `INPUT[toggle:tasks_query_show_due_date]`
+created date: `INPUT[toggle:tasks_query_show_created_date]` cancelled date: `INPUT[toggle:tasks_query_show_cancelled_date]` done date: `INPUT[toggle:tasks_query_show_done_date]`
+urgency: `INPUT[toggle:tasks_query_show_urgency]`
+backlink: `INPUT[toggle:tasks_query_show_backlink]`
+edit button: `INPUT[toggle:tasks_query_show_edit_button]` postpone button: `INPUT[toggle:tasks_query_show_postpone_button]`
+task count: `INPUT[toggle:tasks_query_show_task_count]`
+extra instructions: `INPUT[textArea:tasks_query_extra_instructions]`
+```
+<!-- endSnippet -->
 
 ### Making the property names readable
 
