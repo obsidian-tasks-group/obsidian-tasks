@@ -56,8 +56,6 @@ path includes {{query.file.path}}
 
 # Instructions are listed in the order that items are displayed in Tasks search results
 
-{{const prop = 'tasks_query_explain';                return query.file.hasProperty(prop) ?  ( query.file.property(prop) ? 'explain' : '') : '';}}
-
 {{const prop = 'tasks_query_show_tree';              return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tree' || ''}}
 
 {{const prop = 'tasks_query_show_tags';              return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tags' || ''}}
