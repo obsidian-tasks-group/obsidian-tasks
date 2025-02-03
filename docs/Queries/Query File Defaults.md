@@ -26,7 +26,7 @@ Scenarios:
 You can use the Obsidian **File properties** view to customise Tasks searches:
 
 ![Obsidian's 'File properties' widget, with checkboxes and a text box to modify query file defaults for a file containing Tasks searches.](../images/query-file-defaults-file-properties-controls.png)
-<span class="caption">Obsidian's **File properties** widget, with checkboxes and a text box to modify query file defaults for a file containing Tasks searches. See [[#Making the property names readable]] for the CSS snippet used to widen property names.</span>
+<span class="caption">Obsidian's **File properties** widget, with checkboxes and a text box to modify query file defaults for a file containing Tasks searches. See [[#Widening property names in Obsidian]] for the CSS snippet used to widen property names.</span>
 
 To try this out:
 
@@ -34,6 +34,23 @@ To try this out:
 2. Switch to Reading or Live Preview modes.
 3. Run the Properties view: Show file properties command.
 4. Modify queries simply by editing file properties with names beginning `tasks_query_`.
+
+#### Widening property names in Obsidian
+
+By default, the property names are very narrow in Obsidian.
+
+You can make them wider with the following CSS Snippet.
+
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/widen-property-labels.css -->
+```css
+/* Make property labels wider, to fit the names of Tasks-specific properties */
+.metadata-content {
+    --metadata-label-width: 18em;
+}
+```
+<!-- endSnippet -->
+
+The Obsidian user guide shows how to [use CSS snippets in Obsidian](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets).
 
 ### Meta Bind User Interface
 
@@ -66,19 +83,6 @@ edit button: `INPUT[toggle:tasks_query_show_edit_button]` postpone button: `INPU
 task count: `INPUT[toggle:tasks_query_show_task_count]`
 extra instructions: `INPUT[textArea:tasks_query_extra_instructions]`
 explain: `INPUT[toggle:tasks_query_explain]`
-```
-<!-- endSnippet -->
-
-### Making the property names readable
-
-The property names are
-
-<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/widen-property-labels.css -->
-```css
-/* Make property labels wider, to fit the names of Tasks-specific properties */
-.metadata-content {
-    --metadata-label-width: 18em;
-}
 ```
 <!-- endSnippet -->
 
