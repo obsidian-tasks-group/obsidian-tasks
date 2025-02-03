@@ -59,8 +59,6 @@ path includes {{query.file.path}}
 
 {{const prop = 'tasks_query_sort_by';                return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'sort by ' + g).join('\n') || ''}}
 {{const prop = 'tasks_query_group_by';               return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'group by ' + g).join('\n') || ''}}
-
-{{const prop = 'tasks_query_extra_instructions';     return query.file.hasProperty(prop) ? query.file.property(prop) || '' : '';}}
 ```
 
 ## Can now call functions inside placeholders
