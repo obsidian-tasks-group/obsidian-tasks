@@ -33,6 +33,7 @@ export class QueryFileDefaults {
 
             // Elements of query results:
             this.showAndHide(tasksFile, 'tasks_query_show_urgency', 'urgency'),
+            this.showAndHide(tasksFile, 'tasks_query_show_backlink', 'backlink'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }
