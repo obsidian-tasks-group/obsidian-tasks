@@ -29,6 +29,7 @@ tasks_query_extra_instructions: |-
   # press shift-return to add new lines
   # not done
   # sort by done date
+  # ignore global query
 ---
 
 # Placeholder examples to capture in tests and docs
@@ -50,8 +51,6 @@ To try this out:
 4. Modify the query via only editing file properties.
 
 ```tasks
-# We ignore the global query just to shorten the `explain` output.
-ignore global query
 path includes {{query.file.path}}
 
 # Instructions are listed in the order that items are displayed in Tasks search results
@@ -63,14 +62,12 @@ path includes {{query.file.path}}
 ## Can now call functions inside placeholders
 
 ```tasks
-ignore global query
 path includes {{query.file.path.toUpperCase()}}
 ```
 
 ## Expands to null, but should be an error
 
 ```tasks
-ignore global query
 path includes {{query.file.path}}
 {{query.file.property('stuff')}}
 ```
@@ -78,7 +75,6 @@ path includes {{query.file.path}}
 ## Expands to false, but should be an error
 
 ```tasks
-ignore global query
 path includes {{query.file.path}}
 {{query.file.hasProperty('stuff')}}
 ```
