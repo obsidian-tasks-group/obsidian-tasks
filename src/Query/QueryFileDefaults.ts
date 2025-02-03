@@ -41,7 +41,7 @@ export class QueryFileDefaults {
 
         // Extra instructions
         const prop = 'tasks_query_extra_instructions';
-        const extraInstructions = tasksFile.hasProperty(prop) ? tasksFile.property(prop) || '' : '';
+        const extraInstructions = this.addValue(tasksFile, prop);
         instructions.push(extraInstructions);
 
         return instructions.filter((i) => i !== '').join('\n');
@@ -53,6 +53,10 @@ export class QueryFileDefaults {
 
     private showAndHide(tasksFile: TasksFile, prop: string, field: string) {
         return this.instruction(tasksFile, prop, 'show ' + field, 'hide ' + field);
+    }
+
+    private addValue(tasksFile: TasksFile, prop: string) {
+        return tasksFile.hasProperty(prop) ? tasksFile.property(prop) || '' : '';
     }
 
     public query(tasksFile: OptionalTasksFile) {
