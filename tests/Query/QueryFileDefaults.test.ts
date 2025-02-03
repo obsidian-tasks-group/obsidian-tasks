@@ -33,7 +33,8 @@ describe('QueryFileDefaults', () => {
             hide start date
             hide scheduled date
             hide due date
-            hide cancelled date"
+            hide cancelled date
+            hide done date"
         `);
     });
 
@@ -52,7 +53,8 @@ describe('QueryFileDefaults', () => {
             show start date
             show scheduled date
             show due date
-            show cancelled date"
+            show cancelled date
+            show done date"
         `);
     });
 });

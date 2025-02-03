@@ -29,6 +29,7 @@ export class QueryFileDefaults {
             this.showAndHide(tasksFile, 'tasks_query_show_scheduled_date', 'scheduled date'),
             this.showAndHide(tasksFile, 'tasks_query_show_due_date', 'due date'),
             this.showAndHide(tasksFile, 'tasks_query_show_cancelled_date', 'cancelled date'),
+            this.showAndHide(tasksFile, 'tasks_query_show_done_date', 'done date'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }
