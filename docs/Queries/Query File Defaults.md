@@ -58,49 +58,6 @@ File Defaults.
 }
 ```
 
-### Paste in all supported property values
-
-These are all the properties currently supported by Tasks, as Query File
-Defaults.
-
-You can paste these lines in the top of any file containing Tasks queries.
-
-> [!tip]
-> Make sure your don't add duplicate `---` lines to the file though: if the file
-> already had properties, just copy the text between the `---` lines.
-
-<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_supported-properties-empty.approved.yaml -->
-```yaml
----
-tasks_query_explain:
-tasks_query_short_mode:
-tasks_query_show_tree:
-tasks_query_show_tags:
-tasks_query_show_id:
-tasks_query_show_depends_on:
-tasks_query_show_priority:
-tasks_query_show_recurrence_rule:
-tasks_query_show_on_completion:
-tasks_query_show_created_date:
-tasks_query_show_start_date:
-tasks_query_show_scheduled_date:
-tasks_query_show_due_date:
-tasks_query_show_cancelled_date:
-tasks_query_show_done_date:
-tasks_query_show_urgency:
-tasks_query_show_backlink:
-tasks_query_show_edit_button:
-tasks_query_show_postpone_button:
-tasks_query_show_task_count:
-tasks_query_extra_instructions:
----
-```
-<!-- endSnippet -->
-
-> [!tip]
-> We hope in the future to add an Obsidian Command to add all supported Query
-> File Defaults properties to the current file automatically.
-
 ### Obsidian-native User Interface
 
 You can use the Obsidian **File properties** view to customise Tasks searches:
@@ -161,3 +118,41 @@ The property names are
 }
 ```
 <!-- endSnippet -->
+
+## Technical details
+
+### Supported Query File Defaults property values
+
+These are all the properties currently supported by Tasks, as Query File Defaults.
+
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_supported-properties-empty.approved.yaml -->
+```yaml
+---
+tasks_query_explain:
+tasks_query_short_mode:
+tasks_query_show_tree:
+tasks_query_show_tags:
+tasks_query_show_id:
+tasks_query_show_depends_on:
+tasks_query_show_priority:
+tasks_query_show_recurrence_rule:
+tasks_query_show_on_completion:
+tasks_query_show_created_date:
+tasks_query_show_start_date:
+tasks_query_show_scheduled_date:
+tasks_query_show_due_date:
+tasks_query_show_cancelled_date:
+tasks_query_show_done_date:
+tasks_query_show_urgency:
+tasks_query_show_backlink:
+tasks_query_show_edit_button:
+tasks_query_show_postpone_button:
+tasks_query_show_task_count:
+tasks_query_extra_instructions:
+---
+```
+<!-- endSnippet -->
+
+> [!tip]
+> We hope in the future to add an Obsidian Command to add all supported Query
+> File Defaults properties to the current file automatically.
