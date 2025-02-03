@@ -37,13 +37,10 @@ export class QueryFileDefaults {
             this.showAndHide(tasksFile, 'tasks_query_show_edit_button', 'edit button'),
             this.showAndHide(tasksFile, 'tasks_query_show_postpone_button', 'postpone button'),
             this.showAndHide(tasksFile, 'tasks_query_show_task_count', 'task count'),
+
+            // Extra instructions
+            this.addValue(tasksFile, 'tasks_query_extra_instructions'),
         ];
-
-        // Extra instructions
-        const prop = 'tasks_query_extra_instructions';
-        const extraInstructions = this.addValue(tasksFile, prop);
-        instructions.push(extraInstructions);
-
         return instructions.filter((i) => i !== '').join('\n');
     }
 
