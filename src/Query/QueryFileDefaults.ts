@@ -20,6 +20,7 @@ export class QueryFileDefaults {
             this.showAndHide(tasksFile, 'tasks_query_show_id', 'id'),
             this.showAndHide(tasksFile, 'tasks_query_show_depends_on', 'depends on'),
             this.showAndHide(tasksFile, 'tasks_query_show_priority', 'priority'),
+            this.showAndHide(tasksFile, 'tasks_query_show_recurrence_rule', 'recurrence rule'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }
