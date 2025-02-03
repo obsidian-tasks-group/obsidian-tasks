@@ -15,11 +15,7 @@ Scenarios:
   options, but sometimes it is nice to see more detail, perhaps turning
   `show tree` on and off, depending on your mood.
 
-## Example
-
-## Recognised Properties
-
-## Conveniences
+## Applying instructions to every Tasks search in a file
 
 ### Obsidian-native User Interface
 
