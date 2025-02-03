@@ -10,6 +10,7 @@ export class QueryFileDefaults {
             return '';
         }
         const instructions = [
+            // Instructions are listed in the order that items are displayed in Tasks search results
             this.instruction(tasksFile, 'tasks_query_explain', 'explain', ''),
             this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
             this.showAndHide(tasksFile, 'tasks_query_show_tree', 'tree'),
