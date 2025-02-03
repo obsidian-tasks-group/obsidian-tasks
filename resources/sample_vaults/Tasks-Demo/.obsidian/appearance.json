@@ -5,7 +5,8 @@
     "js-engine-code-block-border",
     "dataview-block",
     "dataview-clare",
-    "dataview-blocks"
+    "dataview-blocks",
+    "widen-property-labels"
   ],
   "accentColor": ""
 }
