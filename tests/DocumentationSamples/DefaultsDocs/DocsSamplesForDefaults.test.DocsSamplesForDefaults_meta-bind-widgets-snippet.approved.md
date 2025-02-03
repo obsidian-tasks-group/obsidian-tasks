@@ -1,5 +1,4 @@
 
-explain: `INPUT[toggle:tasks_query_explain]`
 short mode: `INPUT[toggle:tasks_query_short_mode]`
 tree: `INPUT[toggle:tasks_query_show_tree]`
 tags: `INPUT[toggle:tasks_query_show_tags]`
@@ -13,3 +12,4 @@ backlink: `INPUT[toggle:tasks_query_show_backlink]`
 edit button: `INPUT[toggle:tasks_query_show_edit_button]` postpone button: `INPUT[toggle:tasks_query_show_postpone_button]`
 task count: `INPUT[toggle:tasks_query_show_task_count]`
 extra instructions: `INPUT[textArea:tasks_query_extra_instructions]`
+explain: `INPUT[toggle:tasks_query_explain]`
