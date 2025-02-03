@@ -89,7 +89,7 @@ describe('explain', () => {
 
               No sorting instructions supplied.
 
-            Explanation of the query file defaults (from file properties/frontmatter):
+            Explanation of the query file defaults (from properties/frontmatter in the query's file):
 
               not done
 
