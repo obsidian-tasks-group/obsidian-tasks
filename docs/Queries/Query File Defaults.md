@@ -55,15 +55,16 @@ You can use the [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind) plug
 ![Meta Bind widgets to edit Query File Defaults](../images/query-file-defaults-meta-bind-controls.png)
 <span class="caption">Meta Bind widgets to edit Query File Defaults</span>
 
-Steps to do this, which assume you have already [turned off Obsidian's Restricted mode](https://help.obsidian.md/Extending+Obsidian/Plugin+security):
-
-1. Install and enable [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind)
-2. Click the Copy button to copy the Markdown below.
-3. Paste the markdown in to a note in Obsidian that has one or more Tasks searches.
-4. Switch to Live Preview or Reading modes, to see the widgets.
-5. After experimenting, delete any labels and widgets that you do not need.
-
-![[Meta Bind Query Widgets]]
+> [!info]- Set up Meta Bind widgets to edit Query File Defaults
+> Steps to do this, which assume you have already [turned off Obsidian's Restricted mode](https://help.obsidian.md/Extending+Obsidian/Plugin+security):
+>
+> 1. Install and enable [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind)
+> 2. Click the Copy button to copy the Markdown below.
+> 3. Paste the markdown in to a note in Obsidian that has one or more Tasks searches.
+> 4. Switch to Live Preview or Reading modes, to see the widgets.
+> 5. After experimenting, delete any labels and widgets that you do not need.
+>
+> ![[Meta Bind Query Widgets]]
 
 ## Technical details
 
