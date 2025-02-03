@@ -20,15 +20,17 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values false', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toMatchInlineSnapshot(
-            '"full mode"',
-        );
+        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toMatchInlineSnapshot(`
+            "full mode
+            hide tree"
+        `);
     });
 
     it('should generate instructions - all values true', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_true)).toMatchInlineSnapshot(`
             "explain
-            short mode"
+            short mode
+            show tree"
         `);
     });
 });

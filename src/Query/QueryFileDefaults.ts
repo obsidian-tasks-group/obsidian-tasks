@@ -12,6 +12,7 @@ export class QueryFileDefaults {
         const instructions = [
             this.instruction(tasksFile, 'tasks_query_explain', 'explain', ''),
             this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
+            this.instruction(tasksFile, 'tasks_query_show_tree', 'show tree', 'hide tree'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }
