@@ -36,7 +36,8 @@ describe('QueryFileDefaults', () => {
             hide cancelled date
             hide done date
             hide urgency
-            hide backlink"
+            hide backlink
+            hide edit button"
         `);
     });
 
@@ -58,7 +59,8 @@ describe('QueryFileDefaults', () => {
             show cancelled date
             show done date
             show urgency
-            show backlink"
+            show backlink
+            show edit button"
         `);
     });
 });
