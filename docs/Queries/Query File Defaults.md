@@ -21,43 +21,6 @@ Scenarios:
 
 ## Conveniences
 
-### Set up your types.json file
-
-These are all the types of properties currently supported by Tasks, as Query
-File Defaults.
-
-> [!tip]
-> We plan to make Tasks add these types to the Obsidian vault automatically in
-> future.
-
-```json
-{
-  "types": {
-    "tasks_query_explain": "checkbox",
-    "tasks_query_short_mode": "checkbox",
-    "tasks_query_show_tree": "checkbox",
-    "tasks_query_show_tags": "checkbox",
-    "tasks_query_show_id": "checkbox",
-    "tasks_query_show_depends_on": "checkbox",
-    "tasks_query_show_priority": "checkbox",
-    "tasks_query_show_recurrence_rule": "checkbox",
-    "tasks_query_show_on_completion": "checkbox",
-    "tasks_query_show_created_date": "checkbox",
-    "tasks_query_show_start_date": "checkbox",
-    "tasks_query_show_scheduled_date": "checkbox",
-    "tasks_query_show_due_date": "checkbox",
-    "tasks_query_show_cancelled_date": "checkbox",
-    "tasks_query_show_done_date": "checkbox",
-    "tasks_query_show_urgency": "checkbox",
-    "tasks_query_show_backlink": "checkbox",
-    "tasks_query_show_edit_button": "checkbox",
-    "tasks_query_show_postpone_button": "checkbox",
-    "tasks_query_show_task_count": "checkbox",
-    "tasks_query_extra_instructions": "text"
-  }
-}
-```
-
 ### Obsidian-native User Interface
 
 You can use the Obsidian **File properties** view to customise Tasks searches:
@@ -156,3 +119,40 @@ tasks_query_extra_instructions:
 > [!tip]
 > We hope in the future to add an Obsidian Command to add all supported Query
 > File Defaults properties to the current file automatically.
+
+### Types of Query File Defaults property values
+
+These are all the types of properties currently supported by Tasks, as Query
+File Defaults.
+
+> [!tip]
+> We plan to make Tasks add these types to the Obsidian vault automatically in
+> future.
+
+```json
+{
+  "types": {
+    "tasks_query_explain": "checkbox",
+    "tasks_query_short_mode": "checkbox",
+    "tasks_query_show_tree": "checkbox",
+    "tasks_query_show_tags": "checkbox",
+    "tasks_query_show_id": "checkbox",
+    "tasks_query_show_depends_on": "checkbox",
+    "tasks_query_show_priority": "checkbox",
+    "tasks_query_show_recurrence_rule": "checkbox",
+    "tasks_query_show_on_completion": "checkbox",
+    "tasks_query_show_created_date": "checkbox",
+    "tasks_query_show_start_date": "checkbox",
+    "tasks_query_show_scheduled_date": "checkbox",
+    "tasks_query_show_due_date": "checkbox",
+    "tasks_query_show_cancelled_date": "checkbox",
+    "tasks_query_show_done_date": "checkbox",
+    "tasks_query_show_urgency": "checkbox",
+    "tasks_query_show_backlink": "checkbox",
+    "tasks_query_show_edit_button": "checkbox",
+    "tasks_query_show_postpone_button": "checkbox",
+    "tasks_query_show_task_count": "checkbox",
+    "tasks_query_extra_instructions": "text"
+  }
+}
+```
