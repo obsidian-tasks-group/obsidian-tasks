@@ -9,11 +9,10 @@ export class QueryFileDefaults {
         if (!tasksFile) {
             return '';
         }
-        const field = 'tree';
         const instructions = [
             this.instruction(tasksFile, 'tasks_query_explain', 'explain', ''),
             this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
-            this.showOrHide(tasksFile, 'tasks_query_show_tree', field),
+            this.showOrHide(tasksFile, 'tasks_query_show_tree', 'tree'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }
