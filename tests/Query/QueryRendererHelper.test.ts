@@ -14,7 +14,7 @@ import query_file_defaults_all_options_true from '../Obsidian/__test_data__/quer
 window.moment = moment;
 
 describe('explain', () => {
-    it('should explain a task', () => {
+    it('should explain a search', () => {
         const source = '';
         const query = new Query(source);
         expect(explainResults(query.source, new GlobalFilter(), new GlobalQuery())).toMatchInlineSnapshot(`
@@ -29,7 +29,7 @@ describe('explain', () => {
         `);
     });
 
-    it('should explain a task with global filter active', () => {
+    it('should explain a search with global filter active', () => {
         const globalFilter = new GlobalFilter();
         globalFilter.set('#task');
 
@@ -49,7 +49,7 @@ describe('explain', () => {
         `);
     });
 
-    it('should explain a task with global query active', () => {
+    it('should explain a search with global query active', () => {
         const globalQuery = new GlobalQuery('description includes hello');
 
         const source = '';
@@ -74,7 +74,7 @@ describe('explain', () => {
         `);
     });
 
-    it('should explain a task with global query and query file defaults active', () => {
+    it('should explain a search with global query and query file defaults active', () => {
         const globalQuery = new GlobalQuery('description includes hello');
 
         const source = '';
@@ -108,7 +108,7 @@ describe('explain', () => {
         `);
     });
 
-    it('should explain a task with global query and global filter active', () => {
+    it('should explain a search with global query and global filter active', () => {
         const globalQuery = new GlobalQuery('description includes hello');
         const globalFilter = new GlobalFilter();
         globalFilter.set('#task');
@@ -137,7 +137,7 @@ describe('explain', () => {
         `);
     });
 
-    it('should explain a task with global query set but ignored without the global query', () => {
+    it('should explain a search with global query set but ignored without the global query', () => {
         const globalQuery = new GlobalQuery('description includes hello');
 
         const source = 'ignore global query';
