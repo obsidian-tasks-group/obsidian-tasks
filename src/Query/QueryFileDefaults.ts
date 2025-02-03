@@ -30,6 +30,9 @@ export class QueryFileDefaults {
             this.showAndHide(tasksFile, 'tasks_query_show_due_date', 'due date'),
             this.showAndHide(tasksFile, 'tasks_query_show_cancelled_date', 'cancelled date'),
             this.showAndHide(tasksFile, 'tasks_query_show_done_date', 'done date'),
+
+            // Elements of query results:
+            this.showAndHide(tasksFile, 'tasks_query_show_urgency', 'urgency'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }

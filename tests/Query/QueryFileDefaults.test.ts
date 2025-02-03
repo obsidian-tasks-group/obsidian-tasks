@@ -34,7 +34,8 @@ describe('QueryFileDefaults', () => {
             hide scheduled date
             hide due date
             hide cancelled date
-            hide done date"
+            hide done date
+            hide urgency"
         `);
     });
 
@@ -54,7 +55,8 @@ describe('QueryFileDefaults', () => {
             show scheduled date
             show due date
             show cancelled date
-            show done date"
+            show done date
+            show urgency"
         `);
     });
 });
