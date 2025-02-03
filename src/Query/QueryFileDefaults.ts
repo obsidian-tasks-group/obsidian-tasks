@@ -41,7 +41,8 @@ export class QueryFileDefaults {
 
         // Extra instructions
         const prop = 'tasks_query_extra_instructions';
-        instructions.push(tasksFile.hasProperty(prop) ? tasksFile.property(prop) || '' : '');
+        const extraInstructions = tasksFile.hasProperty(prop) ? tasksFile.property(prop) || '' : '';
+        instructions.push(extraInstructions);
 
         return instructions.filter((i) => i !== '').join('\n');
     }
