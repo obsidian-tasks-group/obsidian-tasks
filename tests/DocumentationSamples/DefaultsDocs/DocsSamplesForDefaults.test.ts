@@ -10,7 +10,7 @@ function extractFrontmatter(data: any) {
     return data.fileContents.slice(pos?.start.offset ?? 0, pos?.end.offset ?? 0);
 }
 
-describe('QueryFileDefaults', () => {
+describe('DocsSamplesForDefaults', () => {
     it('supported-properties-empty', () => {
         expect(extractFrontmatter(query_file_defaults_all_options_null)).toMatchInlineSnapshot(`
             "---
