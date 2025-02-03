@@ -64,7 +64,6 @@ path includes {{query.file.path}}
 
 ```tasks
 ignore global query
-explain
 path includes {{query.file.path.toUpperCase()}}
 ```
 
@@ -72,7 +71,6 @@ path includes {{query.file.path.toUpperCase()}}
 
 ```tasks
 ignore global query
-explain
 path includes {{query.file.path}}
 {{query.file.property('stuff')}}
 ```
@@ -81,7 +79,6 @@ path includes {{query.file.path}}
 
 ```tasks
 ignore global query
-explain
 path includes {{query.file.path}}
 {{query.file.hasProperty('stuff')}}
 ```
