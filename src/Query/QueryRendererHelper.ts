@@ -55,7 +55,7 @@ export function explainResults(
 
     const queryFileDefaultsQuery = new QueryFileDefaults().query(tasksFile);
     if (queryFileDefaultsQuery.source !== '') {
-        const intro = 'Explanation of the query file defaults (from file properties/frontmatter)';
+        const intro = "Explanation of the query file defaults (from properties/frontmatter in the query's file)";
         result += explainQuery(intro, queryFileDefaultsQuery) + '\n';
     }
 
