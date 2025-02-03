@@ -40,12 +40,16 @@ export function explainResults(
     }
 
     const explainer = new Explainer('  ');
+    function explainQuery(label: string, globalQueryQuery: Query) {
+        return `${label}:\n\n${explainer.explainQuery(globalQueryQuery)}`;
+    }
+
     const tasksBlockQuery = new Query(source, tasksFile);
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         if (globalQuery.hasInstructions()) {
             const globalQueryQuery = globalQuery.query(tasksFile);
-            result += `Explanation of the global query:\n\n${explainer.explainQuery(globalQueryQuery)}\n`;
+            result += explainQuery('Explanation of the global query', globalQueryQuery) + '\n';
         }
     }
 
