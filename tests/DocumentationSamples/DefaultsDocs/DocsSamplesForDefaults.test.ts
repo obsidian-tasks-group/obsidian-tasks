@@ -4,7 +4,7 @@ import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
 import query_file_defaults_all_options_null from '../../Obsidian/__test_data__/query_file_defaults_all_options_null.json';
 import query_file_defaults_all_options_true from '../../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
-import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
+import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
 
 function extractFrontmatter(data: any) {
@@ -24,5 +24,9 @@ describe('DocsSamplesForDefaults', () => {
 
     it('meta-bind-widgets-include', () => {
         verifyMarkdownForDocs(new QueryFileDefaults().metaBindPluginWidgets());
+    });
+
+    it('meta-bind-widgets-snippet', () => {
+        verifyMarkdown(new QueryFileDefaults().metaBindPluginWidgets());
     });
 });
