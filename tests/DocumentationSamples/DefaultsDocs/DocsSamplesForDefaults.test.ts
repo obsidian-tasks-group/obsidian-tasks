@@ -22,7 +22,7 @@ describe('DocsSamplesForDefaults', () => {
         verifyWithFileExtension(extractFrontmatter(query_file_defaults_all_options_true), '.yaml');
     });
 
-    it('meta-bind-widgets', () => {
+    it('meta-bind-widgets-include', () => {
         verifyMarkdownForDocs(new QueryFileDefaults().metaBindPluginWidgets());
     });
 });

@@ -37,7 +37,7 @@ tasks_query_extra_instructions: |-
 - [ ] #task Parent task #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
   - [ ] #task Child task
 
-<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-include.approved.md -->
 
 explain: `INPUT[toggle:tasks_query_explain]`
 short mode: `INPUT[toggle:tasks_query_short_mode]`
