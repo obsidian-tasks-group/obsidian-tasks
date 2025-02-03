@@ -13,13 +13,17 @@ export class QueryFileDefaults {
         const instructions = [
             this.instruction(tasksFile, 'tasks_query_explain', 'explain', ''),
             this.instruction(tasksFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
-            this.instruction(tasksFile, 'tasks_query_show_tree', 'show ' + field, 'hide ' + field),
+            this.showOrHide(tasksFile, 'tasks_query_show_tree', field),
         ];
         return instructions.filter((i) => i !== '').join('\n');
     }
 
     private instruction(tasksFile: TasksFile, prop: string, trueValue: string, falseValue: string) {
         return (tasksFile.hasProperty(prop) && (tasksFile.property(prop) ? trueValue : falseValue)) || '';
+    }
+
+    private showOrHide(tasksFile: TasksFile, prop: string, field: string) {
+        return this.instruction(tasksFile, prop, 'show ' + field, 'hide ' + field);
     }
 
     public query(tasksFile: OptionalTasksFile) {
