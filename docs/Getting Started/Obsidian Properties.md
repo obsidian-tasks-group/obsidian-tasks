@@ -183,7 +183,7 @@ group by function \
     return value ? window.moment(value).format('YYYY MMMM') : 'no date'
 ```
 
-## Using Query Properties in Placeholders
+## Using Query Properties in Searches
 
 > [!released]
 > Use of Obsidian properties in placeholders was introduced in Tasks X.Y.Z.
