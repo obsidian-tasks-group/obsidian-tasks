@@ -26,10 +26,19 @@ You can use the Obsidian **File properties** view to customise Tasks searches:
 
 To try this out:
 
-1. Enable the Obsidian core Properties view plugin.
-2. Switch to Reading or Live Preview modes.
-3. Run the Properties view: Show file properties command.
-4. Modify queries simply by editing file properties with names beginning `tasks_query_`.
+1. Show the `File properties` panel:
+    - Enable the Obsidian core Properties view plugin: `Settings` > `Core plugins` > turn on `Properties view`
+    - Switch to Reading or Live Preview modes.
+    - Run the `Properties view: Show file properties` command.
+2. Add one or more `tasks_query_*` properties to the file
+    - Click on `Add property`.
+    - Start typing `tasks_query_`.
+    - Or you can paste in property names from the [[#Supported Query File Defaults property values]] section below.
+    - Press `<Return>` or `<Enter>` to add the property.
+3. Now you can modify these `tasks_query_*` properties to change the behaviour of Tasks searches in this file.
+
+> [!info]
+> We plan to streamline the addition of these properties to notes.
 
 #### Widening property names in Obsidian
 
