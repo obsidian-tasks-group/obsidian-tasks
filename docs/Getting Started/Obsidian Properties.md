@@ -227,6 +227,9 @@ It can be used in queries in several ways:
         return task.description.toLowerCase().includes(propertyLower);
     ```
 
+> [!tip]
+> See also [[Query File Defaults]] for built-in properties automatically supported by Tasks searches.
+
 > [!warning] Using properties with no value
 > Currently when a property in a placeholder is not set:
 >
@@ -235,13 +238,6 @@ It can be used in queries in several ways:
 
 > [!Info]
 > In a future release, we will likely allow Tasks to silently ignore built filters created from properties that have no value.
-
-> [!Info]
-> In a future release, we will likely introduce standard property names for instructions that will automatically be included inside Tasks queries.
-> Perhaps:
->
-> - tasks-search-explain: true/false
-> - tasks-search-limit: number
 
 ## How does Tasks interpret Obsidian Properties?
 
