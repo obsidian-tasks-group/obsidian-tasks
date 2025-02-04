@@ -16,5 +16,6 @@
   "obsidian-kanban",
   "js-engine",
   "table-editor-obsidian",
-  "reveal-active-file-button"
+  "reveal-active-file-button",
+  "obsidian-meta-bind-plugin"
 ]

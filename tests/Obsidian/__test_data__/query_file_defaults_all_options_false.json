@@ -1,0 +1,147 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "tasks_query_explain": false,
+      "tasks_query_extra_instructions": "# press shift-return to add new lines\nnot done",
+      "tasks_query_short_mode": false,
+      "tasks_query_show_backlink": false,
+      "tasks_query_show_cancelled_date": false,
+      "tasks_query_show_created_date": false,
+      "tasks_query_show_depends_on": false,
+      "tasks_query_show_done_date": false,
+      "tasks_query_show_due_date": false,
+      "tasks_query_show_edit_button": false,
+      "tasks_query_show_id": false,
+      "tasks_query_show_on_completion": false,
+      "tasks_query_show_postpone_button": false,
+      "tasks_query_show_priority": false,
+      "tasks_query_show_recurrence_rule": false,
+      "tasks_query_show_scheduled_date": false,
+      "tasks_query_show_start_date": false,
+      "tasks_query_show_tags": false,
+      "tasks_query_show_task_count": false,
+      "tasks_query_show_tree": false,
+      "tasks_query_show_urgency": false
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 24,
+        "offset": 774
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "query_file_defaults_all_options_false",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 39,
+            "line": 26,
+            "offset": 815
+          },
+          "start": {
+            "col": 0,
+            "line": 26,
+            "offset": 776
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -28,
+        "position": {
+          "end": {
+            "col": 59,
+            "line": 28,
+            "offset": 876
+          },
+          "start": {
+            "col": 0,
+            "line": 28,
+            "offset": 817
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 24,
+            "offset": 774
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 39,
+            "line": 26,
+            "offset": 815
+          },
+          "start": {
+            "col": 0,
+            "line": 26,
+            "offset": 776
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 59,
+            "line": 28,
+            "offset": 876
+          },
+          "start": {
+            "col": 0,
+            "line": 28,
+            "offset": 817
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 28,
+            "offset": 828
+          },
+          "start": {
+            "col": 6,
+            "line": 28,
+            "offset": 823
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\ntasks_query_explain: false\ntasks_query_short_mode: false\ntasks_query_show_tree: false\ntasks_query_show_tags: false\ntasks_query_show_id: false\ntasks_query_show_depends_on: false\ntasks_query_show_priority: false\ntasks_query_show_recurrence_rule: false\ntasks_query_show_on_completion: false\ntasks_query_show_created_date: false\ntasks_query_show_start_date: false\ntasks_query_show_scheduled_date: false\ntasks_query_show_due_date: false\ntasks_query_show_cancelled_date: false\ntasks_query_show_done_date: false\ntasks_query_show_urgency: false\ntasks_query_show_backlink: false\ntasks_query_show_edit_button: false\ntasks_query_show_postpone_button: false\ntasks_query_show_task_count: false\ntasks_query_extra_instructions: |-\n  # press shift-return to add new lines\n  not done\n---\n\n# query_file_defaults_all_options_false\n\n- [ ] #task Task in 'query_file_defaults_all_options_false'\n",
+  "filePath": "Test Data/query_file_defaults_all_options_false.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.8.4",
+  "parseFrontMatterTags": null
+}

@@ -3,6 +3,7 @@ import type { GlobalQuery } from '../Config/GlobalQuery';
 import type { OptionalTasksFile } from '../Scripting/TasksFile';
 import { Query } from './Query';
 import { Explainer } from './Explain/Explainer';
+import { QueryFileDefaults } from './QueryFileDefaults';
 
 /**
  * @summary
@@ -39,16 +40,27 @@ export function explainResults(
     }
 
     const explainer = new Explainer('  ');
-    const tasksBlockQuery = new Query(source, tasksFile);
+    function explainQuery(label: string, globalQueryQuery: Query) {
+        return `${label}:\n\n${explainer.explainQuery(globalQueryQuery)}`;
+    }
 
-    if (!tasksBlockQuery.ignoreGlobalQuery) {
+    const tasksBlockQuery = new Query(source, tasksFile);
+    const queryFileDefaultsQuery = new QueryFileDefaults().query(tasksFile);
+
+    const ignoreGlobalQuery = tasksBlockQuery.ignoreGlobalQuery || queryFileDefaultsQuery.ignoreGlobalQuery;
+    if (!ignoreGlobalQuery) {
         if (globalQuery.hasInstructions()) {
             const globalQueryQuery = globalQuery.query(tasksFile);
-            result += `Explanation of the global query:\n\n${explainer.explainQuery(globalQueryQuery)}\n`;
+            result += explainQuery('Explanation of the global query', globalQueryQuery) + '\n';
         }
     }
 
-    result += `Explanation of this Tasks code block query:\n\n${explainer.explainQuery(tasksBlockQuery)}`;
+    if (queryFileDefaultsQuery.source !== '') {
+        const intro = "Explanation of the query file defaults (from properties/frontmatter in the query's file)";
+        result += explainQuery(intro, queryFileDefaultsQuery) + '\n';
+    }
+
+    result += explainQuery('Explanation of this Tasks code block query', tasksBlockQuery);
 
     return result;
 }
@@ -68,7 +80,11 @@ export function getQueryForQueryRenderer(
     globalQuery: GlobalQuery,
     tasksFile: OptionalTasksFile,
 ): Query {
-    const tasksBlockQuery = new Query(source, tasksFile);
+    // Construct query from any recognised properties:
+    const queryFileDefaultsQuery: Query = new QueryFileDefaults().query(tasksFile);
+
+    // Prepend the QueryFileDefaults query - from properties - to the tasks block source:
+    const tasksBlockQuery = queryFileDefaultsQuery.append(new Query(source, tasksFile));
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
         return tasksBlockQuery;
