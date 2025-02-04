@@ -20,8 +20,10 @@ This has a number of benefits:
 - If there is a [[Global Filter|global filter]] enabled, it is included in the explanation.
   - This often explains why tasks are missing from results.
 - If there is a [[Global Query|global query]] enabled, it too is included in the explanation.
-- Any [[Grouping|'group by']] instructions are listed (since Tasks 5.4.0)
-- Any [[Sorting|'sort by']] instructions are listed (since Tasks 5.4.0)
+- Any [[query file defaults]]-generated instructions are listed (since Tasks X.Y.Z).
+  - Note that `show/hide` [[layout]] are not yet shown in `explain` output, however. We are tracking this in [issue #2093](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2093).
+- Any [[Grouping|'group by']] instructions are listed (since Tasks 5.4.0).
+- Any [[Sorting|'sort by']] instructions are listed (since Tasks 5.4.0).
 
 ## Examples
 
