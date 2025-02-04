@@ -192,31 +192,32 @@ group by function \
   - `query.file.hasProperty()` works.
   - `query.file.property()` works.
 
-Imagine this text at the top of the note containing the query:
+Imagine this text at the top of **the note containing the query**:
 
 ```yaml
 ---
 search-text: exercise
+workdate: 2024-04-01
+groupby: group by happens
 ---
 ```
 
-It can be used in your query in two ways:
+It can be used in queries in several ways:
 
-1. A search term from front-matter embedded via placeholder:
+1. A search term from frontmatter embedded via placeholder:
 
     ```javascript
     description includes {{query.file.property('search-text')}}
+    due on or before {{query.file.property('workdate')}}
     ```
 
-1. An entire instruction controlled by front-matter value:
+2. An entire instruction controlled by front-matter value:
 
     ```javascript
-    {{const prop = 'tasks_query_explain';    return query.file.hasProperty(prop) ?  ( query.file.property(prop) ? 'explain' : '') : '';}}
-
-    {{const prop = 'tasks_query_show_tree';  return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tree' || ''}}
+    {{query.file.property('groupby')}}
     ```
 
-1. Scripting, which allows creation of a custom filter, which works when the search term is empty
+3. Scripting, which allows creation of a custom filter, which works when the search term is empty
 
     ```javascript
     filter by function \
