@@ -817,8 +817,6 @@ Problem statement:
 
                     {{query.file.property('task_instruction')}} =>
                     group by filename
-
-                    No sorting instructions supplied.
                     "
                 `);
             });
@@ -831,10 +829,6 @@ Problem statement:
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
                     "{{query.file.property('task_instruction_with_spaces')}} =>
                     path includes query_using_properties
-
-                    No grouping instructions supplied.
-
-                    No sorting instructions supplied.
                     "
                 `);
             });
@@ -860,8 +854,6 @@ group by folder
 
                     {{query.file.property('task_instructions')}}: statement 3 after expansion of placeholder =>
                     group by filename
-
-                    No sorting instructions supplied.
                     "
                 `);
             });
@@ -911,10 +903,6 @@ filter by function \\
                         return roots.includes(task.file.root);
                      =>
                     filter by function if (!query.file.hasProperty('root_dirs_to_search')) { throw Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); } const roots = query.file.property('root_dirs_to_search'); return roots.includes(task.file.root);
-
-                    No grouping instructions supplied.
-
-                    No sorting instructions supplied.
                     "
                 `);
 
@@ -1541,10 +1529,6 @@ describe('Query', () => {
             const query = new Query(source);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "description includes hello
-
-                No grouping instructions supplied.
-
-                No sorting instructions supplied.
                 "
             `);
         });
@@ -1824,10 +1808,6 @@ with \ backslash)`;
                   OR (At least one of):
                     description includes line 1
                     description includes line 1 continued with \\ backslash
-
-                No grouping instructions supplied.
-
-                No sorting instructions supplied.
                 "
             `);
             expect(queryUpperCase.explainQuery()).toMatchInlineSnapshot(`
@@ -1839,10 +1819,6 @@ with \ backslash)`;
                   OR (At least one of):
                     description includes line 1
                     description includes line 1 continued with \\ backslash
-
-                No grouping instructions supplied.
-
-                No sorting instructions supplied.
                 "
             `);
         });

@@ -52,10 +52,6 @@ Explanation of this Tasks code block query:
 
   due before tomorrow =>
     due date is before 2022-10-22 (Saturday 22nd October 2022)
-
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -85,10 +81,6 @@ Explanation of this Tasks code block query:
 
   path regex matches /^Root/Sub-Folder/Sample File\.md/i =>
     using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
-
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -117,10 +109,6 @@ Explanation of this Tasks code block query:
       due before tomorrow =>
         due date is before 2022-10-22 (Saturday 22nd October 2022)
       is recurring
-
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -170,10 +158,6 @@ Explanation of this Tasks code block query:
           description includes 7
         NOT:
           description includes 7
-
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -209,10 +193,6 @@ Explanation of the global query:
 
   heading includes tasks
 
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
-
   At most 50 tasks.
 
 Explanation of this Tasks code block query:
@@ -223,10 +203,6 @@ Explanation of this Tasks code block query:
     due date is between:
       2022-10-24 (Monday 24th October 2022) and
       2022-10-30 (Sunday 30th October 2022) inclusive
-
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -277,10 +253,6 @@ Explanation of this Tasks code block query:
 
   description includes Some Cryptic String {{! Inline comments are removed before search }} =>
   description includes Some Cryptic String
-
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 

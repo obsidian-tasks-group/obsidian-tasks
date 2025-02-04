@@ -38,10 +38,6 @@ Explanation of this Tasks code block query:
     OR (At least one of):
       priority is highest
       priority is lowest
-
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
@@ -81,10 +77,6 @@ Explanation of this Tasks code block query:
 
   description includes \\ =>
   description includes \
-
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
 ```
 <!-- endSnippet -->
 
