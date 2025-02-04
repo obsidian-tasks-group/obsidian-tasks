@@ -183,7 +183,7 @@ group by function \
     return value ? window.moment(value).format('YYYY MMMM') : 'no date'
 ```
 
-## Using Query Properties in Placeholders
+## Using Query Properties in Searches
 
 > [!released]
 > Use of Obsidian properties in placeholders was introduced in Tasks X.Y.Z.
@@ -192,31 +192,32 @@ group by function \
   - `query.file.hasProperty()` works.
   - `query.file.property()` works.
 
-Imagine this text at the top of the note containing the query:
+Imagine this text at the top of **the note containing the query**:
 
 ```yaml
 ---
 search-text: exercise
+workdate: 2024-04-01
+groupby: group by happens
 ---
 ```
 
-It can be used in your query in two ways:
+It can be used in queries in several ways:
 
-1. A search term from front-matter embedded via placeholder:
+1. A search term from frontmatter embedded via placeholder:
 
     ```javascript
     description includes {{query.file.property('search-text')}}
+    due on or before {{query.file.property('workdate')}}
     ```
 
-1. An entire instruction controlled by front-matter value:
+2. An entire instruction controlled by front-matter value:
 
     ```javascript
-    {{const prop = 'TQ-explain';    return query.file.hasProperty(prop) ?  ( query.file.property(prop) ? 'explain' : '') : '';}}
-
-    {{const prop = 'TQ-show-tree';  return query.file.hasProperty(prop) && ( query.file.property(prop) ? 'show' : 'hide') + ' tree' || ''}}
+    {{query.file.property('groupby')}}
     ```
 
-1. Scripting, which allows creation of a custom filter, which works when the search term is empty
+3. Scripting, which allows creation of a custom filter, which works when the search term is empty
 
     ```javascript
     filter by function \
@@ -226,6 +227,9 @@ It can be used in your query in two ways:
         return task.description.toLowerCase().includes(propertyLower);
     ```
 
+> [!tip]
+> See also [[Query File Defaults]] for built-in properties automatically supported by Tasks searches.
+
 > [!warning] Using properties with no value
 > Currently when a property in a placeholder is not set:
 >
@@ -234,13 +238,6 @@ It can be used in your query in two ways:
 
 > [!Info]
 > In a future release, we will likely allow Tasks to silently ignore built filters created from properties that have no value.
-
-> [!Info]
-> In a future release, we will likely introduce standard property names for instructions that will automatically be included inside Tasks queries.
-> Perhaps:
->
-> - tasks-search-explain: true/false
-> - tasks-search-limit: number
 
 ## How does Tasks interpret Obsidian Properties?
 

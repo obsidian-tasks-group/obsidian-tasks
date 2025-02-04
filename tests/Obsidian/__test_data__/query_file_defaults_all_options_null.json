@@ -1,0 +1,147 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "tasks_query_explain": null,
+      "tasks_query_extra_instructions": null,
+      "tasks_query_short_mode": null,
+      "tasks_query_show_backlink": null,
+      "tasks_query_show_cancelled_date": null,
+      "tasks_query_show_created_date": null,
+      "tasks_query_show_depends_on": null,
+      "tasks_query_show_done_date": null,
+      "tasks_query_show_due_date": null,
+      "tasks_query_show_edit_button": null,
+      "tasks_query_show_id": null,
+      "tasks_query_show_on_completion": null,
+      "tasks_query_show_postpone_button": null,
+      "tasks_query_show_priority": null,
+      "tasks_query_show_recurrence_rule": null,
+      "tasks_query_show_scheduled_date": null,
+      "tasks_query_show_start_date": null,
+      "tasks_query_show_tags": null,
+      "tasks_query_show_task_count": null,
+      "tasks_query_show_tree": null,
+      "tasks_query_show_urgency": null
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 22,
+        "offset": 600
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "query_file_defaults_all_options_null",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 24,
+            "offset": 640
+          },
+          "start": {
+            "col": 0,
+            "line": 24,
+            "offset": 602
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -26,
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 26,
+            "offset": 700
+          },
+          "start": {
+            "col": 0,
+            "line": 26,
+            "offset": 642
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 22,
+            "offset": 600
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 24,
+            "offset": 640
+          },
+          "start": {
+            "col": 0,
+            "line": 24,
+            "offset": 602
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 58,
+            "line": 26,
+            "offset": 700
+          },
+          "start": {
+            "col": 0,
+            "line": 26,
+            "offset": 642
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 26,
+            "offset": 653
+          },
+          "start": {
+            "col": 6,
+            "line": 26,
+            "offset": 648
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\ntasks_query_explain:\ntasks_query_short_mode:\ntasks_query_show_tree:\ntasks_query_show_tags:\ntasks_query_show_id:\ntasks_query_show_depends_on:\ntasks_query_show_priority:\ntasks_query_show_recurrence_rule:\ntasks_query_show_on_completion:\ntasks_query_show_created_date:\ntasks_query_show_start_date:\ntasks_query_show_scheduled_date:\ntasks_query_show_due_date:\ntasks_query_show_cancelled_date:\ntasks_query_show_done_date:\ntasks_query_show_urgency:\ntasks_query_show_backlink:\ntasks_query_show_edit_button:\ntasks_query_show_postpone_button:\ntasks_query_show_task_count:\ntasks_query_extra_instructions:\n---\n\n# query_file_defaults_all_options_null\n\n- [ ] #task Task in 'query_file_defaults_all_options_null'\n",
+  "filePath": "Test Data/query_file_defaults_all_options_null.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "obsidianApiVersion": "1.8.4",
+  "parseFrontMatterTags": null
+}
