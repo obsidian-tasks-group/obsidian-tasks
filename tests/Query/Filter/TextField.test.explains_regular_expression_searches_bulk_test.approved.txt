@@ -106,8 +106,4 @@ tags regex does not match /(home|town)/ =>
 tags regex matches /(home|pc_mac|town)/ =>
   using regex:     '(home|pc_mac|town)' with no flags
 
-No grouping instructions supplied.
-
-No sorting instructions supplied.
-
 Error: None

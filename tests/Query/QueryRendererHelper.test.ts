@@ -22,10 +22,6 @@ describe('explain', () => {
             "Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.
-
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
             "
         `);
     });
@@ -42,10 +38,6 @@ describe('explain', () => {
             Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.
-
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
             "
         `);
     });
@@ -60,17 +52,9 @@ describe('explain', () => {
 
               description includes hello
 
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
-
             Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.
-
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
             "
         `);
     });
@@ -86,25 +70,13 @@ describe('explain', () => {
 
               description includes hello
 
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
-
             Explanation of the query file defaults (from properties/frontmatter in the query's file):
 
               not done
 
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
-
             Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.
-
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
             "
         `);
     });
@@ -123,17 +95,9 @@ describe('explain', () => {
 
               description includes hello
 
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
-
             Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.
-
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
             "
         `);
     });
@@ -147,10 +111,6 @@ describe('explain', () => {
             "Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.
-
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
             "
         `);
     });
@@ -167,17 +127,9 @@ describe('explain', () => {
 
               description includes I came from the tasks_query_extra_instructions property
 
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
-
             Explanation of this Tasks code block query:
 
               description includes I came from the code block
-
-              No grouping instructions supplied.
-
-              No sorting instructions supplied.
             "
         `);
     });
