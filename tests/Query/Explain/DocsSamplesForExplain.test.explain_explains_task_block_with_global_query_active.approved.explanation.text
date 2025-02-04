@@ -2,10 +2,6 @@ Explanation of the global query:
 
   heading includes tasks
 
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.
-
   At most 50 tasks.
 
 Explanation of this Tasks code block query:
@@ -16,7 +12,3 @@ Explanation of this Tasks code block query:
     due date is between:
       2022-10-24 (Monday 24th October 2022) and
       2022-10-30 (Sunday 30th October 2022) inclusive
-
-  No grouping instructions supplied.
-
-  No sorting instructions supplied.

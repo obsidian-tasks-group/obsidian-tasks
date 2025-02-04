@@ -58,7 +58,7 @@ export class Explainer {
 
     public explainGroups(query: Query) {
         if (query.grouping.length === 0) {
-            return this.indent('No grouping instructions supplied.\n');
+            return '';
         }
 
         return query.grouping.map((group) => group.statement.explainStatement(this.indentation)).join('\n\n') + '\n';
@@ -66,7 +66,7 @@ export class Explainer {
 
     public explainSorters(query: Query) {
         if (query.sorting.length === 0) {
-            return this.indent('No sorting instructions supplied.\n');
+            return '';
         }
 
         return query.sorting.map((sort) => sort.statement.explainStatement(this.indentation)).join('\n\n') + '\n';
