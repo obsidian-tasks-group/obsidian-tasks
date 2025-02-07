@@ -6,6 +6,7 @@ import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
+import { replaceTaskWithTasks } from '../Obsidian/File';
 import { explainResults, getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
@@ -349,6 +350,19 @@ export class QueryResultsRenderer {
             const checkbox = createAndAppendElement('input', li);
             checkbox.classList.add('task-list-item-checkbox');
             checkbox.type = 'checkbox';
+
+            checkbox.addEventListener('click', (event: MouseEvent) => {
+                event.preventDefault();
+                // It is required to stop propagation so that obsidian won't write the file with the
+                // checkbox (un)checked. Obsidian would write after us and overwrite our change.
+                event.stopPropagation();
+
+                // Should be re-rendered as enabled after update in file.
+                checkbox.disabled = true;
+
+                const checkedOrUncheckedListItem = listItem.checkOrUncheck();
+                replaceTaskWithTasks({ originalTask: listItem, newTasks: checkedOrUncheckedListItem });
+            });
 
             if (listItem.statusCharacter !== ' ') {
                 checkbox.checked = true;
