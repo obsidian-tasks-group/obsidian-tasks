@@ -348,9 +348,20 @@ export class QueryResultsRenderer {
         if (listItem.statusCharacter) {
             li.classList.add('task-list-item');
 
+            // Set these to be compatible with stock obsidian lists:
+            li.setAttribute('data-task', listItem.statusCharacter.trim());
+            // Trim to ensure empty attribute for space. Same way as obsidian.
+            // Commented out because list item doesn't yet know its line number.
+            // li.setAttribute('data-line', taskIndex.toString());
+
             const checkbox = createAndAppendElement('input', li);
             checkbox.classList.add('task-list-item-checkbox');
             checkbox.type = 'checkbox';
+
+            if (listItem.statusCharacter !== ' ') {
+                checkbox.checked = true;
+                li.classList.add('is-checked');
+            }
         }
 
         const span = createAndAppendElement('span', li);
