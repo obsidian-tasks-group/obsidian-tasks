@@ -345,6 +345,14 @@ export class QueryResultsRenderer {
     private async addListItem(taskList: HTMLUListElement, listItem: ListItem) {
         const li = createAndAppendElement('li', taskList);
 
+        if (listItem.statusCharacter) {
+            li.classList.add('task-list-item');
+
+            const checkbox = createAndAppendElement('input', li);
+            checkbox.classList.add('task-list-item-checkbox');
+            checkbox.type = 'checkbox';
+        }
+
         const span = createAndAppendElement('span', li);
         await this.textRenderer(
             listItem.description,
@@ -352,6 +360,15 @@ export class QueryResultsRenderer {
             listItem.findClosestParentTask()?.path ?? '',
             this.obsidianComponent,
         );
+
+        // Unwrap the p-tag that was created by the MarkdownRenderer:
+        const pElement = span.querySelector('p');
+        if (pElement !== null) {
+            while (pElement.firstChild) {
+                span.insertBefore(pElement.firstChild, pElement);
+            }
+            pElement.remove();
+        }
 
         return li;
     }
