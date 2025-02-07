@@ -495,6 +495,7 @@ describe('cache', () => {
             "-  [ ] #task task parent
                 - [ ] #task task child
                 - [ ] non-task child
+                - [x] non-task child status x
                 - list item child
 
             \`\`\`tasks
@@ -510,6 +511,7 @@ describe('cache', () => {
             "-  [ ] #task task parent : Task
                 - [ ] #task task child : Task
                 - [ ] non-task child : ListItem
+                - [x] non-task child status x : ListItem
                 - list item child : ListItem
             "
         `);
