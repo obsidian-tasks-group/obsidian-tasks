@@ -77,11 +77,11 @@ describe('QueryFileDefaults', () => {
         `);
     });
 
-    it('should report a known property type', () => {
+    it('should provide a known property type', () => {
         expect(new QueryFileDefaults().propertyType('TQ_show_tree')).toEqual('checkbox');
     });
 
-    it('should report an unknown property type as undefined', () => {
+    it('should provide an unknown property type as undefined', () => {
         expect(new QueryFileDefaults().propertyType('TQ_any_old_property')).toBeUndefined();
     });
 
