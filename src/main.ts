@@ -62,6 +62,7 @@ export default class TasksPlugin extends Plugin {
         this.inlineRenderer = new InlineRenderer({ plugin: this });
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
 
+        // Update types.json.
         this.setObsidianPropertiesTypes();
 
         this.registerEditorExtension(newLivePreviewExtension());
