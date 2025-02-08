@@ -38,18 +38,42 @@ export class QueryFileDefaults {
                 display: 'tree',
                 handler: Handler.ShowAndHide,
             },
+
+            // Fields that appear before date values:
+            {
+                name: 'tasks_query_show_tags',
+                display: 'tags',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_id',
+                display: 'id',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_depends_on',
+                display: 'depends on',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_priority',
+                display: 'priority',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_recurrence_rule',
+                display: 'recurrence rule',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_on_completion',
+                display: 'on completion',
+                handler: Handler.ShowAndHide,
+            },
         ];
 
         const instructions = [
             ...queryProperties.map((prop) => this.generateInstruction(queryFile, prop)),
-
-            // Fields that appear before date values:
-            this.showAndHide(queryFile, 'tasks_query_show_tags', 'tags'),
-            this.showAndHide(queryFile, 'tasks_query_show_id', 'id'),
-            this.showAndHide(queryFile, 'tasks_query_show_depends_on', 'depends on'),
-            this.showAndHide(queryFile, 'tasks_query_show_priority', 'priority'),
-            this.showAndHide(queryFile, 'tasks_query_show_recurrence_rule', 'recurrence rule'),
-            this.showAndHide(queryFile, 'tasks_query_show_on_completion', 'on completion'),
 
             // Date fields:
             this.showAndHide(queryFile, 'tasks_query_show_created_date', 'created date'),
