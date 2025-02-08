@@ -160,6 +160,14 @@ export class QueryFileDefaults {
         return new Query(this.source(queryFile), queryFile);
     }
 
+    public allPropertyNames(): string[] {
+        return queryProperties.map((prop) => prop.name);
+    }
+
+    public allPropertyNamesSorted(): string[] {
+        return this.allPropertyNames().sort((a, b) => a.localeCompare(b));
+    }
+
     /**
      * Return text that creates MetaBind widgets for users to edit query file defaults.
      */

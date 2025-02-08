@@ -137,7 +137,7 @@
       }
     ]
   },
-  "fileContents": "---\nTQ_explain: false\nTQ_short_mode: false\nTQ_show_tree: false\nTQ_show_tags: false\nTQ_show_id: false\nTQ_show_depends_on: false\nTQ_show_priority: false\nTQ_show_recurrence_rule: false\nTQ_show_on_completion: false\nTQ_show_created_date: false\nTQ_show_start_date: false\nTQ_show_scheduled_date: false\nTQ_show_due_date: false\nTQ_show_cancelled_date: false\nTQ_show_done_date: false\nTQ_show_urgency: false\nTQ_show_backlink: false\nTQ_show_edit_button: false\nTQ_show_postpone_button: false\nTQ_show_task_count: false\nTQ_extra_instructions: |-\n  # press shift-return to add new lines\n  not done\n---\n\n# query_file_defaults_all_options_false\n\n- [ ] #task Task in 'query_file_defaults_all_options_false'\n",
+  "fileContents": "---\nTQ_explain: false\nTQ_extra_instructions: |-\n  # press shift-return to add new lines\n  not done\nTQ_short_mode: false\nTQ_show_backlink: false\nTQ_show_cancelled_date: false\nTQ_show_created_date: false\nTQ_show_depends_on: false\nTQ_show_done_date: false\nTQ_show_due_date: false\nTQ_show_edit_button: false\nTQ_show_id: false\nTQ_show_on_completion: false\nTQ_show_postpone_button: false\nTQ_show_priority: false\nTQ_show_recurrence_rule: false\nTQ_show_scheduled_date: false\nTQ_show_start_date: false\nTQ_show_tags: false\nTQ_show_task_count: false\nTQ_show_tree: false\nTQ_show_urgency: false\n---\n\n# query_file_defaults_all_options_false\n\n- [ ] #task Task in 'query_file_defaults_all_options_false'\n",
   "filePath": "Test Data/query_file_defaults_all_options_false.md",
   "getAllTags": [
     "#task"

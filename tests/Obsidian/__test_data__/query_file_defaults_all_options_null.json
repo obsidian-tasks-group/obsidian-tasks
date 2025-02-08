@@ -137,7 +137,7 @@
       }
     ]
   },
-  "fileContents": "---\nTQ_explain:\nTQ_short_mode:\nTQ_show_tree:\nTQ_show_tags:\nTQ_show_id:\nTQ_show_depends_on:\nTQ_show_priority:\nTQ_show_recurrence_rule:\nTQ_show_on_completion:\nTQ_show_created_date:\nTQ_show_start_date:\nTQ_show_scheduled_date:\nTQ_show_due_date:\nTQ_show_cancelled_date:\nTQ_show_done_date:\nTQ_show_urgency:\nTQ_show_backlink:\nTQ_show_edit_button:\nTQ_show_postpone_button:\nTQ_show_task_count:\nTQ_extra_instructions:\n---\n\n# query_file_defaults_all_options_null\n\n- [ ] #task Task in 'query_file_defaults_all_options_null'\n",
+  "fileContents": "---\nTQ_explain:\nTQ_extra_instructions:\nTQ_short_mode:\nTQ_show_backlink:\nTQ_show_cancelled_date:\nTQ_show_created_date:\nTQ_show_depends_on:\nTQ_show_done_date:\nTQ_show_due_date:\nTQ_show_edit_button:\nTQ_show_id:\nTQ_show_on_completion:\nTQ_show_postpone_button:\nTQ_show_priority:\nTQ_show_recurrence_rule:\nTQ_show_scheduled_date:\nTQ_show_start_date:\nTQ_show_tags:\nTQ_show_task_count:\nTQ_show_tree:\nTQ_show_urgency:\n---\n\n# query_file_defaults_all_options_null\n\n- [ ] #task Task in 'query_file_defaults_all_options_null'\n",
   "filePath": "Test Data/query_file_defaults_all_options_null.md",
   "getAllTags": [
     "#task"

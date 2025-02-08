@@ -1,8 +1,9 @@
-import type { App, Editor, MarkdownFileInfo, MarkdownView, View } from 'obsidian';
+import type { App, Editor, MarkdownFileInfo, MarkdownView, TFile, View } from 'obsidian';
 import type TasksPlugin from '../main';
 import { createOrEdit } from './CreateOrEdit';
 
 import { toggleDone } from './ToggleDone';
+import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
 
 export class Commands {
     private readonly plugin: TasksPlugin;
@@ -30,5 +31,30 @@ export class Commands {
             icon: 'check-in-circle',
             editorCheckCallback: toggleDone,
         });
+
+        plugin.addCommand({
+            id: 'add-query-file-defaults-properties',
+            name: 'Add all Query File Defaults properties',
+            icon: 'settings',
+            checkCallback: (checking: boolean) => {
+                const activeFile = this.app.workspace.getActiveFile();
+                if (!activeFile) {
+                    return false;
+                }
+                if (activeFile.extension !== 'md') {
+                    return false;
+                }
+
+                if (!checking) {
+                    this.ensureQueryFileDefaultsFrontmatter(activeFile).catch(console.error);
+                }
+                return true;
+            },
+        });
+    }
+
+    async ensureQueryFileDefaultsFrontmatter(file: TFile): Promise<void> {
+        const { app } = this;
+        await ensureQueryFileDefaultsInFrontmatter(app, file);
     }
 }
