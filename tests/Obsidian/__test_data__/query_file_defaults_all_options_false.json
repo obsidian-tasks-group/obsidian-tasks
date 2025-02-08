@@ -1,34 +1,34 @@
 {
   "cachedMetadata": {
     "frontmatter": {
-      "tasks_query_explain": false,
-      "tasks_query_extra_instructions": "# press shift-return to add new lines\nnot done",
-      "tasks_query_short_mode": false,
-      "tasks_query_show_backlink": false,
-      "tasks_query_show_cancelled_date": false,
-      "tasks_query_show_created_date": false,
-      "tasks_query_show_depends_on": false,
-      "tasks_query_show_done_date": false,
-      "tasks_query_show_due_date": false,
-      "tasks_query_show_edit_button": false,
-      "tasks_query_show_id": false,
-      "tasks_query_show_on_completion": false,
-      "tasks_query_show_postpone_button": false,
-      "tasks_query_show_priority": false,
-      "tasks_query_show_recurrence_rule": false,
-      "tasks_query_show_scheduled_date": false,
-      "tasks_query_show_start_date": false,
-      "tasks_query_show_tags": false,
-      "tasks_query_show_task_count": false,
-      "tasks_query_show_tree": false,
-      "tasks_query_show_urgency": false
+      "TQ_explain": false,
+      "TQ_extra_instructions": "# press shift-return to add new lines\nnot done",
+      "TQ_short_mode": false,
+      "TQ_show_backlink": false,
+      "TQ_show_cancelled_date": false,
+      "TQ_show_created_date": false,
+      "TQ_show_depends_on": false,
+      "TQ_show_done_date": false,
+      "TQ_show_due_date": false,
+      "TQ_show_edit_button": false,
+      "TQ_show_id": false,
+      "TQ_show_on_completion": false,
+      "TQ_show_postpone_button": false,
+      "TQ_show_priority": false,
+      "TQ_show_recurrence_rule": false,
+      "TQ_show_scheduled_date": false,
+      "TQ_show_start_date": false,
+      "TQ_show_tags": false,
+      "TQ_show_task_count": false,
+      "TQ_show_tree": false,
+      "TQ_show_urgency": false
     },
     "frontmatterLinks": [],
     "frontmatterPosition": {
       "end": {
         "col": 3,
         "line": 24,
-        "offset": 774
+        "offset": 585
       },
       "start": {
         "col": 0,
@@ -44,12 +44,12 @@
           "end": {
             "col": 39,
             "line": 26,
-            "offset": 815
+            "offset": 626
           },
           "start": {
             "col": 0,
             "line": 26,
-            "offset": 776
+            "offset": 587
           }
         }
       }
@@ -61,12 +61,12 @@
           "end": {
             "col": 59,
             "line": 28,
-            "offset": 876
+            "offset": 687
           },
           "start": {
             "col": 0,
             "line": 28,
-            "offset": 817
+            "offset": 628
           }
         },
         "task": " "
@@ -78,7 +78,7 @@
           "end": {
             "col": 3,
             "line": 24,
-            "offset": 774
+            "offset": 585
           },
           "start": {
             "col": 0,
@@ -93,12 +93,12 @@
           "end": {
             "col": 39,
             "line": 26,
-            "offset": 815
+            "offset": 626
           },
           "start": {
             "col": 0,
             "line": 26,
-            "offset": 776
+            "offset": 587
           }
         },
         "type": "heading"
@@ -108,12 +108,12 @@
           "end": {
             "col": 59,
             "line": 28,
-            "offset": 876
+            "offset": 687
           },
           "start": {
             "col": 0,
             "line": 28,
-            "offset": 817
+            "offset": 628
           }
         },
         "type": "list"
@@ -125,19 +125,19 @@
           "end": {
             "col": 11,
             "line": 28,
-            "offset": 828
+            "offset": 639
           },
           "start": {
             "col": 6,
             "line": 28,
-            "offset": 823
+            "offset": 634
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\ntasks_query_explain: false\ntasks_query_short_mode: false\ntasks_query_show_tree: false\ntasks_query_show_tags: false\ntasks_query_show_id: false\ntasks_query_show_depends_on: false\ntasks_query_show_priority: false\ntasks_query_show_recurrence_rule: false\ntasks_query_show_on_completion: false\ntasks_query_show_created_date: false\ntasks_query_show_start_date: false\ntasks_query_show_scheduled_date: false\ntasks_query_show_due_date: false\ntasks_query_show_cancelled_date: false\ntasks_query_show_done_date: false\ntasks_query_show_urgency: false\ntasks_query_show_backlink: false\ntasks_query_show_edit_button: false\ntasks_query_show_postpone_button: false\ntasks_query_show_task_count: false\ntasks_query_extra_instructions: |-\n  # press shift-return to add new lines\n  not done\n---\n\n# query_file_defaults_all_options_false\n\n- [ ] #task Task in 'query_file_defaults_all_options_false'\n",
+  "fileContents": "---\nTQ_explain: false\nTQ_short_mode: false\nTQ_show_tree: false\nTQ_show_tags: false\nTQ_show_id: false\nTQ_show_depends_on: false\nTQ_show_priority: false\nTQ_show_recurrence_rule: false\nTQ_show_on_completion: false\nTQ_show_created_date: false\nTQ_show_start_date: false\nTQ_show_scheduled_date: false\nTQ_show_due_date: false\nTQ_show_cancelled_date: false\nTQ_show_done_date: false\nTQ_show_urgency: false\nTQ_show_backlink: false\nTQ_show_edit_button: false\nTQ_show_postpone_button: false\nTQ_show_task_count: false\nTQ_extra_instructions: |-\n  # press shift-return to add new lines\n  not done\n---\n\n# query_file_defaults_all_options_false\n\n- [ ] #task Task in 'query_file_defaults_all_options_false'\n",
   "filePath": "Test Data/query_file_defaults_all_options_false.md",
   "getAllTags": [
     "#task"
