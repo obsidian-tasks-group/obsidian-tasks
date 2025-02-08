@@ -18,6 +18,7 @@ import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
 import { tasksApiV1 } from './Api';
 import { GlobalFilter } from './Config/GlobalFilter';
+import { QueryFileDefaults } from './Query/QueryFileDefaults';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -61,6 +62,8 @@ export default class TasksPlugin extends Plugin {
         this.inlineRenderer = new InlineRenderer({ plugin: this });
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
 
+        this.setObsidianPropertiesTypes();
+
         this.registerEditorExtension(newLivePreviewExtension());
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
         new Commands({ plugin: this });
@@ -99,6 +102,30 @@ export default class TasksPlugin extends Plugin {
             return [] as Task[];
         } else {
             return this.cache.getTasks();
+        }
+    }
+
+    private setObsidianPropertiesTypes() {
+        // Credit: this code based on ideas...
+        // by:
+        //      @SkepticMystic
+        // in:
+        //      https://github.com/SkepticMystic/breadcrumbs/blob/d380407678ce64f5668550d270b1035bc1a767f8/src/main.ts#L47-L64
+        try {
+            // @ts-expect-error TS2339: Property metadataTypeManager does not exist on type App
+            const metadataTypeManager = this.app.metadataTypeManager;
+            const all_properties = metadataTypeManager.getAllProperties();
+
+            const defaults = new QueryFileDefaults();
+            for (const field of defaults.allPropertyNamesSorted()) {
+                const property_type = defaults.propertyType(field);
+                if (all_properties[field]?.type === property_type) {
+                    continue;
+                }
+                metadataTypeManager.setType(field, property_type);
+            }
+        } catch (error) {
+            console.error('setObsidianPropertiesTypes error', error);
         }
     }
 }
