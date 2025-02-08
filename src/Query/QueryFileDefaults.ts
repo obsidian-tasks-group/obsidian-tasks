@@ -1,6 +1,11 @@
 import type { OptionalTasksFile, TasksFile } from '../Scripting/TasksFile';
 import { Query } from './Query';
 
+// Enum for handler types
+enum Handler {
+    Instruction = 'instruction',
+}
+
 /**
  * Construct query instructions from Obsidian properties in the query file
  */
@@ -9,9 +14,21 @@ export class QueryFileDefaults {
         if (!queryFile) {
             return '';
         }
+
+        // Instructions are listed in the order that items are displayed in Tasks search results
+        // TODO Migrate all properties to this storage:
+        const queryProperties = [
+            {
+                name: 'tasks_query_explain',
+                display: 'explain',
+                handler: Handler.Instruction,
+                trueValue: 'explain',
+                falseValue: '',
+            },
+        ];
+
         const instructions = [
-            // Instructions are listed in the order that items are displayed in Tasks search results
-            this.instruction(queryFile, 'tasks_query_explain', 'explain', ''),
+            ...queryProperties.map((prop) => this.generateInstruction(queryFile, prop)),
             this.instruction(queryFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
             this.showAndHide(queryFile, 'tasks_query_show_tree', 'tree'),
 
@@ -42,6 +59,15 @@ export class QueryFileDefaults {
             this.addValue(queryFile, 'tasks_query_extra_instructions'),
         ];
         return instructions.filter((i) => i !== '').join('\n');
+    }
+
+    private generateInstruction(queryFile: TasksFile, prop: any) {
+        switch (prop.handler) {
+            case Handler.Instruction:
+                return this.instruction(queryFile, prop.name, prop.trueValue, prop.falseValue);
+            default:
+                throw new Error('Unknown handler type: ' + prop.handler + '.');
+        }
     }
 
     private instruction(queryFile: TasksFile, prop: string, trueValue: string, falseValue: string) {
