@@ -1,6 +1,131 @@
 import type { OptionalTasksFile, TasksFile } from '../Scripting/TasksFile';
 import { Query } from './Query';
 
+// Enum for handler types
+enum Handler {
+    Instruction = 'instruction',
+    ShowAndHide = 'showAndHide',
+    AddValue = 'addValue',
+}
+
+// Instructions are listed in the order that items are displayed in Tasks search results
+const queryProperties = [
+    {
+        name: 'tasks_query_explain',
+        display: 'explain',
+        handler: Handler.Instruction,
+        trueValue: 'explain',
+        falseValue: '',
+    },
+    {
+        name: 'tasks_query_short_mode',
+        display: 'short mode',
+        handler: Handler.Instruction,
+        trueValue: 'short mode',
+        falseValue: 'full mode',
+    },
+    {
+        name: 'tasks_query_show_tree',
+        display: 'tree',
+        handler: Handler.ShowAndHide,
+    },
+
+    // Fields that appear before date values:
+    {
+        name: 'tasks_query_show_tags',
+        display: 'tags',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_id',
+        display: 'id',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_depends_on',
+        display: 'depends on',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_priority',
+        display: 'priority',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_recurrence_rule',
+        display: 'recurrence rule',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_on_completion',
+        display: 'on completion',
+        handler: Handler.ShowAndHide,
+    },
+
+    // Date fields:
+    {
+        name: 'tasks_query_show_created_date',
+        display: 'created date',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_start_date',
+        display: 'start date',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_scheduled_date',
+        display: 'scheduled date',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_due_date',
+        display: 'due date',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_cancelled_date',
+        display: 'cancelled date',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_done_date',
+        display: 'done date',
+        handler: Handler.ShowAndHide,
+    },
+
+    // Elements of query results:
+    {
+        name: 'tasks_query_show_urgency',
+        display: 'urgency',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_backlink',
+        display: 'backlink',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_edit_button',
+        display: 'edit button',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_postpone_button',
+        display: 'postpone button',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_show_task_count',
+        display: 'task count',
+        handler: Handler.ShowAndHide,
+    },
+    {
+        name: 'tasks_query_extra_instructions',
+        handler: Handler.AddValue,
+    },
+];
+
 /**
  * Construct query instructions from Obsidian properties in the query file
  */
@@ -9,51 +134,24 @@ export class QueryFileDefaults {
         if (!queryFile) {
             return '';
         }
-        const instructions = [
-            // Instructions are listed in the order that items are displayed in Tasks search results
-            this.instruction(queryFile, 'tasks_query_explain', 'explain', ''),
-            this.instruction(queryFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
-            this.showAndHide(queryFile, 'tasks_query_show_tree', 'tree'),
 
-            // Fields that appear before date values:
-            this.showAndHide(queryFile, 'tasks_query_show_tags', 'tags'),
-            this.showAndHide(queryFile, 'tasks_query_show_id', 'id'),
-            this.showAndHide(queryFile, 'tasks_query_show_depends_on', 'depends on'),
-            this.showAndHide(queryFile, 'tasks_query_show_priority', 'priority'),
-            this.showAndHide(queryFile, 'tasks_query_show_recurrence_rule', 'recurrence rule'),
-            this.showAndHide(queryFile, 'tasks_query_show_on_completion', 'on completion'),
-
-            // Date fields:
-            this.showAndHide(queryFile, 'tasks_query_show_created_date', 'created date'),
-            this.showAndHide(queryFile, 'tasks_query_show_start_date', 'start date'),
-            this.showAndHide(queryFile, 'tasks_query_show_scheduled_date', 'scheduled date'),
-            this.showAndHide(queryFile, 'tasks_query_show_due_date', 'due date'),
-            this.showAndHide(queryFile, 'tasks_query_show_cancelled_date', 'cancelled date'),
-            this.showAndHide(queryFile, 'tasks_query_show_done_date', 'done date'),
-
-            // Elements of query results:
-            this.showAndHide(queryFile, 'tasks_query_show_urgency', 'urgency'),
-            this.showAndHide(queryFile, 'tasks_query_show_backlink', 'backlink'),
-            this.showAndHide(queryFile, 'tasks_query_show_edit_button', 'edit button'),
-            this.showAndHide(queryFile, 'tasks_query_show_postpone_button', 'postpone button'),
-            this.showAndHide(queryFile, 'tasks_query_show_task_count', 'task count'),
-
-            // Extra instructions
-            this.addValue(queryFile, 'tasks_query_extra_instructions'),
-        ];
+        const instructions = queryProperties.map((prop) => this.generateInstruction(queryFile, prop));
         return instructions.filter((i) => i !== '').join('\n');
     }
 
-    private instruction(queryFile: TasksFile, prop: string, trueValue: string, falseValue: string) {
-        return (queryFile.hasProperty(prop) && (queryFile.property(prop) ? trueValue : falseValue)) || '';
-    }
-
-    private showAndHide(queryFile: TasksFile, prop: string, field: string) {
-        return this.instruction(queryFile, prop, 'show ' + field, 'hide ' + field);
-    }
-
-    private addValue(queryFile: TasksFile, prop: string) {
-        return queryFile.hasProperty(prop) ? queryFile.property(prop) || '' : '';
+    private generateInstruction(queryFile: TasksFile, prop: any) {
+        const hasProperty = queryFile.hasProperty(prop.name);
+        const value = queryFile.property(prop.name);
+        switch (prop.handler) {
+            case Handler.Instruction:
+                return (hasProperty && (value ? prop.trueValue : prop.falseValue)) || '';
+            case Handler.ShowAndHide:
+                return (hasProperty && (value ? 'show ' + prop.display : 'hide ' + prop.display)) || '';
+            case Handler.AddValue:
+                return hasProperty ? value || '' : '';
+            default:
+                throw new Error('Unknown handler type: ' + prop.handler + '.');
+        }
     }
 
     public query(queryFile: OptionalTasksFile) {
