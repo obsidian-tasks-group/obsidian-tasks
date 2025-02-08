@@ -1,36 +1,9 @@
-import {
-    type App,
-    type Editor,
-    type MarkdownFileInfo,
-    type MarkdownView,
-    Notice,
-    type TFile,
-    type View,
-} from 'obsidian';
+import type { App, Editor, MarkdownFileInfo, MarkdownView, TFile, View } from 'obsidian';
 import type TasksPlugin from '../main';
-import { QueryFileDefaults } from '../Query/QueryFileDefaults';
 import { createOrEdit } from './CreateOrEdit';
 
 import { toggleDone } from './ToggleDone';
-
-async function ensureQueryFileDefaultsInFrontmatter(app: App, file: TFile) {
-    await app.fileManager.processFrontMatter(file, (frontmatter) => {
-        const requiredKeys = new QueryFileDefaults().allPropertyNamesSorted();
-        let updated = false;
-        requiredKeys.forEach((key) => {
-            if (!(key in frontmatter)) {
-                frontmatter[key] = null;
-                updated = true;
-            }
-        });
-
-        if (!updated) {
-            new Notice('All supported properties are already present.');
-        } else {
-            new Notice('Properties updated successfully.');
-        }
-    });
-}
+import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
 
 export class Commands {
     private readonly plugin: TasksPlugin;
