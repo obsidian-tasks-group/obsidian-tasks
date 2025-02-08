@@ -42,7 +42,7 @@ export class Commands {
 
         plugin.addCommand({
             id: 'add-query-file-defaults-properties',
-            name: 'Add all supported Query File Defaults properties',
+            name: 'Add all Query File Defaults properties',
             icon: 'settings',
             checkCallback: (checking: boolean) => {
                 const activeFile = this.app.workspace.getActiveFile();
