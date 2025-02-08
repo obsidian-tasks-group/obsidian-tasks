@@ -140,21 +140,18 @@ export class QueryFileDefaults {
     }
 
     private generateInstruction(queryFile: TasksFile, prop: any) {
+        const hasProperty = queryFile.hasProperty(prop.name);
         switch (prop.handler) {
             case Handler.Instruction:
-                return (
-                    (queryFile.hasProperty(prop.name) &&
-                        (queryFile.property(prop.name) ? prop.trueValue : prop.falseValue)) ||
-                    ''
-                );
+                return (hasProperty && (queryFile.property(prop.name) ? prop.trueValue : prop.falseValue)) || '';
             case Handler.ShowAndHide:
                 return (
-                    (queryFile.hasProperty(prop.name) &&
+                    (hasProperty &&
                         (queryFile.property(prop.name) ? 'show ' + prop.display : 'hide ' + prop.display)) ||
                     ''
                 );
             case Handler.AddValue:
-                return queryFile.hasProperty(prop.name) ? queryFile.property(prop.name) || '' : '';
+                return hasProperty ? queryFile.property(prop.name) || '' : '';
             default:
                 throw new Error('Unknown handler type: ' + prop.handler + '.');
         }
