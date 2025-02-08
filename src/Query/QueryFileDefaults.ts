@@ -135,7 +135,7 @@ export class QueryFileDefaults {
             },
         ];
 
-        const instructions = [...queryProperties.map((prop) => this.generateInstruction(queryFile, prop))];
+        const instructions = queryProperties.map((prop) => this.generateInstruction(queryFile, prop));
         return instructions.filter((i) => i !== '').join('\n');
     }
 
