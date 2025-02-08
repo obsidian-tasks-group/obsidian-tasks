@@ -15,7 +15,15 @@ function extractFrontmatter(data: any) {
 
 describe('DocsSamplesForDefaults', () => {
     it('supported-properties-empty', () => {
-        verifyWithFileExtension(extractFrontmatter(query_file_defaults_all_options_null), '.yaml');
+        const frontmatter = extractFrontmatter(query_file_defaults_all_options_null);
+
+        // Make sure that any trailing spaces have been removed from the
+        // properties in query_file_defaults_all_options_null.md, to avoid
+        // fighting with spaces at end of line when the approved file from this
+        // test is embedded in the user docs.
+        expect(frontmatter).not.toContain(': ');
+
+        verifyWithFileExtension(frontmatter, '.yaml');
     });
 
     it('supported-properties-full', () => {
