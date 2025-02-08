@@ -32,13 +32,12 @@ To try this out:
     - Run the `Properties view: Show file properties` command.
 2. Add one or more `TQ_*` properties to the file
     - Click on `Add property`.
-    - Start typing `TQ_`.
-    - Or you can paste in property names from the [[#Supported Query File Defaults property values]] section below.
+    - Start typing `TQ_`, or any part of the property names list in [[#Supported Query File Defaults property values]] below.
     - Press `<Return>` or `<Enter>` to add the property.
-3. Now you can modify these `TQ_*` properties to change the behaviour of Tasks searches in this file.
+3. Now you can modify these `TQ_*` properties to change the behaviour of all the Tasks searches in this file.
 
 > [!tip]
-> Use the command **Tasks: Add all Query File Defaults properties** to add all the available `TQ_*` properties to the active note.
+> Use the command **Tasks: Add all Query File Defaults properties** to add all the available `TQ_*` properties to the active note in one simple step.
 
 #### Widening property names in Obsidian
 
@@ -118,35 +117,34 @@ These are all the types of properties currently supported by Tasks, as Query
 File Defaults.
 
 > [!tip]
-> We plan to make Tasks add these types to the Obsidian vault automatically in
-> future.
+> The Tasks plugin automatically adds these properties to the Obsidian vault.
 
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_fake-types.json.approved.json -->
 ```json
 {
   "types": {
     "TQ_explain": "checkbox",
+    "TQ_extra_instructions": "text",
     "TQ_short_mode": "checkbox",
-    "TQ_show_tree": "checkbox",
-    "TQ_show_tags": "checkbox",
-    "TQ_show_id": "checkbox",
+    "TQ_show_backlink": "checkbox",
+    "TQ_show_cancelled_date": "checkbox",
+    "TQ_show_created_date": "checkbox",
     "TQ_show_depends_on": "checkbox",
+    "TQ_show_done_date": "checkbox",
+    "TQ_show_due_date": "checkbox",
+    "TQ_show_edit_button": "checkbox",
+    "TQ_show_id": "checkbox",
+    "TQ_show_on_completion": "checkbox",
+    "TQ_show_postpone_button": "checkbox",
     "TQ_show_priority": "checkbox",
     "TQ_show_recurrence_rule": "checkbox",
-    "TQ_show_on_completion": "checkbox",
-    "TQ_show_created_date": "checkbox",
-    "TQ_show_start_date": "checkbox",
     "TQ_show_scheduled_date": "checkbox",
-    "TQ_show_due_date": "checkbox",
-    "TQ_show_cancelled_date": "checkbox",
-    "TQ_show_done_date": "checkbox",
-    "TQ_show_urgency": "checkbox",
-    "TQ_show_backlink": "checkbox",
-    "TQ_show_edit_button": "checkbox",
-    "TQ_show_postpone_button": "checkbox",
+    "TQ_show_start_date": "checkbox",
+    "TQ_show_tags": "checkbox",
     "TQ_show_task_count": "checkbox",
-    "TQ_sort_by": "multitext",
-    "TQ_group_by": "multitext",
-    "TQ_extra_instructions": "text"
+    "TQ_show_tree": "checkbox",
+    "TQ_show_urgency": "checkbox"
   }
 }
 ```
+<!-- endSnippet -->
