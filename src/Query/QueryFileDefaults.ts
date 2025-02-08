@@ -102,17 +102,37 @@ export class QueryFileDefaults {
                 display: 'done date',
                 handler: Handler.ShowAndHide,
             },
+
+            // Elements of query results:
+            {
+                name: 'tasks_query_show_urgency',
+                display: 'urgency',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_backlink',
+                display: 'backlink',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_edit_button',
+                display: 'edit button',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_postpone_button',
+                display: 'postpone button',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_task_count',
+                display: 'task count',
+                handler: Handler.ShowAndHide,
+            },
         ];
 
         const instructions = [
             ...queryProperties.map((prop) => this.generateInstruction(queryFile, prop)),
-
-            // Elements of query results:
-            this.showAndHide(queryFile, 'tasks_query_show_urgency', 'urgency'),
-            this.showAndHide(queryFile, 'tasks_query_show_backlink', 'backlink'),
-            this.showAndHide(queryFile, 'tasks_query_show_edit_button', 'edit button'),
-            this.showAndHide(queryFile, 'tasks_query_show_postpone_button', 'postpone button'),
-            this.showAndHide(queryFile, 'tasks_query_show_task_count', 'task count'),
 
             // Extra instructions
             this.addValue(queryFile, 'tasks_query_extra_instructions'),
