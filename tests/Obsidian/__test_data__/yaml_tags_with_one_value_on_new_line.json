@@ -125,7 +125,6 @@
     "#single-value-new-line",
     "#task"
   ],
-  "obsidianApiVersion": "1.8.4",
   "parseFrontMatterTags": [
     "#single-value-new-line"
   ]

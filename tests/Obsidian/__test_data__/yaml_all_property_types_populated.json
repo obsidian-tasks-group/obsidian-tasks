@@ -163,7 +163,6 @@
     "#sample/tag/value",
     "#task"
   ],
-  "obsidianApiVersion": "1.8.4",
   "parseFrontMatterTags": [
     "#sample/tag/value"
   ]
