@@ -70,18 +70,42 @@ export class QueryFileDefaults {
                 display: 'on completion',
                 handler: Handler.ShowAndHide,
             },
+
+            // Date fields:
+            {
+                name: 'tasks_query_show_created_date',
+                display: 'created date',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_start_date',
+                display: 'start date',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_scheduled_date',
+                display: 'scheduled date',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_due_date',
+                display: 'due date',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_cancelled_date',
+                display: 'cancelled date',
+                handler: Handler.ShowAndHide,
+            },
+            {
+                name: 'tasks_query_show_done_date',
+                display: 'done date',
+                handler: Handler.ShowAndHide,
+            },
         ];
 
         const instructions = [
             ...queryProperties.map((prop) => this.generateInstruction(queryFile, prop)),
-
-            // Date fields:
-            this.showAndHide(queryFile, 'tasks_query_show_created_date', 'created date'),
-            this.showAndHide(queryFile, 'tasks_query_show_start_date', 'start date'),
-            this.showAndHide(queryFile, 'tasks_query_show_scheduled_date', 'scheduled date'),
-            this.showAndHide(queryFile, 'tasks_query_show_due_date', 'due date'),
-            this.showAndHide(queryFile, 'tasks_query_show_cancelled_date', 'cancelled date'),
-            this.showAndHide(queryFile, 'tasks_query_show_done_date', 'done date'),
 
             // Elements of query results:
             this.showAndHide(queryFile, 'tasks_query_show_urgency', 'urgency'),
