@@ -142,9 +142,17 @@ export class QueryFileDefaults {
     private generateInstruction(queryFile: TasksFile, prop: any) {
         switch (prop.handler) {
             case Handler.Instruction:
-                return this.instruction(queryFile, prop.name, prop.trueValue, prop.falseValue);
+                return (
+                    (queryFile.hasProperty(prop.name) &&
+                        (queryFile.property(prop.name) ? prop.trueValue : prop.falseValue)) ||
+                    ''
+                );
             case Handler.ShowAndHide:
-                return this.instruction(queryFile, prop.name, 'show ' + prop.display, 'hide ' + prop.display);
+                return (
+                    (queryFile.hasProperty(prop.name) &&
+                        (queryFile.property(prop.name) ? 'show ' + prop.display : 'hide ' + prop.display)) ||
+                    ''
+                );
             case Handler.AddValue:
                 return queryFile.hasProperty(prop.name) ? queryFile.property(prop.name) || '' : '';
             default:
@@ -152,9 +160,6 @@ export class QueryFileDefaults {
         }
     }
 
-    private instruction(queryFile: TasksFile, prop: string, trueValue: string, falseValue: string) {
-        return (queryFile.hasProperty(prop) && (queryFile.property(prop) ? trueValue : falseValue)) || '';
-    }
     public query(queryFile: OptionalTasksFile) {
         return new Query(this.source(queryFile), queryFile);
     }
