@@ -4,6 +4,7 @@ import { Query } from './Query';
 // Enum for handler types
 enum Handler {
     Instruction = 'instruction',
+    ShowAndHide = 'showAndHide',
 }
 
 /**
@@ -32,11 +33,15 @@ export class QueryFileDefaults {
                 trueValue: 'short mode',
                 falseValue: 'full mode',
             },
+            {
+                name: 'tasks_query_show_tree',
+                display: 'tree',
+                handler: Handler.ShowAndHide,
+            },
         ];
 
         const instructions = [
             ...queryProperties.map((prop) => this.generateInstruction(queryFile, prop)),
-            this.showAndHide(queryFile, 'tasks_query_show_tree', 'tree'),
 
             // Fields that appear before date values:
             this.showAndHide(queryFile, 'tasks_query_show_tags', 'tags'),
@@ -71,6 +76,8 @@ export class QueryFileDefaults {
         switch (prop.handler) {
             case Handler.Instruction:
                 return this.instruction(queryFile, prop.name, prop.trueValue, prop.falseValue);
+            case Handler.ShowAndHide:
+                return this.showAndHide(queryFile, prop.name, prop.display);
             default:
                 throw new Error('Unknown handler type: ' + prop.handler + '.');
         }
