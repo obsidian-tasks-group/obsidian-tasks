@@ -144,8 +144,6 @@ File Defaults.
     "TQ_show_edit_button": "checkbox",
     "TQ_show_postpone_button": "checkbox",
     "TQ_show_task_count": "checkbox",
-    "TQ_sort_by": "multitext",
-    "TQ_group_by": "multitext",
     "TQ_extra_instructions": "text"
   }
 }
