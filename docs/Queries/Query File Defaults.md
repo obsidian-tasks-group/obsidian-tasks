@@ -50,7 +50,7 @@ You can make them wider with the following CSS Snippet.
 ```css
 /* Make property labels wider, to fit the names of Tasks-specific properties */
 .metadata-content {
-    --metadata-label-width: 18em;
+    --metadata-label-width: 14em;
 }
 ```
 <!-- endSnippet -->
