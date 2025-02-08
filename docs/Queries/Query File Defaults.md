@@ -38,7 +38,7 @@ To try this out:
 3. Now you can modify these `TQ_*` properties to change the behaviour of Tasks searches in this file.
 
 > [!tip]
-> Use the command **Tasks: Add all supported Query File Defaults properties** to add all the available `TQ_*` properties to the active note.
+> Use the command **Tasks: Add all Query File Defaults properties** to add all the available `TQ_*` properties to the active note.
 
 #### Widening property names in Obsidian
 
@@ -110,7 +110,7 @@ TQ_show_urgency:
 <!-- endSnippet -->
 
 > [!tip]
-> Use the command **Tasks: Add all supported Query File Defaults properties** to add all these properties to the active note.
+> Use the command **Tasks: Add all Query File Defaults properties** to add all these properties to the active note.
 
 ### Types of Query File Defaults property values
 
