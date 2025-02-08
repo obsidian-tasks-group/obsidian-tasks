@@ -77,6 +77,14 @@ describe('QueryFileDefaults', () => {
         `);
     });
 
+    it('should report a known property type', () => {
+        expect(new QueryFileDefaults().propertyType('TQ_show_tree')).toEqual('checkbox');
+    });
+
+    it('should report an unknown property type as undefined', () => {
+        expect(new QueryFileDefaults().propertyType('TQ_any_old_property')).toBeUndefined();
+    });
+
     it('should generate instructions - all values false', () => {
         expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toMatchInlineSnapshot(`
             "full mode
