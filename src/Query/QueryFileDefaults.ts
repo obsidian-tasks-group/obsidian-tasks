@@ -8,6 +8,8 @@ enum Handler {
     AddValue = 'addValue',
 }
 
+// Note: This file is excluded from SonarCloud duplication-checks,
+//       as the duplication here provides clarity.
 // Instructions are listed in the order that items are displayed in Tasks search results
 const queryProperties = [
     {
