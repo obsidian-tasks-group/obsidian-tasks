@@ -121,6 +121,7 @@ File Defaults.
 > We plan to make Tasks add these types to the Obsidian vault automatically in
 > future.
 
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_fake-types.json.approved.json -->
 ```json
 {
   "types": {
@@ -148,3 +149,4 @@ File Defaults.
   }
 }
 ```
+<!-- endSnippet -->
