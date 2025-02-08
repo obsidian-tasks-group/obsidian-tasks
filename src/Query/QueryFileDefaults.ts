@@ -146,7 +146,7 @@ export class QueryFileDefaults {
             case Handler.ShowAndHide:
                 return this.showAndHide(queryFile, prop.name, prop.display);
             case Handler.AddValue:
-                return this.addValue(queryFile, prop.name);
+                return queryFile.hasProperty(prop.name) ? queryFile.property(prop.name) || '' : '';
             default:
                 throw new Error('Unknown handler type: ' + prop.handler + '.');
         }
@@ -158,10 +158,6 @@ export class QueryFileDefaults {
 
     private showAndHide(queryFile: TasksFile, prop: string, field: string) {
         return this.instruction(queryFile, prop, 'show ' + field, 'hide ' + field);
-    }
-
-    private addValue(queryFile: TasksFile, prop: string) {
-        return queryFile.hasProperty(prop) ? queryFile.property(prop) || '' : '';
     }
 
     public query(queryFile: OptionalTasksFile) {
