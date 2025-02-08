@@ -32,13 +32,12 @@ To try this out:
     - Run the `Properties view: Show file properties` command.
 2. Add one or more `TQ_*` properties to the file
     - Click on `Add property`.
-    - Start typing `TQ_`.
-    - Or you can paste in property names from the [[#Supported Query File Defaults property values]] section below.
+    - Start typing `TQ_`, or any part of the property names list in [[#Supported Query File Defaults property values]] below.
     - Press `<Return>` or `<Enter>` to add the property.
-3. Now you can modify these `TQ_*` properties to change the behaviour of Tasks searches in this file.
+3. Now you can modify these `TQ_*` properties to change the behaviour of all the Tasks searches in this file.
 
 > [!tip]
-> Use the command **Tasks: Add all Query File Defaults properties** to add all the available `TQ_*` properties to the active note.
+> Use the command **Tasks: Add all Query File Defaults properties** to add all the available `TQ_*` properties to the active note in one simple step.
 
 #### Widening property names in Obsidian
 
@@ -118,8 +117,7 @@ These are all the types of properties currently supported by Tasks, as Query
 File Defaults.
 
 > [!tip]
-> We plan to make Tasks add these types to the Obsidian vault automatically in
-> future.
+> The Tasks plugin automatically adds these properties to the Obsidian vault.
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_fake-types.json.approved.json -->
 ```json
