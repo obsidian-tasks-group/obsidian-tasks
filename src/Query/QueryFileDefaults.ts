@@ -190,7 +190,7 @@ export class QueryFileDefaults {
     }
 
     /**
-     * Retrieves the type of the property with the specified name.
+     * Return the type of the property with the specified name.
      *
      * @param {string} propertyName - The name of the property to retrieve the type for.
      * @return {string | undefined} The type of the property if found, or undefined if the property is not found.
