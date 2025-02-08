@@ -16,6 +16,8 @@
     "creation date": "datetime",
     "project": "text",
     "sample_text_multiline_property": "text",
+    "TQ_group_by": "multitext",
+    "TQ_sort_by": "multitext",
     "TQ_explain": "checkbox",
     "TQ_extra_instructions": "text",
     "TQ_short_mode": "checkbox",
@@ -36,8 +38,6 @@
     "TQ_show_tags": "checkbox",
     "TQ_show_task_count": "checkbox",
     "TQ_show_tree": "checkbox",
-    "TQ_show_urgency": "checkbox",
-    "TQ_group_by": "multitext",
-    "TQ_sort_by": "multitext"
+    "TQ_show_urgency": "checkbox"
   }
 }
