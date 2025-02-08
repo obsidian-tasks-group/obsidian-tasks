@@ -105,6 +105,10 @@ export default class TasksPlugin extends Plugin {
         }
     }
 
+    /**
+     * Add {@link QueryFileDefaults} properties to the Obsidian vault's types.json file,
+     * so that they are available via auto-complete in the File Properties panel.
+     */
     private setObsidianPropertiesTypes() {
         // Credit: this code based on ideas...
         // by:
