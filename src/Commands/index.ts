@@ -1,5 +1,14 @@
-import type { App, Editor, MarkdownFileInfo, MarkdownView, View } from 'obsidian';
+import {
+    type App,
+    type Editor,
+    type MarkdownFileInfo,
+    type MarkdownView,
+    Notice,
+    type TFile,
+    type View,
+} from 'obsidian';
 import type TasksPlugin from '../main';
+import { QueryFileDefaults } from '../Query/QueryFileDefaults';
 import { createOrEdit } from './CreateOrEdit';
 
 import { toggleDone } from './ToggleDone';
@@ -29,6 +38,46 @@ export class Commands {
             name: 'Toggle task done',
             icon: 'check-in-circle',
             editorCheckCallback: toggleDone,
+        });
+
+        plugin.addCommand({
+            id: 'add-query-file-defaults-properties',
+            name: 'Add all supported Query File Defaults properties',
+            icon: 'settings',
+            checkCallback: (checking: boolean) => {
+                const activeFile = this.app.workspace.getActiveFile();
+                if (!activeFile) {
+                    return false;
+                }
+                if (activeFile.extension !== 'md') {
+                    return false;
+                }
+
+                if (!checking) {
+                    this.ensureQueryFileDefaultsFrontmatter(activeFile).catch(console.error);
+                }
+                return true;
+            },
+        });
+    }
+
+    async ensureQueryFileDefaultsFrontmatter(file: TFile): Promise<void> {
+        const { app } = this;
+        await app.fileManager.processFrontMatter(file, (frontmatter) => {
+            const requiredKeys = new QueryFileDefaults().allPropertyNamesSorted();
+            let updated = false;
+            requiredKeys.forEach((key) => {
+                if (!(key in frontmatter)) {
+                    frontmatter[key] = null;
+                    updated = true;
+                }
+            });
+
+            if (!updated) {
+                new Notice('All supported properties are already present.');
+            } else {
+                new Notice('Properties updated successfully.');
+            }
         });
     }
 }
