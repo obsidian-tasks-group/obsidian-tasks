@@ -115,17 +115,17 @@ describe('explain', () => {
         `);
     });
 
-    it('should explain a search with global query set but ignored via tasks_query_extra_instructions saying to ignore it', () => {
+    it('should explain a search with global query set but ignored via TQ_extra_instructions saying to ignore it', () => {
         const globalQuery = new GlobalQuery('description includes hello');
 
         const source = 'description includes I came from the code block';
         const queryFile = getTasksFileFromMockData(query_file_defaults_ignore_global_query);
-        expect(queryFile.property('tasks_query_extra_instructions')).toContain('ignore global query');
+        expect(queryFile.property('TQ_extra_instructions')).toContain('ignore global query');
         const query = new Query(source, queryFile);
         expect(explainResults(query.source, new GlobalFilter(), globalQuery, queryFile)).toMatchInlineSnapshot(`
             "Explanation of the query file defaults (from properties/frontmatter in the query's file):
 
-              description includes I came from the tasks_query_extra_instructions property
+              description includes I came from the TQ_extra_instructions property
 
             Explanation of this Tasks code block query:
 
