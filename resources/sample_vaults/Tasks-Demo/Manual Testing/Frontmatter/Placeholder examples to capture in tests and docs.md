@@ -1,10 +1,10 @@
 ---
 TQ_explain: false
 TQ_extra_instructions: |-
-    # press shift-return to add new lines
-    # not done
-    # sort by done date
-    # ignore global query
+  # press shift-return to add new lines
+  # not done
+  # sort by done date
+  # ignore global query
 TQ_short_mode: false
 TQ_show_backlink: true
 TQ_show_cancelled_date: true
