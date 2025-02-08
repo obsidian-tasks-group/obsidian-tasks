@@ -69,6 +69,5 @@
   "fileContents": "- parent list item\n    - child list item\n        - [ ] grandchild task\n",
   "filePath": "Test Data/inheritance_listitem_listitem_task.md",
   "getAllTags": [],
-  "obsidianApiVersion": "1.8.4",
   "parseFrontMatterTags": null
 }
