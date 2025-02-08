@@ -25,11 +25,17 @@ export class QueryFileDefaults {
                 trueValue: 'explain',
                 falseValue: '',
             },
+            {
+                name: 'tasks_query_short_mode',
+                display: 'short mode',
+                handler: Handler.Instruction,
+                trueValue: 'short mode',
+                falseValue: 'full mode',
+            },
         ];
 
         const instructions = [
             ...queryProperties.map((prop) => this.generateInstruction(queryFile, prop)),
-            this.instruction(queryFile, 'tasks_query_short_mode', 'short mode', 'full mode'),
             this.showAndHide(queryFile, 'tasks_query_show_tree', 'tree'),
 
             // Fields that appear before date values:
