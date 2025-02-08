@@ -13,6 +13,25 @@ import { createOrEdit } from './CreateOrEdit';
 
 import { toggleDone } from './ToggleDone';
 
+async function ensureQueryFileDefaultsInFrontmatter(app: App, file: TFile) {
+    await app.fileManager.processFrontMatter(file, (frontmatter) => {
+        const requiredKeys = new QueryFileDefaults().allPropertyNamesSorted();
+        let updated = false;
+        requiredKeys.forEach((key) => {
+            if (!(key in frontmatter)) {
+                frontmatter[key] = null;
+                updated = true;
+            }
+        });
+
+        if (!updated) {
+            new Notice('All supported properties are already present.');
+        } else {
+            new Notice('Properties updated successfully.');
+        }
+    });
+}
+
 export class Commands {
     private readonly plugin: TasksPlugin;
 
@@ -63,21 +82,6 @@ export class Commands {
 
     async ensureQueryFileDefaultsFrontmatter(file: TFile): Promise<void> {
         const { app } = this;
-        await app.fileManager.processFrontMatter(file, (frontmatter) => {
-            const requiredKeys = new QueryFileDefaults().allPropertyNamesSorted();
-            let updated = false;
-            requiredKeys.forEach((key) => {
-                if (!(key in frontmatter)) {
-                    frontmatter[key] = null;
-                    updated = true;
-                }
-            });
-
-            if (!updated) {
-                new Notice('All supported properties are already present.');
-            } else {
-                new Notice('Properties updated successfully.');
-            }
-        });
+        await ensureQueryFileDefaultsInFrontmatter(app, file);
     }
 }
