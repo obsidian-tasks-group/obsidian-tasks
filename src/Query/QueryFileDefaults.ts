@@ -5,6 +5,7 @@ import { Query } from './Query';
 enum Handler {
     Instruction = 'instruction',
     ShowAndHide = 'showAndHide',
+    AddValue = 'addValue',
 }
 
 /**
@@ -17,7 +18,6 @@ export class QueryFileDefaults {
         }
 
         // Instructions are listed in the order that items are displayed in Tasks search results
-        // TODO Migrate all properties to this storage:
         const queryProperties = [
             {
                 name: 'tasks_query_explain',
@@ -129,14 +129,13 @@ export class QueryFileDefaults {
                 display: 'task count',
                 handler: Handler.ShowAndHide,
             },
+            {
+                name: 'tasks_query_extra_instructions',
+                handler: Handler.AddValue,
+            },
         ];
 
-        const instructions = [
-            ...queryProperties.map((prop) => this.generateInstruction(queryFile, prop)),
-
-            // Extra instructions
-            this.addValue(queryFile, 'tasks_query_extra_instructions'),
-        ];
+        const instructions = [...queryProperties.map((prop) => this.generateInstruction(queryFile, prop))];
         return instructions.filter((i) => i !== '').join('\n');
     }
 
@@ -146,6 +145,8 @@ export class QueryFileDefaults {
                 return this.instruction(queryFile, prop.name, prop.trueValue, prop.falseValue);
             case Handler.ShowAndHide:
                 return this.showAndHide(queryFile, prop.name, prop.display);
+            case Handler.AddValue:
+                return this.addValue(queryFile, prop.name);
             default:
                 throw new Error('Unknown handler type: ' + prop.handler + '.');
         }
