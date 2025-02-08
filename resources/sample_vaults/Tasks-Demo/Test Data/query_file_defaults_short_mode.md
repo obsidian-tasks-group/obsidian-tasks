@@ -1,5 +1,5 @@
 ---
-tasks_query_short_mode: true
+TQ_short_mode: true
 ---
 
 # query_file_defaults_short_mode

@@ -1,6 +1,6 @@
 ---
-tasks_query_extra_instructions: |-
-  description includes I came from the tasks_query_extra_instructions property
+TQ_extra_instructions: |-
+  description includes I came from the TQ_extra_instructions property
   ignore global query
 ---
 

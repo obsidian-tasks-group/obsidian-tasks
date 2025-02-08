@@ -1,14 +1,14 @@
 {
   "cachedMetadata": {
     "frontmatter": {
-      "tasks_query_short_mode": true
+      "TQ_short_mode": true
     },
     "frontmatterLinks": [],
     "frontmatterPosition": {
       "end": {
         "col": 3,
         "line": 2,
-        "offset": 36
+        "offset": 27
       },
       "start": {
         "col": 0,
@@ -24,12 +24,12 @@
           "end": {
             "col": 32,
             "line": 4,
-            "offset": 70
+            "offset": 61
           },
           "start": {
             "col": 0,
             "line": 4,
-            "offset": 38
+            "offset": 29
           }
         }
       }
@@ -41,12 +41,12 @@
           "end": {
             "col": 52,
             "line": 6,
-            "offset": 124
+            "offset": 115
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 72
+            "offset": 63
           }
         },
         "task": " "
@@ -58,7 +58,7 @@
           "end": {
             "col": 3,
             "line": 2,
-            "offset": 36
+            "offset": 27
           },
           "start": {
             "col": 0,
@@ -73,12 +73,12 @@
           "end": {
             "col": 32,
             "line": 4,
-            "offset": 70
+            "offset": 61
           },
           "start": {
             "col": 0,
             "line": 4,
-            "offset": 38
+            "offset": 29
           }
         },
         "type": "heading"
@@ -88,12 +88,12 @@
           "end": {
             "col": 52,
             "line": 6,
-            "offset": 124
+            "offset": 115
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 72
+            "offset": 63
           }
         },
         "type": "list"
@@ -105,19 +105,19 @@
           "end": {
             "col": 11,
             "line": 6,
-            "offset": 83
+            "offset": 74
           },
           "start": {
             "col": 6,
             "line": 6,
-            "offset": 78
+            "offset": 69
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\ntasks_query_short_mode: true\n---\n\n# query_file_defaults_short_mode\n\n- [ ] #task Task in 'query_file_defaults_short_mode'\n",
+  "fileContents": "---\nTQ_short_mode: true\n---\n\n# query_file_defaults_short_mode\n\n- [ ] #task Task in 'query_file_defaults_short_mode'\n",
   "filePath": "Test Data/query_file_defaults_short_mode.md",
   "getAllTags": [
     "#task"

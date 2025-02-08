@@ -1,14 +1,14 @@
 {
   "cachedMetadata": {
     "frontmatter": {
-      "tasks_query_extra_instructions": "description includes I came from the tasks_query_extra_instructions property\nignore global query"
+      "TQ_extra_instructions": "description includes I came from the TQ_extra_instructions property\nignore global query"
     },
     "frontmatterLinks": [],
     "frontmatterPosition": {
       "end": {
         "col": 3,
         "line": 4,
-        "offset": 143
+        "offset": 125
       },
       "start": {
         "col": 0,
@@ -24,12 +24,12 @@
           "end": {
             "col": 41,
             "line": 6,
-            "offset": 186
+            "offset": 168
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 145
+            "offset": 127
           }
         }
       }
@@ -41,12 +41,12 @@
           "end": {
             "col": 61,
             "line": 8,
-            "offset": 249
+            "offset": 231
           },
           "start": {
             "col": 0,
             "line": 8,
-            "offset": 188
+            "offset": 170
           }
         },
         "task": " "
@@ -58,7 +58,7 @@
           "end": {
             "col": 3,
             "line": 4,
-            "offset": 143
+            "offset": 125
           },
           "start": {
             "col": 0,
@@ -73,12 +73,12 @@
           "end": {
             "col": 41,
             "line": 6,
-            "offset": 186
+            "offset": 168
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 145
+            "offset": 127
           }
         },
         "type": "heading"
@@ -88,12 +88,12 @@
           "end": {
             "col": 61,
             "line": 8,
-            "offset": 249
+            "offset": 231
           },
           "start": {
             "col": 0,
             "line": 8,
-            "offset": 188
+            "offset": 170
           }
         },
         "type": "list"
@@ -105,19 +105,19 @@
           "end": {
             "col": 11,
             "line": 8,
-            "offset": 199
+            "offset": 181
           },
           "start": {
             "col": 6,
             "line": 8,
-            "offset": 194
+            "offset": 176
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\ntasks_query_extra_instructions: |-\n  description includes I came from the tasks_query_extra_instructions property\n  ignore global query\n---\n\n# query_file_defaults_ignore_global_query\n\n- [ ] #task Task in 'query_file_defaults_ignore_global_query'\n",
+  "fileContents": "---\nTQ_extra_instructions: |-\n  description includes I came from the TQ_extra_instructions property\n  ignore global query\n---\n\n# query_file_defaults_ignore_global_query\n\n- [ ] #task Task in 'query_file_defaults_ignore_global_query'\n",
   "filePath": "Test Data/query_file_defaults_ignore_global_query.md",
   "getAllTags": [
     "#task"
