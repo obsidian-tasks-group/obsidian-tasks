@@ -1,31 +1,31 @@
 ---
-tasks_query_explain: false
-tasks_query_short_mode: false
-tasks_query_show_tree: true
-tasks_query_show_tags: true
-tasks_query_show_id: true
-tasks_query_show_depends_on: true
-tasks_query_show_priority: true
-tasks_query_show_recurrence_rule: true
-tasks_query_show_on_completion: true
-tasks_query_show_created_date: true
-tasks_query_show_start_date: true
-tasks_query_show_scheduled_date: true
-tasks_query_show_due_date: true
-tasks_query_show_cancelled_date: true
-tasks_query_show_done_date: true
-tasks_query_show_urgency: true
-tasks_query_show_backlink: true
-tasks_query_show_edit_button: true
-tasks_query_show_postpone_button: true
-tasks_query_show_task_count: true
-tasks_query_sort_by:
+TQ_explain: false
+TQ_short_mode: false
+TQ_show_tree: true
+TQ_show_tags: true
+TQ_show_id: true
+TQ_show_depends_on: true
+TQ_show_priority: true
+TQ_show_recurrence_rule: true
+TQ_show_on_completion: true
+TQ_show_created_date: true
+TQ_show_start_date: true
+TQ_show_scheduled_date: true
+TQ_show_due_date: true
+TQ_show_cancelled_date: true
+TQ_show_done_date: true
+TQ_show_urgency: true
+TQ_show_backlink: true
+TQ_show_edit_button: true
+TQ_show_postpone_button: true
+TQ_show_task_count: true
+TQ_sort_by:
   - description
-tasks_query_group_by:
+TQ_group_by:
   - status.type
   - happens reverse
   - function task.tags.sort().join(' ')
-tasks_query_extra_instructions: |-
+TQ_extra_instructions: |-
   # press shift-return to add new lines
   # not done
   # sort by done date
@@ -39,20 +39,20 @@ tasks_query_extra_instructions: |-
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-include.approved.md -->
 
-short mode: `INPUT[toggle:tasks_query_short_mode]`
-tree: `INPUT[toggle:tasks_query_show_tree]`
-tags: `INPUT[toggle:tasks_query_show_tags]`
-id: `INPUT[toggle:tasks_query_show_id]` depends on: `INPUT[toggle:tasks_query_show_depends_on]`
-priority: `INPUT[toggle:tasks_query_show_priority]`
-recurrence rule: `INPUT[toggle:tasks_query_show_recurrence_rule]` on completion: `INPUT[toggle:tasks_query_show_on_completion]`
-start date: `INPUT[toggle:tasks_query_show_start_date]` scheduled date: `INPUT[toggle:tasks_query_show_scheduled_date]` due date: `INPUT[toggle:tasks_query_show_due_date]`
-created date: `INPUT[toggle:tasks_query_show_created_date]` cancelled date: `INPUT[toggle:tasks_query_show_cancelled_date]` done date: `INPUT[toggle:tasks_query_show_done_date]`
-urgency: `INPUT[toggle:tasks_query_show_urgency]`
-backlink: `INPUT[toggle:tasks_query_show_backlink]`
-edit button: `INPUT[toggle:tasks_query_show_edit_button]` postpone button: `INPUT[toggle:tasks_query_show_postpone_button]`
-task count: `INPUT[toggle:tasks_query_show_task_count]`
-extra instructions: `INPUT[textArea:tasks_query_extra_instructions]`
-explain: `INPUT[toggle:tasks_query_explain]`
+short mode: `INPUT[toggle:TQ_short_mode]`
+tree: `INPUT[toggle:TQ_show_tree]`
+tags: `INPUT[toggle:TQ_show_tags]`
+id: `INPUT[toggle:TQ_show_id]` depends on: `INPUT[toggle:TQ_show_depends_on]`
+priority: `INPUT[toggle:TQ_show_priority]`
+recurrence rule: `INPUT[toggle:TQ_show_recurrence_rule]` on completion: `INPUT[toggle:TQ_show_on_completion]`
+start date: `INPUT[toggle:TQ_show_start_date]` scheduled date: `INPUT[toggle:TQ_show_scheduled_date]` due date: `INPUT[toggle:TQ_show_due_date]`
+created date: `INPUT[toggle:TQ_show_created_date]` cancelled date: `INPUT[toggle:TQ_show_cancelled_date]` done date: `INPUT[toggle:TQ_show_done_date]`
+urgency: `INPUT[toggle:TQ_show_urgency]`
+backlink: `INPUT[toggle:TQ_show_backlink]`
+edit button: `INPUT[toggle:TQ_show_edit_button]` postpone button: `INPUT[toggle:TQ_show_postpone_button]`
+task count: `INPUT[toggle:TQ_show_task_count]`
+extra instructions: `INPUT[textArea:TQ_extra_instructions]`
+explain: `INPUT[toggle:TQ_explain]`
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -60,7 +60,7 @@ explain: `INPUT[toggle:tasks_query_explain]`
 
 So we can easily control the query interactively now, via Obsidian's File Properties panel!!!
 
-The `tasks_query_` prefix was chosen to stand for `Task Query`. Interpretation of all of these except `tasks_query_sort_by` and `tasks_query_group_by` is now built in to Tasks.
+The `TQ_` prefix was chosen to stand for `Task Query`. Interpretation of all of these except `TQ_sort_by` and `TQ_group_by` is now built in to Tasks.
 
 To try this out:
 
@@ -74,8 +74,8 @@ path includes {{query.file.path}}
 
 # Instructions are listed in the order that items are displayed in Tasks search results
 
-{{const prop = 'tasks_query_sort_by';                return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'sort by ' + g).join('\n') || ''}}
-{{const prop = 'tasks_query_group_by';               return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'group by ' + g).join('\n') || ''}}
+{{const prop = 'TQ_sort_by';                return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'sort by ' + g).join('\n') || ''}}
+{{const prop = 'TQ_group_by';               return query.file.hasProperty(prop) &&   query.file.property(prop).map((g) => 'group by ' + g).join('\n') || ''}}
 ```
 
 ## Can now call functions inside placeholders
