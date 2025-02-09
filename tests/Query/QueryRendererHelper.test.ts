@@ -70,7 +70,7 @@ describe('explain', () => {
 
               description includes hello
 
-            Explanation of the query file defaults (from properties/frontmatter in the query's file):
+            Explanation of the Query File Defaults (from properties/frontmatter in the query's file):
 
               not done
 
@@ -123,7 +123,7 @@ describe('explain', () => {
         expect(queryFile.property('TQ_extra_instructions')).toContain('ignore global query');
         const query = new Query(source, queryFile);
         expect(explainResults(query.source, new GlobalFilter(), globalQuery, queryFile)).toMatchInlineSnapshot(`
-            "Explanation of the query file defaults (from properties/frontmatter in the query's file):
+            "Explanation of the Query File Defaults (from properties/frontmatter in the query's file):
 
               description includes I came from the TQ_extra_instructions property
 

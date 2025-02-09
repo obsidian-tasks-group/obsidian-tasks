@@ -56,7 +56,7 @@ export function explainResults(
     }
 
     if (queryFileDefaultsQuery.source !== '') {
-        const intro = "Explanation of the query file defaults (from properties/frontmatter in the query's file)";
+        const intro = "Explanation of the Query File Defaults (from properties/frontmatter in the query's file)";
         result += explainQuery(intro, queryFileDefaultsQuery) + '\n';
     }
 

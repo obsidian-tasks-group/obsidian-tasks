@@ -1,0 +1,58 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "TQ_extra_instructions": "folder includes {{query.file.folder}}\nnot done",
+      "TQ_short_mode": true,
+      "TQ_show_tree": true
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 6,
+        "offset": 123
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 6,
+            "offset": 123
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 10,
+            "offset": 145
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 125
+          }
+        },
+        "type": "code"
+      }
+    ]
+  },
+  "fileContents": "---\nTQ_extra_instructions: |-\n  folder includes {{query.file.folder}}\n  not done\nTQ_short_mode: true\nTQ_show_tree: true\n---\n\n```tasks\nexplain\n```\n",
+  "filePath": "Test Data/docs_sample_for_explain_query_file_defaults.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null
+}

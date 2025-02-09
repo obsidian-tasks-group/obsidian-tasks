@@ -2,10 +2,15 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { Options } from 'approvals/lib/Core/Options';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../../src/Config/GlobalQuery';
 import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
 import { resetSettings } from '../../../src/Config/Settings';
+import docs_sample_for_explain_query_file_defaults from '../../Obsidian/__test_data__/docs_sample_for_explain_query_file_defaults.json';
+import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
+import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
+
 window.moment = moment;
 
 function checkExplainPresentAndVerify(blockQuery: string) {
@@ -96,6 +101,25 @@ explain`;
         // Act, Assert
         checkExplainPresentAndVerify(blockQuery);
         verifyTaskBlockExplanation(blockQuery, new GlobalFilter(), globalQuery);
+    });
+
+    describe('query file defaults', () => {
+        const data = docs_sample_for_explain_query_file_defaults;
+        const tasksFile = getTasksFileFromMockData(data);
+
+        it('file content', () => {
+            const markdown = '````text' + '\n' + data.fileContents + '````';
+            verifyMarkdownForDocs(markdown);
+        });
+
+        it('explanation', () => {
+            // Arrange
+            const blockQuery = 'explain';
+
+            // Act, Assert
+            checkExplainPresentAndVerify(blockQuery);
+            verifyTaskBlockExplanation(blockQuery, new GlobalFilter(), new GlobalQuery(), new Options(), tasksFile);
+        });
     });
 
     it('placeholders', () => {
