@@ -213,7 +213,7 @@ Explanation of this Tasks code block query:
 ### Query File Defaults are displayed
 
 > [!released]
-> The Query File Defaults facility was introduced in Tasks X.Y.Z.
+> The [[Query File Defaults]] facility was introduced in Tasks X.Y.Z.
 
 > [!info]- What are Query File Defaults?
 > You can use [[Query File Defaults]] facility to modify Tasks searches, by adding certain pre-defined property value's the query file's frontmatter.
@@ -224,7 +224,7 @@ Explanation of this Tasks code block query:
 > short mode
 > ```
 
-Consider a Markdown note:
+Consider this Markdown note:
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForExplain.test.explain_query_file_defaults_file_content.approved.md -->
 
