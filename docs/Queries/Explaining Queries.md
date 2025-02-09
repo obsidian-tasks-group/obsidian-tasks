@@ -226,6 +226,8 @@ Explanation of this Tasks code block query:
 
 Consider a Markdown note:
 
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForExplain.test.explain_query_file_defaults_file_content.approved.md -->
+
 ````text
 ---
 TQ_extra_instructions: |-
@@ -239,6 +241,8 @@ TQ_show_tree: true
 explain
 ```
 ````
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 The Tasks results begin would the following:
 
