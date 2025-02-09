@@ -137,7 +137,7 @@ The Obsidian user guide shows how to [use CSS snippets in Obsidian](https://help
 
 ### Meta Bind User Interface
 
-See [[Make a query user interface]] for how to use Query File Defaults with the [[Meta Bind Plugin]] to create a User Interface to easily customise your Tasks searches:
+See [[Make a query user interface]] for how to use Query File Defaults with the [[Meta Bind Plugin]] to create a User Interface to easily customise many aspects of your Tasks searches:
 
 ![Meta Bind widgets to edit Query File Defaults](../images/query-file-defaults-meta-bind-controls.png)
 <span class="caption">Meta Bind widgets to edit Query File Defaults</span>

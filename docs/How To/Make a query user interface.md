@@ -18,7 +18,11 @@ We can combine:
 1. The Tasks plugin's [[Query File Defaults]] facility, based on specific properties named `TQ_*`,
 2. The Meta Bind plugin's ability to create widgets to modify note properties.
 
-... to create a User Interface to easily adjust your Tasks searches:
+... to create a User Interface to easily adjust your Tasks searches, that can:
+
+- show and hide each of the task properties,
+- enable or disable other search features, such as nested tasks, short mode, backlink and buttons,
+- and allow arbitrary extra instructions to be added:
 
 ![Meta Bind widgets to edit Query File Defaults](../images/query-file-defaults-meta-bind-controls.png)
 <span class="caption">Meta Bind widgets to edit Query File Defaults</span>
