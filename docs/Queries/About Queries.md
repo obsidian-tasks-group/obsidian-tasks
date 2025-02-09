@@ -46,28 +46,43 @@ In the following sections we will explain all the various options that are avail
 ### Searching tasks - Basics
 
 - [[Filters]]
+  - Control which tasks are shown in Tasks Queries.
 - [[Explaining Queries]]
+  - Get Tasks to show how your query is interpreted, so you can check your instructions.
 - [[Comments]]
+  - Write notes to your future self, explaining your Queries.
 - [[Examples]]
+  - A selection of some of the more commonly used search instructions.
 
 ### Searching tasks - Advanced
 
 - [[Global Query]]
+  - Set a global query in the settings that Tasks will add to the start of all the Queries in your vault.
 - [[Query File Defaults]]
+  - Set properties in note frontmatter, to instruct tasks to add instructions to all the Queries in that file.
 - [[Combining Filters]]
+  - How to use `AND`, `OR` and `NOT`.
+  - Warning: Make sure you understand where to place brackets in these instructions!
 - [[Regular Expressions]]
+  - A complex but powerful alternative to simple text searches.
 - [[Line Continuations]]
+  - Break long instructions up across multiple lines for readability.
 
 ### Viewing the results
 
 - [[Backlinks]]
+  - Navigate from tasks in Queries back to the source Markdown line.
 
 ### Controlling the display
 
 - [[Limiting]]
+  - Control the maximum number of tasks displayed in a Query's results, and in each group of tasks.
 - [[Sorting]]
+  - Define the sort order.
 - [[Grouping]]
+  - Define headings to group tasks.
 - [[Layout]]
+  - Hide and show individual elements of the Query results.
 
 ## Query Tips
 
