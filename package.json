@@ -82,7 +82,7 @@
     "i18next-browser-languagedetector": "^8.0.2",
     "mustache": "^4.2.0",
     "mustache-validator": "^0.2.0",
-    "rrule": "^2.7.2",
+    "rrule": "^2.8.1",
     "svelte-eslint-parser": "^0.43.0"
   }
 }
