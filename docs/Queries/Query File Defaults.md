@@ -15,6 +15,38 @@ Scenarios:
   options, but sometimes it is nice to see more detail, perhaps turning
   `show tree` on and off, depending on your mood.
 
+## Examples
+
+These examples are provided to demonstrate how Query File Defaults work, so that all the supported values ([[#Supported Query File Defaults property values|listed below]]) should make sense.
+
+### Short or full mode
+
+Suppose the file containing our query begins with the following:
+
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_yaml.approved.yaml -->
+```yaml
+---
+TQ_short_mode: true
+---
+```
+<!-- endSnippet -->
+
+Any Tasks code blocks in that file will then have this content inserted at the start:
+
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_instructions.approved.txt -->
+```txt
+short mode
+```
+<!-- endSnippet -->
+
+All possible behaviours of `TQ_short_mode`:
+
+| `TQ_short_mode` value | Generated instruction |
+| --------------------- | --------------------- |
+| `true`                | `short mode`          |
+| `false`               | `full mode`           |
+| *no value*            | *no instruction*      |
+
 ## Applying instructions to every Tasks search in a file
 
 ### Obsidian-native User Interface
