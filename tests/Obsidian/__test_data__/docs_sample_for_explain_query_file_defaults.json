@@ -18,42 +18,6 @@
         "offset": 0
       }
     },
-    "headings": [
-      {
-        "heading": "docs_sample_for_explain_query_file_defaults",
-        "level": 1,
-        "position": {
-          "end": {
-            "col": 45,
-            "line": 7,
-            "offset": 165
-          },
-          "start": {
-            "col": 0,
-            "line": 7,
-            "offset": 120
-          }
-        }
-      }
-    ],
-    "listItems": [
-      {
-        "parent": -9,
-        "position": {
-          "end": {
-            "col": 65,
-            "line": 9,
-            "offset": 232
-          },
-          "start": {
-            "col": 0,
-            "line": 9,
-            "offset": 167
-          }
-        },
-        "task": " "
-      }
-    ],
     "sections": [
       {
         "position": {
@@ -73,71 +37,22 @@
       {
         "position": {
           "end": {
-            "col": 45,
-            "line": 7,
-            "offset": 165
-          },
-          "start": {
-            "col": 0,
-            "line": 7,
-            "offset": 120
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 65,
-            "line": 9,
-            "offset": 232
-          },
-          "start": {
-            "col": 0,
-            "line": 9,
-            "offset": 167
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
             "col": 3,
-            "line": 14,
-            "offset": 274
+            "line": 10,
+            "offset": 141
           },
           "start": {
             "col": 0,
-            "line": 11,
-            "offset": 234
+            "line": 8,
+            "offset": 121
           }
         },
         "type": "code"
       }
-    ],
-    "tags": [
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 9,
-            "offset": 178
-          },
-          "start": {
-            "col": 6,
-            "line": 9,
-            "offset": 173
-          }
-        },
-        "tag": "#task"
-      }
     ]
   },
-  "fileContents": "---\nTQ_extra_instructions: |-\n  path includes {{query.file.path}}\n  not done\nTQ_short_mode: true\nTQ_show_tree: true\n---\n# docs_sample_for_explain_query_file_defaults\n\n- [ ] #task Task in 'docs_sample_for_explain_query_file_defaults'\n\n```tasks\nignore global query\nexplain\n```\n",
+  "fileContents": "---\nTQ_extra_instructions: |-\n  path includes {{query.file.path}}\n  not done\nTQ_short_mode: true\nTQ_show_tree: true\n---\n\n```tasks\nexplain\n```\n",
   "filePath": "Test Data/docs_sample_for_explain_query_file_defaults.md",
-  "getAllTags": [
-    "#task"
-  ],
+  "getAllTags": [],
   "parseFrontMatterTags": null
 }

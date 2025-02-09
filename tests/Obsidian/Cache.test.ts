@@ -788,7 +788,11 @@ describe('all mock files', () => {
         'should be able to read tasks from all mock files: "%s"',
         (path: string, file: any) => {
             const tasks = readTasksFromSimulatedFile(file);
-            if (path === 'Test Data/non_tasks.md') {
+            const files_without_tasks = [
+                'Test Data/docs_sample_for_explain_query_file_defaults.md',
+                'Test Data/non_tasks.md',
+            ];
+            if (files_without_tasks.includes(path)) {
                 expect(tasks.length).toEqual(0);
             } else {
                 expect(tasks.length).toBeGreaterThan(0);
