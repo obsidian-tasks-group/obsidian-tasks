@@ -18,6 +18,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
   - Placeholders can now call functions and contain expressions.
   - New [[Query File Defaults]] facility allows easy customising of all the
     Tasks searches in a file, by editing properties
+  - Add [[Meta Bind plugin]] and [[make a query user interface]] pages.
   - Add Chinese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]]
 - 7.14.0:
   - Add [[Editing Dates#Date-picker on task dates|date picker]] to Reading mode and Tasks query search results.
