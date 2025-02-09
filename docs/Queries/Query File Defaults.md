@@ -7,16 +7,35 @@ publish: true
 > [!released]
 > Introduced in Tasks X.Y.Z.
 
+## Benefits
+
+This is a somewhat specialised facility that enables you to:
+
+1. **Modify [[layout]] options in a Tasks Query without editing the `tasks` code block source.**
+    - This could save you switching repeatedly between Reading and Editing modes.
+    - Perhaps you usually like to see your Tasks search results with certain [[Layout]] options, but sometimes it is nice to see more detail, perhaps turning  `show tree` on and off, depending on your mood.
+2. **Automatically insert one or more instructions in to all the `tasks` code blocks in a file.**
+    - You have multiple Tasks queries in a Markdown file, and they have a lot of text in common.
+    - You would like to avoid repeating those common instructions in each one, because keeping them consistent is tedious and error-prone.
+3. **Remind yourself what all `tasks` code blocks in a file do.**
+    - Quickly turn [[Explaining Queries|explain]] on and off, for when you need a reminder, or are wondering why some tasks are not included in a search.
+
 ## Summary
 
-Scenarios:
+**Query File Defaults** are like the [[Global Query]] only more specific:
 
-- You have multiple Tasks queries in a Markdown file, and they have a lot of
-  text in common. You would like to avoid repeating those common instructions in
-  each one.
-- Usually you like to see your Tasks search results with certain [[Layout]]
-  options, but sometimes it is nice to see more detail, perhaps turning
-  `show tree` on and off, depending on your mood.
+- The Global Query:
+  - applies to **all queries in the vault**,
+  - is defined in the **Tasks Settings**.
+- Query File Defaults:
+  - apply to **all queries in a file**,
+  - is defined in **one or more standard [[#Supported Query File Defaults property values|named properties]] at the start of the file**.
+
+Structure of this page:
+
+- This page uses [[#examples]] to demonstrate the mechanism.
+- It then shows how to easily adjust a file's Query File Defaults using the [[#Obsidian-native user interface]] and a [[#Meta Bind user interface]].
+- Finally, it gives [[#technical details]] and records [[#Limitations of Query File Defaults|limitations]].
 
 ## Examples
 
