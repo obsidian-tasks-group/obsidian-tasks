@@ -17,7 +17,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
   - Add `{{query.file.hasProperty()}}` and `{{query.file.property()}}` in placeholders - see [[Obsidian Properties#Using Query Properties in Searches|Using Query Properties in Placeholders]].
   - Placeholders can now call functions and contain expressions.
   - New [[Query File Defaults]] facility allows easy customising of all the
-    Tasks searches in a file, by editing properties
+    Tasks searches in a file, by editing properties, for example, to customise the [[layout]].
   - Add [[Meta Bind plugin]] and [[make a query user interface]] pages.
   - Add Chinese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]]
 - 7.14.0:
