@@ -231,7 +231,7 @@ Consider this Markdown note:
 ````text
 ---
 TQ_extra_instructions: |-
-  path includes {{query.file.path}}
+  folder includes {{query.file.folder}}
   not done
 TQ_short_mode: true
 TQ_show_tree: true
@@ -250,8 +250,8 @@ The Tasks results begin would the following:
 ```text
 Explanation of the Query File Defaults (from properties/frontmatter in the query's file):
 
-  path includes {{query.file.path}} =>
-  path includes Test Data/docs_sample_for_explain_query_file_defaults.md
+  folder includes {{query.file.folder}} =>
+  folder includes Test Data/
 
   not done
 
