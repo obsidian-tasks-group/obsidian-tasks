@@ -1,6 +1,6 @@
 {
   "collapse-filter": false,
-  "search": "-path:_meta -file:README",
+  "search": "-path:_meta -file:README -file:CHANGELOG -file:About -file:\"Quick Reference\" -file:\"Known Limitations\"",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
@@ -50,16 +50,16 @@
       }
     }
   ],
-  "collapse-display": true,
-  "showArrow": false,
-  "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 1,
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": -3,
+  "nodeSizeMultiplier": 1.54097073518915,
   "lineSizeMultiplier": 1,
   "collapse-forces": false,
   "centerStrength": 0.518713248970312,
   "repelStrength": 16.8733723958333,
   "linkStrength": 1,
   "linkDistance": 319,
-  "scale": 1.3626171834729273,
+  "scale": 0.27373780164375944,
   "close": false
 }
