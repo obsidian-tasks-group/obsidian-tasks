@@ -1,6 +1,6 @@
 ---
 TQ_extra_instructions: |-
-  path includes {{query.file.path}}
+  folder includes {{query.file.folder}}
   not done
 TQ_short_mode: true
 TQ_show_tree: true
