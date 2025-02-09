@@ -4,6 +4,9 @@ publish: true
 
 # Query File Defaults
 
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
 ## Summary
 
 Scenarios:
