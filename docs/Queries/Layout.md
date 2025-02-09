@@ -151,7 +151,7 @@ For example:
     ```tasks
     no due date
     path includes GitHub
-    
+
     hide recurrence rule
     hide task count
     hide backlink
@@ -190,3 +190,38 @@ Example:
     ```
 
 This can be reversed with [[#Full Mode]].
+
+## Alternative to typing layout instructions
+
+> [!released]
+> [[Query File Defaults]] were introduced in Tasks X.Y.Z.
+
+All the layout instructions in this page can be generated for you automatically, by putting certain file properties (called 'Query File Defaults') in the file containing the query.
+
+For example, suppose the file containing our query begins with the following:
+
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_yaml.approved.yaml -->
+```yaml
+---
+TQ_short_mode: true
+---
+```
+<!-- endSnippet -->
+
+All Tasks code blocks in that file will then have this content automatically inserted at their start:
+
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_instructions.approved.txt -->
+```txt
+short mode
+```
+<!-- endSnippet -->
+
+And of course, if `TQ_short_mode` were `false`, the following would be inserted:
+
+```txt
+full mode
+```
+
+For more information, see [[Query File Defaults]].
+
+And for even more power, see [[Make a query user interface]].

@@ -9,6 +9,7 @@ import callouts_nested_issue_2890_labelled from './__test_data__/callouts_nested
 import callouts_nested_issue_2890_unlabelled from './__test_data__/callouts_nested_issue_2890_unlabelled.json';
 import comments_html_style from './__test_data__/comments_html_style.json';
 import comments_markdown_style from './__test_data__/comments_markdown_style.json';
+import docs_sample_for_explain_query_file_defaults from './__test_data__/docs_sample_for_explain_query_file_defaults.json';
 import docs_sample_for_task_properties_reference from './__test_data__/docs_sample_for_task_properties_reference.json';
 import empty_yaml from './__test_data__/empty_yaml.json';
 import example_kanban from './__test_data__/example_kanban.json';
@@ -85,6 +86,7 @@ export function allCacheSampleData() {
         callouts_nested_issue_2890_unlabelled,
         comments_html_style,
         comments_markdown_style,
+        docs_sample_for_explain_query_file_defaults,
         docs_sample_for_task_properties_reference,
         empty_yaml,
         example_kanban,

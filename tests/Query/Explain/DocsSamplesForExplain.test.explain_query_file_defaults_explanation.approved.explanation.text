@@ -1,0 +1,10 @@
+Explanation of the Query File Defaults (from properties/frontmatter in the query's file):
+
+  folder includes {{query.file.folder}} =>
+  folder includes Test Data/
+
+  not done
+
+Explanation of this Tasks code block query:
+
+  No filters supplied. All tasks will match the query.

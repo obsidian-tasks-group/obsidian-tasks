@@ -4,16 +4,117 @@ publish: true
 
 # Query File Defaults
 
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
+## Benefits
+
+This is a somewhat specialised facility that enables you to:
+
+1. **Modify [[layout]] options in a Tasks Query without editing the `tasks` code block source.**
+    - This could save you switching repeatedly between Reading and Editing modes.
+    - Perhaps you usually like to see your Tasks search results with certain [[Layout]] options, but sometimes it is nice to see more detail, perhaps turning  `show tree` on and off, depending on your mood.
+2. **Automatically insert one or more instructions in to all the `tasks` code blocks in a file.**
+    - You have multiple Tasks queries in a Markdown file, and they have a lot of text in common.
+    - You would like to avoid repeating those common instructions in each one, because keeping them consistent is tedious and error-prone.
+3. **Remind yourself what all `tasks` code blocks in a file do.**
+    - Quickly turn [[Explaining Queries|explain]] on and off, for when you need a reminder, or are wondering why some tasks are not included in a search.
+
 ## Summary
 
-Scenarios:
+**Query File Defaults** are like the [[Global Query]] only more specific:
 
-- You have multiple Tasks queries in a Markdown file, and they have a lot of
-  text in common. You would like to avoid repeating those common instructions in
-  each one.
-- Usually you like to see your Tasks search results with certain [[Layout]]
-  options, but sometimes it is nice to see more detail, perhaps turning
-  `show tree` on and off, depending on your mood.
+- The Global Query:
+  - applies to **all queries in the vault**,
+  - is defined in the **Tasks Settings**.
+- Query File Defaults:
+  - apply to **all queries in a file**,
+  - is defined in **one or more standard [[#Supported Query File Defaults property values|named properties]] at the start of the file**.
+
+Structure of this page:
+
+- This page uses [[#examples]] to demonstrate the mechanism.
+- It then shows how to easily adjust a file's Query File Defaults using the [[#Obsidian-native user interface]] and a [[#Meta Bind user interface]].
+- Finally, it gives [[#technical details]] and records [[#Limitations of Query File Defaults|limitations]].
+
+## Examples
+
+These examples are provided to demonstrate how Query File Defaults work, so that all the supported values ([[#Supported Query File Defaults property values|listed below]]) should make sense.
+
+### Add extra instructions
+
+Any number of Tasks instructions can be inserted at the start of all queries in a file, using the `TQ_extra_instructions` property:
+
+```yaml
+---
+TQ_extra_instructions: |-
+  not done
+  group by filename
+---
+```
+
+When editing `TQ_extra_instructions` in Obsidian's File properties editor, you can press `<Shift> + <Return>` to insert a new line.
+
+> [!tip]
+>
+> - `TQ_extra_instructions` is especially useful when you have more than one Tasks search block in a file, and you want the same instructions to be present in all the searches.
+> - Before this feature, if those standard instructions changed, you had to remember to update every search.
+> - Now you can put those standard instructions in `TQ_extra_instructions`, and only update them in one place.
+
+> [!note]
+> The `TQ_extra_instructions` property isn't an array. It's a single string value, and the `|-` allows it to span multiple lines.
+
+### Short or full mode
+
+Suppose the file containing our query begins with the following:
+
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_yaml.approved.yaml -->
+```yaml
+---
+TQ_short_mode: true
+---
+```
+<!-- endSnippet -->
+
+Any Tasks code blocks in that file will then have this content inserted at the start:
+
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_instructions.approved.txt -->
+```txt
+short mode
+```
+<!-- endSnippet -->
+
+All possible behaviours of `TQ_short_mode`:
+
+| `TQ_short_mode` value | Generated instruction |
+| --------------------- | --------------------- |
+| `true`                | `short mode`          |
+| `false`               | `full mode`           |
+| *no value*            | *no instruction*      |
+
+### Show or hide tree
+
+Suppose the file containing our query begins with the following:
+
+```yaml
+---
+TQ_show_tree: true
+---
+```
+
+Any Tasks code blocks in that file will then have this content inserted at the start:
+
+```txt
+show tree
+```
+
+All possible behaviours of `TQ_show_tree`:
+
+| `TQ_show_tree` value | Generated instruction |
+| -------------------- | --------------------- |
+| `true`               | `show tree`           |
+| `false`              | `hide tree`           |
+| *no value*           | *no instruction*      |
 
 ## Applying instructions to every Tasks search in a file
 
@@ -58,21 +159,10 @@ The Obsidian user guide shows how to [use CSS snippets in Obsidian](https://help
 
 ### Meta Bind User Interface
 
-You can use the [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind) plugin to create a User Interface to easily change your Tasks searches:
+See [[Make a query user interface]] for how to use Query File Defaults with the [[Meta Bind Plugin]] to create a User Interface to easily customise many aspects of your Tasks searches:
 
 ![Meta Bind widgets to edit Query File Defaults](../images/query-file-defaults-meta-bind-controls.png)
 <span class="caption">Meta Bind widgets to edit Query File Defaults</span>
-
-> [!info]- Set up Meta Bind widgets to edit Query File Defaults
-> Steps to do this, which assume you have already [turned off Obsidian's Restricted mode](https://help.obsidian.md/Extending+Obsidian/Plugin+security):
->
-> 1. Install and enable [Meta Bind](https://obsidian.md/plugins?search=Meta%20Bind)
-> 2. Click the Copy button to copy the Markdown below.
-> 3. Paste the markdown in to a note in Obsidian that has one or more Tasks searches.
-> 4. Switch to Live Preview or Reading modes, to see the widgets.
-> 5. After experimenting, delete any labels and widgets that you do not need.
->
-> ![[Meta Bind Query Widgets]]
 
 ## Technical details
 
@@ -116,6 +206,8 @@ TQ_show_urgency:
 These are all the types of properties currently supported by Tasks, as Query
 File Defaults.
 
+The `type` values are explained in the [Property types](https://help.obsidian.md/Editing+and+formatting/Properties#Property+types) section of Obsidian Help.
+
 > [!tip]
 > The Tasks plugin automatically adds these properties to the Obsidian vault.
 
@@ -148,3 +240,12 @@ File Defaults.
 }
 ```
 <!-- endSnippet -->
+
+## Limitations of Query File Defaults
+
+- Tasks searches in **Canvas cards** cannot use [[Query File Defaults]], because the [Canvas format](https://jsoncanvas.org) does not support frontmatter/properties.
+  - The workaround is to use the Canvas [Convert to file](https://help.obsidian.md/Plugins/Canvas#Add+text+cards) facility to convert cards which contain Tasks queries to a separate Markdown note, embedded in the canvas.
+  - You can then add Query File Defaults to the new note.
+- The property `TQ_extra_instructions` can contain any kind of Tasks instruction, including placeholders.
+  - But it does not work with [[Line Continuations]].
+  - The workaround is to write any long instructions all on one line when placed in `TQ_extra_instructions`.
