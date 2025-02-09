@@ -36,7 +36,7 @@ SOFTWARE.
 */
 
 /*
-License rrule (included library):
+Licence rrule (included library):
 rrule.js: Library for working with recurrence rules for calendar dates.
 =======================================================================
 
@@ -105,7 +105,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /*
-License chrono-node (included library):
+Licence chrono-node (included library):
 The MIT License
 
 Copyright (c) 2014, Wanasit Tanakitrungruang
@@ -130,7 +130,7 @@ THE SOFTWARE.
 */
 
 /*
-License flatpickr (included library):
+Licence flatpickr (included library):
 The MIT License (MIT)
 
 Copyright (c) 2017 Gregory Petrosyan
