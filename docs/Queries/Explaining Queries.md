@@ -163,6 +163,8 @@ Explanation of this Tasks code block query:
 ```
 <!-- endSnippet -->
 
+## Advanced Examples
+
 ### Global Query is displayed
 
 > [!released]
@@ -207,6 +209,61 @@ Explanation of this Tasks code block query:
       2022-10-30 (Sunday 30th October 2022) inclusive
 ```
 <!-- endSnippet -->
+
+### Query File Defaults are displayed
+
+> [!released]
+> The Query File Defaults facility was introduced in Tasks X.Y.Z.
+
+> [!info]- What are Query File Defaults?
+> You can use [[Query File Defaults]] facility to modify Tasks searches, by adding certain pre-defined property value's the query file's frontmatter.
+>
+> For example, setting `TQ_short_mode` to `true` makes Tasks insert the following line at the start of the query:
+>
+> ```text
+> short mode
+> ```
+
+Consider a Markdown note:
+
+````text
+---
+TQ_extra_instructions: |-
+  path includes {{query.file.path}}
+  not done
+TQ_short_mode: true
+TQ_show_tree: true
+---
+
+```tasks
+explain
+```
+````
+
+The Tasks results begin would the following:
+
+```text
+Explanation of the query file defaults (from properties/frontmatter in the query's file):
+
+  path includes {{query.file.path}} =>
+  path includes Test Data/docs_sample_for_explain_query_file_defaults.md
+
+  not done
+
+Explanation of this Tasks code block query:
+
+  No filters supplied. All tasks will match the query.
+```
+
+> [!info]- Why are the generated layout instructions not visible?
+> The Query File Defaults will have generated these instructions:
+>
+> ```text
+> short mode
+> show tree
+> ```
+>
+> Currently, the `explain` output does not display [[layout]] instructions.  We are tracking this in [issue #2093](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2093).
 
 ### Placeholder values are expanded
 
