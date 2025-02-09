@@ -246,6 +246,7 @@ explain
 
 The Tasks results begin would the following:
 
+<!-- snippet: DocsSamplesForExplain.test.explain_query_file_defaults_explanation.approved.explanation.text -->
 ```text
 Explanation of the query file defaults (from properties/frontmatter in the query's file):
 
@@ -258,6 +259,7 @@ Explanation of this Tasks code block query:
 
   No filters supplied. All tasks will match the query.
 ```
+<!-- endSnippet -->
 
 > [!info]- Why are the generated layout instructions not visible?
 > The Query File Defaults will have generated these instructions:
