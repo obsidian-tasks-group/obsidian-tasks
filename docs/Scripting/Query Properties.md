@@ -64,3 +64,7 @@ This page documents all the available pieces of information in Queries that you 
     - The [[Global Query|global query]] does not affect `query.allTasks`: all tasks tracked by the Tasks plugin are included.
     - See [[Task Properties]] for the available properties on each task.
     - `query.allTasks` was added in Tasks 6.1.0.
+
+## Related Pages
+
+See also [[Query File Defaults]] for a mechanism to generate query instructions from pre-defined Obsidian properties.
