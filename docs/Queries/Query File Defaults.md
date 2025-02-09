@@ -19,6 +19,29 @@ Scenarios:
 
 These examples are provided to demonstrate how Query File Defaults work, so that all the supported values ([[#Supported Query File Defaults property values|listed below]]) should make sense.
 
+### Add extra instructions
+
+Any number of Tasks instructions can be inserted at the start of all queries in a file, using the `TQ_extra_instructions` property:
+
+```yaml
+---
+TQ_extra_instructions: |-
+  not done
+  group by filename
+---
+```
+
+When editing `TQ_extra_instructions` in Obsidian's File properties editor, you can press `<Shift> + <Return>` to insert a new line.
+
+> [!tip]
+>
+> - `TQ_extra_instructions` is especially useful when you have more than one Tasks search block in a file, and you want the same instructions to be present in all the searches.
+> - Before this feature, if those standard instructions changed, you had to remember to update every search.
+> - Now you can put those standard instructions in `TQ_extra_instructions`, and only update them in one place.
+
+> [!note]
+> The `TQ_extra_instructions` property isn't an array. It's a single string value, and the `|-` allows it to span multiple lines.
+
 ### Short or full mode
 
 Suppose the file containing our query begins with the following:
