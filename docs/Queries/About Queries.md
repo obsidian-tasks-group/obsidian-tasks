@@ -54,12 +54,24 @@ In the following sections we will explain all the various options that are avail
 - [[Examples]]
   - A selection of some of the more commonly used search instructions.
 
-### Searching tasks - Advanced
+### Searching tasks - Re-using instructions
 
 - [[Global Query]]
   - Set a global query in the settings that Tasks will add to the start of all the Queries in your vault.
 - [[Query File Defaults]]
   - Set properties in note frontmatter, to instruct tasks to add instructions to all the Queries in that file.
+
+> [!tip] The Query is assembled like this:
+>
+> 1. Get the **Global Query**, from settings.
+>     - This will be discarded if `ignore global query` is present in any of the following locations.
+> 2. Append the **Query File Defaults**, based on the Query file's properties.
+> 3. Append the **Query Source**, from the `tasks` block.
+>
+> Later [[Layout]] instructions will override earlier ones.
+
+### Searching tasks - Advanced
+
 - [[Combining Filters]]
   - How to use `AND`, `OR` and `NOT`.
   - Warning: Make sure you understand where to place brackets in these instructions!
