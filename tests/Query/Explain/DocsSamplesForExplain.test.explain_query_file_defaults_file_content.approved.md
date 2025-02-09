@@ -1,3 +1,6 @@
+<!-- placeholder to force blank line before included text -->
+
+````text
 ---
 TQ_extra_instructions: |-
   path includes {{query.file.path}}
@@ -9,3 +12,6 @@ TQ_show_tree: true
 ```tasks
 explain
 ```
+````
+
+<!-- placeholder to force blank line after included text -->
