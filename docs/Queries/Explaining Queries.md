@@ -248,7 +248,7 @@ The Tasks results begin would the following:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_query_file_defaults_explanation.approved.explanation.text -->
 ```text
-Explanation of the query file defaults (from properties/frontmatter in the query's file):
+Explanation of the Query File Defaults (from properties/frontmatter in the query's file):
 
   path includes {{query.file.path}} =>
   path includes Test Data/docs_sample_for_explain_query_file_defaults.md
