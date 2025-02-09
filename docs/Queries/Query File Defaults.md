@@ -47,6 +47,30 @@ All possible behaviours of `TQ_short_mode`:
 | `false`               | `full mode`           |
 | *no value*            | *no instruction*      |
 
+### Show or hide tree
+
+Suppose the file containing our query begins with the following:
+
+```yaml
+---
+TQ_show_tree: true
+---
+```
+
+Any Tasks code blocks in that file will then have this content inserted at the start:
+
+```txt
+show tree
+```
+
+All possible behaviours of `TQ_show_tree`:
+
+| `TQ_show_tree` value | Generated instruction |
+| -------------------- | --------------------- |
+| `true`               | `show tree`           |
+| `false`              | `hide tree`           |
+| *no value*           | *no instruction*      |
+
 ## Applying instructions to every Tasks search in a file
 
 ### Obsidian-native User Interface
