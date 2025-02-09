@@ -216,7 +216,7 @@ short mode
 ```
 <!-- endSnippet -->
 
-And of course, if `TQ_short_mode` were `false`, the following would inserted:
+And of course, if `TQ_short_mode` were `false`, the following would be inserted:
 
 ```txt
 full mode
