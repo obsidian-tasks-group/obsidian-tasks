@@ -184,6 +184,8 @@ TQ_show_urgency:
 These are all the types of properties currently supported by Tasks, as Query
 File Defaults.
 
+The `type` values are explained in the [Property types](https://help.obsidian.md/Editing+and+formatting/Properties#Property+types) section of Obsidian Help.
+
 > [!tip]
 > The Tasks plugin automatically adds these properties to the Obsidian vault.
 
