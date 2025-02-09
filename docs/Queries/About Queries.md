@@ -53,6 +53,7 @@ In the following sections we will explain all the various options that are avail
 ### Searching tasks - Advanced
 
 - [[Global Query]]
+- [[Query File Defaults]]
 - [[Combining Filters]]
 - [[Regular Expressions]]
 - [[Line Continuations]]
