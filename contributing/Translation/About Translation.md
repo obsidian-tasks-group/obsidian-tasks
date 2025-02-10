@@ -13,6 +13,8 @@ Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a tra
 
 ## Overview of the translation setup
 
+<span class="related-pages">#i18n</span>
+
 ### Tools used
 
 - [i18next](https://www.i18next.com)
@@ -68,6 +70,8 @@ yarn extract-i18n
 
 ## Make strings translatable
 
+<span class="related-pages">#i18n</span>
+
 > [!Warning] Do not extract strings by hand
 > It is just too time-consuming and too error-prone.
 > Find a tool in your IDE that will allow you to select text, give it a label and extract it to all languages.
@@ -83,6 +87,8 @@ Scenarios/topics:
 
 ## Set up WebStorm for translation work
 
+<span class="related-pages">#i18n</span>
+
 Install and configure the [Easy I18n](https://plugins.jetbrains.com/plugin/16316-easy-i18n) plugin.
 
 - Action for extracting strings
@@ -95,15 +101,21 @@ Install and configure the [Easy I18n](https://plugins.jetbrains.com/plugin/16316
 
 ## Set up Visual Studio Code for translation work
 
+<span class="related-pages">#i18n</span>
+
 TODO...
 
 Contributions welcomed, to populate this page.
 
 ## Translate a new string
 
+<span class="related-pages">#i18n</span>
+
 TODO...
 
 ## Support a new language
+
+<span class="related-pages">#i18n</span>
 
 These are the steps required to add support for a new language.
 
@@ -128,6 +140,8 @@ These are the steps required to add support for a new language.
 2. Get a human to open `en.json` and the new file, for example `de.json` , side by side, and add the translations to the new file.
 
 ## Contribute translations
+
+<span class="related-pages">#i18n</span>
 
 TODO...
 
