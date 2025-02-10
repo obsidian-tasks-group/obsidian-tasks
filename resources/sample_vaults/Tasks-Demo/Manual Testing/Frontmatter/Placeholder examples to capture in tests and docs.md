@@ -91,6 +91,13 @@ path includes {{query.file.path}}
 {{query.file.property('stuff')}}
 ```
 
+## Works correctly when property is not set
+
+```tasks
+path includes {{query.file.path}}
+{{query.file.property('stuff') ?? ''}}
+```
+
 ## Expands to false, but should be an error
 
 ```tasks
