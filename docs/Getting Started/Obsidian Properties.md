@@ -241,9 +241,6 @@ It can be used in queries in several ways:
 > - in text instructions, the string used is currently `null`, which is not likely to be the intent
 > - in numeric instructions, the value used is `null` which gives an error
 
-> [!Info]
-> In a future release, we will likely allow Tasks to silently ignore built filters created from properties that have no value.
-
 ## How does Tasks interpret Obsidian Properties?
 
 Consider a file with the following example properties (or "Frontmatter"):
