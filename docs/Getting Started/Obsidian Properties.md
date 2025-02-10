@@ -183,54 +183,6 @@ group by function \
     return value ? window.moment(value).format('YYYY MMMM') : 'no date'
 ```
 
-## Using Query Properties in Searches
-
-> [!released]
-> Use of Obsidian properties in placeholders was introduced in Tasks X.Y.Z.
-
-- It is now possible to use properties in the query file:
-  - `query.file.hasProperty()` works.
-  - `query.file.property()` works.
-
-Imagine this text at the top of **the note containing the query**:
-
-```yaml
----
-search-text: exercise
-workdate: 2024-04-01
-groupby: group by happens
----
-```
-
-It can be used in queries in several ways:
-
-1. A search term from frontmatter embedded via placeholder:
-
-    ```javascript
-    description includes {{query.file.property('search-text')}}
-    due on or before {{query.file.property('workdate')}}
-    ```
-
-    > [!warning]
-    > You must make sure that the property values are set in the query file. Otherwise the text `null` is inserted, which is unlikely to be what you want.
-
-2. An entire instruction controlled by front-matter value, embedded with a [[Placeholders|placeholder]]:
-
-    ```javascript
-    {{query.file.property('groupby') ?? ''}}
-    ```
-
-    The `?? ''` text ensures that if the property is not set, the instruction is ignored, instead of `null` being inserted.
-
-> [!tip]
-> See also [[Query File Defaults]] for built-in properties automatically supported by Tasks searches.
-
-> [!warning] Using properties with no value
-> Currently when a property in a placeholder is *not* set:
->
-> - in text instructions, the string used is currently `null`, which is not likely to be the intent
-> - in numeric instructions, the value used is `null` which gives an error
-
 ## How does Tasks interpret Obsidian Properties?
 
 Consider a file with the following example properties (or "Frontmatter"):
@@ -285,3 +237,51 @@ The following table shows how most of those properties are interpreted in Tasks 
 | `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+## Using Query Properties in Searches
+
+> [!released]
+> Use of Obsidian properties in placeholders was introduced in Tasks X.Y.Z.
+
+- It is now possible to use properties in the query file:
+  - `query.file.hasProperty()` works.
+  - `query.file.property()` works.
+
+Imagine this text at the top of **the note containing the query**:
+
+```yaml
+---
+search-text: exercise
+workdate: 2024-04-01
+groupby: group by happens
+---
+```
+
+It can be used in queries in several ways:
+
+1. A search term from frontmatter embedded via placeholder:
+
+    ```javascript
+    description includes {{query.file.property('search-text')}}
+    due on or before {{query.file.property('workdate')}}
+    ```
+
+    > [!warning]
+    > You must make sure that the property values are set in the query file. Otherwise the text `null` is inserted, which is unlikely to be what you want.
+
+2. An entire instruction controlled by front-matter value, embedded with a [[Placeholders|placeholder]]:
+
+    ```javascript
+    {{query.file.property('groupby') ?? ''}}
+    ```
+
+    The `?? ''` text ensures that if the property is not set, the instruction is ignored, instead of `null` being inserted.
+
+> [!tip]
+> See also [[Query File Defaults]] for built-in properties automatically supported by Tasks searches.
+
+> [!warning] Using properties with no value
+> Currently when a property in a placeholder is *not* set:
+>
+> - in text instructions, the string used is currently `null`, which is not likely to be the intent
+> - in numeric instructions, the value used is `null` which gives an error
