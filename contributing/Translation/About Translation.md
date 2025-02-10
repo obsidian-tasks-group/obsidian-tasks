@@ -14,14 +14,7 @@ Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a tra
 - [[Overview of the translation setup]]
 - [[Make strings translatable]]
 - [[Set up WebStorm for translation work]]
-
-## Set up Visual Studio Code for translation work
-
-<span class="related-pages">#i18n</span>
-
-TODO...
-
-Contributions welcomed, to populate this page.
+- [[Set up Visual Studio Code for translation work]]
 
 ## Translate a new string
 
