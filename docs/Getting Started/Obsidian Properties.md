@@ -238,6 +238,9 @@ The following table shows how most of those properties are interpreted in Tasks 
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+> [!tip]
+> `query.file.hasProperty()` and `query.file.property()` are also available, and naturally behave the same.
+
 ## Using Query Properties in Searches
 
 > [!released]
