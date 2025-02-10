@@ -17,11 +17,4 @@ Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a tra
 - [[Set up Visual Studio Code for translation work]]
 - [[Translate a new string]]
 - [[Support a new language]]
-
-## Contribute translations
-
-<span class="related-pages">#i18n</span>
-
-TODO...
-
-We will find a website to make it easy to add new translations.
+- [[Contribute translations]]
