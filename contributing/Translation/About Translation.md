@@ -27,14 +27,15 @@ Topics - likely to be broken out in to separate pages:
 
 ## Files
 
-- `src/i18n/i18n.ts`
-- `src/i18n/locales/*.json`
+- [src/i18n/i18n.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/i18n.ts)
+- [src/i18n/locales/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/i18n/locales) `*.json`
+- [i18next-parser.config.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/i18next-parser.config.js)
 
 ### Key names
 
 You can see the currently-used key names in:
 
-`src/i18n/locales/en.json`
+[src/i18n/locales/en.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/locales/en.json)
 
 Here, they are nested, for example:
 
