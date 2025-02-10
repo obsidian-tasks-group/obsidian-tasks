@@ -15,6 +15,10 @@ Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a tra
 
 - [[Overview of the translation setup]]
 
+## For translators
+
+- [[Contribute translations]]
+
 ## For developers
 
 - [[Make strings translatable]]
@@ -22,7 +26,3 @@ Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a tra
 - [[Set up Visual Studio Code for translation work]]
 - [[Translate a new string]]
 - [[Support a new language]]
-
-## For translators
-
-- [[Contribute translations]]
