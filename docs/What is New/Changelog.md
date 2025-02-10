@@ -19,7 +19,9 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
   - New [[Query File Defaults]] facility allows easy customising of all the
     Tasks searches in a file, by editing properties, for example, to customise the [[layout]].
   - Add [[Meta Bind plugin]] and [[make a query user interface]] pages.
-  - Add Chinese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]]
+  - Translations:
+    - Add Chinese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
+    - See [contribute translations](https://publish.obsidian.md/tasks-contributing/Translation/Contribute+translationsl) and [related pages](https://publish.obsidian.md/tasks-contributing/Translation/About+Translation) on the [Contributing](https://publish.obsidian.md/tasks-contributing/Welcome) guide.
 - 7.14.0:
   - Add [[Editing Dates#Date-picker on task dates|date picker]] to Reading mode and Tasks query search results.
 - 7.13.0:
