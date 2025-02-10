@@ -1,7 +1,7 @@
 module.exports = {
     input: ['src/**/*.{ts,svelte}'], // Scan relevant files
     output: 'src/i18n/locales/$LOCALE.json', // Output files
-    locales: ['en', 'zh_cn'], // Supported locales
+    locales: ['en', 'de', 'zh_cn'], // Supported locales
     defaultNamespace: 'translation',
     keySeparator: '.', // Use dots to represent nested keys
     namespaceSeparator: false, // Disable namespace separation
