@@ -211,11 +211,16 @@ It can be used in queries in several ways:
     due on or before {{query.file.property('workdate')}}
     ```
 
-2. An entire instruction controlled by front-matter value:
+    > [!warning]
+    > You must make sure that the property values are set in the query file. Otherwise the text `null` is inserted, which is unlikely to be what you want.
+
+2. An entire instruction controlled by front-matter value, embedded with a [[Placeholders|placeholder]]:
 
     ```javascript
-    {{query.file.property('groupby')}}
+    {{query.file.property('groupby') ?? ''}}
     ```
+
+    The `?? ''` text ensures that if the property is not set, the instruction is ignored, instead of `null` being inserted.
 
 3. Scripting, which allows creation of a custom filter, which works when the search term is empty
 
@@ -231,7 +236,7 @@ It can be used in queries in several ways:
 > See also [[Query File Defaults]] for built-in properties automatically supported by Tasks searches.
 
 > [!warning] Using properties with no value
-> Currently when a property in a placeholder is not set:
+> Currently when a property in a placeholder is *not* set:
 >
 > - in text instructions, the string used is currently `null`, which is not likely to be the intent
 > - in numeric instructions, the value used is `null` which gives an error
