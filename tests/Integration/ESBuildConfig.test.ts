@@ -47,7 +47,7 @@ describe('Check esbuild.config.mjs', () => {
     it.each(getReleasedDependencies())('check dependency is in banner: "%s"', (filter: string) => {
         // For files that we embed in main.js, we need to honour the project license,
         // which we do by pasting it in to esbuild.config.mjs.
-        const expectedLine = `Licence ${filter} (included library):`;
+        const expectedLine = `License ${filter} (included library):`;
         expect(bannerContent).toContain(expectedLine);
 
         // If this fails, you need to go to:
