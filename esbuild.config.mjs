@@ -36,7 +36,7 @@ SOFTWARE.
 */
 
 /*
-Licence rrule (included library):
+License rrule (included library):
 rrule.js: Library for working with recurrence rules for calendar dates.
 =======================================================================
 
@@ -105,21 +105,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /*
-Licence chrono-node (included library):
+License chrono-node (included library):
 The MIT License
 
 Copyright (c) 2014, Wanasit Tanakitrungruang
 */
 
 /*
-Licence flatpickr (included library):
+License flatpickr (included library):
 The MIT License (MIT)
 
 Copyright (c) 2017 Gregory Petrosyan
 */
 
 /*
-Licence @floating-ui/dom (included library):
+License @floating-ui/dom (included library):
 
 MIT License
 
@@ -127,7 +127,7 @@ Copyright (c) 2021 Floating UI contributors
 */
 
 /*
-Licence boon-js (included library):
+License boon-js (included library):
 
 The MIT License (MIT)
 
@@ -135,7 +135,7 @@ Copyright (c) 2020-present Jake Chorley
 */
 
 /*
-Licence eventemitter2 (included library):
+License eventemitter2 (included library):
 
 The MIT License (MIT)
 
@@ -143,7 +143,7 @@ Copyright (c) 2016 Paolo Fragomeni <http://www.github.com/0x00a> and Contributor
 */
 
 /*
-Licence i18next (included library):
+License i18next (included library):
 
 The MIT License (MIT)
 
@@ -151,7 +151,7 @@ Copyright (c) 2025 i18next
 */
 
 /*
-Licence i18next-browser-languagedetector (included library):
+License i18next-browser-languagedetector (included library):
 
 The MIT License (MIT)
 
@@ -159,7 +159,7 @@ Copyright (c) 2024 i18next
 */
 
 /*
-Licence mustache (included library):
+License mustache (included library):
 
 The MIT License
 
@@ -169,7 +169,7 @@ Copyright (c) 2010-2015 The mustache.js community
 */
 
 /*
-Licence mustache-validator (included library):
+License mustache-validator (included library):
 
 MIT License
 
