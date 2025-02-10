@@ -11,6 +11,7 @@ export const initializeI18n = async () => {
         await i18next
             .use(LanguageDetector) // Use language detector to determine user's language
             .init({
+                // lng: 'zh_cn', // for testing, hard-code the language and remove the `use(LanguageDetector)` line
                 fallbackLng: 'en', // Fallback language if detection fails or translation is missing
                 returnEmptyString: false, // Use fallback language if i18next-parser put in empty value for untranslated text
                 resources: {
