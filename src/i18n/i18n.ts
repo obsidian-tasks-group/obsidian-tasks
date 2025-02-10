@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import de from './locales/de.json';
 import en from './locales/en.json';
 import zh_cn from './locales/zh_cn.json';
 
@@ -16,7 +15,6 @@ export const initializeI18n = async () => {
                 fallbackLng: 'en', // Fallback language if detection fails or translation is missing
                 returnEmptyString: false, // Use fallback language if i18next-parser put in empty value for untranslated text
                 resources: {
-                    de: { translation: de },
                     en: { translation: en },
                     zh_cn: { translation: zh_cn },
                 },
