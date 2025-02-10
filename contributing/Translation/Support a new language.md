@@ -27,3 +27,8 @@ These are the steps required to add support for a new language.
 
 1. Optionally, paste `en.json` in to  <https://translate.i18next.com>, to get an initial translation.
 2. Get a human to open `en.json` and the new file, for example `de.json` , side by side, and add the translations to the new file.
+    - See [[Contribute translations]].
+
+## Update the translations discussion
+
+1. Get Clare to add the link to the new translation file in the [relevant GitHub discussion](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/3321#discussion-7942115).
