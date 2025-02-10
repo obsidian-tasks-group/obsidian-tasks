@@ -5,7 +5,7 @@ publish: true
 # Query File Defaults
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 7.15.0.
 
 ## Benefits
 

@@ -71,7 +71,7 @@ Explanation of this Tasks code block query:
 ## Using Query Properties in Placeholders
 
 > [!released]
-> Use of Obsidian properties in placeholders was introduced in Tasks X.Y.Z.
+> Use of Obsidian properties in placeholders was introduced in Tasks 7.15.0.
 
 It is now possible to use properties in the query file. See [[Obsidian Properties#Using Query Properties in Searches]]
 

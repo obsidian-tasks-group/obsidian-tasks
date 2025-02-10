@@ -9,7 +9,7 @@ publish: true
 ## Meta Bind Tasks User Interface to Query File Defaults
 
 > [!released]
-> Query File Defaults were introduced in Tasks X.Y.Z.
+> Query File Defaults were introduced in Tasks 7.15.0.
 
 The [[Meta Bind Plugin]] allows Obsidian users to make their notes interactive with inline input fields, metadata displays, and buttons.
 
