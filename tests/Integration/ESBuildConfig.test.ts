@@ -57,6 +57,6 @@ describe('Check esbuild.config.mjs', () => {
         // 4. View its LICENSE file.
         // 5. Copy the contents of the LICENSE file.
         // 6. Create a new comment block inside the banner variable in esbuild.config.mjs
-        // 7. Paste in a new block, including the library name and the full licence text.
+        // 7. Paste in a new block, including the library name and - if it's not a standard license - the full license text.
     });
 });
