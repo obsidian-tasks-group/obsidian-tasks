@@ -4,7 +4,7 @@ publish: true
 
 # Set up WebStorm for translation work
 
-<span class="related-pages">#i18n</span>
+<span class="related-pages">#i18n #tools/webstorm </span>
 
 Install and configure the [Easy I18n](https://plugins.jetbrains.com/plugin/16316-easy-i18n) plugin.
 
