@@ -15,12 +15,7 @@ Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a tra
 - [[Make strings translatable]]
 - [[Set up WebStorm for translation work]]
 - [[Set up Visual Studio Code for translation work]]
-
-## Translate a new string
-
-<span class="related-pages">#i18n</span>
-
-TODO...
+- [[Translate a new string]]
 
 ## Support a new language
 
