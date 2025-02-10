@@ -105,6 +105,24 @@ function isInvalidQueryInstructionLowerAndUpper(
 }
 
 describe('Query parsing', () => {
+    it('should proved access to the parsed statements', () => {
+        const source = `
+description includes Simple Line
+
+{{'description includes' + ' from a Placeholder'}}
+
+description includes \
+    from a Continuation Line
+        `;
+        const query = new Query(source, new TasksFile('test.md'));
+        expect(query.error).toBeUndefined();
+        const statements = query.statements;
+        expect(statements.length).toEqual(3);
+        expect(statements[0].anyPlaceholdersExpanded).toEqual('description includes Simple Line');
+        expect(statements[1].anyPlaceholdersExpanded).toEqual('description includes from a Placeholder');
+        expect(statements[2].anyPlaceholdersExpanded).toEqual('description includes     from a Continuation Line');
+    });
+
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
         // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED

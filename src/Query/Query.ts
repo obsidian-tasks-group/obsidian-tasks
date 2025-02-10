@@ -25,6 +25,11 @@ let queryInstanceCounter = 0;
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
+
+    /** statements contain each source line after processing continuations and placeholders.
+     * There may be more statements than lines in the source, if any multi-line query file property values were used. */
+    public readonly statements: Statement[] = [];
+
     public readonly tasksFile: OptionalTasksFile;
 
     private _limit: number | undefined = undefined;
@@ -59,17 +64,16 @@ export class Query implements IQuery {
 
         const anyContinuationLinesRemoved = continueLines(source);
 
-        const anyPlaceholdersExpanded: Statement[] = [];
         for (const statement of anyContinuationLinesRemoved) {
             const expandedStatements = this.expandPlaceholders(statement, tasksFile);
             if (this.error !== undefined) {
                 // There was an error expanding placeholders.
                 return;
             }
-            anyPlaceholdersExpanded.push(...expandedStatements);
+            this.statements.push(...expandedStatements);
         }
 
-        for (const statement of anyPlaceholdersExpanded) {
+        for (const statement of this.statements) {
             try {
                 this.parseLine(statement);
                 if (this.error !== undefined) {
