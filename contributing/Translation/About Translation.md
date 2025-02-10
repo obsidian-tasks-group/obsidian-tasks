@@ -11,29 +11,26 @@ publish: true
 
 Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a translation framework - also know as internationalisation or i18n.
 
-Topics - likely to be broken out in to separate pages:
+## Overview of the translation setup
 
-- Setting up WebStorm
-- Overview of the translation setup
-- How to add a new string
-- How to enable translations in a new language
-- How to add new translations
+### Tools used
 
-## Tools Used
-
-- i18next
-- i18next-browser-languagedetector
-- i18next-parser
+- [i18next](https://www.i18next.com)
+  - i18next is an **internationalization-framework** written in and for JavaScript.
+- [i18next-browser-languagedetector](https://github.com/i18next/i18next-browser-languageDetector)
+  - This is an i18next language detection plugin used to detect the user's language automatically.
+- [i18next-parser](https://github.com/i18next/i18next-parser)
+  - When translating an application, maintaining the translation catalog by hand is painful. This package parses your code and automates this process, making sure that every locale file contains all the translation strings in the application.
 - WebStorm
   - [Easy I18n](https://plugins.jetbrains.com/plugin/16316-easy-i18n) plugin.
 
-## Files
+### Files used in translation code
 
 - [src/i18n/i18n.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/i18n.ts)
 - [src/i18n/locales/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/i18n/locales) `*.json`
 - [i18next-parser.config.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/i18next-parser.config.js)
 
-### Key names
+### Translation key names
 
 You can see the currently-used key names in:
 
@@ -61,7 +58,15 @@ i18n.t('modals.customStatusModal.editAvailableAsCommand.name')
 
 In WebStorm with the Easy I18n plugin configured, hovering over that `i18n.t()` will show you the expanded text.
 
-## For Developers
+### Translation scripts
+
+The following `yarn` script runs [i18next-parser](https://github.com/i18next/i18next-parser) to ensure that every locale `.json` file contains placeholders for all translatable strings.
+
+```bash
+yarn extract-i18n
+```
+
+## Make strings translatable
 
 > [!Warning] Do not extract strings by hand
 > It is just too time-consuming and too error-prone.
@@ -76,7 +81,9 @@ Scenarios/topics:
 - Beware of extra backticks
 - `yarn extract-i18n`
 
-## WebStorm Easy I18n
+## Set up WebStorm for translation work
+
+Install and configure the [Easy I18n](https://plugins.jetbrains.com/plugin/16316-easy-i18n) plugin.
 
 - Action for extracting strings
 - Table and tree view
@@ -86,7 +93,17 @@ Scenarios/topics:
 ![Screenshot showing WebStorm Easy I18n plugin settings](WebStorm%20Easy%20I18n%20plugin%20settings.png)
 <span class="caption">Screenshot showing WebStorm Easy I18n plugin settings</span>
 
-## Supporting a new language
+## Set up Visual Studio Code for translation work
+
+TODO...
+
+Contributions welcomed, to populate this page.
+
+## Translate a new string
+
+TODO...
+
+## Support a new language
 
 These are the steps required to add support for a new language.
 
@@ -110,6 +127,8 @@ These are the steps required to add support for a new language.
 1. Optionally, paste `en.json` in to  <https://translate.i18next.com>, to get an initial translation.
 2. Get a human to open `en.json` and the new file, for example `de.json` , side by side, and add the translations to the new file.
 
-## For Translators
+## Contribute translations
+
+TODO...
 
 We will find a website to make it easy to add new translations.
