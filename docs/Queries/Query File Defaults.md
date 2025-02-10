@@ -198,6 +198,8 @@ TQ_show_urgency:
 ```
 <!-- endSnippet -->
 
+### Command: Add all Query File Defaults properties
+
 > [!tip]
 > Use the command **Tasks: Add all Query File Defaults properties** to add all these properties to the active note.
 
