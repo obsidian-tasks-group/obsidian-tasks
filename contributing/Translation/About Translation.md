@@ -39,11 +39,11 @@ You can see the currently-used key names in:
 Here, they are nested, for example:
 
 ```json
-{  
-  "modals": {  
-    "customStatusModal": {  
-      "editAvailableAsCommand": {  
-        "name": "Available as command"  
+{
+  "modals": {
+    "customStatusModal": {
+      "editAvailableAsCommand": {
+        "name": "Available as command"
       },
     },
   },
@@ -79,6 +79,9 @@ Scenarios/topics:
 - Table and tree view
   - Meaning of red text
   - Meaning of orange text
+
+![Screenshot showing WebStorm Easy I18n plugin settings](WebStorm%20Easy%20I18n%20plugin%20settings.png)
+<span class="caption">Screenshot showing WebStorm Easy I18n plugin settings</span>
 
 ## For Translators
 
