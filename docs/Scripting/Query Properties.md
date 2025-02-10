@@ -46,8 +46,8 @@ This page documents all the available pieces of information in Queries that you 
 1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
 1. `query.file.pathWithoutExtension` was added in Tasks 4.8.0.
 1. `query.file.filenameWithoutExtension` was added in Tasks 4.8.0.
-1. `query.file.hasProperty()` was added in Tasks X.Y.Z.
-1. `query.file.property()` was added in Tasks X.Y.Z.
+1. `query.file.hasProperty()` was added in Tasks 7.15.0.
+1. `query.file.property()` was added in Tasks 7.15.0.
 
 ## Values for Query Search Properties
 

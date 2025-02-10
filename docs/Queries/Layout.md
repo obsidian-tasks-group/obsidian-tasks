@@ -195,7 +195,7 @@ This can be reversed with [[#Full Mode]].
 ## Alternative to typing layout instructions
 
 > [!released]
-> [[Query File Defaults]] were introduced in Tasks X.Y.Z.
+> [[Query File Defaults]] were introduced in Tasks 7.15.0.
 
 All the layout instructions in this page can be generated for you automatically, by putting certain file properties (called 'Query File Defaults') in the file containing the query.
 

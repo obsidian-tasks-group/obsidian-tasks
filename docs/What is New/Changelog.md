@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
-- X.Y.Z:
+- 7.15.0:
   - Tasks now requires [Obsidian 1.4.0](https://obsidian.md/changelog/2023-08-31-desktop-v1.4.5/) or newer.
   - **Translations**:
     - Add Chinese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].

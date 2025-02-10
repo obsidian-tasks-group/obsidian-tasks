@@ -244,7 +244,7 @@ The following table shows how most of those properties are interpreted in Tasks 
 ## Using Query Properties in Searches
 
 > [!released]
-> Use of Obsidian properties in placeholders was introduced in Tasks X.Y.Z.
+> Use of Obsidian properties in placeholders was introduced in Tasks 7.15.0.
 
 - It is now possible to use properties in the query file:
   - `query.file.hasProperty()` works.

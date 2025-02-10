@@ -20,7 +20,7 @@ This has a number of benefits:
 - If there is a [[Global Filter|global filter]] enabled, it is included in the explanation.
   - This often explains why tasks are missing from results.
 - If there is a [[Global Query|global query]] enabled, it too is included in the explanation.
-- Any [[query file defaults]]-generated instructions are listed (since Tasks X.Y.Z).
+- Any [[query file defaults]]-generated instructions are listed (since Tasks 7.15.0).
   - Note that `show/hide` [[layout]] are not yet shown in `explain` output, however. We are tracking this in [issue #2093](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2093).
 - Any [[Grouping|'group by']] instructions are listed (since Tasks 5.4.0).
 - Any [[Sorting|'sort by']] instructions are listed (since Tasks 5.4.0).
@@ -213,7 +213,7 @@ Explanation of this Tasks code block query:
 ### Query File Defaults are displayed
 
 > [!released]
-> The [[Query File Defaults]] facility was introduced in Tasks X.Y.Z.
+> The [[Query File Defaults]] facility was introduced in Tasks 7.15.0.
 
 > [!info]- What are Query File Defaults?
 > You can use [[Query File Defaults]] facility to modify Tasks searches, by adding certain pre-defined property value's the query file's frontmatter.
