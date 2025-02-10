@@ -4,6 +4,8 @@ publish: true
 
 # About Translation
 
+<span class="related-pages">#i18n</span>
+
 > [!Danger] This page is under development
 > For now, it is a list of things to remember to record.
 
