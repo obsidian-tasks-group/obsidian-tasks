@@ -222,16 +222,6 @@ It can be used in queries in several ways:
 
     The `?? ''` text ensures that if the property is not set, the instruction is ignored, instead of `null` being inserted.
 
-3. Scripting, which allows creation of a custom filter, which works when the search term is empty
-
-    ```javascript
-    filter by function \
-        if (!query.file.hasProperty('search-text')) return true; \
-        const propertyLower = query.file.property('search-text').toLowerCase(); \
-        if (propertyLower === '') return true; \
-        return task.description.toLowerCase().includes(propertyLower);
-    ```
-
 > [!tip]
 > See also [[Query File Defaults]] for built-in properties automatically supported by Tasks searches.
 
