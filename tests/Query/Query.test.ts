@@ -891,6 +891,34 @@ group by folder
                     "
                 `);
             });
+
+            it('visualise the need to guard against undefined query properties in placeholders', () => {
+                const source = "{{query.file.property('no_such_property')}}";
+                const query = new Query(source, file);
+
+                expect(query.error).not.toBeUndefined();
+                // The 'null' value is because we are embedding regardless of whether the property
+                // exists in the query file.
+                expect(query.error).toMatchInlineSnapshot(`
+                    "do not understand query
+                    Problem statement:
+                        {{query.file.property('no_such_property')}} =>
+                        null
+                    "
+                `);
+            });
+
+            it('visualise using "??" nullish coalescing to guard against undefined query properties in placeholders', () => {
+                // In a real use of this, if the property was not set, we would insert a blank line.
+                // But here, we need to supply something that is visible for testing.
+                const defaultInstructionIfNotSet = 'path includes property not set';
+
+                const source = `{{query.file.property('extra_line') ?? '${defaultInstructionIfNotSet}'}}`;
+                const query = new Query(source, file);
+
+                expect(query.error).toBeUndefined();
+                expect(query.statements[0].anyPlaceholdersExpanded).toEqual(defaultInstructionIfNotSet);
+            });
         });
 
         describe('via "filter by function"', () => {
