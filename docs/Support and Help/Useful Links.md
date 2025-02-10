@@ -42,6 +42,10 @@ _Did we miss any? [Let us know](https://github.com/obsidian-tasks-group/obsidian
 - Improving the plugin:
   - [Issues](https://github.com/obsidian-tasks-group/obsidian-tasks/issues)
   - [Discussions](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions)
+- [Roadmap](https://github.com/orgs/obsidian-tasks-group/projects/4)
+  - This shows items that I (Clare Macrae) have prioritised and would like to do eventually, given enough free time.
+  - The Roadmap makes visible the Issues that are labelled `priority: high`, and puts them in the rough order that they might be done on.
+  - It is just a rough guideline, mainly to convey the size of the backlog: The volume of requests on the Tasks project is so large that it is impossible to say with any confident _if_ or _when_ any item might be done.
 
 ## Notes for Tasks developers
 
