@@ -10,8 +10,6 @@ publish: true
 
 - [i18next](https://www.i18next.com)
   - i18next is an **internationalization-framework** written in and for JavaScript.
-- [i18next-browser-languagedetector](https://github.com/i18next/i18next-browser-languageDetector)
-  - This is an i18next language detection plugin used to detect the user's language automatically.
 - [i18next-parser](https://github.com/i18next/i18next-parser)
   - When translating an application, maintaining the translation catalog by hand is painful. This package parses your code and automates this process, making sure that every locale file contains all the translation strings in the application.
 - WebStorm
