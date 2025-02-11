@@ -150,7 +150,6 @@ The MIT License (MIT)
 Copyright (c) 2025 i18next
 */
 
-
 /*
 License mustache (included library):
 
