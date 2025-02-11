@@ -6,7 +6,11 @@ let isInitialized = false;
 
 // Get Obsidian language settings
 const getObsidianLanguage = (): string => {
-    return localStorage.getItem('language')?.toLowerCase() || 'en';
+    const storedLanguage = localStorage.getItem('language');
+    const selectedLanguage = storedLanguage?.toLowerCase() || 'en';
+
+    console.log(`Language in Obsidian settings: '${selectedLanguage}'; requesting Tasks in '${selectedLanguage}'.`);
+    return selectedLanguage;
 };
 
 // Define a function to initialize i18next
@@ -18,7 +22,7 @@ export const initializeI18n = async () => {
             returnEmptyString: false, // Use fallback language if i18next-parser put in empty value for untranslated text
             resources: {
                 en: { translation: en },
-                zh: { translation: zh_cn }, //Enter `localStorage.getItem("language")` in the console to check the current language code.
+                zh: { translation: zh_cn },
             },
             interpolation: {
                 escapeValue: false, // Disable escaping of strings, like '&' -> '&amp;'
