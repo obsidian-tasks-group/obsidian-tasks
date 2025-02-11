@@ -42,3 +42,6 @@ yarn-error.log
 
 # Backup files.
 *.bak
+
+# VS code config
+.vscode/
