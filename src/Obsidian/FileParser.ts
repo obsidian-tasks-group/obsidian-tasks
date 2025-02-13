@@ -119,7 +119,7 @@ export class FileParser {
         sectionIndex: number,
     ) {
         if (listItem.task === undefined) {
-            this.createListItem(listItem, line, lineNumber);
+            this.createListItem(listItem, line, lineNumber, taskLocation);
             return sectionIndex;
         }
         let task;
@@ -149,7 +149,7 @@ export class FileParser {
                 }
             } else {
                 // Treat tasks without the global filter as list items
-                this.createListItem(listItem, line, lineNumber);
+                this.createListItem(listItem, line, lineNumber, taskLocation);
             }
         } catch (e) {
             this.errorReporter(e, this.filePath, listItem, line);
@@ -157,8 +157,8 @@ export class FileParser {
         return sectionIndex;
     }
 
-    private createListItem(listItem: ListItemCache, line: string, lineNumber: number) {
+    private createListItem(listItem: ListItemCache, line: string, lineNumber: number, taskLocation: TaskLocation) {
         const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
-        this.line2ListItem.set(lineNumber, new ListItem(line, parentListItem));
+        this.line2ListItem.set(lineNumber, new ListItem(line, parentListItem, taskLocation));
     }
 }
