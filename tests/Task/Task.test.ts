@@ -1742,7 +1742,7 @@ describe('identicalTo', () => {
     it('should recognise different numbers of child items', () => {
         const task1 = new TaskBuilder().build();
         const task2 = new TaskBuilder().build();
-        createChildListItem('- child of task2', task2);
+        createChildListItem('- child of task2', task2, null);
 
         expect(task2.identicalTo(task1)).toEqual(false);
     });
@@ -1750,8 +1750,8 @@ describe('identicalTo', () => {
     it('should recognise different description in child list items', () => {
         const task1 = new TaskBuilder().build();
         const task2 = new TaskBuilder().build();
-        createChildListItem('- child of task1', task1);
-        createChildListItem('- child of task2', task2);
+        createChildListItem('- child of task1', task1, null);
+        createChildListItem('- child of task2', task2, null);
 
         expect(task2.identicalTo(task1)).toEqual(false);
     });

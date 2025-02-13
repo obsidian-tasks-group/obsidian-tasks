@@ -1,7 +1,8 @@
 import { ListItem } from '../../src/Task/ListItem';
+import type { TaskLocation } from '../../src/Task/TaskLocation';
 
-export function createChildListItem(originalMarkdown: string, parent: ListItem) {
+export function createChildListItem(originalMarkdown: string, parent: ListItem, taskLocation: TaskLocation | null) {
     // This exists purely to silence WebStorm about typescript:S1848
     // See https://sonarcloud.io/organizations/obsidian-tasks-group/rules?open=typescript%3AS1848&rule_key=typescript%3AS1848
-    new ListItem(originalMarkdown, parent, null);
+    new ListItem(originalMarkdown, parent, taskLocation);
 }
