@@ -11,9 +11,9 @@ export class ListItem {
     public readonly description: string;
     public readonly statusCharacter: string | null = null;
 
-    public readonly taskLocation: TaskLocation | null;
+    public readonly taskLocation: TaskLocation;
 
-    constructor(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation | null) {
+    constructor(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         if (nonTaskMatch) {
