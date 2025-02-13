@@ -157,12 +157,7 @@ export class FileParser {
         return sectionIndex;
     }
 
-    private createListItem(
-        listItem: ListItemCache,
-        line: string,
-        lineNumber: number,
-        taskLocation: TaskLocation | null,
-    ) {
+    private createListItem(listItem: ListItemCache, line: string, lineNumber: number, taskLocation: TaskLocation) {
         const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
         this.line2ListItem.set(lineNumber, new ListItem(line, parentListItem, taskLocation));
     }
