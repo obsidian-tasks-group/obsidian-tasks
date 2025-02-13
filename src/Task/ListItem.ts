@@ -1,3 +1,4 @@
+import type { TaskLocation } from './TaskLocation';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
 import type { Task } from './Task';
 
@@ -10,7 +11,9 @@ export class ListItem {
     public readonly description: string;
     public readonly statusCharacter: string | null = null;
 
-    constructor(originalMarkdown: string, parent: ListItem | null) {
+    public readonly taskLocation: TaskLocation;
+
+    constructor(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         if (nonTaskMatch) {
@@ -23,6 +26,8 @@ export class ListItem {
         if (parent !== null) {
             parent.children.push(this);
         }
+
+        this.taskLocation = taskLocation;
     }
 
     /**
