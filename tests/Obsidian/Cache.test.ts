@@ -396,10 +396,6 @@ describe('cache', () => {
                 - child list item : ListItem
             "
         `);
-
-        const task = tasks[0];
-        expect(task.taskLocation.lineNumber).toEqual(0);
-        expect(task.children[0].taskLocation).toEqual(null);
     });
 
     it('should read parent task, child listItem and grandchild task', () => {
@@ -517,6 +513,12 @@ describe('cache', () => {
                 - list item child : ListItem
             "
         `);
+
+        const task = tasks[0];
+        expect(task.taskLocation.lineNumber).toEqual(0);
+        expect(task.children[0].taskLocation?.lineNumber).toEqual(1);
+        expect(task.children[1].taskLocation).toEqual(null);
+        expect(task.children[2].taskLocation).toEqual(null);
     });
 
     it('callout', () => {
