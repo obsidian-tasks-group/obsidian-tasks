@@ -396,6 +396,10 @@ describe('cache', () => {
                 - child list item : ListItem
             "
         `);
+
+        const task = tasks[0];
+        expect(task.taskLocation.lineNumber).toEqual(0);
+        expect(task.children[0].taskLocation).toEqual(null);
     });
 
     it('should read parent task, child listItem and grandchild task', () => {
