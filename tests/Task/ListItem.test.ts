@@ -14,10 +14,12 @@ window.moment = moment;
 
 describe('list item tests', () => {
     it('should create list item with empty children and absent parent', () => {
-        const listItem = new ListItem('', null, null);
+        const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile('anything.md'));
+        const listItem = new ListItem('', null, taskLocation);
         expect(listItem).toBeDefined();
         expect(listItem.children).toEqual([]);
         expect(listItem.parent).toEqual(null);
+        expect(listItem.taskLocation).toBe(taskLocation);
     });
 
     it('should create a list item with 2 children', () => {
