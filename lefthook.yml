@@ -16,9 +16,18 @@ pre-commit:
     lint:
       glob: '*.ts'
       run: yarn lint "{staged_files}" && git add "{staged_files}"
+    lint-svelte:
+      glob: '*.svelte'
+      run: yarn lint && git add "{staged_files}"
     lint-markdown:
       glob: '*.md'
       run: yarn lint:markdown && git add "{staged_files}"
     test:
       glob: '*.ts'
       run: yarn test "{staged_files}" --findRelatedTests --passWithNoTests
+    test-json:
+      glob: 'tests/Obsidian/__test_data__/*.json'
+      run: yarn test
+    test-svelte:
+      glob: '*.svelte'
+      run: yarn test
