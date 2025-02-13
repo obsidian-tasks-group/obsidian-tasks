@@ -13,8 +13,9 @@ import { createChildListItem } from './ListItemHelpers';
 window.moment = moment;
 
 describe('list item tests', () => {
+    const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile('anything.md'));
+
     it('should create list item with empty children and absent parent', () => {
-        const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile('anything.md'));
         const listItem = new ListItem('', null, taskLocation);
         expect(listItem).toBeDefined();
         expect(listItem.children).toEqual([]);
