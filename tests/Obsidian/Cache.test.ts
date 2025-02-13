@@ -516,9 +516,10 @@ describe('cache', () => {
 
         const task = tasks[0];
         expect(task.taskLocation.lineNumber).toEqual(0);
+        // TODO remove ? and ! after taskLocation cannot be null
         expect(task.children[0].taskLocation?.lineNumber).toEqual(1);
-        expect(task.children[1].taskLocation).toEqual(null);
-        expect(task.children[2].taskLocation).toEqual(null);
+        expect(task.children[1].taskLocation?.lineNumber).toEqual(2);
+        expect(task.children[2].taskLocation?.lineNumber).toEqual(3);
     });
 
     it('callout', () => {
