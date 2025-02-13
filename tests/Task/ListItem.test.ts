@@ -181,7 +181,7 @@ describe('identicalTo', () => {
 
     it('should recognise list items with different number of children', () => {
         const item1 = new ListItem('- item', null, taskLocation);
-        createChildListItem('- child of item1', item1);
+        createChildListItem('- child of item1', item1, null);
 
         const item2 = new ListItem('- item', null, taskLocation);
 
@@ -190,10 +190,10 @@ describe('identicalTo', () => {
 
     it('should recognise list items with different children', () => {
         const item1 = new ListItem('- item', null, taskLocation);
-        createChildListItem('- child of item1', item1);
+        createChildListItem('- child of item1', item1, null);
 
         const item2 = new ListItem('- item', null, taskLocation);
-        createChildListItem('- child of item2', item2);
+        createChildListItem('- child of item2', item2, null);
 
         expect(item2.identicalTo(item1)).toEqual(false);
     });
