@@ -1,21 +1,24 @@
-Processed 173 files (392ms) (18 warnings)
+Processed 177 files (601ms) (2 warnings)
 
 1) Config/Settings.ts > Suggestor/Suggestor.ts
-2) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts
-3) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > Task/TaskDependency.ts
-4) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > TaskSerializer/DefaultTaskSerializer.ts > Task/OnCompletion.ts
-5) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > TaskSerializer/DefaultTaskSerializer.ts
-6) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > ui/DependencyHelpers.ts
-7) Task/Task.ts > Config/Settings.ts > TaskSerializer/DataviewTaskSerializer.ts
-8) Task/Task.ts > DateTime/DateFallback.ts
-9) Task/Task.ts > Task/ListItem.ts
-10) Task/Task.ts > Task/Urgency.ts
-11) Task/Task.ts > lib/LogTasksHelper.ts
-12) Query/Query.ts > Query/Explain/Explainer.ts
-13) Query/FilterParser.ts > Query/Filter/BooleanField.ts
-14) main.ts > Config/SettingsTab.ts
-15) Obsidian/Cache.ts > Obsidian/FileParser.ts
-16) Obsidian/Cache.ts > Obsidian/TasksEvents.ts
-17) main.ts > Renderer/QueryRenderer.ts
-18) main.ts > Suggestor/EditorSuggestorPopup.ts
+2) Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts
+3) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts
+4) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > Task/TaskDependency.ts
+5) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > TaskSerializer/DefaultTaskSerializer.ts > Task/OnCompletion.ts
+6) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > TaskSerializer/DefaultTaskSerializer.ts
+7) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > TaskSerializer/DefaultTaskSerializer.ts > TaskSerializer/index.ts
+8) TaskSerializer/DefaultTaskSerializer.ts > TaskSerializer/index.ts
+9) Task/Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > ui/DependencyHelpers.ts
+10) Task/Task.ts > Config/Settings.ts > TaskSerializer/DataviewTaskSerializer.ts
+11) Task/Task.ts > DateTime/DateFallback.ts
+12) Task/Task.ts > Task/ListItem.ts
+13) Task/Task.ts > Task/Urgency.ts
+14) Task/Task.ts > lib/LogTasksHelper.ts
+15) Query/Query.ts > Query/Explain/Explainer.ts
+16) Query/FilterParser.ts > Query/Filter/BooleanField.ts
+17) Commands/index.ts > main.ts
+18) main.ts > Config/SettingsTab.ts
+19) Obsidian/Cache.ts > Obsidian/FileParser.ts
+20) Obsidian/Cache.ts > Obsidian/TasksEvents.ts
+21) main.ts > Renderer/QueryRenderer.ts
 
