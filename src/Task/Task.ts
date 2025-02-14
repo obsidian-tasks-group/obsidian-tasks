@@ -46,8 +46,6 @@ export class Task extends ListItem {
     public readonly indentation: string;
     public readonly listMarker: string;
 
-    public readonly taskLocation: TaskLocation;
-
     public readonly tags: string[];
 
     public readonly priority: Priority;
@@ -126,7 +124,6 @@ export class Task extends ListItem {
         this.description = description;
         this.indentation = indentation;
         this.listMarker = listMarker;
-        this.taskLocation = taskLocation;
 
         this.tags = tags;
 
