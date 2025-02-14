@@ -1,6 +1,6 @@
 # multiple_headings
 
-## Level 2 heading with no taks
+## Level 2 heading with no tasks
 
 ## Level 2 heading
 
