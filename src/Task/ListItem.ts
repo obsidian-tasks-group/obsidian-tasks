@@ -134,7 +134,7 @@ export class ListItem {
     }
 
     /**
-     * Return the name of the file containing the task, with the .md extension removed.
+     * Return the name of the file containing this object, with the .md extension removed.
      */
     public get filename(): string | null {
         const fileNameMatch = this.path.match(/([^/]+)\.md$/);
