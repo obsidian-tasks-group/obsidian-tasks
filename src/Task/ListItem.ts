@@ -1,6 +1,7 @@
+import type { TasksFile } from '../Scripting/TasksFile';
+import type { Task } from './Task';
 import type { TaskLocation } from './TaskLocation';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
-import type { Task } from './Task';
 
 export class ListItem {
     // The original line read from file.
@@ -94,11 +95,23 @@ export class ListItem {
             return false;
         }
 
-        if (this.originalMarkdown !== other.originalMarkdown) {
-            return false;
-        }
+        // Note: sectionStart changes every time a line is added or deleted before
+        //       any of the tasks in a file. This does mean that redrawing of tasks blocks
+        //       happens more often than is ideal.
+        const args: Array<keyof ListItem> = [
+            'originalMarkdown',
+            'description',
+            'statusCharacter',
+            'path',
+            'lineNumber',
+            'sectionStart',
+            'sectionIndex',
+            'precedingHeader',
+        ];
 
-        // Not testing status character as it is implied from the original markdown
+        for (const el of args) {
+            if (this[el]?.toString() !== other[el]?.toString()) return false;
+        }
 
         return ListItem.listsAreIdentical(this.children, other.children);
     }
@@ -122,5 +135,41 @@ export class ListItem {
         }
 
         return list1.every((item, index) => item.identicalTo(list2[index]));
+    }
+
+    public get path(): string {
+        return this.taskLocation.path;
+    }
+
+    public get file(): TasksFile {
+        return this.taskLocation.tasksFile;
+    }
+
+    /**
+     * Return the name of the file containing this object, with the .md extension removed.
+     */
+    public get filename(): string | null {
+        const fileNameMatch = this.path.match(/([^/]+)\.md$/);
+        if (fileNameMatch !== null) {
+            return fileNameMatch[1];
+        } else {
+            return null;
+        }
+    }
+
+    public get lineNumber(): number {
+        return this.taskLocation.lineNumber;
+    }
+
+    public get sectionStart(): number {
+        return this.taskLocation.sectionStart;
+    }
+
+    public get sectionIndex(): number {
+        return this.taskLocation.sectionIndex;
+    }
+
+    public get precedingHeader(): string | null {
+        return this.taskLocation.precedingHeader;
     }
 }

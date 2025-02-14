@@ -6,7 +6,6 @@ import type { Status } from '../Statuses/Status';
 import { compareByDate } from '../DateTime/DateTools';
 import { TasksDate } from '../DateTime/TasksDate';
 import { StatusType } from '../Statuses/StatusConfiguration';
-import type { TasksFile } from '../Scripting/TasksFile';
 import { PriorityTools } from '../lib/PriorityTools';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
@@ -45,8 +44,6 @@ export class Task extends ListItem {
     public readonly description: string;
     public readonly indentation: string;
     public readonly listMarker: string;
-
-    public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
 
@@ -126,7 +123,6 @@ export class Task extends ListItem {
         this.description = description;
         this.indentation = indentation;
         this.listMarker = listMarker;
-        this.taskLocation = taskLocation;
 
         this.tags = tags;
 
@@ -619,10 +615,6 @@ export class Task extends ListItem {
         return this._urgency;
     }
 
-    public get path(): string {
-        return this.taskLocation.path;
-    }
-
     /**
      * Return {@link cancelledDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
@@ -729,38 +721,6 @@ export class Task extends ListItem {
         return this.precedingHeader !== null;
     }
 
-    public get file(): TasksFile {
-        return this.taskLocation.tasksFile;
-    }
-
-    /**
-     * Return the name of the file containing the task, with the .md extension removed.
-     */
-    public get filename(): string | null {
-        const fileNameMatch = this.path.match(/([^/]+)\.md$/);
-        if (fileNameMatch !== null) {
-            return fileNameMatch[1];
-        } else {
-            return null;
-        }
-    }
-
-    get lineNumber(): number {
-        return this.taskLocation.lineNumber;
-    }
-
-    get sectionStart(): number {
-        return this.taskLocation.sectionStart;
-    }
-
-    get sectionIndex(): number {
-        return this.taskLocation.sectionIndex;
-    }
-
-    public get precedingHeader(): string | null {
-        return this.taskLocation.precedingHeader;
-    }
-
     /**
      * Returns the text that should be displayed to the user when linking to the origin of the task
      *
@@ -817,13 +777,8 @@ export class Task extends ListItem {
         //       happens more often than is ideal.
         let args: Array<keyof Task> = [
             'description',
-            'path',
             'indentation',
             'listMarker',
-            'lineNumber',
-            'sectionStart',
-            'sectionIndex',
-            'precedingHeader',
             'priority',
             'blockLink',
             'scheduledDateIsInferred',
