@@ -184,6 +184,6 @@ export class ListItem {
 
     public toFileLineString(): string {
         const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
-        return `- ${statusCharacterToString}${this.description}`;
+        return `${this.indentation}- ${statusCharacterToString}${this.description}`;
     }
 }

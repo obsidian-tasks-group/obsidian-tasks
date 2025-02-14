@@ -173,7 +173,7 @@ describe('list item writing', () => {
         expect(item.toFileLineString()).toEqual('- [ ] simple checklist');
     });
 
-    it.failing('should write an indented list item', () => {
+    it('should write an indented list item', () => {
         const item = new ListItem('    - indented', null, taskLocation);
 
         expect(item.toFileLineString()).toEqual('    - indented');
