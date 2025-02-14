@@ -173,7 +173,7 @@ export class ListItem {
         return this.taskLocation.precedingHeader;
     }
 
-    checkOrUncheck(): ListItem {
+    public checkOrUncheck(): ListItem {
         const newMarkdown = this.originalMarkdown.replace('- [ ]', '- [x]');
         return new ListItem(newMarkdown, null, this.taskLocation);
     }
