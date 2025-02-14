@@ -144,6 +144,14 @@ describe('list item parsing', () => {
     });
 });
 
+describe('list item writing', () => {
+    it('should write a simple list item', () => {
+        const item = new ListItem('- simple', null, taskLocation);
+
+        expect(item.toFileLineString()).toEqual('- simple');
+    });
+});
+
 describe('related items', () => {
     it('should detect if no closest parent task', () => {
         const task = fromLine({ line: '- [ ] task' });
