@@ -359,4 +359,13 @@ describe('list item checking and unchecking', () => {
         expect(checkedListItem.statusCharacter).toEqual(' ');
         expect(checkedListItem.originalMarkdown).toEqual('4. [ ] uncheck me');
     });
+
+    it('should preserve a non-checklist item', () => {
+        const listItem = new ListItem('- no checkbox', null, taskLocation);
+
+        const newListItem = listItem.checkOrUncheck();
+
+        expect(newListItem.statusCharacter).toEqual(null);
+        expect(newListItem.originalMarkdown).toEqual('- no checkbox');
+    });
 });
