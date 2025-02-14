@@ -368,4 +368,13 @@ describe('list item checking and unchecking', () => {
         expect(newListItem.statusCharacter).toEqual(null);
         expect(newListItem.originalMarkdown).toEqual('- no checkbox');
     });
+
+    it.failing('should preserve a non-checklist item with checkbox-like string in description', () => {
+        const listItem = new ListItem('- this looks like a checkbox [f]', null, taskLocation);
+
+        const newListItem = listItem.checkOrUncheck();
+
+        expect(newListItem.statusCharacter).toEqual(null);
+        expect(newListItem.originalMarkdown).toEqual('- this looks like a checkbox [f]');
+    });
 });
