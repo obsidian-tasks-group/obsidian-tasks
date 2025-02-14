@@ -173,7 +173,7 @@ describe('identicalTo', () => {
         expect(listItem1.identicalTo(listItem2)).toEqual(true);
     });
 
-    it('should test different markdown', () => {
+    it('should test different descriptions', () => {
         const listItem1 = new ListItem('- description', null, taskLocation);
         const listItem2 = new ListItem('- description two', null, taskLocation);
         expect(listItem1.identicalTo(listItem2)).toEqual(false);

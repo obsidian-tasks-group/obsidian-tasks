@@ -95,17 +95,13 @@ export class ListItem {
             return false;
         }
 
-        if (this.originalMarkdown !== other.originalMarkdown) {
-            return false;
-        }
-
-        // Not testing status character as it is implied from the original markdown
-
         // Note: sectionStart changes every time a line is added or deleted before
         //       any of the tasks in a file. This does mean that redrawing of tasks blocks
         //       happens more often than is ideal.
         const args: Array<keyof ListItem> = [
+            'originalMarkdown',
             'description',
+            'statusCharacter',
             'path',
             'lineNumber',
             'sectionStart',
