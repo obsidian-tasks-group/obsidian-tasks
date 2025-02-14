@@ -115,6 +115,8 @@ describe('list item parsing', () => {
         expect(item.description).toEqual('without checkbox');
         expect(item.originalMarkdown).toEqual('- without checkbox');
         expect(item.statusCharacter).toEqual(null);
+        expect(item.indentation).toEqual('');
+        expect(item.listMarker).toEqual('-');
     });
 
     it('should read a list item with checkbox', () => {
