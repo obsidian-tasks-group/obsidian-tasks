@@ -177,4 +177,8 @@ export class ListItem {
         const newMarkdown = this.originalMarkdown.replace('- [ ]', '- [x]');
         return new ListItem(newMarkdown, null, this.taskLocation);
     }
+
+    public toFileLineString(): string {
+        return `- ${this.description}`;
+    }
 }
