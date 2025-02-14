@@ -342,7 +342,7 @@ describe('list item checking and unchecking', () => {
         expect(checkedListItem.originalMarkdown).toEqual('- [x] description');
     });
 
-    it('should create a checked list item', () => {
+    it('should create a checked list item and preserve the list marker', () => {
         const listItem = new ListItem('* [ ] check me', null, taskLocation);
 
         const checkedListItem = listItem.checkOrUncheck();
