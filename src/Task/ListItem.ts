@@ -145,15 +145,15 @@ export class ListItem {
         }
     }
 
-    get lineNumber(): number {
+    public get lineNumber(): number {
         return this.taskLocation.lineNumber;
     }
 
-    get sectionStart(): number {
+    public get sectionStart(): number {
         return this.taskLocation.sectionStart;
     }
 
-    get sectionIndex(): number {
+    public get sectionIndex(): number {
         return this.taskLocation.sectionIndex;
     }
 
