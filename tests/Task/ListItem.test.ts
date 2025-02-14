@@ -133,6 +133,13 @@ describe('list item parsing', () => {
         expect(item.statusCharacter).toEqual('x');
     });
 
+    it('should read a list item with indentation', () => {
+        const item = new ListItem('  - indented', null, taskLocation);
+
+        expect(item.description).toEqual('indented');
+        expect(item.indentation).toEqual('  ');
+    });
+
     it('should accept a non list item', () => {
         // we tried making the constructor throw if given a non list item
         // but it broke lots of normal Task uses in the tests (TaskBuilder)
