@@ -3,9 +3,9 @@
  */
 import moment from 'moment/moment';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { ListItem } from '../../src/Task/ListItem';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
-import { ListItem } from '../../src/Task/ListItem';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { createChildListItem } from './ListItemHelpers';
@@ -115,6 +115,8 @@ describe('list item parsing', () => {
         expect(item.description).toEqual('without checkbox');
         expect(item.originalMarkdown).toEqual('- without checkbox');
         expect(item.statusCharacter).toEqual(null);
+        expect(item.indentation).toEqual('');
+        expect(item.listMarker).toEqual('-');
     });
 
     it('should read a list item with checkbox', () => {
@@ -133,6 +135,20 @@ describe('list item parsing', () => {
         expect(item.statusCharacter).toEqual('x');
     });
 
+    it('should read a list item with indentation', () => {
+        const item = new ListItem('  - indented', null, taskLocation);
+
+        expect(item.description).toEqual('indented');
+        expect(item.indentation).toEqual('  ');
+    });
+
+    it('should read a list marker', () => {
+        expect(new ListItem('* xxx', null, taskLocation).listMarker).toEqual('*');
+        expect(new ListItem('- xxx', null, taskLocation).listMarker).toEqual('-');
+        expect(new ListItem('+ xxx', null, taskLocation).listMarker).toEqual('+');
+        expect(new ListItem('2. xxx', null, taskLocation).listMarker).toEqual('2.');
+    });
+
     it('should accept a non list item', () => {
         // we tried making the constructor throw if given a non list item
         // but it broke lots of normal Task uses in the tests (TaskBuilder)
@@ -141,6 +157,32 @@ describe('list item parsing', () => {
         expect(item.description).toEqual('# Heading');
         expect(item.originalMarkdown).toEqual('# Heading');
         expect(item.statusCharacter).toEqual(null);
+    });
+});
+
+describe('list item writing', () => {
+    it('should write a simple list item', () => {
+        const item = new ListItem('- simple', null, taskLocation);
+
+        expect(item.toFileLineString()).toEqual('- simple');
+    });
+
+    it('should write a simple check list item', () => {
+        const item = new ListItem('- [ ] simple checklist', null, taskLocation);
+
+        expect(item.toFileLineString()).toEqual('- [ ] simple checklist');
+    });
+
+    it('should write an indented list item', () => {
+        const item = new ListItem('    - indented', null, taskLocation);
+
+        expect(item.toFileLineString()).toEqual('    - indented');
+    });
+
+    it('should write a list item with a different list marker', () => {
+        const item = new ListItem('* star', null, taskLocation);
+
+        expect(item.toFileLineString()).toEqual('* star');
     });
 });
 
@@ -281,5 +323,58 @@ describe('checking if mixed lists are identical', () => {
         expect(ListItem.listsAreIdentical(list1, list2)).toEqual(false);
         expect(ListItem.listsAreIdentical(list2, list1)).toEqual(false);
         expect(ListItem.listsAreIdentical(list2, list2)).toEqual(true);
+    });
+});
+
+describe('list item checking and unchecking', () => {
+    it('should create a checked list item', () => {
+        const listItem = new ListItem(
+            '- [ ] description',
+            new ListItem('- [ ] parent', null, taskLocation),
+            taskLocation,
+        );
+
+        const checkedListItem = listItem.checkOrUncheck();
+
+        expect(checkedListItem.parent).toEqual(null);
+        expect(checkedListItem.taskLocation).toBe(taskLocation);
+        expect(checkedListItem.statusCharacter).toEqual('x');
+        expect(checkedListItem.originalMarkdown).toEqual('- [x] description');
+    });
+
+    it('should create a checked list item and preserve the list marker', () => {
+        const listItem = new ListItem('* [ ] check me', null, taskLocation);
+
+        const checkedListItem = listItem.checkOrUncheck();
+
+        expect(checkedListItem.statusCharacter).toEqual('x');
+        expect(checkedListItem.originalMarkdown).toEqual('* [x] check me');
+    });
+
+    it('should create an unchecked list item', () => {
+        const listItem = new ListItem('4. [#] uncheck me', null, taskLocation);
+
+        const checkedListItem = listItem.checkOrUncheck();
+
+        expect(checkedListItem.statusCharacter).toEqual(' ');
+        expect(checkedListItem.originalMarkdown).toEqual('4. [ ] uncheck me');
+    });
+
+    it('should preserve a non-checklist item', () => {
+        const listItem = new ListItem('- no checkbox', null, taskLocation);
+
+        const newListItem = listItem.checkOrUncheck();
+
+        expect(newListItem.statusCharacter).toEqual(null);
+        expect(newListItem.originalMarkdown).toEqual('- no checkbox');
+    });
+
+    it.failing('should preserve a non-checklist item with checkbox-like string in description', () => {
+        const listItem = new ListItem('- this looks like a checkbox [f]', null, taskLocation);
+
+        const newListItem = listItem.checkOrUncheck();
+
+        expect(newListItem.statusCharacter).toEqual(null);
+        expect(newListItem.originalMarkdown).toEqual('- this looks like a checkbox [f]');
     });
 });

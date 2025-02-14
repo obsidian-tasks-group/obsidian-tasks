@@ -9,6 +9,8 @@ export class ListItem {
 
     public readonly parent: ListItem | null = null;
     public readonly children: ListItem[] = [];
+    public readonly indentation: string = '';
+    public readonly listMarker: string = '';
     public readonly description: string;
     public readonly statusCharacter: string | null = null;
 
@@ -18,6 +20,8 @@ export class ListItem {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         if (nonTaskMatch) {
+            this.indentation = nonTaskMatch[1];
+            this.listMarker = nonTaskMatch[2];
             this.description = nonTaskMatch[5].trim();
             this.statusCharacter = nonTaskMatch[4] ?? null;
         }
@@ -171,5 +175,20 @@ export class ListItem {
 
     public get precedingHeader(): string | null {
         return this.taskLocation.precedingHeader;
+    }
+
+    public checkOrUncheck(): ListItem {
+        const newStatusCharacter = this.statusCharacter === ' ' ? 'x' : ' ';
+        const newMarkdown = this.originalMarkdown.replace(
+            RegExp(TaskRegularExpressions.checkboxRegex),
+            `[${newStatusCharacter}]`,
+        );
+
+        return new ListItem(newMarkdown, null, this.taskLocation);
+    }
+
+    public toFileLineString(): string {
+        const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
+        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}`;
     }
 }
