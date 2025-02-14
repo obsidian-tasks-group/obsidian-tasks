@@ -9,6 +9,7 @@ export class ListItem {
 
     public readonly parent: ListItem | null = null;
     public readonly children: ListItem[] = [];
+    public readonly indentation: string = '';
     public readonly description: string;
     public readonly statusCharacter: string | null = null;
 
@@ -18,6 +19,7 @@ export class ListItem {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         if (nonTaskMatch) {
+            this.indentation = nonTaskMatch[1];
             this.description = nonTaskMatch[5].trim();
             this.statusCharacter = nonTaskMatch[4] ?? null;
         }
