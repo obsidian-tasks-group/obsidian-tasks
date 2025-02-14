@@ -173,7 +173,7 @@ describe('identicalTo', () => {
         expect(listItem1.identicalTo(listItem2)).toEqual(true);
     });
 
-    it('should test different markdown', () => {
+    it('should recognise different descriptions', () => {
         const listItem1 = new ListItem('- description', null, taskLocation);
         const listItem2 = new ListItem('- description two', null, taskLocation);
         expect(listItem1.identicalTo(listItem2)).toEqual(false);
@@ -210,6 +210,13 @@ describe('identicalTo', () => {
         const task = fromLine({ line: '- [ ] description' });
 
         expect(listItem.identicalTo(task)).toEqual(false);
+    });
+
+    it('should recognise different path', () => {
+        const item1 = new ListItem('- same', null, TaskLocation.fromUnknownPosition(new TasksFile('anything.md')));
+        const item2 = new ListItem('- same', null, TaskLocation.fromUnknownPosition(new TasksFile('something.md')));
+
+        expect(item2.identicalTo(item1)).toEqual(false);
     });
 });
 
