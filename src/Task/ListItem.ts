@@ -179,6 +179,10 @@ export class ListItem {
     }
 
     public toFileLineString(): string {
+        if (this.statusCharacter) {
+            return `- [${this.statusCharacter}] ${this.description}`;
+        }
+
         return `- ${this.description}`;
     }
 }
