@@ -3,9 +3,9 @@
  */
 import moment from 'moment/moment';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { ListItem } from '../../src/Task/ListItem';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
-import { ListItem } from '../../src/Task/ListItem';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { createChildListItem } from './ListItemHelpers';
@@ -140,6 +140,13 @@ describe('list item parsing', () => {
 
         expect(item.description).toEqual('indented');
         expect(item.indentation).toEqual('  ');
+    });
+
+    it('should read a list marker', () => {
+        expect(new ListItem('* xxx', null, taskLocation).listMarker).toEqual('*');
+        expect(new ListItem('- xxx', null, taskLocation).listMarker).toEqual('-');
+        expect(new ListItem('+ xxx', null, taskLocation).listMarker).toEqual('+');
+        expect(new ListItem('2. xxx', null, taskLocation).listMarker).toEqual('2.');
     });
 
     it('should accept a non list item', () => {
