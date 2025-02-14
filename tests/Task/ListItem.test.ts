@@ -295,6 +295,7 @@ describe('list item checking and unchecking', () => {
         const checkedListItem = listItem.checkOrUncheck();
 
         expect(checkedListItem.parent).toEqual(null);
+        expect(checkedListItem.taskLocation).toBe(taskLocation);
         // expect(checkedListItem.statusCharacter).toEqual('x');
         // expect(checkedListItem.originalMarkdown).toEqual('- [x] description');
     });
