@@ -172,4 +172,8 @@ export class ListItem {
     public get precedingHeader(): string | null {
         return this.taskLocation.precedingHeader;
     }
+
+    checkOrUncheck(): ListItem {
+        return new ListItem(this.originalMarkdown, null, this.taskLocation);
+    }
 }
