@@ -211,6 +211,13 @@ describe('identicalTo', () => {
 
         expect(listItem.identicalTo(task)).toEqual(false);
     });
+
+    it('should recognise different path', () => {
+        const item1 = new ListItem('- same', null, TaskLocation.fromUnknownPosition(new TasksFile('anything.md')));
+        const item2 = new ListItem('- same', null, TaskLocation.fromUnknownPosition(new TasksFile('something.md')));
+
+        expect(item2.identicalTo(item1)).toEqual(false);
+    });
 });
 
 describe('checking if list item lists are identical', () => {

@@ -777,13 +777,8 @@ export class Task extends ListItem {
         //       happens more often than is ideal.
         let args: Array<keyof Task> = [
             'description',
-            'path',
             'indentation',
             'listMarker',
-            'lineNumber',
-            'sectionStart',
-            'sectionIndex',
-            'precedingHeader',
             'priority',
             'blockLink',
             'scheduledDateIsInferred',
