@@ -296,7 +296,7 @@ describe('list item checking and unchecking', () => {
 
         expect(checkedListItem.parent).toEqual(null);
         expect(checkedListItem.taskLocation).toBe(taskLocation);
-        // expect(checkedListItem.statusCharacter).toEqual('x');
-        // expect(checkedListItem.originalMarkdown).toEqual('- [x] description');
+        expect(checkedListItem.statusCharacter).toEqual('x');
+        expect(checkedListItem.originalMarkdown).toEqual('- [x] description');
     });
 });

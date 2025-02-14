@@ -174,6 +174,7 @@ export class ListItem {
     }
 
     checkOrUncheck(): ListItem {
-        return new ListItem(this.originalMarkdown, null, this.taskLocation);
+        const newMarkdown = this.originalMarkdown.replace('- [ ]', '- [x]');
+        return new ListItem(newMarkdown, null, this.taskLocation);
     }
 }
