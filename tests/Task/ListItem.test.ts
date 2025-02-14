@@ -150,6 +150,12 @@ describe('list item writing', () => {
 
         expect(item.toFileLineString()).toEqual('- simple');
     });
+
+    it('should write a simple check list item', () => {
+        const item = new ListItem('- [ ] simple checklist', null, taskLocation);
+
+        expect(item.toFileLineString()).toEqual('- [ ] simple checklist');
+    });
 });
 
 describe('related items', () => {
