@@ -178,6 +178,12 @@ describe('list item writing', () => {
 
         expect(item.toFileLineString()).toEqual('    - indented');
     });
+
+    it('should write a list item with a different list marker', () => {
+        const item = new ListItem('* star', null, taskLocation);
+
+        expect(item.toFileLineString()).toEqual('* star');
+    });
 });
 
 describe('related items', () => {
