@@ -351,7 +351,7 @@ describe('list item checking and unchecking', () => {
         expect(checkedListItem.originalMarkdown).toEqual('* [x] check me');
     });
 
-    it.failing('should create an unchecked list item', () => {
+    it('should create an unchecked list item', () => {
         const listItem = new ListItem('4. [#] uncheck me', null, taskLocation);
 
         const checkedListItem = listItem.checkOrUncheck();
