@@ -18,13 +18,13 @@
         }
       },
       {
-        "heading": "Level 2 heading with no taks",
+        "heading": "Level 2 heading with no tasks",
         "level": 2,
         "position": {
           "end": {
-            "col": 31,
+            "col": 32,
             "line": 2,
-            "offset": 52
+            "offset": 53
           },
           "start": {
             "col": 0,
@@ -40,12 +40,12 @@
           "end": {
             "col": 18,
             "line": 4,
-            "offset": 72
+            "offset": 73
           },
           "start": {
             "col": 0,
             "line": 4,
-            "offset": 54
+            "offset": 55
           }
         }
       },
@@ -56,12 +56,12 @@
           "end": {
             "col": 19,
             "line": 13,
-            "offset": 344
+            "offset": 345
           },
           "start": {
             "col": 0,
             "line": 13,
-            "offset": 325
+            "offset": 326
           }
         }
       }
@@ -73,12 +73,12 @@
           "end": {
             "col": 71,
             "line": 6,
-            "offset": 145
+            "offset": 146
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 74
+            "offset": 75
           }
         },
         "task": " "
@@ -89,12 +89,12 @@
           "end": {
             "col": 71,
             "line": 7,
-            "offset": 217
+            "offset": 218
           },
           "start": {
             "col": 0,
             "line": 7,
-            "offset": 146
+            "offset": 147
           }
         },
         "task": " "
@@ -105,12 +105,12 @@
           "end": {
             "col": 71,
             "line": 11,
-            "offset": 323
+            "offset": 324
           },
           "start": {
             "col": 0,
             "line": 11,
-            "offset": 252
+            "offset": 253
           }
         },
         "task": " "
@@ -121,28 +121,28 @@
           "end": {
             "col": 75,
             "line": 15,
-            "offset": 421
-          },
-          "start": {
-            "col": 0,
-            "line": 15,
-            "offset": 346
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -15,
-        "position": {
-          "end": {
-            "col": 75,
-            "line": 16,
-            "offset": 497
-          },
-          "start": {
-            "col": 0,
-            "line": 16,
             "offset": 422
+          },
+          "start": {
+            "col": 0,
+            "line": 15,
+            "offset": 347
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -15,
+        "position": {
+          "end": {
+            "col": 75,
+            "line": 16,
+            "offset": 498
+          },
+          "start": {
+            "col": 0,
+            "line": 16,
+            "offset": 423
           }
         },
         "task": " "
@@ -167,9 +167,9 @@
       {
         "position": {
           "end": {
-            "col": 31,
+            "col": 32,
             "line": 2,
-            "offset": 52
+            "offset": 53
           },
           "start": {
             "col": 0,
@@ -184,12 +184,12 @@
           "end": {
             "col": 18,
             "line": 4,
-            "offset": 72
+            "offset": 73
           },
           "start": {
             "col": 0,
             "line": 4,
-            "offset": 54
+            "offset": 55
           }
         },
         "type": "heading"
@@ -199,12 +199,12 @@
           "end": {
             "col": 71,
             "line": 7,
-            "offset": 217
+            "offset": 218
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 74
+            "offset": 75
           }
         },
         "type": "list"
@@ -214,12 +214,12 @@
           "end": {
             "col": 31,
             "line": 9,
-            "offset": 250
+            "offset": 251
           },
           "start": {
             "col": 0,
             "line": 9,
-            "offset": 219
+            "offset": 220
           }
         },
         "type": "paragraph"
@@ -229,12 +229,12 @@
           "end": {
             "col": 71,
             "line": 11,
-            "offset": 323
+            "offset": 324
           },
           "start": {
             "col": 0,
             "line": 11,
-            "offset": 252
+            "offset": 253
           }
         },
         "type": "list"
@@ -244,12 +244,12 @@
           "end": {
             "col": 19,
             "line": 13,
-            "offset": 344
+            "offset": 345
           },
           "start": {
             "col": 0,
             "line": 13,
-            "offset": 325
+            "offset": 326
           }
         },
         "type": "heading"
@@ -259,12 +259,12 @@
           "end": {
             "col": 75,
             "line": 16,
-            "offset": 497
+            "offset": 498
           },
           "start": {
             "col": 0,
             "line": 15,
-            "offset": 346
+            "offset": 347
           }
         },
         "type": "list"
@@ -276,12 +276,12 @@
           "end": {
             "col": 11,
             "line": 6,
-            "offset": 85
+            "offset": 86
           },
           "start": {
             "col": 6,
             "line": 6,
-            "offset": 80
+            "offset": 81
           }
         },
         "tag": "#task"
@@ -291,12 +291,12 @@
           "end": {
             "col": 11,
             "line": 7,
-            "offset": 157
+            "offset": 158
           },
           "start": {
             "col": 6,
             "line": 7,
-            "offset": 152
+            "offset": 153
           }
         },
         "tag": "#task"
@@ -306,12 +306,12 @@
           "end": {
             "col": 11,
             "line": 11,
-            "offset": 263
+            "offset": 264
           },
           "start": {
             "col": 6,
             "line": 11,
-            "offset": 258
+            "offset": 259
           }
         },
         "tag": "#task"
@@ -321,12 +321,12 @@
           "end": {
             "col": 11,
             "line": 15,
-            "offset": 357
+            "offset": 358
           },
           "start": {
             "col": 6,
             "line": 15,
-            "offset": 352
+            "offset": 353
           }
         },
         "tag": "#task"
@@ -336,19 +336,19 @@
           "end": {
             "col": 11,
             "line": 16,
-            "offset": 433
+            "offset": 434
           },
           "start": {
             "col": 6,
             "line": 16,
-            "offset": 428
+            "offset": 429
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "# multiple_headings\n\n## Level 2 heading with no taks\n\n## Level 2 heading\n\n- [ ] #task Task 1 in Level 2 heading - in 'multiple_headings' - list 1\n- [ ] #task task 2 in Level 2 heading - in 'multiple_headings' - list 1\n\nDivider to create a new section\n\n- [ ] #task task 3 in Level 2 heading - in 'multiple_headings' - list 2\n\n### Level 3 heading\n\n- [ ] #task Task 4 in 'multiple_headings' - in 'multiple_headings' - list 3\n- [ ] #task Task 5 in 'multiple_headings' - in 'multiple_headings' - list 3\n",
+  "fileContents": "# multiple_headings\n\n## Level 2 heading with no tasks\n\n## Level 2 heading\n\n- [ ] #task Task 1 in Level 2 heading - in 'multiple_headings' - list 1\n- [ ] #task task 2 in Level 2 heading - in 'multiple_headings' - list 1\n\nDivider to create a new section\n\n- [ ] #task task 3 in Level 2 heading - in 'multiple_headings' - list 2\n\n### Level 3 heading\n\n- [ ] #task Task 4 in 'multiple_headings' - in 'multiple_headings' - list 3\n- [ ] #task Task 5 in 'multiple_headings' - in 'multiple_headings' - list 3\n",
   "filePath": "Test Data/multiple_headings.md",
   "getAllTags": [
     "#task",
