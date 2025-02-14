@@ -183,11 +183,7 @@ export class ListItem {
     }
 
     public toFileLineString(): string {
-        if (this.statusCharacter) {
-            const statusCharacterToString = `[${this.statusCharacter}] `;
-            return `- ${statusCharacterToString}${this.description}`;
-        }
-
-        return `- ${this.description}`;
+        const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
+        return `- ${statusCharacterToString}${this.description}`;
     }
 }
