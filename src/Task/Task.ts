@@ -1,24 +1,23 @@
 import type { Moment } from 'moment';
-import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import type { Status } from '../Statuses/Status';
+import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
+import { DateFallback } from '../DateTime/DateFallback';
 import { compareByDate } from '../DateTime/DateTools';
 import { TasksDate } from '../DateTime/TasksDate';
-import { StatusType } from '../Statuses/StatusConfiguration';
-import type { TasksFile } from '../Scripting/TasksFile';
-import { PriorityTools } from '../lib/PriorityTools';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
-import { DateFallback } from '../DateTime/DateFallback';
+import { PriorityTools } from '../lib/PriorityTools';
+import type { Status } from '../Statuses/Status';
+import { StatusType } from '../Statuses/StatusConfiguration';
+import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { ListItem } from './ListItem';
 import type { Occurrence } from './Occurrence';
-import { Urgency } from './Urgency';
+import { OnCompletion, handleOnCompletion } from './OnCompletion';
+import type { Priority } from './Priority';
 import type { Recurrence } from './Recurrence';
 import type { TaskLocation } from './TaskLocation';
-import type { Priority } from './Priority';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
-import { OnCompletion, handleOnCompletion } from './OnCompletion';
+import { Urgency } from './Urgency';
 
 /**
  * Storage for the task line, broken down in to sections.
@@ -616,10 +615,6 @@ export class Task extends ListItem {
         return this._urgency;
     }
 
-    public get path(): string {
-        return this.taskLocation.path;
-    }
-
     /**
      * Return {@link cancelledDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
@@ -724,38 +719,6 @@ export class Task extends ListItem {
 
     public get hasHeading(): boolean {
         return this.precedingHeader !== null;
-    }
-
-    public get file(): TasksFile {
-        return this.taskLocation.tasksFile;
-    }
-
-    /**
-     * Return the name of the file containing the task, with the .md extension removed.
-     */
-    public get filename(): string | null {
-        const fileNameMatch = this.path.match(/([^/]+)\.md$/);
-        if (fileNameMatch !== null) {
-            return fileNameMatch[1];
-        } else {
-            return null;
-        }
-    }
-
-    get lineNumber(): number {
-        return this.taskLocation.lineNumber;
-    }
-
-    get sectionStart(): number {
-        return this.taskLocation.sectionStart;
-    }
-
-    get sectionIndex(): number {
-        return this.taskLocation.sectionIndex;
-    }
-
-    public get precedingHeader(): string | null {
-        return this.taskLocation.precedingHeader;
     }
 
     /**
