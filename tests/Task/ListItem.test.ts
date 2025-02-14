@@ -283,3 +283,19 @@ describe('checking if mixed lists are identical', () => {
         expect(ListItem.listsAreIdentical(list2, list2)).toEqual(true);
     });
 });
+
+describe('list item checking and unchecking', () => {
+    it('should create a checked list item', () => {
+        const listItem = new ListItem(
+            '- [ ] description',
+            new ListItem('- [ ] parent', null, taskLocation),
+            taskLocation,
+        );
+
+        const checkedListItem = listItem.checkOrUncheck();
+
+        expect(checkedListItem.parent).toEqual(null);
+        // expect(checkedListItem.statusCharacter).toEqual('x');
+        // expect(checkedListItem.originalMarkdown).toEqual('- [x] description');
+    });
+});
