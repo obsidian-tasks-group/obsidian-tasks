@@ -178,7 +178,8 @@ export class ListItem {
     }
 
     public checkOrUncheck(): ListItem {
-        const newMarkdown = this.originalMarkdown.replace('- [ ]', '- [x]');
+        const newMarkdown = this.originalMarkdown.replace(RegExp(TaskRegularExpressions.checkboxRegex), '[x]');
+
         return new ListItem(newMarkdown, null, this.taskLocation);
     }
 
