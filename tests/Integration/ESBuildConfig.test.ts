@@ -39,7 +39,7 @@ function getTasksPluginCopyrightBanner(): string {
 describe('Check esbuild.config.mjs', () => {
     const bannerContent = getTasksPluginCopyrightBanner();
     it('check licensing', () => {
-        expect(bannerContent).toContain('License obsidian-tasks:\nMIT License');
+        expect(bannerContent).toMatch(/License obsidian-tasks:(\r\n|\r|\n)MIT License/);
         expect(bannerContent).toContain('Clare Macrae, Ilyas Landikov and Martin Schenck');
     });
 
