@@ -4,7 +4,7 @@
   "description": "Task management for the Obsidian knowledge base",
   "main": "main.js",
   "engines": {
-    "node": "^16.10.0 || >=18.0.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
     "dev": "node esbuild.config.mjs",
