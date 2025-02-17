@@ -34,9 +34,8 @@ filter by function { \
 group by function { \
     const cacheKey = 'descriptionCountsAllTasks'; \
     const getDescription = (t) => t.descriptionWithoutTags; \
-    const taskCounts = query.searchCache[cacheKey]; \
     const group = getDescription(task); \
-    const counts = taskCounts.get(group); \
+    const counts = query.searchCache[cacheKey].get(group); \
     return `%%${1000000 - counts}%%` + group + " (" + (counts || 0) + " tasks)"; \
 }
 ```
@@ -72,18 +71,16 @@ filter by function { \
 filter by function { \
     const cacheKey = 'descriptionCountsForMatchingTasks'; \
     const getDescription = (t) => t.descriptionWithoutTags; \
-    const taskCounts = query.searchCache[cacheKey]; \
     const group = getDescription(task); \
-    const counts = taskCounts.get(group); \
+    const counts = query.searchCache[cacheKey].get(group); \
     return counts > 1; \
 }
 
 group by function { \
     const cacheKey = 'descriptionCountsForMatchingTasks'; \
     const getDescription = (t) => t.descriptionWithoutTags; \
-    const taskCounts = query.searchCache[cacheKey]; \
     const group = getDescription(task); \
-    const counts = taskCounts.get(group); \
+    const counts = query.searchCache[cacheKey].get(group); \
     return `%%${1000000 - counts}%%` + group + " (" + (counts || 0) + " tasks)"; \
 }
 ```
