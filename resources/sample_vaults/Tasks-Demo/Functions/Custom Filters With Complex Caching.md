@@ -54,13 +54,12 @@ not done
 # counts are accurate.
 filter by function { \
     const cacheKey = 'descriptionCountsForMatchingTasks'; \
-    const getDescription = (t) => t.descriptionWithoutTags; \
     if (!query.searchCache[cacheKey]) { \
         console.log('Initialising description counts map...'); \
         const taskCounts = new Map(); \
         query.searchCache[cacheKey] = taskCounts; \
     } \
-    const group = getDescription(task); \
+    const group = task.descriptionWithoutTags; \
     taskCounts = query.searchCache[cacheKey]; \
     taskCounts.set(group, (taskCounts.get(group) || 0) + 1); \
     return true; \
@@ -70,16 +69,14 @@ filter by function { \
 # This must be the last filter in the query.
 filter by function { \
     const cacheKey = 'descriptionCountsForMatchingTasks'; \
-    const getDescription = (t) => t.descriptionWithoutTags; \
-    const group = getDescription(task); \
+    const group = task.descriptionWithoutTags; \
     const counts = query.searchCache[cacheKey].get(group); \
     return counts > 1; \
 }
 
 group by function { \
     const cacheKey = 'descriptionCountsForMatchingTasks'; \
-    const getDescription = (t) => t.descriptionWithoutTags; \
-    const group = getDescription(task); \
+    const group = task.descriptionWithoutTags; \
     const counts = query.searchCache[cacheKey].get(group); \
     return `%%${1000000 - counts}%%` + group + " (" + (counts || 0) + " tasks)"; \
 }
