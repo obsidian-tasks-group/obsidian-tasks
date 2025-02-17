@@ -1,3 +1,4 @@
 {
-    "npm.packageManager": "yarn"
+    "npm.packageManager": "yarn",
+    "svelte.enable-ts-plugin" : true,
 }
