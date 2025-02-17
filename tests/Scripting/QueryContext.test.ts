@@ -55,5 +55,19 @@ describe('QueryContext', () => {
             // Assert
             expect(group).toEqual(['1']);
         });
+
+        it('query.searchCache should cache a value', () => {
+            // Arrange
+            const searchInfo = new SearchInfo(tasksFile, [task]);
+            const queryContext = searchInfo.queryContext();
+            expect(queryContext).not.toBeNull();
+            const cacheKey = 'function1';
+
+            // Act
+            queryContext!.query.searchCache[cacheKey] = 1;
+
+            // Assert
+            expect(queryContext!.query.searchCache[cacheKey]).toEqual(1);
+        });
     });
 });
