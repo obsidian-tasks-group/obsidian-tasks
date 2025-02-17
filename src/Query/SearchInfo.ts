@@ -14,10 +14,12 @@ export class SearchInfo {
      */
     public readonly allTasks: Readonly<Task[]>;
     public readonly tasksFile: OptionalTasksFile;
+    private readonly _queryContext: QueryContext | undefined;
 
     public constructor(tasksFile: OptionalTasksFile, allTasks: Task[]) {
         this.tasksFile = tasksFile;
         this.allTasks = [...allTasks];
+        this._queryContext = this.tasksFile ? makeQueryContextWithTasks(this.tasksFile, this.allTasks) : undefined;
     }
 
     public static fromAllTasks(tasks: Task[]): SearchInfo {
@@ -35,6 +37,6 @@ export class SearchInfo {
      * @return A QueryContext, or undefined if the path to the query file is unknown.
      */
     public queryContext(): QueryContext | undefined {
-        return this.tasksFile ? makeQueryContextWithTasks(this.tasksFile, this.allTasks) : undefined;
+        return this._queryContext;
     }
 }
