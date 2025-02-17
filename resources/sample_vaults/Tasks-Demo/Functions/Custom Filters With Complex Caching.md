@@ -70,14 +70,14 @@ filter by function { \
 filter by function { \
     const cacheKey = 'descriptionCountsForMatchingTasks'; \
     const group = task.descriptionWithoutTags; \
-    const counts = query.searchCache[cacheKey].get(group); \
-    return counts > 1; \
+    const count = query.searchCache[cacheKey].get(group); \
+    return count > 1; \
 }
 
 group by function { \
     const cacheKey = 'descriptionCountsForMatchingTasks'; \
     const group = task.descriptionWithoutTags; \
-    const counts = query.searchCache[cacheKey].get(group); \
-    return `%%${1000000 - counts}%%` + group + " (" + (counts || 0) + " tasks)"; \
+    const count = query.searchCache[cacheKey].get(group); \
+    return `%%${1000000 - count}%%` + group + " (" + (count || 0) + " tasks)"; \
 }
 ```
