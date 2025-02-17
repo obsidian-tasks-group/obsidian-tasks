@@ -56,6 +56,14 @@ describe('QueryContext', () => {
             expect(group).toEqual(['1']);
         });
 
+        it('query.searchCache should be empty initially', () => {
+            // Arrange
+            const searchInfo = new SearchInfo(tasksFile, [task]);
+            const queryContext = searchInfo.queryContext();
+
+            expect(queryContext?.query?.searchCache).toEqual({});
+        });
+
         it('query.searchCache should cache a value', () => {
             // Arrange
             const searchInfo = new SearchInfo(tasksFile, [task]);
