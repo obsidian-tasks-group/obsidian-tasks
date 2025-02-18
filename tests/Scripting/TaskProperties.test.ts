@@ -130,6 +130,7 @@ describe('task', () => {
             // 'task.listMarker', // Not a priority to release
             // 'task.blockLink', // Release support for grouping by task.blockLink, after removing the leading space and maybe the carat
             'task.originalMarkdown',
+            'task.lineNumber',
         ]);
     });
 
