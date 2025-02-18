@@ -832,7 +832,7 @@ group by function task.originalMarkdown.replace(/^[^\[\]]+\[.\] */, '')
 
 There is no built-in instruction to group by the task's line number.
 
-Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by the task's line number** is now possible, using `task.lineNumber`.
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by the task's line number** is now possible, using `task.lineNumber`.
 
 > [!tip]
 > With `task.lineNumber`, the first line in the file is on line number `0` (zero), not `1` (one).
