@@ -51,7 +51,7 @@ However, any `sort by` instructions in queries take precedence over these defaul
 >
 > Adding `sort by` lines to the [[Global Query]] provides a way override to the default sort order for **all** searches (except those that [[Global Query#Ignoring the global query|ignore the global query]]).
 >
-> Also, if you have used `group by path` and/or `group by filename`, you may find `sort by function task.lineNumber` to be useful to override the default sort order.
+> Also, if you have used `sort by path` and/or `sort by filename`, you may find `sort by function task.lineNumber` to be useful to override the default sort order.
 
 ## Custom Sorting
 
