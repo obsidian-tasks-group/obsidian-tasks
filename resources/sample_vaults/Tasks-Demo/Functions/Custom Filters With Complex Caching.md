@@ -1,5 +1,8 @@
 # Custom Filters With Complex Caching
 
+> [!error] WARNING
+> These searches use a `query.searchCache` mechanism that is experimental, and may be changed or removed at any time: it is not recommended for use by users at this stage.
+
 This is too complex an example for a general demonstration, or for the documentation.
 
 But it was useful for confirming my (Clare's) understanding of the behaviour.
