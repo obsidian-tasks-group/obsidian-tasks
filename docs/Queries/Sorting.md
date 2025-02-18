@@ -50,6 +50,8 @@ However, any `sort by` instructions in queries take precedence over these defaul
 > To sort the results of a query differently from the default, you must add at least one `sort by` line to the query. The sort instructions you supply will take priority over the appended defaults.
 >
 > Adding `sort by` lines to the [[Global Query]] provides a way override to the default sort order for **all** searches (except those that [[Global Query#Ignoring the global query|ignore the global query]]).
+>
+> Also, if you have used `group by path` and/or `group by filename`, you may find `sort by function task.lineNumber` to be useful to override the default sort order.
 
 ## Custom Sorting
 
@@ -501,6 +503,26 @@ sort by function task.originalMarkdown
 ```
 
 - Sort by the raw text of the task's original line in the MarkDown file.
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Line Number
+
+There is no built-in instruction to filter by the task's line number.
+
+Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by the task's line number** is now possible, using `task.lineNumber`.
+
+> [!tip]
+> With `task.lineNumber`, the first line in the file is on line number `0` (zero), not `1` (one).
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomSortingExamples.test.other_properties_task.lineNumber_docs.approved.md -->
+
+```javascript
+sort by function task.lineNumber
+```
+
+- Sort by the line number of the task's original line in the MarkDown file.
+- This is useful if you are unhappy with the [[Sorting#default sort order]].
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
