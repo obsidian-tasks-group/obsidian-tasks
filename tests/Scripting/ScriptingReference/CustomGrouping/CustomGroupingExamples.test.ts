@@ -691,6 +691,13 @@ describe('other properties', () => {
         ],
 
         [
+            'task.lineNumber',
+            // comment to force line break
+            [],
+            SampleTasks.withRepresentativeLineNumbers(),
+        ],
+
+        [
             'task.urgency',
             [
                 [

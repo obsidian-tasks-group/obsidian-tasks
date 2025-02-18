@@ -1279,6 +1279,19 @@ For example, this could be used to extract information from `task.originalMarkdo
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+### Line Number
+
+There is no built-in instruction to filter by the task's line number.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by the task's line number** is now possible, using `task.lineNumber`.
+
+> [!tip]
+> With `task.lineNumber`, the first line in the file is on line number `0` (zero), not `1` (one).
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.lineNumber_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## Filters for File Properties
 
 These filters allow searching for tasks in particular files and sections of files.

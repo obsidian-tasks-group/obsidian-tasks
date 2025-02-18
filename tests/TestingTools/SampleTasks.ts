@@ -103,6 +103,14 @@ export class SampleTasks {
         });
     }
 
+    public static withRepresentativeLineNumbers(): Task[] {
+        const taskBuilders = [
+            new TaskBuilder().lineNumber(42).description('line 42'),
+            new TaskBuilder().lineNumber(0).description('line 0'),
+        ];
+        return taskBuilders.map((builder) => builder.build());
+    }
+
     public static withAllRepresentativeCreatedDates(): Task[] {
         return representativeDates.map((date) => {
             return new TaskBuilder().createdDate(date).build();
