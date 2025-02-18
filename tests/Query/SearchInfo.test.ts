@@ -3,6 +3,9 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 
 describe('SearchInfo', () => {
+    const path = 'a/b/c.md';
+    const tasksFile = new TasksFile(path);
+
     it('should not be able to modify SearchInfo.allTasks directly', () => {
         const tasks = [new TaskBuilder().build()];
         const searchInfo = SearchInfo.fromAllTasks(tasks);
@@ -25,8 +28,6 @@ describe('SearchInfo', () => {
     });
 
     it('should provide access to query search path', () => {
-        const path = 'a/b/c.md';
-        const tasksFile = new TasksFile(path);
         const searchInfo = new SearchInfo(tasksFile, []);
 
         expect(searchInfo.tasksFile).toEqual(tasksFile);
@@ -34,7 +35,6 @@ describe('SearchInfo', () => {
     });
 
     it('should create a QueryContext from a known path', () => {
-        const tasksFile = new TasksFile('a/b/c.md');
         const searchInfo = new SearchInfo(tasksFile, []);
 
         const queryContext = searchInfo.queryContext();
@@ -49,5 +49,13 @@ describe('SearchInfo', () => {
         const queryContext = searchInfo.queryContext();
 
         expect(queryContext).toBeUndefined();
+    });
+
+    it('should give the same QueryContext on successive calls, for caching data', () => {
+        const searchInfo = new SearchInfo(tasksFile, [new TaskBuilder().build()]);
+
+        searchInfo.queryContext()!.query.searchCache['saved'] = 1;
+
+        expect(searchInfo.queryContext()!.query.searchCache['saved']).toBe(1);
     });
 });
