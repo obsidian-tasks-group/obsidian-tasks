@@ -343,7 +343,7 @@ export class QueryResultsRenderer {
         return await this.addListItem(taskList, listItem, taskIndex);
     }
 
-    private async addListItem(taskList: HTMLUListElement, listItem: ListItem, taskIndex: number) {
+    private async addListItem(taskList: HTMLUListElement, listItem: ListItem, listItemIndex: number) {
         const li = createAndAppendElement('li', taskList);
 
         if (listItem.statusCharacter) {
@@ -374,7 +374,7 @@ export class QueryResultsRenderer {
             // Set these to be compatible with stock obsidian lists:
             li.setAttribute('data-task', listItem.statusCharacter.trim());
             // Trim to ensure empty attribute for space. Same way as obsidian.
-            li.setAttribute('data-line', taskIndex.toString());
+            li.setAttribute('data-line', listItemIndex.toString());
         }
 
         const span = createAndAppendElement('span', li);
