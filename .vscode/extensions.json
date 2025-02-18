@@ -1,5 +1,9 @@
 {
     "recommendations": [
-        "DavidAnson.vscode-markdownlint"
+        "DavidAnson.vscode-markdownlint",
+        "gamunu.vscode-yarn",
+        "mrmlnc.vscode-scss",
+        "Orta.vscode-jest",
+        "svelte.svelte-vscode",
     ]
 }

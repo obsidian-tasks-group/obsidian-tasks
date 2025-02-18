@@ -1,7 +1,11 @@
 # Setting up build environment
 
-This project uses Node 16.x, if you also use a different version, look at using `nvm` to manage your Node versions.
-If you are using `nvm`, you can install the 16.x version of Node with `nvm install 16; nvm use <full version number you installed such as 16.10.0>`.
+See [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) for which version of Node to use.
+
+Consider using `nvm` which allows you to manage multiple versions of node.
+
+For example, to install node 18.x:\
+ `nvm install 18; nvm use <full version number you installed such as 18.2.0>`.
 
 To setup the local environment after cloning the repository, run the following commands:
 
