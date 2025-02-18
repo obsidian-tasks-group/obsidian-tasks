@@ -510,7 +510,7 @@ sort by function task.originalMarkdown
 
 There is no built-in instruction to sort by the task's line number.
 
-Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by the task's line number** is now possible, using `task.lineNumber`.
+Since Tasks 7.16.0, **[[Custom Sorting|custom sorting]] by the task's line number** is now possible, using `task.lineNumber`.
 
 > [!tip]
 > With `task.lineNumber`, the first line in the file is on line number `0` (zero), not `1` (one).

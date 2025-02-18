@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
-- X.Y.Z:
+- 7.16.0:
   - Add `task.lineNumber`.
     - This enables `sort by function task.lineNumber` to override the [[Sorting#Default sort order|default sort order]].
     - See [[Filters#Line Number|filters]], [[Sorting#Line Number|sorting]] and [[Grouping#Line Number|grouping]].
