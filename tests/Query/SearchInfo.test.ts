@@ -54,8 +54,8 @@ describe('SearchInfo', () => {
     it('should give the same QueryContext on successive calls, for caching data', () => {
         const searchInfo = new SearchInfo(tasksFile, [new TaskBuilder().build()]);
 
-        searchInfo.queryContext()!.query!.searchCache['saved'] = 1;
+        searchInfo.queryContext()!.query.searchCache['saved'] = 1;
 
-        expect(searchInfo.queryContext()!.query!.searchCache['saved']).toBe(1);
+        expect(searchInfo.queryContext()!.query.searchCache['saved']).toBe(1);
     });
 });
