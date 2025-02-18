@@ -381,6 +381,18 @@ describe('other properties', () => {
         ],
 
         [
+            'task.lineNumber',
+            [
+                [
+                    'sort by function task.lineNumber',
+                    "Sort by the line number of the task's original line in the MarkDown file.",
+                    'This is useful if you are unhappy with the [[Sorting#default sort order]].',
+                ],
+            ],
+            SampleTasks.withRepresentativeLineNumbers(),
+        ],
+
+        [
             'task.urgency',
             [
                 [

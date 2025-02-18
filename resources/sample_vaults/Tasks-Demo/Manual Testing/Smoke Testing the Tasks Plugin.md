@@ -50,6 +50,7 @@ Work through all the tasks below, until zero tasks remain in this query:
 > not done
 > path includes Smoke Testing the Tasks Plugin
 > description includes **check**:
+> sort by function task.lineNumber
 >
 > short display
 > ```
@@ -191,14 +192,15 @@ hide postpone button
 
 - Non-task checkbox are tasks without the global filter, treated as `ListItems` by the obsidian-tasks plugin
 - [ ] #task Check or uncheck non-task list items with checkbox in the query below this task
-  - [ ] I will have an `x` status  
-  - [x]  I will have a `space` status  
+  - [ ] I will have an `x` status
+  - [x] I will have a `space` status
   - [/] Me too with a `space` status
 
-```tasks  
+```tasks
 filename includes {{query.file.filename}}
 heading includes Toggling non-task checkboxes
-show tree  
+description does not include **check**:
+show tree
 ```
 
 - [ ] #task **check**: Checked all above steps for **toggling non-task list items with checkbox in a query** worked
