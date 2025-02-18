@@ -1,5 +1,8 @@
 # Custom Filters With Simple Caching
 
+> [!error] WARNING
+> These searches use a `query.searchCache` mechanism that is experimental, and may be changed or removed at any time: it is not recommended for use by users at this stage.
+
 ## Find tasks with duplicate non-empty IDs - slow on many tasks
 
 ```tasks
