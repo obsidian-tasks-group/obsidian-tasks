@@ -22,6 +22,7 @@ export interface QueryContext {
     query: {
         file: TasksFile;
         allTasks: Readonly<Task[]>;
+        searchCache: Record<string, any>; // Added caching capability
     };
 }
 
@@ -54,6 +55,7 @@ export function makeQueryContextWithTasks(tasksFile: TasksFile, allTasks: Readon
         query: {
             file: tasksFile,
             allTasks: allTasks,
+            searchCache: {}, // Added for caching
         },
     };
 }
