@@ -1,6 +1,7 @@
 import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from '../lib/MockDataCreator';
+import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
@@ -48,8 +49,8 @@ export const replaceTaskWithTasks = async ({
     originalTask,
     newTasks,
 }: {
-    originalTask: Task;
-    newTasks: Task | Task[];
+    originalTask: ListItem;
+    newTasks: ListItem | ListItem[];
 }): Promise<void> => {
     if (vault === undefined || metadataCache === undefined || workspace === undefined) {
         errorAndNotice('Tasks: cannot use File before initializing it.');
@@ -113,8 +114,8 @@ const tryRepetitive = async ({
     workspace,
     previousTries,
 }: {
-    originalTask: Task;
-    newTasks: Task[];
+    originalTask: ListItem;
+    newTasks: ListItem[];
     vault: Vault;
     metadataCache: MetadataCache;
     workspace: Workspace;
@@ -163,7 +164,7 @@ Recommendations:
         // Finally, we can insert 1 or more lines over the original task line:
         const updatedFileLines = [
             ...fileLines.slice(0, taskLineNumber),
-            ...newTasks.map((task: Task) => task.toFileLineString()),
+            ...newTasks.map((task: ListItem) => task.toFileLineString()),
             ...fileLines.slice(taskLineNumber + 1), // Only supports single-line tasks.
         ];
 
@@ -188,7 +189,7 @@ Recommendations:
  * It may throw a WarningWorthRetrying exception in several cases that justify a retry (should be handled by the caller)
  * or an Error exception in case of an unrecoverable error.
  */
-async function getTaskAndFileLines(task: Task, vault: Vault): Promise<[number, TFile, string[]]> {
+async function getTaskAndFileLines(task: ListItem, vault: Vault): Promise<[number, TFile, string[]]> {
     if (metadataCache === undefined) throw new WarningWorthRetrying();
     // Validate our inputs.
     // For permanent failures, return nothing.
