@@ -508,7 +508,7 @@ sort by function task.originalMarkdown
 
 ### Line Number
 
-There is no built-in instruction to filter by the task's line number.
+There is no built-in instruction to sort by the task's line number.
 
 Since Tasks X.Y.Z, **[[Custom Sorting|custom sorting]] by the task's line number** is now possible, using `task.lineNumber`.
 
