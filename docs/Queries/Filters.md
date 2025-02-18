@@ -1283,7 +1283,7 @@ For example, this could be used to extract information from `task.originalMarkdo
 
 There is no built-in instruction to filter by the task's line number.
 
-Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by the task's line number** is now possible, using `task.lineNumber`.
+Since Tasks 7.16.0, **[[Custom Filters|custom filtering]] by the task's line number** is now possible, using `task.lineNumber`.
 
 > [!tip]
 > With `task.lineNumber`, the first line in the file is on line number `0` (zero), not `1` (one).
