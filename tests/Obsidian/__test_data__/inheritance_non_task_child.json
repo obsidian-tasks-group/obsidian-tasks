@@ -53,14 +53,30 @@
         "parent": 0,
         "position": {
           "end": {
-            "col": 21,
+            "col": 33,
             "line": 3,
-            "offset": 98
+            "offset": 110
           },
           "start": {
             "col": 3,
             "line": 3,
             "offset": 80
+          }
+        },
+        "task": "x"
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 4,
+            "offset": 132
+          },
+          "start": {
+            "col": 3,
+            "line": 4,
+            "offset": 114
           }
         }
       }
@@ -70,8 +86,8 @@
         "position": {
           "end": {
             "col": 21,
-            "line": 3,
-            "offset": 98
+            "line": 4,
+            "offset": 132
           },
           "start": {
             "col": 0,
@@ -85,13 +101,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 8,
-            "offset": 164
+            "line": 9,
+            "offset": 198
           },
           "start": {
             "col": 0,
-            "line": 5,
-            "offset": 100
+            "line": 6,
+            "offset": 134
           }
         },
         "type": "code"
@@ -130,7 +146,7 @@
       }
     ]
   },
-  "fileContents": "-  [ ] #task task parent\n    - [ ] #task task child\n    - [ ] non-task child\n    - list item child\n\n```tasks\nfilename includes {{query.file.filename}}\nshow tree\n```\n",
+  "fileContents": "-  [ ] #task task parent\n    - [ ] #task task child\n    - [ ] non-task child\n    - [x] non-task child status x\n    - list item child\n\n```tasks\nfilename includes {{query.file.filename}}\nshow tree\n```\n",
   "filePath": "Test Data/inheritance_non_task_child.md",
   "getAllTags": [
     "#task",
