@@ -199,6 +199,7 @@ hide postpone button
 ```tasks
 filename includes {{query.file.filename}}
 heading includes Toggling non-task checkboxes
+description does not include **check**:
 show tree
 ```
 
