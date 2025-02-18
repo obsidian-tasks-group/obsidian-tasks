@@ -51,7 +51,7 @@ However, any `sort by` instructions in queries take precedence over these defaul
 >
 > Adding `sort by` lines to the [[Global Query]] provides a way override to the default sort order for **all** searches (except those that [[Global Query#Ignoring the global query|ignore the global query]]).
 >
-> Also, if you have used `sort by path` and/or `sort by filename`, you may find `sort by function task.lineNumber` to be useful to override the default sort order.
+> You may also find `sort by function task.lineNumber` to be useful to override the default sort order. See [[#Override the Tasks plugin's default sort order]] below.
 
 ## Custom Sorting
 
@@ -699,21 +699,46 @@ For example, when you `sort by done reverse` and your query results contain task
 
 ## Examples
 
+### Sort tasks by due date, from oldest to newest
+
     ```tasks
     not done
     due today
     sort by due
     ```
 
+### Sort tasks by due date, from newest to oldest
+
     ```tasks
     done
     sort by done reverse
     ```
 
+### Override the Tasks plugin's default sort order
+
+If you are unhappy with the [[#default sort order]], this is one way to override it:
+
+1. sort by the Markdown file's full path,
+2. then sort by the task's line number in that file.
+
+    ```tasks
+    not done
+    sort by path
+    sort by function task.lineNumber
+    ```
+
+Any other sort instructions can be added before these to, such as `sort by priority` or `sort by happens`
+
+### Sort by multiple properties
+
+1. task's status type (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`),
+2. then the task's description, in reverse alphabetical order
+3. then by the Markdown file's path.
+
     ```tasks
     not done
     due before next monday
-    sort by status
+    sort by status.type
     sort by description reverse
     sort by path
     ```
