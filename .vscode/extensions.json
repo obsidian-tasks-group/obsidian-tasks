@@ -4,6 +4,6 @@
         "gamunu.vscode-yarn",
         "mrmlnc.vscode-scss",
         "Orta.vscode-jest",
-        "svelte.svelte-vscode",
+        "svelte.svelte-vscode"
     ]
 }
