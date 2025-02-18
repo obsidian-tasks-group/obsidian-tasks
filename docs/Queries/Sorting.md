@@ -727,7 +727,7 @@ If you are unhappy with the [[#default sort order]], this is one way to override
     sort by function task.lineNumber
     ```
 
-Any other sort instructions can be added before these to, such as `sort by priority` or `sort by happens`
+Any other sort instructions can be added before these two, such as `sort by priority` or `sort by happens`
 
 ### Sort by multiple properties
 
