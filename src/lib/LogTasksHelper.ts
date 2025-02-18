@@ -1,4 +1,4 @@
-import type { Task } from '../Task/Task';
+import type { ListItem } from '../Task/ListItem';
 import type { Logger } from './logging';
 
 /**
@@ -7,7 +7,7 @@ import type { Logger } from './logging';
  * @param codeLocation - a string description, such as 'callingFunctionName()'.
  * @param originalTask
  */
-export function logStartOfTaskEdit(logger: Logger, codeLocation: string, originalTask: Task) {
+export function logStartOfTaskEdit(logger: Logger, codeLocation: string, originalTask: ListItem) {
     logger.debug(
         `${codeLocation}: task line number: ${originalTask.taskLocation.lineNumber}. file path: "${originalTask.path}"`,
     );
@@ -20,8 +20,8 @@ export function logStartOfTaskEdit(logger: Logger, codeLocation: string, origina
  * @param codeLocation - a string description, such as 'callingFunctionName()'.
  * @param newTasks
  */
-export function logEndOfTaskEdit(logger: Logger, codeLocation: string, newTasks: Task[]) {
-    newTasks.map((task: Task, index: number) => {
+export function logEndOfTaskEdit(logger: Logger, codeLocation: string, newTasks: ListItem[]) {
+    newTasks.map((task: ListItem, index: number) => {
         // Alignment of task lines is intentionally consistent between logStartOfTaskEdit() and this:
         logger.debug(`${codeLocation} ==> ${index + 1}   : ${task.toFileLineString()}`);
     });
