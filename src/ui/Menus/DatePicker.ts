@@ -22,7 +22,8 @@ export function promptForDate(
     //      running overnight, the flatpickr modal shows the previous day as Today.
     // Try to determine the first day of the week based on the locale, or use Monday
     // if unavailable
-    const firstDayOfWeek = (new Intl.Locale(navigator.language) as any).weekInfo.firstDay ?? 1;
+    const firstDayOfWeekFromLocale = (new Intl.Locale(navigator.language) as any).weekInfo.firstDay;
+    const firstDayOfWeek = firstDayOfWeekFromLocale ?? 1;
     const fp = flatpickr(parentElement, {
         defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
         disableMobile: true,
