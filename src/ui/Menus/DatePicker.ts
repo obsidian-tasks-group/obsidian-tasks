@@ -20,15 +20,16 @@ export function promptForDate(
     const currentValue = task[dateFieldToEdit];
     // TODO figure out how Today's date is determined: if Obsidian is left
     //      running overnight, the flatpickr modal shows the previous day as Today.
+    // Try to determine the first day of the week based on the locale, or use Monday
+    // if unavailable
+    const firstDayOfWeek = (new Intl.Locale(navigator.language) as any).weekInfo.firstDay ?? 1;
     const fp = flatpickr(parentElement, {
         defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
         disableMobile: true,
         enableTime: false, // Optional: Enable time picker
         dateFormat: 'Y-m-d', // Adjust the date and time format as needed
         locale: {
-            // Try to determine the first day of the week based on the locale, or use Monday
-            // if unavailable
-            firstDayOfWeek: (new Intl.Locale(navigator.language) as any).weekInfo.firstDay ?? 1,
+            firstDayOfWeek: firstDayOfWeek,
         },
         onClose: async (selectedDates, _dateStr, instance) => {
             if (selectedDates.length > 0) {
