@@ -23,8 +23,14 @@ export function promptForDate(
     // Try to determine the first day of the week based on the locale, or use Monday
     // if unavailable
     const weekInfo = (new Intl.Locale(navigator.language) as any).weekInfo;
+    console.log(`promptForDate(): weekInfo: ${JSON.stringify(weekInfo, null, 4)}`);
+
     const firstDayOfWeekFromLocale = weekInfo.firstDay;
+    console.log(`promptForDate(): firstDayOfWeekFromLocale: ${firstDayOfWeekFromLocale}`);
+
     const firstDayOfWeek = firstDayOfWeekFromLocale ?? 1;
+    console.log(`promptForDate(): firstDayOfWeek: ${firstDayOfWeek}`);
+
     const fp = flatpickr(parentElement, {
         defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
         disableMobile: true,
