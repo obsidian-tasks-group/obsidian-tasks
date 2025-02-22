@@ -11,7 +11,7 @@ These are the steps required to add support for a new language.
 ## Configure the new language
 
 1. Decide on the language code to be used.
-    - See [How should the language codes be formatted?](https://www.i18next.com/how-to/faq#how-should-the-language-codes-be-formatted)
+    - Use the same Laguage codes as Obsidian: see [Existing languages](https://github.com/obsidianmd/obsidian-translations?tab=readme-ov-file#existing-languages)
 2. Add the language code to `locales` in [i18next-parser.config.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/i18next-parser.config.js).
 3. Create the json file that will contain translations:
 
