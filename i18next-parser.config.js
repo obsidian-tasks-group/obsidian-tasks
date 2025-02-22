@@ -5,6 +5,7 @@ module.exports = {
         // Supported locales, in alphabetical order
         'be',
         'en',
+        'ru',
         'uk',
         'zh_cn',
     ],
