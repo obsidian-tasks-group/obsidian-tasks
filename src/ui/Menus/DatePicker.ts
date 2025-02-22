@@ -28,7 +28,7 @@ export function promptForDate(
         locale: {
             // Try to determine the first day of the week based on the locale, or use Monday
             // if unavailable
-            firstDayOfWeek: (new Intl.Locale(navigator.language) as any).weekInfo.firstDay ?? 1,
+            firstDayOfWeek: (new Intl.Locale(navigator.language) as any).weekInfo?.firstDay ?? 1,
         },
         onClose: async (selectedDates, _dateStr, instance) => {
             if (selectedDates.length > 0) {
