@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import be from './locales/be.json';
 import en from './locales/en.json';
 import uk from './locales/uk.json';
 import zh_cn from './locales/zh_cn.json';
@@ -23,6 +24,7 @@ export const initializeI18n = async () => {
             returnEmptyString: false, // Use fallback language if i18next-parser put in empty value for untranslated text
             resources: {
                 // alphabetical order:
+                be: { translation: be },
                 en: { translation: en },
                 uk: { translation: uk },
                 zh: { translation: zh_cn },
