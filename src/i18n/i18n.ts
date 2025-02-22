@@ -25,11 +25,11 @@ export const initializeI18n = async () => {
             returnEmptyString: false, // Use fallback language if i18next-parser put in empty value for untranslated text
             resources: {
                 // alphabetical order:
-                be: { translation: be },
-                en: { translation: en },
-                ru: { translation: ru },
-                uk: { translation: uk },
-                zh: { translation: zh_cn },
+                be: { translation: be }, // Belarusian
+                en: { translation: en }, // English
+                ru: { translation: ru }, // Russian
+                uk: { translation: uk }, // Ukrainian
+                zh: { translation: zh_cn }, // Chinese (Simplified)
             },
             interpolation: {
                 escapeValue: false, // Disable escaping of strings, like '&' -> '&amp;'
