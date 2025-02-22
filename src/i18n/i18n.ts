@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import be from './locales/be.json';
 import en from './locales/en.json';
+import ru from './locales/ru.json';
 import uk from './locales/uk.json';
 import zh_cn from './locales/zh_cn.json';
 
@@ -26,6 +27,7 @@ export const initializeI18n = async () => {
                 // alphabetical order:
                 be: { translation: be },
                 en: { translation: en },
+                ru: { translation: ru },
                 uk: { translation: uk },
                 zh: { translation: zh_cn },
             },
