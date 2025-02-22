@@ -10,6 +10,7 @@ Changes visible to users:
 - [ ] **Breaking change** (prefix: `feat!!` or `fix!!` - fix or feature that would cause existing functionality to not work as expected)
   - Issue/discussion: <!-- Link to the issue or discussion where this has been agreed with a maintainer -->
 - [ ] **Bug fix** (prefix: `fix` - non-breaking change which fixes an issue)
+  - Issue/discussion: <!-- Link to the issue or discussion where this has been agreed with a maintainer -->
 - [ ] **Translation** (prefix: `i18n` - additions or improvements to the translations - see [Support a new language](https://publish.obsidian.md/tasks-contributing/Translation/Support+a+new+language))
 - [ ] **Documentation** (prefix: `docs` - improvements to any documentation content **for users**)
 - [ ] **Sample vault** (prefix: `vault` - improvements to the [Tasks-Demo sample vault](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo))
