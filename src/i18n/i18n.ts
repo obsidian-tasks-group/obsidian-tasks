@@ -1,5 +1,8 @@
 import i18next from 'i18next';
+import be from './locales/be.json';
 import en from './locales/en.json';
+import ru from './locales/ru.json';
+import uk from './locales/uk.json';
 import zh_cn from './locales/zh_cn.json';
 
 let isInitialized = false;
@@ -21,8 +24,12 @@ export const initializeI18n = async () => {
             fallbackLng: 'en', // Fallback language if detection fails or translation is missing
             returnEmptyString: false, // Use fallback language if i18next-parser put in empty value for untranslated text
             resources: {
-                en: { translation: en },
-                zh: { translation: zh_cn },
+                // alphabetical order:
+                be: { translation: be }, // Belarusian
+                en: { translation: en }, // English
+                ru: { translation: ru }, // Russian
+                uk: { translation: uk }, // Ukrainian
+                zh: { translation: zh_cn }, // Chinese (Simplified)
             },
             interpolation: {
                 escapeValue: false, // Disable escaping of strings, like '&' -> '&amp;'
