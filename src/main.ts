@@ -59,8 +59,12 @@ export default class TasksPlugin extends Plugin {
             workspace: this.app.workspace,
             events,
         });
-        this.inlineRenderer = new InlineRenderer({ plugin: this });
-        this.queryRenderer = new QueryRenderer({ plugin: this, events });
+
+        this.app.workspace.onLayoutReady(() => {
+            // Only execute searches after Obsidian finishes loading.
+            this.inlineRenderer = new InlineRenderer({ plugin: this });
+            this.queryRenderer = new QueryRenderer({ plugin: this, events });
+        });
 
         // Update types.json.
         this.setObsidianPropertiesTypes();
