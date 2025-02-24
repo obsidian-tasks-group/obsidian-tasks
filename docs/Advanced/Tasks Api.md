@@ -75,23 +75,19 @@ to automatically add tasks to a specific file.
 
 For this you need to enter the following code as the Capture format:
 
-<!-- markdownlint-disable code-fence-style -->
-~~~markdown
+````markdown
 ```js quickadd
 return await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal();
 ```
-~~~
-<!-- markdownlint-enable code-fence-style -->
+````
 
 Or if you would like a newline character to be added after your new task line, use this as the Capture format instead:
 
-<!-- markdownlint-disable code-fence-style -->
-~~~markdown
+````markdown
 ```js quickadd
 return await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal() + '\n';
 ```
-~~~
-<!-- markdownlint-enable code-fence-style -->
+````
 
 For details refer to [QuickAdd - Inline scripts](https://quickadd.obsidian.guide/docs/InlineScripts).
 
