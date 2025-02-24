@@ -92,6 +92,13 @@ const result = tasksApi.executeToggleTaskDoneCommand(taskLine, sourceFile.path);
 console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
 ```
 
+> [!Tip]- Find plugins that use the Tasks API to toggle tasks
+> [Search GitHub for plugins which may use this function](https://github.com/search?q=executeToggleTaskDoneCommand+NOT+is%3Afork+NOT+repo%3Aobsidian-tasks-group%2Fobsidian-tasks+NOT+path%3A*.md&type=code), and by using `executeToggleTaskDoneCommand()`, will fully respect your Tasks settings.
+> > [!warning]
+> >
+> > - You will need to be logged in to GitHub for this search to work.
+> > - Not all of these plugins have been reviewed by the Obsidian team: you should search for them in `Settings` > `Community plugins` - or review in [Plugins - Obsidian](https://obsidian.md/plugins) - for safety.
+
 ## Auto-Suggest Integration
 
 > [!released]
