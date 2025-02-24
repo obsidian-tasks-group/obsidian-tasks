@@ -69,6 +69,13 @@ console.log(taskLine);
 > [!warning]
 > This function returns a `Promise` - always `await` the result!
 
+> [!Tip]- Find plugins that use the Tasks API to create tasks
+> [Search GitHub for plugins which may use this function](https://github.com/search?q=createTaskLineModal+NOT+is%3Afork+NOT+repo%3Aobsidian-tasks-group%2Fobsidian-tasks+NOT+path%3A*.md&type=code), and by using `createTaskLineModal()`, will fully respect your Tasks settings.
+> > [!warning]
+> >
+> > - You will need to be logged in to GitHub for this search to work.
+> > - Not all of these plugins have been reviewed by the Obsidian team: you should search for them in `Settings` > `Community plugins` - or review in [Plugins - Obsidian](https://obsidian.md/plugins) - for safety.
+
 ### Usage with QuickAdd
 One of the most common usage scenarios is probably in combination with the [QuickAdd](https://github.com/chhoumann/quickadd) plugin
 to automatically add tasks to a specific file.
