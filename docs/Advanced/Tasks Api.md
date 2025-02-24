@@ -96,6 +96,8 @@ const taskLine = '- [ ] This is a task 📅 2024-04-24';
 
 const result = tasksApi.executeToggleTaskDoneCommand(taskLine, sourceFile.path);
 
+// Do whatever you want with the returned value.
+// It's just a string containing the Markdown for the toggled task.
 console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
 ```
 
