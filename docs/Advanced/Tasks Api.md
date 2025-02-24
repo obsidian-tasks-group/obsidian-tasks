@@ -67,7 +67,7 @@ console.log(taskLine);
 ```
 
 > [!warning]
-> This function is returns a `Promise` - always `await` the result!
+> This function returns a `Promise` - always `await` the result!
 
 ### Usage with QuickAdd
 One of the most common usage scenarios is probably in combination with the [QuickAdd](https://github.com/chhoumann/quickadd) plugin
