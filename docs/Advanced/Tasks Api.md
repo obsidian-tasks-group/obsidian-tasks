@@ -138,6 +138,13 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
 > If the `Editor` is not a `MarkdownView`, the functionality is slightly limited.
 > It won't be possible to create [[Task Dependencies]] fields `id` and `dependsOn`.
 
+> [!Tip]- Find plugins that use the Tasks API to suggest task properties
+> [Search GitHub for plugins which may use this function](https://github.com/search?q=showTasksPluginAutoSuggest+NOT+is%3Afork+NOT+repo%3Aobsidian-tasks-group%2Fobsidian-tasks+NOT+path%3A*.md&type=code), and by using `showTasksPluginAutoSuggest()`, will fully respect your Tasks settings.
+> > [!warning]
+> >
+> > - You will need to be logged in to GitHub for this search to work.
+> > - Not all of these plugins have been reviewed by the Obsidian team: you should search for them in `Settings` > `Community plugins` - or review in [Plugins - Obsidian](https://obsidian.md/plugins) - for safety.
+
 ## Limitations of the Tasks API
 
 - Editing tasks:
