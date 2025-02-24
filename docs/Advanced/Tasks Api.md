@@ -67,54 +67,20 @@ console.log(taskLine);
 ```
 
 > [!warning]
-> This function is returns a `Promise` - always `await` the result!
+> This function returns a `Promise` - always `await` the result!
+
+> [!Tip]- Find plugins that use the Tasks API to create tasks
+> [Search GitHub for plugins which may use this function](https://github.com/search?q=createTaskLineModal+NOT+is%3Afork+NOT+repo%3Aobsidian-tasks-group%2Fobsidian-tasks+NOT+path%3A*.md&type=code), and by using `createTaskLineModal()`, will fully respect your Tasks settings.
+> > [!warning]
+> >
+> > - You will need to be logged in to GitHub for this search to work.
+> > - Not all of these plugins have been reviewed by the Obsidian team: you should search for them in `Settings` > `Community plugins` - or review in [Plugins - Obsidian](https://obsidian.md/plugins) - for safety.
 
 ### Usage with QuickAdd
 One of the most common usage scenarios is probably in combination with the [QuickAdd](https://github.com/chhoumann/quickadd) plugin
 to automatically add tasks to a specific file.
 
-For this you need to enter the following code as the Capture format:
-
-<!-- markdownlint-disable code-fence-style -->
-~~~markdown
-```js quickadd
-return await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal();
-```
-~~~
-<!-- markdownlint-enable code-fence-style -->
-
-Or if you would like a newline character to be added after your new task line, use this as the Capture format instead:
-
-<!-- markdownlint-disable code-fence-style -->
-~~~markdown
-```js quickadd
-return await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal() + '\n';
-```
-~~~
-<!-- markdownlint-enable code-fence-style -->
-
-For details refer to [QuickAdd - Inline scripts](https://quickadd.obsidian.guide/docs/InlineScripts).
-
-#### Create the QuickAdd Capture
-
-Use these steps to make the following options appear (tested in QuickAdd 0.12.0):
-
-![Screenshot - Create the QuickAdd Capture](../../images/quickadd-settings-create-capture.png)
-
-1. Open the QuickAdd options.
-2. Type the name `Add task` in the `Name` box.
-3. Click on the `Template` button and select `Capture`.
-4. Click `Add Choice`.
-
-#### Configure the QuickAdd Capture
-
-![Screenshot - Open the QuickAdd Capture Configuration](../../images/quickadd-settings-configure-capture.png)
-
-1. In the new row that was added, click on the cog (⚙) icon.
-2. Now fill in the values below. (See above for the code to enter in to the `Capture format` box.)
-
-Screenshot of QuickAdd capture settings (example)
-![Screenshot - Edit the QuickAdd Capture Configuration](../../images/api-create-taskline-modal-quickadd-capture-example.png)
+See [[QuickAdd#Launching the Edit task modal via QuickAdd|Launching the Edit task modal via QuickAdd]] for full details of how to do this.
 
 ## `executeToggleTaskDoneCommand: (line: string, path: string) => string;`
 
@@ -130,8 +96,17 @@ const taskLine = '- [ ] This is a task 📅 2024-04-24';
 
 const result = tasksApi.executeToggleTaskDoneCommand(taskLine, sourceFile.path);
 
+// Do whatever you want with the returned value.
+// It's just a string containing the Markdown for the toggled task.
 console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
 ```
+
+> [!Tip]- Find plugins that use the Tasks API to toggle tasks
+> [Search GitHub for plugins which may use this function](https://github.com/search?q=executeToggleTaskDoneCommand+NOT+is%3Afork+NOT+repo%3Aobsidian-tasks-group%2Fobsidian-tasks+NOT+path%3A*.md&type=code), and by using `executeToggleTaskDoneCommand()`, will fully respect your Tasks settings.
+> > [!warning]
+> >
+> > - You will need to be logged in to GitHub for this search to work.
+> > - Not all of these plugins have been reviewed by the Obsidian team: you should search for them in `Settings` > `Community plugins` - or review in [Plugins - Obsidian](https://obsidian.md/plugins) - for safety.
 
 ## Auto-Suggest Integration
 
@@ -164,6 +139,13 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
 > [!warning]
 > If the `Editor` is not a `MarkdownView`, the functionality is slightly limited.
 > It won't be possible to create [[Task Dependencies]] fields `id` and `dependsOn`.
+
+> [!Tip]- Find plugins that use the Tasks API to suggest task properties
+> [Search GitHub for plugins which may use this function](https://github.com/search?q=showTasksPluginAutoSuggest+NOT+is%3Afork+NOT+repo%3Aobsidian-tasks-group%2Fobsidian-tasks+NOT+path%3A*.md&type=code), and by using `showTasksPluginAutoSuggest()`, will fully respect your Tasks settings.
+> > [!warning]
+> >
+> > - You will need to be logged in to GitHub for this search to work.
+> > - Not all of these plugins have been reviewed by the Obsidian team: you should search for them in `Settings` > `Community plugins` - or review in [Plugins - Obsidian](https://obsidian.md/plugins) - for safety.
 
 ## Limitations of the Tasks API
 
