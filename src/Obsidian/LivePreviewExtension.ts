@@ -10,6 +10,17 @@ export const newLivePreviewExtension = () => {
     return ViewPlugin.fromClass(LivePreviewExtension);
 };
 
+/**
+ * Integrate custom handling of checkbox clicks in the Obsidian editor's Live Preview mode.
+ *
+ * This class is primarily designed for checkbox-driven task management in the Obsidian plugin, overriding the default handling behavior.
+ * It listens for click events, detects checkbox interactions, and updates the document state accordingly.
+ *
+ * Bug reports associated with this code: (label:"display: live preview")
+ * https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22display%3A%20live%20preview%22%20label%3A%22type%3A%20bug%22
+ *
+ * See also {@link InlineRenderer} which handles Markdown task lines in Obsidian's Reading mode.
+ */
 class LivePreviewExtension implements PluginValue {
     private readonly view: EditorView;
 

@@ -53,6 +53,15 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     return el;
 }
 
+/**
+ * `TaskLineRenderer` is responsible for rendering task details as HTML list items with
+ * various customization options.
+ *
+ * It integrates with Obsidian's rendering system and includes functionalities such as priority,
+ * due dates, and user interactions.
+ *
+ * Individual fields in {@link Task} are rendered by {@link TaskFieldRenderer}.
+ */
 export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianComponent: Component | null;

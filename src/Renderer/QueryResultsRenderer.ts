@@ -21,6 +21,13 @@ import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './T
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
 
+/**
+ * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.
+ *
+ * This interface contains all the necessary properties and handlers to manage
+ * and display query results such as tasks, markdown files, and certain event handlers
+ * for user interactions, like handling backlinks and editing tasks.
+ */
 export interface QueryRendererParameters {
     allTasks: Task[];
     allMarkdownFiles: TFile[];
@@ -29,6 +36,12 @@ export interface QueryRendererParameters {
     editTaskPencilClickHandler: EditButtonClickHandler;
 }
 
+/**
+ * The `QueryResultsRenderer` class is responsible for rendering the results
+ * of a query applied to a set of tasks.
+ *
+ * It handles the construction of task groupings and the application of visual styles.
+ */
 export class QueryResultsRenderer {
     /**
      * The complete text in the instruction block, such as:

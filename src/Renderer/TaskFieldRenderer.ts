@@ -4,6 +4,14 @@ import type { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Task } from '../Task/Task';
 
+/**
+ * A renderer for individual {@link Task} fields in an HTML context.
+ *
+ * This class provides methods to add data attributes and CSS class names to
+ * HTML elements based on specific task-related components.
+ *
+ * See also {@link TaskLineRenderer} which renders all the fields in a task.
+ */
 export class TaskFieldRenderer {
     private readonly data = taskFieldHTMLData;
 
