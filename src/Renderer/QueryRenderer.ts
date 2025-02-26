@@ -21,6 +21,13 @@ import type { Task } from '../Task/Task';
 import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
+/**
+ * `QueryRenderer` is responsible for rendering queries in Markdown code blocks
+ * annotated with the 'tasks' processor.
+ *
+ * It manages the initialization of query rendering related tasks, processing metadata,
+ * and adding rendered content to the DOM.
+ */
 export class QueryRenderer {
     private readonly app: App;
     private readonly plugin: TasksPlugin;
@@ -64,6 +71,15 @@ export class QueryRenderer {
     }
 }
 
+/**
+ * A class that extends {@link MarkdownRenderChild} to render query results dynamically in Obsidian.
+ *
+ * This class listens to various Obsidian events such as metadata updates, cache changes, and
+ * file renames, and re-renders query results when relevant data changes. It supports dynamic
+ * updates, including reloading query results at midnight to ensure accurate relative date queries.
+ *
+ * The generation of HTML to render task lines is done by {@link QueryResultsRenderer}.
+ */
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly plugin: TasksPlugin;
