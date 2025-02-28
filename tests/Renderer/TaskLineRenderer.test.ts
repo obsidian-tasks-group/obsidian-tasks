@@ -38,6 +38,7 @@ async function renderListItem(
     taskLayoutOptions?: TaskLayoutOptions,
     queryLayoutOptions?: QueryLayoutOptions,
     testRenderer?: TextRenderer,
+    queryPath?: string,
 ) {
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: testRenderer ?? mockTextRenderer,
@@ -45,6 +46,7 @@ async function renderListItem(
         parentUlElement: document.createElement('div'),
         taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
+        queryPath,
     });
     return await taskLineRenderer.renderTaskLine(task, 0);
 }
@@ -511,6 +513,119 @@ describe('task line rendering - classes and data attributes', () => {
         await testLiAttributes('- [ ] Full task 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day', [
             'taskPriority: normal',
         ]);
+    });
+});
+
+describe('task line rendering - inline links', () => {
+    it('should not modify internal heading links when rendering in same file', async () => {
+        const path = 'test.md';
+        const task = new TaskBuilder().description('Task with [[#Internal Header]]').path(path).build();
+
+        const listItem = await renderListItem(
+            task,
+            undefined,
+            undefined,
+            undefined,
+            path, // Pass query path
+        );
+
+        expect(getDescriptionText(listItem)).toContain('[[#Internal Header]]');
+    });
+
+    it('should convert internal heading links when rendering in different file', async () => {
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder().description('Task with [[#Internal Header]]').path(taskPath).build();
+
+        const listItem = await renderListItem(
+            task,
+            undefined,
+            undefined,
+            undefined,
+            queryPath, // Pass different query path
+        );
+
+        expect(getDescriptionText(listItem)).toContain('[[original.md#Internal Header]]');
+    });
+
+    it('should handle multiple internal heading links in one description', async () => {
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder().description('Task with [[#Header 1]] and [[#Header 2]]').path(taskPath).build();
+
+        const listItem = await renderListItem(task, undefined, undefined, undefined, queryPath);
+
+        const description = getDescriptionText(listItem);
+        expect(description).toContain('[[original.md#Header 1]]');
+        expect(description).toContain('[[original.md#Header 2]]');
+    });
+
+    it('should not modify regular file links', async () => {
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder().description('Task with [[Other File]] and [[#Header]]').path(taskPath).build();
+
+        const listItem = await renderListItem(task, undefined, undefined, undefined, queryPath);
+
+        const description = getDescriptionText(listItem);
+        expect(description).toContain('[[Other File]]');
+        expect(description).toContain('[[original.md#Header]]');
+    });
+
+    it('should handle mixed link types correctly', async () => {
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .description('[[#Header 1]] then [[Other File#Header 2]] and [[#Header 3]]')
+            .path(taskPath)
+            .build();
+
+        const listItem = await renderListItem(task, undefined, undefined, undefined, queryPath);
+
+        const description = getDescriptionText(listItem);
+        expect(description).toContain('[[original.md#Header 1]]');
+        expect(description).toContain('[[Other File#Header 2]]');
+        expect(description).toContain('[[original.md#Header 3]]');
+    });
+
+    it('should handle links with spaces in headers', async () => {
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder().description('Task with [[#Header with spaces]]').path(taskPath).build();
+
+        const listItem = await renderListItem(task, undefined, undefined, undefined, queryPath);
+
+        expect(getDescriptionText(listItem)).toContain('[[original.md#Header with spaces]]');
+    });
+
+    it('should not modify links when queryPath is undefined', async () => {
+        const taskPath = 'original.md';
+        const task = new TaskBuilder().description('Task with [[#Internal Header]]').path(taskPath).build();
+
+        const listItem = await renderListItem(
+            task,
+            undefined,
+            undefined,
+            undefined,
+            undefined, // No query path
+        );
+
+        expect(getDescriptionText(listItem)).toContain('[[#Internal Header]]');
+    });
+
+    it('should handle special characters in headers', async () => {
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .description('Task with [[#Header-with-dashes]] and [[#Header_with_underscores]]')
+            .path(taskPath)
+            .build();
+
+        const listItem = await renderListItem(task, undefined, undefined, undefined, queryPath);
+
+        const description = getDescriptionText(listItem);
+        expect(description).toContain('[[original.md#Header-with-dashes]]');
+        expect(description).toContain('[[original.md#Header_with_underscores]]');
     });
 });
 
