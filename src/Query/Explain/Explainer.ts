@@ -36,6 +36,7 @@ export class Explainer {
         results.push(this.explainFilters(query));
         results.push(this.explainGroups(query));
         results.push(this.explainSorters(query));
+        results.push(this.explainLayout(query));
         results.push(this.explainQueryLimits(query));
         results.push(this.explainDebugSettings());
 
@@ -63,6 +64,10 @@ export class Explainer {
 
     public explainSorters(query: Query) {
         return this.explainStatements(query.sorting.map((group) => group.statement));
+    }
+
+    public explainLayout(query: Query) {
+        return this.explainStatements(query.layoutStatements);
     }
 
     public explainQueryLimits(query: Query) {
