@@ -74,6 +74,8 @@ describe('explain', () => {
 
               not done
 
+              short mode
+
               show tree
 
               show tags
