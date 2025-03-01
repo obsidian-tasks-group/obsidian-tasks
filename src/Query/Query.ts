@@ -354,6 +354,7 @@ ${statement.explainStatement('    ')}
         const option = hideOptionsMatch[2].toLowerCase();
 
         if (parseQueryShowHideOptions(this._queryLayoutOptions, option, hide)) {
+            this.saveLayoutStatement(statement);
             return;
         }
         if (parseTaskShowHideOptions(this._taskLayoutOptions, option, !hide)) {
