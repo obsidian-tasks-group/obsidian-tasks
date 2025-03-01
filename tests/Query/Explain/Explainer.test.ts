@@ -346,6 +346,13 @@ describe('explain layout instructions', () => {
             "
         `);
     });
+
+    it('should explain full mode', () => {
+        expect(explainLayout('full mode')).toMatchInlineSnapshot(`
+            "full mode
+            "
+        `);
+    });
 });
 
 describe('explain limits', () => {

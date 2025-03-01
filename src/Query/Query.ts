@@ -113,6 +113,7 @@ export class Query implements IQuery {
                 break;
             case this.fullModeRegexp.test(line):
                 this._queryLayoutOptions.shortMode = false;
+                this.saveLayoutStatement(statement);
                 break;
             case this.explainQueryRegexp.test(line):
                 this._queryLayoutOptions.explainQuery = true;
