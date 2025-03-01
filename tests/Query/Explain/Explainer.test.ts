@@ -320,8 +320,7 @@ describe('explain layout instructions', () => {
 
     it('should explain hide due date', () => {
         const source = 'hide due date';
-        const layoutExplanation = explainLayout(source);
-        expect(layoutExplanation).toMatchInlineSnapshot(`
+        expect(explainLayout(source)).toMatchInlineSnapshot(`
             "hide due date
             "
         `);
