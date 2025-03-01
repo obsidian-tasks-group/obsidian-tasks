@@ -34,8 +34,11 @@ export class Query implements IQuery {
 
     private _limit: number | undefined = undefined;
     private _taskGroupLimit: number | undefined = undefined;
+
     private readonly _taskLayoutOptions: TaskLayoutOptions = new TaskLayoutOptions();
     private readonly _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
+    public readonly layoutStatements: Statement[] = [];
+
     private readonly _filters: Filter[] = [];
     private _error: string | undefined = undefined;
     private readonly _sorting: Sorter[] = [];
@@ -354,9 +357,14 @@ ${statement.explainStatement('    ')}
             return;
         }
         if (parseTaskShowHideOptions(this._taskLayoutOptions, option, !hide)) {
+            this.saveLayoutStatement(statement);
             return;
         }
         this.setError('do not understand hide/show option', new Statement(line, line));
+    }
+
+    private saveLayoutStatement(statement: Statement) {
+        this.layoutStatements.push(statement);
     }
 
     private parseFilter(line: string, statement: Statement) {

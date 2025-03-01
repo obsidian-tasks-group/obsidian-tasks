@@ -74,6 +74,30 @@ describe('explain', () => {
 
               not done
 
+              show tags
+
+              show id
+
+              show depends on
+
+              show priority
+
+              show recurrence rule
+
+              show on completion
+
+              show created date
+
+              show start date
+
+              show scheduled date
+
+              show due date
+
+              show cancelled date
+
+              show done date
+
             Explanation of this Tasks code block query:
 
               No filters supplied. All tasks will match the query.

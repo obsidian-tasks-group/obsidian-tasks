@@ -312,6 +312,17 @@ describe('explain sorters', () => {
     });
 });
 
+describe('explain layout instructions', () => {
+    it('should explain hide due date', () => {
+        const source = 'hide due date';
+        const query = new Query(source);
+        expect(explainer.explainLayout(query)).toMatchInlineSnapshot(`
+            "hide due date
+            "
+        `);
+    });
+});
+
 describe('explain limits', () => {
     it('should explain limit 5', () => {
         const source = 'limit 5';
