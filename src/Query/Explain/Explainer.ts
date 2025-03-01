@@ -63,7 +63,7 @@ export class Explainer {
     }
 
     public explainSorters(query: Query) {
-        return this.explainStatements(query.sorting.map((group) => group.statement));
+        return this.explainStatements(query.sorting.map((sort) => sort.statement));
     }
 
     public explainLayout(query: Query) {
