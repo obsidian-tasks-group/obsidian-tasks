@@ -62,11 +62,7 @@ export class Explainer {
     }
 
     public explainSorters(query: Query) {
-        if (query.sorting.length === 0) {
-            return '';
-        }
-
-        return query.sorting.map((sort) => sort.statement.explainStatement(this.indentation)).join('\n\n') + '\n';
+        return this.explainStatements(query.sorting.map((group) => group.statement));
     }
 
     public explainQueryLimits(query: Query) {
