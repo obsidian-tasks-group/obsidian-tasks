@@ -35,8 +35,8 @@ flowchart BT
 
 classDef TASK        stroke-width:3px,font-family:monospace;
 
-2["- [ ] do this first 🆔 abcdef"]:::TASK
-1["- [ ] do this after first ⛔ abcdef"]:::TASK
+2["\- [ ] do this first 🆔 abcdef"]:::TASK
+1["\- [ ] do this after first ⛔ abcdef"]:::TASK
 1-- depends on --> 2
 
 linkStyle default stroke:gray
@@ -51,8 +51,8 @@ flowchart BT
 
 classDef TASK        stroke-width:3px,font-family:monospace;
 
-2["- [ ] do this first&nbsp;&nbsp;[id:: abcdef]"]:::TASK
-1["- [ ] do this after first&nbsp;&nbsp;[dependsOn:: abcdef]"]:::TASK
+2["\- [ ] do this first&nbsp;&nbsp;[id:: abcdef]"]:::TASK
+1["\- [ ] do this after first&nbsp;&nbsp;[dependsOn:: abcdef]"]:::TASK
 1-- depends on --> 2
 
 linkStyle default stroke:gray
@@ -274,8 +274,8 @@ is not blocked
 >
 > classDef TASK        stroke-width:3px,font-family:monospace;
 >
-> 2["- [ ] this is blocking  🆔 abcdef"]:::TASK
-> 1["- [ ] this is blocked&nbsp ⛔ abcdef"]:::TASK
+> 2["\- [ ] this is blocking  🆔 abcdef"]:::TASK
+> 1["\- [ ] this is blocked&nbsp ⛔ abcdef"]:::TASK
 > 1-- depends on --> 2
 >
 > linkStyle default stroke:gray
@@ -289,8 +289,8 @@ is not blocked
 >
 > classDef TASK        stroke-width:3px,font-family:monospace;
 >
-> 4["- [ ] not blocking  🆔 abcdef"]:::TASK
-> 3["- [x] not blocked&nbsp ⛔ abcdef"]:::TASK
+> 4["\- [ ] not blocking  🆔 abcdef"]:::TASK
+> 3["\- [x] not blocked&nbsp ⛔ abcdef"]:::TASK
 > 3-- depends on --> 4
 >
 > linkStyle default stroke:gray
@@ -304,9 +304,9 @@ is not blocked
 >
 > classDef TASK        stroke-width:3px,font-family:monospace;
 >
-> 5["- [x] not blocking  🆔 abcdef"]:::TASK
-> 4["- [ ] blocking 🆔 ghijkl"]:::TASK
-> 3["- [ ] blocked ⛔ abcdef,ghijkl"]:::TASK
+> 5["\- [x] not blocking  🆔 abcdef"]:::TASK
+> 4["\- [ ] blocking 🆔 ghijkl"]:::TASK
+> 3["\- [ ] blocked ⛔ abcdef,ghijkl"]:::TASK
 > 3-- depends on --> 5
 > 3-- depends on --> 4
 >
