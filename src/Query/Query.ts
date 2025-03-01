@@ -124,7 +124,7 @@ export class Query implements IQuery {
             case this.parseGroupBy(line, statement):
                 break;
             case this.hideOptionsRegexp.test(line):
-                this.parseHideOptions(line);
+                this.parseHideOptions(line, statement);
                 break;
             case this.commentRegexp.test(line):
                 // Comment lines are ignored
@@ -341,7 +341,8 @@ ${statement.explainStatement('    ')}
         }
     }
 
-    private parseHideOptions(line: string): void {
+    private parseHideOptions(_line: string, statement: Statement): void {
+        const line = statement.anyPlaceholdersExpanded;
         const hideOptionsMatch = line.match(this.hideOptionsRegexp);
         if (hideOptionsMatch === null) {
             return;
