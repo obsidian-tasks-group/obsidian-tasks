@@ -1,5 +1,6 @@
 import { getSettings } from '../../Config/Settings';
 import type { Query } from '../Query';
+import type { Statement } from '../Statement';
 
 export class Explainer {
     private readonly indentation: string;
@@ -58,11 +59,7 @@ export class Explainer {
 
     public explainGroups(query: Query) {
         const statements = query.grouping.map((group) => group.statement);
-        if (statements.length === 0) {
-            return '';
-        }
-
-        return statements.map((statement) => statement.explainStatement(this.indentation)).join('\n\n') + '\n';
+        return this.explainStatements(statements);
     }
 
     public explainSorters(query: Query) {
@@ -106,6 +103,14 @@ export class Explainer {
             );
         }
         return result;
+    }
+
+    private explainStatements(statements: Statement[]) {
+        if (statements.length === 0) {
+            return '';
+        }
+
+        return statements.map((statement) => statement.explainStatement(this.indentation)).join('\n\n') + '\n';
     }
 
     private indent(description: string) {
