@@ -58,8 +58,7 @@ export class Explainer {
     }
 
     public explainGroups(query: Query) {
-        const statements = query.grouping.map((group) => group.statement);
-        return this.explainStatements(statements);
+        return this.explainStatements(query.grouping.map((group) => group.statement));
     }
 
     public explainSorters(query: Query) {
