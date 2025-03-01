@@ -57,11 +57,12 @@ export class Explainer {
     }
 
     public explainGroups(query: Query) {
-        if (query.grouping.length === 0) {
+        const statements = query.grouping.map((group) => group.statement);
+        if (statements.length === 0) {
             return '';
         }
 
-        return query.grouping.map((group) => group.statement.explainStatement(this.indentation)).join('\n\n') + '\n';
+        return statements.map((statement) => statement.explainStatement(this.indentation)).join('\n\n') + '\n';
     }
 
     public explainSorters(query: Query) {
