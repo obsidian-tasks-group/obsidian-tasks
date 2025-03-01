@@ -313,10 +313,14 @@ describe('explain sorters', () => {
 });
 
 describe('explain layout instructions', () => {
+    function explainLayout(source: string) {
+        const query = new Query(source);
+        return explainer.explainLayout(query);
+    }
+
     it('should explain hide due date', () => {
         const source = 'hide due date';
-        const query = new Query(source);
-        const layoutExplanation = explainer.explainLayout(query);
+        const layoutExplanation = explainLayout(source);
         expect(layoutExplanation).toMatchInlineSnapshot(`
             "hide due date
             "
