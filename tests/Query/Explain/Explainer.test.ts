@@ -106,6 +106,8 @@ limit groups 3
 
             sort by path
 
+            show urgency
+
             At most 50 tasks.
 
             At most 3 tasks per group (if any "group by" options are supplied).
@@ -154,6 +156,8 @@ limit groups 3
               sort by description reverse
 
               sort by path
+
+              show urgency
 
               At most 50 tasks.
 
@@ -321,6 +325,13 @@ describe('explain layout instructions', () => {
     it('should explain hide due date', () => {
         expect(explainLayout('hide due date')).toMatchInlineSnapshot(`
             "hide due date
+            "
+        `);
+    });
+
+    it('should explain show tree', () => {
+        expect(explainLayout('show tree')).toMatchInlineSnapshot(`
+            "show tree
             "
         `);
     });

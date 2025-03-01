@@ -5,6 +5,8 @@ Explanation of the Query File Defaults (from properties/frontmatter in the query
 
   not done
 
+  show tree
+
 Explanation of this Tasks code block query:
 
   No filters supplied. All tasks will match the query.

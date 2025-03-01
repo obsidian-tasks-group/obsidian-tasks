@@ -74,6 +74,8 @@ describe('explain', () => {
 
               not done
 
+              show tree
+
               show tags
 
               show id
@@ -97,6 +99,16 @@ describe('explain', () => {
               show cancelled date
 
               show done date
+
+              show urgency
+
+              show backlink
+
+              show edit button
+
+              show postpone button
+
+              show task count
 
             Explanation of this Tasks code block query:
 
