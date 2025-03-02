@@ -40,8 +40,8 @@ export function explainResults(
     }
 
     const explainer = new Explainer('  ');
-    function explainQuery(label: string, globalQueryQuery: Query) {
-        return `${label}:\n\n${explainer.explainQuery(globalQueryQuery)}`;
+    function explainQuery(label: string, query: Query) {
+        return `${label}:\n\n${explainer.explainQuery(query)}`;
     }
 
     const tasksBlockQuery = new Query(source, tasksFile);
