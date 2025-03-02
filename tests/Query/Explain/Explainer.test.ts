@@ -75,7 +75,9 @@ ignore global query
 
         const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
         expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-            "filter by function \\
+            "ignore global query
+
+            filter by function \\
                  task.path === '{{query.file.path}}'
              =>
             filter by function task.path === '{{query.file.path}}' =>
@@ -128,7 +130,9 @@ ignore global query
         const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
         const indentedExplainer = new Explainer('  ');
         expect(indentedExplainer.explainQuery(query)).toMatchInlineSnapshot(`
-            "  filter by function \\
+            "  ignore global query
+
+              filter by function \\
                    task.path === '{{query.file.path}}'
                =>
               filter by function task.path === '{{query.file.path}}' =>

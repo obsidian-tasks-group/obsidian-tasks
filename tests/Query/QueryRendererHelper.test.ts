@@ -148,6 +148,8 @@ describe('explain', () => {
         expect(explainResults(query.source, new GlobalFilter(), globalQuery)).toMatchInlineSnapshot(`
             "Explanation of this Tasks code block query:
 
+              ignore global query
+
               No filters supplied. All tasks will match the query.
             "
         `);
@@ -162,6 +164,8 @@ describe('explain', () => {
         const query = new Query(source, queryFile);
         expect(explainResults(query.source, new GlobalFilter(), globalQuery, queryFile)).toMatchInlineSnapshot(`
             "Explanation of the Query File Defaults (from properties/frontmatter in the query's file):
+
+              ignore global query
 
               description includes I came from the TQ_extra_instructions property
 
