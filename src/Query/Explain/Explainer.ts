@@ -33,6 +33,7 @@ export class Explainer {
          *     - end with a single newline.
          */
         const results: string[] = [];
+        results.push(this.explainIgnoreGlobalQuery(query));
         results.push(this.explainFilters(query));
         results.push(this.explainGroups(query));
         results.push(this.explainSorters(query));
@@ -48,6 +49,13 @@ export class Explainer {
         result += 'Query has an error:\n';
         result += query.error + '\n';
         return result;
+    }
+
+    private explainIgnoreGlobalQuery(query: Query) {
+        if (!query.ignoreGlobalQuery) {
+            return '';
+        }
+        return this.indent('ignore global query\n');
     }
 
     public explainFilters(query: Query) {
