@@ -175,6 +175,27 @@ describe('explain', () => {
             "
         `);
     });
+
+    it.failing('should discard "ignore global query" from explanation if present in the global query itself', () => {
+        const globalQuery = new GlobalQuery('ignore global query');
+        const querySource = 'description includes from query';
+
+        const explanation = explainResults(querySource, new GlobalFilter(), globalQuery);
+
+        // It does not make sense to put 'ignore global query' in the global query.
+        // If the user did so, we should ignore it in any explanations.
+        expect(explanation).not.toContain('ignore global query');
+        expect(explanation).toMatchInlineSnapshot(`
+            "Explanation of the global query:
+
+              No filters supplied. All tasks will match the query.
+
+            Explanation of this Tasks code block query:
+
+              description includes from query
+            "
+        `);
+    });
 });
 
 /**
