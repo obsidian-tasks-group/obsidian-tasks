@@ -32,6 +32,12 @@ describe('GlobalQuery tests', () => {
         expect(globalQuery.query().source).toEqual('# this should be the new global query');
     });
 
+    it('should ignore any "ignore global query" instruction', () => {
+        const globalQuery = new GlobalQuery('ignore global query');
+
+        expect(globalQuery.query().ignoreGlobalQuery).toEqual(false);
+    });
+
     it.each(['', ' ', '\n', '\n     \n    ', '  \n    \n'])(
         'should have no instructions if only line breaks and spaces were set in the query',
         (globalQuerySource) => {
