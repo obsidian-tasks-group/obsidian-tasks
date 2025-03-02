@@ -117,6 +117,7 @@ export class Query implements IQuery {
                 break;
             case this.explainQueryRegexp.test(line):
                 this._queryLayoutOptions.explainQuery = true;
+                // We intentionally do not explain the 'explain' statement, as it clutters up documentation.
                 break;
             case this.ignoreGlobalQueryRegexp.test(line):
                 this._ignoreGlobalQuery = true;

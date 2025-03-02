@@ -343,6 +343,11 @@ describe('explain layout instructions', () => {
         expect(explainLayout('full')).toEqual('full\n');
         expect(explainLayout('full mode')).toEqual('full mode\n');
     });
+
+    it('should NOT explain explain', () => {
+        // Intentionally do not explain the 'explain' instruction, as it just clutters up the documentation.
+        expect(explainLayout('explain')).toEqual('');
+    });
 });
 
 describe('explain limits', () => {
