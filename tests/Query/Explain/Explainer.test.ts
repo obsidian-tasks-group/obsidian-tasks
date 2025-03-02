@@ -327,31 +327,19 @@ describe('explain layout instructions', () => {
     }
 
     it('should explain hide due date', () => {
-        expect(explainLayout('hide due date')).toMatchInlineSnapshot(`
-            "hide due date
-            "
-        `);
+        expect(explainLayout('hide due date')).toEqual('hide due date\n');
     });
 
     it('should explain show tree', () => {
-        expect(explainLayout('show tree')).toMatchInlineSnapshot(`
-            "show tree
-            "
-        `);
+        expect(explainLayout('show tree')).toEqual('show tree\n');
     });
 
     it('should explain short mode', () => {
-        expect(explainLayout('short mode')).toMatchInlineSnapshot(`
-            "short mode
-            "
-        `);
+        expect(explainLayout('short mode')).toEqual('short mode\n');
     });
 
     it('should explain full mode', () => {
-        expect(explainLayout('full mode')).toMatchInlineSnapshot(`
-            "full mode
-            "
-        `);
+        expect(explainLayout('full mode')).toEqual('full mode\n');
     });
 });
 
