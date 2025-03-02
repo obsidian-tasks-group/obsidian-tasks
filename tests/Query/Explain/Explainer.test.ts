@@ -335,10 +335,12 @@ describe('explain layout instructions', () => {
     });
 
     it('should explain short mode', () => {
+        expect(explainLayout('short')).toEqual('short\n');
         expect(explainLayout('short mode')).toEqual('short mode\n');
     });
 
     it('should explain full mode', () => {
+        expect(explainLayout('full')).toEqual('full\n');
         expect(explainLayout('full mode')).toEqual('full mode\n');
     });
 });
