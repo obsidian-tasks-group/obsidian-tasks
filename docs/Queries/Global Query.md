@@ -35,7 +35,7 @@ You can set a global query in the settings that Tasks will add to the start of a
 
 If you need to ignore the Global Query in a given Tasks block you may add `ignore global query` instruction to any place of the block.
 
-For example, this allows you to have your task seaches ignore certain folders by default. And then in few searches, you can enable searching for tasks in those folders.
+For example, this allows you to have your task searches ignore certain folders by default. And then in a few searches, you can enable searching for tasks in those folders.
 
 > [!example]
 >
@@ -43,6 +43,9 @@ For example, this allows you to have your task seaches ignore certain folders by
 > tags include work
 > ignore global query
 > ```
+
+> [!note]
+> Any use of `ignore global query` inside the Global Query itself is harmless, but ignored.
 
 > [!released]
 The `ignore global query` instruction was added in Tasks 4.6.0.

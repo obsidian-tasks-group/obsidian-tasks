@@ -65,6 +65,8 @@ show urgency
 short mode
 limit 50
 limit groups 3
+
+ignore global query
 `;
 
     it('all types of instruction - not indented', () => {
@@ -73,7 +75,9 @@ limit groups 3
 
         const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
         expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
-            "filter by function \\
+            "ignore global query
+
+            filter by function \\
                  task.path === '{{query.file.path}}'
              =>
             filter by function task.path === '{{query.file.path}}' =>
@@ -126,7 +130,9 @@ limit groups 3
         const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
         const indentedExplainer = new Explainer('  ');
         expect(indentedExplainer.explainQuery(query)).toMatchInlineSnapshot(`
-            "  filter by function \\
+            "  ignore global query
+
+              filter by function \\
                    task.path === '{{query.file.path}}'
                =>
               filter by function task.path === '{{query.file.path}}' =>
@@ -342,6 +348,11 @@ describe('explain layout instructions', () => {
     it('should explain full mode', () => {
         expect(explainLayout('full')).toEqual('full\n');
         expect(explainLayout('full mode')).toEqual('full mode\n');
+    });
+
+    it('should NOT explain explain', () => {
+        // Intentionally do not explain the 'explain' instruction, as it just clutters up the documentation.
+        expect(explainLayout('explain')).toEqual('');
     });
 });
 
