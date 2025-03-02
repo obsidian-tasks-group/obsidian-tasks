@@ -65,6 +65,8 @@ show urgency
 short mode
 limit 50
 limit groups 3
+
+ignore global query
 `;
 
     it('all types of instruction - not indented', () => {
