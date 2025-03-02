@@ -176,7 +176,7 @@ describe('explain', () => {
         `);
     });
 
-    it.failing('should discard "ignore global query" from explanation if present in the global query itself', () => {
+    it('should discard "ignore global query" from explanation if present in the global query itself', () => {
         const globalQuery = new GlobalQuery('ignore global query');
         const querySource = 'description includes from query';
 
