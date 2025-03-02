@@ -32,7 +32,7 @@ describe('GlobalQuery tests', () => {
         expect(globalQuery.query().source).toEqual('# this should be the new global query');
     });
 
-    it.failing('should ignore any "ignore global query" instruction', () => {
+    it('should ignore any "ignore global query" instruction', () => {
         const globalQuery = new GlobalQuery('ignore global query');
 
         expect(globalQuery.query().ignoreGlobalQuery).toEqual(false);

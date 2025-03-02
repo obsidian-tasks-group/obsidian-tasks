@@ -96,6 +96,16 @@ export class Query implements IQuery {
         }
     }
 
+    /**
+     * Remove any instructions that are not valid for Global Queries:
+     */
+    public removeIllegalGlobalQueryInstructions() {
+        // It does not make sense to use 'ignore global query'
+        // in global queries: the value is ignored, and it would be confusing
+        // for 'explain' output to report that it had been supplied:
+        this._ignoreGlobalQuery = false;
+    }
+
     public get filePath(): string | undefined {
         return this.tasksFile?.path ?? undefined;
     }
