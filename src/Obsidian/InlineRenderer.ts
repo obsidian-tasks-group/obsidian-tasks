@@ -24,7 +24,11 @@ import { TaskLocation } from '../Task/TaskLocation';
  */
 export class InlineRenderer {
     constructor({ plugin }: { plugin: Plugin }) {
-        plugin.registerMarkdownPostProcessor(this._markdownPostProcessor.bind(this));
+        plugin.registerMarkdownPostProcessor((el, ctx) => {
+            plugin.app.workspace.onLayoutReady(() => {
+                this.markdownPostProcessor(el, ctx);
+            });
+        });
     }
 
     public markdownPostProcessor = this._markdownPostProcessor.bind(this);
