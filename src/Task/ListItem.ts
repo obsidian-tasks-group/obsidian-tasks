@@ -21,6 +21,7 @@ export class ListItem {
         indentation,
         listMarker,
         statusCharacter,
+        description,
         parent,
         taskLocation,
     }: {
@@ -28,17 +29,14 @@ export class ListItem {
         indentation: string;
         listMarker: string;
         statusCharacter: string | null;
+        description: string;
         parent: ListItem | null;
         taskLocation: TaskLocation;
     }) {
-        this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         this.indentation = indentation;
         this.listMarker = listMarker;
         this.statusCharacter = statusCharacter;
-        const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
-        if (nonTaskMatch) {
-            this.description = nonTaskMatch[5].trim();
-        }
+        this.description = description;
         this.originalMarkdown = originalMarkdown;
 
         this.parent = parent;
@@ -54,13 +52,23 @@ export class ListItem {
         let indentation = '';
         let listMarker = '';
         let statusCharacter = null;
+        let description = '';
         if (nonTaskMatch) {
             indentation = nonTaskMatch[1];
             listMarker = nonTaskMatch[2];
             statusCharacter = nonTaskMatch[4] ?? null;
+            description = nonTaskMatch[5].trim();
         }
 
-        return new ListItem({ originalMarkdown, indentation, listMarker, statusCharacter, taskLocation, parent });
+        return new ListItem({
+            originalMarkdown,
+            indentation,
+            listMarker,
+            statusCharacter,
+            description,
+            taskLocation,
+            parent,
+        });
     }
 
     /**

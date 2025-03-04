@@ -122,6 +122,7 @@ export class Task extends ListItem {
             indentation,
             listMarker,
             statusCharacter: status.symbol,
+            description,
             taskLocation,
             parent,
         });
