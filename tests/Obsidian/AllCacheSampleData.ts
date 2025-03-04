@@ -7,6 +7,7 @@ import callout_custom from './__test_data__/callout_custom.json';
 import callout_labelled from './__test_data__/callout_labelled.json';
 import callouts_nested_issue_2890_labelled from './__test_data__/callouts_nested_issue_2890_labelled.json';
 import callouts_nested_issue_2890_unlabelled from './__test_data__/callouts_nested_issue_2890_unlabelled.json';
+import code_block_in_task from './__test_data__/code_block_in_task.json';
 import comments_html_style from './__test_data__/comments_html_style.json';
 import comments_markdown_style from './__test_data__/comments_markdown_style.json';
 import docs_sample_for_explain_query_file_defaults from './__test_data__/docs_sample_for_explain_query_file_defaults.json';
@@ -84,6 +85,7 @@ export function allCacheSampleData() {
         callout_labelled,
         callouts_nested_issue_2890_labelled,
         callouts_nested_issue_2890_unlabelled,
+        code_block_in_task,
         comments_html_style,
         comments_markdown_style,
         docs_sample_for_explain_query_file_defaults,
