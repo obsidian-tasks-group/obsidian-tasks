@@ -43,8 +43,8 @@ export class ListItem {
         this.taskLocation = taskLocation;
     }
 
-    public static fromListItemLine(line: string, parent: ListItem | null, taskLocation: TaskLocation) {
-        return new ListItem(line, parent, taskLocation, { originalMarkdown: line });
+    public static fromListItemLine(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
+        return new ListItem(originalMarkdown, parent, taskLocation, { originalMarkdown });
     }
 
     /**
