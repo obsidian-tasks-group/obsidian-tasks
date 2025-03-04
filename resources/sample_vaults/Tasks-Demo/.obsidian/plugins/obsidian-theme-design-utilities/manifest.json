@@ -1,12 +1,1 @@
-{
-	"id": "obsidian-theme-design-utilities",
-	"name": "Theme Design Utilities",
-	"version": "0.22.1",
-	"minAppVersion": "0.16.0",
-	"description": "Some Utilities and Quality-of-Life Features for Designers of Obsidian Themes.",
-	"author": "pseudometa",
-	"fundingUrl": "https://ko-fi.com/pseudometa",
-	"authorUrl": "https://github.com/chrisgrieser/theme-design-utilities",
-	"helpUrl": "https://github.com/chrisgrieser/theme-design-utilities#readme",
-	"isDesktopOnly": true
-}
+{"id":"obsidian-theme-design-utilities","name":"Theme Design Utilities","version":"0.22.4","minAppVersion":"0.16.0","description":"Some utilities and Quality-of-Life features for designers of Obsidian themes.","author":"Chris Grieser (aka pseudometa)","fundingUrl":"https://ko-fi.com/pseudometa","authorUrl":"https://github.com/chrisgrieser/theme-design-utilities","helpUrl":"https://github.com/chrisgrieser/theme-design-utilities#readme","isDesktopOnly":true}
