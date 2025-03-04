@@ -9,7 +9,7 @@ export class ListItem {
 
     public readonly parent: ListItem | null = null;
     public readonly children: ListItem[] = [];
-    public readonly indentation: string = '';
+    public readonly indentation: string;
     public readonly listMarker: string = '';
     public readonly description: string;
     public readonly statusCharacter: string | null = null;
@@ -28,9 +28,9 @@ export class ListItem {
         taskLocation: TaskLocation;
     }) {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
+        this.indentation = indentation;
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         if (nonTaskMatch) {
-            this.indentation = indentation;
             this.listMarker = nonTaskMatch[2];
             this.description = nonTaskMatch[5].trim();
             this.statusCharacter = nonTaskMatch[4] ?? null;
