@@ -195,7 +195,7 @@ export class ListItem {
             `[${newStatusCharacter}]`,
         );
 
-        return new ListItem(newMarkdown, null, this.taskLocation);
+        return ListItem.fromListItemLine(newMarkdown, null, this.taskLocation);
     }
 
     public toFileLineString(): string {
