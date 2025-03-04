@@ -110,7 +110,7 @@ describe('list item tests', () => {
 
 describe('list item parsing', () => {
     it('should read a list item without checkbox', () => {
-        const item = new ListItem('- without checkbox', null, taskLocation);
+        const item = ListItem.fromListItemLine('- without checkbox', null, taskLocation);
 
         expect(item.description).toEqual('without checkbox');
         expect(item.originalMarkdown).toEqual('- without checkbox');
