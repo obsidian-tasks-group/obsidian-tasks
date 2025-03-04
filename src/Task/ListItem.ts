@@ -16,15 +16,7 @@ export class ListItem {
 
     public readonly taskLocation: TaskLocation;
 
-    protected constructor(
-        _originalMarkdown: string,
-        parent: ListItem | null,
-        _taskLocation: TaskLocation,
-        _obj: {
-            originalMarkdown: string;
-            taskLocation: TaskLocation;
-        },
-    ) {
+    constructor(parent: ListItem | null, _obj: { originalMarkdown: string; taskLocation: TaskLocation }) {
         const originalMarkdown = _obj.originalMarkdown;
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
@@ -45,7 +37,7 @@ export class ListItem {
     }
 
     public static fromListItemLine(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
-        return new ListItem(originalMarkdown, parent, taskLocation, { originalMarkdown, taskLocation });
+        return new ListItem(parent, { originalMarkdown, taskLocation });
     }
 
     /**
