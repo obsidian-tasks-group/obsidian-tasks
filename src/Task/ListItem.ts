@@ -19,9 +19,10 @@ export class ListItem {
     protected constructor(
         _originalMarkdown: string,
         parent: ListItem | null,
-        taskLocation: TaskLocation,
+        _taskLocation: TaskLocation,
         _obj: {
             originalMarkdown: string;
+            taskLocation: TaskLocation;
         },
     ) {
         const originalMarkdown = _obj.originalMarkdown;
@@ -40,11 +41,11 @@ export class ListItem {
             parent.children.push(this);
         }
 
-        this.taskLocation = taskLocation;
+        this.taskLocation = _obj.taskLocation;
     }
 
     public static fromListItemLine(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
-        return new ListItem(originalMarkdown, parent, taskLocation, { originalMarkdown });
+        return new ListItem(originalMarkdown, parent, taskLocation, { originalMarkdown, taskLocation });
     }
 
     /**
