@@ -17,13 +17,14 @@ export class ListItem {
     public readonly taskLocation: TaskLocation;
 
     protected constructor(
-        originalMarkdown: string,
+        _originalMarkdown: string,
         parent: ListItem | null,
         taskLocation: TaskLocation,
         _obj: {
             originalMarkdown: string;
-        } | null = null,
+        },
     ) {
+        const originalMarkdown = _obj.originalMarkdown;
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         if (nonTaskMatch) {
@@ -43,7 +44,7 @@ export class ListItem {
     }
 
     public static fromListItemLine(line: string, parent: ListItem | null, taskLocation: TaskLocation) {
-        return new ListItem(line, parent, taskLocation);
+        return new ListItem(line, parent, taskLocation, { originalMarkdown: line });
     }
 
     /**

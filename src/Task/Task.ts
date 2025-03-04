@@ -117,7 +117,7 @@ export class Task extends ListItem {
         scheduledDateIsInferred: boolean;
         parent?: ListItem | null;
     }) {
-        super(originalMarkdown, parent, taskLocation);
+        super(originalMarkdown, parent, taskLocation, { originalMarkdown });
         // NEW_TASK_FIELD_EDIT_REQUIRED
         this.status = status;
         this.description = description;
