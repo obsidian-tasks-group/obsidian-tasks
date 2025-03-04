@@ -10,7 +10,7 @@ export class ListItem {
     public readonly parent: ListItem | null = null;
     public readonly children: ListItem[] = [];
     public readonly indentation: string;
-    public readonly listMarker: string = '';
+    public readonly listMarker: string;
     public readonly description: string;
     public readonly statusCharacter: string | null = null;
 
@@ -19,19 +19,21 @@ export class ListItem {
     constructor({
         originalMarkdown,
         indentation,
+        listMarker,
         parent,
         taskLocation,
     }: {
         originalMarkdown: string;
         indentation: string;
+        listMarker: string;
         parent: ListItem | null;
         taskLocation: TaskLocation;
     }) {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         this.indentation = indentation;
+        this.listMarker = listMarker;
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         if (nonTaskMatch) {
-            this.listMarker = nonTaskMatch[2];
             this.description = nonTaskMatch[5].trim();
             this.statusCharacter = nonTaskMatch[4] ?? null;
         }
@@ -48,11 +50,13 @@ export class ListItem {
     public static fromListItemLine(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         let indentation = '';
+        let listMarker = '';
         if (nonTaskMatch) {
             indentation = nonTaskMatch[1];
+            listMarker = nonTaskMatch[2];
         }
 
-        return new ListItem({ originalMarkdown, indentation, taskLocation, parent });
+        return new ListItem({ originalMarkdown, indentation, listMarker, taskLocation, parent });
     }
 
     /**
