@@ -35,6 +35,10 @@ export class ListItem {
         this.taskLocation = taskLocation;
     }
 
+    public static fromListItemLine(line: string, parent: ListItem | null, taskLocation: TaskLocation) {
+        return new ListItem(line, parent, taskLocation);
+    }
+
     /**
      * Return the top-level parent of this list item or task,
      * which will not be indented.
