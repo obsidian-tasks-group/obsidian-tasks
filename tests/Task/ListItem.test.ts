@@ -120,7 +120,7 @@ describe('list item parsing', () => {
     });
 
     it('should read a list item with checkbox', () => {
-        const item = new ListItem('- [ ] with checkbox', null, taskLocation);
+        const item = ListItem.fromListItemLine('- [ ] with checkbox', null, taskLocation);
 
         expect(item.description).toEqual('with checkbox');
         expect(item.originalMarkdown).toEqual('- [ ] with checkbox');
@@ -128,7 +128,7 @@ describe('list item parsing', () => {
     });
 
     it('should read a list item with checkbox', () => {
-        const item = new ListItem('- [x] with checked checkbox', null, taskLocation);
+        const item = ListItem.fromListItemLine('- [x] with checked checkbox', null, taskLocation);
 
         expect(item.description).toEqual('with checked checkbox');
         expect(item.originalMarkdown).toEqual('- [x] with checked checkbox');
@@ -136,17 +136,17 @@ describe('list item parsing', () => {
     });
 
     it('should read a list item with indentation', () => {
-        const item = new ListItem('  - indented', null, taskLocation);
+        const item = ListItem.fromListItemLine('  - indented', null, taskLocation);
 
         expect(item.description).toEqual('indented');
         expect(item.indentation).toEqual('  ');
     });
 
     it('should read a list marker', () => {
-        expect(new ListItem('* xxx', null, taskLocation).listMarker).toEqual('*');
-        expect(new ListItem('- xxx', null, taskLocation).listMarker).toEqual('-');
-        expect(new ListItem('+ xxx', null, taskLocation).listMarker).toEqual('+');
-        expect(new ListItem('2. xxx', null, taskLocation).listMarker).toEqual('2.');
+        expect(ListItem.fromListItemLine('* xxx', null, taskLocation).listMarker).toEqual('*');
+        expect(ListItem.fromListItemLine('- xxx', null, taskLocation).listMarker).toEqual('-');
+        expect(ListItem.fromListItemLine('+ xxx', null, taskLocation).listMarker).toEqual('+');
+        expect(ListItem.fromListItemLine('2. xxx', null, taskLocation).listMarker).toEqual('2.');
     });
 
     it('should accept a non list item', () => {
