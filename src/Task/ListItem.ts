@@ -7,7 +7,7 @@ export class ListItem {
     // The original line read from file.
     public readonly originalMarkdown: string;
 
-    public readonly parent: ListItem | null = null;
+    public readonly parent: ListItem | null;
     public readonly children: ListItem[] = [];
     public readonly indentation: string;
     public readonly listMarker: string;
