@@ -16,7 +16,7 @@ export class ListItem {
 
     public readonly taskLocation: TaskLocation;
 
-    constructor(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
+    protected constructor(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
         this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         if (nonTaskMatch) {
