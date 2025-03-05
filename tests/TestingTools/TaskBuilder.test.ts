@@ -65,7 +65,7 @@ describe('TaskBuilder', () => {
                 nullOrUnsetFields.push(key);
             }
         }
-        return nullOrUnsetFields.sort();
+        return nullOrUnsetFields.sort((a, b) => a.localeCompare(b));
     }
 
     it('createFullyPopulatedTask() should populate every field', () => {
