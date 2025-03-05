@@ -114,7 +114,6 @@ export class InlineRenderer {
             parentUlElement: element,
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
-            queryPath: path,
         });
 
         // The section index is the nth task within this section.
