@@ -108,7 +108,6 @@ export class TaskLineRenderer {
         parentUlElement: HTMLElement;
         taskLayoutOptions: TaskLayoutOptions;
         queryLayoutOptions: QueryLayoutOptions;
-        queryPath?: string;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianComponent = obsidianComponent;
@@ -278,7 +277,6 @@ export class TaskLineRenderer {
                 // Add some debug output to enable hidden information in the task to be inspected.
                 componentString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
             }
-
             await this.textRenderer(componentString, span, task.path, this.obsidianComponent);
 
             // If the task is a block quote, the block quote wraps the p-tag that contains the content.
