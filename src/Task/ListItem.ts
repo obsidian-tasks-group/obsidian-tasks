@@ -7,32 +7,68 @@ export class ListItem {
     // The original line read from file.
     public readonly originalMarkdown: string;
 
-    public readonly parent: ListItem | null = null;
+    public readonly parent: ListItem | null;
     public readonly children: ListItem[] = [];
-    public readonly indentation: string = '';
-    public readonly listMarker: string = '';
+    public readonly indentation: string;
+    public readonly listMarker: string;
     public readonly description: string;
-    public readonly statusCharacter: string | null = null;
+    public readonly statusCharacter: string | null;
 
     public readonly taskLocation: TaskLocation;
 
-    constructor(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
-        this.description = originalMarkdown.replace(TaskRegularExpressions.listItemRegex, '').trim();
-        const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
-        if (nonTaskMatch) {
-            this.indentation = nonTaskMatch[1];
-            this.listMarker = nonTaskMatch[2];
-            this.description = nonTaskMatch[5].trim();
-            this.statusCharacter = nonTaskMatch[4] ?? null;
-        }
+    constructor({
+        originalMarkdown,
+        indentation,
+        listMarker,
+        statusCharacter,
+        description,
+        parent,
+        taskLocation,
+    }: {
+        originalMarkdown: string;
+        indentation: string;
+        listMarker: string;
+        statusCharacter: string | null;
+        description: string;
+        parent: ListItem | null;
+        taskLocation: TaskLocation;
+    }) {
+        this.indentation = indentation;
+        this.listMarker = listMarker;
+        this.statusCharacter = statusCharacter;
+        this.description = description;
         this.originalMarkdown = originalMarkdown;
-        this.parent = parent;
 
+        this.parent = parent;
         if (parent !== null) {
             parent.children.push(this);
         }
 
         this.taskLocation = taskLocation;
+    }
+
+    public static fromListItemLine(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
+        const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
+        let indentation = '';
+        let listMarker = '';
+        let statusCharacter = null;
+        let description = '';
+        if (nonTaskMatch) {
+            indentation = nonTaskMatch[1];
+            listMarker = nonTaskMatch[2];
+            statusCharacter = nonTaskMatch[4] ?? null;
+            description = nonTaskMatch[5].trim();
+        }
+
+        return new ListItem({
+            originalMarkdown,
+            indentation,
+            listMarker,
+            statusCharacter,
+            description,
+            taskLocation,
+            parent,
+        });
     }
 
     /**
@@ -184,7 +220,7 @@ export class ListItem {
             `[${newStatusCharacter}]`,
         );
 
-        return new ListItem(newMarkdown, null, this.taskLocation);
+        return ListItem.fromListItemLine(newMarkdown, null, this.taskLocation);
     }
 
     public toFileLineString(): string {
