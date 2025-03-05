@@ -65,13 +65,13 @@ describe('TaskBuilder', () => {
                 nullOrUnsetFields.push(key);
             }
         }
-        return nullOrUnsetFields;
+        return nullOrUnsetFields.sort((a, b) => a.localeCompare(b));
     }
 
     it('createFullyPopulatedTask() should populate every field', () => {
         const task: Task = TaskBuilder.createFullyPopulatedTask();
 
-        expect(getNullOrUnsetFields(task)).toEqual(['parent', 'children']);
+        expect(getNullOrUnsetFields(task)).toEqual(['children', 'parent']);
         expect(getNullOrUnsetFields(task.taskLocation)).toEqual([]);
 
         expect(task.originalMarkdown).toEqual(
