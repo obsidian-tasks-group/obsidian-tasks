@@ -68,7 +68,6 @@ export class TaskLineRenderer {
     private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
-    private readonly queryPath?: string;
 
     public static async obsidianMarkdownRenderer(
         text: string,
@@ -103,7 +102,6 @@ export class TaskLineRenderer {
         parentUlElement,
         taskLayoutOptions,
         queryLayoutOptions,
-        queryPath,
     }: {
         textRenderer?: TextRenderer;
         obsidianComponent: Component | null;
@@ -117,7 +115,6 @@ export class TaskLineRenderer {
         this.parentUlElement = parentUlElement;
         this.taskLayoutOptions = taskLayoutOptions;
         this.queryLayoutOptions = queryLayoutOptions;
-        this.queryPath = queryPath;
     }
 
     /**
@@ -282,12 +279,7 @@ export class TaskLineRenderer {
                 componentString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
             }
 
-            // Only convert links if we're rendering in a different file
-            let processedString = componentString;
-            if (this.queryPath && this.queryPath !== task.path) {
-                processedString = componentString.replace(/\[\[(#[^\]|]+)\]\]/g, `[[${task.path}$1]]`);
-            }
-            await this.textRenderer(processedString, span, task.path, this.obsidianComponent);
+            await this.textRenderer(componentString, span, task.path, this.obsidianComponent);
 
             // If the task is a block quote, the block quote wraps the p-tag that contains the content.
             // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.

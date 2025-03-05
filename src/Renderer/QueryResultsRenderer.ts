@@ -248,7 +248,6 @@ export class QueryResultsRenderer {
             parentUlElement: taskList,
             taskLayoutOptions: this.query.taskLayoutOptions,
             queryLayoutOptions: this.query.queryLayoutOptions,
-            queryPath: this._tasksFile.path,
         });
 
         for (const [listItemIndex, listItem] of listItems.entries()) {
@@ -419,7 +418,9 @@ export class QueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
     ) {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
-        const listItem = await taskLineRenderer.renderTaskLine(task, taskIndex, isFilenameUnique);
+        const processedTask = this.processTaskLinks(task);
+
+        const listItem = await taskLineRenderer.renderTaskLine(processedTask, taskIndex, isFilenameUnique);
 
         // Remove all footnotes. They don't re-appear in another document.
         const footnotes = listItem.querySelectorAll('[data-footnote-id]');
@@ -544,6 +545,47 @@ export class QueryResultsRenderer {
         if (!shortMode) {
             backLink.append(')');
         }
+    }
+
+    private processTaskLinks(task: Task): Task {
+        // Skip if task is from the same file as the query
+        if (this.filePath === task.path) {
+            return task;
+        }
+
+        const linkCache = task.file.cachedMetadata.links;
+        if (!linkCache) return task;
+
+        // Find links in the task description
+        const taskLinks = linkCache.filter((link) => {
+            return (
+                link.position.start.line === task.taskLocation.lineNumber && task.description.includes(link.original)
+            );
+        });
+        if (taskLinks.length === 0) return task;
+
+        let description = task.description;
+
+        // a task can only be from one file, so we can replace all the internal links
+        //in the description with the new file path
+        for (const link of taskLinks) {
+            if (!link.link.startsWith('#')) {
+                // only care about internal heading links
+                continue;
+            }
+
+            const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+
+            description = description.replace(link.original, fullLink);
+        }
+
+        // Return a new Task with the updated description
+        return new Task({
+            ...task,
+            description,
+            // Preserve the original task's location information
+            taskLocation: task.taskLocation,
+        });
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {

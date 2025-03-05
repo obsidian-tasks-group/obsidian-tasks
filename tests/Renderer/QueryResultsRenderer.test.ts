@@ -10,6 +10,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import inheritance_non_task_child from '../Obsidian/__test_data__/inheritance_non_task_child.json';
 import inheritance_rendering_sample from '../Obsidian/__test_data__/inheritance_rendering_sample.json';
 import inheritance_task_2listitem_3task from '../Obsidian/__test_data__/inheritance_task_2listitem_3task.json';
+import internal_heading_links_test from '../Obsidian/__test_data__/internal_heading_links_test.json';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -115,5 +116,186 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 
         // Assert
         expect(renderer.query.explainQuery()).toContain('path includes newPath.md');
+    });
+});
+
+describe('QueryResultsRenderer - internal heading links', () => {
+    /**
+     * Create a mock element and check if it contains the expected text after rendering
+     */
+    async function testHeadingLinks(task: Task, queryFilePath: string, expectedLink: string) {
+        // Arrange
+        const source = '';
+        const renderer = makeQueryResultsRenderer(source, new TasksFile(queryFilePath));
+        const queryRendererParameters = {
+            allTasks: [task],
+            allMarkdownFiles: [],
+            backlinksClickHandler: () => Promise.resolve(),
+            backlinksMousedownHandler: () => Promise.resolve(),
+            editTaskPencilClickHandler: () => Promise.resolve(),
+        };
+        const container = document.createElement('div');
+
+        // Act
+        await renderer.render(State.Warm, [task], container, queryRendererParameters);
+
+        // Assert
+        // Search for the rendered task description which should contain our link
+        const renderedText = container.innerHTML;
+        expect(renderedText).toContain(expectedLink);
+    }
+
+    it('should not modify internal heading links when rendering in same file', async () => {
+        // Arrange
+        const filePath = 'original.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('Task with [[#Internal Header]]')
+            .path(filePath)
+            .lineNumber(16)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, filePath, '[[#Internal Header]]');
+    });
+
+    it('should convert internal heading links when rendering in different file', async () => {
+        // Arrange
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('Task with [[#Internal Header]]')
+            .path(taskPath)
+            .lineNumber(16)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, queryPath, '[[original.md#Internal Header|Internal Header]]');
+    });
+
+    it('should handle multiple internal heading links in one description', async () => {
+        // Arrange
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('Task with [[#Header 1]] and [[#Header 2]]')
+            .path(taskPath)
+            .lineNumber(17)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, queryPath, '[[original.md#Header 1|Header 1]]');
+        await testHeadingLinks(task, queryPath, '[[original.md#Header 2|Header 2]]');
+    });
+
+    it('should not modify regular file links', async () => {
+        // Arrange
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('Task with [[Other File]] and [[#Header]]')
+            .path(taskPath)
+            .lineNumber(18)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, queryPath, '[[Other File]]');
+        await testHeadingLinks(task, queryPath, '[[original.md#Header|Header]]');
+    });
+
+    it('should handle mixed link types correctly', async () => {
+        // Arrange
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('[[#Header 1]] then [[Other File#Header 2]] and [[#Header 3]]')
+            .path(taskPath)
+            .lineNumber(19)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, queryPath, '[[original.md#Header 1|Header 1]]');
+        await testHeadingLinks(task, queryPath, '[[Other File#Header 2]]');
+        await testHeadingLinks(task, queryPath, '[[original.md#Header 3|Header 3]]');
+    });
+
+    it('should handle links with spaces in headers', async () => {
+        // Arrange
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('Task with [[#Header with spaces]]')
+            .path(taskPath)
+            .lineNumber(20)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, queryPath, '[[original.md#Header with spaces|Header with spaces]]');
+    });
+
+    it('should handle special characters in headers', async () => {
+        // Arrange
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('Task with [[#Header-with-dashes]] and [[#Header_with_underscores]]')
+            .path(taskPath)
+            .lineNumber(21)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, queryPath, '[[original.md#Header-with-dashes|Header-with-dashes]]');
+        await testHeadingLinks(task, queryPath, '[[original.md#Header_with_underscores|Header_with_underscores]]');
+    });
+
+    it('should handle links with aliases', async () => {
+        // Arrange
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('Task with [[#Header|I am an alias]]')
+            .path(taskPath)
+            .lineNumber(22)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, queryPath, '[[original.md#Header|I am an alias]]');
+    });
+
+    it('should not modify formatted text that looks like links in code blocks', async () => {
+        // Arrange
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('Task with `[[#Header]]` code block')
+            .path(taskPath)
+            .lineNumber(23)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, queryPath, '`[[#Header]]`');
+    });
+
+    it('should not modify escaped links', async () => {
+        // Arrange
+        const taskPath = 'original.md';
+        const queryPath = 'query.md';
+        const task = new TaskBuilder()
+            .mockData(internal_heading_links_test)
+            .description('Task with \\[\\[#Header\\]\\] escaped link')
+            .path(taskPath)
+            .lineNumber(24)
+            .build();
+
+        // Assert
+        await testHeadingLinks(task, queryPath, '\\[\\[#Header\\]\\]');
     });
 });
