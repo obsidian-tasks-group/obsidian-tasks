@@ -88,4 +88,10 @@ describe('TaskLocation - identicalTo', function () {
         const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
         expect(lhs.identicalTo(rhs)).toEqual(true);
     });
+
+    it('should check lineNumber', () => {
+        const lhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const rhs = new TaskLocation(tasksFile, 0, sectionStart, sectionIndex, precedingHeader);
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
 });
