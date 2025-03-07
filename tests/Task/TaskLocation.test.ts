@@ -104,4 +104,18 @@ describe('TaskLocation - identicalTo', function () {
         const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, 0, precedingHeader);
         expect(lhs.identicalTo(rhs)).toEqual(false);
     });
+
+    it('should check precedingHeader', () => {
+        {
+            const precedingHeader = null;
+            const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+            expect(lhs.identicalTo(rhs)).toEqual(false);
+        }
+
+        {
+            const precedingHeader = 'different header';
+            const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+            expect(lhs.identicalTo(rhs)).toEqual(false);
+        }
+    });
 });
