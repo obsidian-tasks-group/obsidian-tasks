@@ -96,9 +96,15 @@ export class TaskLocation {
      *
      * If any field is different in any way, it will return false.
      *
-     * @param _other
+     * @param other
      */
-    public identicalTo(_other: TaskLocation) {
+    public identicalTo(other: TaskLocation) {
+        const args: Array<keyof TaskLocation> = ['lineNumber'];
+
+        for (const el of args) {
+            if (this[el] !== other[el]) return false;
+        }
+
         return true;
     }
 }
