@@ -323,3 +323,14 @@ describe('TasksFile - properties', () => {
         expect(tasksFile.property('capital_property')).toEqual('some value');
     });
 });
+
+describe('TasksFile - properties', () => {
+    const path = 'a/b/c/d.md';
+    const cachedMetadata = {};
+
+    it('should detect identical objects', () => {
+        const lhs = new TasksFile(path, cachedMetadata);
+        const rhs = new TasksFile(path, cachedMetadata);
+        expect(lhs.identicalTo(rhs)).toEqual(true);
+    });
+});
