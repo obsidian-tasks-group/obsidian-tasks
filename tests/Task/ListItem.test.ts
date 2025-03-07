@@ -254,7 +254,7 @@ describe('identicalTo', () => {
         expect(listItem.identicalTo(task)).toEqual(false);
     });
 
-    it('should recognise different path', () => {
+    it('should recognise different taskLocation', () => {
         const item1 = ListItem.fromListItemLine(
             '- same',
             null,
