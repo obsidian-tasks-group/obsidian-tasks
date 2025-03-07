@@ -333,4 +333,10 @@ describe('TasksFile - properties', () => {
         const rhs = new TasksFile(path, cachedMetadata);
         expect(lhs.identicalTo(rhs)).toEqual(true);
     });
+
+    it('should check path', () => {
+        const lhs = new TasksFile(path, cachedMetadata);
+        const rhs = new TasksFile('somewhere else.md', cachedMetadata);
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
 });
