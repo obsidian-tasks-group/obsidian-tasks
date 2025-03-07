@@ -83,14 +83,14 @@ describe('TaskLocation - identicalTo', function () {
     const sectionIndex: number = 3;
     const precedingHeader: string | null = 'heading';
 
+    const lhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+
     it('should detect identical objects', () => {
-        const lhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
         const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
         expect(lhs.identicalTo(rhs)).toEqual(true);
     });
 
     it('should check lineNumber', () => {
-        const lhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
         const rhs = new TaskLocation(tasksFile, 0, sectionStart, sectionIndex, precedingHeader);
         expect(lhs.identicalTo(rhs)).toEqual(false);
     });
