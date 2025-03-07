@@ -324,7 +324,7 @@ describe('TasksFile - properties', () => {
     });
 });
 
-describe('TasksFile - properties', () => {
+describe('TasksFile - identicalTo', () => {
     const path = 'a/b/c/d.md';
     const cachedMetadata = {};
 
