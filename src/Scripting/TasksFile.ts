@@ -233,6 +233,6 @@ export class TasksFile {
         if (this.path !== other.path) {
             return false;
         }
-        return true;
+        return this.rawFrontmatterIdenticalTo(other);
     }
 }

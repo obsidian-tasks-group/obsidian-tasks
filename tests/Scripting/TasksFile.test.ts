@@ -339,4 +339,10 @@ describe('TasksFile - properties', () => {
         const rhs = new TasksFile('somewhere else.md', cachedMetadata);
         expect(lhs.identicalTo(rhs)).toEqual(false);
     });
+
+    it('should check cachedMetadata', () => {
+        const lhs = getTasksFileFromMockData(example_kanban);
+        expect(lhs.identicalTo(getTasksFileFromMockData(example_kanban))).toEqual(true);
+        expect(lhs.identicalTo(getTasksFileFromMockData(jason_properties))).toEqual(false);
+    });
 });
