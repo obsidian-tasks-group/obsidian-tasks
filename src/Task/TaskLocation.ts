@@ -105,6 +105,6 @@ export class TaskLocation {
             if (this[el] !== other[el]) return false;
         }
 
-        return true;
+        return this._tasksFile.identicalTo(other._tasksFile);
     }
 }
