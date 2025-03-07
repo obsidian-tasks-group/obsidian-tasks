@@ -99,7 +99,7 @@ export class TaskLocation {
      * @param other
      */
     public identicalTo(other: TaskLocation) {
-        const args: Array<keyof TaskLocation> = ['lineNumber', 'sectionStart'];
+        const args: Array<keyof TaskLocation> = ['lineNumber', 'sectionStart', 'sectionIndex'];
 
         for (const el of args) {
             if (this[el] !== other[el]) return false;
