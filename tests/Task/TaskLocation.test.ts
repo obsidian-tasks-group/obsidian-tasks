@@ -90,6 +90,11 @@ describe('TaskLocation - identicalTo', function () {
         expect(lhs.identicalTo(rhs)).toEqual(true);
     });
 
+    it('should check tasksFile', () => {
+        const rhs = new TaskLocation(new TasksFile('y.md'), lineNumber, sectionStart, sectionIndex, precedingHeader);
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
+
     it('should check lineNumber', () => {
         const rhs = new TaskLocation(tasksFile, 0, sectionStart, sectionIndex, precedingHeader);
         expect(lhs.identicalTo(rhs)).toEqual(false);
