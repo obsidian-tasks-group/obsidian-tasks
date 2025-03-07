@@ -75,3 +75,17 @@ describe('TaskLocation', () => {
         expect(TaskLocation.fromUnknownPosition(new TasksFile('')).hasKnownPath).toBe(false);
     });
 });
+
+describe('TaskLocation - identicalTo', function () {
+    const tasksFile: TasksFile = new TasksFile('x.md');
+    const lineNumber: number = 40;
+    const sectionStart: number = 30;
+    const sectionIndex: number = 3;
+    const precedingHeader: string | null = 'heading';
+
+    it('should detect identical objects', () => {
+        const lhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        expect(lhs.identicalTo(rhs)).toEqual(true);
+    });
+});
