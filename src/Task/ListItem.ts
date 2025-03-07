@@ -153,6 +153,8 @@ export class ListItem {
             if (this[el]?.toString() !== other[el]?.toString()) return false;
         }
 
+        if (!this.taskLocation.identicalTo(other.taskLocation)) return false;
+
         return ListItem.listsAreIdentical(this.children, other.children);
     }
 
