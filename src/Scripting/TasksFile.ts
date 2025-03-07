@@ -227,9 +227,12 @@ export class TasksFile {
      *
      * If any field is different in any way, it will return false.
      *
-     * @param _other
+     * @param other
      */
-    public identicalTo(_other: TasksFile) {
+    public identicalTo(other: TasksFile) {
+        if (this.path !== other.path) {
+            return false;
+        }
         return true;
     }
 }
