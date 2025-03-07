@@ -94,4 +94,9 @@ describe('TaskLocation - identicalTo', function () {
         const rhs = new TaskLocation(tasksFile, 0, sectionStart, sectionIndex, precedingHeader);
         expect(lhs.identicalTo(rhs)).toEqual(false);
     });
+
+    it('should check sectionStart', () => {
+        const rhs = new TaskLocation(tasksFile, lineNumber, 0, sectionIndex, precedingHeader);
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
 });
