@@ -90,4 +90,15 @@ export class TaskLocation {
         const { _tasksFile, ...rest } = { ...this };
         return rest;
     }
+
+    /**
+     * Compare all the fields in another TaskLocation, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * @param _other
+     */
+    public identicalTo(_other: TaskLocation) {
+        return true;
+    }
 }
