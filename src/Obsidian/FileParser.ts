@@ -158,7 +158,7 @@ export class FileParser {
     }
 
     private createListItem(listItem: ListItemCache, line: string, lineNumber: number, taskLocation: TaskLocation) {
-        const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
+        const parentListItem = this.line2ListItem.get(listItem.parent) ?? null;
         const newListItem = ListItem.fromListItemLine(line, parentListItem, taskLocation);
         if (newListItem === null) {
             // This should be unreachable.
