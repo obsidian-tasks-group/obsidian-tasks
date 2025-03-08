@@ -352,7 +352,7 @@ describe('list item checking and unchecking', () => {
     it('should create a checked list item', () => {
         const listItem = ListItem.fromListItemLine(
             '- [ ] description',
-            ListItem.fromListItemLine('- [ ] parent', null, taskLocation)!,
+            ListItem.fromListItemLine('- [ ] parent', null, taskLocation),
             taskLocation,
         )!;
 
