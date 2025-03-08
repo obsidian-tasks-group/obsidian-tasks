@@ -211,6 +211,10 @@ export class ListItem {
     }
 
     public checkOrUncheck(): ListItem {
+        if (this.statusCharacter === null) {
+            return this;
+        }
+
         const newStatusCharacter = this.statusCharacter === ' ' ? 'x' : ' ';
         const newMarkdown = this.originalMarkdown.replace(
             RegExp(TaskRegularExpressions.checkboxRegex),
