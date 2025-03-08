@@ -221,7 +221,15 @@ export class ListItem {
             `[${newStatusCharacter}]`,
         );
 
-        return ListItem.fromListItemLine(newMarkdown, null, this.taskLocation)!;
+        return new ListItem({
+            ...this,
+            originalMarkdown: newMarkdown,
+            statusCharacter: newStatusCharacter,
+            // The purpose of this method is just to update the status character on one single line in the file.
+            // This will trigger an update, making Cache re-read the whole file,
+            // which will then identify and re-create any parent-child relationships.
+            parent: null,
+        });
     }
 
     public toFileLineString(): string {
