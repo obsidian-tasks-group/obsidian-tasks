@@ -47,7 +47,11 @@ export class ListItem {
         this.taskLocation = taskLocation;
     }
 
-    public static fromListItemLine(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
+    public static fromListItemLine(
+        originalMarkdown: string,
+        parent: ListItem | null,
+        taskLocation: TaskLocation,
+    ): ListItem | null {
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         let indentation = '';
         let listMarker = '';
@@ -213,7 +217,7 @@ export class ListItem {
             `[${newStatusCharacter}]`,
         );
 
-        return ListItem.fromListItemLine(newMarkdown, null, this.taskLocation);
+        return ListItem.fromListItemLine(newMarkdown, null, this.taskLocation)!;
     }
 
     public toFileLineString(): string {
