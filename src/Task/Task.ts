@@ -163,6 +163,7 @@ export class Task extends ListItem {
      * @param {(Moment | null)} fallbackDate - The date to use as the scheduled date if no other date is set
      * @return {*}  {(Task | null)}
      * @see parseTaskSignifiers
+     * @see ListItem.fromListItemLine
      */
     public static fromLine({
         line,

@@ -47,6 +47,16 @@ export class ListItem {
         this.taskLocation = taskLocation;
     }
 
+    /**
+     * Takes the given line from an Obsidian note and returns a ListItem object.
+     *
+     * @static
+     * @param {string} originalMarkdown - The full line in the note to parse.
+     * @param {ListItem | null} parent - The optional parent Task or ListItem of the new instance.
+     * @param {TaskLocation} taskLocation - The location of the ListItem.
+     * @return {ListItem | null}
+     * @see Task.fromLine
+     */
     public static fromListItemLine(
         originalMarkdown: string,
         parent: ListItem | null,
