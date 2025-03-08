@@ -138,7 +138,7 @@ export class ListItem {
         // Note: taskLocation changes every time a line is added or deleted before
         //       any of the tasks in a file. This does mean that redrawing of tasks blocks
         //       happens more often than is ideal.
-        const args: Array<keyof ListItem> = ['originalMarkdown', 'description', 'statusCharacter'];
+        const args: Array<keyof ListItem> = ['description', 'statusCharacter', 'indentation', 'listMarker'];
 
         for (const el of args) {
             if (this[el]?.toString() !== other[el]?.toString()) return false;
