@@ -105,6 +105,8 @@ export class TaskLocation {
             if (this[el] !== other[el]) return false;
         }
 
+        // We do this at the end because TasksFile objects are more expensive
+        // to compare, due to their storing potentially complext Properties data.
         return this._tasksFile.identicalTo(other._tasksFile);
     }
 }
