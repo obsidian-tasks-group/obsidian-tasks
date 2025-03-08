@@ -387,8 +387,7 @@ describe('list item checking and unchecking', () => {
 
         const newListItem = listItem.checkOrUncheck();
 
-        expect(newListItem.statusCharacter).toEqual(null);
-        expect(newListItem.originalMarkdown).toEqual('- no checkbox');
+        expect(newListItem).toBe(listItem);
     });
 
     it('should preserve a non-checklist item with checkbox-like string in description', () => {
@@ -396,7 +395,6 @@ describe('list item checking and unchecking', () => {
 
         const newListItem = listItem.checkOrUncheck();
 
-        expect(newListItem.statusCharacter).toEqual(null);
-        expect(newListItem.originalMarkdown).toEqual('- this looks like a checkbox [f]');
+        expect(newListItem).toBe(listItem);
     });
 });
