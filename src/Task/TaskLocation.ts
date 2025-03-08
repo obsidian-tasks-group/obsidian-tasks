@@ -90,4 +90,23 @@ export class TaskLocation {
         const { _tasksFile, ...rest } = { ...this };
         return rest;
     }
+
+    /**
+     * Compare all the fields in another TaskLocation, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * @param other
+     */
+    public identicalTo(other: TaskLocation) {
+        const args: Array<keyof TaskLocation> = ['lineNumber', 'sectionStart', 'sectionIndex', 'precedingHeader'];
+
+        for (const el of args) {
+            if (this[el] !== other[el]) return false;
+        }
+
+        // We do this at the end because TasksFile objects are more expensive
+        // to compare, due to their storing potentially complext Properties data.
+        return this._tasksFile.identicalTo(other._tasksFile);
+    }
 }

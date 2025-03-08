@@ -221,4 +221,18 @@ export class TasksFile {
             return lowerCaseSearchKey === lowerCaseKey;
         });
     }
+
+    /**
+     * Compare all the fields in another TasksFile, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * @param other
+     */
+    public identicalTo(other: TasksFile) {
+        if (this.path !== other.path) {
+            return false;
+        }
+        return this.rawFrontmatterIdenticalTo(other);
+    }
 }

@@ -41,9 +41,6 @@ interface TaskComponents {
 export class Task extends ListItem {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     public readonly status: Status;
-    public readonly description: string;
-    public readonly indentation: string;
-    public readonly listMarker: string;
 
     public readonly tags: string[];
 
@@ -128,9 +125,6 @@ export class Task extends ListItem {
         });
         // NEW_TASK_FIELD_EDIT_REQUIRED
         this.status = status;
-        this.description = description;
-        this.indentation = indentation;
-        this.listMarker = listMarker;
 
         this.tags = tags;
 
@@ -784,9 +778,6 @@ export class Task extends ListItem {
         //       any of the tasks in a file. This does mean that redrawing of tasks blocks
         //       happens more often than is ideal.
         let args: Array<keyof Task> = [
-            'description',
-            'indentation',
-            'listMarker',
             'priority',
             'blockLink',
             'scheduledDateIsInferred',

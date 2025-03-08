@@ -135,23 +135,16 @@ export class ListItem {
             return false;
         }
 
-        // Note: sectionStart changes every time a line is added or deleted before
+        // Note: taskLocation changes every time a line is added or deleted before
         //       any of the tasks in a file. This does mean that redrawing of tasks blocks
         //       happens more often than is ideal.
-        const args: Array<keyof ListItem> = [
-            'originalMarkdown',
-            'description',
-            'statusCharacter',
-            'path',
-            'lineNumber',
-            'sectionStart',
-            'sectionIndex',
-            'precedingHeader',
-        ];
+        const args: Array<keyof ListItem> = ['description', 'statusCharacter', 'indentation', 'listMarker'];
 
         for (const el of args) {
             if (this[el]?.toString() !== other[el]?.toString()) return false;
         }
+
+        if (!this.taskLocation.identicalTo(other.taskLocation)) return false;
 
         return ListItem.listsAreIdentical(this.children, other.children);
     }
