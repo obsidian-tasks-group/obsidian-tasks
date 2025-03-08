@@ -17,6 +17,7 @@ import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toMarkdown } from '../TestingTools/TestHelpers';
 import { mockHTMLRenderer } from './RenderingTestHelpers';
+// import { LinkCache } from 'obsidian';
 
 window.moment = moment;
 
@@ -120,16 +121,19 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 });
 
 describe('QueryResultsRenderer - internal heading links', () => {
-    let allTasks: Task[];
+    let tasksByHeading: Record<string, Task>;
 
     beforeAll(() => {
-        allTasks = readTasksFromSimulatedFile(internal_heading_links_test);
+        const allTasks = readTasksFromSimulatedFile(internal_heading_links_test);
+
+        tasksByHeading = allTasks.reduce((acc, task) => {
+            const heading = task.taskLocation.precedingHeader ?? '';
+            acc[heading] = task;
+            return acc;
+        }, {} as Record<string, Task>);
     });
 
-    async function testHeadingLinks(taskDescription: string, queryFilePath: string, expectedLinks: string[]) {
-        const task = allTasks.find((t) => t.description.includes(taskDescription));
-        if (!task) throw new Error(`Task with description "${taskDescription}" not found`);
-
+    async function renderTask(task: Task, queryFilePath: string = 'query.md') {
         const renderer = makeQueryResultsRenderer('', new TasksFile(queryFilePath));
         const queryRendererParameters = {
             allTasks: [task],
@@ -142,66 +146,87 @@ describe('QueryResultsRenderer - internal heading links', () => {
 
         await renderer.render(State.Warm, [task], container, queryRendererParameters);
 
-        const renderedText = container.innerHTML;
-        expectedLinks.forEach((link) => expect(renderedText).toContain(link));
+        return container.querySelector('.task-description')?.innerHTML || '';
     }
 
-    it('should not modify internal heading links when rendering in same file', async () => {
-        await testHeadingLinks('[[#Basic Internal Links]]', 'original.md', [
-            '[[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]',
-        ]);
+    it('should not modify description when rendering in same file', async () => {
+        const description = await renderTask(
+            tasksByHeading['Basic Internal Links'],
+            'Test Data/internal_heading_links.md',
+        );
+        expect(description).toMatchInlineSnapshot('"<span>#task Task with [[#Basic Internal Links]]</span>"');
     });
 
     it('should convert internal heading links when rendering in different file', async () => {
-        await testHeadingLinks('[[#Basic Internal Links]]', 'query.md', [
-            '[[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]',
-        ]);
+        const description = await renderTask(tasksByHeading['Basic Internal Links'], 'query.md');
+        expect(description).toMatchInlineSnapshot(
+            '"<span>#task Task with [[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]</span>"',
+        );
     });
 
     it('should handle multiple internal heading links in one description', async () => {
-        await testHeadingLinks('[[#Multiple Links In One Task]] and [[#Simple Headers]]', 'query.md', [
-            '[[Test Data/internal_heading_links.md#Multiple Links In One Task|Multiple Links In One Task]]',
-            '[[Test Data/internal_heading_links.md#Simple Headers|Simple Headers]]',
-        ]);
+        const description = await renderTask(tasksByHeading['Multiple Links In One Task'], 'query.md');
+        expect(description).toMatchInlineSnapshot(
+            '"<span>#task Task with [[Test Data/internal_heading_links.md#Multiple Links In One Task|Multiple Links In One Task]] and [[Test Data/internal_heading_links.md#Simple Headers|Simple Headers]]</span>"',
+        );
     });
 
     it('should not modify regular file links', async () => {
-        await testHeadingLinks('[[Other File]]', 'query.md', ['[[Other File]]']);
+        const description = await renderTask(tasksByHeading['External File Links'], 'query.md');
+        expect(description).toMatchInlineSnapshot('"<span>#task Task with [[Other File]]</span>"');
     });
 
-    it('should handle mixed link types correctly', async () => {
-        await testHeadingLinks('[[Other File]] and [[#Mixed Link Types]]', 'query.md', [
-            '[[Other File]]',
-            '[[Test Data/internal_heading_links.md#Mixed Link Types|Mixed Link Types]]',
-        ]);
+    it('should handle header links with mixed link types', async () => {
+        const description = await renderTask(tasksByHeading['Mixed Link Types'], 'query.md');
+        expect(description).toMatchInlineSnapshot(
+            '"<span>#task Task with [[Other File]] and [[Test Data/internal_heading_links.md#Mixed Link Types|Mixed Link Types]]</span>"',
+        );
     });
 
-    it('should handle links with spaces in headers', async () => {
-        await testHeadingLinks('[[#Headers With Spaces]]', 'query.md', [
-            '[[Test Data/internal_heading_links.md#Headers With Spaces|Headers With Spaces]]',
-        ]);
+    it('should handle header links with file references', async () => {
+        const description = await renderTask(tasksByHeading['Header Links With File Reference'], 'query.md');
+        expect(description).toMatchInlineSnapshot(
+            '"<span>#task [[Test Data/internal_heading_links.md#Header Links With File Reference|Header Links With File Reference]] then [[Other File#Some Header]] and [[Test Data/internal_heading_links.md#Another Header|Another Header]]</span>"',
+        );
     });
 
-    it('should handle special characters in headers', async () => {
-        await testHeadingLinks('[[#Headers With Dashes]]', 'query.md', [
-            '[[Test Data/internal_heading_links.md#Headers With Dashes|Headers With Dashes]]',
-        ]);
-        await testHeadingLinks('[[#Headers With Underscores]]', 'query.md', [
-            '[[Test Data/internal_heading_links.md#Headers With Underscores|Headers With Underscores]]',
-        ]);
+    it('should handle header links with special characters', async () => {
+        const description = await renderTask(tasksByHeading['Headers With Special Characters'], 'query.md');
+        expect(description).toMatchInlineSnapshot(
+            '"<span>#task Task with [[Test Data/internal_heading_links.md#Headers-With_Special*Characters|Headers-With_Special*Characters]]</span>"',
+        );
     });
 
     it('should handle links with aliases', async () => {
-        await testHeadingLinks('[[#Aliased Links|I am an alias]]', 'query.md', [
-            '[[Test Data/internal_heading_links.md#Aliased Links|I am an alias]]',
-        ]);
+        const description = await renderTask(tasksByHeading['Aliased Links'], 'query.md');
+        expect(description).toMatchInlineSnapshot(
+            '"<span>#task Task with [[Test Data/internal_heading_links.md#Aliased Links|I am an alias]]</span>"',
+        );
     });
 
     it('should not modify formatted text that looks like links in code blocks', async () => {
-        await testHeadingLinks('`[[#Links In Code Blocks]]`', 'query.md', ['`[[#Links In Code Blocks]]`']);
+        const description = await renderTask(tasksByHeading['Links In Code Blocks'], 'query.md');
+        expect(description).toMatchInlineSnapshot(
+            '"<span>#task Task with `[[#Links In Code Blocks]]` code block</span>"',
+        );
     });
 
     it('should not modify escaped links', async () => {
-        await testHeadingLinks('\\[\\[#Escaped Links\\]\\]', 'query.md', ['\\[\\[#Escaped Links\\]\\]']);
+        const description = await renderTask(tasksByHeading['Escaped Links'], 'query.md');
+        expect(description).toMatchInlineSnapshot(
+            '"<span>#task Task with \\[\\[#Escaped Links\\]\\] escaped link</span>"',
+        );
+    });
+
+    it('should handle multiple links with mixed special formatting', async () => {
+        const description1 = await renderTask(tasksByHeading['Multiple Links with Special Formatting 1'], 'query.md');
+        expect(description1).toMatchInlineSnapshot(
+            '"<span>#task Task with <br>[[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]<br>`[[#Basic Internal Links]]`</span>"',
+        );
+
+        const description2 = await renderTask(tasksByHeading['Multiple Links with Special Formatting 2'], 'query.md');
+        expect(description2).toMatchInlineSnapshot(
+            '"<span>#task Task with <br>`[[#Basic Internal Links]]`<br>[[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]</span>"',
+        );
     });
 });
