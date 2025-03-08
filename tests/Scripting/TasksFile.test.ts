@@ -323,3 +323,26 @@ describe('TasksFile - properties', () => {
         expect(tasksFile.property('capital_property')).toEqual('some value');
     });
 });
+
+describe('TasksFile - identicalTo', () => {
+    const path = 'a/b/c/d.md';
+    const cachedMetadata = {};
+
+    it('should detect identical objects', () => {
+        const lhs = new TasksFile(path, cachedMetadata);
+        const rhs = new TasksFile(path, cachedMetadata);
+        expect(lhs.identicalTo(rhs)).toEqual(true);
+    });
+
+    it('should check path', () => {
+        const lhs = new TasksFile(path, cachedMetadata);
+        const rhs = new TasksFile('somewhere else.md', cachedMetadata);
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
+
+    it('should check cachedMetadata', () => {
+        const lhs = getTasksFileFromMockData(example_kanban);
+        expect(lhs.identicalTo(getTasksFileFromMockData(example_kanban))).toEqual(true);
+        expect(lhs.identicalTo(getTasksFileFromMockData(jason_properties))).toEqual(false);
+    });
+});

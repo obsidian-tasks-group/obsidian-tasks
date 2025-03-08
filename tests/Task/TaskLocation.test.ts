@@ -75,3 +75,52 @@ describe('TaskLocation', () => {
         expect(TaskLocation.fromUnknownPosition(new TasksFile('')).hasKnownPath).toBe(false);
     });
 });
+
+describe('TaskLocation - identicalTo', function () {
+    const tasksFile: TasksFile = new TasksFile('x.md');
+    const lineNumber: number = 40;
+    const sectionStart: number = 30;
+    const sectionIndex: number = 3;
+    const precedingHeader: string | null = 'heading';
+
+    const lhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+
+    it('should detect identical objects', () => {
+        const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+        expect(lhs.identicalTo(rhs)).toEqual(true);
+    });
+
+    it('should check tasksFile', () => {
+        const rhs = new TaskLocation(new TasksFile('y.md'), lineNumber, sectionStart, sectionIndex, precedingHeader);
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
+
+    it('should check lineNumber', () => {
+        const rhs = new TaskLocation(tasksFile, 0, sectionStart, sectionIndex, precedingHeader);
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
+
+    it('should check sectionStart', () => {
+        const rhs = new TaskLocation(tasksFile, lineNumber, 0, sectionIndex, precedingHeader);
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
+
+    it('should check sectionIndex', () => {
+        const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, 0, precedingHeader);
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
+
+    it('should check precedingHeader', () => {
+        {
+            const precedingHeader = null;
+            const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+            expect(lhs.identicalTo(rhs)).toEqual(false);
+        }
+
+        {
+            const precedingHeader = 'different header';
+            const rhs = new TaskLocation(tasksFile, lineNumber, sectionStart, sectionIndex, precedingHeader);
+            expect(lhs.identicalTo(rhs)).toEqual(false);
+        }
+    });
+});
