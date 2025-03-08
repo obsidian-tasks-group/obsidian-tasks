@@ -391,7 +391,7 @@ describe('list item checking and unchecking', () => {
         expect(newListItem.originalMarkdown).toEqual('- no checkbox');
     });
 
-    it.failing('should preserve a non-checklist item with checkbox-like string in description', () => {
+    it('should preserve a non-checklist item with checkbox-like string in description', () => {
         const listItem = ListItem.fromListItemLine('- this looks like a checkbox [f]', null, taskLocation)!;
 
         const newListItem = listItem.checkOrUncheck();
