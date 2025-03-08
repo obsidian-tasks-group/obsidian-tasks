@@ -247,6 +247,20 @@ describe('identicalTo', () => {
         expect(item2.identicalTo(item1)).toEqual(false);
     });
 
+    it('should recognise different indentation', () => {
+        const item1 = ListItem.fromListItemLine('- item', null, taskLocation);
+        const item2 = ListItem.fromListItemLine('    - item', null, taskLocation);
+
+        expect(item2.identicalTo(item1)).toEqual(false);
+    });
+
+    it('should recognise different listMarker', () => {
+        const item1 = ListItem.fromListItemLine('- item', null, taskLocation);
+        const item2 = ListItem.fromListItemLine('* item', null, taskLocation);
+
+        expect(item2.identicalTo(item1)).toEqual(false);
+    });
+
     it('should recognise ListItem and Task as different', () => {
         const listItem = ListItem.fromListItemLine('- [ ] description', null, taskLocation);
         const task = fromLine({ line: '- [ ] description' });
