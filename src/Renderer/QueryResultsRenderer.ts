@@ -559,7 +559,9 @@ export class QueryResultsRenderer {
         // Find links in the task description
         const taskLinks = linkCache.filter((link) => {
             return (
-                link.position.start.line === task.taskLocation.lineNumber && task.description.includes(link.original)
+                link.position.start.line === task.taskLocation.lineNumber &&
+                task.description.includes(link.original) &&
+                link.link.startsWith('#')
             );
         });
         if (taskLinks.length === 0) return task;
@@ -569,14 +571,29 @@ export class QueryResultsRenderer {
         // a task can only be from one file, so we can replace all the internal links
         //in the description with the new file path
         for (const link of taskLinks) {
-            if (!link.link.startsWith('#')) {
-                // only care about internal heading links
-                continue;
+            // Find the occurrence closest to the original position in the source document
+            let currentIndex = 0;
+            let bestMatch = -1;
+            let closestDistance = Number.MAX_SAFE_INTEGER;
+
+            let foundIndex = description.indexOf(link.original, currentIndex);
+            while (foundIndex !== -1) {
+                const distance = Math.abs(foundIndex - link.position.start.col);
+                if (distance < closestDistance) {
+                    bestMatch = foundIndex;
+                    closestDistance = distance;
+                }
+
+                currentIndex = foundIndex + 1; // Move past this occurrence
+                foundIndex = description.indexOf(link.original, currentIndex);
             }
 
-            const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+            // Skip if no match was found (should not happen in practice)
+            if (bestMatch === -1) continue;
 
-            description = description.replace(link.original, fullLink);
+            const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+            description =
+                description.slice(0, bestMatch) + fullLink + description.slice(bestMatch + link.original.length);
         }
 
         // Return a new Task with the updated description
