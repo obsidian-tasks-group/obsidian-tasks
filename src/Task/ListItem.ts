@@ -47,7 +47,21 @@ export class ListItem {
         this.taskLocation = taskLocation;
     }
 
-    public static fromListItemLine(originalMarkdown: string, parent: ListItem | null, taskLocation: TaskLocation) {
+    /**
+     * Takes the given line from an Obsidian note and returns a ListItem object.
+     *
+     * @static
+     * @param {string} originalMarkdown - The full line in the note to parse.
+     * @param {ListItem | null} parent - The optional parent Task or ListItem of the new instance.
+     * @param {TaskLocation} taskLocation - The location of the ListItem.
+     * @return {ListItem | null}
+     * @see Task.fromLine
+     */
+    public static fromListItemLine(
+        originalMarkdown: string,
+        parent: ListItem | null,
+        taskLocation: TaskLocation,
+    ): ListItem | null {
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
         let indentation = '';
         let listMarker = '';
@@ -207,13 +221,25 @@ export class ListItem {
     }
 
     public checkOrUncheck(): ListItem {
+        if (this.statusCharacter === null) {
+            return this;
+        }
+
         const newStatusCharacter = this.statusCharacter === ' ' ? 'x' : ' ';
         const newMarkdown = this.originalMarkdown.replace(
             RegExp(TaskRegularExpressions.checkboxRegex),
             `[${newStatusCharacter}]`,
         );
 
-        return ListItem.fromListItemLine(newMarkdown, null, this.taskLocation);
+        return new ListItem({
+            ...this,
+            originalMarkdown: newMarkdown,
+            statusCharacter: newStatusCharacter,
+            // The purpose of this method is just to update the status character on one single line in the file.
+            // This will trigger an update, making Cache re-read the whole file,
+            // which will then identify and re-create any parent-child relationships.
+            parent: null,
+        });
     }
 
     public toFileLineString(): string {
