@@ -160,6 +160,13 @@ export class FileParser {
     private createListItem(listItem: ListItemCache, line: string, lineNumber: number, taskLocation: TaskLocation) {
         const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
         const newListItem = ListItem.fromListItemLine(line, parentListItem, taskLocation);
-        this.line2ListItem.set(lineNumber, newListItem!);
+        if (newListItem === null) {
+            // This should be unreachable.
+            this.logger.warn(
+                'Unexpected failure to create a list item from line: ' + line + ' in file: ' + this.filePath,
+            );
+            return;
+        }
+        this.line2ListItem.set(lineNumber, newListItem);
     }
 }
