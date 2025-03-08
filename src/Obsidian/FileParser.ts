@@ -159,6 +159,6 @@ export class FileParser {
 
     private createListItem(listItem: ListItemCache, line: string, lineNumber: number, taskLocation: TaskLocation) {
         const parentListItem: ListItem | null = this.line2ListItem.get(listItem.parent) ?? null;
-        this.line2ListItem.set(lineNumber, ListItem.fromListItemLine(line, parentListItem, taskLocation));
+        this.line2ListItem.set(lineNumber, ListItem.fromListItemLine(line, parentListItem, taskLocation)!);
     }
 }
