@@ -127,6 +127,23 @@ describe('QueryResultsRenderer - internal heading links', () => {
 
         tasksByHeading = allTasks.reduce((acc, task) => {
             const heading = task.taskLocation.precedingHeader ?? '';
+
+            // For now, the test design only supports one task per heading, so make it an error
+            // if there are multiple tasks in this heading:
+            if (acc[heading]) {
+                throw new Error(`Multiple tasks found under the heading: "${heading}".
+The test design only supports one task per heading currently, so this is an error.
+
+Edit "${task.path}" to move one of these lines to a separate heading:
+"${acc[heading].originalMarkdown}"
+"${task.originalMarkdown}"
+
+And then rerun the command "Templater: Insert _meta/templates/convert_test_data_markdown_to_js.md".
+
+For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests
+`);
+            }
+
             acc[heading] = task;
             return acc;
         }, {} as Record<string, Task>);
