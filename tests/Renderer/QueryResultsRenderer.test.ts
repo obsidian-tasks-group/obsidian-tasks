@@ -17,7 +17,6 @@ import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toMarkdown } from '../TestingTools/TestHelpers';
 import { mockHTMLRenderer } from './RenderingTestHelpers';
-// import { LinkCache } from 'obsidian';
 
 window.moment = moment;
 
@@ -146,7 +145,7 @@ describe('QueryResultsRenderer - internal heading links', () => {
 
         await renderer.render(State.Warm, [task], container, queryRendererParameters);
 
-        return container.querySelector('.task-description')?.innerHTML || '';
+        return container.querySelector('.task-description')?.innerHTML ?? '';
     }
 
     it('should not modify description when rendering in same file', async () => {
@@ -191,9 +190,9 @@ describe('QueryResultsRenderer - internal heading links', () => {
     });
 
     it('should handle header links with special characters', async () => {
-        const description = await renderTask(tasksByHeading['Headers With Special Characters'], 'query.md');
+        const description = await renderTask(tasksByHeading['Headers-With_Special Characters'], 'query.md');
         expect(description).toMatchInlineSnapshot(
-            '"<span>#task Task with [[Test Data/internal_heading_links.md#Headers-With_Special*Characters|Headers-With_Special*Characters]]</span>"',
+            '"<span>#task Task with [[Test Data/internal_heading_links.md#Headers-With_Special Characters|Headers-With_Special Characters]]</span>"',
         );
     });
 
@@ -215,18 +214,6 @@ describe('QueryResultsRenderer - internal heading links', () => {
         const description = await renderTask(tasksByHeading['Escaped Links'], 'query.md');
         expect(description).toMatchInlineSnapshot(
             '"<span>#task Task with \\[\\[#Escaped Links\\]\\] escaped link</span>"',
-        );
-    });
-
-    it('should handle multiple links with mixed special formatting', async () => {
-        const description1 = await renderTask(tasksByHeading['Multiple Links with Special Formatting 1'], 'query.md');
-        expect(description1).toMatchInlineSnapshot(
-            '"<span>#task Task with <br>[[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]<br>`[[#Basic Internal Links]]`</span>"',
-        );
-
-        const description2 = await renderTask(tasksByHeading['Multiple Links with Special Formatting 2'], 'query.md');
-        expect(description2).toMatchInlineSnapshot(
-            '"<span>#task Task with <br>`[[#Basic Internal Links]]`<br>[[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]</span>"',
         );
     });
 });

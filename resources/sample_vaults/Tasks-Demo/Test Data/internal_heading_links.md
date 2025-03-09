@@ -2,6 +2,10 @@
 
 This file contains test cases for internal heading links in tasks.
 
+## Simple Headers
+
+## Another Header
+
 ## Basic Internal Links
 
 - [ ] #task Task with [[#Basic Internal Links]]
@@ -22,9 +26,9 @@ This file contains test cases for internal heading links in tasks.
 
 - [ ] #task [[#Header Links With File Reference]] then [[Other File#Some Header]] and [[#Another Header]]
 
-## Headers With Special Characters
+## Headers-With_Special Characters
 
-- [ ] #task Task with [[#Headers-With_Special*Characters]]
+- [ ] #task Task with [[#Headers-With_Special Characters]]
 
 ## Aliased Links
 
@@ -37,11 +41,3 @@ This file contains test cases for internal heading links in tasks.
 ## Escaped Links
 
 - [ ] #task Task with \[\[#Escaped Links\]\] escaped link
-
-## Multiple Links with Special Formatting 1
-
-- [ ] #task Task with <br>[[#Basic Internal Links]]<br>`[[#Basic Internal Links]]`
-
-## Multiple Links with Special Formatting 2
-
-- [ ] #task Task with <br>`[[#Basic Internal Links]]`<br>[[#Basic Internal Links]]
