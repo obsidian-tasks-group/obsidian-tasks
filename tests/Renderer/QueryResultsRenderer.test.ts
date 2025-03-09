@@ -170,53 +170,53 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
             tasksByHeading['Basic Internal Links'],
             'Test Data/internal_heading_links.md',
         );
-        expect(description).toMatchInlineSnapshot('"<span>#task Task with [[#Basic Internal Links]]</span>"');
+        expect(description).toMatchInlineSnapshot('"<span>#task Task with<br>[[#Basic Internal Links]]</span>"');
     });
 
     it('should convert internal heading links when rendering in different file', async () => {
         const description = await renderTask(tasksByHeading['Basic Internal Links'], 'query.md');
         expect(description).toMatchInlineSnapshot(
-            '"<span>#task Task with [[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]</span>"',
+            '"<span>#task Task with<br>[[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]</span>"',
         );
     });
 
     it('should handle multiple internal heading links in one description', async () => {
         const description = await renderTask(tasksByHeading['Multiple Links In One Task'], 'query.md');
         expect(description).toMatchInlineSnapshot(
-            '"<span>#task Task with [[Test Data/internal_heading_links.md#Multiple Links In One Task|Multiple Links In One Task]] and [[Test Data/internal_heading_links.md#Simple Headers|Simple Headers]]</span>"',
+            '"<span>#task Task with<br>[[Test Data/internal_heading_links.md#Multiple Links In One Task|Multiple Links In One Task]] and<br>[[Test Data/internal_heading_links.md#Simple Headers|Simple Headers]]</span>"',
         );
     });
 
     it('should not modify regular file links', async () => {
         const description = await renderTask(tasksByHeading['External File Links'], 'query.md');
-        expect(description).toMatchInlineSnapshot('"<span>#task Task with [[Other File]]</span>"');
+        expect(description).toMatchInlineSnapshot('"<span>#task Task with<br>[[Other File]]</span>"');
     });
 
     it('should handle header links with mixed link types', async () => {
         const description = await renderTask(tasksByHeading['Mixed Link Types'], 'query.md');
         expect(description).toMatchInlineSnapshot(
-            '"<span>#task Task with [[Other File]] and [[Test Data/internal_heading_links.md#Mixed Link Types|Mixed Link Types]]</span>"',
+            '"<span>#task Task with<br>[[Other File]] and<br>[[Test Data/internal_heading_links.md#Mixed Link Types|Mixed Link Types]]</span>"',
         );
     });
 
     it('should handle header links with file references', async () => {
         const description = await renderTask(tasksByHeading['Header Links With File Reference'], 'query.md');
         expect(description).toMatchInlineSnapshot(
-            '"<span>#task [[Test Data/internal_heading_links.md#Header Links With File Reference|Header Links With File Reference]] then [[Other File#Some Header]] and [[Test Data/internal_heading_links.md#Another Header|Another Header]]</span>"',
+            '"<span>#task<br>[[Test Data/internal_heading_links.md#Header Links With File Reference|Header Links With File Reference]] then<br>[[Other File#Some Header]] and<br>[[Test Data/internal_heading_links.md#Another Header|Another Header]]</span>"',
         );
     });
 
     it('should handle header links with special characters', async () => {
         const description = await renderTask(tasksByHeading['Headers-With_Special Characters'], 'query.md');
         expect(description).toMatchInlineSnapshot(
-            '"<span>#task Task with [[Test Data/internal_heading_links.md#Headers-With_Special Characters|Headers-With_Special Characters]]</span>"',
+            '"<span>#task Task with<br>[[Test Data/internal_heading_links.md#Headers-With_Special Characters|Headers-With_Special Characters]]</span>"',
         );
     });
 
     it('should handle links with aliases', async () => {
         const description = await renderTask(tasksByHeading['Aliased Links'], 'query.md');
         expect(description).toMatchInlineSnapshot(
-            '"<span>#task Task with [[Test Data/internal_heading_links.md#Aliased Links|I am an alias]]</span>"',
+            '"<span>#task Task with<br>[[Test Data/internal_heading_links.md#Aliased Links|I am an alias]]</span>"',
         );
     });
 

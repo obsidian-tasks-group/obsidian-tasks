@@ -72,12 +72,12 @@
           "end": {
             "col": 29,
             "line": 12,
-            "offset": 240
+            "offset": 243
           },
           "start": {
             "col": 0,
             "line": 12,
-            "offset": 211
+            "offset": 214
           }
         }
       },
@@ -88,12 +88,12 @@
           "end": {
             "col": 22,
             "line": 16,
-            "offset": 343
+            "offset": 352
           },
           "start": {
             "col": 0,
             "line": 16,
-            "offset": 321
+            "offset": 330
           }
         }
       },
@@ -104,12 +104,12 @@
           "end": {
             "col": 19,
             "line": 20,
-            "offset": 402
+            "offset": 414
           },
           "start": {
             "col": 0,
             "line": 20,
-            "offset": 383
+            "offset": 395
           }
         }
       },
@@ -120,12 +120,12 @@
           "end": {
             "col": 35,
             "line": 24,
-            "offset": 503
+            "offset": 521
           },
           "start": {
             "col": 0,
             "line": 24,
-            "offset": 468
+            "offset": 486
           }
         }
       },
@@ -136,12 +136,12 @@
           "end": {
             "col": 34,
             "line": 28,
-            "offset": 646
+            "offset": 673
           },
           "start": {
             "col": 0,
             "line": 28,
-            "offset": 612
+            "offset": 639
           }
         }
       },
@@ -152,12 +152,12 @@
           "end": {
             "col": 16,
             "line": 32,
-            "offset": 724
+            "offset": 754
           },
           "start": {
             "col": 0,
             "line": 32,
-            "offset": 708
+            "offset": 738
           }
         }
       },
@@ -168,12 +168,12 @@
           "end": {
             "col": 23,
             "line": 36,
-            "offset": 805
+            "offset": 838
           },
           "start": {
             "col": 0,
             "line": 36,
-            "offset": 782
+            "offset": 815
           }
         }
       },
@@ -184,12 +184,12 @@
           "end": {
             "col": 16,
             "line": 40,
-            "offset": 885
+            "offset": 918
           },
           "start": {
             "col": 0,
             "line": 40,
-            "offset": 869
+            "offset": 902
           }
         }
       }
@@ -201,14 +201,14 @@
         "original": "[[#Basic Internal Links]]",
         "position": {
           "end": {
-            "col": 47,
+            "col": 50,
             "line": 10,
-            "offset": 209
+            "offset": 212
           },
           "start": {
-            "col": 22,
+            "col": 25,
             "line": 10,
-            "offset": 184
+            "offset": 187
           }
         }
       },
@@ -218,14 +218,14 @@
         "original": "[[#Multiple Links In One Task]]",
         "position": {
           "end": {
-            "col": 53,
+            "col": 56,
             "line": 14,
-            "offset": 295
+            "offset": 301
           },
           "start": {
-            "col": 22,
+            "col": 25,
             "line": 14,
-            "offset": 264
+            "offset": 270
           }
         }
       },
@@ -235,14 +235,14 @@
         "original": "[[#Simple Headers]]",
         "position": {
           "end": {
-            "col": 77,
+            "col": 83,
             "line": 14,
-            "offset": 319
+            "offset": 328
           },
           "start": {
-            "col": 58,
+            "col": 64,
             "line": 14,
-            "offset": 300
+            "offset": 309
           }
         }
       },
@@ -252,14 +252,14 @@
         "original": "[[Other File]]",
         "position": {
           "end": {
-            "col": 36,
+            "col": 39,
             "line": 18,
-            "offset": 381
+            "offset": 393
           },
           "start": {
-            "col": 22,
+            "col": 25,
             "line": 18,
-            "offset": 367
+            "offset": 379
           }
         }
       },
@@ -269,14 +269,14 @@
         "original": "[[Other File]]",
         "position": {
           "end": {
-            "col": 36,
+            "col": 39,
             "line": 22,
-            "offset": 440
+            "offset": 455
           },
           "start": {
-            "col": 22,
+            "col": 25,
             "line": 22,
-            "offset": 426
+            "offset": 441
           }
         }
       },
@@ -286,14 +286,14 @@
         "original": "[[#Mixed Link Types]]",
         "position": {
           "end": {
-            "col": 62,
+            "col": 68,
             "line": 22,
-            "offset": 466
+            "offset": 484
           },
           "start": {
-            "col": 41,
+            "col": 47,
             "line": 22,
-            "offset": 445
+            "offset": 463
           }
         }
       },
@@ -303,14 +303,14 @@
         "original": "[[#Header Links With File Reference]]",
         "position": {
           "end": {
-            "col": 49,
+            "col": 52,
             "line": 26,
-            "offset": 554
+            "offset": 575
           },
           "start": {
-            "col": 12,
+            "col": 15,
             "line": 26,
-            "offset": 517
+            "offset": 538
           }
         }
       },
@@ -320,14 +320,14 @@
         "original": "[[Other File#Some Header]]",
         "position": {
           "end": {
-            "col": 81,
+            "col": 87,
             "line": 26,
-            "offset": 586
+            "offset": 610
           },
           "start": {
-            "col": 55,
+            "col": 61,
             "line": 26,
-            "offset": 560
+            "offset": 584
           }
         }
       },
@@ -337,14 +337,14 @@
         "original": "[[#Another Header]]",
         "position": {
           "end": {
-            "col": 105,
+            "col": 114,
             "line": 26,
-            "offset": 610
+            "offset": 637
           },
           "start": {
-            "col": 86,
+            "col": 95,
             "line": 26,
-            "offset": 591
+            "offset": 618
           }
         }
       },
@@ -354,14 +354,14 @@
         "original": "[[#Headers-With_Special Characters]]",
         "position": {
           "end": {
-            "col": 58,
+            "col": 61,
             "line": 30,
-            "offset": 706
+            "offset": 736
           },
           "start": {
-            "col": 22,
+            "col": 25,
             "line": 30,
-            "offset": 670
+            "offset": 700
           }
         }
       },
@@ -371,14 +371,14 @@
         "original": "[[#Aliased Links|I am an alias]]",
         "position": {
           "end": {
-            "col": 54,
+            "col": 57,
             "line": 34,
-            "offset": 780
+            "offset": 813
           },
           "start": {
-            "col": 22,
+            "col": 25,
             "line": 34,
-            "offset": 748
+            "offset": 781
           }
         }
       }
@@ -388,9 +388,9 @@
         "parent": -10,
         "position": {
           "end": {
-            "col": 47,
+            "col": 50,
             "line": 10,
-            "offset": 209
+            "offset": 212
           },
           "start": {
             "col": 0,
@@ -404,14 +404,14 @@
         "parent": -14,
         "position": {
           "end": {
-            "col": 77,
+            "col": 83,
             "line": 14,
-            "offset": 319
+            "offset": 328
           },
           "start": {
             "col": 0,
             "line": 14,
-            "offset": 242
+            "offset": 245
           }
         },
         "task": " "
@@ -420,14 +420,14 @@
         "parent": -18,
         "position": {
           "end": {
-            "col": 36,
+            "col": 39,
             "line": 18,
-            "offset": 381
+            "offset": 393
           },
           "start": {
             "col": 0,
             "line": 18,
-            "offset": 345
+            "offset": 354
           }
         },
         "task": " "
@@ -436,14 +436,14 @@
         "parent": -22,
         "position": {
           "end": {
-            "col": 62,
+            "col": 68,
             "line": 22,
-            "offset": 466
+            "offset": 484
           },
           "start": {
             "col": 0,
             "line": 22,
-            "offset": 404
+            "offset": 416
           }
         },
         "task": " "
@@ -452,14 +452,14 @@
         "parent": -26,
         "position": {
           "end": {
-            "col": 105,
+            "col": 114,
             "line": 26,
-            "offset": 610
+            "offset": 637
           },
           "start": {
             "col": 0,
             "line": 26,
-            "offset": 505
+            "offset": 523
           }
         },
         "task": " "
@@ -468,14 +468,14 @@
         "parent": -30,
         "position": {
           "end": {
-            "col": 58,
+            "col": 61,
             "line": 30,
-            "offset": 706
+            "offset": 736
           },
           "start": {
             "col": 0,
             "line": 30,
-            "offset": 648
+            "offset": 675
           }
         },
         "task": " "
@@ -484,14 +484,14 @@
         "parent": -34,
         "position": {
           "end": {
-            "col": 54,
+            "col": 57,
             "line": 34,
-            "offset": 780
+            "offset": 813
           },
           "start": {
             "col": 0,
             "line": 34,
-            "offset": 726
+            "offset": 756
           }
         },
         "task": " "
@@ -502,12 +502,12 @@
           "end": {
             "col": 60,
             "line": 38,
-            "offset": 867
+            "offset": 900
           },
           "start": {
             "col": 0,
             "line": 38,
-            "offset": 807
+            "offset": 840
           }
         },
         "task": " "
@@ -518,12 +518,12 @@
           "end": {
             "col": 57,
             "line": 42,
-            "offset": 944
+            "offset": 977
           },
           "start": {
             "col": 0,
             "line": 42,
-            "offset": 887
+            "offset": 920
           }
         },
         "task": " "
@@ -608,9 +608,9 @@
       {
         "position": {
           "end": {
-            "col": 47,
+            "col": 50,
             "line": 10,
-            "offset": 209
+            "offset": 212
           },
           "start": {
             "col": 0,
@@ -625,12 +625,12 @@
           "end": {
             "col": 29,
             "line": 12,
-            "offset": 240
+            "offset": 243
           },
           "start": {
             "col": 0,
             "line": 12,
-            "offset": 211
+            "offset": 214
           }
         },
         "type": "heading"
@@ -638,14 +638,14 @@
       {
         "position": {
           "end": {
-            "col": 77,
+            "col": 83,
             "line": 14,
-            "offset": 319
+            "offset": 328
           },
           "start": {
             "col": 0,
             "line": 14,
-            "offset": 242
+            "offset": 245
           }
         },
         "type": "list"
@@ -655,12 +655,12 @@
           "end": {
             "col": 22,
             "line": 16,
-            "offset": 343
+            "offset": 352
           },
           "start": {
             "col": 0,
             "line": 16,
-            "offset": 321
+            "offset": 330
           }
         },
         "type": "heading"
@@ -668,14 +668,14 @@
       {
         "position": {
           "end": {
-            "col": 36,
+            "col": 39,
             "line": 18,
-            "offset": 381
+            "offset": 393
           },
           "start": {
             "col": 0,
             "line": 18,
-            "offset": 345
+            "offset": 354
           }
         },
         "type": "list"
@@ -685,12 +685,12 @@
           "end": {
             "col": 19,
             "line": 20,
-            "offset": 402
+            "offset": 414
           },
           "start": {
             "col": 0,
             "line": 20,
-            "offset": 383
+            "offset": 395
           }
         },
         "type": "heading"
@@ -698,14 +698,14 @@
       {
         "position": {
           "end": {
-            "col": 62,
+            "col": 68,
             "line": 22,
-            "offset": 466
+            "offset": 484
           },
           "start": {
             "col": 0,
             "line": 22,
-            "offset": 404
+            "offset": 416
           }
         },
         "type": "list"
@@ -715,12 +715,12 @@
           "end": {
             "col": 35,
             "line": 24,
-            "offset": 503
+            "offset": 521
           },
           "start": {
             "col": 0,
             "line": 24,
-            "offset": 468
+            "offset": 486
           }
         },
         "type": "heading"
@@ -728,14 +728,14 @@
       {
         "position": {
           "end": {
-            "col": 105,
+            "col": 114,
             "line": 26,
-            "offset": 610
+            "offset": 637
           },
           "start": {
             "col": 0,
             "line": 26,
-            "offset": 505
+            "offset": 523
           }
         },
         "type": "list"
@@ -745,12 +745,12 @@
           "end": {
             "col": 34,
             "line": 28,
-            "offset": 646
+            "offset": 673
           },
           "start": {
             "col": 0,
             "line": 28,
-            "offset": 612
+            "offset": 639
           }
         },
         "type": "heading"
@@ -758,14 +758,14 @@
       {
         "position": {
           "end": {
-            "col": 58,
+            "col": 61,
             "line": 30,
-            "offset": 706
+            "offset": 736
           },
           "start": {
             "col": 0,
             "line": 30,
-            "offset": 648
+            "offset": 675
           }
         },
         "type": "list"
@@ -775,12 +775,12 @@
           "end": {
             "col": 16,
             "line": 32,
-            "offset": 724
+            "offset": 754
           },
           "start": {
             "col": 0,
             "line": 32,
-            "offset": 708
+            "offset": 738
           }
         },
         "type": "heading"
@@ -788,14 +788,14 @@
       {
         "position": {
           "end": {
-            "col": 54,
+            "col": 57,
             "line": 34,
-            "offset": 780
+            "offset": 813
           },
           "start": {
             "col": 0,
             "line": 34,
-            "offset": 726
+            "offset": 756
           }
         },
         "type": "list"
@@ -805,12 +805,12 @@
           "end": {
             "col": 23,
             "line": 36,
-            "offset": 805
+            "offset": 838
           },
           "start": {
             "col": 0,
             "line": 36,
-            "offset": 782
+            "offset": 815
           }
         },
         "type": "heading"
@@ -820,12 +820,12 @@
           "end": {
             "col": 60,
             "line": 38,
-            "offset": 867
+            "offset": 900
           },
           "start": {
             "col": 0,
             "line": 38,
-            "offset": 807
+            "offset": 840
           }
         },
         "type": "list"
@@ -835,12 +835,12 @@
           "end": {
             "col": 16,
             "line": 40,
-            "offset": 885
+            "offset": 918
           },
           "start": {
             "col": 0,
             "line": 40,
-            "offset": 869
+            "offset": 902
           }
         },
         "type": "heading"
@@ -850,12 +850,12 @@
           "end": {
             "col": 57,
             "line": 42,
-            "offset": 944
+            "offset": 977
           },
           "start": {
             "col": 0,
             "line": 42,
-            "offset": 887
+            "offset": 920
           }
         },
         "type": "list"
@@ -882,12 +882,12 @@
           "end": {
             "col": 11,
             "line": 14,
-            "offset": 253
+            "offset": 256
           },
           "start": {
             "col": 6,
             "line": 14,
-            "offset": 248
+            "offset": 251
           }
         },
         "tag": "#task"
@@ -897,12 +897,12 @@
           "end": {
             "col": 11,
             "line": 18,
-            "offset": 356
+            "offset": 365
           },
           "start": {
             "col": 6,
             "line": 18,
-            "offset": 351
+            "offset": 360
           }
         },
         "tag": "#task"
@@ -912,12 +912,12 @@
           "end": {
             "col": 11,
             "line": 22,
-            "offset": 415
+            "offset": 427
           },
           "start": {
             "col": 6,
             "line": 22,
-            "offset": 410
+            "offset": 422
           }
         },
         "tag": "#task"
@@ -927,12 +927,12 @@
           "end": {
             "col": 11,
             "line": 26,
-            "offset": 516
+            "offset": 534
           },
           "start": {
             "col": 6,
             "line": 26,
-            "offset": 511
+            "offset": 529
           }
         },
         "tag": "#task"
@@ -942,12 +942,12 @@
           "end": {
             "col": 11,
             "line": 30,
-            "offset": 659
+            "offset": 686
           },
           "start": {
             "col": 6,
             "line": 30,
-            "offset": 654
+            "offset": 681
           }
         },
         "tag": "#task"
@@ -957,12 +957,12 @@
           "end": {
             "col": 11,
             "line": 34,
-            "offset": 737
+            "offset": 767
           },
           "start": {
             "col": 6,
             "line": 34,
-            "offset": 732
+            "offset": 762
           }
         },
         "tag": "#task"
@@ -972,12 +972,12 @@
           "end": {
             "col": 11,
             "line": 38,
-            "offset": 818
+            "offset": 851
           },
           "start": {
             "col": 6,
             "line": 38,
-            "offset": 813
+            "offset": 846
           }
         },
         "tag": "#task"
@@ -987,12 +987,12 @@
           "end": {
             "col": 11,
             "line": 42,
-            "offset": 898
+            "offset": 931
           },
           "start": {
             "col": 6,
             "line": 42,
-            "offset": 893
+            "offset": 926
           }
         },
         "tag": "#task"
@@ -1002,19 +1002,19 @@
           "end": {
             "col": 34,
             "line": 42,
-            "offset": 921
+            "offset": 954
           },
           "start": {
             "col": 26,
             "line": 42,
-            "offset": 913
+            "offset": 946
           }
         },
         "tag": "#Escaped"
       }
     ]
   },
-  "fileContents": "# Internal Heading Links Test\n\nThis file contains test cases for internal heading links in tasks.\n\n## Simple Headers\n\n## Another Header\n\n## Basic Internal Links\n\n- [ ] #task Task with [[#Basic Internal Links]]\n\n## Multiple Links In One Task\n\n- [ ] #task Task with [[#Multiple Links In One Task]] and [[#Simple Headers]]\n\n## External File Links\n\n- [ ] #task Task with [[Other File]]\n\n## Mixed Link Types\n\n- [ ] #task Task with [[Other File]] and [[#Mixed Link Types]]\n\n## Header Links With File Reference\n\n- [ ] #task [[#Header Links With File Reference]] then [[Other File#Some Header]] and [[#Another Header]]\n\n## Headers-With_Special Characters\n\n- [ ] #task Task with [[#Headers-With_Special Characters]]\n\n## Aliased Links\n\n- [ ] #task Task with [[#Aliased Links|I am an alias]]\n\n## Links In Code Blocks\n\n- [ ] #task Task with `[[#Links In Code Blocks]]` code block\n\n## Escaped Links\n\n- [ ] #task Task with \\[\\[#Escaped Links\\]\\] escaped link\n",
+  "fileContents": "# Internal Heading Links Test\n\nThis file contains test cases for internal heading links in tasks.\n\n## Simple Headers\n\n## Another Header\n\n## Basic Internal Links\n\n- [ ] #task Task with<br>[[#Basic Internal Links]]\n\n## Multiple Links In One Task\n\n- [ ] #task Task with<br>[[#Multiple Links In One Task]] and<br>[[#Simple Headers]]\n\n## External File Links\n\n- [ ] #task Task with<br>[[Other File]]\n\n## Mixed Link Types\n\n- [ ] #task Task with<br>[[Other File]] and<br>[[#Mixed Link Types]]\n\n## Header Links With File Reference\n\n- [ ] #task<br>[[#Header Links With File Reference]] then<br>[[Other File#Some Header]] and<br>[[#Another Header]]\n\n## Headers-With_Special Characters\n\n- [ ] #task Task with<br>[[#Headers-With_Special Characters]]\n\n## Aliased Links\n\n- [ ] #task Task with<br>[[#Aliased Links|I am an alias]]\n\n## Links In Code Blocks\n\n- [ ] #task Task with `[[#Links In Code Blocks]]` code block\n\n## Escaped Links\n\n- [ ] #task Task with \\[\\[#Escaped Links\\]\\] escaped link\n",
   "filePath": "Test Data/internal_heading_links.md",
   "getAllTags": [
     "#task",
