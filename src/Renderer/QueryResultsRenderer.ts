@@ -572,6 +572,7 @@ export class QueryResultsRenderer {
         //in the description with the new file path
         for (const link of taskLinks) {
             const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+            // Replace the first instance of this link:
             description = description.replace(link.original, fullLink);
         }
 
