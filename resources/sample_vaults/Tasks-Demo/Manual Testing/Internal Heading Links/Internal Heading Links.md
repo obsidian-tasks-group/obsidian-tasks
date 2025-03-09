@@ -1,5 +1,11 @@
 # Internal Heading Links
 
 ```tasks
-filter by function task.file.filename.includes("internal_heading_links")
+filename includes internal_heading_links
+
+sort by function task.lineNumber
+
+group by heading
+
+hide backlinks
 ```
