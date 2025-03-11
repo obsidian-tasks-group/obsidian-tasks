@@ -362,6 +362,9 @@ export class QueryResultsRenderer {
         listItem: ListItem,
         listItemIndex: number,
     ) {
+        const textRenderer = this.textRenderer;
+        const obsidianComponent = this.obsidianComponent;
+
         const li = createAndAppendElement('li', taskList);
 
         if (listItem.statusCharacter) {
@@ -396,12 +399,7 @@ export class QueryResultsRenderer {
         }
 
         const span = createAndAppendElement('span', li);
-        await this.textRenderer(
-            listItem.description,
-            span,
-            listItem.findClosestParentTask()?.path ?? '',
-            this.obsidianComponent,
-        );
+        await textRenderer(listItem.description, span, listItem.findClosestParentTask()?.path ?? '', obsidianComponent);
 
         // Unwrap the p-tag that was created by the MarkdownRenderer:
         const pElement = span.querySelector('p');
