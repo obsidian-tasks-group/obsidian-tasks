@@ -353,10 +353,15 @@ export class QueryResultsRenderer {
             return await this.addTask(taskList, taskLineRenderer, listItem, taskIndex, queryRendererParameters);
         }
 
-        return await this.addListItem(taskList, listItem, taskIndex);
+        return await this.addListItem(taskList, listItem, taskIndex, taskLineRenderer);
     }
 
-    private async addListItem(taskList: HTMLUListElement, listItem: ListItem, listItemIndex: number) {
+    private async addListItem(
+        taskList: HTMLUListElement,
+        listItem: ListItem,
+        listItemIndex: number,
+        _taskLineRenderer: TaskLineRenderer,
+    ) {
         const li = createAndAppendElement('li', taskList);
 
         if (listItem.statusCharacter) {
