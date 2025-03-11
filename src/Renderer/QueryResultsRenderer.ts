@@ -6,7 +6,6 @@ import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
-import { replaceTaskWithTasks } from '../Obsidian/File';
 import { explainResults, getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
@@ -353,61 +352,16 @@ export class QueryResultsRenderer {
             return await this.addTask(taskList, taskLineRenderer, listItem, taskIndex, queryRendererParameters);
         }
 
-        return await this.addListItem(taskList, listItem, taskIndex);
+        return await this.addListItem(taskList, taskLineRenderer, listItem, taskIndex);
     }
 
-    private async addListItem(taskList: HTMLUListElement, listItem: ListItem, listItemIndex: number) {
-        const li = createAndAppendElement('li', taskList);
-
-        if (listItem.statusCharacter) {
-            const checkbox = createAndAppendElement('input', li);
-            checkbox.classList.add('task-list-item-checkbox');
-            checkbox.type = 'checkbox';
-
-            checkbox.addEventListener('click', (event: MouseEvent) => {
-                event.preventDefault();
-                // It is required to stop propagation so that obsidian won't write the file with the
-                // checkbox (un)checked. Obsidian would write after us and overwrite our change.
-                event.stopPropagation();
-
-                // Should be re-rendered as enabled after update in file.
-                checkbox.disabled = true;
-
-                const checkedOrUncheckedListItem = listItem.checkOrUncheck();
-                replaceTaskWithTasks({ originalTask: listItem, newTasks: checkedOrUncheckedListItem });
-            });
-
-            if (listItem.statusCharacter !== ' ') {
-                checkbox.checked = true;
-                li.classList.add('is-checked');
-            }
-
-            li.classList.add('task-list-item');
-
-            // Set these to be compatible with stock obsidian lists:
-            li.setAttribute('data-task', listItem.statusCharacter.trim());
-            // Trim to ensure empty attribute for space. Same way as obsidian.
-            li.setAttribute('data-line', listItemIndex.toString());
-        }
-
-        const span = createAndAppendElement('span', li);
-        await this.textRenderer(
-            listItem.description,
-            span,
-            listItem.findClosestParentTask()?.path ?? '',
-            this.obsidianComponent,
-        );
-
-        // Unwrap the p-tag that was created by the MarkdownRenderer:
-        const pElement = span.querySelector('p');
-        if (pElement !== null) {
-            while (pElement.firstChild) {
-                span.insertBefore(pElement.firstChild, pElement);
-            }
-            pElement.remove();
-        }
-
-        return li;
+    private async addListItem(
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        listItem: ListItem,
+        listItemIndex: number,
+    ) {
+        return await taskLineRenderer.renderListItem(taskList, listItem, listItemIndex);
     }
 
     private async addTask(
