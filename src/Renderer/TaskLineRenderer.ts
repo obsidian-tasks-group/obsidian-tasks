@@ -408,10 +408,10 @@ export class TaskLineRenderer {
         taskList: HTMLUListElement,
         listItem: ListItem,
         listItemIndex: number,
-        textRenderer: any,
+        _textRenderer: any,
         _obsidianComponent: Component | null,
     ) {
-        return await renderListItem(taskList, listItem, listItemIndex, textRenderer, this.obsidianComponent);
+        return await renderListItem(taskList, listItem, listItemIndex, this.textRenderer, this.obsidianComponent);
     }
 }
 
