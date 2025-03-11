@@ -357,11 +357,11 @@ export class QueryResultsRenderer {
 
     private async addListItem(
         taskList: HTMLUListElement,
-        _taskLineRenderer: TaskLineRenderer,
+        taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         listItemIndex: number,
     ) {
-        return await _taskLineRenderer.renderListItem(taskList, listItem, listItemIndex);
+        return await taskLineRenderer.renderListItem(taskList, listItem, listItemIndex);
     }
 
     private async addTask(
