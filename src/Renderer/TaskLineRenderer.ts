@@ -405,7 +405,9 @@ export class TaskLineRenderer {
     }
 
     public async renderListItem(taskList: HTMLUListElement, listItem: ListItem, listItemIndex: number) {
-        return await renderListItem(taskList, listItem, listItemIndex, this.textRenderer, this.obsidianComponent);
+        const textRenderer = this.textRenderer;
+        const obsidianComponent = this.obsidianComponent;
+        return await renderListItem(taskList, listItem, listItemIndex, textRenderer, obsidianComponent);
     }
 }
 
