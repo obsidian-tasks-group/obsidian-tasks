@@ -405,8 +405,6 @@ export class TaskLineRenderer {
     }
 
     public async renderListItem(taskList: HTMLUListElement, listItem: ListItem, listItemIndex: number) {
-        const textRenderer = this.textRenderer;
-        const obsidianComponent = this.obsidianComponent;
         const li = createAndAppendElement('li', taskList);
 
         if (listItem.statusCharacter) {
@@ -441,7 +439,12 @@ export class TaskLineRenderer {
         }
 
         const span = createAndAppendElement('span', li);
-        await textRenderer(listItem.description, span, listItem.findClosestParentTask()?.path ?? '', obsidianComponent);
+        await this.textRenderer(
+            listItem.description,
+            span,
+            listItem.findClosestParentTask()?.path ?? '',
+            this.obsidianComponent,
+        );
 
         // Unwrap the p-tag that was created by the MarkdownRenderer:
         const pElement = span.querySelector('p');
