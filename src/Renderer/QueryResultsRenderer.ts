@@ -6,7 +6,6 @@ import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
-import { replaceTaskWithTasks } from '../Obsidian/File';
 import { explainResults, getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
@@ -16,7 +15,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
-import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+import { TaskLineRenderer, type TextRenderer, createAndAppendElement, renderListItem } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -34,61 +33,6 @@ export interface QueryRendererParameters {
     backlinksClickHandler: BacklinksEventHandler;
     backlinksMousedownHandler: BacklinksEventHandler;
     editTaskPencilClickHandler: EditButtonClickHandler;
-}
-
-async function renderListItem(
-    taskList: HTMLUListElement,
-    listItem: ListItem,
-    listItemIndex: number,
-    textRenderer: any,
-    obsidianComponent: Component | null,
-) {
-    const li = createAndAppendElement('li', taskList);
-
-    if (listItem.statusCharacter) {
-        const checkbox = createAndAppendElement('input', li);
-        checkbox.classList.add('task-list-item-checkbox');
-        checkbox.type = 'checkbox';
-
-        checkbox.addEventListener('click', (event: MouseEvent) => {
-            event.preventDefault();
-            // It is required to stop propagation so that obsidian won't write the file with the
-            // checkbox (un)checked. Obsidian would write after us and overwrite our change.
-            event.stopPropagation();
-
-            // Should be re-rendered as enabled after update in file.
-            checkbox.disabled = true;
-
-            const checkedOrUncheckedListItem = listItem.checkOrUncheck();
-            replaceTaskWithTasks({ originalTask: listItem, newTasks: checkedOrUncheckedListItem });
-        });
-
-        if (listItem.statusCharacter !== ' ') {
-            checkbox.checked = true;
-            li.classList.add('is-checked');
-        }
-
-        li.classList.add('task-list-item');
-
-        // Set these to be compatible with stock obsidian lists:
-        li.setAttribute('data-task', listItem.statusCharacter.trim());
-        // Trim to ensure empty attribute for space. Same way as obsidian.
-        li.setAttribute('data-line', listItemIndex.toString());
-    }
-
-    const span = createAndAppendElement('span', li);
-    await textRenderer(listItem.description, span, listItem.findClosestParentTask()?.path ?? '', obsidianComponent);
-
-    // Unwrap the p-tag that was created by the MarkdownRenderer:
-    const pElement = span.querySelector('p');
-    if (pElement !== null) {
-        while (pElement.firstChild) {
-            span.insertBefore(pElement.firstChild, pElement);
-        }
-        pElement.remove();
-    }
-
-    return li;
 }
 
 /**
