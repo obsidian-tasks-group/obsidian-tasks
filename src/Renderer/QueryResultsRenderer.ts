@@ -15,7 +15,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
-import { TaskLineRenderer, type TextRenderer, createAndAppendElement, renderListItem } from './TaskLineRenderer';
+import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -363,7 +363,13 @@ export class QueryResultsRenderer {
     ) {
         const textRenderer = this.textRenderer;
         const obsidianComponent = this.obsidianComponent;
-        return await renderListItem(taskList, listItem, listItemIndex, textRenderer, obsidianComponent);
+        return await _taskLineRenderer.renderListItem(
+            taskList,
+            listItem,
+            listItemIndex,
+            textRenderer,
+            obsidianComponent,
+        );
     }
 
     private async addTask(

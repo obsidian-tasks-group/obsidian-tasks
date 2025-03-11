@@ -403,6 +403,16 @@ export class TaskLineRenderer {
             });
         });
     }
+
+    public async renderListItem(
+        taskList: HTMLUListElement,
+        listItem: ListItem,
+        listItemIndex: number,
+        textRenderer: any,
+        obsidianComponent: Component | null,
+    ) {
+        return await renderListItem(taskList, listItem, listItemIndex, textRenderer, obsidianComponent);
+    }
 }
 
 export async function renderListItem(
