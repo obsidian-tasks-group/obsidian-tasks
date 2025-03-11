@@ -409,9 +409,9 @@ export class TaskLineRenderer {
         listItem: ListItem,
         listItemIndex: number,
         textRenderer: any,
-        obsidianComponent: Component | null,
+        _obsidianComponent: Component | null,
     ) {
-        return await renderListItem(taskList, listItem, listItemIndex, textRenderer, obsidianComponent);
+        return await renderListItem(taskList, listItem, listItemIndex, textRenderer, this.obsidianComponent);
     }
 }
 
