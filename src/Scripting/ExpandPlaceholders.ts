@@ -72,6 +72,13 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
         const functionOrError = parseExpression(paramsArgs, reconstructed);
         if (functionOrError.isValid()) {
             const result = evaluateExpression(functionOrError.queryComponent!, paramsArgs);
+            if (result === null) {
+                throw Error(
+                    `Invalid placeholder result 'null'.
+    Check for missing file property in this expression:
+        {{${reconstructed}}}`,
+                );
+            }
             if (result !== undefined) {
                 return result;
             }
