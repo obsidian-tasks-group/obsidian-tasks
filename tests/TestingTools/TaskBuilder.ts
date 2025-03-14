@@ -11,6 +11,7 @@ import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfig
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { Priority } from '../../src/Task/Priority';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
+import type { ListItem } from '../../src/Task/ListItem';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -26,6 +27,8 @@ import { setCurrentCacheFile } from '../__mocks__/obsidian';
  */
 export class TaskBuilder {
     // NEW_TASK_FIELD_EDIT_REQUIRED
+    private _parent: ListItem | null = null;
+
     private _status: Status = Status.TODO;
     private _description: string = 'my description';
     private _path: string = '';
@@ -79,6 +82,7 @@ export class TaskBuilder {
         const cachedMetadata = this._mockData?.cachedMetadata ?? {};
         const task = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
+            parent: this._parent,
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
@@ -323,5 +327,10 @@ export class TaskBuilder {
         } else {
             return null;
         }
+    }
+
+    public parent(parent: ListItem | null) {
+        this._parent = parent;
+        return this;
     }
 }

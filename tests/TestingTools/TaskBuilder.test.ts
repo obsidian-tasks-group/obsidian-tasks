@@ -6,6 +6,9 @@ import moment from 'moment';
 import type { Task } from '../../src/Task/Task';
 import example_kanban from '../Obsidian/__test_data__/example_kanban.json';
 import jason_properties from '../Obsidian/__test_data__/jason_properties.json';
+import { ListItem } from '../../src/Task/ListItem';
+import { TaskLocation } from '../../src/Task/TaskLocation';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { TaskBuilder } from './TaskBuilder';
 
 export {};
@@ -23,6 +26,14 @@ describe('TaskBuilder', () => {
         const builder = new TaskBuilder();
         const task = builder.description('hello').build();
         expect(task.originalMarkdown).toEqual('- [ ] hello');
+    });
+
+    it('should allow parent to be supplied', () => {
+        const location = TaskLocation.fromUnknownPosition(new TasksFile('somewhere.md'));
+        const parent = ListItem.fromListItemLine('- any old list item', null, location);
+        const builder = new TaskBuilder();
+        const task = builder.parent(parent).build();
+        expect(task.parent).toEqual(parent);
     });
 
     it('should populate CachedMetadata', () => {
