@@ -892,19 +892,21 @@ group by folder
                 `);
             });
 
-            it('visualise the need to guard against undefined query properties in placeholders', () => {
+            it('visualise the guard against undefined query properties in placeholders', () => {
                 const source = "{{query.file.property('no_such_property')}}";
                 const query = new Query(source, file);
 
                 expect(query.error).not.toBeUndefined();
-                // The 'null' value is because we are embedding regardless of whether the property
-                // exists in the query file.
                 expect(query.error).toMatchInlineSnapshot(`
-                    "do not understand query
-                    Problem statement:
-                        {{query.file.property('no_such_property')}} =>
-                        null
-                    "
+                    "There was an error expanding one or more placeholders.
+
+                    The error message was:
+                        Invalid placeholder result 'null'.
+                        Check for missing file property in this expression:
+                            {{query.file.property('no_such_property')}}
+
+                    The problem is in:
+                        {{query.file.property('no_such_property')}}"
                 `);
             });
 
