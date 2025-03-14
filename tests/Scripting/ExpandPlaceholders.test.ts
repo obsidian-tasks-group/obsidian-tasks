@@ -90,13 +90,22 @@ The problem is in:
         );
     });
 
-    it.failing('should not treat absent property values as string ', () => {
-        // TODO We really must prevent use of null - and probably undefined - as strings from property placeholders
+    it('should not treat absent property values as string, but report the error ', () => {
         const rawString = '{{ query.file.property("non-existent")}}';
 
         const queryContext = makeQueryContext(tasksFile);
-        const expanded = expandPlaceholders(rawString, queryContext);
-        expect(expanded).not.toContain('null');
+
+        expect(() => expandPlaceholders(rawString, queryContext)).toThrow(
+            `There was an error expanding one or more placeholders.
+
+The error message was:
+    Invalid placeholder result 'null'.
+    Check for missing file property in this expression:
+        {{ query.file.property("non-existent")}}
+
+The problem is in:
+    {{ query.file.property("non-existent")}}`,
+        );
     });
 });
 
