@@ -283,6 +283,14 @@ export function groupByFunction(task: Task, arg: GroupingArg, queryContext?: Que
             return [];
         }
 
+        if (typeof result === 'number' && !Number.isInteger(result)) {
+            // Guard against #3371: order of groups, when grouping by "function task.urgency" without specifying precision, is confusing.
+            // Sorting has been found to be unreliable with varying numbers of decimal places.
+            // So to ensure consistent sorting, we round the value to a fixed number of decimals and return it as a string.
+            // This still sorts consistently even when some of the group's values are integers.
+            return [result.toFixed(5)];
+        }
+
         // If there was an error in the expression, like it referred to
         // an unknown task field, result will be undefined, and the call
         // on undefined.toString() will give an exception and a useful error

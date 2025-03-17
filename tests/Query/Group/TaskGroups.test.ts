@@ -238,7 +238,7 @@ describe('Grouping tasks', () => {
         `);
     });
 
-    it.failing('sorts raw urgency value groups correctly', () => {
+    it('sorts raw urgency value groups correctly', () => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date('2025-03-07'));
 
@@ -256,10 +256,8 @@ describe('Grouping tasks', () => {
         const grouping = [new FunctionField().createGrouperFromLine('group by function task.urgency')!];
 
         const groups: TaskGroups = makeTasksGroups(grouping, tasks);
-        const groupHeadings = groups.groups.map((group: TaskGroup) => group.groups[0].slice(0, 7));
-
-        expect(groupHeadings).toEqual(['14.8357', '15.75', '15.2928']); // This passes: it shows that the order is illogical (non-ascending).
-        expect(groupHeadings).toEqual(['14.8357', '15.2928', '15.75']); // This fails: it is what users would expect.
+        const groupHeadings = groups.groups.map((group: TaskGroup) => group.groups[0]);
+        expect(groupHeadings).toEqual(['14.83571', '15.29286', '15.75000']);
     });
 
     it('handles tasks matching multiple groups correctly', () => {
