@@ -20,6 +20,8 @@ import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
+import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 
 window.moment = moment;
 
@@ -574,6 +576,7 @@ describe('onlySuggestIfBracketOpen', () => {
 describe('canSuggestForLine', () => {
     afterEach(() => {
         GlobalFilter.getInstance().reset();
+        resetSettings();
     });
 
     function canSuggestForLineWithCursor(line: string, editor: any = {}) {
@@ -608,6 +611,15 @@ describe('canSuggestForLine', () => {
     it('should not suggest when cursor is in the checkbox', () => {
         expect(canSuggestForLineWithCursor('- [ |] ')).toEqual(false);
         expect(canSuggestForLineWithCursor('- [ ]| ')).toEqual(false);
+    });
+
+    it('should not suggest if cursor is on a task with NON_TASK status', () => {
+        // With the default statuses, ? is TODO, so we should suggest:
+        expect(canSuggestForLineWithCursor('- [?] question|')).toEqual(true);
+
+        StatusRegistry.getInstance().add(new StatusConfiguration('?', 'Question', '_', true, StatusType.NON_TASK));
+        // Now ? is NON_TASK, so we should NOT suggest (issue #1509):
+        expect(canSuggestForLineWithCursor('- [?] question|')).toEqual(false);
     });
 
     it('should suggest when the cursor is at least one character past the checkbox', () => {
