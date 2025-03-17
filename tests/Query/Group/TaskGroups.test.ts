@@ -243,9 +243,12 @@ describe('Grouping tasks', () => {
         jest.setSystemTime(new Date('2025-03-07'));
 
         const lines = [
+            '- [ ] 0 📅 2025-02-28 🔺           ', // urgency: 21
             '- [ ] 1 📅 2025-03-07 ⏳ 2025-03-07', // urgency: 15.75
             '- [ ] 2 📅 2025-03-08 ⏳ 2025-03-07', // urgency: 15.292857142857141
             '- [ ] 3 📅 2025-03-09 ⏳ 2025-03-07', // urgency: 14.835714285714285
+            '- [ ] 4 ⏫  🛫 2025-03-18          ', // urgency: 3
+            '- [ ] 5 🔽                         ', // urgency: 0
         ];
         const tasks = fromLines({ lines });
 
@@ -257,7 +260,7 @@ describe('Grouping tasks', () => {
 
         const groups: TaskGroups = makeTasksGroups(grouping, tasks);
         const groupHeadings = groups.groups.map((group: TaskGroup) => group.groups[0]);
-        expect(groupHeadings).toEqual(['14.83571', '15.29286', '15.75000']);
+        expect(groupHeadings).toEqual(['0', '3', '14.83571', '15.29286', '15.75000', '21']);
     });
 
     it('handles tasks matching multiple groups correctly', () => {
