@@ -522,7 +522,7 @@ describe('FunctionField - grouping return types', () => {
         ['1', ['1']],
         ['0', ['0']],
         ['0 || "No value"', ['No value']],
-        ['1.0765456', ['1.0765456']],
+        ['1.0765456', ['1.07655']],
         ['1.0765456.toFixed(3)', ['1.077']],
         ['["heading1", "heading2"]', ['heading1', 'heading2']], // return two headings, indicating that this task should be displayed twice, once in each heading
         ['[1, 2]', ['1', '2']], // return two headings, that need to be converted to strings
