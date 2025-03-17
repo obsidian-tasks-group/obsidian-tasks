@@ -13,16 +13,23 @@ import { StatusTypeField } from '../../../src/Query/Filter/StatusTypeField';
 import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
-import { fromLine } from '../../TestingTools/TestHelpers';
+import { fromLine, fromLines } from '../../TestingTools/TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { TasksFile } from '../../../src/Scripting/TasksFile';
+import { FunctionField } from '../../../src/Query/Filter/FunctionField';
+import type { TaskGroup } from '../../../src/Query/Group/TaskGroup';
 
 window.moment = moment;
 
-function makeTasksGroups(grouping: Grouper[], inputs: Task[]): any {
+function makeTasksGroups(grouping: Grouper[], inputs: Task[]): TaskGroups {
     return new TaskGroups(grouping, inputs, SearchInfo.fromAllTasks(inputs));
 }
 
+beforeEach(() => {});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
 describe('Grouping tasks', () => {
     it('groups correctly by path', () => {
         // Arrange
@@ -229,6 +236,30 @@ describe('Grouping tasks', () => {
             2 tasks
             "
         `);
+    });
+
+    it.failing('sorts raw urgency value groups correctly', () => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2025-03-07'));
+
+        const lines = [
+            '- [ ] 1 📅 2025-03-07 ⏳ 2025-03-07', // urgency: 15.75
+            '- [ ] 2 📅 2025-03-08 ⏳ 2025-03-07', // urgency: 15.292857142857141
+            '- [ ] 3 📅 2025-03-09 ⏳ 2025-03-07', // urgency: 14.835714285714285
+        ];
+        const tasks = fromLines({ lines });
+
+        // See issue https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3371
+        //      order of groups, when grouping by "function task.urgency" without specifying precision, is confusing
+        // There is a problem with the sorting of groups whose floating-point values differ in precision,
+        // when grouping by the raw urgency value
+        const grouping = [new FunctionField().createGrouperFromLine('group by function task.urgency')!];
+
+        const groups: TaskGroups = makeTasksGroups(grouping, tasks);
+        const groupHeadings = groups.groups.map((group: TaskGroup) => group.groups[0].slice(0, 7));
+
+        expect(groupHeadings).toEqual(['14.8357', '15.75', '15.2928']); // This passes: it shows that the order is illogical (non-ascending).
+        expect(groupHeadings).toEqual(['14.8357', '15.2928', '15.75']); // This fails: it is what users would expect.
     });
 
     it('handles tasks matching multiple groups correctly', () => {
