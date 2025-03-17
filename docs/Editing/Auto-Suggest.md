@@ -44,7 +44,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
          - `* [ ]`
          - `+ [ ]`
      - and the global filter (if any),
-     - and the status character (between `[` and `]`) does not have [[Status Types|status type]] `NON_TASK`.
+     - and the status symbol (the character between `[` and `]`) does not have [[Status Types|status type]] `NON_TASK`.
 
      Tasks also tries to display the auto-suggest menu based on context. For example, suggestions will only appear
       within square brackets `[]` or parentheses `()` when using the [[Dataview Format#Bracketed inline fields|Dataview Task Format]].
