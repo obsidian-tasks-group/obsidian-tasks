@@ -613,7 +613,7 @@ describe('canSuggestForLine', () => {
         expect(canSuggestForLineWithCursor('- [ ]| ')).toEqual(false);
     });
 
-    it.failing('should not suggest if cursor is on a task with NON_TASK status', () => {
+    it('should not suggest if cursor is on a task with NON_TASK status', () => {
         // With the default statuses, ? is TODO, so we should suggest:
         expect(canSuggestForLineWithCursor('- [?] question|')).toEqual(true);
 
