@@ -39,11 +39,12 @@ Here is a more detailed walk through of the creation of a new task, which can be
 
     **Note**: the auto-suggest menu pops up only if the cursor is in a line that is recognized as a task, that is, the line contains:
 
-     - a bullet with a checkbox, that is, one of:
+     - a bullet with a checkbox, that is, starting with one of these three characters:
          - `- [ ]`
          - `* [ ]`
          - `+ [ ]`
-     - and the global filter (if any)
+     - and the global filter (if any),
+     - and the status symbol (the character between `[` and `]`) does not have [[Status Types|status type]] `NON_TASK`.
 
      Tasks also tries to display the auto-suggest menu based on context. For example, suggestions will only appear
       within square brackets `[]` or parentheses `()` when using the [[Dataview Format#Bracketed inline fields|Dataview Task Format]].
@@ -135,8 +136,6 @@ There are some Auto-Suggest behaviours that might be improved in future releases
     - This phrase still needs to be typed manually.
     - We are tracking this in [issue #2066](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2066).
 - It currently pops up when editing completed tasks. This may be changed in future.
-- It currently pops up when editing NON_TASK tasks. This may be changed in future.
-  - We are tracking this in [issue #1509](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1509).
 - The [[Create or edit Task#Date abbreviations|date abbreviations offered by "Create or edit task"]] only work after a space is typed.
 - When Auto-Suggest is used in [[Kanban plugin]] cards (or any other plugins that use the [[Tasks Api#Auto-Suggest Integration|auto-suggest integration]]), the [[Task Dependencies|dependencies]] suggestions are not available, because there is not yet a mechanism for plugins to access all the tasks in the vault.
   - We are tracking this in [issue #3274](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3274).
