@@ -143,3 +143,29 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         dependsOn: [],
     });
 };
+
+export const taskFromString = ({ description }: { description: string }): Task => {
+    const createdDate = getDefaultCreatedDate();
+    return new Task({
+        status: Status.TODO,
+        description: description,
+        taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('')),
+        indentation: '',
+        listMarker: '-',
+        priority: Priority.None,
+        createdDate,
+        startDate: null,
+        scheduledDate: null,
+        dueDate: null,
+        doneDate: null,
+        cancelledDate: null,
+        recurrence: null,
+        onCompletion: OnCompletion.Ignore,
+        dependsOn: [],
+        id: '',
+        blockLink: '',
+        tags: [],
+        originalMarkdown: '',
+        scheduledDateIsInferred: false,
+    });
+};

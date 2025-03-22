@@ -1,8 +1,8 @@
 import type { App } from 'obsidian';
 import type { Task } from '../Task/Task';
-import { taskFromLine } from '../Commands/CreateOrEditTaskParser';
+import { taskFromLine, taskFromString } from '../Commands/CreateOrEditTaskParser';
 import { TaskModal } from '../Obsidian/TaskModal';
-import type { ITaskModal, taskModalFactory } from './createTaskLineModal';
+import type { ITaskModal, taskModalFactory, taskModalFactoryFromString } from './createTaskLineModal';
 
 /**
  * Factory method to create a new {@link TaskModal}.
@@ -26,5 +26,14 @@ export const defaultTaskModalFactory: taskModalFactory = (
     //      One option is to make the allTasks parameter to the Edit task modal be optional,
     //      and if it's not provided, then hide the dependency fields in the modal.
     //      For now, we pass in an empty list of tasks.
+    return new TaskModal({ app, task, onSubmit, allTasks: [] }) as ITaskModal;
+};
+
+export const defaultTaskModalFactoryfromString: taskModalFactoryFromString = (
+    app: App,
+    onSubmit: (updatedTasks: Task[]) => void,
+    description: string,
+): ITaskModal => {
+    const task = taskFromString({ description });
     return new TaskModal({ app, task, onSubmit, allTasks: [] }) as ITaskModal;
 };
