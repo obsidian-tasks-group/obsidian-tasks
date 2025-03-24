@@ -294,7 +294,7 @@ export class TaskLineRenderer {
 
     private async renderDescription(task: Task, span: HTMLSpanElement, isTaskInQueryFile: boolean) {
         let description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(
-            adjustRelativeLinksInDescription(task, isTaskInQueryFile),
+            this.adjustRelativeLinksInDescription(task, isTaskInQueryFile),
         );
 
         const { debugSettings } = getSettings();
@@ -330,6 +330,10 @@ export class TaskLineRenderer {
         span.querySelectorAll('.footnotes').forEach((footnoteElement) => {
             footnoteElement.remove();
         });
+    }
+
+    private adjustRelativeLinksInDescription(task: Task, isTaskInQueryFile: boolean) {
+        return adjustRelativeLinksInDescription(task, isTaskInQueryFile);
     }
 
     /*
