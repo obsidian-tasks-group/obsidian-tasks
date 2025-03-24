@@ -507,6 +507,8 @@ export class QueryResultsRenderer {
     }
 
     private processTaskLinks(task: Task): Task {
+        let description = task.description;
+
         // Skip if task is from the same file as the query
         if (this.taskIsInQueryFile(task)) {
             return task;
@@ -524,8 +526,6 @@ export class QueryResultsRenderer {
             );
         });
         if (taskLinks.length === 0) return task;
-
-        let description = task.description;
 
         // a task can only be from one file, so we can replace all the internal links
         //in the description with the new file path
