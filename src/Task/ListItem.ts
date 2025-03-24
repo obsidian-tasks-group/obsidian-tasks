@@ -72,12 +72,10 @@ export class ListItem {
         let listMarker = '';
         let statusCharacter = null;
         let description = '';
-        if (nonTaskMatch) {
-            indentation = nonTaskMatch[1];
-            listMarker = nonTaskMatch[2];
-            statusCharacter = nonTaskMatch[4] ?? null;
-            description = nonTaskMatch[5].trim();
-        }
+        indentation = nonTaskMatch[1];
+        listMarker = nonTaskMatch[2];
+        statusCharacter = nonTaskMatch[4] ?? null;
+        description = nonTaskMatch[5].trim();
 
         if (listMarker === undefined) {
             return null;
