@@ -376,7 +376,7 @@ export class QueryResultsRenderer {
             task: task,
             taskIndex: taskIndex,
             isFilenameUnique: isFilenameUnique,
-            isTaskInQueryFile: this.isTaskInQueryFile(task),
+            isTaskInQueryFile: this.filePath === task.path,
         });
 
         // Remove all footnotes. They don't re-appear in another document.
@@ -503,11 +503,6 @@ export class QueryResultsRenderer {
             backLink.append(')');
         }
     }
-
-    private isTaskInQueryFile(task: Task): boolean {
-        return this.filePath === task.path;
-    }
-
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
         const amount = 1;
         const timeUnit = 'day';
