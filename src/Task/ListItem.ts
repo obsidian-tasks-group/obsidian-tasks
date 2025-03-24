@@ -68,14 +68,10 @@ export class ListItem {
             return null;
         }
 
-        let indentation = '';
-        let listMarker = '';
-        let statusCharacter = null;
-        let description = '';
-        indentation = nonTaskMatch[1];
-        listMarker = nonTaskMatch[2];
-        statusCharacter = nonTaskMatch[4] ?? null;
-        description = nonTaskMatch[5].trim();
+        const indentation = nonTaskMatch[1];
+        const listMarker = nonTaskMatch[2];
+        const statusCharacter = nonTaskMatch[4] ?? null;
+        const description = nonTaskMatch[5].trim();
 
         if (listMarker === undefined) {
             return null;
