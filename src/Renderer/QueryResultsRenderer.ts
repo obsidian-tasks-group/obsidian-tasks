@@ -372,9 +372,12 @@ export class QueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
     ) {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
-        const processedTask = this.processTaskLinks(task);
-
-        const listItem = await taskLineRenderer.renderTaskLine(processedTask, taskIndex, isFilenameUnique);
+        const listItem = await taskLineRenderer.renderTaskLine({
+            task: task,
+            taskIndex: taskIndex,
+            isTaskInQueryFile: this.filePath === task.path,
+            isFilenameUnique: isFilenameUnique,
+        });
 
         // Remove all footnotes. They don't re-appear in another document.
         const footnotes = listItem.querySelectorAll('[data-footnote-id]');
@@ -500,45 +503,6 @@ export class QueryResultsRenderer {
             backLink.append(')');
         }
     }
-
-    private processTaskLinks(task: Task): Task {
-        // Skip if task is from the same file as the query
-        if (this.filePath === task.path) {
-            return task;
-        }
-
-        const linkCache = task.file.cachedMetadata.links;
-        if (!linkCache) return task;
-
-        // Find links in the task description
-        const taskLinks = linkCache.filter((link) => {
-            return (
-                link.position.start.line === task.taskLocation.lineNumber &&
-                task.description.includes(link.original) &&
-                link.link.startsWith('#')
-            );
-        });
-        if (taskLinks.length === 0) return task;
-
-        let description = task.description;
-
-        // a task can only be from one file, so we can replace all the internal links
-        //in the description with the new file path
-        for (const link of taskLinks) {
-            const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
-            // Replace the first instance of this link:
-            description = description.replace(link.original, fullLink);
-        }
-
-        // Return a new Task with the updated description
-        return new Task({
-            ...task,
-            description,
-            // Preserve the original task's location information
-            taskLocation: task.taskLocation,
-        });
-    }
-
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
         const amount = 1;
         const timeUnit = 'day';

@@ -127,18 +127,28 @@ export class TaskLineRenderer {
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
      * @param task The task to be rendered.
      * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
+     * @param isTaskInQueryFile
      * @param isFilenameUnique Whether the name of the file that contains the task is unique in the vault.
      *                         If it is undefined, the outcome will be the same as with a unique file name:
      *                         the file name only. If set to `true`, the full path will be returned.
      */
-    public async renderTaskLine(task: Task, taskIndex: number, isFilenameUnique?: boolean): Promise<HTMLLIElement> {
+    public async renderTaskLine({
+        task,
+        taskIndex,
+        isTaskInQueryFile,
+        isFilenameUnique,
+    }: {
+        task: Task;
+        taskIndex: number;
+        isTaskInQueryFile: boolean;
+        isFilenameUnique?: boolean;
+    }): Promise<HTMLLIElement> {
         const li = createAndAppendElement('li', this.parentUlElement);
-
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
         const textSpan = createAndAppendElement('span', li);
         textSpan.classList.add('tasks-list-text');
-        await this.taskToHtml(task, textSpan, li);
+        await this.taskToHtml(task, textSpan, li, isTaskInQueryFile);
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
         // moving the code, remember to update that reference too.
@@ -193,7 +203,12 @@ export class TaskLineRenderer {
         return li;
     }
 
-    private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
+    private async taskToHtml(
+        task: Task,
+        parentElement: HTMLElement,
+        li: HTMLLIElement,
+        isTaskInQueryFile: boolean,
+    ): Promise<void> {
         const fieldRenderer = new TaskFieldRenderer();
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
@@ -212,7 +227,7 @@ export class TaskLineRenderer {
                 // to differentiate between the container of the text and the text itself, so it will be possible
                 // to do things like surrounding only the text (rather than its whole placeholder) with a highlight
                 const internalSpan = createAndAppendElement('span', span);
-                await this.renderComponentText(internalSpan, componentString, component, task);
+                await this.renderComponentText(internalSpan, componentString, component, task, isTaskInQueryFile);
                 this.addInternalClasses(component, internalSpan);
 
                 // Add the component's CSS class describing what this component is (priority, due date etc.)
@@ -269,15 +284,17 @@ export class TaskLineRenderer {
         componentString: string,
         component: TaskLayoutComponent,
         task: Task,
+        isTaskInQueryFile: boolean,
     ) {
         if (component === TaskLayoutComponent.Description) {
-            return await this.renderDescription(task, span);
+            return await this.renderDescription(task, span, isTaskInQueryFile);
         }
         span.innerHTML = componentString;
     }
 
-    private async renderDescription(task: Task, span: HTMLSpanElement) {
-        let description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(task.description);
+    private async renderDescription(task: Task, span: HTMLSpanElement, isTaskInQueryFile: boolean) {
+        let description = this.adjustRelativeLinksInDescription(task, isTaskInQueryFile);
+        description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(description);
 
         const { debugSettings } = getSettings();
         if (debugSettings.showTaskHiddenData) {
@@ -312,6 +329,40 @@ export class TaskLineRenderer {
         span.querySelectorAll('.footnotes').forEach((footnoteElement) => {
             footnoteElement.remove();
         });
+    }
+
+    private adjustRelativeLinksInDescription(task: Task, isTaskInQueryFile: boolean) {
+        // Skip if task is from the same file as the query
+        if (isTaskInQueryFile) {
+            return task.description;
+        }
+
+        // Skip if the task is in a file with no links
+        const linkCache = task.file.cachedMetadata.links;
+        if (!linkCache) {
+            return task.description;
+        }
+
+        // Find links in the task description
+        const taskLinks = linkCache.filter((link) => {
+            return (
+                link.position.start.line === task.taskLocation.lineNumber &&
+                task.description.includes(link.original) &&
+                link.link.startsWith('#')
+            );
+        });
+
+        let description = task.description;
+        if (taskLinks.length !== 0) {
+            // a task can only be from one file, so we can replace all the internal links
+            //in the description with the new file path
+            for (const link of taskLinks) {
+                const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+                // Replace the first instance of this link:
+                description = description.replace(link.original, fullLink);
+            }
+        }
+        return description;
     }
 
     /*

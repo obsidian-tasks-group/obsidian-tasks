@@ -41,3 +41,13 @@ This file contains test cases for internal heading links in tasks.
 ## Escaped Links
 
 - [ ] #task Task with \[\[#Escaped Links\]\] escaped link
+
+## Search
+
+Hover over each heading in these tasks, and to make the Page Preview plugin show that the links exist.
+
+```tasks
+path includes {{query.file.path}}
+group by heading
+hide backlinks
+```

@@ -46,7 +46,7 @@ async function renderListItem(
         taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
-    return await taskLineRenderer.renderTaskLine(task, 0);
+    return await taskLineRenderer.renderTaskLine({ task: task, taskIndex: 0, isTaskInQueryFile: true });
 }
 
 function getTextSpan(listItem: HTMLElement) {
@@ -89,7 +89,11 @@ describe('task line rendering - HTML', () => {
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
-        const listItem = await taskLineRenderer.renderTaskLine(new TaskBuilder().build(), 0);
+        const listItem = await taskLineRenderer.renderTaskLine({
+            task: new TaskBuilder().build(),
+            taskIndex: 0,
+            isTaskInQueryFile: true,
+        });
 
         // Just one element
         expect(ulElement.children.length).toEqual(1);
