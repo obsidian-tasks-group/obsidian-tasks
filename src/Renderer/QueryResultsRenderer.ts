@@ -15,7 +15,12 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
-import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+import {
+    TaskLineRenderer,
+    type TextRenderer,
+    adjustRelativeLinksInDescription,
+    createAndAppendElement,
+} from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -33,35 +38,6 @@ export interface QueryRendererParameters {
     backlinksClickHandler: BacklinksEventHandler;
     backlinksMousedownHandler: BacklinksEventHandler;
     editTaskPencilClickHandler: EditButtonClickHandler;
-}
-
-function adjustRelativeLinksInDescription(task: Task, taskIsInQueryFile: boolean) {
-    let description = task.description;
-
-    // Skip if task is from the same file as the query
-    if (!taskIsInQueryFile) {
-        const linkCache = task.file.cachedMetadata.links;
-        if (linkCache) {
-            // Find links in the task description
-            const taskLinks = linkCache.filter((link) => {
-                return (
-                    link.position.start.line === task.taskLocation.lineNumber &&
-                    task.description.includes(link.original) &&
-                    link.link.startsWith('#')
-                );
-            });
-            if (taskLinks.length !== 0) {
-                // a task can only be from one file, so we can replace all the internal links
-                //in the description with the new file path
-                for (const link of taskLinks) {
-                    const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
-                    // Replace the first instance of this link:
-                    description = description.replace(link.original, fullLink);
-                }
-            }
-        }
-    }
-    return description;
 }
 
 /**
