@@ -63,23 +63,22 @@ export class ListItem {
         taskLocation: TaskLocation,
     ): ListItem | null {
         const nonTaskMatch = RegExp(TaskRegularExpressions.nonTaskRegex).exec(originalMarkdown);
-        let indentation = '';
-        let listMarker = '';
-        let statusCharacter = null;
-        let description = '';
-        if (nonTaskMatch) {
-            indentation = nonTaskMatch[1];
-            listMarker = nonTaskMatch[2];
-            statusCharacter = nonTaskMatch[4] ?? null;
-            description = nonTaskMatch[5].trim();
+        if (!nonTaskMatch) {
+            // In practice we never reach here, because the regexp matches any text even '', but the compiler doesn't know that.
+            return null;
+        }
+
+        const listMarker = nonTaskMatch[2];
+        if (listMarker === undefined) {
+            return null;
         }
 
         return new ListItem({
             originalMarkdown,
-            indentation,
+            indentation: nonTaskMatch[1],
             listMarker,
-            statusCharacter,
-            description,
+            statusCharacter: nonTaskMatch[4] ?? null,
+            description: nonTaskMatch[5].trim(),
             taskLocation,
             parent,
         });
