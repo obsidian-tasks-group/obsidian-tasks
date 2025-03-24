@@ -130,17 +130,23 @@ export class TaskLineRenderer {
      * @param isFilenameUnique Whether the name of the file that contains the task is unique in the vault.
      *                         If it is undefined, the outcome will be the same as with a unique file name:
      *                         the file name only. If set to `true`, the full path will be returned.
+     * @param appleSauce
      */
     public async renderTaskLine({
         task,
         taskIndex,
         isFilenameUnique,
+        appleSauce,
     }: {
         task: Task;
         taskIndex: number;
         isFilenameUnique?: boolean;
+        appleSauce?: boolean;
     }): Promise<HTMLLIElement> {
         const li = createAndAppendElement('li', this.parentUlElement);
+        if (appleSauce) {
+            return li;
+        }
 
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
