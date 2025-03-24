@@ -535,8 +535,6 @@ export class QueryResultsRenderer {
                     }
                 }
             }
-        } else {
-            return task;
         }
 
         if (description === task.description) {
