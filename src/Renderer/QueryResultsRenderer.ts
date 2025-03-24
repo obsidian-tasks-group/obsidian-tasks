@@ -507,10 +507,12 @@ export class QueryResultsRenderer {
     }
 
     private processTaskLinks(task: Task): Task {
+        const taskIsInQueryFile = this.taskIsInQueryFile(task);
+
         let description = task.description;
 
         // Skip if task is from the same file as the query
-        if (!this.taskIsInQueryFile(task)) {
+        if (!taskIsInQueryFile) {
             const linkCache = task.file.cachedMetadata.links;
             if (linkCache) {
                 // Find links in the task description
