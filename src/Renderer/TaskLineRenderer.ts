@@ -341,7 +341,9 @@ export class TaskLineRenderer {
         }
 
         const linkCache = task.file.cachedMetadata.links;
-        if (linkCache) {
+        if (!linkCache) {
+            return task.description;
+        } else {
             // Find links in the task description
             const taskLinks = linkCache.filter((link) => {
                 return (
