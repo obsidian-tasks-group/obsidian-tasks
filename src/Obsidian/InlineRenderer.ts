@@ -133,7 +133,11 @@ export class InlineRenderer {
             }
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const taskIndex: number = Number.parseInt(dataLine, 10);
-            const taskElement = await taskLineRenderer.renderTaskLine({ task: task, taskIndex: taskIndex });
+            const taskElement = await taskLineRenderer.renderTaskLine({
+                task: task,
+                taskIndex: taskIndex,
+                isTaskInQueryFile: true,
+            });
 
             // If the rendered element contains a sub-list or sub-div (e.g. the
             // folding arrow), we need to keep it.

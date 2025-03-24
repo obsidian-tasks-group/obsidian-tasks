@@ -141,7 +141,7 @@ export class TaskLineRenderer {
         task: Task;
         taskIndex: number;
         isFilenameUnique?: boolean;
-        isTaskInQueryFile?: boolean;
+        isTaskInQueryFile: boolean;
     }): Promise<HTMLLIElement> {
         const li = createAndAppendElement('li', this.parentUlElement);
         if (isTaskInQueryFile) {
