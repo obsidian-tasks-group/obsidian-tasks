@@ -507,7 +507,7 @@ export class QueryResultsRenderer {
 
     private processTaskLinks(task: Task): Task {
         // Skip if task is from the same file as the query
-        if (this.filePath === task.path) {
+        if (this.taskIsInQueryFile(task)) {
             return task;
         }
 
@@ -541,6 +541,10 @@ export class QueryResultsRenderer {
             // Preserve the original task's location information
             taskLocation: task.taskLocation,
         });
+    }
+
+    private taskIsInQueryFile(task: Task) {
+        return this.filePath === task.path;
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
