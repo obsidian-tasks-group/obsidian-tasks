@@ -286,17 +286,17 @@ export class TaskLineRenderer {
         task: Task,
         isTaskInQueryFile: boolean,
     ) {
-        if (isTaskInQueryFile) {
-            console.log('Remove me!');
-        }
-
         if (component === TaskLayoutComponent.Description) {
-            return await this.renderDescription(task, span);
+            return await this.renderDescription(task, span, isTaskInQueryFile);
         }
         span.innerHTML = componentString;
     }
 
-    private async renderDescription(task: Task, span: HTMLSpanElement) {
+    private async renderDescription(task: Task, span: HTMLSpanElement, isTaskInQueryFile: boolean) {
+        if (isTaskInQueryFile) {
+            console.log('Remove me!');
+        }
+
         let description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(task.description);
 
         const { debugSettings } = getSettings();
