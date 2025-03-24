@@ -271,13 +271,13 @@ export class TaskLineRenderer {
         task: Task,
     ) {
         if (component === TaskLayoutComponent.Description) {
-            return await this.renderDescription(componentString, task, span);
+            return await this.renderDescription(task, span);
         }
         span.innerHTML = componentString;
     }
 
-    private async renderDescription(description: string, task: Task, span: HTMLSpanElement) {
-        description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(description);
+    private async renderDescription(task: Task, span: HTMLSpanElement) {
+        let description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(task.description);
 
         const { debugSettings } = getSettings();
         if (debugSettings.showTaskHiddenData) {
