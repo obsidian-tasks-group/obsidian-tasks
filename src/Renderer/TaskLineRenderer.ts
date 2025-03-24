@@ -338,6 +338,7 @@ export class TaskLineRenderer {
             return task.description;
         }
 
+        // Skip if the task is in a file with no lines
         const linkCache = task.file.cachedMetadata.links;
         if (!linkCache) {
             return task.description;
