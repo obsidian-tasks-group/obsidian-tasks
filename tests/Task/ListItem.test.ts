@@ -16,7 +16,7 @@ const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile('anything.md
 
 describe('list item tests', () => {
     it('should create list item with empty children and absent parent', () => {
-        const listItem = ListItem.fromListItemLine('', null, taskLocation)!;
+        const listItem = ListItem.fromListItemLine('- list item', null, taskLocation)!;
         expect(listItem).toBeDefined();
         expect(listItem.children).toEqual([]);
         expect(listItem.parent).toEqual(null);
@@ -24,9 +24,9 @@ describe('list item tests', () => {
     });
 
     it('should create a list item with 2 children', () => {
-        const listItem = ListItem.fromListItemLine('', null, taskLocation)!;
-        const childItem1 = ListItem.fromListItemLine('', listItem, taskLocation)!;
-        const childItem2 = ListItem.fromListItemLine('', listItem, taskLocation)!;
+        const listItem = ListItem.fromListItemLine('- list item', null, taskLocation)!;
+        const childItem1 = ListItem.fromListItemLine('- list item', listItem, taskLocation)!;
+        const childItem2 = ListItem.fromListItemLine('- list item', listItem, taskLocation)!;
         expect(listItem).toBeDefined();
         expect(childItem1.parent).toEqual(listItem);
         expect(childItem2.parent).toEqual(listItem);
@@ -34,8 +34,8 @@ describe('list item tests', () => {
     });
 
     it('should create a list item with a parent', () => {
-        const parentItem = ListItem.fromListItemLine('', null, taskLocation)!;
-        const listItem = ListItem.fromListItemLine('', parentItem, taskLocation)!;
+        const parentItem = ListItem.fromListItemLine('- list item', null, taskLocation)!;
+        const listItem = ListItem.fromListItemLine('- list item', parentItem, taskLocation)!;
         expect(listItem).toBeDefined();
         expect(listItem.parent).toEqual(parentItem);
         expect(parentItem.children).toEqual([listItem]);
@@ -149,14 +149,10 @@ describe('list item parsing', () => {
         expect(ListItem.fromListItemLine('2. xxx', null, taskLocation)!.listMarker).toEqual('2.');
     });
 
-    it('should accept a non list item', () => {
-        // we tried making the constructor throw if given a non list item
-        // but it broke lots of normal Task uses in the tests (TaskBuilder)
+    it('should detect a non-list item', () => {
         const item = ListItem.fromListItemLine('# Heading', null, taskLocation)!;
 
-        expect(item.description).toEqual('# Heading');
-        expect(item.originalMarkdown).toEqual('# Heading');
-        expect(item.statusCharacter).toEqual(null);
+        expect(item).toBeNull();
     });
 });
 
