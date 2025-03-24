@@ -336,7 +336,9 @@ export class TaskLineRenderer {
         let description = task.description;
 
         // Skip if task is from the same file as the query
-        if (!isTaskInQueryFile) {
+        if (isTaskInQueryFile) {
+            return task.description;
+        } else {
             const linkCache = task.file.cachedMetadata.links;
             if (linkCache) {
                 // Find links in the task description
