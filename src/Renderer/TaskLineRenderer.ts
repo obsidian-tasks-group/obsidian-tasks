@@ -293,11 +293,9 @@ export class TaskLineRenderer {
     }
 
     private async renderDescription(task: Task, span: HTMLSpanElement, isTaskInQueryFile: boolean) {
-        if (isTaskInQueryFile) {
-            console.log('Remove me!');
-        }
-
-        let description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(task.description);
+        let description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(
+            adjustRelativeLinksInDescription(task, isTaskInQueryFile),
+        );
 
         const { debugSettings } = getSettings();
         if (debugSettings.showTaskHiddenData) {
