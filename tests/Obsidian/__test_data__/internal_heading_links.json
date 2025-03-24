@@ -192,6 +192,22 @@
             "offset": 902
           }
         }
+      },
+      {
+        "heading": "Search",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 9,
+            "line": 44,
+            "offset": 988
+          },
+          "start": {
+            "col": 0,
+            "line": 44,
+            "offset": 979
+          }
+        }
       }
     ],
     "links": [
@@ -859,6 +875,51 @@
           }
         },
         "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 9,
+            "line": 44,
+            "offset": 988
+          },
+          "start": {
+            "col": 0,
+            "line": 44,
+            "offset": 979
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 102,
+            "line": 46,
+            "offset": 1092
+          },
+          "start": {
+            "col": 0,
+            "line": 46,
+            "offset": 990
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 52,
+            "offset": 1172
+          },
+          "start": {
+            "col": 0,
+            "line": 48,
+            "offset": 1094
+          }
+        },
+        "type": "code"
       }
     ],
     "tags": [
@@ -1014,7 +1075,7 @@
       }
     ]
   },
-  "fileContents": "# Internal Heading Links Test\n\nThis file contains test cases for internal heading links in tasks.\n\n## Simple Headers\n\n## Another Header\n\n## Basic Internal Links\n\n- [ ] #task Task with<br>[[#Basic Internal Links]]\n\n## Multiple Links In One Task\n\n- [ ] #task Task with<br>[[#Multiple Links In One Task]] and<br>[[#Simple Headers]]\n\n## External File Links\n\n- [ ] #task Task with<br>[[Other File]]\n\n## Mixed Link Types\n\n- [ ] #task Task with<br>[[Other File]] and<br>[[#Mixed Link Types]]\n\n## Header Links With File Reference\n\n- [ ] #task<br>[[#Header Links With File Reference]] then<br>[[Other File#Some Header]] and<br>[[#Another Header]]\n\n## Headers-With_Special Characters\n\n- [ ] #task Task with<br>[[#Headers-With_Special Characters]]\n\n## Aliased Links\n\n- [ ] #task Task with<br>[[#Aliased Links|I am an alias]]\n\n## Links In Code Blocks\n\n- [ ] #task Task with `[[#Links In Code Blocks]]` code block\n\n## Escaped Links\n\n- [ ] #task Task with \\[\\[#Escaped Links\\]\\] escaped link\n",
+  "fileContents": "# Internal Heading Links Test\n\nThis file contains test cases for internal heading links in tasks.\n\n## Simple Headers\n\n## Another Header\n\n## Basic Internal Links\n\n- [ ] #task Task with<br>[[#Basic Internal Links]]\n\n## Multiple Links In One Task\n\n- [ ] #task Task with<br>[[#Multiple Links In One Task]] and<br>[[#Simple Headers]]\n\n## External File Links\n\n- [ ] #task Task with<br>[[Other File]]\n\n## Mixed Link Types\n\n- [ ] #task Task with<br>[[Other File]] and<br>[[#Mixed Link Types]]\n\n## Header Links With File Reference\n\n- [ ] #task<br>[[#Header Links With File Reference]] then<br>[[Other File#Some Header]] and<br>[[#Another Header]]\n\n## Headers-With_Special Characters\n\n- [ ] #task Task with<br>[[#Headers-With_Special Characters]]\n\n## Aliased Links\n\n- [ ] #task Task with<br>[[#Aliased Links|I am an alias]]\n\n## Links In Code Blocks\n\n- [ ] #task Task with `[[#Links In Code Blocks]]` code block\n\n## Escaped Links\n\n- [ ] #task Task with \\[\\[#Escaped Links\\]\\] escaped link\n\n## Search\n\nHover over each heading in these tasks, and to make the Page Preview plugin show that the links exist.\n\n```tasks\npath includes {{query.file.path}}\ngroup by heading\nhide backlinks\n```\n",
   "filePath": "Test Data/internal_heading_links.md",
   "getAllTags": [
     "#task",
