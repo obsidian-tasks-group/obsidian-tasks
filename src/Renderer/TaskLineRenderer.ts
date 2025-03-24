@@ -333,8 +333,6 @@ export class TaskLineRenderer {
     }
 
     private adjustRelativeLinksInDescription(task: Task, isTaskInQueryFile: boolean) {
-        let description = task.description;
-
         // Skip if task is from the same file as the query
         if (isTaskInQueryFile) {
             return task.description;
@@ -353,6 +351,8 @@ export class TaskLineRenderer {
                 link.link.startsWith('#')
             );
         });
+
+        let description = task.description;
         if (taskLinks.length !== 0) {
             // a task can only be from one file, so we can replace all the internal links
             //in the description with the new file path
