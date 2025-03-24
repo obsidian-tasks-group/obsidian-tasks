@@ -127,21 +127,21 @@ export class TaskLineRenderer {
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
      * @param task The task to be rendered.
      * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
+     * @param isTaskInQueryFile
      * @param isFilenameUnique Whether the name of the file that contains the task is unique in the vault.
      *                         If it is undefined, the outcome will be the same as with a unique file name:
      *                         the file name only. If set to `true`, the full path will be returned.
-     * @param isTaskInQueryFile
      */
     public async renderTaskLine({
         task,
         taskIndex,
-        isFilenameUnique,
         isTaskInQueryFile,
+        isFilenameUnique,
     }: {
         task: Task;
         taskIndex: number;
-        isFilenameUnique?: boolean;
         isTaskInQueryFile: boolean;
+        isFilenameUnique?: boolean;
     }): Promise<HTMLLIElement> {
         const li = createAndAppendElement('li', this.parentUlElement);
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
