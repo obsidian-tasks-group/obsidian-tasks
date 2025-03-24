@@ -372,10 +372,8 @@ export class QueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
     ) {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
-        const processedTask = this.processTaskLinks(task);
-
         const listItem = await taskLineRenderer.renderTaskLine({
-            task: processedTask,
+            task: task,
             taskIndex: taskIndex,
             isFilenameUnique: isFilenameUnique,
             isTaskInQueryFile: this.taskIsInQueryFile(task),
@@ -504,22 +502,6 @@ export class QueryResultsRenderer {
         if (!shortMode) {
             backLink.append(')');
         }
-    }
-
-    private processTaskLinks(task: Task): Task {
-        const description = task.description;
-
-        if (description === task.description) {
-            return task;
-        }
-
-        // Return a new Task with the updated description
-        return new Task({
-            ...task,
-            description,
-            // Preserve the original task's location information
-            taskLocation: task.taskLocation,
-        });
     }
 
     private taskIsInQueryFile(task: Task) {
