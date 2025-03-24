@@ -131,7 +131,15 @@ export class TaskLineRenderer {
      *                         If it is undefined, the outcome will be the same as with a unique file name:
      *                         the file name only. If set to `true`, the full path will be returned.
      */
-    public async renderTaskLine(task: Task, taskIndex: number, isFilenameUnique?: boolean): Promise<HTMLLIElement> {
+    public async renderTaskLine({
+        task,
+        taskIndex,
+        isFilenameUnique,
+    }: {
+        task: Task;
+        taskIndex: number;
+        isFilenameUnique?: boolean;
+    }): Promise<HTMLLIElement> {
         const li = createAndAppendElement('li', this.parentUlElement);
 
         li.classList.add('task-list-item', 'plugin-tasks-list-item');

@@ -374,7 +374,11 @@ export class QueryResultsRenderer {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
         const processedTask = this.processTaskLinks(task);
 
-        const listItem = await taskLineRenderer.renderTaskLine(processedTask, taskIndex, isFilenameUnique);
+        const listItem = await taskLineRenderer.renderTaskLine({
+            task: processedTask,
+            taskIndex: taskIndex,
+            isFilenameUnique: isFilenameUnique,
+        });
 
         // Remove all footnotes. They don't re-appear in another document.
         const footnotes = listItem.querySelectorAll('[data-footnote-id]');
