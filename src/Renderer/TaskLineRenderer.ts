@@ -271,7 +271,7 @@ export class TaskLineRenderer {
         task: Task,
     ) {
         if (component === TaskLayoutComponent.Description) {
-            await this.renderDescription(componentString, task, span);
+            return await this.renderDescription(componentString, task, span);
         } else {
             span.innerHTML = componentString;
         }
