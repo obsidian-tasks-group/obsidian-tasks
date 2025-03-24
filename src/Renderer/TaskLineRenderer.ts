@@ -343,23 +343,23 @@ export class TaskLineRenderer {
         const linkCache = task.file.cachedMetadata.links;
         if (!linkCache) {
             return task.description;
-        } else {
-            // Find links in the task description
-            const taskLinks = linkCache.filter((link) => {
-                return (
-                    link.position.start.line === task.taskLocation.lineNumber &&
-                    task.description.includes(link.original) &&
-                    link.link.startsWith('#')
-                );
-            });
-            if (taskLinks.length !== 0) {
-                // a task can only be from one file, so we can replace all the internal links
-                //in the description with the new file path
-                for (const link of taskLinks) {
-                    const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
-                    // Replace the first instance of this link:
-                    description = description.replace(link.original, fullLink);
-                }
+        }
+
+        // Find links in the task description
+        const taskLinks = linkCache.filter((link) => {
+            return (
+                link.position.start.line === task.taskLocation.lineNumber &&
+                task.description.includes(link.original) &&
+                link.link.startsWith('#')
+            );
+        });
+        if (taskLinks.length !== 0) {
+            // a task can only be from one file, so we can replace all the internal links
+            //in the description with the new file path
+            for (const link of taskLinks) {
+                const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+                // Replace the first instance of this link:
+                description = description.replace(link.original, fullLink);
             }
         }
         return description;
