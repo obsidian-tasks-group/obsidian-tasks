@@ -144,15 +144,11 @@ export class TaskLineRenderer {
         isTaskInQueryFile: boolean;
     }): Promise<HTMLLIElement> {
         const li = createAndAppendElement('li', this.parentUlElement);
-        if (isTaskInQueryFile) {
-            console.log('Remove me!');
-        }
-
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
         const textSpan = createAndAppendElement('span', li);
         textSpan.classList.add('tasks-list-text');
-        await this.taskToHtml(task, textSpan, li);
+        await this.taskToHtml(task, textSpan, li, isTaskInQueryFile);
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
         // moving the code, remember to update that reference too.
@@ -207,7 +203,12 @@ export class TaskLineRenderer {
         return li;
     }
 
-    private async taskToHtml(task: Task, parentElement: HTMLElement, li: HTMLLIElement): Promise<void> {
+    private async taskToHtml(
+        task: Task,
+        parentElement: HTMLElement,
+        li: HTMLLIElement,
+        isTaskInQueryFile: boolean,
+    ): Promise<void> {
         const fieldRenderer = new TaskFieldRenderer();
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
@@ -226,7 +227,7 @@ export class TaskLineRenderer {
                 // to differentiate between the container of the text and the text itself, so it will be possible
                 // to do things like surrounding only the text (rather than its whole placeholder) with a highlight
                 const internalSpan = createAndAppendElement('span', span);
-                await this.renderComponentText(internalSpan, componentString, component, task);
+                await this.renderComponentText(internalSpan, componentString, component, task, isTaskInQueryFile);
                 this.addInternalClasses(component, internalSpan);
 
                 // Add the component's CSS class describing what this component is (priority, due date etc.)
@@ -283,7 +284,12 @@ export class TaskLineRenderer {
         componentString: string,
         component: TaskLayoutComponent,
         task: Task,
+        isTaskInQueryFile: boolean,
     ) {
+        if (isTaskInQueryFile) {
+            console.log('Remove me!');
+        }
+
         if (component === TaskLayoutComponent.Description) {
             return await this.renderDescription(task, span);
         }
