@@ -13,6 +13,7 @@ publish: true
 
 - Define your own custom task groups, using JavaScript expressions such as:
   - `group by function task.urgency.toFixed(3)`
+  - See [[#Number property examples]] below for how floating point numbers are treated, if the precision (number of decimal places) is not specified.
 - There are loads of examples in [[Grouping]].
   - Search for `group by function` in that file.
 - Find all the **supported tasks properties** in [[Task Properties]] and [[Quick Reference]].
