@@ -378,6 +378,7 @@ export class QueryResultsRenderer {
             task: processedTask,
             taskIndex: taskIndex,
             isFilenameUnique: isFilenameUnique,
+            appleSauce: this.taskIsInQueryFile(task),
         });
 
         // Remove all footnotes. They don't re-appear in another document.

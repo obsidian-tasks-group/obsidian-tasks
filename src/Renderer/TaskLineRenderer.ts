@@ -145,7 +145,7 @@ export class TaskLineRenderer {
     }): Promise<HTMLLIElement> {
         const li = createAndAppendElement('li', this.parentUlElement);
         if (appleSauce) {
-            return li;
+            console.log('Remove me!');
         }
 
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
