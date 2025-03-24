@@ -512,27 +512,27 @@ export class QueryResultsRenderer {
         // Skip if task is from the same file as the query
         if (this.taskIsInQueryFile(task)) {
             return task;
-        }
+        } else {
+            const linkCache = task.file.cachedMetadata.links;
+            if (!linkCache) return task;
 
-        const linkCache = task.file.cachedMetadata.links;
-        if (!linkCache) return task;
+            // Find links in the task description
+            const taskLinks = linkCache.filter((link) => {
+                return (
+                    link.position.start.line === task.taskLocation.lineNumber &&
+                    task.description.includes(link.original) &&
+                    link.link.startsWith('#')
+                );
+            });
+            if (taskLinks.length === 0) return task;
 
-        // Find links in the task description
-        const taskLinks = linkCache.filter((link) => {
-            return (
-                link.position.start.line === task.taskLocation.lineNumber &&
-                task.description.includes(link.original) &&
-                link.link.startsWith('#')
-            );
-        });
-        if (taskLinks.length === 0) return task;
-
-        // a task can only be from one file, so we can replace all the internal links
-        //in the description with the new file path
-        for (const link of taskLinks) {
-            const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
-            // Replace the first instance of this link:
-            description = description.replace(link.original, fullLink);
+            // a task can only be from one file, so we can replace all the internal links
+            //in the description with the new file path
+            for (const link of taskLinks) {
+                const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+                // Replace the first instance of this link:
+                description = description.replace(link.original, fullLink);
+            }
         }
 
         if (description === task.description) {
