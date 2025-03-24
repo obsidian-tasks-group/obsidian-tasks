@@ -35,6 +35,35 @@ export interface QueryRendererParameters {
     editTaskPencilClickHandler: EditButtonClickHandler;
 }
 
+function adjustRelativeLinksInDescription(task: Task, taskIsInQueryFile: boolean) {
+    let description = task.description;
+
+    // Skip if task is from the same file as the query
+    if (!taskIsInQueryFile) {
+        const linkCache = task.file.cachedMetadata.links;
+        if (linkCache) {
+            // Find links in the task description
+            const taskLinks = linkCache.filter((link) => {
+                return (
+                    link.position.start.line === task.taskLocation.lineNumber &&
+                    task.description.includes(link.original) &&
+                    link.link.startsWith('#')
+                );
+            });
+            if (taskLinks.length !== 0) {
+                // a task can only be from one file, so we can replace all the internal links
+                //in the description with the new file path
+                for (const link of taskLinks) {
+                    const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+                    // Replace the first instance of this link:
+                    description = description.replace(link.original, fullLink);
+                }
+            }
+        }
+    }
+    return description;
+}
+
 /**
  * The `QueryResultsRenderer` class is responsible for rendering the results
  * of a query applied to a set of tasks.
@@ -508,32 +537,7 @@ export class QueryResultsRenderer {
 
     private processTaskLinks(task: Task): Task {
         const taskIsInQueryFile = this.taskIsInQueryFile(task);
-
-        let description = task.description;
-
-        // Skip if task is from the same file as the query
-        if (!taskIsInQueryFile) {
-            const linkCache = task.file.cachedMetadata.links;
-            if (linkCache) {
-                // Find links in the task description
-                const taskLinks = linkCache.filter((link) => {
-                    return (
-                        link.position.start.line === task.taskLocation.lineNumber &&
-                        task.description.includes(link.original) &&
-                        link.link.startsWith('#')
-                    );
-                });
-                if (taskLinks.length !== 0) {
-                    // a task can only be from one file, so we can replace all the internal links
-                    //in the description with the new file path
-                    for (const link of taskLinks) {
-                        const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
-                        // Replace the first instance of this link:
-                        description = description.replace(link.original, fullLink);
-                    }
-                }
-            }
-        }
+        const description = adjustRelativeLinksInDescription(task, taskIsInQueryFile);
 
         if (description === task.description) {
             return task;
