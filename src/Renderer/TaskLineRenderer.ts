@@ -293,8 +293,8 @@ export class TaskLineRenderer {
     }
 
     private async renderDescription(task: Task, span: HTMLSpanElement, isTaskInQueryFile: boolean) {
-        const descriptionWithLinksFixed = this.adjustRelativeLinksInDescription(task, isTaskInQueryFile);
-        let description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(descriptionWithLinksFixed);
+        let description = this.adjustRelativeLinksInDescription(task, isTaskInQueryFile);
+        description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(description);
 
         const { debugSettings } = getSettings();
         if (debugSettings.showTaskHiddenData) {
