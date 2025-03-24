@@ -15,12 +15,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
-import {
-    TaskLineRenderer,
-    type TextRenderer,
-    adjustRelativeLinksInDescription,
-    createAndAppendElement,
-} from './TaskLineRenderer';
+import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -512,8 +507,7 @@ export class QueryResultsRenderer {
     }
 
     private processTaskLinks(task: Task): Task {
-        const taskIsInQueryFile = this.taskIsInQueryFile(task);
-        const description = adjustRelativeLinksInDescription(task, taskIsInQueryFile);
+        const description = task.description;
 
         if (description === task.description) {
             return task;
