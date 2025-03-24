@@ -525,14 +525,16 @@ export class QueryResultsRenderer {
                         link.link.startsWith('#')
                     );
                 });
-                if (taskLinks.length === 0) return task;
-
-                // a task can only be from one file, so we can replace all the internal links
-                //in the description with the new file path
-                for (const link of taskLinks) {
-                    const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
-                    // Replace the first instance of this link:
-                    description = description.replace(link.original, fullLink);
+                if (taskLinks.length === 0) {
+                    return task;
+                } else {
+                    // a task can only be from one file, so we can replace all the internal links
+                    //in the description with the new file path
+                    for (const link of taskLinks) {
+                        const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+                        // Replace the first instance of this link:
+                        description = description.replace(link.original, fullLink);
+                    }
                 }
             }
         }
