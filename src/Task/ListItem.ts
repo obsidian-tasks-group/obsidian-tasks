@@ -74,6 +74,10 @@ export class ListItem {
             description = nonTaskMatch[5].trim();
         }
 
+        if (listMarker === undefined) {
+            return null;
+        }
+
         return new ListItem({
             originalMarkdown,
             indentation,
