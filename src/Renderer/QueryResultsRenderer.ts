@@ -535,6 +535,10 @@ export class QueryResultsRenderer {
             description = description.replace(link.original, fullLink);
         }
 
+        if (description === task.description) {
+            return task;
+        }
+
         // Return a new Task with the updated description
         return new Task({
             ...task,
