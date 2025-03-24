@@ -333,7 +333,32 @@ export class TaskLineRenderer {
     }
 
     private adjustRelativeLinksInDescription(task: Task, isTaskInQueryFile: boolean) {
-        return adjustRelativeLinksInDescription(task, isTaskInQueryFile);
+        let description = task.description;
+
+        // Skip if task is from the same file as the query
+        if (!isTaskInQueryFile) {
+            const linkCache = task.file.cachedMetadata.links;
+            if (linkCache) {
+                // Find links in the task description
+                const taskLinks = linkCache.filter((link) => {
+                    return (
+                        link.position.start.line === task.taskLocation.lineNumber &&
+                        task.description.includes(link.original) &&
+                        link.link.startsWith('#')
+                    );
+                });
+                if (taskLinks.length !== 0) {
+                    // a task can only be from one file, so we can replace all the internal links
+                    //in the description with the new file path
+                    for (const link of taskLinks) {
+                        const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
+                        // Replace the first instance of this link:
+                        description = description.replace(link.original, fullLink);
+                    }
+                }
+            }
+        }
+        return description;
     }
 
     /*
@@ -483,33 +508,4 @@ export class TaskLineRenderer {
 
         return li;
     }
-}
-
-export function adjustRelativeLinksInDescription(task: Task, taskIsInQueryFile: boolean) {
-    let description = task.description;
-
-    // Skip if task is from the same file as the query
-    if (!taskIsInQueryFile) {
-        const linkCache = task.file.cachedMetadata.links;
-        if (linkCache) {
-            // Find links in the task description
-            const taskLinks = linkCache.filter((link) => {
-                return (
-                    link.position.start.line === task.taskLocation.lineNumber &&
-                    task.description.includes(link.original) &&
-                    link.link.startsWith('#')
-                );
-            });
-            if (taskLinks.length !== 0) {
-                // a task can only be from one file, so we can replace all the internal links
-                //in the description with the new file path
-                for (const link of taskLinks) {
-                    const fullLink = `[[${task.path}${link.link}|${link.displayText}]]`;
-                    // Replace the first instance of this link:
-                    description = description.replace(link.original, fullLink);
-                }
-            }
-        }
-    }
-    return description;
 }
