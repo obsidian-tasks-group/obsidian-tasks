@@ -271,45 +271,51 @@ export class TaskLineRenderer {
         task: Task,
     ) {
         if (component === TaskLayoutComponent.Description) {
-            componentString = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(componentString);
-
-            const { debugSettings } = getSettings();
-            if (debugSettings.showTaskHiddenData) {
-                // Add some debug output to enable hidden information in the task to be inspected.
-                componentString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
-            }
-            await this.textRenderer(componentString, span, task.path, this.obsidianComponent);
-
-            // If the task is a block quote, the block quote wraps the p-tag that contains the content.
-            // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
-            // Otherwise, we unwrap the p-tag as a direct descendant of the span.
-            const blockQuote = span.querySelector('blockquote');
-            const directParentOfPTag = blockQuote ?? span;
-
-            // Unwrap the p-tag that was created by the MarkdownRenderer:
-            const pElement = directParentOfPTag.querySelector('p');
-            if (pElement !== null) {
-                while (pElement.firstChild) {
-                    directParentOfPTag.insertBefore(pElement.firstChild, pElement);
-                }
-                pElement.remove();
-            }
-
-            // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
-            span.querySelectorAll('p').forEach((pElement) => {
-                if (!pElement.hasChildNodes()) {
-                    pElement.remove();
-                }
-            });
-
-            // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
-            span.querySelectorAll('.footnotes').forEach((footnoteElement) => {
-                footnoteElement.remove();
-            });
+            componentString = await this.renderDescription(componentString, task, span);
         } else {
             span.innerHTML = componentString;
         }
     }
+
+    private async renderDescription(description: string, task: Task, span: HTMLSpanElement) {
+        description = GlobalFilter.getInstance().removeAsWordFromDependingOnSettings(description);
+
+        const { debugSettings } = getSettings();
+        if (debugSettings.showTaskHiddenData) {
+            // Add some debug output to enable hidden information in the task to be inspected.
+            description += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
+        }
+        await this.textRenderer(description, span, task.path, this.obsidianComponent);
+
+        // If the task is a block quote, the block quote wraps the p-tag that contains the content.
+        // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
+        // Otherwise, we unwrap the p-tag as a direct descendant of the span.
+        const blockQuote = span.querySelector('blockquote');
+        const directParentOfPTag = blockQuote ?? span;
+
+        // Unwrap the p-tag that was created by the MarkdownRenderer:
+        const pElement = directParentOfPTag.querySelector('p');
+        if (pElement !== null) {
+            while (pElement.firstChild) {
+                directParentOfPTag.insertBefore(pElement.firstChild, pElement);
+            }
+            pElement.remove();
+        }
+
+        // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
+        span.querySelectorAll('p').forEach((pElement) => {
+            if (!pElement.hasChildNodes()) {
+                pElement.remove();
+            }
+        });
+
+        // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
+        span.querySelectorAll('.footnotes').forEach((footnoteElement) => {
+            footnoteElement.remove();
+        });
+        return description;
+    }
+
     /*
      * Adds internal classes for various components (right now just tags actually), meaning that we modify the existing
      * rendered element to add classes inside it.
