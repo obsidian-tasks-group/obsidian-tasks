@@ -512,9 +512,7 @@ export class QueryResultsRenderer {
         // Skip if task is from the same file as the query
         if (!this.taskIsInQueryFile(task)) {
             const linkCache = task.file.cachedMetadata.links;
-            if (!linkCache) {
-                return task;
-            } else {
+            if (linkCache) {
                 // Find links in the task description
                 const taskLinks = linkCache.filter((link) => {
                     return (
@@ -534,6 +532,8 @@ export class QueryResultsRenderer {
                         description = description.replace(link.original, fullLink);
                     }
                 }
+            } else {
+                return task;
             }
         }
 
