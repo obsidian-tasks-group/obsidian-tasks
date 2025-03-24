@@ -376,7 +376,7 @@ export class QueryResultsRenderer {
             task: task,
             taskIndex: taskIndex,
             isFilenameUnique: isFilenameUnique,
-            isTaskInQueryFile: this.taskIsInQueryFile(task),
+            isTaskInQueryFile: this.isTaskInQueryFile(task),
         });
 
         // Remove all footnotes. They don't re-appear in another document.
@@ -504,7 +504,7 @@ export class QueryResultsRenderer {
         }
     }
 
-    private taskIsInQueryFile(task: Task) {
+    private isTaskInQueryFile(task: Task): boolean {
         return this.filePath === task.path;
     }
 
