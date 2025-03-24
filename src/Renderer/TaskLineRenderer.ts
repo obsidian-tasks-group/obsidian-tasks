@@ -271,7 +271,7 @@ export class TaskLineRenderer {
         task: Task,
     ) {
         if (component === TaskLayoutComponent.Description) {
-            componentString = await this.renderDescription(componentString, task, span);
+            await this.renderDescription(componentString, task, span);
         } else {
             span.innerHTML = componentString;
         }
@@ -313,7 +313,6 @@ export class TaskLineRenderer {
         span.querySelectorAll('.footnotes').forEach((footnoteElement) => {
             footnoteElement.remove();
         });
-        return description;
     }
 
     /*
