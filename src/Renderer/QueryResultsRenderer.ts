@@ -532,8 +532,6 @@ export class QueryResultsRenderer {
                         description = description.replace(link.original, fullLink);
                     }
                 }
-            } else {
-                return task;
             }
         }
 
