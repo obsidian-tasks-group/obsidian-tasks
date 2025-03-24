@@ -68,21 +68,17 @@ export class ListItem {
             return null;
         }
 
-        const indentation = nonTaskMatch[1];
         const listMarker = nonTaskMatch[2];
-        const statusCharacter = nonTaskMatch[4] ?? null;
-        const description = nonTaskMatch[5].trim();
-
         if (listMarker === undefined) {
             return null;
         }
 
         return new ListItem({
             originalMarkdown,
-            indentation,
+            indentation: nonTaskMatch[1],
             listMarker,
-            statusCharacter,
-            description,
+            statusCharacter: nonTaskMatch[4] ?? null,
+            description: nonTaskMatch[5].trim(),
             taskLocation,
             parent,
         });
