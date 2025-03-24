@@ -529,8 +529,6 @@ export class QueryResultsRenderer {
                         // Replace the first instance of this link:
                         description = description.replace(link.original, fullLink);
                     }
-                } else {
-                    return task;
                 }
             }
         }
