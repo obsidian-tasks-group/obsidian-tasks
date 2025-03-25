@@ -1,4 +1,12 @@
-import type { CachedMetadata, EventRef, HeadingCache, ListItemCache, SectionCache, Workspace } from 'obsidian';
+import {
+    type CachedMetadata,
+    type EventRef,
+    type HeadingCache,
+    type ListItemCache,
+    type SectionCache,
+    type Workspace,
+    debounce,
+} from 'obsidian';
 import { MetadataCache, Notice, TAbstractFile, TFile, Vault } from 'obsidian';
 import { Mutex } from 'async-mutex';
 import { TasksFile } from '../Scripting/TasksFile';
@@ -32,6 +40,12 @@ export class Cache {
     private readonly tasksMutex: Mutex;
     private state: State;
     private tasks: Task[];
+
+    private readonly notifySubscribersDebounced = debounce(
+        () => this.notifySubscribersNotDebounced(),
+        100, // Long enough to prevent successive redraws slowing performance; short enough for edits via context menus to appear snappy
+        true,
+    );
 
     /**
      * We cannot know if this class will be instantiated because obsidian started
@@ -111,6 +125,11 @@ export class Cache {
 
     private notifySubscribers(): void {
         this.logger.debug('Cache.notifySubscribers()');
+        this.notifySubscribersDebounced();
+    }
+
+    private notifySubscribersNotDebounced(): void {
+        this.logger.debug('Cache.notifySubscribersNotDebounced()');
         this.events.triggerCacheUpdate({
             tasks: this.tasks,
             state: this.state,
