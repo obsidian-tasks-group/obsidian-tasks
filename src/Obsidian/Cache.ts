@@ -111,6 +111,11 @@ export class Cache {
 
     private notifySubscribers(): void {
         this.logger.debug('Cache.notifySubscribers()');
+        this.notifySubscribersNotDebounced();
+    }
+
+    private notifySubscribersNotDebounced(): void {
+        this.logger.debug('Cache.notifySubscribersNotDebounced()');
         this.events.triggerCacheUpdate({
             tasks: this.tasks,
             state: this.state,
