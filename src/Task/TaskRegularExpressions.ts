@@ -5,8 +5,8 @@ export class TaskRegularExpressions {
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
 
-    // Matches - * and + list markers, or numbered list markers (eg 1.)
-    public static readonly listMarkerRegex = /([-*+]|[0-9]+\.)/;
+    // Matches - * and + list markers, or numbered list markers, for example 1. and 1)
+    public static readonly listMarkerRegex = /([-*+]|[0-9]+[.)])/;
 
     // Matches a checkbox and saves the status character inside
     public static readonly checkboxRegex = /\[(.)\]/u;
