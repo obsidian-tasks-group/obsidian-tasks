@@ -80,6 +80,21 @@
             "offset": 167
           }
         }
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 48,
+            "line": 6,
+            "offset": 230
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 182
+          }
+        }
       }
     ],
     "sections": [
@@ -101,9 +116,9 @@
       {
         "position": {
           "end": {
-            "col": 17,
-            "line": 5,
-            "offset": 181
+            "col": 48,
+            "line": 6,
+            "offset": 230
           },
           "start": {
             "col": 0,
@@ -147,7 +162,7 @@
       }
     ]
   },
-  "fileContents": "# numbered_list_items_with_paren\n\n1) [ ] #task Task 1 in 'numbered_list_items_with_paren'\n    1) Sub-item 1\n2) [ ] #task Task w in 'numbered_list_items_with_paren'\n    1) Sub-item 2\n",
+  "fileContents": "# numbered_list_items_with_paren\n\n1) [ ] #task Task 1 in 'numbered_list_items_with_paren'\n    1) Sub-item 1\n2) [ ] #task Task 2 in 'numbered_list_items_with_paren'\n    1) Sub-item 2\n3) List item in 'numbered_list_items_with_paren'\n",
   "filePath": "Test Data/numbered_list_items_with_paren.md",
   "getAllTags": [
     "#task",
