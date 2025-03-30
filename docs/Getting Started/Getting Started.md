@@ -26,11 +26,15 @@ Now Tasks tracks that you need to take out the trash!
 >
 > + [ ] task starting with a plus sign
 >
-> 1. [ ] a task in a numbered list
+> 1. [ ] a task in a numbered list with a `.` character
+>
+> 2) [ ] a task in a numbered list with a `)` character
 > ```
 
 > [!released]
-> Support for tasks with `+` was introduced in Tasks 4.5.0.
+>
+> - Support for tasks with `+` was introduced in Tasks 4.5.0.
+> - Support for numbered lists with `)` was introduced in Tasks X.Y.Z.
 
 To list all open tasks in a markdown file, simply add a [[About Queries|query]] as a tasks code block like so:
 
@@ -118,7 +122,9 @@ We are tracking this in [issue #2061](https://github.com/obsidian-tasks-group/ob
 Tasks can read tasks that are in **numbered lists**.
 
 > [!released]
-Reading tasks inside numbered lists was introduced in Tasks 1.20.0.
+>
+> - Reading tasks inside numbered lists was introduced in Tasks 1.20.0.
+> - Reading tasks inside numbered lists with `)` was introduced in Tasks X.Y.Z.
 
 For example:
 
@@ -128,12 +134,20 @@ For example:
 3. [ ] Do following step
 ```
 
+or:
+
+```markdown
+1) [ ] Do first step
+2) [ ] Do next step
+3) [ ] Do following step
+```
+
 Editing and toggling tasks in numbered lists works fine: the original number is preserved.
 
 > [!warning]
 > However, when these tasks are displayed in tasks blocks they are displayed as ordinary bullet list items.
-
-This is because they will usually be displayed in a completely different order than in the original list, often mixed in with tasks from bullet lists. The original numbers in this case just don't make sense.
+>
+> This is because they will usually be displayed in a completely different order than in the original list, often mixed in with tasks from bullet lists. The original numbers in this case just don't make sense.
 
 ### Tasks in Blockquotes and Callouts
 
