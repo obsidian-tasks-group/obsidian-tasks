@@ -139,6 +139,14 @@ describe('cache', () => {
             3. List item in 'numbered_list_items_standard'
             "
         `);
+
+        // TODO Error: Task 2 should have a child list item:
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "1. [ ] #task Task 1 in 'numbered_list_items_standard' : Task
+                1. Sub-item 1 : ListItem
+            2. [ ] #task Task 2 in 'numbered_list_items_standard' : Task
+            "
+        `);
         expect(tasks.length).toEqual(2);
     });
 
@@ -157,6 +165,8 @@ describe('cache', () => {
             3) List item in 'numbered_list_items_with_paren'
             "
         `);
+
+        expect(printRoots(tasks)).toMatchInlineSnapshot('""');
         expect(tasks.length).toEqual(2);
     });
 
