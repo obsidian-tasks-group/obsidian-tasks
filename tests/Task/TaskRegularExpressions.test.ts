@@ -9,6 +9,9 @@ describe('List Markers', () => {
         '0.',
         '1.',
         '12345.',
+        '0)',
+        '1)',
+        '12345)',
     ])('should be a valid list marker: "%s"', (candidate: string) => {
         expect(TaskRegularExpressions.listMarkerRegex.exec(candidate)).not.toBeNull();
     });
@@ -18,9 +21,6 @@ describe('List Markers', () => {
         '%',
         '.',
         ')',
-        '0)',
-        '1)',
-        '12345)',
     ])('should NOT be a valid list marker: "%s"', (candidate: string) => {
         expect(TaskRegularExpressions.listMarkerRegex.exec(candidate)).toBeNull();
     });

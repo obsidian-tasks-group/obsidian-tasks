@@ -151,7 +151,7 @@ describe('cache', () => {
         expect(tasks.length).toEqual(2);
     });
 
-    it.failing('should read numbered list items with closing parenthesis', () => {
+    it('should read numbered list items with closing parenthesis', () => {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3401
         //      "Unexpected failure to create a list item from line" warning when parsing "1)" style numbered list
         const data = numbered_list_items_with_paren;
@@ -167,7 +167,13 @@ describe('cache', () => {
             "
         `);
 
-        expect(printRoots(tasks)).toMatchInlineSnapshot('""');
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "1) [ ] #task Task 1 in 'numbered_list_items_with_paren' : Task
+                1) Sub-item 1 : ListItem
+            2) [ ] #task Task 2 in 'numbered_list_items_with_paren' : Task
+                1) Sub-item 2 : ListItem
+            "
+        `);
         expect(tasks.length).toEqual(2);
     });
 
@@ -846,7 +852,6 @@ describe('all mock files', () => {
             const files_without_tasks = [
                 'Test Data/docs_sample_for_explain_query_file_defaults.md',
                 'Test Data/non_tasks.md',
-                'Test Data/numbered_list_items_with_paren.md',
             ];
             if (files_without_tasks.includes(path)) {
                 expect(tasks.length).toEqual(0);
