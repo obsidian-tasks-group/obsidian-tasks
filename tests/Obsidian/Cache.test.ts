@@ -799,6 +799,7 @@ describe('all mock files', () => {
             const files_without_tasks = [
                 'Test Data/docs_sample_for_explain_query_file_defaults.md',
                 'Test Data/non_tasks.md',
+                'Test Data/numbered_list_items_with_paren.md',
             ];
             if (files_without_tasks.includes(path)) {
                 expect(tasks.length).toEqual(0);

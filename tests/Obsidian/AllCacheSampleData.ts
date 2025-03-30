@@ -53,6 +53,8 @@ import multiple_headings from './__test_data__/multiple_headings.json';
 import no_heading from './__test_data__/no_heading.json';
 import no_yaml from './__test_data__/no_yaml.json';
 import non_tasks from './__test_data__/non_tasks.json';
+import numbered_list_items_standard from './__test_data__/numbered_list_items_standard.json';
+import numbered_list_items_with_paren from './__test_data__/numbered_list_items_with_paren.json';
 import one_task from './__test_data__/one_task.json';
 import query_file_defaults_all_options_false from './__test_data__/query_file_defaults_all_options_false.json';
 import query_file_defaults_all_options_null from './__test_data__/query_file_defaults_all_options_null.json';
@@ -132,6 +134,8 @@ export function allCacheSampleData() {
         no_heading,
         no_yaml,
         non_tasks,
+        numbered_list_items_standard,
+        numbered_list_items_with_paren,
         one_task,
         query_file_defaults_all_options_false,
         query_file_defaults_all_options_null,
