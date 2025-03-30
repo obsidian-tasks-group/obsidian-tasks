@@ -26,6 +26,8 @@ import inheritance_task_listitem from './__test_data__/inheritance_task_listitem
 import inheritance_task_listitem_mixed_grandchildren from './__test_data__/inheritance_task_listitem_mixed_grandchildren.json';
 import inheritance_task_listitem_task from './__test_data__/inheritance_task_listitem_task.json';
 import inheritance_task_mixed_children from './__test_data__/inheritance_task_mixed_children.json';
+import numbered_list_items_with_paren from './__test_data__/numbered_list_items_with_paren.json';
+import numbered_list_items_standard from './__test_data__/numbered_list_items_standard.json';
 import one_task from './__test_data__/one_task.json';
 import callouts_nested_issue_2890_labelled from './__test_data__/callouts_nested_issue_2890_labelled.json';
 import callout from './__test_data__/callout.json';
@@ -122,6 +124,57 @@ describe('cache', () => {
 
         testRootAndChildren(sibling1, []);
         testRootAndChildren(sibling2, []);
+    });
+
+    it('should read numbered list items with dot', () => {
+        const data = numbered_list_items_standard;
+        const tasks = readTasksFromSimulatedFile(data);
+        expect(data.fileContents).toMatchInlineSnapshot(`
+            "# numbered_list_items_standard
+
+            1. [ ] #task Task 1 in 'numbered_list_items_standard'
+                1. Sub-item 1
+            2. [ ] #task Task 2 in 'numbered_list_items_standard'
+                1. Sub-item 2
+            3. List item in 'numbered_list_items_standard'
+            "
+        `);
+        expect(tasks[0].file.cachedMetadata.listItems?.length).toEqual(5);
+
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "1. [ ] #task Task 1 in 'numbered_list_items_standard' : Task
+                1. Sub-item 1 : ListItem
+            2. [ ] #task Task 2 in 'numbered_list_items_standard' : Task
+                1. Sub-item 2 : ListItem
+            "
+        `);
+        expect(tasks.length).toEqual(2);
+    });
+
+    it('should read numbered list items with closing parenthesis', () => {
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3401
+        //      "Unexpected failure to create a list item from line" warning when parsing "1)" style numbered list
+        const data = numbered_list_items_with_paren;
+        const tasks = readTasksFromSimulatedFile(data);
+        expect(data.fileContents).toMatchInlineSnapshot(`
+            "# numbered_list_items_with_paren
+
+            1) [ ] #task Task 1 in 'numbered_list_items_with_paren'
+                1) Sub-item 1
+            2) [ ] #task Task 2 in 'numbered_list_items_with_paren'
+                1) Sub-item 2
+            3) List item in 'numbered_list_items_with_paren'
+            "
+        `);
+
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "1) [ ] #task Task 1 in 'numbered_list_items_with_paren' : Task
+                1) Sub-item 1 : ListItem
+            2) [ ] #task Task 2 in 'numbered_list_items_with_paren' : Task
+                1) Sub-item 2 : ListItem
+            "
+        `);
+        expect(tasks.length).toEqual(2);
     });
 
     it('should read one parent and one child task', () => {

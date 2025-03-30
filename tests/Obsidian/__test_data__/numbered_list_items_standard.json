@@ -1,0 +1,172 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "numbered_list_items_standard",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 30,
+            "line": 0,
+            "offset": 30
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 53,
+            "line": 2,
+            "offset": 85
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 32
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 3,
+            "offset": 103
+          },
+          "start": {
+            "col": 4,
+            "line": 3,
+            "offset": 90
+          }
+        }
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 53,
+            "line": 4,
+            "offset": 157
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 104
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 4,
+        "position": {
+          "end": {
+            "col": 17,
+            "line": 5,
+            "offset": 175
+          },
+          "start": {
+            "col": 4,
+            "line": 5,
+            "offset": 162
+          }
+        }
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 46,
+            "line": 6,
+            "offset": 222
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 176
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 30,
+            "line": 0,
+            "offset": 30
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 46,
+            "line": 6,
+            "offset": 222
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 32
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 2,
+            "offset": 44
+          },
+          "start": {
+            "col": 7,
+            "line": 2,
+            "offset": 39
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 4,
+            "offset": 116
+          },
+          "start": {
+            "col": 7,
+            "line": 4,
+            "offset": 111
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# numbered_list_items_standard\n\n1. [ ] #task Task 1 in 'numbered_list_items_standard'\n    1. Sub-item 1\n2. [ ] #task Task 2 in 'numbered_list_items_standard'\n    1. Sub-item 2\n3. List item in 'numbered_list_items_standard'\n",
+  "filePath": "Test Data/numbered_list_items_standard.md",
+  "getAllTags": [
+    "#task",
+    "#task"
+  ],
+  "parseFrontMatterTags": null
+}
