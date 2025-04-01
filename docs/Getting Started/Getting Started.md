@@ -34,7 +34,7 @@ Now Tasks tracks that you need to take out the trash!
 > [!released]
 >
 > - Support for tasks with `+` was introduced in Tasks 4.5.0.
-> - Support for numbered lists with `)` was introduced in Tasks X.Y.Z.
+> - Support for numbered lists with `)` was introduced in Tasks 7.18.5.
 
 To list all open tasks in a markdown file, simply add a [[About Queries|query]] as a tasks code block like so:
 
@@ -124,7 +124,7 @@ Tasks can read tasks that are in **numbered lists**.
 > [!released]
 >
 > - Reading tasks inside numbered lists was introduced in Tasks 1.20.0.
-> - Reading tasks inside numbered lists with `)` was introduced in Tasks X.Y.Z.
+> - Reading tasks inside numbered lists with `)` was introduced in Tasks 7.18.5.
 
 For example:
 
