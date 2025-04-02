@@ -3,9 +3,9 @@
   "name": "Tag Wrangler",
   "author": "PJ Eby",
   "authorUrl": "https://github.com/pjeby",
-  "version": "0.6.1",
-  "minAppVersion": "1.2.8",
-  "description": "Rename, merge, toggle, and search tags from the tag pane",
+  "version": "0.6.4",
+  "minAppVersion": "1.5.8",
+  "description": "Rename, merge, toggle, and search tags from the tags view",
   "fundingUrl": "https://dirtsimple.org/tips/tag-wrangler",
   "isDesktopOnly": false
 }
