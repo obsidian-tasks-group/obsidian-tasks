@@ -96,7 +96,7 @@ Task with recurrence and scheduled date and start date:
 
 ## How to add QuickAdd command
 
-1. Install [nldates](https://github.com/argenos/nldates-obsidian) and [QuickAdd](https://github.com/chhoumann/quickadd)
+1. Install [Natural Language Dates](https://github.com/argenos/nldates-obsidian) and [QuickAdd](https://github.com/chhoumann/quickadd)
 2. Choose the `capture` choice, then make it visible on the command palette by clicking on the flash emoji
 3. Enable the `save as task` option, then enable the `capture format` option and paste your custom format
 4. Assign a Hotkey to your new command through the standard Settings -> Hotkeys interface (your new command will appear as `QuickAdd: "name you gave your capture"`)
