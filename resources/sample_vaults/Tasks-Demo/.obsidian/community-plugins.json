@@ -17,5 +17,6 @@
   "js-engine",
   "table-editor-obsidian",
   "reveal-active-file-button",
-  "obsidian-meta-bind-plugin"
+  "obsidian-meta-bind-plugin",
+  "vault-nickname"
 ]
