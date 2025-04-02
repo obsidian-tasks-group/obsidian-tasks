@@ -1,0 +1,11 @@
+{
+    "id": "vault-nickname",
+    "name": "Vault Nickname",
+    "version": "1.1.5",
+    "minAppVersion": "1.7.7",
+    "description": "Override the vault's display name and/or title order. Intended to disambiguate vaults with the same folder name when adhering to a common folder structure between projects.",
+    "author": "@rscopic",
+    "authorUrl": "https://github.com/rscopic",
+    "fundingUrl": "https://github.com/sponsors/rscopic/",
+    "isDesktopOnly": true
+}
