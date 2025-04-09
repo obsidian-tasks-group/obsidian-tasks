@@ -20,6 +20,7 @@ If you'd like to see the Tasks plugin in action, have a look at these resources 
 - 2023-08-04: [Obsidian doesn't have a way to do tasks, but...](https://www.youtube.com/watch?v=c6A0u6NQccw) by [vladcampos](https://www.youtube.com/@vladcampos)
 - 2024-09-02: [How to Manage Tasks in Obsidian: I Turned Obsidian into the Ultimate Task Manager](https://www.youtube.com/watch?v=ZjVBQHyLyMM) by [Mike Schmitz](https://www.youtube.com/@MikeSchmitz)
 - 2024-10-04: [Build a Customizable Task Manager in Obsidian](https://www.youtube.com/watch?v=6ksJRqxVc8s) by [CreaDev Labs](https://www.youtube.com/@creadevlabs)
+- 2025-04-09: [Mastering my to-do's with the Obsidian Tasks plugin (part 1)](https://www.youtube.com/watch?v=ip_2RJZ3s6c) by [vladcampos](https://www.youtube.com/@vladcampos)
 
 ### Articles
 
