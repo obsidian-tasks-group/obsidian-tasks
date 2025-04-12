@@ -88,7 +88,7 @@ export class Occurrence {
      *
      * @param nextReferenceDate
      */
-    public next(nextReferenceDate: Date): Occurrence {
+    public next(nextReferenceDate: Date, dropScheduledDate: boolean = false): Occurrence {
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
         if (this.referenceDate === null) {
@@ -99,10 +99,14 @@ export class Occurrence {
             });
         }
 
+        const startDate = this.nextOccurrenceDate(this.startDate, nextReferenceDate);
+        const scheduledDate = dropScheduledDate ? null : this.nextOccurrenceDate(this.scheduledDate, nextReferenceDate);
+        const dueDate = this.nextOccurrenceDate(this.dueDate, nextReferenceDate);
+
         return new Occurrence({
-            startDate: this.nextOccurrenceDate(this.startDate, nextReferenceDate),
-            scheduledDate: this.nextOccurrenceDate(this.scheduledDate, nextReferenceDate),
-            dueDate: this.nextOccurrenceDate(this.dueDate, nextReferenceDate),
+            startDate,
+            scheduledDate,
+            dueDate,
         });
     }
 

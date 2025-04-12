@@ -228,3 +228,23 @@ describe('identicalTo', () => {
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
     });
 });
+
+describe('Recurrence - with dropScheduledDateOnRecurrence', () => {
+    it('drops the scheduledDate when dropScheduledDate is true', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every month',
+            occurrence: new Occurrence({
+                startDate: moment('2022-01-01').startOf('day'),
+                scheduledDate: moment('2022-01-04').startOf('day'),
+                dueDate: moment('2022-01-10').startOf('day'),
+            }),
+        });
+
+        // Act
+        const next = recurrence!.next(undefined, true);
+
+        // Assert
+        expect(next!.scheduledDate).toBeNull();
+    });
+});
