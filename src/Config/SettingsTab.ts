@@ -376,6 +376,19 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
+        new Setting(containerEl)
+            .setName(i18n.t('settings.recurringTasks.dropScheduledDate.name'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(i18n.t('settings.recurringTasks.dropScheduledDate.description')),
+            )
+            .addToggle((toggle) => {
+                const { dropScheduledDateOnRecurrence } = getSettings();
+                toggle.setValue(dropScheduledDateOnRecurrence).onChange(async (value) => {
+                    updateSettings({ dropScheduledDateOnRecurrence: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.autoSuggest.heading')).setHeading();
         // ---------------------------------------------------------------------------
