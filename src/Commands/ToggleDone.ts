@@ -38,7 +38,7 @@ export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView
     const insertion = toggleLine(line, path);
 
     const replacementTextIsNonEmpty = insertion.text.length > 0;
-    const taskIsOnLastLine = !(lineNumber < editor.lineCount() - 1);
+    const taskIsOnLastLine = lineNumber >= editor.lineCount() - 1;
     if (replacementTextIsNonEmpty || taskIsOnLastLine) {
         editor.setLine(lineNumber, insertion.text);
     } else {
