@@ -59,13 +59,13 @@
 - [ ] #task Complete in **Search result**s clicking checkbox 🏁 delete
 - Line after
 
+✅ Whole line is removed.
+
 ```tasks
 path includes {{query.file.path}}
 heading includes Complete in Search results clicking checkbox
 short mode
 ```
-
-✅ Whole line is removed.
 
 ## Remaining steps
 
