@@ -61,9 +61,19 @@
 
 ✅ Whole line is removed.
 
+### Complete in Search results right-clicking checkbox
+
+- Line before
+- [ ] #task Complete in **Search result**s right-clicking checkbox 🏁 delete
+- Line after
+
+✅ Whole line is removed.
+
+### Search
+
 ```tasks
 path includes {{query.file.path}}
-heading includes Complete in Search results clicking checkbox
+heading includes Complete in Search results
 short mode
 ```
 
