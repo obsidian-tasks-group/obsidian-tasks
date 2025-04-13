@@ -13,7 +13,7 @@
 - [ ] #task Complete in **Source Mode** with `Tasks: Toggle task done` command 🏁 delete
 - Line after
 
-==❌ This shows \#3342 - blank line remains, as of Tasks `7.18.4`.==
+✅ Whole line is removed.
 
 ## Live Preview
 
@@ -23,7 +23,7 @@
 - [ ] #task Complete in **Live Preview** with `Tasks: Toggle task done` command 🏁 delete
 - Line after
 
-==❌ This shows \#3342 - blank line remains, as of Tasks `7.18.4`.==
+✅ Whole line is removed.
 
 ### Complete in Live Preview clicking checkbox
 
