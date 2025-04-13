@@ -44,15 +44,15 @@ export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView
     } else {
         // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3342
         // If insertion.text is empty, delete the line instead, so we don't leave a trailing end-of-line character around.
-        if (taskWasNotOnLastLine) {
+        if (!taskWasNotOnLastLine) {
+            // There is no end-of-line character on our line, which is the last line in the file.
+            // console.log(`Deleting line "${editor.getLine(lineNumber)}", because insertion.text is empty.`);
+            editor.setLine(lineNumber, insertion.text);
+        } else {
             const from = { line: lineNumber, ch: 0 };
             const to = { line: lineNumber + 1, ch: 0 };
             // console.log(`Deleting line+EOL "${editor.getRange(from, to)}", because insertion.text is empty.`);
             editor.replaceRange('', from, to);
-        } else {
-            // There is no end-of-line character on our line, which is the last line in the file.
-            // console.log(`Deleting line "${editor.getLine(lineNumber)}", because insertion.text is empty.`);
-            editor.setLine(lineNumber, insertion.text);
         }
     }
 
