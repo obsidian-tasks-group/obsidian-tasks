@@ -39,12 +39,13 @@ export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView
 
     const replacementTextIsNonEmpty = insertion.text.length > 0;
     const taskWasNotOnLastLine = lineNumber < editor.lineCount() - 1;
+    const taskIsOnLastLine = !taskWasNotOnLastLine;
     if (replacementTextIsNonEmpty) {
         editor.setLine(lineNumber, insertion.text);
     } else {
         // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3342
         // If insertion.text is empty, delete the line instead, so we don't leave a trailing end-of-line character around.
-        if (!taskWasNotOnLastLine) {
+        if (taskIsOnLastLine) {
             // There is no end-of-line character on our line, which is the last line in the file.
             // console.log(`Deleting line "${editor.getLine(lineNumber)}", because insertion.text is empty.`);
             editor.setLine(lineNumber, insertion.text);
