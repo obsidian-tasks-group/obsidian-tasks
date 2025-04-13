@@ -37,7 +37,8 @@ export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView
 
     const insertion = toggleLine(line, path);
 
-    if (insertion.text.length > 0) {
+    const replacementTextIsNonEmpty = insertion.text.length > 0;
+    if (replacementTextIsNonEmpty) {
         editor.setLine(lineNumber, insertion.text);
     } else {
         // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3342
