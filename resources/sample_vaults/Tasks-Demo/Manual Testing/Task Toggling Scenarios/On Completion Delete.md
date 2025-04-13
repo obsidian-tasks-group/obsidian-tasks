@@ -31,7 +31,7 @@
 - [ ] #task Complete in **Live Preview** clicking checkbox 🏁 delete
 - Line after
 
-==❌ This shows \#3342 - blank line remains, as of Tasks `7.18.4`.==
+✅ Whole line is removed.
 
 ## Reading Mode
 
