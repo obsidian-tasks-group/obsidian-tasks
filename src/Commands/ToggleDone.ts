@@ -42,9 +42,10 @@ export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView
     if (replacementTextIsNonEmpty || taskIsOnLastLine) {
         editor.setLine(lineNumber, insertion.text);
     } else {
+        // The replacement text is empty, and our line was followed by a new line character,
+        // so we delete the line and the new-line, to avoid leaving a blank line in the file.
         const from = { line: lineNumber, ch: 0 };
         const to = { line: lineNumber + 1, ch: 0 };
-        // console.log(`Deleting line+EOL "${editor.getRange(from, to)}", because insertion.text is empty.`);
         editor.replaceRange('', from, to);
     }
 
