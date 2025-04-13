@@ -13,7 +13,7 @@
 - [ ] #task Complete in **Source Mode** with `Tasks: Toggle task done` command 🏁 delete
 - Line after
 
-==❌ This shows \#3342 - blank line remains, as of Tasks `7.18.4`.==
+✅ Whole line is removed.
 
 ## Live Preview
 
@@ -23,7 +23,7 @@
 - [ ] #task Complete in **Live Preview** with `Tasks: Toggle task done` command 🏁 delete
 - Line after
 
-==❌ This shows \#3342 - blank line remains, as of Tasks `7.18.4`.==
+✅ Whole line is removed.
 
 ### Complete in Live Preview clicking checkbox
 
@@ -31,7 +31,7 @@
 - [ ] #task Complete in **Live Preview** clicking checkbox 🏁 delete
 - Line after
 
-==❌ This shows \#3342 - blank line remains, as of Tasks `7.18.4`.==
+✅ Whole line is removed.
 
 ## Reading Mode
 
@@ -39,6 +39,14 @@
 
 - Line before
 - [ ] #task Complete in **Reading Mode** clicking checkbox 🏁 delete
+- Line after
+
+✅ Whole line is removed.
+
+### Complete in Reading Mode right-clicking checkbox
+
+- Line before
+- [ ] #task Complete in **Reading Mode** right-clicking checkbox 🏁 delete
 - Line after
 
 ✅ Whole line is removed.
@@ -51,13 +59,23 @@
 - [ ] #task Complete in **Search result**s clicking checkbox 🏁 delete
 - Line after
 
-```tasks
-path includes {{query.file.path}}
-heading includes Complete in Search results clicking checkbox
-short mode
-```
+✅ Whole line is removed.
+
+### Complete in Search results right-clicking checkbox
+
+- Line before
+- [ ] #task Complete in **Search result**s right-clicking checkbox 🏁 delete
+- Line after
 
 ✅ Whole line is removed.
+
+### Search
+
+```tasks
+path includes {{query.file.path}}
+heading includes Complete in Search results
+short mode
+```
 
 ## Remaining steps
 
