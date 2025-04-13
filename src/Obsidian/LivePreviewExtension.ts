@@ -91,11 +91,22 @@ class LivePreviewExtension implements PluginValue {
         const toggled = task.toggleWithRecurrenceInUsersOrder();
         const toggledString = toggled.map((t) => t.toFileLineString()).join(state.lineBreak);
 
+        let to = line.to;
+
+        if (toggledString === '') {
+            // We also need to remove any line break at the end of the line.
+            const nextLine = line.number < state.doc.lines ? state.doc.line(line.number + 1) : null;
+            if (nextLine) {
+                // If not the last line, delete up to the start of the next line, including the line break
+                to = nextLine.from;
+            }
+        }
+
         // Creates a CodeMirror transaction in order to update the document.
         const transaction = state.update({
             changes: {
                 from: line.from,
-                to: line.to,
+                to,
                 insert: toggledString,
             },
         });
