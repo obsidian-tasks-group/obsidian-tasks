@@ -43,6 +43,14 @@
 
 ✅ Whole line is removed.
 
+### Complete in Reading Mode right-clicking checkbox
+
+- Line before
+- [ ] #task Complete in **Reading Mode** right-clicking checkbox 🏁 delete
+- Line after
+
+✅ Whole line is removed.
+
 ## Search results
 
 ### Complete in Search results clicking checkbox
