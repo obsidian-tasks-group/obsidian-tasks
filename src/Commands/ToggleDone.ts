@@ -36,7 +36,18 @@ export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView
     const line = editor.getLine(lineNumber);
 
     const insertion = toggleLine(line, path);
-    editor.setLine(lineNumber, insertion.text);
+
+    if (insertion.text.length > 0) {
+        editor.setLine(lineNumber, insertion.text);
+    } else {
+        // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3342
+        // If insertion.text is empty, delete the line instead, so we don't leave a trailing end-of-line character around.
+        // This behaves gracefully even if there is no end-of-line character on the last line in the file.
+        const from = { line: lineNumber, ch: 0 };
+        const to = { line: lineNumber + 1, ch: 0 };
+        // console.log(`Deleting line+EOL "${editor.getRange(from, to)}", because insertion.text is empty.`);
+        editor.replaceRange('', from, to);
+    }
 
     /* Cursor positions are 0-based for both "line" and "ch" offsets.
      * If "ch" offset bigger than the line length, will just continue to next line(s).
