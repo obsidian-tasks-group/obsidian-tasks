@@ -379,7 +379,11 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName(i18n.t('settings.recurringTasks.dropScheduledDate.name'))
             .setDesc(
-                SettingsTab.createFragmentWithHTML(i18n.t('settings.recurringTasks.dropScheduledDate.description')),
+                SettingsTab.createFragmentWithHTML(
+                    i18n.t('settings.recurringTasks.dropScheduledDate.description') +
+                        '</br>' +
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
+                ),
             )
             .addToggle((toggle) => {
                 const { dropScheduledDateOnRecurrence } = getSettings();
