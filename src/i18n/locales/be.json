@@ -182,7 +182,9 @@
         "name": "Наступнае паўтарэнне з'яўляецца на радку ніжэй"
       },
       "removeScheduledDate": {
-        "description": "",
+        "description": {
+          "line1": ""
+        },
         "name": ""
       }
     },

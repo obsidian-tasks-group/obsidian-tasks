@@ -182,7 +182,9 @@
         "name": "Следующее повторение появляется на строке ниже"
       },
       "removeScheduledDate": {
-        "description": "",
+        "description": {
+          "line1": ""
+        },
         "name": ""
       }
     },
