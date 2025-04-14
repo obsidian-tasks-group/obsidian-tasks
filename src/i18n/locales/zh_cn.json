@@ -180,6 +180,13 @@
       "nextLine": {
         "description": "启用此功能后，任务的下一次重复将显示在已完成任务的下一行。若关闭此功能，则下一次重复将出现在已完成任务的上一行。",
         "name": "把任务的下一次重复放在下一行"
+      },
+      "removeScheduledDate": {
+        "description": {
+          "line1": "",
+          "line2": ""
+        },
+        "name": ""
       }
     },
     "seeTheDocumentation": "参阅文档",

@@ -49,5 +49,8 @@ yarn-error.log
 # Backup files.
 *.bak
 
+# Internationalisation
+/src/i18n/locales/*_old.json
+
 # VS code config
 .vscode/
