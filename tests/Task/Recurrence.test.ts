@@ -245,7 +245,9 @@ describe('Recurrence - with dropScheduledDateOnRecurrence', () => {
         const next = recurrence!.next(undefined, true);
 
         // Assert
+        expect(next!.startDate).toEqualMoment(moment('2022-02-01'));
         expect(next!.scheduledDate).toBeNull();
+        expect(next!.dueDate).toEqualMoment(moment('2022-02-10'));
     });
 
     it('does not drop the scheduledDate when it is the only date', () => {
