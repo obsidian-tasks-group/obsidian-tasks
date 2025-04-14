@@ -1,9 +1,10 @@
 # How do I make a release?
 
-1. Go to the [CodeQL Actions page](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/codeql-analysis.yml) and click `Run workflow` to run the CodeQL checks
-    - Wait for them to succeed
-    - If they fail, put the release on hold and fix any issues first. (Failures are very rare.)
-1. Check out the `main` branch
+1. Check the builds on `main`:
+    - Check the [GitHub actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions?query=branch%3Amain) are passing.
+    - Check the [SonarQube checks](https://sonarcloud.io/summary/new_code?id=obsidian-tasks-group_obsidian-tasks&branch=main) are passing.
+    - If any are failing, put the release on hold and fix any issues first.
+1. Check out the `main` branch, and pull the latest code.
 1. Check for the current version in [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) (for example, `1.4.1`) and decide on a next version
     - Backwards incompatible change: increase major version
     - New functionality: increase minor version
