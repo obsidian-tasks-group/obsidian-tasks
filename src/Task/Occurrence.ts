@@ -87,9 +87,9 @@ export class Occurrence {
      * If the occurrence has no reference date, an empty {@link Occurrence} will be returned.
      *
      * @param nextReferenceDate
-     * @param dropScheduledDate - Optional boolean to drop the scheduled date from the next occurrence so long as a start or due date exists.
+     * @param removeScheduledDate - Optional boolean to remove the scheduled date from the next occurrence so long as a start or due date exists.
      */
-    public next(nextReferenceDate: Date, dropScheduledDate: boolean = false): Occurrence {
+    public next(nextReferenceDate: Date, removeScheduledDate: boolean = false): Occurrence {
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
         if (this.referenceDate === null) {
@@ -103,7 +103,7 @@ export class Occurrence {
         const hasStartDate = this.startDate !== null;
         const hasDueDate = this.dueDate !== null;
         const canDropScheduledDate = hasStartDate || hasDueDate;
-        const shouldDropScheduledDate = dropScheduledDate && canDropScheduledDate;
+        const shouldDropScheduledDate = removeScheduledDate && canDropScheduledDate;
 
         const startDate = this.nextOccurrenceDate(this.startDate, nextReferenceDate);
         const scheduledDate = shouldDropScheduledDate
