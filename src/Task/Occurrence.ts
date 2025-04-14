@@ -87,6 +87,7 @@ export class Occurrence {
      * If the occurrence has no reference date, an empty {@link Occurrence} will be returned.
      *
      * @param nextReferenceDate
+     * @param dropScheduledDate - Optional boolean to drop the scheduled date from the next occurrence so long as a start or due date exists.
      */
     public next(nextReferenceDate: Date, dropScheduledDate: boolean = false): Occurrence {
         // Only if a reference date is given. A reference date will exist if at

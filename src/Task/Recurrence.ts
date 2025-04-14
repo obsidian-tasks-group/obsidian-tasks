@@ -72,6 +72,7 @@ export class Recurrence {
      * Returns the dates of the next occurrence or null if there is no next occurrence.
      *
      * @param today - Optional date representing the completion date. Defaults to today.
+     * @param dropScheduledDate - Optional boolean to drop the scheduled date from the next occurrence so long as a start or due date exists.
      */
     public next(today = window.moment(), dropScheduledDate: boolean = false): Occurrence | null {
         const nextReferenceDate = this.nextReferenceDate(today);
