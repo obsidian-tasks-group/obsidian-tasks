@@ -103,10 +103,10 @@ export class Occurrence {
         const hasStartDate = this.startDate !== null;
         const hasDueDate = this.dueDate !== null;
         const canRemoveScheduledDate = hasStartDate || hasDueDate;
-        const shouldDropScheduledDate = removeScheduledDate && canRemoveScheduledDate;
+        const shouldRemoveScheduledDate = removeScheduledDate && canRemoveScheduledDate;
 
         const startDate = this.nextOccurrenceDate(this.startDate, nextReferenceDate);
-        const scheduledDate = shouldDropScheduledDate
+        const scheduledDate = shouldRemoveScheduledDate
             ? null
             : this.nextOccurrenceDate(this.scheduledDate, nextReferenceDate);
         const dueDate = this.nextOccurrenceDate(this.dueDate, nextReferenceDate);
