@@ -182,7 +182,9 @@
         "name": "Next recurrence appears on the line below"
       },
       "removeScheduledDate": {
-        "description": "Enabling this will make the next recurrence of a task have no Scheduled date, when at least one of Start or Due dates is present.",
+        "description": {
+          "line1": "Enabling this will make the next recurrence of a task have no Scheduled date, when at least one of Start or Due dates is present."
+        },
         "name": "Remove scheduled date on recurrence"
       }
     },

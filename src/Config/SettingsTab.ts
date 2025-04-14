@@ -380,7 +380,7 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.recurringTasks.removeScheduledDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.recurringTasks.removeScheduledDate.description') +
+                    i18n.t('settings.recurringTasks.removeScheduledDate.description.line1') +
                         '</br>' +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
                 ),

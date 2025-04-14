@@ -182,7 +182,9 @@
         "name": "把任务的下一次重复放在下一行"
       },
       "removeScheduledDate": {
-        "description": "",
+        "description": {
+          "line1": ""
+        },
         "name": ""
       }
     },
