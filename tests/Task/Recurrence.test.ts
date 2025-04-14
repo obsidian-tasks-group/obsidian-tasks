@@ -229,8 +229,8 @@ describe('identicalTo', () => {
     });
 });
 
-describe('Recurrence - with dropScheduledDateOnRecurrence', () => {
-    it('drops the scheduledDate when dropScheduledDate is true', () => {
+describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
+    it('should remove the scheduledDate when removeScheduledDate is true', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every month',
@@ -250,7 +250,7 @@ describe('Recurrence - with dropScheduledDateOnRecurrence', () => {
         expect(next!.dueDate).toEqualMoment(moment('2022-02-10'));
     });
 
-    it('does not drop the scheduledDate when it is the only date', () => {
+    it('should not remove the scheduledDate when it is the only date', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every month',

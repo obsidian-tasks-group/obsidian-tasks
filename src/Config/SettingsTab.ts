@@ -377,18 +377,20 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName(i18n.t('settings.recurringTasks.dropScheduledDate.name'))
+            .setName(i18n.t('settings.recurringTasks.removeScheduledDate.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.recurringTasks.dropScheduledDate.description') +
+                    i18n.t('settings.recurringTasks.removeScheduledDate.description.line1') +
+                        '</br>' +
+                        i18n.t('settings.recurringTasks.removeScheduledDate.description.line2') +
                         '</br>' +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
                 ),
             )
             .addToggle((toggle) => {
-                const { dropScheduledDateOnRecurrence } = getSettings();
-                toggle.setValue(dropScheduledDateOnRecurrence).onChange(async (value) => {
-                    updateSettings({ dropScheduledDateOnRecurrence: value });
+                const { removeScheduledDateOnRecurrence } = getSettings();
+                toggle.setValue(removeScheduledDateOnRecurrence).onChange(async (value) => {
+                    updateSettings({ removeScheduledDateOnRecurrence: value });
                     await this.plugin.saveSettings();
                 });
             });
