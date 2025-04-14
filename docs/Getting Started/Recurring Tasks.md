@@ -61,7 +61,7 @@ Use this setting to control where the recurring task is inserted. The default is
 
 Use this setting to control whether the Scheduled date should be removed from the next occurrence. The Scheduled date is only removed the task also has a Start or Due date.
 
-This is useful when you want the Start and Due dates to carry forward to the next recurrence, but you will set the Scheduled date in future, once you know plan to work on it.
+This is useful when you want the Start and Due dates to carry forward to the next recurrence, but you will set the Scheduled date in future, once you know when you intend to work on it.
 
 ![Setting for Remove scheduled date on recurrence](../images/settings-recurrence-remove-scheduled-date.png)
 
