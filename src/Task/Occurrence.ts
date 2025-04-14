@@ -99,8 +99,15 @@ export class Occurrence {
             });
         }
 
+        const hasStartDate = this.startDate !== null;
+        const hasDueDate = this.dueDate !== null;
+        const canDropScheduledDate = hasStartDate || hasDueDate;
+        const shouldDropScheduledDate = dropScheduledDate && canDropScheduledDate;
+
         const startDate = this.nextOccurrenceDate(this.startDate, nextReferenceDate);
-        const scheduledDate = dropScheduledDate ? null : this.nextOccurrenceDate(this.scheduledDate, nextReferenceDate);
+        const scheduledDate = shouldDropScheduledDate
+            ? null
+            : this.nextOccurrenceDate(this.scheduledDate, nextReferenceDate);
         const dueDate = this.nextOccurrenceDate(this.dueDate, nextReferenceDate);
 
         return new Occurrence({
