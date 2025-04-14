@@ -25,7 +25,7 @@ Optional: Post to:
 
 - Obsidian Discord
   - Add a post in the `#updates` channel, with detail about the release
-  - Add a one-liner in the `#task-management` channel, linking to the first post
+  - Add a one-liner in the `#tasks` channel, linking to the first post
 - r/ObsidianMD on Reddit
 - Obsidian Forum Share & Showcase section
 - etc.
