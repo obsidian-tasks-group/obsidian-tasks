@@ -55,6 +55,10 @@ Use this setting to control where the recurring task is inserted. The default is
 > [!released]
 > Control of the location (or order) of the new task was introduced in Tasks 3.8.0
 
+### Drop scheduled dates
+
+Use this setting to control whether the scheduled date should be removed from the next occurrence. The scheduled date is only removed the task also has another date.
+
 ### Recurring Tasks with Custom Statuses
 
 > [!Warning]
