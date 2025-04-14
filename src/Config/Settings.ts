@@ -76,6 +76,7 @@ export interface Settings {
     filenameAsScheduledDateFormat: string;
     filenameAsDateFolders: string[];
     recurrenceOnNextLine: boolean;
+    dropScheduledDateOnRecurrence: boolean;
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -110,6 +111,7 @@ const defaultSettings: Settings = {
     filenameAsScheduledDateFormat: '',
     filenameAsDateFolders: [],
     recurrenceOnNextLine: false,
+    dropScheduledDateOnRecurrence: false,
     statusSettings: new StatusSettings(),
     features: Feature.settingsFlags,
     generalSettings: {
