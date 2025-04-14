@@ -176,14 +176,14 @@
       }
     },
     "recurringTasks": {
+      "dropScheduledDate": {
+        "description": "Enabling this will make the next recurrence of a task have no scheduled date, unless the scheduled date is the only date the task has.",
+        "name": "Drop scheduled date (only if Start or Due is present)"
+      },
       "heading": "Recurring tasks",
       "nextLine": {
         "description": "Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.",
         "name": "Next recurrence appears on the line below"
-      },
-      "dropScheduledDate": {
-        "description": "Enabling this will make the next recurrence of a task have no scheduled date, unless the scheduled date is the only date the task has.",
-        "name": "Drop scheduled date (only if Start or Due is present)"
       }
     },
     "seeTheDocumentation": "See the documentation",
