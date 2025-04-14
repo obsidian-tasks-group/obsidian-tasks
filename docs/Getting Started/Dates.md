@@ -59,10 +59,10 @@ Scheduled dates use an hourglass emoji: ⏳.
 - [ ] take out the trash ⏳ 2021-04-09
 ```
 
-See [[Use Filename as Default Date]] for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
+See also:
 
-> [!released]
-'Use Filename as Default Date' was introduced in Tasks 1.18.0.
+- [[Use Filename as Default Date]] for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
+- [[Recurring Tasks#Remove scheduled date on recurrence|Remove scheduled date on recurrence]] for controlling whether new recurring tasks are automatically scheduled.
 
 Related instructions for use in Tasks query blocks:
 
