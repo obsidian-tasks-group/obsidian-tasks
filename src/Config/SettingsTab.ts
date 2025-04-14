@@ -388,9 +388,9 @@ export class SettingsTab extends PluginSettingTab {
                 ),
             )
             .addToggle((toggle) => {
-                const { dropScheduledDateOnRecurrence } = getSettings();
-                toggle.setValue(dropScheduledDateOnRecurrence).onChange(async (value) => {
-                    updateSettings({ dropScheduledDateOnRecurrence: value });
+                const { removeScheduledDateOnRecurrence } = getSettings();
+                toggle.setValue(removeScheduledDateOnRecurrence).onChange(async (value) => {
+                    updateSettings({ removeScheduledDateOnRecurrence: value });
                     await this.plugin.saveSettings();
                 });
             });
