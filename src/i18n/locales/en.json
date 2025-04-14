@@ -182,8 +182,8 @@
         "name": "Next recurrence appears on the line below"
       },
       "dropScheduledDate": {
-        "description": "Enabling this will make the next recurrence of a task have no scheduled date.",
-        "name": "Drop scheduled date on recurrence"
+        "description": "Enabling this will make the next recurrence of a task have no scheduled date, unless the scheduled date is the only date the task has.",
+        "name": "Drop scheduled date (only if Start or Due is present)"
       }
     },
     "seeTheDocumentation": "See the documentation",
