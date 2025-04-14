@@ -183,7 +183,8 @@
       },
       "removeScheduledDate": {
         "description": {
-          "line1": "Enabling this will make the next recurrence of a task have no Scheduled date, when at least one of Start or Due dates is present."
+          "line1": "Enabling this will make the next recurrence of a task have no Scheduled date, when at least one of Start or Due dates is present.",
+          "line2": "This is for when you want the Start and Due dates to carry forward to the next recurrence, but you will set the Scheduled date in future, once you know plan to work on it."
         },
         "name": "Remove scheduled date on recurrence"
       }
