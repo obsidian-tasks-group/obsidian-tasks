@@ -177,8 +177,8 @@
     },
     "recurringTasks": {
       "dropScheduledDate": {
-        "description": "Enabling this will make the next recurrence of a task have no scheduled date, unless the scheduled date is the only date the task has.",
-        "name": "Drop scheduled date (only if Start or Due is present)"
+        "description": "Enabling this will make the next recurrence of a task have no Scheduled date, when at least one of Start or Due dates is present.",
+        "name": "Drop scheduled date on recurrence"
       },
       "heading": "Recurring tasks",
       "nextLine": {
