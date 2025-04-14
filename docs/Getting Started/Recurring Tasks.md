@@ -46,6 +46,8 @@ Alternatively, if you have enabled addition of [[Dates#Created date|created date
 - [x] take out the trash 🔁 every Sunday 📅 2021-04-25 ✅ 2023-03-10
 ```
 
+## Recurrence Settings
+
 ### Order of the new task
 
 Use this setting to control where the recurring task is inserted. The default is to put the new task before the original one.
@@ -66,7 +68,7 @@ This is useful when you want the Start and Due dates to carry forward to the nex
 > [!released]
 > The option to remove the scheduled date on recurrence was introduced in Tasks X.Y.Z.
 
-### Recurring Tasks with Custom Statuses
+## Recurring Tasks with Custom Statuses
 
 > [!Warning]
 > If you use [[Custom Statuses]], please see [[Recurring Tasks and Custom Statuses]] for important information about how these two facilities interact.
