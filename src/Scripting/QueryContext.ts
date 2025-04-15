@@ -1,3 +1,4 @@
+import { getSettings } from '../Config/Settings';
 import type { Task } from '../Task/Task';
 import type { TasksFile } from './TasksFile';
 
@@ -58,8 +59,6 @@ export function makeQueryContextWithTasks(tasksFile: TasksFile, allTasks: Readon
             allTasks: allTasks,
             searchCache: {}, // Added for caching
         },
-        include: {
-            not_done: 'not done',
-        },
+        include: { ...getSettings().include },
     };
 }
