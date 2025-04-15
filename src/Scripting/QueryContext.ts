@@ -24,9 +24,7 @@ export interface QueryContext {
         allTasks: Readonly<Task[]>;
         searchCache: Record<string, any>; // Added caching capability
     };
-    include: {
-        not_done: string;
-    };
+    include: Record<string, string>;
 }
 
 /**
