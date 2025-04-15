@@ -59,6 +59,6 @@ export function makeQueryContextWithTasks(tasksFile: TasksFile, allTasks: Readon
             allTasks: allTasks,
             searchCache: {}, // Added for caching
         },
-        includes: { ...getSettings().include },
+        includes: { ...getSettings().includes },
     };
 }
