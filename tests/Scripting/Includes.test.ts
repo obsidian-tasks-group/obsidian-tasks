@@ -10,7 +10,7 @@ describe('include tests', () => {
     it('should accept whole-line include placeholder', () => {
         updateSettings({ include: { not_done: 'not done' } });
 
-        const source = '{{include.not_done}}';
+        const source = '{{includes.not_done}}';
         const query = new Query(source, new TasksFile('stuff.md'));
 
         expect(query.error).toBeUndefined();
