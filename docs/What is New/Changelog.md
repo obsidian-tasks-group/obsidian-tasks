@@ -12,6 +12,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
+- X.Y.Z:
+  - New setting to [[Recurring Tasks#Remove scheduled date on recurrence|remove scheduled date on recurrence]].
 - 7.16.0:
   - Add `task.lineNumber`.
     - This enables `sort by function task.lineNumber` to override the [[Sorting#Default sort order|default sort order]].
