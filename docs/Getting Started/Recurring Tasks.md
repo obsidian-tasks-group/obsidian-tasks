@@ -66,7 +66,7 @@ This is useful when you want the Start and Due dates to carry forward to the nex
 ![Setting for Remove scheduled date on recurrence](../images/settings-recurrence-remove-scheduled-date.png)
 
 > [!released]
-> The option to remove the scheduled date on recurrence was introduced in Tasks X.Y.Z.
+> The option to remove the scheduled date on recurrence was introduced in Tasks 7.19.0.
 
 ## Recurring Tasks with Custom Statuses
 
