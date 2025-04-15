@@ -1,6 +1,10 @@
-import { getSettings } from '../../src/Config/Settings';
+import { getSettings, resetSettings } from '../../src/Config/Settings';
 import { Query } from '../../src/Query/Query';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+
+afterEach(() => {
+    resetSettings();
+});
 
 describe('include tests', () => {
     it('should accept whole-line include placeholder', () => {
