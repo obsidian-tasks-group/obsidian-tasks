@@ -61,7 +61,7 @@ export const TASK_FORMATS = {
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
 export interface Settings {
-    include: Record<string, string>;
+    includes: Record<string, string>;
     globalQuery: string;
     globalFilter: string;
     removeGlobalFilter: boolean;
@@ -97,7 +97,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-    include: {},
+    includes: {},
     globalQuery: '',
     globalFilter: '',
     removeGlobalFilter: false,

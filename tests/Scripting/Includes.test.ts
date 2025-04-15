@@ -8,7 +8,7 @@ afterEach(() => {
 
 describe('include tests', () => {
     it('should accept whole-line include placeholder', () => {
-        updateSettings({ include: { not_done: 'not done' } });
+        updateSettings({ includes: { not_done: 'not done' } });
 
         const source = '{{includes.not_done}}';
         const query = new Query(source, new TasksFile('stuff.md'));
@@ -23,6 +23,6 @@ describe('include settings tests', () => {
     it('should have an empty include field', () => {
         const settings = getSettings();
 
-        expect(settings.include).toEqual({});
+        expect(settings.includes).toEqual({});
     });
 });
