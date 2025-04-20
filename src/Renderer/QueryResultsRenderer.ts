@@ -417,6 +417,7 @@ export class QueryResultsRenderer {
         if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
             this.addPostponeButton(extrasSpan, task, shortMode);
         }
+        // TODO: add cancel button
 
         taskList.appendChild(listItem);
 

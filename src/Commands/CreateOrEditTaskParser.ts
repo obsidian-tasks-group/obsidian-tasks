@@ -96,6 +96,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             onCompletion: OnCompletion.Ignore,
             dependsOn: [],
             id: '',
+            tickTickId: '',
             blockLink: '',
             tags: [],
             originalMarkdown: '',
@@ -140,6 +141,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         // Not needed since the inferred status is always re-computed after submitting.
         scheduledDateIsInferred: false,
         id: '',
+        tickTickId: '',
         dependsOn: [],
     });
 };
@@ -167,6 +169,7 @@ export const taskFromNothing = ({ path }: { path: string }): Task => {
         onCompletion: OnCompletion.Ignore,
         dependsOn: [],
         id: '',
+        tickTickId: '',
         blockLink: '',
         tags: [],
         originalMarkdown: '',

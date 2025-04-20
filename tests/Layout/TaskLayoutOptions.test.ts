@@ -8,6 +8,7 @@ describe('TaskLayoutOptions', () => {
         expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
             "description
             id
+            tickTickId
             dependsOn
             priority
             recurrenceRule
@@ -64,6 +65,7 @@ describe('TaskLayoutOptions', () => {
         expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
             "description
             id
+            tickTickId
             dependsOn
             priority
             recurrenceRule
@@ -83,6 +85,7 @@ describe('TaskLayoutOptions', () => {
         expect(options.shownComponents.join('\n')).toMatchInlineSnapshot(`
             "description
             id
+            tickTickId
             dependsOn
             priority
             recurrenceRule
@@ -138,6 +141,7 @@ describe('TaskLayoutOptions', () => {
 
         expect(options.toggleableComponents.join('\n')).toMatchInlineSnapshot(`
             "id
+            tickTickId
             dependsOn
             priority
             recurrenceRule

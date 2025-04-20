@@ -118,7 +118,7 @@ describe('EditableTask tests', () => {
         const allTasks = [task];
 
         const editableTask = EditableTask.fromTask(task, allTasks);
-        const appliedEdits = await editableTask.applyEdits(task, [task]);
+        const { updatedTasks: appliedEdits } = await editableTask.applyEdits(task, [task]);
 
         expect(appliedEdits).toEqual([task]);
     });
@@ -128,7 +128,7 @@ describe('EditableTask tests', () => {
         const allTasks = [task];
 
         const editableTask = EditableTask.fromTask(task, allTasks);
-        const appliedEdits = await editableTask.applyEdits(task, [task]);
+        const { updatedTasks: appliedEdits } = await editableTask.applyEdits(task, [task]);
 
         expect(appliedEdits).toEqual([task]);
     });
@@ -154,7 +154,7 @@ describe('EditableTask tests', () => {
         editableTask.blockedBy = [];
         editableTask.blocking = [];
 
-        const appliedEdits = await editableTask.applyEdits(task, allTasks);
+        const { updatedTasks: appliedEdits } = await editableTask.applyEdits(task, [task]);
 
         expect(appliedEdits.length).toEqual(1);
         expect(appliedEdits[0]).toMatchInlineSnapshot(`
@@ -172,7 +172,7 @@ describe('EditableTask tests', () => {
               "indentation": "  ",
               "listMarker": "-",
               "onCompletion": "",
-              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
+              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef 🐬 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
               "parent": null,
               "priority": "3",
               "recurrence": null,
@@ -207,6 +207,7 @@ describe('EditableTask tests', () => {
                   "_tags": [],
                 },
               },
+              "tickTickId": "abcdef",
             }
         `);
     });
@@ -218,7 +219,7 @@ describe('EditableTask tests', () => {
 
         editableTask.dueDate = '2024-07-13';
 
-        const editedTasks = await editableTask.applyEdits(task, allTasks);
+        const { updatedTasks: editedTasks } = await editableTask.applyEdits(task, [task]);
         // TODO Why does this have the time 12:00?
         //      When I edit a task in the plugin, in the modal, and then group by the following, the time is midnight,
         //      so where is the time dropped in production code?
@@ -241,11 +242,11 @@ describe('EditableTask tests', () => {
         const tuesdayAfter = moment('2024-05-21T12:00:00.000Z');
 
         editableTask.forwardOnly = true;
-        const tasksFutureDay = await editableTask.applyEdits(task, allTasks);
+        const { updatedTasks: tasksFutureDay } = await editableTask.applyEdits(task, [task]);
         expect(tasksFutureDay[0].dueDate).toEqualMoment(tuesdayBefore);
 
         editableTask.forwardOnly = false;
-        const tasksClosestDay = await editableTask.applyEdits(task, allTasks);
+        const { updatedTasks: tasksClosestDay } = await editableTask.applyEdits(task, [task]);
         expect(tasksClosestDay[0].dueDate).toEqualMoment(tuesdayAfter);
     });
 });

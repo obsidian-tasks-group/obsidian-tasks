@@ -8,12 +8,13 @@
   },
   "scripts": {
     "dev": "node esbuild.config.mjs",
-    "build": "node esbuild.config.mjs production",
+    "build": "node esbuild.config.mjs production && cp ./dist/* ~/code/src/github.com/vimiomori/BigDolphin/.obsidian/plugins/obsidian-tasks-plugin-vi/",
     "build:dev": "node esbuild.config.mjs development",
     "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
     "lint:markdown": "markdownlint-cli2 --fix \"**/*.md\" ",
     "test": "jest --ci",
     "test:dev": "jest --watch",
+    "test:updateSnapshot": "jest -u",
     "deploy:local": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1",
     "extract-i18n": "npx i18next-parser",
     "circular-deps-text": "madge --circular --extensions ts ./src > circular-deps.txt",
@@ -71,7 +72,7 @@
     "typedoc": "^0.27.3",
     "typedoc-plugin-mdn-links": "^4.0.4",
     "typedoc-umlclass": "^0.10.1",
-    "typescript": "^5.0.4"
+    "typescript": "5.0.4"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.12",

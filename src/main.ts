@@ -1,6 +1,7 @@
 import { Plugin } from 'obsidian';
 
 import type { Task } from 'Task/Task';
+import { TickTickApi } from 'TickTick/api';
 import { i18n, initializeI18n } from './i18n/i18n';
 import { Cache, State } from './Obsidian/Cache';
 import { Commands } from './Commands';
@@ -24,9 +25,17 @@ export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
+    private _ticktickapi: TickTickApi | undefined;
 
     get apiV1() {
         return tasksApiV1(this.app);
+    }
+
+    get ticktickapi() {
+        if (!this._ticktickapi) {
+            this._ticktickapi = TickTickApi.getInstance();
+        }
+        return this._ticktickapi;
     }
 
     async onload() {

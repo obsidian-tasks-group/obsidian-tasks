@@ -8,20 +8,20 @@
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
-    import RecurrenceEditor from './RecurrenceEditor.svelte';
+    // import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
-    export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
+    export let onSubmit: (updatedTasks: Task[], updatedTask?: Task) => void | Promise<void>;
     export let statusOptions: Status[];
     export let allTasks: Task[];
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         prioritySymbols,
-        startDateSymbol,
-        scheduledDateSymbol,
+        // startDateSymbol,
+        // scheduledDateSymbol,
         dueDateSymbol,
         cancelledDateSymbol,
         createdDateSymbol,
@@ -143,8 +143,10 @@
     };
 
     const _onSubmit = async () => {
-        const newTasks = await editableTask.applyEdits(task, allTasks);
-        onSubmit(newTasks);
+        console.log('applying edits');
+        const tasks = await editableTask.applyEdits(task, allTasks);
+        console.log('done appyine edits');
+        onSubmit(tasks.updatedTasks, tasks.updatedTask);
     };
 </script>
 
@@ -243,7 +245,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
+        <!-- <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} /> -->
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
@@ -259,41 +261,40 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="scheduled"
-            dateSymbol={scheduledDateSymbol}
-            bind:date={editableTask.scheduledDate}
-            bind:isDateValid={isScheduledDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('s')}
-        />
+        <!-- <DateEditor -->
+        <!--     id="scheduled" -->
+        <!--     dateSymbol={scheduledDateSymbol} -->
+        <!--     bind:date={editableTask.scheduledDate} -->
+        <!--     bind:isDateValid={isScheduledDateValid} -->
+        <!--     forwardOnly={editableTask.forwardOnly} -->
+        <!--     accesskey={accesskey('s')} -->
+        <!-- /> -->
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Start Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="start"
-            dateSymbol={startDateSymbol}
-            bind:date={editableTask.startDate}
-            bind:isDateValid={isStartDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('a')}
-        />
+        <!-- <DateEditor -->
+        <!--     id="start" -->
+        <!--     dateSymbol={startDateSymbol} -->
+        <!--     bind:date={editableTask.startDate} -->
+        <!--     bind:isDateValid={isStartDateValid} -->
+        <!--     forwardOnly={editableTask.forwardOnly} -->
+        <!--     accesskey={accesskey('a')} -->
+        <!-- /> -->
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
-        <div class="future-dates-only">
-            <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:checked={editableTask.forwardOnly}
-                id="forwardOnly"
-                type="checkbox"
-                class="task-list-item-checkbox tasks-modal-checkbox"
-                accesskey={accesskey('f')}
-            />
-        </div>
+        <!-- <div class="future-dates-only"> -->
+        <!--     <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label> -->
+        <!--     <input -->
+        <!--         bind:checked={editableTask.forwardOnly} -->
+        <!--         id="forwardOnly" -->
+        <!--         type="checkbox" -->
+        <!--         class="task-list-item-checkbox tasks-modal-checkbox" -->
+        <!--         accesskey={accesskey('f')} -->
+        <!--     /> -->
+        <!-- </div> -->
     </section>
 
     <!-- --------------------------------------------------------------------------- -->

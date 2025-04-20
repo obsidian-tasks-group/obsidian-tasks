@@ -2,7 +2,7 @@ import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Priority } from '../Task/Priority';
 import type { Task } from '../Task/Task';
-import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from './DefaultTaskSerializer';
+import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex, tickTickIdRegex } from './DefaultTaskSerializer';
 
 /**
  * Takes a regex of the form 'key:: value' and turns it into a regex that can parse
@@ -78,6 +78,7 @@ export const DATAVIEW_SYMBOLS = {
     recurrenceSymbol: 'repeat::',
     onCompletionSymbol: 'onCompletion::',
     idSymbol: 'id::',
+    tickTickIdSymbol: 'tickTickId::',
     dependsOnSymbol: 'dependsOn::',
     TaskFormatRegularExpressions: {
         priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
@@ -91,6 +92,7 @@ export const DATAVIEW_SYMBOLS = {
         onCompletionRegex: toInlineFieldRegex(/onCompletion:: *([a-zA-Z]+)/),
         dependsOnRegex: toInlineFieldRegex(new RegExp('dependsOn:: *(' + taskIdSequenceRegex.source + ')')),
         idRegex: toInlineFieldRegex(new RegExp('id:: *(' + taskIdRegex.source + ')')),
+        tickTickIdRegex: toInlineFieldRegex(new RegExp('tickTickId:: *(' + tickTickIdRegex.source + ')')),
     },
 } as const;
 

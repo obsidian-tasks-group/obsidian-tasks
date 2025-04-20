@@ -24,6 +24,7 @@ export type TaskDetails = Writeable<
         | 'onCompletion'
         | 'dependsOn'
         | 'id'
+        | 'tickTickId'
         | 'tags'
     >
 >;

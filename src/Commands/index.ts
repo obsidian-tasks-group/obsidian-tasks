@@ -20,7 +20,7 @@ export class Commands {
             id: 'edit-task-at-index',
             name: 'Create or edit task at index',
             icon: 'pencil',
-            callback: () => createAtIndex(this.app, this.plugin.getTasks()),
+            callback: () => createAtIndex(this.app, this.plugin.getTasks(), this.plugin.ticktickapi),
         });
 
         plugin.addCommand({

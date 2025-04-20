@@ -87,6 +87,56 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('settings.viSettings.heading')).setHeading();
+        new Setting(containerEl)
+            .setName(i18n.t('settings.viSettings.toggle.name'))
+            .setDesc(i18n.t('settings.viSettings.toggle.description'))
+            .addToggle((toggle) => {
+                const settings = getSettings();
+
+                toggle.setValue(settings.viSettings).onChange(async (value) => {
+                    updateSettings({ viSettings: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+        new Setting(containerEl)
+            .setName(i18n.t('settings.viSettings.username.name'))
+            .setDesc(i18n.t('settings.viSettings.username.description'))
+            .addText((text) => {
+                text.setPlaceholder(i18n.t('settings.viSettings.username.placeholder'))
+                    .setValue(this.plugin.ticktickapi.getUsername())
+                    .onChange(async (value) => {
+                        updateSettings({ username: value });
+                        this.plugin.ticktickapi.setUsername(value);
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.viSettings.password.name'))
+            .setDesc(i18n.t('settings.viSettings.password.description'))
+            .addText((text) => {
+                text.setPlaceholder(i18n.t('settings.viSettings.password.placeholder'))
+                    .setValue(this.plugin.ticktickapi.getPassword())
+                    .onChange(async (value) => {
+                        updateSettings({ password: value });
+                        this.plugin.ticktickapi.setPassword(value);
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        const input = containerEl.querySelector('input[placeholder="password"]');
+        input?.setAttribute('type', 'password');
+
+        new Setting(containerEl).addButton((component) => {
+            component.setButtonText(i18n.t('settings.viSettings.login.name'));
+            component.onClick(() => {
+                this.plugin.ticktickapi.login();
+            });
+        });
+
+        // ---------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.globalFilter.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let globalFilterHidden: Setting | null = null;

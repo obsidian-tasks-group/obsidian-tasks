@@ -202,7 +202,7 @@ esbuild
         format: 'cjs',
         logLevel: 'info',
         minify: prod ? true : false,
-        outdir: '.',
+        outdir: './dist',
         plugins: [
             esbuildSvelte({
                 preprocess: sveltePreprocess(),

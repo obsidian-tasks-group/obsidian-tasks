@@ -7,7 +7,7 @@ import { Status } from '../Statuses/Status';
 
 export class TaskModal extends Modal {
     public readonly task: Task;
-    public readonly onSubmit: (updatedTasks: Task[]) => void;
+    public readonly onSubmit: (updatedTasks: Task[], updatedTask?: Task) => void | Promise<void>;
     public readonly allTasks: Task[];
 
     constructor({
@@ -18,15 +18,15 @@ export class TaskModal extends Modal {
     }: {
         app: App;
         task: Task;
-        onSubmit: (updatedTasks: Task[]) => void;
+        onSubmit: (updatedTasks: Task[], updatedTask?: Task) => void | Promise<void>;
         allTasks: Task[];
     }) {
         super(app);
 
         this.task = task;
         this.allTasks = allTasks;
-        this.onSubmit = (updatedTasks: Task[]) => {
-            updatedTasks.length && onSubmit(updatedTasks);
+        this.onSubmit = (updatedTasks: Task[], updatedTask?: Task) => {
+            updatedTasks.length && onSubmit(updatedTasks, updatedTask);
             this.close();
         };
     }

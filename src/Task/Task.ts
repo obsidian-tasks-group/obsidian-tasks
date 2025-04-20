@@ -58,6 +58,7 @@ export class Task extends ListItem {
 
     public readonly dependsOn: string[];
     public readonly id: string;
+    public tickTickId: string;
 
     /** The blockLink is a "^" annotation after the dates/recurrence rules.
      * Any non-empty value must begin with ' ^'. */
@@ -85,6 +86,7 @@ export class Task extends ListItem {
         onCompletion,
         dependsOn,
         id,
+        tickTickId,
         blockLink,
         tags,
         originalMarkdown,
@@ -108,6 +110,7 @@ export class Task extends ListItem {
         onCompletion: OnCompletion;
         dependsOn: string[] | [];
         id: string;
+        tickTickId: string;
         blockLink: string;
         tags: string[] | [];
         originalMarkdown: string;
@@ -142,6 +145,7 @@ export class Task extends ListItem {
 
         this.dependsOn = dependsOn;
         this.id = id;
+        this.tickTickId = tickTickId;
 
         this.blockLink = blockLink;
 
@@ -378,7 +382,7 @@ export class Task extends ListItem {
         }
 
         const { removeScheduledDateOnRecurrence } = getSettings();
-        const nextOccurrence = this.recurrence.next(today, removeScheduledDateOnRecurrence);
+        const nextOccurrence = this.recurrence?.next(today, removeScheduledDateOnRecurrence);
         if (nextOccurrence === null) {
             return [toggledTask];
         }
@@ -416,7 +420,7 @@ export class Task extends ListItem {
         return newDate;
     }
 
-    private createNextOccurrence(newStatus: Status, nextOccurrence: Occurrence) {
+    private createNextOccurrence(newStatus: Status, nextOccurrence?: Occurrence | null) {
         const { setCreatedDate } = getSettings();
         let createdDate: moment.Moment | null = null;
         if (setCreatedDate) {

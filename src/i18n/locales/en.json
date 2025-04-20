@@ -90,6 +90,27 @@
     }
   },
   "settings": {
+    "viSettings": {
+      "heading": "Vi Settings",
+      "toggle": {
+        "description": "Enables Vi settings",
+        "name": "Vi settings"
+      },
+      "username": {
+        "description": "Enter your username",
+        "name": "Username",
+        "placeholder": "username"
+      },
+      "password": {
+        "description": "Enter your password",
+        "name": "Password",
+        "placeholder": "password"
+      },
+      "login": {
+        "description": "Login",
+        "name": "Login"
+      }
+    },
     "autoSuggest": {
       "heading": "Auto-suggest",
       "maxSuggestions": {

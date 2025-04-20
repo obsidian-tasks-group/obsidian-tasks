@@ -8,6 +8,7 @@ export enum TaskLayoutComponent {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     Description = 'description',
     Id = 'id',
+    TickTickId = 'tickTickId',
     DependsOn = 'dependsOn',
     Priority = 'priority',
     RecurrenceRule = 'recurrenceRule',
