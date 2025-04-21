@@ -8,19 +8,12 @@
 ![[Tab Panels code block - by GnoxNahte.png]]
 
 ````tabs
-
 --- This folder
 ```tasks
+not done
 folder includes {{query.file.folder}}
 group by filename
 ```
-
---- This file
-```tasks
-path includes {{query.file.path}}
-group by filename
-```
-
 ````
 
 ❌ When a task is edited via the Pencil icon, all the previous code blocks are re-rendered
