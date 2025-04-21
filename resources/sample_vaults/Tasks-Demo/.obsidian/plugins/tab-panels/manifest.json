@@ -1,0 +1,11 @@
+{
+	"id": "tab-panels",
+	"name": "Tab Panels",
+	"version": "1.1.8",
+	"minAppVersion": "1.5.11",
+	"description": "Create tab panels to organize content into sections",
+	"author": "GnoxNahte",
+	"authorUrl": "https://gnoxnahte.dev",
+	"fundingUrl": "https://ko-fi.com/gnoxnahtedev",
+	"isDesktopOnly": false
+}
