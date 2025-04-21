@@ -122,7 +122,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             this,
         );
 
-        this.queryResultsRenderer.query.warn('[render] QueryRenderChild.constructor() entered');
+        this.queryResultsRenderer.query.debug('[render] QueryRenderChild.constructor() entered');
 
         this.app = app;
         this.plugin = plugin;
@@ -130,7 +130,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     onload() {
-        this.queryResultsRenderer.query.warn('[render] QueryRenderChild.onload() entered');
+        this.queryResultsRenderer.query.debug('[render] QueryRenderChild.onload() entered');
 
         // Process the current cache state:
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
@@ -178,12 +178,12 @@ class QueryRenderChild extends MarkdownRenderChild {
             for (const entry of entries) {
                 const visible = entry.isIntersecting && this.containerEl.isShown();
                 if (visible) {
-                    this.queryResultsRenderer.query.warn(
+                    this.queryResultsRenderer.query.debug(
                         `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
                     );
                     if (this.isCacheChangedSinceLastRedraw) {
                         // TODO Should handle exceptions here...
-                        this.queryResultsRenderer.query.warn('[render][observer] ... updating search results');
+                        this.queryResultsRenderer.query.debug('[render][observer] ... updating search results');
                         this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() }).then(() => {});
                     }
                 }
@@ -209,7 +209,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     onunload() {
-        this.queryResultsRenderer.query.warn('[render] QueryRenderChild.onunload() entered');
+        this.queryResultsRenderer.query.debug('[render] QueryRenderChild.onunload() entered');
 
         if (this.renderEventRef !== undefined) {
             this.events.off(this.renderEventRef);
@@ -261,7 +261,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             // (setTimeout(, 0) seemed to work too...)
             const isConnected = this.containerEl.isConnected;
             if (!isConnected) {
-                this.queryResultsRenderer.query.warn(
+                this.queryResultsRenderer.query.debug(
                     '[render] QueryRenderChild.render() Ignoring redraw request, as code block is not connected.',
                 );
                 return;
@@ -269,7 +269,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const isShown = this.containerEl.isShown();
             if (!isShown) {
-                this.queryResultsRenderer.query.warn(
+                this.queryResultsRenderer.query.debug(
                     '[render] QueryRenderChild.render() Ignoring redraw request, as code block is not shown.',
                 );
                 return;
