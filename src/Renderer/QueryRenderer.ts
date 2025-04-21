@@ -259,16 +259,14 @@ class QueryRenderChild extends MarkdownRenderChild {
             // We have to wrap the rendering inside requestAnimationFrame() to ensure
             // that we get correct values for isConnected and isShown().
             // (setTimeout(, 0) seemed to work too...)
-            const isConnected = this.containerEl.isConnected;
-            if (!isConnected) {
+            if (!this.containerEl.isConnected) {
                 this.queryResultsRenderer.query.debug(
                     '[render] QueryRenderChild.render() Ignoring redraw request, as code block is not connected.',
                 );
                 return;
             }
 
-            const isShown = this.containerEl.isShown();
-            if (!isShown) {
+            if (!this.containerEl.isShown()) {
                 this.queryResultsRenderer.query.debug(
                     '[render] QueryRenderChild.render() Ignoring redraw request, as code block is not shown.',
                 );
