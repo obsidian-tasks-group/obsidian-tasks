@@ -91,6 +91,8 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
+
+    private isCacheChangedSinceLastRedraw = false;
     private observer: IntersectionObserver | null = null;
 
     private readonly queryResultsRenderer: QueryResultsRenderer;
@@ -176,10 +178,14 @@ class QueryRenderChild extends MarkdownRenderChild {
             for (const entry of entries) {
                 const visible = entry.isIntersecting && this.containerEl.isShown();
                 if (visible) {
-                    this.queryResultsRenderer.query.warn(`[render][observer] Became visible, with this source:
----
-${this.queryResultsRenderer.query.source}
----`);
+                    this.queryResultsRenderer.query.warn(
+                        `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
+                    );
+                    if (this.isCacheChangedSinceLastRedraw) {
+                        // TODO Should handle exceptions here...
+                        this.queryResultsRenderer.query.warn('[render][observer] ... updating search results');
+                        this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() }).then(() => {});
+                    }
                 }
             }
         });
@@ -245,15 +251,29 @@ ${this.queryResultsRenderer.query.source}
     }
 
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
+        // We got here because the Cache reported a change in at least one task in the vault.
+        // So note that any results we have already drawn are now out-of-date:
+        this.isCacheChangedSinceLastRedraw = true;
+
         requestAnimationFrame(async () => {
             // We have to wrap the rendering inside requestAnimationFrame() to ensure
-            // that we get correct values for isConnected and isShown.
+            // that we get correct values for isConnected and isShown().
             // (setTimeout(, 0) seemed to work too...)
             const isConnected = this.containerEl.isConnected;
+            if (!isConnected) {
+                this.queryResultsRenderer.query.warn(
+                    '[render] QueryRenderChild.render() Ignoring redraw request, as code block is not connected.',
+                );
+                return;
+            }
+
             const isShown = this.containerEl.isShown();
-            this.queryResultsRenderer.query.warn(
-                `[render] QueryRenderChild.render() AFTER FRAME state:${state}; isConnected:${isConnected}; isShown:${isShown};`,
-            );
+            if (!isShown) {
+                this.queryResultsRenderer.query.warn(
+                    '[render] QueryRenderChild.render() Ignoring redraw request, as code block is not shown.',
+                );
+                return;
+            }
 
             const content = createAndAppendElement('div', this.containerEl);
             await this.queryResultsRenderer.render(state, tasks, content, {
@@ -265,6 +285,9 @@ ${this.queryResultsRenderer.query.source}
             });
 
             this.containerEl.firstChild?.replaceWith(content);
+
+            // Our results are now up-to-date:
+            this.isCacheChangedSinceLastRedraw = false;
         });
     }
 }
