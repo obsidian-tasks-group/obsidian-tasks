@@ -219,16 +219,27 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
-        const content = createAndAppendElement('div', this.containerEl);
-        await this.queryResultsRenderer.render(state, tasks, content, {
-            allTasks: this.plugin.getTasks(),
-            allMarkdownFiles: this.app.vault.getMarkdownFiles(),
-            backlinksClickHandler: createBacklinksClickHandler(this.app),
-            backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
-            editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),
-        });
+        requestAnimationFrame(async () => {
+            // We have to wrap the rendering inside requestAnimationFrame() to ensure
+            // that we get correct values for isConnected and isShown.
+            // (setTimeout(, 0) seemed to work too...)
+            const isConnected = this.containerEl.isConnected;
+            const isShown = this.containerEl.isShown();
+            this.queryResultsRenderer.query.warn(
+                `[render] QueryRenderChild.render() AFTER FRAME state:${state}; isConnected:${isConnected}; isShown:${isShown};`,
+            );
 
-        this.containerEl.firstChild?.replaceWith(content);
+            const content = createAndAppendElement('div', this.containerEl);
+            await this.queryResultsRenderer.render(state, tasks, content, {
+                allTasks: this.plugin.getTasks(),
+                allMarkdownFiles: this.app.vault.getMarkdownFiles(),
+                backlinksClickHandler: createBacklinksClickHandler(this.app),
+                backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
+                editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),
+            });
+
+            this.containerEl.firstChild?.replaceWith(content);
+        });
     }
 }
 
