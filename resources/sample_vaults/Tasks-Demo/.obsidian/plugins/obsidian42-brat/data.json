@@ -1,6 +1,5 @@
 {
   "pluginList": [
-    "mnaoumov/obsidian-advanced-debug-mode",
     "pjeby/hot-reload"
   ],
   "pluginSubListFrozenVersion": [],
@@ -12,6 +11,5 @@
   "loggingPath": "BRAT-log",
   "loggingVerboseEnabled": false,
   "debuggingMode": false,
-  "notificationsEnabled": true,
-  "personalAccessToken": ""
+  "notificationsEnabled": true
 }
