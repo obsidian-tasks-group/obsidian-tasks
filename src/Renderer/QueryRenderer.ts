@@ -91,6 +91,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
+    private observer: IntersectionObserver | null = null;
 
     private readonly queryResultsRenderer: QueryResultsRenderer;
 
@@ -162,6 +163,28 @@ class QueryRenderChild extends MarkdownRenderChild {
                 this.handleMetadataOrFilePathChange(tFile.path, fileCache);
             }),
         );
+
+        this.setupVisibilityObserver();
+    }
+
+    private setupVisibilityObserver() {
+        if (this.observer) {
+            return;
+        }
+
+        this.observer = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                const visible = entry.isIntersecting && this.containerEl.isShown();
+                if (visible) {
+                    this.queryResultsRenderer.query.warn(`[render][observer] Became visible, with this source:
+---
+${this.queryResultsRenderer.query.source}
+---`);
+                }
+            }
+        });
+
+        this.observer.observe(this.containerEl);
     }
 
     private handleMetadataOrFilePathChange(filePath: string, fileCache: CachedMetadata | null) {
@@ -189,6 +212,9 @@ class QueryRenderChild extends MarkdownRenderChild {
         if (this.queryReloadTimeout !== undefined) {
             clearTimeout(this.queryReloadTimeout);
         }
+
+        this.observer?.disconnect();
+        this.observer = null;
     }
 
     /**
