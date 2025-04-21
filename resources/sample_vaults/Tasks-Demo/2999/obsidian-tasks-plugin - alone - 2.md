@@ -1,9 +1,9 @@
-# obsidian-tasks-plugin - alone
+# obsidian-tasks-plugin - alone - 2
 
 ## ✅ Simplest query - just Tasks
 
 ```tasks
-not done
+#not done
 folder includes {{query.file.folder}}
 group by filename
 ```
