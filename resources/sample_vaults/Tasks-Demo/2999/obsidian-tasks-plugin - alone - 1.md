@@ -1,15 +1,6 @@
-# tabs by xhuajin
+# obsidian-tasks-plugin - alone - 1
 
-## ❌ Tasks code block in Obsidian Tabs code block - by xhuajin
-
-[GitHub - xhuajin/obsidian-tabs](https://github.com/xhuajin/obsidian-tabs)
-
-![[Obsidian Tabs code block - by xhuajin.png]]
-
-- Forked from [lazyloong/obsidian-code-tab](https://github.com/lazyloong/obsidian-code-tab)
-- Which was forked from  [Jeromexsu/obsidian-code-tab](https://github.com/Jeromexsu/obsidian-code-tab)
-
-- [x] #task Task in tabs by xhuajin ✅ 2025-04-21
+## Verbiage
 
 Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
 
@@ -31,24 +22,18 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapi
 
 Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
 
-~~~~tabs
-tab: This folder
+## ✅ Simplest query - just Tasks
 
 ```tasks
+#not done
 folder includes {{query.file.folder}}
 group by filename
 ```
 
-tab: This file
-```tasks
-path includes {{query.file.path}}
-group by filename
-```
+✅ When a task is edited via the Pencil icon, only one code block is re-rendered.
+This suggests that the Tasks rendered is not kept open after closure.
 
-~~~~
-
-❌ When a task is edited via the Pencil icon, all the previous code blocks are re-rendered
-This suggests that the Tasks rendered ==is kept open after closure==.
+## More verbiage
 
 Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
 
