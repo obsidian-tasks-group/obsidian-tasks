@@ -1,0 +1,191 @@
+.tab-panel-container {
+    display: flex;
+    flex-direction: column;
+    --padding-dist: 0.8em;
+    --outer-border-radius: 1.5em;
+    --inner-border-radius: calc(var(--outer-border-radius) - var(--padding-dist));
+    padding: var(--padding-dist);
+    
+    border: var(--border-width) solid var(--background-modifier-border);
+    border-radius: var(--outer-border-radius);
+    background-color: var(--background-secondary-alt);
+}
+
+.tab-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+
+    &.hide-container {
+        display: none;
+    }
+
+    &::-webkit-scrollbar-track-piece {
+        margin-left: 3px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background-color: var(--background-primary) !important;
+
+        border-top-left-radius: 0.5em;
+        border-top-right-radius: 0.5em;
+        
+        border: var(--border-width) solid var(--background-modifier-border);
+        border-bottom: none;
+
+        box-shadow: 0 5px 0 -1px var(--background-primary),
+                    0 5px var(--background-modifier-border);
+    }
+}
+
+ul.tab-container {
+    /* margin: 0 7px; */
+    display: flex;
+    list-style: none;
+    margin-block: 0;
+    margin: 0 15px;
+    gap: 0.2em;
+    width: fit-content;
+}
+
+.tab-panel-container .tab {
+    /* Remove list styling */
+    white-space: nowrap;
+    margin-inline-start: 0;
+
+    padding: 0.2em 1em 0.6em;
+
+    border-top-left-radius: var(--inner-border-radius);
+    border-top-right-radius: var(--inner-border-radius);
+
+    &.selected {
+        border: var(--border-width) solid var(--background-modifier-border);
+        border-bottom: none;
+        margin-bottom: -1px;
+        background-color: var(--background-primary);
+
+        /* Small curves at the sides of the tabs */
+        /* Copied from inspecting Obsidian tabs */
+        &::before {
+            box-shadow: inset 0 0 0 var(--tab-outline-width) var(--tab-outline-color), 0 0 0 calc(var(--tab-curve) * 4) var(--tab-background-active);
+            left: calc(var(--tab-curve) * -2);
+            clip-path: inset(50% calc(var(--tab-curve) * -1) 0 50%);
+            position: absolute;
+            bottom: 1px;
+            content: '';
+            width: calc(var(--tab-curve) * 2);
+            height: calc(var(--tab-curve) * 2);
+            border-radius: 100%;
+            /* border: 2px solid red; */
+        }
+        &::after {
+            box-shadow: inset 0 0 0 var(--tab-outline-width) var(--tab-outline-color), 0 0 0 calc(var(--tab-curve) * 4) var(--tab-background-active);
+            right: calc(var(--tab-curve) * -2);
+            clip-path: inset(50% 50% 0 calc(var(--tab-curve) * -1));
+            position: absolute;
+            bottom: 1px;
+            content: '';
+            width: calc(var(--tab-curve) * 2);
+            height: calc(var(--tab-curve) * 2);
+            border-radius: 100%;
+        }
+    }
+}
+
+/* Nested tab panels fix curve - Issue: https://github.com/GnoxNahte/obsidian-tab-panels/issues/17#issuecomment-2566461416*/
+.tab-panel-container .tab-panel-container li.tab.selected:last-child {
+    &::before, &::after {
+        bottom: 0px;
+    }
+}
+
+.highlight-selected-tab-name .selected.tab {
+    color: var(--color-accent);
+}
+
+.tab-panel-container .content-container {
+    background-color: var(--background-primary);
+    padding: 1em;
+    border-radius: var(--inner-border-radius);
+    box-shadow: 0 0 0 var(--border-width) var(--background-modifier-border);
+}
+
+.tab-panel-container .content-container > div {
+    &:not(.selected) {
+        display: none;
+    }
+
+    .rendered-content {
+        & > *:first-child {
+            margin-top: 0 !important;
+        }
+    
+        & > *:last-child {
+            margin-bottom: 0 !important;
+        }
+    }
+}
+
+.tab-container .tab:hover {
+    cursor: pointer;
+}
+
+.pdf-tab-header {
+    display: none;
+}
+
+/* Only show when "export to pdf" */
+@media print {
+    .tab-scroll-container {
+        display: none;
+    }
+
+    .tab-panel-container .content-container {
+        padding: 0;
+        background-color: var(--background-secondary-alt);
+        box-shadow: none;
+    }
+
+    .tab-panel-container .content-container > div {
+        display: block !important;
+        flex-direction: column;
+        border-radius: var(--inner-border-radius);
+        border-top: none;
+    }
+
+    .tab-panel-container .pdf-tab-header + div:has(.rendered-content) {
+        margin-top: 0;
+    }
+
+    .tab-panel-container .rendered-content {
+        padding: 1em 1em;
+
+        border: var(--border-width) solid var(--background-modifier-border);
+        background-color: var(--background-primary);
+        border-radius: var(--inner-border-radius);
+    }
+
+    .content-container > div  {
+        display: flex !important;
+    }
+
+    .tab-panel-container .pdf-tab-header {
+        display: block;
+        position:relative;
+        
+        width: fit-content;
+        margin-left: 15px;
+
+        &::before, &::after {
+            bottom: 0 !important;
+        }
+
+        p {
+            margin: 0 !important;
+        }
+    }
+
+    .tab-panel-container .content-container > div:not(:first-child) .pdf-tab-header {
+        margin-top: 1em;
+    }
+}
