@@ -5,7 +5,7 @@
 - [GitHub - GnoxNahte/obsidian-tab-panels: Create tab panels to organize content into sections](https://github.com/GnoxNahte/obsidian-tab-panels)
 - <https://www.moritzjung.dev/obsidian-stats/plugins/tab-panels/#data>
 
-![[Tab Panels code block - by GnoxNahte.png]]
+![[Pasted image 20250421111831.png]]
 
 ````tabs
 --- This folder
