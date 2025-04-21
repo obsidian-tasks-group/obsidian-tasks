@@ -2,7 +2,7 @@ import { Plugin } from 'obsidian';
 
 import type { Task } from 'Task/Task';
 import { i18n, initializeI18n } from './i18n/i18n';
-import { Cache } from './Obsidian/Cache';
+import { Cache, State } from './Obsidian/Cache';
 import { Commands } from './Commands';
 import { GlobalQuery } from './Config/GlobalQuery';
 import { TasksEvents } from './Obsidian/TasksEvents';
@@ -105,6 +105,13 @@ export default class TasksPlugin extends Plugin {
         } else {
             return this.cache.getTasks();
         }
+    }
+
+    public getState(): State {
+        if (this.cache === undefined) {
+            return State.Cold;
+        }
+        return this.cache.getState();
     }
 
     /**
