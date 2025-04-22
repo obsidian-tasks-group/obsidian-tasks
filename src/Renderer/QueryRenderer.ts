@@ -182,9 +182,10 @@ class QueryRenderChild extends MarkdownRenderChild {
                         `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
                     );
                     if (this.isCacheChangedSinceLastRedraw) {
-                        // TODO Should handle exceptions here...
                         this.queryResultsRenderer.query.debug('[render][observer] ... updating search results');
-                        this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() }).then(() => {});
+                        this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() })
+                            .then()
+                            .catch((e) => console.error(e));
                     }
                 }
             }
