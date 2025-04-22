@@ -181,16 +181,18 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             // entry describes a single visibility change for the specific element we are observing.
             // It is safe to assume `entry.target === this.containerEl` here.
-            if (entry.isIntersecting) {
-                this.queryResultsRenderer.query.debug(
-                    `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
-                );
-                if (this.isCacheChangedSinceLastRedraw) {
-                    this.queryResultsRenderer.query.debug('[render][observer] ... updating search results');
-                    this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() })
-                        .then()
-                        .catch((e) => console.error(e));
-                }
+            if (!entry.isIntersecting) {
+                return;
+            }
+
+            this.queryResultsRenderer.query.debug(
+                `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
+            );
+            if (this.isCacheChangedSinceLastRedraw) {
+                this.queryResultsRenderer.query.debug('[render][observer] ... updating search results');
+                this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() })
+                    .then()
+                    .catch((e) => console.error(e));
             }
         });
 
