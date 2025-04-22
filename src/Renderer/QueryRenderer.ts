@@ -175,8 +175,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         this.observer = new IntersectionObserver((entries) => {
+            if (!this.containerEl.isShown()) {
+                return;
+            }
+
             for (const entry of entries) {
-                const visible = entry.isIntersecting && this.containerEl.isShown();
+                const visible = entry.isIntersecting;
                 if (visible) {
                     this.queryResultsRenderer.query.debug(
                         `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
