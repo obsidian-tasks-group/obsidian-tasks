@@ -261,11 +261,11 @@ class QueryRenderChild extends MarkdownRenderChild {
             // (setTimeout(, 0) seemed to work too...)
             if (!this.containerEl.isConnected) {
                 // Example reasons why we might not be "connected":
-                // - This Tasks query block is contained with within another plugin's code block,
+                // - This Tasks query block is contained within another plugin's code block,
                 //   such as a Tabs plugin. The file is closed and that plugin has not correctly
                 //   tidied up, so we have not been deleted.
                 this.queryResultsRenderer.query.debug(
-                    '[render] QueryRenderChild.render() Ignoring redraw request, as code block is not connected.',
+                    '[render] Ignoring redraw request, as code block is not connected.',
                 );
                 return;
             }
@@ -276,9 +276,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 // - We are in a note which is obscured by another note.
                 // - We are in a Tabs plugin, in a tab which is not at the front.
                 // - The user has not yet scrolled to this code block's position in the file.
-                this.queryResultsRenderer.query.debug(
-                    '[render] QueryRenderChild.render() Ignoring redraw request, as code block is not shown.',
-                );
+                this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not shown.');
                 return;
             }
 
