@@ -286,20 +286,24 @@ class QueryRenderChild extends MarkdownRenderChild {
                 return;
             }
 
-            const content = createAndAppendElement('div', this.containerEl);
-            await this.queryResultsRenderer.render(state, tasks, content, {
-                allTasks: this.plugin.getTasks(),
-                allMarkdownFiles: this.app.vault.getMarkdownFiles(),
-                backlinksClickHandler: createBacklinksClickHandler(this.app),
-                backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
-                editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),
-            });
-
-            this.containerEl.firstChild?.replaceWith(content);
+            await this.renderResults(state, tasks);
 
             // Our results are now up-to-date:
             this.isCacheChangedSinceLastRedraw = false;
         });
+    }
+
+    private async renderResults(state: State, tasks: Task[]) {
+        const content = createAndAppendElement('div', this.containerEl);
+        await this.queryResultsRenderer.render(state, tasks, content, {
+            allTasks: this.plugin.getTasks(),
+            allMarkdownFiles: this.app.vault.getMarkdownFiles(),
+            backlinksClickHandler: createBacklinksClickHandler(this.app),
+            backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
+            editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),
+        });
+
+        this.containerEl.firstChild?.replaceWith(content);
     }
 }
 
