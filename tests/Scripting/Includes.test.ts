@@ -17,6 +17,17 @@ describe('include tests', () => {
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
     });
+
+    it.failing('should accept whole-line include instruction', () => {
+        updateSettings({ includes: { not_done: 'not done' } });
+
+        const source = 'include not_done';
+        const query = new Query(source, new TasksFile('stuff.md'));
+
+        expect(query.error).toBeUndefined();
+        expect(query.filters.length).toEqual(1);
+        expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
+    });
 });
 
 describe('include settings tests', () => {
