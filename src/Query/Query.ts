@@ -459,7 +459,9 @@ ${statement.explainStatement('    ')}
             // const newStatement = new Statement(_line, _line);
             // newStatement.recordExpandedPlaceholders(includeValue);
             // this.statements.push(newStatement);
-            this.parseLine(new Statement(includeValue, includeValue));
+            includeValue.split('\n').forEach((instruction) => {
+                this.parseLine(new Statement(instruction, instruction));
+            });
         }
     }
 

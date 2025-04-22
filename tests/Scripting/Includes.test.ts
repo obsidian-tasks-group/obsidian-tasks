@@ -49,6 +49,21 @@ describe('include tests', () => {
         expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('show tree');
     });
 
+    it('should accept multi-line include', () => {
+        updateSettings({ includes: { multi_line: 'scheduled tomorrow\nhide backlink' } });
+
+        const source = 'include multi_line';
+        const query = new Query(source, new TasksFile('stuff.md'));
+
+        expect(query.error).toBeUndefined();
+
+        expect(query.filters.length).toEqual(1);
+        expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('scheduled tomorrow');
+
+        expect(query.queryLayoutOptions.hideBacklinks).toEqual(true);
+        expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('hide backlink');
+    });
+
     it('should give a meaningful error for non-existent include', () => {
         updateSettings({ includes: {} });
 
