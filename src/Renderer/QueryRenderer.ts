@@ -180,6 +180,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             }
 
             for (const entry of entries) {
+                // entry describes a single visibility change for the specific element we are observing.
                 if (entry.isIntersecting) {
                     this.queryResultsRenderer.query.debug(
                         `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
