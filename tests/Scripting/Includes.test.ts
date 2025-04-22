@@ -76,6 +76,27 @@ describe('include tests', () => {
         `);
         expect(query.source).toEqual('include not_existent');
     });
+
+    it('should support nested include instructions', () => {
+        updateSettings({
+            includes: {
+                inside: 'not done',
+                out: 'include inside\nhide edit button',
+            },
+        });
+
+        const source = 'include out';
+        const query = new Query(source, new TasksFile('stuff.md'));
+
+        expect(query.error).toBeUndefined();
+        expect(query.source).toEqual('include out');
+
+        expect(query.filters.length).toEqual(1);
+        expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
+
+        expect(query.queryLayoutOptions.hideEditButton).toEqual(true);
+        expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('hide edit button');
+    });
 });
 
 describe('include settings tests', () => {
