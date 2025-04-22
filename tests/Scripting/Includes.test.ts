@@ -32,6 +32,7 @@ describe('include tests', () => {
         const query = new Query(source, new TasksFile('stuff.md'));
 
         expect(query.error).toBeUndefined();
+        expect(query.source).toEqual('include not_done');
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
     });
@@ -43,6 +44,7 @@ describe('include tests', () => {
         const query = new Query(source, new TasksFile('stuff.md'));
 
         expect(query.error).toBeUndefined();
+        expect(query.source).toEqual('include done_today');
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('done today');
     });
