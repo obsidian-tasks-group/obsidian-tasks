@@ -458,4 +458,8 @@ ${statement.explainStatement('    ')}
     public debug(message: string, objects?: any): void {
         this.logger.debugWithId(this._queryId, `"${this.filePath}": ${message}`, objects);
     }
+
+    public warn(message: string, objects?: any): void {
+        this.logger.warnWithId(this._queryId, `"${this.filePath}": ${message}`, objects);
+    }
 }
