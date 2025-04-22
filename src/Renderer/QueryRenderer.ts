@@ -174,23 +174,22 @@ class QueryRenderChild extends MarkdownRenderChild {
             return;
         }
 
-        this.observer = new IntersectionObserver((entries) => {
+        this.observer = new IntersectionObserver(([entry]) => {
             if (!this.containerEl.isShown()) {
                 return;
             }
 
-            for (const entry of entries) {
-                // entry describes a single visibility change for the specific element we are observing.
-                if (entry.isIntersecting) {
-                    this.queryResultsRenderer.query.debug(
-                        `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
-                    );
-                    if (this.isCacheChangedSinceLastRedraw) {
-                        this.queryResultsRenderer.query.debug('[render][observer] ... updating search results');
-                        this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() })
-                            .then()
-                            .catch((e) => console.error(e));
-                    }
+            // entry describes a single visibility change for the specific element we are observing.
+            // It is safe to assume `entry.target === this.containerEl` here.
+            if (entry.isIntersecting) {
+                this.queryResultsRenderer.query.debug(
+                    `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
+                );
+                if (this.isCacheChangedSinceLastRedraw) {
+                    this.queryResultsRenderer.query.debug('[render][observer] ... updating search results');
+                    this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() })
+                        .then()
+                        .catch((e) => console.error(e));
                 }
             }
         });
