@@ -264,7 +264,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         requestAnimationFrame(async () => {
             // We have to wrap the rendering inside requestAnimationFrame() to ensure
             // that we get correct values for isConnected and isShown().
-            // (setTimeout(, 0) seemed to work too...)
             if (!this.containerEl.isConnected) {
                 // Example reasons why we might not be "connected":
                 // - This Tasks query block is contained within another plugin's code block,
