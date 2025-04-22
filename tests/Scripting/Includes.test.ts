@@ -25,7 +25,7 @@ describe('include tests', () => {
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
     });
 
-    it('should accept whole-line include instruction', () => {
+    it('should accept whole-line include filter instruction', () => {
         updateSettings({ includes: { not_done: 'not done' } });
 
         const source = 'include not_done';
@@ -37,16 +37,16 @@ describe('include tests', () => {
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
     });
 
-    it('should accept another whole-line include instruction', () => {
-        updateSettings({ includes: { done_today: 'done today' } });
+    it('should accept whole-line include layout instruction', () => {
+        updateSettings({ includes: { show_tree: 'show tree' } });
 
-        const source = 'include done_today';
+        const source = 'include show_tree';
         const query = new Query(source, new TasksFile('stuff.md'));
 
         expect(query.error).toBeUndefined();
-        expect(query.source).toEqual('include done_today');
-        expect(query.filters.length).toEqual(1);
-        expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('done today');
+        expect(query.source).toEqual('include show_tree');
+        expect(query.queryLayoutOptions.hideTree).toEqual(false);
+        expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('show tree');
     });
 });
 
