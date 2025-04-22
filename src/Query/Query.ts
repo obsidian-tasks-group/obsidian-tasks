@@ -448,7 +448,19 @@ ${statement.explainStatement('    ')}
     }
 
     private parseInclude(_line: string, _statement: Statement) {
-        this.parseLine(new Statement('not done', 'not done'));
+        const include = this.includeRegexp.exec(_line);
+        if (include) {
+            const includeName = include[1].trim();
+            const includeValue = getSettings().includes[includeName];
+            // if (includeValue === undefined) {
+            //     this.setError(`unknown include: "${includeName}"`, _statement);
+            //     return;
+            // }
+            // const newStatement = new Statement(_line, _line);
+            // newStatement.recordExpandedPlaceholders(includeValue);
+            // this.statements.push(newStatement);
+            this.parseLine(new Statement(includeValue, includeValue));
+        }
     }
 
     /**

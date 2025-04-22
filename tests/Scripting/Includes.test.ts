@@ -1,6 +1,13 @@
+/**
+ * @jest-environment jsdom
+ */
+
+import moment from 'moment';
 import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Query } from '../../src/Query/Query';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+
+window.moment = moment;
 
 afterEach(() => {
     resetSettings();
@@ -27,6 +34,17 @@ describe('include tests', () => {
         expect(query.error).toBeUndefined();
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
+    });
+
+    it('should accept another whole-line include instruction', () => {
+        updateSettings({ includes: { done_today: 'done today' } });
+
+        const source = 'include done_today';
+        const query = new Query(source, new TasksFile('stuff.md'));
+
+        expect(query.error).toBeUndefined();
+        expect(query.filters.length).toEqual(1);
+        expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('done today');
     });
 });
 
