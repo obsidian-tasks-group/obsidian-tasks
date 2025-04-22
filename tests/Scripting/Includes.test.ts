@@ -48,6 +48,19 @@ describe('include tests', () => {
         expect(query.queryLayoutOptions.hideTree).toEqual(false);
         expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('show tree');
     });
+
+    it('should give a meaningful error for non-existent include', () => {
+        updateSettings({ includes: {} });
+
+        const source = 'include not_existent';
+        const query = new Query(source, new TasksFile('stuff.md'));
+
+        expect(query.error).toMatchInlineSnapshot(`
+            "Cannot find include "not_existent" in the Tasks settings
+            Problem line: "include not_existent""
+        `);
+        expect(query.source).toEqual('include not_existent');
+    });
 });
 
 describe('include settings tests', () => {

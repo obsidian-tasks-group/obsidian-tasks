@@ -452,10 +452,10 @@ ${statement.explainStatement('    ')}
         if (include) {
             const includeName = include[1].trim();
             const includeValue = getSettings().includes[includeName];
-            // if (includeValue === undefined) {
-            //     this.setError(`unknown include: "${includeName}"`, _statement);
-            //     return;
-            // }
+            if (!includeValue) {
+                this.setError(`Cannot find include "${includeName}" in the Tasks settings`, _statement);
+                return;
+            }
             // const newStatement = new Statement(_line, _line);
             // newStatement.recordExpandedPlaceholders(includeValue);
             // this.statements.push(newStatement);
