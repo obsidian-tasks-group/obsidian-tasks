@@ -180,8 +180,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             }
 
             for (const entry of entries) {
-                const visible = entry.isIntersecting;
-                if (visible) {
+                if (entry.isIntersecting) {
                     this.queryResultsRenderer.query.debug(
                         `[render][observer] Became visible, isCacheChangedSinceLastRedraw:${this.isCacheChangedSinceLastRedraw}`,
                     );
