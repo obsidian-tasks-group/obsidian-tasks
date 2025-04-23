@@ -49,22 +49,22 @@ ${settingsTable}
 ${i18n.t('reports.statusRegistry.loadedSettings.settingsActuallyUsed')}
 ${mermaidText}
 
-## Sample Tasks
+## ${i18n.t('reports.statusRegistry.sampleTasks.title')}
 
-Here is one example task line for each of the statuses actually used by tasks, for you to experiment with.
+${i18n.t('reports.statusRegistry.sampleTasks.line1')}
 
-The status symbols and names in the task descriptions were correct when this file was created.
+${i18n.t('reports.statusRegistry.sampleTasks.line2')}
 
-If you have modified the sample tasks since they were created, you can see the current status types and names in the group headings in the Tasks search below.
+${i18n.t('reports.statusRegistry.sampleTasks.line3')}
 
-> [!Tip] Tip: If all your checkboxes look the same...
-> If all the checkboxes look the same in Reading Mode or Live Preview, see [Style custom statuses](https://publish.obsidian.md/tasks/How+To/Style+custom+statuses) for how to select a theme or CSS snippet to style your statuses.
+> [!Tip] ${i18n.t('reports.statusRegistry.sampleTasks.tip.line1')}
+> ${i18n.t('reports.statusRegistry.sampleTasks.tip.line2')}
 
 ${sampleTasksText.join('\n')}
 
-## Search the Sample Tasks
+## ${i18n.t('reports.statusRegistry.searchSampleTasks.title')}
 
-This Tasks search shows all the tasks in this file, grouped by their status type and status name.
+${i18n.t('reports.statusRegistry.searchSampleTasks.line1')}
 
 \`\`\`tasks
 path includes {{query.file.path}}
