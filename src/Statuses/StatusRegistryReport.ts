@@ -53,6 +53,23 @@ ${mermaidText}
 
 Here is one example task line for each of the statuses actually used by tasks, for you to experiment with.
 
+The status symbols and names in the task descriptions were correct when this file was created.
+
+If you have modified the sample tasks since they were created, you can see the current status types and names in the group headings in the Tasks search below.
+
 ${sampleTasksText.join('\n')}
+
+## Search the Sample Tasks
+
+This Tasks search shows all the tasks in this file, grouped by their status type and status name.
+
+\`\`\`tasks
+path includes {{query.file.path}}
+group by status.type
+group by status.name
+sort by function task.lineNumber
+hide postpone button
+short mode
+\`\`\`
 `;
 }
