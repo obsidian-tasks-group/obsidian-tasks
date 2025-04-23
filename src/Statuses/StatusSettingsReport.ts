@@ -1,6 +1,7 @@
 import { StatusSettings } from '../Config/StatusSettings';
 import { MarkdownTable } from '../lib/MarkdownTable';
 import { i18n } from '../i18n/i18n';
+import { GlobalFilter } from '../Config/GlobalFilter';
 import { type StatusConfiguration, StatusType } from './StatusConfiguration';
 import { Status } from './Status';
 import { StatusRegistry } from './StatusRegistry';
@@ -123,6 +124,7 @@ export function tabulateStatusSettings(statusSettings: StatusSettings) {
  * @returns {string[]} An array of markdown strings representing sample tasks.
  * Each task includes a symbol, an introductory text, and the name of the status.
  * Only the actually registered symbols are used; duplicate and empty symbols are ignored.
+ * The Global Filter will be added, if it is non-empty.
  */
 export function sampleTaskLinesForValidStatuses(statusSettings: StatusSettings) {
     const statusRegistry = new StatusRegistry();
@@ -130,9 +132,11 @@ export function sampleTaskLinesForValidStatuses(statusSettings: StatusSettings) 
     const registeredStatuses: StatusConfiguration[] = statusRegistry.registeredStatuses;
 
     return registeredStatuses.map((status, index) => {
+        const globalFilter = GlobalFilter.getInstance();
+        const globalFilterIfSet = globalFilter.isEmpty() ? '' : globalFilter.get() + ' ';
         const intro = `Sample task ${index + 1}`;
         const symbol = `status symbol=${getPrintableSymbol(status.symbol)}`;
         const name = `status name='${status.name}'`;
-        return `- [${status.symbol}] ${intro}: ${symbol} ${name}`;
+        return `- [${status.symbol}] ${globalFilterIfSet}${intro}: ${symbol} ${name}`;
     });
 }
