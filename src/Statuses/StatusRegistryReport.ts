@@ -58,7 +58,9 @@ ${i18n.t('reports.statusRegistry.sampleTasks.line2')}
 ${i18n.t('reports.statusRegistry.sampleTasks.line3')}
 
 > [!Tip] ${i18n.t('reports.statusRegistry.sampleTasks.tip.line1')}
-> ${i18n.t('reports.statusRegistry.sampleTasks.tip.line2')}
+> ${i18n.t('reports.statusRegistry.sampleTasks.tip.line2', {
+        url: 'https://publish.obsidian.md/tasks/How+To/Style+custom+statuses',
+    })}
 
 ${sampleTasksText.join('\n')}
 
