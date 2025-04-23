@@ -64,6 +64,20 @@
           "line3": "Див. [Повторювані задачі та користувацькі статуси]({{helpURL}})."
         }
       },
+      "sampleTasks": {
+        "line1": "",
+        "line2": "",
+        "line3": "",
+        "tip": {
+          "line1": "",
+          "line2": ""
+        },
+        "title": ""
+      },
+      "searchSampleTasks": {
+        "line1": "",
+        "title": ""
+      },
       "statusSettings": {
         "comment": {
           "line1": "Перейдіть у режим Live Preview або режим читання, щоб побачити таблицю.",

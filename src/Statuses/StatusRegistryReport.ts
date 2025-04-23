@@ -1,7 +1,7 @@
 import type { StatusSettings } from '../Config/StatusSettings';
 import { i18n } from '../i18n/i18n';
 import type { StatusRegistry } from './StatusRegistry';
-import { tabulateStatusSettings } from './StatusSettingsReport';
+import { sampleTaskLinesForValidStatuses, tabulateStatusSettings } from './StatusSettingsReport';
 
 export function createStatusRegistryReport(
     statusSettings: StatusSettings,
@@ -17,6 +17,7 @@ export function createStatusRegistryReport(
     const detailed = true;
     const settingsTable = tabulateStatusSettings(statusSettings);
     const mermaidText = statusRegistry.mermaidDiagram(detailed);
+    const sampleTasksText = sampleTaskLinesForValidStatuses(statusSettings);
     return `# ${buttonName}
 
 ## ${i18n.t('reports.statusRegistry.about.title')}
@@ -46,5 +47,34 @@ ${settingsTable}
 <!-- ${i18n.t('reports.statusRegistry.loadedSettings.switchToLivePreview')} -->
 
 ${i18n.t('reports.statusRegistry.loadedSettings.settingsActuallyUsed')}
-${mermaidText}`;
+${mermaidText}
+
+## ${i18n.t('reports.statusRegistry.sampleTasks.title')}
+
+${i18n.t('reports.statusRegistry.sampleTasks.line1')}
+
+${i18n.t('reports.statusRegistry.sampleTasks.line2')}
+
+${i18n.t('reports.statusRegistry.sampleTasks.line3')}
+
+> [!Tip] ${i18n.t('reports.statusRegistry.sampleTasks.tip.line1')}
+> ${i18n.t('reports.statusRegistry.sampleTasks.tip.line2', {
+        url: 'https://publish.obsidian.md/tasks/How+To/Style+custom+statuses',
+    })}
+
+${sampleTasksText.join('\n')}
+
+## ${i18n.t('reports.statusRegistry.searchSampleTasks.title')}
+
+${i18n.t('reports.statusRegistry.searchSampleTasks.line1')}
+
+\`\`\`tasks
+path includes {{query.file.path}}
+group by status.type
+group by status.name
+sort by function task.lineNumber
+hide postpone button
+short mode
+\`\`\`
+`;
 }

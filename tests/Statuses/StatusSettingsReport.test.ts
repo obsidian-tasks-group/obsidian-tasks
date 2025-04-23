@@ -1,12 +1,17 @@
 import { StatusSettings } from '../../src/Config/StatusSettings';
-import { tabulateStatusSettings } from '../../src/Statuses/StatusSettingsReport';
+import { sampleTaskLinesForValidStatuses, tabulateStatusSettings } from '../../src/Statuses/StatusSettingsReport';
 import type { StatusCollection } from '../../src/Statuses/StatusCollection';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { coreStatusesData, createStatuses } from '../TestingTools/StatusesTestHelpers';
 import { initializeI18n } from '../../src/i18n/i18n';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
 beforeAll(async () => {
     await initializeI18n();
+});
+
+afterEach(() => {
+    GlobalFilter.getInstance().reset();
 });
 
 describe('StatusSettingsReport', () => {
@@ -35,5 +40,27 @@ describe('StatusSettingsReport', () => {
 
         const markdown = tabulateStatusSettings(statusSettings);
         verifyWithFileExtension(markdown, '.md');
+    });
+
+    const customStatusesDataForSampleLines: StatusCollection = [
+        ['/', 'A slash', 'x', 'IN_PROGRESS'],
+        ['/', 'In Progress DUPLICATE - SHOULD NOT BE IN SAMPLE TASK LINES', 'x', 'IN_PROGRESS'],
+        ['', 'EMPTY STATUS SYMBOL - SHOULD NOT BE IN SAMPLE TASK LINES', '', 'TODO'],
+        ['p', 'A p', 'q', 'TODO'],
+    ];
+
+    it('should create set of sample task lines, excluding duplicate and empty symbols', () => {
+        const { statusSettings } = createStatuses(coreStatusesData, customStatusesDataForSampleLines);
+
+        const taskLines = sampleTaskLinesForValidStatuses(statusSettings);
+        verifyWithFileExtension(taskLines.join('\n'), '.md');
+    });
+
+    it('should create set of sample task lines include global filter', () => {
+        GlobalFilter.getInstance().set('#task');
+        const { statusSettings } = createStatuses(coreStatusesData, customStatusesDataForSampleLines);
+
+        const taskLines = sampleTaskLinesForValidStatuses(statusSettings);
+        verifyWithFileExtension(taskLines.join('\n'), '.md');
     });
 });
