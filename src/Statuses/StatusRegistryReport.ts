@@ -1,7 +1,7 @@
 import type { StatusSettings } from '../Config/StatusSettings';
 import { i18n } from '../i18n/i18n';
 import type { StatusRegistry } from './StatusRegistry';
-import { tabulateStatusSettings } from './StatusSettingsReport';
+import { sampleTaskLinesForValidStatuses, tabulateStatusSettings } from './StatusSettingsReport';
 
 export function createStatusRegistryReport(
     statusSettings: StatusSettings,
@@ -17,6 +17,7 @@ export function createStatusRegistryReport(
     const detailed = true;
     const settingsTable = tabulateStatusSettings(statusSettings);
     const mermaidText = statusRegistry.mermaidDiagram(detailed);
+    const sampleTasksText = sampleTaskLinesForValidStatuses(statusSettings);
     return `# ${buttonName}
 
 ## ${i18n.t('reports.statusRegistry.about.title')}
@@ -46,5 +47,12 @@ ${settingsTable}
 <!-- ${i18n.t('reports.statusRegistry.loadedSettings.switchToLivePreview')} -->
 
 ${i18n.t('reports.statusRegistry.loadedSettings.settingsActuallyUsed')}
-${mermaidText}`;
+${mermaidText}
+
+## Sample Tasks
+
+Here is one example task line for each of the statuses actually used by tasks, for you to experiment with.
+
+${sampleTasksText.join('\n')}
+`;
 }

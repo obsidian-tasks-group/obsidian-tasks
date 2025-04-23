@@ -61,3 +61,15 @@ classDef NON_TASK    stroke:#99e,stroke-width:3px;
 
 linkStyle default stroke:gray
 ```
+
+
+## Sample Tasks
+
+Here is one example task line for each of the statuses actually used by tasks, for you to experiment with.
+
+- [ ] Sample task 1: status symbol=`space` status name='Todo'
+- [x] Sample task 2: status symbol=`x` status name='Done'
+- [/] Sample task 3: status symbol=`/` status name='In Progress'
+- [-] Sample task 4: status symbol=`-` status name='Cancelled'
+- [Q] Sample task 5: status symbol=`Q` status name='Question'
+- [A] Sample task 6: status symbol=`A` status name='Answer'
