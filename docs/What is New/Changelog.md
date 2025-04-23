@@ -12,6 +12,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
+- X.Y.Z:
+  - [[Check your Statuses]] report now contains samples of each status, and a convenient search to test them.
 - 7.19.0:
   - New setting to [[Recurring Tasks#Remove scheduled date on recurrence|remove scheduled date on recurrence]].
 - 7.16.0:

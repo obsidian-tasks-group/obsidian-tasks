@@ -64,6 +64,20 @@
           "line3": "See [Recurring Tasks and Custom Statuses]({{helpURL}})."
         }
       },
+      "sampleTasks": {
+        "line1": "Here is one example task line for each of the statuses actually used by tasks, for you to experiment with.",
+        "line2": "The status symbols and names in the task descriptions were correct when this file was created.",
+        "line3": "If you have modified the sample tasks since they were created, you can see the current status types and names in the group headings in the Tasks search below.",
+        "tip": {
+          "line1": "Tip: If all your checkboxes look the same...",
+          "line2": "If all the checkboxes look the same in Reading Mode or Live Preview, see [Style custom statuses]({{url}}) for how to select a theme or CSS snippet to style your statuses."
+        },
+        "title": "Sample Tasks"
+      },
+      "searchSampleTasks": {
+        "line1": "This Tasks search shows all the tasks in this file, grouped by their status type and status name.",
+        "title": "Search the Sample Tasks"
+      },
       "statusSettings": {
         "comment": {
           "line1": "Switch to Live Preview or Reading Mode to see the table.",
