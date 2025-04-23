@@ -37,14 +37,15 @@ describe('StatusSettingsReport', () => {
         verifyWithFileExtension(markdown, '.md');
     });
 
+    const customStatusesDataForSampleLines: StatusCollection = [
+        ['/', 'A slash', 'x', 'IN_PROGRESS'],
+        ['/', 'In Progress DUPLICATE - SHOULD NOT BE IN SAMPLE TASK LINES', 'x', 'IN_PROGRESS'],
+        ['', 'EMPTY STATUS SYMBOL - SHOULD NOT BE IN SAMPLE TASK LINES', '', 'TODO'],
+        ['p', 'A p', 'q', 'TODO'],
+    ];
+
     it('should create set of sample task lines, excluding duplicate and empty symbols', () => {
-        const customStatusesData: StatusCollection = [
-            ['/', 'A slash', 'x', 'IN_PROGRESS'],
-            ['/', 'In Progress DUPLICATE - SHOULD NOT BE IN SAMPLE TASK LINES', 'x', 'IN_PROGRESS'],
-            ['', 'EMPTY STATUS SYMBOL - SHOULD NOT BE IN SAMPLE TASK LINES', '', 'TODO'],
-            ['p', 'A p', 'q', 'TODO'],
-        ];
-        const { statusSettings } = createStatuses(coreStatusesData, customStatusesData);
+        const { statusSettings } = createStatuses(coreStatusesData, customStatusesDataForSampleLines);
 
         const taskLines = sampleTaskLinesForValidStatuses(statusSettings);
         verifyWithFileExtension(taskLines.join('\n'), '.md');
