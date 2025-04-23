@@ -1,0 +1,4 @@
+- [ ] Sample task 1: status symbol=`space` status name='Todo'
+- [x] Sample task 2: status symbol=`x` status name='Done'
+- [/] Sample task 3: status symbol=`/` status name='A slash'
+- [p] Sample task 4: status symbol=`p` status name='A p'
