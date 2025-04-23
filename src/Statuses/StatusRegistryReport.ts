@@ -57,6 +57,9 @@ The status symbols and names in the task descriptions were correct when this fil
 
 If you have modified the sample tasks since they were created, you can see the current status types and names in the group headings in the Tasks search below.
 
+> [!Tip] Tip: If all your checkboxes look the same...
+> If all the checkboxes look the same in Reading Mode or Live Preview, see [Style custom statuses](https://publish.obsidian.md/tasks/How+To/Style+custom+statuses) for how to select a theme or CSS snippet to style your statuses.
+
 ${sampleTasksText.join('\n')}
 
 ## Search the Sample Tasks
