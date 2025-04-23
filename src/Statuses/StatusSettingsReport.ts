@@ -1,9 +1,9 @@
 import { StatusSettings } from '../Config/StatusSettings';
 import { MarkdownTable } from '../lib/MarkdownTable';
 import { i18n } from '../i18n/i18n';
-import type { StatusConfiguration } from './StatusConfiguration';
-import { StatusType } from './StatusConfiguration';
+import { type StatusConfiguration, StatusType } from './StatusConfiguration';
 import { Status } from './Status';
+import { StatusRegistry } from './StatusRegistry';
 
 function getFirstIndex(statusConfigurations: StatusConfiguration[], wantedSymbol: string) {
     return statusConfigurations.findIndex((s) => s.symbol === wantedSymbol);
@@ -113,4 +113,26 @@ export function tabulateStatusSettings(statusSettings: StatusSettings) {
         ]);
     });
     return table.markdown;
+}
+
+/**
+ * Generates a list of Markdown lines, containing sample tasks based on the given status settings.
+ *
+ * @param {StatusSettings} statusSettings - The settings object containing custom and core statuses.
+ *
+ * @returns {string[]} An array of markdown strings representing sample tasks.
+ * Each task includes a symbol, an introductory text, and the name of the status.
+ * Only the actually registered symbols are used; duplicate and empty symbols are ignored.
+ */
+export function sampleTaskLinesForValidStatuses(statusSettings: StatusSettings) {
+    const statusRegistry = new StatusRegistry();
+    StatusSettings.applyToStatusRegistry(statusSettings, statusRegistry);
+    const registeredStatuses: StatusConfiguration[] = statusRegistry.registeredStatuses;
+
+    return registeredStatuses.map((status, index) => {
+        const intro = `Sample task ${index + 1}`;
+        const symbol = `status symbol=${getPrintableSymbol(status.symbol)}`;
+        const name = `status name='${status.name}'`;
+        return `- [${status.symbol}] ${intro}: ${symbol} ${name}`;
+    });
 }

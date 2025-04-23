@@ -1,5 +1,5 @@
 import { StatusSettings } from '../../src/Config/StatusSettings';
-import { tabulateStatusSettings } from '../../src/Statuses/StatusSettingsReport';
+import { sampleTaskLinesForValidStatuses, tabulateStatusSettings } from '../../src/Statuses/StatusSettingsReport';
 import type { StatusCollection } from '../../src/Statuses/StatusCollection';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { coreStatusesData, createStatuses } from '../TestingTools/StatusesTestHelpers';
@@ -35,5 +35,18 @@ describe('StatusSettingsReport', () => {
 
         const markdown = tabulateStatusSettings(statusSettings);
         verifyWithFileExtension(markdown, '.md');
+    });
+
+    it('should create set of sample task lines, excluding duplicate and empty symbols', () => {
+        const customStatusesData: StatusCollection = [
+            ['/', 'A slash', 'x', 'IN_PROGRESS'],
+            ['/', 'In Progress DUPLICATE - SHOULD NOT BE IN SAMPLE TASK LINES', 'x', 'IN_PROGRESS'],
+            ['', 'EMPTY STATUS SYMBOL - SHOULD NOT BE IN SAMPLE TASK LINES', '', 'TODO'],
+            ['p', 'A p', 'q', 'TODO'],
+        ];
+        const { statusSettings } = createStatuses(coreStatusesData, customStatusesData);
+
+        const taskLines = sampleTaskLinesForValidStatuses(statusSettings);
+        verifyWithFileExtension(taskLines.join('\n'), '.md');
     });
 });
