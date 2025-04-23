@@ -64,6 +64,20 @@
           "line3": "См. [Recurring Tasks and Custom Statuses]({{helpURL}})."
         }
       },
+      "sampleTasks": {
+        "line1": "",
+        "line2": "",
+        "line3": "",
+        "tip": {
+          "line1": "",
+          "line2": ""
+        },
+        "title": ""
+      },
+      "searchSampleTasks": {
+        "line1": "",
+        "title": ""
+      },
       "statusSettings": {
         "comment": {
           "line1": "Переключитесь в режим Live Preview или Reading Mode, чтобы увидеть таблицу.",
