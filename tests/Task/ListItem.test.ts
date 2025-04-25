@@ -8,6 +8,8 @@ import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
+import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
+import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
@@ -201,6 +203,14 @@ describe('related items', () => {
         expect(parentTask.findClosestParentTask()).toEqual(null);
         expect(child.findClosestParentTask()).toEqual(parentTask);
         expect(grandChild.findClosestParentTask()).toEqual(parentTask);
+    });
+});
+
+describe('links', () => {
+    it('should return all links in the task file', () => {
+        const tasks = readTasksFromSimulatedFile(links_everywhere);
+
+        expect(tasks[0].linksInFileBody.length).toEqual(3);
     });
 });
 
