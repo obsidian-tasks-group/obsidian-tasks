@@ -212,6 +212,13 @@ describe('links', () => {
 
         expect(tasks[0].linksInFileBody.length).toEqual(3);
     });
+
+    it('should return all links in the task line', () => {
+        const tasks = readTasksFromSimulatedFile(links_everywhere);
+
+        expect(tasks[0].links.length).toEqual(1);
+        expect(tasks[0].links[0].original).toEqual('[[link_in_task_wikilink]]');
+    });
 });
 
 describe('identicalTo', () => {

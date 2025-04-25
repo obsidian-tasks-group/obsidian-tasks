@@ -204,6 +204,16 @@ export class ListItem {
     }
 
     /**
+     * Return a list of links in the task or list item's line.
+     *
+     * The data contest is documented here:
+     * https://docs.obsidian.md/Reference/TypeScript+API/LinkCache
+     */
+    public get links(): LinkCache[] {
+        return this.linksInFileBody.filter((link) => link.position.start.line === this.lineNumber);
+    }
+
+    /**
      * Return the name of the file containing this object, with the .md extension removed.
      */
     public get filename(): string | null {
