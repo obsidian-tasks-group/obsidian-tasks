@@ -103,9 +103,12 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.viSettings.username.name'))
             .setDesc(i18n.t('settings.viSettings.username.description'))
             .addText((text) => {
+                const settings = getSettings();
+
                 text.setPlaceholder(i18n.t('settings.viSettings.username.placeholder'))
-                    .setValue(this.plugin.ticktickapi.getUsername())
+                    .setValue(settings.username)
                     .onChange(async (value) => {
+                        console.log(value);
                         updateSettings({ username: value });
                         this.plugin.ticktickapi.setUsername(value);
                         await this.plugin.saveSettings();
@@ -116,9 +119,11 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.viSettings.password.name'))
             .setDesc(i18n.t('settings.viSettings.password.description'))
             .addText((text) => {
+                const settings = getSettings();
                 text.setPlaceholder(i18n.t('settings.viSettings.password.placeholder'))
-                    .setValue(this.plugin.ticktickapi.getPassword())
+                    .setValue(settings.password)
                     .onChange(async (value) => {
+                        console.log(value);
                         updateSettings({ password: value });
                         this.plugin.ticktickapi.setPassword(value);
                         await this.plugin.saveSettings();
@@ -134,6 +139,17 @@ export class SettingsTab extends PluginSettingTab {
                 this.plugin.ticktickapi.login();
             });
         });
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.viSettings.sync.name'))
+            .setDesc(i18n.t('settings.viSettings.sync.description'))
+            .addButton((component) => {
+                component.setButtonText(i18n.t('settings.viSettings.sync.name'));
+                component.onClick(() => {
+                    console.log('calling sync');
+                    this.plugin.ticktickapi.sync(this.plugin.getTasks());
+                });
+            });
 
         // ---------------------------------------------------------------------------
         // ---------------------------------------------------------------------------

@@ -2,7 +2,24 @@ import { type RequestUrlParam, type RequestUrlResponse, requestUrl } from 'obsid
 import type { Task } from '../Task/Task';
 
 const LOGIN_ENDPOINT = 'https://api.ticktick.com/api/v2/user/signon?wc=true&remember=true';
-const CREATE_ENDPOINT = 'https://api.ticktick.com/api/v2/task';
+const TASK_ENDPOINT = 'https://api.ticktick.com/api/v2/task';
+const PROJECT_ENDPOINT = 'https://api.ticktick.com/api/v2/project';
+const BATCH_CHECK_ENDPOINT = 'https://ticktick.com/api/v2/batch/check/0';
+const BATCH_ENDPOINT = 'https://ticktick.com/api/v2/batch/task';
+const DELTE_TAG_ENDPOINT = 'https://api.ticktick.com/api/v2/tag/delete';
+
+const ALL_COMPLETED_ENDPOINT = 'https://api.ticktick.com/api/v2/project/all/completedInAll/';
+
+const all = [
+    LOGIN_ENDPOINT,
+    TASK_ENDPOINT,
+    PROJECT_ENDPOINT,
+    BATCH_CHECK_ENDPOINT,
+    ALL_COMPLETED_ENDPOINT,
+    BATCH_ENDPOINT,
+    DELTE_TAG_ENDPOINT,
+] as const;
+type ENDPOINT = (typeof all)[number];
 
 export class TickTickApi {
     private static instance: TickTickApi;
@@ -14,6 +31,9 @@ export class TickTickApi {
     private _userAgent = '';
     private cookies = [''];
     private _cookieHeader = '';
+    public projects = {};
+    public inbox = {};
+    public tags: { name: string }[] = [];
 
     private _lastError: any;
 
@@ -138,6 +158,125 @@ export class TickTickApi {
         return result;
     }
 
+    public async sync(tasks: Task[]): Promise<Task[]> {
+        return tasks.map((task) => {
+            return task;
+        });
+    }
+
+    // private async deleteTask(taskId: string, projectId: string) {
+    //     await this.delete('Delete task', TASK_ENDPOINT, {
+    //         projectId,
+    //         taskId,
+    //     });
+    // }
+
+    // [
+    //     {
+    //         "id": "680497c68f0897947f548f0f",
+    //         "projectId": "inbox118711340",
+    //         "sortOrder": -1099511627776,
+    //         "title": "test test",
+    //         "timeZone": "",
+    //         "isFloating": false,
+    //         "reminder": "",
+    //         "reminders": [],
+    //         "priority": 0,
+    //         "status": 0,
+    //         "items": [],
+    //         "modifiedTime": "2025-04-20T06:44:22.408+0000",
+    //         "etag": "mw786jbi",
+    //         "deleted": 0,
+    //         "createdTime": "2025-04-20T06:44:22.408+0000",
+    //         "creator": 118711340,
+    //         "tags": [],
+    //         "kind": "TEXT"
+    //     }
+    // ]
+    // private async fetchAllCompleted() {
+    //     const res = await this.get('Fetch all completed', ALL_COMPLETED_ENDPOINT);
+    //     console.log(res);
+    //     return res;
+    // }
+    // private async fetchUncompleted() {
+    //     const res = await this.get('Fetch uncompleted', BATCH_CHECK_ENDPOINT);
+    //     const projects = res.projectProfiles as { id: string }[];
+    //     const projectsById = {} as { [key: string]: {} };
+    //     projects.forEach((element) => {
+    //         projectsById[element.id] = element;
+    //     });
+    //
+    //     const inbox = {
+    //         id: res.inboxId,
+    //         name: 'Inbox',
+    //         sortOrder: 0,
+    //     };
+    //     projectsById[res.inboxId] = inbox;
+    //
+    //     this.projects = projectsById;
+    //     this.inbox = inbox;
+    //     this.tags = res.tags;
+    //     console.log('res', res);
+    //     console.log('update bean thing', res['syncTaskBean']['update']);
+    //     return res['syncTaskBean']['update'];
+    // }
+    //
+    // private async getProjectId(): Promise<string> {
+    //     const res = await this.get('Get Project', PROJECT_ENDPOINT);
+    //     return res.id;
+    // }
+
+    // private async get(reqName: string, endpoint: ENDPOINT): Promise<any> {
+    //     try {
+    //         const headers = this.headers();
+    //         const response = await this.makeRequest(reqName, endpoint, 'GET', headers);
+    //         if (response) {
+    //             // TODO: decide what to do about inboxId
+    //             return response;
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+
+    // private async post(reqName: string, endpoint: ENDPOINT, body: any): Promise<any> {
+    //     try {
+    //         const headers = this.headers();
+    //         const response = await this.makeRequest(reqName, endpoint, 'POST', headers, body);
+    //         if (response) {
+    //             // TODO: decide what to do about inboxId
+    //             return response;
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+
+    // private async delete(reqName: string, endpoint: ENDPOINT, body: any): Promise<any> {
+    //     try {
+    //         const headers = this.headers();
+    //         const response = await this.makeRequest(reqName, endpoint, 'DELETE', headers, body);
+    //         if (response) {
+    //             // TODO: decide what to do about inboxId
+    //             return response;
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+
+    // private headers() {
+    //     return {
+    //         //For the record, the bloody rules keep changin and we might have to the _csrf_token
+    //         'Content-Type': 'application/json',
+    //         'User-Agent': this.userAgent,
+    //         'x-device': this.deviceAgent,
+    //         // 'Cookie': 't=' + `${this.token}` + '; AWSALB=pSOIrwzvoncz4ZewmeDJ7PMpbA5nOrji5o1tcb1yXSzeEDKmqlk/maPqPiqTGaXJLQk0yokDm0WtcoxmwemccVHh+sFbA59Mx1MBjBFVV9vACQO5HGpv8eO5pXYL; AWSALBCORS=pSOIrwzvoncz4ZewmeDJ7PMpbA5nOrji5o1tcb1yXSzeEDKmqlk/maPqPiqTGaXJLQk0yokDm0WtcoxmwemccVHh+sFbA59Mx1MBjBFVV9vACQO5HGpv8eO5pXYL',
+    //         Cookie: 't=' + `${this.token}` + ';' + this.cookieHeader,
+    //         t: this.token,
+    //     };
+    // }
+
     public async login() {
         try {
             const body = {
@@ -150,6 +289,8 @@ export class TickTickApi {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
             };
+            console.log('username', this._username);
+            console.log('password', this._password);
             const response = await this.makeRequest('Login', LOGIN_ENDPOINT, 'POST', headers, body);
             console.log('Signed in Response: ', response);
             if (response && response.token) {
@@ -179,7 +320,7 @@ export class TickTickApi {
                 t: this.token,
             };
             console.log('make create request');
-            const response = await this.makeRequest('Create', CREATE_ENDPOINT, 'POST', headers, body);
+            const response = await this.makeRequest('Create', TASK_ENDPOINT, 'POST', headers, body);
             console.log('made request', response);
             if (response && response.token) {
                 // TODO: decide what to do about inboxId
@@ -193,7 +334,14 @@ export class TickTickApi {
         return '';
     }
 
-    async makeRequest(operation: string, url: string, method: string, headers: any, body: any | undefined = undefined) {
+    //https://github.com/lazeroffmichael/ticktick-py/issues/42#issuecomment-1606568919
+    async makeRequest(
+        operation: string,
+        url: ENDPOINT,
+        method: string,
+        headers: any,
+        body: any | undefined = undefined,
+    ) {
         try {
             const options: RequestUrlParam = {
                 method: method,
@@ -207,6 +355,7 @@ export class TickTickApi {
             //console.log(operation, result)
             if (result.status != 200) {
                 this.setError(operation, result, null);
+                console.log(result);
                 return null;
             }
             this.cookies = (result.headers['set-cookie'] as unknown as string[]) ?? [];

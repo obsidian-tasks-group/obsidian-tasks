@@ -109,6 +109,10 @@
       "login": {
         "description": "Login",
         "name": "Login"
+      },
+      "sync": {
+        "description": "Sync with TickTick",
+        "name": "Sync"
       }
     },
     "autoSuggest": {

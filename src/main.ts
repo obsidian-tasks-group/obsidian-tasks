@@ -46,6 +46,13 @@ export default class TasksPlugin extends Plugin {
 
         await this.loadSettings();
 
+        const { username, password } = getSettings();
+        if (username && password) {
+            this.ticktickapi.setUsername(username);
+            this.ticktickapi.setPassword(password);
+            this.ticktickapi.login();
+        }
+
         // Configure logging.
         const { loggingOptions } = getSettings();
         logging.configure(loggingOptions);
