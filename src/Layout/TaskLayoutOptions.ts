@@ -114,6 +114,8 @@ export function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, o
         ['done date', TaskLayoutComponent.DoneDate],
         ['due date', TaskLayoutComponent.DueDate],
         ['id', TaskLayoutComponent.Id],
+        ['ticktickid', TaskLayoutComponent.TickTickId],
+        ['ticktickprojectid', TaskLayoutComponent.TickTickProjectId],
         ['on completion', TaskLayoutComponent.OnCompletion],
         ['priority', TaskLayoutComponent.Priority],
         ['recurrence rule', TaskLayoutComponent.RecurrenceRule],
