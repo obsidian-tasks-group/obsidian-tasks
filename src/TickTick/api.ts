@@ -3,23 +3,13 @@ import type { Task } from '../Task/Task';
 
 const LOGIN_ENDPOINT = 'https://api.ticktick.com/api/v2/user/signon?wc=true&remember=true';
 const TASK_ENDPOINT = 'https://api.ticktick.com/api/v2/task';
-const PROJECT_ENDPOINT = 'https://api.ticktick.com/api/v2/project';
-const BATCH_CHECK_ENDPOINT = 'https://ticktick.com/api/v2/batch/check/0';
+// const V1_ENDPOINT = 'https://api.ticktick.com/api/v1';
+// const PROJECT_ENDPOINT = 'https://api.ticktick.com/api/v2/project';
+// const BATCH_CHECK_ENDPOINT = 'https://ticktick.com/api/v2/batch/check/0';
 const BATCH_ENDPOINT = 'https://ticktick.com/api/v2/batch/task';
-const DELTE_TAG_ENDPOINT = 'https://api.ticktick.com/api/v2/tag/delete';
-
-const ALL_COMPLETED_ENDPOINT = 'https://api.ticktick.com/api/v2/project/all/completedInAll/';
-
-const all = [
-    LOGIN_ENDPOINT,
-    TASK_ENDPOINT,
-    PROJECT_ENDPOINT,
-    BATCH_CHECK_ENDPOINT,
-    ALL_COMPLETED_ENDPOINT,
-    BATCH_ENDPOINT,
-    DELTE_TAG_ENDPOINT,
-] as const;
-type ENDPOINT = (typeof all)[number];
+// const DELTE_TAG_ENDPOINT = 'https://api.ticktick.com/api/v2/tag/delete';
+//
+// const ALL_COMPLETED_ENDPOINT = 'https://api.ticktick.com/api/v2/project/all/completedInAll/';
 
 export class TickTickApi {
     private static instance: TickTickApi;
@@ -226,7 +216,7 @@ export class TickTickApi {
     //     return res.id;
     // }
 
-    // private async get(reqName: string, endpoint: ENDPOINT): Promise<any> {
+    // private async get(reqName: string, endpoint: string): Promise<any> {
     //     try {
     //         const headers = this.headers();
     //         const response = await this.makeRequest(reqName, endpoint, 'GET', headers);
@@ -239,18 +229,18 @@ export class TickTickApi {
     //     }
     // }
 
-    // private async post(reqName: string, endpoint: ENDPOINT, body: any): Promise<any> {
-    //     try {
-    //         const headers = this.headers();
-    //         const response = await this.makeRequest(reqName, endpoint, 'POST', headers, body);
-    //         if (response) {
-    //             // TODO: decide what to do about inboxId
-    //             return response;
-    //         }
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
+    private async post(reqName: string, endpoint: string, body: any): Promise<any> {
+        try {
+            const headers = this.headers();
+            const response = await this.makeRequest(reqName, endpoint, 'POST', headers, body);
+            if (response) {
+                // TODO: decide what to do about inboxId
+                return response;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     // private async delete(reqName: string, endpoint: ENDPOINT, body: any): Promise<any> {
     //     try {
@@ -265,17 +255,17 @@ export class TickTickApi {
     //     }
     // }
 
-    // private headers() {
-    //     return {
-    //         //For the record, the bloody rules keep changin and we might have to the _csrf_token
-    //         'Content-Type': 'application/json',
-    //         'User-Agent': this.userAgent,
-    //         'x-device': this.deviceAgent,
-    //         // 'Cookie': 't=' + `${this.token}` + '; AWSALB=pSOIrwzvoncz4ZewmeDJ7PMpbA5nOrji5o1tcb1yXSzeEDKmqlk/maPqPiqTGaXJLQk0yokDm0WtcoxmwemccVHh+sFbA59Mx1MBjBFVV9vACQO5HGpv8eO5pXYL; AWSALBCORS=pSOIrwzvoncz4ZewmeDJ7PMpbA5nOrji5o1tcb1yXSzeEDKmqlk/maPqPiqTGaXJLQk0yokDm0WtcoxmwemccVHh+sFbA59Mx1MBjBFVV9vACQO5HGpv8eO5pXYL',
-    //         Cookie: 't=' + `${this.token}` + ';' + this.cookieHeader,
-    //         t: this.token,
-    //     };
-    // }
+    private headers() {
+        return {
+            //For the record, the bloody rules keep changin and we might have to the _csrf_token
+            'Content-Type': 'application/json',
+            'User-Agent': this.userAgent,
+            'x-device': this.deviceAgent,
+            // 'Cookie': 't=' + `${this.token}` + '; AWSALB=pSOIrwzvoncz4ZewmeDJ7PMpbA5nOrji5o1tcb1yXSzeEDKmqlk/maPqPiqTGaXJLQk0yokDm0WtcoxmwemccVHh+sFbA59Mx1MBjBFVV9vACQO5HGpv8eO5pXYL; AWSALBCORS=pSOIrwzvoncz4ZewmeDJ7PMpbA5nOrji5o1tcb1yXSzeEDKmqlk/maPqPiqTGaXJLQk0yokDm0WtcoxmwemccVHh+sFbA59Mx1MBjBFVV9vACQO5HGpv8eO5pXYL',
+            Cookie: 't=' + `${this.token}` + ';' + this.cookieHeader,
+            t: this.token,
+        };
+    }
 
     public async login() {
         try {
@@ -292,6 +282,7 @@ export class TickTickApi {
             console.log('username', this._username);
             console.log('password', this._password);
             const response = await this.makeRequest('Login', LOGIN_ENDPOINT, 'POST', headers, body);
+            // const response = await this.post('Login', LOGIN_ENDPOINT, body);
             console.log('Signed in Response: ', response);
             if (response && response.token) {
                 // TODO: decide what to do about inboxId
@@ -304,28 +295,38 @@ export class TickTickApi {
         }
     }
 
-    public async create(task: Task): Promise<string> {
+    public async create(task: Task): Promise<{ id: string; projectId: string }> {
         try {
             // TODO: all fields
             const body = {
                 title: task.descriptionWithoutTags,
+                dueDate: task.dueDate?.toISOString(),
             };
-            const headers = {
-                //For the record, the bloody rules keep changin and we might have to the _csrf_token
-                'Content-Type': 'application/json',
-                'User-Agent': this.userAgent,
-                'x-device': this.deviceAgent,
-                // 'Cookie': 't=' + `${this.token}` + '; AWSALB=pSOIrwzvoncz4ZewmeDJ7PMpbA5nOrji5o1tcb1yXSzeEDKmqlk/maPqPiqTGaXJLQk0yokDm0WtcoxmwemccVHh+sFbA59Mx1MBjBFVV9vACQO5HGpv8eO5pXYL; AWSALBCORS=pSOIrwzvoncz4ZewmeDJ7PMpbA5nOrji5o1tcb1yXSzeEDKmqlk/maPqPiqTGaXJLQk0yokDm0WtcoxmwemccVHh+sFbA59Mx1MBjBFVV9vACQO5HGpv8eO5pXYL',
-                Cookie: 't=' + `${this.token}` + ';' + this.cookieHeader,
-                t: this.token,
+            const response = await this.post('Create', TASK_ENDPOINT, body);
+            if (response) {
+                console.log('created response', response);
+                return { id: response.id, projectId: response.projectId };
+            }
+        } catch (error) {
+            console.error(error);
+        }
+        return { id: '', projectId: '' };
+    }
+
+    public async update(task: Task): Promise<string> {
+        try {
+            const tickTickTask = {
+                title: task.descriptionWithoutTags,
+                dueDate: task.dueDate?.toISOString(),
+                id: task.tickTickId,
+                projectId: task.tickTickProjectId,
             };
-            console.log('make create request');
-            const response = await this.makeRequest('Create', TASK_ENDPOINT, 'POST', headers, body);
-            console.log('made request', response);
-            if (response && response.token) {
-                // TODO: decide what to do about inboxId
-                console.log(response);
-                console.log(response.id);
+
+            const body = {
+                update: [tickTickTask],
+            };
+            const response = await this.post('Update', BATCH_ENDPOINT, body);
+            if (response) {
                 return response.id;
             }
         } catch (error) {
@@ -335,13 +336,7 @@ export class TickTickApi {
     }
 
     //https://github.com/lazeroffmichael/ticktick-py/issues/42#issuecomment-1606568919
-    async makeRequest(
-        operation: string,
-        url: ENDPOINT,
-        method: string,
-        headers: any,
-        body: any | undefined = undefined,
-    ) {
+    async makeRequest(operation: string, url: string, method: string, headers: any, body: any | undefined = undefined) {
         try {
             const options: RequestUrlParam = {
                 method: method,
@@ -351,11 +346,13 @@ export class TickTickApi {
                 body: body ? JSON.stringify(body) : undefined,
                 throw: false,
             };
+            console.log('make request');
             const result = await requestUrl(options);
+            console.log('made request', result);
             //console.log(operation, result)
             if (result.status != 200) {
                 this.setError(operation, result, null);
-                console.log(result);
+                console.log('error result', result);
                 return null;
             }
             this.cookies = (result.headers['set-cookie'] as unknown as string[]) ?? [];

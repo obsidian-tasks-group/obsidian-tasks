@@ -114,6 +114,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         dependsOn: [],
         id: '',
         tickTickId: '',
+        tickTickProjectId: '',
         tags: [],
         ...t,
     };

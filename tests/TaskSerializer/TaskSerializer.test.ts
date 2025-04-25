@@ -77,6 +77,7 @@ describe('TaskSerializer Example', () => {
                 dependsOn: [],
                 id: '',
                 tickTickId: '',
+                tickTickProjectId: '',
             };
         }
 

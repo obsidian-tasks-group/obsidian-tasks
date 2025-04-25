@@ -1,10 +1,18 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
+import type { TickTickApi } from 'TickTick/api';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { Task } from '../Task/Task';
 import { DateFallback } from '../DateTime/DateFallback';
 import { taskFromLine } from './CreateOrEditTaskParser';
 
-export const createOrEdit = (checking: boolean, editor: Editor, view: View, app: App, allTasks: Task[]) => {
+export const createOrEdit = (
+    checking: boolean,
+    editor: Editor,
+    view: View,
+    app: App,
+    allTasks: Task[],
+    tickTickApi: TickTickApi,
+) => {
     if (checking) {
         return view instanceof MarkdownView;
     }
@@ -24,7 +32,10 @@ export const createOrEdit = (checking: boolean, editor: Editor, view: View, app:
     const line = editor.getLine(lineNumber);
     const task = taskFromLine({ line, path });
 
-    const onSubmit = (updatedTasks: Task[]): void => {
+    const onSubmit = async (updatedTasks: Task[], updatedTask?: Task): Promise<void> => {
+        if (updatedTask) {
+            await tickTickApi.update(updatedTask);
+        }
         const serialized = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
             .map((task: Task) => task.toFileLineString())
             .join('\n');

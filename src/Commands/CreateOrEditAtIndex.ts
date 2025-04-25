@@ -20,17 +20,23 @@ export const createAtIndex = async (app: App, allTasks: Task[], tickTickApi: Tic
 
     const onSubmit = async (updatedTasks: Task[], updatedTask?: Task): Promise<void> => {
         let ticktickId = '';
+        let ticktickProjectId = '';
         if (updatedTask) {
-            ticktickId = await tickTickApi.create(updatedTask);
+            const tickTickTask = await tickTickApi.create(updatedTask);
+            console.log('created ticktick task', tickTickTask);
+            ticktickId = tickTickTask.id;
+            ticktickProjectId = tickTickTask.projectId;
         }
         const serialized = updatedTasks
             .map((task: Task) => {
                 if (task.id === updatedTask?.id) {
                     task.tickTickId = ticktickId;
+                    task.tickTickProjectId = ticktickProjectId;
                 }
                 return task.toFileLineString();
             })
             .join('\n');
+        console.log('serialized', serialized);
         contentArray.splice(0, 0, serialized);
         content = contentArray.join('\n');
         await app.vault.modify(file, content);

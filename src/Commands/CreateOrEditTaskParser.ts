@@ -97,6 +97,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             dependsOn: [],
             id: '',
             tickTickId: '',
+            tickTickProjectId: '',
             blockLink: '',
             tags: [],
             originalMarkdown: '',
@@ -142,6 +143,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         scheduledDateIsInferred: false,
         id: '',
         tickTickId: '',
+        tickTickProjectId: '',
         dependsOn: [],
     });
 };
@@ -170,6 +172,7 @@ export const taskFromNothing = ({ path }: { path: string }): Task => {
         dependsOn: [],
         id: '',
         tickTickId: '',
+        tickTickProjectId: '',
         blockLink: '',
         tags: [],
         originalMarkdown: '',

@@ -198,6 +198,7 @@ describe('task line rendering - layout options', () => {
                 'Do exercises #todo #health',
                 ' 🆔 abcdef',
                 ' 🐬 abcdef',
+                ' 🐳 abcdef',
                 ' ⛔ 123456,abc123',
                 ' 🔼',
                 ' 🔁 every day when done',
@@ -220,6 +221,7 @@ describe('task line rendering - layout options', () => {
                 'Do exercises #todo #health',
                 ' 🆔 abcdef',
                 ' 🐬 abcdef',
+                ' 🐳 abcdef',
                 ' ⛔ 123456,abc123',
                 ' 🔼',
                 ' 🔁 every day when done',
@@ -287,6 +289,9 @@ describe('task line rendering - layout options', () => {
 
     it('renders with tickTickId', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' 🐬 abcdef'], [TaskLayoutComponent.TickTickId]);
+    });
+    it('renders with tickTickProjectId', async () => {
+        await testLayoutOptions(['Do exercises #todo #health', ' 🐳 abcdef'], [TaskLayoutComponent.TickTickProjectId]);
     });
 });
 

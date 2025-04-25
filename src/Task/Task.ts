@@ -59,6 +59,7 @@ export class Task extends ListItem {
     public readonly dependsOn: string[];
     public readonly id: string;
     public tickTickId: string;
+    public tickTickProjectId: string;
 
     /** The blockLink is a "^" annotation after the dates/recurrence rules.
      * Any non-empty value must begin with ' ^'. */
@@ -87,6 +88,7 @@ export class Task extends ListItem {
         dependsOn,
         id,
         tickTickId,
+        tickTickProjectId,
         blockLink,
         tags,
         originalMarkdown,
@@ -111,6 +113,7 @@ export class Task extends ListItem {
         dependsOn: string[] | [];
         id: string;
         tickTickId: string;
+        tickTickProjectId: string;
         blockLink: string;
         tags: string[] | [];
         originalMarkdown: string;
@@ -146,6 +149,7 @@ export class Task extends ListItem {
         this.dependsOn = dependsOn;
         this.id = id;
         this.tickTickId = tickTickId;
+        this.tickTickProjectId = tickTickProjectId;
 
         this.blockLink = blockLink;
 

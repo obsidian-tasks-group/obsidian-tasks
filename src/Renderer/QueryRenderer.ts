@@ -10,6 +10,7 @@ import {
     debounce,
 } from 'obsidian';
 import { App, Keymap } from 'obsidian';
+import type { TickTickApi } from 'TickTick/api';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type TasksPlugin from '../main';
@@ -320,7 +321,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             allMarkdownFiles: this.app.vault.getMarkdownFiles(),
             backlinksClickHandler: createBacklinksClickHandler(this.app),
             backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
-            editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),
+            editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app, this.plugin.ticktickapi),
         });
 
         this.containerEl.firstChild?.replaceWith(content);
@@ -333,15 +334,18 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 }
 
-function createEditTaskPencilClickHandler(app: App): EditButtonClickHandler {
+function createEditTaskPencilClickHandler(app: App, api: TickTickApi): EditButtonClickHandler {
     return function editTaskPencilClickHandler(event: MouseEvent, task: Task, allTasks: Task[]) {
         event.preventDefault();
 
-        const onSubmit = async (updatedTasks: Task[]): Promise<void> => {
+        const onSubmit = async (updatedTasks: Task[], updatedTask?: Task): Promise<void> => {
             await replaceTaskWithTasks({
                 originalTask: task,
                 newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
             });
+            if (updatedTask) {
+                await api.update(updatedTask);
+            }
         };
 
         // Need to create a new instance every time, as cursor/task can change.

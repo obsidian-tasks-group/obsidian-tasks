@@ -33,6 +33,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly onCompletionSymbol: string;
     readonly idSymbol: string;
     readonly tickTickIdSymbol: string;
+    readonly tickTickProjectIdSymbol: string;
     readonly dependsOnSymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
@@ -46,6 +47,7 @@ export interface DefaultTaskSerializerSymbols {
         onCompletionRegex: RegExp;
         idRegex: RegExp;
         tickTickIdRegex: RegExp;
+        tickTickProjectIdRegex: RegExp;
         dependsOnRegex: RegExp;
     };
 }
@@ -54,6 +56,7 @@ export interface DefaultTaskSerializerSymbols {
 export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 // TODO: confirm regex
 export const tickTickIdRegex = /[a-zA-Z0-9-_]+/;
+export const tickTickProjectIdRegex = /[a-zA-Z0-9-_]+/;
 
 // The allowed characters in a comma-separated sequence of task ids:
 export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
@@ -99,6 +102,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     dependsOnSymbol: '⛔',
     idSymbol: '🆔',
     tickTickIdSymbol: '🐬',
+    tickTickProjectIdSymbol: '🐳',
     TaskFormatRegularExpressions: {
         priorityRegex: fieldRegex('([🔺⏫🔼🔽⏬])', ''),
         startDateRegex: dateFieldRegex('🛫'),
@@ -112,6 +116,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dependsOnRegex: fieldRegex('⛔', '(' + taskIdSequenceRegex.source + ')'),
         idRegex: fieldRegex('🆔', '(' + taskIdRegex.source + ')'),
         tickTickIdRegex: fieldRegex('🐬', '(' + tickTickIdRegex.source + ')'),
+        tickTickProjectIdRegex: fieldRegex('🐳', '(' + tickTickProjectIdRegex.source + ')'),
     },
 } as const;
 
@@ -184,6 +189,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             dependsOnSymbol,
             idSymbol,
             tickTickIdSymbol,
+            tickTickProjectIdSymbol,
         } = this.symbols;
 
         switch (component) {
@@ -233,6 +239,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return symbolAndStringValue(shortMode, idSymbol, task.id);
             case TaskLayoutComponent.TickTickId:
                 return symbolAndStringValue(shortMode, tickTickIdSymbol, task.tickTickId);
+            case TaskLayoutComponent.TickTickProjectId:
+                return symbolAndStringValue(shortMode, tickTickProjectIdSymbol, task.tickTickProjectId);
             case TaskLayoutComponent.BlockLink:
                 return task.blockLink ?? '';
             default:
@@ -292,6 +300,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let onCompletion: OnCompletion = OnCompletion.Ignore;
         let id: string = '';
         let tickTickId: string = '';
+        let tickTickProjectId: string = '';
         let dependsOn: string[] | [] = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
@@ -398,6 +407,14 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 matched = true;
             }
 
+            const tickTickProjectIdmatch = line.match(TaskFormatRegularExpressions.tickTickProjectIdRegex);
+
+            if (tickTickProjectIdmatch != null) {
+                line = line.replace(TaskFormatRegularExpressions.tickTickProjectIdRegex, '').trim();
+                tickTickProjectId = tickTickProjectIdmatch[1].trim();
+                matched = true;
+            }
+
             const dependsOnMatch = line.match(TaskFormatRegularExpressions.dependsOnRegex);
 
             if (dependsOnMatch != null) {
@@ -439,6 +456,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             onCompletion,
             id,
             tickTickId,
+            tickTickProjectId,
             dependsOn,
             tags: Task.extractHashtags(line),
         };
