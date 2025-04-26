@@ -31,7 +31,7 @@ export const createAtIndex = async (app: App, allTasks: Task[], tickTickApi: Tic
                 return task.toFileLineString();
             })
             .join('\n');
-        await app.vault.append(file, serialized);
+        await app.vault.append(file, serialized + '\n');
     };
 
     const taskModal = new TaskModal({
