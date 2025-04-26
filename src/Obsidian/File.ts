@@ -168,6 +168,8 @@ Recommendations:
             ...fileLines.slice(taskLineNumber + 1), // Only supports single-line tasks.
         ];
 
+        // TODO consider doing an update here instead of anywhere else
+
         await vault.modify(file, updatedFileLines.join('\n'));
     } catch (e) {
         if (e instanceof WarningWorthRetrying) {

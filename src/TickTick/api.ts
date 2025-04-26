@@ -1,5 +1,6 @@
 import { type RequestUrlParam, type RequestUrlResponse, requestUrl } from 'obsidian';
 import type { Task } from '../Task/Task';
+import { StatusType } from '../Statuses/StatusConfiguration';
 
 const LOGIN_ENDPOINT = 'https://api.ticktick.com/api/v2/user/signon?wc=true&remember=true';
 const TASK_ENDPOINT = 'https://api.ticktick.com/api/v2/task';
@@ -10,6 +11,8 @@ const BATCH_ENDPOINT = 'https://ticktick.com/api/v2/batch/task';
 // const DELTE_TAG_ENDPOINT = 'https://api.ticktick.com/api/v2/tag/delete';
 //
 // const ALL_COMPLETED_ENDPOINT = 'https://api.ticktick.com/api/v2/project/all/completedInAll/';
+//
+// statuses: done = 2, cancelled = -1
 
 export class TickTickApi {
     private static instance: TickTickApi;
@@ -314,12 +317,24 @@ export class TickTickApi {
     }
 
     public async update(task: Task): Promise<string> {
+        let status = 0;
+        let completedTime = null;
+        if (task.status.type === StatusType.DONE) {
+            status = 2;
+            completedTime = task.doneDate?.toISOString();
+        } else if (task.status.type === StatusType.CANCELLED) {
+            status = -1;
+            completedTime = task.cancelledDate?.toISOString();
+        }
+
         try {
             const tickTickTask = {
                 title: task.descriptionWithoutTags,
                 dueDate: task.dueDate?.toISOString(),
                 id: task.tickTickId,
                 projectId: task.tickTickProjectId,
+                status: status,
+                completedTime: completedTime,
             };
 
             const body = {

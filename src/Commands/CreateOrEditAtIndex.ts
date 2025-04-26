@@ -23,13 +23,13 @@ export const createAtIndex = async (app: App, allTasks: Task[], tickTickApi: Tic
         let ticktickProjectId = '';
         if (updatedTask) {
             const tickTickTask = await tickTickApi.create(updatedTask);
-            console.log('created ticktick task', tickTickTask);
             ticktickId = tickTickTask.id;
             ticktickProjectId = tickTickTask.projectId;
         }
         const serialized = updatedTasks
             .map((task: Task) => {
-                if (task.id === updatedTask?.id) {
+                console.log(task.descriptionWithoutTags, updatedTask?.descriptionWithoutTags);
+                if (task.descriptionWithoutTags === updatedTask?.descriptionWithoutTags) {
                     task.tickTickId = ticktickId;
                     task.tickTickProjectId = ticktickProjectId;
                 }

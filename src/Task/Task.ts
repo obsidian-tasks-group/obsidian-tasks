@@ -1,4 +1,5 @@
 import type { Moment } from 'moment';
+import { TickTickApi } from '../TickTick/api';
 import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
@@ -379,6 +380,9 @@ export class Task extends ListItem {
         const newStatusIsNotDone = !newStatus.isCompleted();
         const oldStatusWasDone = this.status.isCompleted();
         const noRecurrenceRule = this.recurrence === null;
+
+        const api = TickTickApi.getInstance();
+        api.update(toggledTask);
 
         const noNewRecurrence = newStatusIsNotDone || oldStatusWasDone || noRecurrenceRule;
         if (noNewRecurrence) {
