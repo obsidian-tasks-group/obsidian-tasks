@@ -115,7 +115,8 @@ describe('include tests', () => {
         const query = new Query(source, new TasksFile('stuff.md'));
 
         expect(query.explainQuery()).toMatchInlineSnapshot(`
-            "(happens this week) AND (starts before today) =>
+            "include out =>
+            (happens this week) AND (starts before today) =>
               AND (All of):
                 happens this week =>
                   due, start or scheduled date is between:
@@ -124,6 +125,7 @@ describe('include tests', () => {
                 starts before today =>
                   start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
 
+            include out =>
             not done
             "
         `);
@@ -142,7 +144,10 @@ describe('include tests', () => {
 
         expect(query.error).toMatchInlineSnapshot(`
             "do not understand query
-            Problem line: "apple sauce""
+            Problem statement:
+                include out =>
+                apple sauce
+            "
         `);
     });
 });
