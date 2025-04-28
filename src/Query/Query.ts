@@ -456,9 +456,7 @@ ${statement.explainStatement('    ')}
                 this.setError(`Cannot find include "${includeName}" in the Tasks settings`, _statement);
                 return;
             }
-            // const newStatement = new Statement(_line, _line);
-            // newStatement.recordExpandedPlaceholders(includeValue);
-            // this.statements.push(newStatement);
+
             includeValue.split('\n').forEach((instruction) => {
                 const statement = new Statement(_statement.rawInstruction, _statement.anyContinuationLinesRemoved);
                 statement.recordExpandedPlaceholders(instruction);
