@@ -9,6 +9,11 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 
 window.moment = moment;
 
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2025-04-28'));
+});
+
 afterEach(() => {
     resetSettings();
 });
@@ -96,6 +101,32 @@ describe('include tests', () => {
 
         expect(query.queryLayoutOptions.hideEditButton).toEqual(true);
         expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('hide edit button');
+    });
+
+    it('should explain two levels of nested includes', () => {
+        updateSettings({
+            includes: {
+                inside: '(happens this week) AND (starts before today)',
+                out: 'include inside\nnot done',
+            },
+        });
+
+        const source = 'include out';
+        const query = new Query(source, new TasksFile('stuff.md'));
+
+        expect(query.explainQuery()).toMatchInlineSnapshot(`
+            "(happens this week) AND (starts before today) =>
+              AND (All of):
+                happens this week =>
+                  due, start or scheduled date is between:
+                    2025-04-28 (Monday 28th April 2025) and
+                    2025-05-04 (Sunday 4th May 2025) inclusive
+                starts before today =>
+                  start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
+
+            not done
+            "
+        `);
     });
 });
 
