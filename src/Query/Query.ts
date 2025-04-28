@@ -460,7 +460,9 @@ ${statement.explainStatement('    ')}
             // newStatement.recordExpandedPlaceholders(includeValue);
             // this.statements.push(newStatement);
             includeValue.split('\n').forEach((instruction) => {
-                this.parseLine(new Statement(instruction, instruction));
+                const statement = new Statement(_statement.rawInstruction, _statement.anyContinuationLinesRemoved);
+                statement.recordExpandedPlaceholders(instruction);
+                this.parseLine(statement);
             });
         }
     }
