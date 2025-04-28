@@ -128,6 +128,23 @@ describe('include tests', () => {
             "
         `);
     });
+
+    it('should give meaningful error message about included text', () => {
+        updateSettings({
+            includes: {
+                inside: 'apple sauce',
+                out: 'include inside',
+            },
+        });
+
+        const source = 'include out';
+        const query = new Query(source, new TasksFile('stuff.md'));
+
+        expect(query.error).toMatchInlineSnapshot(`
+            "do not understand query
+            Problem line: "apple sauce""
+        `);
+    });
 });
 
 describe('include settings tests', () => {
