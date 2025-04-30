@@ -3,7 +3,7 @@
  */
 
 import moment from 'moment';
-import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { type IncludesMap, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Query } from '../../src/Query/Query';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 
@@ -17,6 +17,10 @@ beforeEach(() => {
 afterEach(() => {
     resetSettings();
 });
+
+export function makeIncludes(...entries: [string, string][]): IncludesMap {
+    return Object.fromEntries(entries);
+}
 
 describe('include tests', () => {
     it('should accept whole-line include placeholder', () => {
@@ -105,10 +109,10 @@ describe('include tests', () => {
 
     it('should explain two levels of nested includes', () => {
         updateSettings({
-            includes: {
-                inside: '(happens this week) AND (starts before today)',
-                out: 'include inside\nnot done',
-            },
+            includes: makeIncludes(
+                ['inside', '(happens this week) AND (starts before today)'],
+                ['out', 'include inside\nnot done'],
+            ),
         });
 
         const source = 'include out';
