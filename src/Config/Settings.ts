@@ -59,9 +59,10 @@ export const TASK_FORMATS = {
 } as const;
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
+export type IncludesMap = Record<string, string>;
 
 export interface Settings {
-    includes: Record<string, string>;
+    includes: IncludesMap;
     globalQuery: string;
     globalFilter: string;
     removeGlobalFilter: boolean;
