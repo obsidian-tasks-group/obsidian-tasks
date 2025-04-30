@@ -657,14 +657,25 @@ export class SettingsTab extends PluginSettingTab {
                     })
                     .addTextArea((textArea) => {
                         textArea.inputEl.addClass('tasks-includes-value');
-                        textArea
-                            .setPlaceholder('Query or filter text...')
-                            .setValue(value)
-                            .onChange(async (newValue) => {
-                                settings.includes[key] = newValue;
-                                updateSettings({ includes: settings.includes });
-                                await this.plugin.saveSettings();
-                            });
+                        textArea.setPlaceholder('Query or filter text...').setValue(value);
+
+                        // Resize to fit content
+                        const resize = () => {
+                            textArea.inputEl.style.height = 'auto'; // reset first
+                            textArea.inputEl.style.height = `${textArea.inputEl.scrollHeight}px`;
+                        };
+
+                        // Initial resize
+                        resize();
+
+                        // Resize on input
+                        textArea.inputEl.addEventListener('input', resize);
+
+                        return textArea.onChange(async (newValue) => {
+                            settings.includes[key] = newValue;
+                            updateSettings({ includes: settings.includes });
+                            await this.plugin.saveSettings();
+                        });
                     })
                     .addExtraButton((btn) => {
                         btn.setIcon('cross')
