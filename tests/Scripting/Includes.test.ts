@@ -24,7 +24,9 @@ export function makeIncludes(...entries: [string, string][]): IncludesMap {
 
 describe('include tests', () => {
     it('should accept whole-line include placeholder', () => {
-        updateSettings({ includes: { not_done: 'not done' } });
+        updateSettings({
+            includes: makeIncludes(['not_done', 'not done']),
+        });
 
         const source = '{{includes.not_done}}';
         const query = new Query(source, new TasksFile('stuff.md'));
@@ -35,7 +37,9 @@ describe('include tests', () => {
     });
 
     it('should accept whole-line include filter instruction', () => {
-        updateSettings({ includes: { not_done: 'not done' } });
+        updateSettings({
+            includes: makeIncludes(['not_done', 'not done']),
+        });
 
         const source = 'include not_done';
         const query = new Query(source, new TasksFile('stuff.md'));
@@ -47,7 +51,9 @@ describe('include tests', () => {
     });
 
     it('should accept whole-line include layout instruction', () => {
-        updateSettings({ includes: { show_tree: 'show tree' } });
+        updateSettings({
+            includes: makeIncludes(['show_tree', 'show tree']),
+        });
 
         const source = 'include show_tree';
         const query = new Query(source, new TasksFile('stuff.md'));
@@ -59,8 +65,9 @@ describe('include tests', () => {
     });
 
     it('should accept multi-line include', () => {
-        updateSettings({ includes: { multi_line: 'scheduled tomorrow\nhide backlink' } });
-
+        updateSettings({
+            includes: makeIncludes(['multi_line', 'scheduled tomorrow\nhide backlink']),
+        });
         const source = 'include multi_line';
         const query = new Query(source, new TasksFile('stuff.md'));
 
@@ -88,10 +95,11 @@ describe('include tests', () => {
 
     it('should support nested include instructions', () => {
         updateSettings({
-            includes: {
-                inside: 'not done',
-                out: 'include inside\nhide edit button',
-            },
+            includes: makeIncludes(
+                // Force line break
+                ['inside', 'not done'],
+                ['out', 'include inside\nhide edit button'],
+            ),
         });
 
         const source = 'include out';
@@ -137,10 +145,11 @@ describe('include tests', () => {
 
     it('should give meaningful error message about included text', () => {
         updateSettings({
-            includes: {
-                inside: 'apple sauce',
-                out: 'include inside',
-            },
+            includes: makeIncludes(
+                // Force line break
+                ['inside', 'apple sauce'],
+                ['out', 'include inside'],
+            ),
         });
 
         const source = 'include out';
