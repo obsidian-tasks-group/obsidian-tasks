@@ -106,7 +106,10 @@
     min-width: 300px;
     min-height: 3em;
     font-family: monospace;
-    resize: vertical;
+    resize: both; // optional, allows user to resize in both directions
+    overflow: auto;
+    white-space: pre;       // key: disables word wrapping
+    word-wrap: normal;      // ensure Obsidian styles don’t override it
 }
 
 /* Responsive: stack in narrow view */
