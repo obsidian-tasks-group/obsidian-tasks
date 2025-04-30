@@ -625,19 +625,35 @@ export class SettingsTab extends PluginSettingTab {
 
             Object.entries(settings.includes).forEach(([key, value]) => {
                 new Setting(includesContainer)
-                    .addText((text) =>
-                        text
-                            .setPlaceholder('Name')
-                            .setValue(key)
-                            .onChange(async (newKey) => {
+                    .addText((text) => {
+                        text.setPlaceholder('Name').setValue(key);
+
+                        let newKey = key;
+
+                        text.inputEl.addEventListener('input', (e) => {
+                            newKey = (e.target as HTMLInputElement).value;
+                        });
+
+                        // Only commit the change in key name when the field loses focus or the user presses Enter.
+                        const commitRename = async () => {
+                            if (newKey && newKey !== key) {
                                 const val = settings.includes[key];
                                 delete settings.includes[key];
                                 settings.includes[newKey] = val;
                                 updateSettings({ includes: settings.includes });
                                 await this.plugin.saveSettings();
                                 renderIncludes();
-                            }),
-                    )
+                            }
+                        };
+
+                        text.inputEl.addEventListener('blur', commitRename);
+                        text.inputEl.addEventListener('keydown', async (e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                text.inputEl.blur(); // trigger blur handler
+                            }
+                        });
+                    })
                     .addTextArea((textArea) =>
                         textArea
                             .setPlaceholder('Query or filter text...')
