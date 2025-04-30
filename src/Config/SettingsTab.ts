@@ -6,6 +6,7 @@ import { Status } from '../Statuses/Status';
 import type { StatusCollection } from '../Statuses/StatusCollection';
 import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
+import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import * as Themes from './Themes';
 import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
@@ -637,10 +638,8 @@ export class SettingsTab extends PluginSettingTab {
                         // Only commit the change in key name when the field loses focus or the user presses Enter.
                         const commitRename = async () => {
                             if (newKey && newKey !== key) {
-                                const val = settings.includes[key];
-                                delete settings.includes[key];
-                                settings.includes[newKey] = val;
-                                updateSettings({ includes: settings.includes });
+                                const newIncludes = renameKeyInRecordPreservingOrder(settings.includes, key, newKey);
+                                updateSettings({ includes: newIncludes });
                                 await this.plugin.saveSettings();
                                 renderIncludes();
                             }
