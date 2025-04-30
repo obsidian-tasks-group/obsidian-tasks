@@ -682,7 +682,7 @@ export class SettingsTab extends PluginSettingTab {
         renderIncludes();
 
         new Setting(containerEl).addButton((btn) => {
-            btn.setButtonText('Add New Include')
+            btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
                     const baseKey = 'new_key';
