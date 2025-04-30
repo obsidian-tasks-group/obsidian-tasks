@@ -147,6 +147,11 @@ export class SettingsTab extends PluginSettingTab {
         );
 
         // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName('Includes').setHeading();
+        // ---------------------------------------------------------------------------
+        this.renderIncludesSettings(containerEl);
+
+        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
@@ -607,6 +612,73 @@ export class SettingsTab extends PluginSettingTab {
                 .map((folder) => folder.replace(/^\/|\/$/g, ''))
                 .filter((folder) => folder !== '')
         );
+    }
+
+    private renderIncludesSettings(containerEl: HTMLElement) {
+        containerEl.createEl('h3', { text: 'Includes' });
+
+        const includesContainer = containerEl.createDiv();
+        const settings = getSettings();
+
+        const renderIncludes = () => {
+            includesContainer.empty();
+
+            Object.entries(settings.includes).forEach(([key, value]) => {
+                new Setting(includesContainer)
+                    .addText((text) =>
+                        text
+                            .setPlaceholder('Name')
+                            .setValue(key)
+                            .onChange(async (newKey) => {
+                                const val = settings.includes[key];
+                                delete settings.includes[key];
+                                settings.includes[newKey] = val;
+                                updateSettings({ includes: settings.includes });
+                                await this.plugin.saveSettings();
+                                renderIncludes();
+                            }),
+                    )
+                    .addTextArea((textArea) =>
+                        textArea
+                            .setPlaceholder('Query or filter text...')
+                            .setValue(value)
+                            .onChange(async (newValue) => {
+                                settings.includes[key] = newValue;
+                                updateSettings({ includes: settings.includes });
+                                await this.plugin.saveSettings();
+                            }),
+                    )
+                    .addExtraButton((btn) => {
+                        btn.setIcon('cross')
+                            .setTooltip('Delete')
+                            .onClick(async () => {
+                                delete settings.includes[key];
+                                updateSettings({ includes: settings.includes });
+                                await this.plugin.saveSettings();
+                                renderIncludes();
+                            });
+                    });
+            });
+        };
+
+        renderIncludes();
+
+        new Setting(containerEl).addButton((btn) => {
+            btn.setButtonText('Add New Include')
+                .setCta()
+                .onClick(async () => {
+                    const baseKey = 'new_key';
+                    let suffix = 1;
+                    while (Object.prototype.hasOwnProperty.call(settings.includes, `${baseKey}_${suffix}`)) {
+                        suffix++;
+                    }
+                    const newKey = `${baseKey}_${suffix}`;
+                    settings.includes[newKey] = '';
+                    updateSettings({ includes: settings.includes });
+                    await this.plugin.saveSettings();
+                    renderIncludes();
+                });
+        });
     }
 
     private static renderFolderArray(folders: string[]): string {
