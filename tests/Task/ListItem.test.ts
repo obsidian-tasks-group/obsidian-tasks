@@ -225,13 +225,21 @@ describe('links', () => {
 });
 
 class Link {
-    public rawLink: LinkCache;
+    private rawLink: LinkCache;
     constructor(rawLink: LinkCache) {
         this.rawLink = rawLink;
     }
 
     public get originalMarkdown() {
         return this.rawLink.original;
+    }
+
+    public get destination() {
+        return this.rawLink.link;
+    }
+
+    public get displayText() {
+        return this.rawLink.displayText;
     }
 }
 
@@ -241,6 +249,8 @@ describe('linkClass', () => {
         const link = new Link(rawLink);
         expect(link).toBeDefined();
         expect(link.originalMarkdown).toEqual('[[link_in_file_body]]');
+        expect(link.destination).toEqual('link_in_file_body');
+        expect(link.displayText).toEqual('link_in_file_body');
     });
 });
 
