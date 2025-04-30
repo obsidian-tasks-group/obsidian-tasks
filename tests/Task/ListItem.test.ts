@@ -2,6 +2,9 @@
  * @jest-environment jsdom
  */
 import moment from 'moment/moment';
+
+import type { LinkCache } from 'obsidian';
+
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { ListItem } from '../../src/Task/ListItem';
 import { Task } from '../../src/Task/Task';
@@ -218,6 +221,26 @@ describe('links', () => {
 
         expect(tasks[0].links.length).toEqual(1);
         expect(tasks[0].links[0].original).toEqual('[[link_in_task_wikilink]]');
+    });
+});
+
+class Link {
+    public rawLink: LinkCache;
+    constructor(rawLink: LinkCache) {
+        this.rawLink = rawLink;
+    }
+
+    public get originalMarkdown() {
+        return this.rawLink.original;
+    }
+}
+
+describe('linkClass', () => {
+    it('should construct a Link object', () => {
+        const rawLink = links_everywhere.cachedMetadata.links[0];
+        const link = new Link(rawLink);
+        expect(link).toBeDefined();
+        expect(link.originalMarkdown).toEqual('[[link_in_file_body]]');
     });
 });
 
