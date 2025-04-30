@@ -616,8 +616,6 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     private renderIncludesSettings(containerEl: HTMLElement) {
-        containerEl.createEl('h3', { text: 'Includes' });
-
         const includesContainer = containerEl.createDiv();
         const settings = getSettings();
 
