@@ -625,9 +625,14 @@ export class SettingsTab extends PluginSettingTab {
             includesContainer.empty();
 
             Object.entries(settings.includes).forEach(([key, value]) => {
-                new Setting(includesContainer)
+                const wrapper = includesContainer.createDiv({ cls: 'tasks-includes-wrapper' });
+                const setting = new Setting(wrapper);
+                setting.settingEl.addClass('tasks-includes-setting');
+
+                setting
                     .addText((text) => {
                         text.setPlaceholder('Name').setValue(key);
+                        text.inputEl.addClass('tasks-includes-key');
 
                         let newKey = key;
 
@@ -635,7 +640,6 @@ export class SettingsTab extends PluginSettingTab {
                             newKey = (e.target as HTMLInputElement).value;
                         });
 
-                        // Only commit the change in key name when the field loses focus or the user presses Enter.
                         const commitRename = async () => {
                             if (newKey && newKey !== key) {
                                 const newIncludes = renameKeyInRecordPreservingOrder(settings.includes, key, newKey);
@@ -653,7 +657,8 @@ export class SettingsTab extends PluginSettingTab {
                             }
                         });
                     })
-                    .addTextArea((textArea) =>
+                    .addTextArea((textArea) => {
+                        textArea.inputEl.addClass('tasks-includes-value');
                         textArea
                             .setPlaceholder('Query or filter text...')
                             .setValue(value)
@@ -661,8 +666,8 @@ export class SettingsTab extends PluginSettingTab {
                                 settings.includes[key] = newValue;
                                 updateSettings({ includes: settings.includes });
                                 await this.plugin.saveSettings();
-                            }),
-                    )
+                            });
+                    })
                     .addExtraButton((btn) => {
                         btn.setIcon('cross')
                             .setTooltip('Delete')
