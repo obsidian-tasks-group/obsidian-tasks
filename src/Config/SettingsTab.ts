@@ -6,6 +6,7 @@ import { Status } from '../Statuses/Status';
 import type { StatusCollection } from '../Statuses/StatusCollection';
 import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
+import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import * as Themes from './Themes';
 import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
@@ -145,6 +146,11 @@ export class SettingsTab extends PluginSettingTab {
                         });
                 }),
         );
+
+        // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName('Includes').setHeading();
+        // ---------------------------------------------------------------------------
+        this.renderIncludesSettings(containerEl);
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
@@ -607,6 +613,101 @@ export class SettingsTab extends PluginSettingTab {
                 .map((folder) => folder.replace(/^\/|\/$/g, ''))
                 .filter((folder) => folder !== '')
         );
+    }
+
+    private renderIncludesSettings(containerEl: HTMLElement) {
+        const includesContainer = containerEl.createDiv();
+        const settings = getSettings();
+
+        const renderIncludes = () => {
+            includesContainer.empty();
+
+            Object.entries(settings.includes).forEach(([key, value]) => {
+                const wrapper = includesContainer.createDiv({ cls: 'tasks-includes-wrapper' });
+                const setting = new Setting(wrapper);
+                setting.settingEl.addClass('tasks-includes-setting');
+
+                setting
+                    .addText((text) => {
+                        text.setPlaceholder('Name').setValue(key);
+                        text.inputEl.addClass('tasks-includes-key');
+
+                        let newKey = key;
+
+                        text.inputEl.addEventListener('input', (e) => {
+                            newKey = (e.target as HTMLInputElement).value;
+                        });
+
+                        const commitRename = async () => {
+                            if (newKey && newKey !== key) {
+                                const newIncludes = renameKeyInRecordPreservingOrder(settings.includes, key, newKey);
+                                updateSettings({ includes: newIncludes });
+                                await this.plugin.saveSettings();
+                                renderIncludes();
+                            }
+                        };
+
+                        text.inputEl.addEventListener('blur', commitRename);
+                        text.inputEl.addEventListener('keydown', async (e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                text.inputEl.blur(); // trigger blur handler
+                            }
+                        });
+                    })
+                    .addTextArea((textArea) => {
+                        textArea.inputEl.addClass('tasks-includes-value');
+                        textArea.setPlaceholder('Query or filter text...').setValue(value);
+
+                        // Resize to fit content
+                        const resize = () => {
+                            textArea.inputEl.style.height = 'auto'; // reset first
+                            textArea.inputEl.style.height = `${textArea.inputEl.scrollHeight}px`;
+                        };
+
+                        // Initial resize
+                        resize();
+
+                        // Resize on input
+                        textArea.inputEl.addEventListener('input', resize);
+
+                        return textArea.onChange(async (newValue) => {
+                            settings.includes[key] = newValue;
+                            updateSettings({ includes: settings.includes });
+                            await this.plugin.saveSettings();
+                        });
+                    })
+                    .addExtraButton((btn) => {
+                        btn.setIcon('cross')
+                            .setTooltip('Delete')
+                            .onClick(async () => {
+                                delete settings.includes[key];
+                                updateSettings({ includes: settings.includes });
+                                await this.plugin.saveSettings();
+                                renderIncludes();
+                            });
+                    });
+            });
+        };
+
+        renderIncludes();
+
+        new Setting(containerEl).addButton((btn) => {
+            btn.setButtonText('Add new include')
+                .setCta()
+                .onClick(async () => {
+                    const baseKey = 'new_key';
+                    let suffix = 1;
+                    while (Object.prototype.hasOwnProperty.call(settings.includes, `${baseKey}_${suffix}`)) {
+                        suffix++;
+                    }
+                    const newKey = `${baseKey}_${suffix}`;
+                    settings.includes[newKey] = '';
+                    updateSettings({ includes: settings.includes });
+                    await this.plugin.saveSettings();
+                    renderIncludes();
+                });
+        });
     }
 
     private static renderFolderArray(folders: string[]): string {
