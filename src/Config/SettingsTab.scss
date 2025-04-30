@@ -106,7 +106,7 @@
     min-width: 300px;
     min-height: 3em;
     font-family: monospace;
-    resize: none;            // user can't resize manually
+    resize: horizontal;      // allow horizontal resizing
     overflow-x: auto;        // allow horizontal scrolling
     overflow-y: hidden;      // hide vertical scrollbar
     white-space: pre;        // prevent wrapping
