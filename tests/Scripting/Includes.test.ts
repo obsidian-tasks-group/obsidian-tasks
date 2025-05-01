@@ -92,19 +92,14 @@ describe('include tests', () => {
     });
 
     it('should support nested include instructions', () => {
-        updateSettings({
-            includes: makeIncludes(
-                // Force line break
-                ['inside', 'not done'],
-                ['out', 'include inside\nhide edit button'],
-            ),
-        });
-
+        const includes = makeIncludes(
+            // Force line break
+            ['inside', 'not done'],
+            ['out', 'include inside\nhide edit button'],
+        );
         const source = 'include out';
-        const query = new Query(source, tasksFile);
 
-        expect(query.error).toBeUndefined();
-        expect(query.source).toEqual('include out');
+        const query = createValidQuery(source, includes);
 
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
