@@ -23,13 +23,15 @@ export function makeIncludes(...entries: [string, string][]): IncludesMap {
 }
 
 describe('include tests', () => {
+    const tasksFile = new TasksFile('stuff.md');
+
     it('should accept whole-line include placeholder', () => {
         updateSettings({
             includes: makeIncludes(['not_done', 'not done']),
         });
 
         const source = '{{includes.not_done}}';
-        const query = new Query(source, new TasksFile('stuff.md'));
+        const query = new Query(source, tasksFile);
 
         expect(query.error).toBeUndefined();
         expect(query.filters.length).toEqual(1);
@@ -42,7 +44,7 @@ describe('include tests', () => {
         });
 
         const source = 'include not_done';
-        const query = new Query(source, new TasksFile('stuff.md'));
+        const query = new Query(source, tasksFile);
 
         expect(query.error).toBeUndefined();
         expect(query.source).toEqual('include not_done');
@@ -56,7 +58,7 @@ describe('include tests', () => {
         });
 
         const source = 'include show_tree';
-        const query = new Query(source, new TasksFile('stuff.md'));
+        const query = new Query(source, tasksFile);
 
         expect(query.error).toBeUndefined();
         expect(query.source).toEqual('include show_tree');
@@ -69,7 +71,7 @@ describe('include tests', () => {
             includes: makeIncludes(['multi_line', 'scheduled tomorrow\nhide backlink']),
         });
         const source = 'include multi_line';
-        const query = new Query(source, new TasksFile('stuff.md'));
+        const query = new Query(source, tasksFile);
 
         expect(query.error).toBeUndefined();
 
@@ -84,7 +86,7 @@ describe('include tests', () => {
         updateSettings({ includes: {} });
 
         const source = 'include not_existent';
-        const query = new Query(source, new TasksFile('stuff.md'));
+        const query = new Query(source, tasksFile);
 
         expect(query.error).toMatchInlineSnapshot(`
             "Cannot find include "not_existent" in the Tasks settings
@@ -103,7 +105,7 @@ describe('include tests', () => {
         });
 
         const source = 'include out';
-        const query = new Query(source, new TasksFile('stuff.md'));
+        const query = new Query(source, tasksFile);
 
         expect(query.error).toBeUndefined();
         expect(query.source).toEqual('include out');
@@ -124,7 +126,7 @@ describe('include tests', () => {
         });
 
         const source = 'include out';
-        const query = new Query(source, new TasksFile('stuff.md'));
+        const query = new Query(source, tasksFile);
 
         expect(query.explainQuery()).toMatchInlineSnapshot(`
             "include out =>
@@ -153,7 +155,7 @@ describe('include tests', () => {
         });
 
         const source = 'include out';
-        const query = new Query(source, new TasksFile('stuff.md'));
+        const query = new Query(source, tasksFile);
 
         expect(query.error).toMatchInlineSnapshot(`
             "do not understand query
