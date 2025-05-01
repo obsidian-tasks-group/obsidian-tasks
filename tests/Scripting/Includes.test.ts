@@ -104,30 +104,33 @@ describe('include tests', () => {
 });
 
 describe('include - explain output', () => {
-    it('should explain two levels of nested includes', () => {
+    describe('explain two levels of nested includes', () => {
         const includes = makeIncludes(
             ['inside', '(happens this week) AND (starts before today)'],
             ['out', 'include inside\nnot done'],
         );
-        const source = 'include out';
 
-        const query = createValidQuery(source, includes);
+        it('should explain two levels of nested includes', () => {
+            const source = 'include out';
 
-        expect(query.explainQuery()).toMatchInlineSnapshot(`
-            "include out =>
-            (happens this week) AND (starts before today) =>
-              AND (All of):
-                happens this week =>
-                  due, start or scheduled date is between:
-                    2025-04-28 (Monday 28th April 2025) and
-                    2025-05-04 (Sunday 4th May 2025) inclusive
-                starts before today =>
-                  start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
+            const query = createValidQuery(source, includes);
 
-            include out =>
-            not done
-            "
-        `);
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "include out =>
+                (happens this week) AND (starts before today) =>
+                  AND (All of):
+                    happens this week =>
+                      due, start or scheduled date is between:
+                        2025-04-28 (Monday 28th April 2025) and
+                        2025-05-04 (Sunday 4th May 2025) inclusive
+                    starts before today =>
+                      start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
+
+                include out =>
+                not done
+                "
+            `);
+        });
     });
 });
 
