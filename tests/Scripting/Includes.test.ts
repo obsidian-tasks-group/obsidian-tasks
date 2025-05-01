@@ -139,16 +139,14 @@ describe('include tests', () => {
     });
 
     it('should give meaningful error message about included text', () => {
-        updateSettings({
-            includes: makeIncludes(
-                // Force line break
-                ['inside', 'apple sauce'],
-                ['out', 'include inside'],
-            ),
-        });
-
+        const includes = makeIncludes(
+            // Force line break
+            ['inside', 'apple sauce'],
+            ['out', 'include inside'],
+        );
         const source = 'include out';
-        const query = new Query(source, tasksFile);
+
+        const query = createQuery(source, includes);
 
         expect(query.error).toMatchInlineSnapshot(`
             "do not understand query
