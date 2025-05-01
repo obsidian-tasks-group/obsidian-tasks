@@ -25,9 +25,13 @@ export function makeIncludes(...entries: [string, string][]): IncludesMap {
 describe('include tests', () => {
     const tasksFile = new TasksFile('stuff.md');
 
-    function createValidQuery(source: string, includes: IncludesMap) {
+    function createQuery(source: string, includes: IncludesMap) {
         updateSettings({ includes });
-        const query = new Query(source, tasksFile);
+        return new Query(source, tasksFile);
+    }
+
+    function createValidQuery(source: string, includes: IncludesMap) {
+        const query = createQuery(source, includes);
 
         expect(query.error).toBeUndefined();
         expect(query.source).toEqual(source);
