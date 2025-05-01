@@ -83,10 +83,10 @@ describe('include tests', () => {
     });
 
     it('should give a meaningful error for non-existent include', () => {
-        updateSettings({ includes: {} });
-
+        const includes = {};
         const source = 'include not_existent';
-        const query = new Query(source, tasksFile);
+
+        const query = createQuery(source, includes);
 
         expect(query.error).toMatchInlineSnapshot(`
             "Cannot find include "not_existent" in the Tasks settings
