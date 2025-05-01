@@ -25,12 +25,16 @@ export function makeIncludes(...entries: [string, string][]): IncludesMap {
 describe('include tests', () => {
     const tasksFile = new TasksFile('stuff.md');
 
+    function createQuery(source: string, includes: IncludesMap) {
+        updateSettings({ includes });
+        return new Query(source, tasksFile);
+    }
+
     it('should accept whole-line include placeholder', () => {
         const includes = makeIncludes(['not_done', 'not done']);
         const source = '{{includes.not_done}}';
 
-        updateSettings({ includes });
-        const query = new Query(source, tasksFile);
+        const query = createQuery(source, includes);
 
         expect(query.error).toBeUndefined();
         expect(query.filters.length).toEqual(1);
