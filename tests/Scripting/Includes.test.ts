@@ -27,14 +27,17 @@ describe('include tests', () => {
 
     function createQuery(source: string, includes: IncludesMap) {
         updateSettings({ includes });
-        return new Query(source, tasksFile);
+        const query = new Query(source, tasksFile);
+
+        expect(query.source).toEqual(source);
+
+        return query;
     }
 
     function createValidQuery(source: string, includes: IncludesMap) {
         const query = createQuery(source, includes);
 
         expect(query.error).toBeUndefined();
-        expect(query.source).toEqual(source);
 
         return query;
     }
@@ -92,7 +95,6 @@ describe('include tests', () => {
             "Cannot find include "not_existent" in the Tasks settings
             Problem line: "include not_existent""
         `);
-        expect(query.source).toEqual('include not_existent');
     });
 
     it('should support nested include instructions', () => {
