@@ -110,11 +110,31 @@ describe('include - explain output', () => {
             ['out', 'include inside\nnot done'],
         );
 
-        it('should explain two levels of nested includes', () => {
-            const source = 'include out';
+        it('includes placeholder should explain two levels of nested includes', () => {
+            const query = createValidQuery('{{includes.out}}', includes);
+            // The 'statement 1', 'statement 2' text is useful in clarifying that
+            // some text was expanded in to more than one line.
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "{{includes.out}}: statement 1 after expansion of placeholder =>
+                (happens this week) AND (starts before today) =>
+                  AND (All of):
+                    happens this week =>
+                      due, start or scheduled date is between:
+                        2025-04-28 (Monday 28th April 2025) and
+                        2025-05-04 (Sunday 4th May 2025) inclusive
+                    starts before today =>
+                      start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
 
-            const query = createValidQuery(source, includes);
+                {{includes.out}}: statement 2 after expansion of placeholder =>
+                not done
+                "
+            `);
+        });
 
+        it('include instruction should explain two levels of nested includes', () => {
+            const query = createValidQuery('include out', includes);
+            // With the repeated output 'include out =>', it is less obvious than in
+            // the previous test that some text was expanded in to more than one line.
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "include out =>
                 (happens this week) AND (starts before today) =>
