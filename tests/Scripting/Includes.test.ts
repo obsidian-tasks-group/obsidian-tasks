@@ -26,8 +26,9 @@ describe('include tests', () => {
     const tasksFile = new TasksFile('stuff.md');
 
     it('should accept whole-line include placeholder', () => {
+        const includes = makeIncludes(['not_done', 'not done']);
         updateSettings({
-            includes: makeIncludes(['not_done', 'not done']),
+            includes: includes,
         });
 
         const source = '{{includes.not_done}}';
