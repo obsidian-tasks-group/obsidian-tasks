@@ -101,7 +101,9 @@ describe('include tests', () => {
         expect(query.queryLayoutOptions.hideEditButton).toEqual(true);
         expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('hide edit button');
     });
+});
 
+describe('include - explain output', () => {
     it('should explain two levels of nested includes', () => {
         const includes = makeIncludes(
             ['inside', '(happens this week) AND (starts before today)'],
