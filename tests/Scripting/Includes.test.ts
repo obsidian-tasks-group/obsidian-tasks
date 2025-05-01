@@ -130,35 +130,39 @@ describe('include tests', () => {
 });
 
 describe('include - error messages', () => {
-    it('should give a meaningful error for non-existent include', () => {
-        const includes = {};
-        const source = 'include not_existent';
+    describe('use of non-existent include', () => {
+        it('should give a meaningful error for non-existent include', () => {
+            const includes = {};
+            const source = 'include not_existent';
 
-        const query = createQuery(source, includes);
+            const query = createQuery(source, includes);
 
-        expect(query.error).toMatchInlineSnapshot(`
-            "Cannot find include "not_existent" in the Tasks settings
-            Problem line: "include not_existent""
-        `);
+            expect(query.error).toMatchInlineSnapshot(`
+                "Cannot find include "not_existent" in the Tasks settings
+                Problem line: "include not_existent""
+            `);
+        });
     });
 
-    it('should give meaningful error message about included text', () => {
-        const includes = makeIncludes(
-            // Force line break
-            ['inside', 'apple sauce'],
-            ['out', 'include inside'],
-        );
-        const source = 'include out';
+    describe('expanded text is invalid instruction', () => {
+        it('should give meaningful error message about included text', () => {
+            const includes = makeIncludes(
+                // Force line break
+                ['inside', 'apple sauce'],
+                ['out', 'include inside'],
+            );
+            const source = 'include out';
 
-        const query = createQuery(source, includes);
+            const query = createQuery(source, includes);
 
-        expect(query.error).toMatchInlineSnapshot(`
-            "do not understand query
-            Problem statement:
-                include out =>
-                apple sauce
-            "
-        `);
+            expect(query.error).toMatchInlineSnapshot(`
+                "do not understand query
+                Problem statement:
+                    include out =>
+                    apple sauce
+                "
+            `);
+        });
     });
 });
 
