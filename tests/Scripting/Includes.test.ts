@@ -99,6 +99,23 @@ describe('include tests', () => {
         expect(query.queryLayoutOptions.hideEditButton).toEqual(true);
         expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('hide edit button');
     });
+
+    describe('placeholders inside includes', () => {
+        const includes = makeIncludes(['this_path', 'path includes {{query.file.path}}']);
+
+        it('should accept whole-line include placeholder', () => {
+            const source = '{{includes.this_path}}';
+            const query = createValidQuery(source, includes);
+            expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('path includes stuff.md');
+        });
+
+        it.failing('should accept whole-line include filter instruction', () => {
+            const source = 'include this_path';
+            const query = createValidQuery(source, includes);
+            // This generates an instruction containing an unexpanded placeholder: 'path includes {{query.file.path}}'
+            expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('path includes stuff.md');
+        });
+    });
 });
 
 describe('include - explain output', () => {
