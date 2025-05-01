@@ -5,7 +5,7 @@ import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrou
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { expandPlaceholders } from '../../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../../src/Scripting/QueryContext';
-import { scan } from '../../../src/Query/Scanner';
+import { splitSourceHonouringLineContinuations } from '../../../src/Query/Scanner';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { Sort } from '../../../src/Query/Sort/Sort';
 import { toLines } from '../../TestingTools/TestHelpers';
@@ -21,7 +21,7 @@ export type CustomPropertyDocsTestData = [TaskPropertyName, QueryInstructionLine
 // -----------------------------------------------------------------------------------------------------------------
 
 function preprocessSingleInstruction(instruction: string, tasksFile: TasksFile) {
-    const instructions = scan(instruction);
+    const instructions = splitSourceHonouringLineContinuations(instruction);
     expect(instructions.length).toEqual(1);
     return expandPlaceholders(instructions[0], makeQueryContext(tasksFile));
 }
