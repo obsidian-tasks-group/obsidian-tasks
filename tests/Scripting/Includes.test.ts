@@ -42,24 +42,26 @@ function createValidQuery(source: string, includes: IncludesMap) {
 }
 
 describe('include tests', () => {
-    it('should accept whole-line include placeholder', () => {
-        const includes = makeIncludes(['not_done', 'not done']);
-        const source = '{{includes.not_done}}';
+    describe('whole-line placeholder', () => {
+        it('should accept whole-line include placeholder', () => {
+            const includes = makeIncludes(['not_done', 'not done']);
+            const source = '{{includes.not_done}}';
 
-        const query = createValidQuery(source, includes);
+            const query = createValidQuery(source, includes);
 
-        expect(query.filters.length).toEqual(1);
-        expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
-    });
+            expect(query.filters.length).toEqual(1);
+            expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
+        });
 
-    it('should accept whole-line include filter instruction', () => {
-        const includes = makeIncludes(['not_done', 'not done']);
-        const source = 'include not_done';
+        it('should accept whole-line include filter instruction', () => {
+            const includes = makeIncludes(['not_done', 'not done']);
+            const source = 'include not_done';
 
-        const query = createValidQuery(source, includes);
+            const query = createValidQuery(source, includes);
 
-        expect(query.filters.length).toEqual(1);
-        expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
+            expect(query.filters.length).toEqual(1);
+            expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
+        });
     });
 
     it('should accept whole-line include layout instruction', () => {
