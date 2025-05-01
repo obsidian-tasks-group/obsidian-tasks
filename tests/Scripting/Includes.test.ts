@@ -108,13 +108,13 @@ describe('include tests', () => {
     describe('placeholders inside includes', () => {
         const includes = makeIncludes(['this_path', 'path includes {{query.file.path}}']);
 
-        it('should accept whole-line include placeholder', () => {
+        it('includes placeholder should expand placeholder in include value', () => {
             const source = '{{includes.this_path}}';
             const query = createValidQuery(source, includes);
             expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
         });
 
-        it.failing('should accept whole-line include filter instruction', () => {
+        it.failing('include instruction should expand placeholder in include value', () => {
             const source = 'include this_path';
             const query = createValidQuery(source, includes);
             // This generates an instruction containing an unexpanded placeholder: 'path includes {{query.file.path}}'
