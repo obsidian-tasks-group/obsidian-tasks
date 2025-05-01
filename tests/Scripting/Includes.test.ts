@@ -27,7 +27,11 @@ describe('include tests', () => {
 
     function createQuery(source: string, includes: IncludesMap) {
         updateSettings({ includes });
-        return new Query(source, tasksFile);
+        const query = new Query(source, tasksFile);
+
+        expect(query.error).toBeUndefined();
+
+        return query;
     }
 
     it('should accept whole-line include placeholder', () => {
@@ -36,7 +40,6 @@ describe('include tests', () => {
 
         const query = createQuery(source, includes);
 
-        expect(query.error).toBeUndefined();
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
     });
@@ -47,7 +50,6 @@ describe('include tests', () => {
 
         const query = createQuery(source, includes);
 
-        expect(query.error).toBeUndefined();
         expect(query.source).toEqual('include not_done');
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
