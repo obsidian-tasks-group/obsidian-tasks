@@ -42,12 +42,10 @@ describe('include tests', () => {
     });
 
     it('should accept whole-line include filter instruction', () => {
-        updateSettings({
-            includes: makeIncludes(['not_done', 'not done']),
-        });
-
+        const includes = makeIncludes(['not_done', 'not done']);
         const source = 'include not_done';
-        const query = new Query(source, tasksFile);
+
+        const query = createQuery(source, includes);
 
         expect(query.error).toBeUndefined();
         expect(query.source).toEqual('include not_done');
