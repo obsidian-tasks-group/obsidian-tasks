@@ -27,9 +27,7 @@ describe('include tests', () => {
 
     it('should accept whole-line include placeholder', () => {
         const includes = makeIncludes(['not_done', 'not done']);
-        updateSettings({
-            includes: includes,
-        });
+        updateSettings({ includes });
 
         const source = '{{includes.not_done}}';
         const query = new Query(source, tasksFile);
