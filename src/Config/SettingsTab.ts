@@ -643,6 +643,9 @@ export class SettingsTab extends PluginSettingTab {
                                 const newIncludes = renameKeyInRecordPreservingOrder(settings.includes, key, newKey);
                                 updateSettings({ includes: newIncludes });
                                 await this.plugin.saveSettings();
+
+                                // Refresh settings after replacing the includes object to avoid stale data in the next render.
+                                Object.assign(settings, getSettings());
                                 renderIncludes();
                             }
                         };
