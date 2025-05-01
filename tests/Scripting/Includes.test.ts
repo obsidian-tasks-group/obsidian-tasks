@@ -30,6 +30,7 @@ describe('include tests', () => {
         const query = new Query(source, tasksFile);
 
         expect(query.error).toBeUndefined();
+        expect(query.source).toEqual(source);
 
         return query;
     }
@@ -50,7 +51,6 @@ describe('include tests', () => {
 
         const query = createValidQuery(source, includes);
 
-        expect(query.source).toEqual('include not_done');
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
     });
