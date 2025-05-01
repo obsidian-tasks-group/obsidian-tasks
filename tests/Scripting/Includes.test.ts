@@ -134,10 +134,7 @@ describe('include - error messages', () => {
         const includes = {};
 
         it('should give a meaningful error for non-existent include', () => {
-            const source = 'include not_existent';
-
-            const query = createQuery(source, includes);
-
+            const query = createQuery('include not_existent', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "Cannot find include "not_existent" in the Tasks settings
                 Problem line: "include not_existent""
@@ -153,10 +150,7 @@ describe('include - error messages', () => {
         );
 
         it('should give meaningful error message about included text', () => {
-            const source = 'include out';
-
-            const query = createQuery(source, includes);
-
+            const query = createQuery('include out', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "do not understand query
                 Problem statement:
