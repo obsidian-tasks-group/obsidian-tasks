@@ -131,8 +131,9 @@ describe('include tests', () => {
 
 describe('include - error messages', () => {
     describe('use of non-existent include', () => {
+        const includes = {};
+
         it('should give a meaningful error for non-existent include', () => {
-            const includes = {};
             const source = 'include not_existent';
 
             const query = createQuery(source, includes);
@@ -145,12 +146,13 @@ describe('include - error messages', () => {
     });
 
     describe('expanded text is invalid instruction', () => {
+        const includes = makeIncludes(
+            // Force line break
+            ['inside', 'apple sauce'],
+            ['out', 'include inside'],
+        );
+
         it('should give meaningful error message about included text', () => {
-            const includes = makeIncludes(
-                // Force line break
-                ['inside', 'apple sauce'],
-                ['out', 'include inside'],
-            );
             const source = 'include out';
 
             const query = createQuery(source, includes);
