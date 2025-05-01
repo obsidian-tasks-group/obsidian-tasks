@@ -162,7 +162,18 @@ describe('include - error messages', () => {
             ['out', 'include inside'],
         );
 
-        it('should give meaningful error message about included text', () => {
+        it('includes placeholder should give meaningful error message about included text', () => {
+            const query = createQuery('{{includes.out}}', includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "do not understand query
+                Problem statement:
+                    {{includes.out}} =>
+                    apple sauce
+                "
+            `);
+        });
+
+        it('include instruction should give meaningful error message about included text', () => {
             const query = createQuery('include out', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "do not understand query
