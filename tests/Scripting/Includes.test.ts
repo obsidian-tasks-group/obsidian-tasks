@@ -109,15 +109,13 @@ describe('include tests', () => {
     });
 
     it('should explain two levels of nested includes', () => {
-        updateSettings({
-            includes: makeIncludes(
-                ['inside', '(happens this week) AND (starts before today)'],
-                ['out', 'include inside\nnot done'],
-            ),
-        });
-
+        const includes = makeIncludes(
+            ['inside', '(happens this week) AND (starts before today)'],
+            ['out', 'include inside\nnot done'],
+        );
         const source = 'include out';
-        const query = new Query(source, tasksFile);
+
+        const query = createValidQuery(source, includes);
 
         expect(query.explainQuery()).toMatchInlineSnapshot(`
             "include out =>
