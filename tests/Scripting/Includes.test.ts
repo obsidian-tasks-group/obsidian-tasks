@@ -66,13 +66,10 @@ describe('include tests', () => {
     });
 
     it('should accept multi-line include', () => {
-        updateSettings({
-            includes: makeIncludes(['multi_line', 'scheduled tomorrow\nhide backlink']),
-        });
+        const includes = makeIncludes(['multi_line', 'scheduled tomorrow\nhide backlink']);
         const source = 'include multi_line';
-        const query = new Query(source, tasksFile);
 
-        expect(query.error).toBeUndefined();
+        const query = createValidQuery(source, includes);
 
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('scheduled tomorrow');
