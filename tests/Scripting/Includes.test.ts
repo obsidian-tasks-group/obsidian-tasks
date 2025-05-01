@@ -25,7 +25,7 @@ export function makeIncludes(...entries: [string, string][]): IncludesMap {
 describe('include tests', () => {
     const tasksFile = new TasksFile('stuff.md');
 
-    function createQuery(source: string, includes: IncludesMap) {
+    function createValidQuery(source: string, includes: IncludesMap) {
         updateSettings({ includes });
         const query = new Query(source, tasksFile);
 
@@ -38,7 +38,7 @@ describe('include tests', () => {
         const includes = makeIncludes(['not_done', 'not done']);
         const source = '{{includes.not_done}}';
 
-        const query = createQuery(source, includes);
+        const query = createValidQuery(source, includes);
 
         expect(query.filters.length).toEqual(1);
         expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
@@ -48,7 +48,7 @@ describe('include tests', () => {
         const includes = makeIncludes(['not_done', 'not done']);
         const source = 'include not_done';
 
-        const query = createQuery(source, includes);
+        const query = createValidQuery(source, includes);
 
         expect(query.source).toEqual('include not_done');
         expect(query.filters.length).toEqual(1);
