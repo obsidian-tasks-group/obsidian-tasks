@@ -6,6 +6,7 @@ import moment from 'moment';
 import { type IncludesMap, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Query } from '../../src/Query/Query';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import type { Statement } from '../../src/Query/Statement';
 
 window.moment = moment;
 
@@ -41,6 +42,10 @@ function createValidQuery(source: string, includes: IncludesMap) {
     return query;
 }
 
+function expectExpandedStatementToBe(statement: Statement, expandedLine: string) {
+    expect(statement.anyPlaceholdersExpanded).toEqual(expandedLine);
+}
+
 describe('include tests', () => {
     describe('whole-line placeholder', () => {
         const includes = makeIncludes(['not_done', 'not done']);
@@ -49,7 +54,7 @@ describe('include tests', () => {
             const source = '{{includes.not_done}}';
             const query = createValidQuery(source, includes);
             expect(query.filters.length).toEqual(1);
-            expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
+            expectExpandedStatementToBe(query.filters[0].statement, 'not done');
         });
 
         it('should accept whole-line include filter instruction', () => {
