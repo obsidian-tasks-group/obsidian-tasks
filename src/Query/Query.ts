@@ -14,7 +14,7 @@ import * as FilterParser from './FilterParser';
 import type { Grouper } from './Group/Grouper';
 import { TaskGroups } from './Group/TaskGroups';
 import { QueryResult } from './QueryResult';
-import { continueLines } from './Scanner';
+import { continueLines, splitSourceHonouringLineContinuations } from './Scanner';
 import { SearchInfo } from './SearchInfo';
 import { Sort } from './Sort/Sort';
 import type { Sorter } from './Sort/Sorter';
@@ -457,7 +457,7 @@ ${statement.explainStatement('    ')}
                 return;
             }
 
-            includeValue.split('\n').forEach((instruction) => {
+            splitSourceHonouringLineContinuations(includeValue).forEach((instruction) => {
                 const statement = new Statement(_statement.rawInstruction, _statement.anyContinuationLinesRemoved);
                 statement.recordExpandedPlaceholders(instruction);
                 this.parseLine(statement);
