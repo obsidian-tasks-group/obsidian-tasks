@@ -113,6 +113,6 @@ export function continueLines(input: string): Statement[] {
  * @param input Input string
  * @returns List of statements
  */
-export function scan(input: string): string[] {
+export function splitSourceHonouringLineContinuations(input: string): string[] {
     return continueLines(input).map((instruction: Statement) => instruction.anyContinuationLinesRemoved);
 }

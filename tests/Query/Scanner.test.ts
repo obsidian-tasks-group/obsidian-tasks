@@ -1,5 +1,5 @@
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { continueLines, continueLinesFlattened, scan } from '../../src/Query/Scanner';
+import { continueLines, continueLinesFlattened, splitSourceHonouringLineContinuations } from '../../src/Query/Scanner';
 
 // There is no way to have a literal \ at the end of a raw string.
 // In such cases, we use substitution instead.
@@ -187,7 +187,7 @@ describe('scan', () => {
             'not done',
             'due this week',
         ].join('\n');
-        expect(scan(text)).toEqual(['not done', 'due this week']);
+        expect(splitSourceHonouringLineContinuations(text)).toEqual(['not done', 'due this week']);
     });
 
     it('strips whitespace', () => {
@@ -196,7 +196,7 @@ describe('scan', () => {
             ' not done   ',
             '        due this week',
         ].join('\n');
-        expect(scan(text)).toEqual(['not done', 'due this week']);
+        expect(splitSourceHonouringLineContinuations(text)).toEqual(['not done', 'due this week']);
     });
 
     it('supports line continuation', () => {
@@ -205,7 +205,7 @@ describe('scan', () => {
             String.raw`( property1 ) AND ${bs}`,
             ' (property2)',
         ].join('\n');
-        expect(scan(text)).toEqual(['( property1 ) AND (property2)']);
+        expect(splitSourceHonouringLineContinuations(text)).toEqual(['( property1 ) AND (property2)']);
     });
 
     it('drops empty lines', () => {
@@ -219,7 +219,7 @@ describe('scan', () => {
             '  ',
             '  ',
         ].join('\n');
-        expect(scan(text)).toEqual(['line1', 'line2', 'line3']);
+        expect(splitSourceHonouringLineContinuations(text)).toEqual(['line1', 'line2', 'line3']);
     });
 
     it('visualise scanning', () => {
@@ -231,7 +231,7 @@ ${querySource}
 
 result after removing continuation characters:
 -------------------------------------
-${scan(querySource).join('\n')}
+${splitSourceHonouringLineContinuations(querySource).join('\n')}
 -------------------------------------
 `;
         verify(output);
