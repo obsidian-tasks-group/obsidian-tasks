@@ -56,15 +56,11 @@ describe('include tests', () => {
     });
 
     it('should accept whole-line include layout instruction', () => {
-        updateSettings({
-            includes: makeIncludes(['show_tree', 'show tree']),
-        });
-
+        const includes = makeIncludes(['show_tree', 'show tree']);
         const source = 'include show_tree';
-        const query = new Query(source, tasksFile);
 
-        expect(query.error).toBeUndefined();
-        expect(query.source).toEqual('include show_tree');
+        const query = createValidQuery(source, includes);
+
         expect(query.queryLayoutOptions.hideTree).toEqual(false);
         expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('show tree');
     });
