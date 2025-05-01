@@ -121,6 +121,52 @@ describe('include tests', () => {
             expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
         });
     });
+
+    describe('continuation lines inside includes', () => {
+        const continuationLine = String.raw`group by function \
+return "Hello World";`;
+        const includes = makeIncludes(['instruction_with_continuation_lines', continuationLine]);
+
+        // @ts-expect-error Unused variable
+        const expectedStatement = 'group by function return "Hello World";';
+
+        // Just as TQ_extra_instructions (in Query File Defaults) does not work with line continuations,
+        // so includes do not.
+        // This is because line continuations are applied only once, before the placeholders/includes
+        // are expanded.
+
+        it('includes placeholder DOES NOT YET SUPPORT line continuations in include value', () => {
+            const source = '{{includes.instruction_with_continuation_lines}}';
+            const query = createQuery(source, includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "Could not interpret the following instruction as a Boolean combination:
+                    return "Hello World";
+
+                The error message is:
+                    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+                Problem statement:
+                    {{includes.instruction_with_continuation_lines}}: statement 2 after expansion of placeholder =>
+                    return "Hello World";
+                "
+            `);
+        });
+
+        it('include instruction DOES NOT YET SUPPORT line continuations in include value', () => {
+            const source = 'include instruction_with_continuation_lines';
+            const query = createQuery(source, includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "Could not interpret the following instruction as a Boolean combination:
+                    return "Hello World";
+
+                The error message is:
+                    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
+                Problem statement:
+                    include instruction_with_continuation_lines =>
+                    return "Hello World";
+                "
+            `);
+        });
+    });
 });
 
 describe('include - explain output', () => {
