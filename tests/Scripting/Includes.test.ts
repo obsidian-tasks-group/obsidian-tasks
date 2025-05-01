@@ -85,18 +85,6 @@ describe('include tests', () => {
         expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('hide backlink');
     });
 
-    it('should give a meaningful error for non-existent include', () => {
-        const includes = {};
-        const source = 'include not_existent';
-
-        const query = createQuery(source, includes);
-
-        expect(query.error).toMatchInlineSnapshot(`
-            "Cannot find include "not_existent" in the Tasks settings
-            Problem line: "include not_existent""
-        `);
-    });
-
     it('should support nested include instructions', () => {
         const includes = makeIncludes(
             // Force line break
@@ -137,6 +125,20 @@ describe('include tests', () => {
             include out =>
             not done
             "
+        `);
+    });
+});
+
+describe('include - error messages', () => {
+    it('should give a meaningful error for non-existent include', () => {
+        const includes = {};
+        const source = 'include not_existent';
+
+        const query = createQuery(source, includes);
+
+        expect(query.error).toMatchInlineSnapshot(`
+            "Cannot find include "not_existent" in the Tasks settings
+            Problem line: "include not_existent""
         `);
     });
 
