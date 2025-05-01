@@ -61,7 +61,7 @@ describe('include tests', () => {
             const source = 'include not_done';
             const query = createValidQuery(source, includes);
             expect(query.filters.length).toEqual(1);
-            expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
+            expectExpandedStatementToBe(query.filters[0].statement, 'not done');
         });
     });
 
@@ -72,7 +72,7 @@ describe('include tests', () => {
         const query = createValidQuery(source, includes);
 
         expect(query.queryLayoutOptions.hideTree).toEqual(false);
-        expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('show tree');
+        expectExpandedStatementToBe(query.layoutStatements[0], 'show tree');
     });
 
     it('should accept multi-line include', () => {
@@ -82,10 +82,10 @@ describe('include tests', () => {
         const query = createValidQuery(source, includes);
 
         expect(query.filters.length).toEqual(1);
-        expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('scheduled tomorrow');
+        expectExpandedStatementToBe(query.filters[0].statement, 'scheduled tomorrow');
 
         expect(query.queryLayoutOptions.hideBacklinks).toEqual(true);
-        expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('hide backlink');
+        expectExpandedStatementToBe(query.layoutStatements[0], 'hide backlink');
     });
 
     it('should support nested include instructions', () => {
@@ -99,10 +99,10 @@ describe('include tests', () => {
         const query = createValidQuery(source, includes);
 
         expect(query.filters.length).toEqual(1);
-        expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('not done');
+        expectExpandedStatementToBe(query.filters[0].statement, 'not done');
 
         expect(query.queryLayoutOptions.hideEditButton).toEqual(true);
-        expect(query.layoutStatements[0].anyPlaceholdersExpanded).toEqual('hide edit button');
+        expectExpandedStatementToBe(query.layoutStatements[0], 'hide edit button');
     });
 
     describe('placeholders inside includes', () => {
@@ -111,14 +111,14 @@ describe('include tests', () => {
         it('should accept whole-line include placeholder', () => {
             const source = '{{includes.this_path}}';
             const query = createValidQuery(source, includes);
-            expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('path includes stuff.md');
+            expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
         });
 
         it.failing('should accept whole-line include filter instruction', () => {
             const source = 'include this_path';
             const query = createValidQuery(source, includes);
             // This generates an instruction containing an unexpanded placeholder: 'path includes {{query.file.path}}'
-            expect(query.filters[0].statement.anyPlaceholdersExpanded).toEqual('path includes stuff.md');
+            expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
         });
     });
 });
