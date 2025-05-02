@@ -210,8 +210,37 @@ describe('include - explain output', () => {
 });
 
 describe('include - error messages', () => {
-    describe('use of non-existent include', () => {
+    describe('use of non-existent include, when no includes are defined', () => {
         const includes = {};
+
+        it('includes placeholder should give a meaningful error for non-existent include', () => {
+            const query = createQuery('{{includes.not_existent}}', includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "There was an error expanding one or more placeholders.
+
+                The error message was:
+                    Unknown property: includes.not_existent
+
+                The problem is in:
+                    {{includes.not_existent}}"
+            `);
+        });
+
+        it('include instruction should give a meaningful error for non-existent include', () => {
+            const query = createQuery('include not_existent', includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "Cannot find include "not_existent" in the Tasks settings
+                Problem line: "include not_existent""
+            `);
+        });
+    });
+
+    describe('use of non-existent include, when some includes are defined', () => {
+        const includes = makeIncludes(
+            // Force line break
+            ['include1', 'sort by function task.lineNumber'],
+            ['include2', 'task.due.format("YYYY")'],
+        );
 
         it('includes placeholder should give a meaningful error for non-existent include', () => {
             const query = createQuery('{{includes.not_existent}}', includes);
