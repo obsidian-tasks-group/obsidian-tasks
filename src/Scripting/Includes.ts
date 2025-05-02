@@ -6,6 +6,8 @@ export function unknownIncludeErrorMessage(includeName: string, includes: Includ
     const isIncludesEmpty = Object.keys(includes).length === 0;
     if (isIncludesEmpty) {
         message += `\nYou can define the instruction(s) for "${includeName}" in the Tasks settings.`;
+    } else {
+        message += `\nThe following includes are defined: \n  ${Object.keys(includes).join('\n  ')}`;
     }
 
     return message;

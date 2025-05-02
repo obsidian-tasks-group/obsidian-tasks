@@ -260,6 +260,9 @@ describe('include - error messages', () => {
             const query = createQuery('include not_existent', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "Cannot find include "not_existent" in the Tasks settings
+                The following includes are defined: 
+                  include1
+                  include2
                 Problem line: "include not_existent""
             `);
         });
