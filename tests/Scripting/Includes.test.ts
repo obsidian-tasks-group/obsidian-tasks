@@ -261,8 +261,8 @@ describe('include - error messages', () => {
             expect(query.error).toMatchInlineSnapshot(`
                 "Cannot find include "not_existent" in the Tasks settings
                 The following includes are defined:
-                  include1
-                  include2
+                  include1: sort by function task.lineNumber
+                  include2: task.due.format("YYYY")
                 Problem line: "include not_existent""
             `);
         });
