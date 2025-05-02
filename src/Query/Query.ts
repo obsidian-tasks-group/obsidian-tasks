@@ -459,6 +459,16 @@ ${statement.explainStatement('    ')}
                 return;
             }
 
+            if (includeValue.includes('{{')) {
+                this.setError(
+                    `Cannot yet include instructions containing placeholders.
+You can use a placeholder line instead, like this:
+  {{includes.${includeName}}}`,
+                    _statement,
+                );
+                return;
+            }
+
             splitSourceHonouringLineContinuations(includeValue).forEach((instruction) => {
                 const statement = new Statement(_statement.rawInstruction, _statement.anyContinuationLinesRemoved);
                 statement.recordExpandedPlaceholders(instruction);
