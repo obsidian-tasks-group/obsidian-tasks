@@ -448,14 +448,14 @@ ${statement.explainStatement('    ')}
         return false;
     }
 
-    private parseInclude(_line: string, _statement: Statement) {
-        const include = this.includeRegexp.exec(_line);
+    private parseInclude(line: string, statement: Statement) {
+        const include = this.includeRegexp.exec(line);
         if (include) {
             const includeName = include[1].trim();
             const { includes } = getSettings();
             const includeValue = includes[includeName];
             if (!includeValue) {
-                this.setError(unknownIncludeErrorMessage(includeName, includes), _statement);
+                this.setError(unknownIncludeErrorMessage(includeName, includes), statement);
                 return;
             }
 
@@ -464,13 +464,13 @@ ${statement.explainStatement('    ')}
                     `Cannot yet include instructions containing placeholders.
 You can use a placeholder line instead, like this:
   {{includes.${includeName}}}`,
-                    _statement,
+                    statement,
                 );
                 return;
             }
 
             splitSourceHonouringLineContinuations(includeValue).forEach((instruction) => {
-                const newStatement = new Statement(_statement.rawInstruction, _statement.anyContinuationLinesRemoved);
+                const newStatement = new Statement(statement.rawInstruction, statement.anyContinuationLinesRemoved);
                 newStatement.recordExpandedPlaceholders(instruction);
                 this.parseLine(newStatement);
             });
