@@ -317,6 +317,45 @@ describe('include - error messages', () => {
             `);
         });
     });
+
+    describe('infinite recursion of instruction', () => {
+        const includes = makeIncludes(
+            ['self_reference_1', '{{includes.self_reference_1}}'],
+            ['self_reference_2', 'include self_reference_2'],
+        );
+
+        it('includes placeholder should give meaningful error message about self-referencing instructions BUT DOES NOT', () => {
+            const query = createQuery('{{includes.self_reference_1}}', includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "Could not interpret the following instruction as a Boolean combination:
+                    {{includes.self_reference_1}}
+
+                The error message is:
+                    couldn't parse sub-expression 'includes.self_reference_1'
+
+                The instruction was converted to the following simplified line:
+                    ((f1))
+
+                Where the sub-expressions in the simplified line are:
+                    'f1': 'includes.self_reference_1'
+                        => ERROR:
+                           do not understand query
+
+                For help, see:
+                    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+                Problem line: "{{includes.self_reference_1}}""
+            `);
+        });
+
+        it('include instruction should give meaningful error message about self-referencing instructions BUT DOES NOT', () => {
+            const query = createQuery('include self_reference_2', includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "Maximum call stack size exceeded
+                Problem line: "include self_reference_2""
+            `);
+        });
+    });
 });
 
 describe('include settings tests', () => {
