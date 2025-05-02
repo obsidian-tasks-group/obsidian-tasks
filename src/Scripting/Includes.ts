@@ -2,12 +2,18 @@ import type { IncludesMap } from '../Config/Settings';
 
 function summariseInstruction(instructions: string) {
     let result = instructions;
+    let truncated = false;
+
     // Only return the first line of any multi-line instructions:
     const splitInstructions = instructions.split('\n');
     if (splitInstructions.length > 1) {
-        result = `${splitInstructions[0]}...`;
+        result = splitInstructions[0];
+        truncated = true;
     }
 
+    if (truncated) {
+        result += '...';
+    }
     return result;
 }
 
