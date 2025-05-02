@@ -239,8 +239,8 @@ describe('include - error messages', () => {
     describe('use of non-existent include, when some includes are defined', () => {
         const includes = makeIncludes(
             // Force line break
-            ['include1', 'sort by function task.lineNumber'],
             ['include2', 'task.due.format("YYYY")'],
+            ['include1', 'sort by function task.lineNumber'],
         );
 
         it('includes placeholder should give a meaningful error for non-existent include', () => {
