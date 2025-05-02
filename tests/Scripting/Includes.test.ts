@@ -129,12 +129,12 @@ return "Hello World";`;
 
         const expectedStatement = 'group by function return "Hello World";';
 
-        // Just as TQ_extra_instructions (in Query File Defaults) does not work with line continuations,
-        // so includes do not.
-        // This is because line continuations are applied only once, before the placeholders/includes
-        // are expanded.
-
         it('includes placeholder DOES NOT YET SUPPORT line continuations in include value', () => {
+            // Just as TQ_extra_instructions (in Query File Defaults) does not work with line continuations,
+            // so includes in placeholders do not.
+            // This is because line continuations are applied only once, before the placeholders
+            // are expanded.
+
             const source = '{{includes.instruction_with_continuation_lines}}';
             const query = createQuery(source, includes);
             expect(query.error).toMatchInlineSnapshot(`
