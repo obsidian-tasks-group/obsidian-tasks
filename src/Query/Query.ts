@@ -8,6 +8,7 @@ import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
 import type { Task } from '../Task/Task';
 import type { OptionalTasksFile } from '../Scripting/TasksFile';
+import { unknownIncludeErrorMessage } from '../Scripting/Includes';
 import { Explainer } from './Explain/Explainer';
 import type { Filter } from './Filter/Filter';
 import * as FilterParser from './FilterParser';
@@ -21,10 +22,6 @@ import type { Sorter } from './Sort/Sorter';
 import { Statement } from './Statement';
 
 let queryInstanceCounter = 0;
-
-function unknownIncludeErrorMessage(includeName: string) {
-    return `Cannot find include "${includeName}" in the Tasks settings`;
-}
 
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
