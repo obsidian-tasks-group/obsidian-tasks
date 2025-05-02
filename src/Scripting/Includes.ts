@@ -11,6 +11,13 @@ function summariseInstruction(instructions: string) {
         truncated = true;
     }
 
+    // Shorten longer lines, since text is wrapped in error output.
+    const maxLineLength = 60;
+    if (result.length > maxLineLength) {
+        result = result.slice(0, maxLineLength);
+        truncated = true;
+    }
+
     if (truncated) {
         result += '...';
     }
