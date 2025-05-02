@@ -114,11 +114,20 @@ describe('include tests', () => {
             expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
         });
 
-        it.failing('include instruction should expand placeholder in include value', () => {
+        it('include instruction DOES NOT YET expand placeholder in include value', () => {
             const source = 'include this_path';
-            const query = createValidQuery(source, includes);
-            // This generates an instruction containing an unexpanded placeholder: 'path includes {{query.file.path}}'
-            expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
+            const query = createQuery(source, includes);
+            // This would currently generate an instruction containing an unexpanded placeholder:
+            //      'path includes {{query.file.path}}'
+            // which is not what users would intend, and which silently matches no tasks.
+            // So for now, Query's handing of the include instruction refuses to act on any
+            // Includes that contain placeholder text.
+            expect(query.error).toMatchInlineSnapshot(`
+                "Cannot yet include instructions containing placeholders.
+                You can use a placeholder line instead, like this:
+                  {{includes.this_path}}
+                Problem line: "include this_path""
+            `);
         });
     });
 
