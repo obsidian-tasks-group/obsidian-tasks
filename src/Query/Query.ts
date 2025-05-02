@@ -470,9 +470,9 @@ You can use a placeholder line instead, like this:
             }
 
             splitSourceHonouringLineContinuations(includeValue).forEach((instruction) => {
-                const statement = new Statement(_statement.rawInstruction, _statement.anyContinuationLinesRemoved);
-                statement.recordExpandedPlaceholders(instruction);
-                this.parseLine(statement);
+                const newStatement = new Statement(_statement.rawInstruction, _statement.anyContinuationLinesRemoved);
+                newStatement.recordExpandedPlaceholders(instruction);
+                this.parseLine(newStatement);
             });
         }
     }
