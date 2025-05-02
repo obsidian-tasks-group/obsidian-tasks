@@ -247,8 +247,8 @@ describe('include - error messages', () => {
             [
                 'include4',
                 `(filename includes File 1) AND \\
-( (heading includes Heading 1) OR \\
-(description includes Something else) )`,
+    ( (heading includes Heading 1) OR \\
+    (description includes Something else) )`,
             ],
         );
 
@@ -274,8 +274,8 @@ describe('include - error messages', () => {
                   include2: task.due.format("YYYY")
                   include3: (filename includes File 1) AND ( (heading includes Heading 1) OR (description includes Something else) )
                   include4: (filename includes File 1) AND \\
-                ( (heading includes Heading 1) OR \\
-                (description includes Something else) )
+                    ( (heading includes Heading 1) OR \\
+                    (description includes Something else) )
                 Problem line: "include not_existent""
             `);
         });
