@@ -1,5 +1,9 @@
 import type { IncludesMap } from '../Config/Settings';
 
+function summariseInstruction(instructions: string) {
+    return instructions;
+}
+
 export function unknownIncludeErrorMessage(includeName: string, includes: IncludesMap) {
     let message = `Cannot find include "${includeName}" in the Tasks settings`;
 
@@ -9,7 +13,7 @@ export function unknownIncludeErrorMessage(includeName: string, includes: Includ
     } else {
         const availableNames = Object.entries(includes)
             .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-            .map(([key, value]) => `${key}: ${value}`)
+            .map(([key, value]) => `${key}: ${summariseInstruction(value)}`)
             .join('\n  ');
         message += `\nThe following includes are defined:\n  ${availableNames}`;
     }
