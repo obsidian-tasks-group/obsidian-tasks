@@ -22,6 +22,10 @@ import { Statement } from './Statement';
 
 let queryInstanceCounter = 0;
 
+function unknownIncludeErrorMessage(includeName: string) {
+    return `Cannot find include "${includeName}" in the Tasks settings`;
+}
+
 export class Query implements IQuery {
     /** Note: source is the raw source, before expanding any placeholders */
     public readonly source: string;
@@ -454,7 +458,9 @@ ${statement.explainStatement('    ')}
             const { includes } = getSettings();
             const includeValue = includes[includeName];
             if (!includeValue) {
-                this.setError(`Cannot find include "${includeName}" in the Tasks settings`, _statement);
+                const message = unknownIncludeErrorMessage(includeName);
+                // Add to message the text: The available values in includes are ...:
+                this.setError(message, _statement);
                 return;
             }
 
