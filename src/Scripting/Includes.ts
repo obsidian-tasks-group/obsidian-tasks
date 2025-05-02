@@ -12,7 +12,7 @@ function summariseInstruction(instructions: string) {
     }
 
     // Shorten longer lines, since text is wrapped in error output.
-    const maxLineLength = 60;
+    const maxLineLength = 50;
     if (result.length > maxLineLength) {
         result = result.slice(0, maxLineLength);
         truncated = true;
