@@ -17,9 +17,10 @@ export function unknownIncludeErrorMessage(includeName: string, includes: Includ
     if (isIncludesEmpty) {
         message += `\nYou can define the instruction(s) for "${includeName}" in the Tasks settings.`;
     } else {
+        const maxKeyLength = Math.max(...Object.keys(includes).map((key) => key.length));
         const availableNames = Object.entries(includes)
             .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-            .map(([key, value]) => `${key}: ${summariseInstruction(value)}`)
+            .map(([key, value]) => `${key.padEnd(maxKeyLength)}: ${summariseInstruction(value)}`)
             .join('\n  ');
         message += `\nThe following includes are defined in the Tasks settings:\n  ${availableNames}`;
     }
