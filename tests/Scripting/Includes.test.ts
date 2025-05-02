@@ -241,6 +241,16 @@ describe('include - error messages', () => {
             // Force line break
             ['include2', 'task.due.format("YYYY")'],
             ['include1', 'sort by function task.lineNumber'],
+            [
+                'include3',
+                '(filename includes File 1) AND ( (heading includes Heading 1) OR (description includes Something else) )',
+            ],
+            [
+                'include4',
+                `(filename includes File 1) AND \\
+( (heading includes Heading 1) OR \\
+(description includes Something else) )`,
+            ],
         );
 
         it('includes placeholder should give a meaningful error for non-existent include', () => {
@@ -263,6 +273,10 @@ describe('include - error messages', () => {
                 The following includes are defined:
                   include1: sort by function task.lineNumber
                   include2: task.due.format("YYYY")
+                  include3: (filename includes File 1) AND ( (heading includes Heading 1) OR (description includes Something else) )
+                  include4: (filename includes File 1) AND \\
+                ( (heading includes Heading 1) OR \\
+                (description includes Something else) )
                 Problem line: "include not_existent""
             `);
         });
