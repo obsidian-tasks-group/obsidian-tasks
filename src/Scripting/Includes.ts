@@ -1,13 +1,14 @@
 import type { IncludesMap } from '../Config/Settings';
 
 function summariseInstruction(instructions: string) {
+    let result = instructions;
     // Only return the first line of any multi-line instructions:
     const splitInstructions = instructions.split('\n');
     if (splitInstructions.length > 1) {
-        return `${splitInstructions[0]}...`;
+        result = `${splitInstructions[0]}...`;
     }
 
-    return instructions;
+    return result;
 }
 
 export function unknownIncludeErrorMessage(includeName: string, includes: IncludesMap) {
