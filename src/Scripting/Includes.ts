@@ -1,6 +1,12 @@
 import type { IncludesMap } from '../Config/Settings';
 
 function summariseInstruction(instructions: string) {
+    // Only return the first line of any multi-line instructions:
+    const splitInstructions = instructions.split('\n');
+    if (splitInstructions.length > 1) {
+        return `${splitInstructions[0]}...`;
+    }
+
     return instructions;
 }
 
