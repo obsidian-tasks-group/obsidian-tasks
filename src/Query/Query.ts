@@ -455,8 +455,7 @@ ${statement.explainStatement('    ')}
             const { includes } = getSettings();
             const includeValue = includes[includeName];
             if (!includeValue) {
-                const message = unknownIncludeErrorMessage(includeName, includes);
-                this.setError(message, _statement);
+                this.setError(unknownIncludeErrorMessage(includeName, includes), _statement);
                 return;
             }
 
