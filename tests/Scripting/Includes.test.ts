@@ -273,9 +273,7 @@ describe('include - error messages', () => {
                   include1: sort by function task.lineNumber
                   include2: task.due.format("YYYY")
                   include3: (filename includes File 1) AND ( (heading includes Heading 1) OR (description includes Something else) )
-                  include4: (filename includes File 1) AND \\
-                    ( (heading includes Heading 1) OR \\
-                    (description includes Something else) )
+                  include4: (filename includes File 1) AND \\...
                 Problem line: "include not_existent""
             `);
         });
