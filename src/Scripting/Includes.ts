@@ -15,7 +15,7 @@ export function unknownIncludeErrorMessage(includeName: string, includes: Includ
             .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
             .map(([key, value]) => `${key}: ${summariseInstruction(value)}`)
             .join('\n  ');
-        message += `\nThe following includes are defined:\n  ${availableNames}`;
+        message += `\nThe following includes are defined in the Tasks settings:\n  ${availableNames}`;
     }
 
     return message;
