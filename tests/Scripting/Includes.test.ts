@@ -270,9 +270,9 @@ describe('include - error messages', () => {
             expect(query.error).toMatchInlineSnapshot(`
                 "Cannot find include "not_existent" in the Tasks settings
                 The following includes are defined in the Tasks settings:
-                  include1: sort by function task.lineNumber
-                  include2: task.due.format("YYYY")
-                  include3: (filename includes File 1) AND ( (heading includes Heading 1) OR (description includes Something else) )
+                  include1            : sort by function task.lineNumber
+                  include2            : task.due.format("YYYY")
+                  include3            : (filename includes File 1) AND ( (heading includes Heading 1) OR (description includes Something else) )
                   include4_longer_name: (filename includes File 1) AND \\...
                 Problem line: "include not_existent""
             `);
