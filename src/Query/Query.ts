@@ -451,7 +451,8 @@ ${statement.explainStatement('    ')}
         const include = this.includeRegexp.exec(_line);
         if (include) {
             const includeName = include[1].trim();
-            const includeValue = getSettings().includes[includeName];
+            const { includes } = getSettings();
+            const includeValue = includes[includeName];
             if (!includeValue) {
                 this.setError(`Cannot find include "${includeName}" in the Tasks settings`, _statement);
                 return;
