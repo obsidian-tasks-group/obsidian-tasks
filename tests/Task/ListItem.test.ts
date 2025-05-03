@@ -217,7 +217,7 @@ describe('links', () => {
         const tasks = readTasksFromSimulatedFile(links_everywhere);
 
         expect(tasks[0].links.length).toEqual(1);
-        expect(tasks[0].links[0].original).toEqual('[[link_in_task_wikilink]]');
+        expect(tasks[0].links[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
     });
 });
 

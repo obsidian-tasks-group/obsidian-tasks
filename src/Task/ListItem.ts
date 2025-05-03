@@ -3,6 +3,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from './Task';
 import type { TaskLocation } from './TaskLocation';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
+import { Link } from './Link';
 
 export class ListItem {
     // The original line read from file.
@@ -205,12 +206,11 @@ export class ListItem {
 
     /**
      * Return a list of links in the task or list item's line.
-     *
-     * The data contest is documented here:
-     * https://docs.obsidian.md/Reference/TypeScript+API/LinkCache
      */
-    public get links(): LinkCache[] {
-        return this.linksInFileBody.filter((link) => link.position.start.line === this.lineNumber);
+    public get links(): Link[] {
+        return this.linksInFileBody
+            .filter((link) => link.position.start.line === this.lineNumber)
+            .map((link) => new Link(link));
     }
 
     /**
