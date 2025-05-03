@@ -3,8 +3,6 @@
  */
 import moment from 'moment/moment';
 
-import type { LinkCache } from 'obsidian';
-
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { ListItem } from '../../src/Task/ListItem';
 import { Task } from '../../src/Task/Task';
@@ -13,6 +11,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
+import { Link } from '../../src/Task/Link';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
@@ -208,7 +207,6 @@ describe('related items', () => {
         expect(grandChild.findClosestParentTask()).toEqual(parentTask);
     });
 });
-
 describe('links', () => {
     it('should return all links in the task file', () => {
         const tasks = readTasksFromSimulatedFile(links_everywhere);
@@ -223,25 +221,6 @@ describe('links', () => {
         expect(tasks[0].links[0].original).toEqual('[[link_in_task_wikilink]]');
     });
 });
-
-class Link {
-    private rawLink: LinkCache;
-    constructor(rawLink: LinkCache) {
-        this.rawLink = rawLink;
-    }
-
-    public get originalMarkdown() {
-        return this.rawLink.original;
-    }
-
-    public get destination() {
-        return this.rawLink.link;
-    }
-
-    public get displayText() {
-        return this.rawLink.displayText;
-    }
-}
 
 describe('linkClass', () => {
     it('should construct a Link object', () => {
