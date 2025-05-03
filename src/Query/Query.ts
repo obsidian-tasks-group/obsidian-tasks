@@ -459,20 +459,19 @@ ${statement.explainStatement('    ')}
                 return;
             }
 
-            if (includeValue.includes('{{')) {
-                this.setError(
-                    `Cannot yet include instructions containing placeholders.
-You can use a placeholder line instead, like this:
-  {{includes.${includeName}}}`,
-                    statement,
-                );
-                return;
-            }
-
+            // Process the included text with placeholder expansion
             const instructions = splitSourceHonouringLineContinuations(includeValue);
             for (const instruction of instructions) {
                 const newStatement = new Statement(statement.rawInstruction, statement.anyContinuationLinesRemoved);
                 newStatement.recordExpandedPlaceholders(instruction);
+
+                // Apply placeholder expansion again if needed
+                if (instruction.includes('{{') && instruction.includes('}}') && this.tasksFile) {
+                    const queryContext = makeQueryContext(this.tasksFile);
+                    const expandedInstruction = expandPlaceholders(instruction, queryContext);
+                    newStatement.recordExpandedPlaceholders(expandedInstruction);
+                }
+
                 this.parseLine(newStatement);
             }
         }
