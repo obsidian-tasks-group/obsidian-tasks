@@ -184,6 +184,11 @@ ${source}`;
             const queryContext = makeQueryContext(tasksFile);
             try {
                 expandedSource = expandPlaceholders(source, queryContext);
+                if (expandedSource !== source) {
+                    expandedSource = continueLines(expandedSource)
+                        .map((statement) => statement.anyContinuationLinesRemoved)
+                        .join('\n');
+                }
             } catch (error) {
                 if (error instanceof Error) {
                     this._error = error.message;
