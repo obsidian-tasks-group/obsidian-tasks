@@ -114,20 +114,10 @@ describe('include tests', () => {
             expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
         });
 
-        it('include instruction DOES NOT YET expand placeholder in include value', () => {
+        it('include instruction should expand placeholder in include value', () => {
             const source = 'include this_path';
-            const query = createQuery(source, includes);
-            // This would currently generate an instruction containing an unexpanded placeholder:
-            //      'path includes {{query.file.path}}'
-            // which is not what users would intend, and which silently matches no tasks.
-            // So for now, Query's handing of the include instruction refuses to act on any
-            // Includes that contain placeholder text.
-            expect(query.error).toMatchInlineSnapshot(`
-                "Cannot yet include instructions containing placeholders.
-                You can use a placeholder line instead, like this:
-                  {{includes.this_path}}
-                Problem line: "include this_path""
-            `);
+            const query = createValidQuery(source, includes);
+            expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
         });
     });
 
@@ -139,6 +129,7 @@ return "Hello World";`;
         const expectedStatement = 'group by function return "Hello World";';
 
         it('includes placeholder DOES NOT YET SUPPORT line continuations in include value', () => {
+            // TODO Teach '{{includes.x}}' to support line continuations
             // Just as TQ_extra_instructions (in Query File Defaults) does not work with line continuations,
             // so includes in placeholders do not.
             // This is because line continuations are applied only once, before the placeholders
@@ -325,6 +316,7 @@ describe('include - error messages', () => {
         );
 
         it('includes placeholder should give meaningful error message about self-referencing instructions BUT DOES NOT', () => {
+            // TODO Better error error message for '{{includes.self_reference}}'
             const query = createQuery('{{includes.self_reference_1}}', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "Could not interpret the following instruction as a Boolean combination:
@@ -349,6 +341,7 @@ describe('include - error messages', () => {
         });
 
         it('include instruction should give meaningful error message about self-referencing instructions BUT DOES NOT', () => {
+            // TODO Better error error message for 'include self_reference'
             const query = createQuery('include self_reference_2', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "Maximum call stack size exceeded
