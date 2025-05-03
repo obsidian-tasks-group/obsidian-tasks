@@ -121,6 +121,33 @@ describe('include tests', () => {
         });
     });
 
+    describe('multi-line placeholders inside includes', () => {
+        const includes = makeIncludes(
+            ['two_lines', 'has due date\nhas created date'],
+            ['two_lines_as_placeholder', '{{includes.two_lines}}'],
+        );
+
+        it('includes placeholder should detect both lines in included value', () => {
+            const source = '{{includes.two_lines_as_placeholder}}';
+            const query = createValidQuery(source, includes);
+            expect(query.filters.length).toEqual(2);
+        });
+
+        it('include instruction should detect both lines in included value BUT DOES NOT', () => {
+            // TODO Handle expanding multi-line placeholders
+            const source = 'include two_lines_as_placeholder';
+            const query = createQuery(source, includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "do not understand query
+                Problem statement:
+                    include two_lines_as_placeholder =>
+                    has due date
+                has created date
+                "
+            `);
+        });
+    });
+
     describe('continuation lines inside includes', () => {
         const continuationLine = String.raw`group by function \
 return "Hello World";`;
