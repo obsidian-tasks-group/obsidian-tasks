@@ -222,6 +222,7 @@ describe('TasksFile - accessing links', () => {
     it('should return all links in the task file', () => {
         const tasksFile = getTasksFileFromMockData(links_everywhere);
         expect(tasksFile.outLinks.length).toEqual(3);
+        expect(tasksFile.outLinks[0].originalMarkdown).toEqual('[[link_in_file_body]]');
     });
 });
 

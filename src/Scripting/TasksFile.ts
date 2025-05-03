@@ -1,4 +1,5 @@
-import { type CachedMetadata, type FrontMatterCache, type LinkCache, getAllTags, parseFrontMatterTags } from 'obsidian';
+import { type CachedMetadata, type FrontMatterCache, getAllTags, parseFrontMatterTags } from 'obsidian';
+import { Link } from '../Task/Link';
 
 export type OptionalTasksFile = TasksFile | undefined;
 
@@ -50,14 +51,10 @@ export class TasksFile {
     }
 
     /**
-     * Return a list of links in the body of the file containing
-     * the task or list item.
-     *
-     * The data contest is documented here:
-     * https://docs.obsidian.md/Reference/TypeScript+API/LinkCache
+     * Return a array of Link in the body of the file.
      */
-    get outLinks(): LinkCache[] {
-        return this.cachedMetadata?.links ?? [];
+    get outLinks(): Link[] {
+        return this.cachedMetadata?.links?.map((link) => new Link(link)) ?? [];
     }
 
     /**
