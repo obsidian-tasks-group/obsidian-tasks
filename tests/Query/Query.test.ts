@@ -788,7 +788,7 @@ Problem statement:
             expect(query.filters.length).toEqual(0);
         });
 
-        it.failing('should not report error if comment contains a non-existent placeholder', () => {
+        it('should not report error if comment contains a non-existent placeholder', () => {
             // Arrange
             const source = '  #  path includes {{query.file.noSuchProperty}}';
             const tasksFile = new TasksFile('a/b/path with space.md');
@@ -797,7 +797,7 @@ Problem statement:
             const query = new Query(source, tasksFile);
 
             // Assert
-            expect(query).toBeValid();
+            expect(query.error).toBeUndefined();
             expect(query.filters.length).toEqual(0);
         });
 

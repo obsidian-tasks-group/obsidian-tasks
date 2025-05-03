@@ -177,7 +177,14 @@ ${source}`;
             }
         }
 
-        // TODO Do not complain about any placeholder errors in comment lines
+        const isAComment = this.commentRegexp.test(source);
+        if (isAComment) {
+            // If it's a comment, we return the line un-changed, to avoid:
+            // 1. pointless error messages for any harmless unknown placeholders,
+            // 2. accidentally processing the second-and-subsequent lines of multi-line placeholders.
+            return [statement];
+        }
+
         // TODO Give user error info if they try and put a string in a regex search
         let expandedSource: string = source;
         if (tasksFile) {
