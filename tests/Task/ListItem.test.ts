@@ -11,7 +11,6 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
-import { Link } from '../../src/Task/Link';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
@@ -219,17 +218,6 @@ describe('links', () => {
 
         expect(tasks[0].links.length).toEqual(1);
         expect(tasks[0].links[0].original).toEqual('[[link_in_task_wikilink]]');
-    });
-});
-
-describe('linkClass', () => {
-    it('should construct a Link object', () => {
-        const rawLink = links_everywhere.cachedMetadata.links[0];
-        const link = new Link(rawLink);
-        expect(link).toBeDefined();
-        expect(link.originalMarkdown).toEqual('[[link_in_file_body]]');
-        expect(link.destination).toEqual('link_in_file_body');
-        expect(link.displayText).toEqual('link_in_file_body');
     });
 });
 
