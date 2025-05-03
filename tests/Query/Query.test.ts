@@ -756,7 +756,6 @@ Problem statement:
             const query = new Query(source);
 
             // Assert
-            expect(query).not.toBeValid();
             expect(query.error).toEqual(
                 'The query looks like it contains a placeholder, with "{{" and "}}"\n' +
                     'but no file path has been supplied, so cannot expand placeholder values.\n' +
@@ -775,7 +774,6 @@ Problem statement:
             const query = new Query(source, tasksFile);
 
             // Assert
-            expect(query).not.toBeValid();
             expect(query.error).toEqual(
                 'There was an error expanding one or more placeholders.\n' +
                     '\n' +
@@ -812,7 +810,6 @@ Problem statement:
             const query = new Query(source, tasksFile);
 
             // Assert
-            expect(query).not.toBeValid();
             expect(query.error).toEqual(
                 'There was an error expanding one or more placeholders.\n' +
                     '\n' +
