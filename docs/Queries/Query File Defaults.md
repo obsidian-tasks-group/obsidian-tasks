@@ -60,6 +60,7 @@ When editing `TQ_extra_instructions` in Obsidian's File properties editor, you c
 > - `TQ_extra_instructions` is especially useful when you have more than one Tasks search block in a file, and you want the same instructions to be present in all the searches.
 > - Before this feature, if those standard instructions changed, you had to remember to update every search.
 > - Now you can put those standard instructions in `TQ_extra_instructions`, and only update them in one place.
+> - Since Tasks X.Y.Z, `TQ_extra_instructions` does support [[Line Continuations]].
 
 > [!note]
 > The `TQ_extra_instructions` property isn't an array. It's a single string value, and the `|-` allows it to span multiple lines.
@@ -248,6 +249,3 @@ The `type` values are explained in the [Property types](https://help.obsidian.md
 - Tasks searches in **Canvas cards** cannot use [[Query File Defaults]], because the [Canvas format](https://jsoncanvas.org) does not support frontmatter/properties.
   - The workaround is to use the Canvas [Convert to file](https://help.obsidian.md/Plugins/Canvas#Add+text+cards) facility to convert cards which contain Tasks queries to a separate Markdown note, embedded in the canvas.
   - You can then add Query File Defaults to the new note.
-- The property `TQ_extra_instructions` can contain any kind of Tasks instruction, including placeholders.
-  - But it does not work with [[Line Continuations]].
-  - The workaround is to write any long instructions all on one line when placed in `TQ_extra_instructions`.

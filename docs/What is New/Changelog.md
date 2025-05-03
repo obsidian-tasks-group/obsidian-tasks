@@ -13,6 +13,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 ## 7.x releases
 
 - X.Y.Z:
+  - [[Line Continuations]] can now be used in the [[Query File Defaults]] property `TQ_extra_instructions`.
   - [[Check your Statuses]] report now contains samples of each status, and a convenient search to test them.
 - 7.19.0:
   - New setting to [[Recurring Tasks#Remove scheduled date on recurrence|remove scheduled date on recurrence]].
