@@ -788,6 +788,19 @@ Problem statement:
             expect(query.filters.length).toEqual(0);
         });
 
+        it.failing('should not report error if comment contains a non-existent placeholder', () => {
+            // Arrange
+            const source = '  #  path includes {{query.file.noSuchProperty}}';
+            const tasksFile = new TasksFile('a/b/path with space.md');
+
+            // Act
+            const query = new Query(source, tasksFile);
+
+            // Assert
+            expect(query).toBeValid();
+            expect(query.filters.length).toEqual(0);
+        });
+
         it('should report first error if non-existent placeholder used', () => {
             // Arrange
             const source = `{{error 1}}

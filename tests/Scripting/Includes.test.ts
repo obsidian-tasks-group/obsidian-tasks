@@ -133,6 +133,13 @@ describe('include tests', () => {
             expect(query.filters.length).toEqual(2);
         });
 
+        it.failing('includes placeholders should be ignored in comments', () => {
+            const source = '# {{includes.two_lines_as_placeholder}}';
+            const query = createValidQuery(source, includes);
+            // Error: only the first line is commented-out. The second line is parsed.
+            expect(query.filters.length).toEqual(0);
+        });
+
         it('include instruction should detect both lines in included value BUT DOES NOT', () => {
             // TODO Handle expanding multi-line placeholders
             const source = 'include two_lines_as_placeholder';
