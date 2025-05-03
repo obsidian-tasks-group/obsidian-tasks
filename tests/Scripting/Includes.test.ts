@@ -155,26 +155,10 @@ return "Hello World";`;
 
         const expectedStatement = 'group by function return "Hello World";';
 
-        it('includes placeholder DOES NOT YET SUPPORT line continuations in include value', () => {
-            // TODO Teach '{{includes.x}}' to support line continuations
-            // Just as TQ_extra_instructions (in Query File Defaults) does not work with line continuations,
-            // so includes in placeholders do not.
-            // This is because line continuations are applied only once, before the placeholders
-            // are expanded.
-
+        it('includes placeholder supports line continuations in include value', () => {
             const source = '{{includes.instruction_with_continuation_lines}}';
-            const query = createQuery(source, includes);
-            expect(query.error).toMatchInlineSnapshot(`
-                "Could not interpret the following instruction as a Boolean combination:
-                    return "Hello World";
-
-                The error message is:
-                    All filters in a Boolean instruction must be inside one of these pairs of delimiter characters: (...) or [...] or {...} or "...". Combinations of those delimiters are no longer supported.
-                Problem statement:
-                    {{includes.instruction_with_continuation_lines}}: statement 2 after expansion of placeholder =>
-                    return "Hello World";
-                "
-            `);
+            const query = createValidQuery(source, includes);
+            expectExpandedStatementToBe(query.grouping[0].statement, expectedStatement);
         });
 
         it('include instruction supports line continuations in include value', () => {

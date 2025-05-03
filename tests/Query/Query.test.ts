@@ -876,18 +876,16 @@ group by folder
                 `);
             });
 
-            it('does not work with continuation lines in multi-line property with query.file.property via placeholder', () => {
+            it('should work with continuation lines in multi-line property with query.file.property via placeholder', () => {
                 const propertyValue = `path \\
   includes query_using_properties
 `;
                 const query = makeQueryFromPropertyWithValue('task_instructions_with_continuation_line', propertyValue);
 
-                expect(query.error).not.toBeUndefined();
-                expect(query.error).toMatchInlineSnapshot(`
-                    "do not understand query
-                    Problem statement:
-                        {{query.file.property('task_instructions_with_continuation_line')}}: statement 1 after expansion of placeholder =>
-                        path \\
+                expect(query.error).toBeUndefined();
+                expect(query.explainQuery()).toMatchInlineSnapshot(`
+                    "{{query.file.property('task_instructions_with_continuation_line')}} =>
+                    path includes query_using_properties
                     "
                 `);
             });
