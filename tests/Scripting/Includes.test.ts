@@ -155,6 +155,68 @@ describe('include tests', () => {
         });
     });
 
+    describe('placeholders inside placeholders', () => {
+        const includes = makeIncludes(
+            // 3 includes that each contain 1 query.file placeholder:
+            ['this_path', 'path includes {{query.file.path}}'],
+            ['this_folder', 'folder includes {{query.file.folder}}'],
+            ['this_root', 'root includes {{query.file.root}}'],
+            // 2-level include:
+            ['this_everything', '{{includes.this_path}}\n{{includes.this_folder}}\n{{includes.this_root}}'],
+            // 3-level include:
+            ['this_everything_indirect', '{{includes.this_everything}}'],
+        );
+
+        const expectedFilterLines = [
+            'path includes root/folder/stuff.md',
+            'folder includes root/folder/',
+            'root includes root/',
+        ];
+
+        it.failing('includes placeholder should support one-level nested placeholders', () => {
+            const source = '{{includes.this_everything}}';
+            const query = createValidQuery(source, includes);
+            /*
+            The actual filter lines are the following: the placeholders are not expanded:
+                  "path includes {{query.file.path}}",
+                  "folder includes {{query.file.folder}}",
+                  "root includes {{query.file.root}}"
+             */
+            expect(query.filters.map((filter) => filter.statement.anyPlaceholdersExpanded)).toEqual(
+                expectedFilterLines,
+            );
+        });
+
+        it.failing('includes placeholder should support two-level nested placeholders', () => {
+            const source = '{{includes.this_everything_indirect}}';
+            /*
+            createValidQuery() reports:
+                Error: expect(received).toBeUndefined()
+
+                Received: "Could not interpret the following instruction as a Boolean combination:
+                    {{includes.this_path}}·
+                The error message is:
+                    couldn't parse sub-expression 'includes.this_path'·
+                The instruction was converted to the following simplified line:
+                    ((f1))·
+                Where the sub-expressions in the simplified line are:
+                    'f1': 'includes.this_path'
+                        => ERROR:
+                           do not understand query·
+                For help, see:
+                    https://publish.obsidian.md/tasks/Queries/Combining+Filters·
+                Problem statement:
+                    {{includes.this_everything_indirect}}: statement 1 after expansion of placeholder =>
+                    {{includes.this_path}}
+                "
+             */
+            const query = createValidQuery(source, includes);
+            expect(query.filters.map((filter) => filter.statement.anyPlaceholdersExpanded)).toEqual(
+                expectedFilterLines,
+            );
+        });
+    });
+
     describe('continuation lines inside includes', () => {
         const continuationLine = String.raw`group by function \
 return "Hello World";`;
