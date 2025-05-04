@@ -46,6 +46,10 @@ function expectExpandedStatementToBe(statement: Statement, expandedLine: string)
     expect(statement.anyPlaceholdersExpanded).toEqual(expandedLine);
 }
 
+function expectFiltersToBe(query: Query, expectedFilterLines: string[]) {
+    expect(query.filters.map((filter) => filter.statement.anyPlaceholdersExpanded)).toEqual(expectedFilterLines);
+}
+
 describe('include tests', () => {
     describe('whole-line placeholder', () => {
         const includes = makeIncludes(['not_done', 'not done']);
@@ -175,9 +179,7 @@ describe('include tests', () => {
         it('includes placeholder should support placeholders inside simple instructions', () => {
             const source = '{{includes.this_path}}\n{{includes.this_folder}}\n{{includes.this_root}}';
             const query = createValidQuery(source, includes);
-            expect(query.filters.map((filter) => filter.statement.anyPlaceholdersExpanded)).toEqual(
-                expectedFilterLines,
-            );
+            expectFiltersToBe(query, expectedFilterLines);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "{{includes.this_path}} =>
                 path includes root/folder/stuff.md
