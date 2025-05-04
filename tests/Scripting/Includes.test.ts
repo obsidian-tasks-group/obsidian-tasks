@@ -136,7 +136,6 @@ describe('include tests', () => {
         it('includes placeholders should be ignored in comments', () => {
             const source = '# {{includes.two_lines_as_placeholder}}';
             const query = createValidQuery(source, includes);
-            // Error: only the first line is commented-out. The second line is parsed.
             expect(query.filters.length).toEqual(0);
         });
 
