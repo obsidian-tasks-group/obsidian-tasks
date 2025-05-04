@@ -189,8 +189,18 @@ ${source}`;
         let expandedSource: string = source;
         if (tasksFile) {
             const queryContext = makeQueryContext(tasksFile);
+            let previousExpandedSource: string = '';
             try {
-                expandedSource = expandPlaceholders(source, queryContext);
+                // Keep expanding placeholders until no more changes occur or max iterations reached.
+                const maxIterations = 10; // Prevent infinite loops if there are any circular references.
+                let iterations = 0;
+
+                while (expandedSource !== previousExpandedSource && iterations < maxIterations) {
+                    previousExpandedSource = expandedSource;
+                    expandedSource = expandPlaceholders(previousExpandedSource, queryContext);
+                    iterations++;
+                }
+
                 if (expandedSource !== source) {
                     expandedSource = continueLines(expandedSource)
                         .map((statement) => statement.anyContinuationLinesRemoved)
