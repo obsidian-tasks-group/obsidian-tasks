@@ -23,7 +23,7 @@ export function makeIncludes(...entries: [string, string][]): IncludesMap {
     return Object.fromEntries(entries);
 }
 
-const tasksFile = new TasksFile('stuff.md');
+const tasksFile = new TasksFile('root/folder/stuff.md');
 
 function createQuery(source: string, includes: IncludesMap) {
     updateSettings({ includes });
@@ -111,13 +111,13 @@ describe('include tests', () => {
         it('includes placeholder should expand placeholder in include value', () => {
             const source = '{{includes.this_path}}';
             const query = createValidQuery(source, includes);
-            expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
+            expectExpandedStatementToBe(query.filters[0].statement, 'path includes root/folder/stuff.md');
         });
 
         it('include instruction should expand placeholder in include value', () => {
             const source = 'include this_path';
             const query = createValidQuery(source, includes);
-            expectExpandedStatementToBe(query.filters[0].statement, 'path includes stuff.md');
+            expectExpandedStatementToBe(query.filters[0].statement, 'path includes root/folder/stuff.md');
         });
     });
 
