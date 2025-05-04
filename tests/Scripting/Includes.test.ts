@@ -173,12 +173,42 @@ describe('include tests', () => {
             'root includes root/',
         ];
 
+        it('includes placeholder should support placeholders inside simple instructions', () => {
+            const source = '{{includes.this_path}}\n{{includes.this_folder}}\n{{includes.this_root}}';
+            const query = createValidQuery(source, includes);
+            expect(query.filters.map((filter) => filter.statement.anyPlaceholdersExpanded)).toEqual(
+                expectedFilterLines,
+            );
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "{{includes.this_path}} =>
+                path includes root/folder/stuff.md
+
+                {{includes.this_folder}} =>
+                folder includes root/folder/
+
+                {{includes.this_root}} =>
+                root includes root/
+                "
+            `);
+        });
+
         it('includes placeholder should support one-level nested placeholders', () => {
             const source = '{{includes.this_everything}}';
             const query = createValidQuery(source, includes);
             expect(query.filters.map((filter) => filter.statement.anyPlaceholdersExpanded)).toEqual(
                 expectedFilterLines,
             );
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "{{includes.this_everything}}: statement 1 after expansion of placeholder =>
+                path includes root/folder/stuff.md
+
+                {{includes.this_everything}}: statement 2 after expansion of placeholder =>
+                folder includes root/folder/
+
+                {{includes.this_everything}}: statement 3 after expansion of placeholder =>
+                root includes root/
+                "
+            `);
         });
 
         it('includes placeholder should support two-level nested placeholders', () => {
@@ -187,6 +217,17 @@ describe('include tests', () => {
             expect(query.filters.map((filter) => filter.statement.anyPlaceholdersExpanded)).toEqual(
                 expectedFilterLines,
             );
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "{{includes.this_everything_indirect}}: statement 1 after expansion of placeholder =>
+                path includes root/folder/stuff.md
+
+                {{includes.this_everything_indirect}}: statement 2 after expansion of placeholder =>
+                folder includes root/folder/
+
+                {{includes.this_everything_indirect}}: statement 3 after expansion of placeholder =>
+                root includes root/
+                "
+            `);
         });
     });
 
