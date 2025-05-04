@@ -196,9 +196,7 @@ describe('include tests', () => {
         it('includes placeholder should support one-level nested placeholders', () => {
             const source = '{{includes.this_everything}}';
             const query = createValidQuery(source, includes);
-            expect(query.filters.map((filter) => filter.statement.anyPlaceholdersExpanded)).toEqual(
-                expectedFilterLines,
-            );
+            expectFiltersToBe(query, expectedFilterLines);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "{{includes.this_everything}}: statement 1 after expansion of placeholder =>
                 path includes root/folder/stuff.md
@@ -215,9 +213,7 @@ describe('include tests', () => {
         it('includes placeholder should support two-level nested placeholders', () => {
             const source = '{{includes.this_everything_indirect}}';
             const query = createValidQuery(source, includes);
-            expect(query.filters.map((filter) => filter.statement.anyPlaceholdersExpanded)).toEqual(
-                expectedFilterLines,
-            );
+            expectFiltersToBe(query, expectedFilterLines);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "{{includes.this_everything_indirect}}: statement 1 after expansion of placeholder =>
                 path includes root/folder/stuff.md
