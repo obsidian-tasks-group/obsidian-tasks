@@ -58,6 +58,11 @@ describe('include tests', () => {
             const source = '{{includes.not_done}}';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, ['not done']);
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "{{includes.not_done}} =>
+                not done
+                "
+            `);
         });
 
         it('should accept whole-line include filter instruction', () => {
