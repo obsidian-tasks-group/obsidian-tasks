@@ -648,69 +648,74 @@ export class SettingsTab extends PluginSettingTab {
         const setting = new Setting(wrapper);
         setting.settingEl.addClass('tasks-includes-setting');
 
-        setting
-            .addText((text) => {
-                text.setPlaceholder('Name').setValue(key);
-                text.inputEl.addClass('tasks-includes-key');
+        // Add name input field
+        setting.addText((text) => {
+            text.setPlaceholder('Name').setValue(key);
+            text.inputEl.addClass('tasks-includes-key');
 
-                let newKey = key;
+            let newKey = key;
 
-                text.inputEl.addEventListener('input', (e) => {
-                    newKey = (e.target as HTMLInputElement).value;
-                });
+            text.inputEl.addEventListener('input', (e) => {
+                newKey = (e.target as HTMLInputElement).value;
+            });
 
-                const commitRename = async () => {
-                    if (newKey && newKey !== key) {
-                        const newIncludes = renameKeyInRecordPreservingOrder(settings.includes, key, newKey);
-                        updateSettings({ includes: newIncludes });
-                        await this.plugin.saveSettings();
+            // Handle renaming an include
+            const commitRename = async () => {
+                if (newKey && newKey !== key) {
+                    const newIncludes = renameKeyInRecordPreservingOrder(settings.includes, key, newKey);
+                    updateSettings({ includes: newIncludes });
+                    await this.plugin.saveSettings();
 
-                        // Refresh settings after replacing the includes object to avoid stale data in the next render.
-                        Object.assign(settings, getSettings());
-                        renderIncludes();
-                    }
-                };
+                    // Refresh settings after replacing the includes object to avoid stale data in the next render.
+                    Object.assign(settings, getSettings());
+                    renderIncludes();
+                }
+            };
 
-                text.inputEl.addEventListener('blur', commitRename);
-                text.inputEl.addEventListener('keydown', async (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        text.inputEl.blur(); // trigger blur handler
-                    }
-                });
-            })
-            .addTextArea((textArea) => {
-                textArea.inputEl.addClass('tasks-includes-value');
-                textArea.setPlaceholder('Query or filter text...').setValue(value);
+            text.inputEl.addEventListener('blur', commitRename);
+            text.inputEl.addEventListener('keydown', async (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    text.inputEl.blur(); // trigger blur handler
+                }
+            });
+        });
 
-                // Resize to fit content
-                const resize = () => {
-                    textArea.inputEl.style.height = 'auto'; // reset first
-                    textArea.inputEl.style.height = `${textArea.inputEl.scrollHeight}px`;
-                };
+        // Add value textarea
+        setting.addTextArea((textArea) => {
+            textArea.inputEl.addClass('tasks-includes-value');
+            textArea.setPlaceholder('Query or filter text...').setValue(value);
 
-                // Initial resize
-                resize();
+            // Resize to fit content
+            const resize = () => {
+                textArea.inputEl.style.height = 'auto'; // reset first
+                textArea.inputEl.style.height = `${textArea.inputEl.scrollHeight}px`;
+            };
 
-                // Resize on input
-                textArea.inputEl.addEventListener('input', resize);
+            // Initial resize
+            resize();
 
-                return textArea.onChange(async (newValue) => {
-                    settings.includes[key] = newValue;
+            // Resize on input
+            textArea.inputEl.addEventListener('input', resize);
+
+            return textArea.onChange(async (newValue) => {
+                settings.includes[key] = newValue;
+                updateSettings({ includes: settings.includes });
+                await this.plugin.saveSettings();
+            });
+        });
+
+        // Add delete button
+        setting.addExtraButton((btn) => {
+            btn.setIcon('cross')
+                .setTooltip('Delete')
+                .onClick(async () => {
+                    delete settings.includes[key];
                     updateSettings({ includes: settings.includes });
                     await this.plugin.saveSettings();
+                    renderIncludes();
                 });
-            })
-            .addExtraButton((btn) => {
-                btn.setIcon('cross')
-                    .setTooltip('Delete')
-                    .onClick(async () => {
-                        delete settings.includes[key];
-                        updateSettings({ includes: settings.includes });
-                        await this.plugin.saveSettings();
-                        renderIncludes();
-                    });
-            });
+        });
     }
 
     private createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, renderIncludes: () => void) {
