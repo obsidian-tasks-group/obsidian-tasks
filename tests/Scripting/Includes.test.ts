@@ -148,6 +148,7 @@ describe('include tests', () => {
     describe('multi-line placeholders inside includes', () => {
         const includes = makeIncludes(
             ['two_lines', 'has due date\nhas created date'],
+            ['two_lines_as_include', 'include two_lines'],
             ['two_lines_as_placeholder', '{{includes.two_lines}}'],
         );
 
@@ -163,7 +164,13 @@ describe('include tests', () => {
             expectFiltersToBe(query, []);
         });
 
-        it('include instruction should detect both lines in included value BUT DOES NOT', () => {
+        it('include another include instruction should detect both lines in included value', () => {
+            const source = 'include two_lines_as_include';
+            const query = createValidQuery(source, includes);
+            expectFiltersToBe(query, ['has due date', 'has created date']);
+        });
+
+        it('include a placeholder include should detect both lines in included value BUT DOES NOT', () => {
             // TODO Handle expanding multi-line placeholders
             const source = 'include two_lines_as_placeholder';
             const query = createQuery(source, includes);
