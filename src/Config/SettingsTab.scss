@@ -123,3 +123,9 @@
         align-items: stretch;
     }
 }
+
+.tasks-includes-setting .setting-item-info {
+    &:has(.setting-item-name:empty):has(.setting-item-description:empty) {
+        display: none;
+    }
+}
