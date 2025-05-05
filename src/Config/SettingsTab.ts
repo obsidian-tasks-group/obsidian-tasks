@@ -1,4 +1,4 @@
-import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
+import { Notice, PluginSettingTab, Setting, TextAreaComponent, debounce } from 'obsidian';
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
@@ -686,17 +686,7 @@ export class SettingsTab extends PluginSettingTab {
             textArea.inputEl.addClass('tasks-includes-value');
             textArea.setPlaceholder('Query or filter text...').setValue(value);
 
-            // Resize to fit content
-            const resize = () => {
-                textArea.inputEl.style.height = 'auto'; // reset first
-                textArea.inputEl.style.height = `${textArea.inputEl.scrollHeight}px`;
-            };
-
-            // Initial resize
-            resize();
-
-            // Resize on input
-            textArea.inputEl.addEventListener('input', resize);
+            this.setupAutoResizingTextarea(textArea);
 
             return textArea.onChange(async (newValue) => {
                 settings.includes[key] = newValue;
@@ -716,6 +706,19 @@ export class SettingsTab extends PluginSettingTab {
                     renderIncludes();
                 });
         });
+    }
+
+    private setupAutoResizingTextarea(textArea: TextAreaComponent) {
+        const resize = () => {
+            textArea.inputEl.style.height = 'auto'; // reset first
+            textArea.inputEl.style.height = `${textArea.inputEl.scrollHeight}px`;
+        };
+
+        // Initial resize
+        resize();
+
+        // Resize on input
+        textArea.inputEl.addEventListener('input', resize);
     }
 
     private createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, renderIncludes: () => void) {
