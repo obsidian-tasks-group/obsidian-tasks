@@ -708,18 +708,22 @@ export class SettingsTab extends PluginSettingTab {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const baseKey = 'new_key';
-                    let suffix = 1;
-                    while (Object.prototype.hasOwnProperty.call(settings.includes, `${baseKey}_${suffix}`)) {
-                        suffix++;
-                    }
-                    const newKey = `${baseKey}_${suffix}`;
+                    const newKey = this.generateUniqueIncludeKey(settings);
                     settings.includes[newKey] = '';
                     updateSettings({ includes: settings.includes });
                     await this.plugin.saveSettings();
                     renderIncludes();
                 });
         });
+    }
+
+    private generateUniqueIncludeKey(settings: Settings) {
+        const baseKey = 'new_key';
+        let suffix = 1;
+        while (Object.prototype.hasOwnProperty.call(settings.includes, `${baseKey}_${suffix}`)) {
+            suffix++;
+        }
+        return `${baseKey}_${suffix}`;
     }
 
     private static renderFolderArray(folders: string[]): string {
