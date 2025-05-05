@@ -267,6 +267,61 @@ return "Hello World";`;
             expectExpandedStatementToBe(query.grouping[0].statement, expectedStatement);
         });
     });
+
+    describe('includes inside Boolean combinations', () => {
+        // ( {{includes.filter1}} ) AND ( {{includes.filter2}} )
+        // ( include filter1 ) AND ( include filter2 )
+        const includes = makeIncludes(
+            // Force line break
+            ['filter1', 'not done'],
+            ['filter2', 'due 2025-05-01'],
+        );
+        const expectedStatement = '( not done ) AND ( due 2025-05-01 )';
+
+        it('should allow Boolean instructions to use includes placeholders', () => {
+            const source = '( {{includes.filter1}} ) AND ( {{includes.filter2}} )';
+            const query = createValidQuery(source, includes);
+
+            expectFiltersToBe(query, [expectedStatement]);
+            expect(query.explainQuery()).toMatchInlineSnapshot(`
+                "( {{includes.filter1}} ) AND ( {{includes.filter2}} ) =>
+                ( not done ) AND ( due 2025-05-01 ) =>
+                  AND (All of):
+                    not done
+                    due 2025-05-01 =>
+                      due date is on 2025-05-01 (Thursday 1st May 2025)
+                "
+            `);
+        });
+
+        it('should allow Boolean instructions to use include instruction BUT DOES NOT', () => {
+            const source = '( include filter1 ) AND ( include filter2 )';
+            const query = createQuery(source, includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "Could not interpret the following instruction as a Boolean combination:
+                    ( include filter1 ) AND ( include filter2 )
+
+                The error message is:
+                    couldn't parse sub-expression 'include filter1'
+
+                The instruction was converted to the following simplified line:
+                    ( f1 ) AND ( f2 )
+
+                Where the sub-expressions in the simplified line are:
+                    'f1': 'include filter1'
+                        => ERROR:
+                           do not understand query
+                    'f2': 'include filter2'
+                        => ERROR:
+                           do not understand query
+
+                For help, see:
+                    https://publish.obsidian.md/tasks/Queries/Combining+Filters
+
+                Problem line: "( include filter1 ) AND ( include filter2 )""
+            `);
+        });
+    });
 });
 
 describe('include - explain output', () => {
