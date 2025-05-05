@@ -8,7 +8,7 @@ import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
 import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import * as Themes from './Themes';
-import { type HeadingState, TASK_FORMATS } from './Settings';
+import { type HeadingState, type Settings, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
@@ -700,6 +700,10 @@ export class SettingsTab extends PluginSettingTab {
 
         renderIncludes();
 
+        this.createAddNewIncludeButton(containerEl, settings, renderIncludes);
+    }
+
+    private createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, renderIncludes: () => void) {
         new Setting(containerEl).addButton((btn) => {
             btn.setButtonText('Add new include')
                 .setCta()
