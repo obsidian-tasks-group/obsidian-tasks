@@ -3,10 +3,10 @@ import type { IncludesMap } from './Settings';
 export class IncludesSettingsService {
     /**
      * Adds a new include to the map with a unique key
-     * @param includes The current includes map
+     * @param includes The current includes map (will not be modified)
      * @returns An object with the updated includes map and the new key
      */
-    public addInclude(includes: IncludesMap): { includes: IncludesMap; newKey: string } {
+    public addInclude(includes: Readonly<IncludesMap>): { includes: IncludesMap; newKey: string } {
         const newKey = this.generateUniqueKey(includes);
         const newIncludes = { ...includes };
         newIncludes[newKey] = '';
