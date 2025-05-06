@@ -24,6 +24,9 @@ export class IncludesSettingsService {
      * @returns True if the key would be a duplicate, false otherwise
      */
     public isDuplicateKey(includes: Readonly<IncludesMap>, originalKey: string, newKey: string): boolean {
+        // Normalize the newKey once
+        const normalizedNewKey = newKey.trim();
+
         // Check if it's the same as the original key (after trimming)
         if (originalKey === newKey) {
             return false; // Same key, not a duplicate
@@ -32,7 +35,7 @@ export class IncludesSettingsService {
         // Check against all existing keys
         for (const existingKey of Object.keys(includes)) {
             // Skip the original key
-            if (existingKey !== originalKey && existingKey === newKey) {
+            if (existingKey !== originalKey && existingKey === normalizedNewKey) {
                 return true; // Found a duplicate
             }
         }
