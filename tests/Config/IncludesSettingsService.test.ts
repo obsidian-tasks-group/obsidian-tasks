@@ -26,6 +26,6 @@ describe('IncludesSettingsService', () => {
         expect(service.isDuplicateKey(testIncludes, 'key1', 'key2')).toBe(true);
         expect(service.isDuplicateKey(testIncludes, 'key1', 'key3')).toBe(false);
         expect(service.isDuplicateKey(testIncludes, 'key1', 'key1')).toBe(false);
-        expect(service.isDuplicateKey(testIncludes, 'key1', ' key2 ')).toBe(false); // White space counts as different
+        expect(service.isDuplicateKey(testIncludes, 'key1', ' key2 ')).toBe(true); // Trim test
     });
 });
