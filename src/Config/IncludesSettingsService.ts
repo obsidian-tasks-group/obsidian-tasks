@@ -28,7 +28,7 @@ export class IncludesSettingsService {
         const normalizedNewKey = newKey.trim();
 
         // Check if it's the same as the original key (after trimming)
-        if (originalKey === newKey) {
+        if (originalKey.trim() === newKey) {
             return false; // Same key, not a duplicate
         }
 
