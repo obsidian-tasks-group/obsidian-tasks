@@ -20,4 +20,12 @@ describe('IncludesSettingsService', () => {
         expect(result.includes['new_key_1']).toBe('');
         expect(Object.keys(result.includes).length).toBe(3);
     });
+
+    it('should detect duplicates', () => {
+        // Checks if a new key would create a duplicate in the includes map
+        expect(service.isDuplicateKey(testIncludes, 'key1', 'key2')).toBe(true);
+        expect(service.isDuplicateKey(testIncludes, 'key1', 'key3')).toBe(false);
+        expect(service.isDuplicateKey(testIncludes, 'key1', 'key1')).toBe(false);
+        expect(service.isDuplicateKey(testIncludes, 'key1', ' key2 ')).toBe(false); // White space counts as different
+    });
 });
