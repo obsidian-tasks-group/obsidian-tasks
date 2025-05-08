@@ -76,7 +76,7 @@ describe('IncludesSettingsService', () => {
             expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', '  key1  ')).toBe(false);
         });
 
-        it.failing('should identify a rename as non-duplicate when only whitespace differs', () => {
+        it('should identify a rename as non-duplicate when only whitespace differs', () => {
             // Should be considered the same key (not a duplicate)
             expect(service.wouldCreateDuplicateKey(testIncludes, 'key1  ', '  key1')).toBe(false);
         });

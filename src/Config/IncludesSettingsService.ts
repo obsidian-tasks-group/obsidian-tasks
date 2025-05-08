@@ -31,9 +31,9 @@ export class IncludesSettingsService {
         // Normalize the proposedNewName once
         const normalizedNewName = proposedNewName.trim();
 
-        // Check if it's the same as the original key (after trimming)
-        if (keyBeingRenamed.trim() === proposedNewName) {
-            return false; // Same key, not a duplicate
+        // If it's the same key (after trimming), it's not a duplicate
+        if (keyBeingRenamed.trim() === normalizedNewName) {
+            return false;
         }
 
         // Check against all existing keys
