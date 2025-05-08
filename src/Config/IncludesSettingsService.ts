@@ -34,6 +34,8 @@ export class IncludesSettingsService {
             return null; // Empty keys are not allowed
         }
 
+        proposedNewName = proposedNewName.trim();
+
         // Check if this would create a duplicate
         if (this.wouldCreateDuplicateKey(includes, keyBeingRenamed, proposedNewName)) {
             return null;

@@ -33,7 +33,7 @@ describe('IncludesSettingsService', () => {
             expect(Object.keys(result!).length).toBe(2);
         });
 
-        it.failing('should trim spaces from a unique new name', () => {
+        it('should trim spaces from a unique new name', () => {
             const result = service.renameInclude(testIncludes, 'key2', '  renamed_key2  ');
             expect(result).not.toBeNull();
             expect(Object.keys(result!)[1]).toBe('renamed_key2');
