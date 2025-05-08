@@ -734,13 +734,13 @@ export class SettingsTab extends PluginSettingTab {
         });
     }
 
-    private async saveIncludesSettings(updatedIncludes: IncludesMap, settings: Settings, renderIncludes: () => void) {
+    private async saveIncludesSettings(updatedIncludes: IncludesMap, settings: Settings, refreshView: () => void) {
         updateSettings({ includes: updatedIncludes });
         await this.plugin.saveSettings();
 
         // Update the local settings object to reflect the change
         settings.includes = { ...updatedIncludes };
-        renderIncludes();
+        refreshView();
     }
 
     private static renderFolderArray(folders: string[]): string {
