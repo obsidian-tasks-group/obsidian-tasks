@@ -734,15 +734,22 @@ export class SettingsTab extends PluginSettingTab {
         });
     }
 
+    /**
+     * Updates settings with new includes and refreshes UI
+     * @param updatedIncludes The new includes map
+     * @param settings The current settings object to update
+     * @param refreshView Callback to refresh the view
+     */
     private async saveIncludesSettings(
         updatedIncludes: IncludesMap,
         settings: Settings,
         refreshView: () => void,
     ): Promise<void> {
+        // Update the settings in storage
         updateSettings({ includes: updatedIncludes });
         await this.plugin.saveSettings();
 
-        // Update the local settings object to reflect the change
+        // Update the local settings object to reflect the changes
         settings.includes = { ...updatedIncludes };
         refreshView();
     }
