@@ -23,10 +23,10 @@ describe('IncludesSettingsService', () => {
 
     it('should detect duplicates', () => {
         // Checks if a new key would create a duplicate in the includes map
-        expect(service.isDuplicateKey(testIncludes, 'key1', 'key2')).toBe(true);
-        expect(service.isDuplicateKey(testIncludes, 'key1', 'key3')).toBe(false);
-        expect(service.isDuplicateKey(testIncludes, 'key1', 'key1')).toBe(false);
-        expect(service.isDuplicateKey(testIncludes, ' key1 ', 'key1')).toBe(false); // Trim test
-        expect(service.isDuplicateKey(testIncludes, 'key1', ' key2 ')).toBe(true); // Trim test
+        expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'key2')).toBe(true);
+        expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'key3')).toBe(false);
+        expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'key1')).toBe(false);
+        expect(service.wouldCreateDuplicateKey(testIncludes, ' key1 ', 'key1')).toBe(false); // Trim test
+        expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', ' key2 ')).toBe(true); // Trim test
     });
 });
