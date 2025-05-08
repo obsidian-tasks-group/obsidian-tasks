@@ -8,7 +8,7 @@ import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
 import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import * as Themes from './Themes';
-import { type HeadingState, type Settings, TASK_FORMATS } from './Settings';
+import { type HeadingState, type IncludesMap, type Settings, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
@@ -729,14 +729,18 @@ export class SettingsTab extends PluginSettingTab {
                 .setCta()
                 .onClick(async () => {
                     const { includes: updatedIncludes } = this.includesSettingsService.addInclude(settings.includes);
-                    updateSettings({ includes: updatedIncludes });
-                    await this.plugin.saveSettings();
-
-                    // Update the local settings object to reflect the change
-                    settings.includes = { ...updatedIncludes };
-                    renderIncludes();
+                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                 });
         });
+    }
+
+    private async saveIncludesSettings(updatedIncludes: IncludesMap, settings: Settings, renderIncludes: () => void) {
+        updateSettings({ includes: updatedIncludes });
+        await this.plugin.saveSettings();
+
+        // Update the local settings object to reflect the change
+        settings.includes = { ...updatedIncludes };
+        renderIncludes();
     }
 
     private static renderFolderArray(folders: string[]): string {
