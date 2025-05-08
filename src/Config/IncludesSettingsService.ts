@@ -23,7 +23,7 @@ export class IncludesSettingsService {
      * @param newKey The new key to check
      * @returns True if the key would be a duplicate, false otherwise
      */
-    public isDuplicateKey(includes: Readonly<IncludesMap>, originalKey: string, newKey: string): boolean {
+    public wouldCreateDuplicateKey(includes: Readonly<IncludesMap>, originalKey: string, newKey: string): boolean {
         // Normalize the newKey once
         const normalizedNewKey = newKey.trim();
 
