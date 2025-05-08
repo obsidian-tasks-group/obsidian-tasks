@@ -15,6 +15,7 @@ import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
+import { IncludesSettingsService } from './IncludesSettingsService';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -726,22 +727,14 @@ export class SettingsTab extends PluginSettingTab {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const newKey = this.generateUniqueIncludeKey(settings);
+                    const includesSettingsService = new IncludesSettingsService();
+                    const { newKey } = includesSettingsService.addInclude(settings.includes);
                     settings.includes[newKey] = '';
                     updateSettings({ includes: settings.includes });
                     await this.plugin.saveSettings();
                     renderIncludes();
                 });
         });
-    }
-
-    private generateUniqueIncludeKey(settings: Settings) {
-        const baseKey = 'new_key';
-        let suffix = 1;
-        while (Object.prototype.hasOwnProperty.call(settings.includes, `${baseKey}_${suffix}`)) {
-            suffix++;
-        }
-        return `${baseKey}_${suffix}`;
     }
 
     private static renderFolderArray(folders: string[]): string {
