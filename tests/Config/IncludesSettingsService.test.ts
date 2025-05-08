@@ -33,6 +33,14 @@ describe('IncludesSettingsService', () => {
         });
     });
 
+    describe('IncludesSettingsService - updateIncludeValue', () => {
+        it('should update the value of an include', () => {
+            const result = service.updateIncludeValue(testIncludes, 'key1', 'new value');
+
+            expect(result['key1']).toBe('new value');
+        });
+    });
+
     describe('IncludesSettingsService - wouldCreateDuplicateKey', () => {
         let service: IncludesSettingsService;
         let testIncludes: IncludesMap;

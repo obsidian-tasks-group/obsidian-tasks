@@ -29,6 +29,19 @@ export class IncludesSettingsService {
     }
 
     /**
+     * Updates the value of an include
+     * @param includes The current includes map (will not be modified)
+     * @param key The key to update
+     * @param value The new value
+     * @returns The updated includes map
+     */
+    public updateIncludeValue(includes: Readonly<IncludesMap>, key: string, value: string): IncludesMap {
+        const newIncludes = { ...includes };
+        newIncludes[key] = value;
+        return newIncludes;
+    }
+
+    /**
      * Checks if renaming a key would create a duplicate in the includes map
      * @param includes The includes map to check against
      * @param keyBeingRenamed The existing key that would be renamed
