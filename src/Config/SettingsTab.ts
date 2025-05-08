@@ -691,9 +691,12 @@ export class SettingsTab extends PluginSettingTab {
             this.setupAutoResizingTextarea(textArea);
 
             return textArea.onChange(async (newValue) => {
-                settings.includes[key] = newValue;
-                updateSettings({ includes: settings.includes });
-                await this.plugin.saveSettings();
+                const updatedIncludes = this.includesSettingsService.updateIncludeValue(
+                    settings.includes,
+                    key,
+                    newValue,
+                );
+                await this.saveIncludesSettings(updatedIncludes, settings, null);
             });
         });
 
@@ -733,15 +736,15 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     /**
-     * Updates settings with new includes and refreshes UI
+     * Updates settings with new includes and refreshes UI if needed
      * @param updatedIncludes The new includes map
      * @param settings The current settings object to update
-     * @param refreshView Callback to refresh the view
+     * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
      */
     private async saveIncludesSettings(
         updatedIncludes: IncludesMap,
         settings: Settings,
-        refreshView: () => void,
+        refreshView: (() => void) | null,
     ): Promise<void> {
         // Update the settings in storage
         updateSettings({ includes: updatedIncludes });
@@ -749,7 +752,11 @@ export class SettingsTab extends PluginSettingTab {
 
         // Update the local settings object to reflect the changes
         settings.includes = { ...updatedIncludes };
-        refreshView();
+
+        // Refresh the view if a callback was provided
+        if (refreshView) {
+            refreshView();
+        }
     }
 
     private static renderFolderArray(folders: string[]): string {
