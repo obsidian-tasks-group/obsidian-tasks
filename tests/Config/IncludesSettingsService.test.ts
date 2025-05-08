@@ -60,7 +60,7 @@ describe('IncludesSettingsService', () => {
             expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', '  key2  ')).toBe(true);
         });
 
-        it.failing('should normalize both new key and existing keys by trimming whitespace', () => {
+        it('should normalize both new key and existing keys by trimming whitespace', () => {
             // Add a key with leading/trailing whitespace to the includes map
             const includesWithSpacedKey = {
                 ...testIncludes,
@@ -99,7 +99,7 @@ describe('IncludesSettingsService', () => {
             expect(service.wouldCreateDuplicateKey(includesWithEmptyKey, 'key1', '')).toBe(true);
         });
 
-        it.failing('should handle keys containing only whitespace', () => {
+        it('should handle keys containing only whitespace', () => {
             const includesWithWhitespaceKey = {
                 ...testIncludes,
                 '   ': 'whitespace value',
