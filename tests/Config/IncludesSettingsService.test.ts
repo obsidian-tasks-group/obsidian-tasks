@@ -45,7 +45,7 @@ describe('IncludesSettingsService', () => {
             expect(result).toBeNull();
         });
 
-        it.failing('should return null for empty key containing only whitespace', () => {
+        it('should return null for empty key containing only whitespace', () => {
             const result = service.renameInclude(testIncludes, 'key1', '\t ');
 
             expect(result).toBeNull();

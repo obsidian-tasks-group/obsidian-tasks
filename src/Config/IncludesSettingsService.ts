@@ -30,7 +30,7 @@ export class IncludesSettingsService {
         proposedNewName: string,
     ): IncludesMap | null {
         // Validate inputs
-        if (!proposedNewName) {
+        if (!proposedNewName || proposedNewName.trim() === '') {
             return null; // Empty keys are not allowed
         }
 
