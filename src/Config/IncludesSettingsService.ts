@@ -20,15 +20,19 @@ export class IncludesSettingsService {
      * Checks if a new key would create a duplicate in the includes map
      * @param includes The current includes map (will not be modified)
      * @param keyBeingRenamed The original key (to exclude from comparison)
-     * @param newKey The new key to check
+     * @param proposedNewName The new key to check
      * @returns True if the key would be a duplicate, false otherwise
      */
-    public wouldCreateDuplicateKey(includes: Readonly<IncludesMap>, keyBeingRenamed: string, newKey: string): boolean {
-        // Normalize the newKey once
-        const normalizedNewKey = newKey.trim();
+    public wouldCreateDuplicateKey(
+        includes: Readonly<IncludesMap>,
+        keyBeingRenamed: string,
+        proposedNewName: string,
+    ): boolean {
+        // Normalize the proposedNewName once
+        const normalizedNewKey = proposedNewName.trim();
 
         // Check if it's the same as the original key (after trimming)
-        if (keyBeingRenamed.trim() === newKey) {
+        if (keyBeingRenamed.trim() === proposedNewName) {
             return false; // Same key, not a duplicate
         }
 
