@@ -728,12 +728,12 @@ export class SettingsTab extends PluginSettingTab {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const { includes } = this.includesSettingsService.addInclude(settings.includes);
-                    updateSettings({ includes: includes });
+                    const { includes: updatedIncludes } = this.includesSettingsService.addInclude(settings.includes);
+                    updateSettings({ includes: updatedIncludes });
                     await this.plugin.saveSettings();
 
                     // Update the local settings object to reflect the change
-                    settings.includes = { ...includes };
+                    settings.includes = { ...updatedIncludes };
                     renderIncludes();
                 });
         });
