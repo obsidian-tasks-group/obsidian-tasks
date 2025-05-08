@@ -17,11 +17,11 @@ export class IncludesSettingsService {
     }
 
     /**
-     * Checks if a new key would create a duplicate in the includes map
-     * @param includes The current includes map (will not be modified)
-     * @param keyBeingRenamed The original key (to exclude from comparison)
-     * @param proposedNewName The new key to check
-     * @returns True if the key would be a duplicate, false otherwise
+     * Checks if renaming a key would create a duplicate in the includes map
+     * @param includes The includes map to check against
+     * @param keyBeingRenamed The existing key that would be renamed
+     * @param proposedNewName The new name being considered
+     * @returns True if the proposed new name would conflict with an existing key
      */
     public wouldCreateDuplicateKey(
         includes: Readonly<IncludesMap>,
