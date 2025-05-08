@@ -60,6 +60,17 @@ describe('IncludesSettingsService', () => {
             expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', '  key2  ')).toBe(true);
         });
 
+        it.failing('should normalize both new key and existing keys by trimming whitespace', () => {
+            // Add a key with leading/trailing whitespace to the includes map
+            const includesWithSpacedKey = {
+                ...testIncludes,
+                '  spacedKey  ': 'value4',
+            };
+
+            // Should detect when we try to rename to a key that matches after trimming
+            expect(service.wouldCreateDuplicateKey(includesWithSpacedKey, 'key1', 'spacedKey')).toBe(true);
+        });
+
         // Tests for the conditional logic
 
         it('should ignore the key being renamed when checking for duplicates', () => {
@@ -86,6 +97,19 @@ describe('IncludesSettingsService', () => {
 
             // Should detect when we try to rename to an empty key that already exists
             expect(service.wouldCreateDuplicateKey(includesWithEmptyKey, 'key1', '')).toBe(true);
+        });
+
+        it.failing('should handle keys containing only whitespace', () => {
+            const includesWithWhitespaceKey = {
+                ...testIncludes,
+                '   ': 'whitespace value',
+            };
+
+            // Should detect when we try to rename to a whitespace-only key that matches after trimming
+            expect(service.wouldCreateDuplicateKey(includesWithWhitespaceKey, 'key1', '  ')).toBe(true);
+
+            // Should handle comparing empty string (after trim) with whitespace-only key
+            expect(service.wouldCreateDuplicateKey(includesWithWhitespaceKey, '   ', 'newKey')).toBe(false);
         });
 
         it('should handle case sensitivity correctly', () => {
