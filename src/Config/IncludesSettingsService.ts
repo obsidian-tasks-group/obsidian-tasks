@@ -29,6 +29,11 @@ export class IncludesSettingsService {
         keyBeingRenamed: string,
         proposedNewName: string,
     ): IncludesMap | null {
+        // Validate inputs
+        if (!proposedNewName) {
+            return null; // Empty keys are not allowed
+        }
+
         // Check if this would create a duplicate
         if (this.wouldCreateDuplicateKey(includes, keyBeingRenamed, proposedNewName)) {
             return null;
