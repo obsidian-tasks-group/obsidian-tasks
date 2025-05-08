@@ -12,6 +12,7 @@ describe('IncludesSettingsService', () => {
             key2: 'value2',
         };
     });
+
     describe('IncludesSettingsService - addInclude', () => {
         it('should add a new include with a unique key', () => {
             const result = service.addInclude(testIncludes);
@@ -19,6 +20,16 @@ describe('IncludesSettingsService', () => {
             expect(result.newKey).toBe('new_key_1');
             expect(result.includes['new_key_1']).toBe('');
             expect(Object.keys(result.includes).length).toBe(3);
+        });
+    });
+
+    describe('IncludesSettingsService - deleteInclude', () => {
+        it('should remove a key', () => {
+            const result = service.deleteInclude(testIncludes, 'key1');
+
+            expect(Object.keys(result).length).toBe(1);
+            expect(result['key1']).toBeUndefined();
+            expect(result['key2']).toBe('value2');
         });
     });
 

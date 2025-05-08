@@ -17,6 +17,18 @@ export class IncludesSettingsService {
     }
 
     /**
+     * Deletes an include from the map
+     * @param includes The current includes map (will not be modified)
+     * @param key The key to delete
+     * @returns The updated includes map
+     */
+    public deleteInclude(includes: Readonly<IncludesMap>, key: string): IncludesMap {
+        const newIncludes = { ...includes };
+        delete newIncludes[key];
+        return newIncludes;
+    }
+
+    /**
      * Checks if renaming a key would create a duplicate in the includes map
      * @param includes The includes map to check against
      * @param keyBeingRenamed The existing key that would be renamed
