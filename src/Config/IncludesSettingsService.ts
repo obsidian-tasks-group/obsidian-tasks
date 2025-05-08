@@ -38,8 +38,8 @@ export class IncludesSettingsService {
 
         // Check against all existing keys
         for (const existingKey of Object.keys(includes)) {
-            // Skip the original key
-            if (existingKey !== keyBeingRenamed && existingKey === normalizedNewName) {
+            // Skip the key being renamed (exact reference check)
+            if (existingKey !== keyBeingRenamed && existingKey.trim() === normalizedNewName) {
                 return true; // Found a duplicate
             }
         }
