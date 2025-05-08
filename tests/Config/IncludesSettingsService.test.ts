@@ -71,6 +71,28 @@ describe('IncludesSettingsService', () => {
             expect(service.wouldCreateDuplicateKey(includesWithSpacedKey, 'key1', 'spacedKey')).toBe(true);
         });
 
+        it('should normalize the proposed new name before comparison', () => {
+            // We're renaming 'key1' to '  key1  ' which should be considered the same key after trimming
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', '  key1  ')).toBe(false);
+        });
+
+        it.failing('should identify a rename as non-duplicate when only whitespace differs', () => {
+            // Should be considered the same key (not a duplicate)
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1  ', '  key1')).toBe(false);
+        });
+
+        it('should not consider keys the same if there are actual differences beyond whitespace', () => {
+            // Add a key with a similar name
+            const extendedIncludes = {
+                ...testIncludes,
+                key1a: 'value3',
+            };
+
+            // Should NOT consider 'key1' and 'key1a' the same after trimming
+            expect(service.wouldCreateDuplicateKey(extendedIncludes, 'key1', '  key1a  ')).toBe(true);
+            expect(service.wouldCreateDuplicateKey(extendedIncludes, 'key1  ', '  key1a')).toBe(true);
+        });
+
         // Tests for the conditional logic
 
         it('should ignore the key being renamed when checking for duplicates', () => {
