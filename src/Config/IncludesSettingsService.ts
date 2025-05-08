@@ -52,7 +52,7 @@ export class IncludesSettingsService {
      * @param includes The current includes map
      * @returns A unique key string
      */
-    private generateUniqueKey(includes: IncludesMap): string {
+    private generateUniqueKey(includes: Readonly<IncludesMap>): string {
         const baseKey = 'new_key';
         let suffix = 1;
         while (Object.prototype.hasOwnProperty.call(includes, `${baseKey}_${suffix}`)) {
