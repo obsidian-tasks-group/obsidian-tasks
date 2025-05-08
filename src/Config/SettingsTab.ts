@@ -27,6 +27,7 @@ export class SettingsTab extends PluginSettingTab {
     };
 
     private readonly plugin: TasksPlugin;
+    private readonly includesSettingsService = new IncludesSettingsService();
 
     constructor({ plugin }: { plugin: TasksPlugin }) {
         super(plugin.app, plugin);
@@ -727,8 +728,7 @@ export class SettingsTab extends PluginSettingTab {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const includesSettingsService = new IncludesSettingsService();
-                    const { newKey } = includesSettingsService.addInclude(settings.includes);
+                    const { newKey } = this.includesSettingsService.addInclude(settings.includes);
                     settings.includes[newKey] = '';
                     updateSettings({ includes: settings.includes });
                     await this.plugin.saveSettings();
