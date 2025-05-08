@@ -702,10 +702,8 @@ export class SettingsTab extends PluginSettingTab {
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    delete settings.includes[key];
-                    updateSettings({ includes: settings.includes });
-                    await this.plugin.saveSettings();
-                    renderIncludes();
+                    const updatedIncludes = this.includesSettingsService.deleteInclude(settings.includes, key);
+                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                 });
         });
     }
