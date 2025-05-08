@@ -23,6 +23,23 @@ describe('IncludesSettingsService', () => {
         });
     });
 
+    describe('IncludesSettingsService - renameInclude', () => {
+        it('should rename a key and preserve order', () => {
+            const result = service.renameInclude(testIncludes, 'key1', 'newName');
+
+            expect(result).not.toBeNull();
+            expect(Object.keys(result!)[0]).toBe('newName');
+            expect(result!['newName']).toBe('value1');
+            expect(Object.keys(result!).length).toBe(2);
+        });
+
+        it('should return null for duplicate keys', () => {
+            const result = service.renameInclude(testIncludes, 'key1', 'key2');
+
+            expect(result).toBeNull();
+        });
+    });
+
     describe('IncludesSettingsService - deleteInclude', () => {
         it('should remove a key', () => {
             const result = service.deleteInclude(testIncludes, 'key1');

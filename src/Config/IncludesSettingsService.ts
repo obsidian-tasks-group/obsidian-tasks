@@ -1,3 +1,4 @@
+import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import type { IncludesMap } from './Settings';
 
 export class IncludesSettingsService {
@@ -14,6 +15,22 @@ export class IncludesSettingsService {
             includes: newIncludes,
             newKey,
         };
+    }
+
+    /**
+     * Renames a key in the includes map, preserving order
+     * @param includes The current includes map (will not be modified)
+     * @param oldKey The key to rename
+     * @param newKey The new key name
+     * @returns The updated includes map, or null if the operation failed (for example, duplicate key)
+     */
+    public renameInclude(includes: Readonly<IncludesMap>, oldKey: string, newKey: string): IncludesMap | null {
+        // Check if this would create a duplicate
+        if (this.wouldCreateDuplicateKey(includes, oldKey, newKey)) {
+            return null;
+        }
+
+        return renameKeyInRecordPreservingOrder(includes, oldKey, newKey);
     }
 
     /**
