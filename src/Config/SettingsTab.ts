@@ -6,7 +6,6 @@ import { Status } from '../Statuses/Status';
 import type { StatusCollection } from '../Statuses/StatusCollection';
 import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
-import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import * as Themes from './Themes';
 import { type HeadingState, type IncludesMap, type Settings, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
@@ -664,13 +663,10 @@ export class SettingsTab extends PluginSettingTab {
             // Handle renaming an include
             const commitRename = async () => {
                 if (newKey && newKey !== key) {
-                    const newIncludes = renameKeyInRecordPreservingOrder(settings.includes, key, newKey);
-                    updateSettings({ includes: newIncludes });
-                    await this.plugin.saveSettings();
-
-                    // Refresh settings after replacing the includes object to avoid stale data in the next render.
-                    Object.assign(settings, getSettings());
-                    renderIncludes();
+                    const updatedIncludes = this.includesSettingsService.renameInclude(settings.includes, key, newKey);
+                    if (updatedIncludes) {
+                        await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                    }
                 }
             };
 
