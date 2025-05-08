@@ -29,7 +29,7 @@ export class IncludesSettingsService {
         proposedNewName: string,
     ): boolean {
         // Normalize the proposedNewName once
-        const normalizedNewKey = proposedNewName.trim();
+        const normalizedNewName = proposedNewName.trim();
 
         // Check if it's the same as the original key (after trimming)
         if (keyBeingRenamed.trim() === proposedNewName) {
@@ -39,7 +39,7 @@ export class IncludesSettingsService {
         // Check against all existing keys
         for (const existingKey of Object.keys(includes)) {
             // Skip the original key
-            if (existingKey !== keyBeingRenamed && existingKey === normalizedNewKey) {
+            if (existingKey !== keyBeingRenamed && existingKey === normalizedNewName) {
                 return true; // Found a duplicate
             }
         }
