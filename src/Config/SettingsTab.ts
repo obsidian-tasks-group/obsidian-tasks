@@ -734,7 +734,11 @@ export class SettingsTab extends PluginSettingTab {
         });
     }
 
-    private async saveIncludesSettings(updatedIncludes: IncludesMap, settings: Settings, refreshView: () => void) {
+    private async saveIncludesSettings(
+        updatedIncludes: IncludesMap,
+        settings: Settings,
+        refreshView: () => void,
+    ): Promise<void> {
         updateSettings({ includes: updatedIncludes });
         await this.plugin.saveSettings();
 
