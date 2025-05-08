@@ -20,17 +20,17 @@ export class IncludesSettingsService {
     /**
      * Renames a key in the includes map, preserving order
      * @param includes The current includes map (will not be modified)
-     * @param oldKey The key to rename
+     * @param keyBeingRenamed The existing key that would be renamed
      * @param newKey The new key name
      * @returns The updated includes map, or null if the operation failed (for example, duplicate key)
      */
-    public renameInclude(includes: Readonly<IncludesMap>, oldKey: string, newKey: string): IncludesMap | null {
+    public renameInclude(includes: Readonly<IncludesMap>, keyBeingRenamed: string, newKey: string): IncludesMap | null {
         // Check if this would create a duplicate
-        if (this.wouldCreateDuplicateKey(includes, oldKey, newKey)) {
+        if (this.wouldCreateDuplicateKey(includes, keyBeingRenamed, newKey)) {
             return null;
         }
 
-        return renameKeyInRecordPreservingOrder(includes, oldKey, newKey);
+        return renameKeyInRecordPreservingOrder(includes, keyBeingRenamed, newKey);
     }
 
     /**
