@@ -21,12 +21,90 @@ describe('IncludesSettingsService', () => {
         expect(Object.keys(result.includes).length).toBe(3);
     });
 
-    it('should detect duplicates', () => {
-        // Checks if a new key would create a duplicate in the includes map
-        expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'key2')).toBe(true);
-        expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'key3')).toBe(false);
-        expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'key1')).toBe(false);
-        expect(service.wouldCreateDuplicateKey(testIncludes, ' key1 ', 'key1')).toBe(false); // Trim test
-        expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', ' key2 ')).toBe(true); // Trim test
+    describe('IncludesSettingsService - wouldCreateDuplicateKey', () => {
+        let service: IncludesSettingsService;
+        let testIncludes: IncludesMap;
+
+        beforeEach(() => {
+            service = new IncludesSettingsService();
+            testIncludes = {
+                key1: 'value1',
+                key2: 'value2',
+                'key with spaces': 'value3',
+            };
+        });
+
+        // Basic functionality tests
+
+        it('should return false when renaming a key to itself', () => {
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'key1')).toBe(false);
+        });
+
+        it('should return true when new name matches an existing key', () => {
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'key2')).toBe(true);
+        });
+
+        it('should return false when new name does not match any existing key', () => {
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'uniqueKey')).toBe(false);
+        });
+
+        // Tests for the trimming logic
+
+        it('should return false when renaming a key to itself but with different whitespace', () => {
+            // This tests the first trim() call - comparing original key (trimmed) with new key
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', '  key1  ')).toBe(false);
+        });
+
+        it('should return true when new name matches an existing key after trimming', () => {
+            // This tests the second trim() call - comparing existing keys (trimmed) with new key
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', '  key2  ')).toBe(true);
+        });
+
+        // Tests for the conditional logic
+
+        it('should ignore the key being renamed when checking for duplicates', () => {
+            // This tests the existingKey !== keyBeingRenamed check
+            // We're renaming 'key1' to 'uniqueKey', and checking that 'key1' isn't considered a duplicate
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'uniqueKey')).toBe(false);
+        });
+
+        it('should detect duplicates with spaces in the keys', () => {
+            // Should detect a duplicate when the existing key has spaces
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'key with spaces')).toBe(true);
+        });
+
+        // Edge cases
+
+        it('should handle empty keys appropriately', () => {
+            // Should not detect a duplicate when the empty key doesn't exist
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', '')).toBe(false);
+
+            const includesWithEmptyKey = {
+                ...testIncludes,
+                '': 'empty value',
+            };
+
+            // Should detect when we try to rename to an empty key that already exists
+            expect(service.wouldCreateDuplicateKey(includesWithEmptyKey, 'key1', '')).toBe(true);
+        });
+
+        it('should handle case sensitivity correctly', () => {
+            // Keys should be case-sensitive
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'Key2')).toBe(false);
+            expect(service.wouldCreateDuplicateKey(testIncludes, 'key1', 'KEY2')).toBe(false);
+        });
+
+        it('should handle special characters in keys', () => {
+            const includesWithSpecialChars = {
+                ...testIncludes,
+                'special!@#': 'special value',
+            };
+
+            // Should detect a duplicate with special characters
+            expect(service.wouldCreateDuplicateKey(includesWithSpecialChars, 'key1', 'special!@#')).toBe(true);
+
+            // Should not detect a duplicate with slightly different special characters
+            expect(service.wouldCreateDuplicateKey(includesWithSpecialChars, 'key1', 'special!@')).toBe(false);
+        });
     });
 });
