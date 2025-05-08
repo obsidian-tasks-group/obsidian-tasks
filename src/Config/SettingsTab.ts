@@ -6,15 +6,15 @@ import { Status } from '../Statuses/Status';
 import type { StatusCollection } from '../Statuses/StatusCollection';
 import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
-import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import * as Themes from './Themes';
-import { type HeadingState, type Settings, TASK_FORMATS } from './Settings';
+import { type HeadingState, type IncludesMap, type Settings, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
+import { IncludesSettingsService } from './IncludesSettingsService';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -26,6 +26,7 @@ export class SettingsTab extends PluginSettingTab {
     };
 
     private readonly plugin: TasksPlugin;
+    private readonly includesSettingsService = new IncludesSettingsService();
 
     constructor({ plugin }: { plugin: TasksPlugin }) {
         super(plugin.app, plugin);
@@ -662,13 +663,10 @@ export class SettingsTab extends PluginSettingTab {
             // Handle renaming an include
             const commitRename = async () => {
                 if (newKey && newKey !== key) {
-                    const newIncludes = renameKeyInRecordPreservingOrder(settings.includes, key, newKey);
-                    updateSettings({ includes: newIncludes });
-                    await this.plugin.saveSettings();
-
-                    // Refresh settings after replacing the includes object to avoid stale data in the next render.
-                    Object.assign(settings, getSettings());
-                    renderIncludes();
+                    const updatedIncludes = this.includesSettingsService.renameInclude(settings.includes, key, newKey);
+                    if (updatedIncludes) {
+                        await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                    }
                 }
             };
 
@@ -689,9 +687,12 @@ export class SettingsTab extends PluginSettingTab {
             this.setupAutoResizingTextarea(textArea);
 
             return textArea.onChange(async (newValue) => {
-                settings.includes[key] = newValue;
-                updateSettings({ includes: settings.includes });
-                await this.plugin.saveSettings();
+                const updatedIncludes = this.includesSettingsService.updateIncludeValue(
+                    settings.includes,
+                    key,
+                    newValue,
+                );
+                await this.saveIncludesSettings(updatedIncludes, settings, null);
             });
         });
 
@@ -700,10 +701,8 @@ export class SettingsTab extends PluginSettingTab {
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    delete settings.includes[key];
-                    updateSettings({ includes: settings.includes });
-                    await this.plugin.saveSettings();
-                    renderIncludes();
+                    const updatedIncludes = this.includesSettingsService.deleteInclude(settings.includes, key);
+                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                 });
         });
     }
@@ -726,22 +725,34 @@ export class SettingsTab extends PluginSettingTab {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const newKey = this.generateUniqueIncludeKey(settings);
-                    settings.includes[newKey] = '';
-                    updateSettings({ includes: settings.includes });
-                    await this.plugin.saveSettings();
-                    renderIncludes();
+                    const { includes: updatedIncludes } = this.includesSettingsService.addInclude(settings.includes);
+                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                 });
         });
     }
 
-    private generateUniqueIncludeKey(settings: Settings) {
-        const baseKey = 'new_key';
-        let suffix = 1;
-        while (Object.prototype.hasOwnProperty.call(settings.includes, `${baseKey}_${suffix}`)) {
-            suffix++;
+    /**
+     * Updates settings with new includes and refreshes UI if needed
+     * @param updatedIncludes The new includes map
+     * @param settings The current settings object to update
+     * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
+     */
+    private async saveIncludesSettings(
+        updatedIncludes: IncludesMap,
+        settings: Settings,
+        refreshView: (() => void) | null,
+    ): Promise<void> {
+        // Update the settings in storage
+        updateSettings({ includes: updatedIncludes });
+        await this.plugin.saveSettings();
+
+        // Update the local settings object to reflect the changes
+        settings.includes = { ...updatedIncludes };
+
+        // Refresh the view if a callback was provided
+        if (refreshView) {
+            refreshView();
         }
-        return `${baseKey}_${suffix}`;
     }
 
     private static renderFolderArray(folders: string[]): string {
