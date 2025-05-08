@@ -38,6 +38,12 @@ describe('IncludesSettingsService', () => {
 
             expect(result).toBeNull();
         });
+
+        it.failing('should return null for empty new key', () => {
+            const result = service.renameInclude(testIncludes, 'key1', '');
+
+            expect(result).toBeNull();
+        });
     });
 
     describe('IncludesSettingsService - deleteInclude', () => {
