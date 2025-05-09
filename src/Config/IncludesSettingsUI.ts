@@ -23,25 +23,16 @@ export class IncludesSettingsUI {
         settings: Settings,
         refreshView: RefreshViewCallback | null,
     ) {
-        await saveIncludesSettings(updatedIncludes, this.plugin, settings, refreshView);
-    }
-}
+        // Update the settings in storage
+        updateSettings({ includes: updatedIncludes });
+        await this.plugin.saveSettings();
 
-export async function saveIncludesSettings(
-    updatedIncludes: IncludesMap,
-    plugin: TasksPlugin,
-    settings: Settings,
-    refreshView: (() => void) | null,
-) {
-    // Update the settings in storage
-    updateSettings({ includes: updatedIncludes });
-    await plugin.saveSettings();
+        // Update the local settings object to reflect the changes
+        settings.includes = { ...updatedIncludes };
 
-    // Update the local settings object to reflect the changes
-    settings.includes = { ...updatedIncludes };
-
-    // Refresh the view if a callback was provided
-    if (refreshView) {
-        refreshView();
+        // Refresh the view if a callback was provided
+        if (refreshView) {
+            refreshView();
+        }
     }
 }
