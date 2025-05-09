@@ -12,6 +12,12 @@ export class IncludesSettingsUI {
         this.plugin = plugin;
     }
 
+    /**
+     * Updates settings with new includes and refreshes UI if needed
+     * @param updatedIncludes The new includes map
+     * @param settings The current settings object to update
+     * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
+     */
     public async saveIncludesSettings(
         updatedIncludes: IncludesMap,
         settings: Settings,
