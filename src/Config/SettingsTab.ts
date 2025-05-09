@@ -21,25 +21,7 @@ import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
-import { IncludesSettingsUI, type RefreshViewCallback } from './IncludesSettingsUI';
-
-function createAddNewIncludeButton(
-    includesSettingsUI: any,
-    containerEl: HTMLElement,
-    settings: Settings,
-    renderIncludes: () => void,
-) {
-    new Setting(containerEl).addButton((btn) => {
-        btn.setButtonText('Add new include')
-            .setCta()
-            .onClick(async () => {
-                const { includes: updatedIncludes } = includesSettingsUI.includesSettingsService.addInclude(
-                    settings.includes,
-                );
-                await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
-            });
-    });
-}
+import { IncludesSettingsUI, type RefreshViewCallback, createAddNewIncludeButton } from './IncludesSettingsUI';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
