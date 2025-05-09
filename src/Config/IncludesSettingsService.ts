@@ -3,7 +3,7 @@ import type { IncludesMap } from './Settings';
 
 export class IncludesSettingsService {
     public validateIncludeName(
-        _testIncludes: IncludesMap,
+        _testIncludes: Readonly<IncludesMap>,
         _keyBeingRenamed: string,
         proposedName: string,
     ): { isValid: boolean; errorMessage: string | null } {
