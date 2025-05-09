@@ -14,7 +14,20 @@ export class IncludesSettingsUI {
     }
 
     public renderIncludesSettings(containerEl: HTMLElement, includesSettingsUI: IncludesSettingsUI) {
-        renderIncludesSettings(containerEl, includesSettingsUI);
+        const includesContainer = containerEl.createDiv();
+        const settings = getSettings();
+
+        const renderIncludes = () => {
+            includesContainer.empty();
+
+            Object.entries(settings.includes).forEach(([key, value]) => {
+                includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
+            });
+        };
+
+        renderIncludes();
+
+        includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
     }
 
     renderIncludeItem(
@@ -133,21 +146,4 @@ export class IncludesSettingsUI {
             refreshView();
         }
     }
-}
-
-export function renderIncludesSettings(containerEl: HTMLElement, includesSettingsUI: any) {
-    const includesContainer = containerEl.createDiv();
-    const settings = getSettings();
-
-    const renderIncludes = () => {
-        includesContainer.empty();
-
-        Object.entries(settings.includes).forEach(([key, value]) => {
-            includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
-        });
-    };
-
-    renderIncludes();
-
-    includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
 }
