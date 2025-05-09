@@ -22,7 +22,7 @@ import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
-import { IncludesSettingsUI, type RefreshViewCallback, saveIncludesSettings } from './IncludesSettingsUI';
+import { IncludesSettingsUI, type RefreshViewCallback } from './IncludesSettingsUI';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -765,7 +765,7 @@ export class SettingsTab extends PluginSettingTab {
         refreshView: RefreshViewCallback | null,
     ): Promise<void> {
         const plugin = this.plugin;
-        await saveIncludesSettings(updatedIncludes, plugin, settings, refreshView);
+        await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, plugin, settings, refreshView);
     }
 
     private static renderFolderArray(folders: string[]): string {

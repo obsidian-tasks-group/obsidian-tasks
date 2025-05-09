@@ -12,6 +12,15 @@ export class IncludesSettingsUI {
     constructor(plugin: TasksPlugin) {
         this.plugin = plugin;
     }
+
+    public async saveIncludesSettings(
+        updatedIncludes: IncludesMap,
+        plugin: TasksPlugin,
+        settings: Settings,
+        refreshView: RefreshViewCallback | null,
+    ) {
+        await saveIncludesSettings(updatedIncludes, plugin, settings, refreshView);
+    }
 }
 
 export async function saveIncludesSettings(
