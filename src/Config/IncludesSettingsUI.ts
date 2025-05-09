@@ -13,6 +13,15 @@ export class IncludesSettingsUI {
         this.plugin = plugin;
     }
 
+    createAddNewIncludeButton(
+        includesSettingsUI: IncludesSettingsUI,
+        containerEl: HTMLElement,
+        settings: Settings,
+        renderIncludes: RefreshViewCallback,
+    ) {
+        createAddNewIncludeButton(includesSettingsUI, containerEl, settings, renderIncludes);
+    }
+
     /**
      * Updates settings with new includes and refreshes UI if needed
      * @param updatedIncludes The new includes map
