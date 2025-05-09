@@ -3,7 +3,7 @@ import type TasksPlugin from '../main';
 import { IncludesSettingsService } from './IncludesSettingsService';
 import { type IncludesMap, type Settings, getSettings, updateSettings } from './Settings';
 
-export type RefreshViewCallback = () => void;
+type RefreshViewCallback = () => void;
 
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
