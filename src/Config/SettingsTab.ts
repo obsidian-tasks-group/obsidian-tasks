@@ -163,7 +163,7 @@ export class SettingsTab extends PluginSettingTab {
                 'You can define named instructions here, that you can re-use in multiple queries. They can be used with "{{includes.name}}" and "include name".',
             );
         // ---------------------------------------------------------------------------
-        this.renderIncludesSettings(containerEl);
+        this.includesSettingsUI.renderIncludesSettings(containerEl);
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
@@ -627,11 +627,6 @@ export class SettingsTab extends PluginSettingTab {
                 .filter((folder) => folder !== '')
         );
     }
-
-    private renderIncludesSettings(containerEl: HTMLElement) {
-        this.includesSettingsUI.renderIncludesSettings(containerEl);
-    }
-
     private static renderFolderArray(folders: string[]): string {
         return folders.join(',');
     }
