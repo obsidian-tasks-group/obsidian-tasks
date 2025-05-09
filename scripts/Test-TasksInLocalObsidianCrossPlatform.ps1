@@ -10,8 +10,11 @@
 
 # How to temporarily set environment variables:
 # In PowerShell, you can set environment variables using the following command:
+# Windows:
 # $env:OBSIDIAN_PLUGIN_ROOT = "C:\path\to\your\obsidian\plugins"
 # $env:OBSIDIAN_PLUGIN_NAME = "your-plugin-name"
+# Linux/Mac:
+# TODO: Add Linux/Mac instructions
 
 # How to persist environment variables:
 # You can set environment variables in your PowerShell profile script to persist them across sessions.
