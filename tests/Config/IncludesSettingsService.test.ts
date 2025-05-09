@@ -31,8 +31,7 @@ describe('IncludesSettingsService', () => {
         it('should reject an empty new name', () => {
             const result = service.validateIncludeName(testIncludes, 'key1', '');
 
-            const errorMessage = 'Include name cannot be empty or all whitespace';
-            expectIsNotValid(result, errorMessage);
+            expectIsNotValid(result, 'Include name cannot be empty or all whitespace');
         });
 
         it('should reject an new name with only whitespaces', () => {
@@ -48,9 +47,7 @@ describe('IncludesSettingsService', () => {
         });
 
         it('should treat renaming to self as valid', () => {
-            const result = service.validateIncludeName(testIncludes, 'key1', 'key1');
-
-            expectIsValid(result);
+            expectIsValid(service.validateIncludeName(testIncludes, 'key1', 'key1'));
         });
     });
 
