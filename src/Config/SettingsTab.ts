@@ -756,9 +756,11 @@ export class SettingsTab extends PluginSettingTab {
         settings: Settings,
         refreshView: RefreshViewCallback | null,
     ): Promise<void> {
+        const plugin = this.plugin;
+
         // Update the settings in storage
         updateSettings({ includes: updatedIncludes });
-        await this.plugin.saveSettings();
+        await plugin.saveSettings();
 
         // Update the local settings object to reflect the changes
         settings.includes = { ...updatedIncludes };
