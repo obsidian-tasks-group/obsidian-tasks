@@ -20,7 +20,7 @@ import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
-import { IncludesSettingsUI, renderIncludesSettings } from './IncludesSettingsUI';
+import { IncludesSettingsUI } from './IncludesSettingsUI';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -630,7 +630,7 @@ export class SettingsTab extends PluginSettingTab {
 
     private renderIncludesSettings(containerEl: HTMLElement) {
         const includesSettingsUI = this.includesSettingsUI;
-        renderIncludesSettings(containerEl, includesSettingsUI);
+        this.includesSettingsUI.renderIncludesSettings(containerEl, includesSettingsUI);
     }
 
     private static renderFolderArray(folders: string[]): string {
