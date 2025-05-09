@@ -1,3 +1,4 @@
+import { Setting } from 'obsidian';
 import type TasksPlugin from '../main';
 import { IncludesSettingsService } from './IncludesSettingsService';
 import { type IncludesMap, type Settings, updateSettings } from './Settings';
@@ -35,4 +36,22 @@ export class IncludesSettingsUI {
             refreshView();
         }
     }
+}
+
+export function createAddNewIncludeButton(
+    includesSettingsUI: any,
+    containerEl: HTMLElement,
+    settings: Settings,
+    renderIncludes: () => void,
+) {
+    new Setting(containerEl).addButton((btn) => {
+        btn.setButtonText('Add new include')
+            .setCta()
+            .onClick(async () => {
+                const { includes: updatedIncludes } = includesSettingsUI.includesSettingsService.addInclude(
+                    settings.includes,
+                );
+                await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+            });
+    });
 }
