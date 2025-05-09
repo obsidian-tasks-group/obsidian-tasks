@@ -653,6 +653,8 @@ export class SettingsTab extends PluginSettingTab {
         value: string,
         renderIncludes: RefreshViewCallback,
     ) {
+        const includesSettingsUI = this.includesSettingsUI;
+
         const wrapper = includesContainer.createDiv({ cls: 'tasks-includes-wrapper' });
         const setting = new Setting(wrapper);
         setting.settingEl.addClass('tasks-includes-setting');
@@ -671,13 +673,13 @@ export class SettingsTab extends PluginSettingTab {
             // Handle renaming an include
             const commitRename = async () => {
                 if (newKey && newKey !== key) {
-                    const updatedIncludes = this.includesSettingsUI.includesSettingsService.renameInclude(
+                    const updatedIncludes = includesSettingsUI.includesSettingsService.renameInclude(
                         settings.includes,
                         key,
                         newKey,
                     );
                     if (updatedIncludes) {
-                        await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                        await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                     }
                 }
             };
