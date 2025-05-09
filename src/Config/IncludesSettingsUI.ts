@@ -1,7 +1,7 @@
 import { Setting, TextAreaComponent } from 'obsidian';
 import type TasksPlugin from '../main';
 import { IncludesSettingsService } from './IncludesSettingsService';
-import { type IncludesMap, type Settings, updateSettings } from './Settings';
+import { type IncludesMap, type Settings, getSettings, updateSettings } from './Settings';
 
 export type RefreshViewCallback = () => void;
 
@@ -129,4 +129,21 @@ export class IncludesSettingsUI {
             refreshView();
         }
     }
+}
+
+export function renderIncludesSettings(containerEl: HTMLElement, includesSettingsUI: any) {
+    const includesContainer = containerEl.createDiv();
+    const settings = getSettings();
+
+    const renderIncludes = () => {
+        includesContainer.empty();
+
+        Object.entries(settings.includes).forEach(([key, value]) => {
+            includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
+        });
+    };
+
+    renderIncludes();
+
+    includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
 }
