@@ -13,6 +13,15 @@ describe('IncludesSettingsService', () => {
         };
     });
 
+    describe('IncludesSettingsService - validateIncludeName', () => {
+        it('should recognise valid new name', () => {
+            const result = service.validateIncludeName(testIncludes, 'key1', 'new-name');
+
+            expect(result.isValid).toBe(true);
+            expect(result.errorMessage).toBe(null);
+        });
+    });
+
     describe('IncludesSettingsService - addInclude', () => {
         it('should add a new include with a unique key', () => {
             const result = service.addInclude(testIncludes);
