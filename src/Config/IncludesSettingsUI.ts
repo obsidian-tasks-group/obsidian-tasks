@@ -14,7 +14,14 @@ export class IncludesSettingsUI {
     }
 
     createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, renderIncludes: RefreshViewCallback) {
-        createAddNewIncludeButton(this, containerEl, settings, renderIncludes);
+        new Setting(containerEl).addButton((btn) => {
+            btn.setButtonText('Add new include')
+                .setCta()
+                .onClick(async () => {
+                    const { includes: updatedIncludes } = this.includesSettingsService.addInclude(settings.includes);
+                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                });
+        });
     }
 
     /**
@@ -40,22 +47,4 @@ export class IncludesSettingsUI {
             refreshView();
         }
     }
-}
-
-export function createAddNewIncludeButton(
-    includesSettingsUI: any,
-    containerEl: HTMLElement,
-    settings: Settings,
-    renderIncludes: () => void,
-) {
-    new Setting(containerEl).addButton((btn) => {
-        btn.setButtonText('Add new include')
-            .setCta()
-            .onClick(async () => {
-                const { includes: updatedIncludes } = includesSettingsUI.includesSettingsService.addInclude(
-                    settings.includes,
-                );
-                await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
-            });
-    });
 }
