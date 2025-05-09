@@ -7,12 +7,11 @@ export type RefreshViewCallback = () => void;
 export class IncludesSettingsUI {
     // @ts-expect-error: plugin unused
     private readonly plugin: TasksPlugin;
+    public readonly includesSettingsService = new IncludesSettingsService();
 
     constructor(plugin: TasksPlugin) {
         this.plugin = plugin;
     }
-
-    public readonly includesSettingsService = new IncludesSettingsService();
 }
 
 export async function saveIncludesSettings(
