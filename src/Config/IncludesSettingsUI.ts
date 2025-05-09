@@ -13,7 +13,8 @@ export class IncludesSettingsUI {
         this.plugin = plugin;
     }
 
-    public renderIncludesSettings(containerEl: HTMLElement, includesSettingsUI: IncludesSettingsUI) {
+    public renderIncludesSettings(containerEl: HTMLElement, _includesSettingsUI: IncludesSettingsUI) {
+        const includesSettingsUI = this;
         const includesContainer = containerEl.createDiv();
         const settings = getSettings();
 
