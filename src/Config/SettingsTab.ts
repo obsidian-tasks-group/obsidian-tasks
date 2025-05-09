@@ -22,6 +22,23 @@ import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
 import { IncludesSettingsUI } from './IncludesSettingsUI';
 
+function renderIncludesSettings(containerEl: HTMLElement, includesSettingsUI: any) {
+    const includesContainer = containerEl.createDiv();
+    const settings = getSettings();
+
+    const renderIncludes = () => {
+        includesContainer.empty();
+
+        Object.entries(settings.includes).forEach(([key, value]) => {
+            includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
+        });
+    };
+
+    renderIncludes();
+
+    includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
+}
+
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
     // custom function and specify it from the json file. It will
@@ -630,21 +647,7 @@ export class SettingsTab extends PluginSettingTab {
 
     private renderIncludesSettings(containerEl: HTMLElement) {
         const includesSettingsUI = this.includesSettingsUI;
-
-        const includesContainer = containerEl.createDiv();
-        const settings = getSettings();
-
-        const renderIncludes = () => {
-            includesContainer.empty();
-
-            Object.entries(settings.includes).forEach(([key, value]) => {
-                includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
-            });
-        };
-
-        renderIncludes();
-
-        includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
+        renderIncludesSettings(containerEl, includesSettingsUI);
     }
 
     private static renderFolderArray(folders: string[]): string {
