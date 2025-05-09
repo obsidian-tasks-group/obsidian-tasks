@@ -629,6 +629,8 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     private renderIncludesSettings(containerEl: HTMLElement) {
+        const includesSettingsUI = this.includesSettingsUI;
+
         const includesContainer = containerEl.createDiv();
         const settings = getSettings();
 
@@ -636,13 +638,13 @@ export class SettingsTab extends PluginSettingTab {
             includesContainer.empty();
 
             Object.entries(settings.includes).forEach(([key, value]) => {
-                this.includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
+                includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
             });
         };
 
         renderIncludes();
 
-        this.includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
+        includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
     }
 
     private static renderFolderArray(folders: string[]): string {
