@@ -30,19 +30,16 @@ describe('IncludesSettingsService', () => {
 
         it('should reject an empty new name', () => {
             const result = service.validateIncludeName(testIncludes, 'key1', '');
-
             expectIsNotValid(result, 'Include name cannot be empty or all whitespace');
         });
 
         it('should reject an new name with only whitespaces', () => {
             const result = service.validateIncludeName(testIncludes, 'key1', ' \t');
-
             expectIsNotValid(result, 'Include name cannot be empty or all whitespace');
         });
 
         it('should reject a new name if it already exists', () => {
             const result = service.validateIncludeName(testIncludes, 'key1', 'key2');
-
             expectIsNotValid(result, 'An include with this name already exists');
         });
 
