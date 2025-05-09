@@ -14,12 +14,12 @@ export class IncludesSettingsUI {
     }
 
     createAddNewIncludeButton(
-        includesSettingsUI: IncludesSettingsUI,
+        _includesSettingsUI: IncludesSettingsUI,
         containerEl: HTMLElement,
         settings: Settings,
         renderIncludes: RefreshViewCallback,
     ) {
-        createAddNewIncludeButton(includesSettingsUI, containerEl, settings, renderIncludes);
+        createAddNewIncludeButton(this, containerEl, settings, renderIncludes);
     }
 
     /**
