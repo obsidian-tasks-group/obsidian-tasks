@@ -1,0 +1,53 @@
+/* ---------------------------------------------- */
+/* Includes section                               */
+/* ---------------------------------------------- */
+
+/* Container for each setting row */
+.tasks-settings .tasks-includes-wrapper {
+    width: 100%;
+}
+
+/* Flex layout for each row */
+.tasks-settings .tasks-includes-setting.setting-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1em;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Input for key */
+.tasks-settings .tasks-includes-setting .tasks-includes-key {
+    width: 200px;
+    flex-shrink: 0;
+}
+
+/* Textarea for value */
+.tasks-settings .tasks-includes-setting .tasks-includes-value {
+    flex-grow: 1;
+    min-width: 300px;
+    min-height: 3em;
+    font-family: monospace;
+    resize: horizontal;      // allow horizontal resizing
+    overflow-x: auto;        // allow horizontal scrolling
+    overflow-y: hidden;      // hide vertical scrollbar
+    white-space: pre;        // prevent wrapping
+}
+
+/* Responsive: stack in narrow view */
+@media (max-width: 600px) {
+    .tasks-settings .tasks-includes-setting.setting-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.tasks-includes-setting {
+    .setting-item-info:has(.setting-item-name:empty):has(.setting-item-description:empty) {
+        display: none;
+    }
+
+    .setting-item-control {
+        align-items: unset;
+    }
+}
