@@ -629,8 +629,7 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     private renderIncludesSettings(containerEl: HTMLElement) {
-        const includesSettingsUI = this.includesSettingsUI;
-        this.includesSettingsUI.renderIncludesSettings(containerEl, includesSettingsUI);
+        this.includesSettingsUI.renderIncludesSettings(containerEl);
     }
 
     private static renderFolderArray(folders: string[]): string {
