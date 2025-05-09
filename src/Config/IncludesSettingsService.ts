@@ -2,7 +2,15 @@ import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import type { IncludesMap } from './Settings';
 
 export class IncludesSettingsService {
-    public validateIncludeName(_testIncludes: IncludesMap, _keyBeingRenamed: string, _proposedName: string) {
+    public validateIncludeName(_testIncludes: IncludesMap, _keyBeingRenamed: string, proposedName: string) {
+        // Check for empty name
+        if (!proposedName) {
+            return {
+                isValid: false,
+                errorMessage: 'Include name cannot be empty',
+            };
+        }
+
         return { isValid: true, errorMessage: null };
     }
 

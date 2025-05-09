@@ -20,6 +20,13 @@ describe('IncludesSettingsService', () => {
             expect(result.isValid).toBe(true);
             expect(result.errorMessage).toBe(null);
         });
+
+        it('should reject an empty new name', () => {
+            const result = service.validateIncludeName(testIncludes, 'key1', '');
+
+            expect(result.isValid).toBe(false);
+            expect(result.errorMessage).toBe('Include name cannot be empty');
+        });
     });
 
     describe('IncludesSettingsService - addInclude', () => {
