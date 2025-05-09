@@ -20,7 +20,66 @@ export class IncludesSettingsUI {
         value: string,
         renderIncludes: RefreshViewCallback,
     ) {
-        renderIncludeItem(this, includesContainer, settings, key, value, renderIncludes);
+        const wrapper = includesContainer.createDiv({ cls: 'tasks-includes-wrapper' });
+        const setting = new Setting(wrapper);
+        setting.settingEl.addClass('tasks-includes-setting');
+
+        // Add name input field
+        setting.addText((text) => {
+            text.setPlaceholder('Name').setValue(key);
+            text.inputEl.addClass('tasks-includes-key');
+
+            let newKey = key;
+
+            text.inputEl.addEventListener('input', (e) => {
+                newKey = (e.target as HTMLInputElement).value;
+            });
+
+            // Handle renaming an include
+            const commitRename = async () => {
+                if (newKey && newKey !== key) {
+                    const updatedIncludes = this.includesSettingsService.renameInclude(settings.includes, key, newKey);
+                    if (updatedIncludes) {
+                        await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                    }
+                }
+            };
+
+            text.inputEl.addEventListener('blur', commitRename);
+            text.inputEl.addEventListener('keydown', async (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    text.inputEl.blur(); // trigger blur handler
+                }
+            });
+        });
+
+        // Add value textarea
+        setting.addTextArea((textArea) => {
+            textArea.inputEl.addClass('tasks-includes-value');
+            textArea.setPlaceholder('Query or filter text...').setValue(value);
+
+            this.setupAutoResizingTextarea(textArea);
+
+            return textArea.onChange(async (newValue) => {
+                const updatedIncludes = this.includesSettingsService.updateIncludeValue(
+                    settings.includes,
+                    key,
+                    newValue,
+                );
+                await this.saveIncludesSettings(updatedIncludes, settings, null);
+            });
+        });
+
+        // Add delete button
+        setting.addExtraButton((btn) => {
+            btn.setIcon('cross')
+                .setTooltip('Delete')
+                .onClick(async () => {
+                    const updatedIncludes = this.includesSettingsService.deleteInclude(settings.includes, key);
+                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                });
+        });
     }
 
     public setupAutoResizingTextarea(textArea: TextAreaComponent) {
@@ -70,81 +129,4 @@ export class IncludesSettingsUI {
             refreshView();
         }
     }
-}
-
-export function renderIncludeItem(
-    includesSettingsUI: any,
-    includesContainer: HTMLDivElement,
-    settings: Settings,
-    key: string,
-    value: string,
-    renderIncludes: RefreshViewCallback,
-) {
-    const wrapper = includesContainer.createDiv({ cls: 'tasks-includes-wrapper' });
-    const setting = new Setting(wrapper);
-    setting.settingEl.addClass('tasks-includes-setting');
-
-    // Add name input field
-    setting.addText((text) => {
-        text.setPlaceholder('Name').setValue(key);
-        text.inputEl.addClass('tasks-includes-key');
-
-        let newKey = key;
-
-        text.inputEl.addEventListener('input', (e) => {
-            newKey = (e.target as HTMLInputElement).value;
-        });
-
-        // Handle renaming an include
-        const commitRename = async () => {
-            if (newKey && newKey !== key) {
-                const updatedIncludes = includesSettingsUI.includesSettingsService.renameInclude(
-                    settings.includes,
-                    key,
-                    newKey,
-                );
-                if (updatedIncludes) {
-                    await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
-                }
-            }
-        };
-
-        text.inputEl.addEventListener('blur', commitRename);
-        text.inputEl.addEventListener('keydown', async (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                text.inputEl.blur(); // trigger blur handler
-            }
-        });
-    });
-
-    // Add value textarea
-    setting.addTextArea((textArea) => {
-        textArea.inputEl.addClass('tasks-includes-value');
-        textArea.setPlaceholder('Query or filter text...').setValue(value);
-
-        includesSettingsUI.setupAutoResizingTextarea(textArea);
-
-        return textArea.onChange(async (newValue) => {
-            const updatedIncludes = includesSettingsUI.includesSettingsService.updateIncludeValue(
-                settings.includes,
-                key,
-                newValue,
-            );
-            await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, null);
-        });
-    });
-
-    // Add delete button
-    setting.addExtraButton((btn) => {
-        btn.setIcon('cross')
-            .setTooltip('Delete')
-            .onClick(async () => {
-                const updatedIncludes = includesSettingsUI.includesSettingsService.deleteInclude(
-                    settings.includes,
-                    key,
-                );
-                await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
-            });
-    });
 }
