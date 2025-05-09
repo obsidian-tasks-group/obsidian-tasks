@@ -3,7 +3,7 @@ import type { IncludesMap } from './Settings';
 
 export class IncludesSettingsService {
     public validateIncludeName(
-        _testIncludes: Readonly<IncludesMap>,
+        includes: Readonly<IncludesMap>,
         _keyBeingRenamed: string,
         proposedName: string,
     ): { isValid: boolean; errorMessage: string | null } {
@@ -13,6 +13,15 @@ export class IncludesSettingsService {
                 isValid: false,
                 errorMessage: 'Include name cannot be empty or all whitespace',
             };
+        }
+
+        for (const existingKey of Object.keys(includes)) {
+            if (existingKey === proposedName) {
+                return {
+                    isValid: false,
+                    errorMessage: 'An include with this name already exists',
+                };
+            }
         }
 
         return { isValid: true, errorMessage: null };

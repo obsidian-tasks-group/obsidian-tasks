@@ -34,6 +34,13 @@ describe('IncludesSettingsService', () => {
             expect(result.isValid).toBe(false);
             expect(result.errorMessage).toBe('Include name cannot be empty or all whitespace');
         });
+
+        it('should reject a new name if it already exists', () => {
+            const result = service.validateIncludeName(testIncludes, 'key1', 'key2');
+
+            expect(result.isValid).toBe(false);
+            expect(result.errorMessage).toBe('An include with this name already exists');
+        });
     });
 
     describe('IncludesSettingsService - addInclude', () => {
