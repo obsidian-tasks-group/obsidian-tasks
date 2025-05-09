@@ -4,7 +4,7 @@ import type { IncludesMap } from './Settings';
 export class IncludesSettingsService {
     public validateIncludeName(
         includes: Readonly<IncludesMap>,
-        _keyBeingRenamed: string,
+        keyBeingRenamed: string,
         proposedName: string,
     ): { isValid: boolean; errorMessage: string | null } {
         // Check for empty name
@@ -16,6 +16,11 @@ export class IncludesSettingsService {
         }
 
         for (const existingKey of Object.keys(includes)) {
+            // Skip the key being renamed
+            if (existingKey === keyBeingRenamed) {
+                continue;
+            }
+
             if (existingKey === proposedName) {
                 return {
                     isValid: false,

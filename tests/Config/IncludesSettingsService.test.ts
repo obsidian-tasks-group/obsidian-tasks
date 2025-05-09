@@ -41,6 +41,13 @@ describe('IncludesSettingsService', () => {
             expect(result.isValid).toBe(false);
             expect(result.errorMessage).toBe('An include with this name already exists');
         });
+
+        it('should treat renaming to self as valid', () => {
+            const result = service.validateIncludeName(testIncludes, 'key1', 'key1');
+
+            expect(result.isValid).toBe(true);
+            expect(result.errorMessage).toBe(null);
+        });
     });
 
     describe('IncludesSettingsService - addInclude', () => {
