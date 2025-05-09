@@ -7,33 +7,22 @@ import type { StatusCollection } from '../Statuses/StatusCollection';
 import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
 import * as Themes from './Themes';
-import { type HeadingState, type IncludesMap, type Settings, TASK_FORMATS } from './Settings';
-import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
+import {
+    type HeadingState,
+    type IncludesMap,
+    type Settings,
+    TASK_FORMATS,
+    getSettings,
+    isFeatureEnabled,
+    updateGeneralSetting,
+    updateSettings,
+} from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
-import { IncludesSettingsUI, type RefreshViewCallback } from './IncludesSettingsUI';
-
-async function saveIncludesSettings(
-    updatedIncludes: IncludesMap,
-    plugin: TasksPlugin,
-    settings: Settings,
-    refreshView: (() => void) | null,
-) {
-    // Update the settings in storage
-    updateSettings({ includes: updatedIncludes });
-    await plugin.saveSettings();
-
-    // Update the local settings object to reflect the changes
-    settings.includes = { ...updatedIncludes };
-
-    // Refresh the view if a callback was provided
-    if (refreshView) {
-        refreshView();
-    }
-}
+import { IncludesSettingsUI, type RefreshViewCallback, saveIncludesSettings } from './IncludesSettingsUI';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
