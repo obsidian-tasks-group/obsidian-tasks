@@ -27,7 +27,6 @@ export class SettingsTab extends PluginSettingTab {
 
     private readonly plugin: TasksPlugin;
     private readonly includesSettingsUI = new IncludesSettingsUI();
-    private readonly includesSettingsService = this.includesSettingsUI.includesSettingsService;
 
     constructor({ plugin }: { plugin: TasksPlugin }) {
         super(plugin.app, plugin);
@@ -664,7 +663,11 @@ export class SettingsTab extends PluginSettingTab {
             // Handle renaming an include
             const commitRename = async () => {
                 if (newKey && newKey !== key) {
-                    const updatedIncludes = this.includesSettingsService.renameInclude(settings.includes, key, newKey);
+                    const updatedIncludes = this.includesSettingsUI.includesSettingsService.renameInclude(
+                        settings.includes,
+                        key,
+                        newKey,
+                    );
                     if (updatedIncludes) {
                         await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                     }
@@ -688,7 +691,7 @@ export class SettingsTab extends PluginSettingTab {
             this.setupAutoResizingTextarea(textArea);
 
             return textArea.onChange(async (newValue) => {
-                const updatedIncludes = this.includesSettingsService.updateIncludeValue(
+                const updatedIncludes = this.includesSettingsUI.includesSettingsService.updateIncludeValue(
                     settings.includes,
                     key,
                     newValue,
@@ -702,7 +705,10 @@ export class SettingsTab extends PluginSettingTab {
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const updatedIncludes = this.includesSettingsService.deleteInclude(settings.includes, key);
+                    const updatedIncludes = this.includesSettingsUI.includesSettingsService.deleteInclude(
+                        settings.includes,
+                        key,
+                    );
                     await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                 });
         });
@@ -726,7 +732,9 @@ export class SettingsTab extends PluginSettingTab {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const { includes: updatedIncludes } = this.includesSettingsService.addInclude(settings.includes);
+                    const { includes: updatedIncludes } = this.includesSettingsUI.includesSettingsService.addInclude(
+                        settings.includes,
+                    );
                     await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                 });
         });
