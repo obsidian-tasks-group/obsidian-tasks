@@ -2,6 +2,13 @@ import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import type { IncludesMap } from './Settings';
 
 export class IncludesSettingsService {
+    /**
+     * Validates if an include name is valid
+     * @param includes The current includes map
+     * @param keyBeingRenamed The key being renamed
+     * @param proposedName The proposed name to validate
+     * @returns An object with validation result and error message if any
+     */
     public validateIncludeName(
         includes: Readonly<IncludesMap>,
         keyBeingRenamed: string,
