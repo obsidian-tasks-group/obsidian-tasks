@@ -35,7 +35,7 @@ export class IncludesSettingsUI {
         settings: Settings,
         key: string,
         value: string,
-        renderIncludes: RefreshViewCallback,
+        refreshView: RefreshViewCallback,
     ) {
         const wrapper = includesContainer.createDiv({ cls: 'tasks-includes-wrapper' });
         const setting = new Setting(wrapper);
@@ -57,7 +57,7 @@ export class IncludesSettingsUI {
                 if (newKey && newKey !== key) {
                     const updatedIncludes = this.includesSettingsService.renameInclude(settings.includes, key, newKey);
                     if (updatedIncludes) {
-                        await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                        await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                     }
                 }
             };
@@ -94,7 +94,7 @@ export class IncludesSettingsUI {
                 .setTooltip('Delete')
                 .onClick(async () => {
                     const updatedIncludes = this.includesSettingsService.deleteInclude(settings.includes, key);
-                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                    await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                 });
         });
     }
@@ -112,17 +112,13 @@ export class IncludesSettingsUI {
         textArea.inputEl.addEventListener('input', resize);
     }
 
-    private createAddNewIncludeButton(
-        containerEl: HTMLElement,
-        settings: Settings,
-        renderIncludes: RefreshViewCallback,
-    ) {
+    private createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, refreshView: RefreshViewCallback) {
         new Setting(containerEl).addButton((btn) => {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
                     const { includes: updatedIncludes } = this.includesSettingsService.addInclude(settings.includes);
-                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                    await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                 });
         });
     }
