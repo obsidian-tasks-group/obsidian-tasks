@@ -14,7 +14,6 @@ export class IncludesSettingsUI {
     }
 
     public renderIncludesSettings(containerEl: HTMLElement, _includesSettingsUI: IncludesSettingsUI) {
-        const includesSettingsUI = this;
         const includesContainer = containerEl.createDiv();
         const settings = getSettings();
 
@@ -22,13 +21,13 @@ export class IncludesSettingsUI {
             includesContainer.empty();
 
             Object.entries(settings.includes).forEach(([key, value]) => {
-                includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
+                this.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
             });
         };
 
         renderIncludes();
 
-        includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
+        this.createAddNewIncludeButton(containerEl, settings, renderIncludes);
     }
 
     renderIncludeItem(
