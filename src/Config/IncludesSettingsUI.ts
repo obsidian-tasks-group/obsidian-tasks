@@ -13,6 +13,10 @@ export class IncludesSettingsUI {
         this.plugin = plugin;
     }
 
+    public renderIncludesSettings(containerEl: HTMLElement, includesSettingsUI: IncludesSettingsUI) {
+        renderIncludesSettings(containerEl, includesSettingsUI);
+    }
+
     renderIncludeItem(
         includesContainer: HTMLDivElement,
         settings: Settings,
