@@ -16,6 +16,25 @@ import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
 import { IncludesSettingsUI, type RefreshViewCallback } from './IncludesSettingsUI';
 
+async function saveIncludesSettings(
+    updatedIncludes: IncludesMap,
+    plugin: TasksPlugin,
+    settings: Settings,
+    refreshView: (() => void) | null,
+) {
+    // Update the settings in storage
+    updateSettings({ includes: updatedIncludes });
+    await plugin.saveSettings();
+
+    // Update the local settings object to reflect the changes
+    settings.includes = { ...updatedIncludes };
+
+    // Refresh the view if a callback was provided
+    if (refreshView) {
+        refreshView();
+    }
+}
+
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
     // custom function and specify it from the json file. It will
@@ -757,18 +776,7 @@ export class SettingsTab extends PluginSettingTab {
         refreshView: RefreshViewCallback | null,
     ): Promise<void> {
         const plugin = this.plugin;
-
-        // Update the settings in storage
-        updateSettings({ includes: updatedIncludes });
-        await plugin.saveSettings();
-
-        // Update the local settings object to reflect the changes
-        settings.includes = { ...updatedIncludes };
-
-        // Refresh the view if a callback was provided
-        if (refreshView) {
-            refreshView();
-        }
+        await saveIncludesSettings(updatedIncludes, plugin, settings, refreshView);
     }
 
     private static renderFolderArray(folders: string[]): string {
