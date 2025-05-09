@@ -643,7 +643,7 @@ export class SettingsTab extends PluginSettingTab {
 
         renderIncludes();
 
-        this.createAddNewIncludeButton(containerEl, settings, renderIncludes);
+        this.includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
     }
 
     private renderIncludeItem(
@@ -733,14 +733,6 @@ export class SettingsTab extends PluginSettingTab {
 
         // Resize on input
         textArea.inputEl.addEventListener('input', resize);
-    }
-
-    private createAddNewIncludeButton(
-        containerEl: HTMLElement,
-        settings: Settings,
-        renderIncludes: RefreshViewCallback,
-    ) {
-        this.includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
     }
 
     private static renderFolderArray(folders: string[]): string {
