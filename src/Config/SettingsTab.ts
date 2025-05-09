@@ -9,7 +9,6 @@ import { i18n } from '../i18n/i18n';
 import * as Themes from './Themes';
 import {
     type HeadingState,
-    type Settings,
     TASK_FORMATS,
     getSettings,
     isFeatureEnabled,
@@ -21,7 +20,7 @@ import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
-import { IncludesSettingsUI, type RefreshViewCallback } from './IncludesSettingsUI';
+import { IncludesSettingsUI } from './IncludesSettingsUI';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -637,23 +636,13 @@ export class SettingsTab extends PluginSettingTab {
             includesContainer.empty();
 
             Object.entries(settings.includes).forEach(([key, value]) => {
-                this.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
+                this.includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
             });
         };
 
         renderIncludes();
 
         this.includesSettingsUI.createAddNewIncludeButton(containerEl, settings, renderIncludes);
-    }
-
-    private renderIncludeItem(
-        includesContainer: HTMLDivElement,
-        settings: Settings,
-        key: string,
-        value: string,
-        renderIncludes: RefreshViewCallback,
-    ) {
-        this.includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
     }
 
     private static renderFolderArray(folders: string[]): string {
