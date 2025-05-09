@@ -764,8 +764,7 @@ export class SettingsTab extends PluginSettingTab {
         settings: Settings,
         refreshView: RefreshViewCallback | null,
     ): Promise<void> {
-        const plugin = this.plugin;
-        await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, plugin, settings, refreshView);
+        await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, refreshView);
     }
 
     private static renderFolderArray(folders: string[]): string {

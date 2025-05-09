@@ -14,7 +14,6 @@ export class IncludesSettingsUI {
 
     public async saveIncludesSettings(
         updatedIncludes: IncludesMap,
-        _plugin: TasksPlugin,
         settings: Settings,
         refreshView: RefreshViewCallback | null,
     ) {
