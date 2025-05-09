@@ -15,6 +15,7 @@ import { StatusSettings } from './StatusSettings';
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
 import { IncludesSettingsService } from './IncludesSettingsService';
+import { IncludesSettingsUI } from './IncludesSettingsUI';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -26,6 +27,8 @@ export class SettingsTab extends PluginSettingTab {
     };
 
     private readonly plugin: TasksPlugin;
+    // @ts-expect-error: includesSettingsUI is unused
+    private readonly includesSettingsUI = new IncludesSettingsUI();
     private readonly includesSettingsService = new IncludesSettingsService();
 
     constructor({ plugin }: { plugin: TasksPlugin }) {
