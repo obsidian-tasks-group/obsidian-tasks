@@ -14,11 +14,14 @@ describe('IncludesSettingsService', () => {
     });
 
     describe('IncludesSettingsService - validateIncludeName', () => {
-        it('should recognise valid new name', () => {
-            const result = service.validateIncludeName(testIncludes, 'key1', 'new-name');
-
+        function expectIsValid(result: { isValid: boolean; errorMessage: string | null }) {
             expect(result.isValid).toBe(true);
             expect(result.errorMessage).toBe(null);
+        }
+
+        it('should recognise valid new name', () => {
+            const result = service.validateIncludeName(testIncludes, 'key1', 'new-name');
+            expectIsValid(result);
         });
 
         it('should reject an empty new name', () => {
@@ -45,8 +48,7 @@ describe('IncludesSettingsService', () => {
         it('should treat renaming to self as valid', () => {
             const result = service.validateIncludeName(testIncludes, 'key1', 'key1');
 
-            expect(result.isValid).toBe(true);
-            expect(result.errorMessage).toBe(null);
+            expectIsValid(result);
         });
     });
 
