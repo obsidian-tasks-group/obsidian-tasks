@@ -19,16 +19,20 @@ describe('IncludesSettingsService', () => {
             expect(result.errorMessage).toBe(null);
         }
 
+        function expectIsNotValid(result: { isValid: boolean; errorMessage: string | null }, errorMessage: string) {
+            expect(result.isValid).toBe(false);
+            expect(result.errorMessage).toBe(errorMessage);
+        }
+
         it('should recognise valid new name', () => {
-            const result = service.validateIncludeName(testIncludes, 'key1', 'new-name');
-            expectIsValid(result);
+            expectIsValid(service.validateIncludeName(testIncludes, 'key1', 'new-name'));
         });
 
         it('should reject an empty new name', () => {
             const result = service.validateIncludeName(testIncludes, 'key1', '');
 
-            expect(result.isValid).toBe(false);
-            expect(result.errorMessage).toBe('Include name cannot be empty or all whitespace');
+            const errorMessage = 'Include name cannot be empty or all whitespace';
+            expectIsNotValid(result, errorMessage);
         });
 
         it('should reject an new name with only whitespaces', () => {
