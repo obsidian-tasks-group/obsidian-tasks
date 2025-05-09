@@ -2,6 +2,10 @@ import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import type { IncludesMap } from './Settings';
 
 export class IncludesSettingsService {
+    public validateIncludeName(_testIncludes: IncludesMap, _keyBeingRenamed: string, _proposedName: string) {
+        return { isValid: true, errorMessage: null };
+    }
+
     /**
      * Adds a new include to the map with a unique key
      * @param includes The current includes map (will not be modified)
