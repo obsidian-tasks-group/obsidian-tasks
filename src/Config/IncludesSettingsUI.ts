@@ -13,12 +13,7 @@ export class IncludesSettingsUI {
         this.plugin = plugin;
     }
 
-    createAddNewIncludeButton(
-        _includesSettingsUI: IncludesSettingsUI,
-        containerEl: HTMLElement,
-        settings: Settings,
-        renderIncludes: RefreshViewCallback,
-    ) {
+    createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, renderIncludes: RefreshViewCallback) {
         createAddNewIncludeButton(this, containerEl, settings, renderIncludes);
     }
 
