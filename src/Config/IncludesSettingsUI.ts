@@ -5,14 +5,27 @@ import { type IncludesMap, type Settings, getSettings, updateSettings } from './
 
 type RefreshViewCallback = () => void;
 
+/**
+ * Manages the user interface for configuring includes settings in the Tasks plugin.
+ *
+ * This class handles rendering, updating, and managing the includes settings UI components.
+ */
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
     private readonly includesSettingsService = new IncludesSettingsService();
 
+    /**
+     * Creates a new instance of IncludesSettingsUI
+     * @param plugin The Tasks plugin instance
+     */
     constructor(plugin: TasksPlugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * Renders the includes settings interface in the specified container
+     * @param containerEl The HTML element to render the settings interface in
+     */
     public renderIncludesSettings(containerEl: HTMLElement) {
         const includesContainer = containerEl.createDiv();
         const settings = getSettings();
@@ -30,6 +43,14 @@ export class IncludesSettingsUI {
         this.createAddNewIncludeButton(containerEl, settings, renderIncludes);
     }
 
+    /**
+     * Renders a single include item with its controls
+     * @param includesContainer The container element for the include item
+     * @param settings The current plugin settings
+     * @param key The key/name of the include
+     * @param value The value/query of the include
+     * @param refreshView Callback to refresh the view after changes
+     */
     private renderIncludeItem(
         includesContainer: HTMLDivElement,
         settings: Settings,
@@ -99,6 +120,10 @@ export class IncludesSettingsUI {
         });
     }
 
+    /**
+     * Sets up auto-resizing behaviour for a textarea component
+     * @param textArea The textarea component to configure
+     */
     private setupAutoResizingTextarea(textArea: TextAreaComponent) {
         const resize = () => {
             textArea.inputEl.style.height = 'auto'; // reset first
@@ -112,6 +137,12 @@ export class IncludesSettingsUI {
         textArea.inputEl.addEventListener('input', resize);
     }
 
+    /**
+     * Creates and configures the "Add new include" button
+     * @param containerEl The container element for the button
+     * @param settings The current plugin settings
+     * @param refreshView Callback to refresh the view after adding a new include
+     */
     private createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, refreshView: RefreshViewCallback) {
         new Setting(containerEl).addButton((btn) => {
             btn.setButtonText('Add new include')
