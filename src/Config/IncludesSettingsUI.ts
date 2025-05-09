@@ -71,6 +71,17 @@ export class IncludesSettingsUI {
 
             text.inputEl.addEventListener('input', (e) => {
                 newKey = (e.target as HTMLInputElement).value;
+
+                // Validate the name as the user types
+                // TODO This does not remove the red if the user renames the Include
+                //      this one matched.
+                const validation = this.includesSettingsService.validateIncludeName(settings.includes, key, newKey);
+
+                if (!validation.isValid) {
+                    text.inputEl.addClass('has-error');
+                } else {
+                    text.inputEl.removeClass('has-error');
+                }
             });
 
             // Handle renaming an include
