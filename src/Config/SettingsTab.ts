@@ -9,7 +9,6 @@ import { i18n } from '../i18n/i18n';
 import * as Themes from './Themes';
 import {
     type HeadingState,
-    type IncludesMap,
     type Settings,
     TASK_FORMATS,
     getSettings,
@@ -678,7 +677,7 @@ export class SettingsTab extends PluginSettingTab {
                         newKey,
                     );
                     if (updatedIncludes) {
-                        await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                        await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                     }
                 }
             };
@@ -705,7 +704,7 @@ export class SettingsTab extends PluginSettingTab {
                     key,
                     newValue,
                 );
-                await this.saveIncludesSettings(updatedIncludes, settings, null);
+                await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, null);
             });
         });
 
@@ -718,7 +717,7 @@ export class SettingsTab extends PluginSettingTab {
                         settings.includes,
                         key,
                     );
-                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                    await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                 });
         });
     }
@@ -748,23 +747,9 @@ export class SettingsTab extends PluginSettingTab {
                     const { includes: updatedIncludes } = this.includesSettingsUI.includesSettingsService.addInclude(
                         settings.includes,
                     );
-                    await this.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                    await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                 });
         });
-    }
-
-    /**
-     * Updates settings with new includes and refreshes UI if needed
-     * @param updatedIncludes The new includes map
-     * @param settings The current settings object to update
-     * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
-     */
-    private async saveIncludesSettings(
-        updatedIncludes: IncludesMap,
-        settings: Settings,
-        refreshView: RefreshViewCallback | null,
-    ): Promise<void> {
-        await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, refreshView);
     }
 
     private static renderFolderArray(folders: string[]): string {
