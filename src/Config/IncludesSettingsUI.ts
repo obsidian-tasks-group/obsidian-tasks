@@ -1,4 +1,4 @@
-import { Setting } from 'obsidian';
+import { Setting, TextAreaComponent } from 'obsidian';
 import type TasksPlugin from '../main';
 import { IncludesSettingsService } from './IncludesSettingsService';
 import { type IncludesMap, type Settings, updateSettings } from './Settings';
@@ -11,6 +11,19 @@ export class IncludesSettingsUI {
 
     constructor(plugin: TasksPlugin) {
         this.plugin = plugin;
+    }
+
+    public setupAutoResizingTextarea(textArea: TextAreaComponent) {
+        const resize = () => {
+            textArea.inputEl.style.height = 'auto'; // reset first
+            textArea.inputEl.style.height = `${textArea.inputEl.scrollHeight}px`;
+        };
+
+        // Initial resize
+        resize();
+
+        // Resize on input
+        textArea.inputEl.addEventListener('input', resize);
     }
 
     createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, renderIncludes: RefreshViewCallback) {
