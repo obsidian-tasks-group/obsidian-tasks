@@ -23,6 +23,24 @@ import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
 import { IncludesSettingsUI, type RefreshViewCallback } from './IncludesSettingsUI';
 
+function createAddNewIncludeButton(
+    includesSettingsUI: any,
+    containerEl: HTMLElement,
+    settings: Settings,
+    renderIncludes: () => void,
+) {
+    new Setting(containerEl).addButton((btn) => {
+        btn.setButtonText('Add new include')
+            .setCta()
+            .onClick(async () => {
+                const { includes: updatedIncludes } = includesSettingsUI.includesSettingsService.addInclude(
+                    settings.includes,
+                );
+                await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+            });
+    });
+}
+
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
     // custom function and specify it from the json file. It will
@@ -741,16 +759,7 @@ export class SettingsTab extends PluginSettingTab {
         renderIncludes: RefreshViewCallback,
     ) {
         const includesSettingsUI = this.includesSettingsUI;
-        new Setting(containerEl).addButton((btn) => {
-            btn.setButtonText('Add new include')
-                .setCta()
-                .onClick(async () => {
-                    const { includes: updatedIncludes } = includesSettingsUI.includesSettingsService.addInclude(
-                        settings.includes,
-                    );
-                    await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
-                });
-        });
+        createAddNewIncludeButton(includesSettingsUI, containerEl, settings, renderIncludes);
     }
 
     private static renderFolderArray(folders: string[]): string {
