@@ -14,14 +14,14 @@ export class IncludesSettingsUI {
     }
 
     renderIncludeItem(
-        includesSettingsUI: IncludesSettingsUI,
+        _includesSettingsUI: IncludesSettingsUI,
         includesContainer: HTMLDivElement,
         settings: Settings,
         key: string,
         value: string,
         renderIncludes: RefreshViewCallback,
     ) {
-        renderIncludeItem(includesSettingsUI, includesContainer, settings, key, value, renderIncludes);
+        renderIncludeItem(this, includesContainer, settings, key, value, renderIncludes);
     }
 
     public setupAutoResizingTextarea(textArea: TextAreaComponent) {
