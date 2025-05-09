@@ -14,7 +14,6 @@ export class IncludesSettingsUI {
     }
 
     renderIncludeItem(
-        _includesSettingsUI: IncludesSettingsUI,
         includesContainer: HTMLDivElement,
         settings: Settings,
         key: string,

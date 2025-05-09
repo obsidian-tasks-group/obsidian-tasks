@@ -653,15 +653,7 @@ export class SettingsTab extends PluginSettingTab {
         value: string,
         renderIncludes: RefreshViewCallback,
     ) {
-        const includesSettingsUI = this.includesSettingsUI;
-        this.includesSettingsUI.renderIncludeItem(
-            includesSettingsUI,
-            includesContainer,
-            settings,
-            key,
-            value,
-            renderIncludes,
-        );
+        this.includesSettingsUI.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
     }
 
     private static renderFolderArray(folders: string[]): string {
