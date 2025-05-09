@@ -26,12 +26,13 @@ export class SettingsTab extends PluginSettingTab {
     };
 
     private readonly plugin: TasksPlugin;
-    private readonly includesSettingsUI = new IncludesSettingsUI();
+    private readonly includesSettingsUI;
 
     constructor({ plugin }: { plugin: TasksPlugin }) {
         super(plugin.app, plugin);
 
         this.plugin = plugin;
+        this.includesSettingsUI = new IncludesSettingsUI(plugin);
     }
 
     private static createFragmentWithHTML = (html: string) =>
