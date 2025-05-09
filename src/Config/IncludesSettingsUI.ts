@@ -1,6 +1,8 @@
 import type TasksPlugin from '../main';
 import { IncludesSettingsService } from './IncludesSettingsService';
 
+export type RefreshViewCallback = () => void;
+
 export class IncludesSettingsUI {
     // @ts-expect-error: plugin unused
     private readonly plugin: TasksPlugin;

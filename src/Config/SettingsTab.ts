@@ -14,7 +14,7 @@ import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
-import { IncludesSettingsUI } from './IncludesSettingsUI';
+import { IncludesSettingsUI, type RefreshViewCallback } from './IncludesSettingsUI';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -644,7 +644,7 @@ export class SettingsTab extends PluginSettingTab {
         settings: Settings,
         key: string,
         value: string,
-        renderIncludes: () => void,
+        renderIncludes: RefreshViewCallback,
     ) {
         const wrapper = includesContainer.createDiv({ cls: 'tasks-includes-wrapper' });
         const setting = new Setting(wrapper);
@@ -728,7 +728,11 @@ export class SettingsTab extends PluginSettingTab {
         textArea.inputEl.addEventListener('input', resize);
     }
 
-    private createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, renderIncludes: () => void) {
+    private createAddNewIncludeButton(
+        containerEl: HTMLElement,
+        settings: Settings,
+        renderIncludes: RefreshViewCallback,
+    ) {
         new Setting(containerEl).addButton((btn) => {
             btn.setButtonText('Add new include')
                 .setCta()
@@ -750,7 +754,7 @@ export class SettingsTab extends PluginSettingTab {
     private async saveIncludesSettings(
         updatedIncludes: IncludesMap,
         settings: Settings,
-        refreshView: (() => void) | null,
+        refreshView: RefreshViewCallback | null,
     ): Promise<void> {
         // Update the settings in storage
         updateSettings({ includes: updatedIncludes });
