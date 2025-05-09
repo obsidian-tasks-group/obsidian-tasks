@@ -5,7 +5,6 @@ import { type IncludesMap, type Settings, updateSettings } from './Settings';
 export type RefreshViewCallback = () => void;
 
 export class IncludesSettingsUI {
-    // @ts-expect-error: plugin unused
     private readonly plugin: TasksPlugin;
     public readonly includesSettingsService = new IncludesSettingsService();
 
@@ -15,11 +14,11 @@ export class IncludesSettingsUI {
 
     public async saveIncludesSettings(
         updatedIncludes: IncludesMap,
-        plugin: TasksPlugin,
+        _plugin: TasksPlugin,
         settings: Settings,
         refreshView: RefreshViewCallback | null,
     ) {
-        await saveIncludesSettings(updatedIncludes, plugin, settings, refreshView);
+        await saveIncludesSettings(updatedIncludes, this.plugin, settings, refreshView);
     }
 }
 
