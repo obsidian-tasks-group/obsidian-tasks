@@ -13,6 +13,17 @@ export class IncludesSettingsUI {
         this.plugin = plugin;
     }
 
+    renderIncludeItem(
+        includesSettingsUI: IncludesSettingsUI,
+        includesContainer: HTMLDivElement,
+        settings: Settings,
+        key: string,
+        value: string,
+        renderIncludes: RefreshViewCallback,
+    ) {
+        renderIncludeItem(includesSettingsUI, includesContainer, settings, key, value, renderIncludes);
+    }
+
     public setupAutoResizingTextarea(textArea: TextAreaComponent) {
         const resize = () => {
             textArea.inputEl.style.height = 'auto'; // reset first
