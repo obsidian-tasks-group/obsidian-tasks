@@ -7,7 +7,7 @@ export type RefreshViewCallback = () => void;
 
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
-    public readonly includesSettingsService = new IncludesSettingsService();
+    private readonly includesSettingsService = new IncludesSettingsService();
 
     constructor(plugin: TasksPlugin) {
         this.plugin = plugin;
@@ -30,7 +30,7 @@ export class IncludesSettingsUI {
         this.createAddNewIncludeButton(containerEl, settings, renderIncludes);
     }
 
-    renderIncludeItem(
+    private renderIncludeItem(
         includesContainer: HTMLDivElement,
         settings: Settings,
         key: string,
@@ -99,7 +99,7 @@ export class IncludesSettingsUI {
         });
     }
 
-    public setupAutoResizingTextarea(textArea: TextAreaComponent) {
+    private setupAutoResizingTextarea(textArea: TextAreaComponent) {
         const resize = () => {
             textArea.inputEl.style.height = 'auto'; // reset first
             textArea.inputEl.style.height = `${textArea.inputEl.scrollHeight}px`;
@@ -112,7 +112,11 @@ export class IncludesSettingsUI {
         textArea.inputEl.addEventListener('input', resize);
     }
 
-    createAddNewIncludeButton(containerEl: HTMLElement, settings: Settings, renderIncludes: RefreshViewCallback) {
+    private createAddNewIncludeButton(
+        containerEl: HTMLElement,
+        settings: Settings,
+        renderIncludes: RefreshViewCallback,
+    ) {
         new Setting(containerEl).addButton((btn) => {
             btn.setButtonText('Add new include')
                 .setCta()
@@ -129,7 +133,7 @@ export class IncludesSettingsUI {
      * @param settings The current settings object to update
      * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
      */
-    public async saveIncludesSettings(
+    private async saveIncludesSettings(
         updatedIncludes: IncludesMap,
         settings: Settings,
         refreshView: RefreshViewCallback | null,
