@@ -698,15 +698,15 @@ export class SettingsTab extends PluginSettingTab {
             textArea.inputEl.addClass('tasks-includes-value');
             textArea.setPlaceholder('Query or filter text...').setValue(value);
 
-            this.includesSettingsUI.setupAutoResizingTextarea(textArea);
+            includesSettingsUI.setupAutoResizingTextarea(textArea);
 
             return textArea.onChange(async (newValue) => {
-                const updatedIncludes = this.includesSettingsUI.includesSettingsService.updateIncludeValue(
+                const updatedIncludes = includesSettingsUI.includesSettingsService.updateIncludeValue(
                     settings.includes,
                     key,
                     newValue,
                 );
-                await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, null);
+                await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, null);
             });
         });
 
@@ -715,11 +715,11 @@ export class SettingsTab extends PluginSettingTab {
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const updatedIncludes = this.includesSettingsUI.includesSettingsService.deleteInclude(
+                    const updatedIncludes = includesSettingsUI.includesSettingsService.deleteInclude(
                         settings.includes,
                         key,
                     );
-                    await this.includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
+                    await includesSettingsUI.saveIncludesSettings(updatedIncludes, settings, renderIncludes);
                 });
         });
     }
