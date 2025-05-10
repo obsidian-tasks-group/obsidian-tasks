@@ -20,6 +20,10 @@ describe('IncludesSettingsService', () => {
             service = new IncludesSettingsService();
         });
 
+        function expectToBeValid(resultForOriginalName: { isValid: boolean; errorMessage: string | null }) {
+            expect(resultForOriginalName.isValid).toBe(true);
+        }
+
         it('should validate all keys as valid when there are no duplicates', () => {
             const keyMap: OriginalToCurrentNameMap = {
                 original_key_1: 'unique_value_1',
@@ -29,7 +33,7 @@ describe('IncludesSettingsService', () => {
 
             const result = service.validateMultipleIncludeNames(keyMap);
 
-            expect(result['original_key_1'].isValid).toBe(true);
+            expectToBeValid(result['original_key_1']);
             expect(result['original_key_2'].isValid).toBe(true);
             expect(result['original_key_3'].isValid).toBe(true);
         });
