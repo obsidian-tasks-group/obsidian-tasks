@@ -42,12 +42,12 @@ export class IncludesSettingsService {
             let isDuplicate = false;
             let duplicateKey = '';
 
-            for (const [otherKey, otherValue] of Object.entries(names)) {
+            for (const [otherRowOriginalName, otherRowCurrentName] of Object.entries(names)) {
                 // Skip comparing to self
-                if (otherKey !== originalName) {
-                    if (otherValue === currentName) {
+                if (otherRowOriginalName !== originalName) {
+                    if (otherRowCurrentName === currentName) {
                         isDuplicate = true;
-                        duplicateKey = otherKey;
+                        duplicateKey = otherRowOriginalName;
                         break;
                     }
                 }
