@@ -19,6 +19,10 @@ export type taskModalFactory = {
     (app: App, onSubmit: (updatedTasks: Task[]) => void): ITaskModal;
 };
 
+export type taskModalFactoryFromString = {
+    (app: App, onSubmit: (updatedTasks: Task[]) => void, description: string): ITaskModal;
+};
+
 /**
  * Opens the Tasks UI and returns the Markdown string for the task entered.
  *
@@ -41,6 +45,26 @@ export const createTaskLineModal = (app: App, taskModalFactory: taskModalFactory
     };
 
     const taskModal = taskModalFactory(app, onSubmit);
+    taskModal.open();
+    return waitForClose;
+};
+
+export const createTaskLineModalFromString = (
+    app: App,
+    taskModalFactoryFromString: taskModalFactoryFromString,
+    description: string,
+): Promise<string> => {
+    let resolvePromise: (input: string) => void;
+    const waitForClose = new Promise<string>((resolve, _) => {
+        resolvePromise = resolve;
+    });
+
+    const onSubmit = (updatedTasks: Task[]): void => {
+        const line = updatedTasks.map((task: Task) => task.toFileLineString()).join('\n');
+        resolvePromise(line);
+    };
+
+    const taskModal = taskModalFactoryFromString(app, onSubmit, description);
     taskModal.open();
     return waitForClose;
 };
