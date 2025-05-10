@@ -1,12 +1,16 @@
-# TODO: add input for relative sample vault path?
+# TODO: add input for relatiobsidianPluginRootsve sample vault path?
 # TODO: Make cross-platform compatible. Currently, it is only compatible with Windows.
+# TODO: remove invalid paths and continue
 
-### FOR OBSIDIAN TASKS PLUGIN ###
-# $env:OBSIDIAN_TASKS_PLUGIN_PLUGIN_ROOTS = ".....\obsidian-tasks\resources\sample_vaults\Tasks-Demo" 
-# $env:OBSIDIAN_TASKS_PLUGIN_PLUGIN_NAME = "obsidian-tasks-plugin"
+### TLDR FOR OBSIDIAN TASKS PLUGIN ###
+# Add persistent environment variable to your PowerShell profile for sample vaults and optionally your personal vault:
+# run `notepad $PROFILE`
+#   Add ONE string with one path or multiple paths separated by semicolon(s).:
+#   If you make a mistake reload your profile with by starting a new terminal or running `& $PROFILE`
+#   $env:OBSIDIAN_TASKS_PLUGIN_PLUGIN_ROOTS = "C:\....\obsidian-tasks\resources\sample_vaults\Tasks-Demo\.obsidian\plugins;C:\....\{vault}\.obsidian\plugins"
+# run this script from inside the Git repository for the plugin.
 
 ### DOCUMENTATION ###
-
 # This script is used to hot-reload one Obsidian plugin repo to one or more vaults.
 # Administrator privileges are required to run this script because of symbolic links.
 # The script will prompt for Administrator permissions if not already running as Administrator.
@@ -21,23 +25,19 @@
 # - Environment variables to be set:
 #   - Required: OBSIDIAN_PLUGIN_ROOTS
 #     - Paths to the root of the plugin folders located at .obsidian/plugins. Separated by spaces.
-#     - Example (Windows): "C:\path\to\vault1\.obsidian\plugins" "C:\path\to\vault2\.obsidian\plugins"
-#   - Optional: OBSIDIAN_PLUGIN_NAME
-#     - The name of the plugin folder located at .obsidian/plugins/{OBSIDIAN_PLUGIN_NAME}.
-#     - Defaults to the `id` field in the repository's manifest.json if not provided.
+#     - Example (Windows): "C:\path\to\vault1\.obsidian\plugins;C:\path\to\vault2\.obsidian\plugins"
 
 # Temporary Environment Variable Setup:
 # - Windows:
-#   $env:OBSIDIAN_PLUGIN_ROOTS = "C:\path\to\vault1\.obsidian\plugins" "C:\path\to\vault2\.obsidian\plugins"
-#   $env:OBSIDIAN_PLUGIN_NAME = "your-plugin-name"
+#   $env:OBSIDIAN_PLUGIN_ROOTS = "C:\path\to\vault1\.obsidian\plugins;C:\path\to\vault2\.obsidian\plugins"
 
 # Persistent Environment Variable Setup:
+# - NOTE: Changes to $PROFILE may need to be ran in a new terminal to take effect.
 # - Windows:
 #   Use your PowerShell profile script ($PROFILE) to persist variables across sessions:
 #   notepad $PROFILE
 #   Add the following lines:
-#   $env:OBSIDIAN_PLUGIN_ROOTS = "C:\path\to\vault1\.obsidian\plugins" "C:\path\to\vault2\.obsidian\plugins"
-#   $env:OBSIDIAN_PLUGIN_NAME = "your-plugin-name"
+#   $env:OBSIDIAN_PLUGIN_ROOTS = "C:\path\to\vault1\.obsidian\plugins;C:\path\to\vault2\.obsidian\plugins"
 
 # Steps for Repository Integration:
 
@@ -45,7 +45,7 @@
 # 2. Add a comment to the top of the script with the example environment variables.
 # 3. Assign settings at: ### REPOSITORY SETTINGS
 #   - rename environment variable under $relay_OBSIDIAN_PLUGIN_ROOTS
-#   - rename environment variable under $relay_OBSIDIAN_PLUGIN_NAME
+#   - rename environment variable under $OBSIDIAN_PLUGIN_NAME
 #   - $buildCommand: The command to run to build the plugin to ensure the files are up to date.
 #   - $devCommand: The command to run at the end of the script. 
 #   - Add custom test commands.
@@ -61,10 +61,10 @@ param (
     # OBSIDIAN_PLUGIN_ROOTS
     [Parameter(HelpMessage = 'The paths to the plugins folders under the .obsidian directory.')]
     [ValidateScript({
-            Write-Host "Validating paths: $obsidianPluginRoots"
-            foreach ($path in $obsidianPluginRoots) {
+            Write-Host "Validating paths: $pObsidianPluginRoots"
+            foreach ($path in $pObsidianPluginRoots) {
                 Write-Host "Validating path: $path"
-                Write-Host "obsidianPluginRoots: $obsidianPluginRoots"
+                Write-Host "pObsidianPluginRoots: $pObsidianPluginRoots"
                 if (-not ($path -match '[\\/]plugins$')) {
                     
                     throw "Invalid path: Each path must end with '/plugins' or '\plugins'. Provided: $path"
@@ -82,7 +82,7 @@ param (
         })]
     [String[]]
     # Split by space
-    $obsidianPluginRoots = $OBSIDIAN_PLUGIN_ROOTS -split '\s+',
+    $pObsidianPluginRoots = $relay_OBSIDIAN_PLUGIN_ROOTS -split ';',
     
     # OBSIDIAN_PLUGIN_NAME: The folder name of a specific plugin inside the plugins directory.
     # Example: For a plugin located at:
@@ -91,7 +91,7 @@ param (
     # daily-tasks   
     [Parameter(HelpMessage = 'The folder name of the plugin to copy the files to.')]
     [String]
-    $pluginFolderName = $(if ($OBSIDIAN_PLUGIN_NAME) { $OBSIDIAN_PLUGIN_NAME } else { "obsidian-tasks-plugin" })
+    $pPluginFolderName = $OBSIDIAN_PLUGIN_NAME
 )
 
 function Write-ErrorWithNoExit {
@@ -116,9 +116,9 @@ try {
     # ON REPOSITOY INTEGRATION rename $env:OBSIDIAN_PLUGIN_ROOTS to $env:yourpluginname_PLUGIN_ROOTS
     # ON REPOSITOY INTEGRATION rename $env:OBSIDIAN_PLUGIN_NAME to $env:yourpluginname_PLUGIN_NAME
     $relay_OBSIDIAN_PLUGIN_ROOTS = $env:OBSIDIAN_TASKS_PLUGIN_PLUGIN_ROOTS
-    $relay_OBSIDIAN_PLUGIN_NAME = $env:OBSIDIAN_TASKS_PLUGIN_PLUGIN_NAME
+    $OBSIDIAN_PLUGIN_NAME = "obsidian-tasks-plugin"
 
-    # Set the command to run to build the plugin to enrure the files are up to date.
+    # Set the command to run to build the plugin to ensure the files are up to date.
     $buildCommand = "yarn run build:dev"
     $devCommand = "yarn run dev"
 
@@ -128,6 +128,9 @@ try {
     }
     ### END of REPOSITORY SETTINGS
 
+    Write-Host "Plugin roots: $relay_OBSIDIAN_PLUGIN_ROOTS"
+    Write-Host "Plugin folder name: $OBSIDIAN_PLUGIN_NAME"
+
     # Ensure script is running as Administrator
     if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
         $scriptPath = $MyInvocation.MyCommand.Path
@@ -135,10 +138,27 @@ try {
             "-NoExit",
             "-ExecutionPolicy", "Bypass",
             "-File", "`"$scriptPath`"",
-            "-obsidianPluginRoots", $relay_OBSIDIAN_PLUGIN_ROOTS,
-            "-pluginFolderName", $relay_OBSIDIAN_PLUGIN_NAME
+            "-pObsidianPluginRoots", $relay_OBSIDIAN_PLUGIN_ROOTS,
+            "-pPluginFolderName", $OBSIDIAN_PLUGIN_NAME
         ) -Verb RunAs
         exit
+    }
+    # Note for future reference: don't assign split to a parameter, it fails silenty.
+    # $pObsidianPluginRoots = $pObsidianPluginRoots -split ';' does not work 
+    # as expected because powershell parameters are read only.
+
+    # Split the plugin roots by space
+    $obsidianPluginRootsSplit = $pObsidianPluginRoots -split ';'
+
+    # Check all plugin roots
+    foreach ($obsidianPluginRoot in $obsidianPluginRootsSplit) {
+        
+        if (-not (Test-Path $obsidianPluginRoot)) {
+            Write-ErrorWithNoExit "Obsidian plugin root not found at: $obsidianPluginRoot. `nobsidianPluginRoots: $obsidianPluginRootsSplit"
+        }
+        else {
+            Write-Host "Obsidian plugin root found at: $obsidianPluginRoot"
+        }
     }
 
     # Get Git repo root
@@ -149,14 +169,14 @@ try {
         Write-ErrorWithNoExit "Failed to determine Git repo root. Ensure this script is run inside a Git repository."
     }
     
-    # Check to see if $pluginFolderName is the same as the id in repo mainfest.json, if not warn
+    # Check to see if $pPluginFolderName is the same as the id in repo mainfest.json, if not warn
     $repoManifestPath = Join-Path $repoRoot 'manifest.json'
     if (Test-Path $repoManifestPath) {
         $manifest = Get-Content -Path $repoManifestPath | ConvertFrom-Json
-        if ($manifest.id -ne $pluginFolderName) {
+        if ($manifest.id -ne $pPluginFolderName) {
             Write-Warning "Plugin ID in manifest.json does not match the provided plugin folder name."
             Write-Warning "Manifest ID: $($manifest.id)"
-            Write-Warning "Provided Plugin Folder Name: $pluginFolderName"
+            Write-Warning "Provided Plugin Folder Name: $pPluginFolderName"
         } 
         else {
             Write-Host "Plugin ID in manifest.json matches the provided plugin folder name."
@@ -166,17 +186,8 @@ try {
         # If the manifest file is not found, warn the user where?
         Write-ErrorWithNoExit "Manifest file not found at: $repoManifestPath"
     }
-
-    # Check all plugin roots
-    foreach ($obsidianPluginRoot in $obsidianPluginRoots) {
         
-        if (-not (Test-Path $obsidianPluginRoot)) {
-            Write-ErrorWithNoExit "Obsidian plugin root not found at: $obsidianPluginRoot. obsidianPluginRoots: $obsidianPluginRoots"
-        }
-        else {
-            Write-Host "Obsidian plugin root found at: $obsidianPluginRoot"
-        }
-    }
+   
 
     Push-Location $repoRoot
     Write-Host "Repo root: $repoRoot"
@@ -193,8 +204,8 @@ try {
     $filesToLink = @('main.js', 'styles.css', 'manifest.json')
 
     # Link files to all $obsidianPluginRoot
-    foreach ($obsidianPluginRoot in $obsidianPluginRoots) {
-        $targetPath = Join-Path $obsidianPluginRoot $pluginFolderName
+    foreach ($obsidianPluginRoot in $obsidianPluginRootsSplit) {
+        $targetPath = Join-Path $obsidianPluginRoot $pPluginFolderName
 
         foreach ($file in $filesToLink) {
             $linkPath = Join-Path $targetPath $file
@@ -220,6 +231,8 @@ try {
     }
 
     # Start dev mode
+    Write-Host "Starting dev mode..."
+    Write-Host "Running command: $devCommand"
     Invoke-Expression $devCommand
     Pop-Location
 }
