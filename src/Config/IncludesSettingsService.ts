@@ -5,7 +5,7 @@ import type { IncludesMap } from './Settings';
  * Represents a map of include keys and their current values
  * used during validation
  */
-export interface OriginalToCurrentIncludeNameMap {
+export interface OriginalToCurrentNameMap {
     [originalName: string]: string;
 }
 
@@ -22,7 +22,7 @@ export class IncludesSettingsService {
      * @param originalKeys Map of original keys to their current values in UI
      * @returns Object mapping each key to its validation result
      */
-    public validateMultipleIncludeNames(originalKeys: OriginalToCurrentIncludeNameMap): CrossValidatedNameEditResults {
+    public validateMultipleIncludeNames(originalKeys: OriginalToCurrentNameMap): CrossValidatedNameEditResults {
         // TODO Reuse validateIncludeName()? Or at least unify the logic.
         // TODO Two keys differing only in trailing spaces are considered as different - they should match.
         const results: CrossValidatedNameEditResults = {};
