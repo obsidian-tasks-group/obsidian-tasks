@@ -11,6 +11,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
+import multi_line_task_and_list_item from '../Obsidian/__test_data__/multi_line_task_and_list_item.json';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
@@ -206,7 +207,7 @@ describe('related items', () => {
         expect(grandChild.findClosestParentTask()).toEqual(parentTask);
     });
 });
-describe('links', () => {
+describe('outLinks', () => {
     it('should return all links in the task file', () => {
         const tasks = readTasksFromSimulatedFile(links_everywhere);
 
@@ -218,6 +219,11 @@ describe('links', () => {
 
         expect(tasks[0].outLinks.length).toEqual(1);
         expect(tasks[0].outLinks[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
+    });
+
+    it('should return [] when no links in the task line', () => {
+        const tasks = readTasksFromSimulatedFile(multi_line_task_and_list_item);
+        expect(tasks[0].outLinks).toEqual([]);
     });
 });
 
