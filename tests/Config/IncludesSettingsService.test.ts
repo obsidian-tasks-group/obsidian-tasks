@@ -56,10 +56,7 @@ describe('IncludesSettingsService', () => {
             const result = service.validateMultipleIncludeNames(keyMap);
 
             expectToGiveError(result['original_key_1'], 'Duplicate of include "original_key_2"');
-
-            expect(result['original_key_2'].isValid).toBe(false);
-            expect(result['original_key_2'].errorMessage).toBe('Duplicate of include "original_key_1"');
-
+            expectToGiveError(result['original_key_2'], 'Duplicate of include "original_key_1"');
             expectToBeValid(result['original_key_3']);
         });
 
@@ -72,12 +69,8 @@ describe('IncludesSettingsService', () => {
 
             const result = service.validateMultipleIncludeNames(keyMap);
 
-            expect(result['original_key_1'].isValid).toBe(false);
-            expect(result['original_key_1'].errorMessage).toBe('Include name cannot be empty or all whitespace');
-
-            expect(result['original_key_2'].isValid).toBe(false);
-            expect(result['original_key_2'].errorMessage).toBe('Include name cannot be empty or all whitespace');
-
+            expectToGiveError(result['original_key_1'], 'Include name cannot be empty or all whitespace');
+            expectToGiveError(result['original_key_2'], 'Include name cannot be empty or all whitespace');
             expectToBeValid(result['original_key_3']);
         });
 
