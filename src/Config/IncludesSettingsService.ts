@@ -12,7 +12,7 @@ export interface OriginalToCurrentIncludeNameMap {
 /**
  * Result of validating multiple include values at once
  */
-export interface MultiValidationResult {
+export interface CrossValidatedNameEditResults {
     [key: string]: { isValid: boolean; errorMessage: string | null };
 }
 
@@ -22,10 +22,10 @@ export class IncludesSettingsService {
      * @param originalKeys Map of original keys to their current values in UI
      * @returns Object mapping each key to its validation result
      */
-    public validateMultipleIncludeNames(originalKeys: OriginalToCurrentIncludeNameMap): MultiValidationResult {
+    public validateMultipleIncludeNames(originalKeys: OriginalToCurrentIncludeNameMap): CrossValidatedNameEditResults {
         // TODO Reuse validateIncludeName()? Or at least unify the logic.
         // TODO Two keys differing only in trailing spaces are considered as different - they should match.
-        const results: MultiValidationResult = {};
+        const results: CrossValidatedNameEditResults = {};
 
         // Check each key against all others
         for (const [originalKey, currentValue] of Object.entries(originalKeys)) {
