@@ -6,7 +6,7 @@ import type { IncludesMap } from './Settings';
  * used during validation
  */
 export interface OriginalToCurrentIncludeNameMap {
-    [key: string]: string;
+    [originalName: string]: string;
 }
 
 /**
