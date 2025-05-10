@@ -119,6 +119,8 @@ export class IncludesSettingsUI {
             });
         });
 
+        // TODO Add reorder button or facility to drag and drop items
+
         // Add delete button
         setting.addExtraButton((btn) => {
             btn.setIcon('cross')
