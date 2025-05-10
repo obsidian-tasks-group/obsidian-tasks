@@ -14,9 +14,22 @@ describe('linkClass', () => {
         expect(link.displayText).toEqual('link_in_file_body');
         expect(link.destinationFilename).toEqual('link_in_file_body');
     });
-    it('should return the filename if the link is internal', () => {
+    it('should return the filename if the link is internal filename [[#heading]]', () => {
         const rawLink = internal_heading_links.cachedMetadata.links[0];
         const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
         expect(link.destinationFilename).toEqual('internal_heading_links');
     });
+    it('should return the filename if the link is internal filename [[#heading|display text]]', () => {
+        const rawLink = internal_heading_links.cachedMetadata.links[6];
+        const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
+        expect(link.destinationFilename).toEqual('internal_heading_links');
+    });
+
+    // TODO: test wikiLink format, destination tests for that?
+    // TODO: test filename#heading
+    // TODO: test path/../filename
+    // TODO: test path/../filename#heading
+    // TODO: what if file path is ambiguous?
+
+    // TODO: test markdown format
 });
