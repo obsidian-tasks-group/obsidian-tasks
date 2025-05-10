@@ -13,7 +13,7 @@ type RefreshViewCallback = () => void;
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
     private readonly includesSettingsService = new IncludesSettingsService();
-    private inputElements: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
+    private readonly inputElements: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
 
     /**
      * Creates a new instance of IncludesSettingsUI
