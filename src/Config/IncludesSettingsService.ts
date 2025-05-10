@@ -1,7 +1,69 @@
 import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import type { IncludesMap } from './Settings';
 
+/**
+ * Represents a map of include keys and their current values
+ * used during validation
+ */
+export interface IncludeKeyValueMap {
+    [key: string]: string;
+}
+
+/**
+ * Result of validating multiple include values at once
+ */
+export interface MultiValidationResult {
+    [key: string]: { isValid: boolean; errorMessage: string | null };
+}
+
 export class IncludesSettingsService {
+    /**
+     * Validates multiple include names against each other
+     * @param originalKeys Map of original keys to their current values in UI
+     * @returns Object mapping each key to its validation result
+     */
+    public validateMultipleIncludeNames(originalKeys: IncludeKeyValueMap): MultiValidationResult {
+        const results: MultiValidationResult = {};
+
+        // Check each key against all others
+        for (const [originalKey, currentValue] of Object.entries(originalKeys)) {
+            // Skip validation if empty (handled separately)
+            if (!currentValue || currentValue.trim() === '') {
+                results[originalKey] = {
+                    isValid: false,
+                    errorMessage: 'Include name cannot be empty or all whitespace',
+                };
+                continue;
+            }
+
+            // Check for duplicates
+            let isDuplicate = false;
+            let duplicateKey = '';
+
+            for (const [otherKey, otherValue] of Object.entries(originalKeys)) {
+                // Skip comparing to self
+                if (otherKey !== originalKey) {
+                    if (otherValue === currentValue) {
+                        isDuplicate = true;
+                        duplicateKey = otherKey;
+                        break;
+                    }
+                }
+            }
+
+            if (isDuplicate) {
+                results[originalKey] = {
+                    isValid: false,
+                    errorMessage: `Duplicate of include "${duplicateKey}"`,
+                };
+            } else {
+                results[originalKey] = { isValid: true, errorMessage: null };
+            }
+        }
+
+        return results;
+    }
+
     /**
      * Validates if an include name is valid
      * @param includes The current includes map

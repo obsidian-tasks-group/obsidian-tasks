@@ -1,4 +1,4 @@
-import { IncludesSettingsService } from '../../src/Config/IncludesSettingsService';
+import { type IncludeKeyValueMap, IncludesSettingsService } from '../../src/Config/IncludesSettingsService';
 import type { IncludesMap } from '../../src/Config/Settings';
 
 describe('IncludesSettingsService', () => {
@@ -11,6 +11,71 @@ describe('IncludesSettingsService', () => {
             key1: 'value1',
             key2: 'value2',
         };
+    });
+
+    describe('IncludesSettingsService - validateMultipleIncludeNames', () => {
+        let service: IncludesSettingsService;
+
+        beforeEach(() => {
+            service = new IncludesSettingsService();
+        });
+
+        it('should validate all keys as valid when there are no duplicates', () => {
+            const keyMap: IncludeKeyValueMap = {
+                original_key_1: 'unique_value_1',
+                original_key_2: 'unique_value_2',
+                original_key_3: 'unique_value_3',
+            };
+
+            const result = service.validateMultipleIncludeNames(keyMap);
+
+            expect(result['original_key_1'].isValid).toBe(true);
+            expect(result['original_key_2'].isValid).toBe(true);
+            expect(result['original_key_3'].isValid).toBe(true);
+        });
+
+        it('should mark duplicate keys as invalid', () => {
+            const keyMap: IncludeKeyValueMap = {
+                original_key_1: 'duplicate_value',
+                original_key_2: 'duplicate_value', // Duplicate
+                original_key_3: 'unique_value',
+            };
+
+            const result = service.validateMultipleIncludeNames(keyMap);
+
+            expect(result['original_key_1'].isValid).toBe(false);
+            expect(result['original_key_2'].isValid).toBe(false);
+            expect(result['original_key_3'].isValid).toBe(true);
+        });
+
+        it('should mark empty keys as invalid', () => {
+            const keyMap: IncludeKeyValueMap = {
+                original_key_1: '',
+                original_key_2: '  ', // Whitespace only
+                original_key_3: 'valid_key',
+            };
+
+            const result = service.validateMultipleIncludeNames(keyMap);
+
+            expect(result['original_key_1'].isValid).toBe(false);
+            expect(result['original_key_1'].errorMessage).toContain('empty');
+            expect(result['original_key_2'].isValid).toBe(false);
+            expect(result['original_key_3'].isValid).toBe(true);
+        });
+
+        it('should handle the case when all keys are identical', () => {
+            const keyMap: IncludeKeyValueMap = {
+                original_key_1: 'same_value',
+                original_key_2: 'same_value',
+                original_key_3: 'same_value',
+            };
+
+            const result = service.validateMultipleIncludeNames(keyMap);
+
+            // All should be invalid except potentially one
+            const validCount = Object.values(result).filter((r) => r.isValid).length;
+            expect(validCount).toBeLessThanOrEqual(1);
+        });
     });
 
     describe('IncludesSettingsService - validateIncludeName', () => {
