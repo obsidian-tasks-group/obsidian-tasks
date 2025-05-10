@@ -13,7 +13,7 @@ export interface OriginalToCurrentIncludeNameMap {
  * Result of validating multiple include values at once
  */
 export interface CrossValidatedNameEditResults {
-    [key: string]: { isValid: boolean; errorMessage: string | null };
+    [originalName: string]: { isValid: boolean; errorMessage: string | null };
 }
 
 export class IncludesSettingsService {
