@@ -83,9 +83,9 @@ describe('IncludesSettingsService', () => {
 
             const result = service.validateMultipleIncludeNames(keyMap);
 
-            // All should be invalid except potentially one
+            // None should be valid
             const validCount = Object.values(result).filter((r) => r.isValid).length;
-            expect(validCount).toBeLessThanOrEqual(1);
+            expect(validCount).toBe(0);
         });
     });
 
