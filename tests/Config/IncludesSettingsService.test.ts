@@ -34,8 +34,8 @@ describe('IncludesSettingsService', () => {
             const result = service.validateMultipleIncludeNames(keyMap);
 
             expectToBeValid(result['original_key_1']);
-            expect(result['original_key_2'].isValid).toBe(true);
-            expect(result['original_key_3'].isValid).toBe(true);
+            expectToBeValid(result['original_key_2']);
+            expectToBeValid(result['original_key_3']);
         });
 
         it('should mark duplicate keys as invalid', () => {
@@ -53,7 +53,7 @@ describe('IncludesSettingsService', () => {
             expect(result['original_key_2'].isValid).toBe(false);
             expect(result['original_key_2'].errorMessage).toBe('Duplicate of include "original_key_1"');
 
-            expect(result['original_key_3'].isValid).toBe(true);
+            expectToBeValid(result['original_key_3']);
         });
 
         it('should mark empty keys as invalid', () => {
@@ -71,7 +71,7 @@ describe('IncludesSettingsService', () => {
             expect(result['original_key_2'].isValid).toBe(false);
             expect(result['original_key_2'].errorMessage).toBe('Include name cannot be empty or all whitespace');
 
-            expect(result['original_key_3'].isValid).toBe(true);
+            expectToBeValid(result['original_key_3']);
         });
 
         it('should handle the case when all keys are identical', () => {
