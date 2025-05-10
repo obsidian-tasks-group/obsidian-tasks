@@ -54,7 +54,7 @@ export class TasksFile {
      * Return a array of Link in the body of the file.
      */
     get outLinks(): Link[] {
-        return this.cachedMetadata?.links?.map((link) => new Link(link)) ?? [];
+        return this.cachedMetadata?.links?.map((link) => new Link(link, this.filenameWithoutExtension)) ?? [];
     }
 
     /**
