@@ -24,6 +24,14 @@ describe('IncludesSettingsService', () => {
             expect(resultForOriginalName.isValid).toBe(true);
         }
 
+        function expectToGiveError(
+            resultForOriginalName: { isValid: boolean; errorMessage: string | null },
+            expectedErrorMessage: string,
+        ) {
+            expect(resultForOriginalName.isValid).toBe(false);
+            expect(resultForOriginalName.errorMessage).toBe(expectedErrorMessage);
+        }
+
         it('should validate all keys as valid when there are no duplicates', () => {
             const keyMap: OriginalToCurrentNameMap = {
                 original_key_1: 'unique_value_1',
@@ -47,8 +55,9 @@ describe('IncludesSettingsService', () => {
 
             const result = service.validateMultipleIncludeNames(keyMap);
 
-            expect(result['original_key_1'].isValid).toBe(false);
-            expect(result['original_key_1'].errorMessage).toBe('Duplicate of include "original_key_2"');
+            const r = result['original_key_1'];
+            const expectedErrorMessage = 'Duplicate of include "original_key_2"';
+            expectToGiveError(r, expectedErrorMessage);
 
             expect(result['original_key_2'].isValid).toBe(false);
             expect(result['original_key_2'].errorMessage).toBe('Duplicate of include "original_key_1"');
