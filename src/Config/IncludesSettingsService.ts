@@ -23,44 +23,28 @@ export class IncludesSettingsService {
      * @returns Object mapping each key to its validation result
      */
     public validateMultipleIncludeNames(names: OriginalToCurrentNameMap): CrossValidatedNameEditResults {
-        // TODO Reuse validateIncludeName()? Or at least unify the logic.
         // TODO Two keys differing only in trailing spaces are considered as different - they should match.
         const results: CrossValidatedNameEditResults = {};
 
         // Check each key against all others
         for (const [originalName, currentName] of Object.entries(names)) {
-            // Skip validation if empty (handled separately)
-            if (!currentName || currentName.trim() === '') {
-                results[originalName] = {
-                    isValid: false,
-                    errorMessage: 'Include name cannot be empty or all whitespace',
-                };
-                continue;
-            }
+            // Create a temporary map simulating the situation if this rename were to happen
+            const simulatedIncludes: IncludesMap = {};
 
-            // Check for duplicates
-            let isDuplicate = false;
-            let duplicateKey = '';
-
-            for (const [otherRowOriginalName, otherRowCurrentName] of Object.entries(names)) {
-                // Skip comparing to self
-                if (otherRowOriginalName !== originalName) {
-                    if (otherRowCurrentName === currentName) {
-                        isDuplicate = true;
-                        duplicateKey = otherRowOriginalName;
-                        break;
-                    }
+            // Collect all other current name values to check against
+            for (const [otherOriginalName, otherCurrentName] of Object.entries(names)) {
+                // Skip the name being validated
+                if (otherOriginalName !== originalName) {
+                    // Use other current names as keys in the map
+                    simulatedIncludes[otherCurrentName] = '';
                 }
             }
 
-            if (isDuplicate) {
-                results[originalName] = {
-                    isValid: false,
-                    errorMessage: `Duplicate of include "${duplicateKey}"`,
-                };
-            } else {
-                results[originalName] = { isValid: true, errorMessage: null };
-            }
+            // Use validateIncludeName to validate against all other names
+            const result = this.validateIncludeName(simulatedIncludes, '', currentName);
+
+            // Store the validation result
+            results[originalName] = result;
         }
 
         return results;
