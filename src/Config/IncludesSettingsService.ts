@@ -28,10 +28,10 @@ export class IncludesSettingsService {
         const results: CrossValidatedNameEditResults = {};
 
         // Check each key against all others
-        for (const [originalKey, currentValue] of Object.entries(names)) {
+        for (const [originalName, currentName] of Object.entries(names)) {
             // Skip validation if empty (handled separately)
-            if (!currentValue || currentValue.trim() === '') {
-                results[originalKey] = {
+            if (!currentName || currentName.trim() === '') {
+                results[originalName] = {
                     isValid: false,
                     errorMessage: 'Include name cannot be empty or all whitespace',
                 };
@@ -44,8 +44,8 @@ export class IncludesSettingsService {
 
             for (const [otherKey, otherValue] of Object.entries(names)) {
                 // Skip comparing to self
-                if (otherKey !== originalKey) {
-                    if (otherValue === currentValue) {
+                if (otherKey !== originalName) {
+                    if (otherValue === currentName) {
                         isDuplicate = true;
                         duplicateKey = otherKey;
                         break;
@@ -54,12 +54,12 @@ export class IncludesSettingsService {
             }
 
             if (isDuplicate) {
-                results[originalKey] = {
+                results[originalName] = {
                     isValid: false,
                     errorMessage: `Duplicate of include "${duplicateKey}"`,
                 };
             } else {
-                results[originalKey] = { isValid: true, errorMessage: null };
+                results[originalName] = { isValid: true, errorMessage: null };
             }
         }
 
