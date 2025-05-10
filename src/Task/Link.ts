@@ -14,6 +14,10 @@ export class Link {
         return this.rawLink.link;
     }
 
+    public get destinationFilename() {
+        return this.destination;
+    }
+
     public get displayText() {
         return this.rawLink.displayText;
     }

@@ -9,5 +9,6 @@ describe('linkClass', () => {
         expect(link.originalMarkdown).toEqual('[[link_in_file_body]]');
         expect(link.destination).toEqual('link_in_file_body');
         expect(link.displayText).toEqual('link_in_file_body');
+        expect(link.destinationFilename).toEqual('link_in_file_body');
     });
 });
