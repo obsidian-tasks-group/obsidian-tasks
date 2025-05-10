@@ -60,6 +60,20 @@ describe('IncludesSettingsService', () => {
             expectToBeValid(result['original_key_3']);
         });
 
+        it.failing('should mark names differing only in whitespace as identical', () => {
+            const keyMap: OriginalToCurrentNameMap = {
+                original_key_1: 'duplicate_value',
+                original_key_2: 'duplicate_value  ', // Duplicate
+                original_key_3: 'unique_value',
+            };
+
+            const result = service.validateMultipleIncludeNames(keyMap);
+
+            expectToGiveError(result['original_key_1'], 'Duplicate of include "original_key_2"');
+            expectToGiveError(result['original_key_2'], 'Duplicate of include "original_key_1"');
+            expectToBeValid(result['original_key_3']);
+        });
+
         it('should mark empty keys as invalid', () => {
             const keyMap: OriginalToCurrentNameMap = {
                 original_key_1: '',
