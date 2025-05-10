@@ -13,7 +13,7 @@ type RefreshViewCallback = () => void;
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
     private readonly includesSettingsService = new IncludesSettingsService();
-    private readonly inputElements: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
+    private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
 
     /**
      * Creates a new instance of IncludesSettingsUI
@@ -35,7 +35,7 @@ export class IncludesSettingsUI {
             includesContainer.empty();
 
             // Clear the input map when re-rendering
-            this.inputElements.clear();
+            this.nameFields.clear();
 
             Object.entries(settings.includes).forEach(([key, value]) => {
                 this.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
@@ -72,7 +72,7 @@ export class IncludesSettingsUI {
             text.inputEl.addClass('tasks-includes-key');
 
             // Store reference to this input with its original key
-            this.inputElements.set(key, { inputEl: text.inputEl, originalKey: key });
+            this.nameFields.set(key, { inputEl: text.inputEl, originalKey: key });
 
             let newKey = key;
 
@@ -137,7 +137,7 @@ export class IncludesSettingsUI {
         // Build the current key-value map for validation
         const currentValues: IncludeKeyValueMap = {};
 
-        this.inputElements.forEach(({ inputEl, originalKey }) => {
+        this.nameFields.forEach(({ inputEl, originalKey }) => {
             currentValues[originalKey] = inputEl.value;
         });
 
@@ -145,7 +145,7 @@ export class IncludesSettingsUI {
         const validationResults = this.includesSettingsService.validateMultipleIncludeNames(currentValues);
 
         // Apply styling based on validation results
-        this.inputElements.forEach(({ inputEl, originalKey }) => {
+        this.nameFields.forEach(({ inputEl, originalKey }) => {
             const result = validationResults[originalKey];
 
             if (result && !result.isValid) {
