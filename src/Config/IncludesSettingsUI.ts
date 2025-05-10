@@ -205,6 +205,7 @@ export class IncludesSettingsUI {
         settings: Settings,
         refreshView: RefreshViewCallback | null,
     ) {
+        // TODO Consider how this relates to the validation code - should it refuse to save settings if validation fails?
         // Update the settings in storage
         updateSettings({ includes: updatedIncludes });
         await this.plugin.saveSettings();

@@ -23,6 +23,8 @@ export class IncludesSettingsService {
      * @returns Object mapping each key to its validation result
      */
     public validateMultipleIncludeNames(originalKeys: IncludeKeyValueMap): MultiValidationResult {
+        // TODO Reuse validateIncludeName()? Or at least unify the logic.
+        // TODO Two keys differing only in trailing spaces are considered as different - they should match.
         const results: MultiValidationResult = {};
 
         // Check each key against all others
