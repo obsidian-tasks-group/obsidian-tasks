@@ -60,7 +60,7 @@ describe('IncludesSettingsService', () => {
             expectToBeValid(result['original_key_3']);
         });
 
-        it.failing('should mark names differing only in whitespace as identical', () => {
+        it('should mark names differing only in whitespace as identical', () => {
             const keyMap: OriginalToCurrentNameMap = {
                 original_key_1: 'duplicate_value',
                 original_key_2: 'duplicate_value  ', // Duplicate
@@ -69,8 +69,8 @@ describe('IncludesSettingsService', () => {
 
             const result = service.validateMultipleIncludeNames(keyMap);
 
-            expectToGiveError(result['original_key_1'], 'Duplicate of include "original_key_2"');
-            expectToGiveError(result['original_key_2'], 'Duplicate of include "original_key_1"');
+            expectToGiveError(result['original_key_1'], 'An include with this name already exists');
+            expectToGiveError(result['original_key_2'], 'An include with this name already exists');
             expectToBeValid(result['original_key_3']);
         });
 
