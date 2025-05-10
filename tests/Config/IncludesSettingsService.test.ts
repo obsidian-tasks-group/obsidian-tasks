@@ -1,7 +1,4 @@
-import {
-    IncludesSettingsService,
-    type OriginalToCurrentIncludeNameMap,
-} from '../../src/Config/IncludesSettingsService';
+import { IncludesSettingsService, type OriginalToCurrentNameMap } from '../../src/Config/IncludesSettingsService';
 import type { IncludesMap } from '../../src/Config/Settings';
 
 describe('IncludesSettingsService', () => {
@@ -24,7 +21,7 @@ describe('IncludesSettingsService', () => {
         });
 
         it('should validate all keys as valid when there are no duplicates', () => {
-            const keyMap: OriginalToCurrentIncludeNameMap = {
+            const keyMap: OriginalToCurrentNameMap = {
                 original_key_1: 'unique_value_1',
                 original_key_2: 'unique_value_2',
                 original_key_3: 'unique_value_3',
@@ -38,7 +35,7 @@ describe('IncludesSettingsService', () => {
         });
 
         it('should mark duplicate keys as invalid', () => {
-            const keyMap: OriginalToCurrentIncludeNameMap = {
+            const keyMap: OriginalToCurrentNameMap = {
                 original_key_1: 'duplicate_value',
                 original_key_2: 'duplicate_value', // Duplicate
                 original_key_3: 'unique_value',
@@ -52,7 +49,7 @@ describe('IncludesSettingsService', () => {
         });
 
         it('should mark empty keys as invalid', () => {
-            const keyMap: OriginalToCurrentIncludeNameMap = {
+            const keyMap: OriginalToCurrentNameMap = {
                 original_key_1: '',
                 original_key_2: '  ', // Whitespace only
                 original_key_3: 'valid_key',
@@ -67,7 +64,7 @@ describe('IncludesSettingsService', () => {
         });
 
         it('should handle the case when all keys are identical', () => {
-            const keyMap: OriginalToCurrentIncludeNameMap = {
+            const keyMap: OriginalToCurrentNameMap = {
                 original_key_1: 'same_value',
                 original_key_2: 'same_value',
                 original_key_3: 'same_value',
