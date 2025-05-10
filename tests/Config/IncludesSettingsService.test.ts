@@ -55,9 +55,7 @@ describe('IncludesSettingsService', () => {
 
             const result = service.validateMultipleIncludeNames(keyMap);
 
-            const r = result['original_key_1'];
-            const expectedErrorMessage = 'Duplicate of include "original_key_2"';
-            expectToGiveError(r, expectedErrorMessage);
+            expectToGiveError(result['original_key_1'], 'Duplicate of include "original_key_2"');
 
             expect(result['original_key_2'].isValid).toBe(false);
             expect(result['original_key_2'].errorMessage).toBe('Duplicate of include "original_key_1"');
