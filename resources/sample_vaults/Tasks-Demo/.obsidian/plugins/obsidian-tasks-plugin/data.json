@@ -1,5 +1,11 @@
 {
-  "includes": {},
+  "includes": {
+    "hide_all_dates": "hide due date\nhide scheduled date\nhide start date\nhide created date\nhide done date\nhide cancelled date",
+    "hide_buttons": "hide postpone button\nhide edit button\nhide backlinks",
+    "hide_other_fields": "hide id\nhide depends on\nhide recurrence rule\nhide on completion\nhide priority",
+    "just_the_description_and_tags": "include hide_all_dates\ninclude hide_other_fields\ninclude hide_buttons",
+    "just_the_description": "include just_the_description_and_tags\nhide tags"
+  },
   "globalQuery": "# Exclude templates files:\nroot does not include _meta\n\n# Ignore the sample tasks that demonstrate Theme and Snippet support:\npath does not include Manual Testing/SlrVb's Alternative Checkboxes\npath does not include Styling/Snippet -\npath does not include Styling/Theme -\n",
   "globalFilter": "#task",
   "removeGlobalFilter": true,
