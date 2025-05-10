@@ -55,8 +55,8 @@ describe('IncludesSettingsService', () => {
 
             const result = service.validateMultipleIncludeNames(keyMap);
 
-            expectToGiveError(result['original_key_1'], 'Duplicate of include "original_key_2"');
-            expectToGiveError(result['original_key_2'], 'Duplicate of include "original_key_1"');
+            expectToGiveError(result['original_key_1'], 'An include with this name already exists');
+            expectToGiveError(result['original_key_2'], 'An include with this name already exists');
             expectToBeValid(result['original_key_3']);
         });
 
