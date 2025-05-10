@@ -19,16 +19,16 @@ export interface CrossValidatedNameEditResults {
 export class IncludesSettingsService {
     /**
      * Validates multiple include names against each other
-     * @param originalKeys Map of original keys to their current values in UI
+     * @param names Map of original keys to their current values in UI
      * @returns Object mapping each key to its validation result
      */
-    public validateMultipleIncludeNames(originalKeys: OriginalToCurrentNameMap): CrossValidatedNameEditResults {
+    public validateMultipleIncludeNames(names: OriginalToCurrentNameMap): CrossValidatedNameEditResults {
         // TODO Reuse validateIncludeName()? Or at least unify the logic.
         // TODO Two keys differing only in trailing spaces are considered as different - they should match.
         const results: CrossValidatedNameEditResults = {};
 
         // Check each key against all others
-        for (const [originalKey, currentValue] of Object.entries(originalKeys)) {
+        for (const [originalKey, currentValue] of Object.entries(names)) {
             // Skip validation if empty (handled separately)
             if (!currentValue || currentValue.trim() === '') {
                 results[originalKey] = {
@@ -42,7 +42,7 @@ export class IncludesSettingsService {
             let isDuplicate = false;
             let duplicateKey = '';
 
-            for (const [otherKey, otherValue] of Object.entries(originalKeys)) {
+            for (const [otherKey, otherValue] of Object.entries(names)) {
                 // Skip comparing to self
                 if (otherKey !== originalKey) {
                     if (otherValue === currentValue) {
