@@ -1,6 +1,6 @@
 import { Setting, TextAreaComponent } from 'obsidian';
 import type TasksPlugin from '../main';
-import { type IncludeKeyValueMap, IncludesSettingsService } from './IncludesSettingsService';
+import { IncludesSettingsService, type OriginalToCurrentIncludeNameMap } from './IncludesSettingsService';
 import { type IncludesMap, type Settings, getSettings, updateSettings } from './Settings';
 
 type RefreshViewCallback = () => void;
@@ -135,7 +135,7 @@ export class IncludesSettingsUI {
      */
     private validateAllInputs() {
         // Build the current key-value map for validation
-        const currentValues: IncludeKeyValueMap = {};
+        const currentValues: OriginalToCurrentIncludeNameMap = {};
 
         this.nameFields.forEach(({ inputEl, originalKey }) => {
             currentValues[originalKey] = inputEl.value;
