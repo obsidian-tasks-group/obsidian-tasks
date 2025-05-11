@@ -5,40 +5,40 @@ import type { IncludesMap } from './Settings';
  * Represents a map of include keys and their current values
  * used during validation
  */
-export interface OriginalToCurrentNameMap {
+export interface RenamesInProgress {
     [originalName: string]: string;
 }
 
 /**
  * Result of validating multiple include values at once
  */
-export interface CrossValidatedNameEditResults {
+export interface RenameResults {
     [originalName: string]: { isValid: boolean; errorMessage: string | null };
 }
 
 export class IncludesSettingsService {
     /**
      * Validates multiple include names against each other
-     * @param names Map of original keys to their current values in UI
+     * @param renames Map of original keys to their current values in UI
      * @returns Object mapping each key to its validation result
      */
-    public validateMultipleIncludeNames(names: OriginalToCurrentNameMap): CrossValidatedNameEditResults {
-        const results: CrossValidatedNameEditResults = {};
+    public validateRenames(renames: RenamesInProgress): RenameResults {
+        const results: RenameResults = {};
 
         // Check each key against all others
-        for (const [originalName, currentName] of Object.entries(names)) {
+        for (const [originalName, newName] of Object.entries(renames)) {
             // Create a temporary map to simulate the situation
             const simulatedIncludes: IncludesMap = {};
 
-            for (const [otherOriginalName, otherNormalisedName] of Object.entries(names)) {
+            for (const [otherOriginalName, otherNewName] of Object.entries(renames)) {
                 // Skip the name being validated
                 if (otherOriginalName !== originalName) {
-                    simulatedIncludes[otherNormalisedName] = '';
+                    simulatedIncludes[otherNewName] = '';
                 }
             }
 
             // Pass empty string as keyBeingRenamed since we're not excluding any key from duplicate check
-            const result = this.validateIncludeName(simulatedIncludes, '', currentName);
+            const result = this.validateRename(simulatedIncludes, '', newName);
 
             // Store the validation result
             results[originalName] = result;
@@ -54,7 +54,7 @@ export class IncludesSettingsService {
      * @param proposedName The proposed name to validate
      * @returns An object with validation result and error message if any
      */
-    public validateIncludeName(
+    public validateRename(
         includes: Readonly<IncludesMap>,
         keyBeingRenamed: string,
         proposedName: string,
