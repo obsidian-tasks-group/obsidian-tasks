@@ -26,11 +26,7 @@ export class IncludesSettingsService {
         const results: CrossValidatedNameEditResults = {};
 
         // First, normalise all input names
-        const normalisedNames: OriginalToCurrentNameMap = {};
-        for (const [originalName, currentName] of Object.entries(names)) {
-            // Store the normalised (trimmed) version of each name
-            normalisedNames[originalName] = currentName.trim();
-        }
+        const normalisedNames: OriginalToCurrentNameMap = names;
 
         // Check each key against all others using the normalised names
         for (const [originalName, normalisedName] of Object.entries(normalisedNames)) {
