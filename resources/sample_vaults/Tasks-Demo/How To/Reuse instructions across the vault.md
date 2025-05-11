@@ -25,7 +25,6 @@ include xxxx
 explain: `INPUT[toggle:TQ_explain]`
 
 ```tasks
-limit 10
 ```
 
 ## Hide all the fields
@@ -35,7 +34,6 @@ explain: `INPUT[toggle:TQ_explain]`
 ```tasks
 include hide_all_dates
 include hide_other_fields
-limit 10
 ```
 
 ## Hide all the Tasks user interface elements
@@ -44,14 +42,12 @@ explain: `INPUT[toggle:TQ_explain]`
 
 ```tasks
 include hide_buttons
-limit 10
 ```
 
 ## Hide everything, including tags
 
 ```tasks
 include just_the_description_and_tags
-limit 10
 ```
 
 ## Advanced use: return a function, that takes a parameter from the query source
@@ -71,7 +67,7 @@ group by function const x = "{{includes.filter_by_context}}"; return x
 # For debug/explanatory purposes, show the source of the Include as a group name:
 group by function const x = "{{includes.extract_contexts_1}}"; return x
 
-# includes.extract_contexts_1 value needs to be surrounded by parentheses (): 
+# includes.extract_contexts_1 value needs to be surrounded by parentheses ():
 filter by function return ({{includes.extract_contexts_1}})('home')
 ```
 
