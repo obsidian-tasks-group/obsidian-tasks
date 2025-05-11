@@ -27,18 +27,17 @@ export class IncludesSettingsService {
 
         // Check each key against all others
         for (const [originalName, newName] of Object.entries(renames)) {
-            // Create a temporary map to simulate the situation
-            const simulatedIncludes: IncludesMap = {};
+            const includesWithOtherPendingRenames: IncludesMap = {};
 
             for (const [otherOriginalName, otherNewName] of Object.entries(renames)) {
-                // Skip the name being validated
+                // Skip the name being validated to avoid false duplicate matches.
                 if (otherOriginalName !== originalName) {
-                    simulatedIncludes[otherNewName] = '';
+                    includesWithOtherPendingRenames[otherNewName] = '';
                 }
             }
 
             // Pass empty string as keyBeingRenamed since we're not excluding any key from duplicate check
-            const result = this.validateRename(simulatedIncludes, '', newName);
+            const result = this.validateRename(includesWithOtherPendingRenames, '', newName);
 
             // Store the validation result
             results[originalName] = result;
