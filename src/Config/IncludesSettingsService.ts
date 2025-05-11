@@ -37,10 +37,7 @@ export class IncludesSettingsService {
             }
 
             // Pass empty string as keyBeingRenamed since we're not excluding any key from duplicate check
-            const result = this.validateRename(includesWithOtherPendingRenames, '', newName);
-
-            // Store the validation result
-            results[originalName] = result;
+            results[originalName] = this.validateRename(includesWithOtherPendingRenames, '', newName);
         }
 
         return results;
