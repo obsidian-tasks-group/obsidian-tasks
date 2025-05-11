@@ -1,11 +1,16 @@
 ---
 TQ_explain: false
+TQ_extra_instructions: |-
+  ignore global query
+  limit 10
 ---
 # Reuse instructions across the vault
 
 These searches are for experimenting with, and understanding, the new "Includes" facility, which was released in Tasks X.Y.Z.
 
 Includes values can be defined in the Tasks settings.
+
+explain: `INPUT[toggle:TQ_explain]`
 
 ## List all the known 'include' values in settings
 
@@ -47,4 +52,35 @@ limit 10
 ```tasks
 include just_the_description_and_tags
 limit 10
+```
+
+## Advanced use: return a function, that takes a parameter from the query source
+
+### Has context 'home' - and group by the Include text - version 1
+
+```tasks
+# For debug/explanatory purposes, show the source of the Include as a group name:
+group by function const x = "{{includes.filter_by_context}}"; return x
+
+{{includes.filter_by_context}}('home')
+```
+
+### Has context 'home' - and group by the Include text - version 2
+
+```tasks
+# For debug/explanatory purposes, show the source of the Include as a group name:
+group by function const x = "{{includes.extract_contents_1}}"; return x
+
+filter by function const f = {{includes.extract_contents_1}}; return f('home');
+filter by function return ({{includes.extract_contents_1}})('home')
+```
+
+### Has context 'home' - and group by the Include text - version 3
+
+```tasks
+# For debug/explanatory purposes, show the source of the Include as a group name:
+group by function const x = "{{includes.extract_contents_2}}"; return x
+
+filter by function const f = {{includes.extract_contents_2}}; return f('home');
+filter by function {{includes.extract_contents_2}}('home')
 ```
