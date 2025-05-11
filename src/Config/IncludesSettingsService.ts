@@ -25,24 +25,20 @@ export class IncludesSettingsService {
     public validateMultipleIncludeNames(names: OriginalToCurrentNameMap): CrossValidatedNameEditResults {
         const results: CrossValidatedNameEditResults = {};
 
-        // Check each key against all others using the normalised names
-        for (const [originalName, normalisedName] of Object.entries(names)) {
+        // Check each key against all others
+        for (const [originalName, currentName] of Object.entries(names)) {
             // Create a temporary map to simulate the situation
             const simulatedIncludes: IncludesMap = {};
 
-            // Add all other normalised names to the map
             for (const [otherOriginalName, otherNormalisedName] of Object.entries(names)) {
                 // Skip the name being validated
                 if (otherOriginalName !== originalName) {
-                    // Use normalised names in the map
                     simulatedIncludes[otherNormalisedName] = '';
                 }
             }
 
-            // Use validateIncludeName to check against the normalised map
             // Pass empty string as keyBeingRenamed since we're not excluding any key from duplicate check
-            // validateIncludeName will trim normalisedName again, which is redundant but harmless
-            const result = this.validateIncludeName(simulatedIncludes, '', normalisedName);
+            const result = this.validateIncludeName(simulatedIncludes, '', currentName);
 
             // Store the validation result
             results[originalName] = result;
