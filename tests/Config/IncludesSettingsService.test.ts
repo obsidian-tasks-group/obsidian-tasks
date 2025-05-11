@@ -1,4 +1,4 @@
-import { IncludesSettingsService, type OriginalToCurrentNameMap } from '../../src/Config/IncludesSettingsService';
+import { IncludesSettingsService, type RenamesInProgress } from '../../src/Config/IncludesSettingsService';
 import type { IncludesMap } from '../../src/Config/Settings';
 
 describe('IncludesSettingsService', () => {
@@ -33,13 +33,13 @@ describe('IncludesSettingsService', () => {
         }
 
         it('should validate all keys as valid when there are no duplicates', () => {
-            const keyMap: OriginalToCurrentNameMap = {
+            const keyMap: RenamesInProgress = {
                 original_key_1: 'unique_value_1',
                 original_key_2: 'unique_value_2',
                 original_key_3: 'unique_value_3',
             };
 
-            const result = service.validateMultipleIncludeNames(keyMap);
+            const result = service.validateRenames(keyMap);
 
             expectToBeValid(result['original_key_1']);
             expectToBeValid(result['original_key_2']);
@@ -47,13 +47,13 @@ describe('IncludesSettingsService', () => {
         });
 
         it('should mark duplicate keys as invalid', () => {
-            const keyMap: OriginalToCurrentNameMap = {
+            const keyMap: RenamesInProgress = {
                 original_key_1: 'duplicate_value',
                 original_key_2: 'duplicate_value', // Duplicate
                 original_key_3: 'unique_value',
             };
 
-            const result = service.validateMultipleIncludeNames(keyMap);
+            const result = service.validateRenames(keyMap);
 
             expectToGiveError(result['original_key_1'], 'An include with this name already exists');
             expectToGiveError(result['original_key_2'], 'An include with this name already exists');
@@ -61,13 +61,13 @@ describe('IncludesSettingsService', () => {
         });
 
         it('should mark names differing only in whitespace as identical', () => {
-            const keyMap: OriginalToCurrentNameMap = {
+            const keyMap: RenamesInProgress = {
                 original_key_1: 'duplicate_value',
                 original_key_2: 'duplicate_value  ', // Duplicate
                 original_key_3: 'unique_value',
             };
 
-            const result = service.validateMultipleIncludeNames(keyMap);
+            const result = service.validateRenames(keyMap);
 
             expectToGiveError(result['original_key_1'], 'An include with this name already exists');
             expectToGiveError(result['original_key_2'], 'An include with this name already exists');
@@ -75,13 +75,13 @@ describe('IncludesSettingsService', () => {
         });
 
         it('should mark empty keys as invalid', () => {
-            const keyMap: OriginalToCurrentNameMap = {
+            const keyMap: RenamesInProgress = {
                 original_key_1: '',
                 original_key_2: '  ', // Whitespace only
                 original_key_3: 'valid_key',
             };
 
-            const result = service.validateMultipleIncludeNames(keyMap);
+            const result = service.validateRenames(keyMap);
 
             expectToGiveError(result['original_key_1'], 'Include name cannot be empty or all whitespace');
             expectToGiveError(result['original_key_2'], 'Include name cannot be empty or all whitespace');
@@ -89,13 +89,13 @@ describe('IncludesSettingsService', () => {
         });
 
         it('should handle the case when all keys are identical', () => {
-            const keyMap: OriginalToCurrentNameMap = {
+            const keyMap: RenamesInProgress = {
                 original_key_1: 'same_value',
                 original_key_2: 'same_value',
                 original_key_3: 'same_value',
             };
 
-            const result = service.validateMultipleIncludeNames(keyMap);
+            const result = service.validateRenames(keyMap);
 
             // None should be valid
             const validCount = Object.values(result).filter((r) => r.isValid).length;
@@ -115,26 +115,26 @@ describe('IncludesSettingsService', () => {
         }
 
         it('should recognise valid new name', () => {
-            expectIsValid(service.validateIncludeName(testIncludes, 'key1', 'new-name'));
+            expectIsValid(service.validateRename(testIncludes, 'key1', 'new-name'));
         });
 
         it('should reject an empty new name', () => {
-            const result = service.validateIncludeName(testIncludes, 'key1', '');
+            const result = service.validateRename(testIncludes, 'key1', '');
             expectIsNotValid(result, 'Include name cannot be empty or all whitespace');
         });
 
         it('should reject an new name with only whitespaces', () => {
-            const result = service.validateIncludeName(testIncludes, 'key1', ' \t');
+            const result = service.validateRename(testIncludes, 'key1', ' \t');
             expectIsNotValid(result, 'Include name cannot be empty or all whitespace');
         });
 
         it('should reject a new name if it already exists', () => {
-            const result = service.validateIncludeName(testIncludes, 'key1', 'key2');
+            const result = service.validateRename(testIncludes, 'key1', 'key2');
             expectIsNotValid(result, 'An include with this name already exists');
         });
 
         it('should reject a new name if it already exists, without ending spaces', () => {
-            const result = service.validateIncludeName(testIncludes, 'key1', 'key2  ');
+            const result = service.validateRename(testIncludes, 'key1', 'key2  ');
             expectIsNotValid(result, 'An include with this name already exists');
         });
 
@@ -144,12 +144,12 @@ describe('IncludesSettingsService', () => {
                 ' key2 ': 'value2',
             };
 
-            const result = service.validateIncludeName(testIncludes, 'key1', 'key2');
+            const result = service.validateRename(testIncludes, 'key1', 'key2');
             expectIsNotValid(result, 'An include with this name already exists');
         });
 
         it('should treat renaming to self as valid', () => {
-            expectIsValid(service.validateIncludeName(testIncludes, 'key1', 'key1'));
+            expectIsValid(service.validateRename(testIncludes, 'key1', 'key1'));
         });
     });
 

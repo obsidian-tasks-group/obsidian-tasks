@@ -1,6 +1,6 @@
 import { Setting, TextAreaComponent } from 'obsidian';
 import type TasksPlugin from '../main';
-import { IncludesSettingsService, type OriginalToCurrentNameMap } from './IncludesSettingsService';
+import { IncludesSettingsService, type RenamesInProgress } from './IncludesSettingsService';
 import { type IncludesMap, type Settings, getSettings, updateSettings } from './Settings';
 
 type RefreshViewCallback = () => void;
@@ -137,14 +137,14 @@ export class IncludesSettingsUI {
      */
     private validateAllInputs() {
         // Build the current key-value map for validation
-        const currentValues: OriginalToCurrentNameMap = {};
+        const currentValues: RenamesInProgress = {};
 
         this.nameFields.forEach(({ inputEl, originalKey }) => {
             currentValues[originalKey] = inputEl.value;
         });
 
         // Get validation results from the service
-        const validationResults = this.includesSettingsService.validateMultipleIncludeNames(currentValues);
+        const validationResults = this.includesSettingsService.validateRenames(currentValues);
 
         // Apply styling based on validation results
         this.nameFields.forEach(({ inputEl, originalKey }) => {
