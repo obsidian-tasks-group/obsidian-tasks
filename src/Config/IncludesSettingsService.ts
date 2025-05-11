@@ -84,7 +84,7 @@ export class IncludesSettingsService {
                 continue;
             }
 
-            if (existingKey === proposedName.trim()) {
+            if (existingKey.trim() === proposedName.trim()) {
                 return {
                     isValid: false,
                     errorMessage: 'An include with this name already exists',

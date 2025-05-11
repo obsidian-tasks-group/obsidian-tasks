@@ -138,7 +138,7 @@ describe('IncludesSettingsService', () => {
             expectIsNotValid(result, 'An include with this name already exists');
         });
 
-        it.failing('should reject a new name if it already exists, with surrounding spaces', () => {
+        it('should reject a new name if it already exists, with surrounding spaces', () => {
             testIncludes = {
                 key1: 'value1',
                 ' key2 ': 'value2',
