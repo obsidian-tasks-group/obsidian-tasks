@@ -46,6 +46,8 @@ include hide_buttons
 
 ## Hide everything, including tags
 
+explain: `INPUT[toggle:TQ_explain]`
+
 ```tasks
 include just_the_description_and_tags
 ```
@@ -53,6 +55,8 @@ include just_the_description_and_tags
 ## Advanced use: return a function, that takes a parameter from the query source
 
 ### Has context 'home' - and group by the Include text - version 1
+
+explain: `INPUT[toggle:TQ_explain]`
 
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
@@ -63,6 +67,8 @@ group by function const x = "{{includes.filter_by_context}}"; return x
 
 ### Has context 'home' - and group by the Include text - version 2
 
+explain: `INPUT[toggle:TQ_explain]`
+
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
 group by function const x = "{{includes.extract_contexts_1}}"; return x
@@ -72,6 +78,8 @@ filter by function return ({{includes.extract_contexts_1}})('home')
 ```
 
 ### Has context 'home' - and group by the Include text - version 3
+
+explain: `INPUT[toggle:TQ_explain]`
 
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
