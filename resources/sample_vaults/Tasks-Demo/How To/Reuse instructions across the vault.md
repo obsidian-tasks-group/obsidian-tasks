@@ -69,18 +69,18 @@ group by function const x = "{{includes.filter_by_context}}"; return x
 
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
-group by function const x = "{{includes.extract_contents_1}}"; return x
+group by function const x = "{{includes.extract_contexts_1}}"; return x
 
-# includes.extract_contents_1 value needs to be surrounded by parentheses (): 
-filter by function return ({{includes.extract_contents_1}})('home')
+# includes.extract_contexts_1 value needs to be surrounded by parentheses (): 
+filter by function return ({{includes.extract_contexts_1}})('home')
 ```
 
 ### Has context 'home' - and group by the Include text - version 3
 
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
-group by function const x = "{{includes.extract_contents_2}}"; return x
+group by function const x = "{{includes.extract_contexts_2}}"; return x
 
-# includes.extract_contents_1 value has the parentheses, to simplify use:
-filter by function {{includes.extract_contents_2}}('home')
+# includes.extract_contexts_1 value has the parentheses, to simplify use:
+filter by function {{includes.extract_contexts_2}}('home')
 ```
