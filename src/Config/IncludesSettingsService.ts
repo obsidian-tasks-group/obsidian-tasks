@@ -47,16 +47,16 @@ export class IncludesSettingsService {
      * Validates if an include name is valid
      * @param includes The current includes map
      * @param keyBeingRenamed The key being renamed
-     * @param proposedName The proposed name to validate
+     * @param newName The proposed name to validate
      * @returns An object with validation result and error message if any
      */
     public validateRename(
         includes: Readonly<IncludesMap>,
         keyBeingRenamed: string,
-        proposedName: string,
+        newName: string,
     ): { isValid: boolean; errorMessage: string | null } {
         // Check for empty name
-        if (!proposedName || proposedName.trim() === '') {
+        if (!newName || newName.trim() === '') {
             return {
                 isValid: false,
                 errorMessage: 'Include name cannot be empty or all whitespace',
@@ -69,7 +69,7 @@ export class IncludesSettingsService {
                 continue;
             }
 
-            if (existingKey.trim() === proposedName.trim()) {
+            if (existingKey.trim() === newName.trim()) {
                 return {
                     isValid: false,
                     errorMessage: 'An include with this name already exists',
