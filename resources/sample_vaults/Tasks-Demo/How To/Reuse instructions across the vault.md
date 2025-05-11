@@ -71,7 +71,7 @@ group by function const x = "{{includes.filter_by_context}}"; return x
 # For debug/explanatory purposes, show the source of the Include as a group name:
 group by function const x = "{{includes.extract_contents_1}}"; return x
 
-filter by function const f = {{includes.extract_contents_1}}; return f('home');
+# includes.extract_contents_1 value needs to be surrounded by parentheses (): 
 filter by function return ({{includes.extract_contents_1}})('home')
 ```
 
@@ -81,6 +81,6 @@ filter by function return ({{includes.extract_contents_1}})('home')
 # For debug/explanatory purposes, show the source of the Include as a group name:
 group by function const x = "{{includes.extract_contents_2}}"; return x
 
-filter by function const f = {{includes.extract_contents_2}}; return f('home');
+# includes.extract_contents_1 value has the parentheses, to simplify use:
 filter by function {{includes.extract_contents_2}}('home')
 ```
