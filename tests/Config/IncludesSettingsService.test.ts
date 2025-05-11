@@ -133,7 +133,7 @@ describe('IncludesSettingsService', () => {
             expectIsNotValid(result, 'An include with this name already exists');
         });
 
-        it.failing('should reject a new name if it already exists, without ending spaces', () => {
+        it('should reject a new name if it already exists, without ending spaces', () => {
             const result = service.validateIncludeName(testIncludes, 'key1', 'key2  ');
             expectIsNotValid(result, 'An include with this name already exists');
         });
