@@ -825,11 +825,11 @@ describe('accessing links in file', function () {
 });
 
 describe('all mock files', () => {
-    const files: any = allCacheSampleData();
+    const files: SimulatedFile[] = allCacheSampleData();
 
     it.each(listPathAndData(files))(
         'should create valid TasksFile for all mock files: "%s"',
-        (_path: string, file: any) => {
+        (_path: string, file: SimulatedFile) => {
             const tasksFile = getTasksFileFromMockData(file);
 
             const frontmatter = tasksFile.frontmatter;

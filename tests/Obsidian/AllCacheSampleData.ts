@@ -1,6 +1,8 @@
 // DO NOT EDIT!
 // This file is machine-generated in the test vault, by convert_test_data_markdown_to_js.js.
 
+import type { SimulatedFile } from './SimulatedFile';
+
 import blockquote from './__test_data__/blockquote.json';
 import callout from './__test_data__/callout.json';
 import callout_custom from './__test_data__/callout_custom.json';
@@ -80,7 +82,7 @@ import yaml_tags_with_one_value_on_single_line from './__test_data__/yaml_tags_w
 import yaml_tags_with_two_values_on_one_line from './__test_data__/yaml_tags_with_two_values_on_one_line.json';
 import yaml_tags_with_two_values_on_two_lines from './__test_data__/yaml_tags_with_two_values_on_two_lines.json';
 
-export function allCacheSampleData() {
+export function allCacheSampleData(): SimulatedFile[] {
     return [
         blockquote,
         callout,
