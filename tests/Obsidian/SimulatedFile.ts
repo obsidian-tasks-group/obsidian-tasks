@@ -14,6 +14,8 @@ export interface SimulatedFile {
     cachedMetadata: CachedMetadata;
     filePath: string;
     fileContents: string;
+    getAllTags: string[];
+    parseFrontMatterTags: string[] | null;
 }
 
 /**
