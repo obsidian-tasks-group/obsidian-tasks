@@ -98,6 +98,15 @@ import type { SimulatedFile } from './SimulatedFile';
 
 ${imports.join('\n')}
 
+/**
+ * All the sample data in \`resources/sample_vaults/Tasks-Demo/Test Data\`.
+ *
+ * Related code that uses some or all of this data:
+ * - {@link SimulatedFile}
+ * - {@link readTasksFromSimulatedFile}
+ * - {@link getTasksFileFromMockData}
+ * - {@link listPathAndData}
+ */
 export function allCacheSampleData(): SimulatedFile[] {
     return [
 ${functions.join('\n')}
