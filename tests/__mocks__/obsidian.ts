@@ -130,6 +130,13 @@ export function setCurrentCacheFile(mockData: any) {
     mockedFileData = mockData;
 }
 
+/**
+ * Fake implementation of Obsidian's `getAllTags()`.
+ *
+ * See https://docs.obsidian.md/Reference/TypeScript+API/getAllTags
+ *
+ * @param cachedMetadata
+ */
 export function getAllTags(cachedMetadata: CachedMetadata): string[] {
     if (cachedMetadata !== mockedFileData.cachedMetadata) {
         throw new Error(
@@ -139,6 +146,13 @@ export function getAllTags(cachedMetadata: CachedMetadata): string[] {
     return mockedFileData.getAllTags;
 }
 
+/**
+ * Fake implementation of Obsidian's `parseFrontMatterTags()`.
+ *
+ * See https://docs.obsidian.md/Reference/TypeScript+API/parseFrontMatterTags
+ *
+ * @param frontmatter
+ */
 export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
     if (frontmatter !== mockedFileData.cachedMetadata.frontmatter) {
         throw new Error(
