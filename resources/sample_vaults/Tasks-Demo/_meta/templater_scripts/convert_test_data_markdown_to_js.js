@@ -94,9 +94,11 @@ async function writeListOfAllTestFunctions(files) {
     const content = `// DO NOT EDIT!
 // This file is machine-generated in the test vault, by convert_test_data_markdown_to_js.js.
 
+import type { SimulatedFile } from './SimulatedFile';
+
 ${imports.join('\n')}
 
-export function allCacheSampleData() {
+export function allCacheSampleData(): SimulatedFile[] {
     return [
 ${functions.join('\n')}
     ];
