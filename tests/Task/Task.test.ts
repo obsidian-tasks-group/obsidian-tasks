@@ -1584,7 +1584,7 @@ describe('identicalTo', () => {
         const lhs = new TaskBuilder().mockData(example_kanban);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().mockData(example_kanban));
 
-        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().mockData({}));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().mockData(undefined));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().mockData(jason_properties));
     });
 
