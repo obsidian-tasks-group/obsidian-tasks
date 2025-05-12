@@ -82,6 +82,15 @@ import yaml_tags_with_one_value_on_single_line from './__test_data__/yaml_tags_w
 import yaml_tags_with_two_values_on_one_line from './__test_data__/yaml_tags_with_two_values_on_one_line.json';
 import yaml_tags_with_two_values_on_two_lines from './__test_data__/yaml_tags_with_two_values_on_two_lines.json';
 
+/**
+ * All the sample data in `resources/sample_vaults/Tasks-Demo/Test Data`.
+ *
+ * Related code that uses some or all of this data:
+ * - {@link SimulatedFile}
+ * - {@link readTasksFromSimulatedFile}
+ * - {@link getTasksFileFromMockData}
+ * - {@link listPathAndData}
+ */
 export function allCacheSampleData(): SimulatedFile[] {
     return [
         blockquote,
