@@ -61,37 +61,30 @@ param (
     # OBSIDIAN_PLUGIN_ROOTS
     [Parameter(HelpMessage = 'The paths to the plugins folders under the .obsidian directory.')]
     [ValidateScript({
-            Write-Host "Validating paths: $pObsidianPluginRoots"
-            foreach ($path in $pObsidianPluginRoots) {
-                Write-Host "Validating path: $path"
-                Write-Host "pObsidianPluginRoots: $pObsidianPluginRoots"
+            $paths = $_ -split ';'
+            # Validate that the paths end with '/plugins' or '\plugins' and that they exist."
+            foreach ($path in $paths) {
                 if (-not ($path -match '[\\/]plugins$')) {
-                    
                     throw "Invalid path: Each path must end with '/plugins' or '\plugins'. Provided: $path"
                 }
                 if (-not (Test-Path $path)) {
                     if ($path -match '\s') {
                         throw "Invalid path: The specified path contains spaces, maybe at the end. Provided: $path"
-                        return $false
                     }
                     throw "Invalid path: The specified path does not exist. Provided: $path"
-                    return $false
                 }
             }
-            $true
-        })]
-    [String[]]
-    # Split by space
-    $pObsidianPluginRoots = $relay_OBSIDIAN_PLUGIN_ROOTS -split ';',
-    
+            return $true
+        })
+    ]
+    [String[]] $pObsidianPluginRoots,
     # OBSIDIAN_PLUGIN_NAME: The folder name of a specific plugin inside the plugins directory.
     # Example: For a plugin located at:
     # /Users/alex/Documents/ObsidianVault/.obsidian/plugins/daily-tasks
     # the OBSIDIAN_PLUGIN_NAME would be:
     # daily-tasks   
     [Parameter(HelpMessage = 'The folder name of the plugin to copy the files to.')]
-    [String]
-    $pPluginFolderName = $OBSIDIAN_PLUGIN_NAME
+    [String] $pPluginFolderName
 )
 
 function Write-ErrorWithNoExit {
