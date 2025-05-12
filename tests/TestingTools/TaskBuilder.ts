@@ -12,6 +12,7 @@ import { TaskLocation } from '../../src/Task/TaskLocation';
 import { Priority } from '../../src/Task/Priority';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import type { ListItem } from '../../src/Task/ListItem';
+import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -57,7 +58,7 @@ export class TaskBuilder {
     private _scheduledDateIsInferred: boolean = false;
     private _id: string = '';
     private _dependsOn: string[] = [];
-    private _mockData: any = undefined;
+    private _mockData?: SimulatedFile = undefined;
 
     /**
      * Build a Task
@@ -209,10 +210,11 @@ export class TaskBuilder {
      * See {@link example_kanban} and other files in the same directory, for available sample mock data.
      *
      * @example
+     * import example_kanban from '../Obsidian/__test_data__/example_kanban.json';
      *      const builder = new TaskBuilder().mockData(example_kanban);
      * @param mockData
      */
-    public mockData(mockData: any) {
+    public mockData(mockData?: SimulatedFile) {
         this._mockData = mockData;
         return this;
     }
