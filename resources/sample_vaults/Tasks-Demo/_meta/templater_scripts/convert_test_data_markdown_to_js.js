@@ -52,7 +52,15 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     const tFile = vault.getAbstractFileByPath(filePath);
 
     const fileContents = await vault.read(tFile);
+
     const cachedMetadata = app.metadataCache.getFileCache(tFile);
+    if (cachedMetadata && cachedMetadata.v !== undefined) {
+        // Obsidian intermittently adds '"v": 1' values to the cache, which clutters up the diffs.
+        // It's possible to remove them by doing "Rebuild cache vault" in Obsidian Settings > "Files and Settings",
+        // and re-running this script, but it's easier for us to just delete them here:
+        delete cachedMetadata.v;
+    }
+
     const getAllTags = tp.obsidian.getAllTags(cachedMetadata);
     const parseFrontMatterTags = tp.obsidian.parseFrontMatterTags(cachedMetadata.frontmatter);
     const data = { filePath, fileContents, cachedMetadata, getAllTags, parseFrontMatterTags };
