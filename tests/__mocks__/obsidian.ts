@@ -132,14 +132,18 @@ export function setCurrentCacheFile(mockData: any) {
 
 export function getAllTags(cachedMetadata: CachedMetadata): string[] {
     if (cachedMetadata !== mockedFileData.cachedMetadata) {
-        throw new Error('Inconsistent test data used in mock getAllTags()');
+        throw new Error(
+            'Inconsistent test data used in mock getAllTags(). Check setCurrentCacheFile() has been called with the correct {@link SimulatedFile} data.',
+        );
     }
     return mockedFileData.getAllTags;
 }
 
 export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
     if (frontmatter !== mockedFileData.cachedMetadata.frontmatter) {
-        throw new Error('Inconsistent test data used in mock parseFrontMatterTags()');
+        throw new Error(
+            'Inconsistent test data used in mock parseFrontMatterTags(). Check setCurrentCacheFile() has been called with the correct {@link SimulatedFile} data.',
+        );
     }
     return mockedFileData.parseFrontMatterTags;
 }
