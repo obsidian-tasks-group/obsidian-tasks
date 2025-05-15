@@ -21,7 +21,7 @@ export class NewResult {
     }
 }
 
-export type RenameResult = { isValid: boolean; errorMessage: string | null; newResult: NewResult };
+export type RenameResult = { isValid: boolean; newResult: NewResult };
 
 /**
  * Result of validating multiple include values at once
@@ -69,7 +69,6 @@ export class IncludesSettingsService {
         if (!newName || newName.trim() === '') {
             return {
                 isValid: false,
-                errorMessage: 'Include name cannot be empty or all whitespace',
                 newResult: new NewResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace'),
             };
         }
@@ -83,13 +82,12 @@ export class IncludesSettingsService {
             if (existingKey.trim() === newName.trim()) {
                 return {
                     isValid: false,
-                    errorMessage: 'An include with this name already exists',
                     newResult: new NewResult(keyBeingRenamed, false, 'An include with this name already exists'),
                 };
             }
         }
 
-        return { isValid: true, errorMessage: null, newResult: new NewResult(keyBeingRenamed, true, null) };
+        return { isValid: true, newResult: new NewResult(keyBeingRenamed, true, null) };
     }
 
     /**
