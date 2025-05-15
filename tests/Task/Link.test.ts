@@ -35,7 +35,7 @@ describe('linkClass', () => {
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
         expect(link.destinationFilename).toEqual('link_in_task_wikilink');
     });
-    it('should return the filename if link has a path and an  alias [[filename|alias]]', () => {
+    it('should return the filename if link has an alias [[filename|alias]]', () => {
         const rawLink = link_in_task_wikilink.cachedMetadata.links[4];
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
         expect(link.destinationFilename).toEqual('link_in_task_wikilink');
@@ -45,9 +45,12 @@ describe('linkClass', () => {
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
         expect(link.destinationFilename).toEqual('link_in_task_wikilink');
     });
-    // TODO: test wikiLink format, destination tests for that?
-    // TODO: test path/../filename
-    // TODO: test path/../filename#heading
-    // TODO: what if file path is ambiguous?
+    // Current code targets # and / characters, / is not a valid character in a filename or a path
+    // # is a valid character in a filename or a path
+    it('should return the filename if path contains a # [[pa#th/path/filename]]', () => {
+        const rawLink = link_in_task_wikilink.cachedMetadata.links[6];
+        const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+        expect(link.destinationFilename).toEqual('link_in_task_wikilink');
+    });
     // TODO: test markdown format
 });

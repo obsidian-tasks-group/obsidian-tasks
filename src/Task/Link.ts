@@ -17,12 +17,17 @@ export class Link {
     }
 
     public get destinationFilename() {
+        // Limitation: # in filename can never be supported
+        // Remove the path from the destination first to handle # in path
+        // TODO: Is the performance hit worth handling # in path?
+        // ai says 30% slower over 1000000 iterations 320ms vs 450ms compared to last commit
+        const filenamePart = this.destination.substring(this.destination.lastIndexOf('/') + 1);
+
         // Handle internal links (starting with '#')
         if (this.destination[0] === '#') return this.filename;
 
-        // Extract filename from path (handles both path and optional hash fragment)
-        const pathPart = this.destination.split('#', 1)[0];
-        return pathPart.substring(pathPart.lastIndexOf('/') + 1);
+        // Removes # after path is removed
+        return filenamePart.split('#', 1)[0];
     }
 
     public get displayText() {
