@@ -30,13 +30,17 @@ describe('linkClass', () => {
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
         expect(link.destinationFilename).toEqual('link_in_task_wikilink');
     });
-    it('should return the filename if link has a path and a heading link [[path/filename#alias]]', () => {
+    it('should return the filename if link has a path and a heading link [[path/filename#heading]]', () => {
         const rawLink = link_in_task_wikilink.cachedMetadata.links[3];
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
         expect(link.destinationFilename).toEqual('link_in_task_wikilink');
     });
+    it('should return the filename if link has a path and an  alias [[filename|alias]]', () => {
+        const rawLink = link_in_task_wikilink.cachedMetadata.links[4];
+        const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+        expect(link.destinationFilename).toEqual('link_in_task_wikilink');
+    });
     // TODO: test wikiLink format, destination tests for that?
-    // TODO: test filename#heading
     // TODO: test path/../filename
     // TODO: test path/../filename#heading
     // TODO: what if file path is ambiguous?
