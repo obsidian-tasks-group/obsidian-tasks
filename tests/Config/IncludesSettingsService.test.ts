@@ -5,6 +5,16 @@ import {
 } from '../../src/Config/IncludesSettingsService';
 import type { IncludesMap } from '../../src/Config/Settings';
 
+function expectToBeValid(result: RenameResult) {
+    expect(result.isValid).toBe(true);
+    expect(result.errorMessage).toBe(null);
+}
+
+function expectToGiveError(result: RenameResult, errorMessage: string) {
+    expect(result.isValid).toBe(false);
+    expect(result.errorMessage).toBe(errorMessage);
+}
+
 describe('IncludesSettingsService', () => {
     let service: IncludesSettingsService;
     let testIncludes: IncludesMap;
@@ -23,16 +33,6 @@ describe('IncludesSettingsService', () => {
         beforeEach(() => {
             service = new IncludesSettingsService();
         });
-
-        function expectToBeValid(resultForOriginalName: RenameResult) {
-            expect(resultForOriginalName.isValid).toBe(true);
-            expect(resultForOriginalName.errorMessage).toBe(null);
-        }
-
-        function expectToGiveError(resultForOriginalName: RenameResult, expectedErrorMessage: string) {
-            expect(resultForOriginalName.isValid).toBe(false);
-            expect(resultForOriginalName.errorMessage).toBe(expectedErrorMessage);
-        }
 
         it('should validate all keys as valid when there are no duplicates', () => {
             const keyMap: RenamesInProgress = {
@@ -106,16 +106,6 @@ describe('IncludesSettingsService', () => {
     });
 
     describe('IncludesSettingsService - validateIncludeName', () => {
-        function expectToBeValid(result: RenameResult) {
-            expect(result.isValid).toBe(true);
-            expect(result.errorMessage).toBe(null);
-        }
-
-        function expectToGiveError(result: RenameResult, errorMessage: string) {
-            expect(result.isValid).toBe(false);
-            expect(result.errorMessage).toBe(errorMessage);
-        }
-
         it('should recognise valid new name', () => {
             expectToBeValid(service.validateRename(testIncludes, 'key1', 'new-name'));
         });
