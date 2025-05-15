@@ -21,7 +21,7 @@ export class NewResult {
     }
 }
 
-export type RenameResult = { newResult: NewResult };
+export type RenameResult = NewResult;
 
 /**
  * Result of validating multiple include values at once
@@ -67,9 +67,7 @@ export class IncludesSettingsService {
     public validateRename(includes: Readonly<IncludesMap>, keyBeingRenamed: string, newName: string): RenameResult {
         // Check for empty name
         if (!newName || newName.trim() === '') {
-            return {
-                newResult: new NewResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace'),
-            };
+            return new NewResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace');
         }
 
         for (const existingKey of Object.keys(includes)) {
@@ -79,13 +77,11 @@ export class IncludesSettingsService {
             }
 
             if (existingKey.trim() === newName.trim()) {
-                return {
-                    newResult: new NewResult(keyBeingRenamed, false, 'An include with this name already exists'),
-                };
+                return new NewResult(keyBeingRenamed, false, 'An include with this name already exists');
             }
         }
 
-        return { newResult: new NewResult(keyBeingRenamed, true, null) };
+        return new NewResult(keyBeingRenamed, true, null);
     }
 
     /**
