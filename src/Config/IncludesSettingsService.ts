@@ -21,11 +21,13 @@ export class NewResult {
     }
 }
 
+type RenameResult = { isValid: boolean; errorMessage: string | null; newResult: NewResult };
+
 /**
  * Result of validating multiple include values at once
  */
 export interface RenameResults {
-    [originalName: string]: { isValid: boolean; errorMessage: string | null; newResult: NewResult };
+    [originalName: string]: RenameResult;
 }
 
 export class IncludesSettingsService {
@@ -62,11 +64,7 @@ export class IncludesSettingsService {
      * @param newName The proposed name to validate
      * @returns An object with validation result and error message if any
      */
-    public validateRename(
-        includes: Readonly<IncludesMap>,
-        keyBeingRenamed: string,
-        newName: string,
-    ): { isValid: boolean; errorMessage: string | null; newResult: NewResult } {
+    public validateRename(includes: Readonly<IncludesMap>, keyBeingRenamed: string, newName: string): RenameResult {
         // Check for empty name
         if (!newName || newName.trim() === '') {
             return {
