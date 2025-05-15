@@ -1,4 +1,8 @@
-import { IncludesSettingsService, type RenamesInProgress } from '../../src/Config/IncludesSettingsService';
+import {
+    IncludesSettingsService,
+    type RenameResult,
+    type RenamesInProgress,
+} from '../../src/Config/IncludesSettingsService';
 import type { IncludesMap } from '../../src/Config/Settings';
 
 describe('IncludesSettingsService', () => {
@@ -20,14 +24,11 @@ describe('IncludesSettingsService', () => {
             service = new IncludesSettingsService();
         });
 
-        function expectToBeValid(resultForOriginalName: { isValid: boolean; errorMessage: string | null }) {
+        function expectToBeValid(resultForOriginalName: RenameResult) {
             expect(resultForOriginalName.isValid).toBe(true);
         }
 
-        function expectToGiveError(
-            resultForOriginalName: { isValid: boolean; errorMessage: string | null },
-            expectedErrorMessage: string,
-        ) {
+        function expectToGiveError(resultForOriginalName: RenameResult, expectedErrorMessage: string) {
             expect(resultForOriginalName.isValid).toBe(false);
             expect(resultForOriginalName.errorMessage).toBe(expectedErrorMessage);
         }
@@ -104,12 +105,12 @@ describe('IncludesSettingsService', () => {
     });
 
     describe('IncludesSettingsService - validateIncludeName', () => {
-        function expectIsValid(result: { isValid: boolean; errorMessage: string | null }) {
+        function expectIsValid(result: RenameResult) {
             expect(result.isValid).toBe(true);
             expect(result.errorMessage).toBe(null);
         }
 
-        function expectIsNotValid(result: { isValid: boolean; errorMessage: string | null }, errorMessage: string) {
+        function expectIsNotValid(result: RenameResult, errorMessage: string) {
             expect(result.isValid).toBe(false);
             expect(result.errorMessage).toBe(errorMessage);
         }
