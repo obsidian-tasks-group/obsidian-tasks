@@ -1,8 +1,9 @@
 import { Link } from '../../src/Task/Link';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
-import { TasksFile } from '../../src/Scripting/TasksFile';
+import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
 
 describe('linkClass', () => {
     it('should construct a Link object', () => {
@@ -23,6 +24,11 @@ describe('linkClass', () => {
         const rawLink = internal_heading_links.cachedMetadata.links[6];
         const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
         expect(link.destinationFilename).toEqual('internal_heading_links');
+    });
+    it('should return the filename if link has a path [[path/filename]]', () => {
+        const rawLink = link_in_task_wikilink.cachedMetadata.links[2];
+        const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+        expect(link.destinationFilename).toEqual('link_in_task_wikilink');
     });
 
     // TODO: test wikiLink format, destination tests for that?

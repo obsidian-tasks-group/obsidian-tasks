@@ -17,8 +17,13 @@ export class Link {
     }
 
     public get destinationFilename() {
-        // If destination begins with a `#`, it is a heading link. So return this.filename. Otherwise, return this.destination.
-        return this.destination.startsWith('#') ? this.filename : this.destination;
+        // If destination begins with a `#`, it is a internal heading link or an internal block link.
+        if (this.destination.startsWith('#')) {
+            return this.filename;
+        }
+
+        // Split the destination by `#` and return the first part.
+        return this.destination.split('#')[0].split('/').pop();
     }
 
     public get displayText() {
