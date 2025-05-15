@@ -17,13 +17,12 @@ export class Link {
     }
 
     public get destinationFilename() {
-        // If destination begins with a `#`, it is a internal heading link or an internal block link.
-        if (this.destination.startsWith('#')) {
-            return this.filename;
-        }
+        // Handle internal links (starting with '#')
+        if (this.destination[0] === '#') return this.filename;
 
-        // Split the destination by `#` and return the first part.
-        return this.destination.split('#')[0].split('/').pop();
+        // Extract filename from path (handles both path and optional hash fragment)
+        const pathPart = this.destination.split('#', 1)[0];
+        return pathPart.substring(pathPart.lastIndexOf('/') + 1);
     }
 
     public get displayText() {
