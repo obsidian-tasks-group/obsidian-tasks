@@ -1,6 +1,6 @@
 import {
     IncludesSettingsService,
-    type RenameResult,
+    RenameResult,
     type RenamesInProgress,
 } from '../../src/Config/IncludesSettingsService';
 import type { IncludesMap } from '../../src/Config/Settings';

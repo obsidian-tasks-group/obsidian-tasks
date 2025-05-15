@@ -9,7 +9,7 @@ export interface RenamesInProgress {
     [originalName: string]: string;
 }
 
-export class NewResult {
+export class RenameResult {
     public readonly originalName: string;
     public readonly isValid: boolean;
     public readonly errorMessage: string | null;
@@ -20,8 +20,6 @@ export class NewResult {
         this.errorMessage = errorMessage;
     }
 }
-
-export type RenameResult = NewResult;
 
 /**
  * Result of validating multiple include values at once
@@ -67,7 +65,7 @@ export class IncludesSettingsService {
     public validateRename(includes: Readonly<IncludesMap>, keyBeingRenamed: string, newName: string): RenameResult {
         // Check for empty name
         if (!newName || newName.trim() === '') {
-            return new NewResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace');
+            return new RenameResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace');
         }
 
         for (const existingKey of Object.keys(includes)) {
@@ -77,11 +75,11 @@ export class IncludesSettingsService {
             }
 
             if (existingKey.trim() === newName.trim()) {
-                return new NewResult(keyBeingRenamed, false, 'An include with this name already exists');
+                return new RenameResult(keyBeingRenamed, false, 'An include with this name already exists');
             }
         }
 
-        return new NewResult(keyBeingRenamed, true, null);
+        return new RenameResult(keyBeingRenamed, true, null);
     }
 
     /**
