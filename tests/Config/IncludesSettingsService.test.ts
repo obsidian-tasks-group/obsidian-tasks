@@ -27,14 +27,12 @@ describe('IncludesSettingsService', () => {
         function expectToBeValid(resultForOriginalName: RenameResult) {
             expect(resultForOriginalName.isValid).toBe(true);
             expect(resultForOriginalName.newResult.isValid).toBe(true);
-            expect(resultForOriginalName.errorMessage).toBe(null);
             expect(resultForOriginalName.newResult.errorMessage).toBe(null);
         }
 
         function expectToGiveError(resultForOriginalName: RenameResult, expectedErrorMessage: string) {
             expect(resultForOriginalName.isValid).toBe(false);
             expect(resultForOriginalName.newResult.isValid).toBe(false);
-            expect(resultForOriginalName.errorMessage).toBe(expectedErrorMessage);
             expect(resultForOriginalName.newResult.errorMessage).toBe(expectedErrorMessage);
         }
 
@@ -112,13 +110,11 @@ describe('IncludesSettingsService', () => {
     describe('IncludesSettingsService - validateIncludeName', () => {
         function expectIsValid(result: RenameResult) {
             expect(result.isValid).toBe(true);
-            expect(result.errorMessage).toBe(null);
             expect(result.newResult.errorMessage).toBe(null);
         }
 
         function expectIsNotValid(result: RenameResult, errorMessage: string) {
             expect(result.isValid).toBe(false);
-            expect(result.errorMessage).toBe(errorMessage);
             expect(result.newResult.errorMessage).toBe(errorMessage);
         }
 
