@@ -150,7 +150,7 @@ export class IncludesSettingsUI {
         this.nameFields.forEach(({ inputEl, originalKey }) => {
             const result = validationResults[originalKey];
 
-            if (result && !result.isValid) {
+            if (result && !result.newResult.isValid) {
                 inputEl.addClass('has-error');
 
                 // Optionally, you could add a title attribute to show the error message on hover
