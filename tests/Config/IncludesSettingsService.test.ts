@@ -106,38 +106,38 @@ describe('IncludesSettingsService', () => {
     });
 
     describe('IncludesSettingsService - validateIncludeName', () => {
-        function expectIsValid(result: RenameResult) {
+        function expectToBeValid(result: RenameResult) {
             expect(result.isValid).toBe(true);
             expect(result.errorMessage).toBe(null);
         }
 
-        function expectIsNotValid(result: RenameResult, errorMessage: string) {
+        function expectToGiveError(result: RenameResult, errorMessage: string) {
             expect(result.isValid).toBe(false);
             expect(result.errorMessage).toBe(errorMessage);
         }
 
         it('should recognise valid new name', () => {
-            expectIsValid(service.validateRename(testIncludes, 'key1', 'new-name'));
+            expectToBeValid(service.validateRename(testIncludes, 'key1', 'new-name'));
         });
 
         it('should reject an empty new name', () => {
             const result = service.validateRename(testIncludes, 'key1', '');
-            expectIsNotValid(result, 'Include name cannot be empty or all whitespace');
+            expectToGiveError(result, 'Include name cannot be empty or all whitespace');
         });
 
         it('should reject an new name with only whitespaces', () => {
             const result = service.validateRename(testIncludes, 'key1', ' \t');
-            expectIsNotValid(result, 'Include name cannot be empty or all whitespace');
+            expectToGiveError(result, 'Include name cannot be empty or all whitespace');
         });
 
         it('should reject a new name if it already exists', () => {
             const result = service.validateRename(testIncludes, 'key1', 'key2');
-            expectIsNotValid(result, 'An include with this name already exists');
+            expectToGiveError(result, 'An include with this name already exists');
         });
 
         it('should reject a new name if it already exists, without ending spaces', () => {
             const result = service.validateRename(testIncludes, 'key1', 'key2  ');
-            expectIsNotValid(result, 'An include with this name already exists');
+            expectToGiveError(result, 'An include with this name already exists');
         });
 
         it('should reject a new name if it already exists, with surrounding spaces', () => {
@@ -147,11 +147,11 @@ describe('IncludesSettingsService', () => {
             };
 
             const result = service.validateRename(testIncludes, 'key1', 'key2');
-            expectIsNotValid(result, 'An include with this name already exists');
+            expectToGiveError(result, 'An include with this name already exists');
         });
 
         it('should treat renaming to self as valid', () => {
-            expectIsValid(service.validateRename(testIncludes, 'key1', 'key1'));
+            expectToBeValid(service.validateRename(testIncludes, 'key1', 'key1'));
         });
     });
 
