@@ -21,7 +21,7 @@ export class NewResult {
     }
 }
 
-type RenameResult = { isValid: boolean; errorMessage: string | null; newResult: NewResult };
+export type RenameResult = { isValid: boolean; errorMessage: string | null; newResult: NewResult };
 
 /**
  * Result of validating multiple include values at once
