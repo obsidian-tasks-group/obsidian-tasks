@@ -9,11 +9,23 @@ export interface RenamesInProgress {
     [originalName: string]: string;
 }
 
+export class NewResult {
+    public readonly originalName: string;
+    public readonly isValid: boolean;
+    public readonly errorMessage: string | null;
+
+    constructor(originalName: string, isValid: boolean, errorMessage: string | null) {
+        this.originalName = originalName;
+        this.isValid = isValid;
+        this.errorMessage = errorMessage;
+    }
+}
+
 /**
  * Result of validating multiple include values at once
  */
 export interface RenameResults {
-    [originalName: string]: { isValid: boolean; errorMessage: string | null };
+    [originalName: string]: { isValid: boolean; errorMessage: string | null; newResult: NewResult };
 }
 
 export class IncludesSettingsService {
@@ -54,12 +66,13 @@ export class IncludesSettingsService {
         includes: Readonly<IncludesMap>,
         keyBeingRenamed: string,
         newName: string,
-    ): { isValid: boolean; errorMessage: string | null } {
+    ): { isValid: boolean; errorMessage: string | null; newResult: NewResult } {
         // Check for empty name
         if (!newName || newName.trim() === '') {
             return {
                 isValid: false,
                 errorMessage: 'Include name cannot be empty or all whitespace',
+                newResult: new NewResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace'),
             };
         }
 
@@ -73,11 +86,12 @@ export class IncludesSettingsService {
                 return {
                     isValid: false,
                     errorMessage: 'An include with this name already exists',
+                    newResult: new NewResult(keyBeingRenamed, false, 'An include with this name already exists'),
                 };
             }
         }
 
-        return { isValid: true, errorMessage: null };
+        return { isValid: true, errorMessage: null, newResult: new NewResult(keyBeingRenamed, true, null) };
     }
 
     /**
