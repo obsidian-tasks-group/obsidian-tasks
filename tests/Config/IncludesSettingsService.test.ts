@@ -107,10 +107,12 @@ describe('IncludesSettingsService', () => {
 
     describe('IncludesSettingsService - validateIncludeName', () => {
         function expectIsValid(result: RenameResult) {
+            expect(result.isValid).toBe(true);
             expect(result.errorMessage).toBe(null);
         }
 
         function expectIsNotValid(result: RenameResult, errorMessage: string) {
+            expect(result.isValid).toBe(false);
             expect(result.errorMessage).toBe(errorMessage);
         }
 
