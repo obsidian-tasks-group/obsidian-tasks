@@ -28,21 +28,25 @@ describe('linkClass', () => {
     it('should return the filename if link has a path [[path/filename]]', () => {
         const rawLink = link_in_task_wikilink.cachedMetadata.links[2];
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+        expect(link.originalMarkdown).toEqual('[[path/link_in_task_wikilink]]');
         expect(link.destinationFilename).toEqual('link_in_task_wikilink');
     });
     it('should return the filename if link has a path and a heading link [[path/filename#heading]]', () => {
         const rawLink = link_in_task_wikilink.cachedMetadata.links[3];
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+        expect(link.originalMarkdown).toEqual('[[path/link_in_task_wikilink#heading_link]]');
         expect(link.destinationFilename).toEqual('link_in_task_wikilink');
     });
     it('should return the filename if link has an alias [[filename|alias]]', () => {
         const rawLink = link_in_task_wikilink.cachedMetadata.links[4];
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+        expect(link.originalMarkdown).toEqual('[[link_in_task_wikilink|alias]]');
         expect(link.destinationFilename).toEqual('link_in_task_wikilink');
     });
     it('should return the filename if link has a path and an alias [[path/path/filename|alias]]', () => {
         const rawLink = link_in_task_wikilink.cachedMetadata.links[5];
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+        expect(link.originalMarkdown).toEqual('[[path/path/link_in_task_wikilink|alias]]');
         expect(link.destinationFilename).toEqual('link_in_task_wikilink');
     });
     // Current code targets # and / characters, / is not a valid character in a filename or a path
@@ -50,7 +54,8 @@ describe('linkClass', () => {
     it('should return the filename if path contains a # [[pa#th/path/filename]]', () => {
         const rawLink = link_in_task_wikilink.cachedMetadata.links[6];
         const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
-        expect(link.destinationFilename).toEqual('link_in_task_wikilink');
+        expect(link.originalMarkdown).toEqual('[[pa#th/path/link_in_task_wikilink]]');
+        expect(link.destinationFilename).toEqual('pa');
     });
     // TODO: test markdown format
 });
