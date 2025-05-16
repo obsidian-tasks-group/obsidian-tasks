@@ -18,11 +18,13 @@ describe('linkClass', () => {
     it('should return the filename if the link is internal filename [[#heading]]', () => {
         const rawLink = internal_heading_links.cachedMetadata.links[0];
         const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
+        expect(link.originalMarkdown).toEqual('[[#Basic Internal Links]]');
         expect(link.destinationFilename).toEqual('internal_heading_links');
     });
     it('should return the filename if the link is internal filename [[#heading|display text]]', () => {
         const rawLink = internal_heading_links.cachedMetadata.links[6];
         const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
+        expect(link.originalMarkdown).toEqual('[[#Header Links With File Reference]]');
         expect(link.destinationFilename).toEqual('internal_heading_links');
     });
     it('should return the filename if link has a path [[path/filename]]', () => {
