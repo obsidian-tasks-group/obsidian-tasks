@@ -1,25 +1,71 @@
 import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import type { IncludesMap } from './Settings';
 
+/**
+ * Represents a map of include keys and their current values
+ * used during validation
+ */
+export interface RenamesInProgress {
+    [originalName: string]: string;
+}
+
+export class RenameResult {
+    public readonly originalName: string;
+    public readonly isValid: boolean;
+    public readonly errorMessage: string | null;
+
+    constructor(originalName: string, isValid: boolean, errorMessage: string | null) {
+        this.originalName = originalName;
+        this.isValid = isValid;
+        this.errorMessage = errorMessage;
+    }
+}
+
+/**
+ * Result of validating multiple include values at once
+ */
+export interface RenameResults {
+    [originalName: string]: RenameResult;
+}
+
 export class IncludesSettingsService {
+    /**
+     * Validates multiple include names against each other
+     * @param renames Map of original keys to their current values in UI
+     * @returns Object mapping each key to its validation result
+     */
+    public validateRenames(renames: RenamesInProgress): RenameResults {
+        const results: RenameResults = {};
+
+        // Check each key against all others
+        for (const [originalName, newName] of Object.entries(renames)) {
+            const includesWithOtherPendingRenames: IncludesMap = {};
+
+            for (const [otherOriginalName, otherNewName] of Object.entries(renames)) {
+                // Skip the name being validated to avoid false duplicate matches.
+                if (otherOriginalName !== originalName) {
+                    includesWithOtherPendingRenames[otherNewName] = '';
+                }
+            }
+
+            // Pass empty string as keyBeingRenamed since we're not excluding any key from duplicate check
+            results[originalName] = this.validateRename(includesWithOtherPendingRenames, '', newName);
+        }
+
+        return results;
+    }
+
     /**
      * Validates if an include name is valid
      * @param includes The current includes map
      * @param keyBeingRenamed The key being renamed
-     * @param proposedName The proposed name to validate
+     * @param newName The proposed name to validate
      * @returns An object with validation result and error message if any
      */
-    public validateIncludeName(
-        includes: Readonly<IncludesMap>,
-        keyBeingRenamed: string,
-        proposedName: string,
-    ): { isValid: boolean; errorMessage: string | null } {
+    public validateRename(includes: Readonly<IncludesMap>, keyBeingRenamed: string, newName: string): RenameResult {
         // Check for empty name
-        if (!proposedName || proposedName.trim() === '') {
-            return {
-                isValid: false,
-                errorMessage: 'Include name cannot be empty or all whitespace',
-            };
+        if (!newName || newName.trim() === '') {
+            return new RenameResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace');
         }
 
         for (const existingKey of Object.keys(includes)) {
@@ -28,15 +74,12 @@ export class IncludesSettingsService {
                 continue;
             }
 
-            if (existingKey === proposedName) {
-                return {
-                    isValid: false,
-                    errorMessage: 'An include with this name already exists',
-                };
+            if (existingKey.trim() === newName.trim()) {
+                return new RenameResult(keyBeingRenamed, false, 'An include with this name already exists');
             }
         }
 
-        return { isValid: true, errorMessage: null };
+        return new RenameResult(keyBeingRenamed, true, null);
     }
 
     /**

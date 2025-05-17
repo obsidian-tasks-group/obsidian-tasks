@@ -51,3 +51,9 @@
         align-items: unset;
     }
 }
+
+/* Error state for invalid input */
+.tasks-settings .tasks-includes-setting .tasks-includes-key.has-error {
+    border-color: var(--text-error);
+    border-width: 2px;
+}
