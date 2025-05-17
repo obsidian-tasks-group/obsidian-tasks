@@ -1,6 +1,6 @@
 import { Setting, TextAreaComponent } from 'obsidian';
 import type TasksPlugin from '../main';
-import { IncludesSettingsService } from './IncludesSettingsService';
+import { IncludesSettingsService, type RenamesInProgress } from './IncludesSettingsService';
 import { type IncludesMap, type Settings, getSettings, updateSettings } from './Settings';
 
 type RefreshViewCallback = () => void;
@@ -13,6 +13,7 @@ type RefreshViewCallback = () => void;
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
     private readonly includesSettingsService = new IncludesSettingsService();
+    private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
 
     /**
      * Creates a new instance of IncludesSettingsUI
@@ -32,6 +33,9 @@ export class IncludesSettingsUI {
 
         const renderIncludes = () => {
             includesContainer.empty();
+
+            // Clear the input map when re-rendering
+            this.nameFields.clear();
 
             Object.entries(settings.includes).forEach(([key, value]) => {
                 this.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
@@ -67,10 +71,16 @@ export class IncludesSettingsUI {
             text.setPlaceholder('Name').setValue(key);
             text.inputEl.addClass('tasks-includes-key');
 
+            // Store reference to this input with its original key
+            this.nameFields.set(key, { inputEl: text.inputEl, originalKey: key });
+
             let newKey = key;
 
             text.inputEl.addEventListener('input', (e) => {
                 newKey = (e.target as HTMLInputElement).value;
+
+                // Validate all inputs to update any that might be affected
+                this.validateAllInputs();
             });
 
             // Handle renaming an include
@@ -109,6 +119,8 @@ export class IncludesSettingsUI {
             });
         });
 
+        // TODO Add reorder button or facility to drag and drop items
+
         // Add delete button
         setting.addExtraButton((btn) => {
             btn.setIcon('cross')
@@ -117,6 +129,36 @@ export class IncludesSettingsUI {
                     const updatedIncludes = this.includesSettingsService.deleteInclude(settings.includes, key);
                     await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                 });
+        });
+    }
+
+    /**
+     * Validates all input elements and updates their styling
+     */
+    private validateAllInputs() {
+        // Build the current key-value map for validation
+        const currentValues: RenamesInProgress = {};
+
+        this.nameFields.forEach(({ inputEl, originalKey }) => {
+            currentValues[originalKey] = inputEl.value;
+        });
+
+        // Get validation results from the service
+        const validationResults = this.includesSettingsService.validateRenames(currentValues);
+
+        // Apply styling based on validation results
+        this.nameFields.forEach(({ inputEl, originalKey }) => {
+            const result = validationResults[originalKey];
+
+            if (result && !result.isValid) {
+                inputEl.addClass('has-error');
+
+                // Optionally, you could add a title attribute to show the error message on hover
+                inputEl.title = result.errorMessage || '';
+            } else {
+                inputEl.removeClass('has-error');
+                inputEl.title = '';
+            }
         });
     }
 
@@ -165,6 +207,7 @@ export class IncludesSettingsUI {
         settings: Settings,
         refreshView: RefreshViewCallback | null,
     ) {
+        // TODO Consider how this relates to the validation code - should it refuse to save settings if validation fails?
         // Update the settings in storage
         updateSettings({ includes: updatedIncludes });
         await this.plugin.saveSettings();
