@@ -154,7 +154,7 @@ export class IncludesSettingsUI {
                 inputEl.addClass('has-error');
 
                 // Optionally, you could add a title attribute to show the error message on hover
-                inputEl.title = result.errorMessage || '';
+                inputEl.title = result.errorMessage ?? '';
             } else {
                 inputEl.removeClass('has-error');
                 inputEl.title = '';
