@@ -90,6 +90,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private readonly events: TasksEvents;
 
     private renderEventRef: EventRef | undefined;
+    private reloadSearchResultsEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
     private isCacheChangedSinceLastRedraw = false;
@@ -134,8 +135,10 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         // Process the current cache state:
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
-        // Listen to future cache changes:
+
+        // Listen to future changes:
         this.renderEventRef = this.events.onCacheUpdate(this.render.bind(this));
+        this.reloadSearchResultsEventRef = this.events.onReloadOpenSearchResults(this.rereadQueryFromFile.bind(this));
 
         this.reloadQueryAtMidnight();
 
@@ -221,6 +224,10 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.events.off(this.renderEventRef);
         }
 
+        if (this.reloadSearchResultsEventRef !== undefined) {
+            this.events.off(this.reloadSearchResultsEventRef);
+        }
+
         if (this.queryReloadTimeout !== undefined) {
             clearTimeout(this.queryReloadTimeout);
         }
@@ -303,6 +310,13 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
 
         this.containerEl.firstChild?.replaceWith(content);
+    }
+
+    private rereadQueryFromFile() {
+        this.queryResultsRenderer.rereadQueryFromFile();
+        this.isCacheChangedSinceLastRedraw = true;
+        // TODO Debounce this rendering
+        this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() });
     }
 }
 

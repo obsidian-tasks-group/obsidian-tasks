@@ -13,7 +13,6 @@ type RefreshViewCallback = () => void;
  */
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
-    // @ts-expect-error: TS6133: events is declared but its value is never read.
     private readonly events: TasksEvents;
     private readonly includesSettingsService = new IncludesSettingsService();
     private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
@@ -223,5 +222,7 @@ export class IncludesSettingsUI {
         if (refreshView) {
             refreshView();
         }
+
+        this.events.triggerReloadOpenSearchResults();
     }
 }
