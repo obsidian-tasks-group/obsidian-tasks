@@ -4,6 +4,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
 import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
+import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
 
 describe('linkClass', () => {
     it('should construct a Link object', () => {
@@ -82,6 +83,25 @@ describe('linkClass', () => {
             const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
             expect(link.originalMarkdown).toEqual('[[a_pdf_file.pdf]]');
             expect(link.destinationFilename).toEqual('a_pdf_file.pdf');
+        });
+        // Markdown Links Tests
+        it('should return the filename if the link is internal [display name](#heading)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[8];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[heading](#heading)');
+            expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
+        });
+        it('should return the filename when a simple markdown link [display name](filename)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[2];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[link_in_task_markdown_link](link_in_task_markdown_link.md)');
+            expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
+        });
+        it('should return the filename if link has a path [link_in_task_markdown_link](path/link_in_task_markdown_link.md)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[3];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[link_in_task_markdown_link](path/link_in_task_markdown_link.md)');
+            expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
         });
     });
 });
