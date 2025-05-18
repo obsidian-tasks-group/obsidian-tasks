@@ -69,7 +69,7 @@ include hide_buttons
 include hide_buttons
 ```
 
-## Hide everything, including tags
+## Show only the description and any tags
 
 explain: `INPUT[toggle:TQ_explain]`
 
@@ -81,6 +81,20 @@ include just_the_description_and_tags
 
 ```tasks
 include just_the_description_and_tags
+```
+
+## Just show the description, without tags
+
+explain: `INPUT[toggle:TQ_explain]`
+
+````text
+```tasks
+include just_the_description
+```
+````
+
+```tasks
+include just_the_description
 ```
 
 ## Advanced use: return a function, that takes a parameter from the query source
