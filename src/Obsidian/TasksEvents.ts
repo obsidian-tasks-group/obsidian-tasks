@@ -7,6 +7,7 @@ import type { State } from './Cache';
 enum Event {
     CacheUpdate = 'obsidian-tasks-plugin:cache-update',
     RequestCacheUpdate = 'obsidian-tasks-plugin:request-cache-update',
+    ReloadOpenSearchResults = 'obsidian-tasks-plugin:reload-open-search-results',
 }
 
 interface CacheUpdateData {
@@ -52,6 +53,20 @@ export class TasksEvents {
     public triggerRequestCacheUpdate(fn: (cacheData: CacheUpdateData) => void): void {
         this.logger.debug('TasksEvents.triggerRequestCacheUpdate()');
         this.obsidianEvents.trigger(Event.RequestCacheUpdate, fn);
+    }
+
+    // ------------------------------------------------------------------------
+    // ReloadOpenSearchResults event
+
+    public onReloadOpenSearchResults(handler: () => void): EventRef {
+        this.logger.debug('TasksEvents.onReloadOpenSearchResults()');
+        const name = Event.ReloadOpenSearchResults;
+        return this.obsidianEvents.on(name, handler);
+    }
+
+    public triggerReloadOpenSearchResults(): void {
+        this.logger.debug('TasksEvents.triggerReloadOpenSearchResults()');
+        this.obsidianEvents.trigger(Event.ReloadOpenSearchResults);
     }
 
     public off(eventRef: EventRef): void {
