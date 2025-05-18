@@ -20,6 +20,11 @@ export class Link {
         // Handle internal links (starting with '#')
         if (this.destination[0] === '#') return this.filename;
 
+        // Remove .md extension if present from markdown links
+        if (this.destination.endsWith('.md')) {
+            return this.destination.substring(0, this.destination.length - 3);
+        }
+
         // Extract filename from path (handles both path and optional hash fragment)
         const pathPart = this.destination.split('#', 1)[0];
         return pathPart.substring(pathPart.lastIndexOf('/') + 1);

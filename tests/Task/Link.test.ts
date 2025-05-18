@@ -15,49 +15,65 @@ describe('linkClass', () => {
         expect(link.displayText).toEqual('link_in_file_body');
         expect(link.destinationFilename).toEqual('link_in_file_body');
     });
-    it('should return the filename if the link is internal filename [[#heading]]', () => {
-        const rawLink = internal_heading_links.cachedMetadata.links[0];
-        const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
-        expect(link.originalMarkdown).toEqual('[[#Basic Internal Links]]');
-        expect(link.destinationFilename).toEqual('internal_heading_links');
+    describe('.destinationFilename', () => {
+        // Wikilink Tests
+        it('should return the filename if the link is internal filename [[#heading]]', () => {
+            const rawLink = internal_heading_links.cachedMetadata.links[0];
+            const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[#Basic Internal Links]]');
+            expect(link.destinationFilename).toEqual('internal_heading_links');
+        });
+        it('should return the filename if the link is internal filename [[#heading|display text]]', () => {
+            const rawLink = internal_heading_links.cachedMetadata.links[6];
+            const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[#Header Links With File Reference]]');
+            expect(link.destinationFilename).toEqual('internal_heading_links');
+        });
+        it('should return the filename if link has a path [[path/filename]]', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[2];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[path/link_in_task_wikilink]]');
+            expect(link.destinationFilename).toEqual('link_in_task_wikilink');
+        });
+        it('should return the filename if link has a path and a heading link [[path/filename#heading]]', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[3];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[path/link_in_task_wikilink#heading_link]]');
+            expect(link.destinationFilename).toEqual('link_in_task_wikilink');
+        });
+        it('should return the filename if link has an alias [[filename|alias]]', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[4];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[link_in_task_wikilink|alias]]');
+            expect(link.destinationFilename).toEqual('link_in_task_wikilink');
+        });
+        it('should return the filename if link has a path and an alias [[path/path/filename|alias]]', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[5];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[path/path/link_in_task_wikilink|alias]]');
+            expect(link.destinationFilename).toEqual('link_in_task_wikilink');
+        });
+        // Current code targets # and / characters, / is not a valid character in a filename or a path
+        // # is a valid character in a filename or a path
+        it('should return the filename if path contains a # [[pa#th/path/filename]]', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[6];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[pa#th/path/link_in_task_wikilink]]');
+            expect(link.destinationFilename).toEqual('pa');
+        });
+        // TODO: How does this affect filtering?
+        // When grouping a Wikilink link expect [[file]] to be grouped with [[file.md]]
+        it('should return a filename with no file extension if suffixed with .md [[link_in_task_wikilink.md]]', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[7];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[link_in_task_wikilink.md]]');
+            expect(link.destinationFilename).toEqual('link_in_task_wikilink');
+        });
+        it('should return a filename with corresponding file extension if not markdown [[a_pdf_file.pdf]]', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[8];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[a_pdf_file.pdf]]');
+            expect(link.destinationFilename).toEqual('a_pdf_file.pdf');
+        });
     });
-    it('should return the filename if the link is internal filename [[#heading|display text]]', () => {
-        const rawLink = internal_heading_links.cachedMetadata.links[6];
-        const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
-        expect(link.originalMarkdown).toEqual('[[#Header Links With File Reference]]');
-        expect(link.destinationFilename).toEqual('internal_heading_links');
-    });
-    it('should return the filename if link has a path [[path/filename]]', () => {
-        const rawLink = link_in_task_wikilink.cachedMetadata.links[2];
-        const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
-        expect(link.originalMarkdown).toEqual('[[path/link_in_task_wikilink]]');
-        expect(link.destinationFilename).toEqual('link_in_task_wikilink');
-    });
-    it('should return the filename if link has a path and a heading link [[path/filename#heading]]', () => {
-        const rawLink = link_in_task_wikilink.cachedMetadata.links[3];
-        const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
-        expect(link.originalMarkdown).toEqual('[[path/link_in_task_wikilink#heading_link]]');
-        expect(link.destinationFilename).toEqual('link_in_task_wikilink');
-    });
-    it('should return the filename if link has an alias [[filename|alias]]', () => {
-        const rawLink = link_in_task_wikilink.cachedMetadata.links[4];
-        const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
-        expect(link.originalMarkdown).toEqual('[[link_in_task_wikilink|alias]]');
-        expect(link.destinationFilename).toEqual('link_in_task_wikilink');
-    });
-    it('should return the filename if link has a path and an alias [[path/path/filename|alias]]', () => {
-        const rawLink = link_in_task_wikilink.cachedMetadata.links[5];
-        const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
-        expect(link.originalMarkdown).toEqual('[[path/path/link_in_task_wikilink|alias]]');
-        expect(link.destinationFilename).toEqual('link_in_task_wikilink');
-    });
-    // Current code targets # and / characters, / is not a valid character in a filename or a path
-    // # is a valid character in a filename or a path
-    it('should return the filename if path contains a # [[pa#th/path/filename]]', () => {
-        const rawLink = link_in_task_wikilink.cachedMetadata.links[6];
-        const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
-        expect(link.originalMarkdown).toEqual('[[pa#th/path/link_in_task_wikilink]]');
-        expect(link.destinationFilename).toEqual('pa');
-    });
-    // TODO: test markdown format
 });
