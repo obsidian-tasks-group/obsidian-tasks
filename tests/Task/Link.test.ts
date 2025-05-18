@@ -97,11 +97,53 @@ describe('linkClass', () => {
             expect(link.originalMarkdown).toEqual('[link_in_task_markdown_link](link_in_task_markdown_link.md)');
             expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
         });
-        it('should return the filename if link has a path [link_in_task_markdown_link](path/link_in_task_markdown_link.md)', () => {
+        it('should return the filename if link has a path [link_in_task_markdown_link](path/filename.md)', () => {
             const rawLink = link_in_task_markdown_link.cachedMetadata.links[3];
             const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
             expect(link.originalMarkdown).toEqual('[link_in_task_markdown_link](path/link_in_task_markdown_link.md)');
             expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
+        });
+        it('should return the filename if link has a path and a heading link [heading_link](path/filename.md#heading)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[4];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[heading_link](path/link_in_task_markdown_link.md#heading_link)');
+            expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
+        });
+        it('should return the filename if link has an alias [alias](filename.md)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[5];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[alias](link_in_task_markdown_link.md)');
+            expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
+        });
+        it('should return the filename if link has a path and an alias [alias](path/path/filename.md)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[6];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[alias](path/path/link_in_task_markdown_link.md)');
+            expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
+        });
+        // // Current code targets # and / characters, / is not a valid character in a filename or a path
+        // // # is a valid character in a filename or a path
+        it('should return the filename if path contains a # [link_in_task_markdown_link](pa#th/path/filename.md)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[7];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual(
+                '[link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)',
+            );
+            expect(link.destinationFilename).toEqual('pa');
+        });
+        // // TODO: How does this affect filtering?
+        // // When grouping a Wikilink link expect [[file]] to be grouped with [[file.md]]
+        it('should return a filename when no .md extension exists in markdown link [alias](filename)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[9];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[link_in_task_markdown_link](link_in_task_markdown_link)');
+            expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
+        });
+        it('should return a filename with corresponding file extension if not markdown [a_pdf_file](a_pdf_file.pdf)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[10];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[a_pdf_file](a_pdf_file.pdf)');
+            expect(link.destinationFilename).toEqual('a_pdf_file.pdf');
         });
     });
 });
