@@ -1,8 +1,9 @@
 ---
 TQ_explain: false
 TQ_extra_instructions: |-
+  (filename includes Tasks Format) OR (tag includes #context)
   ignore global query
-  limit 10
+  limit 20
 ---
 # Reuse instructions across the vault
 
