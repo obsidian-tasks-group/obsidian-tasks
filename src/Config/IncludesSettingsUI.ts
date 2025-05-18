@@ -1,5 +1,6 @@
 import { Setting, TextAreaComponent } from 'obsidian';
 import type TasksPlugin from '../main';
+import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { IncludesSettingsService, type RenamesInProgress } from './IncludesSettingsService';
 import { type IncludesMap, type Settings, getSettings, updateSettings } from './Settings';
 
@@ -12,6 +13,8 @@ type RefreshViewCallback = () => void;
  */
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
+    // @ts-expect-error: TS6133: events is declared but its value is never read.
+    private readonly events: TasksEvents;
     private readonly includesSettingsService = new IncludesSettingsService();
     private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
 
@@ -19,8 +22,9 @@ export class IncludesSettingsUI {
      * Creates a new instance of IncludesSettingsUI
      * @param plugin The Tasks plugin instance
      */
-    constructor(plugin: TasksPlugin) {
+    constructor(plugin: TasksPlugin, events: TasksEvents) {
         this.plugin = plugin;
+        this.events = events;
     }
 
     /**
