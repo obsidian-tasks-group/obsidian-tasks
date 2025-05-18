@@ -112,6 +112,20 @@ export class QueryResultsRenderer {
      */
     public setTasksFile(newFile: TasksFile) {
         this._tasksFile = newFile;
+        this.rereadQueryFromFile();
+    }
+
+    /**
+     * Reads the query from the source file and tasks file.
+     *
+     * This is for when some change in the vault invalidates the current
+     * Query object, and so it needs to be reloaded.
+     *
+     * For example, the user edited their Tasks plugin settings in some
+     * way that changes how the query is interpreted, such as changing an
+     * 'includes' definition.
+     */
+    public rereadQueryFromFile() {
         this.query = this.makeQueryFromSourceAndTasksFile();
     }
 
