@@ -15,19 +15,27 @@ describe('linkClass', () => {
         expect(link.displayText).toEqual('link_in_file_body');
         expect(link.destinationFilename).toEqual('link_in_file_body');
     });
-    describe('.destinationFilename', () => {
+    describe('.destinationFilename()', () => {
         // Wikilink Tests
-        it('should return the filename if the link is internal filename [[#heading]]', () => {
+        // __internal_heading_links__
+        it('should return the filename of the containing note if the link is internal [[#heading]]', () => {
             const rawLink = internal_heading_links.cachedMetadata.links[0];
             const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
             expect(link.originalMarkdown).toEqual('[[#Basic Internal Links]]');
             expect(link.destinationFilename).toEqual('internal_heading_links');
         });
-        it('should return the filename if the link is internal filename [[#heading|display text]]', () => {
+        it('should return the filename of the containing note if the link is internal and has an alias [[#heading|display text]]', () => {
             const rawLink = internal_heading_links.cachedMetadata.links[6];
             const link = new Link(rawLink, new TasksFile(internal_heading_links.filePath).filenameWithoutExtension);
             expect(link.originalMarkdown).toEqual('[[#Header Links With File Reference]]');
             expect(link.destinationFilename).toEqual('internal_heading_links');
+        });
+        // __link_in_task_wikilink__
+        it('should return the filename if simple [[filename]]', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[0];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[link_in_task_wikilink]]');
+            expect(link.destinationFilename).toEqual('link_in_task_wikilink');
         });
         it('should return the filename if link has a path [[path/filename]]', () => {
             const rawLink = link_in_task_wikilink.cachedMetadata.links[2];
