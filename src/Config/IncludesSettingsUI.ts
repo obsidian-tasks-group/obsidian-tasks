@@ -20,6 +20,7 @@ export class IncludesSettingsUI {
     /**
      * Creates a new instance of IncludesSettingsUI
      * @param plugin The Tasks plugin instance
+     * @param events The plugin's events object
      */
     constructor(plugin: TasksPlugin, events: TasksEvents) {
         this.plugin = plugin;
