@@ -28,12 +28,10 @@ export class Link {
 
         // Extract filename from path (handles both path and optional hash fragment)
         const pathPart = this.destination.split('#', 1)[0];
-        const withoutPath = pathPart.substring(pathPart.lastIndexOf('/') + 1);
+        const withoutDirectory = pathPart.substring(pathPart.lastIndexOf('/') + 1);
 
         // Remove.md extension if present
-        const final = withoutPath.endsWith('.md') ? withoutPath.slice(0, -3) : withoutPath;
-
-        return final;
+        return withoutDirectory.endsWith('.md') ? withoutDirectory.slice(0, -3) : withoutDirectory;
     }
 
     public get displayText() {
