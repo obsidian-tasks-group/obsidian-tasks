@@ -16,6 +16,12 @@ export class Link {
         return this.rawLink.link;
     }
 
+    /**
+     * Returns the filename of the link destination without the path or alias
+     * Removes the .md extension if present leaves other extensions intact.
+     * No accomodation for empty links.
+     * @returns {string}
+     */
     public get destinationFilename() {
         // Handle internal links (starting with '#')
         if (this.destination[0] === '#') return this.filename;
@@ -25,7 +31,7 @@ export class Link {
         const withoutPath = pathPart.substring(pathPart.lastIndexOf('/') + 1);
 
         // Remove.md extension if present
-        const final = withoutPath.endsWith('.md') ? withoutPath.substring(0, withoutPath.length - 3) : withoutPath;
+        const final = withoutPath.endsWith('.md') ? withoutPath.slice(0, -3) : withoutPath;
 
         return final;
     }
