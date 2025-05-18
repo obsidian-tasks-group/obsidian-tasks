@@ -31,3 +31,13 @@
 ## Task with PDF File
 
 - [ ]  #task Task with PDF File [[a_pdf_file.pdf]]
+
+## Empty Link That Isn't Processed
+
+- [ ] #task Task with empty link [[]]
+
+## Empty Links That Are Processed
+
+- [ ] #task Task with empty link [[|]]
+- [ ] #task Task with empty link [[|alias]]
+- [ ] #task Task with empty link [[|#alias]]

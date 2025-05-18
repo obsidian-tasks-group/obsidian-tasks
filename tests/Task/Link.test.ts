@@ -70,7 +70,6 @@ describe('linkClass', () => {
             expect(link.originalMarkdown).toEqual('[[pa#th/path/link_in_task_wikilink]]');
             expect(link.destinationFilename).toEqual('pa');
         });
-        // TODO: How does this affect filtering?
         // When grouping a Wikilink link expect [[file]] to be grouped with [[file.md]]
         it('should return a filename with no file extension if suffixed with .md [[link_in_task_wikilink.md]]', () => {
             const rawLink = link_in_task_wikilink.cachedMetadata.links[7];
@@ -83,6 +82,26 @@ describe('linkClass', () => {
             const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
             expect(link.originalMarkdown).toEqual('[[a_pdf_file.pdf]]');
             expect(link.destinationFilename).toEqual('a_pdf_file.pdf');
+        });
+        // Empty Wikilink Tests
+        // [[]] is not detected by the obsidian parser as a link
+        it('should provide no special functionality for [[|]]; returns "|")', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[9];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[|]]');
+            expect(link.destinationFilename).toEqual('|');
+        });
+        it('should provide no special functionality for [[|alias]]; returns "|alias".)', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[10];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[|alias]]');
+            expect(link.destinationFilename).toEqual('|alias');
+        });
+        it('should provide no special functionality for [[|#alias]]; returns "|".)', () => {
+            const rawLink = link_in_task_wikilink.cachedMetadata.links[11];
+            const link = new Link(rawLink, new TasksFile(link_in_task_wikilink.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual('[[|#alias]]');
+            expect(link.destinationFilename).toEqual('|');
         });
         // Markdown Links Tests
         it('should return the filename if the link is internal [display name](#heading)', () => {
@@ -131,7 +150,6 @@ describe('linkClass', () => {
             );
             expect(link.destinationFilename).toEqual('pa');
         });
-        // // TODO: How does this affect filtering?
         // // When grouping a Wikilink link expect [[file]] to be grouped with [[file.md]]
         it('should return a filename when no .md extension exists in markdown link [alias](filename)', () => {
             const rawLink = link_in_task_markdown_link.cachedMetadata.links[9];
@@ -145,5 +163,7 @@ describe('linkClass', () => {
             expect(link.originalMarkdown).toEqual('[a_pdf_file](a_pdf_file.pdf)');
             expect(link.destinationFilename).toEqual('a_pdf_file.pdf');
         });
+        // Empty Markdown Link Tests
+        // []() and [alias]() are not detected by the obsidian parser as a link
     });
 });

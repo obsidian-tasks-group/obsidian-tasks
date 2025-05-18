@@ -39,3 +39,8 @@
 ## Task with PDF File
 
 - [ ] #task Task with PDF File [a_pdf_file](a_pdf_file.pdf)
+
+## Empty Links That Aren't Processed
+
+- [ ] #task Task with empty link []()
+- [ ] #task Task with empty link [alias]()
