@@ -17,7 +17,7 @@ describe('linkClass', () => {
         expect(link.destinationFilename).toEqual('link_in_file_body');
     });
     describe('.destinationFilename()', () => {
-        // Wikilink Tests
+        // == wikilink Tests ==
         // __internal_heading_links__
         it('should return the filename of the containing note if the link is internal [[#heading]]', () => {
             const rawLink = internal_heading_links.cachedMetadata.links[0];
@@ -103,7 +103,8 @@ describe('linkClass', () => {
             expect(link.originalMarkdown).toEqual('[[|#alias]]');
             expect(link.destinationFilename).toEqual('|');
         });
-        // Markdown Links Tests
+        // == markdown link Tests ==
+        // __link_in_task_markdown_link__
         it('should return the filename if the link is internal [display name](#heading)', () => {
             const rawLink = link_in_task_markdown_link.cachedMetadata.links[8];
             const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
@@ -140,8 +141,8 @@ describe('linkClass', () => {
             expect(link.originalMarkdown).toEqual('[alias](path/path/link_in_task_markdown_link.md)');
             expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
         });
-        // // Current code targets # and / characters, / is not a valid character in a filename or a path
-        // // # is a valid character in a filename or a path
+        // Current code targets # and / characters, / is not a valid character in a filename or a path
+        // # is a valid character in a filename or a path
         it('should return the filename if path contains a # [link_in_task_markdown_link](pa#th/path/filename.md)', () => {
             const rawLink = link_in_task_markdown_link.cachedMetadata.links[7];
             const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
@@ -150,7 +151,7 @@ describe('linkClass', () => {
             );
             expect(link.destinationFilename).toEqual('pa');
         });
-        // // When grouping a Wikilink link expect [[file]] to be grouped with [[file.md]]
+        // When grouping a Wikilink link expect [[file]] to be grouped with [[file.md]]
         it('should return a filename when no .md extension exists in markdown link [alias](filename)', () => {
             const rawLink = link_in_task_markdown_link.cachedMetadata.links[9];
             const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
@@ -162,6 +163,14 @@ describe('linkClass', () => {
             const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
             expect(link.originalMarkdown).toEqual('[a_pdf_file](a_pdf_file.pdf)');
             expect(link.destinationFilename).toEqual('a_pdf_file.pdf');
+        });
+        it('should handle spaces in the path, filename, and heading link [heading link](path/filename with spaces.md#heading link)', () => {
+            const rawLink = link_in_task_markdown_link.cachedMetadata.links[11];
+            const link = new Link(rawLink, new TasksFile(link_in_task_markdown_link.filePath).filenameWithoutExtension);
+            expect(link.originalMarkdown).toEqual(
+                '[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)',
+            );
+            expect(link.destinationFilename).toEqual('spaced filename link');
         });
         // Empty Markdown Link Tests
         // []() and [alias]() are not detected by the obsidian parser as a link
