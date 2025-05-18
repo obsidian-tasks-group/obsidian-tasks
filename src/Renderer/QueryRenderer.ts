@@ -1,13 +1,11 @@
 import {
     type CachedMetadata,
-    type Debouncer,
     type EventRef,
     type MarkdownPostProcessorContext,
     MarkdownRenderChild,
     MarkdownRenderer,
     type TAbstractFile,
     TFile,
-    debounce,
 } from 'obsidian';
 import { App, Keymap } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
@@ -22,8 +20,6 @@ import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
 import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
-
-type RenderParams = { tasks: Task[]; state: State };
 
 /**
  * `QueryRenderer` is responsible for rendering queries in Markdown code blocks
@@ -94,14 +90,12 @@ class QueryRenderChild extends MarkdownRenderChild {
     private readonly events: TasksEvents;
 
     private renderEventRef: EventRef | undefined;
-    private reloadSearchResultsEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
     private isCacheChangedSinceLastRedraw = false;
     private observer: IntersectionObserver | null = null;
 
     private readonly queryResultsRenderer: QueryResultsRenderer;
-    private readonly debouncedRenderFn: Debouncer<[RenderParams], void>;
 
     constructor({
         app,
@@ -133,8 +127,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.app = app;
         this.plugin = plugin;
         this.events = events;
-
-        this.debouncedRenderFn = debounce((params: RenderParams) => this.render(params), 300, true);
     }
 
     onload() {
@@ -142,10 +134,8 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         // Process the current cache state:
         this.events.triggerRequestCacheUpdate(this.render.bind(this));
-
-        // Listen to future changes:
+        // Listen to future cache changes:
         this.renderEventRef = this.events.onCacheUpdate(this.render.bind(this));
-        this.reloadSearchResultsEventRef = this.events.onReloadOpenSearchResults(this.rereadQueryFromFile.bind(this));
 
         this.reloadQueryAtMidnight();
 
@@ -231,16 +221,9 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.events.off(this.renderEventRef);
         }
 
-        if (this.reloadSearchResultsEventRef !== undefined) {
-            this.events.off(this.reloadSearchResultsEventRef);
-        }
-
         if (this.queryReloadTimeout !== undefined) {
             clearTimeout(this.queryReloadTimeout);
         }
-
-        // Cancel any pending debounced renders
-        this.debouncedRenderFn.cancel();
 
         this.observer?.disconnect();
         this.observer = null;
@@ -273,11 +256,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         }, millisecondsToMidnight + 1000); // Add buffer to be sure to run after midnight.
     }
 
-    private debouncedRender(params: RenderParams): void {
-        this.debouncedRenderFn(params);
-    }
-
-    private async render({ tasks, state }: RenderParams) {
+    private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         // We got here because the Cache reported a change in at least one task in the vault.
         // So note that any results we have already drawn are now out-of-date:
         this.isCacheChangedSinceLastRedraw = true;
@@ -324,12 +303,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
 
         this.containerEl.firstChild?.replaceWith(content);
-    }
-
-    private rereadQueryFromFile() {
-        this.queryResultsRenderer.rereadQueryFromFile();
-        this.isCacheChangedSinceLastRedraw = true;
-        this.debouncedRender({ tasks: this.plugin.getTasks(), state: this.plugin.getState() });
     }
 }
 

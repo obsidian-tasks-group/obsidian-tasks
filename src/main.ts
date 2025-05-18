@@ -41,9 +41,7 @@ export default class TasksPlugin extends Plugin {
         const { loggingOptions } = getSettings();
         logging.configure(loggingOptions);
 
-        const events = new TasksEvents({ obsidianEvents: this.app.workspace });
-
-        this.addSettingTab(new SettingsTab({ plugin: this, events }));
+        this.addSettingTab(new SettingsTab({ plugin: this }));
 
         initializeFile({
             metadataCache: this.app.metadataCache,
@@ -54,6 +52,7 @@ export default class TasksPlugin extends Plugin {
         // Load configured status types.
         await this.loadTaskStatuses();
 
+        const events = new TasksEvents({ obsidianEvents: this.app.workspace });
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,
