@@ -22,6 +22,9 @@ export class TasksEvents {
         this.obsidianEvents = obsidianEvents;
     }
 
+    // ------------------------------------------------------------------------
+    // CacheUpdate event
+
     public onCacheUpdate(handler: (cacheData: CacheUpdateData) => void): EventRef {
         this.logger.debug('TasksEvents.onCacheUpdate()');
         const name = Event.CacheUpdate;
@@ -34,6 +37,9 @@ export class TasksEvents {
         this.logger.debug('TasksEvents.triggerCacheUpdate()');
         this.obsidianEvents.trigger(Event.CacheUpdate, cacheData);
     }
+
+    // ------------------------------------------------------------------------
+    // RequestCacheUpdate event
 
     public onRequestCacheUpdate(handler: (fn: (cacheData: CacheUpdateData) => void) => void): EventRef {
         this.logger.debug('TasksEvents.onRequestCacheUpdate()');
