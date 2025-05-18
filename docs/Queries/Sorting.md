@@ -697,6 +697,8 @@ If given, the sort order will be reverse for that property.
 Note that `reverse` will reverse the entire result set.
 For example, when you `sort by done reverse` and your query results contain tasks that do not have a done date, then those tasks without a done date will be listed first.
 
+Refer to [[Grouping#Reversing groups]] to specify the sort order of groups when using the `GROUP BY` clause.
+
 ## Examples
 
 ### Sort tasks by due date, from oldest to newest
