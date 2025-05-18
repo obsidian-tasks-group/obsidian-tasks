@@ -1,46 +1,51 @@
-# link_in_task_markdown_link
+ link_in_task_markdown_link
 
-## Task with Multiple Markdown Links
+## Multiple Links
 
-- [ ] #task Task with Multiple Markdown Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)
+- [ ] #task Multiple Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)
 
-## Task with Simple Link
+## Link with Simple Link
 
-- [ ] #task Task with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)
+- [ ] #task Link with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)
 
-## Task with Path
+## Link with Path
 
-- [ ] #task Task with Path [link_in_task_markdown_link](path/link_in_task_markdown_link.md)
+- [ ] #task Link with Path [link_in_task_markdown_link](path/link_in_task_markdown_link.md)
 
-## Task with Path Heading Link
+## Link with Path Heading Link
 
-- [ ] #task Task with Heading Reference Link [heading_link](path/link_in_task_markdown_link.md#heading_link)
+- [ ] #task Link with Heading Reference Link [heading_link](path/link_in_task_markdown_link.md#heading_link)
 
-## Task with Alias
+## Link with Alias
 
-- [ ] #task Task with Alias [alias](link_in_task_markdown_link.md)
+- [ ] #task Link with Alias [alias](link_in_task_markdown_link.md)
 
-## Task with Nested Path and Alias
+## Link with Nested Path and Alias
 
-- [ ] #task Task with Nested Path and Alias [alias](path/path/link_in_task_markdown_link.md)
+- [ ] #task Link with Nested Path and Alias [alias](path/path/link_in_task_markdown_link.md)
 
-## Task with Hash in Path
+## Link with Hash in Path
 
-- [ ] #task Task with Hash in Path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)
+- [ ] #task Link with Hash in Path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)
 
-## Task with Internal Link
+## Link with Internal Link
 
-- [ ] #task Task with Internal Link [heading](#heading)
+- [ ] #task Link with Internal Link [heading](#heading)
 
-## Task with Markdown Link No Suffix
+## Link with Markdown Link No Suffix
 
-- [ ] #task Task with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)
+- [ ] #task Link with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)
 
-## Task with PDF File
+## Link with PDF File
 
-- [ ] #task Task with PDF File [a_pdf_file](a_pdf_file.pdf)
+- [ ] #task Link with PDF File [a_pdf_file](a_pdf_file.pdf)
+
+## Link with Spaces
+
+- [ ] Link with spaces everywhere[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)
 
 ## Empty Links That Aren't Processed
 
-- [ ] #task Task with empty link []()
-- [ ] #task Task with empty link [alias]()
+- [ ] #task Link with empty link []()
+- [ ] #task Link with empty link [alias]()
+

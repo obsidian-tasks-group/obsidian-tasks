@@ -1,43 +1,43 @@
 # link_in_task_wikilink
 
-## Task with Multiple Wikilinks
+## Multiple
 
-- [ ]  #task Task with Multiple Wikilinks [[link_in_task_wikilink]] [[multiple_headings]]
+- [ ]  #task Link with Multiple Wikilinks [[link_in_task_wikilink]] [[multiple_headings]]
 
-## Task with Simple Path
+## Link with Simple Path
 
-- [ ]  #task Task with Simple Path [[path/link_in_task_wikilink]]
+- [ ]  #task Link with Simple Path [[path/link_in_task_wikilink]]
 
-## Task with Heading Reference
+## Link with Heading Reference
 
-- [ ]  #task Task with Heading Reference [[path/link_in_task_wikilink#heading_link]]
+- [ ]  #task Link with Heading Reference [[path/link_in_task_wikilink#heading_link]]
 
-## Task with Alias
+## Link with Alias
 
-- [ ]  #task Task with Alias [[link_in_task_wikilink|alias]]
+- [ ]  #task Link with Alias [[link_in_task_wikilink|alias]]
 
-## Task with Nested Path and Alias
+## Link with Nested Path and Alias
 
-- [ ]  #task Task with Nested Path and Alias [[path/path/link_in_task_wikilink|alias]]
+- [ ]  #task Link with Nested Path and Alias [[path/path/link_in_task_wikilink|alias]]
 
-## Task with Hash in Path
+## Link with Hash in Path
 
-- [ ]  #task Task with Hash in Path [[pa#th/path/link_in_task_wikilink]]
+- [ ]  #task Link with Hash in Path [[pa#th/path/link_in_task_wikilink]]
 
-## Task with Markdown File Extension
+## Link with Markdown File Extension
 
-- [ ]  #task Task with Markdown File Extension [[link_in_task_wikilink.md]]
+- [ ]  #task Link with Markdown File Extension [[link_in_task_wikilink.md]]
 
-## Task with PDF File
+## Link with PDF File
 
-- [ ]  #task Task with PDF File [[a_pdf_file.pdf]]
+- [ ]  #task Link with PDF File [[a_pdf_file.pdf]]
 
-## Empty Link That Isn't Processed
+## Empty Link That Obsidian Doesn't Parse
 
-- [ ] #task Task with empty link [[]]
+- [ ] #task Link with empty link [[]]
 
-## Empty Links That Are Processed
+## Empty Links That Obsidian Parses
 
-- [ ] #task Task with empty link [[|]]
-- [ ] #task Task with empty link [[|alias]]
-- [ ] #task Task with empty link [[|#alias]]
+- [ ] #task Link with empty link [[|]]
+- [ ] #task Link with empty link [[|alias]]
+- [ ] #task Link with empty link [[|#alias]]
