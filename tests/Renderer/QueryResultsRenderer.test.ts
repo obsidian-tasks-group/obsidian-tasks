@@ -16,6 +16,7 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toMarkdown } from '../TestingTools/TestHelpers';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { mockHTMLRenderer } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -28,6 +29,7 @@ beforeEach(() => {
 afterEach(() => {
     jest.useRealTimers();
     GlobalFilter.getInstance().reset();
+    resetSettings();
 });
 
 function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
@@ -116,6 +118,21 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 
         // Assert
         expect(renderer.query.explainQuery()).toContain('path includes newPath.md');
+    });
+
+    it('should be able to reread the query when query settings are changed', () => {
+        // Arrange
+        updateSettings({ includes: { CurrentGrouping: 'group by PATH' } });
+        const source = 'include CurrentGrouping';
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('any file.md'));
+        expect(renderer.query.explainQuery()).toContain('group by PATH');
+
+        // Act
+        updateSettings({ includes: { CurrentGrouping: 'group by DUE' } });
+        renderer.rereadQueryFromFile();
+
+        // Assert
+        expect(renderer.query.explainQuery()).toContain('group by DUE');
     });
 });
 
