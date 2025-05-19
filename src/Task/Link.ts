@@ -3,6 +3,11 @@ import type { LinkCache } from 'obsidian';
 export class Link {
     private rawLink: LinkCache;
     private filename: string;
+
+    /**
+     * @param {LinkCache} rawLink - The raw link from Obsidian cache.
+     * @param {string} filename - The name of the file where this link is located.
+     */
     constructor(rawLink: LinkCache, filename: string) {
         this.rawLink = rawLink;
         this.filename = filename;
@@ -28,10 +33,10 @@ export class Link {
 
         // Extract filename from path (handles both path and optional hash fragment)
         const pathPart = this.destination.split('#', 1)[0];
-        const withoutDirectory = pathPart.substring(pathPart.lastIndexOf('/') + 1);
+        const destFilename = pathPart.substring(pathPart.lastIndexOf('/') + 1);
 
         // Remove.md extension if present
-        return withoutDirectory.endsWith('.md') ? withoutDirectory.slice(0, -3) : withoutDirectory;
+        return destFilename.endsWith('.md') ? destFilename.slice(0, -3) : destFilename;
     }
 
     public get displayText() {
