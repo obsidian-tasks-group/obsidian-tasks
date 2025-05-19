@@ -12,7 +12,7 @@
     const { durationSymbol } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 </script>
 
-<label for="duration" />
+<label for="duration">Duration</label>
 <!-- svelte-ignore a11y-accesskey -->
 <input
     bind:value={editableTask.duration}
