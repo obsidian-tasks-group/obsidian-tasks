@@ -1,13 +1,12 @@
-# TODO: add input for relatiobsidianPluginRootsve sample vault path?
+# WINDOWS ONLY CURRENTLY
 # TODO: Make cross-platform compatible. Currently, it is only compatible with Windows.
-# TODO: remove invalid paths and continue
 
 ### TLDR FOR OBSIDIAN TASKS PLUGIN ###
 # Add persistent environment variable to your PowerShell profile for sample vaults and optionally your personal vault:
 # run `notepad $PROFILE`
 #   Add ONE string with one path or multiple paths separated by semicolon(s).:
-#   If you make a mistake reload your profile with by starting a new terminal or running `& $PROFILE`
-#   $env:OBSIDIAN_TASKS_PLUGIN_PLUGIN_ROOTS = "C:\....\obsidian-tasks\resources\sample_vaults\Tasks-Demo\.obsidian\plugins;C:\....\{vault}\.obsidian\plugins"
+#   When you make a change reload your profile by starting a new terminal or running `& $PROFILE`
+#   $env:OBSIDIAN_DOT_PLUGINS_PATHS = "C:\....\{vault}\.obsidian\plugins"
 # run this script from inside the Git repository for the plugin.
 
 ### DOCUMENTATION ###
@@ -20,37 +19,35 @@
 #   in the specified plugin folder(s) under the .obsidian/plugins directory.
 # - It is intended to be used with the Obsidian plugin hot-reload tool: https://github.com/pjeby/hot-reload.
 
-# Prerequisites:
+# Requirements:
 # - The script must be run from inside a Git repository.
-# - Environment variables to be set:
-#   - Required: OBSIDIAN_PLUGIN_ROOTS
-#     - Paths to the root of the plugin folders located at .obsidian/plugins. Separated by spaces.
-#     - Example (Windows): "C:\path\to\vault1\.obsidian\plugins;C:\path\to\vault2\.obsidian\plugins"
+# - OPTIONAL: Provide absolute path(s) to .obsidian/plugins folders. Separated by semi-colons. 
 
-# Temporary Environment Variable Setup:
+## Temporary Environment Variable Setup:
 # - Windows:
-#   $env:OBSIDIAN_PLUGIN_ROOTS = "C:\path\to\vault1\.obsidian\plugins;C:\path\to\vault2\.obsidian\plugins"
+#   $env:OBSIDIAN_DOT_PLUGINS_PATHS = "C:\path\to\vault1\.obsidian\plugins;C:\path\to\vault2\.obsidian\plugins"
 
-# Persistent Environment Variable Setup:
+## Persistent Environment Variable Setup:
 # - NOTE: Changes to $PROFILE may need to be ran in a new terminal to take effect.
 # - Windows:
 #   Use your PowerShell profile script ($PROFILE) to persist variables across sessions:
 #   notepad $PROFILE
 #   Add the following lines:
-#   $env:OBSIDIAN_PLUGIN_ROOTS = "C:\path\to\vault1\.obsidian\plugins;C:\path\to\vault2\.obsidian\plugins"
+#   $env:OBSIDIAN_DOT_PLUGINS_PATHS = "C:\path\to\vault1\.obsidian\plugins;C:\path\to\vault2\.obsidian\plugins"
 
 # Steps for Repository Integration:
 
-# 1. Provide example environment variable that includes a path to the repo test vault.
+# 1. Provide path to obsidian sample vault .obsidian/plugins folder $repoVaultObsidianDotPluginsPath
 # 2. Add a comment to the top of the script with the example environment variables.
-# 3. Assign settings at: ### REPOSITORY SETTINGS
-#   - rename environment variable under $relay_OBSIDIAN_PLUGIN_ROOTS
-#   - rename environment variable under $OBSIDIAN_PLUGIN_NAME
+# 3. Assign settings in the section below named: ### REPOSITORY SETTINGS
+#   - set $repoVaultObsidianDotPluginsPath
+#   - rename environment variable accepted by $userVaultRootsAbsolute, $env:OBSIDIAN_DOT_PLUGINS_PATHS
+#   - assign plugin folder name $obsidianPluginName ="plugin name"
 #   - $buildCommand: The command to run to build the plugin to ensure the files are up to date.
 #   - $devCommand: The command to run at the end of the script. 
 #   - Add custom test commands.
 
-# Files created at the target path (.obsidian/plugins/{OBSIDIAN_PLUGIN_NAME}):
+# Files created at the target path (.obsidian/plugins/{obsidianPluginName}):
 # - main.js
 # - styles.css
 # - manifest.json
@@ -58,7 +55,7 @@
 
 [CmdletBinding()]
 param (
-    # OBSIDIAN_PLUGIN_ROOTS
+    # pobsidianDotPluginsPaths
     [Parameter(HelpMessage = 'The paths to the plugins folders under the .obsidian directory.')]
     [ValidateScript({
             $paths = $_ -split ';'
@@ -77,11 +74,12 @@ param (
             return $true
         })
     ]
-    [String[]] $pObsidianPluginRoots,
-    # OBSIDIAN_PLUGIN_NAME: The folder name of a specific plugin inside the plugins directory.
+    [String[]] $pObsidianDotPluginsPaths,
+
+    # pPluginFolderName: The folder name of a specific plugin inside the plugins directory.
     # Example: For a plugin located at:
     # /Users/alex/Documents/ObsidianVault/.obsidian/plugins/daily-tasks
-    # the OBSIDIAN_PLUGIN_NAME would be:
+    # the pPluginFolderName would be:
     # daily-tasks   
     [Parameter(HelpMessage = 'The folder name of the plugin to copy the files to.')]
     [String] $pPluginFolderName
@@ -106,51 +104,163 @@ function Write-ErrorWithNoExit {
 try {
     ### REPOSITORY SETTINGS
     # Grab environment variables so they are passed if new window opens
-    # ON REPOSITOY INTEGRATION rename $env:OBSIDIAN_PLUGIN_ROOTS to $env:yourpluginname_PLUGIN_ROOTS
-    # ON REPOSITOY INTEGRATION rename $env:OBSIDIAN_PLUGIN_NAME to $env:yourpluginname_PLUGIN_NAME
-    $relay_OBSIDIAN_PLUGIN_ROOTS = $env:OBSIDIAN_TASKS_PLUGIN_PLUGIN_ROOTS
-    $OBSIDIAN_PLUGIN_NAME = "obsidian-tasks-plugin"
 
-    # Set the command to run to build the plugin to ensure the files are up to date.
+    # ON REPOSITOY INTEGRATION provide $sample_vault(s) path
+    $repoRoot = (Resolve-Path -Path $(git rev-parse --show-toplevel)).Path
+    $repoVaultObsidianDotPluginsPath = Join-Path $repoRoot "\resources\sample_vaults\Tasks-Demo\.obsidian\plugins"
+    
+    # ON REPOSITOY INTEGRATION rename $env:OBSIDIAN_DOT_PLUGINS_PATHS to $env:yourpluginname_PLUGIN_ROOTS_ABSOLUTE
+    $userVaultRootsAbsolute = $env:OBSIDIAN_DOT_PLUGINS_PATHS
+
+    # ON REPOSITOY INTEGRATION rename obsidianPluginName to your plugin name. 
+    $obsidianPluginName = "obsidian-tasks-plugin" 
+
+    # ON REPOSITOY INTEGRATION Set the command to run and build the plugin to ensure the files are up to date.
     $buildCommand = "yarn run build:dev"
+
+    # ON REPOSITOY INTEGRATION Set the command to start dev environment.
     $devCommand = "yarn run dev"
 
+    # ON REPOSITOY INTEGRATION Provide additional checks.
     # Check if Yarn is installed
     if (-not (Get-Command yarn -ErrorAction SilentlyContinue)) {
         Write-ErrorWithNoExit "Yarn is not installed or not in PATH. Please install Yarn before running this script."
     }
+
     ### END of REPOSITORY SETTINGS
 
-    Write-Host "Plugin roots: $relay_OBSIDIAN_PLUGIN_ROOTS"
-    Write-Host "Plugin folder name: $OBSIDIAN_PLUGIN_NAME"
-
-    # Ensure script is running as Administrator
-    if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-        $scriptPath = $MyInvocation.MyCommand.Path
-        Start-Process pwsh -ArgumentList @(
-            "-NoExit",
-            "-ExecutionPolicy", "Bypass",
-            "-File", "`"$scriptPath`"",
-            "-pObsidianPluginRoots", $relay_OBSIDIAN_PLUGIN_ROOTS,
-            "-pPluginFolderName", $OBSIDIAN_PLUGIN_NAME
-        ) -Verb RunAs
-        exit
-    }
-    # Note for future reference: don't assign split to a parameter, it fails silenty.
-    # $pObsidianPluginRoots = $pObsidianPluginRoots -split ';' does not work 
-    # as expected because powershell parameters are read only.
-
-    # Split the plugin roots by space
-    $obsidianPluginRootsSplit = $pObsidianPluginRoots -split ';'
-
-    # Check all plugin roots
-    foreach ($obsidianPluginRoot in $obsidianPluginRootsSplit) {
-        
-        if (-not (Test-Path $obsidianPluginRoot)) {
-            Write-ErrorWithNoExit "Obsidian plugin root not found at: $obsidianPluginRoot. `nobsidianPluginRoots: $obsidianPluginRootsSplit"
+    # Aggregate .obsidian/plugins paths depending on what is provided
+    $relayObsidianDotPluginsPaths = if ([string]::IsNullOrEmpty($repoVaultObsidianDotPluginsPath)) {
+        if (![string]::IsNullOrEmpty($userVaultRootsAbsolute)) {
+            "$($userVaultRootsAbsolute)"
         }
         else {
-            Write-Host "Obsidian plugin root found at: $obsidianPluginRoot"
+            $null
+        }
+    }
+    else {
+        if (![string]::IsNullOrEmpty($userVaultRootsAbsolute)) {
+            "$($repoVaultObsidianDotPluginsPath);$($userVaultRootsAbsolute)"
+        }
+        else {
+            "$($repoVaultObsidianDotPluginsPath)"
+        }
+    }
+
+    Write-Host "Commencing with .obsidian/plugins paths: $relayObsidianDotPluginsPaths"
+    Write-Host "..plugins/ folder name: $obsidianPluginName"
+
+    # Proper platform detection without assignment
+    $isPlatformWindows = $PSVersionTable.PSVersion.Major -ge 6 ? $IsWindows : $true
+    $isPlatformLinux = $PSVersionTable.PSVersion.Major -ge 6 -and $IsLinux
+    $isPlatformMacOS = $PSVersionTable.PSVersion.Major -ge 6 -and $IsMacOS
+
+    # Now use the platform variables for conditional logic
+    if ($isPlatformLinux) {
+        # Linux-specific code would go here
+        # Similar to macOS but with Linux-specific considerations 
+
+    } 
+    elseif ($isPlatformMacOS) {
+        # macOS admin check and symlink handling
+    
+        # Check if running with sudo
+        $isAdmin = (id -u) -eq 0
+    
+        if (-not $isAdmin) {
+            Write-Host "Creating symbolic links requires administrative privileges." -ForegroundColor Yellow
+            Write-Host "Re-launching with sudo..." -ForegroundColor Yellow
+        
+            # Prepare arguments for sudo command
+            $scriptPath = $MyInvocation.MyCommand.Path
+            $arguments = @(
+                "-File", 
+                "`"$scriptPath`"", 
+                "-pObsidianPluginRoots", 
+                "`"$relayObsidianPluginRoots`"", 
+                "-pPluginFolderName", 
+                "`"$obsidianPluginName`""
+            )
+        
+            # Use AppleScript to request password via GUI dialog if in GUI environment
+            $useAppleScript = $Host.UI.SupportsGUI
+        
+            if ($useAppleScript) {
+                $appleScript = @"
+do shell script "pwsh $scriptPath -pObsidianPluginRoots '$relayObsidianPluginRoots' -pPluginFolderName '$obsidianPluginName'" with administrator privileges
+"@
+                osascript -e $appleScript
+            }
+            else {
+                # Command line sudo
+                sudo pwsh $arguments
+            }
+            exit
+        }
+        # macOS specific path handling
+        $repoRoot = (Resolve-Path -Path $(git rev-parse --show-toplevel)).Path
+    
+        # On macOS, use system command for creating symlinks for better compatibility
+        function New-MacSymlink {
+            param (
+                [string]$linkPath,
+                [string]$targetPath
+            )
+        
+            # Remove existing link or file if it exists
+            if (Test-Path $linkPath) {
+                Remove-Item $linkPath -Force
+            }
+        
+            # Create symlink using ln -s
+            $linkDir = Split-Path -Parent $linkPath
+            if (-not (Test-Path $linkDir)) {
+                New-Item -ItemType Directory -Path $linkDir -Force | Out-Null
+            }
+        
+            # Use relative paths if possible for more portable symlinks
+            Push-Location (Split-Path -Parent $linkPath)
+            $relativeTarget = Resolve-Path -Relative $targetPath
+            ln -s $relativeTarget $linkPath
+            Pop-Location
+        }
+       
+    }
+    elseif ($isPlatformWindows) {
+        # Check for admin privlages
+        ## Windows
+        # Rerun command if no admin privlages.
+        if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+            $scriptPath = $MyInvocation.MyCommand.Path
+            Start-Process pwsh -ArgumentList @(
+                "-NoExit",
+                "-ExecutionPolicy", "Bypass",
+                "-File", "`"$scriptPath`"",
+                "-pObsidianDotPluginsPaths", $relayObsidianDotPluginsPaths,
+                "-pPluginFolderName", $obsidianPluginName
+            ) -Verb RunAs
+            exit
+        }
+        # Note for future reference: don't assign split to a parameter, it fails silenty.
+        # $pObsidianDotPluginsPaths = $pObsidianDotPluginsPaths -split ';' does not work 
+        # as expected because powershell parameters are read only.
+    }
+    else {
+        Write-ErrorWithNoExit("Are you running a potato?")
+    } 
+
+    # Split the .obsidian/plugins paths
+    # TODO is the robustness good?
+    $obsidianDotPluginsPathsSplit = $pObsidianDotPluginsPaths -split ';' | Where-Object { $_ -ne '' }
+
+    # Check all .obsidian/plugins paths
+    foreach ($obsidianDotPluginsPath in $obsidianDotPluginsPathsSplit) {
+        
+        if (-not (Test-Path $obsidianDotPluginsPath)) {
+            Write-ErrorWithNoExit "A .obsidian/plugins path was not found at: $obsidianDotPluginsPath. `nobsidianDotPluginsPaths: $obsidianDotPluginsPathsSplit"
+        }
+        else {
+            Write-Host "A .obsidian/plugins path was found at: $obsidianDotPluginsPath"
         }
     }
 
@@ -180,8 +290,6 @@ try {
         Write-ErrorWithNoExit "Manifest file not found at: $repoManifestPath"
     }
         
-   
-
     Push-Location $repoRoot
     Write-Host "Repo root: $repoRoot"
 
@@ -196,22 +304,33 @@ try {
     # Link files
     $filesToLink = @('main.js', 'styles.css', 'manifest.json')
 
-    # Link files to all $obsidianPluginRoot
-    foreach ($obsidianPluginRoot in $obsidianPluginRootsSplit) {
-        $targetPath = Join-Path $obsidianPluginRoot $pPluginFolderName
+    # Link files to all $obsidianDotPluginsPath
+    foreach ($obsidianDotPluginsPath in $obsidianDotPluginsPathsSplit) {
+        $targetPath = Join-Path $obsidianDotPluginsPath $pPluginFolderName
 
         foreach ($file in $filesToLink) {
             $linkPath = Join-Path $targetPath $file
             $sourcePath = Join-Path $repoRoot $file
 
-            if (Test-Path $linkPath) {
-                if ((Get-Item $linkPath).LinkType -ne 'SymbolicLink') {
-                    Remove-Item $linkPath -Force
+            if ($isPlatformLinux) {
+                # Linux symlink creation (similar to macOS)
+                # Linux implementation would go here
+            }
+            elseif ($isPlatformMacOS) {
+                # Use the macOS specific function
+                New-MacSymlink -linkPath $linkPath -targetPath $sourcePath
+            }
+            elseif ($isPlatformWindows) {
+                # Windows symlink creation
+                if (Test-Path $linkPath) {
+                    if ((Get-Item $linkPath).LinkType -ne 'SymbolicLink') {
+                        Remove-Item $linkPath -Force
+                        New-Item -ItemType SymbolicLink -Path $linkPath -Target $sourcePath
+                    }
+                }
+                else {
                     New-Item -ItemType SymbolicLink -Path $linkPath -Target $sourcePath
                 }
-            }
-            else {
-                New-Item -ItemType SymbolicLink -Path $linkPath -Target $sourcePath
             }
         }
 
