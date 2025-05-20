@@ -1,0 +1,259 @@
+{
+  "main": {
+    "loadingPlugin": "Lade Plugin: {{name}} v{{version}}",
+    "unloadingPlugin": "Entlade Plugin: {{name}} v{{version}}"
+  },
+  "modals": {
+    "customStatusModal": {
+      "editAvailableAsCommand": {
+        "description": "WennBei Aktivierung können Sie diesen Status als Befehl nutzen und ihm eine Tastenkombination zuordnen, um den Status umzuschalten.",
+        "name": "Verfügbar als Befehl"
+      },
+      "editNextStatusSymbol": {
+        "description": "Bei Klick verwenden Sie dies als das nächstverwendete Symbol.",
+        "name": "Symbol für nächsten Status"
+      },
+      "editStatusName": {
+        "description": "Der Anzeigename des Aufgabenstatus.",
+        "name": "Name des Aufgabenstatus"
+      },
+      "editStatusSymbol": {
+        "description": "Das Zeichen zwischen den eckigen Klammern. (Sie können es nur für benutzerdefinierte Status bearbeiten, nicht für Kernstatus.)",
+        "name": "Symbol des Aufgabenstatus"
+      },
+      "editStatusType": {
+        "description": "Kontrollieren Sie, wie der Status beim Suchen und Umschalten funktioniert.",
+        "name": "Typ des Aufgabenstatus"
+      },
+      "fixErrorsBeforeSaving": "Fehler vor dem Speichern beheben."
+    }
+  },
+  "reports": {
+    "statusRegistry": {
+      "about": {
+        "createdBy": "Ich habe diese Datei mit dem Obsidian Tasks-Plugin (Version {{version}}) erstellt, um die Aufgabenstatus in diesem Vault zu visualisieren.",
+        "deleteFileAnyTime": "Sie können diese Datei jederzeit löschen.",
+        "title": "Über diese Datei",
+        "updateReport": {
+          "line1": "Wenn Sie die Tasks-Status-Einstellungen ändern, erhalten Sie einen aktualisierten Bericht, indem Sie:",
+          "line2": "Zu `Einstellungen` -> `Tasks` gehen.",
+          "line3": "Auf `Überprüfen und Status kontrollieren` klicken."
+        }
+      },
+      "columnHeadings": {
+        "nextStatusSymbol": "Nächstes Status-Symbol",
+        "problems": "Probleme (falls vorhanden)",
+        "statusName": "Statusname",
+        "statusSymbol": "Statussymbol",
+        "statusType": "Statustyp"
+      },
+      "loadedSettings": {
+        "settingsActuallyUsed": "Dies sind die aktuellen Einstellungen, die Tasks verwendet.",
+        "switchToLivePreview": "Wechseln Sie zur Live-Vorschau oder zum Lesemodus, um das Diagramm zu sehen.",
+        "title": "Geladene Einstellungen"
+      },
+      "messages": {
+        "cannotFindNextStatus": "Ich konnte den nächsten Status nicht finden.",
+        "duplicateSymbol": "Doppeltes Symbol '{{symbol}}': Plugin ignoriert diesen Status.",
+        "emptySymbol": "Leeres Symbol: Plugin ignoriert diesen Status.",
+        "nextSymbolUnknown": "Nächstes Symbol {{symbol}} ist unbekannt: Erstellen Sie einen Status mit dem Symbol {{symbol}}.",
+        "notConventionalType": "Zur Information: Der übliche Typ für das Status-Symbol {{symbol}} ist {{type}}. Überprüfen Sie diesen Typ gegebenenfalls.",
+        "wrongTypeAfterDone": {
+          "line1": "Nach diesem `ERLEDIGT`-Status folgt {{nextType}}, nicht `TODO` oder `IN_PROGRESS`.",
+          "line2": "Wenn Sie diesen Status verwenden, um eine wiederkehrende Aufgabe abzuschließen, folgt darauf `TODO` oder `IN_PROGRESS`, um sicherzustellen, dass die nächste Aufgabe dem `nicht erledigt`-Filter entspricht.",
+          "line3": "Siehe [Wiederkehrende Aufgaben und benutzerdefinierte Status]({{helpURL}})."
+        }
+      },
+      "sampleTasks": {
+        "line1": "Hier ist eine Beispiel-Aufgabenzeile für jeden von Tasks tatsächlich genutzten Status, mit der Sie experimentieren können.",
+        "line2": "Zu dem Zeitpunkt, zu dem ich diese Datei erstellt habe, waren die Status-Symbole und Namen in den Aufgabentexten korrekt.",
+        "line3": "Wenn Sie die Beispielaufgaben geändert haben, sehen Sie die aktuellen Statustypen und Namen in den Gruppenüberschriften in der Tasks-Suche unten.",
+        "tip": {
+          "line1": "Tipp: Wenn alle Ihre Kontrollkästchen gleich aussehen...",
+          "line2": "Wenn Ihre Kontrollkästchen im Lesemodus oder in der Live-Vorschau gleich aussehen, informieren Sie sich unter [Benutzerdefinierte Statusstile]({{url}}), wie Sie ein Theme oder ein CSS-Snippet auswählen können, um Ihre Status zu formatieren."
+        },
+        "title": "Beispielaufgaben"
+      },
+      "searchSampleTasks": {
+        "line1": "Diese Tasks-Suche zeigt alle Aufgaben in dieser Datei an, gruppiert nach ihrem Statustyp und Statusnamen.",
+        "title": "Suche in den Beispielaufgaben"
+      },
+      "statusSettings": {
+        "comment": {
+          "line1": "Wechseln Sie zur Live-Vorschau oder zum Lesemodus, um die Tabelle zu sehen.",
+          "line2": "Wenn in Statusnamen Markdown-Formatierungszeichen wie '*' oder '_' enthalten sind,",
+          "line3": "stellt Obsidian die Tabelle möglicherweise nur im Lesemodus korrekt dar."
+        },
+        "theseAreStatusValues": "Diese Statuswerte finden Sie in den Abschnitten Kern- und Benutzerdefinierte Status.",
+        "title": "Status-Einstellungen"
+      }
+    }
+  },
+  "settings": {
+    "autoSuggest": {
+      "heading": "Autosuggest",
+      "maxSuggestions": {
+        "description": "Wie viele Vorschläge möchten Sie anzeigen, wenn ein Autosuggest-Menü aufgeht (einschließlich der \"⏎\"-Option).",
+        "name": "Maximale Anzahl von Autosuggest-Vorschlägen anzeigen"
+      },
+      "minLength": {
+        "description": "Wenn größer als 0, löst Autosuggest nur aus, wenn Sie den Beginn eines unterstützten Schlüsselwortes erkennen.",
+        "name": "Minimale Übereinstimmungslänge für Autosuggest"
+      },
+      "toggle": {
+        "description": "Durch Aktivierung öffnet sich ein intelligentes Vorschlagsmenü, während Sie innerhalb einer erkannten Aufgabenzeile tippen.",
+        "name": "Aufgabentext automatisch vorschlagen"
+      }
+    },
+    "changeRequiresRestart": "Das Ändern von Einstellungen erfordert einen Neustart von Obsidian.",
+    "dates": {
+      "cancelledDate": {
+        "description": "Wenn aktiviert, füge beim Umschalten auf 'abgebrochen' automatisch ein Datum ❌ YYYY-MM-DD am Ende hinzu.",
+        "name": "Abbruch-Datum bei jeder abgebrochenen Aufgabe festlegen"
+      },
+      "createdDate": {
+        "description": "Füge bei Aktivierung beim Erstellen einer Aufgabe mit 'Erstellen oder Bearbeiten einer Aufgabe' oder beim Abschluss einer wiederkehrenden Aufgabe ein Datum ➕ YYYY-MM-DD vor anderen Datumswerten hinzu.",
+        "name": "Erstellungsdatum bei jeder hinzugefügten Aufgabe festlegen"
+      },
+      "doneDate": {
+        "description": "Bei Aktivierung wird beim Umschalten auf 'erledigt' automatisch ein Datum ✅ YYYY-MM-DD am Ende hinzugefügt.",
+        "name": "Erledigungsdatum bei jeder abgeschlossenen Aufgabe festlegen"
+      },
+      "heading": "Daten"
+    },
+    "datesFromFileNames": {
+      "heading": "Daten aus Dateinamen",
+      "scheduledDate": {
+        "extraFormat": {
+          "description": {
+            "line1": "Ein zusätzliches Datumsformat, das das Tasks-Plugin beim Verwenden des Dateinamens als geplantes Datum für undatierte Aufgaben erkennt.",
+            "line2": "Syntax-Referenz"
+          },
+          "name": "Zusätzliches Datumsformat für Dateinamen als geplantes Datum für undatierte Aufgaben",
+          "placeholder": "Beispiel: MMM DD YYYY"
+        },
+        "folders": {
+          "description": "Lassen Sie dieses Feld leer, wenn Sie standardmäßige geplante Datumsangaben überall verwenden wollen, oder geben Sie eine durch Kommas getrennte Liste von Ordnern ein.",
+          "name": "Ordner mit standardmäßigen geplanten Datumsangaben"
+        },
+        "toggle": {
+          "description": {
+            "line1": "Sparen Sie Zeit beim Eingeben geplanter (⏳) Daten.",
+            "line2": "Bei Aktivierung erhalten alle undatierten Aufgaben ein geplantes Datum, das aus ihrem Dateinamen extrahiert wird.",
+            "line3": "Standardmäßig erkennt das Tasks-Plugin sowohl <code>YYYY-MM-DD</code> als auch <code>YYYYMMDD</code> Datumsformate.",
+            "line4": "Undatierte Aufgaben haben weder ein Fälligkeitsdatum (📅 ), geplantes (⏳) noch Start-(🛫)datum."
+          },
+          "name": "Dateinamen als geplantes Datum für undatierte Aufgaben verwenden"
+        }
+      }
+    },
+    "dialogs": {
+      "accessKeys": {
+        "description": "Wenn die Zugriffsschlüssel (Tastenkombinationen) für verschiedene Steuerelemente in Dialogfeldern in Konflikt mit System-Tastenkombinationen oder wichtigen assistiven Funktionen stehen, deaktivieren Sie sie hier.",
+        "name": "Zugriffsschlüssel in Dialogen bereitstellen"
+      },
+      "heading": "Dialoge"
+    },
+    "format": {
+      "description": {
+        "line1": "Das Format, das Tasks zum Lesen und Schreiben von Aufgaben verwendet.",
+        "line2": "<b>Wichtig:</b> Tasks unterstützt gleichzeitig nur ein Format. Wenn Sie Dataview auswählen, hindert dies Tasks daran, seine eigenen Emoji-Anzeiger zu verwenden."
+      },
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Tasks Emoji Format"
+      },
+      "name": "Aufgabenformat"
+    },
+    "globalFilter": {
+      "filter": {
+        "description": {
+          "line1": "Empfehlung: Lassen Sie dieses Feld leer, damit das Plugin alle Kontrollkästchen in Ihrem Tresor als Aufgaben verwalten kann.",
+          "line2": "Verwenden Sie einen globalen Filter, wenn Tasks nur auf einen Teil Ihrer \"<code>- [ ]</code>\" Kontrollkästchenitems wirken soll. Sorgen Sie dafür, dass ein Kontrollkästchenitem die angegebene Zeichenfolge in seiner Beschreibung enthält, um als Aufgabe betrachtet zu werden.",
+          "line3": "Setzen Sie den globalen Filter z. B. auf <code>#task</code>, verwaltet Tasks nur die mit <code>#task</code> gekennzeichneten Kontrollkästchenitems.",
+          "line4": "Andere Kontrollkästchenitems bleiben normale Kontrollkästchen und erscheinen nicht in Abfragen und erhalten kein Erledigungsdatum."
+        },
+        "name": "Globaler Filter",
+        "placeholder": "z.B. #task oder TODO"
+      },
+      "heading": "Globaler Aufgabenfilter",
+      "removeFilter": {
+        "description": "Aktiviert entfernt die Zeichenfolge, die Sie als globalen Filter gesetzt haben, aus der Aufgabenbeschreibung, wenn die Aufgabe angezeigt wird.",
+        "name": "Globalen Filter aus Beschreibung entfernen"
+      }
+    },
+    "globalQuery": {
+      "heading": "Globale Abfrage",
+      "query": {
+        "description": "Fügen Sie automatisch eine Abfrage am Anfang jedes Tasks-Blocks im Tresor hinzu. Nützlich für Standardfilter oder Layout-Optionen.",
+        "placeholder": "Zum Beispiel...\npath does not include _templates/\nlimit 300\nshow urgency"
+      }
+    },
+    "recurringTasks": {
+      "heading": "Wiederkehrende Aufgaben",
+      "nextLine": {
+        "description": "Aktivieren Sie dies, damit das nächste Auftreten einer Aufgabe in der Zeile unterhalb der abgeschlossenen Aufgabe erscheint. Ansonsten erscheint es vor der abgeschlossenen Aufgabe.",
+        "name": "Nächste Wiederholung erscheint in Zeile darunter"
+      },
+      "removeScheduledDate": {
+        "description": {
+          "line1": "Aktiviert, damit das nächste Auftreten einer Aufgabe keinen geplanten (⏳) Termin hat, wenn mindestens Start-(🛫) oder Fälligkeitsdaten (📅) vorhanden sind.",
+          "line2": "Dies gilt, wenn Sie möchten, dass Start- und Fälligkeitsdaten beim nächsten Auftreten beibehalten werden, aber das geplante Datum später festgelegt wird, sobald Sie planen, daran zu arbeiten."
+        },
+        "name": "Geplantes Datum bei Wiederholung entfernen"
+      }
+    },
+    "seeTheDocumentation": "Vgl. die Dokumentation",
+    "statuses": {
+      "collections": {
+        "anuppuccinTheme": "AnuPpuccin Theme",
+        "auraTheme": "Aura Theme",
+        "borderTheme": "Border Theme",
+        "buttons": {
+          "addCollection": {
+            "name": "{{themeName}}: Füge {{numberOfStatuses}} unterstützte Status hinzu"
+          }
+        },
+        "ebullientworksTheme": "Ebullientworks Theme",
+        "itsThemeAndSlrvbCheckboxes": "ITS Theme & SlRvb Kontrollkästchen",
+        "lytModeTheme": "LYT Mode Theme (nur Dunkelmodus)",
+        "minimalTheme": "Minimal Theme",
+        "thingsTheme": "Things Theme"
+      },
+      "coreStatuses": {
+        "buttons": {
+          "checkStatuses": {
+            "name": "Überprüfen und einsehen Sie Ihre Status-Einträge",
+            "tooltip": "Erstellen Sie eine neue Datei im Hauptverzeichnis des Tresors, die ein Mermaid-Diagramm der aktuellen Statuseinstellungen enthält."
+          }
+        },
+        "description": {
+          "line1": "Diese Kern-Status unterstützt Tasks nativ ohne benutzerdefiniertes CSS-Styling oder Themes.",
+          "line2": "Hinzufügen und Bearbeiten Ihrer eigenen benutzerdefinierten Status können Sie im unteren Abschnitt."
+        },
+        "heading": "Kern-Status"
+      },
+      "customStatuses": {
+        "buttons": {
+          "addAllUnknown": {
+            "name": "Alle unbekannten Statustypen hinzufügen"
+          },
+          "addNewStatus": {
+            "name": "Neuen Aufgabenstatus hinzufügen"
+          },
+          "resetCustomStatuses": {
+            "name": "Benutzerdefinierte Statustypen auf Standard zurücksetzen"
+          }
+        },
+        "description": {
+          "line1": "Zuerst wählen und installieren Sie ein CSS-Snippet oder Theme, um benutzerdefinierte Kontrollkästchen zu formatieren.",
+          "line2": "Verwenden Sie dann die untenstehenden Schaltflächen, um Ihre benutzerdefinierten Status zu erstellen, sodass sie mit Ihren ausgewählten CSS-Kontrollkästchen übereinstimmen.",
+          "line3": "Hinweis: Status mit dem gleichen Symbol wie ein früherer Status ignorieren wir. Bestätigen Sie die tatsächlich geladenen Status, indem Sie den 'Aufgabe erstellen oder bearbeiten'-Befehl ausführen und das Status-Dropdown anschauen.",
+          "line4": "Nutzen Sie die Dokumentation, um loszulegen!"
+        },
+        "heading": "Benutzerdefinierte Status"
+      },
+      "heading": "Aufgabenstatus"
+    }
+  }
+}
