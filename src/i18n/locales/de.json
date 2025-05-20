@@ -223,7 +223,7 @@
       "coreStatuses": {
         "buttons": {
           "checkStatuses": {
-            "name": "Überprüfen und Status kontrollieren",
+            "name": "Überprüfen und einsehen Sie Ihre Status-Einträge",
             "tooltip": "Erstellen Sie eine neue Datei im Hauptverzeichnis des Tresors, die ein Mermaid-Diagramm der aktuellen Statuseinstellungen enthält."
           }
         },
