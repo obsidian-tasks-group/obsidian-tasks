@@ -59,7 +59,7 @@
         "nextSymbolUnknown": "Nächstes Symbol {{symbol}} ist unbekannt: Erstellen Sie einen Status mit dem Symbol {{symbol}}.",
         "notConventionalType": "Zur Information: Der übliche Typ für das Status-Symbol {{symbol}} ist {{type}}. Überprüfen Sie diesen Typ gegebenenfalls.",
         "wrongTypeAfterDone": {
-          "line1": "Dieser `ERLEDIGT`-Status folgt {{nextType}}, nicht `TODO` oder `IN_PROGRESS`.",
+          "line1": "Nach diesem `ERLEDIGT`-Status folgt {{nextType}}, nicht `TODO` oder `IN_PROGRESS`.",
           "line2": "Wenn Sie diesen Status verwenden, um eine wiederkehrende Aufgabe abzuschließen, folgt darauf `TODO` oder `IN_PROGRESS`, um sicherzustellen, dass die nächste Aufgabe dem `nicht erledigt`-Filter entspricht.",
           "line3": "Siehe [Wiederkehrende Aufgaben und benutzerdefinierte Status]({{helpURL}})."
         }
