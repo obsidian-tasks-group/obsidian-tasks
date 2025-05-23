@@ -25,9 +25,11 @@
         }
 
         /* Error state for invalid input */
-        .tasks-includes-key.has-error {
-            border-color: var(--text-error);
-            border-width: 2px;
+        .tasks-includes-key {
+            &.has-error {
+                border-color: var(--text-error);
+                border-width: 2px;
+            }
         }
 
         /* Textarea for value */
