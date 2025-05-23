@@ -10,15 +10,6 @@
 
     // Individual setting row
     .tasks-includes-setting {
-        &.setting-item {
-            // Layout: horizontal flex with wrap
-            display: flex;
-            align-items: flex-start;
-            gap: 1em;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-
         // Name input field (left column)
         .tasks-includes-key {
             width: 200px;
