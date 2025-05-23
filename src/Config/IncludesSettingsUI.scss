@@ -36,7 +36,7 @@
             flex-grow: 1;
             min-width: 300px;
             min-height: 3em;
-            font-family: monospace;
+            font-family: var(--font-monospace);
 
             // Horizontal-only resizing and scrolling
             resize: horizontal;
