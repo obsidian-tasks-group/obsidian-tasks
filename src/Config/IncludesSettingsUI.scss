@@ -9,8 +9,8 @@
     }
 }
 
-/* Flex layout for each row */
 .tasks-settings {
+    /* Flex layout for each row */
     .tasks-includes-setting.setting-item {
         display: flex;
         align-items: flex-start;
@@ -20,16 +20,16 @@
     }
 }
 
-/* Input for key */
 .tasks-settings {
+    /* Input for key */
     .tasks-includes-setting .tasks-includes-key {
         width: 200px;
         flex-shrink: 0;
     }
 }
 
-/* Textarea for value */
 .tasks-settings {
+    /* Textarea for value */
     .tasks-includes-setting .tasks-includes-value {
         flex-grow: 1;
         min-width: 300px;
@@ -54,8 +54,8 @@
     }
 }
 
-/* Error state for invalid input */
 .tasks-settings {
+    /* Error state for invalid input */
     .tasks-includes-setting .tasks-includes-key.has-error {
         border-color: var(--text-error);
         border-width: 2px;
