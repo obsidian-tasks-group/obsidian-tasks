@@ -2,15 +2,16 @@
 /* Includes section                               */
 /* ---------------------------------------------- */
 
-/* Container for each setting row */
 .tasks-settings {
+    // Main wrapper for includes section
     .tasks-includes-wrapper {
         width: 100%;
     }
 
+    // Individual setting row
     .tasks-includes-setting {
-        /* Flex layout for each row */
         &.setting-item {
+            // Layout: horizontal flex with wrap
             display: flex;
             align-items: flex-start;
             gap: 1em;
@@ -18,43 +19,47 @@
             width: 100%;
         }
 
-        /* Input for key */
+        // Name input field (left column)
         .tasks-includes-key {
             width: 200px;
             flex-shrink: 0;
 
-            /* Error state for invalid input */
+            // Error state styling
             &.has-error {
                 border-color: var(--text-error);
                 border-width: 2px;
             }
         }
 
-        /* Textarea for value */
+        // Value textarea (right column)
         .tasks-includes-value {
             flex-grow: 1;
             min-width: 300px;
             min-height: 3em;
             font-family: monospace;
-            resize: horizontal;      // allow horizontal resizing
-            overflow-x: auto;        // allow horizontal scrolling
-            overflow-y: hidden;      // hide vertical scrollbar
-            white-space: pre;        // prevent wrapping
+
+            // Horizontal-only resizing and scrolling
+            resize: horizontal;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: pre;        // Preserve formatting
         }
 
+        // Hide empty info sections
         .setting-item-info {
             &:has(.setting-item-name:empty):has(.setting-item-description:empty) {
                 display: none;
             }
         }
 
+        // Control alignment adjustment
         .setting-item-control {
             align-items: unset;
         }
     }
 }
 
-/* Responsive: stack in narrow view */
+// Responsive: Stack vertically on narrow screens (does not work)
 @media (max-width: 600px) {
     .tasks-settings .tasks-includes-setting.setting-item {
         flex-direction: column;
