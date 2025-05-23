@@ -22,9 +22,7 @@
         .tasks-includes-key {
             width: 200px;
             flex-shrink: 0;
-        }
 
-        .tasks-includes-key {
             /* Error state for invalid input */
             &.has-error {
                 border-color: var(--text-error);
