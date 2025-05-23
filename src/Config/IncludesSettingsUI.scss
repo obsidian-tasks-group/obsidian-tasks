@@ -2,58 +2,67 @@
 /* Includes section                               */
 /* ---------------------------------------------- */
 
-/* Container for each setting row */
-.tasks-settings .tasks-includes-wrapper {
-    width: 100%;
-}
-
-/* Flex layout for each row */
-.tasks-settings .tasks-includes-setting.setting-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1em;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-/* Input for key */
-.tasks-settings .tasks-includes-setting .tasks-includes-key {
-    width: 200px;
-    flex-shrink: 0;
-}
-
-/* Textarea for value */
-.tasks-settings .tasks-includes-setting .tasks-includes-value {
-    flex-grow: 1;
-    min-width: 300px;
-    min-height: 3em;
-    font-family: monospace;
-    resize: horizontal;      // allow horizontal resizing
-    overflow-x: auto;        // allow horizontal scrolling
-    overflow-y: hidden;      // hide vertical scrollbar
-    white-space: pre;        // prevent wrapping
-}
-
-/* Responsive: stack in narrow view */
-@media (max-width: 600px) {
-    .tasks-settings .tasks-includes-setting.setting-item {
-        flex-direction: column;
-        align-items: stretch;
-    }
-}
-
-.tasks-includes-setting {
-    .setting-item-info:has(.setting-item-name:empty):has(.setting-item-description:empty) {
-        display: none;
+.tasks-settings {
+    // Main wrapper for includes section
+    .tasks-includes-wrapper {
+        width: 100%;
     }
 
-    .setting-item-control {
-        align-items: unset;
-    }
-}
+    // Individual setting row
+    .tasks-includes-setting {
+        &.setting-item {
+            // Layout: horizontal flex with wrap
+            display: flex;
+            align-items: flex-start;
+            gap: 1em;
+            flex-wrap: wrap;
+            width: 100%;
+        }
 
-/* Error state for invalid input */
-.tasks-settings .tasks-includes-setting .tasks-includes-key.has-error {
-    border-color: var(--text-error);
-    border-width: 2px;
+        // Name input field (left column)
+        .tasks-includes-key {
+            width: 200px;
+            flex-shrink: 0;
+
+            // Error state styling
+            &.has-error {
+                border-color: var(--text-error);
+                border-width: 2px;
+            }
+        }
+
+        // Value textarea (right column)
+        .tasks-includes-value {
+            flex-grow: 1;
+            min-width: 300px;
+            min-height: 3em;
+            font-family: var(--font-monospace);
+
+            // Horizontal-only resizing and scrolling
+            resize: horizontal;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: pre;        // Preserve formatting
+        }
+
+        // Hide empty info sections
+        .setting-item-info {
+            &:has(.setting-item-name:empty):has(.setting-item-description:empty) {
+                display: none;
+            }
+        }
+
+        // Control alignment adjustment
+        .setting-item-control {
+            align-items: unset;
+        }
+    }
+
+    // Responsive: Stack vertically on narrow screens (does not work)
+    @media (max-width: 600px) {
+        .tasks-includes-setting.setting-item {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
 }
