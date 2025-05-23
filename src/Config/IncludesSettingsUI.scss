@@ -42,8 +42,10 @@
             white-space: pre;        // prevent wrapping
         }
 
-        .setting-item-info:has(.setting-item-name:empty):has(.setting-item-description:empty) {
-            display: none;
+        .setting-item-info {
+            &:has(.setting-item-name:empty):has(.setting-item-description:empty) {
+                display: none;
+            }
         }
 
         .setting-item-control {
