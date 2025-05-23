@@ -24,6 +24,12 @@
             flex-shrink: 0;
         }
 
+        /* Error state for invalid input */
+        .tasks-includes-key.has-error {
+            border-color: var(--text-error);
+            border-width: 2px;
+        }
+
         /* Textarea for value */
         .tasks-includes-value {
             flex-grow: 1;
@@ -42,12 +48,6 @@
 
         .setting-item-control {
             align-items: unset;
-        }
-
-        /* Error state for invalid input */
-        .tasks-includes-key.has-error {
-            border-color: var(--text-error);
-            border-width: 2px;
         }
     }
 }
