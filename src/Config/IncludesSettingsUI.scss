@@ -46,6 +46,20 @@
         // Control alignment adjustment
         .setting-item-control {
             align-items: unset;
+
+            // Force wrapping behavior on narrow screens
+            @container (max-width: 600px) {
+                flex-wrap: wrap;
+
+                .tasks-includes-key {
+                    width: 100%;
+                }
+
+                .tasks-includes-value {
+                    width: 100%;
+                    min-width: 0;
+                }
+            }
         }
     }
 }
