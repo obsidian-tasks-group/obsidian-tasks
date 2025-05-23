@@ -57,12 +57,12 @@
             align-items: unset;
         }
     }
-}
 
-// Responsive: Stack vertically on narrow screens (does not work)
-@media (max-width: 600px) {
-    .tasks-settings .tasks-includes-setting.setting-item {
-        flex-direction: column;
-        align-items: stretch;
+    // Responsive: Stack vertically on narrow screens (does not work)
+    @media (max-width: 600px) {
+        .tasks-includes-setting.setting-item {
+            flex-direction: column;
+            align-items: stretch;
+        }
     }
 }
