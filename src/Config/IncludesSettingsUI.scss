@@ -9,30 +9,36 @@
     }
 
     /* Flex layout for each row */
-    .tasks-includes-setting.setting-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 1em;
-        flex-wrap: wrap;
-        width: 100%;
+    .tasks-includes-setting {
+        &.setting-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1em;
+            flex-wrap: wrap;
+            width: 100%;
+        }
     }
 
     /* Input for key */
-    .tasks-includes-setting .tasks-includes-key {
-        width: 200px;
-        flex-shrink: 0;
+    .tasks-includes-setting {
+        .tasks-includes-key {
+            width: 200px;
+            flex-shrink: 0;
+        }
     }
 
     /* Textarea for value */
-    .tasks-includes-setting .tasks-includes-value {
-        flex-grow: 1;
-        min-width: 300px;
-        min-height: 3em;
-        font-family: monospace;
-        resize: horizontal;      // allow horizontal resizing
-        overflow-x: auto;        // allow horizontal scrolling
-        overflow-y: hidden;      // hide vertical scrollbar
-        white-space: pre;        // prevent wrapping
+    .tasks-includes-setting {
+        .tasks-includes-value {
+            flex-grow: 1;
+            min-width: 300px;
+            min-height: 3em;
+            font-family: monospace;
+            resize: horizontal;      // allow horizontal resizing
+            overflow-x: auto;        // allow horizontal scrolling
+            overflow-y: hidden;      // hide vertical scrollbar
+            white-space: pre;        // prevent wrapping
+        }
     }
 
     .tasks-includes-setting {
@@ -46,9 +52,11 @@
     }
 
     /* Error state for invalid input */
-    .tasks-includes-setting .tasks-includes-key.has-error {
-        border-color: var(--text-error);
-        border-width: 2px;
+    .tasks-includes-setting {
+        .tasks-includes-key.has-error {
+            border-color: var(--text-error);
+            border-width: 2px;
+        }
     }
 }
 
