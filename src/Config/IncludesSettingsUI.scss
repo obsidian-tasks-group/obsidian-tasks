@@ -24,8 +24,8 @@
             flex-shrink: 0;
         }
 
-        /* Error state for invalid input */
         .tasks-includes-key {
+            /* Error state for invalid input */
             &.has-error {
                 border-color: var(--text-error);
                 border-width: 2px;
