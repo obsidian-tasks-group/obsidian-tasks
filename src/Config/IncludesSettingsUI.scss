@@ -17,17 +17,13 @@
             flex-wrap: wrap;
             width: 100%;
         }
-    }
 
-    .tasks-includes-setting {
         /* Input for key */
         .tasks-includes-key {
             width: 200px;
             flex-shrink: 0;
         }
-    }
 
-    .tasks-includes-setting {
         /* Textarea for value */
         .tasks-includes-value {
             flex-grow: 1;
@@ -39,9 +35,7 @@
             overflow-y: hidden;      // hide vertical scrollbar
             white-space: pre;        // prevent wrapping
         }
-    }
 
-    .tasks-includes-setting {
         .setting-item-info:has(.setting-item-name:empty):has(.setting-item-description:empty) {
             display: none;
         }
@@ -49,9 +43,7 @@
         .setting-item-control {
             align-items: unset;
         }
-    }
 
-    .tasks-includes-setting {
         /* Error state for invalid input */
         .tasks-includes-key.has-error {
             border-color: var(--text-error);
