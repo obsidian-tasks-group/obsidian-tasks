@@ -42,13 +42,15 @@
     }
 }
 
-.tasks-includes-setting {
-    .setting-item-info:has(.setting-item-name:empty):has(.setting-item-description:empty) {
-        display: none;
-    }
+.tasks-settings {
+    .tasks-includes-setting {
+        .setting-item-info:has(.setting-item-name:empty):has(.setting-item-description:empty) {
+            display: none;
+        }
 
-    .setting-item-control {
-        align-items: unset;
+        .setting-item-control {
+            align-items: unset;
+        }
     }
 }
 
