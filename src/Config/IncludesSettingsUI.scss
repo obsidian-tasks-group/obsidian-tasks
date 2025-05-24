@@ -10,15 +10,6 @@
 
     // Individual setting row
     .tasks-includes-setting {
-        &.setting-item {
-            // Layout: horizontal flex with wrap
-            display: flex;
-            align-items: flex-start;
-            gap: 1em;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-
         // Name input field (left column)
         .tasks-includes-key {
             width: 200px;
@@ -45,24 +36,34 @@
             white-space: pre;        // Preserve formatting
         }
 
-        // Hide empty info sections
-        .setting-item-info {
-            &:has(.setting-item-name:empty):has(.setting-item-description:empty) {
-                display: none;
-            }
-        }
-
         // Control alignment adjustment
         .setting-item-control {
             align-items: unset;
-        }
-    }
 
-    // Responsive: Stack vertically on narrow screens (does not work)
-    @media (max-width: 600px) {
-        .tasks-includes-setting.setting-item {
-            flex-direction: column;
-            align-items: stretch;
+            // Force wrapping behavior on narrow screens
+            @container (max-width: 600px) {
+                flex-wrap: wrap;
+
+                // Put a border around the elements for each Include, to make structure easier
+                // to see when in single-column mode.
+                border: 1px solid var(--background-modifier-border) !important;
+                padding: 0.5em !important;
+                border-radius: 4px !important;
+
+                .tasks-includes-key {
+                    // Make the Name input field full-width.
+                    // The value textarea will take up most of the width, with the Delete button to its right.
+                    width: 100%;
+                }
+            }
+
+            @container (max-width: 500px) {
+                .tasks-includes-value {
+                    // Make the Value textarea full-width, forcing the Delete button on to the third row.
+                    width: 100%;
+                    min-width: 0;
+                }
+            }
         }
     }
 }
