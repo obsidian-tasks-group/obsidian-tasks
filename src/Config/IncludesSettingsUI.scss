@@ -51,6 +51,12 @@
             @container (max-width: 500px) {
                 flex-wrap: wrap;
 
+                // Put a border around the elements for each Include, to make structure easier
+                // to see when in single-column mode.
+                border: 1px solid var(--background-modifier-border) !important;
+                padding: 0.5em !important;
+                border-radius: 4px !important;
+
                 .tasks-includes-key {
                     width: 100%;
                 }
