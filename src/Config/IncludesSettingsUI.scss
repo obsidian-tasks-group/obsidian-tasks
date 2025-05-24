@@ -48,7 +48,7 @@
             align-items: unset;
 
             // Force wrapping behavior on narrow screens
-            @container (max-width: 600px) {
+            @container (max-width: 500px) {
                 flex-wrap: wrap;
 
                 .tasks-includes-key {
