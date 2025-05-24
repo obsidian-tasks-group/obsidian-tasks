@@ -48,7 +48,7 @@
             align-items: unset;
 
             // Force wrapping behavior on narrow screens
-            @container (max-width: 500px) {
+            @container (max-width: 600px) {
                 flex-wrap: wrap;
 
                 // Put a border around the elements for each Include, to make structure easier
