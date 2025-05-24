@@ -51,10 +51,15 @@
                 border-radius: 4px !important;
 
                 .tasks-includes-key {
+                    // Make the Name input field full-width.
+                    // The value textarea will take up most of the width, with the Delete button to its right.
                     width: 100%;
                 }
+            }
 
+            @container (max-width: 500px) {
                 .tasks-includes-value {
+                    // Make the Value textarea full-width, forcing the Delete button on to the third row.
                     width: 100%;
                     min-width: 0;
                 }
