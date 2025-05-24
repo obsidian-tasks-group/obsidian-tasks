@@ -134,6 +134,10 @@ export class IncludesSettingsUI {
                     await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                 });
         });
+
+        // We are not providing any information about this setting, so delete it to prevent
+        // using up screen width.
+        setting.infoEl.remove();
     }
 
     /**

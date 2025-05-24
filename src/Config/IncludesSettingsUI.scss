@@ -36,13 +36,6 @@
             white-space: pre;        // Preserve formatting
         }
 
-        // Hide empty info sections
-        .setting-item-info {
-            &:has(.setting-item-name:empty):has(.setting-item-description:empty) {
-                display: none;
-            }
-        }
-
         // Control alignment adjustment
         .setting-item-control {
             align-items: unset;
