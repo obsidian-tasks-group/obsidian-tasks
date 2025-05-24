@@ -20,6 +20,7 @@ import yaml_all_property_types_empty from '../Obsidian/__test_data__/yaml_all_pr
 import yaml_all_property_types_populated from '../Obsidian/__test_data__/yaml_all_property_types_populated.json';
 import yaml_1_alias from '../Obsidian/__test_data__/yaml_1_alias.json';
 import yaml_2_aliases from '../Obsidian/__test_data__/yaml_2_aliases.json';
+import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('TasksFile', () => {
@@ -214,6 +215,14 @@ describe('TasksFile - reading frontmatter', () => {
               "tags => string[] = ['#sample/tag/value']",
             ]
         `);
+    });
+});
+
+describe('TasksFile - accessing links', () => {
+    it('should return all links in the task file', () => {
+        const tasksFile = getTasksFileFromMockData(links_everywhere);
+        expect(tasksFile.outLinks.length).toEqual(3);
+        expect(tasksFile.outLinks[0].originalMarkdown).toEqual('[[link_in_file_body]]');
     });
 });
 
