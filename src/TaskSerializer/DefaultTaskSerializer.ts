@@ -5,6 +5,7 @@ import { Occurrence } from '../Task/Occurrence';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
+import { Duration } from '../Task/Duration';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import type { TaskDetails, TaskSerializer } from '.';
 
@@ -26,6 +27,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly startDateSymbol: string;
     readonly createdDateSymbol: string;
     readonly scheduledDateSymbol: string;
+    readonly durationSymbol: string;
     readonly dueDateSymbol: string;
     readonly doneDateSymbol: string;
     readonly cancelledDateSymbol: string;
@@ -38,6 +40,7 @@ export interface DefaultTaskSerializerSymbols {
         startDateRegex: RegExp;
         createdDateRegex: RegExp;
         scheduledDateRegex: RegExp;
+        durationRegex: RegExp;
         dueDateRegex: RegExp;
         doneDateRegex: RegExp;
         cancelledDateRegex: RegExp;
@@ -87,6 +90,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     startDateSymbol: '🛫',
     createdDateSymbol: '➕',
     scheduledDateSymbol: '⏳',
+    durationSymbol: '⏱',
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
@@ -99,6 +103,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         startDateRegex: dateFieldRegex('🛫'),
         createdDateRegex: dateFieldRegex('➕'),
         scheduledDateRegex: dateFieldRegex('[⏳⌛]'),
+        durationRegex: fieldRegex('⏱', '(' + Duration.valueRegEx + ')'),
         dueDateRegex: dateFieldRegex('[📅📆🗓]'),
         doneDateRegex: dateFieldRegex('✅'),
         cancelledDateRegex: dateFieldRegex('❌'),
@@ -170,6 +175,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             startDateSymbol,
             createdDateSymbol,
             scheduledDateSymbol,
+            durationSymbol,
             doneDateSymbol,
             cancelledDateSymbol,
             recurrenceSymbol,
@@ -206,6 +212,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
             case TaskLayoutComponent.ScheduledDate:
                 if (task.scheduledDateIsInferred) return '';
                 return symbolAndDateValue(shortMode, scheduledDateSymbol, task.scheduledDate);
+            case TaskLayoutComponent.Duration:
+                if (!task.duration) return '';
+                return symbolAndStringValue(shortMode, durationSymbol, task.duration.toText());
             case TaskLayoutComponent.DoneDate:
                 return symbolAndDateValue(shortMode, doneDateSymbol, task.doneDate);
             case TaskLayoutComponent.CancelledDate:
@@ -274,6 +283,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let priority: Priority = Priority.None;
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
+        let duration: Duration = Duration.None;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let cancelledDate: Moment | null = null;
@@ -326,6 +336,15 @@ export class DefaultTaskSerializer implements TaskSerializer {
             if (scheduledDateMatch !== null) {
                 scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
                 line = line.replace(TaskFormatRegularExpressions.scheduledDateRegex, '').trim();
+                matched = true;
+            }
+
+            const durationMatch = line.match(TaskFormatRegularExpressions.durationRegex);
+            if (durationMatch !== null) {
+                line = line.replace(TaskFormatRegularExpressions.durationRegex, '').trim();
+                //note: as TaskFormatRegularExpressions.durationRegex is derived from Duration.valueRegEx
+                //Duration.fromText() should never(!) return null.
+                duration = Duration.fromText(durationMatch[1].trim())!;
                 matched = true;
             }
 
@@ -414,6 +433,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             startDate,
             createdDate,
             scheduledDate,
+            duration,
             dueDate,
             doneDate,
             cancelledDate,
