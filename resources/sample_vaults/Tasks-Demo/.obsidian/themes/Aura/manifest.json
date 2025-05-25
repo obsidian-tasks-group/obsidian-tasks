@@ -1,7 +1,7 @@
 {
 	"name": "Aura",
-	"version": "1.9.0",
-	"minAppVersion": "0.16.0",
-	"author": "ashwinjadhav",
-	"authorUrl": "https://github.com/ashwinjadhav818/"
+	"minAppVersion": "1.6.0",
+	"author": "Ashwin Jadhav",
+	"authorUrl": "https://github.com/ashwinjadhav818/",
+	"version": "2.3.3"
 }

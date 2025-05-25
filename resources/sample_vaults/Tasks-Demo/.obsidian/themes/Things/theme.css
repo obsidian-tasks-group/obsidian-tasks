@@ -1,6 +1,6 @@
 /*───────────────────────────────────────────────────────
 THINGS
-Version 2.1.6
+Version 2.1.20
 Created by @colineckert
 
 Readme:
@@ -35,7 +35,7 @@ body {
   --purple: #9e86c8;
 
   --h1-color: var(--text-normal);
-  --h2-color: var(--blue);
+  --h2-color: var(--text-normal);
   --h3-color: var(--blue);
   --h4-color: var(--yellow);
   --h5-color: var(--red);
@@ -50,6 +50,16 @@ body {
   --tag-background-color-d: #1d694b;
   --tag-font-color-d: #ffffff;
 
+  --highlight-background-color--normal: hsl(50deg 100% 50% / 15%) !important;
+  --highlight-background-color-underline: hsl(50deg 100% 50% / 100%) !important;
+  --highlight-background-color--active: hsl(50deg 100% 50% / 20%) !important;
+
+  --progress-color-1: #ad5758;
+  --progress-color-2: #b87f4c;
+  --progress-color-3: #d2b874;
+  --progress-color-4: #b0c07e;
+  --progress-color-5: #768399;
+
   /* Font families */
   --font-text-theme: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Inter, Ubuntu, sans-serif;
@@ -62,6 +72,13 @@ body {
   --font-editor: var(--font-editor-override), var(--font-text-override),
     var(--font-editor-theme);
 
+  --h1-size: 1.7rem;
+  --h2-size: 1.5rem;
+  --h3-size: 1.2rem;
+  --h4-size: 1.1rem;
+  --h5-size: 1rem;
+  --h6-size: 0.9rem;
+
   /* Misc */
   --checkbox-radius: 30%;
   --link-external-decoration: underline;
@@ -72,6 +89,17 @@ body {
   --radius-m: 8px;
   --radius-l: 10px;
   --radius-xl: 16px;
+
+  --line-width: 40rem;
+  --line-height: 1.5;
+  --max-width: 90%;
+  --max-col-width: 18em;
+  --icon-muted: 0.5;
+  --nested-padding: 1.1em;
+  --folding-offset: 10px;
+
+  --line-width-adaptive: var(--line-width);
+  --line-width-wide: calc(var(--line-width) + 12.5%);
 }
 
 /* COLOR SCHEMES
@@ -211,6 +239,7 @@ body.theme-dark.is-mobile {
     var(--accent-s),
     calc(var(--accent-l) + 3.8%)
   );
+  --titlebar-background-focused: var(--color-base-10);
   --background-modifier-form-field: var(--color-base-25);
   --background-secondary-alt: var(--color-base-30);
   --interactive-normal: var(--color-base-30);
@@ -311,6 +340,20 @@ body:not(.default-font-color) mark em {
   color: var(--text-normal);
 }
 
+/* Fancy highlight */
+body.fancy-highlight span.cm-highlight,
+body.fancy-highlight .markdown-preview-view mark,
+body.fancy-highlight span.search-result-file-matched-text {
+  background-image: linear-gradient(
+    0deg,
+    var(--highlight-background-color-underline) 0%,
+    var(--highlight-background-color-underline) 2px,
+    var(--highlight-background-color--active) 2px,
+    var(--highlight-background-color--active) 100%
+  ) !important;
+  background-color: var(--highlight-text-color--active) !important;
+}
+
 /* Markdown formatting */
 .cm-formatting-strong,
 .cm-formatting-em,
@@ -323,7 +366,8 @@ body:not(.default-font-color) mark em {
 /* Completed checkboxes */
 .markdown-preview-view ul > li.task-list-item.is-checked,
 .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='x'],
-.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='X'] {
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='X'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='M'] {
   text-decoration: none;
   color: var(--text-faint);
 }
@@ -335,12 +379,12 @@ img {
 }
 
 .theme-dark .modal-container .suggestion-item.is-selected {
-  background: var(--blue);
+  background: var(--color-accent);
 }
 
 /* Focus active line */
-body.active-line
-  .cm-active:not(.HyperMD-quote, .HyperMD-header, .HyperMD-codeblock)::before {
+body.active-line .cm-active:not(.HyperMD-header, .HyperMD-codeblock)::before,
+body.active-line .cm-active.HyperMD-quote::before {
   content: '';
   height: 100%;
   position: absolute;
@@ -350,16 +394,12 @@ body.active-line
   opacity: 0.85;
 }
 
-/* Highlight styling */
-span.cm-highlight,
-.markdown-preview-view mark,
-span.search-result-file-matched-text {
-  padding: 0.1em 0;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+/* Code blocks horizontal scroll */
+.markdown-reading-view .markdown-preview-view pre:not(.frontmatter) code {
+  white-space: pre;
 }
 
-/* Code blocks */
+/* Fancy code blocks */
 .cm-inline-code,
 .cm-s-obsidian .HyperMD-codeblock,
 .markdown-preview-view.markdown-preview-view :is(pre, code) {
@@ -369,19 +409,15 @@ span.search-result-file-matched-text {
   --slight-code-roundish: var(--radius-xs);
 }
 
-.cm-s-obsidian .HyperMD-codeblock {
+body.fancy-code .cm-s-obsidian .HyperMD-codeblock {
   line-height: 1.4em;
 }
 
-body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
-  padding-left: var(--size-2-2);
-}
-
-body:not(.no-codeblock-line-numbers) .HyperMD-codeblock-begin {
+body.fancy-code .HyperMD-codeblock-begin {
   counter-reset: codeblock-line-numbers;
 }
 
-body:not(.no-codeblock-line-numbers)
+body.fancy-code
   .HyperMD-codeblock:not(
     .HyperMD-codeblock-begin,
     .HyperMD-codeblock-end
@@ -401,7 +437,7 @@ body:not(.no-codeblock-line-numbers)
   padding-right: 1.4em;
 }
 
-body:not(.no-codeblock-line-numbers)
+body.fancy-code
   .HyperMD-codeblock.cm-line:not(
     .HyperMD-codeblock-begin,
     .HyperMD-codeblock-end
@@ -409,9 +445,7 @@ body:not(.no-codeblock-line-numbers)
   padding-left: 2.8em;
 }
 
-body:not(.no-codeblock-line-numbers)
-  .cm-s-obsidian
-  div.HyperMD-codeblock-begin-bg {
+body.fancy-code .cm-s-obsidian div.HyperMD-codeblock-begin-bg {
   background-color: var(--code-block-alt-bg);
   border: var(--codeblock-border);
   border-bottom: none;
@@ -419,23 +453,19 @@ body:not(.no-codeblock-line-numbers)
   border-top-left-radius: var(--codeblock-roundness);
 }
 
-div.HyperMD-codeblock-bg:not(.HyperMD-codeblock-begin-bg) {
+body.fancy-code div.HyperMD-codeblock-bg:not(.HyperMD-codeblock-begin-bg) {
   border-right: var(--codeblock-border);
   border-left: var(--codeblock-border);
 }
 
-body:not(.no-codeblock-line-numbers)
-  .cm-line.HyperMD-codeblock
-  .code-block-flair {
+body.fancy-code .cm-line.HyperMD-codeblock .code-block-flair {
   font-size: calc(var(--code-size) * 0.9);
   color: var(--text-muted);
   padding: 0 1px;
   top: 0;
 }
 
-body:not(.no-codeblock-line-numbers)
-  .markdown-reading-view
-  pre[class*='language-']::before {
+body.fancy-code .markdown-reading-view pre[class*='language-']::before {
   display: block;
   content: ' ';
   line-height: 1.5em;
@@ -444,7 +474,7 @@ body:not(.no-codeblock-line-numbers)
   border-top-left-radius: calc(var(--codeblock-roundness) * 0.8);
 }
 
-body:not(.no-codeblock-line-numbers) pre[class*='language-']::after {
+body.fancy-code pre[class*='language-']::after {
   content: attr(class);
   font-size: 0.9rem;
   text-shadow: none;
@@ -454,36 +484,29 @@ body:not(.no-codeblock-line-numbers) pre[class*='language-']::after {
   right: 5px;
 }
 
-.markdown-reading-view .markdown-preview-view pre:not(.frontmatter) code {
-  white-space: pre;
-}
-
-body:not(.no-codeblock-line-numbers) .markdown-preview-view pre code {
+body.fancy-code .markdown-preview-view pre code {
   padding: var(--size-4-1) var(--size-4-2);
 }
 
-body:not(.no-codeblock-line-numbers)
-  .copy-code-button.copy-code-button.copy-code-button {
+body.fancy-code .copy-code-button.copy-code-button.copy-code-button {
   background-color: var(--interactive-normal);
   top: unset;
   bottom: 0;
   padding: 0 var(--size-2-2);
 }
 
-body:not(.no-codeblock-line-numbers)
-  .markdown-preview-view.markdown-preview-view
-  pre {
+body.fancy-code .markdown-preview-view.markdown-preview-view pre {
   padding: 0;
   margin-top: var(--size-4-2);
   border: var(--codeblock-border);
   border-radius: var(--codeblock-roundness);
 }
 
-.markdown-reading-view .markdown-preview-view pre code {
+body.fancy-code .markdown-reading-view .markdown-preview-view pre code {
   display: block;
 }
 
-body:not(.no-codeblock-line-numbers) .markdown-preview-view pre code {
+body.fancy-code .markdown-preview-view pre code {
   padding: var(--size-4-1) var(--size-4-5);
 }
 
@@ -491,10 +514,11 @@ body:not(.no-codeblock-line-numbers) .markdown-preview-view pre code {
 /* One Dark Syntax Coloring */
 /* Source: https://github.com/AGMStudio/prism-theme-one-dark */
 /* ------------------- */
-.theme-light .token.comment {
+.theme-light .token.comment .theme-light .cm-comment {
   color: #ababab;
 }
 .theme-dark .token.comment,
+.theme-dark .cm-comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
@@ -502,33 +526,42 @@ body:not(.no-codeblock-line-numbers) .markdown-preview-view pre code {
 }
 .token.punctuation,
 .token.plain-text,
-.token.parameter,
 .token.dom.variable,
 .cm-hmd-codeblock.cm-bracket {
-  color: var(--atom-gray-2) !important;
+  color: var(--atom-gray-2);
 }
+code[class*='language-'],
 .token.selector,
-.token.tag,
-.token.property,
-.token.property-access,
+.cm-tag,
 .token.dom.variable,
-span.token.variable,
-.cm-hmd-codeblock.cm-tag,
-.cm-variable,
+.token.tag,
+.cm-def,
+.token.parameter,
 .cm-property,
 .cm-qualifier {
   color: var(--atom-red);
 }
+.token.class-name,
+.token.maybe-class-name,
+.token.property-access,
+.token.constant,
+.token.builtin,
+.cm-variable-2,
+.cm-type,
+.cm-atom,
+code .cm-tag {
+  color: var(--atom-yellow);
+}
+.token.property,
 .token.boolean,
 .token.number,
 .token.symbol,
-.token.builtin,
 .token.attr-name,
 .token.deleted,
 .cm-attribute,
 .cm-number,
 .cm-property.cm-string {
-  color: var(--atom-orange) !important;
+  color: var(--atom-orange);
 }
 .token.string,
 .token.char,
@@ -551,19 +584,11 @@ span.token.variable,
 .cm-keyword {
   color: var(--atom-purple);
 }
-.cm-builtin,
+.cm-variable,
 .token.function,
 .token.method,
 .token.macro.property {
   color: var(--atom-blue);
-}
-.token.class-name,
-.token.constant,
-.cm-atom,
-code .cm-tag,
-.cm-variable-2,
-.cm-type {
-  color: var(--atom-yellow);
 }
 .token.regex,
 .token.important,
@@ -586,9 +611,9 @@ code .cm-tag,
 /* --------------------- */
 
 body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
-  .view-action:nth-last-of-type(5),
+  .view-action:nth-last-of-type(2),
 body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
-  .view-action:nth-last-of-type(4) {
+  .view-action:nth-last-of-type(2) {
   color: white;
   background-color: var(--blue);
   opacity: 1;
@@ -610,9 +635,9 @@ body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
 }
 
 body.is-mobile:not(.floating-button-off).advanced-toolbar
-  .view-action:nth-last-of-type(5),
+  .view-action:nth-last-of-type(2),
 body.is-mobile:not(.floating-button-off).advanced-toolbar
-  .view-action:nth-last-of-type(4) {
+  .view-action:nth-last-of-type(2) {
   color: white;
   background-color: var(--blue);
   opacity: 1;
@@ -653,6 +678,9 @@ input[data-task='l']:checked,
 input[data-task='p']:checked,
 input[data-task='u']:checked,
 input[data-task='w']:checked,
+input[data-task='P']:checked, /* Open PR */
+input[data-task='M']:checked, /* Merged PR */
+input[data-task='D']:checked, /* Draft PR */
 li[data-task='!'] > input:checked,
 li[data-task='!'] > p > input:checked,
 li[data-task='*'] > input:checked,
@@ -682,7 +710,13 @@ li[data-task='p'] > p > input:checked,
 li[data-task='u'] > input:checked,
 li[data-task='u'] > p > input:checked,
 li[data-task='w'] > input:checked,
-li[data-task='w'] > p > input:checked {
+li[data-task='w'] > p > input:checked,
+li[data-task='P'] > input:checked,
+li[data-task='P'] > p > input:checked,
+li[data-task='M'] > input:checked,
+li[data-task='M'] > p > input:checked,
+li[data-task='D'] > input:checked,
+li[data-task='D'] > p > input:checked {
   --checkbox-marker-color: transparent;
   border: none;
   border-radius: 0;
@@ -882,6 +916,92 @@ li[data-task='b'] > p > input:checked {
   color: var(--color-orange);
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' /%3E%3C/svg%3E");
 }
+input[data-task='P']:checked,
+li[data-task='P'] > input:checked,
+li[data-task='P'] > p > input:checked {
+  color: var(--color-green);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath d='M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z'%3E%3C/path%3E%3C/svg%3E");
+}
+input[data-task='M']:checked,
+li[data-task='M'] > input:checked,
+li[data-task='M'] > p > input:checked {
+  color: var(--color-purple);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath d='M5.45 5.154A4.25 4.25 0 0 0 9.25 7.5h1.378a2.251 2.251 0 1 1 0 1.5H9.25A5.734 5.734 0 0 1 5 7.123v3.505a2.25 2.25 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.95-.218ZM4.25 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm8.5-4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM5 3.25a.75.75 0 1 0 0 .005V3.25Z'%3E%3C/path%3E%3C/svg%3E");
+}
+input[data-task='D']:checked,
+li[data-task='D'] > input:checked,
+li[data-task='D'] > p > input:checked {
+  color: var(--color-base-50);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath d='M3.25 1A2.25 2.25 0 0 1 4 5.372v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.251 2.251 0 0 1 3.25 1Zm9.5 14a2.25 2.25 0 1 1 0-4.5 2.25 2.25 0 0 1 0 4.5ZM2.5 3.25a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0ZM3.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm9.5 0a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM14 7.5a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Zm0-4.25a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body:not(.tasks) li[data-task='>'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='<'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='b'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='i'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='*'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='!'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='S'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='?'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='/'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='"'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='l'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='I'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='p'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='c'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='f'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='k'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='w'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='u'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='d'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='P'].task-list-item.is-checked,
+body:not(.tasks) li[data-task='D'].task-list-item.is-checked {
+  color: var(--text-normal);
+}
+
+/* ------------------- */
+/* Progress bars styling. Credit Minimal theme: https://minimal.guide/progress-bars */
+/* Support @kepano - https://www.buymeacoffee.com/kepano */
+/* ------------------- */
+.progress-color {
+  .markdown-rendered progress,
+  .markdown-source-view.is-live-preview progress,
+  .markdown-preview-view progress {
+    &[value^='1']::-webkit-progress-value,
+    &[value^='2']::-webkit-progress-value,
+    &[value^='3']::-webkit-progress-value {
+      background-color: var(--progress-color-1);
+    }
+    &[value^='4']::-webkit-progress-value,
+    &[value^='5']::-webkit-progress-value {
+      background-color: var(--progress-color-2);
+    }
+    &[value^='6']::-webkit-progress-value,
+    &[value^='7']::-webkit-progress-value {
+      background-color: var(--progress-color-3);
+    }
+    &[value^='8']::-webkit-progress-value,
+    &[value^='9']::-webkit-progress-value {
+      background-color: var(--progress-color-4);
+    }
+    &[value='1']::-webkit-progress-value,
+    &[value='100']::-webkit-progress-value {
+      background-color: var(--progress-color-5);
+    }
+
+    &[value='0']::-webkit-progress-value,
+    &[value='2']::-webkit-progress-value,
+    &[value='3']::-webkit-progress-value,
+    &[value='4']::-webkit-progress-value,
+    &[value='5']::-webkit-progress-value,
+    &[value='6']::-webkit-progress-value,
+    &[value='7']::-webkit-progress-value,
+    &[value='8']::-webkit-progress-value,
+    &[value='9']::-webkit-progress-value {
+      background-color: var(--progress-color-1);
+    }
+  }
+}
 
 /* ─────────────────────────────────────────────────── */
 /* Plugins */
@@ -1021,12 +1141,12 @@ li[data-task='b'] > p > input:checked {
 /* Kanban */
 /* --------------- */
 
-.kanban-plugin {
-  --dot-color: hsl(0 0% 40% / 25%);
+body:not(.no-kanban-styles) .kanban-plugin {
+  --dot-color: hsl(0 0% 40% / 10%);
   --dot-spacing: 9px;
   --dot-size: 1px;
 }
-.kanban-plugin__board {
+body:not(.no-kanban-styles) .kanban-plugin__board {
   background-image: radial-gradient(
     circle,
     var(--dot-color) var(--dot-size),
@@ -1035,6 +1155,69 @@ li[data-task='b'] > p > input:checked {
   border-top: var(--thin-border);
   background-size: var(--dot-spacing) var(--dot-spacing);
   background-attachment: local;
+}
+
+body:not(.no-kanban-styles) .kanban-plugin__board > div {
+  margin: 0 auto;
+}
+body:not(.no-kanban-styles) .kanban-plugin__item-form {
+  border-top: none;
+}
+body:not(.no-kanban-styles) .kanban-plugin__lane-header-wrapper {
+  border-bottom: 0;
+}
+body:not(.no-kanban-styles) .kanban-plugin button {
+  box-shadow: none;
+}
+body:not(.no-kanban-styles) .kanban-plugin__item-button-wrapper > button:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+body:not(.no-kanban-styles) .kanban-plugin__item-button-wrapper {
+  border-top: none;
+}
+body:not(.no-kanban-styles) .kanban-plugin__lane {
+  border: 1px solid transparent;
+}
+body:not(.no-kanban-styles) .kanban-plugin__item-content-wrapper {
+  box-shadow: none;
+}
+
+body:not(.no-kanban-styles):not(.is-mobile)
+  .kanban-plugin__grow-wrap
+  > textarea:focus {
+  box-shadow: none;
+}
+body:not(.no-kanban-styles) .kanban-plugin__item-input-actions button,
+body:not(.no-kanban-styles) .kanban-plugin__lane-input-actions button {
+  font-size: var(--font-adaptive-small);
+}
+body:not(.no-kanban-styles)
+  .kanban-plugin__lane-header-wrapper
+  .kanban-plugin__grow-wrap
+  > textarea,
+body:not(.no-kanban-styles)
+  .kanban-plugin__lane-input-wrapper
+  .kanban-plugin__grow-wrap
+  > textarea {
+  background: transparent;
+}
+body .kanban-plugin__item-button-wrapper > button {
+  color: var(--text-muted);
+  font-weight: 400;
+  background: 0 0;
+  min-height: calc(var(--input-height) + 8px);
+}
+body .kanban-plugin__item-form .kanban-plugin__item-input-wrapper {
+  min-height: calc(var(--input-height) + 8px);
+  display: flex;
+  justify-content: center;
+}
+.kanban-plugin__item-input-wrapper textarea {
+  background-color: var(--background-primary);
+}
+.kanban-plugin__lane-items {
+  padding-bottom: 0;
 }
 
 /* ─────────────────────────────────────────────────── */
@@ -1070,9 +1253,21 @@ settings:
         type: class-toggle
         default: false
     -
-        title: Disable enhanced code blocks
-        description: Remove line numbers and additional styling to code blocks
-        id: no-codeblock-line-numbers
+        title: Fancy code blocks
+        description: Enable fancy numbered code blocks
+        id: fancy-code
+        type: class-toggle
+        default: false
+    -
+        title: Fancy highlighting
+        description: Enable fancy highlight styles with highlight underlines
+        id: fancy-highlight
+        type: class-toggle
+        default: false
+    -
+        title: Disable Kanban board styles
+        description: Remove minimalist styling to the Kanban plugin
+        id: no-kanban-styles
         type: class-toggle
         default: false
     -
@@ -1172,6 +1367,47 @@ settings:
         format: hex
         default: '#FFFFFF' 
     - 
+        id: progress-color
+        title: Progress colorful mode switcher
+        description: Toggle progress color scheme
+        type: class-toggle
+        default: false
+    - 
+        id: progress-color-1
+        title: progress 2-39% color
+        type: variable-color
+        opacity: true
+        format: hex
+        default: '#ad5758'
+    - 
+        id: progress-color-2
+        title: progress 40-59% color
+        type: variable-color
+        opacity: true
+        format: hex
+        default: '#b87f4c'
+    - 
+        id: progress-color-3
+        title: progress 60-79% color
+        type: variable-color
+        opacity: true
+        format: hex
+        default: '#d2b874'
+    - 
+        id: progress-color-4
+        title: progress 80-99% color
+        type: variable-color
+        opacity: true
+        format: hex
+        default: '#b0c07e'
+    - 
+        id: progress-color-5
+        title: progress 1,100% color
+        type: variable-color
+        opacity: true
+        format: hex
+        default: '#768399'
+    - 
         id: headings
         title: Headings
         type: heading
@@ -1188,7 +1424,7 @@ settings:
         title: H1 font size
         description: Accepts any CSS font-size value
         type: variable-text
-        default: 2em
+        default: 1.7em
     - 
         id: h1-weight
         title: H1 font weight
@@ -1242,7 +1478,7 @@ settings:
         title: H3 font size
         description: Accepts any CSS font-size value
         type: variable-text
-        default: 1.3em
+        default: 1.2em
     - 
         id: h3-weight
         title: H3 font weight
@@ -1266,7 +1502,7 @@ settings:
         title: H4 font size
         description: Accepts any CSS font-size value
         type: variable-text
-        default: 1.2em
+        default: 1.1em
     - 
         id: h4-weight
         title: H4 font weight
@@ -1303,7 +1539,7 @@ settings:
         title: H5 font size
         description: Accepts any CSS font-size value
         type: variable-text
-        default: 1.1em
+        default: 1em
     - 
         id: h5-weight
         title: H5 font weight
@@ -1327,7 +1563,7 @@ settings:
         title: H6 font size
         description: Accepts any CSS font-size value
         type: variable-text
-        default: 1.1em
+        default: 0.9em
     - 
         id: h6-weight
         title: H6 font weight
