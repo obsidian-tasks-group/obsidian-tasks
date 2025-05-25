@@ -111,14 +111,6 @@
                     width: 100%;
                 }
             }
-
-            @container (max-width: 500px) {
-                .tasks-includes-value {
-                    // Make the Value textarea full-width, forcing the Delete button on to the third row.
-                    width: 100%;
-                    min-width: 0;
-                }
-            }
         }
     }
 }
