@@ -6,6 +6,14 @@
     // Main wrapper for includes section
     .tasks-includes-wrapper {
         width: 100%;
+        position: relative;
+        transition: all 0.2s ease;
+
+        // Drag visual state
+        &.tasks-includes-dragging {
+            opacity: 0.5;
+            transform: rotate(2deg);
+        }
     }
 
     // Individual setting row

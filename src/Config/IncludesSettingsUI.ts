@@ -70,6 +70,10 @@ export class IncludesSettingsUI {
         const setting = new Setting(wrapper);
         setting.settingEl.addClass('tasks-includes-setting');
 
+        // Make the wrapper draggable
+        wrapper.draggable = true;
+        wrapper.setAttribute('data-include-key', key);
+
         // Add name input field
         setting.addText((text) => {
             text.setPlaceholder('Name').setValue(key);
@@ -126,9 +130,15 @@ export class IncludesSettingsUI {
         // Add drag handle
         setting.addExtraButton((btn) => {
             btn.extraSettingsEl.addClass('tasks-includes-drag-handle');
-            btn.setIcon('grip-vertical').setTooltip('Drag to reorder (coming soon)');
+            btn.setIcon('grip-vertical').setTooltip('Drag to reorder');
 
             btn.extraSettingsEl.style.cursor = 'grab';
+            btn.extraSettingsEl.addEventListener('mousedown', (_e) => {
+                btn.extraSettingsEl.style.cursor = 'grabbing';
+            });
+            btn.extraSettingsEl.addEventListener('mouseup', (_e) => {
+                btn.extraSettingsEl.style.cursor = 'grab';
+            });
         });
 
         // Add delete button
@@ -142,9 +152,28 @@ export class IncludesSettingsUI {
                 });
         });
 
+        // Set up drag and drop event handlers
+        this.setupDragAndDrop(wrapper);
+
         // We are not providing any information about this setting, so delete it to prevent
         // using up screen width.
         setting.infoEl.remove();
+    }
+
+    /**
+     * Sets up drag and drop functionality for an include item
+     * @param wrapper The wrapper element for the include item
+     */
+    private setupDragAndDrop(wrapper: HTMLDivElement) {
+        // Drag start
+        wrapper.addEventListener('dragstart', (_e) => {
+            wrapper.addClass('tasks-includes-dragging');
+        });
+
+        // Drag end
+        wrapper.addEventListener('dragend', (_e) => {
+            wrapper.removeClass('tasks-includes-dragging');
+        });
     }
 
     /**
