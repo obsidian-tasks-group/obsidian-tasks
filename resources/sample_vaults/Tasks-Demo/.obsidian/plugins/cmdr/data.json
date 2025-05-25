@@ -9,19 +9,50 @@
       "id": "theme:switch",
       "icon": "eye",
       "name": "Change theme",
-      "mode": "any"
+      "mode": "any",
+      "color": "#4d32d2"
     },
     {
       "id": "theme:use-light",
       "icon": "circle",
       "name": "Use light mode",
-      "mode": "any"
+      "mode": "any",
+      "color": "#3c9a54"
     },
     {
       "id": "theme:use-dark",
       "icon": "circle-slashed",
       "name": "Use dark mode",
-      "mode": "any"
+      "mode": "any",
+      "color": "#3d9b54"
+    },
+    {
+      "id": "obsidian-theme-design-utilities:toggle-emulate-mobile",
+      "icon": "lucide-smartphone",
+      "name": "Theme Design Utilities: Toggle mobile emulation",
+      "mode": "any",
+      "color": "#8d2acf"
+    },
+    {
+      "id": "obsidian-theme-design-utilities:debugging-outline",
+      "icon": "lucide-panels-top-bottom",
+      "name": "Theme Design Utilities: Toggle Red Outlines for Debugging",
+      "mode": "any",
+      "color": "#e41111"
+    },
+    {
+      "id": "app:open-settings",
+      "icon": "lucide-settings",
+      "name": "Open settings",
+      "mode": "any",
+      "color": "#2798a0"
+    },
+    {
+      "id": "app:reload",
+      "icon": "lucide-rotate-ccw",
+      "name": "Reload app without saving",
+      "mode": "any",
+      "color": "#e51111"
     }
   ],
   "rightRibbon": [],
