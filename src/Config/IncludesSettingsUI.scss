@@ -12,7 +12,7 @@
     .tasks-includes-setting {
         // Name input field (left column)
         .tasks-includes-key {
-            grid-column: 1;
+            grid-area: key;
 
             // Error state styling
             &.has-error {
@@ -23,7 +23,8 @@
 
         // Value textarea (right column)
         .tasks-includes-value {
-            grid-column: 2;
+            grid-area: value;
+
             min-width: 300px;
             min-height: 3em;
             font-family: var(--font-monospace);
@@ -36,7 +37,7 @@
         }
 
         .tasks-includes-delete-button {
-            grid-column: 3;
+            grid-area: delete;
         }
 
         // Control alignment adjustment
@@ -44,11 +45,17 @@
             justify-content: start;
             display: grid;
             grid-template-columns: 200px 1fr auto;
+            grid-template-areas: "key value delete";
 
             align-items: unset;
 
             // Force wrapping behavior on narrow screens
             @container (max-width: 600px) {
+                grid-template-columns: 5fr 1fr;
+                grid-template-areas:
+                  "key delete"
+                  "value value";
+
                 // Put a border around the elements for each Include, to make structure easier
                 // to see when in single-column mode.
                 border: 1px solid var(--background-modifier-border) !important;
