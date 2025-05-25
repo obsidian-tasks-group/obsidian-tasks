@@ -48,6 +48,13 @@
       "color": "#2798a0"
     },
     {
+      "id": "open-plugin-settings:obsidian-tasks-plugin",
+      "icon": "lucide-settings-2",
+      "name": "Open Plugin Settings: Open Tasks plugin settings",
+      "mode": "any",
+      "color": "#2699a0"
+    },
+    {
       "id": "app:reload",
       "icon": "lucide-rotate-ccw",
       "name": "Reload app without saving",
