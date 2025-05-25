@@ -1,13 +1,14 @@
 /*
+MODIFIED: 2023-12-19
 LYT MODE
-Obsidian Theme v1.5
+Obsidian Theme
 by Nick Milo (evolved from Cybertron)
 
 LYT Mode is for "Linking Your Thinking". 
 It invokes sensemaking and lateral thinking.
 This is where I do my sensemaking: in LYT Mode. 
 LYT actually stands for: "Linking Your Thinking" Mode.
-It's meant to encourage sensemaking % lateral thinking. 
+It's meant to encourage sensemaking and lateral thinking. 
 I do both my creative and my analytical work in LYT Mode.
 
 README: https://github.com/nickmilo/LYT-Mode
@@ -268,6 +269,8 @@ Icons
 
 
 body.theme-dark {
+    --window-border: 1px solid var(--window-border-color); /* Thanks Damian K from the Prism theme! */
+    --window-border-color: var(--color-gray-70);
     /*───────── Obsidian - provided Variables ──────────*/
     --font-sans: 'DM Sans', 'Inter', -apple-system
     BlinkMacSystemFont, 'Segoe UI', 'Ubuntu',
@@ -304,6 +307,7 @@ body.theme-dark {
 
     /* Borders */
     --border-width: 1px;
+
 
     /* Callouts */
     --callout-border-width: 1px;
@@ -386,7 +390,10 @@ body.theme-dark {
     /* Relative font sizes */
     --font-smallest: 0.8em;
     --font-smaller: 0.875em;
+    --font-smallish: 0.89em;
     --font-small: 0.933em;
+    --font-body: 1em;
+    --font-big: 1.15em; /* A sloppy hack to make the sidebars bigger, hopefully just slightly smaller than the body text */
 
     /* UI font sizes */
     --font-ui-smaller: 13px;
@@ -443,12 +450,12 @@ body.theme-dark {
     --h4-line-height: calc(0.8 * var(--line-height));
     --h5-line-height: calc(0.8 * var(--line-height));
     --h6-line-height: calc(0.8 * var(--line-height));
-    --h1-size: 1.750rem;
-    --h2-size: 1.688rem;
-    --h3-size: 1.563rem;
-    --h4-size: 1.438rem;
-    --h5-size: 1.313rem;
-    --h6-size: 1.188rem;
+    --h1-size: 1.55rem;
+    --h2-size: 1.45rem;
+    --h3-size: 1.35rem;
+    --h4-size: 1.25rem;
+    --h5-size: 1.15rem;
+    --h6-size: 1.05rem;
     --h1-style: normal;
     --h2-style: normal;
     --h3-style: normal;
@@ -863,18 +870,8 @@ body.theme-dark {
 
 /*───────── Sidebar Tabs ──────────*/
 
-.mod-left-split .workspace-tab-header-container-inner,
-.mod-right-split .workspace-tab-header-container-inner {
-    padding-bottom: 0;
-}
+/*─ Deleted stuff in 1.6.3 and again in 1.6.5 to be more in line with the default Obsidian tabs ──────────*/
 
-.mod-left-split .workspace-tab-header-container-inner {
-    padding-left: 0;
-}
-
-.mod-right-split .workspace-tab-header-container-inner {
-    padding-left: 2px;
-}
 
 .theme-dark .workspace-split.mod-left-split .workspace-leaf-content,
 .theme-dark .workspace-split.mod-right-split .workspace-leaf-content {
@@ -1037,13 +1034,10 @@ body.theme-dark {
 /*─────────Tree Items for Tabs──────────*/
 
 .tree-item .tree-item-self {
-    border-radius: var(--size-2-1);
     padding:    var(--size-2-1)
                 var(--size-4-2)
                 var(--size-2-1)
                 calc(4px + var(--size-4-2));
-    display: flex;
-    align-items: flex-start;
 }
 
 /*~ Tree Items for Tabs Colors ~*/
@@ -1051,9 +1045,6 @@ body.theme-dark {
 .tree-item-self {
     color: var(--color-gray-40);
     background: transparent;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-    border-left: 1px solid transparent;
 }
 
 .tree-item-self.is-clickable:hover {
@@ -1088,25 +1079,41 @@ body.theme-dark {
     background: var(--color-gray-100);
 }
 
+/*─────────Test For Aligning The Outline, Tags with Tabs──────────*/
+/* The Padding Values go clockwise: top, right, bottom, left */
+
+.tree-item-inner {
+    font-size: var(--font-big);
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 8px /* STEP 2: This one is crucial ✨ */
+} /* This POV is of the lined text itself */
+
+.tree-item-icon.collapse-icon {
+    margin: 0px 0px 0px -10px; /* STEP 1: This one is crucial ✨ */
+    padding: 0px 0px 0px 0px; /* STEP 3: This one is crucial ✨ */
+    position: 6px 6px 0px 0px
+} /* This POV is the collapse icon */
+
+.tree-item-children {
+    margin: 0px 0px 1px 12px;
+    padding: 0px 0px 0px 2px /* STEP 4: This one is crucial ✨ */
+} /* This POV of the whole line */
+
+
 /*─────────Vault Title──────────*/
 
 .nav-folder-title[data-path="/"] {
-    font-size: var(--font-small);
+   /* font-size: var(--font-small); */
     font-family: var(--font-monospace-theme);
     top: 0;
     width: 100%;
     position: sticky;
-    justify-content: center;
-    padding:    var(--size-2-2)
-                var(--size-2-2)
-                var(--size-2-2)
-                var(--size-2-2);
-    margin-bottom: var(--size-4-2);
+    justify-content: left;
     z-index: 2;
 }
 
 .theme-dark .nav-folder-title[data-path="/"] {
-    color: var(--color-white) !important;
+    color: var(--color-gray-10) !important;
     background: var(--color-gray-100);
     border-top: 1px solid var(--color-gray-90);
     border-bottom: 1px solid var(--color-gray-90);
@@ -1127,10 +1134,11 @@ body.theme-dark {
 
 .nav-folder-title,
 .nav-file-title {
-    border: 1px solid transparent;
+    border: .9px solid transparent;  /* hid this, which causes tighter spacing and an animated effect while hovering over, which mimics that same effect with the tag and outline panes. */
     border-radius: 2px;
-    line-height: 1.1;
+    line-height: 1.0;
     padding: var(--size-2-1) var(--size-4-2);
+   /* font-size: var(--font-smallish); hid this because .tree-item-inner seems to be the main one */
 }
 
 .theme-dark .nav-folder-title:hover,
@@ -1172,6 +1180,7 @@ Content / Active Note / Opened Notes
 .theme-dark .markdown-source-view,
 .theme-dark .markdown-preview-view {
     color: var(--color-cyan-530); /* THIS IS THE BODY TEXT COLOR!!!!!!!!!!!!!!!!!!!!! */
+    /* font-size: inherit; */
 }
 
 /* Header Colors */
@@ -3977,6 +3986,21 @@ dataview.table-view-table .table-view-tbody tr {
     margin-bottom: 0;
 }
 
+
+/*────────────────────────────────────
+            Sortable Plugin (My attempt to get rid of the weird "countless arrows" visual)
+────────────────────────────────────*/
+
+
+th[sortable-style="sortable-asc"] {
+    background-image: none !important;
+}
+
+th[sortable-style="sortable-desc"] {
+    background-image: none !important;
+}
+
+
 /*────────────────────────────────────
             Hover Editor
 ────────────────────────────────────*/
@@ -4047,6 +4071,10 @@ dataview.table-view-table .table-view-tbody tr {
 .theme-dark .hover-editor .popover-action.mod-close:hover {
     color: var(--color-cyan-500);
     background: var(--color-gray-100);
+}
+
+div.search-result-file-match {
+    font: 12px;
 }
 
 /*──────────────────────────────────────
@@ -5257,4 +5285,172 @@ body:not(.no-custom-icons) svg.wrench-screwdriver-glyph {
 /* Yesterday Glyph, Calendar with Minus */
 body:not(.no-custom-icons) svg.yesterday-glyph {
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 24 24' style='fill: rgba(0, 0, 0, 1);transform: ;msFilter:;'%3E%3Cpath d='M8 13h8v2H8z'%3E%3C/path%3E%3Cpath d='M19 4h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm.002 16H5V8h14l.002 12z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+
+/* CALLOUTS, TRYING TO FIX USING PRISM'S SETTINGS WITH A SLOPPY COPY AND PASTE */ 
+
+
+
+
+/* 
+
+body:not(.pt-disable-callout-styling) {
+    --callout-padding: 4px;
+    --callout-radius: var(--radius-m);
+    --callout-background-alpha: 20%;
+  } 
+  
+
+
+  body:not(.pt-disable-callout-styling) .callout {
+    background-color: unset;
+  }
+
+  */
+
+
+  /* THIS IS THE ONE THAT FIXES CALLOUTS WITH HEADERS, THANKS DAMIAN OF THE PRISM THEME! */ 
+
+  body:not(.pt-disable-callout-styling) .callout .callout-title {
+    position: relative;
+    z-index: 5;
+    gap: unset;
+    align-items: center;
+    min-height: 36px;
+    border: 2px solid;
+    border-radius: var(--radius-m);
+  }
+
+  body:not(.pt-disable-callout-styling) .callout .callout-title:empty + .callout-content {
+    padding: var(--size-4-1) var(--size-4-3);
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-radius: var(--radius-m);
+  }
+  body:not(.pt-disable-callout-styling) .callout .callout-title-inner {
+    padding: var(--size-4-1) 0;
+    margin: 0 var(--size-4-1);
+  }
+  body:not(.pt-disable-callout-styling) .callout .callout-icon {
+    align-self: unset;
+    margin: 0 var(--size-4-1) 0 var(--size-4-2);
+    border-radius: var(--radius-m);
+  }
+  body:not(.pt-disable-callout-styling) .callout .callout-fold {
+    display: flex;
+    align-self: unset;
+    margin-top: unset;
+    margin-left: auto;
+  }
+
+
+  body:not(.pt-disable-callout-styling) .callout .callout-content {
+
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-bottom-right-radius: var(--radius-m);
+    border-bottom-left-radius: var(--radius-m);
+  }
+
+
+/* PROPERTIES: SLOPPY COPY AND PASTE OF DAMIAN K.'S PRISM THEME */
+
+
+.metadata-properties-heading {
+  display: inline-flex;
+  width: 100%;
+  padding: var(--size-4-2);
+  margin-bottom: unset;
+  background-color: var(--color-gray-95);
+  border: var(--window-border);
+}
+.metadata-properties-heading .collapse-indicator {
+  position: relative;
+  left: unset;
+  order: 2;
+  opacity: 1;
+}
+.metadata-properties-heading .collapse-indicator .collapse-icon svg.svg-icon {
+  width: 18px;
+}
+
+.metadata-properties-title {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: unset;
+  font-weight: var(--bold-weight);
+}
+.metadata-properties-title::before {
+  align-items: center;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-right: var(--size-4-2);
+  content: "";
+  background-color: var(--text-muted);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-archive'%3E%3Crect width='20' height='5' x='2' y='4' rx='2'/%3E%3Cpath d='M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9'/%3E%3Cpath d='M10 13h4'/%3E%3C/svg%3E");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 18px;
+}
+
+.cm-editor .metadata-content,
+.markdown-preview-view .metadata-content {
+  padding: var(--size-4-3) var(--size-4-2);
+  border: var(--window-border);
+  border-top: unset;
+}
+
+.metadata-property-key {
+  align-items: center;
+}
+
+.textarea, input[type='text'], input[type='search'], input[type='email'], input[type='password'], input[type='number'], input.document-search-input, input.document-replace-input, input.prompt-input {
+    font-size: var(--font-normal); /* THIS FIXES THE ANNOYINGLY BIGGER KEY FONT */
+} 
+
+.metadata-property-icon {
+  height: fit-content;
+  padding: var(--size-2-1);
+  margin-left: var(--size-4-1);
+}
+.metadata-property-icon:hover {
+  background-color: var(--interactive-accent-base);
+  border-radius: var(--radius-s);
+}
+.metadata-property-icon::before {
+  display: none;
+}
+
+.metadata-container {
+  transform: unset;
+}
+.metadata-container .metadata-add-button {
+  margin-top: var(--size-4-2);
+  margin-left: var(--size-4-1);
+  border: var(--window-border);
+}
+
+.multi-select-container {
+  gap: var(--size-4-2);
+}
+
+.metadata-property:not([data-property-key=tags]) .multi-select-pill {
+  line-height: unset;
+}
+
+.metadata-property[data-property-key=tags] {
+  --pill-radius: var(--radius-s);
+}
+
+.workspace-leaf-content[data-type=all-properties] .view-content,
+.workspace-leaf-content[data-type=file-properties] .view-content,
+.workspace-leaf-content[data-type=properties] .view-content {
+  padding: var(--size-4-1);
+}
+
+.metadata-property:focus-within {
+  box-shadow: 0 0 0 1px var(--window-border-color);
 }
