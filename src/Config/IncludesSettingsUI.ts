@@ -153,7 +153,7 @@ export class IncludesSettingsUI {
         });
 
         // Set up drag and drop event handlers
-        this.setupDragAndDrop(wrapper);
+        this.setupDragAndDrop(wrapper, key);
 
         // We are not providing any information about this setting, so delete it to prevent
         // using up screen width.
@@ -163,10 +163,15 @@ export class IncludesSettingsUI {
     /**
      * Sets up drag and drop functionality for an include item
      * @param wrapper The wrapper element for the include item
+     * @param key The key of the include item
      */
-    private setupDragAndDrop(wrapper: HTMLDivElement) {
+    private setupDragAndDrop(wrapper: HTMLDivElement, key: string) {
         // Drag start
-        wrapper.addEventListener('dragstart', (_e) => {
+        wrapper.addEventListener('dragstart', (e) => {
+            if (e.dataTransfer) {
+                e.dataTransfer.setData('text/plain', key);
+                e.dataTransfer.effectAllowed = 'move';
+            }
             wrapper.addClass('tasks-includes-dragging');
         });
 
@@ -179,6 +184,10 @@ export class IncludesSettingsUI {
         // Drag over
         wrapper.addEventListener('dragover', (e) => {
             e.preventDefault();
+            if (e.dataTransfer) {
+                e.dataTransfer.dropEffect = 'move';
+            }
+
             this.showDropIndicator(wrapper, e);
         });
 
@@ -191,6 +200,25 @@ export class IncludesSettingsUI {
             if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
                 this.clearDropIndicator(wrapper);
             }
+        });
+
+        // Drop
+        wrapper.addEventListener('drop', async (e) => {
+            e.preventDefault();
+
+            const draggedKey = e.dataTransfer?.getData('text/plain');
+            if (!draggedKey || draggedKey === key) {
+                this.clearDropIndicators();
+                return;
+            }
+
+            // Calculate drop position
+            const dropPosition = this.calculateDropPosition(wrapper, e);
+
+            // TODO: Implement actual reordering
+            console.log(`Would move "${draggedKey}" ${dropPosition} "${key}"`);
+
+            this.clearDropIndicators();
         });
     }
 
