@@ -153,7 +153,7 @@ export class IncludesSettingsUI {
         });
 
         // Set up drag and drop event handlers
-        this.setupDragAndDrop(wrapper, key);
+        this.setupDragAndDrop(wrapper, key, settings, refreshView);
 
         // We are not providing any information about this setting, so delete it to prevent
         // using up screen width.
@@ -164,8 +164,15 @@ export class IncludesSettingsUI {
      * Sets up drag and drop functionality for an include item
      * @param wrapper The wrapper element for the include item
      * @param key The key of the include item
+     * @param settings The current plugin settings
+     * @param refreshView Callback to refresh the view after reordering
      */
-    private setupDragAndDrop(wrapper: HTMLDivElement, key: string) {
+    private setupDragAndDrop(
+        wrapper: HTMLDivElement,
+        key: string,
+        settings: Settings,
+        refreshView: RefreshViewCallback,
+    ) {
         // Drag start
         wrapper.addEventListener('dragstart', (e) => {
             if (e.dataTransfer) {
@@ -214,12 +221,39 @@ export class IncludesSettingsUI {
 
             // Calculate drop position
             const dropPosition = this.calculateDropPosition(wrapper, e);
+            const targetIndex = this.getTargetIndex(key, dropPosition);
 
-            // TODO: Implement actual reordering
-            console.log(`Would move "${draggedKey}" ${dropPosition} "${key}"`);
+            // Perform the reorder
+            const updatedIncludes = this.includesSettingsService.reorderInclude(
+                settings.includes,
+                draggedKey,
+                targetIndex,
+            );
+
+            if (updatedIncludes) {
+                await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
+            }
 
             this.clearDropIndicators();
         });
+    }
+
+    /**
+     * Gets the target index for a drop operation
+     * @param targetKey The key of the element being dropped on
+     * @param position Whether dropping above or below
+     * @returns The target index for the reorder operation
+     */
+    private getTargetIndex(targetKey: string, position: 'above' | 'below'): number {
+        const settings = getSettings();
+        const keys = Object.keys(settings.includes);
+        const targetIndex = keys.indexOf(targetKey);
+
+        if (position === 'above') {
+            return targetIndex;
+        } else {
+            return targetIndex + 1;
+        }
     }
 
     /**
