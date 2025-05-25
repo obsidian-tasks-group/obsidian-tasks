@@ -127,6 +127,7 @@ export class IncludesSettingsUI {
 
         // Add delete button
         setting.addExtraButton((btn) => {
+            btn.extraSettingsEl.addClass('tasks-includes-delete-button');
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
