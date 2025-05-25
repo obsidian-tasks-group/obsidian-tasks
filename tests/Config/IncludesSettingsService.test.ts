@@ -343,4 +343,80 @@ describe('IncludesSettingsService', () => {
             expect(service.wouldCreateDuplicateKey(includesWithSpecialChars, 'key1', 'special!@')).toBe(false);
         });
     });
+
+    describe('IncludesSettingsService - reorderInclude', () => {
+        let service: IncludesSettingsService;
+        let testIncludes: IncludesMap;
+
+        beforeEach(() => {
+            service = new IncludesSettingsService();
+            testIncludes = {
+                first: 'value1',
+                second: 'value2',
+                third: 'value3',
+                fourth: 'value4',
+                fifth: 'value5',
+            };
+        });
+
+        it('should move an item to a new position', () => {
+            // Move 'fourth' to position 1 (second position, 0-indexed)
+            const result = service.reorderInclude(testIncludes, 'fourth', 1);
+
+            expect(result).not.toBeNull();
+            const keys = Object.keys(result!);
+            expect(keys).toEqual(['first', 'fourth', 'second', 'third', 'fifth']);
+        });
+
+        it('should move an item from beginning to end', () => {
+            // Move 'first' to the last position
+            const result = service.reorderInclude(testIncludes, 'first', 4);
+
+            expect(result).not.toBeNull();
+            const keys = Object.keys(result!);
+            expect(keys).toEqual(['second', 'third', 'fourth', 'fifth', 'first']);
+        });
+
+        it('should move an item from end to beginning', () => {
+            // Move 'fifth' to the first position
+            const result = service.reorderInclude(testIncludes, 'fifth', 0);
+
+            expect(result).not.toBeNull();
+            const keys = Object.keys(result!);
+            expect(keys).toEqual(['fifth', 'first', 'second', 'third', 'fourth']);
+        });
+
+        it('should return null for invalid key', () => {
+            const result = service.reorderInclude(testIncludes, 'nonexistent', 1);
+            expect(result).toBeNull();
+        });
+
+        it('should return null for invalid target position (negative)', () => {
+            const result = service.reorderInclude(testIncludes, 'second', -1);
+            expect(result).toBeNull();
+        });
+
+        it('should return null for invalid target position (too high)', () => {
+            const result = service.reorderInclude(testIncludes, 'second', 10);
+            expect(result).toBeNull();
+        });
+
+        it('should handle moving to the same position (no change)', () => {
+            // 'third' is currently at index 2, move it to index 2
+            const result = service.reorderInclude(testIncludes, 'third', 2);
+
+            expect(result).not.toBeNull();
+            const keys = Object.keys(result!);
+            expect(keys).toEqual(['first', 'second', 'third', 'fourth', 'fifth']);
+        });
+
+        it('should handle complex reordering correctly', () => {
+            // Move 'second' (index 1) to index 3
+            const result = service.reorderInclude(testIncludes, 'second', 3);
+
+            expect(result).not.toBeNull();
+            const keys = Object.keys(result!);
+            expect(keys).toEqual(['first', 'third', 'fourth', 'second', 'fifth']);
+        });
+    });
 });

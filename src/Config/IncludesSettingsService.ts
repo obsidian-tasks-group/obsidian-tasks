@@ -193,4 +193,47 @@ export class IncludesSettingsService {
         }
         return `${baseKey}_${suffix}`;
     }
+
+    /**
+     * Reorders an include to a specific position in the map
+     * @param includes The current includes map (will not be modified)
+     * @param key The key to reorder
+     * @param newIndex The target position (0-based index)
+     * @returns The updated includes map, or null if the operation failed
+     */
+    public reorderInclude(includes: Readonly<IncludesMap>, key: string, newIndex: number): IncludesMap | null {
+        const keys = Object.keys(includes);
+        const currentIndex = keys.indexOf(key);
+
+        // Validate inputs
+        if (currentIndex === -1) {
+            return null; // Key doesn't exist
+        }
+
+        if (newIndex < 0 || newIndex >= keys.length) {
+            return null; // Invalid target position
+        }
+
+        if (currentIndex === newIndex) {
+            // No change needed, but return a copy
+            return { ...includes };
+        }
+
+        // Create new key order
+        const newKeys = [...keys];
+
+        // Remove the key from its current position
+        newKeys.splice(currentIndex, 1);
+
+        // Insert it at the new position
+        newKeys.splice(newIndex, 0, key);
+
+        // Rebuild the map in the new order
+        const newIncludes: IncludesMap = {};
+        for (const k of newKeys) {
+            newIncludes[k] = includes[k];
+        }
+
+        return newIncludes;
+    }
 }
