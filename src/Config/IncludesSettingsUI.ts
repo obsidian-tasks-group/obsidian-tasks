@@ -123,7 +123,13 @@ export class IncludesSettingsUI {
             });
         });
 
-        // TODO Add reorder button or facility to drag and drop items
+        // Add drag handle
+        setting.addExtraButton((btn) => {
+            btn.extraSettingsEl.addClass('tasks-includes-drag-handle');
+            btn.setIcon('grip-vertical').setTooltip('Drag to reorder (coming soon)');
+
+            btn.extraSettingsEl.style.cursor = 'grab';
+        });
 
         // Add delete button
         setting.addExtraButton((btn) => {
