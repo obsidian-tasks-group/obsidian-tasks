@@ -173,7 +173,72 @@ export class IncludesSettingsUI {
         // Drag end
         wrapper.addEventListener('dragend', (_e) => {
             wrapper.removeClass('tasks-includes-dragging');
+            this.clearDropIndicators();
         });
+
+        // Drag over
+        wrapper.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            this.showDropIndicator(wrapper, e);
+        });
+
+        // Drag leave
+        wrapper.addEventListener('dragleave', (e) => {
+            const rect = wrapper.getBoundingClientRect();
+            const x = e.clientX;
+            const y = e.clientY;
+
+            if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+                this.clearDropIndicator(wrapper);
+            }
+        });
+    }
+
+    /**
+     * Shows a drop indicator on the target element
+     * @param wrapper The wrapper element
+     * @param e The drag event
+     */
+    private showDropIndicator(wrapper: HTMLDivElement, e: DragEvent) {
+        this.clearDropIndicators();
+
+        const dropPosition = this.calculateDropPosition(wrapper, e);
+        if (dropPosition === 'above') {
+            wrapper.addClass('tasks-includes-drop-above');
+        } else {
+            wrapper.addClass('tasks-includes-drop-below');
+        }
+    }
+
+    /**
+     * Calculates whether the drop should be above or below the target
+     * @param wrapper The wrapper element
+     * @param e The drag event
+     * @returns 'above' or 'below'
+     */
+    private calculateDropPosition(wrapper: HTMLDivElement, e: DragEvent): 'above' | 'below' {
+        const rect = wrapper.getBoundingClientRect();
+        const midpoint = rect.top + rect.height / 2;
+        return e.clientY < midpoint ? 'above' : 'below';
+    }
+
+    /**
+     * Clears all drop indicators
+     */
+    private clearDropIndicators() {
+        const containers = document.querySelectorAll('.tasks-includes-wrapper');
+        containers.forEach((container) => {
+            this.clearDropIndicator(container as HTMLElement);
+        });
+    }
+
+    /**
+     * Clears drop indicator from a specific element
+     * @param element The element to clear indicators from
+     */
+    private clearDropIndicator(element: HTMLElement) {
+        element.removeClass('tasks-includes-drop-above');
+        element.removeClass('tasks-includes-drop-below');
     }
 
     /**
