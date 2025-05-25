@@ -49,19 +49,19 @@
 
             align-items: unset;
 
+            // Put a border around the elements for each Include, to make structure easier
+            // to see.
+            border: 1px solid var(--background-modifier-border) !important;
+            padding: 0.5em !important;
+            background-color: var(--background-secondary) !important;
+            border-radius: 4px !important;
+
             // Force wrapping behavior on narrow screens
             @container (max-width: 600px) {
                 grid-template-columns: 5fr 1fr;
                 grid-template-areas:
                   "key delete"
                   "value value";
-
-                // Put a border around the elements for each Include, to make structure easier
-                // to see when in single-column mode.
-                border: 1px solid var(--background-modifier-border) !important;
-                padding: 0.5em !important;
-                background-color: var(--background-secondary) !important;
-                border-radius: 4px !important;
 
                 .tasks-includes-key {
                     // Make the Name input field full-width.
