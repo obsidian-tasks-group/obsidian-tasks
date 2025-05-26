@@ -60,6 +60,13 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     }
 
     getSuggestions(context: EditorSuggestContext): SuggestInfoWithContext[] {
+        if (context.file === undefined) {
+            // If the editor isn't a real file, we won't be able to locate
+            // the task line where the cursor is, so won't be able to make any
+            // suggestions:
+            return [] as SuggestInfoWithContext[];
+        }
+
         const line = context.query;
         const currentCursor = context.editor.getCursor();
         const allTasks = this.plugin.getTasks();
