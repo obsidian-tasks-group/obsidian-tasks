@@ -21,6 +21,7 @@ import yaml_all_property_types_populated from '../Obsidian/__test_data__/yaml_al
 import yaml_1_alias from '../Obsidian/__test_data__/yaml_1_alias.json';
 import yaml_2_aliases from '../Obsidian/__test_data__/yaml_2_aliases.json';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
+import link_in_yaml from '../Obsidian/__test_data__/link_in_yaml.json';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 describe('TasksFile', () => {
@@ -219,10 +220,15 @@ describe('TasksFile - reading frontmatter', () => {
 });
 
 describe('TasksFile - accessing links', () => {
-    it('should return all links in the task file', () => {
+    it('should return all links in the file body', () => {
         const tasksFile = getTasksFileFromMockData(links_everywhere);
         expect(tasksFile.outLinks.length).toEqual(3);
         expect(tasksFile.outLinks[0].originalMarkdown).toEqual('[[link_in_file_body]]');
+    });
+
+    it('should return no yaml links', () => {
+        const tasksFile = getTasksFileFromMockData(link_in_yaml);
+        expect(tasksFile.outLinks.length).toEqual(0);
     });
 });
 
