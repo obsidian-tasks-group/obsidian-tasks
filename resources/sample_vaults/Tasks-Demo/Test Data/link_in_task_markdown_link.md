@@ -1,4 +1,4 @@
- link_in_task_markdown_link
+# link_in_task_markdown_link
 
 ## Multiple Links
 
@@ -26,7 +26,7 @@
 
 ## Link with Hash in Path
 
-- [ ] #task Link with Hash in Path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)
+- [ ] #task Heading Link with text that looks like a path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)
 
 ## Link with Internal Link
 
