@@ -54,6 +54,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         }
 
         const line = editor.getLine(cursor.line);
+
         if (canSuggestForLine(line, cursor, editor)) {
             return {
                 start: { line: cursor.line, ch: 0 },
@@ -78,6 +79,10 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const line = context.query;
         const currentCursor = context.editor.getCursor();
         const allTasks = this.plugin.getTasks();
+
+        // TODO: performance testing, it's jittery
+        // Does it really need to search all tasks?
+        // Does it take long to search all tasks?
 
         const taskToSuggestFor = allTasks.find(
             (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
