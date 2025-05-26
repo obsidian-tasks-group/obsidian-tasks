@@ -47,7 +47,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         if (!this.settings.autoSuggestInEditor) return null;
 
         if (_file === undefined) {
-            // We won't be able to save any changes, tell Obsidian that we cannot make suggestions.
+            // We won't be able to save any changes, so tell Obsidian that we cannot make suggestions.
             // This allows other plugins, such as Natural Language Dates, to have the opportunity
             // to make suggestions.
             return null;
