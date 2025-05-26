@@ -45,6 +45,14 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
         if (!this.settings.autoSuggestInEditor) return null;
+
+        if (_file === undefined) {
+            // We won't be able to save any changes, so tell Obsidian that we cannot make suggestions.
+            // This allows other plugins, such as Natural Language Dates, to have the opportunity
+            // to make suggestions.
+            return null;
+        }
+
         const line = editor.getLine(cursor.line);
         if (canSuggestForLine(line, cursor, editor)) {
             return {
@@ -60,6 +68,13 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     }
 
     getSuggestions(context: EditorSuggestContext): SuggestInfoWithContext[] {
+        if (context.file === undefined) {
+            // If the editor isn't a real file, we won't be able to locate
+            // the task line where the cursor is, so won't be able to make any
+            // suggestions:
+            return [] as SuggestInfoWithContext[];
+        }
+
         const line = context.query;
         const currentCursor = context.editor.getCursor();
         const allTasks = this.plugin.getTasks();
