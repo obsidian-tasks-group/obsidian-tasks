@@ -6,6 +6,38 @@
     // Main wrapper for includes section
     .tasks-includes-wrapper {
         width: 100%;
+        position: relative;
+        transition: all 0.2s ease;
+
+        // Drag visual state
+        &.tasks-includes-dragging {
+            opacity: 0.5;
+            transform: rotate(2deg);
+        }
+
+        &.tasks-includes-drop-above::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--interactive-accent);
+            border-radius: 2px;
+            z-index: 10;
+        }
+
+        &.tasks-includes-drop-below::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--interactive-accent);
+            border-radius: 2px;
+            z-index: 10;
+        }
     }
 
     // Individual setting row
@@ -36,6 +68,15 @@
             white-space: pre;        // Preserve formatting
         }
 
+        .tasks-includes-drag-handle {
+            grid-area: drag;
+            color: var(--text-muted);
+
+            &:hover {
+                color: var(--text-normal);
+            }
+        }
+
         .tasks-includes-delete-button {
             grid-area: delete;
         }
@@ -44,8 +85,9 @@
         .setting-item-control {
             justify-content: start;
             display: grid;
-            grid-template-columns: 200px 1fr auto;
-            grid-template-areas: "key value delete";
+            grid-template-columns: 200px 1fr auto auto;
+            grid-template-areas: "key value drag delete";
+            gap: 4px;
 
             align-items: unset;
 
@@ -58,23 +100,15 @@
 
             // Force wrapping behavior on narrow screens
             @container (max-width: 600px) {
-                grid-template-columns: 5fr 1fr;
+                grid-template-columns: 5fr 1fr 1fr;
                 grid-template-areas:
-                  "key delete"
-                  "value value";
+                  "key drag delete"
+                  "value value value";
 
                 .tasks-includes-key {
                     // Make the Name input field full-width.
                     // The value textarea will take up most of the width, with the Delete button to its right.
                     width: 100%;
-                }
-            }
-
-            @container (max-width: 500px) {
-                .tasks-includes-value {
-                    // Make the Value textarea full-width, forcing the Delete button on to the third row.
-                    width: 100%;
-                    min-width: 0;
                 }
             }
         }

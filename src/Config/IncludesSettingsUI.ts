@@ -70,6 +70,10 @@ export class IncludesSettingsUI {
         const setting = new Setting(wrapper);
         setting.settingEl.addClass('tasks-includes-setting');
 
+        // Make the wrapper draggable
+        wrapper.draggable = true;
+        wrapper.setAttribute('data-include-key', key);
+
         // Add name input field
         setting.addText((text) => {
             text.setPlaceholder('Name').setValue(key);
@@ -123,7 +127,19 @@ export class IncludesSettingsUI {
             });
         });
 
-        // TODO Add reorder button or facility to drag and drop items
+        // Add drag handle
+        setting.addExtraButton((btn) => {
+            btn.extraSettingsEl.addClass('tasks-includes-drag-handle');
+            btn.setIcon('grip-vertical').setTooltip('Drag to reorder');
+
+            btn.extraSettingsEl.style.cursor = 'grab';
+            btn.extraSettingsEl.addEventListener('mousedown', (_e) => {
+                btn.extraSettingsEl.style.cursor = 'grabbing';
+            });
+            btn.extraSettingsEl.addEventListener('mouseup', (_e) => {
+                btn.extraSettingsEl.style.cursor = 'grab';
+            });
+        });
 
         // Add delete button
         setting.addExtraButton((btn) => {
@@ -136,9 +152,155 @@ export class IncludesSettingsUI {
                 });
         });
 
+        // Set up drag and drop event handlers
+        this.setupDragAndDrop(wrapper, key, settings, refreshView);
+
         // We are not providing any information about this setting, so delete it to prevent
         // using up screen width.
         setting.infoEl.remove();
+    }
+
+    /**
+     * Sets up drag and drop functionality for an include item
+     * @param wrapper The wrapper element for the include item
+     * @param key The key of the include item
+     * @param settings The current plugin settings
+     * @param refreshView Callback to refresh the view after reordering
+     */
+    private setupDragAndDrop(
+        wrapper: HTMLDivElement,
+        key: string,
+        settings: Settings,
+        refreshView: RefreshViewCallback,
+    ) {
+        // Drag start
+        wrapper.addEventListener('dragstart', (e) => {
+            if (e.dataTransfer) {
+                e.dataTransfer.setData('text/plain', key);
+                e.dataTransfer.effectAllowed = 'move';
+            }
+            wrapper.addClass('tasks-includes-dragging');
+        });
+
+        // Drag end
+        wrapper.addEventListener('dragend', (_e) => {
+            wrapper.removeClass('tasks-includes-dragging');
+            this.clearDropIndicators();
+        });
+
+        // Drag over
+        wrapper.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (e.dataTransfer) {
+                e.dataTransfer.dropEffect = 'move';
+            }
+
+            this.showDropIndicator(wrapper, e);
+        });
+
+        // Drag leave
+        wrapper.addEventListener('dragleave', (e) => {
+            const rect = wrapper.getBoundingClientRect();
+            const x = e.clientX;
+            const y = e.clientY;
+
+            if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+                this.clearDropIndicator(wrapper);
+            }
+        });
+
+        // Drop
+        wrapper.addEventListener('drop', async (e) => {
+            e.preventDefault();
+
+            const draggedKey = e.dataTransfer?.getData('text/plain');
+            if (!draggedKey || draggedKey === key) {
+                this.clearDropIndicators();
+                return;
+            }
+
+            // Calculate drop position
+            const dropPosition = this.calculateDropPosition(wrapper, e);
+            const targetIndex = this.getTargetIndex(key, dropPosition);
+
+            // Perform the reorder
+            const updatedIncludes = this.includesSettingsService.reorderInclude(
+                settings.includes,
+                draggedKey,
+                targetIndex,
+            );
+
+            if (updatedIncludes) {
+                await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
+            }
+
+            this.clearDropIndicators();
+        });
+    }
+
+    /**
+     * Gets the target index for a drop operation
+     * @param targetKey The key of the element being dropped on
+     * @param position Whether dropping above or below
+     * @returns The target index for the reorder operation
+     */
+    private getTargetIndex(targetKey: string, position: 'above' | 'below'): number {
+        const settings = getSettings();
+        const keys = Object.keys(settings.includes);
+        const targetIndex = keys.indexOf(targetKey);
+
+        if (position === 'above') {
+            return targetIndex;
+        } else {
+            return targetIndex + 1;
+        }
+    }
+
+    /**
+     * Shows a drop indicator on the target element
+     * @param wrapper The wrapper element
+     * @param e The drag event
+     */
+    private showDropIndicator(wrapper: HTMLDivElement, e: DragEvent) {
+        this.clearDropIndicators();
+
+        const dropPosition = this.calculateDropPosition(wrapper, e);
+        if (dropPosition === 'above') {
+            wrapper.addClass('tasks-includes-drop-above');
+        } else {
+            wrapper.addClass('tasks-includes-drop-below');
+        }
+    }
+
+    /**
+     * Calculates whether the drop should be above or below the target
+     * @param wrapper The wrapper element
+     * @param e The drag event
+     * @returns 'above' or 'below'
+     */
+    private calculateDropPosition(wrapper: HTMLDivElement, e: DragEvent): 'above' | 'below' {
+        const rect = wrapper.getBoundingClientRect();
+        const midpoint = rect.top + rect.height / 2;
+        return e.clientY < midpoint ? 'above' : 'below';
+    }
+
+    /**
+     * Clears all drop indicators
+     */
+    private clearDropIndicators() {
+        const containers = document.querySelectorAll('.tasks-includes-wrapper');
+        containers.forEach((container) => {
+            this.clearDropIndicator(container as HTMLElement);
+        });
+    }
+
+    /**
+     * Clears drop indicator from a specific element
+     * @param element The element to clear indicators from
+     */
+    private clearDropIndicator(element: HTMLElement) {
+        element.removeClass('tasks-includes-drop-above');
+        element.removeClass('tasks-includes-drop-below');
     }
 
     /**
