@@ -724,89 +724,6 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
     };
 }
 
-// Fast pre-filter to check for incomplete task attributes that need suggestions
-function couldHaveTaskSuggestions(line: string): boolean {
-    const lowerLine = line.toLowerCase();
-
-    // Check for incomplete date attributes (missing date after keyword)
-    const dateAttributes = ['created', 'due', 'scheduled', 'start'];
-    for (const attr of dateAttributes) {
-        const regex = new RegExp(`\\b${attr}(?!\\s+\\d{4}-\\d{2}-\\d{2})`, 'i');
-        if (regex.test(lowerLine)) {
-            return true; // Found attribute without a complete date
-        }
-    }
-
-    // Check for incomplete priority (no specific level specified)
-    if (/\bpriority(?!\s+(high|medium|low|highest|lowest))/i.test(lowerLine)) {
-        return true;
-    }
-
-    // Check for incomplete recurring patterns
-    const incompleteRecurring = [
-        /🔁(?!\s*(every|when))/, // 🔁 without "every" or "when"
-        /\bevery(?!\s+(day|week|month|year|sunday|monday|tuesday|wednesday|thursday|friday|saturday|\d))/i, // "every" without specific interval
-        /\bevery\s+week(?!\s+on\s+(sunday|monday|tuesday|wednesday|thursday|friday|saturday))/i, // "every week" without day
-        /\bevery\s+month(?!\s+on\s+the)/i, // "every month" without "on the"
-    ];
-
-    for (const pattern of incompleteRecurring) {
-        if (pattern.test(lowerLine)) {
-            return true;
-        }
-    }
-
-    // Check for incomplete completion settings
-    if (/🏁(?!\s+(delete|keep))/i.test(lowerLine) || /\bon\s+completion(?!\s+(delete|keep))/i.test(lowerLine)) {
-        return true;
-    }
-
-    // Check for incomplete date emojis (emoji without date)
-    const dateEmojiPatterns = [
-        /📅(?!\s*\d{4}-\d{2}-\d{2})/, // 📅 without date
-        /⏳(?!\s*\d{4}-\d{2}-\d{2})/, // ⏳ without date
-        /🛫(?!\s*\d{4}-\d{2}-\d{2})/, // 🛫 without date
-    ];
-
-    for (const pattern of dateEmojiPatterns) {
-        if (pattern.test(lowerLine)) {
-            return true;
-        }
-    }
-
-    // Check for partial text that could be completed with relative dates
-    const relativeDateStarters = [
-        /\b(today|tomorrow|next\s+week|next\s+month|next\s+year)$/i,
-        /\b(sunday|monday|tuesday|wednesday|thursday|friday|saturday)$/i,
-    ];
-
-    for (const pattern of relativeDateStarters) {
-        if (pattern.test(lowerLine.trim())) {
-            return true;
-        }
-    }
-
-    // Check for incomplete depends on
-    if (/\bdepends\s+on(?!\s+[a-zA-Z0-9]+)/i.test(lowerLine)) {
-        return true;
-    }
-
-    // Check for ID generation request
-    if (/🆔|generate\s+unique\s+id/i.test(lowerLine)) {
-        return true;
-    }
-
-    // Check if lowerLine ends with space after potential trigger words (user might be typing)
-    const triggerWords = ['due', 'start', 'scheduled', 'created', 'priority', 'every', 'next', 'depends', 'on'];
-    for (const word of triggerWords) {
-        if (new RegExp(`\\b${word}\\s*$`, 'i').test(lowerLine)) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 /**
  * Return true if the Auto-Suggest menu may be shown on the current line,
  * and false value otherwise.
@@ -821,21 +738,6 @@ function couldHaveTaskSuggestions(line: string): boolean {
  * @param editor - the editor instance to which the suggest belongs
  */
 export function canSuggestForLine(line: string, cursor: EditorPosition, editor: Editor) {
-    // Need setting for how many suggestions minimum
-    console.log('=== Checking line ===', line);
-
-    // Test each condition and log the results
-    const hasIncompleteDate = /\b(created|due|scheduled|start)(?!\s+\d{4}-\d{2}-\d{2})/i.test(line);
-    console.log('Has incomplete date:', hasIncompleteDate);
-
-    const hasIncompleteEmoji = /(?!\s*\d{4}-\d{2}-\d{2})/.test(line);
-    console.log('Has incomplete emoji:', hasIncompleteEmoji);
-
-    const result = hasIncompleteDate || hasIncompleteEmoji; // etc...
-    console.log('Final result:', result);
-
-    console.log(couldHaveTaskSuggestions(line)); //is a fast pre-filter to check for incomplete task attributes
-
     // Old Code
     const lineHasGlobalFilter = GlobalFilter.getInstance().includedIn(line);
     const didEditorRequest = editorIsRequestingSuggest(editor, cursor, lineHasGlobalFilter);
