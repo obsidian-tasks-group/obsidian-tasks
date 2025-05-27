@@ -84,7 +84,7 @@ There is a lot of flexibility here. For example:
 
 - You can type in exact dates, such as `2022-11-28`.
 - You can also enter parts of dates, such as `6 oct`.
-- You can enter relative dates, such as `today` or `tomorrow` or `Saturday`.
+- You can enter relative dates, such as `today`, `tomorrow`, `Saturday`, `10 days`, `2 weeks`.
 
 Note that relative dates will be always interpreted as being in the future, because that is usually what you want. You can change this behavior by unchecking "Only future dates" if you want to enter an overdue task or experiment with the way how relative dates in the past would be interpreted in queries.
 
