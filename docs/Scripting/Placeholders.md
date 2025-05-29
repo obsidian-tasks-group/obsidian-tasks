@@ -80,7 +80,7 @@ It is now possible to use properties in the query file. See [[Obsidian Propertie
 You can do the following:
 
 ```text
-{{includes.my_snippet_from_settings}}
+{{preset.my_snippet_from_settings}}
 ```
 
 See also [[Includes]].
