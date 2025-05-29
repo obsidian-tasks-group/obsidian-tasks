@@ -20,6 +20,7 @@ Getting the most from this documentation:
 - See [[About Testing]] to learn about automated and manual testing of the plugin
 - See [[About Debugging]] for tips to debug the plugin
 - See [[About Code]] for descriptions of the project's source code
+- See [[About Architecture Decisions]] for Architecture Decision Records
 - See [[About Documentation]] if you would like to improve and test the user docs
 - See [[About Translation]] if you are adding new text the plugin, and to help translate it
 
