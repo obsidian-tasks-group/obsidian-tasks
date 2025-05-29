@@ -106,17 +106,17 @@ explain: `INPUT[toggle:TQ_explain]`
 ````text
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
-group by function const x = "{{includes.filter_by_context}}"; return x
+group by function const x = "{{preset.filter_by_context}}"; return x
 
-{{includes.filter_by_context}}('home')
+{{preset.filter_by_context}}('home')
 ```
 ````
 
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
-group by function const x = "{{includes.filter_by_context}}"; return x
+group by function const x = "{{preset.filter_by_context}}"; return x
 
-{{includes.filter_by_context}}('home')
+{{preset.filter_by_context}}('home')
 ```
 
 ### Has context 'home' - and group by the Include text - version 2
@@ -126,19 +126,19 @@ explain: `INPUT[toggle:TQ_explain]`
 ````text
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
-group by function const x = "{{includes.extract_contexts_1}}"; return x
+group by function const x = "{{preset.extract_contexts_1}}"; return x
 
 # includes.extract_contexts_1 value needs to be surrounded by parentheses ():
-filter by function return ({{includes.extract_contexts_1}})('home')
+filter by function return ({{preset.extract_contexts_1}})('home')
 ```
 ````
 
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
-group by function const x = "{{includes.extract_contexts_1}}"; return x
+group by function const x = "{{preset.extract_contexts_1}}"; return x
 
 # includes.extract_contexts_1 value needs to be surrounded by parentheses ():
-filter by function return ({{includes.extract_contexts_1}})('home')
+filter by function return ({{preset.extract_contexts_1}})('home')
 ```
 
 ### Has context 'home' - and group by the Include text - version 3
@@ -148,17 +148,17 @@ explain: `INPUT[toggle:TQ_explain]`
 ````text
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
-group by function const x = "{{includes.extract_contexts_2}}"; return x
+group by function const x = "{{preset.extract_contexts_2}}"; return x
 
 # includes.extract_contexts_1 value has the parentheses, to simplify use:
-filter by function {{includes.extract_contexts_2}}('home')
+filter by function {{preset.extract_contexts_2}}('home')
 ```
 ````
 
 ```tasks
 # For debug/explanatory purposes, show the source of the Include as a group name:
-group by function const x = "{{includes.extract_contexts_2}}"; return x
+group by function const x = "{{preset.extract_contexts_2}}"; return x
 
 # includes.extract_contexts_1 value has the parentheses, to simplify use:
-filter by function {{includes.extract_contexts_2}}('home')
+filter by function {{preset.extract_contexts_2}}('home')
 ```
