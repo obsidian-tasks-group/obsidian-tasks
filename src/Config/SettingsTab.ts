@@ -158,10 +158,10 @@ export class SettingsTab extends PluginSettingTab {
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl)
-            .setName('Includes')
+            .setName('Presets')
             .setHeading()
             .setDesc(
-                'You can define named instructions here, that you can re-use in multiple queries. They can be used with "{{includes.name}}" and "include name".',
+                'You can define named instructions here, that you can re-use in multiple queries. They can be used with "{{preset.name}}" and "preset name".',
             );
         // ---------------------------------------------------------------------------
         this.includesSettingsUI.renderIncludesSettings(containerEl);
