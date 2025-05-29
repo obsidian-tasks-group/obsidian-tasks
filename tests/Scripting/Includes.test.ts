@@ -55,11 +55,11 @@ describe('include tests', () => {
         const includes = makeIncludes(['not_done', 'not done']);
 
         it('should accept whole-line include placeholder', () => {
-            const source = '{{includes.not_done}}';
+            const source = '{{preset.not_done}}';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, ['not done']);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "{{includes.not_done}} =>
+                "{{preset.not_done}} =>
                 not done
                 "
             `);
@@ -133,7 +133,7 @@ describe('include tests', () => {
         const includes = makeIncludes(['this_path', 'path includes {{query.file.path}}']);
 
         it('includes placeholder should expand placeholder in include value', () => {
-            const source = '{{includes.this_path}}';
+            const source = '{{preset.this_path}}';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, ['path includes root/folder/stuff.md']);
         });
@@ -149,17 +149,17 @@ describe('include tests', () => {
         const includes = makeIncludes(
             ['two_lines', 'has due date\nhas created date'],
             ['two_lines_as_include', 'include two_lines'],
-            ['two_lines_as_placeholder', '{{includes.two_lines}}'],
+            ['two_lines_as_placeholder', '{{preset.two_lines}}'],
         );
 
         it('includes placeholder should detect both lines in included value', () => {
-            const source = '{{includes.two_lines_as_placeholder}}';
+            const source = '{{preset.two_lines_as_placeholder}}';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, ['has due date', 'has created date']);
         });
 
         it('includes placeholders should be ignored in comments', () => {
-            const source = '# {{includes.two_lines_as_placeholder}}';
+            const source = '# {{preset.two_lines_as_placeholder}}';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, []);
         });
@@ -192,9 +192,9 @@ describe('include tests', () => {
             ['this_folder', 'folder includes {{query.file.folder}}'],
             ['this_root', 'root includes {{query.file.root}}'],
             // 2-level include:
-            ['this_everything', '{{includes.this_path}}\n{{includes.this_folder}}\n{{includes.this_root}}'],
+            ['this_everything', '{{preset.this_path}}\n{{preset.this_folder}}\n{{preset.this_root}}'],
             // 3-level include:
-            ['this_everything_indirect', '{{includes.this_everything}}'],
+            ['this_everything_indirect', '{{preset.this_everything}}'],
         );
 
         const expectedFilterLines = [
@@ -204,51 +204,51 @@ describe('include tests', () => {
         ];
 
         it('includes placeholder should support placeholders inside simple instructions', () => {
-            const source = '{{includes.this_path}}\n{{includes.this_folder}}\n{{includes.this_root}}';
+            const source = '{{preset.this_path}}\n{{preset.this_folder}}\n{{preset.this_root}}';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, expectedFilterLines);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "{{includes.this_path}} =>
+                "{{preset.this_path}} =>
                 path includes root/folder/stuff.md
 
-                {{includes.this_folder}} =>
+                {{preset.this_folder}} =>
                 folder includes root/folder/
 
-                {{includes.this_root}} =>
+                {{preset.this_root}} =>
                 root includes root/
                 "
             `);
         });
 
         it('includes placeholder should support one-level nested placeholders', () => {
-            const source = '{{includes.this_everything}}';
+            const source = '{{preset.this_everything}}';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, expectedFilterLines);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "{{includes.this_everything}}: statement 1 after expansion of placeholder =>
+                "{{preset.this_everything}}: statement 1 after expansion of placeholder =>
                 path includes root/folder/stuff.md
 
-                {{includes.this_everything}}: statement 2 after expansion of placeholder =>
+                {{preset.this_everything}}: statement 2 after expansion of placeholder =>
                 folder includes root/folder/
 
-                {{includes.this_everything}}: statement 3 after expansion of placeholder =>
+                {{preset.this_everything}}: statement 3 after expansion of placeholder =>
                 root includes root/
                 "
             `);
         });
 
         it('includes placeholder should support two-level nested placeholders', () => {
-            const source = '{{includes.this_everything_indirect}}';
+            const source = '{{preset.this_everything_indirect}}';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, expectedFilterLines);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "{{includes.this_everything_indirect}}: statement 1 after expansion of placeholder =>
+                "{{preset.this_everything_indirect}}: statement 1 after expansion of placeholder =>
                 path includes root/folder/stuff.md
 
-                {{includes.this_everything_indirect}}: statement 2 after expansion of placeholder =>
+                {{preset.this_everything_indirect}}: statement 2 after expansion of placeholder =>
                 folder includes root/folder/
 
-                {{includes.this_everything_indirect}}: statement 3 after expansion of placeholder =>
+                {{preset.this_everything_indirect}}: statement 3 after expansion of placeholder =>
                 root includes root/
                 "
             `);
@@ -263,7 +263,7 @@ return "Hello World";`;
         const expectedStatement = 'group by function return "Hello World";';
 
         it('includes placeholder supports line continuations in include value', () => {
-            const source = '{{includes.instruction_with_continuation_lines}}';
+            const source = '{{preset.instruction_with_continuation_lines}}';
             const query = createValidQuery(source, includes);
             expectExpandedStatementToBe(query.grouping[0].statement, expectedStatement);
         });
@@ -276,7 +276,7 @@ return "Hello World";`;
     });
 
     describe('includes inside Boolean combinations', () => {
-        // ( {{includes.filter1}} ) AND ( {{includes.filter2}} )
+        // ( {{preset.filter1}} ) AND ( {{preset.filter2}} )
         // ( include filter1 ) AND ( include filter2 )
         const includes = makeIncludes(
             // Force line break
@@ -286,12 +286,12 @@ return "Hello World";`;
         const expectedStatement = '( not done ) AND ( due 2025-05-01 )';
 
         it('should allow Boolean instructions to use includes placeholders', () => {
-            const source = '( {{includes.filter1}} ) AND ( {{includes.filter2}} )';
+            const source = '( {{preset.filter1}} ) AND ( {{preset.filter2}} )';
             const query = createValidQuery(source, includes);
 
             expectFiltersToBe(query, [expectedStatement]);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "( {{includes.filter1}} ) AND ( {{includes.filter2}} ) =>
+                "( {{preset.filter1}} ) AND ( {{preset.filter2}} ) =>
                 ( not done ) AND ( due 2025-05-01 ) =>
                   AND (All of):
                     not done
@@ -339,11 +339,11 @@ describe('include - explain output', () => {
         );
 
         it('includes placeholder should explain two levels of nested includes', () => {
-            const query = createValidQuery('{{includes.out}}', includes);
+            const query = createValidQuery('{{preset.out}}', includes);
             // The 'statement 1', 'statement 2' text is useful in clarifying that
             // some text was expanded in to more than one line.
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "{{includes.out}}: statement 1 after expansion of placeholder =>
+                "{{preset.out}}: statement 1 after expansion of placeholder =>
                 (happens this week) AND (starts before today) =>
                   AND (All of):
                     happens this week =>
@@ -353,7 +353,7 @@ describe('include - explain output', () => {
                     starts before today =>
                       start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
 
-                {{includes.out}}: statement 2 after expansion of placeholder =>
+                {{preset.out}}: statement 2 after expansion of placeholder =>
                 not done
                 "
             `);
@@ -387,15 +387,15 @@ describe('include - error messages', () => {
         const includes = {};
 
         it('includes placeholder should give a meaningful error for non-existent include', () => {
-            const query = createQuery('{{includes.not_existent}}', includes);
+            const query = createQuery('{{preset.not_existent}}', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "There was an error expanding one or more placeholders.
 
                 The error message was:
-                    Unknown property: includes.not_existent
+                    Unknown property: preset.not_existent
 
                 The problem is in:
-                    {{includes.not_existent}}"
+                    {{preset.not_existent}}"
             `);
         });
 
@@ -426,15 +426,15 @@ describe('include - error messages', () => {
         );
 
         it('includes placeholder should give a meaningful error for non-existent include', () => {
-            const query = createQuery('{{includes.not_existent}}', includes);
+            const query = createQuery('{{preset.not_existent}}', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "There was an error expanding one or more placeholders.
 
                 The error message was:
-                    Unknown property: includes.not_existent
+                    Unknown property: preset.not_existent
 
                 The problem is in:
-                    {{includes.not_existent}}"
+                    {{preset.not_existent}}"
             `);
         });
 
@@ -460,11 +460,11 @@ describe('include - error messages', () => {
         );
 
         it('includes placeholder should give meaningful error message about included text', () => {
-            const query = createQuery('{{includes.out}}', includes);
+            const query = createQuery('{{preset.out}}', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "do not understand query
                 Problem statement:
-                    {{includes.out}} =>
+                    {{preset.out}} =>
                     apple sauce
                 "
             `);
@@ -484,32 +484,32 @@ describe('include - error messages', () => {
 
     describe('infinite recursion of instruction', () => {
         const includes = makeIncludes(
-            ['self_reference_1', '{{includes.self_reference_1}}'],
+            ['self_reference_1', '{{preset.self_reference_1}}'],
             ['self_reference_2', 'include self_reference_2'],
         );
 
         it('includes placeholder should give meaningful error message about self-referencing instructions BUT DOES NOT', () => {
-            // TODO Better error error message for '{{includes.self_reference}}'
-            const query = createQuery('{{includes.self_reference_1}}', includes);
+            // TODO Better error error message for '{{preset.self_reference}}'
+            const query = createQuery('{{preset.self_reference_1}}', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "Could not interpret the following instruction as a Boolean combination:
-                    {{includes.self_reference_1}}
+                    {{preset.self_reference_1}}
 
                 The error message is:
-                    couldn't parse sub-expression 'includes.self_reference_1'
+                    couldn't parse sub-expression 'preset.self_reference_1'
 
                 The instruction was converted to the following simplified line:
                     ((f1))
 
                 Where the sub-expressions in the simplified line are:
-                    'f1': 'includes.self_reference_1'
+                    'f1': 'preset.self_reference_1'
                         => ERROR:
                            do not understand query
 
                 For help, see:
                     https://publish.obsidian.md/tasks/Queries/Combining+Filters
 
-                Problem line: "{{includes.self_reference_1}}""
+                Problem line: "{{preset.self_reference_1}}""
             `);
         });
 
