@@ -1,5 +1,6 @@
 import { readTasksFromSimulatedFile } from './SimulatedFile';
 import multiple_headings from './__test_data__/multiple_headings.json';
+import zero_width from './__test_data__/zero_width.json';
 
 describe('FileParser', () => {
     it('should set all non-TasksFile data in TaskLocation', () => {
@@ -43,5 +44,18 @@ describe('FileParser', () => {
               },
             ]
         `);
+    });
+
+    it('does not read task lines beginning with a ZWSP - zero-width space', () => {
+        // Demo the behaviour of Obsidian when then Simple Tab Indent plugin indents what looks like a task line.
+        // https://github.com/hoomersinpsom/simple-tab-indent
+        const data = zero_width;
+        expect(data.fileContents).toContain("- [ ] #task Task line 1 in 'zero_width' - indented by tab character");
+        expect(data.fileContents).toContain(
+            "- [ ] #task Task line 2 in 'zero_width' - indented by ZWSP + tab character",
+        );
+        const tasks = readTasksFromSimulatedFile(data);
+        expect(tasks.length).toEqual(1);
+        expect(tasks[0].description).toEqual("#task Task line 1 in 'zero_width' - indented by tab character");
     });
 });
