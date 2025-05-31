@@ -53,20 +53,20 @@ export class PresetsSettingsUI {
 
     /**
      * Renders a single include item with its controls
-     * @param includesContainer The container element for the include item
+     * @param presetsContainer The container element for the include item
      * @param settings The current plugin settings
      * @param key The key/name of the include
      * @param value The value/query of the include
      * @param refreshView Callback to refresh the view after changes
      */
     private renderPresetItem(
-        includesContainer: HTMLDivElement,
+        presetsContainer: HTMLDivElement,
         settings: Settings,
         key: string,
         value: string,
         refreshView: RefreshViewCallback,
     ) {
-        const wrapper = includesContainer.createDiv({ cls: 'tasks-includes-wrapper' });
+        const wrapper = presetsContainer.createDiv({ cls: 'tasks-includes-wrapper' });
         const setting = new Setting(wrapper);
         setting.settingEl.addClass('tasks-includes-setting');
 
