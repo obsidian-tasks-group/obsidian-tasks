@@ -2,7 +2,7 @@ import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
 import type { PresetsMap } from './Settings';
 
 /**
- * Represents a map of include keys and their current values
+ * Represents a map of preset keys and their current values
  * used during validation
  */
 export interface RenamesInProgress {
@@ -22,7 +22,7 @@ export class RenameResult {
 }
 
 /**
- * Result of validating multiple include values at once
+ * Result of validating multiple preset values at once
  */
 export interface RenameResults {
     [originalName: string]: RenameResult;
@@ -30,7 +30,7 @@ export interface RenameResults {
 
 export class PresetsSettingsService {
     /**
-     * Validates multiple include names against each other
+     * Validates multiple preset names against each other
      * @param renames Map of original keys to their current values in UI
      * @returns Object mapping each key to its validation result
      */
@@ -56,7 +56,7 @@ export class PresetsSettingsService {
     }
 
     /**
-     * Validates if an include name is valid
+     * Validates if a preset name is valid
      * @param presets The current presets map
      * @param keyBeingRenamed The key being renamed
      * @param newName The proposed name to validate
@@ -83,7 +83,7 @@ export class PresetsSettingsService {
     }
 
     /**
-     * Adds a new include to the map with a unique key
+     * Adds a new preset to the map with a unique key
      * @param presets The current presets map (will not be modified)
      * @returns An object with the updated presets map and the new key
      */
@@ -125,7 +125,7 @@ export class PresetsSettingsService {
     }
 
     /**
-     * Deletes an include from the map
+     * Deletes a preset from the map
      * @param presets The current presets map (will not be modified)
      * @param key The key to delete
      * @returns The updated presets map
@@ -137,7 +137,7 @@ export class PresetsSettingsService {
     }
 
     /**
-     * Updates the value of an include
+     * Updates the value of a preset
      * @param presets The current presets map (will not be modified)
      * @param key The key to update
      * @param value The new value
@@ -181,7 +181,7 @@ export class PresetsSettingsService {
     }
 
     /**
-     * Generates a unique key for a new include
+     * Generates a unique key for a new preset
      * @param presets The current presets map
      * @returns A unique key string
      */
@@ -195,7 +195,7 @@ export class PresetsSettingsService {
     }
 
     /**
-     * Reorders an include to a specific position in the map
+     * Reorders a preset to a specific position in the map
      * @param presets The current presets map (will not be modified)
      * @param key The key to reorder
      * @param newIndex The target position (0-based index)
