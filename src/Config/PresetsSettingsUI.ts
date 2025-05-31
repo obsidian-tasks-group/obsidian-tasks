@@ -350,7 +350,7 @@ export class PresetsSettingsUI {
      */
     private createAddNewPresetButton(containerEl: HTMLElement, settings: Settings, refreshView: RefreshViewCallback) {
         new Setting(containerEl).addButton((btn) => {
-            btn.setButtonText('Add new include')
+            btn.setButtonText('Add new preset')
                 .setCta()
                 .onClick(async () => {
                     const { presets: updatedPresets } = this.presetsSettingsService.addPreset(settings.presets);
