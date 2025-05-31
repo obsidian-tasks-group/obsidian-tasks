@@ -1,4 +1,4 @@
-import type { IncludesMap } from '../Config/Settings';
+import type { PresetsMap } from '../Config/Settings';
 
 function summariseInstruction(instructions: string) {
     let result = instructions;
@@ -24,7 +24,7 @@ function summariseInstruction(instructions: string) {
     return result;
 }
 
-export function unknownIncludeErrorMessage(includeName: string, includes: IncludesMap) {
+export function unknownIncludeErrorMessage(includeName: string, includes: PresetsMap) {
     let message = `Cannot find preset "${includeName}" in the Tasks settings`;
 
     const isIncludesEmpty = Object.keys(includes).length === 0;

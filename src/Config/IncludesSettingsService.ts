@@ -1,5 +1,5 @@
 import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
-import type { IncludesMap } from './Settings';
+import type { PresetsMap } from './Settings';
 
 /**
  * Represents a map of include keys and their current values
@@ -39,7 +39,7 @@ export class IncludesSettingsService {
 
         // Check each key against all others
         for (const [originalName, newName] of Object.entries(renames)) {
-            const includesWithOtherPendingRenames: IncludesMap = {};
+            const includesWithOtherPendingRenames: PresetsMap = {};
 
             for (const [otherOriginalName, otherNewName] of Object.entries(renames)) {
                 // Skip the name being validated to avoid false duplicate matches.
@@ -62,7 +62,7 @@ export class IncludesSettingsService {
      * @param newName The proposed name to validate
      * @returns An object with validation result and error message if any
      */
-    public validateRename(includes: Readonly<IncludesMap>, keyBeingRenamed: string, newName: string): RenameResult {
+    public validateRename(includes: Readonly<PresetsMap>, keyBeingRenamed: string, newName: string): RenameResult {
         // Check for empty name
         if (!newName || newName.trim() === '') {
             return new RenameResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace');
@@ -87,7 +87,7 @@ export class IncludesSettingsService {
      * @param includes The current includes map (will not be modified)
      * @returns An object with the updated includes map and the new key
      */
-    public addInclude(includes: Readonly<IncludesMap>): { includes: IncludesMap; newKey: string } {
+    public addInclude(includes: Readonly<PresetsMap>): { includes: PresetsMap; newKey: string } {
         const newKey = this.generateUniqueKey(includes);
         const newIncludes = { ...includes };
         newIncludes[newKey] = '';
@@ -105,10 +105,10 @@ export class IncludesSettingsService {
      * @returns The updated includes map, or null if the operation failed (for example, duplicate key)
      */
     public renameInclude(
-        includes: Readonly<IncludesMap>,
+        includes: Readonly<PresetsMap>,
         keyBeingRenamed: string,
         proposedNewName: string,
-    ): IncludesMap | null {
+    ): PresetsMap | null {
         // Validate inputs
         if (!proposedNewName || proposedNewName.trim() === '') {
             return null; // Empty keys are not allowed
@@ -130,7 +130,7 @@ export class IncludesSettingsService {
      * @param key The key to delete
      * @returns The updated includes map
      */
-    public deleteInclude(includes: Readonly<IncludesMap>, key: string): IncludesMap {
+    public deleteInclude(includes: Readonly<PresetsMap>, key: string): PresetsMap {
         const newIncludes = { ...includes };
         delete newIncludes[key];
         return newIncludes;
@@ -143,7 +143,7 @@ export class IncludesSettingsService {
      * @param value The new value
      * @returns The updated includes map
      */
-    public updateIncludeValue(includes: Readonly<IncludesMap>, key: string, value: string): IncludesMap {
+    public updateIncludeValue(includes: Readonly<PresetsMap>, key: string, value: string): PresetsMap {
         const newIncludes = { ...includes };
         newIncludes[key] = value;
         return newIncludes;
@@ -157,7 +157,7 @@ export class IncludesSettingsService {
      * @returns True if the proposed new name would conflict with an existing key
      */
     public wouldCreateDuplicateKey(
-        includes: Readonly<IncludesMap>,
+        includes: Readonly<PresetsMap>,
         keyBeingRenamed: string,
         proposedNewName: string,
     ): boolean {
@@ -185,7 +185,7 @@ export class IncludesSettingsService {
      * @param includes The current includes map
      * @returns A unique key string
      */
-    private generateUniqueKey(includes: Readonly<IncludesMap>): string {
+    private generateUniqueKey(includes: Readonly<PresetsMap>): string {
         const baseKey = 'new_key';
         let suffix = 1;
         while (Object.prototype.hasOwnProperty.call(includes, `${baseKey}_${suffix}`)) {
@@ -201,7 +201,7 @@ export class IncludesSettingsService {
      * @param newIndex The target position (0-based index)
      * @returns The updated includes map, or null if the operation failed
      */
-    public reorderInclude(includes: Readonly<IncludesMap>, key: string, newIndex: number): IncludesMap | null {
+    public reorderInclude(includes: Readonly<PresetsMap>, key: string, newIndex: number): PresetsMap | null {
         const keys = Object.keys(includes);
         const currentIndex = keys.indexOf(key);
 
@@ -229,7 +229,7 @@ export class IncludesSettingsService {
         newKeys.splice(newIndex, 0, key);
 
         // Rebuild the map in the new order
-        const newIncludes: IncludesMap = {};
+        const newIncludes: PresetsMap = {};
         for (const k of newKeys) {
             newIncludes[k] = includes[k];
         }
