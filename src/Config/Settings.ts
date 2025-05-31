@@ -62,7 +62,7 @@ export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some 
 export type IncludesMap = Record<string, string>;
 
 export interface Settings {
-    includes: IncludesMap;
+    presets: IncludesMap;
     globalQuery: string;
     globalFilter: string;
     removeGlobalFilter: boolean;
@@ -98,7 +98,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-    includes: {},
+    presets: {},
     globalQuery: '',
     globalFilter: '',
     removeGlobalFilter: false,

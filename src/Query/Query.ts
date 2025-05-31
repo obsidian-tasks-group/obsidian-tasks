@@ -474,10 +474,10 @@ ${statement.explainStatement('    ')}
         const include = this.includeRegexp.exec(line);
         if (include) {
             const includeName = include[1].trim();
-            const { includes } = getSettings();
-            const includeValue = includes[includeName];
+            const { presets } = getSettings();
+            const includeValue = presets[includeName];
             if (!includeValue) {
-                this.setError(unknownIncludeErrorMessage(includeName, includes), statement);
+                this.setError(unknownIncludeErrorMessage(includeName, presets), statement);
                 return;
             }
 
