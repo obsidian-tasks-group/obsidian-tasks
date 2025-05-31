@@ -101,7 +101,7 @@ describe('PresetsSettingsService', () => {
         });
     });
 
-    describe('PresetsSettingsService - validateIncludeName', () => {
+    describe('PresetsSettingsService - validateRename', () => {
         it('should recognise valid new name', () => {
             expectToBeValid(service.validateRename(testPresets, 'key1', 'new-name'));
         });
@@ -141,9 +141,9 @@ describe('PresetsSettingsService', () => {
         });
     });
 
-    describe('PresetsSettingsService - addInclude', () => {
+    describe('PresetsSettingsService - addPreset', () => {
         it('should add a new include with a unique key', () => {
-            const result = service.addInclude(testPresets);
+            const result = service.addPreset(testPresets);
 
             expect(result.newKey).toBe('new_key_1');
             expect(result.includes['new_key_1']).toBe('');
@@ -151,9 +151,9 @@ describe('PresetsSettingsService', () => {
         });
     });
 
-    describe('PresetsSettingsService - renameInclude', () => {
+    describe('PresetsSettingsService - renamePreset', () => {
         it('should rename a key and preserve order', () => {
-            const result = service.renameInclude(testPresets, 'key1', 'newName');
+            const result = service.renamePreset(testPresets, 'key1', 'newName');
 
             expect(result).not.toBeNull();
             expect(Object.keys(result!)[0]).toBe('newName');
@@ -162,7 +162,7 @@ describe('PresetsSettingsService', () => {
         });
 
         it('should trim spaces from a unique new name', () => {
-            const result = service.renameInclude(testPresets, 'key2', '  renamed_key2  ');
+            const result = service.renamePreset(testPresets, 'key2', '  renamed_key2  ');
 
             expect(result).not.toBeNull();
             expect(Object.keys(result!)[1]).toBe('renamed_key2');
@@ -171,27 +171,27 @@ describe('PresetsSettingsService', () => {
         });
 
         it('should return null for duplicate keys', () => {
-            const result = service.renameInclude(testPresets, 'key1', 'key2');
+            const result = service.renamePreset(testPresets, 'key1', 'key2');
 
             expect(result).toBeNull();
         });
 
         it('should return null for empty new key', () => {
-            const result = service.renameInclude(testPresets, 'key1', '');
+            const result = service.renamePreset(testPresets, 'key1', '');
 
             expect(result).toBeNull();
         });
 
         it('should return null for empty key containing only whitespace', () => {
-            const result = service.renameInclude(testPresets, 'key1', '\t ');
+            const result = service.renamePreset(testPresets, 'key1', '\t ');
 
             expect(result).toBeNull();
         });
     });
 
-    describe('PresetsSettingsService - deleteInclude', () => {
+    describe('PresetsSettingsService - deletePreset', () => {
         it('should remove a key', () => {
-            const result = service.deleteInclude(testPresets, 'key1');
+            const result = service.deletePreset(testPresets, 'key1');
 
             expect(Object.keys(result).length).toBe(1);
             expect(result['key1']).toBeUndefined();
@@ -201,7 +201,7 @@ describe('PresetsSettingsService', () => {
 
     describe('PresetsSettingsService - updateIncludeValue', () => {
         it('should update the value of an include', () => {
-            const result = service.updateIncludeValue(testPresets, 'key1', 'new value');
+            const result = service.updatePresetValue(testPresets, 'key1', 'new value');
 
             expect(result['key1']).toBe('new value');
         });
@@ -340,7 +340,7 @@ describe('PresetsSettingsService', () => {
         });
     });
 
-    describe('PresetsSettingsService - reorderInclude', () => {
+    describe('PresetsSettingsService - reorderPreset', () => {
         let service: PresetsSettingsService;
         let testIncludes: PresetsMap;
 
@@ -357,7 +357,7 @@ describe('PresetsSettingsService', () => {
 
         it('should move an item to a new position', () => {
             // Move 'fourth' to position 1 (second position, 0-indexed)
-            const result = service.reorderInclude(testIncludes, 'fourth', 1);
+            const result = service.reorderPreset(testIncludes, 'fourth', 1);
 
             expect(result).not.toBeNull();
             const keys = Object.keys(result!);
@@ -366,7 +366,7 @@ describe('PresetsSettingsService', () => {
 
         it('should move an item from beginning to end', () => {
             // Move 'first' to the last position
-            const result = service.reorderInclude(testIncludes, 'first', 4);
+            const result = service.reorderPreset(testIncludes, 'first', 4);
 
             expect(result).not.toBeNull();
             const keys = Object.keys(result!);
@@ -375,7 +375,7 @@ describe('PresetsSettingsService', () => {
 
         it('should move an item from end to beginning', () => {
             // Move 'fifth' to the first position
-            const result = service.reorderInclude(testIncludes, 'fifth', 0);
+            const result = service.reorderPreset(testIncludes, 'fifth', 0);
 
             expect(result).not.toBeNull();
             const keys = Object.keys(result!);
@@ -383,23 +383,23 @@ describe('PresetsSettingsService', () => {
         });
 
         it('should return null for invalid key', () => {
-            const result = service.reorderInclude(testIncludes, 'nonexistent', 1);
+            const result = service.reorderPreset(testIncludes, 'nonexistent', 1);
             expect(result).toBeNull();
         });
 
         it('should return null for invalid target position (negative)', () => {
-            const result = service.reorderInclude(testIncludes, 'second', -1);
+            const result = service.reorderPreset(testIncludes, 'second', -1);
             expect(result).toBeNull();
         });
 
         it('should return null for invalid target position (too high)', () => {
-            const result = service.reorderInclude(testIncludes, 'second', 10);
+            const result = service.reorderPreset(testIncludes, 'second', 10);
             expect(result).toBeNull();
         });
 
         it('should handle moving to the same position (no change)', () => {
             // 'third' is currently at index 2, move it to index 2
-            const result = service.reorderInclude(testIncludes, 'third', 2);
+            const result = service.reorderPreset(testIncludes, 'third', 2);
 
             expect(result).not.toBeNull();
             const keys = Object.keys(result!);
@@ -408,7 +408,7 @@ describe('PresetsSettingsService', () => {
 
         it('should handle complex reordering correctly', () => {
             // Move 'second' (index 1) to index 3
-            const result = service.reorderInclude(testIncludes, 'second', 3);
+            const result = service.reorderPreset(testIncludes, 'second', 3);
 
             expect(result).not.toBeNull();
             const keys = Object.keys(result!);
