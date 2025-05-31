@@ -57,18 +57,18 @@ export class PresetsSettingsService {
 
     /**
      * Validates if an include name is valid
-     * @param includes The current presets map
+     * @param presets The current presets map
      * @param keyBeingRenamed The key being renamed
      * @param newName The proposed name to validate
      * @returns An object with validation result and error message if any
      */
-    public validateRename(includes: Readonly<PresetsMap>, keyBeingRenamed: string, newName: string): RenameResult {
+    public validateRename(presets: Readonly<PresetsMap>, keyBeingRenamed: string, newName: string): RenameResult {
         // Check for empty name
         if (!newName || newName.trim() === '') {
             return new RenameResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace');
         }
 
-        for (const existingKey of Object.keys(includes)) {
+        for (const existingKey of Object.keys(presets)) {
             // Skip the key being renamed
             if (existingKey === keyBeingRenamed) {
                 continue;
@@ -84,12 +84,12 @@ export class PresetsSettingsService {
 
     /**
      * Adds a new include to the map with a unique key
-     * @param includes The current presets map (will not be modified)
+     * @param presets The current presets map (will not be modified)
      * @returns An object with the updated presets map and the new key
      */
-    public addPreset(includes: Readonly<PresetsMap>): { includes: PresetsMap; newKey: string } {
-        const newKey = this.generateUniqueKey(includes);
-        const newIncludes = { ...includes };
+    public addPreset(presets: Readonly<PresetsMap>): { includes: PresetsMap; newKey: string } {
+        const newKey = this.generateUniqueKey(presets);
+        const newIncludes = { ...presets };
         newIncludes[newKey] = '';
         return {
             includes: newIncludes,
@@ -99,13 +99,13 @@ export class PresetsSettingsService {
 
     /**
      * Renames a key in the presets map, preserving order
-     * @param includes The current presets map (will not be modified)
+     * @param presets The current presets map (will not be modified)
      * @param keyBeingRenamed The existing key that would be renamed
      * @param proposedNewName The new name being considered
      * @returns The updated presets map, or null if the operation failed (for example, duplicate key)
      */
     public renamePreset(
-        includes: Readonly<PresetsMap>,
+        presets: Readonly<PresetsMap>,
         keyBeingRenamed: string,
         proposedNewName: string,
     ): PresetsMap | null {
@@ -117,47 +117,47 @@ export class PresetsSettingsService {
         proposedNewName = proposedNewName.trim();
 
         // Check if this would create a duplicate
-        if (this.wouldCreateDuplicateKey(includes, keyBeingRenamed, proposedNewName)) {
+        if (this.wouldCreateDuplicateKey(presets, keyBeingRenamed, proposedNewName)) {
             return null;
         }
 
-        return renameKeyInRecordPreservingOrder(includes, keyBeingRenamed, proposedNewName);
+        return renameKeyInRecordPreservingOrder(presets, keyBeingRenamed, proposedNewName);
     }
 
     /**
      * Deletes an include from the map
-     * @param includes The current presets map (will not be modified)
+     * @param presets The current presets map (will not be modified)
      * @param key The key to delete
      * @returns The updated presets map
      */
-    public deletePreset(includes: Readonly<PresetsMap>, key: string): PresetsMap {
-        const newIncludes = { ...includes };
+    public deletePreset(presets: Readonly<PresetsMap>, key: string): PresetsMap {
+        const newIncludes = { ...presets };
         delete newIncludes[key];
         return newIncludes;
     }
 
     /**
      * Updates the value of an include
-     * @param includes The current presets map (will not be modified)
+     * @param presets The current presets map (will not be modified)
      * @param key The key to update
      * @param value The new value
      * @returns The updated presets map
      */
-    public updatePresetValue(includes: Readonly<PresetsMap>, key: string, value: string): PresetsMap {
-        const newIncludes = { ...includes };
+    public updatePresetValue(presets: Readonly<PresetsMap>, key: string, value: string): PresetsMap {
+        const newIncludes = { ...presets };
         newIncludes[key] = value;
         return newIncludes;
     }
 
     /**
      * Checks if renaming a key would create a duplicate in the presets map
-     * @param includes The presets map to check against
+     * @param presets The presets map to check against
      * @param keyBeingRenamed The existing key that would be renamed
      * @param proposedNewName The new name being considered
      * @returns True if the proposed new name would conflict with an existing key
      */
     public wouldCreateDuplicateKey(
-        includes: Readonly<PresetsMap>,
+        presets: Readonly<PresetsMap>,
         keyBeingRenamed: string,
         proposedNewName: string,
     ): boolean {
@@ -170,7 +170,7 @@ export class PresetsSettingsService {
         }
 
         // Check against all existing keys
-        for (const existingKey of Object.keys(includes)) {
+        for (const existingKey of Object.keys(presets)) {
             // Skip the key being renamed (exact reference check)
             if (existingKey !== keyBeingRenamed && existingKey.trim() === normalizedNewName) {
                 return true; // Found a duplicate
@@ -182,13 +182,13 @@ export class PresetsSettingsService {
 
     /**
      * Generates a unique key for a new include
-     * @param includes The current presets map
+     * @param presets The current presets map
      * @returns A unique key string
      */
-    private generateUniqueKey(includes: Readonly<PresetsMap>): string {
+    private generateUniqueKey(presets: Readonly<PresetsMap>): string {
         const baseKey = 'new_key';
         let suffix = 1;
-        while (Object.prototype.hasOwnProperty.call(includes, `${baseKey}_${suffix}`)) {
+        while (Object.prototype.hasOwnProperty.call(presets, `${baseKey}_${suffix}`)) {
             suffix++;
         }
         return `${baseKey}_${suffix}`;
@@ -196,13 +196,13 @@ export class PresetsSettingsService {
 
     /**
      * Reorders an include to a specific position in the map
-     * @param includes The current presets map (will not be modified)
+     * @param presets The current presets map (will not be modified)
      * @param key The key to reorder
      * @param newIndex The target position (0-based index)
      * @returns The updated presets map, or null if the operation failed
      */
-    public reorderPreset(includes: Readonly<PresetsMap>, key: string, newIndex: number): PresetsMap | null {
-        const keys = Object.keys(includes);
+    public reorderPreset(presets: Readonly<PresetsMap>, key: string, newIndex: number): PresetsMap | null {
+        const keys = Object.keys(presets);
         const currentIndex = keys.indexOf(key);
 
         // Validate inputs
@@ -216,7 +216,7 @@ export class PresetsSettingsService {
 
         if (currentIndex === newIndex) {
             // No change needed, but return a copy
-            return { ...includes };
+            return { ...presets };
         }
 
         // Create new key order
@@ -231,7 +231,7 @@ export class PresetsSettingsService {
         // Rebuild the map in the new order
         const newIncludes: PresetsMap = {};
         for (const k of newKeys) {
-            newIncludes[k] = includes[k];
+            newIncludes[k] = presets[k];
         }
 
         return newIncludes;
