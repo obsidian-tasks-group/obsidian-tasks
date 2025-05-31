@@ -87,7 +87,7 @@ export class PresetsSettingsService {
      * @param includes The current includes map (will not be modified)
      * @returns An object with the updated includes map and the new key
      */
-    public addInclude(includes: Readonly<PresetsMap>): { includes: PresetsMap; newKey: string } {
+    public addPreset(includes: Readonly<PresetsMap>): { includes: PresetsMap; newKey: string } {
         const newKey = this.generateUniqueKey(includes);
         const newIncludes = { ...includes };
         newIncludes[newKey] = '';
@@ -104,7 +104,7 @@ export class PresetsSettingsService {
      * @param proposedNewName The new name being considered
      * @returns The updated includes map, or null if the operation failed (for example, duplicate key)
      */
-    public renameInclude(
+    public renamePreset(
         includes: Readonly<PresetsMap>,
         keyBeingRenamed: string,
         proposedNewName: string,
@@ -130,7 +130,7 @@ export class PresetsSettingsService {
      * @param key The key to delete
      * @returns The updated includes map
      */
-    public deleteInclude(includes: Readonly<PresetsMap>, key: string): PresetsMap {
+    public deletePreset(includes: Readonly<PresetsMap>, key: string): PresetsMap {
         const newIncludes = { ...includes };
         delete newIncludes[key];
         return newIncludes;
@@ -143,7 +143,7 @@ export class PresetsSettingsService {
      * @param value The new value
      * @returns The updated includes map
      */
-    public updateIncludeValue(includes: Readonly<PresetsMap>, key: string, value: string): PresetsMap {
+    public updatePresetValue(includes: Readonly<PresetsMap>, key: string, value: string): PresetsMap {
         const newIncludes = { ...includes };
         newIncludes[key] = value;
         return newIncludes;
@@ -201,7 +201,7 @@ export class PresetsSettingsService {
      * @param newIndex The target position (0-based index)
      * @returns The updated includes map, or null if the operation failed
      */
-    public reorderInclude(includes: Readonly<PresetsMap>, key: string, newIndex: number): PresetsMap | null {
+    public reorderPreset(includes: Readonly<PresetsMap>, key: string, newIndex: number): PresetsMap | null {
         const keys = Object.keys(includes);
         const currentIndex = keys.indexOf(key);
 

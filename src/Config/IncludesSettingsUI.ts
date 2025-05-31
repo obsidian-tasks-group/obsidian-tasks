@@ -94,7 +94,7 @@ export class IncludesSettingsUI {
             // Handle renaming an include
             const commitRename = async () => {
                 if (newKey && newKey !== key) {
-                    const updatedIncludes = this.includesSettingsService.renameInclude(settings.presets, key, newKey);
+                    const updatedIncludes = this.includesSettingsService.renamePreset(settings.presets, key, newKey);
                     if (updatedIncludes) {
                         await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                     }
@@ -118,11 +118,7 @@ export class IncludesSettingsUI {
             this.setupAutoResizingTextarea(textArea);
 
             return textArea.onChange(async (newValue) => {
-                const updatedIncludes = this.includesSettingsService.updateIncludeValue(
-                    settings.presets,
-                    key,
-                    newValue,
-                );
+                const updatedIncludes = this.includesSettingsService.updatePresetValue(settings.presets, key, newValue);
                 await this.saveIncludesSettings(updatedIncludes, settings, null);
             });
         });
@@ -147,7 +143,7 @@ export class IncludesSettingsUI {
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const updatedIncludes = this.includesSettingsService.deleteInclude(settings.presets, key);
+                    const updatedIncludes = this.includesSettingsService.deletePreset(settings.presets, key);
                     await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                 });
         });
@@ -224,7 +220,7 @@ export class IncludesSettingsUI {
             const targetIndex = this.getTargetIndex(key, dropPosition);
 
             // Perform the reorder
-            const updatedIncludes = this.includesSettingsService.reorderInclude(
+            const updatedIncludes = this.includesSettingsService.reorderPreset(
                 settings.presets,
                 draggedKey,
                 targetIndex,
@@ -361,7 +357,7 @@ export class IncludesSettingsUI {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const { includes: updatedIncludes } = this.includesSettingsService.addInclude(settings.presets);
+                    const { includes: updatedIncludes } = this.includesSettingsService.addPreset(settings.presets);
                     await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                 });
         });
