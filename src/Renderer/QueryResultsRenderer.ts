@@ -122,8 +122,8 @@ export class QueryResultsRenderer {
      * Query object, and so it needs to be reloaded.
      *
      * For example, the user edited their Tasks plugin settings in some
-     * way that changes how the query is interpreted, such as changing an
-     * 'includes' definition.
+     * way that changes how the query is interpreted, such as changing a
+     * 'presets' definition.
      */
     public rereadQueryFromFile() {
         this.query = this.makeQueryFromSourceAndTasksFile();
