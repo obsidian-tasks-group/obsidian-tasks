@@ -39,17 +39,17 @@ export class PresetsSettingsService {
 
         // Check each key against all others
         for (const [originalName, newName] of Object.entries(renames)) {
-            const includesWithOtherPendingRenames: PresetsMap = {};
+            const presetsWithOtherPendingRenames: PresetsMap = {};
 
             for (const [otherOriginalName, otherNewName] of Object.entries(renames)) {
                 // Skip the name being validated to avoid false duplicate matches.
                 if (otherOriginalName !== originalName) {
-                    includesWithOtherPendingRenames[otherNewName] = '';
+                    presetsWithOtherPendingRenames[otherNewName] = '';
                 }
             }
 
             // Pass empty string as keyBeingRenamed since we're not excluding any key from duplicate check
-            results[originalName] = this.validateRename(includesWithOtherPendingRenames, '', newName);
+            results[originalName] = this.validateRename(presetsWithOtherPendingRenames, '', newName);
         }
 
         return results;
