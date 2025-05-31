@@ -59,7 +59,7 @@ export class Query implements IQuery {
     private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/i;
 
     private readonly commentRegexp = /^#.*/;
-    private readonly includeRegexp = /^preset +(.*)/i;
+    private readonly presetRegexp = /^preset +(.*)/i;
 
     constructor(source: string, tasksFile: OptionalTasksFile = undefined) {
         this._queryId = this.generateQueryId(10);
@@ -119,7 +119,7 @@ export class Query implements IQuery {
     private parseLine(statement: Statement) {
         const line = statement.anyPlaceholdersExpanded;
         switch (true) {
-            case this.includeRegexp.test(line):
+            case this.presetRegexp.test(line):
                 this.parseInclude(line, statement);
                 break;
             case this.shortModeRegexp.test(line):
@@ -471,7 +471,7 @@ ${statement.explainStatement('    ')}
     }
 
     private parseInclude(line: string, statement: Statement) {
-        const include = this.includeRegexp.exec(line);
+        const include = this.presetRegexp.exec(line);
         if (include) {
             const includeName = include[1].trim();
             const { presets } = getSettings();
