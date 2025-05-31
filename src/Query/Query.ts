@@ -481,7 +481,7 @@ ${statement.explainStatement('    ')}
                 return;
             }
 
-            // Process the included text with placeholder expansion
+            // Process the preset text with placeholder expansion
             const instructions = splitSourceHonouringLineContinuations(presetValue);
             for (const instruction of instructions) {
                 const newStatement = new Statement(statement.rawInstruction, statement.anyContinuationLinesRemoved);
