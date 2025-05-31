@@ -9,7 +9,7 @@ TQ_extra_instructions: |-
 
 These searches are for experimenting with, and understanding, the new "Includes" facility, which was released in Tasks X.Y.Z.
 
-Includes values can be defined in the Tasks settings.
+presets values can be defined in the Tasks settings.
 
 explain: `INPUT[toggle:TQ_explain]`
 
@@ -19,12 +19,12 @@ explain: `INPUT[toggle:TQ_explain]`
 
 ````text
 ```tasks
-include xxxx
+preset xxxx
 ```
 ````
 
 ```tasks
-include xxxx
+preset xxxx
 ```
 
 ## Show all the fields
@@ -45,14 +45,14 @@ explain: `INPUT[toggle:TQ_explain]`
 
 ````text
 ```tasks
-include hide_all_dates
-include hide_other_fields
+preset hide_all_dates
+preset hide_other_fields
 ```
 ````
 
 ```tasks
-include hide_all_dates
-include hide_other_fields
+preset hide_all_dates
+preset hide_other_fields
 ```
 
 ## Hide all the Tasks user interface elements
@@ -61,12 +61,12 @@ explain: `INPUT[toggle:TQ_explain]`
 
 ````text
 ```tasks
-include hide_buttons
+preset hide_buttons
 ```
 ````
 
 ```tasks
-include hide_buttons
+preset hide_buttons
 ```
 
 ## Show only the description and any tags
@@ -75,12 +75,12 @@ explain: `INPUT[toggle:TQ_explain]`
 
 ````text
 ```tasks
-include just_the_description_and_tags
+preset just_the_description_and_tags
 ```
 ````
 
 ```tasks
-include just_the_description_and_tags
+preset just_the_description_and_tags
 ```
 
 ## Just show the description, without tags
@@ -89,12 +89,12 @@ explain: `INPUT[toggle:TQ_explain]`
 
 ````text
 ```tasks
-include just_the_description
+preset just_the_description
 ```
 ````
 
 ```tasks
-include just_the_description
+preset just_the_description
 ```
 
 ## Advanced use: return a function, that takes a parameter from the query source
