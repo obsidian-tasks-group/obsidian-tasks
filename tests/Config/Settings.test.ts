@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { getSettings, isFeatureEnabled, toggleFeature, updateSettings } from '../../src/Config/Settings';
+import { getSettings, isFeatureEnabled, resetSettings, toggleFeature, updateSettings } from '../../src/Config/Settings';
 
 describe('settings-usage', () => {
     it('load default settings and validate features', () => {
@@ -42,5 +42,34 @@ describe('settings-usage', () => {
 
         // Assert:
         expect(loggingOptions.loggingOptions.minLevels['tasks.Query']).toBeDefined();
+    });
+});
+
+describe('resetSettings behaviour', () => {
+    it('should reset a setting to default values', () => {
+        expect(getSettings().setCancelledDate).toEqual(true);
+
+        updateSettings({ setCancelledDate: false });
+        expect(getSettings().setCancelledDate).toEqual(false);
+
+        resetSettings();
+        expect(getSettings().setCancelledDate).toEqual(true);
+    });
+
+    it.failing('should completely remove properties not in defaultSettings', () => {
+        // Arrange: Add an extra property that isn't in defaultSettings
+        updateSettings({
+            extraProperty: 'should be removed',
+        } as any);
+
+        // Verify the extra property exists
+        const settingsBeforeReset = getSettings();
+        expect((settingsBeforeReset as any).extraProperty).toBe('should be removed');
+
+        // Act: Reset settings
+        const resetResult = resetSettings();
+
+        // Assert: Extra property should be completely gone
+        expect((resetResult as any).extraProperty).toBeUndefined();
     });
 });
