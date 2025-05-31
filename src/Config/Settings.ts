@@ -196,7 +196,8 @@ export const updateSettings = (newSettings: Partial<Settings>): Settings => {
 };
 
 export const resetSettings = (): Settings => {
-    return updateSettings(defaultSettings);
+    settings = JSON.parse(JSON.stringify(defaultSettings));
+    return settings;
 };
 
 export const updateGeneralSetting = (name: string, value: string | boolean): Settings => {
