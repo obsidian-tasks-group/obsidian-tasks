@@ -25,7 +25,7 @@ function summariseInstruction(instructions: string) {
 }
 
 export function unknownIncludeErrorMessage(includeName: string, includes: IncludesMap) {
-    let message = `Cannot find include "${includeName}" in the Tasks settings`;
+    let message = `Cannot find preset "${includeName}" in the Tasks settings`;
 
     const isIncludesEmpty = Object.keys(includes).length === 0;
     if (isIncludesEmpty) {
@@ -36,7 +36,7 @@ export function unknownIncludeErrorMessage(includeName: string, includes: Includ
             .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
             .map(([key, value]) => `${key.padEnd(maxKeyLength)}: ${summariseInstruction(value)}`)
             .join('\n  ');
-        message += `\nThe following includes are defined in the Tasks settings:\n  ${availableNames}`;
+        message += `\nThe following presets are defined in the Tasks settings:\n  ${availableNames}`;
     }
 
     return message;

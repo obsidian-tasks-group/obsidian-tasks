@@ -402,7 +402,7 @@ describe('include - error messages', () => {
         it('include instruction should give a meaningful error for non-existent include', () => {
             const query = createQuery('preset not_existent', includes);
             expect(query.error).toMatchInlineSnapshot(`
-                "Cannot find include "not_existent" in the Tasks settings
+                "Cannot find preset "not_existent" in the Tasks settings
                 You can define the instruction(s) for "not_existent" in the Tasks settings.
                 Problem line: "preset not_existent""
             `);
@@ -441,8 +441,8 @@ describe('include - error messages', () => {
         it('include instruction should give a meaningful error for non-existent include', () => {
             const query = createQuery('preset not_existent', includes);
             expect(query.error).toMatchInlineSnapshot(`
-                "Cannot find include "not_existent" in the Tasks settings
-                The following includes are defined in the Tasks settings:
+                "Cannot find preset "not_existent" in the Tasks settings
+                The following presets are defined in the Tasks settings:
                   include1            : sort by function task.lineNumber
                   include2            : task.due.format("YYYY")
                   include3            : (filename includes File 1) AND ( (heading includes...
