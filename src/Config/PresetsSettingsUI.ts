@@ -31,7 +31,7 @@ export class PresetsSettingsUI {
      * Renders the presets settings interface in the specified container
      * @param containerEl The HTML element to render the settings interface in
      */
-    public renderIncludesSettings(containerEl: HTMLElement) {
+    public renderPresetsSettings(containerEl: HTMLElement) {
         const includesContainer = containerEl.createDiv();
         const settings = getSettings();
 

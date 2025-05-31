@@ -164,7 +164,7 @@ export class SettingsTab extends PluginSettingTab {
                 'You can define named instructions here, that you can re-use in multiple queries. They can be used with "{{preset.name}}" and "preset name".',
             );
         // ---------------------------------------------------------------------------
-        this.includesSettingsUI.renderIncludesSettings(containerEl);
+        this.includesSettingsUI.renderPresetsSettings(containerEl);
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
