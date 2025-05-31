@@ -1,10 +1,10 @@
 {
-  "includes": {
+  "presets": {
     "hide_all_dates": "# Hide any values for all 6 date fields\nhide due date\nhide scheduled date\nhide start date\nhide created date\nhide done date\nhide cancelled date",
     "hide_buttons": "# Hide postpone, edit and backinks\nhide postpone button\nhide edit button\nhide backlinks",
     "hide_other_fields": "# Hide all the non-date fields, keep tags\nhide id\nhide depends on\nhide recurrence rule\nhide on completion\nhide priority",
-    "just_the_description_and_tags": "# Show only description and any tags\ninclude hide_all_dates\ninclude hide_other_fields\ninclude hide_buttons",
-    "just_the_description": "# Show only description, not even the tags\ninclude just_the_description_and_tags\nhide tags",
+    "just_the_description_and_tags": "# Show only description and any tags\npreset hide_all_dates\npreset hide_other_fields\npreset hide_buttons",
+    "just_the_description": "# Show only description, not even the tags\npreset just_the_description_and_tags\nhide tags",
     "filter_by_context": "filter by function let fn = (ctx) => task.tags.includes(`#context/${ctx}`); return fn",
     "extract_contexts_1": "ctx => task.tags.includes(`#context/${ctx}`)",
     "extract_contexts_2": "(ctx => task.tags.includes(`#context/${ctx}`))"

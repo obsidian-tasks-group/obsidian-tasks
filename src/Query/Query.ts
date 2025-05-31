@@ -59,7 +59,7 @@ export class Query implements IQuery {
     private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/i;
 
     private readonly commentRegexp = /^#.*/;
-    private readonly includeRegexp = /^include +(.*)/i;
+    private readonly includeRegexp = /^preset +(.*)/i;
 
     constructor(source: string, tasksFile: OptionalTasksFile = undefined) {
         this._queryId = this.generateQueryId(10);
@@ -474,10 +474,10 @@ ${statement.explainStatement('    ')}
         const include = this.includeRegexp.exec(line);
         if (include) {
             const includeName = include[1].trim();
-            const { includes } = getSettings();
-            const includeValue = includes[includeName];
+            const { presets } = getSettings();
+            const includeValue = presets[includeName];
             if (!includeValue) {
-                this.setError(unknownIncludeErrorMessage(includeName, includes), statement);
+                this.setError(unknownIncludeErrorMessage(includeName, presets), statement);
                 return;
             }
 
