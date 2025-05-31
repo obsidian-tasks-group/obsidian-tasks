@@ -1,9 +1,9 @@
 /* ---------------------------------------------- */
-/* Includes section                               */
+/* Presets section                               */
 /* ---------------------------------------------- */
 
 .tasks-settings {
-    // Main wrapper for includes section
+    // Main wrapper for presets section
     .tasks-presets-wrapper {
         width: 100%;
         position: relative;
@@ -91,7 +91,7 @@
 
             align-items: unset;
 
-            // Put a border around the elements for each Include, to make structure easier
+            // Put a border around the elements for each Preset, to make structure easier
             // to see.
             border: 1px solid var(--background-modifier-border) !important;
             padding: 0.5em !important;
