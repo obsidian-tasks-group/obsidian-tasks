@@ -13,6 +13,7 @@ import {
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
+import { Duration } from '../../src/Task/Duration';
 import { escapeInvisibleCharacters } from '../../src/lib/StringHelpers';
 
 jest.mock('obsidian');
@@ -69,6 +70,7 @@ describe('validate emoji regular expressions', () => {
             startDateRegex: /🛫\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
             createdDateRegex: /➕\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
             scheduledDateRegex: /[⏳⌛]\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
+            durationRegex: /⏱\\ufe0f? *([0-9]+h[0-9]+m?|[0-9]+h|[0-9]+m?)$/u
             dueDateRegex: /[📅📆🗓]\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
             doneDateRegex: /✅\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
             cancelledDateRegex: /❌\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
@@ -93,6 +95,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         recurrenceSymbol,
         onCompletionSymbol,
         scheduledDateSymbol,
+        durationSymbol,
         dueDateSymbol,
         doneDateSymbol,
         idSymbol,
@@ -170,6 +173,13 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
 
                 const taskDetails = deserialize(line);
                 expect(taskDetails).toMatchTaskDetails({ priority: Priority.High });
+            });
+        });
+
+        it('should parse a duration', () => {
+            const taskDetails = deserialize(`${durationSymbol} 1h30m`);
+            expect(taskDetails).toMatchTaskDetails({
+                duration: new Duration({ hours: 1, minutes: 30 }),
             });
         });
 
@@ -298,6 +308,18 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
 
         it('should serialize a None priority', () => {
             const task = new TaskBuilder().priority(Priority.None).description('').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual('');
+        });
+
+        it('should serialize a valid duration', () => {
+            const task = new TaskBuilder().duration(Duration.fromText('1h30m')!).description('').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(` ${durationSymbol} 1h30m`);
+        });
+
+        it('should serialize a None duration', () => {
+            const task = new TaskBuilder().duration(Duration.None).description('').build();
             const serialized = serialize(task);
             expect(serialized).toEqual('');
         });

@@ -20,6 +20,7 @@ import { createTasksFromMarkdown, fromLine } from '../TestingTools/TestHelpers';
 import type { FilteringCase } from '../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { Duration } from '../../src/Task/Duration';
 import { Priority } from '../../src/Task/Priority';
 import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
 import query_using_properties from '../Obsidian/__test_data__/query_using_properties.json';
@@ -158,6 +159,9 @@ description includes \
         'due in 2021-12-27 2021-12-29',
         'due on 2021-12-27',
         'due this week',
+        'duration above 1h30m',
+        'duration is 5m',
+        'duration under 2h',
         'exclude sub-items',
         'filename includes wibble',
         'filter by function task.isDone', // This cannot contain any () because of issue #1500
@@ -325,6 +329,8 @@ description includes \
             'sort by done reverse',
             'sort by due',
             'sort by due reverse',
+            'sort by duration',
+            'sort by duration reverse',
             'sort by filename',
             'sort by filename reverse',
             'sort by function reverse task.description.length',
@@ -404,6 +410,8 @@ description includes \
             'group by done reverse',
             'group by due',
             'group by due reverse',
+            'group by duration',
+            'group by duration reverse',
             'group by filename',
             'group by filename reverse',
             'group by folder',
@@ -486,6 +494,7 @@ description includes \
             'hide depends on',
             'hide done date',
             'hide due date',
+            'hide duration',
             'hide edit button',
             'hide id',
             'hide on completion',
@@ -511,6 +520,7 @@ description includes \
             'show depends on',
             'show done date',
             'show due date',
+            'show duration',
             'show edit button',
             'show id',
             'show on completion',
@@ -988,6 +998,7 @@ describe('Query', () => {
                     indentation: '',
                     listMarker: '-',
                     priority: Priority.None,
+                    duration: Duration.None,
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,
@@ -1010,6 +1021,7 @@ describe('Query', () => {
                     indentation: '',
                     listMarker: '-',
                     priority: Priority.None,
+                    duration: Duration.None,
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,
@@ -1161,6 +1173,34 @@ describe('Query', () => {
                         '- [ ] I have no done date, so should fail',
                     ],
                     expectedResult: ['- [ ] I am done before filter, and should pass ✅ 2022-12-01'],
+                },
+            ],
+            [
+                'by duration (under)',
+                {
+                    filters: ['duration under 1h'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 ⏱ 45m',
+                        '- [ ] task 3 ⏱ 90m',
+                        '- [ ] task 4 ⏱ 1h30m',
+                        '- [ ] task 5 ⏱ 2h',
+                    ],
+                    expectedResult: ['- [ ] task 2 ⏱ 0h45m'],
+                },
+            ],
+            [
+                'by duration (above)',
+                {
+                    filters: ['duration above 2h'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 ⏱ 45m',
+                        '- [ ] task 3 ⏱ 123m',
+                        '- [ ] task 4 ⏱ 1h30m',
+                        '- [ ] task 5 ⏱ 2h',
+                    ],
+                    expectedResult: ['- [ ] task 3 ⏱ 0h123m'],
                 },
             ],
         ])('should support filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {

@@ -3,6 +3,7 @@
 | due:: due date | due::  |
 | start:: start date | start::  |
 | scheduled:: scheduled date | scheduled::  |
+| duration:: duration | duration::  |
 | priority:: high priority | priority:: high]  |
 | priority:: medium priority | priority:: medium]  |
 | priority:: low priority | priority:: low]  |
@@ -50,6 +51,13 @@
 | next week (2022-07-18) | scheduled:: 2022-07-18]  |
 | next month (2022-08-11) | scheduled:: 2022-08-11]  |
 | next year (2023-07-11) | scheduled:: 2023-07-11]  |
+| duration:: 5m | duration:: 5m]  |
+| duration:: 15m | duration:: 15m]  |
+| duration:: 1h | duration:: 1h]  |
+| duration:: 30m | duration:: 30m]  |
+| duration:: 45m | duration:: 45m]  |
+| duration:: 2h | duration:: 2h]  |
+| duration:: 3h | duration:: 3h]  |
 | today (2022-07-11) | start:: 2022-07-11]  |
 | tomorrow (2022-07-12) | start:: 2022-07-12]  |
 | Sunday (2022-07-17) | start:: 2022-07-17]  |

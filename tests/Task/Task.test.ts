@@ -16,6 +16,7 @@ import { fromLine, toMarkdown } from '../TestingTools/TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { Priority } from '../../src/Task/Priority';
+import { Duration } from '../../src/Task/Duration';
 import { SampleTasks } from '../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../TestingTools/FilterTestHelpers';
 import type { TasksDate } from '../../src/DateTime/TasksDate';
@@ -1629,6 +1630,12 @@ describe('identicalTo', () => {
         const lhs = new TaskBuilder().priority(Priority.Medium);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().priority(Priority.Medium));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().priority(Priority.None));
+    });
+
+    it('should check duration', () => {
+        const lhs = new TaskBuilder().duration(Duration.fromText('1h30m')!);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().duration(new Duration({ hours: 1, minutes: 30 })));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().duration(new Duration({ hours: 0, minutes: 90 })));
     });
 
     it('should check createdDate', () => {
