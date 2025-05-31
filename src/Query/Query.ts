@@ -8,7 +8,7 @@ import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
 import type { Task } from '../Task/Task';
 import type { OptionalTasksFile } from '../Scripting/TasksFile';
-import { unknownIncludeErrorMessage } from '../Scripting/Includes';
+import { unknownPresetErrorMessage } from '../Scripting/Includes';
 import { Explainer } from './Explain/Explainer';
 import type { Filter } from './Filter/Filter';
 import * as FilterParser from './FilterParser';
@@ -477,7 +477,7 @@ ${statement.explainStatement('    ')}
             const { presets } = getSettings();
             const includeValue = presets[includeName];
             if (!includeValue) {
-                this.setError(unknownIncludeErrorMessage(includeName, presets), statement);
+                this.setError(unknownPresetErrorMessage(includeName, presets), statement);
                 return;
             }
 
