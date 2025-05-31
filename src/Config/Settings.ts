@@ -254,6 +254,8 @@ export function getUserSelectedTaskFormat(): TaskFormat {
 /**
  * Migrates old settings structure to new structure.
  * This handles backwards compatibility when settings property names change.
+ *
+ * Note: The vault's 'data.json' file is only updated when the user opens the Tasks settings UI.
  */
 function migrateSettings(loadedSettings: any): Partial<Settings> {
     const migratedSettings = { ...loadedSettings };
