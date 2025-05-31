@@ -87,12 +87,12 @@ export class PresetsSettingsService {
      * @param presets The current presets map (will not be modified)
      * @returns An object with the updated presets map and the new key
      */
-    public addPreset(presets: Readonly<PresetsMap>): { includes: PresetsMap; newKey: string } {
+    public addPreset(presets: Readonly<PresetsMap>): { presets: PresetsMap; newKey: string } {
         const newKey = this.generateUniqueKey(presets);
         const newPresets = { ...presets };
         newPresets[newKey] = '';
         return {
-            includes: newPresets,
+            presets: newPresets,
             newKey,
         };
     }
