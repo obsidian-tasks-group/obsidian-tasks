@@ -14,7 +14,7 @@ type RefreshViewCallback = () => void;
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
     private readonly events: TasksEvents;
-    private readonly includesSettingsService = new PresetsSettingsService();
+    private readonly presetsSettingsService = new PresetsSettingsService();
     private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
 
     /**
@@ -94,7 +94,7 @@ export class IncludesSettingsUI {
             // Handle renaming an include
             const commitRename = async () => {
                 if (newKey && newKey !== key) {
-                    const updatedPresets = this.includesSettingsService.renamePreset(settings.presets, key, newKey);
+                    const updatedPresets = this.presetsSettingsService.renamePreset(settings.presets, key, newKey);
                     if (updatedPresets) {
                         await this.saveIncludesSettings(updatedPresets, settings, refreshView);
                     }
@@ -118,7 +118,7 @@ export class IncludesSettingsUI {
             this.setupAutoResizingTextarea(textArea);
 
             return textArea.onChange(async (newValue) => {
-                const updatedPresets = this.includesSettingsService.updatePresetValue(settings.presets, key, newValue);
+                const updatedPresets = this.presetsSettingsService.updatePresetValue(settings.presets, key, newValue);
                 await this.saveIncludesSettings(updatedPresets, settings, null);
             });
         });
@@ -143,7 +143,7 @@ export class IncludesSettingsUI {
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const updatedPresets = this.includesSettingsService.deletePreset(settings.presets, key);
+                    const updatedPresets = this.presetsSettingsService.deletePreset(settings.presets, key);
                     await this.saveIncludesSettings(updatedPresets, settings, refreshView);
                 });
         });
@@ -220,11 +220,7 @@ export class IncludesSettingsUI {
             const targetIndex = this.getTargetIndex(key, dropPosition);
 
             // Perform the reorder
-            const updatedPresets = this.includesSettingsService.reorderPreset(
-                settings.presets,
-                draggedKey,
-                targetIndex,
-            );
+            const updatedPresets = this.presetsSettingsService.reorderPreset(settings.presets, draggedKey, targetIndex);
 
             if (updatedPresets) {
                 await this.saveIncludesSettings(updatedPresets, settings, refreshView);
@@ -311,7 +307,7 @@ export class IncludesSettingsUI {
         });
 
         // Get validation results from the service
-        const validationResults = this.includesSettingsService.validateRenames(currentValues);
+        const validationResults = this.presetsSettingsService.validateRenames(currentValues);
 
         // Apply styling based on validation results
         this.nameFields.forEach(({ inputEl, originalKey }) => {
@@ -357,7 +353,7 @@ export class IncludesSettingsUI {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const { presets: updatedPresets } = this.includesSettingsService.addPreset(settings.presets);
+                    const { presets: updatedPresets } = this.presetsSettingsService.addPreset(settings.presets);
                     await this.saveIncludesSettings(updatedPresets, settings, refreshView);
                 });
         });
