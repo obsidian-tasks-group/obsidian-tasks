@@ -738,6 +738,7 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
  * @param editor - the editor instance to which the suggest belongs
  */
 export function canSuggestForLine(line: string, cursor: EditorPosition, editor: Editor) {
+    // Old Code
     const lineHasGlobalFilter = GlobalFilter.getInstance().includedIn(line);
     const didEditorRequest = editorIsRequestingSuggest(editor, cursor, lineHasGlobalFilter);
 
