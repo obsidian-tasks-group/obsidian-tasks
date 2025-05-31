@@ -471,18 +471,18 @@ ${statement.explainStatement('    ')}
     }
 
     private parsePreset(line: string, statement: Statement) {
-        const include = this.presetRegexp.exec(line);
-        if (include) {
-            const includeName = include[1].trim();
+        const preset = this.presetRegexp.exec(line);
+        if (preset) {
+            const presetName = preset[1].trim();
             const { presets } = getSettings();
-            const includeValue = presets[includeName];
-            if (!includeValue) {
-                this.setError(unknownPresetErrorMessage(includeName, presets), statement);
+            const presetValue = presets[presetName];
+            if (!presetValue) {
+                this.setError(unknownPresetErrorMessage(presetName, presets), statement);
                 return;
             }
 
             // Process the included text with placeholder expansion
-            const instructions = splitSourceHonouringLineContinuations(includeValue);
+            const instructions = splitSourceHonouringLineContinuations(presetValue);
             for (const instruction of instructions) {
                 const newStatement = new Statement(statement.rawInstruction, statement.anyContinuationLinesRemoved);
                 newStatement.recordExpandedPlaceholders(instruction);
