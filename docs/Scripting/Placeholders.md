@@ -75,7 +75,7 @@ Explanation of this Tasks code block query:
 
 It is now possible to use properties in the query file. See [[Obsidian Properties#Using Query Properties in Searches]]
 
-## Using includes.xxx
+## Using preset.xxx
 
 You can do the following:
 
@@ -83,7 +83,7 @@ You can do the following:
 {{preset.my_snippet_from_settings}}
 ```
 
-See also [[Includes]].
+See also [[Presets]].
 
 ## Error checking: invalid variables
 
