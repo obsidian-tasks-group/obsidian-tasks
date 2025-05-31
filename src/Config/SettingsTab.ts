@@ -33,13 +33,13 @@ export class SettingsTab extends PluginSettingTab {
     };
 
     private readonly plugin: TasksPlugin;
-    private readonly includesSettingsUI;
+    private readonly presetsSettingsUI;
 
     constructor({ plugin, events }: { plugin: TasksPlugin; events: TasksEvents }) {
         super(plugin.app, plugin);
 
         this.plugin = plugin;
-        this.includesSettingsUI = new PresetsSettingsUI(plugin, events);
+        this.presetsSettingsUI = new PresetsSettingsUI(plugin, events);
     }
 
     private static createFragmentWithHTML = (html: string) =>
@@ -164,7 +164,7 @@ export class SettingsTab extends PluginSettingTab {
                 'You can define named instructions here, that you can re-use in multiple queries. They can be used with "{{preset.name}}" and "preset name".',
             );
         // ---------------------------------------------------------------------------
-        this.includesSettingsUI.renderPresetsSettings(containerEl);
+        this.presetsSettingsUI.renderPresetsSettings(containerEl);
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
