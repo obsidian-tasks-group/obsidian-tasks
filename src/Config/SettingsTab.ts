@@ -21,7 +21,7 @@ import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
-import { IncludesSettingsUI } from './IncludesSettingsUI';
+import { PresetsSettingsUI } from './PresetsSettingsUI';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -39,7 +39,7 @@ export class SettingsTab extends PluginSettingTab {
         super(plugin.app, plugin);
 
         this.plugin = plugin;
-        this.includesSettingsUI = new IncludesSettingsUI(plugin, events);
+        this.includesSettingsUI = new PresetsSettingsUI(plugin, events);
     }
 
     private static createFragmentWithHTML = (html: string) =>

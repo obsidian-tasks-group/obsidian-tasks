@@ -11,7 +11,7 @@ type RefreshViewCallback = () => void;
  *
  * This class handles rendering, updating, and managing the includes settings UI components.
  */
-export class IncludesSettingsUI {
+export class PresetsSettingsUI {
     private readonly plugin: TasksPlugin;
     private readonly events: TasksEvents;
     private readonly presetsSettingsService = new PresetsSettingsService();
