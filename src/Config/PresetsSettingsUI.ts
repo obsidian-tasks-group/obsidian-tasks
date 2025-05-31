@@ -52,11 +52,11 @@ export class PresetsSettingsUI {
     }
 
     /**
-     * Renders a single include item with its controls
-     * @param presetsContainer The container element for the include item
+     * Renders a single preset item with its controls
+     * @param presetsContainer The container element for the preset item
      * @param settings The current plugin settings
-     * @param key The key/name of the include
-     * @param value The value/query of the include
+     * @param key The key/name of the preset
+     * @param value The value/query of the preset
      * @param refreshView Callback to refresh the view after changes
      */
     private renderPresetItem(
@@ -91,7 +91,7 @@ export class PresetsSettingsUI {
                 this.validateAllInputs();
             });
 
-            // Handle renaming an include
+            // Handle renaming a preset
             const commitRename = async () => {
                 if (newKey && newKey !== key) {
                     const updatedPresets = this.presetsSettingsService.renamePreset(settings.presets, key, newKey);
@@ -157,9 +157,9 @@ export class PresetsSettingsUI {
     }
 
     /**
-     * Sets up drag and drop functionality for an include item
-     * @param wrapper The wrapper element for the include item
-     * @param key The key of the include item
+     * Sets up drag and drop functionality for a preset item
+     * @param wrapper The wrapper element for the preset item
+     * @param key The key of the preset item
      * @param settings The current plugin settings
      * @param refreshView Callback to refresh the view after reordering
      */
@@ -343,10 +343,10 @@ export class PresetsSettingsUI {
     }
 
     /**
-     * Creates and configures the "Add new include" button
+     * Creates and configures the "Add new preset" button
      * @param containerEl The container element for the button
      * @param settings The current plugin settings
-     * @param refreshView Callback to refresh the view after adding a new include
+     * @param refreshView Callback to refresh the view after adding a new preset
      */
     private createAddNewPresetButton(containerEl: HTMLElement, settings: Settings, refreshView: RefreshViewCallback) {
         new Setting(containerEl).addButton((btn) => {
@@ -360,7 +360,7 @@ export class PresetsSettingsUI {
     }
 
     /**
-     * Updates settings with new includes and refreshes UI if needed
+     * Updates settings with new presets and refreshes UI if needed
      * @param updatedPresets The new presets map
      * @param settings The current settings object to update
      * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
