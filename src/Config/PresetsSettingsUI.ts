@@ -7,9 +7,9 @@ import { type PresetsMap, type Settings, getSettings, updateSettings } from './S
 type RefreshViewCallback = () => void;
 
 /**
- * Manages the user interface for configuring includes settings in the Tasks plugin.
+ * Manages the user interface for configuring presets settings in the Tasks plugin.
  *
- * This class handles rendering, updating, and managing the includes settings UI components.
+ * This class handles rendering, updating, and managing the presets settings UI components.
  */
 export class PresetsSettingsUI {
     private readonly plugin: TasksPlugin;
@@ -18,7 +18,7 @@ export class PresetsSettingsUI {
     private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
 
     /**
-     * Creates a new instance of IncludesSettingsUI
+     * Creates a new instance of PresetsSettingsUI
      * @param plugin The Tasks plugin instance
      * @param events The plugin's events object
      */
@@ -28,7 +28,7 @@ export class PresetsSettingsUI {
     }
 
     /**
-     * Renders the includes settings interface in the specified container
+     * Renders the presets settings interface in the specified container
      * @param containerEl The HTML element to render the settings interface in
      */
     public renderIncludesSettings(containerEl: HTMLElement) {
