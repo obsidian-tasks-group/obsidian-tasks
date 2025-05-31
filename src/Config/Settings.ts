@@ -97,7 +97,7 @@ export interface Settings {
     loggingOptions: LogOptions;
 }
 
-const defaultSettings: Settings = {
+const defaultSettings: Readonly<Settings> = {
     presets: {},
     globalQuery: '',
     globalFilter: '',
@@ -190,7 +190,10 @@ export const getSettings = (): Settings => {
 };
 
 export const updateSettings = (newSettings: Partial<Settings>): Settings => {
-    settings = { ...settings, ...newSettings };
+    // Apply migrations before updating settings
+    const migratedSettings = migrateSettings(newSettings);
+
+    settings = { ...settings, ...migratedSettings };
 
     return getSettings();
 };
@@ -246,4 +249,22 @@ export const toggleFeature = (internalName: string, enabled: boolean): FeatureFl
  */
 export function getUserSelectedTaskFormat(): TaskFormat {
     return TASK_FORMATS[getSettings().taskFormat];
+}
+
+/**
+ * Migrates old settings structure to new structure.
+ * This handles backwards compatibility when settings property names change.
+ */
+function migrateSettings(loadedSettings: any): Partial<Settings> {
+    const migratedSettings = { ...loadedSettings };
+
+    // Migrate 'includes' to 'presets' if present
+    if ('includes' in migratedSettings && !('presets' in migratedSettings)) {
+        migratedSettings.presets = migratedSettings.includes;
+        delete migratedSettings.includes;
+    }
+
+    // Add future migrations here as needed
+
+    return migratedSettings;
 }
