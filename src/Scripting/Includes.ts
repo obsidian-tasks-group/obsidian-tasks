@@ -24,7 +24,7 @@ function summariseInstruction(instructions: string) {
     return result;
 }
 
-export function unknownIncludeErrorMessage(includeName: string, includes: PresetsMap) {
+export function unknownPresetErrorMessage(includeName: string, includes: PresetsMap) {
     let message = `Cannot find preset "${includeName}" in the Tasks settings`;
 
     const isIncludesEmpty = Object.keys(includes).length === 0;
