@@ -32,23 +32,23 @@ export class PresetsSettingsUI {
      * @param containerEl The HTML element to render the settings interface in
      */
     public renderPresetsSettings(containerEl: HTMLElement) {
-        const includesContainer = containerEl.createDiv();
+        const presetsContainer = containerEl.createDiv();
         const settings = getSettings();
 
-        const renderIncludes = () => {
-            includesContainer.empty();
+        const renderPresets = () => {
+            presetsContainer.empty();
 
             // Clear the input map when re-rendering
             this.nameFields.clear();
 
             Object.entries(settings.presets).forEach(([key, value]) => {
-                this.renderPresetItem(includesContainer, settings, key, value, renderIncludes);
+                this.renderPresetItem(presetsContainer, settings, key, value, renderPresets);
             });
         };
 
-        renderIncludes();
+        renderPresets();
 
-        this.createAddNewPresetButton(containerEl, settings, renderIncludes);
+        this.createAddNewPresetButton(containerEl, settings, renderPresets);
     }
 
     /**
