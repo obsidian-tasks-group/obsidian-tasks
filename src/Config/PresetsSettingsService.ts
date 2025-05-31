@@ -28,7 +28,7 @@ export interface RenameResults {
     [originalName: string]: RenameResult;
 }
 
-export class IncludesSettingsService {
+export class PresetsSettingsService {
     /**
      * Validates multiple include names against each other
      * @param renames Map of original keys to their current values in UI
