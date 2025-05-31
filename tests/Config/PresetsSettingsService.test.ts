@@ -146,8 +146,8 @@ describe('PresetsSettingsService', () => {
             const result = service.addPreset(testPresets);
 
             expect(result.newKey).toBe('new_key_1');
-            expect(result.includes['new_key_1']).toBe('');
-            expect(Object.keys(result.includes).length).toBe(3);
+            expect(result.presets['new_key_1']).toBe('');
+            expect(Object.keys(result.presets).length).toBe(3);
         });
     });
 

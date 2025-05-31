@@ -357,7 +357,7 @@ export class IncludesSettingsUI {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const { includes: updatedIncludes } = this.includesSettingsService.addPreset(settings.presets);
+                    const { presets: updatedIncludes } = this.includesSettingsService.addPreset(settings.presets);
                     await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                 });
         });
