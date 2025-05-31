@@ -56,7 +56,7 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().setCancelledDate).toEqual(true);
     });
 
-    it.failing('should completely remove properties not in defaultSettings', () => {
+    it('should completely remove properties not in defaultSettings', () => {
         // Arrange: Add an extra property that isn't in defaultSettings
         updateSettings({
             extraProperty: 'should be removed',
