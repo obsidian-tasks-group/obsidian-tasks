@@ -59,10 +59,10 @@ export const TASK_FORMATS = {
 } as const;
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
-export type IncludesMap = Record<string, string>;
+export type PresetsMap = Record<string, string>;
 
 export interface Settings {
-    presets: IncludesMap;
+    presets: PresetsMap;
     globalQuery: string;
     globalFilter: string;
     removeGlobalFilter: boolean;

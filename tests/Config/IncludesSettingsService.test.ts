@@ -3,7 +3,7 @@ import {
     RenameResult,
     type RenamesInProgress,
 } from '../../src/Config/IncludesSettingsService';
-import type { IncludesMap } from '../../src/Config/Settings';
+import type { PresetsMap } from '../../src/Config/Settings';
 
 function expectToBeValid(result: RenameResult) {
     expect(result.isValid).toBe(true);
@@ -17,7 +17,7 @@ function expectToGiveError(result: RenameResult, errorMessage: string) {
 
 describe('IncludesSettingsService', () => {
     let service: IncludesSettingsService;
-    let testIncludes: IncludesMap;
+    let testIncludes: PresetsMap;
 
     beforeEach(() => {
         service = new IncludesSettingsService();
@@ -213,7 +213,7 @@ describe('IncludesSettingsService', () => {
 
     describe('IncludesSettingsService - wouldCreateDuplicateKey', () => {
         let service: IncludesSettingsService;
-        let testIncludes: IncludesMap;
+        let testIncludes: PresetsMap;
 
         beforeEach(() => {
             service = new IncludesSettingsService();
@@ -346,7 +346,7 @@ describe('IncludesSettingsService', () => {
 
     describe('IncludesSettingsService - reorderInclude', () => {
         let service: IncludesSettingsService;
-        let testIncludes: IncludesMap;
+        let testIncludes: PresetsMap;
 
         beforeEach(() => {
             service = new IncludesSettingsService();

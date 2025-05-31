@@ -3,7 +3,7 @@
  */
 
 import moment from 'moment';
-import { type IncludesMap, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { type PresetsMap, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Query } from '../../src/Query/Query';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Statement } from '../../src/Query/Statement';
@@ -19,13 +19,13 @@ afterEach(() => {
     resetSettings();
 });
 
-export function makeIncludes(...entries: [string, string][]): IncludesMap {
+export function makeIncludes(...entries: [string, string][]): PresetsMap {
     return Object.fromEntries(entries);
 }
 
 const tasksFile = new TasksFile('root/folder/stuff.md');
 
-function createQuery(source: string, includes: IncludesMap) {
+function createQuery(source: string, includes: PresetsMap) {
     updateSettings({ presets: includes });
     const query = new Query(source, tasksFile);
 
@@ -34,7 +34,7 @@ function createQuery(source: string, includes: IncludesMap) {
     return query;
 }
 
-function createValidQuery(source: string, includes: IncludesMap) {
+function createValidQuery(source: string, includes: PresetsMap) {
     const query = createQuery(source, includes);
 
     expect(query.error).toBeUndefined();

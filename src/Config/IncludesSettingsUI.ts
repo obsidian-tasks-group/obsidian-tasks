@@ -2,7 +2,7 @@ import { Setting, TextAreaComponent } from 'obsidian';
 import type TasksPlugin from '../main';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { IncludesSettingsService, type RenamesInProgress } from './IncludesSettingsService';
-import { type IncludesMap, type Settings, getSettings, updateSettings } from './Settings';
+import { type PresetsMap, type Settings, getSettings, updateSettings } from './Settings';
 
 type RefreshViewCallback = () => void;
 
@@ -374,7 +374,7 @@ export class IncludesSettingsUI {
      * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
      */
     private async saveIncludesSettings(
-        updatedIncludes: IncludesMap,
+        updatedIncludes: PresetsMap,
         settings: Settings,
         refreshView: RefreshViewCallback | null,
     ) {
