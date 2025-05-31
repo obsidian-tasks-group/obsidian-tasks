@@ -72,7 +72,7 @@ export class PresetsSettingsUI {
 
         // Make the wrapper draggable
         wrapper.draggable = true;
-        wrapper.setAttribute('data-include-key', key);
+        wrapper.setAttribute('data-preset-key', key);
 
         // Add name input field
         setting.addText((text) => {
