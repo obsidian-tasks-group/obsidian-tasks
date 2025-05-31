@@ -1,8 +1,4 @@
-import {
-    IncludesSettingsService,
-    RenameResult,
-    type RenamesInProgress,
-} from '../../src/Config/IncludesSettingsService';
+import { PresetsSettingsService, RenameResult, type RenamesInProgress } from '../../src/Config/PresetsSettingsService';
 import type { PresetsMap } from '../../src/Config/Settings';
 
 function expectToBeValid(result: RenameResult) {
@@ -16,11 +12,11 @@ function expectToGiveError(result: RenameResult, errorMessage: string) {
 }
 
 describe('IncludesSettingsService', () => {
-    let service: IncludesSettingsService;
+    let service: PresetsSettingsService;
     let testIncludes: PresetsMap;
 
     beforeEach(() => {
-        service = new IncludesSettingsService();
+        service = new PresetsSettingsService();
         testIncludes = {
             key1: 'value1',
             key2: 'value2',
@@ -28,10 +24,10 @@ describe('IncludesSettingsService', () => {
     });
 
     describe('IncludesSettingsService - validateMultipleIncludeNames', () => {
-        let service: IncludesSettingsService;
+        let service: PresetsSettingsService;
 
         beforeEach(() => {
-            service = new IncludesSettingsService();
+            service = new PresetsSettingsService();
         });
 
         it('should validate all keys as valid when there are no duplicates', () => {
@@ -212,11 +208,11 @@ describe('IncludesSettingsService', () => {
     });
 
     describe('IncludesSettingsService - wouldCreateDuplicateKey', () => {
-        let service: IncludesSettingsService;
+        let service: PresetsSettingsService;
         let testIncludes: PresetsMap;
 
         beforeEach(() => {
-            service = new IncludesSettingsService();
+            service = new PresetsSettingsService();
             testIncludes = {
                 key1: 'value1',
                 key2: 'value2',
@@ -345,11 +341,11 @@ describe('IncludesSettingsService', () => {
     });
 
     describe('IncludesSettingsService - reorderInclude', () => {
-        let service: IncludesSettingsService;
+        let service: PresetsSettingsService;
         let testIncludes: PresetsMap;
 
         beforeEach(() => {
-            service = new IncludesSettingsService();
+            service = new PresetsSettingsService();
             testIncludes = {
                 first: 'value1',
                 second: 'value2',

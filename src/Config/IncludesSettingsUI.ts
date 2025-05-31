@@ -1,7 +1,7 @@
 import { Setting, TextAreaComponent } from 'obsidian';
 import type TasksPlugin from '../main';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
-import { IncludesSettingsService, type RenamesInProgress } from './IncludesSettingsService';
+import { PresetsSettingsService, type RenamesInProgress } from './PresetsSettingsService';
 import { type PresetsMap, type Settings, getSettings, updateSettings } from './Settings';
 
 type RefreshViewCallback = () => void;
@@ -14,7 +14,7 @@ type RefreshViewCallback = () => void;
 export class IncludesSettingsUI {
     private readonly plugin: TasksPlugin;
     private readonly events: TasksEvents;
-    private readonly includesSettingsService = new IncludesSettingsService();
+    private readonly includesSettingsService = new PresetsSettingsService();
     private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
 
     /**
