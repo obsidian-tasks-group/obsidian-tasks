@@ -66,25 +66,25 @@ describe('include tests', () => {
         });
 
         it('should accept whole-line include filter instruction', () => {
-            const source = 'include not_done';
+            const source = 'preset not_done';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, ['not done']);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "include not_done =>
+                "preset not_done =>
                 not done
                 "
             `);
         });
 
         it('should accept whole-line include filter instruction, continued over two lines', () => {
-            const source = 'include \\\nnot_done';
+            const source = 'preset \\\nnot_done';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, ['not done']);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "include \\
+                "preset \\
                 not_done
                  =>
-                include not_done =>
+                preset not_done =>
                 not done
                 "
             `);
@@ -93,7 +93,7 @@ describe('include tests', () => {
 
     it('should accept whole-line include layout instruction', () => {
         const includes = makeIncludes(['show_tree', 'show tree']);
-        const source = 'include show_tree';
+        const source = 'preset show_tree';
 
         const query = createValidQuery(source, includes);
 
@@ -103,7 +103,7 @@ describe('include tests', () => {
 
     it('should accept multi-line include', () => {
         const includes = makeIncludes(['multi_line', 'scheduled tomorrow\nhide backlink']);
-        const source = 'include multi_line';
+        const source = 'preset multi_line';
 
         const query = createValidQuery(source, includes);
 
@@ -117,9 +117,9 @@ describe('include tests', () => {
         const includes = makeIncludes(
             // Force line break
             ['inside', 'not done'],
-            ['out', 'include inside\nhide edit button'],
+            ['out', 'preset inside\nhide edit button'],
         );
-        const source = 'include out';
+        const source = 'preset out';
 
         const query = createValidQuery(source, includes);
 
@@ -139,7 +139,7 @@ describe('include tests', () => {
         });
 
         it('include instruction should expand placeholder in include value', () => {
-            const source = 'include this_path';
+            const source = 'preset this_path';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, ['path includes root/folder/stuff.md']);
         });
@@ -148,7 +148,7 @@ describe('include tests', () => {
     describe('multi-line placeholders inside includes', () => {
         const includes = makeIncludes(
             ['two_lines', 'has due date\nhas created date'],
-            ['two_lines_as_include', 'include two_lines'],
+            ['two_lines_as_include', 'preset two_lines'],
             ['two_lines_as_placeholder', '{{preset.two_lines}}'],
         );
 
@@ -165,19 +165,19 @@ describe('include tests', () => {
         });
 
         it('include another include instruction should detect both lines in included value', () => {
-            const source = 'include two_lines_as_include';
+            const source = 'preset two_lines_as_include';
             const query = createValidQuery(source, includes);
             expectFiltersToBe(query, ['has due date', 'has created date']);
         });
 
         it('include a placeholder include should detect both lines in included value BUT DOES NOT', () => {
             // TODO Handle expanding multi-line placeholders
-            const source = 'include two_lines_as_placeholder';
+            const source = 'preset two_lines_as_placeholder';
             const query = createQuery(source, includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "do not understand query
                 Problem statement:
-                    include two_lines_as_placeholder =>
+                    preset two_lines_as_placeholder =>
                     has due date
                 has created date
                 "
@@ -269,7 +269,7 @@ return "Hello World";`;
         });
 
         it('include instruction supports line continuations in include value', () => {
-            const source = 'include instruction_with_continuation_lines';
+            const source = 'preset instruction_with_continuation_lines';
             const query = createValidQuery(source, includes);
             expectExpandedStatementToBe(query.grouping[0].statement, expectedStatement);
         });
@@ -335,7 +335,7 @@ describe('include - explain output', () => {
     describe('explain two levels of nested includes', () => {
         const includes = makeIncludes(
             ['inside', '(happens this week) AND (starts before today)'],
-            ['out', 'include inside\nnot done'],
+            ['out', 'preset inside\nnot done'],
         );
 
         it('includes placeholder should explain two levels of nested includes', () => {
@@ -360,11 +360,11 @@ describe('include - explain output', () => {
         });
 
         it('include instruction should explain two levels of nested includes', () => {
-            const query = createValidQuery('include out', includes);
+            const query = createValidQuery('preset out', includes);
             // With the repeated output 'include out =>', it is less obvious than in
             // the previous test that some text was expanded in to more than one line.
             expect(query.explainQuery()).toMatchInlineSnapshot(`
-                "include out =>
+                "preset out =>
                 (happens this week) AND (starts before today) =>
                   AND (All of):
                     happens this week =>
@@ -374,7 +374,7 @@ describe('include - explain output', () => {
                     starts before today =>
                       start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
 
-                include out =>
+                preset out =>
                 not done
                 "
             `);
@@ -400,11 +400,11 @@ describe('include - error messages', () => {
         });
 
         it('include instruction should give a meaningful error for non-existent include', () => {
-            const query = createQuery('include not_existent', includes);
+            const query = createQuery('preset not_existent', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "Cannot find include "not_existent" in the Tasks settings
                 You can define the instruction(s) for "not_existent" in the Tasks settings.
-                Problem line: "include not_existent""
+                Problem line: "preset not_existent""
             `);
         });
     });
@@ -439,7 +439,7 @@ describe('include - error messages', () => {
         });
 
         it('include instruction should give a meaningful error for non-existent include', () => {
-            const query = createQuery('include not_existent', includes);
+            const query = createQuery('preset not_existent', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "Cannot find include "not_existent" in the Tasks settings
                 The following includes are defined in the Tasks settings:
@@ -447,7 +447,7 @@ describe('include - error messages', () => {
                   include2            : task.due.format("YYYY")
                   include3            : (filename includes File 1) AND ( (heading includes...
                   include4_longer_name: (filename includes File 1) AND \\...
-                Problem line: "include not_existent""
+                Problem line: "preset not_existent""
             `);
         });
     });
@@ -456,7 +456,7 @@ describe('include - error messages', () => {
         const includes = makeIncludes(
             // Force line break
             ['inside', 'apple sauce'],
-            ['out', 'include inside'],
+            ['out', 'preset inside'],
         );
 
         it('includes placeholder should give meaningful error message about included text', () => {
@@ -471,11 +471,11 @@ describe('include - error messages', () => {
         });
 
         it('include instruction should give meaningful error message about included text', () => {
-            const query = createQuery('include out', includes);
+            const query = createQuery('preset out', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "do not understand query
                 Problem statement:
-                    include out =>
+                    preset out =>
                     apple sauce
                 "
             `);
@@ -485,7 +485,7 @@ describe('include - error messages', () => {
     describe('infinite recursion of instruction', () => {
         const includes = makeIncludes(
             ['self_reference_1', '{{preset.self_reference_1}}'],
-            ['self_reference_2', 'include self_reference_2'],
+            ['self_reference_2', 'preset self_reference_2'],
         );
 
         it('includes placeholder should give meaningful error message about self-referencing instructions BUT DOES NOT', () => {
@@ -514,11 +514,11 @@ describe('include - error messages', () => {
         });
 
         it('include instruction should give meaningful error message about self-referencing instructions BUT DOES NOT', () => {
-            // TODO Better error error message for 'include self_reference'
-            const query = createQuery('include self_reference_2', includes);
+            // TODO Better error error message for 'preset self_reference'
+            const query = createQuery('preset self_reference_2', includes);
             expect(query.error).toMatchInlineSnapshot(`
                 "Maximum call stack size exceeded
-                Problem line: "include self_reference_2""
+                Problem line: "preset self_reference_2""
             `);
         });
     });
