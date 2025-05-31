@@ -122,13 +122,13 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 
     it('should be able to reread the query when query settings are changed', () => {
         // Arrange
-        updateSettings({ includes: { CurrentGrouping: 'group by PATH' } });
-        const source = 'include CurrentGrouping';
+        updateSettings({ presets: { CurrentGrouping: 'group by PATH' } });
+        const source = 'preset CurrentGrouping';
         const renderer = makeQueryResultsRenderer(source, new TasksFile('any file.md'));
         expect(renderer.query.explainQuery()).toContain('group by PATH');
 
         // Act
-        updateSettings({ includes: { CurrentGrouping: 'group by DUE' } });
+        updateSettings({ presets: { CurrentGrouping: 'group by DUE' } });
         renderer.rereadQueryFromFile();
 
         // Assert
