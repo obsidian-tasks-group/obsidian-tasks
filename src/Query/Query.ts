@@ -120,7 +120,7 @@ export class Query implements IQuery {
         const line = statement.anyPlaceholdersExpanded;
         switch (true) {
             case this.presetRegexp.test(line):
-                this.parseInclude(line, statement);
+                this.parsePreset(line, statement);
                 break;
             case this.shortModeRegexp.test(line):
                 this._queryLayoutOptions.shortMode = true;
@@ -470,7 +470,7 @@ ${statement.explainStatement('    ')}
         return false;
     }
 
-    private parseInclude(line: string, statement: Statement) {
+    private parsePreset(line: string, statement: Statement) {
         const include = this.presetRegexp.exec(line);
         if (include) {
             const includeName = include[1].trim();
