@@ -66,9 +66,9 @@ export class PresetsSettingsUI {
         value: string,
         refreshView: RefreshViewCallback,
     ) {
-        const wrapper = presetsContainer.createDiv({ cls: 'tasks-includes-wrapper' });
+        const wrapper = presetsContainer.createDiv({ cls: 'tasks-presets-wrapper' });
         const setting = new Setting(wrapper);
-        setting.settingEl.addClass('tasks-includes-setting');
+        setting.settingEl.addClass('tasks-presets-setting');
 
         // Make the wrapper draggable
         wrapper.draggable = true;
@@ -77,7 +77,7 @@ export class PresetsSettingsUI {
         // Add name input field
         setting.addText((text) => {
             text.setPlaceholder('Name').setValue(key);
-            text.inputEl.addClass('tasks-includes-key');
+            text.inputEl.addClass('tasks-presets-key');
 
             // Store reference to this input with its original key
             this.nameFields.set(key, { inputEl: text.inputEl, originalKey: key });
@@ -112,7 +112,7 @@ export class PresetsSettingsUI {
 
         // Add value textarea
         setting.addTextArea((textArea) => {
-            textArea.inputEl.addClass('tasks-includes-value');
+            textArea.inputEl.addClass('tasks-presets-value');
             textArea.setPlaceholder('Query or filter text...').setValue(value);
 
             this.setupAutoResizingTextarea(textArea);
@@ -125,7 +125,7 @@ export class PresetsSettingsUI {
 
         // Add drag handle
         setting.addExtraButton((btn) => {
-            btn.extraSettingsEl.addClass('tasks-includes-drag-handle');
+            btn.extraSettingsEl.addClass('tasks-presets-drag-handle');
             btn.setIcon('grip-vertical').setTooltip('Drag to reorder');
 
             btn.extraSettingsEl.style.cursor = 'grab';
@@ -139,7 +139,7 @@ export class PresetsSettingsUI {
 
         // Add delete button
         setting.addExtraButton((btn) => {
-            btn.extraSettingsEl.addClass('tasks-includes-delete-button');
+            btn.extraSettingsEl.addClass('tasks-presets-delete-button');
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
@@ -175,12 +175,12 @@ export class PresetsSettingsUI {
                 e.dataTransfer.setData('text/plain', key);
                 e.dataTransfer.effectAllowed = 'move';
             }
-            wrapper.addClass('tasks-includes-dragging');
+            wrapper.addClass('tasks-presets-dragging');
         });
 
         // Drag end
         wrapper.addEventListener('dragend', (_e) => {
-            wrapper.removeClass('tasks-includes-dragging');
+            wrapper.removeClass('tasks-presets-dragging');
             this.clearDropIndicators();
         });
 
@@ -258,9 +258,9 @@ export class PresetsSettingsUI {
 
         const dropPosition = this.calculateDropPosition(wrapper, e);
         if (dropPosition === 'above') {
-            wrapper.addClass('tasks-includes-drop-above');
+            wrapper.addClass('tasks-presets-drop-above');
         } else {
-            wrapper.addClass('tasks-includes-drop-below');
+            wrapper.addClass('tasks-presets-drop-below');
         }
     }
 
@@ -280,7 +280,7 @@ export class PresetsSettingsUI {
      * Clears all drop indicators
      */
     private clearDropIndicators() {
-        const containers = document.querySelectorAll('.tasks-includes-wrapper');
+        const containers = document.querySelectorAll('.tasks-presets-wrapper');
         containers.forEach((container) => {
             this.clearDropIndicator(container as HTMLElement);
         });
@@ -291,8 +291,8 @@ export class PresetsSettingsUI {
      * @param element The element to clear indicators from
      */
     private clearDropIndicator(element: HTMLElement) {
-        element.removeClass('tasks-includes-drop-above');
-        element.removeClass('tasks-includes-drop-below');
+        element.removeClass('tasks-presets-drop-above');
+        element.removeClass('tasks-presets-drop-below');
     }
 
     /**
