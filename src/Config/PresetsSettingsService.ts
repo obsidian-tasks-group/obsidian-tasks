@@ -89,10 +89,10 @@ export class PresetsSettingsService {
      */
     public addPreset(presets: Readonly<PresetsMap>): { includes: PresetsMap; newKey: string } {
         const newKey = this.generateUniqueKey(presets);
-        const newIncludes = { ...presets };
-        newIncludes[newKey] = '';
+        const newPresets = { ...presets };
+        newPresets[newKey] = '';
         return {
-            includes: newIncludes,
+            includes: newPresets,
             newKey,
         };
     }
@@ -131,9 +131,9 @@ export class PresetsSettingsService {
      * @returns The updated presets map
      */
     public deletePreset(presets: Readonly<PresetsMap>, key: string): PresetsMap {
-        const newIncludes = { ...presets };
-        delete newIncludes[key];
-        return newIncludes;
+        const newPresets = { ...presets };
+        delete newPresets[key];
+        return newPresets;
     }
 
     /**
@@ -144,9 +144,9 @@ export class PresetsSettingsService {
      * @returns The updated presets map
      */
     public updatePresetValue(presets: Readonly<PresetsMap>, key: string, value: string): PresetsMap {
-        const newIncludes = { ...presets };
-        newIncludes[key] = value;
-        return newIncludes;
+        const newPresets = { ...presets };
+        newPresets[key] = value;
+        return newPresets;
     }
 
     /**
@@ -229,11 +229,11 @@ export class PresetsSettingsService {
         newKeys.splice(newIndex, 0, key);
 
         // Rebuild the map in the new order
-        const newIncludes: PresetsMap = {};
+        const newPresets: PresetsMap = {};
         for (const k of newKeys) {
-            newIncludes[k] = presets[k];
+            newPresets[k] = presets[k];
         }
 
-        return newIncludes;
+        return newPresets;
     }
 }
