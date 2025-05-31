@@ -3,6 +3,14 @@
  */
 import { getSettings, isFeatureEnabled, resetSettings, toggleFeature, updateSettings } from '../../src/Config/Settings';
 
+beforeEach(() => {
+    resetSettings();
+});
+
+afterEach(() => {
+    resetSettings();
+});
+
 describe('settings-usage', () => {
     it('load default settings and validate features', () => {
         const currentSettings = getSettings();
@@ -71,5 +79,88 @@ describe('resetSettings behaviour', () => {
 
         // Assert: Extra property should be completely gone
         expect((resetResult as any).extraProperty).toBeUndefined();
+    });
+});
+
+describe('settings migration', () => {
+    it('should migrate "includes" to "presets" when loading old settings', () => {
+        // Arrange: Create settings with old 'includes' property
+        const oldSettings = {
+            includes: {
+                'my-preset': 'some query value',
+                'another-preset': 'another query',
+            },
+            globalQuery: 'test query',
+        };
+
+        // Act: Update settings with the old structure
+        updateSettings(oldSettings);
+        const currentSettings = getSettings();
+
+        // Assert: Verify migration happened correctly
+        expect(currentSettings.presets).toEqual({
+            'my-preset': 'some query value',
+            'another-preset': 'another query',
+        });
+        expect((currentSettings as any).includes).toBeUndefined();
+        expect(currentSettings.globalQuery).toBe('test query');
+    });
+
+    it('should not migrate when "presets" already exists', () => {
+        // Arrange: Settings with both old and new properties
+        const settingsWithBothProperties = {
+            includes: {
+                'old-preset': 'old value',
+            },
+            presets: {
+                'new-preset': 'new value',
+            },
+        };
+
+        // Act
+        updateSettings(settingsWithBothProperties);
+        const currentSettings = getSettings();
+
+        // Assert: Should keep the new "presets" and ignore "includes"
+        expect(currentSettings.presets).toEqual({
+            'new-preset': 'new value',
+        });
+        expect(currentSettings.presets).not.toEqual({
+            'old-preset': 'old value',
+        });
+    });
+
+    it('should handle empty includes migration', () => {
+        // Arrange: Settings with empty includes
+        const settingsWithEmptyIncludes = {
+            includes: {},
+            globalQuery: 'test',
+        };
+
+        // Act
+        updateSettings(settingsWithEmptyIncludes);
+        const currentSettings = getSettings();
+
+        // Assert
+        expect(currentSettings.presets).toEqual({});
+        expect((currentSettings as any).includes).toBeUndefined();
+    });
+
+    it('should handle settings without includes property', () => {
+        // Arrange: Normal settings without includes
+        const normalSettings = {
+            globalQuery: 'test query',
+            globalFilter: 'test filter',
+        };
+
+        // Act
+        updateSettings(normalSettings);
+        const currentSettings = getSettings();
+
+        // Assert: Should work normally without any migration
+        expect(currentSettings.globalQuery).toBe('test query');
+        expect(currentSettings.globalFilter).toBe('test filter');
+        // presets should be the default empty object
+        expect(currentSettings.presets).toEqual({});
     });
 });
