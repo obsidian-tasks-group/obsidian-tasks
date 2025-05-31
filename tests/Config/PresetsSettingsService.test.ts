@@ -247,7 +247,7 @@ describe('PresetsSettingsService', () => {
         });
 
         it('should normalize both new key and existing keys by trimming whitespace', () => {
-            // Add a key with leading/trailing whitespace to the includes map
+            // Add a key with leading/trailing whitespace to the presets map
             const includesWithSpacedKey = {
                 ...testIncludes,
                 '  spacedKey  ': 'value4',
