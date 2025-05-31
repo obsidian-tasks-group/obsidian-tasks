@@ -26,7 +26,7 @@ export function makeIncludes(...entries: [string, string][]): IncludesMap {
 const tasksFile = new TasksFile('root/folder/stuff.md');
 
 function createQuery(source: string, includes: IncludesMap) {
-    updateSettings({ includes });
+    updateSettings({ presets: includes });
     const query = new Query(source, tasksFile);
 
     expect(query.source).toEqual(source);
@@ -528,6 +528,6 @@ describe('include settings tests', () => {
     it('should have an empty include field', () => {
         const settings = getSettings();
 
-        expect(settings.includes).toEqual({});
+        expect(settings.presets).toEqual({});
     });
 });

@@ -41,7 +41,7 @@ export class IncludesSettingsUI {
             // Clear the input map when re-rendering
             this.nameFields.clear();
 
-            Object.entries(settings.includes).forEach(([key, value]) => {
+            Object.entries(settings.presets).forEach(([key, value]) => {
                 this.renderIncludeItem(includesContainer, settings, key, value, renderIncludes);
             });
         };
@@ -94,7 +94,7 @@ export class IncludesSettingsUI {
             // Handle renaming an include
             const commitRename = async () => {
                 if (newKey && newKey !== key) {
-                    const updatedIncludes = this.includesSettingsService.renameInclude(settings.includes, key, newKey);
+                    const updatedIncludes = this.includesSettingsService.renameInclude(settings.presets, key, newKey);
                     if (updatedIncludes) {
                         await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                     }
@@ -119,7 +119,7 @@ export class IncludesSettingsUI {
 
             return textArea.onChange(async (newValue) => {
                 const updatedIncludes = this.includesSettingsService.updateIncludeValue(
-                    settings.includes,
+                    settings.presets,
                     key,
                     newValue,
                 );
@@ -147,7 +147,7 @@ export class IncludesSettingsUI {
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const updatedIncludes = this.includesSettingsService.deleteInclude(settings.includes, key);
+                    const updatedIncludes = this.includesSettingsService.deleteInclude(settings.presets, key);
                     await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                 });
         });
@@ -225,7 +225,7 @@ export class IncludesSettingsUI {
 
             // Perform the reorder
             const updatedIncludes = this.includesSettingsService.reorderInclude(
-                settings.includes,
+                settings.presets,
                 draggedKey,
                 targetIndex,
             );
@@ -246,7 +246,7 @@ export class IncludesSettingsUI {
      */
     private getTargetIndex(targetKey: string, position: 'above' | 'below'): number {
         const settings = getSettings();
-        const keys = Object.keys(settings.includes);
+        const keys = Object.keys(settings.presets);
         const targetIndex = keys.indexOf(targetKey);
 
         if (position === 'above') {
@@ -361,7 +361,7 @@ export class IncludesSettingsUI {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const { includes: updatedIncludes } = this.includesSettingsService.addInclude(settings.includes);
+                    const { includes: updatedIncludes } = this.includesSettingsService.addInclude(settings.presets);
                     await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
                 });
         });
@@ -380,11 +380,11 @@ export class IncludesSettingsUI {
     ) {
         // TODO Consider how this relates to the validation code - should it refuse to save settings if validation fails?
         // Update the settings in storage
-        updateSettings({ includes: updatedIncludes });
+        updateSettings({ presets: updatedIncludes });
         await this.plugin.saveSettings();
 
         // Update the local settings object to reflect the changes
-        settings.includes = { ...updatedIncludes };
+        settings.presets = { ...updatedIncludes };
 
         // Refresh the view if a callback was provided
         if (refreshView) {
