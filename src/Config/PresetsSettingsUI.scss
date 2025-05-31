@@ -4,18 +4,18 @@
 
 .tasks-settings {
     // Main wrapper for includes section
-    .tasks-includes-wrapper {
+    .tasks-presets-wrapper {
         width: 100%;
         position: relative;
         transition: all 0.2s ease;
 
         // Drag visual state
-        &.tasks-includes-dragging {
+        &.tasks-presets-dragging {
             opacity: 0.5;
             transform: rotate(2deg);
         }
 
-        &.tasks-includes-drop-above::before {
+        &.tasks-presets-drop-above::before {
             content: '';
             position: absolute;
             top: -2px;
@@ -27,7 +27,7 @@
             z-index: 10;
         }
 
-        &.tasks-includes-drop-below::after {
+        &.tasks-presets-drop-below::after {
             content: '';
             position: absolute;
             bottom: -2px;
@@ -41,9 +41,9 @@
     }
 
     // Individual setting row
-    .tasks-includes-setting {
+    .tasks-presets-setting {
         // Name input field (left column)
-        .tasks-includes-key {
+        .tasks-presets-key {
             grid-area: key;
 
             // Error state styling
@@ -54,7 +54,7 @@
         }
 
         // Value textarea (right column)
-        .tasks-includes-value {
+        .tasks-presets-value {
             grid-area: value;
 
             min-width: 300px;
@@ -68,7 +68,7 @@
             white-space: pre;        // Preserve formatting
         }
 
-        .tasks-includes-drag-handle {
+        .tasks-presets-drag-handle {
             grid-area: drag;
             color: var(--text-muted);
 
@@ -77,7 +77,7 @@
             }
         }
 
-        .tasks-includes-delete-button {
+        .tasks-presets-delete-button {
             grid-area: delete;
         }
 
@@ -105,7 +105,7 @@
                   "key drag delete"
                   "value value value";
 
-                .tasks-includes-key {
+                .tasks-presets-key {
                     // Make the Name input field full-width.
                     // The value textarea will take up most of the width, with the Delete button to its right.
                     width: 100%;
