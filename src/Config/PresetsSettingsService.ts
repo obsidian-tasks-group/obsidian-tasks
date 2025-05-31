@@ -65,7 +65,7 @@ export class PresetsSettingsService {
     public validateRename(presets: Readonly<PresetsMap>, keyBeingRenamed: string, newName: string): RenameResult {
         // Check for empty name
         if (!newName || newName.trim() === '') {
-            return new RenameResult(keyBeingRenamed, false, 'Include name cannot be empty or all whitespace');
+            return new RenameResult(keyBeingRenamed, false, 'Preset name cannot be empty or all whitespace');
         }
 
         for (const existingKey of Object.keys(presets)) {
@@ -75,7 +75,7 @@ export class PresetsSettingsService {
             }
 
             if (existingKey.trim() === newName.trim()) {
-                return new RenameResult(keyBeingRenamed, false, 'An include with this name already exists');
+                return new RenameResult(keyBeingRenamed, false, 'A preset with this name already exists');
             }
         }
 

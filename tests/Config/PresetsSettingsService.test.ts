@@ -53,8 +53,8 @@ describe('PresetsSettingsService', () => {
 
             const result = service.validateRenames(keyMap);
 
-            expectToGiveError(result['original_key_1'], 'An include with this name already exists');
-            expectToGiveError(result['original_key_2'], 'An include with this name already exists');
+            expectToGiveError(result['original_key_1'], 'A preset with this name already exists');
+            expectToGiveError(result['original_key_2'], 'A preset with this name already exists');
             expectToBeValid(result['original_key_3']);
         });
 
@@ -67,8 +67,8 @@ describe('PresetsSettingsService', () => {
 
             const result = service.validateRenames(keyMap);
 
-            expectToGiveError(result['original_key_1'], 'An include with this name already exists');
-            expectToGiveError(result['original_key_2'], 'An include with this name already exists');
+            expectToGiveError(result['original_key_1'], 'A preset with this name already exists');
+            expectToGiveError(result['original_key_2'], 'A preset with this name already exists');
             expectToBeValid(result['original_key_3']);
         });
 
@@ -81,8 +81,8 @@ describe('PresetsSettingsService', () => {
 
             const result = service.validateRenames(keyMap);
 
-            expectToGiveError(result['original_key_1'], 'Include name cannot be empty or all whitespace');
-            expectToGiveError(result['original_key_2'], 'Include name cannot be empty or all whitespace');
+            expectToGiveError(result['original_key_1'], 'Preset name cannot be empty or all whitespace');
+            expectToGiveError(result['original_key_2'], 'Preset name cannot be empty or all whitespace');
             expectToBeValid(result['original_key_3']);
         });
 
@@ -108,22 +108,22 @@ describe('PresetsSettingsService', () => {
 
         it('should reject an empty new name', () => {
             const result = service.validateRename(testPresets, 'key1', '');
-            expectToGiveError(result, 'Include name cannot be empty or all whitespace');
+            expectToGiveError(result, 'Preset name cannot be empty or all whitespace');
         });
 
         it('should reject an new name with only whitespaces', () => {
             const result = service.validateRename(testPresets, 'key1', ' \t');
-            expectToGiveError(result, 'Include name cannot be empty or all whitespace');
+            expectToGiveError(result, 'Preset name cannot be empty or all whitespace');
         });
 
         it('should reject a new name if it already exists', () => {
             const result = service.validateRename(testPresets, 'key1', 'key2');
-            expectToGiveError(result, 'An include with this name already exists');
+            expectToGiveError(result, 'A preset with this name already exists');
         });
 
         it('should reject a new name if it already exists, without ending spaces', () => {
             const result = service.validateRename(testPresets, 'key1', 'key2  ');
-            expectToGiveError(result, 'An include with this name already exists');
+            expectToGiveError(result, 'A preset with this name already exists');
         });
 
         it('should reject a new name if it already exists, with surrounding spaces', () => {
@@ -133,7 +133,7 @@ describe('PresetsSettingsService', () => {
             };
 
             const result = service.validateRename(testPresets, 'key1', 'key2');
-            expectToGiveError(result, 'An include with this name already exists');
+            expectToGiveError(result, 'A preset with this name already exists');
         });
 
         it('should treat renaming to self as valid', () => {
