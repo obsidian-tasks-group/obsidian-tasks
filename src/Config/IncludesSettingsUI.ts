@@ -94,9 +94,9 @@ export class IncludesSettingsUI {
             // Handle renaming an include
             const commitRename = async () => {
                 if (newKey && newKey !== key) {
-                    const updatedIncludes = this.includesSettingsService.renamePreset(settings.presets, key, newKey);
-                    if (updatedIncludes) {
-                        await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
+                    const updatedPresets = this.includesSettingsService.renamePreset(settings.presets, key, newKey);
+                    if (updatedPresets) {
+                        await this.saveIncludesSettings(updatedPresets, settings, refreshView);
                     }
                 }
             };
@@ -118,8 +118,8 @@ export class IncludesSettingsUI {
             this.setupAutoResizingTextarea(textArea);
 
             return textArea.onChange(async (newValue) => {
-                const updatedIncludes = this.includesSettingsService.updatePresetValue(settings.presets, key, newValue);
-                await this.saveIncludesSettings(updatedIncludes, settings, null);
+                const updatedPresets = this.includesSettingsService.updatePresetValue(settings.presets, key, newValue);
+                await this.saveIncludesSettings(updatedPresets, settings, null);
             });
         });
 
@@ -143,8 +143,8 @@ export class IncludesSettingsUI {
             btn.setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const updatedIncludes = this.includesSettingsService.deletePreset(settings.presets, key);
-                    await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
+                    const updatedPresets = this.includesSettingsService.deletePreset(settings.presets, key);
+                    await this.saveIncludesSettings(updatedPresets, settings, refreshView);
                 });
         });
 
@@ -220,14 +220,14 @@ export class IncludesSettingsUI {
             const targetIndex = this.getTargetIndex(key, dropPosition);
 
             // Perform the reorder
-            const updatedIncludes = this.includesSettingsService.reorderPreset(
+            const updatedPresets = this.includesSettingsService.reorderPreset(
                 settings.presets,
                 draggedKey,
                 targetIndex,
             );
 
-            if (updatedIncludes) {
-                await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
+            if (updatedPresets) {
+                await this.saveIncludesSettings(updatedPresets, settings, refreshView);
             }
 
             this.clearDropIndicators();
@@ -357,30 +357,30 @@ export class IncludesSettingsUI {
             btn.setButtonText('Add new include')
                 .setCta()
                 .onClick(async () => {
-                    const { presets: updatedIncludes } = this.includesSettingsService.addPreset(settings.presets);
-                    await this.saveIncludesSettings(updatedIncludes, settings, refreshView);
+                    const { presets: updatedPresets } = this.includesSettingsService.addPreset(settings.presets);
+                    await this.saveIncludesSettings(updatedPresets, settings, refreshView);
                 });
         });
     }
 
     /**
      * Updates settings with new includes and refreshes UI if needed
-     * @param updatedIncludes The new presets map
+     * @param updatedPresets The new presets map
      * @param settings The current settings object to update
      * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
      */
     private async saveIncludesSettings(
-        updatedIncludes: PresetsMap,
+        updatedPresets: PresetsMap,
         settings: Settings,
         refreshView: RefreshViewCallback | null,
     ) {
         // TODO Consider how this relates to the validation code - should it refuse to save settings if validation fails?
         // Update the settings in storage
-        updateSettings({ presets: updatedIncludes });
+        updateSettings({ presets: updatedPresets });
         await this.plugin.saveSettings();
 
         // Update the local settings object to reflect the changes
-        settings.presets = { ...updatedIncludes };
+        settings.presets = { ...updatedPresets };
 
         // Refresh the view if a callback was provided
         if (refreshView) {
