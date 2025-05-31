@@ -365,7 +365,7 @@ export class IncludesSettingsUI {
 
     /**
      * Updates settings with new includes and refreshes UI if needed
-     * @param updatedIncludes The new includes map
+     * @param updatedIncludes The new presets map
      * @param settings The current settings object to update
      * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
      */

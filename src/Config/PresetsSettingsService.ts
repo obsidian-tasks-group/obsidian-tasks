@@ -57,7 +57,7 @@ export class PresetsSettingsService {
 
     /**
      * Validates if an include name is valid
-     * @param includes The current includes map
+     * @param includes The current presets map
      * @param keyBeingRenamed The key being renamed
      * @param newName The proposed name to validate
      * @returns An object with validation result and error message if any
@@ -84,8 +84,8 @@ export class PresetsSettingsService {
 
     /**
      * Adds a new include to the map with a unique key
-     * @param includes The current includes map (will not be modified)
-     * @returns An object with the updated includes map and the new key
+     * @param includes The current presets map (will not be modified)
+     * @returns An object with the updated presets map and the new key
      */
     public addPreset(includes: Readonly<PresetsMap>): { includes: PresetsMap; newKey: string } {
         const newKey = this.generateUniqueKey(includes);
@@ -98,11 +98,11 @@ export class PresetsSettingsService {
     }
 
     /**
-     * Renames a key in the includes map, preserving order
-     * @param includes The current includes map (will not be modified)
+     * Renames a key in the presets map, preserving order
+     * @param includes The current presets map (will not be modified)
      * @param keyBeingRenamed The existing key that would be renamed
      * @param proposedNewName The new name being considered
-     * @returns The updated includes map, or null if the operation failed (for example, duplicate key)
+     * @returns The updated presets map, or null if the operation failed (for example, duplicate key)
      */
     public renamePreset(
         includes: Readonly<PresetsMap>,
@@ -126,9 +126,9 @@ export class PresetsSettingsService {
 
     /**
      * Deletes an include from the map
-     * @param includes The current includes map (will not be modified)
+     * @param includes The current presets map (will not be modified)
      * @param key The key to delete
-     * @returns The updated includes map
+     * @returns The updated presets map
      */
     public deletePreset(includes: Readonly<PresetsMap>, key: string): PresetsMap {
         const newIncludes = { ...includes };
@@ -138,10 +138,10 @@ export class PresetsSettingsService {
 
     /**
      * Updates the value of an include
-     * @param includes The current includes map (will not be modified)
+     * @param includes The current presets map (will not be modified)
      * @param key The key to update
      * @param value The new value
-     * @returns The updated includes map
+     * @returns The updated presets map
      */
     public updatePresetValue(includes: Readonly<PresetsMap>, key: string, value: string): PresetsMap {
         const newIncludes = { ...includes };
@@ -150,8 +150,8 @@ export class PresetsSettingsService {
     }
 
     /**
-     * Checks if renaming a key would create a duplicate in the includes map
-     * @param includes The includes map to check against
+     * Checks if renaming a key would create a duplicate in the presets map
+     * @param includes The presets map to check against
      * @param keyBeingRenamed The existing key that would be renamed
      * @param proposedNewName The new name being considered
      * @returns True if the proposed new name would conflict with an existing key
@@ -182,7 +182,7 @@ export class PresetsSettingsService {
 
     /**
      * Generates a unique key for a new include
-     * @param includes The current includes map
+     * @param includes The current presets map
      * @returns A unique key string
      */
     private generateUniqueKey(includes: Readonly<PresetsMap>): string {
@@ -196,10 +196,10 @@ export class PresetsSettingsService {
 
     /**
      * Reorders an include to a specific position in the map
-     * @param includes The current includes map (will not be modified)
+     * @param includes The current presets map (will not be modified)
      * @param key The key to reorder
      * @param newIndex The target position (0-based index)
-     * @returns The updated includes map, or null if the operation failed
+     * @returns The updated presets map, or null if the operation failed
      */
     public reorderPreset(includes: Readonly<PresetsMap>, key: string, newIndex: number): PresetsMap | null {
         const keys = Object.keys(includes);
