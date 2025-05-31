@@ -11,7 +11,7 @@ function expectToGiveError(result: RenameResult, errorMessage: string) {
     expect(result.errorMessage).toBe(errorMessage);
 }
 
-describe('IncludesSettingsService', () => {
+describe('PresetsSettingsService', () => {
     let service: PresetsSettingsService;
     let testIncludes: PresetsMap;
 
@@ -23,7 +23,7 @@ describe('IncludesSettingsService', () => {
         };
     });
 
-    describe('IncludesSettingsService - validateMultipleIncludeNames', () => {
+    describe('PresetsSettingsService - validateMultipleIncludeNames', () => {
         let service: PresetsSettingsService;
 
         beforeEach(() => {
@@ -101,7 +101,7 @@ describe('IncludesSettingsService', () => {
         });
     });
 
-    describe('IncludesSettingsService - validateIncludeName', () => {
+    describe('PresetsSettingsService - validateIncludeName', () => {
         it('should recognise valid new name', () => {
             expectToBeValid(service.validateRename(testIncludes, 'key1', 'new-name'));
         });
@@ -141,7 +141,7 @@ describe('IncludesSettingsService', () => {
         });
     });
 
-    describe('IncludesSettingsService - addInclude', () => {
+    describe('PresetsSettingsService - addInclude', () => {
         it('should add a new include with a unique key', () => {
             const result = service.addInclude(testIncludes);
 
@@ -151,7 +151,7 @@ describe('IncludesSettingsService', () => {
         });
     });
 
-    describe('IncludesSettingsService - renameInclude', () => {
+    describe('PresetsSettingsService - renameInclude', () => {
         it('should rename a key and preserve order', () => {
             const result = service.renameInclude(testIncludes, 'key1', 'newName');
 
@@ -189,7 +189,7 @@ describe('IncludesSettingsService', () => {
         });
     });
 
-    describe('IncludesSettingsService - deleteInclude', () => {
+    describe('PresetsSettingsService - deleteInclude', () => {
         it('should remove a key', () => {
             const result = service.deleteInclude(testIncludes, 'key1');
 
@@ -199,7 +199,7 @@ describe('IncludesSettingsService', () => {
         });
     });
 
-    describe('IncludesSettingsService - updateIncludeValue', () => {
+    describe('PresetsSettingsService - updateIncludeValue', () => {
         it('should update the value of an include', () => {
             const result = service.updateIncludeValue(testIncludes, 'key1', 'new value');
 
@@ -207,7 +207,7 @@ describe('IncludesSettingsService', () => {
         });
     });
 
-    describe('IncludesSettingsService - wouldCreateDuplicateKey', () => {
+    describe('PresetsSettingsService - wouldCreateDuplicateKey', () => {
         let service: PresetsSettingsService;
         let testIncludes: PresetsMap;
 
@@ -340,7 +340,7 @@ describe('IncludesSettingsService', () => {
         });
     });
 
-    describe('IncludesSettingsService - reorderInclude', () => {
+    describe('PresetsSettingsService - reorderInclude', () => {
         let service: PresetsSettingsService;
         let testIncludes: PresetsMap;
 
