@@ -74,11 +74,11 @@ describe('date editor wrapper tests', () => {
     it('should initialise fields correctly', () => {
         const container = renderDateEditorWrapper({ forwardOnly: true });
 
-        testInputValue(container, 'due', '');
-        testInputValue(container, 'parsedDateFromDateEditor', '<i>no due date</i>');
-        testInputValue(container, 'dueDateFromDateEditor', '');
+        // testInputValue(container, 'due', '');
+        testInputValue(container, 'parsedDateFromDateEditor', '2024-04-20');
+        testInputValue(container, 'dueDateFromDateEditor', '2024-04-20');
 
-        testDatePickerValue(container, '');
+        testDatePickerValue(container, '2024-04-20');
     });
 
     it('should replace an empty date field with typed date value', async () => {

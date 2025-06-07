@@ -145,7 +145,7 @@ export class Client {
                 return response;
             }
         } catch (error) {
-            console.error(error);
+            // console.error(error);
         }
     }
     public async post(reqName: string, endpoint: string, body: any): Promise<any> {
@@ -157,7 +157,7 @@ export class Client {
                 return response;
             }
         } catch (error) {
-            console.error(error);
+            // console.log(error);
         }
     }
 
@@ -169,7 +169,7 @@ export class Client {
                 this.token = response.token;
             }
         } catch (error) {
-            console.error(error);
+            // console.log(error);
         }
     }
 
@@ -197,7 +197,8 @@ export class Client {
             this.cookieHeader = this.cookies.join('; ') + ';';
             return result.json;
         } catch (exception) {
-            console.error(exception);
+            // console.error(exception);
+            // console.log(exception);
             return null;
         }
     }

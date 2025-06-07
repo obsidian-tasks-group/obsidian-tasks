@@ -18,11 +18,16 @@
 
     let input: HTMLElement;
     let dropdown: HTMLElement;
+    const workProject = { id: '67f9c5dd8f08d8402fd1b88f', name: '💼Work' };
 
     function selectProject(project: TickTickProject) {
         editableTask['tickTickProjectid'] = project.id;
         search = project.name;
         inputFocused = false;
+    }
+
+    if (search === '') {
+        selectProject(workProject);
     }
 
     function taskKeydown(e: KeyboardEvent) {

@@ -33,6 +33,9 @@
 
     // 'weekend' abbreviation omitted due to lack of space.
     const datePlaceholder = "Try 'Mon' or 'tm' then space";
+    if (id === 'due' && date === '') {
+        date = parseTypedDateForDisplayUsingFutureDate(id, 'today', forwardOnly);
+    }
 </script>
 
 <label for={id}>{@html labelContentWithAccessKey(id, accesskey)}</label>
