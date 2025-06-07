@@ -14,7 +14,7 @@ export class ListItem {
     public readonly description: string;
     public readonly statusCharacter: string | null;
 
-    public readonly taskLocation: TaskLocation;
+    public taskLocation: TaskLocation;
 
     constructor({
         originalMarkdown,

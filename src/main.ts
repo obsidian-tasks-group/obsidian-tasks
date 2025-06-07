@@ -3,11 +3,11 @@ import { Plugin } from 'obsidian';
 import type { Task } from 'Task/Task';
 import { TickTickApi } from 'TickTick/api';
 import { i18n, initializeI18n } from './i18n/i18n';
-import { Cache, State } from './Obsidian/Cache';
+import { Cache, State, type TasksMap } from './Obsidian/Cache';
 import { Commands } from './Commands';
 import { GlobalQuery } from './Config/GlobalQuery';
 import { TasksEvents } from './Obsidian/TasksEvents';
-import { initializeFile } from './Obsidian/File';
+import { initializeFile, replaceTaskWithTasks } from './Obsidian/File';
 import { InlineRenderer } from './Obsidian/InlineRenderer';
 import { newLivePreviewExtension } from './Obsidian/LivePreviewExtension';
 import { QueryRenderer } from './Renderer/QueryRenderer';
@@ -130,6 +130,43 @@ export default class TasksPlugin extends Plugin {
             return State.Cold;
         }
         return this.cache.getState();
+    }
+
+    public getTasksMap(): TasksMap {
+        if (this.cache === undefined) {
+            return {} as TasksMap;
+        } else {
+            return this.cache.getTasksMap();
+        }
+    }
+
+    public async ticktickSync(skipTask?: Task) {
+        const { checkpoint } = getSettings();
+        const syncCheckpoint = await this.ticktickapi.sync(checkpoint);
+        const tasksMap = this.getTasksMap();
+
+        const createOrUpdates = [...syncCheckpoint.taskSync.add, ...syncCheckpoint.taskSync.update];
+        for (const update of createOrUpdates) {
+            if (update.tickTickId === skipTask?.tickTickId) {
+                continue;
+            }
+            const oldTask = tasksMap.get(update.tickTickId);
+            if (!oldTask) {
+                const file = this.app.workspace.getActiveFile();
+                if (!file) {
+                    continue;
+                }
+                const newTask = update.toFileLineString();
+                await this.app.vault.append(file, newTask + '\n');
+                console.log('created new task', newTask);
+                continue;
+            }
+            update.taskLocation = oldTask.taskLocation;
+            await replaceTaskWithTasks({ originalTask: oldTask, newTasks: update });
+            console.log('updated task', update.toFileLineString());
+        }
+        updateSettings({ checkpoint: syncCheckpoint.checkpoint });
+        console.log('updated checkpoint', syncCheckpoint.checkpoint);
     }
 
     /**

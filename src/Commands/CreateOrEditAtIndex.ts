@@ -1,14 +1,17 @@
 import type { App } from 'obsidian';
-import type { TickTickApi } from 'TickTick/api';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { Task } from '../Task/Task';
+import type TasksPlugin from '../main';
 import { taskFromNothing } from './CreateOrEditTaskParser';
 
-export const createAtIndex = async (app: App, allTasks: Task[], tickTickApi: TickTickApi) => {
+export const createAtIndex = async (app: App, plugin: TasksPlugin) => {
     const file = app.workspace.getActiveFile();
     if (!file) {
         return;
     }
+
+    const allTasks = plugin.getTasks();
+    const tickTickApi = plugin.ticktickapi;
 
     const path = file.path;
     const task = taskFromNothing({ path });
@@ -34,6 +37,7 @@ export const createAtIndex = async (app: App, allTasks: Task[], tickTickApi: Tic
             })
             .join('\n');
         await app.vault.append(file, serialized + '\n');
+        await plugin.ticktickSync(updatedTask);
     };
 
     const taskModal = new TaskModal({

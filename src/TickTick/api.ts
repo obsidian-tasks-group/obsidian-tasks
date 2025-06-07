@@ -67,7 +67,7 @@ export class TickTickApi {
         this._password = value;
     }
 
-    public async sync(tasks: Task[], checkPoint: number, projects: TickTickProject[]): Promise<SyncCheckpoint> {
+    public async sync(checkPoint: number): Promise<SyncCheckpoint> {
         const ret = {
             checkpoint: 0,
             taskSync: { add: [], update: [], delete: [] },
@@ -75,32 +75,12 @@ export class TickTickApi {
             projects: [],
         } as SyncCheckpoint;
 
-        for (const task of tasks) {
-            if (task.isDone || task.tickTickId) {
-                continue;
-            }
-
-            const created = await this.create(task);
-            if (created) {
-                ret.taskSync.update.push(taskFromTickTickTask(created));
-            }
-        }
         const response = await this.client.get('Get Batch', BATCH_CHECK_ENDPOINT + `/${checkPoint}`);
         if (!response) {
             return ret;
         }
 
         ret.checkpoint = response.checkPoint;
-        ret.projects = projects;
-
-        type Tasks = {
-            [id: string]: Task;
-        };
-        const taskById = {} as Tasks;
-
-        tasks.forEach((task) => {
-            taskById[task.tickTickId] = task;
-        });
 
         for (const update of response.syncTaskBean.update) {
             ret.taskSync.update.push(taskFromTickTickTask(update));
@@ -112,8 +92,8 @@ export class TickTickApi {
             ret.taskSync.delete.push(taskFromTickTickTask(del));
         }
 
+        const inbox = { id: response.inboxId, name: 'Inbox' };
         if (response.projectProfiles) {
-            const inbox = projects.find((project) => project.name === 'Inbox');
             ret.projects = [
                 inbox,
                 ...response.projectProfiles.map((profile: any) => {
@@ -338,7 +318,7 @@ export const taskFromTickTickTask = (task: TickTickTask): Task => {
     let tags: string[] = [];
 
     if (task.dueDate) {
-        duedate = moment(duedate);
+        duedate = moment(task.dueDate);
     }
     if (task.completedTime) {
         doneDate = moment(task.completedTime);
@@ -352,7 +332,7 @@ export const taskFromTickTickTask = (task: TickTickTask): Task => {
     return new Task({
         // NEW_TASK_FIELD_EDIT_REQUIRED
         status: toTaskStatus(task.status),
-        description: task.title,
+        description: `#task ${task.title}`,
         // We don't need the location fields except file to edit here in the editor.
         taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('Tasks/Inbox')),
         indentation: '',
