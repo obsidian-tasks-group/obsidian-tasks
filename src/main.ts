@@ -86,6 +86,14 @@ export default class TasksPlugin extends Plugin {
         this.registerEditorExtension(newLivePreviewExtension());
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
         this.registerInterval(window.setInterval(() => this.ticktickapi.login(), 1000 * 60 * 60 * 12)); // 12 hours
+        const item = this.addStatusBarItem();
+        const button = item.createEl('a', { text: 'Sync' });
+        button.title = 'Sync';
+        button.addEventListener('click', (ev: MouseEvent) => {
+            ev.preventDefault(); // suppress the default click behavior
+            ev.stopPropagation(); // suppress further event propagation
+            this.ticktickSync();
+        });
         new Commands({ plugin: this });
     }
 
@@ -158,15 +166,12 @@ export default class TasksPlugin extends Plugin {
                 }
                 const newTask = update.toFileLineString();
                 await this.app.vault.append(file, newTask + '\n');
-                console.log('created new task', newTask);
                 continue;
             }
             update.taskLocation = oldTask.taskLocation;
             await replaceTaskWithTasks({ originalTask: oldTask, newTasks: update });
-            console.log('updated task', update.toFileLineString());
         }
-        updateSettings({ checkpoint: syncCheckpoint.checkpoint });
-        console.log('updated checkpoint', syncCheckpoint.checkpoint);
+        updateSettings({ checkpoint: syncCheckpoint.checkpoint, ticktickprojects: syncCheckpoint.projects });
     }
 
     /**
