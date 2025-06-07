@@ -145,9 +145,11 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(i18n.t('settings.viSettings.sync.description'))
             .addButton((component) => {
                 component.setButtonText(i18n.t('settings.viSettings.sync.name'));
-                component.onClick(() => {
+                component.onClick(async () => {
                     console.log('calling sync');
-                    this.plugin.ticktickapi.sync(this.plugin.getTasks());
+                    const projects = await this.plugin.ticktickapi.listProjects();
+                    updateSettings({ ticktickprojects: projects });
+                    await this.plugin.saveSettings();
                 });
             });
 

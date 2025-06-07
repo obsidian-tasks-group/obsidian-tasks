@@ -1,18 +1,36 @@
-import type { Task } from '../Task/Task';
+import moment from 'moment';
+import type { TickTickProject } from 'Config/Settings';
+import { Task } from '../Task/Task';
+import { TasksFile } from '../Scripting/TasksFile';
+import { Priority } from '../Task/Priority';
+import { TaskLocation } from '../Task/TaskLocation';
+import { OnCompletion } from '../Task/OnCompletion';
 import { StatusType } from '../Statuses/StatusConfiguration';
+import { Status } from '../Statuses/Status';
 import { Client } from './client';
 
 const LOGIN_ENDPOINT = 'https://api.ticktick.com/api/v2/user/signon?wc=true&remember=true';
 const TASK_ENDPOINT = 'https://api.ticktick.com/api/v2/task';
 // const V1_ENDPOINT = 'https://api.ticktick.com/api/v1';
 // const PROJECT_ENDPOINT = 'https://api.ticktick.com/api/v2/project';
-// const BATCH_CHECK_ENDPOINT = 'https://ticktick.com/api/v2/batch/check/0';
+const BATCH_CHECK_ENDPOINT = 'https://ticktick.com/api/v2/batch/check';
 const BATCH_ENDPOINT = 'https://ticktick.com/api/v2/batch/task';
 // const DELTE_TAG_ENDPOINT = 'https://api.ticktick.com/api/v2/tag/delete';
 //
 // const ALL_COMPLETED_ENDPOINT = 'https://api.ticktick.com/api/v2/project/all/completedInAll/';
 //
 // statuses: done = 2, cancelled = -1
+//
+type TaskSync = {
+    add: Task[];
+    update: Task[];
+    delete: Task[];
+};
+type SyncCheckpoint = {
+    checkpoint: number;
+    taskSync: TaskSync;
+    projects: TickTickProject[];
+};
 
 export class TickTickApi {
     private static instance: TickTickApi;
@@ -49,10 +67,82 @@ export class TickTickApi {
         this._password = value;
     }
 
-    public async sync(tasks: Task[]): Promise<Task[]> {
-        return tasks.map((task) => {
-            return task;
+    public async sync(tasks: Task[], checkPoint: number, projects: TickTickProject[]): Promise<SyncCheckpoint> {
+        const ret = {
+            checkpoint: 0,
+            taskSync: { add: [], update: [], delete: [] },
+            projectSync: { add: [], update: [], delete: [] },
+            projects: [],
+        } as SyncCheckpoint;
+
+        for (const task of tasks) {
+            if (task.isDone || task.tickTickId) {
+                continue;
+            }
+
+            const created = await this.create(task);
+            if (created) {
+                ret.taskSync.update.push(taskFromTickTickTask(created));
+            }
+        }
+        const response = await this.client.get('Get Batch', BATCH_CHECK_ENDPOINT + `/${checkPoint}`);
+        if (!response) {
+            return ret;
+        }
+
+        ret.checkpoint = response.checkPoint;
+        ret.projects = projects;
+
+        type Tasks = {
+            [id: string]: Task;
+        };
+        const taskById = {} as Tasks;
+
+        tasks.forEach((task) => {
+            taskById[task.tickTickId] = task;
         });
+
+        for (const update of response.syncTaskBean.update) {
+            ret.taskSync.update.push(taskFromTickTickTask(update));
+        }
+        for (const add of response.syncTaskBean.add) {
+            ret.taskSync.add.push(taskFromTickTickTask(add));
+        }
+        for (const del of response.syncTaskBean.delete) {
+            ret.taskSync.delete.push(taskFromTickTickTask(del));
+        }
+
+        if (response.projectProfiles) {
+            const inbox = projects.find((project) => project.name === 'Inbox');
+            ret.projects = [
+                inbox,
+                ...response.projectProfiles.map((profile: any) => {
+                    return {
+                        id: profile.id,
+                        name: profile.name,
+                    };
+                }),
+            ];
+        }
+
+        return ret;
+    }
+
+    public async listProjects(): Promise<TickTickProject[]> {
+        const response = await this.client.get('Get Batch', BATCH_CHECK_ENDPOINT + '/0');
+        if (!response) {
+            return [];
+        }
+
+        const inbox = { id: response.inboxId, name: 'Inbox' };
+        const tickTickProjects = response.projectProfiles.map((profile: any) => {
+            return {
+                id: profile.id,
+                name: profile.name,
+            };
+        });
+
+        return [inbox, ...tickTickProjects];
     }
 
     // private async deleteTask(taskId: string, projectId: string) {
@@ -155,21 +245,27 @@ export class TickTickApi {
         }
     }
 
-    public async create(task: Task): Promise<{ id: string; projectId: string }> {
+    public async create(task: Task): Promise<TickTickTask | null> {
         try {
             // TODO: all fields
+            let projectId = null;
+            if (task.tickTickProjectId) {
+                projectId = task.tickTickProjectId;
+            }
             const body = {
                 title: task.descriptionWithoutTags,
                 dueDate: task.dueDate?.toISOString(),
+                projectId: projectId,
+                tags: task.tags,
             };
             const response = await this.client.post('Create', TASK_ENDPOINT, body);
             if (response) {
-                return { id: response.id, projectId: response.projectId };
+                return response;
             }
         } catch (error) {
             console.error(error);
         }
-        return { id: '', projectId: '' };
+        return null;
     }
 
     public async update(task: Task): Promise<string> {
@@ -191,6 +287,7 @@ export class TickTickApi {
                 projectId: task.tickTickProjectId,
                 status: status,
                 completedTime: completedTime,
+                tags: task.tags,
             };
 
             const body = {
@@ -206,3 +303,76 @@ export class TickTickApi {
         return '';
     }
 }
+
+type TickTickTask = {
+    id: string;
+    projectId: string;
+    title: string;
+    dueDate: string;
+    createdDate: string;
+    completedTime: string;
+    status: number;
+    tags: {
+        rawName: string;
+    }[];
+};
+
+const toTaskStatus = (n: number) => {
+    switch (n) {
+        case 0:
+            return Status.TODO;
+        case 2:
+            return Status.DONE;
+        case -1:
+            return Status.CANCELLED;
+        default:
+            return Status.TODO;
+    }
+};
+
+export const taskFromTickTickTask = (task: TickTickTask): Task => {
+    // If we are not on a line of a task, we take what we have.
+    let duedate = null;
+    let doneDate = null;
+    let createdDate = null;
+    let tags: string[] = [];
+
+    if (task.dueDate) {
+        duedate = moment(duedate);
+    }
+    if (task.completedTime) {
+        doneDate = moment(task.completedTime);
+    }
+    if (task.createdDate) {
+        createdDate = moment(task.createdDate);
+    }
+    if (task.tags) {
+        tags = task.tags.map((tag) => tag.rawName);
+    }
+    return new Task({
+        // NEW_TASK_FIELD_EDIT_REQUIRED
+        status: toTaskStatus(task.status),
+        description: task.title,
+        // We don't need the location fields except file to edit here in the editor.
+        taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('Tasks/Inbox')),
+        indentation: '',
+        listMarker: '-',
+        priority: Priority.None,
+        createdDate: createdDate,
+        startDate: null,
+        scheduledDate: null,
+        dueDate: duedate,
+        doneDate: doneDate,
+        cancelledDate: null,
+        recurrence: null,
+        onCompletion: OnCompletion.Ignore,
+        dependsOn: [],
+        id: '',
+        tickTickId: task.id,
+        tickTickProjectId: task.projectId,
+        blockLink: '',
+        tags: tags,
+        originalMarkdown: '',
+        scheduledDateIsInferred: false,
+    });
+};

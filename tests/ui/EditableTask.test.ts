@@ -70,6 +70,7 @@ describe('EditableTask tests', () => {
                   "type": "TODO",
                 },
               },
+              "tickTickProjectid": "abcdef",
             }
         `);
     });

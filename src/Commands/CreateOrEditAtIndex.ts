@@ -18,8 +18,10 @@ export const createAtIndex = async (app: App, allTasks: Task[], tickTickApi: Tic
         let ticktickProjectId = '';
         if (updatedTask) {
             const tickTickTask = await tickTickApi.create(updatedTask);
-            ticktickId = tickTickTask.id;
-            ticktickProjectId = tickTickTask.projectId;
+            if (tickTickTask) {
+                ticktickId = tickTickTask.id;
+                ticktickProjectId = tickTickTask.projectId;
+            }
         }
         const serialized = updatedTasks
             .map((task: Task) => {

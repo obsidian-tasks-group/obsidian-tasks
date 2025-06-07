@@ -25,6 +25,11 @@ export type HeadingState = {
     [id: string]: boolean;
 };
 
+export type TickTickProject = {
+    id: string;
+    name: string;
+};
+
 /**
  * Interface encapsulating how a Task is written to and read from text
  *
@@ -83,6 +88,10 @@ export interface Settings {
     recurrenceOnNextLine: boolean;
     removeScheduledDateOnRecurrence: boolean;
 
+    // TickTickSync
+    ticktickprojects: TickTickProject[];
+    checkpoint: number;
+
     // The custom status states.
     statusSettings: StatusSettings;
 
@@ -132,6 +141,8 @@ const defaultSettings: Readonly<Settings> = {
         // removeGlobalFilter: false,
         // setDoneDate: true,
     },
+    ticktickprojects: [],
+    checkpoint: 0,
     headingOpened: {},
     debugSettings: new DebugSettings(),
 

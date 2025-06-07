@@ -35,6 +35,7 @@ export class EditableTask {
     forwardOnly: boolean;
     blockedBy: Task[];
     blocking: Task[];
+    tickTickProjectid: string;
 
     private constructor(editableTask: {
         addGlobalFilterOnSave: boolean;
@@ -55,6 +56,7 @@ export class EditableTask {
         forwardOnly: boolean;
         blockedBy: Task[];
         blocking: Task[];
+        tickTickProjectid: string;
     }) {
         this.addGlobalFilterOnSave = editableTask.addGlobalFilterOnSave;
         this.originalBlocking = editableTask.originalBlocking;
@@ -73,6 +75,7 @@ export class EditableTask {
         this.forwardOnly = editableTask.forwardOnly;
         this.blockedBy = editableTask.blockedBy;
         this.blocking = editableTask.blocking;
+        this.tickTickProjectid = editableTask.tickTickProjectid;
     }
 
     /**
@@ -133,6 +136,7 @@ export class EditableTask {
             forwardOnly: true,
             blockedBy: blockedBy,
             blocking: originalBlocking,
+            tickTickProjectid: task.tickTickProjectId,
         });
     }
 
@@ -209,6 +213,7 @@ export class EditableTask {
             cancelledDate,
             dependsOn: blockedByWithIds.map((task) => task.id),
             id,
+            tickTickProjectId: this.tickTickProjectid,
         });
 
         for (const blocking of removedBlocking) {
