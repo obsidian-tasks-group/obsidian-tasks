@@ -8,8 +8,8 @@
     export let _onDescriptionKeyDown: (e: KeyboardEvent) => void;
     export let placeholder: string = 'Type to search...';
     export let projects: TickTickProject[];
+    export let search: string = '';
 
-    let search: string = '';
     let searchResults: TickTickProject[] | null = null;
     let searchIndex: number | null = 0;
     let inputWidth: number;

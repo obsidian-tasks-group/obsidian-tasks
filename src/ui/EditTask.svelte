@@ -47,6 +47,7 @@
 
     let withAccessKeys: boolean = true;
     let projects: TickTickProject[] = [{ id: '', name: '' }];
+    let selectedProject: TickTickProject = { id: '', name: '' };
     let formIsValid: boolean = true;
 
     let mountComplete = false;
@@ -118,6 +119,14 @@
         const { provideAccessKeys, ticktickprojects } = getSettings();
         withAccessKeys = provideAccessKeys;
         projects = ticktickprojects;
+        if (editableTask.tickTickProjectid !== '') {
+            const hit = projects.filter((f) => {
+                return f.id === editableTask.tickTickProjectid;
+            });
+            if (hit.length > 0) {
+                selectedProject = hit[0];
+            }
+        }
 
         mountComplete = true;
 
@@ -273,7 +282,13 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Blocked By Tasks  -->
         <!-- --------------------------------------------------------------------------- -->
-        <ProjectPicker {editableTask} {projects} {_onDescriptionKeyDown} placeholder="Project ?" />
+        <ProjectPicker
+            bind:search={selectedProject.name}
+            {editableTask}
+            {projects}
+            {_onDescriptionKeyDown}
+            placeholder="Project ?"
+        />
     </section>
 
     <!-- --------------------------------------------------------------------------- -->
