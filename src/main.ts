@@ -85,6 +85,7 @@ export default class TasksPlugin extends Plugin {
 
         this.registerEditorExtension(newLivePreviewExtension());
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
+        this.registerInterval(window.setInterval(() => this.ticktickapi.login(), 1000 * 60 * 60 * 12)); // 12 hours
         new Commands({ plugin: this });
     }
 
