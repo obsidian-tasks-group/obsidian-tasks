@@ -8,7 +8,8 @@
     },
     "scripts": {
         "dev": "node esbuild.config.mjs",
-        "build": "node esbuild.config.mjs production && cp ./dist/* ~/code/src/github.com/vimiomori/BigDolphin/.obsidian/plugins/obsidian-tasks-plugin-vi/",
+        "build": "node esbuild.config.mjs production",
+        "build:vi": "node esbuild.config.mjs production && cp ./dist/* ~/code/src/github.com/vimiomori/BigDolphin/.obsidian/plugins/obsidian-tasks-plugin-vi/",
         "build:scoot": "node esbuild.config.mjs production && cp ./dist/* ~/personal/uptoyou/.obsidian/plugins/obsidian-tasks-plugin-vi",
         "build:dev": "node esbuild.config.mjs development",
         "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
