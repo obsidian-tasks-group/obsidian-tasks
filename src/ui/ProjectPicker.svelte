@@ -110,7 +110,7 @@
     }
 </script>
 
-<label for={'project'}>Project</label>
+<label for={'project'} />
 <!-- svelte-ignore a11y-accesskey -->
 <span bind:clientWidth={inputWidth}>
     <input

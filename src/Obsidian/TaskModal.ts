@@ -2,8 +2,8 @@ import { App, Modal } from 'obsidian';
 
 import EditTask from '../ui/EditTask.svelte';
 import type { Task } from '../Task/Task';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import { Status } from '../Statuses/Status';
+// import { StatusRegistry } from '../Statuses/StatusRegistry';
+// import { Status } from '../Statuses/Status';
 
 export class TaskModal extends Modal {
     public readonly task: Task;
@@ -38,13 +38,13 @@ export class TaskModal extends Modal {
         const { contentEl } = this;
         this.contentEl.style.paddingBottom = '0';
 
-        const statusOptions = this.getKnownStatusesAndCurrentTaskStatusIfNotKnown();
+        // const statusOptions = this.getKnownStatusesAndCurrentTaskStatusIfNotKnown();
 
         new EditTask({
             target: contentEl,
             props: {
                 task: this.task,
-                statusOptions: statusOptions,
+                // statusOptions: statusOptions,
                 onSubmit: this.onSubmit,
                 allTasks: this.allTasks,
             },
@@ -57,13 +57,13 @@ export class TaskModal extends Modal {
      * This allows the user to switch to a different status and then change their
      * mind and return to the initial status.
      */
-    private getKnownStatusesAndCurrentTaskStatusIfNotKnown() {
-        const statusOptions: Status[] = StatusRegistry.getInstance().registeredStatuses;
-        if (StatusRegistry.getInstance().bySymbol(this.task.status.symbol) === Status.EMPTY) {
-            statusOptions.push(this.task.status);
-        }
-        return statusOptions;
-    }
+    // private getKnownStatusesAndCurrentTaskStatusIfNotKnown() {
+    //     const statusOptions: Status[] = StatusRegistry.getInstance().registeredStatuses;
+    //     if (StatusRegistry.getInstance().bySymbol(this.task.status.symbol) === Status.EMPTY) {
+    //         statusOptions.push(this.task.status);
+    //     }
+    //     return statusOptions;
+    // }
 
     public onClose(): void {
         const { contentEl } = this;

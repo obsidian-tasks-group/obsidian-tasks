@@ -1,7 +1,7 @@
 .tasks-modal {
     section + section {
-            // Put some space when sections are one next to another
-            margin-top: 6px;
+        // Put some space when sections are one next to another
+        // margin-top: 6px;
     }
 
     hr {
@@ -66,26 +66,32 @@
 }
 
 .tasks-modal-dates-section {
-    display: grid;
-    grid-template-columns: 6.0em 13em auto;
-    column-gap: .5em;
-    row-gap: 5px;
+    // display: grid;
+    // grid-template-columns: 6.0em 13em auto;
+    // column-gap: .5em;
+    // row-gap: 5px;
+    // align-items: center;
+
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 1rem;
 
     label {
         grid-column: 1;
     }
 
     .tasks-modal-date-input {
-        min-width: 15em;
+        // min-width: 15em;
     }
 
     .tasks-modal-date-editor-picker {
-        margin-left: .5em;
+        // margin-left: 0.5em;
     }
 
     .tasks-modal-parsed-date {
-        grid-column: 3;
+        // grid-column: 3;
         font-size: var(--font-ui-small);
     }
 
@@ -106,7 +112,7 @@
 
 .tasks-modal-dependencies-section {
     display: grid;
-    grid-template-columns: 6.0em auto;
+    grid-template-columns: 6em auto;
     column-gap: 0.5em;
     row-gap: 5px;
     align-items: center;
@@ -125,11 +131,11 @@
     position: sticky;
     bottom: 0;
     background-color: var(--modal-background);
-    padding-bottom: 16px;
-    padding-top: 16px;
+    padding-bottom: 1rem;
+    padding-top: 2rem;
     display: grid;
     grid-template-columns: 3fr 1fr;
-    column-gap: .5em;
+    column-gap: 0.5em;
 
     button:disabled {
         pointer-events: none !important;
