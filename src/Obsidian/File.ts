@@ -1,8 +1,9 @@
 import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
+import { getUserSelectedTaskFormat } from '../Config/Settings';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from '../lib/MockDataCreator';
 import type { ListItem } from '../Task/ListItem';
-import type { Task } from '../Task/Task';
+import { Task } from '../Task/Task';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
 
@@ -222,7 +223,7 @@ async function getTaskAndFileLines(task: ListItem, vault: Vault): Promise<[numbe
     const taskLineNumber = findLineNumberOfTaskToToggle(task, fileLines, listItemsCache, debugLog);
 
     if (taskLineNumber === undefined) {
-        const logDataForMocking = false;
+        const logDataForMocking = true;
         if (logDataForMocking) {
             // There was an error finding the correct line to toggle,
             // so write out to the console a representation of the data needed to reconstruct the above
@@ -319,8 +320,21 @@ function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask,
 function tryFindingIdenticalUniqueMarkdownLineInFile(originalTask: Task | MockTask, fileLines: string[]) {
     const matchingLineNumbers = [];
     for (let i = 0; i < fileLines.length; i++) {
-        if (fileLines[i] === originalTask.originalMarkdown) {
+        const line = fileLines[i];
+        if (line === originalTask.originalMarkdown) {
             matchingLineNumbers.push(i);
+        } else {
+            // If the task on TickTick was updated, the original markdown would not match.
+            // Find the position of the original task looking for a line containing the tickTickId.
+            const taskComponents = Task.extractTaskComponents(line);
+            if (taskComponents === null) {
+                continue;
+            }
+            const { taskSerializer } = getUserSelectedTaskFormat();
+            const taskInfo = taskSerializer.deserialize(taskComponents.body);
+            if (taskInfo.tickTickId === originalTask.tickTickId) {
+                matchingLineNumbers.push(i);
+            }
         }
     }
     if (matchingLineNumbers.length === 1) {

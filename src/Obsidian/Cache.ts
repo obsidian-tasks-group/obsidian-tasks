@@ -200,6 +200,18 @@ export class Cache {
         });
         this.vaultEventReferences.push(createdEventReference);
 
+        const modifiedEventReference = this.vault.on('modify', (file: TAbstractFile) => {
+            if (!(file instanceof TFile)) {
+                return;
+            }
+            this.logger.debug(`Cache.subscribeToVault.modifiedEventReference() ${file.path}`);
+
+            this.tasksMutex.runExclusive(() => {
+                this.indexFile(file);
+            });
+        });
+        this.vaultEventReferences.push(modifiedEventReference);
+
         const deletedEventReference = this.vault.on('delete', (file: TAbstractFile) => {
             if (!(file instanceof TFile)) {
                 return;

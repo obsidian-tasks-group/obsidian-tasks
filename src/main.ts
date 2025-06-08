@@ -2,6 +2,8 @@ import { Plugin } from 'obsidian';
 
 import type { Task } from 'Task/Task';
 import { TickTickApi } from 'TickTick/api';
+import { TaskLocation } from 'Task/TaskLocation';
+import { TasksFile } from './Scripting/TasksFile';
 import { i18n, initializeI18n } from './i18n/i18n';
 import { Cache, State, type TasksMap } from './Obsidian/Cache';
 import { Commands } from './Commands';
@@ -133,6 +135,15 @@ export default class TasksPlugin extends Plugin {
         }
     }
 
+    private setTasks(tasks: Task[]) {
+        if (this.cache === undefined) {
+            return;
+        } else {
+            this.cache.tasks = tasks;
+            return;
+        }
+    }
+
     public getState(): State {
         if (this.cache === undefined) {
             return State.Cold;
@@ -154,24 +165,42 @@ export default class TasksPlugin extends Plugin {
         const tasksMap = this.getTasksMap();
 
         const createOrUpdates = [...syncCheckpoint.taskSync.add, ...syncCheckpoint.taskSync.update];
-        for (const update of createOrUpdates) {
-            if (update.tickTickId === skipTask?.tickTickId) {
+        for (const tickTickTask of createOrUpdates) {
+            if (tickTickTask.tickTickId === skipTask?.tickTickId) {
                 continue;
             }
-            const oldTask = tasksMap.get(update.tickTickId);
+
+            const oldTask = tasksMap.get(tickTickTask.tickTickId);
             if (!oldTask) {
-                const file = this.app.workspace.getActiveFile();
-                if (!file) {
-                    continue;
-                }
-                const newTask = update.toFileLineString();
-                await this.app.vault.append(file, newTask + '\n');
-                continue;
+                await this.createTask(tickTickTask);
+            } else {
+                await this.updateTask(oldTask, tickTickTask);
             }
-            update.taskLocation = oldTask.taskLocation;
-            await replaceTaskWithTasks({ originalTask: oldTask, newTasks: update });
+
+            tasksMap.set(tickTickTask.tickTickId, tickTickTask);
         }
+        // update cache
+        this.setTasks([...tasksMap.values()]);
+        // update checkpoint
         updateSettings({ checkpoint: syncCheckpoint.checkpoint, ticktickprojects: syncCheckpoint.projects });
+        await this.saveSettings();
+    }
+
+    private async updateTask(originalTask: Task, update: Task) {
+        update.taskLocation = originalTask.taskLocation;
+        update.originalMarkdown = update.toFileLineString();
+        await replaceTaskWithTasks({ originalTask: originalTask, newTasks: update });
+    }
+
+    private async createTask(toCreate: Task) {
+        const file = this.app.workspace.getActiveFile();
+        if (!file) {
+            return;
+        }
+        const newTask = toCreate.toFileLineString();
+        toCreate.taskLocation = TaskLocation.fromUnknownPosition(new TasksFile(file.path));
+        toCreate.originalMarkdown = newTask;
+        await this.app.vault.append(file, newTask + '\n');
     }
 
     /**

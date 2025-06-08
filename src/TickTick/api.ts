@@ -219,6 +219,8 @@ export class TickTickApi {
                 username: this._username,
                 password: this._password,
             };
+            // console.log(this._username);
+            // console.log(this._password);
             await this.client.login('Login', LOGIN_ENDPOINT, body);
         } catch (error) {
             console.error(error);

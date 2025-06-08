@@ -26,6 +26,7 @@ type MockListItemCaches = MockListItemCache[];
 export type MockTask = {
     originalMarkdown: string;
     taskLocation: MockTaskLocation;
+    tickTickId: string;
 };
 
 /** All the data required to call {@link findLineNumberOfTaskToToggle} */
@@ -70,6 +71,7 @@ export function getMockDataForTesting(
         taskData: {
             originalMarkdown: originalTask.originalMarkdown,
             taskLocation: mockTaskLocation,
+            tickTickId: 'tickTickId',
         },
         fileData: {
             fileLines: fileLines,

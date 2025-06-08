@@ -148,7 +148,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     });
 };
 
-export const taskFromNothing = ({ path }: { path: string }): Task => {
+export const taskFromFilePath = ({ path }: { path: string }): Task => {
     const createdDate = getDefaultCreatedDate();
 
     // If we are not on a line of a task, we take what we have.

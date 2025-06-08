@@ -129,6 +129,7 @@ export class Task extends ListItem {
             description,
             taskLocation,
             parent,
+            tickTickId,
         });
         // NEW_TASK_FIELD_EDIT_REQUIRED
         this.status = status;
