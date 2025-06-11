@@ -42,74 +42,44 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return true;
         });
     }
+
     // onTrigger needs to be tested to see if it returns null unless there are suggestions.
-
-    // Temporary benchmark to check impact of mimicking getSuggestions in onTrigger
-    benchmark(fn: CallableFunction, iterations = 1000) {
-        const start = performance.now();
-        for (let i = 0; i < iterations; i++) {
-            fn();
-        }
-        const end = performance.now();
-        return (end - start) / iterations;
-    }
-    // Results
-    // Original onTrigger
-    // myVault: onTrigger 0.1ms , getSuggestions 0.8ms
-    // demoVault: onTrigger 0.1ms, getSuggestions 0.4ms
-
-    // Modified onTrigger to mimic getSuggestions
-    // myVault: onTrigger 1.3ms , getSuggestions 0.7ms
-    // demoVault: onTrigger 0.6ms, getSuggestions 0.3ms
-
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
-        const onTriggerStartTime = performance.now();
-
         const line = editor.getLine(cursor.line);
 
-        const timerWrapperHasSuggestions = (() => {
-            if (!this.settings.autoSuggestInEditor) return null;
+        if (!this.settings.autoSuggestInEditor) return null;
 
-            if (_file === undefined) {
-                // We won't be able to save any changes, so tell Obsidian that we cannot make suggestions.
-                // This allows other plugins, such as Natural Language Dates, to have the opportunity
-                // to make suggestions.
-                return null;
-            }
+        if (_file === undefined) {
+            // We won't be able to save any changes, so tell Obsidian that we cannot make suggestions.
+            // This allows other plugins, such as Natural Language Dates, to have the opportunity
+            // to make suggestions.
+            return null;
+        }
 
-            if (!canSuggestForLine(line, cursor, editor)) {
-                return null;
-            }
+        if (!canSuggestForLine(line, cursor, editor)) {
+            return null;
+        }
 
-            // Logic that mimics getSuggestions
-            const allTasks = this.plugin.getTasks();
-            const taskToTest = allTasks.find(
-                (task) => task.taskLocation.path == _file.path && task.taskLocation.lineNumber == cursor.line,
-            );
+        // Logic that mimics getSuggestions
+        const allTasks = this.plugin.getTasks();
+        const taskToTest = allTasks.find(
+            (task) => task.taskLocation.path == _file.path && task.taskLocation.lineNumber == cursor.line,
+        );
 
-            const suggestions: SuggestInfo[] =
-                getUserSelectedTaskFormat().buildSuggestions?.(
-                    line,
-                    cursor.ch,
-                    this.settings,
-                    allTasks,
-                    true, // canSaveEdits, assume true no context
-                    taskToTest,
-                ) ?? [];
+        const suggestions: SuggestInfo[] =
+            getUserSelectedTaskFormat().buildSuggestions?.(
+                line,
+                cursor.ch,
+                this.settings,
+                allTasks,
+                true, // canSaveEdits, assume true no context
+                taskToTest,
+            ) ?? [];
 
-            console.log('onTrigger built suggestions:\n', suggestions);
+        console.log('onTrigger built suggestions:\n', suggestions);
 
-            // If no suggestions were made, don't try to show the suggestor popup.
-            if (suggestions.length === 0) {
-                return null;
-            }
-            return true;
-        })();
-
-        const onTriggerEndTime = performance.now();
-        console.log(`onTrigger took ${onTriggerEndTime - onTriggerStartTime}ms`);
-
-        if (timerWrapperHasSuggestions === null) {
+        // If no suggestions were made, don't try to show the suggestor popup.
+        if (suggestions.length === 0) {
             return null;
         }
 
@@ -124,7 +94,6 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     }
 
     getSuggestions(context: EditorSuggestContext): SuggestInfoWithContext[] {
-        const getSuggestionsStartTime = performance.now();
         if (context.file === undefined) {
             // If the editor isn't a real file, we won't be able to locate
             // the task line where the cursor is, so won't be able to make any
@@ -161,9 +130,6 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         console.log('getSuggestions built suggestions:\n', suggestions);
 
         const payload = suggestions.map((s) => ({ ...s, context }));
-
-        const getSuggestionsEndTime = performance.now();
-        console.log(`getSuggestions took ${getSuggestionsEndTime - getSuggestionsStartTime}ms`);
 
         return payload;
     }
