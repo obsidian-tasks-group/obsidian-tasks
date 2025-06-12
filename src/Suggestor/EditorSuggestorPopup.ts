@@ -44,6 +44,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     }
 
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
+        this.onTriggerSuggestions = []; // Reset suggestions on each trigger
         if (!this.settings.autoSuggestInEditor) return null;
         if (!_file) return null;
 
@@ -57,6 +58,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             cursorLine: cursor.line,
             canSaveEdits: true, // Assume true in onTrigger context
         });
+        this.onTriggerSuggestions = suggestions;
 
         console.debug('onTrigger built suggestions:\n', suggestions);
 
@@ -85,6 +87,14 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         });
 
         console.debug('getSuggestions built suggestions:\n', suggestions);
+
+        if (this.deepEqual(this.onTriggerSuggestions, suggestions)) {
+            console.debug('suggestions match onTrigger suggestions');
+        } else {
+            console.warn('suggestions in getSuggestions() differ from those in onTrigger()');
+            console.warn('onTrigger() suggestions:', this.onTriggerSuggestions);
+            console.warn('getSuggestions() suggestions:', suggestions);
+        }
 
         return suggestions.map((suggestion) => ({ ...suggestion, context }));
     }
@@ -128,6 +138,21 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         return taskFormat.buildSuggestions
             ? taskFormat.buildSuggestions(line, cursorPosition, this.settings, allTasks, canSaveEdits, taskToSuggestFor)
             : [];
+    }
+
+    // Check to see if the suggestions built in getSuggestions match those built in onTrigger
+    private onTriggerSuggestions: any = [];
+    private deepEqual(obj1: { [x: string]: any } | null, obj2: { [x: string]: any } | null): boolean {
+        if (obj1 === obj2) return true;
+        if (obj1 == null || obj2 == null) return false;
+        if (typeof obj1 !== 'object' || typeof obj2 !== 'object') return false;
+
+        const keys1 = Object.keys(obj1);
+        const keys2 = Object.keys(obj2);
+
+        if (keys1.length !== keys2.length) return false;
+
+        return keys1.every((key) => this.deepEqual(obj1[key], obj2[key]));
     }
 
     private getMarkdownFileInfo(context: EditorSuggestContext) {
