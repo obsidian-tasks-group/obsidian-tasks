@@ -104,6 +104,14 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             );
         }
 
+        if (this.deepEqual(this.onTriggerSuggestions, suggestions)) {
+            console.debug('suggestions match onTrigger suggestions');
+        } else {
+            console.warn('suggestions in getSuggestions() differ from those in onTrigger()');
+            console.warn('onTrigger() suggestions:', this.onTriggerSuggestions);
+            console.warn('getSuggestions() suggestions:', suggestions);
+        }
+
         return suggestions.map((suggestion) => ({ ...suggestion, context }));
     }
 
