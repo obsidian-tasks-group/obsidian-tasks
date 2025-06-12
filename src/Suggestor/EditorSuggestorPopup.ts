@@ -66,15 +66,17 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             (task) => task.taskLocation.path == _file.path && task.taskLocation.lineNumber == cursor.line,
         );
 
-        const suggestions: SuggestInfo[] =
-            getUserSelectedTaskFormat().buildSuggestions?.(
-                line,
-                cursor.ch,
-                this.settings,
-                allTasks,
-                true, // canSaveEdits, assume true no context
-                taskToTest,
-            ) ?? [];
+        const taskFormat = getUserSelectedTaskFormat();
+        const suggestions: SuggestInfo[] = taskFormat.buildSuggestions
+            ? taskFormat.buildSuggestions(
+                  line,
+                  cursor.ch,
+                  this.settings,
+                  allTasks,
+                  true, // canSaveEdits, assume true no context
+                  taskToTest,
+              )
+            : [];
 
         console.log('onTrigger built suggestions:\n', suggestions);
 
@@ -116,15 +118,17 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
         const canSaveEdits = this.canSaveEdits(markdownFileInfo);
 
-        const suggestions: SuggestInfo[] =
-            getUserSelectedTaskFormat().buildSuggestions?.(
-                line,
-                currentCursor.ch,
-                this.settings,
-                allTasks,
-                canSaveEdits,
-                taskToSuggestFor,
-            ) ?? [];
+        const taskFormat = getUserSelectedTaskFormat();
+        const suggestions: SuggestInfo[] = taskFormat.buildSuggestions
+            ? taskFormat.buildSuggestions(
+                  line,
+                  currentCursor.ch,
+                  this.settings,
+                  allTasks,
+                  canSaveEdits,
+                  taskToSuggestFor,
+              )
+            : [];
 
         // Add the editor context to all the suggestions
         console.log('getSuggestions built suggestions:\n', suggestions);
