@@ -44,6 +44,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     }
 
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
+        this.onTriggerSuggestions = []; // Reset suggestions on each trigger
         if (!this.settings.autoSuggestInEditor) return null;
         if (!_file) return null;
 
@@ -57,6 +58,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             cursorLine: cursor.line,
             canSaveEdits: true, // Assume true in onTrigger context
         });
+        this.onTriggerSuggestions = suggestions;
 
         console.debug('onTrigger built suggestions:\n', suggestions);
 
@@ -84,7 +86,23 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             canSaveEdits: canSaveEdits,
         });
 
-        console.debug('getSuggestions built suggestions:\n', suggestions);
+        if (this.deepEqual(this.onTriggerSuggestions, suggestions)) {
+            console.debug(
+                'suggestions match onTrigger() suggestions',
+                '\nonTrigger() suggestions:',
+                this.onTriggerSuggestions,
+                '\ngetSuggestions() suggestions:',
+                suggestions,
+            );
+        } else {
+            console.warn(
+                'suggestions in getSuggestions() differ from those in onTrigger()',
+                '\nonTrigger() suggestions:',
+                this.onTriggerSuggestions,
+                '\ngetSuggestions() suggestions:',
+                suggestions,
+            );
+        }
 
         return suggestions.map((suggestion) => ({ ...suggestion, context }));
     }
@@ -92,11 +110,12 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     /**
      * Shared logic for building suggestions based on cursor position and file context
      *
-     * gatherSuggestions is called in onTrigger and getSuggestions
-     * onTrigger uses the length of the suggestions to determine if the suggestor
-     * should be opened getSuggestions uses the suggestions to render the suggestor popup
+     * grabSuggestions is called in onTrigger and getSuggestions
+     *  - onTrigger uses the length of the suggestions to determine if the suggestor
+     *  should be opened
+     *  - getSuggestions uses the suggestions to render the suggestor popup
      *
-     * The parameters, passed to gatherSuggestions, are obtained in different ways
+     * The parameters, passed to grabSuggestions, are obtained from different methods
      * in onTrigger and getSuggestions.
      *
      * For the functionality of the tasks plugin, it is important that onTrigger
@@ -107,6 +126,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
      *
      * If the parameters passed to grabSuggestions are equivalent then it is
      * assumed that the suggestor will return the same suggestions in both cases.
+     *
      */
 
     private grabSuggestions(params: {
@@ -128,6 +148,21 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         return taskFormat.buildSuggestions
             ? taskFormat.buildSuggestions(line, cursorPosition, this.settings, allTasks, canSaveEdits, taskToSuggestFor)
             : [];
+    }
+
+    // Check to see if the suggestions built in getSuggestions match those built in onTrigger
+    private onTriggerSuggestions: any = [];
+    private deepEqual(obj1: { [x: string]: any } | null, obj2: { [x: string]: any } | null): boolean {
+        if (obj1 === obj2) return true;
+        if (obj1 == null || obj2 == null) return false;
+        if (typeof obj1 !== 'object' || typeof obj2 !== 'object') return false;
+
+        const keys1 = Object.keys(obj1);
+        const keys2 = Object.keys(obj2);
+
+        if (keys1.length !== keys2.length) return false;
+
+        return keys1.every((key) => this.deepEqual(obj1[key], obj2[key]));
     }
 
     private getMarkdownFileInfo(context: EditorSuggestContext) {
