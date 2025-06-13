@@ -44,63 +44,133 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     }
 
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
+        this.onTriggerSuggestions = []; // Reset suggestions on each trigger
         if (!this.settings.autoSuggestInEditor) return null;
-
-        if (_file === undefined) {
-            // We won't be able to save any changes, so tell Obsidian that we cannot make suggestions.
-            // This allows other plugins, such as Natural Language Dates, to have the opportunity
-            // to make suggestions.
-            return null;
-        }
+        if (!_file) return null;
 
         const line = editor.getLine(cursor.line);
-        if (canSuggestForLine(line, cursor, editor)) {
-            return {
-                start: { line: cursor.line, ch: 0 },
-                end: {
-                    line: cursor.line,
-                    ch: line.length,
-                },
-                query: line,
-            };
-        }
-        return null;
+        if (!canSuggestForLine(line, cursor, editor)) return null;
+
+        const suggestions = this.grabSuggestions({
+            line: line,
+            cursorPosition: cursor.ch,
+            file: _file,
+            cursorLine: cursor.line,
+            canSaveEdits: true, // Assume true in onTrigger context
+        });
+        this.onTriggerSuggestions = suggestions;
+
+        console.debug('onTrigger built suggestions:\n', suggestions);
+
+        if (suggestions.length === 0) return null;
+
+        return {
+            start: { line: cursor.line, ch: 0 },
+            end: { line: cursor.line, ch: line.length },
+            query: line,
+        };
     }
 
     getSuggestions(context: EditorSuggestContext): SuggestInfoWithContext[] {
-        if (context.file === undefined) {
-            // If the editor isn't a real file, we won't be able to locate
-            // the task line where the cursor is, so won't be able to make any
-            // suggestions:
-            return [] as SuggestInfoWithContext[];
-        }
+        if (!context.file) return [] as SuggestInfoWithContext[];
 
-        const line = context.query;
         const currentCursor = context.editor.getCursor();
-        const allTasks = this.plugin.getTasks();
-
-        const taskToSuggestFor = allTasks.find(
-            (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
-        );
-
         const markdownFileInfo = this.getMarkdownFileInfo(context);
-
-        // If we can't save the file, we should not allow users to choose dependencies.
-        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
         const canSaveEdits = this.canSaveEdits(markdownFileInfo);
 
-        const suggestions: SuggestInfo[] =
-            getUserSelectedTaskFormat().buildSuggestions?.(
-                line,
-                currentCursor.ch,
-                this.settings,
-                allTasks,
-                canSaveEdits,
-                taskToSuggestFor,
-            ) ?? [];
+        const suggestions = this.grabSuggestions({
+            line: context.query,
+            cursorPosition: currentCursor.ch,
+            file: context.file,
+            cursorLine: currentCursor.line,
+            canSaveEdits: canSaveEdits,
+        });
 
-        // Add the editor context to all the suggestions
-        return suggestions.map((s) => ({ ...s, context }));
+        if (this.deepEqual(this.onTriggerSuggestions, suggestions)) {
+            console.debug(
+                'suggestions match onTrigger() suggestions',
+                '\nonTrigger() suggestions:',
+                this.onTriggerSuggestions,
+                '\ngetSuggestions() suggestions:',
+                suggestions,
+            );
+        } else {
+            console.warn(
+                'suggestions in getSuggestions() differ from those in onTrigger()',
+                '\nonTrigger() suggestions:',
+                this.onTriggerSuggestions,
+                '\ngetSuggestions() suggestions:',
+                suggestions,
+            );
+        }
+
+        if (this.deepEqual(this.onTriggerSuggestions, suggestions)) {
+            console.debug('suggestions match onTrigger suggestions');
+        } else {
+            console.warn('suggestions in getSuggestions() differ from those in onTrigger()');
+            console.warn('onTrigger() suggestions:', this.onTriggerSuggestions);
+            console.warn('getSuggestions() suggestions:', suggestions);
+        }
+
+        return suggestions.map((suggestion) => ({ ...suggestion, context }));
+    }
+
+    /**
+     * Shared logic for building suggestions based on cursor position and file context
+     *
+     * grabSuggestions is called in onTrigger and getSuggestions
+     *  - onTrigger uses the length of the suggestions to determine if the suggestor
+     *  should be opened
+     *  - getSuggestions uses the suggestions to render the suggestor popup
+     *
+     * The parameters, passed to grabSuggestions, are obtained from different methods
+     * in onTrigger and getSuggestions.
+     *
+     * For the functionality of the tasks plugin, it is important that onTrigger
+     * returns true when there are suggestions.
+     *
+     * For the functionality of other plugins that use the EditorSuggestor,
+     * it is important that onTrigger returns null when there are no suggestions.
+     *
+     * If the parameters passed to grabSuggestions are equivalent then it is
+     * assumed that the suggestor will return the same suggestions in both cases.
+     *
+     */
+
+    private grabSuggestions(params: {
+        line: string;
+        cursorPosition: number;
+        file: TFile;
+        cursorLine: number;
+        canSaveEdits: boolean;
+    }): SuggestInfo[] {
+        const { line, cursorPosition, file, cursorLine, canSaveEdits } = params;
+
+        const allTasks = this.plugin.getTasks();
+        const taskToSuggestFor = allTasks.find(
+            (task) => task.taskLocation.path === file.path && task.taskLocation.lineNumber === cursorLine,
+        );
+
+        const taskFormat = getUserSelectedTaskFormat();
+
+        return taskFormat.buildSuggestions
+            ? taskFormat.buildSuggestions(line, cursorPosition, this.settings, allTasks, canSaveEdits, taskToSuggestFor)
+            : [];
+    }
+
+    // Check to see if the suggestions built in getSuggestions match those built in onTrigger
+    private onTriggerSuggestions: any = [];
+    private deepEqual(obj1: { [x: string]: any } | null, obj2: { [x: string]: any } | null): boolean {
+        if (obj1 === obj2) return true;
+        if (obj1 == null || obj2 == null) return false;
+        if (typeof obj1 !== 'object' || typeof obj2 !== 'object') return false;
+
+        const keys1 = Object.keys(obj1);
+        const keys2 = Object.keys(obj2);
+
+        if (keys1.length !== keys2.length) return false;
+
+        return keys1.every((key) => this.deepEqual(obj1[key], obj2[key]));
     }
 
     private getMarkdownFileInfo(context: EditorSuggestContext) {
