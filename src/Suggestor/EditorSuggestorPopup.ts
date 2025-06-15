@@ -75,10 +75,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return [] as SuggestInfoWithContext[];
         }
 
-        const line = context.query;
-        const editor = context.editor;
-        const file = context.file;
-        const suggestions = this.grabSuggestions(editor, file, line);
+        const suggestions = this.grabSuggestions(context.editor, context.file, context.query);
 
         // Add the editor context to all the suggestions
         return suggestions.map((s) => ({ ...s, context }));
