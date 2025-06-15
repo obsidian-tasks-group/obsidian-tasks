@@ -77,6 +77,9 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
         const line = context.query;
         const currentCursor = context.editor.getCursor();
+        const cursorPosition = currentCursor.ch;
+
+        // Goal: Move all uses of context above this line
         const allTasks = this.plugin.getTasks();
 
         const taskToSuggestFor = allTasks.find(
@@ -92,7 +95,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const suggestions: SuggestInfo[] =
             getUserSelectedTaskFormat().buildSuggestions?.(
                 line,
-                currentCursor.ch,
+                cursorPosition,
                 this.settings,
                 allTasks,
                 canSaveEdits,
