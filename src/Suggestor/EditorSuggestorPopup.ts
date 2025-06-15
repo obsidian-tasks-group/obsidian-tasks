@@ -75,8 +75,6 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return [] as SuggestInfoWithContext[];
         }
 
-        const cursorPosition = context.editor.getCursor().ch;
-
         const markdownFileInfo = this.getMarkdownFileInfo(context);
 
         // If we can't save the file, we should not allow users to choose dependencies.
@@ -88,7 +86,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             context.file,
             context.editor.getCursor(),
             context.query,
-            cursorPosition,
+            context.editor.getCursor().ch,
             canSaveEdits,
         );
 
