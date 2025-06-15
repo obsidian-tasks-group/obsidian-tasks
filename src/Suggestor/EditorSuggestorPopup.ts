@@ -85,11 +85,13 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
         const canSaveEdits = this.canSaveEdits(markdownFileInfo);
 
+        const file = context.file;
+
         // Goal: Move all uses of context above this line
         const allTasks = this.plugin.getTasks();
 
         const taskToSuggestFor = allTasks.find(
-            (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
+            (task) => task.taskLocation.path == file.path && task.taskLocation.lineNumber == currentCursor.line,
         );
 
         const suggestions: SuggestInfo[] =
