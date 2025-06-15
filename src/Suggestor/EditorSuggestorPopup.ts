@@ -75,8 +75,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return [] as SuggestInfoWithContext[];
         }
 
-        const currentCursor = context.editor.getCursor();
-        const cursorPosition = currentCursor.ch;
+        const cursorPosition = context.editor.getCursor().ch;
 
         const markdownFileInfo = this.getMarkdownFileInfo(context);
 
@@ -84,10 +83,14 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
         const canSaveEdits = this.canSaveEdits(markdownFileInfo);
 
-        const file = context.file;
-
         // Goal: Move all uses of context above this line
-        const suggestions = this.grabSuggestions(file, currentCursor, context.query, cursorPosition, canSaveEdits);
+        const suggestions = this.grabSuggestions(
+            context.file,
+            context.editor.getCursor(),
+            context.query,
+            cursorPosition,
+            canSaveEdits,
+        );
 
         // Add the editor context to all the suggestions
         return suggestions.map((s) => ({ ...s, context }));
