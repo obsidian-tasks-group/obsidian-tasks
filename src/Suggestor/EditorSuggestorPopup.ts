@@ -75,7 +75,6 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return [] as SuggestInfoWithContext[];
         }
 
-        const line = context.query;
         const currentCursor = context.editor.getCursor();
         const cursorPosition = currentCursor.ch;
 
@@ -88,7 +87,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const file = context.file;
 
         // Goal: Move all uses of context above this line
-        const suggestions = this.grabSuggestions(file, currentCursor, line, cursorPosition, canSaveEdits);
+        const suggestions = this.grabSuggestions(file, currentCursor, context.query, cursorPosition, canSaveEdits);
 
         // Add the editor context to all the suggestions
         return suggestions.map((s) => ({ ...s, context }));
