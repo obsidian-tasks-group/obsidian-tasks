@@ -107,7 +107,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             (task) => task.taskLocation.path == file.path && task.taskLocation.lineNumber == currentCursor.line,
         );
 
-        const suggestions: SuggestInfo[] =
+        return (
             getUserSelectedTaskFormat().buildSuggestions?.(
                 line,
                 cursorPosition,
@@ -115,8 +115,8 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
                 allTasks,
                 canSaveEdits,
                 taskToSuggestFor,
-            ) ?? [];
-        return suggestions;
+            ) ?? []
+        );
     }
 
     private getMarkdownFileInfo(context: EditorSuggestContext) {
