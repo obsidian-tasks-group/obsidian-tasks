@@ -56,16 +56,15 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const line = editor.getLine(cursor.line);
         if (!canSuggestForLine(line, cursor, editor)) {
             return null;
-        } else {
-            return {
-                start: { line: cursor.line, ch: 0 },
-                end: {
-                    line: cursor.line,
-                    ch: line.length,
-                },
-                query: line,
-            };
         }
+        return {
+            start: { line: cursor.line, ch: 0 },
+            end: {
+                line: cursor.line,
+                ch: line.length,
+            },
+            query: line,
+        };
     }
 
     getSuggestions(context: EditorSuggestContext): SuggestInfoWithContext[] {
