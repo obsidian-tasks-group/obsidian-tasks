@@ -54,6 +54,11 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         }
 
         const line = editor.getLine(cursor.line);
+
+        // Proof-of-concept demo: We can now get the suggestions easily from inside onTrigger()
+        // @ts-expect-error: TS6133: suggestions is declared but its value is never read
+        const suggestions = this.grabSuggestions(editor, _file, line);
+
         if (canSuggestForLine(line, cursor, editor)) {
             return {
                 start: { line: cursor.line, ch: 0 },
