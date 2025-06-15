@@ -83,7 +83,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
         );
 
-        const markdownFileInfo = this.getMarkdownFileInfo(context, context.editor);
+        const markdownFileInfo = this.getMarkdownFileInfo(context.editor);
 
         // If we can't save the file, we should not allow users to choose dependencies.
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
@@ -103,7 +103,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         return suggestions.map((s) => ({ ...s, context }));
     }
 
-    private getMarkdownFileInfo(_context: EditorSuggestContext, editor: Editor) {
+    private getMarkdownFileInfo(editor: Editor) {
         // @ts-expect-error: TS2339: Property cm does not exist on type Editor
         return editor.cm.state.field(editorInfoField);
     }
@@ -201,7 +201,7 @@ file: '${newTask.path}'
         // the same task can be offered again, and if done in rapid succession,
         // multiple ID fields can be added to individual task lines.
 
-        const markdownFileInfo = this.getMarkdownFileInfo(value.context, value.context.editor);
+        const markdownFileInfo = this.getMarkdownFileInfo(value.context.editor);
         if (this.canSaveEdits(markdownFileInfo)) {
             await markdownFileInfo.save();
         }
