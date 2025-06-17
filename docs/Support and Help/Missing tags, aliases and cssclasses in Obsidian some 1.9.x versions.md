@@ -60,7 +60,7 @@ Steps:
 
 Here is one way to fix them.
 
-1. Open the file **Check Tags.base**
+1. Download the file **[Check Tags.base](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/obsidain-1.9.2/resources/sample_vaults/Tasks-Demo/How%20To/Find%20properties%20not%20read%20by%20Obsidian%201.9.x)** - and open it in Obsidian 1.9.2 or newer.
     - Pin the file
     - Review _all_ the values in the **ErrorsAreTagsValuesNeedingFixing** column.
     - For every row that has an **⚠︎ Error** value:
@@ -83,7 +83,7 @@ Here is one way to fix them.
         ---
         ```
 
-2. Open the file **Check Aliases.base**
+2. Download the file **[Check Aliases.base](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/obsidain-1.9.2/resources/sample_vaults/Tasks-Demo/How%20To/Find%20properties%20not%20read%20by%20Obsidian%201.9.x)** - and open it in Obsidian 1.9.2 or newer.
     - Pin the file
     - Review _all_ the values in the **ErrorsAreAliasesValuesNeedingFixing** column.
     - For every row that has an **⚠︎ Error** value:
@@ -106,7 +106,7 @@ Here is one way to fix them.
         ---
         ```
 
-3. Open the file **Check CssClasses.base**
+3. Download the file **[Check CssClasses.base](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/obsidain-1.9.2/resources/sample_vaults/Tasks-Demo/How%20To/Find%20properties%20not%20read%20by%20Obsidian%201.9.x)** - and open it in Obsidian 1.9.2 or newer.
     - Pin the file
     - Review _all_ the values in the **ErrorsAreCssclassesValuesNeedingFixing** column.
     - For every row that has an **⚠︎ Error** value:
