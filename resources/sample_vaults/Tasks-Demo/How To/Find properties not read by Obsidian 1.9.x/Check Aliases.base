@@ -1,0 +1,16 @@
+filters:
+  or:
+    - "!aliases.isEmpty()"
+formulas:
+  ErrorsAreAliasesValuesNeedingFixing: note.aliases.join("; ")
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - formula.ErrorsAreAliasesValuesNeedingFixing
+      - aliases
+      - file.path
+    sort:
+      - column: file.path
+        direction: ASC

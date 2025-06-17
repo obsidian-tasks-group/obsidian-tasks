@@ -1,14 +1,14 @@
 {
   "cachedMetadata": {
     "frontmatter": {
-      "tags": "single-value-single-line"
+      "cssclasses": "value-1-of-2-on-one-line, value-2-of-2-on-one-line"
     },
     "frontmatterLinks": [],
     "frontmatterPosition": {
       "end": {
         "col": 3,
         "line": 2,
-        "offset": 38
+        "offset": 70
       },
       "start": {
         "col": 0,
@@ -18,18 +18,18 @@
     },
     "headings": [
       {
-        "heading": "yaml_tags_with_one_value_on_single_line",
+        "heading": "yaml_cssclasses_with_two_values_on_one_line",
         "level": 1,
         "position": {
           "end": {
-            "col": 41,
+            "col": 45,
             "line": 4,
-            "offset": 81
+            "offset": 117
           },
           "start": {
             "col": 0,
             "line": 4,
-            "offset": 40
+            "offset": 72
           }
         }
       }
@@ -39,14 +39,14 @@
         "parent": -6,
         "position": {
           "end": {
-            "col": 61,
+            "col": 65,
             "line": 6,
-            "offset": 144
+            "offset": 184
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 83
+            "offset": 119
           }
         },
         "task": " "
@@ -58,7 +58,7 @@
           "end": {
             "col": 3,
             "line": 2,
-            "offset": 38
+            "offset": 70
           },
           "start": {
             "col": 0,
@@ -71,14 +71,14 @@
       {
         "position": {
           "end": {
-            "col": 41,
+            "col": 45,
             "line": 4,
-            "offset": 81
+            "offset": 117
           },
           "start": {
             "col": 0,
             "line": 4,
-            "offset": 40
+            "offset": 72
           }
         },
         "type": "heading"
@@ -86,14 +86,14 @@
       {
         "position": {
           "end": {
-            "col": 61,
+            "col": 65,
             "line": 6,
-            "offset": 144
+            "offset": 184
           },
           "start": {
             "col": 0,
             "line": 6,
-            "offset": 83
+            "offset": 119
           }
         },
         "type": "list"
@@ -105,20 +105,20 @@
           "end": {
             "col": 11,
             "line": 6,
-            "offset": 94
+            "offset": 130
           },
           "start": {
             "col": 6,
             "line": 6,
-            "offset": 89
+            "offset": 125
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\ntags: single-value-single-line\n---\n\n# yaml_tags_with_one_value_on_single_line\n\n- [ ] #task Task in 'yaml_tags_with_one_value_on_single_line'\n",
-  "filePath": "Test Data/yaml_tags_with_one_value_on_single_line.md",
+  "fileContents": "---\ncssclasses: value-1-of-2-on-one-line, value-2-of-2-on-one-line\n---\n\n# yaml_cssclasses_with_two_values_on_one_line\n\n- [ ] #task Task in 'yaml_cssclasses_with_two_values_on_one_line'\n",
+  "filePath": "Test Data/yaml_cssclasses_with_two_values_on_one_line.md",
   "getAllTags": [
     "#task"
   ],
