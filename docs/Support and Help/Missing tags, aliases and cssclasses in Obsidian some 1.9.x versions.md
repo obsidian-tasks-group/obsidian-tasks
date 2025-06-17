@@ -1,3 +1,7 @@
+---
+publish: true
+---
+
 # Missing tags, aliases and cssclasses in Obsidian some 1.9.x versions
 
 ## Obsidian 1.9.0 reads properties strictly
