@@ -1,0 +1,22 @@
+filters:
+  or:
+    - "!cssclass.isEmpty()"
+    - "!cssclasses.isEmpty()"
+formulas:
+  CssClassesWithSpaceJoin: note.cssclasses.join(" ")
+  CssClassesAsList: list(note.cssclasses)
+  CssClassesToString: note.cssclasses.toString()
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - cssclasses
+      - note.CSSCLASS,
+      - formula.CssClassesWithSpaceJoin
+      - formula.CssClassesAsList
+      - formula.CssClassesToString
+      - file.path
+    sort:
+      - column: file.path
+        direction: ASC

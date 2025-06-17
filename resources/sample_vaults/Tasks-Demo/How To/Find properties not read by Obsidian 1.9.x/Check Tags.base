@@ -1,0 +1,22 @@
+filters:
+  or:
+    - "!tag.isEmpty()"
+    - "!tags.isEmpty()"
+formulas:
+  TagsWithSpaceJoin: note.tags.join(" ")
+  TagsAsList: list(note.tags)
+  TagsToString: note.tags.toString()
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - tags
+      - note.TAG,
+      - formula.TagsWithSpaceJoin
+      - formula.TagsAsList
+      - formula.TagsToString
+      - file.path
+    sort:
+      - column: file.path
+        direction: ASC
