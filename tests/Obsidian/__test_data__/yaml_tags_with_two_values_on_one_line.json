@@ -120,12 +120,7 @@
   "fileContents": "---\ntags: value-1-of-2-on-one-line, value-2-of-2-on-one-line\n---\n\n# yaml_tags_with_two_values_on_one_line\n\n- [ ] #task Task in 'yaml_tags_with_two_values_on_one_line'\n",
   "filePath": "Test Data/yaml_tags_with_two_values_on_one_line.md",
   "getAllTags": [
-    "#value-1-of-2-on-one-line",
-    "#value-2-of-2-on-one-line",
     "#task"
   ],
-  "parseFrontMatterTags": [
-    "#value-1-of-2-on-one-line",
-    "#value-2-of-2-on-one-line"
-  ]
+  "parseFrontMatterTags": null
 }

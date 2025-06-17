@@ -1,0 +1,16 @@
+filters:
+  or:
+    - "!tags.isEmpty()"
+formulas:
+  ErrorsAreTagsValuesNeedingFixing: note.tags.join("; ")
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - formula.ErrorsAreTagsValuesNeedingFixing
+      - tags
+      - file.path
+    sort:
+      - column: file.path
+        direction: ASC

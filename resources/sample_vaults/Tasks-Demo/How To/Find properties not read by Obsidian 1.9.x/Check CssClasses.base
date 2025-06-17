@@ -1,0 +1,16 @@
+filters:
+  or:
+    - "!cssclasses.isEmpty()"
+formulas:
+  ErrorsAreCssclassesValuesNeedingFixing: note.cssclasses.join("; ")
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - formula.ErrorsAreCssclassesValuesNeedingFixing
+      - cssclasses
+      - file.path
+    sort:
+      - column: file.path
+        direction: ASC
