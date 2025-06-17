@@ -183,6 +183,16 @@ describe('TasksFile - reading frontmatter', () => {
 
     it('should read yaml_complex_example', () => {
         const tasksFile = getTasksFileFromMockData(yaml_complex_example);
+        // Obsidian 1.9.x change in behaviour: See #3482
+        // The tags line in frontmatter is:
+        //      TAG:
+        //          - value1
+        //          - value2
+        // Obsidian 1.8.10 and earlier read tags as an array:
+        //      ["#value1", "#value2"]
+        // Obsidian 1.9.0 to 1.9.2 reads tags as an empty array:
+        //      []
+
         verifyAsJson(tasksFile.frontmatter);
     });
 

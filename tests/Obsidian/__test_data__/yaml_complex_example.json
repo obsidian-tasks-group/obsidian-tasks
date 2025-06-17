@@ -171,12 +171,7 @@
   "fileContents": "---\nTAG:\n  - value1\n  - value2\nALIAS:\n  - test 1\n  - test 2\ncustom_list:\n  - value 1\n  - value 2\ncustom_list_2:\n  - x\ncustom_number_prop: 42\nunknown_property:\n  - hello\n  - world\nunknown_property_2:\n  - 1\n  - 2\nunknown_number_property: 13\nunknown_empty_property:\nunknown_list:\n  -\n  -\nparent:\n  - child1:\n    - grandchild1: 1\n    - grandchild2: 2\n  - child2:\n    - grandchild3: 3\n    - grandchild4: 4\n---\n\n# yaml_complex_example\n\n- [ ] #task Task in 'yaml_complex_example'\n",
   "filePath": "Test Data/yaml_complex_example.md",
   "getAllTags": [
-    "#value1",
-    "#value2",
     "#task"
   ],
-  "parseFrontMatterTags": [
-    "#value1",
-    "#value2"
-  ]
+  "parseFrontMatterTags": null
 }
