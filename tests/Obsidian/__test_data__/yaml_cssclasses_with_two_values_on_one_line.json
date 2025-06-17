@@ -1,0 +1,126 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "cssclasses": "value-1-of-2-on-one-line, value-2-of-2-on-one-line"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 70
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_cssclasses_with_two_values_on_one_line",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 45,
+            "line": 4,
+            "offset": 117
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 72
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 65,
+            "line": 6,
+            "offset": 184
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 119
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 70
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 45,
+            "line": 4,
+            "offset": 117
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 72
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 65,
+            "line": 6,
+            "offset": 184
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 119
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 6,
+            "offset": 130
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 125
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\ncssclasses: value-1-of-2-on-one-line, value-2-of-2-on-one-line\n---\n\n# yaml_cssclasses_with_two_values_on_one_line\n\n- [ ] #task Task in 'yaml_cssclasses_with_two_values_on_one_line'\n",
+  "filePath": "Test Data/yaml_cssclasses_with_two_values_on_one_line.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "parseFrontMatterTags": null
+}

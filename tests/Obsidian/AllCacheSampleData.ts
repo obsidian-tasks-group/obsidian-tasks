@@ -66,11 +66,13 @@ import query_file_defaults_short_mode from './__test_data__/query_file_defaults_
 import query_using_properties from './__test_data__/query_using_properties.json';
 import yaml_1_alias from './__test_data__/yaml_1_alias.json';
 import yaml_2_aliases from './__test_data__/yaml_2_aliases.json';
+import yaml_aliases_with_two_values_on_one_line from './__test_data__/yaml_aliases_with_two_values_on_one_line.json';
 import yaml_all_property_types_empty from './__test_data__/yaml_all_property_types_empty.json';
 import yaml_all_property_types_populated from './__test_data__/yaml_all_property_types_populated.json';
 import yaml_capitalised_property_name from './__test_data__/yaml_capitalised_property_name.json';
 import yaml_complex_example from './__test_data__/yaml_complex_example.json';
 import yaml_complex_example_standardised from './__test_data__/yaml_complex_example_standardised.json';
+import yaml_cssclasses_with_two_values_on_one_line from './__test_data__/yaml_cssclasses_with_two_values_on_one_line.json';
 import yaml_custom_number_property from './__test_data__/yaml_custom_number_property.json';
 import yaml_tags_field_added_by_obsidian_but_not_populated from './__test_data__/yaml_tags_field_added_by_obsidian_but_not_populated.json';
 import yaml_tags_had_value_then_was_emptied_by_obsidian from './__test_data__/yaml_tags_had_value_then_was_emptied_by_obsidian.json';
@@ -157,11 +159,13 @@ export function allCacheSampleData(): SimulatedFile[] {
         query_using_properties,
         yaml_1_alias,
         yaml_2_aliases,
+        yaml_aliases_with_two_values_on_one_line,
         yaml_all_property_types_empty,
         yaml_all_property_types_populated,
         yaml_capitalised_property_name,
         yaml_complex_example,
         yaml_complex_example_standardised,
+        yaml_cssclasses_with_two_values_on_one_line,
         yaml_custom_number_property,
         yaml_tags_field_added_by_obsidian_but_not_populated,
         yaml_tags_had_value_then_was_emptied_by_obsidian,
