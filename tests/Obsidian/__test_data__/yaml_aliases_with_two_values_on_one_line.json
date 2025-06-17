@@ -1,0 +1,126 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "aliases": "value-1-of-2-on-one-line, value-2-of-2-on-one-line"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 67
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "yaml_aliases_with_two_values_on_one_line",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 4,
+            "offset": 111
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 69
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 62,
+            "line": 6,
+            "offset": 175
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 113
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 67
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 4,
+            "offset": 111
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 69
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 62,
+            "line": 6,
+            "offset": 175
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 113
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 6,
+            "offset": 124
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 119
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\naliases: value-1-of-2-on-one-line, value-2-of-2-on-one-line\n---\n\n# yaml_aliases_with_two_values_on_one_line\n\n- [ ] #task Task in 'yaml_aliases_with_two_values_on_one_line'\n",
+  "filePath": "Test Data/yaml_aliases_with_two_values_on_one_line.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "parseFrontMatterTags": null
+}
