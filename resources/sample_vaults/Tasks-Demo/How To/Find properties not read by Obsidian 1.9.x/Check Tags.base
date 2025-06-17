@@ -2,7 +2,7 @@ filters:
   or:
     - "!tags.isEmpty()"
 formulas:
-  ErrorsAreTagsValuesNeedingFixing: note.tags.join(" ")
+  ErrorsAreTagsValuesNeedingFixing: note.tags.join("; ")
 views:
   - type: table
     name: Table
@@ -14,6 +14,3 @@ views:
     sort:
       - column: file.path
         direction: ASC
-    columnSize:
-      formula.ErrorsAreTagsValuesNeedingFixing: 375
-      note.tags: 395
