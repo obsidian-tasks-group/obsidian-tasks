@@ -1,21 +1,15 @@
 filters:
   or:
-    - "!alias.isEmpty()"
     - "!aliases.isEmpty()"
 formulas:
-  AliasesWithSpaceJoin: note.aliases.join(" ")
-  AliasesAsList: list(note.aliases)
-  AliasesToString: note.aliases.toString()
+  ErrorsAreAliasesValuesNeedingFixing: note.aliases.join("; ")
 views:
   - type: table
     name: Table
     order:
       - file.name
+      - formula.ErrorsAreAliasesValuesNeedingFixing
       - aliases
-      - note.ALIAS,
-      - formula.AliasesWithSpaceJoin
-      - formula.AliasesAsList
-      - formula.AliasesToString
       - file.path
     sort:
       - column: file.path
