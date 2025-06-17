@@ -1,22 +1,19 @@
 filters:
   or:
-    - "!tag.isEmpty()"
     - "!tags.isEmpty()"
 formulas:
-  TagsWithSpaceJoin: note.tags.join(" ")
-  TagsAsList: list(note.tags)
-  TagsToString: note.tags.toString()
+  ErrorsAreTagsValuesNeedingFixing: note.tags.join(" ")
 views:
   - type: table
     name: Table
     order:
       - file.name
+      - formula.ErrorsAreTagsValuesNeedingFixing
       - tags
-      - note.TAG,
-      - formula.TagsWithSpaceJoin
-      - formula.TagsAsList
-      - formula.TagsToString
       - file.path
     sort:
       - column: file.path
         direction: ASC
+    columnSize:
+      formula.ErrorsAreTagsValuesNeedingFixing: 375
+      note.tags: 395
