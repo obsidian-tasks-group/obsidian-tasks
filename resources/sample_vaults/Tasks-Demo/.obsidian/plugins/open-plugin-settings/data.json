@@ -4,6 +4,11 @@
       "id": "obsidian-tasks-plugin",
       "name": "Tasks",
       "commandName": "Open Tasks plugin settings"
+    },
+    {
+      "id": "open-plugin-settings",
+      "name": "Open Plugin Settings",
+      "commandName": "Open Plugin Settings"
     }
   ]
 }
