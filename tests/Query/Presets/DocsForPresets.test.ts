@@ -6,7 +6,13 @@ import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 it('default-presets', () => {
     const table = new MarkdownTable(['Name', 'Instruction(s)']);
     for (const [key, value] of Object.entries(defaultPresets)) {
-        table.addRow([addBackticks(key), addBackticks(value)]);
+        table.addRow([
+            addBackticks(key),
+            value
+                .split('\n')
+                .map((line) => addBackticks(line))
+                .join('<br>'),
+        ]);
     }
     verifyMarkdownForDocs(table.markdown);
 });

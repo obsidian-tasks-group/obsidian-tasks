@@ -4,6 +4,13 @@ export const defaultPresets = {
     this_folder: 'folder includes {{query.file.folder}}',
     this_folder_only: 'filter by function task.file.folder === query.file.folder',
     this_root: 'root includes {{query.file.root}}',
+    hide_date_fields:
+        '# Hide any values for all date fields\nhide due date\nhide scheduled date\nhide start date\nhide created date\nhide done date\nhide cancelled date',
+    hide_non_date_fields:
+        '# Hide all the non-date fields, but not tags\nhide id\nhide depends on\nhide recurrence rule\nhide on completion\nhide priority',
+    hide_query_elements: '# Hide postpone, edit and backinks\nhide postpone button\nhide edit button\nhide backlinks',
+    hide_everything:
+        '# Hide everything except description and any tags\npreset hide_date_fields\npreset hide_non_date_fields\npreset hide_query_elements',
 };
 
 function summariseInstruction(instructions: string) {
