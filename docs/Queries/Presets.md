@@ -67,13 +67,24 @@ Use the **placeholder syntax** (`{{preset.name}}`) when you need to:
 
 ## Default Presets
 
-Tasks includes several built-in presets:
+The Tasks plugin defines several useful built-in presets, for demonstration purposes:
 
-- `this_file` - Tasks from the current file only
-- `this_folder` - Tasks from the current folder
-- `hide_date_fields` - Hide all date-related fields
-- `hide_non_date_fields` - Hide priority, dependencies, etc.
-- `hide_everything` - Show only task descriptions and tags
+<!-- placeholder to force blank line before included text --><!-- include: DocsForPresets.test.default-presets.approved.md -->
+
+| Name | Instruction(s) |
+| ----- | ----- |
+| `this_file` | `path includes {{query.file.path}}` |
+| `this_folder` | `folder includes {{query.file.folder}}` |
+| `this_folder_only` | `filter by function task.file.folder === query.file.folder` |
+| `this_root` | `root includes {{query.file.root}}` |
+| `hide_date_fields` | `# Hide any values for all date fields`<br>`hide due date`<br>`hide scheduled date`<br>`hide start date`<br>`hide created date`<br>`hide done date`<br>`hide cancelled date` |
+| `hide_non_date_fields` | `# Hide all the non-date fields, but not tags`<br>`hide id`<br>`hide depends on`<br>`hide recurrence rule`<br>`hide on completion`<br>`hide priority` |
+| `hide_query_elements` | `# Hide postpone, edit and backinks`<br>`hide postpone button`<br>`hide edit button`<br>`hide backlinks` |
+| `hide_everything` | `# Hide everything except description and any tags`<br>`preset hide_date_fields`<br>`preset hide_non_date_fields`<br>`preset hide_query_elements` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+These defaults can, of course, be edited, renamed and deleted.
 
 ## Example: Daily Note Presets
 
