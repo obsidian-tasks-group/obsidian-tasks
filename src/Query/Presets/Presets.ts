@@ -1,4 +1,4 @@
-import type { PresetsMap } from '../../Config/Settings';
+export type PresetsMap = Record<string, string>;
 
 function summariseInstruction(instructions: string) {
     let result = instructions;
