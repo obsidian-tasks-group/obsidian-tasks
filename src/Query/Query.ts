@@ -8,7 +8,7 @@ import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../Scripting/QueryContext';
 import type { Task } from '../Task/Task';
 import type { OptionalTasksFile } from '../Scripting/TasksFile';
-import { unknownPresetErrorMessage } from '../Scripting/Presets';
+import { unknownPresetErrorMessage } from './Presets/Presets';
 import { Explainer } from './Explain/Explainer';
 import type { Filter } from './Filter/Filter';
 import * as FilterParser from './FilterParser';
