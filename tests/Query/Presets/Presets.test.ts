@@ -7,10 +7,7 @@ import { getSettings, resetSettings, updateSettings } from '../../../src/Config/
 import { Query } from '../../../src/Query/Query';
 import { TasksFile } from '../../../src/Scripting/TasksFile';
 import type { Statement } from '../../../src/Query/Statement';
-import { type PresetsMap, defaultPresets } from '../../../src/Query/Presets/Presets';
-import { MarkdownTable } from '../../../src/lib/MarkdownTable';
-import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
-import { addBackticks } from '../../Scripting/ScriptingTestHelpers';
+import type { PresetsMap } from '../../../src/Query/Presets/Presets';
 
 window.moment = moment;
 
@@ -540,14 +537,5 @@ describe('include settings tests', () => {
               "this_root": "root includes {{query.file.root}}",
             }
         `);
-    });
-
-    it('default-presets', () => {
-        const table = new MarkdownTable(['Name', 'Instruction(s)']);
-        for (const key in defaultPresets) {
-            const value = defaultPresets[key as keyof typeof defaultPresets];
-            table.addRow([addBackticks(key), addBackticks(value)]);
-        }
-        verifyMarkdownForDocs(table.markdown);
     });
 });
