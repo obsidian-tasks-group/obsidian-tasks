@@ -1,4 +1,5 @@
 export type PresetsMap = Record<string, string>;
+export const defaultPresets = {};
 
 function summariseInstruction(instructions: string) {
     let result = instructions;
