@@ -3,9 +3,9 @@ import { defaultPresets } from '../../../src/Query/Presets/Presets';
 import { addBackticks } from '../../Scripting/ScriptingTestHelpers';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 
-it('default-presets', () => {
+function verifyPresetsMarkdownTable(entries: [string, string][]) {
     const table = new MarkdownTable(['Name', 'Instruction(s)']);
-    for (const [key, value] of Object.entries(defaultPresets)) {
+    for (const [key, value] of entries) {
         table.addRow([
             addBackticks(key),
             value
@@ -15,4 +15,8 @@ it('default-presets', () => {
         ]);
     }
     verifyMarkdownForDocs(table.markdown);
+}
+
+it('default-presets', () => {
+    verifyPresetsMarkdownTable(Object.entries(defaultPresets));
 });
