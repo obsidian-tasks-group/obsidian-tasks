@@ -97,8 +97,9 @@ export interface Settings {
     loggingOptions: LogOptions;
 }
 
+const defaultPresets = {};
 const defaultSettings: Readonly<Settings> = {
-    presets: {},
+    presets: defaultPresets,
     globalQuery: '',
     globalFilter: '',
     removeGlobalFilter: false,
