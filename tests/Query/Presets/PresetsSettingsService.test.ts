@@ -3,7 +3,7 @@ import {
     RenameResult,
     type RenamesInProgress,
 } from '../../../src/Query/Presets/PresetsSettingsService';
-import type { PresetsMap } from '../../../src/Config/Settings';
+import type { PresetsMap } from '../../../src/Query/Presets/Presets';
 
 function expectToBeValid(result: RenameResult) {
     expect(result.isValid).toBe(true);
