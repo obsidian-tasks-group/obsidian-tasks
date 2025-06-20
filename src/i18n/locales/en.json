@@ -190,7 +190,7 @@
       }
     },
     "presets": {
-      "line1": "You can define named instructions here, that you can re-use in multiple queries. A preset called '<tt>name</tt>' can be used in Tasks queries with either '<tt>preset name</tt>' or '<tt>{{preset.name}}</tt>'.",
+      "line1": "You can define named instructions here, that you can re-use in multiple queries. A preset called '{{name}}' can be used in Tasks queries with either '{{instruction1}}' or '{{instruction2}}'.",
       "name": "Presets"
     },
     "recurringTasks": {
