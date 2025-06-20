@@ -1,7 +1,7 @@
 import { Setting, TextAreaComponent } from 'obsidian';
 import type TasksPlugin from '../main';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
-import { PresetsSettingsService, type RenamesInProgress } from './PresetsSettingsService';
+import { PresetsSettingsService, type RenamesInProgress } from '../Query/Presets/PresetsSettingsService';
 import { type PresetsMap, type Settings, getSettings, updateSettings } from './Settings';
 
 type RefreshViewCallback = () => void;

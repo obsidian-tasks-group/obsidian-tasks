@@ -1,4 +1,8 @@
-import { PresetsSettingsService, RenameResult, type RenamesInProgress } from '../../src/Config/PresetsSettingsService';
+import {
+    PresetsSettingsService,
+    RenameResult,
+    type RenamesInProgress,
+} from '../../src/Query/Presets/PresetsSettingsService';
 import type { PresetsMap } from '../../src/Config/Settings';
 
 function expectToBeValid(result: RenameResult) {
