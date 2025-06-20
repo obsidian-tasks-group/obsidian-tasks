@@ -15,15 +15,15 @@ Presets allow you to save commonly used task query instructions and reuse them a
 
 Presets are particularly useful when you:
 
-- Use the same query patterns frequently
-- Want to maintain consistent formatting across multiple task views
-- Need to update search criteria in multiple locations (change once, update everywhere)
-- Use daily notes, all of which share the same task queries
+- Use the same query patterns frequently.
+- Want to maintain consistent formatting across multiple task views.
+- Need to update search criteria in multiple locations (change once, update everywhere).
+- Use daily notes, all of which share the same task queries.
 
 ## How to Define Presets
 
-1. Open Tasks settings
-2. Navigate to the "Presets" section
+1. Open Tasks settings.
+2. Navigate to the "Presets" section.
 3. Add your preset definitions using the format:
    - **Name**: A simple identifier (e.g., `my_overdue_tasks`)
    - **Instructions**: One or more valid task query lines
@@ -62,8 +62,8 @@ Use the **basic syntax** (`preset name`) for most cases where you want to includ
 
 Use the **placeholder syntax** (`{{preset.name}}`) when you need to:
 
-- Include presets within Boolean query combinations (AND, OR, NOT)
-- Define partial instruction lines, such as expressions for `filter by function`, `sort by function`, or `group by function`
+- Include presets within Boolean query combinations (AND, OR, NOT).
+- Define partial instruction lines, such as expressions for `filter by function`, `sort by function`, or `group by function`.
 
 ## Default Presets
 
@@ -157,8 +157,8 @@ This approach is particularly useful for complex filter expressions that you wan
 
 ## Limitations
 
-- Preset names should not contain spaces or special characters
-- When using basic syntax (`preset name`), presets must contain complete, valid instruction lines
-- When using placeholder syntax (`{{preset.name}}`), presets can contain partial instruction lines
-- Presets are applied exactly as written and cannot be modified when used
-- The basic syntax (`preset name`) cannot be used within Boolean query combinations
+- Preset names should not contain spaces or special characters.
+- When using basic syntax (`preset name`), presets must contain complete, valid instruction lines.
+- When using placeholder syntax (`{{preset.name}}`), presets can contain partial instruction lines.
+- Presets are applied exactly as written and cannot be modified when used.
+- The basic syntax (`preset name`) cannot be used within Boolean query combinations.
