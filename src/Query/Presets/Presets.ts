@@ -1,5 +1,10 @@
 export type PresetsMap = Record<string, string>;
-export const defaultPresets = {};
+export const defaultPresets = {
+    this_file: 'path includes {{query.file.path}}',
+    this_folder: 'folder includes {{query.file.folder}}',
+    this_folder_only: 'filter by function task.file.folder === query.file.folder',
+    this_root: 'root includes {{query.file.root}}',
+};
 
 function summariseInstruction(instructions: string) {
     let result = instructions;
