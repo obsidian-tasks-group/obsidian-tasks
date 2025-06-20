@@ -531,6 +531,27 @@ describe('include settings tests', () => {
 
         expect(settings.presets).toMatchInlineSnapshot(`
             {
+              "hide_date_fields": "# Hide any values for all date fields
+            hide due date
+            hide scheduled date
+            hide start date
+            hide created date
+            hide done date
+            hide cancelled date",
+              "hide_everything": "# Hide everything except description and any tags
+            preset hide_date_fields
+            preset hide_non_date_fields
+            preset hide_query_elements",
+              "hide_non_date_fields": "# Hide all the non-date fields, but not tags
+            hide id
+            hide depends on
+            hide recurrence rule
+            hide on completion
+            hide priority",
+              "hide_query_elements": "# Hide postpone, edit and backinks
+            hide postpone button
+            hide edit button
+            hide backlinks",
               "this_file": "path includes {{query.file.path}}",
               "this_folder": "folder includes {{query.file.folder}}",
               "this_folder_only": "filter by function task.file.folder === query.file.folder",
