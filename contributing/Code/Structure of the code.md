@@ -48,6 +48,11 @@ The `src/` directory contains the code that **implements** the Tasks plugin.
     - Abstraction for the different types of [text filters](https://publish.obsidian.md/tasks/Queries/Filters#Text%20filters):
       - Substring search
       - Regular expression search
+  - [Presets](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Presets)
+    - Implementation details of the [presets](https://publish.obsidian.md/tasks/Queries/Presets) facility, for declaring re-usable, named instruction blocks.
+    - See also these in `src/Config/`:
+      - [PresetsSettingsUI.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Config/PresetsSettingsUI.ts)
+      - [PresetsSettingsUI.scss](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Config/PresetsSettingsUI.scss)
   - [Sort/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Sort)
     - Implementation of the sorting mechanism.
     - [Sort.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Sort/Sort.ts) is the starting point for sorting tasks.
