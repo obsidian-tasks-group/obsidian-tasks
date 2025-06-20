@@ -160,7 +160,8 @@ description includes \
         'due this week',
         'exclude sub-items',
         'filename includes wibble',
-        'filter by function task.isDone', // This cannot contain any () because of issue #1500
+        'filter by function task.due.formatAsDate().includes("2024");', // The trailing ';' prevents 'Could not interpret the following instruction as a Boolean combination'
+        'filter by function task.isDone',
         'folder does not include some/path',
         'folder includes AND', // Verify Query doesn't confuse this with a boolean query
         'folder includes some/path',
