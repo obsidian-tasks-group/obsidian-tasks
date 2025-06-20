@@ -9,9 +9,9 @@
     "hide_query_elements": "# Hide postpone, edit and backinks\nhide postpone button\nhide edit button\nhide backlinks",
     "hide_everything": "# Hide everything except description and any tags\npreset hide_date_fields\npreset hide_non_date_fields\npreset hide_query_elements",
     "just_the_description": "# Show only description, not even the tags\npreset hide_everything\nhide tags",
-    "daily_note_overdue": "# Tasks that should have been done before today - requires YYYY-MM-DD file name\nnot done\nhappens before {{query.file.filenameWithoutExtension}}\ngroup by function task.happens.format('YYYY-MM')",
-    "daily_note_do_today": "# Tasks that should have been done today - requires YYYY-MM-DD file name\nnot done\nhappens {{query.file.filenameWithoutExtension}}",
-    "daily_note_done_today": "# Tasks that have been done today - requires YYYY-MM-DD file name\ndone\ndone {{query.file.filenameWithoutExtension}}",
+    "daily_note_overdue": "# Tasks that should have been done before this day - requires YYYY-MM-DD file name\nnot done\nhappens before {{query.file.filenameWithoutExtension}}\ngroup by function task.happens.format('YYYY-MM')",
+    "daily_note_do_this_day": "# Tasks that should be done this day - requires YYYY-MM-DD file name\nnot done\nhappens {{query.file.filenameWithoutExtension}}",
+    "daily_note_done_this_day": "# Tasks that have been done this day - requires YYYY-MM-DD file name\ndone\ndone {{query.file.filenameWithoutExtension}}",
     "filter_by_context": "filter by function let fn = (ctx) => task.tags.includes(`#context/${ctx}`); return fn",
     "extract_contexts_1": "ctx => task.tags.includes(`#context/${ctx}`)",
     "extract_contexts_2": "(ctx => task.tags.includes(`#context/${ctx}`))"
