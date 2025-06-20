@@ -5,8 +5,7 @@ import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 
 it('default-presets', () => {
     const table = new MarkdownTable(['Name', 'Instruction(s)']);
-    for (const key in defaultPresets) {
-        const value = defaultPresets[key as keyof typeof defaultPresets];
+    for (const [key, value] of Object.entries(defaultPresets)) {
         table.addRow([addBackticks(key), addBackticks(value)]);
     }
     verifyMarkdownForDocs(table.markdown);
