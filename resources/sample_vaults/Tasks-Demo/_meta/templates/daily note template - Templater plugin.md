@@ -1,21 +1,23 @@
 # <% tp.file.title %>
-
 <%*
   let yesterday = tp.date.now("YYYY-MM-DD", -1, tp.file.title, "YYYY-MM-DD")
   let today     = tp.date.now("YYYY-MM-DD",  0, tp.file.title, "YYYY-MM-DD")
   let tomorrow  = tp.date.now("YYYY-MM-DD",  1, tp.file.title, "YYYY-MM-DD")
 %>
-
 ## Overdue
 
 ```tasks
-not done
-happens before <% today %>
+preset daily_note_overdue
 ```
 
 ## Do today
 
 ```tasks
-not done
-happens <% today %>
+preset daily_note_do_today
+```
+
+## Done today
+
+```tasks
+preset daily_note_done_today
 ```
