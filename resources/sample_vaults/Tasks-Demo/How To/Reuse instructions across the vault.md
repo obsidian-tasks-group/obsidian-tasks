@@ -27,6 +27,36 @@ preset xxxx
 preset xxxx
 ```
 
+## Find tasks in the same folder as the query (and not sub-folder)
+
+explain: `INPUT[toggle:TQ_explain]`
+
+````text
+```tasks
+preset this_folder_only
+```
+````
+
+```tasks
+preset this_folder_only
+```
+
+## Find tasks in folders other than the folder tree containing the query
+
+explain: `INPUT[toggle:TQ_explain]`
+
+````text
+```tasks
+preset this_folder_only
+group by folder
+```
+````
+
+```tasks
+NOT ({{preset.this_folder}})
+group by folder
+```
+
 ## Show all the fields
 
 explain: `INPUT[toggle:TQ_explain]`
