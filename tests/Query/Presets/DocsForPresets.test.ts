@@ -20,3 +20,16 @@ function verifyPresetsMarkdownTable(entries: [string, string][]) {
 it('default-presets', () => {
     verifyPresetsMarkdownTable(Object.entries(defaultPresets));
 });
+
+it('daily-note-presets', () => {
+    const dailyNotePresets = {
+        daily_note_overdue:
+            "# Tasks that should have been done before this day - requires YYYY-MM-DD file name\nnot done\nhappens before {{query.file.filenameWithoutExtension}}\ngroup by function task.happens.format('YYYY-MM')",
+        daily_note_do_this_day:
+            '# Tasks that should be done this day - requires YYYY-MM-DD file name\nnot done\nhappens {{query.file.filenameWithoutExtension}}',
+        daily_note_done_this_day:
+            '# Tasks that have been done this day - requires YYYY-MM-DD file name\ndone\ndone {{query.file.filenameWithoutExtension}}',
+    };
+
+    verifyPresetsMarkdownTable(Object.entries(dailyNotePresets));
+});
