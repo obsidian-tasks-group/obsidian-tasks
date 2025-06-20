@@ -28,6 +28,9 @@ Presets are particularly useful when you:
    - **Name**: A simple identifier (e.g., `my_overdue_tasks`)
    - **Instructions**: One or more valid task query lines
 
+> [!Tip]
+> Any open Tasks queries are reloaded automatically when presets are edited.
+
 ## How to Use Presets
 
 There are two ways to use presets in your task queries:
