@@ -1,5 +1,5 @@
-import { renameKeyInRecordPreservingOrder } from '../lib/RecordHelpers';
-import type { PresetsMap } from './Settings';
+import { renameKeyInRecordPreservingOrder } from '../../lib/RecordHelpers';
+import type { PresetsMap } from '../../Config/Settings';
 
 /**
  * Represents a map of preset keys and their current values
