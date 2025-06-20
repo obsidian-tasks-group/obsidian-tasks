@@ -543,8 +543,8 @@ describe('include settings tests', () => {
 
     it('default-presets', () => {
         const table = new MarkdownTable(['Name', 'Instruction(s)']);
-        for (const defaultPresetsKey in defaultPresets) {
-            table.addRow([defaultPresetsKey, defaultPresets[defaultPresetsKey as keyof typeof defaultPresets]]);
+        for (const key in defaultPresets) {
+            table.addRow([key, defaultPresets[key as keyof typeof defaultPresets]]);
         }
         verifyMarkdownForDocs(table.markdown);
     });
