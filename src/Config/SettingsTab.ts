@@ -158,11 +158,9 @@ export class SettingsTab extends PluginSettingTab {
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl)
-            .setName('Presets')
+            .setName(i18n.t('settings.presets.name'))
             .setHeading()
-            .setDesc(
-                'You can define named instructions here, that you can re-use in multiple queries. They can be used with "{{preset.name}}" and "preset name".',
-            );
+            .setDesc(i18n.t('settings.presets.line1'));
         // ---------------------------------------------------------------------------
         this.presetsSettingsUI.renderPresetsSettings(containerEl);
 
