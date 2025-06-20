@@ -189,6 +189,10 @@
         "placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency"
       }
     },
+    "presets": {
+      "line1": "You can define named instructions here, that you can re-use in multiple queries. They can be used with \"{{preset.name}}\" and \"preset name\".",
+      "name": "Presets"
+    },
     "recurringTasks": {
       "heading": "Recurring tasks",
       "nextLine": {
