@@ -160,7 +160,12 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName(i18n.t('settings.presets.name'))
             .setHeading()
-            .setDesc(i18n.t('settings.presets.line1'));
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    `<p>${i18n.t('settings.presets.line1')}</p>` +
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+                ),
+            );
         // ---------------------------------------------------------------------------
         this.presetsSettingsUI.renderPresetsSettings(containerEl);
 
