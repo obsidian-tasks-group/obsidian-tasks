@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import { getSettings, isFeatureEnabled, resetSettings, toggleFeature, updateSettings } from '../../src/Config/Settings';
+import { defaultPresets } from '../../src/Query/Presets/Presets';
 
 beforeEach(() => {
     resetSettings();
@@ -161,6 +162,6 @@ describe('settings migration', () => {
         expect(currentSettings.globalQuery).toBe('test query');
         expect(currentSettings.globalFilter).toBe('test filter');
         // presets should be the default empty object
-        expect(currentSettings.presets).toEqual({});
+        expect(currentSettings.presets).toEqual(defaultPresets);
     });
 });
