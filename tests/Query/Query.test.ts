@@ -244,9 +244,13 @@ description includes \
         'tags include sometag',
     ];
 
-    const notValidWhenCapitalised: ReadonlyArray<string> = filters.filter((line) => line.startsWith('preset '));
+    const notValidWhenCapitalised: ReadonlyArray<string> = filters.filter((line) =>
+        ['preset '].some((prefix) => line.startsWith(prefix)),
+    );
 
-    const notValidInBoolean: ReadonlyArray<string> = filters.filter((line) => line.startsWith('preset '));
+    const notValidInBoolean: ReadonlyArray<string> = filters.filter((line) =>
+        ['preset '].some((prefix) => line.startsWith(prefix)),
+    );
 
     /**
      * As more and more filters are added via the Field class, and tested
