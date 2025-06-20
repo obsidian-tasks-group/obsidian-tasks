@@ -18,7 +18,7 @@ Presets are particularly useful when you:
 - Use the same query patterns frequently
 - Want to maintain consistent formatting across multiple task views
 - Need to update search criteria in multiple locations (change once, update everywhere)
-- Use daily notes with recurring task queries
+- Use daily notes, all of which share the same task queries
 
 ## How to Define Presets
 
@@ -90,7 +90,8 @@ These defaults can, of course, be edited, renamed and deleted.
 
 A common use case is creating presets for daily notes.
 
-The following presets work when the daily note's file name matches the pattern `YYYY-MM-DD`.
+> [!Tip]
+> The following presets work when the daily note's file name matches the pattern `YYYY-MM-DD`.
 
 **Preset name**: `overdue_tasks`
 **Instructions**:
@@ -143,7 +144,7 @@ You can create presets that define partial instruction lines for use with functi
 **Instructions**:
 
 ```text
-task.tags.find(tag => tag.includes('#context/home'))
+task.tags.some(tag => tag.includes('#context/home'))
 ```
 
 **Usage**:
