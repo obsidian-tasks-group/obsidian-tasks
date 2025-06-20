@@ -24,11 +24,11 @@ it('default-presets', () => {
 it('daily-note-presets', () => {
     const dailyNotePresets = {
         daily_note_overdue:
-            "# Tasks that should have been done before this day - requires YYYY-MM-DD file name\nnot done\nhappens before {{query.file.filenameWithoutExtension}}\ngroup by function task.happens.format('YYYY-MM')",
+            "# Tasks that should have been done before this day.\n# This preset requires a YYYY-MM-DD file name.\nnot done\nhappens before {{query.file.filenameWithoutExtension}}\ngroup by function task.happens.format('YYYY-MM')",
         daily_note_do_this_day:
-            '# Tasks that should be done this day - requires YYYY-MM-DD file name\nnot done\nhappens {{query.file.filenameWithoutExtension}}',
+            '# Tasks that should be done this day.\n# This preset requires a YYYY-MM-DD file name.\nnot done\nhappens {{query.file.filenameWithoutExtension}}',
         daily_note_done_this_day:
-            '# Tasks that have been done this day - requires YYYY-MM-DD file name\ndone\ndone {{query.file.filenameWithoutExtension}}',
+            '# Tasks that have been done this day.\n# This preset requires a YYYY-MM-DD file name.\ndone\ndone {{query.file.filenameWithoutExtension}}',
     };
 
     verifyPresetsMarkdownTable(Object.entries(dailyNotePresets));
