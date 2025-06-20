@@ -75,14 +75,14 @@ explain: `INPUT[toggle:TQ_explain]`
 
 ````text
 ```tasks
-preset hide_all_dates
-preset hide_other_fields
+preset hide_date_fields
+preset hide_non_date_fields
 ```
 ````
 
 ```tasks
-preset hide_all_dates
-preset hide_other_fields
+preset hide_date_fields
+preset hide_non_date_fields
 ```
 
 ## Hide all the Tasks user interface elements
@@ -91,12 +91,12 @@ explain: `INPUT[toggle:TQ_explain]`
 
 ````text
 ```tasks
-preset hide_buttons
+preset hide_query_elements
 ```
 ````
 
 ```tasks
-preset hide_buttons
+preset hide_query_elements
 ```
 
 ## Show only the description and any tags
@@ -105,12 +105,12 @@ explain: `INPUT[toggle:TQ_explain]`
 
 ````text
 ```tasks
-preset just_the_description_and_tags
+preset hide_everything
 ```
 ````
 
 ```tasks
-preset just_the_description_and_tags
+preset hide_everything
 ```
 
 ## Just show the description, without tags
