@@ -30,7 +30,9 @@ Presets are particularly useful when you:
 
 ## How to Use Presets
 
-Include a preset in your task query using:
+There are two ways to use presets in your task queries:
+
+### Basic Usage
 
 ```text
 preset preset_name
@@ -41,6 +43,27 @@ For example:
 ```text
 preset my_overdue_tasks
 ```
+
+### Placeholder Usage
+
+```text
+{{preset.preset_name}}
+```
+
+For example:
+
+```text
+{{preset.my_overdue_tasks}}
+```
+
+### When to Use Each Method
+
+Use the **basic syntax** (`preset name`) for most cases where you want to include complete instruction lines.
+
+Use the **placeholder syntax** (`{{preset.name}}`) when you need to:
+
+- Include presets within Boolean query combinations (AND, OR, NOT)
+- Define partial instruction lines, such as expressions for `filter by function`, `sort by function`, or `group by function`
 
 ## Default Presets
 
@@ -91,8 +114,39 @@ preset today_tasks
 ```
 ````
 
+## Advanced Usage
+
+### Boolean Combinations
+
+The placeholder syntax allows presets to be used within Boolean query combinations:
+
+```text
+({{preset.work_tasks}}) AND ({{preset.high_priority}})
+```
+
+### Partial Instructions
+
+You can create presets that define partial instruction lines for use with function-based queries:
+
+**Preset name**: `filter_home_context`
+**Instructions**:
+
+```text
+task.tags.find(tag => tag.includes('#context/home'))
+```
+
+**Usage**:
+
+```text
+filter by function {{preset.filter_home_context}}
+```
+
+This approach is particularly useful for complex filter expressions that you want to reuse across multiple queries.
+
 ## Limitations
 
-- Presets must contain complete, valid instruction lines
 - Preset names should not contain spaces or special characters
+- When using basic syntax (`preset name`), presets must contain complete, valid instruction lines
+- When using placeholder syntax (`{{preset.name}}`), presets can contain partial instruction lines
 - Presets are applied exactly as written and cannot be modified when used
+- The basic syntax (`preset name`) cannot be used within Boolean query combinations
