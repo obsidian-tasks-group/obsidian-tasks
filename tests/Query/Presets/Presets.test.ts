@@ -3,10 +3,10 @@
  */
 
 import moment from 'moment';
-import { type PresetsMap, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
-import { Query } from '../../src/Query/Query';
-import { TasksFile } from '../../src/Scripting/TasksFile';
-import type { Statement } from '../../src/Query/Statement';
+import { type PresetsMap, getSettings, resetSettings, updateSettings } from '../../../src/Config/Settings';
+import { Query } from '../../../src/Query/Query';
+import { TasksFile } from '../../../src/Scripting/TasksFile';
+import type { Statement } from '../../../src/Query/Statement';
 
 window.moment = moment;
 
