@@ -58,6 +58,8 @@ In the following sections we will explain all the various options that are avail
 
 - [[Global Query]]
   - Set a global query in the settings that Tasks will add to the start of all the Queries in your vault.
+- [[Presets]]
+  - Define named instructions that you can re-use in multiple queries throughout your whole vault.
 - [[Query File Defaults]]
   - Set properties in note frontmatter, to instruct tasks to add instructions to all the Queries in that file.
 
