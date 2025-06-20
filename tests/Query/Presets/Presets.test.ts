@@ -7,7 +7,9 @@ import { getSettings, resetSettings, updateSettings } from '../../../src/Config/
 import { Query } from '../../../src/Query/Query';
 import { TasksFile } from '../../../src/Scripting/TasksFile';
 import type { Statement } from '../../../src/Query/Statement';
-import type { PresetsMap } from '../../../src/Query/Presets/Presets';
+import { type PresetsMap, defaultPresets } from '../../../src/Query/Presets/Presets';
+import { MarkdownTable } from '../../../src/lib/MarkdownTable';
+import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 
 window.moment = moment;
 
@@ -537,5 +539,13 @@ describe('include settings tests', () => {
               "this_root": "root includes {{query.file.root}}",
             }
         `);
+    });
+
+    it('default-presets', () => {
+        const table = new MarkdownTable(['Name', 'Instruction(s)']);
+        for (const defaultPresetsKey in defaultPresets) {
+            table.addRow([defaultPresetsKey, defaultPresets[defaultPresetsKey as keyof typeof defaultPresets]]);
+        }
+        verifyMarkdownForDocs(table.markdown);
     });
 });
