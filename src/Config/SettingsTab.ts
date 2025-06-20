@@ -168,6 +168,8 @@ export class SettingsTab extends PluginSettingTab {
                             instruction1: '<code>preset name</code>',
                             instruction2: '<code>{{preset.name}}</code>',
                         }) +
+                        '</p><p>' +
+                        i18n.t('settings.presets.line2') +
                         '</p>' +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
                 ),

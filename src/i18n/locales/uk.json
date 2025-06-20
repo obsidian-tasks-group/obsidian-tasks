@@ -191,6 +191,7 @@
     },
     "presets": {
       "line1": "",
+      "line2": "",
       "name": ""
     },
     "recurringTasks": {
