@@ -163,9 +163,9 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     `<p>${i18n.t('settings.presets.line1', {
-                        name: '<tt>name</tt>',
-                        instruction1: '<tt>preset name</tt>',
-                        instruction2: '<tt>{{preset.name}}</tt>',
+                        name: '<code>name</code>',
+                        instruction1: '<code>preset name</code>',
+                        instruction2: '<code>{{preset.name}}</code>',
                     })}</p>` + this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
                 ),
             );
