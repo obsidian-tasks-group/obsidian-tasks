@@ -13,11 +13,11 @@ preset daily_note_overdue
 ## Do today
 
 ```tasks
-preset daily_note_do_today
+preset daily_note_do_this_day
 ```
 
 ## Done today
 
 ```tasks
-preset daily_note_done_today
+preset daily_note_done_this_day
 ```
