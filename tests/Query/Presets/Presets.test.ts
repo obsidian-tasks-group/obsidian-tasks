@@ -10,6 +10,7 @@ import type { Statement } from '../../../src/Query/Statement';
 import { type PresetsMap, defaultPresets } from '../../../src/Query/Presets/Presets';
 import { MarkdownTable } from '../../../src/lib/MarkdownTable';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
+import { addBackticks } from '../../Scripting/ScriptingTestHelpers';
 
 window.moment = moment;
 
@@ -545,7 +546,7 @@ describe('include settings tests', () => {
         const table = new MarkdownTable(['Name', 'Instruction(s)']);
         for (const key in defaultPresets) {
             const value = defaultPresets[key as keyof typeof defaultPresets];
-            table.addRow([key, value]);
+            table.addRow([addBackticks(key), addBackticks(value)]);
         }
         verifyMarkdownForDocs(table.markdown);
     });
