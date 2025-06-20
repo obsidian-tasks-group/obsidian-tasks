@@ -7,7 +7,7 @@ import { getSettings, resetSettings, updateSettings } from '../../../src/Config/
 import { Query } from '../../../src/Query/Query';
 import { TasksFile } from '../../../src/Scripting/TasksFile';
 import type { Statement } from '../../../src/Query/Statement';
-import type { PresetsMap } from '../../../src/Query/Presets/Presets';
+import { type PresetsMap, defaultPresets } from '../../../src/Query/Presets/Presets';
 
 window.moment = moment;
 
@@ -558,5 +558,13 @@ describe('include settings tests', () => {
               "this_root": "root includes {{query.file.root}}",
             }
         `);
+    });
+
+    it.each(Object.entries(defaultPresets))('should handle preset "%s"', (name, instructions) => {
+        expect(name).toBeDefined();
+        expect(instructions).toBeDefined();
+
+        const query = new Query(instructions, new TasksFile('anywhere.md'));
+        expect(query.error).toBeUndefined();
     });
 });
