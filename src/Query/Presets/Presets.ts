@@ -1,4 +1,4 @@
-import type { PresetsMap } from '../Config/Settings';
+import type { PresetsMap } from '../../Config/Settings';
 
 function summariseInstruction(instructions: string) {
     let result = instructions;
