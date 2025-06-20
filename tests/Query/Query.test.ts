@@ -45,7 +45,7 @@ function sortInstructionLines(filters: ReadonlyArray<string>) {
 
 function isValidQueryFilter(filter: string) {
     // Arrange
-    const query = new Query(filter);
+    const query = new Query(filter, new TasksFile('anywhere.md'));
 
     // Assert
     expect(query.error).toBeUndefined();
@@ -129,6 +129,7 @@ description includes \
         '"due this week" AND "description includes Hello World"',
         '(due this week) AND (description includes Hello World)',
         '[due this week] AND [description includes Hello World]',
+        '{{preset.this_file}}',
         '{due this week} AND {description includes Hello World}',
         'cancelled after 2021-12-27',
         'cancelled before 2021-12-27',
@@ -245,7 +246,7 @@ description includes \
     ];
 
     const notValidWhenCapitalised: ReadonlyArray<string> = filters.filter((line) =>
-        ['preset '].some((prefix) => line.startsWith(prefix)),
+        ['preset ', '{{preset.'].some((prefix) => line.startsWith(prefix)),
     );
 
     const notValidInBoolean: ReadonlyArray<string> = filters.filter((line) =>
