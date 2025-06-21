@@ -16,6 +16,166 @@
             "offset": 0
           }
         }
+      },
+      {
+        "heading": "Multiple",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 36
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 25
+          }
+        }
+      },
+      {
+        "heading": "Link with Simple Path",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 24,
+            "line": 6,
+            "offset": 153
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 129
+          }
+        }
+      },
+      {
+        "heading": "Link with Heading Reference",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 30,
+            "line": 10,
+            "offset": 252
+          },
+          "start": {
+            "col": 0,
+            "line": 10,
+            "offset": 222
+          }
+        }
+      },
+      {
+        "heading": "Link with Alias",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 14,
+            "offset": 358
+          },
+          "start": {
+            "col": 0,
+            "line": 14,
+            "offset": 340
+          }
+        }
+      },
+      {
+        "heading": "Link with Nested Path and Alias",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 18,
+            "offset": 456
+          },
+          "start": {
+            "col": 0,
+            "line": 18,
+            "offset": 422
+          }
+        }
+      },
+      {
+        "heading": "Link with Hash in Path",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 25,
+            "line": 22,
+            "offset": 571
+          },
+          "start": {
+            "col": 0,
+            "line": 22,
+            "offset": 546
+          }
+        }
+      },
+      {
+        "heading": "Link with Markdown File Extension",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 36,
+            "line": 26,
+            "offset": 683
+          },
+          "start": {
+            "col": 0,
+            "line": 26,
+            "offset": 647
+          }
+        }
+      },
+      {
+        "heading": "Link with PDF File",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 30,
+            "offset": 783
+          },
+          "start": {
+            "col": 0,
+            "line": 30,
+            "offset": 762
+          }
+        }
+      },
+      {
+        "heading": "Empty Link That Obsidian Doesn't Parse",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 41,
+            "line": 34,
+            "offset": 878
+          },
+          "start": {
+            "col": 0,
+            "line": 34,
+            "offset": 837
+          }
+        }
+      },
+      {
+        "heading": "Empty Links That Obsidian Parses",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 35,
+            "line": 38,
+            "offset": 954
+          },
+          "start": {
+            "col": 0,
+            "line": 38,
+            "offset": 919
+          }
+        }
       }
     ],
     "links": [
@@ -25,14 +185,14 @@
         "original": "[[link_in_task_wikilink]]",
         "position": {
           "end": {
-            "col": 69,
-            "line": 2,
-            "offset": 94
+            "col": 67,
+            "line": 4,
+            "offset": 105
           },
           "start": {
-            "col": 44,
-            "line": 2,
-            "offset": 69
+            "col": 42,
+            "line": 4,
+            "offset": 80
           }
         }
       },
@@ -42,31 +202,377 @@
         "original": "[[multiple_headings]]",
         "position": {
           "end": {
-            "col": 91,
-            "line": 2,
-            "offset": 116
+            "col": 89,
+            "line": 4,
+            "offset": 127
           },
           "start": {
-            "col": 70,
-            "line": 2,
-            "offset": 95
+            "col": 68,
+            "line": 4,
+            "offset": 106
+          }
+        }
+      },
+      {
+        "displayText": "path/link_in_task_wikilink",
+        "link": "path/link_in_task_wikilink",
+        "original": "[[path/link_in_task_wikilink]]",
+        "position": {
+          "end": {
+            "col": 65,
+            "line": 8,
+            "offset": 220
+          },
+          "start": {
+            "col": 35,
+            "line": 8,
+            "offset": 190
+          }
+        }
+      },
+      {
+        "displayText": "path/link_in_task_wikilink > heading_link",
+        "link": "path/link_in_task_wikilink#heading_link",
+        "original": "[[path/link_in_task_wikilink#heading_link]]",
+        "position": {
+          "end": {
+            "col": 84,
+            "line": 12,
+            "offset": 338
+          },
+          "start": {
+            "col": 41,
+            "line": 12,
+            "offset": 295
+          }
+        }
+      },
+      {
+        "displayText": "alias",
+        "link": "link_in_task_wikilink",
+        "original": "[[link_in_task_wikilink|alias]]",
+        "position": {
+          "end": {
+            "col": 60,
+            "line": 16,
+            "offset": 420
+          },
+          "start": {
+            "col": 29,
+            "line": 16,
+            "offset": 389
+          }
+        }
+      },
+      {
+        "displayText": "alias",
+        "link": "path/path/link_in_task_wikilink",
+        "original": "[[path/path/link_in_task_wikilink|alias]]",
+        "position": {
+          "end": {
+            "col": 86,
+            "line": 20,
+            "offset": 544
+          },
+          "start": {
+            "col": 45,
+            "line": 20,
+            "offset": 503
+          }
+        }
+      },
+      {
+        "displayText": "pa > th/path/link_in_task_wikilink",
+        "link": "pa#th/path/link_in_task_wikilink",
+        "original": "[[pa#th/path/link_in_task_wikilink]]",
+        "position": {
+          "end": {
+            "col": 72,
+            "line": 24,
+            "offset": 645
+          },
+          "start": {
+            "col": 36,
+            "line": 24,
+            "offset": 609
+          }
+        }
+      },
+      {
+        "displayText": "link_in_task_wikilink.md",
+        "link": "link_in_task_wikilink.md",
+        "original": "[[link_in_task_wikilink.md]]",
+        "position": {
+          "end": {
+            "col": 75,
+            "line": 28,
+            "offset": 760
+          },
+          "start": {
+            "col": 47,
+            "line": 28,
+            "offset": 732
+          }
+        }
+      },
+      {
+        "displayText": "a_pdf_file.pdf",
+        "link": "a_pdf_file.pdf",
+        "original": "[[a_pdf_file.pdf]]",
+        "position": {
+          "end": {
+            "col": 50,
+            "line": 32,
+            "offset": 835
+          },
+          "start": {
+            "col": 32,
+            "line": 32,
+            "offset": 817
+          }
+        }
+      },
+      {
+        "displayText": "|",
+        "link": "|",
+        "original": "[[|]]",
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 40,
+            "offset": 994
+          },
+          "start": {
+            "col": 33,
+            "line": 40,
+            "offset": 989
+          }
+        }
+      },
+      {
+        "displayText": "|alias",
+        "link": "|alias",
+        "original": "[[|alias]]",
+        "position": {
+          "end": {
+            "col": 43,
+            "line": 41,
+            "offset": 1038
+          },
+          "start": {
+            "col": 33,
+            "line": 41,
+            "offset": 1028
+          }
+        }
+      },
+      {
+        "displayText": "| > alias",
+        "link": "|#alias",
+        "original": "[[|#alias]]",
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 42,
+            "offset": 1083
+          },
+          "start": {
+            "col": 33,
+            "line": 42,
+            "offset": 1072
           }
         }
       }
     ],
     "listItems": [
       {
-        "parent": -2,
+        "parent": -4,
         "position": {
           "end": {
-            "col": 91,
-            "line": 2,
-            "offset": 116
+            "col": 89,
+            "line": 4,
+            "offset": 127
           },
           "start": {
             "col": 0,
-            "line": 2,
-            "offset": 25
+            "line": 4,
+            "offset": 38
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -8,
+        "position": {
+          "end": {
+            "col": 65,
+            "line": 8,
+            "offset": 220
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 155
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -12,
+        "position": {
+          "end": {
+            "col": 84,
+            "line": 12,
+            "offset": 338
+          },
+          "start": {
+            "col": 0,
+            "line": 12,
+            "offset": 254
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -16,
+        "position": {
+          "end": {
+            "col": 60,
+            "line": 16,
+            "offset": 420
+          },
+          "start": {
+            "col": 0,
+            "line": 16,
+            "offset": 360
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -20,
+        "position": {
+          "end": {
+            "col": 86,
+            "line": 20,
+            "offset": 544
+          },
+          "start": {
+            "col": 0,
+            "line": 20,
+            "offset": 458
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -24,
+        "position": {
+          "end": {
+            "col": 72,
+            "line": 24,
+            "offset": 645
+          },
+          "start": {
+            "col": 0,
+            "line": 24,
+            "offset": 573
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -28,
+        "position": {
+          "end": {
+            "col": 75,
+            "line": 28,
+            "offset": 760
+          },
+          "start": {
+            "col": 0,
+            "line": 28,
+            "offset": 685
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -32,
+        "position": {
+          "end": {
+            "col": 50,
+            "line": 32,
+            "offset": 835
+          },
+          "start": {
+            "col": 0,
+            "line": 32,
+            "offset": 785
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -36,
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 36,
+            "offset": 917
+          },
+          "start": {
+            "col": 0,
+            "line": 36,
+            "offset": 880
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -40,
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 40,
+            "offset": 994
+          },
+          "start": {
+            "col": 0,
+            "line": 40,
+            "offset": 956
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -40,
+        "position": {
+          "end": {
+            "col": 43,
+            "line": 41,
+            "offset": 1038
+          },
+          "start": {
+            "col": 0,
+            "line": 41,
+            "offset": 995
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -40,
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 42,
+            "offset": 1083
+          },
+          "start": {
+            "col": 0,
+            "line": 42,
+            "offset": 1039
           }
         },
         "task": " "
@@ -91,14 +597,299 @@
       {
         "position": {
           "end": {
-            "col": 91,
+            "col": 11,
             "line": 2,
-            "offset": 116
+            "offset": 36
           },
           "start": {
             "col": 0,
             "line": 2,
             "offset": 25
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 89,
+            "line": 4,
+            "offset": 127
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 38
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 24,
+            "line": 6,
+            "offset": 153
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 129
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 65,
+            "line": 8,
+            "offset": 220
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 155
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 30,
+            "line": 10,
+            "offset": 252
+          },
+          "start": {
+            "col": 0,
+            "line": 10,
+            "offset": 222
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 84,
+            "line": 12,
+            "offset": 338
+          },
+          "start": {
+            "col": 0,
+            "line": 12,
+            "offset": 254
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 14,
+            "offset": 358
+          },
+          "start": {
+            "col": 0,
+            "line": 14,
+            "offset": 340
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 60,
+            "line": 16,
+            "offset": 420
+          },
+          "start": {
+            "col": 0,
+            "line": 16,
+            "offset": 360
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 18,
+            "offset": 456
+          },
+          "start": {
+            "col": 0,
+            "line": 18,
+            "offset": 422
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 86,
+            "line": 20,
+            "offset": 544
+          },
+          "start": {
+            "col": 0,
+            "line": 20,
+            "offset": 458
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 25,
+            "line": 22,
+            "offset": 571
+          },
+          "start": {
+            "col": 0,
+            "line": 22,
+            "offset": 546
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 72,
+            "line": 24,
+            "offset": 645
+          },
+          "start": {
+            "col": 0,
+            "line": 24,
+            "offset": 573
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 36,
+            "line": 26,
+            "offset": 683
+          },
+          "start": {
+            "col": 0,
+            "line": 26,
+            "offset": 647
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 75,
+            "line": 28,
+            "offset": 760
+          },
+          "start": {
+            "col": 0,
+            "line": 28,
+            "offset": 685
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 30,
+            "offset": 783
+          },
+          "start": {
+            "col": 0,
+            "line": 30,
+            "offset": 762
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 50,
+            "line": 32,
+            "offset": 835
+          },
+          "start": {
+            "col": 0,
+            "line": 32,
+            "offset": 785
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 41,
+            "line": 34,
+            "offset": 878
+          },
+          "start": {
+            "col": 0,
+            "line": 34,
+            "offset": 837
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 36,
+            "offset": 917
+          },
+          "start": {
+            "col": 0,
+            "line": 36,
+            "offset": 880
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 35,
+            "line": 38,
+            "offset": 954
+          },
+          "start": {
+            "col": 0,
+            "line": 38,
+            "offset": 919
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 42,
+            "offset": 1083
+          },
+          "start": {
+            "col": 0,
+            "line": 40,
+            "offset": 956
           }
         },
         "type": "list"
@@ -108,23 +899,199 @@
       {
         "position": {
           "end": {
+            "col": 12,
+            "line": 4,
+            "offset": 50
+          },
+          "start": {
+            "col": 7,
+            "line": 4,
+            "offset": 45
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 8,
+            "offset": 167
+          },
+          "start": {
+            "col": 7,
+            "line": 8,
+            "offset": 162
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 12,
+            "offset": 266
+          },
+          "start": {
+            "col": 7,
+            "line": 12,
+            "offset": 261
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 16,
+            "offset": 372
+          },
+          "start": {
+            "col": 7,
+            "line": 16,
+            "offset": 367
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 20,
+            "offset": 470
+          },
+          "start": {
+            "col": 7,
+            "line": 20,
+            "offset": 465
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 24,
+            "offset": 585
+          },
+          "start": {
+            "col": 7,
+            "line": 24,
+            "offset": 580
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 28,
+            "offset": 697
+          },
+          "start": {
+            "col": 7,
+            "line": 28,
+            "offset": 692
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 32,
+            "offset": 797
+          },
+          "start": {
+            "col": 7,
+            "line": 32,
+            "offset": 792
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
             "col": 11,
-            "line": 2,
-            "offset": 36
+            "line": 36,
+            "offset": 891
           },
           "start": {
             "col": 6,
-            "line": 2,
-            "offset": 31
+            "line": 36,
+            "offset": 886
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 40,
+            "offset": 967
+          },
+          "start": {
+            "col": 6,
+            "line": 40,
+            "offset": 962
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 41,
+            "offset": 1006
+          },
+          "start": {
+            "col": 6,
+            "line": 41,
+            "offset": 1001
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 42,
+            "offset": 1050
+          },
+          "start": {
+            "col": 6,
+            "line": 42,
+            "offset": 1045
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "# link_in_task_wikilink\n\n- [ ] #task Task in 'link_in_task_wikilink' [[link_in_task_wikilink]] [[multiple_headings]]\n",
+  "fileContents": "# link_in_task_wikilink\n\n## Multiple\n\n- [ ]  #task Link with Multiple Wikilinks [[link_in_task_wikilink]] [[multiple_headings]]\n\n## Link with Simple Path\n\n- [ ]  #task Link with Simple Path [[path/link_in_task_wikilink]]\n\n## Link with Heading Reference\n\n- [ ]  #task Link with Heading Reference [[path/link_in_task_wikilink#heading_link]]\n\n## Link with Alias\n\n- [ ]  #task Link with Alias [[link_in_task_wikilink|alias]]\n\n## Link with Nested Path and Alias\n\n- [ ]  #task Link with Nested Path and Alias [[path/path/link_in_task_wikilink|alias]]\n\n## Link with Hash in Path\n\n- [ ]  #task Link with Hash in Path [[pa#th/path/link_in_task_wikilink]]\n\n## Link with Markdown File Extension\n\n- [ ]  #task Link with Markdown File Extension [[link_in_task_wikilink.md]]\n\n## Link with PDF File\n\n- [ ]  #task Link with PDF File [[a_pdf_file.pdf]]\n\n## Empty Link That Obsidian Doesn't Parse\n\n- [ ] #task Link with empty link [[]]\n\n## Empty Links That Obsidian Parses\n\n- [ ] #task Link with empty link [[|]]\n- [ ] #task Link with empty link [[|alias]]\n- [ ] #task Link with empty link [[|#alias]]\n",
   "filePath": "Test Data/link_in_task_wikilink.md",
   "getAllTags": [
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
+    "#task",
     "#task"
   ],
   "parseFrontMatterTags": null
