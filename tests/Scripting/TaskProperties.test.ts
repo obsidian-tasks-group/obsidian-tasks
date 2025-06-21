@@ -118,6 +118,8 @@ describe('task', () => {
         verifyFieldDataForReferenceDocs([
             'task.description',
             'task.descriptionWithoutTags',
+            'task.durationHours',
+            'task.durationMinutes',
             'task.priorityNumber',
             'task.priorityName',
             'task.priorityNameGroupText',
