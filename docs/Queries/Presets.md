@@ -73,11 +73,30 @@ Use the **[[Placeholders|placeholder]] syntax** (`{{preset.name}}`) when you nee
 ### See the Available Presets
 
 - When the requested preset does not exist, Tasks writes out the list of available Presets, with their first line.
-- So for a quick reminder, type `preset xxxxxxxx` or any other non-existent Preset name, then switch to Reading or Live Preview modes.
+- So for a quick reminder, type `preset xxxx` or any other non-existent Preset name, then switch to Reading or Live Preview modes.
+
+For example, with the [[#Default Presets|default settings]], using `preset xxxx` would show this in the Tasks search results:
+
+<!-- placeholder to force blank line before included text --><!-- include: DocsForPresets.test.presets_help_message.approved.md -->
+
+```text
+Cannot find preset "xxxx" in the Tasks settings
+The following presets are defined in the Tasks settings:
+  hide_date_fields    : # Hide any values for all date fields...
+  hide_everything     : # Hide everything except description and any tags...
+  hide_non_date_fields: # Hide all the non-date fields, but not tags...
+  hide_query_elements : # Hide postpone, edit and backinks...
+  this_file           : path includes {{query.file.path}}
+  this_folder         : folder includes {{query.file.folder}}
+  this_folder_only    : filter by function task.file.folder === query.file...
+  this_root           : root includes {{query.file.root}}
+```
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Remembering what your Presets do
 
-- For multi-line presets, you can put a descriptive [[Comments|comment]] on their first line (starting with a `#` character).
+As the above example shows, for multi-line presets, it is worth adding a descriptive [[Comments|comment]] on their first line (starting with a `#` character), to remind you of their behaviour.
 
 ## Default Presets
 
