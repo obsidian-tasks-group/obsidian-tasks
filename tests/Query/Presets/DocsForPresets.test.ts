@@ -1,7 +1,8 @@
 import { MarkdownTable } from '../../../src/lib/MarkdownTable';
-import { defaultPresets } from '../../../src/Query/Presets/Presets';
+import { defaultPresets, unknownPresetErrorMessage } from '../../../src/Query/Presets/Presets';
 import { addBackticks } from '../../Scripting/ScriptingTestHelpers';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
+import { getSettings } from '../../../src/Config/Settings';
 
 function verifyPresetsMarkdownTable(entries: [string, string][]) {
     const table = new MarkdownTable(['Name', 'Instruction(s)']);
@@ -32,4 +33,11 @@ it('daily-note-presets', () => {
     };
 
     verifyPresetsMarkdownTable(Object.entries(dailyNotePresets));
+});
+
+it('presets help message', () => {
+    const { presets } = getSettings();
+    const help = unknownPresetErrorMessage('xxxx', presets);
+    const markdown = ['```text', help, '```'].join('\n');
+    verifyMarkdownForDocs(markdown);
 });
