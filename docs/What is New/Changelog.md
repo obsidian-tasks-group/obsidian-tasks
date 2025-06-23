@@ -14,7 +14,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 - X.Y.Z:
   - Add [[Presets]] feature to save commonly used task query instructions.
-  - Document [[Missing tags, aliases and cssclasses in Obsidian some 1.9.x versions]] - for Insider users of Obsidian 1.9.x.
+  - Document [[Missing tags, aliases and cssclasses in some Obsidian 1.9.x versions]] - for Insider users of Obsidian 1.9.x.
   - [[Line Continuations]] can now be used in the [[Query File Defaults]] property `TQ_extra_instructions`.
   - [[Check your Statuses]] report now contains samples of each status, and a convenient search to test them.
   - Add German translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
