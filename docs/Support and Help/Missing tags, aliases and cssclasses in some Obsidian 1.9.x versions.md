@@ -33,6 +33,8 @@ Unless you have version-controlled your vault, and you regularly check for diffe
 
 The following sections show how you can fix and fix most of the problem cases.
 
+## Find and fix your properties using Obsidian
+
 ### Find and rename old `tag`, `alias`, `cssclass` and properties
 
 You will need to find all uses of the `tag`, `alias`, `cssclass` properties and manually rename them to `tags`, `aliases` and `cssclasses`, to ensure that Obsidian files these properties, as it did prior to version 1.9.0.
@@ -130,3 +132,9 @@ Here is one way to fix them.
         cssclasses: [value-1-of-2-on-one-line, value-2-of-2-on-one-line]
         ---
         ```
+
+## Other ways to find and fix your properties
+
+- Check to see if the [Obsidian Linter](https://github.com/platers/obsidian-linter) plugin has provided a way to find and fix problem properties.
+- A Discord user reported:
+    > I thought I'd just raise awareness of this little python app written by someone in the Obsidian user community - it can bulk edit YAML properties - I used it myself to get all my YAML consistent to help with using Bases in my vault...it works really well! It has a dry run mode so you can test a change before committing it: <https://github.com/fussbanana/obsidian-frontmatter-tool>
