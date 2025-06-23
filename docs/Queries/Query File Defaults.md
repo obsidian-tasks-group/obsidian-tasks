@@ -60,7 +60,7 @@ When editing `TQ_extra_instructions` in Obsidian's File properties editor, you c
 > - `TQ_extra_instructions` is especially useful when you have more than one Tasks search block in a file, and you want the same instructions to be present in all the searches.
 > - Before this feature, if those standard instructions changed, you had to remember to update every search.
 > - Now you can put those standard instructions in `TQ_extra_instructions`, and only update them in one place.
-> - Since Tasks X.Y.Z, `TQ_extra_instructions` does support [[Line Continuations]].
+> - Since Tasks 7.20.0, `TQ_extra_instructions` does support [[Line Continuations]].
 
 > [!note]
 > The `TQ_extra_instructions` property isn't an array. It's a single string value, and the `|-` allows it to span multiple lines.

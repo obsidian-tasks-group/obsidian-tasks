@@ -9,7 +9,7 @@ publish: true
 Presets allow you to save commonly used task query instructions and reuse them across multiple queries. Instead of repeatedly typing the same complex filters and sorting options, you can define them once in settings and reference them by name.
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 7.20.0.
 
 ## Why Use Presets?
 

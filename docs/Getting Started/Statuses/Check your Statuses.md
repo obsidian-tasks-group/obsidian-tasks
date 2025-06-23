@@ -50,7 +50,7 @@ Here is an example report, that is generated from the problem statuses shown in 
 
 ### Sample tasks sections
 
-Since Tasks X.Y.Z, there will also be **Sample Tasks** and **Search the Sample Tasks** sections.
+Since Tasks 7.20.0, there will also be **Sample Tasks** and **Search the Sample Tasks** sections.
 
 Their appearance depends on your choice of Theme or CSS snippet.
 
