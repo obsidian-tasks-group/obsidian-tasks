@@ -68,6 +68,17 @@ Use the **[[Placeholders|placeholder]] syntax** (`{{preset.name}}`) when you nee
 - Include presets within [[Combining Filters|Boolean query combinations]] (AND, OR, NOT).
 - Define partial instruction lines, such as expressions for `filter by function`, `sort by function`, or `group by function`.
 
+## How to Quickly List Your Presets
+
+### See the Available Presets
+
+- When the requested preset does not exist, Tasks writes out the list of available Presets, with their first line.
+- So for a quick reminder, type `preset xxxxxxxx` or any other non-existent Preset name, then switch to Reading or Live Preview modes.
+
+### Remembering what your Presets do
+
+- For multi-line presets, you can put a descriptive [[Comments|comment]] on their first line (starting with a `#` character).
+
 ## Default Presets
 
 The Tasks plugin defines several useful built-in presets, for demonstration purposes:
@@ -96,7 +107,7 @@ A common use case is creating presets for daily notes.
 > [!Tip]
 > The following presets work when the daily note's file name matches the pattern `YYYY-MM-DD`.
 
-**Preset name**: `overdue_tasks`  
+**Preset name**: `overdue_tasks`
 **Instructions**:
 
 ```text
@@ -113,7 +124,7 @@ preset overdue_tasks
 ```
 ````
 
-**Preset name**: `today_tasks`  
+**Preset name**: `today_tasks`
 **Instructions**:
 
 ```text
