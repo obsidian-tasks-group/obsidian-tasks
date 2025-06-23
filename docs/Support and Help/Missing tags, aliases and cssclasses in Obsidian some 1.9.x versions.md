@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Support and Help/Missing tags, aliases and cssclasses in Obsidian some 1.9.x versions
 ---
 
 # Missing tags, aliases and cssclasses in Obsidian some 1.9.x versions
