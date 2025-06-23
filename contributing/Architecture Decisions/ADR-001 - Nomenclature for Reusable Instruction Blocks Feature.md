@@ -10,7 +10,7 @@ publish: true
 
 ## Context
 
-The Tasks plugin introduced a feature allowing users to define reusable blocks of Tasks instructions in settings and reference them in queries. This feature was initially named "Includes" with the following syntax:
+The Tasks plugin is introducing a feature allowing users to define reusable blocks of Tasks instructions in settings and reference them in queries. This feature was initially named "Includes" with the following syntax:
 
 - Direct instruction: `include standard_options`  
 - Placeholder syntax: `{{includes.standard_options}}`
