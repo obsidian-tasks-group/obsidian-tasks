@@ -6,11 +6,11 @@ export class Link {
 
     /**
      * @param {LinkCache} rawLink - The raw link from Obsidian cache.
-     * @param {string} filename - The name of the file where this link is located.
+     * @param {string} filenameContainingLink - The name of the file where this link is located.
      */
-    constructor(rawLink: LinkCache, filename: string) {
+    constructor(rawLink: LinkCache, filenameContainingLink: string) {
         this.rawLink = rawLink;
-        this.filenameContainingLink = filename;
+        this.filenameContainingLink = filenameContainingLink;
     }
 
     public get originalMarkdown() {
