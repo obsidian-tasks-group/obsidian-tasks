@@ -29,7 +29,7 @@ export class Link {
      */
     public get destinationFilename() {
         // Handle internal links (starting with '#')
-        if (this.destination[0] === '#') return this.filename;
+        if (this.destination.startsWith('#')) return this.filename;
 
         // Extract filename from path (handles both path and optional hash fragment)
         const pathPart = this.destination.split('#', 1)[0];
