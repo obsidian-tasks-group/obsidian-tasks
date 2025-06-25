@@ -8,8 +8,7 @@ import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_m
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
-    const link = new Link(rawLink, new TasksFile(data.filePath).filenameWithoutExtension);
-    return link;
+    return new Link(rawLink, new TasksFile(data.filePath).filenameWithoutExtension);
 }
 
 describe('linkClass', () => {
