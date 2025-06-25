@@ -8,8 +8,10 @@ import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_m
 
 describe('linkClass', () => {
     it('should construct a Link object', () => {
-        const rawLink = links_everywhere.cachedMetadata.links[0];
-        const link = new Link(rawLink, new TasksFile(links_everywhere.filePath).filenameWithoutExtension);
+        const data = links_everywhere;
+        const index = 0;
+        const rawLink = data.cachedMetadata.links[index];
+        const link = new Link(rawLink, new TasksFile(data.filePath).filenameWithoutExtension);
 
         expect(link).toBeDefined();
         expect(link.originalMarkdown).toEqual('[[link_in_file_body]]');
