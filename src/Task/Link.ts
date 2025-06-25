@@ -24,7 +24,7 @@ export class Link {
     /**
      * Returns the filename of the link destination without the path or alias
      * Removes the .md extension if present leaves other extensions intact.
-     * No accomodation for empty links.
+     * No accommodation for empty links.
      * @returns {string}
      */
     public get destinationFilename() {
