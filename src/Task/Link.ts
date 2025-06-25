@@ -13,11 +13,11 @@ export class Link {
         this.filenameContainingLink = filenameContainingLink;
     }
 
-    public get originalMarkdown() {
+    public get originalMarkdown(): string {
         return this.rawLink.original;
     }
 
-    public get destination() {
+    public get destination(): string {
         return this.rawLink.link;
     }
 
@@ -27,7 +27,7 @@ export class Link {
      * No accommodation for empty links.
      * @returns {string}
      */
-    public get destinationFilename() {
+    public get destinationFilename(): string {
         // Handle internal links (starting with '#')
         if (this.destination.startsWith('#')) {
             return this.filenameContainingLink;
@@ -41,7 +41,7 @@ export class Link {
         return destFilename.endsWith('.md') ? destFilename.slice(0, -3) : destFilename;
     }
 
-    public get displayText() {
+    public get displayText(): string | undefined {
         return this.rawLink.displayText;
     }
 }
