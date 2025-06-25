@@ -78,7 +78,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const line = context.query;
         const editor = context.editor;
         const file = context.file;
-        const currentCursor = context.editor.getCursor();
+        const currentCursor = editor.getCursor();
         const allTasks = this.plugin.getTasks();
 
         const taskToSuggestFor = allTasks.find(
