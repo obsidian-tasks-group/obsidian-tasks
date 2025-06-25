@@ -1,4 +1,5 @@
 import { type CachedMetadata, type FrontMatterCache, getAllTags, parseFrontMatterTags } from 'obsidian';
+import { Link } from '../Task/Link';
 
 export type OptionalTasksFile = TasksFile | undefined;
 
@@ -47,6 +48,13 @@ export class TasksFile {
      */
     get tags(): string[] {
         return this._tags;
+    }
+
+    /**
+     * Return a array of Link in the body of the file.
+     */
+    get outLinks(): Link[] {
+        return this.cachedMetadata?.links?.map((link) => new Link(link, this.filenameWithoutExtension)) ?? [];
     }
 
     /**

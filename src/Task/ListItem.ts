@@ -1,7 +1,9 @@
+import type { LinkCache } from 'obsidian';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from './Task';
 import type { TaskLocation } from './TaskLocation';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
+import { Link } from './Link';
 
 export class ListItem {
     // The original line read from file.
@@ -189,6 +191,26 @@ export class ListItem {
 
     public get file(): TasksFile {
         return this.taskLocation.tasksFile;
+    }
+
+    /**
+     * Return a list of links in the body of the file containing
+     * the task or list item.
+     *
+     * The data contest is documented here:
+     * https://docs.obsidian.md/Reference/TypeScript+API/LinkCache
+     */
+    get rawLinksInFileBody(): LinkCache[] {
+        return this.file.cachedMetadata?.links ?? [];
+    }
+
+    /**
+     * Return a list of links in the task or list item's line.
+     */
+    public get outLinks(): Link[] {
+        return this.rawLinksInFileBody
+            .filter((link) => link.position.start.line === this.lineNumber)
+            .map((link) => new Link(link, this.file.filenameWithoutExtension));
     }
 
     /**
