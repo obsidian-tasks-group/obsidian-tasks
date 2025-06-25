@@ -14,9 +14,7 @@ function getLink(data: any, index: number) {
 
 describe('linkClass', () => {
     it('should construct a Link object', () => {
-        const data = links_everywhere;
-        const index = 0;
-        const link = getLink(data, index);
+        const link = getLink(links_everywhere, 0);
 
         expect(link).toBeDefined();
         expect(link.originalMarkdown).toEqual('[[link_in_file_body]]');
