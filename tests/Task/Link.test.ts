@@ -6,12 +6,17 @@ import internal_heading_links from '../Obsidian/__test_data__/internal_heading_l
 import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
 import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
 
+function getLink(data: any, index: number) {
+    const rawLink = data.cachedMetadata.links[index];
+    const link = new Link(rawLink, new TasksFile(data.filePath).filenameWithoutExtension);
+    return link;
+}
+
 describe('linkClass', () => {
     it('should construct a Link object', () => {
         const data = links_everywhere;
         const index = 0;
-        const rawLink = data.cachedMetadata.links[index];
-        const link = new Link(rawLink, new TasksFile(data.filePath).filenameWithoutExtension);
+        const link = getLink(data, index);
 
         expect(link).toBeDefined();
         expect(link.originalMarkdown).toEqual('[[link_in_file_body]]');
