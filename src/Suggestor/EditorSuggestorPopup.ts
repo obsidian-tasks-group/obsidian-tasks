@@ -77,11 +77,12 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
         const line = context.query;
         const editor = context.editor;
+        const file = context.file;
         const currentCursor = context.editor.getCursor();
         const allTasks = this.plugin.getTasks();
 
         const taskToSuggestFor = allTasks.find(
-            (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
+            (task) => task.taskLocation.path == file.path && task.taskLocation.lineNumber == currentCursor.line,
         );
 
         const markdownFileInfo = this.getMarkdownFileInfo(editor);
