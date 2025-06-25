@@ -1,35 +1,37 @@
 import type { LinkCache } from 'obsidian';
 
 export class Link {
-    private rawLink: LinkCache;
-    private filename: string;
+    private readonly rawLink: LinkCache;
+    private readonly filenameContainingLink: string;
 
     /**
      * @param {LinkCache} rawLink - The raw link from Obsidian cache.
-     * @param {string} filename - The name of the file where this link is located.
+     * @param {string} filenameContainingLink - The name of the file where this link is located.
      */
-    constructor(rawLink: LinkCache, filename: string) {
+    constructor(rawLink: LinkCache, filenameContainingLink: string) {
         this.rawLink = rawLink;
-        this.filename = filename;
+        this.filenameContainingLink = filenameContainingLink;
     }
 
-    public get originalMarkdown() {
+    public get originalMarkdown(): string {
         return this.rawLink.original;
     }
 
-    public get destination() {
+    public get destination(): string {
         return this.rawLink.link;
     }
 
     /**
      * Returns the filename of the link destination without the path or alias
      * Removes the .md extension if present leaves other extensions intact.
-     * No accomodation for empty links.
+     * No accommodation for empty links.
      * @returns {string}
      */
-    public get destinationFilename() {
+    public get destinationFilename(): string {
         // Handle internal links (starting with '#')
-        if (this.destination[0] === '#') return this.filename;
+        if (this.destination.startsWith('#')) {
+            return this.filenameContainingLink;
+        }
 
         // Extract filename from path (handles both path and optional hash fragment)
         const pathPart = this.destination.split('#', 1)[0];
@@ -39,7 +41,7 @@ export class Link {
         return destFilename.endsWith('.md') ? destFilename.slice(0, -3) : destFilename;
     }
 
-    public get displayText() {
+    public get displayText(): string | undefined {
         return this.rawLink.displayText;
     }
 }
