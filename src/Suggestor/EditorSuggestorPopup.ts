@@ -76,6 +76,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         }
 
         const line = context.query;
+        const editor = context.editor;
         const currentCursor = context.editor.getCursor();
         const allTasks = this.plugin.getTasks();
 
@@ -83,7 +84,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             (task) => task.taskLocation.path == context.file.path && task.taskLocation.lineNumber == currentCursor.line,
         );
 
-        const markdownFileInfo = this.getMarkdownFileInfo(context.editor);
+        const markdownFileInfo = this.getMarkdownFileInfo(editor);
 
         // If we can't save the file, we should not allow users to choose dependencies.
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
