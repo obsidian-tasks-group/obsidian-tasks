@@ -1,8 +1,8 @@
 import type { LinkCache } from 'obsidian';
 
 export class Link {
-    private rawLink: LinkCache;
-    private filename: string;
+    private readonly rawLink: LinkCache;
+    private readonly filename: string;
 
     /**
      * @param {LinkCache} rawLink - The raw link from Obsidian cache.
