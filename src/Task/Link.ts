@@ -2,7 +2,7 @@ import type { LinkCache } from 'obsidian';
 
 export class Link {
     private readonly rawLink: LinkCache;
-    private readonly filename: string;
+    private readonly filenameContainingLink: string;
 
     /**
      * @param {LinkCache} rawLink - The raw link from Obsidian cache.
@@ -10,7 +10,7 @@ export class Link {
      */
     constructor(rawLink: LinkCache, filename: string) {
         this.rawLink = rawLink;
-        this.filename = filename;
+        this.filenameContainingLink = filename;
     }
 
     public get originalMarkdown() {
@@ -30,7 +30,7 @@ export class Link {
     public get destinationFilename() {
         // Handle internal links (starting with '#')
         if (this.destination.startsWith('#')) {
-            return this.filename;
+            return this.filenameContainingLink;
         }
 
         // Extract filename from path (handles both path and optional hash fragment)
