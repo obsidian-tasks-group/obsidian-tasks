@@ -58,6 +58,8 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return null;
         }
 
+        if (this.grabSuggestions(editor, _file, line).length === 0) return null;
+
         return {
             start: { line: cursor.line, ch: 0 },
             end: {
