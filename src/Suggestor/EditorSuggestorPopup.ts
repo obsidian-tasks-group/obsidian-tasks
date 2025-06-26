@@ -78,6 +78,13 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const line = context.query;
         const editor = context.editor;
         const file = context.file;
+        const suggestions: SuggestInfo[] = this.grabSuggestions(editor, file, line);
+
+        // Add the editor context to all the suggestions
+        return suggestions.map((s) => ({ ...s, context }));
+    }
+
+    private grabSuggestions(editor: Editor, file: TFile, line: string) {
         const currentCursor = editor.getCursor();
         const allTasks = this.plugin.getTasks();
 
@@ -100,9 +107,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
                 canSaveEdits,
                 taskToSuggestFor,
             ) ?? [];
-
-        // Add the editor context to all the suggestions
-        return suggestions.map((s) => ({ ...s, context }));
+        return suggestions;
     }
 
     private getMarkdownFileInfo(editor: Editor) {
