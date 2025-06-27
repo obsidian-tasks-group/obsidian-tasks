@@ -56,3 +56,6 @@ yarn-error.log
 
 # VS code config
 .vscode/
+
+# Obsidian's hot reload plugin marker file
+.hotreload
