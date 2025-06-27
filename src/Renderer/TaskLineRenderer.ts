@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import { App, Component, MarkdownRenderer } from 'obsidian';
+import { type App, Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from '../Config/Settings';
 import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
