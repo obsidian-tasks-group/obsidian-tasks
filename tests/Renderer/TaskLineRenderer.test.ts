@@ -3,6 +3,7 @@
  */
 import moment from 'moment';
 
+import type { App } from 'obsidian';
 import { DebugSettings } from '../../src/Config/DebugSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
@@ -23,6 +24,13 @@ jest.mock('obsidian');
 window.moment = moment;
 
 /**
+ * Since we don't use the app object's method or properties directly,
+ * and just treat it as an "opaque object" for markdown rendering, there is
+ * not a lot to mock in particular.
+ */
+const mockApp = {} as unknown as App;
+
+/**
  * Renders a task for test purposes and returns the rendered ListItem.
  *
  * @param task to be rendered
@@ -41,6 +49,7 @@ async function renderListItem(
 ) {
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: testRenderer ?? mockTextRenderer,
+        obsidianApp: mockApp,
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
         taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
@@ -84,6 +93,7 @@ describe('task line rendering - HTML', () => {
         const ulElement = document.createElement('ul');
         const taskLineRenderer = new TaskLineRenderer({
             textRenderer: mockTextRenderer,
+            obsidianApp: mockApp,
             obsidianComponent: null,
             parentUlElement: ulElement,
             taskLayoutOptions: new TaskLayoutOptions(),
