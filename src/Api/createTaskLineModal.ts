@@ -1,5 +1,7 @@
 import type { App } from 'obsidian';
 import type { Task } from '../Task/Task';
+import { taskFromLine } from '../Commands/CreateOrEditTaskParser';
+import { TaskModal } from '../Obsidian/TaskModal';
 
 /**
  * Interface to remove all references to {TaskModal} in this file.
@@ -23,13 +25,11 @@ export type taskModalFactory = {
  * Opens the Tasks UI and returns the Markdown string for the task entered.
  *
  * @param app - The Obsidian App
- * @param taskModalFactory - Factory method to instantiate {@link TaskModal}. Default value is {@link defaultTaskModalFactory}.
- *                           Used only for testing.
  *
  * @returns {Promise<string>} A promise that contains the Markdown string for the task entered or
  * an empty string, if data entry was cancelled.
  */
-export const createTaskLineModal = (app: App, taskModalFactory: taskModalFactory): Promise<string> => {
+export const createTaskLineModal = (app: App): Promise<string> => {
     let resolvePromise: (input: string) => void;
     const waitForClose = new Promise<string>((resolve, _) => {
         resolvePromise = resolve;
@@ -40,7 +40,10 @@ export const createTaskLineModal = (app: App, taskModalFactory: taskModalFactory
         resolvePromise(line);
     };
 
-    const taskModal = taskModalFactory(app, onSubmit);
+    const task = taskFromLine({ line: '', path: '' });
+    const taskModal = new TaskModal({ app, task, onSubmit, allTasks: [] });
+
     taskModal.open();
+
     return waitForClose;
 };

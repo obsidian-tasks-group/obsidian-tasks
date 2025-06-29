@@ -20,17 +20,13 @@ jest.mock('../../src/Obsidian/TaskModal', () => {
     };
 });
 
-const taskModalFactory = (app: App, onSubmit: (updatedTasks: Task[]) => void) => {
-    return new TaskModal({ app, task: createNewTask(), onSubmit });
-};
-
 describe('APIv1 - createTaskLineModal', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
     it('TaskModal.open() should be called', () => {
-        createTaskLineModal(app, taskModalFactory);
+        createTaskLineModal(app);
 
         expect(TaskModal.instance.open).toHaveBeenCalledTimes(1);
     });
@@ -39,7 +35,7 @@ describe('APIv1 - createTaskLineModal', () => {
      * If the Modal returns the expected text, the api function createTaskLineModal() returns that text
      */
     it('should return the Markdown for a task if submitted', async () => {
-        const taskLinePromise = createTaskLineModal(app, taskModalFactory);
+        const taskLinePromise = createTaskLineModal(app);
         const expected = '- [ ] test';
 
         TaskModal.instance.onSubmit([createNewTask(expected)]);
@@ -49,7 +45,7 @@ describe('APIv1 - createTaskLineModal', () => {
     });
 
     it('should return an empty string if cancelled', async () => {
-        const taskLinePromise = createTaskLineModal(app, taskModalFactory);
+        const taskLinePromise = createTaskLineModal(app);
         const expected = '';
 
         TaskModal.instance.cancel();
