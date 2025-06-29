@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import { Component, MarkdownRenderer } from 'obsidian';
+import { type App, Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from '../Config/Settings';
 import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
@@ -21,6 +21,7 @@ import { TaskFieldRenderer } from './TaskFieldRenderer';
  * The function used to render a Markdown task line into an existing HTML element.
  */
 export type TextRenderer = (
+    app: App,
     text: string,
     element: HTMLSpanElement,
     path: string,
@@ -65,12 +66,14 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
  */
 export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
+    private readonly obsidianApp: App;
     private readonly obsidianComponent: Component | null;
     private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
     public static async obsidianMarkdownRenderer(
+        app: App,
         text: string,
         element: HTMLSpanElement,
         path: string,
@@ -79,7 +82,8 @@ export class TaskLineRenderer {
         if (!obsidianComponent) {
             return;
         }
-        await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
+
+        await MarkdownRenderer.render(app, text, element, path, obsidianComponent);
     }
 
     /**
@@ -99,18 +103,21 @@ export class TaskLineRenderer {
      */
     constructor({
         textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
+        obsidianApp,
         obsidianComponent,
         parentUlElement,
         taskLayoutOptions,
         queryLayoutOptions,
     }: {
         textRenderer?: TextRenderer;
+        obsidianApp: App;
         obsidianComponent: Component | null;
         parentUlElement: HTMLElement;
         taskLayoutOptions: TaskLayoutOptions;
         queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;
+        this.obsidianApp = obsidianApp;
         this.obsidianComponent = obsidianComponent;
         this.parentUlElement = parentUlElement;
         this.taskLayoutOptions = taskLayoutOptions;
@@ -301,7 +308,7 @@ export class TaskLineRenderer {
             // Add some debug output to enable hidden information in the task to be inspected.
             description += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
         }
-        await this.textRenderer(description, span, task.path, this.obsidianComponent);
+        await this.textRenderer(this.obsidianApp, description, span, task.path, this.obsidianComponent);
 
         // If the task is a block quote, the block quote wraps the p-tag that contains the content.
         // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
@@ -495,6 +502,7 @@ export class TaskLineRenderer {
 
         const span = createAndAppendElement('span', li);
         await this.textRenderer(
+            this.obsidianApp,
             listItem.description,
             span,
             listItem.findClosestParentTask()?.path ?? '',
