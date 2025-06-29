@@ -25,6 +25,9 @@ describe('APIv1 - createTaskLineModal', () => {
         jest.clearAllMocks();
     });
 
+    /**
+     * When we ask to create the task line modal, it should call open() on the TaskModal instance.
+     */
     it('TaskModal.open() should be called', () => {
         createTaskLineModal(app);
 
@@ -44,6 +47,9 @@ describe('APIv1 - createTaskLineModal', () => {
         expect(result).toEqual(expected);
     });
 
+    /**
+     * If the Modal is cancelled, the api function createTaskLineModal() should return an empty string
+     */
     it('should return an empty string if cancelled', async () => {
         const taskLinePromise = createTaskLineModal(app);
         const expected = '';
