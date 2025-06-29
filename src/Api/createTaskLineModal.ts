@@ -4,24 +4,6 @@ import { taskFromLine } from '../Commands/CreateOrEditTaskParser';
 import { TaskModal } from '../Obsidian/TaskModal';
 
 /**
- * Interface to remove all references to {TaskModal} in this file.
- * This is necessary to make {createTaskLineModal} testable.
- * Once Jest is configured to work with Svelte, this can be removed.
- */
-export interface ITaskModal {
-    open(): void;
-}
-
-/**
- * Signature of the factory method for {@link TaskModal}.
- * This is necessary to make {@link createTaskLineModal} testable.
- * Once Jest is configured to work with Svelte, this can be removed.
- */
-export type taskModalFactory = {
-    (app: App, onSubmit: (updatedTasks: Task[]) => void): ITaskModal;
-};
-
-/**
  * Opens the Tasks UI and returns the Markdown string for the task entered.
  *
  * @param app - The Obsidian App
