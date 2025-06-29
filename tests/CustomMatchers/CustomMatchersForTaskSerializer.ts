@@ -2,6 +2,7 @@ import { diff } from 'jest-diff';
 import type { MatcherFunction } from 'expect';
 import moment from 'moment';
 import type { TaskDetails } from '../../src/TaskSerializer';
+import { Duration } from '../../src/Task/Duration';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Priority } from '../../src/Task/Priority';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
@@ -81,6 +82,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         startDate: t.startDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         createdDate: t.createdDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         scheduledDate: t.scheduledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
+        duration: t.duration?.toText() ?? null,
         dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         cancelledDate: t.cancelledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
@@ -106,6 +108,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         startDate: null,
         createdDate: null,
         scheduledDate: null,
+        duration: Duration.None,
         dueDate: null,
         doneDate: null,
         cancelledDate: null,

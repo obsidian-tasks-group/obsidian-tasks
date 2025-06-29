@@ -4,6 +4,7 @@ import { PriorityTools } from '../lib/PriorityTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
 import type { OnCompletion } from '../Task/OnCompletion';
+import { Duration } from '../Task/Duration';
 import { Occurrence } from '../Task/Occurrence';
 import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
@@ -29,6 +30,7 @@ export class EditableTask {
     createdDate: string;
     startDate: string;
     scheduledDate: string;
+    duration: string;
     dueDate: string;
     doneDate: string;
     cancelledDate: string;
@@ -49,6 +51,7 @@ export class EditableTask {
         createdDate: string;
         startDate: string;
         scheduledDate: string;
+        duration: string;
         dueDate: string;
         doneDate: string;
         cancelledDate: string;
@@ -67,6 +70,7 @@ export class EditableTask {
         this.createdDate = editableTask.createdDate;
         this.startDate = editableTask.startDate;
         this.scheduledDate = editableTask.scheduledDate;
+        this.duration = editableTask.duration;
         this.dueDate = editableTask.dueDate;
         this.doneDate = editableTask.doneDate;
         this.cancelledDate = editableTask.cancelledDate;
@@ -127,6 +131,7 @@ export class EditableTask {
             createdDate: task.created.formatAsDate(),
             startDate: task.start.formatAsDate(),
             scheduledDate: task.scheduled.formatAsDate(),
+            duration: task.duration.toText(),
             dueDate: task.due.formatAsDate(),
             doneDate: task.done.formatAsDate(),
             cancelledDate: task.cancelled.formatAsDate(),
@@ -153,6 +158,7 @@ export class EditableTask {
 
         const startDate = parseTypedDateForSaving(this.startDate, this.forwardOnly);
         const scheduledDate = parseTypedDateForSaving(this.scheduledDate, this.forwardOnly);
+        const duration = Duration.fromText(this.duration) ?? Duration.None;
         const dueDate = parseTypedDateForSaving(this.dueDate, this.forwardOnly);
 
         const cancelledDate = parseTypedDateForSaving(this.cancelledDate, this.forwardOnly);
@@ -201,6 +207,7 @@ export class EditableTask {
             recurrence,
             startDate,
             scheduledDate,
+            duration,
             dueDate,
             doneDate,
             createdDate,
@@ -253,6 +260,20 @@ export class EditableTask {
 
         // Otherwise, use the current date.
         return window.moment();
+    }
+
+    public parseAndValidateDuration() {
+        if (!this.duration) {
+            return { parsedDuration: '<i>no duration</i>', isDurationValid: true };
+        }
+
+        const durationFromText = Duration.fromText(this.duration)?.toText();
+
+        if (!durationFromText) {
+            return { parsedDuration: '<i>invalid duration. Only hours/minutes.</i>', isDurationValid: false };
+        }
+
+        return { parsedDuration: durationFromText, isDurationValid: true };
     }
 
     public parseAndValidateRecurrence() {

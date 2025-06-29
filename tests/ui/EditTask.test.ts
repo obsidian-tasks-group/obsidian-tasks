@@ -252,6 +252,10 @@ describe('Task rendering', () => {
         testElementRender(fullyPopulatedLine, 'scheduled', '2023-07-03');
     });
 
+    it('should display valid duration', () => {
+        testElementRender(fullyPopulatedLine, 'duration', '26h59m');
+    });
+
     it('should display valid due date', () => {
         testElementRender(fullyPopulatedLine, 'due', '2023-07-04');
     });
