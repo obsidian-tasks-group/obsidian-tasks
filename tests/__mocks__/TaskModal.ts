@@ -9,14 +9,26 @@ export class TaskModal {
     public readonly app: App;
     public readonly task: Task;
     public readonly onSubmit: (updateTasks: Task[]) => void;
+    public readonly allTasks: Task[];
 
     public readonly open: () => void;
 
-    constructor({ app, task, onSubmit }: { app: App; task: Task; onSubmit: (updatedTasks: Task[]) => void }) {
+    constructor({
+        app,
+        task,
+        onSubmit,
+        allTasks,
+    }: {
+        app: App;
+        task: Task;
+        onSubmit: (updatedTasks: Task[]) => void;
+        allTasks?: Task[];
+    }) {
         this.app = app;
         this.task = task;
         this.onSubmit = onSubmit;
         this.open = jest.fn();
+        this.allTasks = allTasks || [];
 
         TaskModal.instance = this;
     }

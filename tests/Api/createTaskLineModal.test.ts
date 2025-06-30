@@ -13,8 +13,18 @@ const createNewTask = (line = ''): Task => {
 jest.mock('../../src/Obsidian/TaskModal', () => {
     return {
         TaskModal: jest.fn(
-            ({ app, task, onSubmit }: { app: App; task: Task; onSubmit: (updatedTasks: Task[]) => void }) => {
-                return new TaskModal({ app, task, onSubmit });
+            ({
+                app,
+                task,
+                onSubmit,
+                allTasks,
+            }: {
+                app: App;
+                task: Task;
+                onSubmit: (updatedTasks: Task[]) => void;
+                allTasks: Task[];
+            }) => {
+                return new TaskModal({ app, task, onSubmit, allTasks });
             },
         ),
     };
@@ -58,5 +68,12 @@ describe('APIv1 - createTaskLineModal', () => {
 
         const result = await taskLinePromise;
         expect(result).toEqual(expected);
+    });
+
+    it('should pass allTasks to TaskModal', async () => {
+        const allTasks = [createNewTask('- [ ] test')];
+        createTaskLineModal(app, allTasks);
+
+        expect(TaskModal.instance.allTasks).toEqual(allTasks);
     });
 });
