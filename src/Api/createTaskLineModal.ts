@@ -11,7 +11,7 @@ import { TaskModal } from '../Obsidian/TaskModal';
  * @returns {Promise<string>} A promise that contains the Markdown string for the task entered or
  * an empty string, if data entry was cancelled.
  */
-export const createTaskLineModal = (app: App): Promise<string> => {
+export const createTaskLineModal = (app: App, allTasks: Task[]): Promise<string> => {
     let resolvePromise: (input: string) => void;
     const waitForClose = new Promise<string>((resolve, _) => {
         resolvePromise = resolve;
@@ -23,7 +23,7 @@ export const createTaskLineModal = (app: App): Promise<string> => {
     };
 
     const task = taskFromLine({ line: '', path: '' });
-    const taskModal = new TaskModal({ app, task, onSubmit, allTasks: [] });
+    const taskModal = new TaskModal({ app, task, onSubmit, allTasks });
 
     taskModal.open();
 
