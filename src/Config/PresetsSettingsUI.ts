@@ -71,8 +71,6 @@ export class PresetsSettingsUI {
         const setting = new Setting(wrapper);
         setting.settingEl.addClass('tasks-presets-setting');
 
-        // Make the wrapper draggable
-        wrapper.draggable = true;
         wrapper.setAttribute('data-preset-key', key);
 
         // Add name input field
@@ -131,6 +129,8 @@ export class PresetsSettingsUI {
 
             btn.extraSettingsEl.style.cursor = 'grab';
             btn.extraSettingsEl.addEventListener('mousedown', (_e) => {
+                // Enable dragging only when mousedown starts on the handle
+                wrapper.draggable = true;
                 btn.extraSettingsEl.style.cursor = 'grabbing';
             });
             btn.extraSettingsEl.addEventListener('mouseup', (_e) => {
@@ -181,6 +181,8 @@ export class PresetsSettingsUI {
 
         // Drag end
         wrapper.addEventListener('dragend', (_e) => {
+            // Disable dragging after drag ends
+            wrapper.draggable = false;
             wrapper.removeClass('tasks-presets-dragging');
             this.clearDropIndicators();
         });
