@@ -15,7 +15,7 @@
 >
 > ```json
 > [
-> ... 
+> ...
 > "obsidian-tasks-plugin",
 > "nldates-obsidian",
 > "various-complements"
