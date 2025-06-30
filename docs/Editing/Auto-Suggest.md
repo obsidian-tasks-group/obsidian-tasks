@@ -140,55 +140,118 @@ There are some Auto-Suggest behaviours that might be improved in future releases
 - When Auto-Suggest is used in [[Kanban plugin]] cards (or any other plugins that use the [[Tasks Api#Auto-Suggest Integration|auto-suggest integration]]), the [[Task Dependencies|dependencies]] suggestions are not available, because there is not yet a mechanism for plugins to access all the tasks in the vault.
   - We are tracking this in [issue #3274](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3274).
 
-## Minimizing Suggestion Conflicts With Other Plugins
+## Managing Auto-Suggest Conflicts With Other Plugins
 
-Obsidian plugins, such as Tasks, cannot detect if auto-suggest features from other plugins are enabled. It's the user's responsibility to manage conflicts between auto-suggest features. Tasks auto-suggest will only appear on lines that start with `- [ ]` and contain the global filter (if one is set).
+When multiple Obsidian plugins offer auto-suggest features, they can interfere with each other, causing suggestions to not appear when expected or overwhelming you with too many options. This guide explains how to configure popular plugins to work together seamlessly.
+
+### Understanding the Problem
+
+Auto-suggest conflicts occur because:
+
+- Multiple plugins try to provide suggestions simultaneously
+- Obsidian prioritizes suggestions from plugins that load first
+- Some plugins consume all available "suggestion space," blocking others
+- Different plugins use overlapping trigger conditions
+
+Common symptoms:
+
+- Expected suggestions don't appear
+- Wrong plugin's suggestions show up
+- Suggestion list becomes cluttered or unresponsive
+
+### How Plugin Loading Works
+
+Obsidian loads community plugins in the order they appear in your plugin list. The first plugin to load gets first priority for suggestions. When that plugin runs out of suggestions, the next plugin can offer its suggestions.
+
+**Key principle:** Plugins with fewer, more specific suggestions should load first so they aren't blocked by plugins with more numerous or unpredictable suggestions.
+
+**Note:** Tasks auto-suggest will only appear on lines that start with `- [ ]` and contain the global filter (if one is set).
 
 ### Strategies
-
 To simultaneously use auto-suggest features from other plugins, a strategy must be implemented to minimize conflicts. Plugin specific settings and plugin load order can be utilized to obtain a mostly seamless experience.
 
 In Obsidian plugins that load first have suggestions prioritized. Given that, it makes sense to load plugins with less suggestions and/or less trigger text first. Doing so will pass priority to the next plugin when suggestions run out.
 
-#### Plugin Specific Settings
+#### Configure Plugin Specific Settings
+**Tasks Plugin:**
 
-A few mentions on plugin specific settings:
+- Go to Settings → Tasks → Auto-suggest
+- Set "Minimum match length for auto suggest" to **1**
+- Why: This allows other plugins to show suggestions when Tasks has no matches
 
-- Tasks plugin setting:
-  - Minimum match length for auto suggest` must be 1 or greater to allow subsequently loaded plugins to display suggestions.
-- Various Compliments:
-  - can be provided a by line regex filter but mainlining it may be a recurring chore and cause unsuspected behavior.
-- Natural Language Dates:
-  - the trigger phrase default of @ works well, prefer something that doesn't conflict with the Tasks Plugin
+**Natural Language Dates:**
 
-#### Managing Load Orders
+- Go to Settings → Natural Language Dates
+- Set trigger phrase to **@** (or another single character that doesn't conflict with Tasks syntax)
+- Why: Single-character triggers work well with the load order approach
 
-1. no additional plugins: disabling then enabling a plugin will cause it to be loaded first.
-2. lazy plugin loader: delay loading to plugins to obtain goal load order
+**Various Compliments:**
 
-### Example Strategies
+- Go to Settings → Various Compliments → Suggest
+- Consider adding a line filter regex if you want to limit where it appears
+- Note: This plugin provides many suggestions and should load last
 
-The following strategy aims to use load order to provide a seamless auto suggestion experience.
+#### Set Load Orders
+Choose one of these methods:
 
-| Load | Plugin                 | Notes                                                                         | Suggestion Space          |
-| ---- | ---------------------- | ----------------------------------------------------------------------------- | ------------------------- |
-| 1st  | Natural Language Dates | prefer 1 character trigger phrase that doesn't conflict with tasks, @ is okay | 1 character               |
-| 2nd  | Tasks                  | minimum match length must be 1 to load subsequent plugins                     | minimal                   |
-| 3rd  | Various Compliments    | takes the most suggestion space and will block plugins loaded after           | very large, unpredictable |
+##### Method A: Manual Load Order (No Additional Plugins)
 
-#### With Core Obsidian With Tasks
+1. Go to Settings → Community plugins
+2. Disable all auto-suggest plugins
+3. Re-enable them in this exact order:
+    - **Tasks** (enable first)
+    - **Natural Language Dates** (enable second)
+    - **Various Compliments** (enable last)
 
-1. set Tasks minimum match length for auto suggest to 1.
-2. disable then enable tasks
-3. disable then enable natural language dates
-4. disable then enable various compliments
+##### Method B: Using Lazy Plugin Loader
 
-#### With Lazy Plugin Loader
+1. Install and enable Lazy Plugin Loader
+2. Go to Settings → Lazy Plugin Loader
+3. Configure delays:
+    - **Natural Language Dates:** Instant
+    - **Tasks:** Short delay
+    - **Various Compliments:** Long delay
 
-1. set minimum match length for auto suggest to 1.
-2. set tasks to short delay
-3. set natural language dates to instant (or short with no conflicting trigger phrase)
-4. set various compliments to long delay
+#### Expected Results
+
+With proper configuration, you should see:
+**On task lines** (starting with `- [ ]`):
+
+1. Tasks-specific suggestions appear (due dates, priorities, etc.)
+2. When typing `@`, Natural Language Dates suggestions appear
+3. Various Compliments fills in remaining suggestion space
+
+**On regular lines:**
+
+1. Natural Language Dates responds to `@` trigger
+2. Various Compliments provides general text suggestions
+
+#### Troubleshooting
+**General:**
+
+- Restart Obsidian after changing settings or load order
+
+**Tasks suggestions not appearing:**
+
+- Verify the line is a task
+- Check if a global filter is set in Tasks settings
+- Ensure minimum match length is set to 1 or more
+- Check that it's loading before Various Compliments
+
+**Natural Language Dates not working:**
+
+- Confirm you're using the correct trigger character
+- Check that it's loading before Various Compliments
+- Try a different trigger character if conflicts persist
+
+**Too many suggestions from Various Compliments:**
+
+- Move it to load last in the order
+
+**Suggestions completely missing:**
+
+- Check that all plugins are enabled
+- Verify you're typing in the correct context (task lines vs regular text)
 
 ## Common Questions
 
