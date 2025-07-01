@@ -151,7 +151,6 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
 
 - Editing tasks:
   - It is not yet possible to use the API to edit an *existing task line* with Tasks [[Create or edit Task|Create or edit task UI]]. We are tracking this in [issue #1945](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1945).
-  - It is not yet possible to use the API to add [[Task Dependencies|dependencies]] with the Tasks [[Create or edit Task|Create or edit task UI]]. We are tracking this in [issue #2993](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2993).
 - Auto Suggest:
   - It is not yet possible for [[auto-suggest]] to add [[Task Dependencies|dependencies]] when Auto-Suggest is used in [[Kanban plugin]] cards - or any other plugins that use the [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]]. We are tracking this in [issue #3274](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3274).
 - Searching tasks:
