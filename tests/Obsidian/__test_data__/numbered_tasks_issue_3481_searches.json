@@ -1,0 +1,303 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "numbered_tasks_issue_3481_searches",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 36,
+            "line": 0,
+            "offset": 36
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      },
+      {
+        "heading": "Tasks",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 8,
+            "line": 2,
+            "offset": 46
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 38
+          }
+        }
+      },
+      {
+        "heading": "show tree",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 6,
+            "offset": 128
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 115
+          }
+        }
+      },
+      {
+        "heading": "hide tree",
+        "level": 3,
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 14,
+            "offset": 217
+          },
+          "start": {
+            "col": 0,
+            "line": 14,
+            "offset": 204
+          }
+        }
+      },
+      {
+        "heading": "Dataview",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 22,
+            "offset": 304
+          },
+          "start": {
+            "col": 0,
+            "line": 22,
+            "offset": 293
+          }
+        }
+      },
+      {
+        "heading": "Obsidian search",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 31,
+            "offset": 418
+          },
+          "start": {
+            "col": 0,
+            "line": 31,
+            "offset": 400
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 36,
+            "line": 0,
+            "offset": 36
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 8,
+            "line": 2,
+            "offset": 46
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 38
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 65,
+            "line": 4,
+            "offset": 113
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 48
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 6,
+            "offset": 128
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 115
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 12,
+            "offset": 202
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 130
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 14,
+            "offset": 217
+          },
+          "start": {
+            "col": 0,
+            "line": 14,
+            "offset": 204
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 20,
+            "offset": 291
+          },
+          "start": {
+            "col": 0,
+            "line": 16,
+            "offset": 219
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 22,
+            "offset": 304
+          },
+          "start": {
+            "col": 0,
+            "line": 22,
+            "offset": 293
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 27,
+            "line": 24,
+            "offset": 333
+          },
+          "start": {
+            "col": 0,
+            "line": 24,
+            "offset": 306
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 29,
+            "offset": 398
+          },
+          "start": {
+            "col": 0,
+            "line": 26,
+            "offset": 335
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 31,
+            "offset": 418
+          },
+          "start": {
+            "col": 0,
+            "line": 31,
+            "offset": 400
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 27,
+            "line": 33,
+            "offset": 447
+          },
+          "start": {
+            "col": 0,
+            "line": 33,
+            "offset": 420
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 37,
+            "offset": 471
+          },
+          "start": {
+            "col": 0,
+            "line": 35,
+            "offset": 449
+          }
+        },
+        "type": "code"
+      }
+    ]
+  },
+  "fileContents": "# numbered_tasks_issue_3481_searches\n\n## Tasks\n\nThe Tasks plugin finds ==6 tasks==, but with 2 nested list items.\n\n### show tree\n\n```tasks\npath includes numbered_tasks_issue_3481\nshow tree\nfull mode\n```\n\n### hide tree\n\n```tasks\npath includes numbered_tasks_issue_3481\nhide tree\nfull mode\n```\n\n## Dataview\n\nDataview finds ==4 tasks==:\n\n```dataview\nTASK\nFROM \"Test Data/numbered_tasks_issue_3481\"\n```\n\n## Obsidian search\n\nObsidian finds ==6 tasks==:\n\n```query\ntask:3481\n```\n",
+  "filePath": "Test Data/numbered_tasks_issue_3481_searches.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null
+}
