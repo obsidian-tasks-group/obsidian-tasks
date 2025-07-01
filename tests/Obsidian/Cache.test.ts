@@ -28,6 +28,7 @@ import inheritance_task_listitem_task from './__test_data__/inheritance_task_lis
 import inheritance_task_mixed_children from './__test_data__/inheritance_task_mixed_children.json';
 import numbered_list_items_with_paren from './__test_data__/numbered_list_items_with_paren.json';
 import numbered_list_items_standard from './__test_data__/numbered_list_items_standard.json';
+import numbered_tasks_issue_3481 from './__test_data__/numbered_tasks_issue_3481.json';
 import one_task from './__test_data__/one_task.json';
 import callouts_nested_issue_2890_labelled from './__test_data__/callouts_nested_issue_2890_labelled.json';
 import callout from './__test_data__/callout.json';
@@ -175,6 +176,48 @@ describe('cache', () => {
             "
         `);
         expect(tasks.length).toEqual(2);
+    });
+
+    it('visualise how Tasks handles sample tasks in issue #3481', () => {
+        // This test name does not yet begin 'should', because it is only documenting/visualsing
+        // the current behaviour - and not stating that the current behaviour is correct.
+
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3481
+        //      "Tasks query turns single-line tasks into multi-line tasks"
+        const data = numbered_tasks_issue_3481;
+        const tasks = readTasksFromSimulatedFile(data);
+        expect(data.fileContents).toMatchInlineSnapshot(`
+            "# numbered_tasks_issue_3481
+
+            See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3481.
+
+            - [ ] 1. #task Task 1 in 'numbered_tasks_issue_3481'
+            - [ ] 2 #task Task 2 in 'numbered_tasks_issue_3481'
+            - [ ] 3) #task Task 3 in 'numbered_tasks_issue_3481'
+            - [ ] 4 - #task Task 4 in 'numbered_tasks_issue_3481'
+            - [ ] 5: #task Task 5 in 'numbered_tasks_issue_3481'
+            - [ ] (6) #task Task 6 in 'numbered_tasks_issue_3481'
+
+            The file [[numbered_tasks_issue_3481_searches]] shows how Obsidian and some plugins parse the above data.
+            "
+        `);
+
+        // This shows the current behaviour of the Tasks code for processing Obsidian listItems.
+        // The two nested ListItem lines are not expected.
+        // But reviewing the listItems values in numbered_tasks_issue_3481.json, it is plausible
+        // to see why Tasks might have created them.
+        expect(printRoots(tasks)).toMatchInlineSnapshot(`
+            "- [ ] 1. #task Task 1 in 'numbered_tasks_issue_3481' : Task
+                - [ ] 1. #task Task 1 in 'numbered_tasks_issue_3481' : ListItem
+            - [ ] 2 #task Task 2 in 'numbered_tasks_issue_3481' : Task
+            - [ ] 3) #task Task 3 in 'numbered_tasks_issue_3481' : Task
+                - [ ] 3) #task Task 3 in 'numbered_tasks_issue_3481' : ListItem
+            - [ ] 4 - #task Task 4 in 'numbered_tasks_issue_3481' : Task
+            - [ ] 5: #task Task 5 in 'numbered_tasks_issue_3481' : Task
+            - [ ] (6) #task Task 6 in 'numbered_tasks_issue_3481' : Task
+            "
+        `);
+        expect(tasks.length).toEqual(6);
     });
 
     it('should read one parent and one child task', () => {
@@ -852,6 +895,7 @@ describe('all mock files', () => {
             const files_without_tasks = [
                 'Test Data/docs_sample_for_explain_query_file_defaults.md',
                 'Test Data/non_tasks.md',
+                'Test Data/numbered_tasks_issue_3481_searches.md',
             ];
             if (files_without_tasks.includes(path)) {
                 expect(tasks.length).toEqual(0);
