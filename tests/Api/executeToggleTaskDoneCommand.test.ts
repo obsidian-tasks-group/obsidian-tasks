@@ -3,7 +3,7 @@
  */
 
 import moment from 'moment';
-import type { App } from 'obsidian';
+import type TasksPlugin from '../../src/main';
 import { tasksApiV1 } from '../../src/Api';
 
 // This needs to be mocked because the API imports TaskModal which extends Obsidian's Modal
@@ -24,7 +24,7 @@ describe('APIv1 - executeToggleTaskDoneCommand', () => {
         jest.useRealTimers();
     });
 
-    const api = tasksApiV1({} as App);
+    const api = tasksApiV1({} as TasksPlugin);
 
     // This is a simple smoke test to make sure executeToggleTaskDoneCommand is working. Its core
     // functionality is covered by other tests
