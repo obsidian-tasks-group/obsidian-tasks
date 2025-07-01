@@ -2,79 +2,78 @@ import type { App } from 'obsidian';
 import type { Task } from '../../src/Task/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { createTaskLineModal } from '../../src/Api/createTaskLineModal';
-import type { ITaskModal, taskModalFactory } from '../../src/Api/createTaskLineModal';
+import { TaskModal } from '../__mocks__/TaskModal';
 
 const app = {} as App;
-
-class TaskModalMock implements ITaskModal {
-    public task: Task;
-    public onSubmit: (updatedTasks: Task[]) => void;
-    public openWasCalled: boolean = false;
-
-    constructor() {
-        this.task = createNewTask();
-        this.onSubmit = (_: Task[]) => {};
-    }
-
-    public open() {
-        this.openWasCalled = true;
-    }
-
-    // helper method to simulate pressing the submit button
-    public submit() {
-        this.onSubmit([this.task]);
-    }
-
-    // helper method to simulate pressing the cancel button
-    public cancel() {
-        this.onSubmit([]);
-    }
-}
 
 const createNewTask = (line = ''): Task => {
     return taskFromLine({ line, path: '' });
 };
 
-function mockModalFactory(modalMock: TaskModalMock) {
-    return (_: App, onSubmit: (updatedTasks: Task[]) => void): ITaskModal => {
-        modalMock.onSubmit = onSubmit;
-        return modalMock;
+jest.mock('../../src/Obsidian/TaskModal', () => {
+    return {
+        TaskModal: jest.fn(
+            ({
+                app,
+                task,
+                onSubmit,
+                allTasks,
+            }: {
+                app: App;
+                task: Task;
+                onSubmit: (updatedTasks: Task[]) => void;
+                allTasks: Task[];
+            }) => {
+                return new TaskModal({ app, task, onSubmit, allTasks });
+            },
+        ),
     };
-}
+});
 
 describe('APIv1 - createTaskLineModal', () => {
-    let modalMock: TaskModalMock;
-    let modalFactory: taskModalFactory;
-
     beforeEach(() => {
-        modalMock = new TaskModalMock();
-        modalFactory = mockModalFactory(modalMock);
+        jest.clearAllMocks();
     });
 
+    /**
+     * When we ask to create the task line modal, it should call open() on the TaskModal instance.
+     */
     it('TaskModal.open() should be called', () => {
-        createTaskLineModal(app, modalFactory);
-        expect(modalMock.openWasCalled).toBeTruthy();
+        createTaskLineModal(app, []);
+
+        expect(TaskModal.instance.open).toHaveBeenCalledTimes(1);
     });
 
+    /**
+     * If the Modal returns the expected text, the api function createTaskLineModal() returns that text
+     */
     it('should return the Markdown for a task if submitted', async () => {
-        const taskLinePromise = createTaskLineModal(app, modalFactory);
+        const taskLinePromise = createTaskLineModal(app, []);
         const expected = '- [ ] test';
 
-        modalMock.task = createNewTask(expected);
-        modalMock.submit();
+        TaskModal.instance.onSubmit([createNewTask(expected)]);
         const result = await taskLinePromise;
 
         expect(result).toEqual(expected);
     });
 
+    /**
+     * If the Modal is cancelled, the api function createTaskLineModal() should return an empty string
+     */
     it('should return an empty string if cancelled', async () => {
-        const taskLinePromise = createTaskLineModal(app, mockModalFactory(modalMock));
+        const taskLinePromise = createTaskLineModal(app, []);
         const expected = '';
 
-        modalMock.task = createNewTask(expected);
-        modalMock.cancel();
+        TaskModal.instance.cancel();
 
         const result = await taskLinePromise;
         expect(result).toEqual(expected);
+    });
+
+    it('should pass allTasks to TaskModal', async () => {
+        const allTasks = [createNewTask('- [ ] test')];
+        createTaskLineModal(app, allTasks);
+
+        expect(TaskModal.instance.allTasks).toEqual(allTasks);
     });
 });
