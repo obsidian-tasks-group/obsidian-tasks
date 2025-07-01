@@ -9,7 +9,9 @@ See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3481.
 - [ ] 5: #task Task 5 in 'numbered_tasks_issue_3481'
 - [ ] (6) #task Task 6 in 'numbered_tasks_issue_3481'
 
-## show tree
+## Tasks
+
+### show tree
 
 ```tasks
 path includes {{query.file.path}}
@@ -17,10 +19,17 @@ show tree
 full mode
 ```
 
-## hide tree
+### hide tree
 
 ```tasks
 path includes {{query.file.path}}
 hide tree
 full mode
+```
+
+## Dataview
+
+```dataview
+TASK
+FROM "Test Data/numbered_tasks_issue_3481"
 ```
