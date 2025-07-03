@@ -120,7 +120,10 @@
   "fileContents": "---\ntags: single-value-single-line\n---\n\n# yaml_tags_with_one_value_on_single_line\n\n- [ ] #task Task in 'yaml_tags_with_one_value_on_single_line'\n",
   "filePath": "Test Data/yaml_tags_with_one_value_on_single_line.md",
   "getAllTags": [
+    "#single-value-single-line",
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": [
+    "#single-value-single-line"
+  ]
 }
