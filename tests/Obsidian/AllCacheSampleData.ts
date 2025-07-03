@@ -57,6 +57,8 @@ import no_yaml from './__test_data__/no_yaml.json';
 import non_tasks from './__test_data__/non_tasks.json';
 import numbered_list_items_standard from './__test_data__/numbered_list_items_standard.json';
 import numbered_list_items_with_paren from './__test_data__/numbered_list_items_with_paren.json';
+import numbered_tasks_issue_3481 from './__test_data__/numbered_tasks_issue_3481.json';
+import numbered_tasks_issue_3481_searches from './__test_data__/numbered_tasks_issue_3481_searches.json';
 import one_task from './__test_data__/one_task.json';
 import query_file_defaults_all_options_false from './__test_data__/query_file_defaults_all_options_false.json';
 import query_file_defaults_all_options_null from './__test_data__/query_file_defaults_all_options_null.json';
@@ -150,6 +152,8 @@ export function allCacheSampleData(): SimulatedFile[] {
         non_tasks,
         numbered_list_items_standard,
         numbered_list_items_with_paren,
+        numbered_tasks_issue_3481,
+        numbered_tasks_issue_3481_searches,
         one_task,
         query_file_defaults_all_options_false,
         query_file_defaults_all_options_null,
