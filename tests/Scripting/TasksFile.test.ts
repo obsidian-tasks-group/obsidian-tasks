@@ -179,7 +179,9 @@ describe('TasksFile - reading frontmatter', () => {
         //      ["#journal"]
         // Obsidian 1.9.0 to 1.9.2 reads this as an empty array:
         //      []
-        expect(tasksFile.frontmatter.tags).toEqual([]);
+        // Obsidian 1.9.4 again reads this as an array:
+        //      ["#journal"]
+        expect(tasksFile.frontmatter.tags).toEqual(['#journal']);
         expect(tasksFile.frontmatter.publish).toEqual(false);
     });
 

@@ -121,7 +121,10 @@
   "fileContents": "---\n{\n  \"tags\": \"journal\",\n  \"publish\": false\n}\n---\n\n# jason_properties\n\n- [ ] #task Task in 'jason_properties'\n",
   "filePath": "Test Data/jason_properties.md",
   "getAllTags": [
+    "#journal",
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": [
+    "#journal"
+  ]
 }
