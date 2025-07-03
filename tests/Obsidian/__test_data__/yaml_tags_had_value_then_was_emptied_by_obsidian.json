@@ -122,5 +122,5 @@
   "getAllTags": [
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": []
 }
