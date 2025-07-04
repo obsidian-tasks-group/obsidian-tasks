@@ -242,11 +242,9 @@ describe('visualise links', () => {
 
     it('note bodies', () => {
         let output = '';
-
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
-            const outlinks = tasksFile.outlinks;
-            output = visualiseLinks(outlinks, output, file);
+            output = visualiseLinks(tasksFile.outlinks, output, file);
         });
         verifyMarkdown(output);
     });
