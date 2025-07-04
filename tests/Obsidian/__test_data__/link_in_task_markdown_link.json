@@ -199,13 +199,13 @@
         "position": {
           "end": {
             "col": 36,
-            "line": 46,
-            "offset": 1405
+            "line": 45,
+            "offset": 1428
           },
           "start": {
             "col": 0,
-            "line": 46,
-            "offset": 1369
+            "line": 45,
+            "offset": 1392
           }
         }
       },
@@ -215,13 +215,13 @@
         "position": {
           "end": {
             "col": 10,
-            "line": 51,
-            "offset": 1499
+            "line": 50,
+            "offset": 1522
           },
           "start": {
             "col": 0,
-            "line": 51,
-            "offset": 1489
+            "line": 50,
+            "offset": 1512
           }
         }
       }
@@ -416,13 +416,13 @@
       },
       {
         "displayText": "spaces everywhere",
-        "link": "Test Data/spaced filename link.md#spaced heading",
-        "original": "[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)",
+        "link": "Manual Testing/Smoke Testing the Tasks Plugin#How the tests work",
+        "original": "[spaces everywhere](Manual%20Testing/Smoke%20Testing%20the%20Tasks%20Plugin#How%20the%20tests%20work)",
         "position": {
           "end": {
-            "col": 110,
+            "col": 134,
             "line": 44,
-            "offset": 1367
+            "offset": 1391
           },
           "start": {
             "col": 33,
@@ -597,9 +597,9 @@
         "parent": -44,
         "position": {
           "end": {
-            "col": 110,
+            "col": 134,
             "line": 44,
-            "offset": 1367
+            "offset": 1391
           },
           "start": {
             "col": 0,
@@ -610,33 +610,33 @@
         "task": " "
       },
       {
-        "parent": -48,
+        "parent": -47,
         "position": {
           "end": {
             "col": 37,
-            "line": 48,
-            "offset": 1444
+            "line": 47,
+            "offset": 1467
           },
           "start": {
             "col": 0,
-            "line": 48,
-            "offset": 1407
+            "line": 47,
+            "offset": 1430
           }
         },
         "task": " "
       },
       {
-        "parent": -48,
+        "parent": -47,
         "position": {
           "end": {
             "col": 42,
-            "line": 49,
-            "offset": 1487
+            "line": 48,
+            "offset": 1510
           },
           "start": {
             "col": 0,
-            "line": 49,
-            "offset": 1445
+            "line": 48,
+            "offset": 1468
           }
         },
         "task": " "
@@ -976,9 +976,9 @@
       {
         "position": {
           "end": {
-            "col": 110,
+            "col": 134,
             "line": 44,
-            "offset": 1367
+            "offset": 1391
           },
           "start": {
             "col": 0,
@@ -992,13 +992,13 @@
         "position": {
           "end": {
             "col": 36,
-            "line": 46,
-            "offset": 1405
+            "line": 45,
+            "offset": 1428
           },
           "start": {
             "col": 0,
-            "line": 46,
-            "offset": 1369
+            "line": 45,
+            "offset": 1392
           }
         },
         "type": "heading"
@@ -1007,13 +1007,13 @@
         "position": {
           "end": {
             "col": 42,
-            "line": 49,
-            "offset": 1487
+            "line": 48,
+            "offset": 1510
           },
           "start": {
             "col": 0,
-            "line": 48,
-            "offset": 1407
+            "line": 47,
+            "offset": 1430
           }
         },
         "type": "list"
@@ -1022,13 +1022,13 @@
         "position": {
           "end": {
             "col": 10,
-            "line": 51,
-            "offset": 1499
+            "line": 50,
+            "offset": 1522
           },
           "start": {
             "col": 0,
-            "line": 51,
-            "offset": 1489
+            "line": 50,
+            "offset": 1512
           }
         },
         "type": "heading"
@@ -1189,13 +1189,13 @@
         "position": {
           "end": {
             "col": 11,
-            "line": 48,
-            "offset": 1418
+            "line": 47,
+            "offset": 1441
           },
           "start": {
             "col": 6,
-            "line": 48,
-            "offset": 1413
+            "line": 47,
+            "offset": 1436
           }
         },
         "tag": "#task"
@@ -1204,20 +1204,20 @@
         "position": {
           "end": {
             "col": 11,
-            "line": 49,
-            "offset": 1456
+            "line": 48,
+            "offset": 1479
           },
           "start": {
             "col": 6,
-            "line": 49,
-            "offset": 1451
+            "line": 48,
+            "offset": 1474
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "# link_in_task_markdown_link\n\n## Multiple Links\n\n- [ ] #task Multiple Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)\n\n## Link with Simple Link\n\n- [ ] #task Link with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)\n\n## Link with Path\n\n- [ ] #task Link with Path [link_in_task_markdown_link](Test%20Data/link_in_task_markdown_link.md)\n\n## Link with Path Heading Link\n\n- [ ] #task Link with Heading Reference Link [heading_link](Test%20Data/link_in_task_markdown_link.md#heading)\n\n## Link with Alias\n\n- [ ] #task Link with Alias [alias](link_in_task_markdown_link.md)\n\n## Link with Nested Path and Alias\n\n- [ ] #task Link with Nested Path and Alias [alias](path/path/link_in_task_markdown_link.md)\n\n## Link with Hash in Path\n\n- [ ] #task Heading Link with text that looks like a path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)\n\n## Link with Internal Link\n\n- [ ] #task Link with Internal Link [heading](#heading)\n\n## Link with Markdown Link No Suffix\n\n- [ ] #task Link with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)\n\n## Link with PDF File\n\n- [ ] #task Link with PDF File [a_pdf_file](a_pdf_file.pdf)\n\n## Link with Spaces\n\n- [ ] Link with spaces everywhere[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)\n\n## Empty Links That Aren't Processed\n\n- [ ] #task Link with empty link []()\n- [ ] #task Link with empty link [alias]()\n\n## heading\n",
+  "fileContents": "# link_in_task_markdown_link\n\n## Multiple Links\n\n- [ ] #task Multiple Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)\n\n## Link with Simple Link\n\n- [ ] #task Link with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)\n\n## Link with Path\n\n- [ ] #task Link with Path [link_in_task_markdown_link](Test%20Data/link_in_task_markdown_link.md)\n\n## Link with Path Heading Link\n\n- [ ] #task Link with Heading Reference Link [heading_link](Test%20Data/link_in_task_markdown_link.md#heading)\n\n## Link with Alias\n\n- [ ] #task Link with Alias [alias](link_in_task_markdown_link.md)\n\n## Link with Nested Path and Alias\n\n- [ ] #task Link with Nested Path and Alias [alias](path/path/link_in_task_markdown_link.md)\n\n## Link with Hash in Path\n\n- [ ] #task Heading Link with text that looks like a path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)\n\n## Link with Internal Link\n\n- [ ] #task Link with Internal Link [heading](#heading)\n\n## Link with Markdown Link No Suffix\n\n- [ ] #task Link with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)\n\n## Link with PDF File\n\n- [ ] #task Link with PDF File [a_pdf_file](a_pdf_file.pdf)\n\n## Link with Spaces\n\n- [ ] Link with spaces everywhere[spaces everywhere](Manual%20Testing/Smoke%20Testing%20the%20Tasks%20Plugin#How%20the%20tests%20work)\n## Empty Links That Aren't Processed\n\n- [ ] #task Link with empty link []()\n- [ ] #task Link with empty link [alias]()\n\n## heading\n",
   "filePath": "Test Data/link_in_task_markdown_link.md",
   "getAllTags": [
     "#task",

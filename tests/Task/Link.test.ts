@@ -204,9 +204,9 @@ describe('linkClass', () => {
             const link = getLink(link_in_task_markdown_link, 11);
 
             expect(link.originalMarkdown).toEqual(
-                '[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)',
+                '[spaces everywhere](Manual%20Testing/Smoke%20Testing%20the%20Tasks%20Plugin#How%20the%20tests%20work)',
             );
-            expect(link.destinationFilename).toEqual('spaced filename link');
+            expect(link.destinationFilename).toEqual('Smoke Testing the Tasks Plugin');
         });
 
         // Empty Markdown Link Tests
