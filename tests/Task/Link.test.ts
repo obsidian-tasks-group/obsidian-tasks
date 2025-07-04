@@ -219,12 +219,12 @@ describe('linkClass', () => {
 });
 
 describe('visualise links', () => {
+    function createRow(field: string, value: string | undefined): string {
+        return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
+    }
+
     it('note bodies', () => {
         let output = '';
-
-        function createRow(field: string, value: string | undefined): string {
-            return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
-        }
 
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
