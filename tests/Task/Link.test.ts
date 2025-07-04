@@ -5,6 +5,10 @@ import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
 import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
 import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
+import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
+import { MarkdownTable } from '../../src/lib/MarkdownTable';
+import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
@@ -211,5 +215,18 @@ describe('linkClass', () => {
 
         // Empty Markdown Link Tests
         // []() and [alias]() are not detected by the obsidian parser as a link
+    });
+});
+
+describe('visualise links', () => {
+    it('all fields', () => {
+        const table = new MarkdownTable(['originalMarkdown']);
+        allCacheSampleData().map((file) => {
+            const tasksFile = getTasksFileFromMockData(file);
+            tasksFile.outlinks.forEach((l) => {
+                table.addRow([l.originalMarkdown]);
+            });
+        });
+        verifyMarkdown(table.markdown);
     });
 });
