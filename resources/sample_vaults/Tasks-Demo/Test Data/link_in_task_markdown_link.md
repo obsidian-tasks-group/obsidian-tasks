@@ -42,8 +42,7 @@
 
 ## Link with Spaces
 
-- [ ] Link with spaces everywhere[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)
-
+- [ ] Link with spaces everywhere[spaces everywhere](Manual%20Testing/Smoke%20Testing%20the%20Tasks%20Plugin#How%20the%20tests%20work)
 ## Empty Links That Aren't Processed
 
 - [ ] #task Link with empty link []()
