@@ -250,4 +250,15 @@ describe('visualise links', () => {
         });
         verifyMarkdown(output);
     });
+
+    it('properties', () => {
+        let output = '';
+        allCacheSampleData().map((file) => {
+            const tasksFile = getTasksFileFromMockData(file);
+            const frontmatterLinks = tasksFile.cachedMetadata.frontmatterLinks;
+            const links = frontmatterLinks?.map((rawLink) => new Link(rawLink, tasksFile.filename)) ?? [];
+            output += visualiseLinks(links, file);
+        });
+        verifyMarkdown(output);
+    });
 });
