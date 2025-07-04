@@ -211,13 +211,13 @@ describe('outLinks', () => {
     it('should return all links in the task line', () => {
         const tasks = readTasksFromSimulatedFile(links_everywhere);
 
-        expect(tasks[0].outLinks.length).toEqual(1);
-        expect(tasks[0].outLinks[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
+        expect(tasks[0].outlinks.length).toEqual(1);
+        expect(tasks[0].outlinks[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
     });
 
     it('should return [] when no links in the task line', () => {
         const tasks = readTasksFromSimulatedFile(multi_line_task_and_list_item);
-        expect(tasks[0].outLinks).toEqual([]);
+        expect(tasks[0].outlinks).toEqual([]);
     });
 });
 
