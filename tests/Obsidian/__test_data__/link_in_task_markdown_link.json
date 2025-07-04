@@ -72,12 +72,12 @@
           "end": {
             "col": 30,
             "line": 14,
-            "offset": 429
+            "offset": 436
           },
           "start": {
             "col": 0,
             "line": 14,
-            "offset": 399
+            "offset": 406
           }
         }
       },
@@ -88,12 +88,12 @@
           "end": {
             "col": 18,
             "line": 18,
-            "offset": 559
+            "offset": 566
           },
           "start": {
             "col": 0,
             "line": 18,
-            "offset": 541
+            "offset": 548
           }
         }
       },
@@ -104,12 +104,12 @@
           "end": {
             "col": 34,
             "line": 22,
-            "offset": 663
+            "offset": 670
           },
           "start": {
             "col": 0,
             "line": 22,
-            "offset": 629
+            "offset": 636
           }
         }
       },
@@ -120,12 +120,12 @@
           "end": {
             "col": 25,
             "line": 26,
-            "offset": 784
+            "offset": 791
           },
           "start": {
             "col": 0,
             "line": 26,
-            "offset": 759
+            "offset": 766
           }
         }
       },
@@ -136,12 +136,12 @@
           "end": {
             "col": 26,
             "line": 30,
-            "offset": 942
+            "offset": 949
           },
           "start": {
             "col": 0,
             "line": 30,
-            "offset": 916
+            "offset": 923
           }
         }
       },
@@ -152,12 +152,12 @@
           "end": {
             "col": 36,
             "line": 34,
-            "offset": 1037
+            "offset": 1044
           },
           "start": {
             "col": 0,
             "line": 34,
-            "offset": 1001
+            "offset": 1008
           }
         }
       },
@@ -168,12 +168,12 @@
           "end": {
             "col": 21,
             "line": 38,
-            "offset": 1164
+            "offset": 1171
           },
           "start": {
             "col": 0,
             "line": 38,
-            "offset": 1143
+            "offset": 1150
           }
         }
       },
@@ -184,12 +184,12 @@
           "end": {
             "col": 19,
             "line": 42,
-            "offset": 1246
+            "offset": 1253
           },
           "start": {
             "col": 0,
             "line": 42,
-            "offset": 1227
+            "offset": 1234
           }
         }
       },
@@ -200,12 +200,12 @@
           "end": {
             "col": 36,
             "line": 46,
-            "offset": 1396
+            "offset": 1403
           },
           "start": {
             "col": 0,
             "line": 46,
-            "offset": 1360
+            "offset": 1367
           }
         }
       },
@@ -216,12 +216,12 @@
           "end": {
             "col": 10,
             "line": 51,
-            "offset": 1490
+            "offset": 1497
           },
           "start": {
             "col": 0,
             "line": 51,
-            "offset": 1480
+            "offset": 1487
           }
         }
       }
@@ -280,13 +280,13 @@
       },
       {
         "displayText": "link_in_task_markdown_link",
-        "link": "path/link_in_task_markdown_link.md",
-        "original": "[link_in_task_markdown_link](path/link_in_task_markdown_link.md)",
+        "link": "Test Data/link_in_task_markdown_link.md",
+        "original": "[link_in_task_markdown_link](Test%20Data/link_in_task_markdown_link.md)",
         "position": {
           "end": {
-            "col": 91,
+            "col": 98,
             "line": 12,
-            "offset": 397
+            "offset": 404
           },
           "start": {
             "col": 27,
@@ -303,12 +303,12 @@
           "end": {
             "col": 108,
             "line": 16,
-            "offset": 539
+            "offset": 546
           },
           "start": {
             "col": 45,
             "line": 16,
-            "offset": 476
+            "offset": 483
           }
         }
       },
@@ -320,12 +320,12 @@
           "end": {
             "col": 66,
             "line": 20,
-            "offset": 627
+            "offset": 634
           },
           "start": {
             "col": 28,
             "line": 20,
-            "offset": 589
+            "offset": 596
           }
         }
       },
@@ -337,12 +337,12 @@
           "end": {
             "col": 92,
             "line": 24,
-            "offset": 757
+            "offset": 764
           },
           "start": {
             "col": 44,
             "line": 24,
-            "offset": 709
+            "offset": 716
           }
         }
       },
@@ -354,12 +354,12 @@
           "end": {
             "col": 128,
             "line": 28,
-            "offset": 914
+            "offset": 921
           },
           "start": {
             "col": 58,
             "line": 28,
-            "offset": 844
+            "offset": 851
           }
         }
       },
@@ -371,12 +371,12 @@
           "end": {
             "col": 55,
             "line": 32,
-            "offset": 999
+            "offset": 1006
           },
           "start": {
             "col": 36,
             "line": 32,
-            "offset": 980
+            "offset": 987
           }
         }
       },
@@ -388,12 +388,12 @@
           "end": {
             "col": 102,
             "line": 36,
-            "offset": 1141
+            "offset": 1148
           },
           "start": {
             "col": 46,
             "line": 36,
-            "offset": 1085
+            "offset": 1092
           }
         }
       },
@@ -405,12 +405,12 @@
           "end": {
             "col": 59,
             "line": 40,
-            "offset": 1225
+            "offset": 1232
           },
           "start": {
             "col": 31,
             "line": 40,
-            "offset": 1197
+            "offset": 1204
           }
         }
       },
@@ -422,12 +422,12 @@
           "end": {
             "col": 110,
             "line": 44,
-            "offset": 1358
+            "offset": 1365
           },
           "start": {
             "col": 33,
             "line": 44,
-            "offset": 1281
+            "offset": 1288
           }
         }
       }
@@ -469,9 +469,9 @@
         "parent": -12,
         "position": {
           "end": {
-            "col": 91,
+            "col": 98,
             "line": 12,
-            "offset": 397
+            "offset": 404
           },
           "start": {
             "col": 0,
@@ -487,12 +487,12 @@
           "end": {
             "col": 108,
             "line": 16,
-            "offset": 539
+            "offset": 546
           },
           "start": {
             "col": 0,
             "line": 16,
-            "offset": 431
+            "offset": 438
           }
         },
         "task": " "
@@ -503,12 +503,12 @@
           "end": {
             "col": 66,
             "line": 20,
-            "offset": 627
+            "offset": 634
           },
           "start": {
             "col": 0,
             "line": 20,
-            "offset": 561
+            "offset": 568
           }
         },
         "task": " "
@@ -519,12 +519,12 @@
           "end": {
             "col": 92,
             "line": 24,
-            "offset": 757
+            "offset": 764
           },
           "start": {
             "col": 0,
             "line": 24,
-            "offset": 665
+            "offset": 672
           }
         },
         "task": " "
@@ -535,12 +535,12 @@
           "end": {
             "col": 128,
             "line": 28,
-            "offset": 914
+            "offset": 921
           },
           "start": {
             "col": 0,
             "line": 28,
-            "offset": 786
+            "offset": 793
           }
         },
         "task": " "
@@ -551,12 +551,12 @@
           "end": {
             "col": 55,
             "line": 32,
-            "offset": 999
+            "offset": 1006
           },
           "start": {
             "col": 0,
             "line": 32,
-            "offset": 944
+            "offset": 951
           }
         },
         "task": " "
@@ -567,12 +567,12 @@
           "end": {
             "col": 102,
             "line": 36,
-            "offset": 1141
+            "offset": 1148
           },
           "start": {
             "col": 0,
             "line": 36,
-            "offset": 1039
+            "offset": 1046
           }
         },
         "task": " "
@@ -583,12 +583,12 @@
           "end": {
             "col": 59,
             "line": 40,
-            "offset": 1225
+            "offset": 1232
           },
           "start": {
             "col": 0,
             "line": 40,
-            "offset": 1166
+            "offset": 1173
           }
         },
         "task": " "
@@ -599,12 +599,12 @@
           "end": {
             "col": 110,
             "line": 44,
-            "offset": 1358
+            "offset": 1365
           },
           "start": {
             "col": 0,
             "line": 44,
-            "offset": 1248
+            "offset": 1255
           }
         },
         "task": " "
@@ -615,12 +615,12 @@
           "end": {
             "col": 37,
             "line": 48,
-            "offset": 1435
+            "offset": 1442
           },
           "start": {
             "col": 0,
             "line": 48,
-            "offset": 1398
+            "offset": 1405
           }
         },
         "task": " "
@@ -631,12 +631,12 @@
           "end": {
             "col": 42,
             "line": 49,
-            "offset": 1478
+            "offset": 1485
           },
           "start": {
             "col": 0,
             "line": 49,
-            "offset": 1436
+            "offset": 1443
           }
         },
         "task": " "
@@ -736,9 +736,9 @@
       {
         "position": {
           "end": {
-            "col": 91,
+            "col": 98,
             "line": 12,
-            "offset": 397
+            "offset": 404
           },
           "start": {
             "col": 0,
@@ -753,12 +753,12 @@
           "end": {
             "col": 30,
             "line": 14,
-            "offset": 429
+            "offset": 436
           },
           "start": {
             "col": 0,
             "line": 14,
-            "offset": 399
+            "offset": 406
           }
         },
         "type": "heading"
@@ -768,12 +768,12 @@
           "end": {
             "col": 108,
             "line": 16,
-            "offset": 539
+            "offset": 546
           },
           "start": {
             "col": 0,
             "line": 16,
-            "offset": 431
+            "offset": 438
           }
         },
         "type": "list"
@@ -783,12 +783,12 @@
           "end": {
             "col": 18,
             "line": 18,
-            "offset": 559
+            "offset": 566
           },
           "start": {
             "col": 0,
             "line": 18,
-            "offset": 541
+            "offset": 548
           }
         },
         "type": "heading"
@@ -798,12 +798,12 @@
           "end": {
             "col": 66,
             "line": 20,
-            "offset": 627
+            "offset": 634
           },
           "start": {
             "col": 0,
             "line": 20,
-            "offset": 561
+            "offset": 568
           }
         },
         "type": "list"
@@ -813,12 +813,12 @@
           "end": {
             "col": 34,
             "line": 22,
-            "offset": 663
+            "offset": 670
           },
           "start": {
             "col": 0,
             "line": 22,
-            "offset": 629
+            "offset": 636
           }
         },
         "type": "heading"
@@ -828,12 +828,12 @@
           "end": {
             "col": 92,
             "line": 24,
-            "offset": 757
+            "offset": 764
           },
           "start": {
             "col": 0,
             "line": 24,
-            "offset": 665
+            "offset": 672
           }
         },
         "type": "list"
@@ -843,12 +843,12 @@
           "end": {
             "col": 25,
             "line": 26,
-            "offset": 784
+            "offset": 791
           },
           "start": {
             "col": 0,
             "line": 26,
-            "offset": 759
+            "offset": 766
           }
         },
         "type": "heading"
@@ -858,12 +858,12 @@
           "end": {
             "col": 128,
             "line": 28,
-            "offset": 914
+            "offset": 921
           },
           "start": {
             "col": 0,
             "line": 28,
-            "offset": 786
+            "offset": 793
           }
         },
         "type": "list"
@@ -873,12 +873,12 @@
           "end": {
             "col": 26,
             "line": 30,
-            "offset": 942
+            "offset": 949
           },
           "start": {
             "col": 0,
             "line": 30,
-            "offset": 916
+            "offset": 923
           }
         },
         "type": "heading"
@@ -888,12 +888,12 @@
           "end": {
             "col": 55,
             "line": 32,
-            "offset": 999
+            "offset": 1006
           },
           "start": {
             "col": 0,
             "line": 32,
-            "offset": 944
+            "offset": 951
           }
         },
         "type": "list"
@@ -903,12 +903,12 @@
           "end": {
             "col": 36,
             "line": 34,
-            "offset": 1037
+            "offset": 1044
           },
           "start": {
             "col": 0,
             "line": 34,
-            "offset": 1001
+            "offset": 1008
           }
         },
         "type": "heading"
@@ -918,12 +918,12 @@
           "end": {
             "col": 102,
             "line": 36,
-            "offset": 1141
+            "offset": 1148
           },
           "start": {
             "col": 0,
             "line": 36,
-            "offset": 1039
+            "offset": 1046
           }
         },
         "type": "list"
@@ -933,12 +933,12 @@
           "end": {
             "col": 21,
             "line": 38,
-            "offset": 1164
+            "offset": 1171
           },
           "start": {
             "col": 0,
             "line": 38,
-            "offset": 1143
+            "offset": 1150
           }
         },
         "type": "heading"
@@ -948,12 +948,12 @@
           "end": {
             "col": 59,
             "line": 40,
-            "offset": 1225
+            "offset": 1232
           },
           "start": {
             "col": 0,
             "line": 40,
-            "offset": 1166
+            "offset": 1173
           }
         },
         "type": "list"
@@ -963,12 +963,12 @@
           "end": {
             "col": 19,
             "line": 42,
-            "offset": 1246
+            "offset": 1253
           },
           "start": {
             "col": 0,
             "line": 42,
-            "offset": 1227
+            "offset": 1234
           }
         },
         "type": "heading"
@@ -978,12 +978,12 @@
           "end": {
             "col": 110,
             "line": 44,
-            "offset": 1358
+            "offset": 1365
           },
           "start": {
             "col": 0,
             "line": 44,
-            "offset": 1248
+            "offset": 1255
           }
         },
         "type": "list"
@@ -993,12 +993,12 @@
           "end": {
             "col": 36,
             "line": 46,
-            "offset": 1396
+            "offset": 1403
           },
           "start": {
             "col": 0,
             "line": 46,
-            "offset": 1360
+            "offset": 1367
           }
         },
         "type": "heading"
@@ -1008,12 +1008,12 @@
           "end": {
             "col": 42,
             "line": 49,
-            "offset": 1478
+            "offset": 1485
           },
           "start": {
             "col": 0,
             "line": 48,
-            "offset": 1398
+            "offset": 1405
           }
         },
         "type": "list"
@@ -1023,12 +1023,12 @@
           "end": {
             "col": 10,
             "line": 51,
-            "offset": 1490
+            "offset": 1497
           },
           "start": {
             "col": 0,
             "line": 51,
-            "offset": 1480
+            "offset": 1487
           }
         },
         "type": "heading"
@@ -1085,12 +1085,12 @@
           "end": {
             "col": 11,
             "line": 16,
-            "offset": 442
+            "offset": 449
           },
           "start": {
             "col": 6,
             "line": 16,
-            "offset": 437
+            "offset": 444
           }
         },
         "tag": "#task"
@@ -1100,12 +1100,12 @@
           "end": {
             "col": 11,
             "line": 20,
-            "offset": 572
+            "offset": 579
           },
           "start": {
             "col": 6,
             "line": 20,
-            "offset": 567
+            "offset": 574
           }
         },
         "tag": "#task"
@@ -1115,12 +1115,12 @@
           "end": {
             "col": 11,
             "line": 24,
-            "offset": 676
+            "offset": 683
           },
           "start": {
             "col": 6,
             "line": 24,
-            "offset": 671
+            "offset": 678
           }
         },
         "tag": "#task"
@@ -1130,12 +1130,12 @@
           "end": {
             "col": 11,
             "line": 28,
-            "offset": 797
+            "offset": 804
           },
           "start": {
             "col": 6,
             "line": 28,
-            "offset": 792
+            "offset": 799
           }
         },
         "tag": "#task"
@@ -1145,12 +1145,12 @@
           "end": {
             "col": 11,
             "line": 32,
-            "offset": 955
+            "offset": 962
           },
           "start": {
             "col": 6,
             "line": 32,
-            "offset": 950
+            "offset": 957
           }
         },
         "tag": "#task"
@@ -1160,12 +1160,12 @@
           "end": {
             "col": 11,
             "line": 36,
-            "offset": 1050
+            "offset": 1057
           },
           "start": {
             "col": 6,
             "line": 36,
-            "offset": 1045
+            "offset": 1052
           }
         },
         "tag": "#task"
@@ -1175,12 +1175,12 @@
           "end": {
             "col": 11,
             "line": 40,
-            "offset": 1177
+            "offset": 1184
           },
           "start": {
             "col": 6,
             "line": 40,
-            "offset": 1172
+            "offset": 1179
           }
         },
         "tag": "#task"
@@ -1190,12 +1190,12 @@
           "end": {
             "col": 11,
             "line": 48,
-            "offset": 1409
+            "offset": 1416
           },
           "start": {
             "col": 6,
             "line": 48,
-            "offset": 1404
+            "offset": 1411
           }
         },
         "tag": "#task"
@@ -1205,19 +1205,19 @@
           "end": {
             "col": 11,
             "line": 49,
-            "offset": 1447
+            "offset": 1454
           },
           "start": {
             "col": 6,
             "line": 49,
-            "offset": 1442
+            "offset": 1449
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "# link_in_task_markdown_link\n\n## Multiple Links\n\n- [ ] #task Multiple Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)\n\n## Link with Simple Link\n\n- [ ] #task Link with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)\n\n## Link with Path\n\n- [ ] #task Link with Path [link_in_task_markdown_link](path/link_in_task_markdown_link.md)\n\n## Link with Path Heading Link\n\n- [ ] #task Link with Heading Reference Link [heading_link](path/link_in_task_markdown_link.md#heading_link)\n\n## Link with Alias\n\n- [ ] #task Link with Alias [alias](link_in_task_markdown_link.md)\n\n## Link with Nested Path and Alias\n\n- [ ] #task Link with Nested Path and Alias [alias](path/path/link_in_task_markdown_link.md)\n\n## Link with Hash in Path\n\n- [ ] #task Heading Link with text that looks like a path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)\n\n## Link with Internal Link\n\n- [ ] #task Link with Internal Link [heading](#heading)\n\n## Link with Markdown Link No Suffix\n\n- [ ] #task Link with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)\n\n## Link with PDF File\n\n- [ ] #task Link with PDF File [a_pdf_file](a_pdf_file.pdf)\n\n## Link with Spaces\n\n- [ ] Link with spaces everywhere[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)\n\n## Empty Links That Aren't Processed\n\n- [ ] #task Link with empty link []()\n- [ ] #task Link with empty link [alias]()\n\n## heading\n",
+  "fileContents": "# link_in_task_markdown_link\n\n## Multiple Links\n\n- [ ] #task Multiple Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)\n\n## Link with Simple Link\n\n- [ ] #task Link with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)\n\n## Link with Path\n\n- [ ] #task Link with Path [link_in_task_markdown_link](Test%20Data/link_in_task_markdown_link.md)\n\n## Link with Path Heading Link\n\n- [ ] #task Link with Heading Reference Link [heading_link](path/link_in_task_markdown_link.md#heading_link)\n\n## Link with Alias\n\n- [ ] #task Link with Alias [alias](link_in_task_markdown_link.md)\n\n## Link with Nested Path and Alias\n\n- [ ] #task Link with Nested Path and Alias [alias](path/path/link_in_task_markdown_link.md)\n\n## Link with Hash in Path\n\n- [ ] #task Heading Link with text that looks like a path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)\n\n## Link with Internal Link\n\n- [ ] #task Link with Internal Link [heading](#heading)\n\n## Link with Markdown Link No Suffix\n\n- [ ] #task Link with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)\n\n## Link with PDF File\n\n- [ ] #task Link with PDF File [a_pdf_file](a_pdf_file.pdf)\n\n## Link with Spaces\n\n- [ ] Link with spaces everywhere[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)\n\n## Empty Links That Aren't Processed\n\n- [ ] #task Link with empty link []()\n- [ ] #task Link with empty link [alias]()\n\n## heading\n",
   "filePath": "Test Data/link_in_task_markdown_link.md",
   "getAllTags": [
     "#task",
