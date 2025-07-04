@@ -226,7 +226,7 @@ describe('visualise links', () => {
             tasksFile.outlinks.forEach((link) => {
                 const field = 'link.originalMarkdown';
                 const value = link.originalMarkdown;
-                output += addBackticks(field) + ': ' + addBackticks(formatToRepresentType(value)) + '\n\n';
+                output += addBackticks(field) + ': ' + addBackticks(formatToRepresentType(value)) + '\n' + '\n';
             });
         });
         verifyMarkdown(output);
