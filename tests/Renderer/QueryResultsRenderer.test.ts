@@ -17,6 +17,7 @@ import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toMarkdown } from '../TestingTools/TestHelpers';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { mockApp } from '../__mocks__/obsidian';
 import { mockHTMLRenderer } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -39,6 +40,7 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
         tasksFile,
         () => Promise.resolve(),
         null,
+        mockApp,
         mockHTMLRenderer,
     );
 }

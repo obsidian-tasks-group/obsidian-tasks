@@ -17,6 +17,7 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
+import { mockApp } from '../__mocks__/obsidian';
 import { mockHTMLRenderer, mockTextRenderer } from './RenderingTestHelpers';
 
 jest.mock('obsidian');
@@ -41,6 +42,7 @@ async function renderListItem(
 ) {
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: testRenderer ?? mockTextRenderer,
+        obsidianApp: mockApp,
         obsidianComponent: null,
         parentUlElement: document.createElement('div'),
         taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
@@ -84,6 +86,7 @@ describe('task line rendering - HTML', () => {
         const ulElement = document.createElement('ul');
         const taskLineRenderer = new TaskLineRenderer({
             textRenderer: mockTextRenderer,
+            obsidianApp: mockApp,
             obsidianComponent: null,
             parentUlElement: ulElement,
             taskLayoutOptions: new TaskLayoutOptions(),
