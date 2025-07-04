@@ -207,7 +207,7 @@ export class ListItem {
     /**
      * Return a list of links in the task or list item's line.
      */
-    public get outLinks(): Link[] {
+    public get outlinks(): Link[] {
         return this.rawLinksInFileBody
             .filter((link) => link.position.start.line === this.lineNumber)
             .map((link) => new Link(link, this.file.filenameWithoutExtension));
