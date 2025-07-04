@@ -207,7 +207,7 @@ describe('related items', () => {
         expect(grandChild.findClosestParentTask()).toEqual(parentTask);
     });
 });
-describe('outLinks', () => {
+describe('outlinks', () => {
     it('should return all links in the task line', () => {
         const tasks = readTasksFromSimulatedFile(links_everywhere);
 
