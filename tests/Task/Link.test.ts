@@ -224,9 +224,9 @@ describe('visualise links', () => {
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             tasksFile.outlinks.forEach((link) => {
+                const field = 'link.originalMarkdown';
                 const value = link.originalMarkdown;
-                output +=
-                    addBackticks('link.originalMarkdown') + ': ' + addBackticks(formatToRepresentType(value)) + '\n\n';
+                output += addBackticks(field) + ': ' + addBackticks(formatToRepresentType(value)) + '\n\n';
             });
         });
         verifyMarkdown(output);
