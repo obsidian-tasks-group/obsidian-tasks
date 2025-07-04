@@ -208,6 +208,22 @@
             "offset": 1360
           }
         }
+      },
+      {
+        "heading": "heading",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 51,
+            "offset": 1490
+          },
+          "start": {
+            "col": 0,
+            "line": 51,
+            "offset": 1480
+          }
+        }
       }
     ],
     "links": [
@@ -1001,6 +1017,21 @@
           }
         },
         "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 51,
+            "offset": 1490
+          },
+          "start": {
+            "col": 0,
+            "line": 51,
+            "offset": 1480
+          }
+        },
+        "type": "heading"
       }
     ],
     "tags": [
@@ -1186,7 +1217,7 @@
       }
     ]
   },
-  "fileContents": "# link_in_task_markdown_link\n\n## Multiple Links\n\n- [ ] #task Multiple Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)\n\n## Link with Simple Link\n\n- [ ] #task Link with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)\n\n## Link with Path\n\n- [ ] #task Link with Path [link_in_task_markdown_link](path/link_in_task_markdown_link.md)\n\n## Link with Path Heading Link\n\n- [ ] #task Link with Heading Reference Link [heading_link](path/link_in_task_markdown_link.md#heading_link)\n\n## Link with Alias\n\n- [ ] #task Link with Alias [alias](link_in_task_markdown_link.md)\n\n## Link with Nested Path and Alias\n\n- [ ] #task Link with Nested Path and Alias [alias](path/path/link_in_task_markdown_link.md)\n\n## Link with Hash in Path\n\n- [ ] #task Heading Link with text that looks like a path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)\n\n## Link with Internal Link\n\n- [ ] #task Link with Internal Link [heading](#heading)\n\n## Link with Markdown Link No Suffix\n\n- [ ] #task Link with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)\n\n## Link with PDF File\n\n- [ ] #task Link with PDF File [a_pdf_file](a_pdf_file.pdf)\n\n## Link with Spaces\n\n- [ ] Link with spaces everywhere[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)\n\n## Empty Links That Aren't Processed\n\n- [ ] #task Link with empty link []()\n- [ ] #task Link with empty link [alias]()\n\n",
+  "fileContents": "# link_in_task_markdown_link\n\n## Multiple Links\n\n- [ ] #task Multiple Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)\n\n## Link with Simple Link\n\n- [ ] #task Link with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)\n\n## Link with Path\n\n- [ ] #task Link with Path [link_in_task_markdown_link](path/link_in_task_markdown_link.md)\n\n## Link with Path Heading Link\n\n- [ ] #task Link with Heading Reference Link [heading_link](path/link_in_task_markdown_link.md#heading_link)\n\n## Link with Alias\n\n- [ ] #task Link with Alias [alias](link_in_task_markdown_link.md)\n\n## Link with Nested Path and Alias\n\n- [ ] #task Link with Nested Path and Alias [alias](path/path/link_in_task_markdown_link.md)\n\n## Link with Hash in Path\n\n- [ ] #task Heading Link with text that looks like a path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)\n\n## Link with Internal Link\n\n- [ ] #task Link with Internal Link [heading](#heading)\n\n## Link with Markdown Link No Suffix\n\n- [ ] #task Link with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)\n\n## Link with PDF File\n\n- [ ] #task Link with PDF File [a_pdf_file](a_pdf_file.pdf)\n\n## Link with Spaces\n\n- [ ] Link with spaces everywhere[spaces everywhere](Test%20Data/spaced%20filename%20link.md#spaced%20heading)\n\n## Empty Links That Aren't Processed\n\n- [ ] #task Link with empty link []()\n- [ ] #task Link with empty link [alias]()\n\n## heading\n",
   "filePath": "Test Data/link_in_task_markdown_link.md",
   "getAllTags": [
     "#task",
