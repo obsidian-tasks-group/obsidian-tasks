@@ -6,10 +6,9 @@ import internal_heading_links from '../Obsidian/__test_data__/internal_heading_l
 import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
 import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
 import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
-import { MarkdownTable } from '../../src/lib/MarkdownTable';
-import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
+import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
@@ -221,14 +220,14 @@ describe('linkClass', () => {
 
 describe('visualise links', () => {
     it('all fields', () => {
-        const table = new MarkdownTable(['originalMarkdown']);
+        let output = '';
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             tasksFile.outlinks.forEach((l) => {
                 const value = l.originalMarkdown;
-                table.addRow([addBackticks(formatToRepresentType(value))]);
+                output += addBackticks(formatToRepresentType(value)) + '\n\n';
             });
         });
-        verifyMarkdown(table.markdown);
+        verifyMarkdown(output);
     });
 });
