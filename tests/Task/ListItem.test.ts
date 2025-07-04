@@ -208,12 +208,6 @@ describe('related items', () => {
     });
 });
 describe('outLinks', () => {
-    it('should return all links in the task file', () => {
-        const tasks = readTasksFromSimulatedFile(links_everywhere);
-
-        expect(tasks[0].rawLinksInFileBody.length).toEqual(3);
-    });
-
     it('should return all links in the task line', () => {
         const tasks = readTasksFromSimulatedFile(links_everywhere);
 

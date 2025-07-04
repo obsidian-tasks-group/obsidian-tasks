@@ -200,7 +200,7 @@ export class ListItem {
      * The data contest is documented here:
      * https://docs.obsidian.md/Reference/TypeScript+API/LinkCache
      */
-    get rawLinksInFileBody(): LinkCache[] {
+    private get rawLinksInFileBody(): LinkCache[] {
         return this.file.cachedMetadata?.links ?? [];
     }
 
