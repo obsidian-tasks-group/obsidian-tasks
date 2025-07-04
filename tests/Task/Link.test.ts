@@ -224,7 +224,9 @@ describe('visualise links', () => {
         return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
     }
 
-    function visualiseLinks(outlinks: Link[], output: string, file: SimulatedFile) {
+    function visualiseLinks(outlinks: Link[], file: SimulatedFile) {
+        let output = '';
+
         if (outlinks.length === 0) {
             return output;
         }
@@ -244,7 +246,7 @@ describe('visualise links', () => {
         let output = '';
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
-            output = visualiseLinks(tasksFile.outlinks, output, file);
+            output += visualiseLinks(tasksFile.outlinks, file);
         });
         verifyMarkdown(output);
     });
