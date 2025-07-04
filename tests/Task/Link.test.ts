@@ -222,14 +222,18 @@ describe('visualise links', () => {
     it('all fields', () => {
         let output = '';
 
-        function createRow(field: string, value: string) {
+        function createRow(field: string, value: string | undefined): string {
             return addBackticks(field) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
         }
 
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             tasksFile.outlinks.forEach((link) => {
-                output += createRow('link.originalMarkdown', link.originalMarkdown) + '\n';
+                output += createRow('link.originalMarkdown', link.originalMarkdown);
+                output += createRow('link.destinationFilename', link.destinationFilename);
+                output += createRow('link.destination', link.destination);
+                output += createRow('link.displayText', link.displayText);
+                output += '\n';
             });
         });
         verifyMarkdown(output);
