@@ -1,14 +1,14 @@
-import type { LinkCache } from 'obsidian';
+import type { Reference } from 'obsidian';
 
 export class Link {
-    private readonly rawLink: LinkCache;
+    private readonly rawLink: Reference;
     private readonly filenameContainingLink: string;
 
     /**
-     * @param {LinkCache} rawLink - The raw link from Obsidian cache.
+     * @param {Reference} rawLink - The raw link from Obsidian cache.
      * @param {string} filenameContainingLink - The name of the file where this link is located.
      */
-    constructor(rawLink: LinkCache, filenameContainingLink: string) {
+    constructor(rawLink: Reference, filenameContainingLink: string) {
         this.rawLink = rawLink;
         this.filenameContainingLink = filenameContainingLink;
     }
