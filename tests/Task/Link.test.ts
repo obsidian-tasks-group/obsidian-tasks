@@ -228,7 +228,11 @@ describe('visualise links', () => {
 
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
-            tasksFile.outlinks.forEach((link) => {
+            const outlinks = tasksFile.outlinks;
+            if (outlinks.length === 0) {
+                return;
+            }
+            outlinks.forEach((link) => {
                 output += createRow('link.originalMarkdown', link.originalMarkdown);
                 output += createRow('link.destinationFilename', link.destinationFilename);
                 output += createRow('link.destination', link.destination);
