@@ -10,7 +10,7 @@
 
 ## Link with Heading Reference
 
-- [ ]  #task Link with Heading Reference [[path/link_in_task_wikilink#heading_link]]
+- [ ]  #task Link with Heading Reference [[Test Data/link_in_task_wikilink#heading_link]]
 
 ## Link with Alias
 
@@ -41,3 +41,7 @@
 - [ ] #task Link with empty link [[|]]
 - [ ] #task Link with empty link [[|alias]]
 - [ ] #task Link with empty link [[|#alias]]
+
+## heading_link
+
+Example text in section `heading_link`
