@@ -16,9 +16,9 @@
 
 - [ ]  #task Link with Alias [[link_in_task_wikilink|alias]]
 
-## Link with Nested Path and Alias
+## Link with Path and Alias
 
-- [ ]  #task Link with Nested Path and Alias [[path/path/link_in_task_wikilink|alias]]
+- [ ]  #task Link with Nested Path and Alias [[Test Data/link_in_task_wikilink|alias]]
 
 ## Link with Hash in Path
 
