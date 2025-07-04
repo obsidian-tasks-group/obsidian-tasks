@@ -219,7 +219,7 @@ describe('linkClass', () => {
 });
 
 describe('visualise links', () => {
-    it('all fields', () => {
+    it('note bodies', () => {
         let output = '';
 
         function createRow(field: string, value: string | undefined): string {
