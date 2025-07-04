@@ -232,6 +232,8 @@ describe('visualise links', () => {
             if (outlinks.length === 0) {
                 return;
             }
+
+            output += `## ${file.filePath}\n\n`;
             outlinks.forEach((link) => {
                 output += createRow('link.originalMarkdown', link.originalMarkdown);
                 output += createRow('link.destinationFilename', link.destinationFilename);
