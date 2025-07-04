@@ -3,7 +3,6 @@
  */
 import moment from 'moment';
 
-import type { App } from 'obsidian';
 import { DebugSettings } from '../../src/Config/DebugSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
@@ -18,17 +17,11 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
+import { mockApp } from '../__mocks__/obsidian';
 import { mockHTMLRenderer, mockTextRenderer } from './RenderingTestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
-
-/**
- * Since we don't use the app object's method or properties directly,
- * and just treat it as an "opaque object" for markdown rendering, there is
- * not a lot to mock in particular.
- */
-const mockApp = {} as unknown as App;
 
 /**
  * Renders a task for test purposes and returns the rendered ListItem.
