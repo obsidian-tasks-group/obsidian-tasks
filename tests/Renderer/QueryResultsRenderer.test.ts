@@ -3,7 +3,6 @@
  */
 import moment from 'moment';
 import type { Task } from 'Task/Task';
-import type { App } from 'obsidian';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { State } from '../../src/Obsidian/Cache';
 import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
@@ -18,6 +17,7 @@ import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toMarkdown } from '../TestingTools/TestHelpers';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { mockApp } from '../__mocks__/obsidian';
 import { mockHTMLRenderer } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -32,13 +32,6 @@ afterEach(() => {
     GlobalFilter.getInstance().reset();
     resetSettings();
 });
-
-/**
- * Since we don't use the app object's method or properties directly,
- * and just treat it as an "opaque object" for markdown rendering, there is
- * not a lot to mock in particular.
- */
-const mockApp = {} as unknown as App;
 
 function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
     return new QueryResultsRenderer(
