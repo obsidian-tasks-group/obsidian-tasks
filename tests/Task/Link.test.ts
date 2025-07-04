@@ -9,6 +9,7 @@ import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
@@ -224,7 +225,8 @@ describe('visualise links', () => {
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             tasksFile.outlinks.forEach((l) => {
-                table.addRow([l.originalMarkdown]);
+                const value = l.originalMarkdown;
+                table.addRow([addBackticks(formatToRepresentType(value))]);
             });
         });
         verifyMarkdown(table.markdown);
