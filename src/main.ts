@@ -61,7 +61,7 @@ export default class TasksPlugin extends Plugin {
             events,
         });
 
-        this.inlineRenderer = new InlineRenderer({ plugin: this });
+        this.inlineRenderer = new InlineRenderer({ plugin: this, app: this.app });
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
 
         // Update types.json.

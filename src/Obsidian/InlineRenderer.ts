@@ -1,4 +1,4 @@
-import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import type { App, MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
@@ -23,7 +23,11 @@ import { TaskLocation } from '../Task/TaskLocation';
  * See also {@link LivePreviewExtension} which handles Markdown task lines in Obsidian's Live Preview mode.
  */
 export class InlineRenderer {
-    constructor({ plugin }: { plugin: Plugin }) {
+    private readonly app: App;
+
+    constructor({ plugin, app }: { plugin: Plugin; app: App }) {
+        this.app = app;
+
         plugin.registerMarkdownPostProcessor((el, ctx) => {
             plugin.app.workspace.onLayoutReady(() => {
                 this.markdownPostProcessor(el, ctx);
@@ -114,6 +118,7 @@ export class InlineRenderer {
         }
 
         const taskLineRenderer = new TaskLineRenderer({
+            obsidianApp: this.app,
             obsidianComponent: childComponent,
             parentUlElement: element,
             taskLayoutOptions: new TaskLayoutOptions(),

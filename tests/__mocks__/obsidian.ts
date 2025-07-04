@@ -1,6 +1,13 @@
-import type { CachedMetadata } from 'obsidian';
+import type { App, CachedMetadata } from 'obsidian';
 
 export {};
+
+/**
+ * Since we don't use the app object's method or properties directly,
+ * and just treat it as an "opaque object" for markdown rendering, there is
+ * not a lot to mock in particular.
+ */
+export const mockApp = {} as unknown as App;
 
 export class MenuItem {
     public title: string | DocumentFragment = '';
