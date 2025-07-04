@@ -22,7 +22,7 @@
 
 ## Link with Nested Path and Alias
 
-- [ ] #task Link with Nested Path and Alias [alias](path/path/link_in_task_markdown_link.md)
+- [ ] #task Link with Nested Path and Alias [alias](Test%20Data/link_in_task_markdown_link.md)
 
 ## Link with Hash in Path
 

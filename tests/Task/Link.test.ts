@@ -171,7 +171,7 @@ describe('linkClass', () => {
         it('should return the filename if link has a path and an alias [alias](path/path/filename.md)', () => {
             const link = getLink(link_in_task_markdown_link, 6);
 
-            expect(link.originalMarkdown).toEqual('[alias](path/path/link_in_task_markdown_link.md)');
+            expect(link.originalMarkdown).toEqual('[alias](Test%20Data/link_in_task_markdown_link.md)');
             expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
         });
 
