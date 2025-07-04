@@ -223,7 +223,7 @@ describe('visualise links', () => {
         let output = '';
 
         function createRow(field: string, value: string | undefined): string {
-            return addBackticks(field) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
+            return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
         }
 
         allCacheSampleData().map((file) => {
