@@ -229,9 +229,7 @@ describe('visualise links', () => {
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             tasksFile.outlinks.forEach((link) => {
-                const field = 'link.originalMarkdown';
-                const value = link.originalMarkdown;
-                output += createRow(field, value) + '\n';
+                output += createRow('link.originalMarkdown', link.originalMarkdown) + '\n';
             });
         });
         verifyMarkdown(output);
