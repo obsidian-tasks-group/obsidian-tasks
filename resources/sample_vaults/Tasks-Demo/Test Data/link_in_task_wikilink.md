@@ -6,7 +6,7 @@
 
 ## Link with Simple Path
 
-- [ ]  #task Link with Simple Path [[path/link_in_task_wikilink]]
+- [ ]  #task Link with Simple Path [[Test Data/link_in_task_wikilink]]
 
 ## Link with Heading Reference
 
