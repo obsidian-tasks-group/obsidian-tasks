@@ -200,14 +200,14 @@ export class ListItem {
      * The data contest is documented here:
      * https://docs.obsidian.md/Reference/TypeScript+API/LinkCache
      */
-    get rawLinksInFileBody(): LinkCache[] {
+    private get rawLinksInFileBody(): LinkCache[] {
         return this.file.cachedMetadata?.links ?? [];
     }
 
     /**
      * Return a list of links in the task or list item's line.
      */
-    public get outLinks(): Link[] {
+    public get outlinks(): Link[] {
         return this.rawLinksInFileBody
             .filter((link) => link.position.start.line === this.lineNumber)
             .map((link) => new Link(link, this.file.filenameWithoutExtension));
