@@ -14,7 +14,7 @@
 
 ## Link with Path Heading Link
 
-- [ ] #task Link with Heading Reference Link [heading_link](path/link_in_task_markdown_link.md#heading_link)
+- [ ] #task Link with Heading Reference Link [heading_link](Test%20Data/link_in_task_markdown_link.md#heading)
 
 ## Link with Alias
 

@@ -157,7 +157,7 @@ describe('linkClass', () => {
         it('should return the filename if link has a path and a heading link [heading_link](path/filename.md#heading)', () => {
             const link = getLink(link_in_task_markdown_link, 4);
 
-            expect(link.originalMarkdown).toEqual('[heading_link](path/link_in_task_markdown_link.md#heading_link)');
+            expect(link.originalMarkdown).toEqual('[heading_link](Test%20Data/link_in_task_markdown_link.md#heading)');
             expect(link.destinationFilename).toEqual('link_in_task_markdown_link');
         });
 
