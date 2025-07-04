@@ -241,13 +241,13 @@ describe('TasksFile - reading frontmatter', () => {
 describe('TasksFile - accessing links', () => {
     it('should return all links in the file body', () => {
         const tasksFile = getTasksFileFromMockData(links_everywhere);
-        expect(tasksFile.outLinks.length).toEqual(3);
-        expect(tasksFile.outLinks[0].originalMarkdown).toEqual('[[link_in_file_body]]');
+        expect(tasksFile.outlinks.length).toEqual(3);
+        expect(tasksFile.outlinks[0].originalMarkdown).toEqual('[[link_in_file_body]]');
     });
 
     it('should return no yaml links', () => {
         const tasksFile = getTasksFileFromMockData(link_in_yaml);
-        expect(tasksFile.outLinks.length).toEqual(0);
+        expect(tasksFile.outlinks.length).toEqual(0);
     });
 });
 
