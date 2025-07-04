@@ -221,12 +221,17 @@ describe('linkClass', () => {
 describe('visualise links', () => {
     it('all fields', () => {
         let output = '';
+
+        function createRow(field: string, value: string) {
+            return addBackticks(field) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
+        }
+
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             tasksFile.outlinks.forEach((link) => {
                 const field = 'link.originalMarkdown';
                 const value = link.originalMarkdown;
-                output += addBackticks(field) + ': ' + addBackticks(formatToRepresentType(value)) + '\n' + '\n';
+                output += createRow(field, value) + '\n';
             });
         });
         verifyMarkdown(output);
