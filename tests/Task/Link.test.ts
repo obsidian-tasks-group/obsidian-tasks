@@ -9,6 +9,7 @@ import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
+import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
@@ -223,24 +224,29 @@ describe('visualise links', () => {
         return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
     }
 
+    function visualiseLinks(outlinks: Link[], output: string, file: SimulatedFile) {
+        if (outlinks.length === 0) {
+            return output;
+        }
+
+        output += `## ${file.filePath}\n\n`;
+        outlinks.forEach((link) => {
+            output += createRow('link.originalMarkdown', link.originalMarkdown);
+            output += createRow('link.destinationFilename', link.destinationFilename);
+            output += createRow('link.destination', link.destination);
+            output += createRow('link.displayText', link.displayText);
+            output += '\n';
+        });
+        return output;
+    }
+
     it('note bodies', () => {
         let output = '';
 
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             const outlinks = tasksFile.outlinks;
-            if (outlinks.length === 0) {
-                return;
-            }
-
-            output += `## ${file.filePath}\n\n`;
-            outlinks.forEach((link) => {
-                output += createRow('link.originalMarkdown', link.originalMarkdown);
-                output += createRow('link.destinationFilename', link.destinationFilename);
-                output += createRow('link.destination', link.destination);
-                output += createRow('link.displayText', link.displayText);
-                output += '\n';
-            });
+            output = visualiseLinks(outlinks, output, file);
         });
         verifyMarkdown(output);
     });
