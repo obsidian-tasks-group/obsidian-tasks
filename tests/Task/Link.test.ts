@@ -53,7 +53,7 @@ describe('linkClass', () => {
         it('should return the filename if link has a path [[path/filename]]', () => {
             const link = getLink(link_in_task_wikilink, 2);
 
-            expect(link.originalMarkdown).toEqual('[[path/link_in_task_wikilink]]');
+            expect(link.originalMarkdown).toEqual('[[Test Data/link_in_task_wikilink]]');
             expect(link.destinationFilename).toEqual('link_in_task_wikilink');
         });
 
