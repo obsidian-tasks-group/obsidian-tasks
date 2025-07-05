@@ -221,6 +221,8 @@ describe('linkClass', () => {
 
 describe('visualise links', () => {
     function createRow(field: string, value: string | undefined): string {
+        // We use NBSP - non-breaking spaces - so that the approved file content
+        // is correctly aligned when viewed in Obsidian:
         return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
     }
 
