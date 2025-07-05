@@ -3,14 +3,18 @@ import type { Reference } from 'obsidian';
 export class Link {
     private readonly rawLink: Reference;
     private readonly filenameContainingLink: string;
+    // @ts-expect-error: TS6133: pathContainingLink is declared but its value is never read.
+    private readonly pathContainingLink: string;
 
     /**
      * @param {Reference} rawLink - The raw link from Obsidian cache.
      * @param {string} filenameContainingLink - The name of the file where this link is located.
+     * @param {string} pathContainingLink - The path of the file where this link is located.
      */
-    constructor(rawLink: Reference, filenameContainingLink: string) {
+    constructor(rawLink: Reference, filenameContainingLink: string, pathContainingLink: string) {
         this.rawLink = rawLink;
         this.filenameContainingLink = filenameContainingLink;
+        this.pathContainingLink = pathContainingLink;
     }
 
     /**

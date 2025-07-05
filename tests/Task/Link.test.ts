@@ -13,7 +13,7 @@ import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
-    return new Link(rawLink, new TasksFile(data.filePath).filenameWithoutExtension);
+    return new Link(rawLink, new TasksFile(data.filePath).filenameWithoutExtension, data.filePath);
 }
 
 describe('linkClass', () => {
