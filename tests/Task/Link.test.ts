@@ -46,9 +46,7 @@ describe('linkClass', () => {
                 '[[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]',
             );
         });
-    });
 
-    describe('.markdown()', () => {
         // ================================
         // WIKILINK TESTS
         // ================================
