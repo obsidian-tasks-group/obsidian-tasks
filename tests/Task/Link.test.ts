@@ -24,7 +24,6 @@ describe('linkClass', () => {
         expect(link.originalMarkdown).toEqual('[[link_in_file_body]]');
         expect(link.destination).toEqual('link_in_file_body');
         expect(link.displayText).toEqual('link_in_file_body');
-        expect(link.destinationFilename).toEqual('link_in_file_body');
         expect(link.markdown).toEqual(link.originalMarkdown);
     });
 
@@ -260,7 +259,6 @@ describe('visualise links', () => {
         outlinks.forEach((link) => {
             output += createRow('link.originalMarkdown', link.originalMarkdown);
             output += createRow('link.markdown', link.markdown);
-            output += createRow('link.destinationFilename', link.destinationFilename);
             output += createRow('link.destination', link.destination);
             output += createRow('link.displayText', link.displayText);
             output += '\n';
