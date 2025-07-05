@@ -256,7 +256,8 @@ describe('visualise links', () => {
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             const frontmatterLinks = tasksFile.cachedMetadata.frontmatterLinks;
-            const links = frontmatterLinks?.map((rawLink) => new Link(rawLink, tasksFile.filename)) ?? [];
+            const links =
+                frontmatterLinks?.map((rawLink) => new Link(rawLink, tasksFile.filenameWithoutExtension)) ?? [];
             output += visualiseLinks(links, file);
         });
         verifyMarkdown(output);
