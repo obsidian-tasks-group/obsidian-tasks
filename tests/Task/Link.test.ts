@@ -27,6 +27,23 @@ describe('linkClass', () => {
         expect(link.destinationFilename).toEqual('link_in_file_body');
     });
 
+    describe('return markdown to navigate to a link', () => {
+        // These links are useful
+        it('should return the filename if simple [[filename]]', () => {
+            const link = getLink(link_in_task_wikilink, 0);
+
+            expect(link.originalMarkdown).toEqual('[[link_in_task_wikilink]]');
+            expect(link.markdown).toEqual('[[link_in_task_wikilink]]');
+        });
+
+        it.failing('should return a working link to [[#heading]]', () => {
+            const link = getLink(internal_heading_links, 0);
+
+            expect(link.originalMarkdown).toEqual('[[#Basic Internal Links]]');
+            expect(link.markdown).toEqual('[[internal_heading_links#Basic Internal Links]]');
+        });
+    });
+
     describe('.destinationFilename()', () => {
         // ================================
         // WIKILINK TESTS
