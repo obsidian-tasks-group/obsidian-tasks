@@ -29,19 +29,19 @@
 ## Test Data/internal_heading_links.md
 
 `link.originalMarkdown     `: `'[[#Basic Internal Links]]'`
-`link.markdown             `: `'[[#Basic Internal Links]]'`
+`link.markdown             `: `'[[internal_heading_links#Basic Internal Links|Basic Internal Links]]'`
 `link.destinationFilename  `: `'internal_heading_links'`
 `link.destination          `: `'#Basic Internal Links'`
 `link.displayText          `: `'Basic Internal Links'`
 
 `link.originalMarkdown     `: `'[[#Multiple Links In One Task]]'`
-`link.markdown             `: `'[[#Multiple Links In One Task]]'`
+`link.markdown             `: `'[[internal_heading_links#Multiple Links In One Task|Multiple Links In One Task]]'`
 `link.destinationFilename  `: `'internal_heading_links'`
 `link.destination          `: `'#Multiple Links In One Task'`
 `link.displayText          `: `'Multiple Links In One Task'`
 
 `link.originalMarkdown     `: `'[[#Simple Headers]]'`
-`link.markdown             `: `'[[#Simple Headers]]'`
+`link.markdown             `: `'[[internal_heading_links#Simple Headers|Simple Headers]]'`
 `link.destinationFilename  `: `'internal_heading_links'`
 `link.destination          `: `'#Simple Headers'`
 `link.displayText          `: `'Simple Headers'`
@@ -59,13 +59,13 @@
 `link.displayText          `: `'Other File'`
 
 `link.originalMarkdown     `: `'[[#Mixed Link Types]]'`
-`link.markdown             `: `'[[#Mixed Link Types]]'`
+`link.markdown             `: `'[[internal_heading_links#Mixed Link Types|Mixed Link Types]]'`
 `link.destinationFilename  `: `'internal_heading_links'`
 `link.destination          `: `'#Mixed Link Types'`
 `link.displayText          `: `'Mixed Link Types'`
 
 `link.originalMarkdown     `: `'[[#Header Links With File Reference]]'`
-`link.markdown             `: `'[[#Header Links With File Reference]]'`
+`link.markdown             `: `'[[internal_heading_links#Header Links With File Reference|Header Links With File Reference]]'`
 `link.destinationFilename  `: `'internal_heading_links'`
 `link.destination          `: `'#Header Links With File Reference'`
 `link.displayText          `: `'Header Links With File Reference'`
@@ -77,19 +77,19 @@
 `link.displayText          `: `'Other File > Some Header'`
 
 `link.originalMarkdown     `: `'[[#Another Header]]'`
-`link.markdown             `: `'[[#Another Header]]'`
+`link.markdown             `: `'[[internal_heading_links#Another Header|Another Header]]'`
 `link.destinationFilename  `: `'internal_heading_links'`
 `link.destination          `: `'#Another Header'`
 `link.displayText          `: `'Another Header'`
 
 `link.originalMarkdown     `: `'[[#Headers-With_Special Characters]]'`
-`link.markdown             `: `'[[#Headers-With_Special Characters]]'`
+`link.markdown             `: `'[[internal_heading_links#Headers-With_Special Characters|Headers-With_Special Characters]]'`
 `link.destinationFilename  `: `'internal_heading_links'`
 `link.destination          `: `'#Headers-With_Special Characters'`
 `link.displayText          `: `'Headers-With_Special Characters'`
 
 `link.originalMarkdown     `: `'[[#Aliased Links|I am an alias]]'`
-`link.markdown             `: `'[[#Aliased Links|I am an alias]]'`
+`link.markdown             `: `'[[internal_heading_links#Aliased Links|I am an alias]]'`
 `link.destinationFilename  `: `'internal_heading_links'`
 `link.destination          `: `'#Aliased Links'`
 `link.displayText          `: `'I am an alias'`
@@ -169,7 +169,7 @@
 `link.displayText          `: `'link_in_task_markdown_link'`
 
 `link.originalMarkdown     `: `'[heading](#heading)'`
-`link.markdown             `: `'[heading](#heading)'`
+`link.markdown             `: `'[[link_in_task_markdown_link#heading|heading]]'`
 `link.destinationFilename  `: `'link_in_task_markdown_link'`
 `link.destination          `: `'#heading'`
 `link.displayText          `: `'heading'`
@@ -291,7 +291,7 @@
 `link.displayText          `: `'link_in_yaml'`
 
 `link.originalMarkdown     `: `'[[#A link in a link_in_heading]]'`
-`link.markdown             `: `'[[#A link in a link_in_heading]]'`
+`link.markdown             `: `'[[links_everywhere#A link in a link_in_heading|A link in a link_in_heading]]'`
 `link.destinationFilename  `: `'links_everywhere'`
 `link.destination          `: `'#A link in a link_in_heading'`
 `link.displayText          `: `'A link in a link_in_heading'`
