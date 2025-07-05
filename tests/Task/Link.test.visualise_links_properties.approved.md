@@ -30,7 +30,7 @@
 `link.displayText          `: `'link_in_yaml'`
 
 `link.originalMarkdown     `: `'[[#A link in a link_in_heading]]'`
-`link.destinationFilename  `: `'links_everywhere.md'`
+`link.destinationFilename  `: `'links_everywhere'`
 `link.destination          `: `'#A link in a link_in_heading'`
 `link.displayText          `: `'A link in a link_in_heading'`
 
