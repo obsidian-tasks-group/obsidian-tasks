@@ -17,7 +17,7 @@ export const tasksApiV1 = (plugin: TasksPlugin): TasksApiV1 => {
             return createTaskLineModal(app, plugin.getTasks());
         },
         editTaskLineModal: (taskLine: string): Promise<string> => {
-            return editTaskLineModal(app, taskLine, []);
+            return editTaskLineModal(app, taskLine, plugin.getTasks());
         },
         executeToggleTaskDoneCommand: (line: string, path: string) => toggleLine(line, path).text,
     };
