@@ -29,7 +29,13 @@ export class Link {
      * See also {@link originalMarkdown}
      */
     public get markdown(): string {
-        return this.rawLink.original;
+        if (!this.destination.startsWith('#')) {
+            // The link already has a file name, so just return it
+            return this.originalMarkdown;
+        }
+
+        // We will need to construct a new link, containing the filename (later, the full path)
+        return `[[${this.destinationFilename}${this.destination}|${this.displayText}]]`;
     }
 
     public get destination(): string {
