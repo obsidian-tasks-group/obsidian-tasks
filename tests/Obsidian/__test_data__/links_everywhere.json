@@ -1,7 +1,8 @@
 {
   "cachedMetadata": {
     "frontmatter": {
-      "link-in-frontmatter": "[[link_in_yaml]]"
+      "link-in-frontmatter": "[[link_in_yaml]]",
+      "link-in-frontmatter-to-heading": "[[#A link in a link_in_heading]]"
     },
     "frontmatterLinks": [
       {
@@ -9,13 +10,19 @@
         "key": "link-in-frontmatter",
         "link": "link_in_yaml",
         "original": "[[link_in_yaml]]"
+      },
+      {
+        "displayText": "A link in a link_in_heading",
+        "key": "link-in-frontmatter-to-heading",
+        "link": "#A link in a link_in_heading",
+        "original": "[[#A link in a link_in_heading]]"
       }
     ],
     "frontmatterPosition": {
       "end": {
         "col": 3,
-        "line": 2,
-        "offset": 47
+        "line": 3,
+        "offset": 114
       },
       "start": {
         "col": 0,
@@ -30,13 +37,13 @@
         "position": {
           "end": {
             "col": 18,
-            "line": 3,
-            "offset": 66
+            "line": 4,
+            "offset": 133
           },
           "start": {
             "col": 0,
-            "line": 3,
-            "offset": 48
+            "line": 4,
+            "offset": 115
           }
         }
       },
@@ -46,13 +53,13 @@
         "position": {
           "end": {
             "col": 34,
-            "line": 7,
-            "offset": 150
+            "line": 8,
+            "offset": 217
           },
           "start": {
             "col": 0,
-            "line": 7,
-            "offset": 116
+            "line": 8,
+            "offset": 183
           }
         }
       }
@@ -65,13 +72,13 @@
         "position": {
           "end": {
             "col": 46,
-            "line": 5,
-            "offset": 114
+            "line": 6,
+            "offset": 181
           },
           "start": {
             "col": 25,
-            "line": 5,
-            "offset": 93
+            "line": 6,
+            "offset": 160
           }
         }
       },
@@ -82,13 +89,13 @@
         "position": {
           "end": {
             "col": 34,
-            "line": 7,
-            "offset": 150
+            "line": 8,
+            "offset": 217
           },
           "start": {
             "col": 15,
-            "line": 7,
-            "offset": 131
+            "line": 8,
+            "offset": 198
           }
         }
       },
@@ -99,30 +106,30 @@
         "position": {
           "end": {
             "col": 86,
-            "line": 9,
-            "offset": 238
+            "line": 10,
+            "offset": 305
           },
           "start": {
             "col": 61,
-            "line": 9,
-            "offset": 213
+            "line": 10,
+            "offset": 280
           }
         }
       }
     ],
     "listItems": [
       {
-        "parent": -9,
+        "parent": -10,
         "position": {
           "end": {
             "col": 86,
-            "line": 9,
-            "offset": 238
+            "line": 10,
+            "offset": 305
           },
           "start": {
             "col": 0,
-            "line": 9,
-            "offset": 152
+            "line": 10,
+            "offset": 219
           }
         },
         "task": " "
@@ -133,8 +140,8 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 2,
-            "offset": 47
+            "line": 3,
+            "offset": 114
           },
           "start": {
             "col": 0,
@@ -148,13 +155,13 @@
         "position": {
           "end": {
             "col": 18,
-            "line": 3,
-            "offset": 66
+            "line": 4,
+            "offset": 133
           },
           "start": {
             "col": 0,
-            "line": 3,
-            "offset": 48
+            "line": 4,
+            "offset": 115
           }
         },
         "type": "heading"
@@ -163,13 +170,13 @@
         "position": {
           "end": {
             "col": 46,
-            "line": 5,
-            "offset": 114
+            "line": 6,
+            "offset": 181
           },
           "start": {
             "col": 0,
-            "line": 5,
-            "offset": 68
+            "line": 6,
+            "offset": 135
           }
         },
         "type": "paragraph"
@@ -178,13 +185,13 @@
         "position": {
           "end": {
             "col": 34,
-            "line": 7,
-            "offset": 150
+            "line": 8,
+            "offset": 217
           },
           "start": {
             "col": 0,
-            "line": 7,
-            "offset": 116
+            "line": 8,
+            "offset": 183
           }
         },
         "type": "heading"
@@ -193,13 +200,13 @@
         "position": {
           "end": {
             "col": 86,
-            "line": 9,
-            "offset": 238
+            "line": 10,
+            "offset": 305
           },
           "start": {
             "col": 0,
-            "line": 9,
-            "offset": 152
+            "line": 10,
+            "offset": 219
           }
         },
         "type": "list"
@@ -210,20 +217,20 @@
         "position": {
           "end": {
             "col": 11,
-            "line": 9,
-            "offset": 163
+            "line": 10,
+            "offset": 230
           },
           "start": {
             "col": 6,
-            "line": 9,
-            "offset": 158
+            "line": 10,
+            "offset": 225
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\nlink-in-frontmatter: \"[[link_in_yaml]]\"\n---\n# links_everywhere\n\nA link in the file body: [[link_in_file_body]]\n\n## A link in a [[link_in_heading]]\n\n- [ ] #task Task in 'links_everywhere' - a link on the task: [[link_in_task_wikilink]]\n",
+  "fileContents": "---\nlink-in-frontmatter: \"[[link_in_yaml]]\"\nlink-in-frontmatter-to-heading: \"[[#A link in a link_in_heading]]\"\n---\n# links_everywhere\n\nA link in the file body: [[link_in_file_body]]\n\n## A link in a [[link_in_heading]]\n\n- [ ] #task Task in 'links_everywhere' - a link on the task: [[link_in_task_wikilink]]\n",
   "filePath": "Test Data/links_everywhere.md",
   "getAllTags": [
     "#task"

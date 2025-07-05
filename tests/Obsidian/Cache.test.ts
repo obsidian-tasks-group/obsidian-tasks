@@ -773,18 +773,19 @@ describe('accessing links in file', function () {
 
         it('see source', () => {
             expect(data.fileContents).toMatchInlineSnapshot(`
-                            "---
-                            link-in-frontmatter: "[[link_in_yaml]]"
-                            ---
-                            # links_everywhere
+                "---
+                link-in-frontmatter: "[[link_in_yaml]]"
+                link-in-frontmatter-to-heading: "[[#A link in a link_in_heading]]"
+                ---
+                # links_everywhere
 
-                            A link in the file body: [[link_in_file_body]]
+                A link in the file body: [[link_in_file_body]]
 
-                            ## A link in a [[link_in_heading]]
+                ## A link in a [[link_in_heading]]
 
-                            - [ ] #task Task in 'links_everywhere' - a link on the task: [[link_in_task_wikilink]]
-                            "
-                    `);
+                - [ ] #task Task in 'links_everywhere' - a link on the task: [[link_in_task_wikilink]]
+                "
+            `);
         });
 
         it('should access links in frontmatter', () => {
@@ -815,24 +816,24 @@ describe('accessing links in file', function () {
 
             const firstFileBodyLink = fileBodyLinks![0];
             expect(firstFileBodyLink).toMatchInlineSnapshot(`
-                            {
-                              "displayText": "link_in_file_body",
-                              "link": "link_in_file_body",
-                              "original": "[[link_in_file_body]]",
-                              "position": {
-                                "end": {
-                                  "col": 46,
-                                  "line": 5,
-                                  "offset": 114,
-                                },
-                                "start": {
-                                  "col": 25,
-                                  "line": 5,
-                                  "offset": 93,
-                                },
-                              },
-                            }
-                    `);
+                {
+                  "displayText": "link_in_file_body",
+                  "link": "link_in_file_body",
+                  "original": "[[link_in_file_body]]",
+                  "position": {
+                    "end": {
+                      "col": 46,
+                      "line": 6,
+                      "offset": 181,
+                    },
+                    "start": {
+                      "col": 25,
+                      "line": 6,
+                      "offset": 160,
+                    },
+                  },
+                }
+            `);
         });
 
         it('should access links in task line', () => {
@@ -852,13 +853,13 @@ describe('accessing links in file', function () {
                   "position": {
                     "end": {
                       "col": 86,
-                      "line": 9,
-                      "offset": 238,
+                      "line": 10,
+                      "offset": 305,
                     },
                     "start": {
                       "col": 61,
-                      "line": 9,
-                      "offset": 213,
+                      "line": 10,
+                      "offset": 280,
                     },
                   },
                 }
