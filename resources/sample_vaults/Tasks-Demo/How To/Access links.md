@@ -50,24 +50,6 @@ limit groups 1
 ```tasks
 # Task line has a link
 filter by function task.outlinks.length > 0
-group by function task.outlinks.map(link => link.originalMarkdown).sort().join(' · ')
-limit groups 1
-```
-
-### Group by task outlinks - task outlinks that give broken group headings
-
-- Hovering over these links **in the task lines** works because of [#3357](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/3357).
-- Hovering over these links **in the group headings** gives things like **Unable to find “Basic Internal Links” in Access links**
-
-```tasks
-# Task line has a link
-filter by function task.outlinks.length > 0
-
-# Task's link goes to a heading in the same file
-description includes [[#
-
-filename includes internal_heading_links
-
-group by function task.outlinks.map(link => link.originalMarkdown).sort().join(' · ')
+group by function task.outlinks.map(link => link.markdown).sort().join(' · ')
 limit groups 1
 ```
