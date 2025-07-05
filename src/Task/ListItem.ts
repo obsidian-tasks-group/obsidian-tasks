@@ -210,7 +210,7 @@ export class ListItem {
     public get outlinks(): Link[] {
         return this.rawLinksInFileBody
             .filter((link) => link.position.start.line === this.lineNumber)
-            .map((link) => new Link(link, this.file.filenameWithoutExtension, this.file.path));
+            .map((link) => new Link(link, this.file.path));
     }
 
     /**

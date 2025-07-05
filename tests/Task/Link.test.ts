@@ -1,5 +1,4 @@
 import { Link } from '../../src/Task/Link';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
@@ -13,7 +12,7 @@ import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
-    return new Link(rawLink, new TasksFile(data.filePath).filenameWithoutExtension, data.filePath);
+    return new Link(rawLink, data.filePath);
 }
 
 describe('linkClass', () => {
