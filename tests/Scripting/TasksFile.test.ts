@@ -239,6 +239,20 @@ describe('TasksFile - reading frontmatter', () => {
 });
 
 describe('TasksFile - accessing links', () => {
+    it('should access all links in the file - both properties and body', () => {
+        const tasksFile = getTasksFileFromMockData(links_everywhere);
+        expect(tasksFile.outlinks.length).toEqual(5);
+        expect(tasksFile.outlinks.map((link) => link.originalMarkdown)).toMatchInlineSnapshot(`
+            [
+              "[[link_in_yaml]]",
+              "[[#A link in a link_in_heading]]",
+              "[[link_in_file_body]]",
+              "[[link_in_heading]]",
+              "[[link_in_task_wikilink]]",
+            ]
+        `);
+    });
+
     it('should access all links in the file body', () => {
         {
             const tasksFile = getTasksFileFromMockData(links_everywhere);
