@@ -246,7 +246,7 @@ describe('visualise links', () => {
 
     it('note bodies', () => {
         let output = '';
-        allCacheSampleData().map((file) => {
+        allCacheSampleData().forEach((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinksInBody, file);
         });
@@ -255,7 +255,7 @@ describe('visualise links', () => {
 
     it('properties', () => {
         let output = '';
-        allCacheSampleData().map((file) => {
+        allCacheSampleData().forEach((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinksInProperties, file);
         });
@@ -264,7 +264,7 @@ describe('visualise links', () => {
 
     it('outlinks', () => {
         let output = '';
-        allCacheSampleData().map((file) => {
+        allCacheSampleData().forEach((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinks, file);
         });
