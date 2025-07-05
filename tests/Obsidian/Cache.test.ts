@@ -755,21 +755,9 @@ describe('accessing links in file', function () {
 
         const cachedMetadata: CachedMetadata = task.file.cachedMetadata;
 
-        /**
-         * I am thinking of the following, to evantually make links accessible to users.
-         * 1. Provide a class or interface called Link, with fields:
-         *      - displayText, e.g. "link_in_yaml"
-         *      - link, e.g. "link_in_yaml"
-         *      - original, e.g. "[[link_in_yaml]]"
-         * 2. Add some getters that construct the relevant Link objects from cached metadata on demand, such as:
-         *      - task.file.linksInBody
-         *      - task.file.linksInFrontMatter
-         *      - task.file.allLinks
-         *      - task.links
-         * 3. Consider the vocabulary - some dataview users talk about inlines and outlinks.
-         *    The above are all outlinks - but do we want to name them as such, to prepare
-         *    for if or when inlinks are also supported?
-         */
+        // Usability note:
+        //    These tests are for visualising how Obsidian caches link properties.
+        //    See TasksFile and ListItem classes for accessing links via the Link class in Tasks cvode
 
         it('see source', () => {
             expect(data.fileContents).toMatchInlineSnapshot(`
@@ -788,7 +776,7 @@ describe('accessing links in file', function () {
             `);
         });
 
-        it('should access links in frontmatter', () => {
+        it('visualise raw links in frontmatter', () => {
             const frontMatterLinks = cachedMetadata['frontmatterLinks'];
             expect(frontMatterLinks).toBeDefined();
 
@@ -804,7 +792,7 @@ describe('accessing links in file', function () {
                     `);
         });
 
-        it('should access links in file body', () => {
+        it('visualise raw links in file body', () => {
             const fileBodyLinks = cachedMetadata.links;
 
             const originalLinkText = fileBodyLinks?.map((link) => link.original).join('\n');
@@ -836,7 +824,7 @@ describe('accessing links in file', function () {
             `);
         });
 
-        it('should access links in task line', () => {
+        it('visualise raw links in task line', () => {
             const fileBodyLinks = cachedMetadata.links;
             const linksOnTask = fileBodyLinks?.filter((link) => link.position.start.line === task.lineNumber);
 

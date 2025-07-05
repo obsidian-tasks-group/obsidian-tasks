@@ -246,21 +246,27 @@ describe('visualise links', () => {
 
     it('note bodies', () => {
         let output = '';
-        allCacheSampleData().map((file) => {
+        allCacheSampleData().forEach((file) => {
             const tasksFile = getTasksFileFromMockData(file);
-            output += visualiseLinks(tasksFile.outlinks, file);
+            output += visualiseLinks(tasksFile.outlinksInBody, file);
         });
         verifyMarkdown(output);
     });
 
     it('properties', () => {
         let output = '';
-        allCacheSampleData().map((file) => {
+        allCacheSampleData().forEach((file) => {
             const tasksFile = getTasksFileFromMockData(file);
-            const frontmatterLinks = tasksFile.cachedMetadata.frontmatterLinks;
-            const links =
-                frontmatterLinks?.map((rawLink) => new Link(rawLink, tasksFile.filenameWithoutExtension)) ?? [];
-            output += visualiseLinks(links, file);
+            output += visualiseLinks(tasksFile.outlinksInProperties, file);
+        });
+        verifyMarkdown(output);
+    });
+
+    it('outlinks', () => {
+        let output = '';
+        allCacheSampleData().forEach((file) => {
+            const tasksFile = getTasksFileFromMockData(file);
+            output += visualiseLinks(tasksFile.outlinks, file);
         });
         verifyMarkdown(output);
     });

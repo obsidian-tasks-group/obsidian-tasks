@@ -239,15 +239,37 @@ describe('TasksFile - reading frontmatter', () => {
 });
 
 describe('TasksFile - accessing links', () => {
-    it('should return all links in the file body', () => {
+    it('should access all links in the file - both properties and body', () => {
         const tasksFile = getTasksFileFromMockData(links_everywhere);
-        expect(tasksFile.outlinks.length).toEqual(3);
-        expect(tasksFile.outlinks[0].originalMarkdown).toEqual('[[link_in_file_body]]');
+        expect(tasksFile.outlinks.length).toEqual(5);
+        expect(tasksFile.outlinks.map((link) => link.originalMarkdown)).toMatchInlineSnapshot(`
+            [
+              "[[link_in_yaml]]",
+              "[[#A link in a link_in_heading]]",
+              "[[link_in_file_body]]",
+              "[[link_in_heading]]",
+              "[[link_in_task_wikilink]]",
+            ]
+        `);
     });
 
-    it('should return no yaml links', () => {
+    it('should access all links in the file body', () => {
+        {
+            const tasksFile = getTasksFileFromMockData(links_everywhere);
+            expect(tasksFile.outlinksInBody.length).toEqual(3);
+            expect(tasksFile.outlinksInBody[0].originalMarkdown).toEqual('[[link_in_file_body]]');
+        }
+
+        {
+            const tasksFile = getTasksFileFromMockData(link_in_yaml);
+            expect(tasksFile.outlinksInBody.length).toEqual(0);
+        }
+    });
+
+    it('should access all links in properties', () => {
         const tasksFile = getTasksFileFromMockData(link_in_yaml);
-        expect(tasksFile.outlinks.length).toEqual(0);
+        expect(tasksFile.outlinksInProperties.length).toEqual(1);
+        expect(tasksFile.outlinksInProperties[0].originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
     });
 });
 
