@@ -248,7 +248,7 @@ describe('visualise links', () => {
         let output = '';
         allCacheSampleData().map((file) => {
             const tasksFile = getTasksFileFromMockData(file);
-            output += visualiseLinks(tasksFile.outlinks, file);
+            output += visualiseLinks(tasksFile.outlinksInBody, file);
         });
         verifyMarkdown(output);
     });
