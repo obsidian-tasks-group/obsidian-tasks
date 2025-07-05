@@ -41,9 +41,9 @@ describe('linkClass', () => {
             const link = getLink(internal_heading_links, 0);
 
             expect(link.originalMarkdown).toEqual('[[#Basic Internal Links]]');
-            // Eventually we will want the result to include the path, so:
-            //      [[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]
-            expect(link.markdown).toEqual('[[internal_heading_links#Basic Internal Links|Basic Internal Links]]');
+            expect(link.markdown).toEqual(
+                '[[Test Data/internal_heading_links.md#Basic Internal Links|Basic Internal Links]]',
+            );
         });
     });
 
