@@ -1,5 +1,6 @@
 ---
 link-in-frontmatter: "[[link_in_yaml]]"
+link-in-frontmatter-to-heading: "[[#A link in a link_in_heading]]"
 ---
 # links_everywhere
 
