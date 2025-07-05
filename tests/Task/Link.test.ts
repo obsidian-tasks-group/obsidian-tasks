@@ -261,4 +261,13 @@ describe('visualise links', () => {
         });
         verifyMarkdown(output);
     });
+
+    it('outlinks', () => {
+        let output = '';
+        allCacheSampleData().map((file) => {
+            const tasksFile = getTasksFileFromMockData(file);
+            output += visualiseLinks(tasksFile.outlinks, file);
+        });
+        verifyMarkdown(output);
+    });
 });
