@@ -191,8 +191,12 @@ export function setIcon(_parent: HTMLElement, _iconId: IconName): void {}
  * Without this testing the TaskModal throws an error attempting to extend Modal
  */
 export class Modal {
-    public open(): void {}
-    public close(): void {}
+    public open(): void {
+        // Mocked interface, no-op
+    }
+    public close(): void {
+        // Mocked interface, no-op
+    }
     public onOpen(): void {}
     public onClose(): void {}
 }
