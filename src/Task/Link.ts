@@ -13,7 +13,22 @@ export class Link {
         this.filenameContainingLink = filenameContainingLink;
     }
 
+    /**
+     * Return the original Markdown.
+     *
+     * See also {@link markdown}
+     */
     public get originalMarkdown(): string {
+        return this.rawLink.original;
+    }
+
+    /**
+     * This is like {@link originalMarkdown}, but will also work for heading-only links
+     * when viewed in files other than the one containing the original link.
+     *
+     * See also {@link originalMarkdown}
+     */
+    public get markdown(): string {
         return this.rawLink.original;
     }
 
