@@ -3,7 +3,6 @@ import type { Reference } from 'obsidian';
 export class Link {
     private readonly rawLink: Reference;
     private readonly filenameContainingLink: string;
-    // @ts-expect-error: TS6133: pathContainingLink is declared but its value is never read.
     private readonly pathContainingLink: string;
 
     /**
@@ -39,7 +38,7 @@ export class Link {
         }
 
         // We will need to construct a new link, containing the filename (later, the full path)
-        return `[[${this.destinationFilename}${this.destination}|${this.displayText}]]`;
+        return `[[${this.pathContainingLink}${this.destination}|${this.displayText}]]`;
     }
 
     public get destination(): string {
