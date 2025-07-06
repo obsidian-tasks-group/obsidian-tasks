@@ -18,6 +18,19 @@ aliases:
 
 ## Things discovered whilst exploring this breaking change
 
+### Obsidian 1.9.4
+
+All the following behaviours were observed and tested in Obsidian 1.9.4.
+
+| Properties                                            | Obsidian 1.9.4 behaviour                                                                                                                                                                       |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`tag`, `alias`, `cssclass`**                        | ❌ Ignored by Obsidian: no longer treated as `tags`, `aliases`, `cssclasses`                                                                                                                   |
+| **`tags` that are not proper lists**                  | ✅ Obsidian highlights incorrectly-formatted `tags` in red.<br>✅ Obsidian no longer deletes their values when making any changes to the file's properties.                                    |
+| **`aliases`, `cssclasses` that are not proper lists** | ❌ Obsidian still does not warn about these.<br>✅ Obsidian no longer deletes their values when making any changes to the file's properties.                                                   |
+| **`TAGS`, `ALIASES`, `CSSCLASSES`**                   | ✅ Still treated as `tags`, `aliases`, `cssclasses`                                                                                                                                            |
+| **Finding and fixing formatting problems**            | ✅ New ["Properties" option in the Format Converter core plugin](https://help.obsidian.md/plugins/format-converter#Properties) can automatically fix those issues marked ❌ above!             |
+| **Restoring any lost data**                           | ❌ Because Obsidian 1.9.0, 1.9.1 and 1.9.2 may have already silently deleted mis-formatted list values, you may still notice missing data, and may wish to review a backup copy of your vault. |
+
 ### Obsidian 1.9.0, 1.9.1 and 1.9.2
 
 All the following behaviours were observed and tested in Obsidian 1.9.2.
