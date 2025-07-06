@@ -96,7 +96,11 @@ cssclasses:
   - custom-style
 ```
 
-## Fix properties that need updating
+## How to fix unsupported properties
+
+The Obsidian team has now provided a mechanism to **update entire pre-Obsidian-1.9.0 vaults**.
+
+Here is how to use it.
 
 1. Make a **backup of your vault**.
 2. Make sure you are using **Obsidian 1.9.3 or above**.
