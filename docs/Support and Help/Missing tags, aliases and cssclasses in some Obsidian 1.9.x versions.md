@@ -18,12 +18,14 @@ aliases:
 
 ## Things discovered whilst exploring this breaking change
 
-All the following were observed and tested in Obsidian 1.9.2.
+### Obsidian 1.9.0, 1.9.1 and 1.9.2
 
-1. Any properties called `tag`, `alias`,  or `cssclass` are now ignored by Obsidian.
-2. Obsidian no longer warns about incorrectly-formatted `tags`, `aliases` and `cssclasses` values, so they are easy to miss.
-3. Any `tags`, `aliases` and `cssclasses` properties with non-list (incorrectly formatter) values will have their values deleted if Obsidian makes any changes to the file's frontmatter.
-4. Obsidian does still support capitalised versions of the correctly spelled names: `TAGS`, `ALIASES` AND `CSSCLASSES`.
+> [!Info]- All the following were observed and tested in Obsidian 1.9.2.
+>
+> 1. Any properties called `tag`, `alias`,  or `cssclass` are now ignored by Obsidian.
+> 2. Obsidian no longer warns about incorrectly-formatted `tags`, `aliases` and `cssclasses` values, so they are easy to miss.
+> 3. Any `tags`, `aliases` and `cssclasses` properties with non-list (incorrectly formatter) values will have their values deleted if Obsidian makes any changes to the file's frontmatter.
+> 4. Obsidian does still support capitalised versions of the correctly spelled names: `TAGS`, `ALIASES` AND `CSSCLASSES`.
 
 ### You should check and fix your vault before using the 'File Properties' UI to edit any properties
 
