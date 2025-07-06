@@ -49,6 +49,53 @@ All the following behaviours were observed and tested in Obsidian 1.9.2.
 | **Finding problems**                                          | ❌ Any problem values have to be **found** by the user, to prevent data loss                                                            |
 | **Fixed problems**                                            | ❌ Any problem values have to be **fixed** by the user                                                                                  |
 
+## What needs to change?
+
+These examples, from the [Obsidian documentation](https://help.obsidian.md/plugins/format-converter#Properties), show the kind of edits needed:
+
+1. Property names may need updating.
+2. These are all list properties, so each value needs to be on a new line, preceded by a hyphen (`-`).
+
+**Aliases:**
+
+```yaml
+# Before
+
+alias: My Note Title
+
+# After
+
+aliases:
+  - My Note Title
+```
+
+**Tags:**
+
+```yaml
+# Before
+
+tag: project, important
+
+# After
+
+tags:
+  - project
+  - important
+```
+
+**CSS Classes:**
+
+```yaml
+# Before
+
+cssclass: custom-style
+
+# After
+
+cssclasses:
+  - custom-style
+```
+
 ## Fix properties that need updating
 
 1. Make a **backup of your vault**.
