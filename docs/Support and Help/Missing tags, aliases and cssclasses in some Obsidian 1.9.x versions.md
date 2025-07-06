@@ -129,9 +129,13 @@ So for safety, after the format converter has completed, we would recommend that
 1. You should [**regenerate the Obsidian metadata cache**](https://publish.obsidian.md/tasks/Support+and+Help/Missing+tasks+in+callouts+with+some+Obsidian+1.6.x+versions#The+solution+Regenerate+the+Obsidian+metadata+cache).
 2. If your vault is synchronised with other devices, once each other device has finished syncing, you repeat the cache regeneration step there too.
 
-## Find properties that need updating
+## Appendix
 
-### Find old `tag`, `alias`, `cssclass` and properties
+Some earlier notes that may still be of interest.
+
+### Find properties that need updating
+
+#### Find old `tag`, `alias`, `cssclass` and properties
 
 If your vault uses the original names `tag`, `alias`, `cssclass` properties, it will benefit from using the Format converter.
 
@@ -141,7 +145,7 @@ Here is how to easily see if you have any old values needing to be updated.
 2. In the Obsidian **Search** box, paste in `["tag"]`.
 3. In the Obsidian **Search** box, paste in `["cssclass"]`.
 
-### Find any incorrectly typed `tags`, `aliases` and `cssclasses` with string values
+#### Find any incorrectly typed `tags`, `aliases` and `cssclasses` with string values
 
 `tags`, `aliases` and `cssclasses` properties with string values will be wrongly interpreted by Obsidian 1.9.0 and above.
 
@@ -153,7 +157,7 @@ Here is one way to find them.
 
 3. Download the file **[Check CssClasses.base](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo/How%20To/Find%20properties%20not%20read%20by%20Obsidian%201.9.x)** - and open it in Obsidian 1.9.2 or newer.
 
-## Other ways to find and fix your properties
+### Other ways to find and fix your properties
 
 - Check to see if the [Obsidian Linter](https://github.com/platers/obsidian-linter) plugin has provided a way to find and fix problem properties.
 - A Discord user reported:
