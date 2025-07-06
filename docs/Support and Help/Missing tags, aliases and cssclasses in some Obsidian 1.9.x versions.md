@@ -6,6 +6,12 @@ aliases:
 
 # Missing tags, aliases and cssclasses in some Obsidian 1.9.x versions
 
+## Summary
+
+- **Obsidian 1.9.0 and above** have **breaking changes** that are likely to cause missing `tags`, `aliases`, `cssclasses` values.
+- **Obsidian 1.9.3** introduced a new option in the core **Format converter** plugin to update your notes automatically.
+- **Obsidian 1.9.4** behaves more robustly than the earlier 1.9.x versions, although it still has some issues.
+
 ## Obsidian 1.9.0 and above read properties strictly
 
 > [!Warning] Warning: Breaking changes in Obsidian 1.9.x
