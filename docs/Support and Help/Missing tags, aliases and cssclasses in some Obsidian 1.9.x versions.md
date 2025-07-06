@@ -20,12 +20,15 @@ aliases:
 
 ### Obsidian 1.9.0, 1.9.1 and 1.9.2
 
-> [!Info]- All the following were observed and tested in Obsidian 1.9.2.
->
-> 1. Any properties called `tag`, `alias`,  or `cssclass` are now ignored by Obsidian.
-> 2. Obsidian no longer warns about incorrectly-formatted `tags`, `aliases` and `cssclasses` values, so they are easy to miss.
-> 3. Any `tags`, `aliases` and `cssclasses` properties with non-list (incorrectly formatter) values will have their values deleted if Obsidian makes any changes to the file's frontmatter.
-> 4. Obsidian does still support capitalised versions of the correctly spelled names: `TAGS`, `ALIASES` AND `CSSCLASSES`.
+All the following behaviours were observed and tested in Obsidian 1.9.2.
+
+| Properties                                                    | Obsidian 1.9.0, 1.9.1 and 1.9.2 behaviours                                                                                              |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **`tag`, `alias`, `cssclass`**                                | ❌ Ignored by Obsidian: no longer treated as `tags`, `aliases`, `cssclasses`                                                            |
+| **`tags`, `aliases`, `cssclasses` that are not proper lists** | ❌ Obsidian no longer warns about these.<br>❌ Obsidian silently deletes their values when making any changes to the file's properties. |
+| **`TAGS`, `ALIASES`, `CSSCLASSES`**                           | ✅ Still treated as `tags`, `aliases`, `cssclasses`                                                                                     |
+| **Finding problems**                                          | ❌ Any problem values have to be **found** by the user, to prevent data loss                                                            |
+| **Fixed problems**                                            | ❌ Any problem values have to be **fixed** by the user                                                                                  |
 
 ### You should check and fix your vault before using the 'File Properties' UI to edit any properties
 
