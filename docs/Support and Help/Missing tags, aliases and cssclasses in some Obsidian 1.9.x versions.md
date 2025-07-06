@@ -98,6 +98,8 @@ cssclasses:
 
 ## How to fix unsupported properties
 
+### Step 1: Run the Format converter plugin
+
 The Obsidian team has now provided a mechanism to **update entire pre-Obsidian-1.9.0 vaults**.
 
 Here is how to use it.
@@ -115,6 +117,17 @@ Here is how to use it.
 
     ![Select 'Frontmatter migration' option, and Start the conversion](../images/core-plugin-format-converter-options.png)
     <span class="caption">Select 'Frontmatter migration' option, and Start the conversion</span>
+
+### Step 2: Rebuild the cache vault in this and all its synced copies
+
+Anecdotally, we have found that there is a higher-than-usual chance of getting an out-of-date Obsidian cache when a lot of files have changed.
+
+This can result in problems like plugins not being able to find every task in the vault.
+
+So for safety, after the format converter has completed, we would recommend that:
+
+1. You should [**regenerate the Obsidian metadata cache**](https://publish.obsidian.md/tasks/Support+and+Help/Missing+tasks+in+callouts+with+some+Obsidian+1.6.x+versions#The+solution+Regenerate+the+Obsidian+metadata+cache).
+2. If your vault is synchronised with other devices, once each other device has finished syncing, you repeat the cache regeneration step there too.
 
 ## Find properties that need updating
 
