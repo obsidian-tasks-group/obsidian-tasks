@@ -6,7 +6,7 @@ aliases:
 
 # Missing tags, aliases and cssclasses in some Obsidian 1.9.x versions
 
-## Obsidian 1.9.0 reads properties strictly
+## Obsidian 1.9.0 and above read properties strictly
 
 > [!Warning] Warning: Breaking changes in Obsidian 1.9.x
 >
