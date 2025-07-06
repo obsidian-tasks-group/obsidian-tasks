@@ -49,7 +49,23 @@ All the following behaviours were observed and tested in Obsidian 1.9.2.
 | **Finding problems**                                          | ❌ Any problem values have to be **found** by the user, to prevent data loss                                                            |
 | **Fixed problems**                                            | ❌ Any problem values have to be **fixed** by the user                                                                                  |
 
-## Finding properties that need updating
+## Fix properties that need updating
+
+1. Make a **backup of your vault**.
+2. Make sure you are using **Obsidian 1.9.3 or above**.
+3. Turn on the **[Format converter](https://help.obsidian.md/plugins/format-converter)** core plugin.
+
+    ![Turn on the 'Format converter' core plugin](../images/core-plugin-format-converter.png)
+    <span class="caption">Turn on the 'Format converter' core plugin</span>
+
+4. Run the **Open format converter** command.
+5. Turn on the **[Frontmatter migration](https://help.obsidian.md/plugins/format-converter#Properties)** option.
+6. Click **Start conversion**.
+
+    ![Select 'Frontmatter migration' option, and Start the conversion](../images/core-plugin-format-converter-options.png)
+    <span class="caption">Select 'Frontmatter migration' option, and Start the conversion</span>
+
+## Find properties that need updating
 
 ### Find old `tag`, `alias`, `cssclass` and properties
 
