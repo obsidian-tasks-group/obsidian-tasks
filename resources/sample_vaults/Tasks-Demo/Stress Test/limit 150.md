@@ -1,8 +1,5 @@
 ---
 creation date: 2024-03-23 15:14
-tags:
-aliases:
-  -
 ---
 
 # limit 150
