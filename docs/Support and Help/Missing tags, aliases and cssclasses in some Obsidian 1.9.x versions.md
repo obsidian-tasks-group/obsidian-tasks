@@ -9,8 +9,11 @@ aliases:
 ## Summary
 
 - **Obsidian 1.9.0 and above** have **breaking changes** that are likely to cause missing `tags`, `aliases`, `cssclasses` values.
+  - See [[#Obsidian 1.9.0 and above read properties strictly]] and [[#What needs to change?]]
 - **Obsidian 1.9.3** introduced a new option in the core **Format converter** plugin to update your notes automatically.
+  - See [[#How to fix unsupported properties]]
 - **Obsidian 1.9.4** behaves more robustly than the earlier 1.9.x versions, although it still has some issues.
+  - See [[#Things discovered whilst exploring this breaking change]]
 
 ## Obsidian 1.9.0 and above read properties strictly
 
@@ -21,6 +24,12 @@ aliases:
 > However, it is important to note the following in the [Obsidian 1.9.0 (Insider) changelog](https://obsidian.md/changelog/2025-05-21-desktop-v1.9.0/):
 > > [!Quote] Breaking changes
 > > We have officially removed support for the properties `tag`, `alias`, `cssclass` in favor of `tags`, `aliases` and `cssclasses`. In addition, the values of these properties _must_ be a list. If the current value is a text property, it will no longer be recognized by Obsidian.
+
+Consequences of this:
+
+- Searches that use **tags** in properties/frontmatter may no longer find expected, due to tags not being recognised, or being interpreted differently.
+- Notes with **aliases** may no longer be found, as their alias values may be ignored.
+- Notes with **cssclasses** may no longer be rendered as before, as their cssclass(s) values may be ignored.
 
 ## Things discovered whilst exploring this breaking change
 
