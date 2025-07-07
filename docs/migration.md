@@ -1,6 +1,7 @@
 ---
 publish: false
-alias: Migration to Publish
+aliases:
+  - Migration to Publish
 ---
 
 # Migration to Publish
