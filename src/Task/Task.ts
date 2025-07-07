@@ -16,6 +16,7 @@ import { Urgency } from './Urgency';
 import type { Recurrence } from './Recurrence';
 import type { TaskLocation } from './TaskLocation';
 import type { Priority } from './Priority';
+import { Duration } from './Duration';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
 import { OnCompletion, handleOnCompletion } from './OnCompletion';
 
@@ -49,6 +50,7 @@ export class Task extends ListItem {
     public readonly createdDate: Moment | null;
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
+    public readonly duration: Duration;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
     public readonly cancelledDate: Moment | null;
@@ -78,6 +80,7 @@ export class Task extends ListItem {
         createdDate,
         startDate,
         scheduledDate,
+        duration,
         dueDate,
         doneDate,
         cancelledDate,
@@ -101,6 +104,7 @@ export class Task extends ListItem {
         createdDate: moment.Moment | null;
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
+        duration: Duration;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
         cancelledDate: moment.Moment | null;
@@ -133,6 +137,7 @@ export class Task extends ListItem {
         this.createdDate = createdDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
+        this.duration = duration;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
         this.cancelledDate = cancelledDate;
@@ -655,6 +660,20 @@ export class Task extends ListItem {
     }
 
     /**
+     * Return {@link hours} from {@link Duration}.
+     */
+    public get durationHours(): number | string {
+        return this.duration === Duration.None ? '' : this.duration.hours;
+    }
+
+    /**
+     * Return {@link minutes} from {@link Duration}.
+     */
+    public get durationMinutes(): number | string {
+        return this.duration === Duration.None ? '' : this.duration.minutes;
+    }
+
+    /**
      * Return {@link startDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
     public get start(): TasksDate {
@@ -781,6 +800,7 @@ export class Task extends ListItem {
         //       happens more often than is ideal.
         let args: Array<keyof Task> = [
             'priority',
+            'duration',
             'blockLink',
             'scheduledDateIsInferred',
             'id',
@@ -818,6 +838,11 @@ export class Task extends ListItem {
             }
         }
         if (!this.recurrenceIdenticalTo(other)) {
+            return false;
+        }
+        // Compare duration. Only identical if their textual representation is identical.
+        // 1h30m may not be semantically equal to 90m.
+        if (this.duration.toText() != other.duration.toText()) {
             return false;
         }
 

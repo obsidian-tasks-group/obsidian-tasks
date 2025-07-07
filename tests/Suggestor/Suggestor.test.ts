@@ -216,6 +216,7 @@ ${JSON.stringify(suggestions[0], null, 4)}
     const {
         dueDateSymbol,
         scheduledDateSymbol,
+        durationSymbol,
         startDateSymbol,
         createdDateSymbol,
         recurrenceSymbol,
@@ -250,6 +251,24 @@ ${JSON.stringify(suggestions[0], null, 4)}
             `- [ ] some task ${dueDateSymbol} 1 year`, // a relative date
         ];
         verifyFirstSuggestions(lines, 'How due date suggestions are affected by what the user has typed:');
+    });
+
+    it('offers generic duration completions', () => {
+        const line = `- [ ] some task ${durationSymbol} `; //FIXME: errors on removing trailing space..
+        shouldStartWithSuggestionsEqualling(line, [
+            `${durationSymbol} 5m`,
+            `${durationSymbol} 15m`,
+            `${durationSymbol} 1h`,
+        ]);
+    });
+
+    it('offers specific duration completions', () => {
+        const line = `- [ ] some task ${durationSymbol} 1h`;
+        shouldStartWithSuggestionsEqualling(line, [
+            `${durationSymbol} 1h15m`,
+            `${durationSymbol} 1h30m`,
+            `${durationSymbol} 1h45m`,
+        ]);
     });
 
     it('offers generic recurrence completions', () => {
@@ -488,6 +507,7 @@ ${JSON.stringify(suggestions[0], null, 4)}
             `- [ ] some task ${recurrenceSymbol} `,
             `- [ ] some task ${dueDateSymbol} `,
             `- [ ] some task ${scheduledDateSymbol} `,
+            `- [ ] some task ${durationSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
             `- [ ] some task ${onCompletionSymbol} `,
         ];

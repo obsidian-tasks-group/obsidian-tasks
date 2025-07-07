@@ -207,6 +207,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
+                ' ⏱ 26h59m',
                 ' 📅 2023-07-04',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
@@ -228,6 +229,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
+                ' ⏱ 26h59m',
                 ' 📅 2023-07-04',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
@@ -241,6 +243,10 @@ describe('task line rendering - layout options', () => {
 
     it('renders with priority', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' 🔼'], [TaskLayoutComponent.Priority]);
+    });
+
+    it('renders with duration', async () => {
+        await testLayoutOptions(['Do exercises #todo #health', ' ⏱ 26h59m'], [TaskLayoutComponent.Duration]);
     });
 
     it('renders with recurrence rule', async () => {
@@ -362,6 +368,10 @@ describe('task line rendering - classes and data attributes', () => {
     it('renders dependency fields with their correct classes', async () => {
         await testComponentClasses('- [ ] Minimal task 🆔 g7317o', 'task-id', '');
         await testComponentClasses('- [ ] Minimal task ⛔ ya44g5,hry475', 'task-dependsOn', '');
+    });
+
+    it('renders duration field with its class', async () => {
+        await testComponentClasses('- [ ] Minimal task ⏱️ 1h30m', 'task-duration', 'taskDuration: 1h30m');
     });
 
     it('should render recurrence component with its class and data attribute', async () => {
