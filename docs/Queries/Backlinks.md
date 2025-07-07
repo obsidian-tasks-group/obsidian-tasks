@@ -1,8 +1,8 @@
 ---
 publish: true
-alias:
-- Backlink
-- Getting Started/Backlinks
+aliases:
+  - Backlink
+  - Getting Started/Backlinks
 ---
 
 # Backlinks
