@@ -136,7 +136,7 @@ This can result in problems like plugins not being able to find every task in th
 So for safety, after the format converter has completed, we would recommend that:
 
 1. You should [**regenerate the Obsidian metadata cache**](https://publish.obsidian.md/tasks/Support+and+Help/Missing+tasks+in+callouts+with+some+Obsidian+1.6.x+versions#The+solution+Regenerate+the+Obsidian+metadata+cache).
-2. If your vault is synchronised with other devices, once each other device has finished syncing, you repeat the cache regeneration step there too.
+2. If your vault is synchronised with other devices, once each other device has finished syncing, you should repeat the cache regeneration step there too.
 
 ## Appendix
 
