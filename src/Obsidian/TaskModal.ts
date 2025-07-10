@@ -1,26 +1,24 @@
-import { App, Modal } from 'obsidian';
+import type { App } from 'obsidian';
+import { Modal } from 'obsidian';
 
 import EditTask from '../ui/EditTask.svelte';
 import type { Task } from '../Task/Task';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
 
+export interface TaskModalParams {
+    app: App;
+    task: Task;
+    onSubmit: (updatedTasks: Task[]) => void;
+    allTasks: Task[];
+}
+
 export class TaskModal extends Modal {
     public readonly task: Task;
     public readonly onSubmit: (updatedTasks: Task[]) => void;
     public readonly allTasks: Task[];
 
-    constructor({
-        app,
-        task,
-        onSubmit,
-        allTasks,
-    }: {
-        app: App;
-        task: Task;
-        onSubmit: (updatedTasks: Task[]) => void;
-        allTasks: Task[];
-    }) {
+    constructor({ app, task, onSubmit, allTasks }: TaskModalParams) {
         super(app);
 
         this.task = task;
