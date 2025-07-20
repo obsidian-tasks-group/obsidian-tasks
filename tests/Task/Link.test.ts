@@ -1,14 +1,15 @@
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
+import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
+import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
+import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
 
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
-import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
-import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
-import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
 import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
-import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
-import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
-import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
+import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
@@ -268,6 +269,13 @@ describe('linkClass', () => {
             expect(linkToAFolder.isLinkTo('link_in_task_wikilink')).toEqual(true);
             expect(linkToAFolder.isLinkTo('Test Data/link_in_task_wikilink')).toEqual(true);
             expect(linkToAFolder.isLinkTo('Test Data/link_in_task_wikilink.md')).toEqual(true);
+        });
+
+        it('matches TasksFile', () => {
+            const linkToAFolder = getLink(link_in_task_wikilink, 2);
+            expect(linkToAFolder.originalMarkdown).toMatchInlineSnapshot('"[[Test Data/link_in_task_wikilink]]"');
+
+            expect(linkToAFolder.isLinkTo(new TasksFile(link_in_task_wikilink.filePath))).toEqual(true);
         });
     });
 });

@@ -1,4 +1,5 @@
 import type { Reference } from 'obsidian';
+import type { TasksFile } from '../Scripting/TasksFile';
 
 export class Link {
     private readonly rawLink: Reference;
@@ -68,7 +69,11 @@ export class Link {
         return this.rawLink.displayText;
     }
 
-    public isLinkTo(destination: string): boolean {
+    public isLinkTo(destination: string | TasksFile): boolean {
+        if (typeof destination !== 'string') {
+            return true;
+        }
+
         const removeMd = /\.md$/;
         const thisDestinationWithoutMd = this.destination.replace(removeMd, '');
         const destinationWithoutMd = destination.replace(removeMd, '');
