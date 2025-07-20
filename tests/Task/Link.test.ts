@@ -240,6 +240,17 @@ describe('linkClass', () => {
         // Empty Markdown Link Tests
         // []() and [alias]() are not detected by the obsidian parser as a link
     });
+
+    describe('isLinkTo() tests', () => {
+        it('matches filenames', () => {
+            const link = getLink(links_everywhere, 0);
+
+            expect(link.isLinkTo('link_in_file_body')).toEqual(true);
+            expect(link.isLinkTo('link_in_file_body.md')).toEqual(true);
+
+            expect(link.isLinkTo('somewhere_else')).toEqual(false);
+        });
+    });
 });
 
 describe('visualise links', () => {
