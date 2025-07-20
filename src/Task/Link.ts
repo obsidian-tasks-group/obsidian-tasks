@@ -68,7 +68,11 @@ export class Link {
         return this.rawLink.displayText;
     }
 
-    public isLinkTo(_: string): boolean {
-        return true;
+    public isLinkTo(destination: string): boolean {
+        if (destination.startsWith(this.destination)) {
+            return true;
+        }
+
+        return false;
     }
 }
