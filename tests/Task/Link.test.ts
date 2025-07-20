@@ -254,14 +254,17 @@ describe('linkClass', () => {
             expect(link.isLinkTo('link_in_file_')).toEqual(false);
         });
 
-        it.failing('matches folders', () => {
+        it('matches without folders', () => {
             const linkToAFile = getLink(link_in_task_wikilink, 0);
             expect(linkToAFile.originalMarkdown).toMatchInlineSnapshot('"[[link_in_task_wikilink]]"');
 
+            expect(linkToAFile.isLinkTo('link_in_task_wikilink')).toEqual(true);
+        });
+
+        it.failing('matches with folders', () => {
             const linkToAFolder = getLink(link_in_task_wikilink, 2);
             expect(linkToAFolder.originalMarkdown).toMatchInlineSnapshot('"[[Test Data/link_in_task_wikilink]]"');
 
-            expect(linkToAFile.isLinkTo('link_in_task_wikilink')).toEqual(true);
             expect(linkToAFolder.isLinkTo('link_in_task_wikilink')).toEqual(true);
             expect(linkToAFolder.isLinkTo('Test Data/link_in_task_wikilink')).toEqual(true);
             expect(linkToAFolder.isLinkTo('Test Data/link_in_task_wikilink.md')).toEqual(true);
