@@ -72,7 +72,14 @@ export class Link {
         const removeMd = /\.md$/;
         const thisDestinationWithoutMd = this.destination.replace(removeMd, '');
         const destinationWithoutMd = destination.replace(removeMd, '');
+
+        // This is filenames match allowing extension to be present or absent
         if (destinationWithoutMd === thisDestinationWithoutMd) {
+            return true;
+        }
+
+        // The link can contain a folder that is not present in the parameter
+        if (thisDestinationWithoutMd.endsWith(`/${destinationWithoutMd}`)) {
             return true;
         }
 
