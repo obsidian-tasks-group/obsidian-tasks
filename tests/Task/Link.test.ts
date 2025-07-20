@@ -24,6 +24,8 @@ describe('linkClass', () => {
         expect(link.destination).toEqual('link_in_file_body');
         expect(link.displayText).toEqual('link_in_file_body');
         expect(link.markdown).toEqual(link.originalMarkdown);
+        expect(link.isLinkTo('link_in_file_body')).toEqual(true);
+        expect(link.isLinkTo('link_in_file_body.md')).toEqual(true);
     });
 
     describe('return markdown to navigate to a link', () => {
