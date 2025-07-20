@@ -69,7 +69,7 @@ export class Link {
     }
 
     public isLinkTo(destination: string): boolean {
-        if (destination.startsWith(this.destination)) {
+        if (destination.replace(/\.md$/, '') === this.destination.replace(/\.md$/, '')) {
             return true;
         }
 

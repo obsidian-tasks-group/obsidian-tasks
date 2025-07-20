@@ -249,6 +249,9 @@ describe('linkClass', () => {
             expect(link.isLinkTo('link_in_file_body.md')).toEqual(true);
 
             expect(link.isLinkTo('somewhere_else')).toEqual(false);
+
+            expect(link.isLinkTo('link_in_file_body_but_different')).toEqual(false);
+            expect(link.isLinkTo('link_in_file_')).toEqual(false);
         });
     });
 });
