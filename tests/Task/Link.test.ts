@@ -261,7 +261,7 @@ describe('linkClass', () => {
             expect(linkToAFile.isLinkTo('link_in_task_wikilink')).toEqual(true);
         });
 
-        it.failing('matches with folders', () => {
+        it('matches with folders', () => {
             const linkToAFolder = getLink(link_in_task_wikilink, 2);
             expect(linkToAFolder.originalMarkdown).toMatchInlineSnapshot('"[[Test Data/link_in_task_wikilink]]"');
 
