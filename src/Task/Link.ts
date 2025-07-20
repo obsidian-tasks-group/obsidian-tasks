@@ -67,4 +67,8 @@ export class Link {
     public get displayText(): string | undefined {
         return this.rawLink.displayText;
     }
+
+    public isLinkTo(_: string): boolean {
+        return true;
+    }
 }
