@@ -1,14 +1,15 @@
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
+import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
+import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
+import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
 
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
-import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
-import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
-import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
 import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
-import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
-import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
-import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
+import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
@@ -24,6 +25,8 @@ describe('linkClass', () => {
         expect(link.destination).toEqual('link_in_file_body');
         expect(link.displayText).toEqual('link_in_file_body');
         expect(link.markdown).toEqual(link.originalMarkdown);
+        expect(link.isLinkTo('link_in_file_body')).toEqual(true);
+        expect(link.isLinkTo('link_in_file_body.md')).toEqual(true);
     });
 
     describe('return markdown to navigate to a link', () => {
@@ -237,6 +240,46 @@ describe('linkClass', () => {
 
         // Empty Markdown Link Tests
         // []() and [alias]() are not detected by the obsidian parser as a link
+    });
+
+    describe('isLinkTo() tests', () => {
+        it('matches filenames', () => {
+            const link = getLink(links_everywhere, 0);
+
+            expect(link.isLinkTo('link_in_file_body')).toEqual(true);
+            expect(link.isLinkTo('link_in_file_body.md')).toEqual(true);
+
+            expect(link.isLinkTo('somewhere_else')).toEqual(false);
+
+            expect(link.isLinkTo('link_in_file_body_but_different')).toEqual(false);
+            expect(link.isLinkTo('link_in_file_')).toEqual(false);
+        });
+
+        it('matches without folders', () => {
+            const linkToAFile = getLink(link_in_task_wikilink, 0);
+            expect(linkToAFile.originalMarkdown).toMatchInlineSnapshot('"[[link_in_task_wikilink]]"');
+
+            expect(linkToAFile.isLinkTo('link_in_task_wikilink')).toEqual(true);
+        });
+
+        it('matches with folders', () => {
+            const linkToAFolder = getLink(link_in_task_wikilink, 2);
+            expect(linkToAFolder.originalMarkdown).toMatchInlineSnapshot('"[[Test Data/link_in_task_wikilink]]"');
+
+            expect(linkToAFolder.isLinkTo('link_in_task_wikilink')).toEqual(true);
+            expect(linkToAFolder.isLinkTo('Test Data/link_in_task_wikilink')).toEqual(true);
+            expect(linkToAFolder.isLinkTo('Test Data/link_in_task_wikilink.md')).toEqual(true);
+        });
+
+        it('matches TasksFile', () => {
+            const linkToAFolder = getLink(link_in_task_wikilink, 2);
+            expect(linkToAFolder.originalMarkdown).toMatchInlineSnapshot('"[[Test Data/link_in_task_wikilink]]"');
+
+            expect(linkToAFolder.isLinkTo(new TasksFile('Test Data/link_in_task_wikilink.md'))).toEqual(true);
+            expect(linkToAFolder.isLinkTo(new TasksFile('link_in_task_wikilink.md'))).toEqual(true);
+            expect(linkToAFolder.isLinkTo(new TasksFile('Wrong Test Data/link_in_task_wikilink.md'))).toEqual(false);
+            expect(linkToAFolder.isLinkTo(new TasksFile('something_obviously_different.md'))).toEqual(false);
+        });
     });
 });
 
