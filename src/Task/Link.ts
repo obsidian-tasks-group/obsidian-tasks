@@ -14,7 +14,8 @@ export class Link {
     }
 
     /**
-     * Return the original Markdown.
+     * Return the original Markdown, exactly as specified in the original markdown.
+     * For "[ab](cd.md)", it would return "[ab](cd.md)".
      *
      * See also {@link markdown}
      */
@@ -26,6 +27,11 @@ export class Link {
      * This is like {@link originalMarkdown}, but will also work for heading-only links
      * when viewed in files other than the one containing the original link.
      *
+     * For "[ab](cd.md)" it would return "[ab](cd.md)".
+     * For "[#heading](cd.md)" in file "de.md" it would return "[de#heading](cd.md)".
+     *
+     * This is needed if using links in Tasks group headings if any of your task files have
+     * links to headings in their same file.
      * See also {@link originalMarkdown}
      */
     public get markdown(): string {
@@ -38,10 +44,26 @@ export class Link {
         return `[[${this.pathContainingLink}${this.destination}|${this.displayText}]]`;
     }
 
+    /**
+     * Return the destination, exactly as specified in the original markdown.
+     * For "[ab](cd.md)", it would return "cd.md".
+     *
+     * It is not able to supply the full path of the link destination.
+     * Note that if you have two files called `cd.md`, Tasks does not yet do anything
+     * to select the closest file of that name.
+     *
+     * So if this is used in a link in Obsidian, Obsidian will use its own logic to open the
+     * "closest" file.
+     * Obsidian would choose the closest file to where the Tasks query is, as opposed
+     * to the closest file where the original task Markdown line is.
+     */
     public get destination(): string {
         return this.rawLink.link;
     }
 
+    /**
+     * For "[ab](cd.md)", it would return "ab".
+     */
     public get displayText(): string | undefined {
         return this.rawLink.displayText;
     }
