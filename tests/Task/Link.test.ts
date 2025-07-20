@@ -275,7 +275,10 @@ describe('linkClass', () => {
             const linkToAFolder = getLink(link_in_task_wikilink, 2);
             expect(linkToAFolder.originalMarkdown).toMatchInlineSnapshot('"[[Test Data/link_in_task_wikilink]]"');
 
-            expect(linkToAFolder.isLinkTo(new TasksFile(link_in_task_wikilink.filePath))).toEqual(true);
+            expect(linkToAFolder.isLinkTo(new TasksFile('Test Data/link_in_task_wikilink.md'))).toEqual(true);
+            expect(linkToAFolder.isLinkTo(new TasksFile('link_in_task_wikilink.md'))).toEqual(true);
+            expect(linkToAFolder.isLinkTo(new TasksFile('Wrong Test Data/link_in_task_wikilink.md'))).toEqual(false);
+            expect(linkToAFolder.isLinkTo(new TasksFile('something_obviously_different.md'))).toEqual(false);
         });
     });
 });

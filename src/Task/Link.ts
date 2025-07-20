@@ -88,6 +88,6 @@ export class Link {
             return false;
         }
 
-        return true;
+        return this.isLinkTo(destination.path);
     }
 }
