@@ -69,7 +69,8 @@ export class Link {
     }
 
     public isLinkTo(destination: string): boolean {
-        if (destination.replace(/\.md$/, '') === this.destination.replace(/\.md$/, '')) {
+        const removeMd = /\.md$/;
+        if (destination.replace(removeMd, '') === this.destination.replace(removeMd, '')) {
             return true;
         }
 
