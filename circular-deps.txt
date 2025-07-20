@@ -1,21 +1,22 @@
-Processed 185 files (640ms) (2 warnings)
+Processed 185 files (596ms) (2 warnings)
 
 1) Config/Settings.ts > Suggestor/Suggestor.ts
 2) Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts
 3) Config/Settings.ts > Suggestor/Suggestor.ts > Task/Task.ts
 4) Config/Settings.ts > Suggestor/Suggestor.ts > Task/Task.ts > DateTime/DateFallback.ts
 5) Task/Task.ts > DateTime/DateFallback.ts
-6) Task/Task.ts > Task/ListItem.ts
-7) Task/Task.ts > Task/OnCompletion.ts
-8) Task/Task.ts > Task/Urgency.ts
-9) TaskSerializer/DefaultTaskSerializer.ts > TaskSerializer/index.ts
-10) Api/index.ts > main.ts
-11) Query/Query.ts > Query/Explain/Explainer.ts
-12) Query/FilterParser.ts > Query/Filter/BooleanField.ts
-13) main.ts > Commands/index.ts
-14) Obsidian/Cache.ts > Obsidian/FileParser.ts
-15) Obsidian/TasksEvents.ts > Obsidian/Cache.ts
-16) main.ts > Config/SettingsTab.ts > Config/PresetsSettingsUI.ts
-17) main.ts > Config/SettingsTab.ts
-18) main.ts > Renderer/QueryRenderer.ts
+6) Scripting/TasksFile.ts > Task/Link.ts
+7) Task/Task.ts > Task/ListItem.ts
+8) Task/Task.ts > Task/OnCompletion.ts
+9) Task/Task.ts > Task/Urgency.ts
+10) TaskSerializer/DefaultTaskSerializer.ts > TaskSerializer/index.ts
+11) Api/index.ts > main.ts
+12) Query/Query.ts > Query/Explain/Explainer.ts
+13) Query/FilterParser.ts > Query/Filter/BooleanField.ts
+14) main.ts > Commands/index.ts
+15) Obsidian/Cache.ts > Obsidian/FileParser.ts
+16) Obsidian/TasksEvents.ts > Obsidian/Cache.ts
+17) main.ts > Config/SettingsTab.ts > Config/PresetsSettingsUI.ts
+18) main.ts > Config/SettingsTab.ts
+19) main.ts > Renderer/QueryRenderer.ts
 
