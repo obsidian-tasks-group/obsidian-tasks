@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const vault = app.vault;
+const metadataCache = app.metadataCache;
 
 async function getMarkdownFiles() {
     // Get all files from Test Data/ directory
@@ -118,6 +119,13 @@ ${functions.join('\n')}
     writeFile(testSourceFile, content);
 }
 
+function writeResolvedLinks() {
+    const resolvedLinks = metadataCache.resolvedLinks;
+    const content = JSON.stringify(resolvedLinks, null, 2);
+    const testSourceFile = getOutputFilePath('__test_data__/metadataCache/resolvedLinks.json');
+    writeFile(testSourceFile, content);
+}
+
 async function export_files(tp) {
     const markdownFiles = await getMarkdownFiles();
 
@@ -126,6 +134,8 @@ async function export_files(tp) {
     }
 
     await writeListOfAllTestFunctions(markdownFiles);
+
+    writeResolvedLinks();
 
     showNotice('Success.');
     return '';
