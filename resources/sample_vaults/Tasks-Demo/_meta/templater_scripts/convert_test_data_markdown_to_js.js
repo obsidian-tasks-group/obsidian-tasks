@@ -14,6 +14,12 @@ function getBasename(filePath) {
     return path.basename(filePath, '.md');
 }
 
+function writeDataAsJson(sortedData, outputPath) {
+    const testSourceFile = getOutputFilePath(outputPath);
+    const content = JSON.stringify(sortedData, null, 2);
+    writeFile(testSourceFile, content);
+}
+
 function getOutputFilePath(outputFile) {
     const rootOfVault = vault.adapter.getBasePath();
     return path.join(rootOfVault, '../../../tests/Obsidian', outputFile);
@@ -82,9 +88,7 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     // Sort keys in the data object to ensure stable order
     const sortedData = sortObjectKeys(data);
 
-    const testSourceFile = getOutputFilePath(outputPath);
-    const content = JSON.stringify(sortedData, null, 2);
-    writeFile(testSourceFile, content);
+    writeDataAsJson(sortedData, outputPath);
 }
 
 async function writeListOfAllTestFunctions(files) {
