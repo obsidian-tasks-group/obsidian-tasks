@@ -1,3 +1,115 @@
+## Test Data/all_link_types.md
+
+`link.originalMarkdown     `: `'[markdownLink](markdownLink.md)'`
+`link.markdown             `: `'[markdownLink](markdownLink.md)'`
+`link.destination          `: `'markdownLink.md'`
+`link.displayText          `: `'markdownLink'`
+
+`link.originalMarkdown     `: `'[markdownLink with alias](markdownLink.md)'`
+`link.markdown             `: `'[markdownLink with alias](markdownLink.md)'`
+`link.destination          `: `'markdownLink.md'`
+`link.displayText          `: `'markdownLink with alias'`
+
+`link.originalMarkdown     `: `'[[wikilink]]'`
+`link.markdown             `: `'[[wikilink]]'`
+`link.destination          `: `'wikilink'`
+`link.displayText          `: `'wikilink'`
+
+`link.originalMarkdown     `: `'[[wikilink|wikilink with alias]]'`
+`link.markdown             `: `'[[wikilink|wikilink with alias]]'`
+`link.destination          `: `'wikilink'`
+`link.displayText          `: `'wikilink with alias'`
+
+`link.originalMarkdown     `: `'[[#heading]]'`
+`link.markdown             `: `'[[Test Data/all_link_types.md#heading|heading]]'`
+`link.destination          `: `'#heading'`
+`link.displayText          `: `'heading'`
+
+`link.originalMarkdown     `: `'[[#heading|internal wikilink with alias and heading]]'`
+`link.markdown             `: `'[[Test Data/all_link_types.md#heading|internal wikilink with alias and heading]]'`
+`link.destination          `: `'#heading'`
+`link.displayText          `: `'internal wikilink with alias and heading'`
+
+`link.originalMarkdown     `: `'[[#heading#sub-heading]]'`
+`link.markdown             `: `'[[Test Data/all_link_types.md#heading#sub-heading|heading > sub-heading]]'`
+`link.destination          `: `'#heading#sub-heading'`
+`link.displayText          `: `'heading > sub-heading'`
+
+`link.originalMarkdown     `: `'[[#heading#sub-heading||internal wikilink with alias and two headings]]'`
+`link.markdown             `: `'[[Test Data/all_link_types.md#heading#sub-heading||internal wikilink with alias and two headings]]'`
+`link.destination          `: `'#heading#sub-heading'`
+`link.displayText          `: `'|internal wikilink with alias and two headings'`
+
+`link.originalMarkdown     `: `'[[wikilink#heading]]'`
+`link.markdown             `: `'[[wikilink#heading]]'`
+`link.destination          `: `'wikilink#heading'`
+`link.displayText          `: `'wikilink > heading'`
+
+`link.originalMarkdown     `: `'[[wikilink#heading|wikilink with alias and heading]]'`
+`link.markdown             `: `'[[wikilink#heading|wikilink with alias and heading]]'`
+`link.destination          `: `'wikilink#heading'`
+`link.displayText          `: `'wikilink with alias and heading'`
+
+`link.originalMarkdown     `: `'[[wikilink#heading#sub-heading]]'`
+`link.markdown             `: `'[[wikilink#heading#sub-heading]]'`
+`link.destination          `: `'wikilink#heading#sub-heading'`
+`link.displayText          `: `'wikilink > heading > sub-heading'`
+
+`link.originalMarkdown     `: `'[[wikilink#heading#sub-heading|wikilink with alias and two headings]]'`
+`link.markdown             `: `'[[wikilink#heading#sub-heading|wikilink with alias and two headings]]'`
+`link.destination          `: `'wikilink#heading#sub-heading'`
+`link.displayText          `: `'wikilink with alias and two headings'`
+
+`link.originalMarkdown     `: `'[markdownLink](markdownLink.md#heading)'`
+`link.markdown             `: `'[markdownLink](markdownLink.md#heading)'`
+`link.destination          `: `'markdownLink.md#heading'`
+`link.displayText          `: `'markdownLink'`
+
+`link.originalMarkdown     `: `'[markdownLink with alias and heading](markdownLink.md#heading)'`
+`link.markdown             `: `'[markdownLink with alias and heading](markdownLink.md#heading)'`
+`link.destination          `: `'markdownLink.md#heading'`
+`link.displayText          `: `'markdownLink with alias and heading'`
+
+`link.originalMarkdown     `: `'[markdownLink](markdownLink.md#heading#sub-heading)'`
+`link.markdown             `: `'[markdownLink](markdownLink.md#heading#sub-heading)'`
+`link.destination          `: `'markdownLink.md#heading#sub-heading'`
+`link.displayText          `: `'markdownLink'`
+
+`link.originalMarkdown     `: `'[markdownLink with alias and two headings](markdownLink.md#heading#sub-heading)'`
+`link.markdown             `: `'[markdownLink with alias and two headings](markdownLink.md#heading#sub-heading)'`
+`link.destination          `: `'markdownLink.md#heading#sub-heading'`
+`link.displayText          `: `'markdownLink with alias and two headings'`
+
+`link.originalMarkdown     `: `'[[#^block]]'`
+`link.markdown             `: `'[[Test Data/all_link_types.md#^block|^block]]'`
+`link.destination          `: `'#^block'`
+`link.displayText          `: `'^block'`
+
+`link.originalMarkdown     `: `'[[#^block|wikilink with alias and block]]'`
+`link.markdown             `: `'[[Test Data/all_link_types.md#^block|wikilink with alias and block]]'`
+`link.destination          `: `'#^block'`
+`link.displayText          `: `'wikilink with alias and block'`
+
+`link.originalMarkdown     `: `'[[wikilink#^block]]'`
+`link.markdown             `: `'[[wikilink#^block]]'`
+`link.destination          `: `'wikilink#^block'`
+`link.displayText          `: `'wikilink > ^block'`
+
+`link.originalMarkdown     `: `'[[wikilink#^block|wikilink with alias and block]]'`
+`link.markdown             `: `'[[wikilink#^block|wikilink with alias and block]]'`
+`link.destination          `: `'wikilink#^block'`
+`link.displayText          `: `'wikilink with alias and block'`
+
+`link.originalMarkdown     `: `'[markdownLink](markdownLink.md#^block)'`
+`link.markdown             `: `'[markdownLink](markdownLink.md#^block)'`
+`link.destination          `: `'markdownLink.md#^block'`
+`link.displayText          `: `'markdownLink'`
+
+`link.originalMarkdown     `: `'[markdownLink with alias and block](markdownLink.md#^block)'`
+`link.markdown             `: `'[markdownLink with alias and block](markdownLink.md#^block)'`
+`link.destination          `: `'markdownLink.md#^block'`
+`link.displayText          `: `'markdownLink with alias and block'`
+
 ## Test Data/comments_markdown_style.md
 
 `link.originalMarkdown     `: `'[[comments_html_style]]'`

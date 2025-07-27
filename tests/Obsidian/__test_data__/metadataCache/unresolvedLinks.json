@@ -198,5 +198,8 @@
   "_meta/templates/tasks with range of all dates - Templater plugin.md": {},
   "_meta/templates/tasks with range of due dates - Templater plugin.md": {},
   "_meta/templates/tasks with range of scheduled dates - Templater plugin.md": {},
-  "_meta/templates/tasks with range of start dates - Templater plugin.md": {}
+  "_meta/templates/tasks with range of start dates - Templater plugin.md": {},
+  "Test Data/all_link_types.md": {},
+  "Test Attachments/markdownLink.md": {},
+  "Test Attachments/wikilink.md": {}
 }
