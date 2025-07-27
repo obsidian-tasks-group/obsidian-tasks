@@ -84,11 +84,10 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
         return '';
     }
 
-    const outputPath = `__test_data__/${filename}.json`;
     // Sort keys in the data object to ensure stable order
     const sortedData = sortObjectKeys(data);
 
-    writeDataAsJson(outputPath, sortedData);
+    writeDataAsJson(`__test_data__/${filename}.json`, sortedData);
 }
 
 async function writeListOfAllTestFunctions(files) {
