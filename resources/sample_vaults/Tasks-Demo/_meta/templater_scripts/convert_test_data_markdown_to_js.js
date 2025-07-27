@@ -126,9 +126,7 @@ ${functions.join('\n')}
 
 function writeResolvedLinks() {
     const resolvedLinks = metadataCache.resolvedLinks;
-    const content = JSON.stringify(resolvedLinks, null, 2);
-    const testSourceFile = getOutputFilePath('__test_data__/metadataCache/resolvedLinks.json');
-    writeFile(testSourceFile, content);
+    writeDataAsJson(resolvedLinks, '__test_data__/metadataCache/resolvedLinks.json');
 }
 
 async function export_files(tp) {
