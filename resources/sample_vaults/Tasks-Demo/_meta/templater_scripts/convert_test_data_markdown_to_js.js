@@ -55,6 +55,21 @@ function sortObjectKeys(obj) {
     return obj;
 }
 
+/**
+ * Sorts an object's keys in alphabetical order at the top level only.
+ */
+function sortTopLevelKeys(obj) {
+    if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+        return Object.keys(obj)
+            .sort()
+            .reduce((acc, key) => {
+                acc[key] = obj[key]; // No recursive call here
+                return acc;
+            }, {});
+    }
+    return obj;
+}
+
 async function convertMarkdownFileToTestFunction(filePath, tp) {
     const tFile = vault.getAbstractFileByPath(filePath);
 
@@ -124,7 +139,8 @@ ${functions.join('\n')}
 }
 
 function writeMetadataCacheData() {
-    writeDataAsJson('__test_data__/metadataCache/resolvedLinks.json', metadataCache.resolvedLinks);
+    writeDataAsJson('__test_data__/metadataCache/resolvedLinks.json', sortTopLevelKeys(metadataCache.resolvedLinks));
+    writeDataAsJson('__test_data__/metadataCache/unresolvedLinks.json', metadataCache.unresolvedLinks);
     writeDataAsJson('__test_data__/metadataCache/unresolvedLinks.json', metadataCache.unresolvedLinks);
 }
 
