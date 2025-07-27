@@ -125,8 +125,7 @@ ${functions.join('\n')}
 }
 
 function writeResolvedLinks() {
-    const resolvedLinks = metadataCache.resolvedLinks;
-    writeDataAsJson('__test_data__/metadataCache/resolvedLinks.json', resolvedLinks);
+    writeDataAsJson('__test_data__/metadataCache/resolvedLinks.json', metadataCache.resolvedLinks);
 }
 
 async function export_files(tp) {
