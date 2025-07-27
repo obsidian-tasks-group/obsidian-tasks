@@ -14,7 +14,7 @@ function getBasename(filePath) {
     return path.basename(filePath, '.md');
 }
 
-function writeDataAsJson(sortedData, outputPath) {
+function writeDataAsJson(outputPath, sortedData) {
     const testSourceFile = getOutputFilePath(outputPath);
     const content = JSON.stringify(sortedData, null, 2);
     writeFile(testSourceFile, content);
@@ -88,7 +88,7 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     // Sort keys in the data object to ensure stable order
     const sortedData = sortObjectKeys(data);
 
-    writeDataAsJson(sortedData, outputPath);
+    writeDataAsJson(outputPath, sortedData);
 }
 
 async function writeListOfAllTestFunctions(files) {
@@ -126,7 +126,7 @@ ${functions.join('\n')}
 
 function writeResolvedLinks() {
     const resolvedLinks = metadataCache.resolvedLinks;
-    writeDataAsJson(resolvedLinks, '__test_data__/metadataCache/resolvedLinks.json');
+    writeDataAsJson('__test_data__/metadataCache/resolvedLinks.json', resolvedLinks);
 }
 
 async function export_files(tp) {
