@@ -127,6 +127,17 @@
   "Styling/Theme - Minimal Theme.md": {},
   "Styling/Theme - Things Theme.md": {},
   "Tasks.md": {},
+  "Test Attachments/markdownLink.md": {
+    "Test Data/all_link_types.md": 1
+  },
+  "Test Attachments/wikilink.md": {
+    "Test Data/all_link_types.md": 1
+  },
+  "Test Data/all_link_types.md": {
+    "Test Attachments/markdownLink.md": 8,
+    "Test Attachments/wikilink.md": 8,
+    "Test Data/all_link_types.md": 6
+  },
   "Test Data/blockquote.md": {},
   "Test Data/callout.md": {},
   "Test Data/callout_custom.md": {},
@@ -253,16 +264,5 @@
   "_meta/templates/tasks with range of all dates - Templater plugin.md": {},
   "_meta/templates/tasks with range of due dates - Templater plugin.md": {},
   "_meta/templates/tasks with range of scheduled dates - Templater plugin.md": {},
-  "_meta/templates/tasks with range of start dates - Templater plugin.md": {},
-  "Test Data/all_link_types.md": {
-    "Test Attachments/markdownLink.md": 8,
-    "Test Attachments/wikilink.md": 8,
-    "Test Data/all_link_types.md": 6
-  },
-  "Test Attachments/markdownLink.md": {
-    "Test Data/all_link_types.md": 1
-  },
-  "Test Attachments/wikilink.md": {
-    "Test Data/all_link_types.md": 1
-  }
+  "_meta/templates/tasks with range of start dates - Templater plugin.md": {}
 }
