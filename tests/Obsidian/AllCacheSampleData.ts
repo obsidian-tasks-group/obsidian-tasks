@@ -3,6 +3,7 @@
 
 import type { SimulatedFile } from './SimulatedFile';
 
+import all_link_types from './__test_data__/all_link_types.json';
 import blockquote from './__test_data__/blockquote.json';
 import callout from './__test_data__/callout.json';
 import callout_custom from './__test_data__/callout_custom.json';
@@ -98,6 +99,7 @@ import zero_width from './__test_data__/zero_width.json';
  */
 export function allCacheSampleData(): SimulatedFile[] {
     return [
+        all_link_types,
         blockquote,
         callout,
         callout_custom,
