@@ -13,6 +13,8 @@ export class TasksFile {
     private readonly _frontmatter = { tags: [] } as any;
     private readonly _tags: string[] = [];
 
+    private readonly _outlinksInProperties: Link[] = [];
+
     constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
         this._cachedMetadata = cachedMetadata;
@@ -22,6 +24,8 @@ export class TasksFile {
             this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
             this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter) ?? [];
         }
+        this._outlinksInProperties =
+            this.cachedMetadata.frontmatterLinks?.map((link) => new Link(link, this.path)) ?? [];
 
         if (Object.keys(cachedMetadata).length !== 0) {
             const tags = getAllTags(this.cachedMetadata) ?? [];
@@ -61,7 +65,7 @@ export class TasksFile {
      * Return an array of {@link Link} in the file's properties/frontmatter.
      */
     get outlinksInProperties(): Link[] {
-        return this.cachedMetadata.frontmatterLinks?.map((link) => new Link(link, this.path)) ?? [];
+        return this._outlinksInProperties;
     }
 
     /**
