@@ -4,7 +4,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 export class Link {
     private readonly rawLink: Reference;
     private readonly pathContainingLink: string;
-    private readonly _destinationPath: string | undefined;
+    private readonly _destinationPath: string | null;
 
     /**
      * @param {Reference} rawLink - The raw link from Obsidian cache.
@@ -14,7 +14,7 @@ export class Link {
     constructor(rawLink: Reference, pathContainingLink: string, destinationPath?: string) {
         this.rawLink = rawLink;
         this.pathContainingLink = pathContainingLink;
-        this._destinationPath = destinationPath;
+        this._destinationPath = destinationPath ?? null;
     }
 
     /**
@@ -65,7 +65,7 @@ export class Link {
         return this.rawLink.link;
     }
 
-    public get destinationPath(): string | undefined {
+    public get destinationPath(): string | null {
         return this._destinationPath;
     }
 

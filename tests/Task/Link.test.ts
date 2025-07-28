@@ -255,6 +255,17 @@ describe('linkClass', () => {
 
             expect(link.destinationPath).toEqual(destinationPath);
         });
+
+        it('should return null path if destinationPath not supplied', () => {
+            const data = link_in_file_body;
+            const rawLink = data.cachedMetadata.links[0];
+            expect(rawLink.original).toEqual('[[yaml_tags_is_empty]]');
+            expect(rawLink.link).toEqual('yaml_tags_is_empty');
+
+            const link = new Link(rawLink, data.filePath);
+
+            expect(link.destinationPath).toBeNull();
+        });
     });
 
     describe('isLinkTo() tests', () => {
