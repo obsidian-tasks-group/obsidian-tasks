@@ -251,10 +251,9 @@ describe('linkClass', () => {
             expect(rawLink.link).toEqual('yaml_tags_is_empty');
 
             const destinationPath = 'Test Data/yaml_tags_is_empty.md';
-            // @ts-expect-error TS6133: link is declared but its value is never read.
             const link = new Link(rawLink, data.filePath, destinationPath);
 
-            // expect(link.destinationPath).toEqual(destinationPath);
+            expect(link.destinationPath).toEqual(destinationPath);
         });
     });
 
