@@ -290,7 +290,7 @@ describe('visualise links', () => {
         return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
     }
 
-    function visualiseLinks(outlinks: Link[], file: SimulatedFile) {
+    function visualiseLinks(outlinks: Readonly<Link[]>, file: SimulatedFile) {
         let output = '';
 
         if (outlinks.length === 0) {

@@ -13,7 +13,7 @@ export class TasksFile {
     private readonly _frontmatter = { tags: [] } as any;
     private readonly _tags: string[] = [];
 
-    private readonly _outlinksInProperties: Link[] = [];
+    private readonly _outlinksInProperties: Readonly<Link[]> = [];
 
     constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
@@ -64,7 +64,7 @@ export class TasksFile {
     /**
      * Return an array of {@link Link} in the file's properties/frontmatter.
      */
-    get outlinksInProperties(): Link[] {
+    get outlinksInProperties(): Readonly<Link[]> {
         return this._outlinksInProperties;
     }
 
