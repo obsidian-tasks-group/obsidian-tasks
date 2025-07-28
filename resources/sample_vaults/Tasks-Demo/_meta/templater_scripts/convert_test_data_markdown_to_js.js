@@ -139,11 +139,9 @@ ${functions.join('\n')}
 }
 
 function writeMetadataCacheData() {
-    writeDataAsJson('__test_data__/metadataCache/resolvedLinks.json', sortTopLevelKeys(metadataCache.resolvedLinks));
-    writeDataAsJson(
-        '__test_data__/metadataCache/unresolvedLinks.json',
-        sortTopLevelKeys(metadataCache.unresolvedLinks),
-    );
+    const outputPath = '__test_data__/metadataCache/';
+    writeDataAsJson(outputPath + 'resolvedLinks.json', sortTopLevelKeys(metadataCache.resolvedLinks));
+    writeDataAsJson(outputPath + 'unresolvedLinks.json', sortTopLevelKeys(metadataCache.unresolvedLinks));
 }
 
 async function export_files(tp) {
