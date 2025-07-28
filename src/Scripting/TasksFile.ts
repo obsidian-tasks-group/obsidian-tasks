@@ -14,6 +14,7 @@ export class TasksFile {
     private readonly _tags: string[] = [];
 
     private readonly _outlinksInProperties: Readonly<Link[]> = [];
+    private readonly _outlinksInBody: Readonly<Link[]> = [];
 
     constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
@@ -26,6 +27,7 @@ export class TasksFile {
         }
         this._outlinksInProperties =
             this.cachedMetadata.frontmatterLinks?.map((link) => new Link(link, this.path)) ?? [];
+        this._outlinksInBody = this.cachedMetadata?.links?.map((link) => new Link(link, this.path)) ?? [];
 
         if (Object.keys(cachedMetadata).length !== 0) {
             const tags = getAllTags(this.cachedMetadata) ?? [];
@@ -71,8 +73,8 @@ export class TasksFile {
     /**
      * Return an array of {@link Link} in the body of the file.
      */
-    get outlinksInBody(): Link[] {
-        return this.cachedMetadata?.links?.map((link) => new Link(link, this.path)) ?? [];
+    get outlinksInBody(): Readonly<Link[]> {
+        return this._outlinksInBody;
     }
 
     /**
