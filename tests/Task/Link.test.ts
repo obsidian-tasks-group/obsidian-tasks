@@ -4,6 +4,7 @@ import internal_heading_links from '../Obsidian/__test_data__/internal_heading_l
 import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
 import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
 
+import link_in_file_body from '../Obsidian/__test_data__/link_in_file_body.json';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
@@ -240,6 +241,21 @@ describe('linkClass', () => {
 
         // Empty Markdown Link Tests
         // []() and [alias]() are not detected by the obsidian parser as a link
+    });
+
+    describe('destinationPath tests', () => {
+        it('should accept and return destinationPath', () => {
+            const data = link_in_file_body;
+            const rawLink = data.cachedMetadata.links[0];
+            expect(rawLink.original).toEqual('[[yaml_tags_is_empty]]');
+            expect(rawLink.link).toEqual('yaml_tags_is_empty');
+
+            const destinationPath = 'Test Data/yaml_tags_is_empty.md';
+            // @ts-expect-error TS6133: link is declared but its value is never read.
+            const link = new Link(rawLink, data.filePath, destinationPath);
+
+            // expect(link.destinationPath).toEqual(destinationPath);
+        });
     });
 
     describe('isLinkTo() tests', () => {
