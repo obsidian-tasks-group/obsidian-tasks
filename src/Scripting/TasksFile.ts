@@ -2,6 +2,7 @@ import {
     type CachedMetadata,
     type FrontMatterCache,
     type FrontmatterLinkCache,
+    type LinkCache,
     getAllTags,
     parseFrontMatterTags,
 } from 'obsidian';
@@ -32,7 +33,7 @@ export class TasksFile {
             this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter) ?? [];
         }
         this._outlinksInProperties = this.createLinks(this.cachedMetadata.frontmatterLinks);
-        this._outlinksInBody = this.cachedMetadata?.links?.map((link) => new Link(link, this.path)) ?? [];
+        this._outlinksInBody = this.createLinks(this.cachedMetadata.links);
 
         if (Object.keys(cachedMetadata).length !== 0) {
             const tags = getAllTags(this.cachedMetadata) ?? [];
@@ -40,7 +41,7 @@ export class TasksFile {
         }
     }
 
-    private createLinks(frontmatterLinks: FrontmatterLinkCache[] | undefined) {
+    private createLinks(frontmatterLinks: LinkCache[] | FrontmatterLinkCache[] | undefined) {
         return frontmatterLinks?.map((link) => new Link(link, this.path)) ?? [];
     }
 
