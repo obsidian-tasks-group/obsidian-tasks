@@ -4,8 +4,8 @@ import { Link } from './Link';
 export class LinkResolver {
     private static instance: LinkResolver;
 
-    public resolve(rawLink: Reference, pathContainingLink: string, destinationPath?: string) {
-        return new Link(rawLink, pathContainingLink, destinationPath);
+    public resolve(rawLink: Reference, pathContainingLink: string) {
+        return new Link(rawLink, pathContainingLink);
     }
 
     /**
