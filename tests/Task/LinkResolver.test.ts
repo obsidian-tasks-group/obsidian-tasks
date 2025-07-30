@@ -23,4 +23,12 @@ describe('LinkResolver', () => {
         expect(link.originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
         expect(link.destinationPath).toBeNull();
     });
+
+    it('should allow a function to be supplied, to find the destination of a link', () => {
+        const resolver = new LinkResolver();
+        resolver.setGetFirstLinkpathDestFn((_linkpath: string, _sourcePath: string) => 'Hello World.md');
+
+        const link = resolver.resolve(rawLink, link_in_file_body.filePath);
+        expect(link.destinationPath).toEqual('Hello World.md');
+    });
 });
