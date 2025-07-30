@@ -1,12 +1,12 @@
 import type { Reference } from 'obsidian';
 import { Link } from './Link';
 
-export type GetFirstLinkpathDestFn = (linkpath: string, sourcePath: string) => string | null;
+export type GetFirstLinkpathDestFn = (rawLink: Reference, sourcePath: string) => string | null;
 
 export class LinkResolver {
     private static instance: LinkResolver;
 
-    private getFirstLinkpathDestFn: GetFirstLinkpathDestFn = (_linkpath: string, _sourcePath: string) => null;
+    private getFirstLinkpathDestFn: GetFirstLinkpathDestFn = (_rawLink: Reference, _sourcePath: string) => null;
 
     public setGetFirstLinkpathDestFn(getFirstLinkpathDestFn: GetFirstLinkpathDestFn) {
         this.getFirstLinkpathDestFn = getFirstLinkpathDestFn;
@@ -16,7 +16,7 @@ export class LinkResolver {
         return new Link(
             rawLink,
             pathContainingLink,
-            this.getFirstLinkpathDestFn(rawLink.link, pathContainingLink) ?? undefined,
+            this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined,
         );
     }
 
