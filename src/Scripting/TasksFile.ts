@@ -41,8 +41,8 @@ export class TasksFile {
         }
     }
 
-    private createLinks(frontmatterLinks: LinkCache[] | FrontmatterLinkCache[] | undefined) {
-        return frontmatterLinks?.map((link) => new Link(link, this.path)) ?? [];
+    private createLinks(obsidianRawLinks: LinkCache[] | FrontmatterLinkCache[] | undefined) {
+        return obsidianRawLinks?.map((link) => new Link(link, this.path)) ?? [];
     }
 
     /**
