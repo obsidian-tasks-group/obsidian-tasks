@@ -31,4 +31,19 @@ describe('LinkResolver', () => {
         const link = resolver.resolve(rawLink, link_in_file_body.filePath);
         expect(link.destinationPath).toEqual('Hello World.md');
     });
+
+    it('should allow the global instance to be reset', () => {
+        const globalInstance = LinkResolver.getInstance();
+        globalInstance.setGetFirstLinkpathDestFn(
+            (_rawLink: Reference, _sourcePath: string) => 'From Global Instance.md',
+        );
+
+        const link1 = globalInstance.resolve(rawLink, link_in_file_body.filePath);
+        expect(link1.destinationPath).toEqual('From Global Instance.md');
+
+        globalInstance.resetGetFirstLinkpathDestFn();
+
+        const link2 = globalInstance.resolve(rawLink, link_in_file_body.filePath);
+        expect(link2.destinationPath).toBeNull();
+    });
 });
