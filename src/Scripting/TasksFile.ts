@@ -25,14 +25,17 @@ export class TasksFile {
             this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
             this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter) ?? [];
         }
-        this._outlinksInProperties =
-            this.cachedMetadata.frontmatterLinks?.map((link) => new Link(link, this.path)) ?? [];
+        this._outlinksInProperties = this.createLinks();
         this._outlinksInBody = this.cachedMetadata?.links?.map((link) => new Link(link, this.path)) ?? [];
 
         if (Object.keys(cachedMetadata).length !== 0) {
             const tags = getAllTags(this.cachedMetadata) ?? [];
             this._tags = [...new Set(tags)];
         }
+    }
+
+    private createLinks() {
+        return this.cachedMetadata.frontmatterLinks?.map((link) => new Link(link, this.path)) ?? [];
     }
 
     /**
