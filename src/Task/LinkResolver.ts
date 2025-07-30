@@ -1,11 +1,23 @@
 import type { Reference } from 'obsidian';
 import { Link } from './Link';
 
+export type GetFirstLinkpathDestFn = (linkpath: string, sourcePath: string) => string | null;
+
 export class LinkResolver {
     private static instance: LinkResolver;
 
+    private getFirstLinkpathDestFn: GetFirstLinkpathDestFn = (_linkpath: string, _sourcePath: string) => null;
+
+    public setGetFirstLinkpathDestFn(getFirstLinkpathDestFn: GetFirstLinkpathDestFn) {
+        this.getFirstLinkpathDestFn = getFirstLinkpathDestFn;
+    }
+
     public resolve(rawLink: Reference, pathContainingLink: string) {
-        return new Link(rawLink, pathContainingLink);
+        return new Link(
+            rawLink,
+            pathContainingLink,
+            this.getFirstLinkpathDestFn(rawLink.link, pathContainingLink) ?? undefined,
+        );
     }
 
     /**
