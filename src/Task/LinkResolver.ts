@@ -3,13 +3,19 @@ import { Link } from './Link';
 
 export type GetFirstLinkpathDestFn = (rawLink: Reference, sourcePath: string) => string | null;
 
+const defaultGetFirstLinkpathDestFn = (_rawLink: Reference, _sourcePath: string) => null;
+
 export class LinkResolver {
     private static instance: LinkResolver;
 
-    private getFirstLinkpathDestFn: GetFirstLinkpathDestFn = (_rawLink: Reference, _sourcePath: string) => null;
+    private getFirstLinkpathDestFn: GetFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
 
     public setGetFirstLinkpathDestFn(getFirstLinkpathDestFn: GetFirstLinkpathDestFn) {
         this.getFirstLinkpathDestFn = getFirstLinkpathDestFn;
+    }
+
+    public resetGetFirstLinkpathDestFn() {
+        this.getFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
     }
 
     public resolve(rawLink: Reference, pathContainingLink: string) {
