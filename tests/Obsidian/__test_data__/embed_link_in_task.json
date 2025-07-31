@@ -1,5 +1,24 @@
 {
   "cachedMetadata": {
+    "embeds": [
+      {
+        "displayText": "empty_yaml",
+        "link": "empty_yaml",
+        "original": "![[empty_yaml]]",
+        "position": {
+          "end": {
+            "col": 56,
+            "line": 2,
+            "offset": 78
+          },
+          "start": {
+            "col": 41,
+            "line": 2,
+            "offset": 63
+          }
+        }
+      }
+    ],
     "headings": [
       {
         "heading": "embed_link_in_task",
@@ -18,33 +37,14 @@
         }
       }
     ],
-    "links": [
-      {
-        "displayText": "empty_yaml",
-        "link": "empty_yaml",
-        "original": "[[empty_yaml]]",
-        "position": {
-          "end": {
-            "col": 55,
-            "line": 2,
-            "offset": 77
-          },
-          "start": {
-            "col": 41,
-            "line": 2,
-            "offset": 63
-          }
-        }
-      }
-    ],
     "listItems": [
       {
         "parent": -2,
         "position": {
           "end": {
-            "col": 55,
+            "col": 56,
             "line": 2,
-            "offset": 77
+            "offset": 78
           },
           "start": {
             "col": 0,
@@ -74,9 +74,9 @@
       {
         "position": {
           "end": {
-            "col": 55,
+            "col": 56,
             "line": 2,
-            "offset": 77
+            "offset": 78
           },
           "start": {
             "col": 0,
@@ -105,7 +105,7 @@
       }
     ]
   },
-  "fileContents": "# embed_link_in_task\n\n- [ ] #task Task in 'embed_link_in_task' [[empty_yaml]]\n",
+  "fileContents": "# embed_link_in_task\n\n- [ ] #task Task in 'embed_link_in_task' ![[empty_yaml]]\n",
   "filePath": "Test Data/embed_link_in_task.md",
   "getAllTags": [
     "#task"
