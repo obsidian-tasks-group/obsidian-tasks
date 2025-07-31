@@ -154,6 +154,9 @@
     "Test Data/yaml_all_property_types_populated.md": 2,
     "Test Data/yaml_all_property_types_empty.md": 1
   },
+  "Test Data/embed_link_in_task.md": {
+    "Test Data/empty_yaml.md": 1
+  },
   "Test Data/empty_yaml.md": {},
   "Test Data/example_kanban.md": {},
   "Test Data/inheritance_1parent1child.md": {},

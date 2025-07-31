@@ -117,6 +117,13 @@
 `link.destination          `: `'comments_html_style'`
 `link.displayText          `: `'comments_html_style'`
 
+## Test Data/embed_link_in_task.md
+
+`link.originalMarkdown     `: `'[[empty_yaml]]'`
+`link.markdown             `: `'[[empty_yaml]]'`
+`link.destination          `: `'empty_yaml'`
+`link.displayText          `: `'empty_yaml'`
+
 ## Test Data/internal_heading_links.md
 
 `link.originalMarkdown     `: `'[[#Basic Internal Links]]'`
