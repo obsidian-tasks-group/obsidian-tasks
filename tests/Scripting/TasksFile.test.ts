@@ -279,7 +279,7 @@ describe('TasksFile - accessing links', () => {
         expect(tasksFile.outlinksInProperties[0].destinationPath).toBeNull();
     });
 
-    it.failing('should save destinationPath when LinksResolver is supplied', () => {
+    it('should save destinationPath when LinksResolver is supplied', () => {
         LinkResolver.getInstance().setGetFirstLinkpathDestFn(
             (_rawLink: Reference, _sourcePath: string) => 'Hello World.md',
         );
