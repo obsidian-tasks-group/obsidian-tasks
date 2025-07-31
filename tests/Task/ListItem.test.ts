@@ -227,7 +227,7 @@ describe('outlinks', () => {
         expect(tasks[0].outlinks).toEqual([]);
     });
 
-    it.failing('should save destinationPath when LinksResolver is supplied', () => {
+    it('should save destinationPath when LinksResolver is supplied', () => {
         LinkResolver.getInstance().setGetFirstLinkpathDestFn(
             (_rawLink: Reference, _sourcePath: string) => 'Hello World.md',
         );
