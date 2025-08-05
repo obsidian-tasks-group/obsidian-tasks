@@ -137,9 +137,9 @@ export function setCurrentCacheFile(mockData: any) {
     mockedFileData = mockData;
 }
 
-function reportInconsistentTestData() {
+function reportInconsistentTestData(functionName: string) {
     throw new Error(
-        'Inconsistent test data used in mock getAllTags(). Check setCurrentCacheFile() has been called with the correct {@link SimulatedFile} data.',
+        `Inconsistent test data used in mock ${functionName}(). Check setCurrentCacheFile() has been called with the correct {@link SimulatedFile} data.`,
     );
 }
 
@@ -152,7 +152,7 @@ function reportInconsistentTestData() {
  */
 export function getAllTags(cachedMetadata: CachedMetadata): string[] {
     if (cachedMetadata !== mockedFileData.cachedMetadata) {
-        reportInconsistentTestData();
+        reportInconsistentTestData('getAllTags');
     }
     return mockedFileData.getAllTags;
 }
