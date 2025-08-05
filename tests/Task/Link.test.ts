@@ -328,6 +328,7 @@ describe('visualise links', () => {
             output += createRow('link.originalMarkdown', link.originalMarkdown);
             output += createRow('link.markdown', link.markdown);
             output += createRow('link.destination', link.destination);
+            output += createRow('link.destinationPath', link.destinationPath ?? 'null');
             output += createRow('link.displayText', link.displayText);
             output += '\n';
         });
