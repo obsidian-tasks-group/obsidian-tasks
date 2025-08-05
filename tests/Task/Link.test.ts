@@ -315,6 +315,10 @@ describe('linkClass', () => {
     });
 });
 
+function getFirstLinkpathDest(_rawLink: Reference, _sourcePath: string) {
+    return null;
+}
+
 describe('visualise links', () => {
     function createRow(field: string, value: string | undefined): string {
         // We use NBSP - non-breaking spaces - so that the approved file content
@@ -325,7 +329,7 @@ describe('visualise links', () => {
     function visualiseLinks(outlinks: Readonly<Link[]>, file: SimulatedFile) {
         LinkResolver.getInstance().setGetFirstLinkpathDestFn(
             // TODO: Work out how to save resolved paths in tests/Obsidian/__test_data__/metadataCache/*.json
-            (_rawLink: Reference, _sourcePath: string) => null,
+            (_rawLink: Reference, _sourcePath: string) => getFirstLinkpathDest(_rawLink, _sourcePath),
         );
 
         let output = '';
