@@ -171,8 +171,8 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
     return mockedFileData.parseFrontMatterTags;
 }
 
-export function getFirstLinkpathDest(_rawLink: Reference, _sourcePath: string) {
-    return mockedFileData.resolveLinkToPath[_rawLink.link];
+export function getFirstLinkpathDest(rawLink: Reference, _sourcePath: string) {
+    return mockedFileData.resolveLinkToPath[rawLink.link];
 }
 
 /**
