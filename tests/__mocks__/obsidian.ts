@@ -1,4 +1,4 @@
-import type { App, CachedMetadata } from 'obsidian';
+import type { App, CachedMetadata, Reference } from 'obsidian';
 
 export {};
 
@@ -169,6 +169,10 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
         reportInconsistentTestData('parseFrontMatterTags');
     }
     return mockedFileData.parseFrontMatterTags;
+}
+
+export function getFirstLinkpathDest(_rawLink: Reference, _sourcePath: string) {
+    return null;
 }
 
 /**

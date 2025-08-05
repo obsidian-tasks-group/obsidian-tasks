@@ -13,6 +13,7 @@ import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestH
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { LinkResolver } from '../../src/Task/LinkResolver';
+import { getFirstLinkpathDest } from '../__mocks__/obsidian';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
@@ -314,10 +315,6 @@ describe('linkClass', () => {
         });
     });
 });
-
-function getFirstLinkpathDest(_rawLink: Reference, _sourcePath: string) {
-    return null;
-}
 
 describe('visualise links', () => {
     function createRow(field: string, value: string | undefined): string {
