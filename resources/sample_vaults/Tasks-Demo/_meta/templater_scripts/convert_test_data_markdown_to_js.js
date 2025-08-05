@@ -87,8 +87,9 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
     const parseFrontMatterTags = tp.obsidian.parseFrontMatterTags(cachedMetadata.frontmatter);
 
     // Resolve all links in body of this file
+    const allLinks = cachedMetadata.links ?? [];
     const resolveLinkToPath = {};
-    (cachedMetadata.links ?? []).forEach((link) => {
+    allLinks.forEach((link) => {
         const linkpath = tp.obsidian.getLinkpath(link.link);
         const tFile = app.metadataCache.getFirstLinkpathDest(linkpath, filePath);
         resolveLinkToPath[link.link] = tFile ? tFile.path : null;
