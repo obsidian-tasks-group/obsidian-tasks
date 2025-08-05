@@ -1233,5 +1233,17 @@
     "#task",
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "#heading": "Test Data/link_in_task_markdown_link.md",
+    "Manual Testing/Smoke Testing the Tasks Plugin#How the tests work": "Manual Testing/Smoke Testing the Tasks Plugin.md",
+    "Test Data/link_in_task_markdown_link.md": "Test Data/link_in_task_markdown_link.md",
+    "Test Data/link_in_task_markdown_link.md#heading": "Test Data/link_in_task_markdown_link.md",
+    "a_pdf_file.pdf": "Test Attachments/a_pdf_file.pdf",
+    "jason_properties.md": "Test Data/jason_properties.md",
+    "link_in_task_markdown_link": "Test Data/link_in_task_markdown_link.md",
+    "link_in_task_markdown_link.md": "Test Data/link_in_task_markdown_link.md",
+    "multiple_headings.md": "Test Data/multiple_headings.md",
+    "pa#th/path/link_in_task_markdown_link.md": null
+  }
 }

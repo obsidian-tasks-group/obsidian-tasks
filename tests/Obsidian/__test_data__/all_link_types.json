@@ -1234,5 +1234,18 @@
     "#task",
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "#^block": "Test Data/all_link_types.md",
+    "#heading": "Test Data/all_link_types.md",
+    "#heading#sub-heading": "Test Data/all_link_types.md",
+    "markdownLink.md": "Test Attachments/markdownLink.md",
+    "markdownLink.md#^block": "Test Attachments/markdownLink.md",
+    "markdownLink.md#heading": "Test Attachments/markdownLink.md",
+    "markdownLink.md#heading#sub-heading": "Test Attachments/markdownLink.md",
+    "wikilink": "Test Attachments/wikilink.md",
+    "wikilink#^block": "Test Attachments/wikilink.md",
+    "wikilink#heading": "Test Attachments/wikilink.md",
+    "wikilink#heading#sub-heading": "Test Attachments/wikilink.md"
+  }
 }

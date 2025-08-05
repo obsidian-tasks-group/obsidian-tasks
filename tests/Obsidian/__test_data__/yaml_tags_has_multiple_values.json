@@ -130,5 +130,6 @@
   "parseFrontMatterTags": [
     "#multiple1",
     "#multiple2"
-  ]
+  ],
+  "resolveLinkToPath": {}
 }

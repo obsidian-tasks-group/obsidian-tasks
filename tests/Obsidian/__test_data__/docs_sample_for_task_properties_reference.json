@@ -246,5 +246,6 @@
   ],
   "parseFrontMatterTags": [
     "#tag-from-file-properties"
-  ]
+  ],
+  "resolveLinkToPath": {}
 }

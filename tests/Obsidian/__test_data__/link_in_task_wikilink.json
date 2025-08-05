@@ -1140,5 +1140,17 @@
     "#task",
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "Test Data/link_in_task_wikilink": "Test Data/link_in_task_wikilink.md",
+    "Test Data/link_in_task_wikilink#heading_link": "Test Data/link_in_task_wikilink.md",
+    "a_pdf_file.pdf": "Test Attachments/a_pdf_file.pdf",
+    "link_in_task_wikilink": "Test Data/link_in_task_wikilink.md",
+    "link_in_task_wikilink.md": "Test Data/link_in_task_wikilink.md",
+    "multiple_headings": "Test Data/multiple_headings.md",
+    "pa#th/path/link_in_task_wikilink": null,
+    "|": null,
+    "|#alias": null,
+    "|alias": null
+  }
 }
