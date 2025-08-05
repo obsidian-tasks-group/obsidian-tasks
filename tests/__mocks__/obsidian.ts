@@ -172,7 +172,7 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
 }
 
 export function getFirstLinkpathDest(_rawLink: Reference, _sourcePath: string) {
-    return null;
+    return mockedFileData.resolveLinkToPath[_rawLink.link];
 }
 
 /**
