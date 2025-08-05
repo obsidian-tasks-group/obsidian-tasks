@@ -171,9 +171,12 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
     return mockedFileData.parseFrontMatterTags;
 }
 
-export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string) {
+export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string): string | null {
     if (mockedFileData.filePath !== sourcePath) {
         reportInconsistentTestData('getFirstLinkpathDest');
+    }
+    if (!(rawLink.link in mockedFileData.resolveLinkToPath)) {
+        console.log(`Cannot find resolved path for ${rawLink.link} in ${sourcePath} in mock getFirstLinkpathDest()`);
     }
     return mockedFileData.resolveLinkToPath[rawLink.link];
 }
