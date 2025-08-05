@@ -314,8 +314,8 @@ describe('linkClass', () => {
 
 describe('visualise links', () => {
     beforeAll(() => {
-        LinkResolver.getInstance().setGetFirstLinkpathDestFn((_rawLink: Reference, _sourcePath: string) => {
-            return getFirstLinkpathDest(_rawLink, _sourcePath);
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, sourcePath: string) => {
+            return getFirstLinkpathDest(rawLink, sourcePath);
         });
     });
 
