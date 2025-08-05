@@ -43,6 +43,12 @@ filter by function task.file.outlinks.length > 0
 limit groups 1
 ```
 
+### Task lines that contain broken links
+
+```tasks
+filter by function task.outlinks.some(link => link.destinationPath === null)
+```
+
 ## Grouping
 
 ### Group by task outlinks
@@ -51,5 +57,13 @@ limit groups 1
 # Task line has a link
 filter by function task.outlinks.length > 0
 group by function task.outlinks.map(link => link.markdown).sort().join(' · ')
-limit groups 1
+```
+
+### Group tasks by the files they link to
+
+The value of `link.destinationPath`  is null if the link is broken.
+
+```tasks
+filter by function task.outlinks.length > 0
+group by function task.outlinks.map(link => link.destinationPath).sort().join(' · ')
 ```
