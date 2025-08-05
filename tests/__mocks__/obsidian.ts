@@ -171,7 +171,10 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
     return mockedFileData.parseFrontMatterTags;
 }
 
-export function getFirstLinkpathDest(rawLink: Reference, _sourcePath: string) {
+export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string) {
+    if (mockedFileData.filePath !== sourcePath) {
+        reportInconsistentTestData('getFirstLinkpathDest');
+    }
     return mockedFileData.resolveLinkToPath[rawLink.link];
 }
 
