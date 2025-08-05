@@ -130,5 +130,7 @@
     "#task"
   ],
   "parseFrontMatterTags": null,
-  "resolveLinkToPath": {}
+  "resolveLinkToPath": {
+    "yaml_tags_is_empty": "Test Data/yaml_tags_is_empty.md"
+  }
 }
