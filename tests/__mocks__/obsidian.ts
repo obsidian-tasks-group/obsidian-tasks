@@ -171,6 +171,25 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
     return mockedFileData.parseFrontMatterTags;
 }
 
+/**
+ * Fake implementation of calling Obsidian's `getLinkpath()` and `app.metadataCache.getFirstLinkpathDest()`
+ * This reads saved the {@link SimulatedFile} JSON files.
+ *
+ * See https://docs.obsidian.md/Reference/TypeScript+API/getLinkpath
+ * See https://docs.obsidian.md/Reference/TypeScript+API/MetadataCache/getFirstLinkpathDest
+ *
+ * @param rawLink
+ * @param sourcePath
+ *
+ * @example
+ * ```typescript
+ *     beforeAll(() => {
+ *         LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, sourcePath: string) => {
+ *             return getFirstLinkpathDest(rawLink, sourcePath);
+ *         });
+ *     });
+ * ```
+ */
 export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string): string | null {
     if (mockedFileData.filePath !== sourcePath) {
         reportInconsistentTestData('getFirstLinkpathDest');
