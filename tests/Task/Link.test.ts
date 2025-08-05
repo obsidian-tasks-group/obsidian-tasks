@@ -1,3 +1,4 @@
+import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
@@ -11,11 +12,16 @@ import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
+import { LinkResolver } from '../../src/Task/LinkResolver';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
     return new Link(rawLink, data.filePath);
 }
+
+afterEach(() => {
+    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
+});
 
 describe('linkClass', () => {
     it('should construct a Link object', () => {
@@ -317,6 +323,11 @@ describe('visualise links', () => {
     }
 
     function visualiseLinks(outlinks: Readonly<Link[]>, file: SimulatedFile) {
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn(
+            // TODO: Work out how to save resolved paths in tests/Obsidian/__test_data__/metadataCache/*.json
+            (_rawLink: Reference, _sourcePath: string) => null,
+        );
+
         let output = '';
 
         if (outlinks.length === 0) {
