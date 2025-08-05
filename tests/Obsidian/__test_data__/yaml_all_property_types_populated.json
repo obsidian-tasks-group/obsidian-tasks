@@ -165,5 +165,6 @@
   ],
   "parseFrontMatterTags": [
     "#sample/tag/value"
-  ]
+  ],
+  "resolveLinkToPath": {}
 }

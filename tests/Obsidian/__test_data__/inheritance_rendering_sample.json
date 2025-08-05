@@ -164,5 +164,6 @@
   "fileContents": "-  grandparent list item\n    - [ ] parent 1\n        - [ ] child 1\n            - [ ] grandchild 1\n                - list item grand grand child\n        - [ ] child 2\n            - non task grandchild\n                - [ ] grand grand child\n    - [ ] parent 2\n",
   "filePath": "Test Data/inheritance_rendering_sample.md",
   "getAllTags": [],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
 }

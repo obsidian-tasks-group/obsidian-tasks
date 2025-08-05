@@ -130,5 +130,6 @@
   "parseFrontMatterTags": [
     "#value-1-of-2-on-two-lines",
     "#value-2-of-2-on-two-lines"
-  ]
+  ],
+  "resolveLinkToPath": {}
 }

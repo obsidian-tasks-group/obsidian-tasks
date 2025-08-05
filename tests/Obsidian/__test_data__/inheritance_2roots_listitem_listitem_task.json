@@ -115,5 +115,6 @@
   "fileContents": "- parent list item 1\n    - child list item 1\n        - [ ] grandchild task 1\n\n- parent list item 2\n    - child list item 2\n        - [ ] grandchild task 2\n",
   "filePath": "Test Data/inheritance_2roots_listitem_listitem_task.md",
   "getAllTags": [],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
 }

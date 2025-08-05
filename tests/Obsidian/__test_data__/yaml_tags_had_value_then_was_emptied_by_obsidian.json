@@ -122,5 +122,6 @@
   "getAllTags": [
     "#task"
   ],
-  "parseFrontMatterTags": []
+  "parseFrontMatterTags": [],
+  "resolveLinkToPath": {}
 }

@@ -204,5 +204,8 @@
     "#i-am-parsed-by-obsidian",
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "comments_html_style": "Test Data/comments_html_style.md"
+  }
 }

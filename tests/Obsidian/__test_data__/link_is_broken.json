@@ -110,5 +110,8 @@
   "getAllTags": [
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "broken link - do not fix me": null
+  }
 }
