@@ -20,10 +20,6 @@ function getLink(data: any, index: number) {
     return new Link(rawLink, data.filePath);
 }
 
-afterEach(() => {
-    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
-});
-
 describe('linkClass', () => {
     it('should construct a Link object', () => {
         const link = getLink(links_everywhere, 0);
@@ -317,6 +313,16 @@ describe('linkClass', () => {
 });
 
 describe('visualise links', () => {
+    beforeAll(() => {
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn((_rawLink: Reference, _sourcePath: string) => {
+            return getFirstLinkpathDest(_rawLink, _sourcePath);
+        });
+    });
+
+    afterAll(() => {
+        LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
+    });
+
     function createRow(field: string, value: string | undefined): string {
         // We use NBSP - non-breaking spaces - so that the approved file content
         // is correctly aligned when viewed in Obsidian:
@@ -324,11 +330,6 @@ describe('visualise links', () => {
     }
 
     function visualiseLinks(outlinks: Readonly<Link[]>, file: SimulatedFile) {
-        LinkResolver.getInstance().setGetFirstLinkpathDestFn(
-            // TODO: Work out how to save resolved paths in tests/Obsidian/__test_data__/metadataCache/*.json
-            (_rawLink: Reference, _sourcePath: string) => getFirstLinkpathDest(_rawLink, _sourcePath),
-        );
-
         let output = '';
 
         if (outlinks.length === 0) {
