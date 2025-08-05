@@ -137,6 +137,12 @@ export function setCurrentCacheFile(mockData: any) {
     mockedFileData = mockData;
 }
 
+function reportInconsistentTestData() {
+    throw new Error(
+        'Inconsistent test data used in mock getAllTags(). Check setCurrentCacheFile() has been called with the correct {@link SimulatedFile} data.',
+    );
+}
+
 /**
  * Fake implementation of Obsidian's `getAllTags()`.
  *
@@ -146,9 +152,7 @@ export function setCurrentCacheFile(mockData: any) {
  */
 export function getAllTags(cachedMetadata: CachedMetadata): string[] {
     if (cachedMetadata !== mockedFileData.cachedMetadata) {
-        throw new Error(
-            'Inconsistent test data used in mock getAllTags(). Check setCurrentCacheFile() has been called with the correct {@link SimulatedFile} data.',
-        );
+        reportInconsistentTestData();
     }
     return mockedFileData.getAllTags;
 }
