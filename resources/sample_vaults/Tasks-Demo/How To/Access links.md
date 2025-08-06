@@ -1,8 +1,6 @@
 ---
 TQ_short_mode: true
-TQ_extra_instructions: |-
-  group by folder
-  group by function task.file.filenameWithoutExtension
+TQ_extra_instructions:
 ---
 
 # Accessing Links
