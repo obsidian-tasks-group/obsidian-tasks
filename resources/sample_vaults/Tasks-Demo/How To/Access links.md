@@ -49,6 +49,33 @@ limit groups 1
 filter by function task.outlinks.some(link => link.destinationPath === null)
 ```
 
+### Tasks lines that link to the file containing the query
+
+#### Tasks - version 1
+
+This should match one task, in [[Link to Access links file]].
+
+```tasks
+filter by function task.outlinks.some(link => link.destinationPath === query.file.path)
+```
+
+#### Tasks - version 2
+
+This should match one task, in [[Link to Access links file]].
+
+There is a bug: this does not yet find the task it should do.
+
+```tasks
+filter by function task.outlinks.some(link => link.isLinkTo(query.file))
+```
+
+#### Dataview version
+
+```dataview
+TASK
+WHERE contains(file.outlinks, this.file.link)
+```
+
 ## Grouping
 
 ### Group by task outlinks
