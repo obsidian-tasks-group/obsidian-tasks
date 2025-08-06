@@ -1067,6 +1067,24 @@ describe('toggle done', () => {
             nextDue: '2021-10-20',
         },
         {
+            // Prioritise due date over scheduled and start
+            interval: 'every month on the 15th',
+            due: '2025-08-16',
+            scheduled: '2025-08-11', // 5 days before old due
+            start: '2025-08-06', // 10 days before old due
+            nextDue: '2025-09-15', // The next '15th'
+            nextScheduled: '2025-09-10', // 5 days before new due
+            nextStart: '2025-09-05', // 10 days before the new due
+        },
+        {
+            // Prioritise scheduled date over start
+            interval: 'every month on the 15th',
+            scheduled: '2025-08-10',
+            start: '2025-08-05', // 5 days before the old scheduled
+            nextScheduled: '2025-08-15', // 5 days before new due
+            nextStart: '2025-08-10', // 5 days before the new scheduled
+        },
+        {
             // every month - due 31 March, and so 31 April would not exist: it used to skip forward 2 months
             interval: 'every month',
             due: '2021-03-31',
