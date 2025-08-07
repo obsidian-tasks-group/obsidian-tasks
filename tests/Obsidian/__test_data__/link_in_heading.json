@@ -141,5 +141,8 @@
   "getAllTags": [
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "multiple_headings": "Test Data/multiple_headings.md"
+  }
 }

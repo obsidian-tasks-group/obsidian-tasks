@@ -1,0 +1,115 @@
+{
+  "cachedMetadata": {
+    "embeds": [
+      {
+        "displayText": "empty_yaml",
+        "link": "empty_yaml",
+        "original": "![[empty_yaml]]",
+        "position": {
+          "end": {
+            "col": 56,
+            "line": 2,
+            "offset": 78
+          },
+          "start": {
+            "col": 41,
+            "line": 2,
+            "offset": 63
+          }
+        }
+      }
+    ],
+    "headings": [
+      {
+        "heading": "embed_link_in_task",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 0,
+            "offset": 20
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 56,
+            "line": 2,
+            "offset": 78
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 22
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 0,
+            "offset": 20
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 56,
+            "line": 2,
+            "offset": 78
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 22
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 33
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 28
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# embed_link_in_task\n\n- [ ] #task Task in 'embed_link_in_task' ![[empty_yaml]]\n",
+  "filePath": "Test Data/embed_link_in_task.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

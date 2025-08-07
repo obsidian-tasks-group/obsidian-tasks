@@ -330,5 +330,8 @@
     "#task",
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "numbered_tasks_issue_3481_searches": "Test Data/numbered_tasks_issue_3481_searches.md"
+  }
 }

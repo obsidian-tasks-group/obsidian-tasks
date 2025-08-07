@@ -1,4 +1,5 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import callouts_nested_issue_2890_unlabelled from '../Obsidian/__test_data__/callouts_nested_issue_2890_unlabelled.json';
 import no_yaml from '../Obsidian/__test_data__/no_yaml.json';
@@ -22,7 +23,12 @@ import yaml_1_alias from '../Obsidian/__test_data__/yaml_1_alias.json';
 import yaml_2_aliases from '../Obsidian/__test_data__/yaml_2_aliases.json';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import link_in_yaml from '../Obsidian/__test_data__/link_in_yaml.json';
+import { LinkResolver } from '../../src/Task/LinkResolver';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
+
+afterEach(() => {
+    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
+});
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
@@ -270,6 +276,17 @@ describe('TasksFile - accessing links', () => {
         const tasksFile = getTasksFileFromMockData(link_in_yaml);
         expect(tasksFile.outlinksInProperties.length).toEqual(1);
         expect(tasksFile.outlinksInProperties[0].originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
+        expect(tasksFile.outlinksInProperties[0].destinationPath).toBeNull();
+    });
+
+    it('should save destinationPath when LinksResolver is supplied', () => {
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn(
+            (_rawLink: Reference, _sourcePath: string) => 'Hello World.md',
+        );
+
+        const tasksFile = getTasksFileFromMockData(link_in_yaml);
+        expect(tasksFile.outlinksInProperties[0].originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
+        expect(tasksFile.outlinksInProperties[0].destinationPath).toEqual('Hello World.md');
     });
 });
 

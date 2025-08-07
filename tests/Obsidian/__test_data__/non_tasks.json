@@ -129,5 +129,6 @@
   "fileContents": "# non_tasks\n\n```tasks\npath includes {{query.file.path}}\n```\n\n```\n- [ ] I look like a task but am in a code block\n```\n\nBelow is an HTML comment in `<!-- .... ->`, so the \"task\" inside is not seen by Obsidian or any of its task-based plugins.\n\n<!--\n- [ ] I look like a task but am in an HTML comment\n-->\n\nBelow is an Obsidian comment in `%% ... %%`, so the \"task\" inside is not seen by Obsidian or any of its task-based plugins.\n\n%%\n- [ ] I look like a task but am in an Obsidian (percent) comment\n%%\n",
   "filePath": "Test Data/non_tasks.md",
   "getAllTags": [],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
 }

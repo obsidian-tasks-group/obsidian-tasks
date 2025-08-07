@@ -165,5 +165,9 @@
   ],
   "parseFrontMatterTags": [
     "#sample/tag/value"
-  ]
+  ],
+  "resolveLinkToPath": {
+    "yaml_all_property_types_empty": "Test Data/yaml_all_property_types_empty.md",
+    "yaml_all_property_types_populated": "Test Data/yaml_all_property_types_populated.md"
+  }
 }

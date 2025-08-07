@@ -23,6 +23,7 @@ import { setCurrentCacheFile } from '../__mocks__/obsidian';
  * @property fileContents - The complete content of the source note.
  * @property getAllTags - Used for mocking the result of `getAllTags()` in tests.
  * @property parseFrontMatterTags - Used for mocking the result of `parseFrontMatterTags()` in tests.
+ * @property resolveLinkToPath - Used for mocking this.app.metadataCache.getFirstLinkpathDest(linkpath, sourcePath).
  *
  * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
  */
@@ -32,6 +33,7 @@ export interface SimulatedFile {
     fileContents: string;
     getAllTags: string[];
     parseFrontMatterTags: string[] | null;
+    resolveLinkToPath: { [key: string]: string | null };
 }
 
 /**

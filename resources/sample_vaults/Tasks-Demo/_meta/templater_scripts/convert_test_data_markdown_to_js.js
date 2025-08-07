@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const vault = app.vault;
+const metadataCache = app.metadataCache;
 
 async function getMarkdownFiles() {
     // Get all files from Test Data/ directory
@@ -11,6 +12,12 @@ async function getMarkdownFiles() {
 
 function getBasename(filePath) {
     return path.basename(filePath, '.md');
+}
+
+function writeDataAsJson(outputPath, sortedData) {
+    const testSourceFile = getOutputFilePath(outputPath);
+    const content = JSON.stringify(sortedData, null, 2);
+    writeFile(testSourceFile, content);
 }
 
 function getOutputFilePath(outputFile) {
@@ -48,6 +55,21 @@ function sortObjectKeys(obj) {
     return obj;
 }
 
+/**
+ * Sorts an object's keys in alphabetical order at the top level only.
+ */
+function sortTopLevelKeys(obj) {
+    if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+        return Object.keys(obj)
+            .sort()
+            .reduce((acc, key) => {
+                acc[key] = obj[key]; // No recursive call here
+                return acc;
+            }, {});
+    }
+    return obj;
+}
+
 async function convertMarkdownFileToTestFunction(filePath, tp) {
     const tFile = vault.getAbstractFileByPath(filePath);
 
@@ -63,7 +85,24 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
 
     const getAllTags = tp.obsidian.getAllTags(cachedMetadata);
     const parseFrontMatterTags = tp.obsidian.parseFrontMatterTags(cachedMetadata.frontmatter);
-    const data = { filePath, fileContents, cachedMetadata, getAllTags, parseFrontMatterTags };
+
+    // Resolve all links in body of this file
+    const allLinks = [...(cachedMetadata.links ?? []), ...(cachedMetadata.frontmatterLinks ?? [])];
+    const resolveLinkToPath = {};
+    allLinks.forEach((link) => {
+        const linkpath = tp.obsidian.getLinkpath(link.link);
+        const tFile = app.metadataCache.getFirstLinkpathDest(linkpath, filePath);
+        resolveLinkToPath[link.link] = tFile ? tFile.path : null;
+    });
+
+    const data = {
+        filePath,
+        fileContents,
+        cachedMetadata,
+        getAllTags,
+        parseFrontMatterTags,
+        resolveLinkToPath,
+    };
 
     const filename = getBasename(filePath);
     if (filename.includes(' ')) {
@@ -77,12 +116,10 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
         return '';
     }
 
-    const testSourceFile = getOutputFilePath(`__test_data__/${filename}.json`);
-
     // Sort keys in the data object to ensure stable order
     const sortedData = sortObjectKeys(data);
-    const content = JSON.stringify(sortedData, null, 2);
-    writeFile(testSourceFile, content);
+
+    writeDataAsJson(`__test_data__/${filename}.json`, sortedData);
 }
 
 async function writeListOfAllTestFunctions(files) {
@@ -118,6 +155,12 @@ ${functions.join('\n')}
     writeFile(testSourceFile, content);
 }
 
+function writeMetadataCacheData() {
+    const outputPath = '__test_data__/metadataCache/';
+    writeDataAsJson(outputPath + 'resolvedLinks.json', sortTopLevelKeys(metadataCache.resolvedLinks));
+    writeDataAsJson(outputPath + 'unresolvedLinks.json', sortTopLevelKeys(metadataCache.unresolvedLinks));
+}
+
 async function export_files(tp) {
     const markdownFiles = await getMarkdownFiles();
 
@@ -126,6 +169,8 @@ async function export_files(tp) {
     }
 
     await writeListOfAllTestFunctions(markdownFiles);
+
+    writeMetadataCacheData();
 
     showNotice('Success.');
     return '';

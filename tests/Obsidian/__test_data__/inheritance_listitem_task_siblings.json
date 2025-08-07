@@ -54,5 +54,6 @@
   "fileContents": "- list item\n- [ ] task\n",
   "filePath": "Test Data/inheritance_listitem_task_siblings.md",
   "getAllTags": [],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
 }

@@ -3,6 +3,7 @@
  */
 import moment from 'moment/moment';
 
+import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { ListItem } from '../../src/Task/ListItem';
 import { Task } from '../../src/Task/Task';
@@ -12,11 +13,16 @@ import { fromLine } from '../TestingTools/TestHelpers';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import multi_line_task_and_list_item from '../Obsidian/__test_data__/multi_line_task_and_list_item.json';
+import { LinkResolver } from '../../src/Task/LinkResolver';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
 
 const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile('anything.md'));
+
+afterEach(() => {
+    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
+});
 
 describe('list item tests', () => {
     it('should create list item with empty children and absent parent', () => {
@@ -213,11 +219,24 @@ describe('outlinks', () => {
 
         expect(tasks[0].outlinks.length).toEqual(1);
         expect(tasks[0].outlinks[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
+        expect(tasks[0].outlinks[0].destinationPath).toBeNull();
     });
 
     it('should return [] when no links in the task line', () => {
         const tasks = readTasksFromSimulatedFile(multi_line_task_and_list_item);
         expect(tasks[0].outlinks).toEqual([]);
+    });
+
+    it('should save destinationPath when LinksResolver is supplied', () => {
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn(
+            (_rawLink: Reference, _sourcePath: string) => 'Hello World.md',
+        );
+
+        const tasks = readTasksFromSimulatedFile(links_everywhere);
+
+        expect(tasks[0].outlinks.length).toEqual(1);
+        expect(tasks[0].outlinks[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
+        expect(tasks[0].outlinks[0].destinationPath).toEqual('Hello World.md');
     });
 });
 
