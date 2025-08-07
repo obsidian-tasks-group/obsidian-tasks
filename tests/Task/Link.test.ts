@@ -1,15 +1,19 @@
+import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
 import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
 import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
 
+import link_in_file_body from '../Obsidian/__test_data__/link_in_file_body.json';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
+import { LinkResolver } from '../../src/Task/LinkResolver';
+import { getFirstLinkpathDest } from '../__mocks__/obsidian';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
@@ -242,6 +246,31 @@ describe('linkClass', () => {
         // []() and [alias]() are not detected by the obsidian parser as a link
     });
 
+    describe('destinationPath tests', () => {
+        it('should accept and return destinationPath', () => {
+            const data = link_in_file_body;
+            const rawLink = data.cachedMetadata.links[0];
+            expect(rawLink.original).toEqual('[[yaml_tags_is_empty]]');
+            expect(rawLink.link).toEqual('yaml_tags_is_empty');
+
+            const destinationPath = 'Test Data/yaml_tags_is_empty.md';
+            const link = new Link(rawLink, data.filePath, destinationPath);
+
+            expect(link.destinationPath).toEqual(destinationPath);
+        });
+
+        it('should return null path if destinationPath not supplied', () => {
+            const data = link_in_file_body;
+            const rawLink = data.cachedMetadata.links[0];
+            expect(rawLink.original).toEqual('[[yaml_tags_is_empty]]');
+            expect(rawLink.link).toEqual('yaml_tags_is_empty');
+
+            const link = new Link(rawLink, data.filePath);
+
+            expect(link.destinationPath).toBeNull();
+        });
+    });
+
     describe('isLinkTo() tests', () => {
         it('matches filenames', () => {
             const link = getLink(links_everywhere, 0);
@@ -284,13 +313,23 @@ describe('linkClass', () => {
 });
 
 describe('visualise links', () => {
+    beforeAll(() => {
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, sourcePath: string) => {
+            return getFirstLinkpathDest(rawLink, sourcePath);
+        });
+    });
+
+    afterAll(() => {
+        LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
+    });
+
     function createRow(field: string, value: string | undefined): string {
         // We use NBSP - non-breaking spaces - so that the approved file content
         // is correctly aligned when viewed in Obsidian:
         return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
     }
 
-    function visualiseLinks(outlinks: Link[], file: SimulatedFile) {
+    function visualiseLinks(outlinks: Readonly<Link[]>, file: SimulatedFile) {
         let output = '';
 
         if (outlinks.length === 0) {
@@ -302,6 +341,7 @@ describe('visualise links', () => {
             output += createRow('link.originalMarkdown', link.originalMarkdown);
             output += createRow('link.markdown', link.markdown);
             output += createRow('link.destination', link.destination);
+            output += createRow('link.destinationPath', link.destinationPath ?? 'null');
             output += createRow('link.displayText', link.displayText);
             output += '\n';
         });

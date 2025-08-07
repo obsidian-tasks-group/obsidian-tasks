@@ -235,5 +235,12 @@
   "getAllTags": [
     "#task"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "#A link in a link_in_heading": "Test Data/links_everywhere.md",
+    "link_in_file_body": "Test Data/link_in_file_body.md",
+    "link_in_heading": "Test Data/link_in_heading.md",
+    "link_in_task_wikilink": "Test Data/link_in_task_wikilink.md",
+    "link_in_yaml": "Test Data/link_in_yaml.md"
+  }
 }

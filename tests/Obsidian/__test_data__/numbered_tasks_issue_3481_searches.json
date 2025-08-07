@@ -299,5 +299,6 @@
   "fileContents": "# numbered_tasks_issue_3481_searches\n\n## Tasks\n\nThe Tasks plugin finds ==6 tasks==, but with 2 nested list items.\n\n### show tree\n\n```tasks\npath includes numbered_tasks_issue_3481\nshow tree\nfull mode\n```\n\n### hide tree\n\n```tasks\npath includes numbered_tasks_issue_3481\nhide tree\nfull mode\n```\n\n## Dataview\n\nDataview finds ==4 tasks==:\n\n```dataview\nTASK\nFROM \"Test Data/numbered_tasks_issue_3481\"\n```\n\n## Obsidian search\n\nObsidian finds ==6 tasks==:\n\n```query\ntask:3481\n```\n",
   "filePath": "Test Data/numbered_tasks_issue_3481_searches.md",
   "getAllTags": [],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
 }

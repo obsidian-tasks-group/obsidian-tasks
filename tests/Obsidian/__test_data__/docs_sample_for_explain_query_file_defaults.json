@@ -54,5 +54,6 @@
   "fileContents": "---\nTQ_extra_instructions: |-\n  folder includes {{query.file.folder}}\n  not done\nTQ_short_mode: true\nTQ_show_tree: true\n---\n\n```tasks\nexplain\n```\n",
   "filePath": "Test Data/docs_sample_for_explain_query_file_defaults.md",
   "getAllTags": [],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
 }

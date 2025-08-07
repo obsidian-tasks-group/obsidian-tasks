@@ -203,6 +203,8 @@ describe('EditableTask tests', () => {
                   "_frontmatter": {
                     "tags": [],
                   },
+                  "_outlinksInBody": [],
+                  "_outlinksInProperties": [],
                   "_path": "some/folder/fileName.md",
                   "_tags": [],
                 },

@@ -125,5 +125,6 @@
   ],
   "parseFrontMatterTags": [
     "#single-value-single-line"
-  ]
+  ],
+  "resolveLinkToPath": {}
 }

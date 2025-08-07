@@ -69,5 +69,6 @@
   "fileContents": "- parent list item\n    - child list item\n        - [ ] grandchild task\n",
   "filePath": "Test Data/inheritance_listitem_listitem_task.md",
   "getAllTags": [],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
 }

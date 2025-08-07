@@ -175,5 +175,6 @@
   "parseFrontMatterTags": [
     "#value1",
     "#value2"
-  ]
+  ],
+  "resolveLinkToPath": {}
 }

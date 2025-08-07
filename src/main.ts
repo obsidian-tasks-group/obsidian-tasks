@@ -1,4 +1,4 @@
-import { Plugin } from 'obsidian';
+import { Plugin, type Reference, getLinkpath } from 'obsidian';
 
 import type { Task } from 'Task/Task';
 import { i18n, initializeI18n } from './i18n/i18n';
@@ -19,6 +19,7 @@ import { StatusSettings } from './Config/StatusSettings';
 import { tasksApiV1 } from './Api';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { QueryFileDefaults } from './Query/QueryFileDefaults';
+import { LinkResolver } from './Task/LinkResolver';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -40,6 +41,13 @@ export default class TasksPlugin extends Plugin {
         // Configure logging.
         const { loggingOptions } = getSettings();
         logging.configure(loggingOptions);
+
+        // Configure LinkResolver.getInstance().resolve(), to ensure that links know where Obsidian will resolve them to:
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn((link: Reference, sourcePath: string) => {
+            const linkpath = getLinkpath(link.link);
+            const tFile = this.app.metadataCache.getFirstLinkpathDest(linkpath, sourcePath);
+            return tFile ? tFile.path : null;
+        });
 
         const events = new TasksEvents({ obsidianEvents: this.app.workspace });
 

@@ -1089,5 +1089,17 @@
     "#task",
     "#Escaped"
   ],
-  "parseFrontMatterTags": null
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "#Aliased Links": "Test Data/internal_heading_links.md",
+    "#Another Header": "Test Data/internal_heading_links.md",
+    "#Basic Internal Links": "Test Data/internal_heading_links.md",
+    "#Header Links With File Reference": "Test Data/internal_heading_links.md",
+    "#Headers-With_Special Characters": "Test Data/internal_heading_links.md",
+    "#Mixed Link Types": "Test Data/internal_heading_links.md",
+    "#Multiple Links In One Task": "Test Data/internal_heading_links.md",
+    "#Simple Headers": "Test Data/internal_heading_links.md",
+    "Other File": "Manual Testing/Internal Heading Links/Other File.md",
+    "Other File#Some Header": "Manual Testing/Internal Heading Links/Other File.md"
+  }
 }

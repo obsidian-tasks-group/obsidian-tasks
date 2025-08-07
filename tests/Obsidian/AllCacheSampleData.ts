@@ -3,6 +3,7 @@
 
 import type { SimulatedFile } from './SimulatedFile';
 
+import all_link_types from './__test_data__/all_link_types.json';
 import blockquote from './__test_data__/blockquote.json';
 import callout from './__test_data__/callout.json';
 import callout_custom from './__test_data__/callout_custom.json';
@@ -14,6 +15,7 @@ import comments_html_style from './__test_data__/comments_html_style.json';
 import comments_markdown_style from './__test_data__/comments_markdown_style.json';
 import docs_sample_for_explain_query_file_defaults from './__test_data__/docs_sample_for_explain_query_file_defaults.json';
 import docs_sample_for_task_properties_reference from './__test_data__/docs_sample_for_task_properties_reference.json';
+import embed_link_in_task from './__test_data__/embed_link_in_task.json';
 import empty_yaml from './__test_data__/empty_yaml.json';
 import example_kanban from './__test_data__/example_kanban.json';
 import inheritance_1parent1child from './__test_data__/inheritance_1parent1child.json';
@@ -98,6 +100,7 @@ import zero_width from './__test_data__/zero_width.json';
  */
 export function allCacheSampleData(): SimulatedFile[] {
     return [
+        all_link_types,
         blockquote,
         callout,
         callout_custom,
@@ -109,6 +112,7 @@ export function allCacheSampleData(): SimulatedFile[] {
         comments_markdown_style,
         docs_sample_for_explain_query_file_defaults,
         docs_sample_for_task_properties_reference,
+        embed_link_in_task,
         empty_yaml,
         example_kanban,
         inheritance_1parent1child,

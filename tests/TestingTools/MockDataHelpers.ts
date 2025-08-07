@@ -1,4 +1,3 @@
-import type { CachedMetadata } from 'obsidian';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
@@ -29,7 +28,7 @@ import type { SimulatedFile } from '../Obsidian/SimulatedFile';
  */
 export function getTasksFileFromMockData(data: SimulatedFile) {
     setCurrentCacheFile(data);
-    const cachedMetadata = data.cachedMetadata as CachedMetadata;
+    const cachedMetadata = data.cachedMetadata;
     return new TasksFile(data.filePath, cachedMetadata);
 }
 

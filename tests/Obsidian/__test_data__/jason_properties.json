@@ -126,5 +126,6 @@
   ],
   "parseFrontMatterTags": [
     "#journal"
-  ]
+  ],
+  "resolveLinkToPath": {}
 }

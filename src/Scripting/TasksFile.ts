@@ -1,5 +1,6 @@
-import { type CachedMetadata, type FrontMatterCache, getAllTags, parseFrontMatterTags } from 'obsidian';
-import { Link } from '../Task/Link';
+import { type CachedMetadata, type FrontMatterCache, type Reference, getAllTags, parseFrontMatterTags } from 'obsidian';
+import type { Link } from '../Task/Link';
+import { LinkResolver } from '../Task/LinkResolver';
 
 export type OptionalTasksFile = TasksFile | undefined;
 
@@ -13,6 +14,9 @@ export class TasksFile {
     private readonly _frontmatter = { tags: [] } as any;
     private readonly _tags: string[] = [];
 
+    private readonly _outlinksInProperties: Readonly<Link[]> = [];
+    private readonly _outlinksInBody: Readonly<Link[]> = [];
+
     constructor(path: string, cachedMetadata: CachedMetadata = {}) {
         this._path = path;
         this._cachedMetadata = cachedMetadata;
@@ -22,11 +26,17 @@ export class TasksFile {
             this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
             this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter) ?? [];
         }
+        this._outlinksInProperties = this.createLinks(this.cachedMetadata.frontmatterLinks);
+        this._outlinksInBody = this.createLinks(this.cachedMetadata.links);
 
         if (Object.keys(cachedMetadata).length !== 0) {
             const tags = getAllTags(this.cachedMetadata) ?? [];
             this._tags = [...new Set(tags)];
         }
+    }
+
+    private createLinks(obsidianRawLinks: Reference[] | undefined) {
+        return obsidianRawLinks?.map((link) => LinkResolver.getInstance().resolve(link, this.path)) ?? [];
     }
 
     /**
@@ -60,15 +70,15 @@ export class TasksFile {
     /**
      * Return an array of {@link Link} in the file's properties/frontmatter.
      */
-    get outlinksInProperties(): Link[] {
-        return this.cachedMetadata.frontmatterLinks?.map((link) => new Link(link, this.path)) ?? [];
+    get outlinksInProperties(): Readonly<Link[]> {
+        return this._outlinksInProperties;
     }
 
     /**
      * Return an array of {@link Link} in the body of the file.
      */
-    get outlinksInBody(): Link[] {
-        return this.cachedMetadata?.links?.map((link) => new Link(link, this.path)) ?? [];
+    get outlinksInBody(): Readonly<Link[]> {
+        return this._outlinksInBody;
     }
 
     /**
