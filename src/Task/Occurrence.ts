@@ -11,19 +11,6 @@ export class Occurrence {
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
 
-    /**
-     * The reference date is used to calculate future occurrences.
-     *
-     * Future occurrences will recur based on the reference date.
-     * The reference date is the due date, if it is given.
-     * Otherwise the scheduled date, if it is given. And so on.
-     *
-     * Recurrence of all dates will be kept relative to the reference date.
-     * For example: if the due date and the start date are given, the due date
-     * is the reference date. Future occurrences will have a start date with the
-     * same relative distance to the due date as the original task. For example
-     * "starts one week before it is due".
-     */
     private readonly _referenceDate: Moment | null;
 
     constructor({
@@ -41,6 +28,19 @@ export class Occurrence {
         this._referenceDate = this.getReferenceDate();
     }
 
+    /**
+     * The reference date is used to calculate future occurrences.
+     *
+     * Future occurrences will recur based on the reference date.
+     * The reference date is the due date, if it is given.
+     * Otherwise the scheduled date, if it is given. And so on.
+     *
+     * Recurrence of all dates will be kept relative to the reference date.
+     * For example: if the due date and the start date are given, the due date
+     * is the reference date. Future occurrences will have a start date with the
+     * same relative distance to the due date as the original task. For example
+     * "starts one week before it is due".
+     */
     public get referenceDate(): moment.Moment | null {
         return this._referenceDate;
     }
