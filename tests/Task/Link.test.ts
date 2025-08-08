@@ -15,11 +15,12 @@ import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestH
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { LinkResolver } from '../../src/Task/LinkResolver';
-import { getFirstLinkpathDest } from '../__mocks__/obsidian';
+import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
 
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
-    return new Link(rawLink, data.filePath);
+    const destinationPath = getFirstLinkpathDestFromData(data, rawLink);
+    return new Link(rawLink, data.filePath, destinationPath);
 }
 
 describe('linkClass', () => {
@@ -36,7 +37,7 @@ describe('linkClass', () => {
     });
 
     describe('getLink() configures Link.destinationPath automatically', () => {
-        it.failing('should set the full path for a resolved link', () => {
+        it('should set the full path for a resolved link', () => {
             const link = getLink(link_in_heading, 0);
             expect(link.destinationPath).toEqual('Test Data/multiple_headings.md');
         });
