@@ -11,8 +11,6 @@ export class Occurrence {
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
 
-    private readonly _referenceDate: Moment | null;
-
     constructor({
         startDate = null,
         scheduledDate = null,
@@ -25,7 +23,6 @@ export class Occurrence {
         this.startDate = startDate ?? null;
         this.scheduledDate = scheduledDate ?? null;
         this.dueDate = dueDate ?? null;
-        this._referenceDate = this.getReferenceDate();
     }
 
     /**
@@ -42,7 +39,7 @@ export class Occurrence {
      * "starts one week before it is due".
      */
     public get referenceDate(): moment.Moment | null {
-        return this._referenceDate;
+        return this.getReferenceDate();
     }
 
     /**
