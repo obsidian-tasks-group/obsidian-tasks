@@ -212,6 +212,9 @@
     "Test Data/multiple_headings.md": 1,
     "Test Attachments/a_pdf_file.pdf": 1
   },
+  "Test Data/link_in_task_wikilink_different_case.md": {
+    "Test Data/link_in_yaml.md": 1
+  },
   "Test Data/link_in_yaml.md": {
     "Test Data/yaml_tags_is_empty.md": 1
   },

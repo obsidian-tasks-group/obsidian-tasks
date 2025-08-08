@@ -1,0 +1,117 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "link_in_task_wikilink_different_case",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 0,
+            "offset": 38
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "links": [
+      {
+        "displayText": "liNk_in_YaMl",
+        "link": "liNk_in_YaMl",
+        "original": "[[liNk_in_YaMl]]",
+        "position": {
+          "end": {
+            "col": 75,
+            "line": 2,
+            "offset": 115
+          },
+          "start": {
+            "col": 59,
+            "line": 2,
+            "offset": 99
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 75,
+            "line": 2,
+            "offset": 115
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 40
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 38,
+            "line": 0,
+            "offset": 38
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 75,
+            "line": 2,
+            "offset": 115
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 40
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 51
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 46
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# link_in_task_wikilink_different_case\n\n- [ ] #task Task in 'link_in_task_wikilink_different_case' [[liNk_in_YaMl]]\n",
+  "filePath": "Test Data/link_in_task_wikilink_different_case.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "liNk_in_YaMl": "Test Data/link_in_yaml.md"
+  }
+}

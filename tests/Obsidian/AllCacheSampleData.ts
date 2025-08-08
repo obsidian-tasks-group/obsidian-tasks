@@ -47,6 +47,7 @@ import link_in_heading from './__test_data__/link_in_heading.json';
 import link_in_task_html from './__test_data__/link_in_task_html.json';
 import link_in_task_markdown_link from './__test_data__/link_in_task_markdown_link.json';
 import link_in_task_wikilink from './__test_data__/link_in_task_wikilink.json';
+import link_in_task_wikilink_different_case from './__test_data__/link_in_task_wikilink_different_case.json';
 import link_in_yaml from './__test_data__/link_in_yaml.json';
 import link_is_broken from './__test_data__/link_is_broken.json';
 import links_everywhere from './__test_data__/links_everywhere.json';
@@ -144,6 +145,7 @@ export function allCacheSampleData(): SimulatedFile[] {
         link_in_task_html,
         link_in_task_markdown_link,
         link_in_task_wikilink,
+        link_in_task_wikilink_different_case,
         link_in_yaml,
         link_is_broken,
         links_everywhere,
