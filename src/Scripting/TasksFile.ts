@@ -63,7 +63,7 @@ export class TasksFile {
     /**
      * Return an array of {@link Link} all the links in the file - both in frontmatter and in the file body.
      */
-    get outlinks(): Link[] {
+    get outlinks(): Readonly<Link[]> {
         return [...this.outlinksInProperties, ...this.outlinksInBody];
     }
 
