@@ -104,12 +104,12 @@ This should match one task, in [[Link to Access links file]].
 
 ````text
 ```tasks
-filter by function task.outlinks.some(link => link.isLinkTo(query.file))
+filter by function task.outlinks.some(link => link.linksTo(query.file))
 ```
 ````
 
 ```tasks
-filter by function task.outlinks.some(link => link.isLinkTo(query.file))
+filter by function task.outlinks.some(link => link.linksTo(query.file))
 ```
 
 #### Dataview version

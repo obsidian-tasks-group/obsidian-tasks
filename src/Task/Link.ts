@@ -76,7 +76,7 @@ export class Link {
         return this.rawLink.displayText;
     }
 
-    public isLinkTo(destination: string | TasksFile): boolean {
+    public linksTo(destination: string | TasksFile): boolean {
         if (typeof destination === 'string') {
             const removeMd = /\.md$/;
             const thisDestinationWithoutMd = this.destination.replace(removeMd, '');
