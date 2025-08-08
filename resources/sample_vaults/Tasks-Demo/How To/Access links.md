@@ -102,8 +102,6 @@ filter by function task.outlinks.some(link => link.destinationPath === query.fil
 
 This should match one task, in [[Link to Access links file]].
 
-There is a bug: this does not yet find the task it should do.
-
 ````text
 ```tasks
 filter by function task.outlinks.some(link => link.isLinkTo(query.file))
