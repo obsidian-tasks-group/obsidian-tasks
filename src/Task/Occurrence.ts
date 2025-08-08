@@ -1,5 +1,6 @@
 import type { Moment } from 'moment/moment';
 import { compareByDate } from '../DateTime/DateTools';
+import { getSettings } from '../Config/Settings';
 
 /**
  * A set of dates on a single instance of {@link Recurrence}.
@@ -88,9 +89,12 @@ export class Occurrence {
      * If the occurrence has no reference date, an empty {@link Occurrence} will be returned.
      *
      * @param nextReferenceDate
-     * @param removeScheduledDate - Optional boolean to remove the scheduled date from the next occurrence so long as a start or due date exists.
+     * @param _removeScheduledDate - Optional boolean to remove the scheduled date from the next occurrence so long as a start or due date exists.
      */
-    public next(nextReferenceDate: Date, removeScheduledDate: boolean = false): Occurrence {
+    public next(nextReferenceDate: Date, _removeScheduledDate: boolean = false): Occurrence {
+        const { removeScheduledDateOnRecurrence } = getSettings();
+        const removeScheduledDate = removeScheduledDateOnRecurrence;
+
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
         if (this.referenceDate === null) {
