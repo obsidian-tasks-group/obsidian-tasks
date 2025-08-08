@@ -1,4 +1,5 @@
 import type { App, CachedMetadata, Reference } from 'obsidian';
+import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 
 export {};
 
@@ -133,7 +134,7 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
 
 let mockedFileData: any = {};
 
-export function setCurrentCacheFile(mockData: any) {
+export function setCurrentCacheFile(mockData: SimulatedFile) {
     mockedFileData = mockData;
 }
 
