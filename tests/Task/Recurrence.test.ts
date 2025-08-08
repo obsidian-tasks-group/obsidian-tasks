@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Occurrence } from '../../src/Task/Occurrence';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
+import { updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
 
@@ -230,6 +231,14 @@ describe('identicalTo', () => {
 });
 
 describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
+    beforeEach(() => {
+        updateSettings({ removeScheduledDateOnRecurrence: true });
+    });
+
+    afterEach(() => {
+        updateSettings({ removeScheduledDateOnRecurrence: false });
+    });
+
     it('should remove the scheduledDate when removeScheduledDate is true', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
