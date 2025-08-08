@@ -95,6 +95,9 @@ export class Link {
             return false;
         }
 
-        return this.isLinkTo(destination.path);
+        // Links only match if they resolve to the full path,
+        // thus distinguishing between multiple identically named files
+        // in different folders in the vault.
+        return this.destinationPath === destination.path;
     }
 }
