@@ -251,7 +251,7 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
         });
 
         // Act
-        const next = recurrence!.next(undefined);
+        const next = recurrence!.next();
 
         // Assert
         expect(next!.startDate).toEqualMoment(moment('2022-02-01'));
@@ -269,7 +269,7 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
         });
 
         // Act
-        const next = recurrence!.next(undefined);
+        const next = recurrence!.next();
 
         // Assert
         expect(next!.scheduledDate).not.toBeNull();
@@ -304,7 +304,7 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
             });
 
             // Act
-            const next = recurrence!.next(undefined);
+            const next = recurrence!.next();
 
             // Assert
             expect(next!.startDate).toEqualMoment(moment('2022-01-13'));
