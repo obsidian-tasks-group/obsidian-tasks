@@ -24,7 +24,7 @@ export class Occurrence {
      * same relative distance to the due date as the original task. For example
      * "starts one week before it is due".
      */
-    public readonly referenceDate: Moment | null;
+    private readonly _referenceDate: Moment | null;
 
     constructor({
         startDate = null,
@@ -38,7 +38,11 @@ export class Occurrence {
         this.startDate = startDate ?? null;
         this.scheduledDate = scheduledDate ?? null;
         this.dueDate = dueDate ?? null;
-        this.referenceDate = this.getReferenceDate();
+        this._referenceDate = this.getReferenceDate();
+    }
+
+    public get referenceDate(): moment.Moment | null {
+        return this._referenceDate;
     }
 
     /**
