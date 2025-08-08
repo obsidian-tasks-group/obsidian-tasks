@@ -195,6 +195,10 @@ export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string): st
         reportInconsistentTestData('getFirstLinkpathDest');
     }
     const data = mockedFileData;
+    return getFirstLinkpathDestFromData(data, rawLink, sourcePath);
+}
+
+function getFirstLinkpathDestFromData(data: any, rawLink: Reference, sourcePath: string) {
     if (!(rawLink.link in data.resolveLinkToPath)) {
         console.log(`Cannot find resolved path for ${rawLink.link} in ${sourcePath} in mock getFirstLinkpathDest()`);
     }
