@@ -32,8 +32,8 @@ describe('linkClass', () => {
         expect(link.destination).toEqual('link_in_file_body');
         expect(link.displayText).toEqual('link_in_file_body');
         expect(link.markdown).toEqual(link.originalMarkdown);
-        expect(link.isLinkTo('link_in_file_body')).toEqual(true);
-        expect(link.isLinkTo('link_in_file_body.md')).toEqual(true);
+        expect(link.linksTo('link_in_file_body')).toEqual(true);
+        expect(link.linksTo('link_in_file_body.md')).toEqual(true);
     });
 
     describe('getLink() configures Link.destinationPath automatically', () => {
@@ -286,43 +286,43 @@ describe('linkClass', () => {
         });
     });
 
-    describe('isLinkTo() tests', () => {
+    describe('linksTo() tests', () => {
         it('matches filenames', () => {
             const link = getLink(links_everywhere, 0);
 
-            expect(link.isLinkTo('link_in_file_body')).toEqual(true);
-            expect(link.isLinkTo('link_in_file_body.md')).toEqual(true);
+            expect(link.linksTo('link_in_file_body')).toEqual(true);
+            expect(link.linksTo('link_in_file_body.md')).toEqual(true);
 
-            expect(link.isLinkTo('somewhere_else')).toEqual(false);
+            expect(link.linksTo('somewhere_else')).toEqual(false);
 
-            expect(link.isLinkTo('link_in_file_body_but_different')).toEqual(false);
-            expect(link.isLinkTo('link_in_file_')).toEqual(false);
+            expect(link.linksTo('link_in_file_body_but_different')).toEqual(false);
+            expect(link.linksTo('link_in_file_')).toEqual(false);
         });
 
         it('matches without folders', () => {
             const linkToAFile = getLink(link_in_task_wikilink, 0);
             expect(linkToAFile.originalMarkdown).toMatchInlineSnapshot('"[[link_in_task_wikilink]]"');
 
-            expect(linkToAFile.isLinkTo('link_in_task_wikilink')).toEqual(true);
+            expect(linkToAFile.linksTo('link_in_task_wikilink')).toEqual(true);
         });
 
         it('matches with folders', () => {
             const linkToAFolder = getLink(link_in_task_wikilink, 2);
             expect(linkToAFolder.originalMarkdown).toMatchInlineSnapshot('"[[Test Data/link_in_task_wikilink]]"');
 
-            expect(linkToAFolder.isLinkTo('link_in_task_wikilink')).toEqual(true);
-            expect(linkToAFolder.isLinkTo('Test Data/link_in_task_wikilink')).toEqual(true);
-            expect(linkToAFolder.isLinkTo('Test Data/link_in_task_wikilink.md')).toEqual(true);
+            expect(linkToAFolder.linksTo('link_in_task_wikilink')).toEqual(true);
+            expect(linkToAFolder.linksTo('Test Data/link_in_task_wikilink')).toEqual(true);
+            expect(linkToAFolder.linksTo('Test Data/link_in_task_wikilink.md')).toEqual(true);
         });
 
         it('matches TasksFile - only exact paths match', () => {
             const linkToAFolder = getLink(link_in_task_wikilink, 2);
             expect(linkToAFolder.originalMarkdown).toMatchInlineSnapshot('"[[Test Data/link_in_task_wikilink]]"');
 
-            expect(linkToAFolder.isLinkTo(new TasksFile('Test Data/link_in_task_wikilink.md'))).toEqual(true);
-            expect(linkToAFolder.isLinkTo(new TasksFile('link_in_task_wikilink.md'))).toEqual(false);
-            expect(linkToAFolder.isLinkTo(new TasksFile('Wrong Test Data/link_in_task_wikilink.md'))).toEqual(false);
-            expect(linkToAFolder.isLinkTo(new TasksFile('something_obviously_different.md'))).toEqual(false);
+            expect(linkToAFolder.linksTo(new TasksFile('Test Data/link_in_task_wikilink.md'))).toEqual(true);
+            expect(linkToAFolder.linksTo(new TasksFile('link_in_task_wikilink.md'))).toEqual(false);
+            expect(linkToAFolder.linksTo(new TasksFile('Wrong Test Data/link_in_task_wikilink.md'))).toEqual(false);
+            expect(linkToAFolder.linksTo(new TasksFile('something_obviously_different.md'))).toEqual(false);
         });
     });
 });
