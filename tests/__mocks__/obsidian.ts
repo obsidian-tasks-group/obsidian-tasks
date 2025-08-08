@@ -194,8 +194,7 @@ export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string): st
     if (mockedFileData.filePath !== sourcePath) {
         reportInconsistentTestData('getFirstLinkpathDest');
     }
-    const data = mockedFileData;
-    return getFirstLinkpathDestFromData(data, rawLink, sourcePath);
+    return getFirstLinkpathDestFromData(mockedFileData, rawLink, sourcePath);
 }
 
 function getFirstLinkpathDestFromData(data: any, rawLink: Reference, sourcePath: string) {
