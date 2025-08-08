@@ -265,4 +265,32 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
         // Assert
         expect(next!.scheduledDate).not.toBeNull();
     });
+
+    describe('dropScheduledDate and when done', () => {
+        beforeEach(() => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date('2022-01-10'));
+        });
+        afterEach(() => {
+            jest.useRealTimers();
+        });
+
+        it.failing('calculates the correct start date when dropScheduledDate is true and repeat is when done', () => {
+            // Arrange
+            const recurrence = Recurrence.fromText({
+                recurrenceRuleText: 'every 3 days when done',
+                occurrence: new Occurrence({
+                    startDate: moment('2022-01-01').startOf('day'),
+                    scheduledDate: moment('2022-01-04').startOf('day'),
+                }),
+            });
+
+            // Act
+            const next = recurrence!.next(undefined, true);
+
+            // Assert
+            expect(next!.startDate).toEqualMoment(moment('2022-01-13'));
+            expect(next!.scheduledDate).toBeNull();
+        });
+    });
 });
