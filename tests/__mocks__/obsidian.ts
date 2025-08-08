@@ -1,4 +1,5 @@
 import type { App, CachedMetadata, Reference } from 'obsidian';
+import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 
 export {};
 
@@ -133,7 +134,7 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
 
 let mockedFileData: any = {};
 
-export function setCurrentCacheFile(mockData: any) {
+export function setCurrentCacheFile(mockData: SimulatedFile) {
     mockedFileData = mockData;
 }
 
@@ -194,10 +195,14 @@ export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string): st
     if (mockedFileData.filePath !== sourcePath) {
         reportInconsistentTestData('getFirstLinkpathDest');
     }
-    if (!(rawLink.link in mockedFileData.resolveLinkToPath)) {
-        console.log(`Cannot find resolved path for ${rawLink.link} in ${sourcePath} in mock getFirstLinkpathDest()`);
+    return getFirstLinkpathDestFromData(mockedFileData, rawLink);
+}
+
+export function getFirstLinkpathDestFromData(data: any, rawLink: Reference) {
+    if (!(rawLink.link in data.resolveLinkToPath)) {
+        console.log(`Cannot find resolved path for ${rawLink.link} in ${data.filePath} in mock getFirstLinkpathDest()`);
     }
-    return mockedFileData.resolveLinkToPath[rawLink.link];
+    return data.resolveLinkToPath[rawLink.link];
 }
 
 /**

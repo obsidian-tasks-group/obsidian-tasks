@@ -16,7 +16,9 @@
   "Functions/Custom Filters With Simple Caching.md": {},
   "Functions/Custom Sorting.md": {},
   "Functions/Fields for Functions - Demo.md": {},
-  "How To/Access links.md": {},
+  "How To/Access links.md": {
+    "Test Attachments/Link to Access links file.md": 2
+  },
   "How To/Access properties in frontmatter.md": {},
   "How To/Find properties not read by Obsidian 1.9.x/README.md": {},
   "How To/Find tasks in notes with particular tag.md": {},
@@ -127,6 +129,9 @@
   "Styling/Theme - Minimal Theme.md": {},
   "Styling/Theme - Things Theme.md": {},
   "Tasks.md": {},
+  "Test Attachments/Link to Access links file.md": {
+    "How To/Access links.md": 1
+  },
   "Test Attachments/markdownLink.md": {
     "Test Data/all_link_types.md": 1
   },
@@ -206,6 +211,9 @@
     "Test Data/link_in_task_wikilink.md": 6,
     "Test Data/multiple_headings.md": 1,
     "Test Attachments/a_pdf_file.pdf": 1
+  },
+  "Test Data/link_in_task_wikilink_different_case.md": {
+    "Test Data/link_in_yaml.md": 1
   },
   "Test Data/link_in_yaml.md": {
     "Test Data/yaml_tags_is_empty.md": 1
