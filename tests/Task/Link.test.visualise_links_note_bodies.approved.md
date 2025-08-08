@@ -380,6 +380,14 @@
 `link.destinationPath      `: `'null'`
 `link.displayText          `: `'| > alias'`
 
+## Test Data/link_in_task_wikilink_different_case.md
+
+`link.originalMarkdown     `: `'[[liNk_in_YaMl]]'`
+`link.markdown             `: `'[[liNk_in_YaMl]]'`
+`link.destination          `: `'liNk_in_YaMl'`
+`link.destinationPath      `: `'Test Data/link_in_yaml.md'`
+`link.displayText          `: `'liNk_in_YaMl'`
+
 ## Test Data/link_is_broken.md
 
 `link.originalMarkdown     `: `'[[broken link - do not fix me]]'`
