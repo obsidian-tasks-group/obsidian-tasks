@@ -89,9 +89,8 @@ export class Occurrence {
      * If the occurrence has no reference date, an empty {@link Occurrence} will be returned.
      *
      * @param nextReferenceDate
-     * @param _removeScheduledDate - Optional boolean to remove the scheduled date from the next occurrence so long as a start or due date exists.
      */
-    public next(nextReferenceDate: Date, _removeScheduledDate: boolean = false): Occurrence {
+    public next(nextReferenceDate: Date): Occurrence {
         const { removeScheduledDateOnRecurrence } = getSettings();
         const removeScheduledDate = removeScheduledDateOnRecurrence;
 
