@@ -2,8 +2,10 @@ import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
+import link_in_heading from '../Obsidian/__test_data__/link_in_heading.json';
 import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_markdown_link.json';
 import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
+import link_is_broken from '../Obsidian/__test_data__/link_is_broken.json';
 
 import link_in_file_body from '../Obsidian/__test_data__/link_in_file_body.json';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
@@ -31,6 +33,18 @@ describe('linkClass', () => {
         expect(link.markdown).toEqual(link.originalMarkdown);
         expect(link.isLinkTo('link_in_file_body')).toEqual(true);
         expect(link.isLinkTo('link_in_file_body.md')).toEqual(true);
+    });
+
+    describe('getLink() configures Link.destinationPath automatically', () => {
+        it.failing('should set the full path for a resolved link', () => {
+            const link = getLink(link_in_heading, 0);
+            expect(link.destinationPath).toEqual('Test Data/multiple_headings.md');
+        });
+
+        it('should not set the full path for a broken/unresolved link', () => {
+            const link = getLink(link_is_broken, 0);
+            expect(link.destinationPath).toEqual(null);
+        });
     });
 
     describe('return markdown to navigate to a link', () => {
