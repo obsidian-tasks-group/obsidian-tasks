@@ -92,7 +92,6 @@ export class Occurrence {
      */
     public next(nextReferenceDate: Date): Occurrence {
         const { removeScheduledDateOnRecurrence } = getSettings();
-        const removeScheduledDate = removeScheduledDateOnRecurrence;
 
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
@@ -107,7 +106,7 @@ export class Occurrence {
         const hasStartDate = this.startDate !== null;
         const hasDueDate = this.dueDate !== null;
         const canRemoveScheduledDate = hasStartDate || hasDueDate;
-        const shouldRemoveScheduledDate = removeScheduledDate && canRemoveScheduledDate;
+        const shouldRemoveScheduledDate = removeScheduledDateOnRecurrence && canRemoveScheduledDate;
 
         const startDate = this.nextOccurrenceDate(this.startDate, nextReferenceDate);
         const scheduledDate = shouldRemoveScheduledDate
