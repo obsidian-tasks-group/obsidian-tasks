@@ -284,8 +284,17 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
             jest.useRealTimers();
         });
 
-        it.failing('calculates the correct start date when dropScheduledDate is true and repeat is when done', () => {
+        it.failing('calculates correct start date with "dropScheduledDate" and "when done", with no due date', () => {
             // Arrange
+
+            // The task is being completed on the 10th of January.
+            // And the user has turned on the setting to remove the scheduled date in the new instance.
+            // This means that the user will apply a scheduled date at some point in the future,
+            // when they are ready to work on the task.
+            // Therefore, in the new task, as there is no Due date, the only date the user will see
+            // is the Start date.
+            // And so it makes sense to calculate the new 'happens' date using the Start date,
+            // not the old scheduled date.
             const recurrence = Recurrence.fromText({
                 recurrenceRuleText: 'every 3 days when done',
                 occurrence: new Occurrence({
