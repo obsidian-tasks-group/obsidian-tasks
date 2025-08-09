@@ -4,6 +4,7 @@ import type { Settings } from '../Config/Settings';
 import { DateParser } from '../DateTime/DateParser';
 import { doAutocomplete } from '../DateTime/DateAbbreviations';
 import { Occurrence } from '../Task/Occurrence';
+import { Duration } from '../Task/Duration';
 import { Recurrence } from '../Task/Recurrence';
 import {
     type DefaultTaskSerializerSymbols,
@@ -80,6 +81,9 @@ export function makeDefaultSuggestionBuilder(
         // add date suggestions if relevant
         suggestions = suggestions.concat(addDatesSuggestions(datePrefixRegex, maxGenericSuggestions, parameters));
 
+        // add duration suggestions if relevant
+        suggestions = suggestions.concat(addDurationValueSuggestions(symbols.durationSymbol, parameters));
+
         // add recurrence suggestions if relevant
         suggestions = suggestions.concat(addRecurrenceValueSuggestions(symbols.recurrenceSymbol, parameters));
 
@@ -152,6 +156,7 @@ function addTaskPropertySuggestions(
     addField(genericSuggestions, line, symbols.dueDateSymbol, 'due date');
     addField(genericSuggestions, line, symbols.startDateSymbol, 'start date');
     addField(genericSuggestions, line, symbols.scheduledDateSymbol, 'scheduled date');
+    addField(genericSuggestions, line, symbols.durationSymbol, 'duration');
 
     addPrioritySuggestions(genericSuggestions, symbols, parameters);
     addField(genericSuggestions, line, symbols.recurrenceSymbol, 'recurring (repeat)');
@@ -272,6 +277,95 @@ function dateExtractor(symbol: string, date: string) {
     return { displayText, appendText };
 }
 
+/*
+ * If the cursor is located in a section that should be followed by a duration description, suggest options
+ * for what to enter as a duration.
+ * This has two parts: either generic predefined suggestions, or a single suggestion that is a parsed result
+ * of what the user is typing.
+ * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
+ * something where a duration is expected) or unfiltered
+ */
+function addDurationValueSuggestions(durationSymbol: string, parameters: SuggestorParameters) {
+    let genericSuggestions = ['5m', '15m', '1h', '30m', '45m', '2h', '3h'];
+    const hourSuggestions = ['15m', '30m', '45m'];
+
+    const results: SuggestInfo[] = [];
+    const durationRegex = new RegExp(`(${durationSymbol})\\s*([0-9hm]*)`, 'ug');
+    const durationMatch = matchIfCursorInRegex(durationRegex, parameters);
+    if (durationMatch && durationMatch.length >= 1) {
+        const durationPrefix = durationMatch[1];
+        let durationString = '';
+        if (durationMatch[2]) {
+            durationString = durationMatch[2];
+        }
+        if (durationString.length > 0) {
+            // If the text matches a valid duration, suggest logical continuations
+            let parsedduration = Duration.fromText(durationString);
+            if (!parsedduration) {
+                //not a valid duration string => no h/m yet. Suggest finishing with minutes or complete hour!
+                if (parseInt(durationString, 10) > 0) {
+                    results.push({
+                        suggestionType: 'match',
+                        displayText: `${durationPrefix} ${durationString}m`,
+                        appendText: `${durationPrefix} ${durationString}m` + parameters.postfix,
+                        insertAt: durationMatch.index,
+                        insertSkip: calculateSkipValueForMatch(durationMatch[0], parameters),
+                    });
+                    genericSuggestions = genericSuggestions.filter((s) => s != `${durationString}m`);
+                    results.push({
+                        suggestionType: 'match',
+                        displayText: `${durationPrefix} ${durationString}h`,
+                        appendText: `${durationPrefix} ${durationString}h` + parameters.postfix,
+                        insertAt: durationMatch.index,
+                        insertSkip: calculateSkipValueForMatch(durationMatch[0], parameters),
+                    });
+                    genericSuggestions = genericSuggestions.filter((s) => s != `${durationString}h`);
+                }
+                // also suggest that '2' implies '2h', thus also suggesting continuations like '2h30m'
+                parsedduration = Duration.fromText(durationString + 'h');
+            }
+            if (parsedduration) {
+                // special suggestions on finished hour like '123h'
+                const genText = (sugg: string) => `${durationPrefix} ${parsedduration!.hours}h${sugg}`;
+                for (const suggestion of hourSuggestions.filter(
+                    // suggestion is either all suggestions or the one with matching prefix
+                    (s) => parsedduration?.minutes == 0 || s.startsWith(parsedduration!.minutes.toString(10)),
+                )) {
+                    results.push({
+                        suggestionType: 'match',
+                        displayText: `${genText(suggestion)}`,
+                        appendText: genText(suggestion) + parameters.postfix,
+                        insertAt: durationMatch.index,
+                        insertSkip: calculateSkipValueForMatch(durationMatch[0], parameters),
+                    });
+                }
+            }
+        }
+        // Now to generic predefined suggestions.
+        // If we get a partial match with some of the suggestions (e.g. the user started typing "3"),
+        // we use that for matches to the generic example-list above (i.e. "3h").
+        // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
+        // a max number.
+        // In the case of duration rules, the max number should be small enough to allow users to "escape"
+        // the mode of writing a duration rule, i.e. we should leave enough space for component suggestions
+        const maxGenericDurationSuggestions = parameters.settings.autoSuggestMaxItems / 2;
+        const genericMatches = filterGenericSuggestions(
+            genericSuggestions,
+            durationString,
+            maxGenericDurationSuggestions,
+            true,
+        );
+
+        const extractor = (durationPrefix: string, match: string) => {
+            const displayText = `${durationPrefix} ${match}`;
+            const appendText = `${durationPrefix} ${match}`;
+            return { displayText, appendText };
+        };
+        constructSuggestions(parameters, durationMatch, genericMatches, extractor, results);
+    }
+
+    return results;
+}
 /*
  * If the cursor is located in a section that should be followed by a date (due, start date or scheduled date),
  * suggest options for what to enter as a date.
