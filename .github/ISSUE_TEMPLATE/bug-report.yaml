@@ -30,8 +30,9 @@ body:
         * Searches
         * Sorting
         * Grouping
+
         See [#3546](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3546) and [#3546](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3560).
-        <br>
+
         The **Label filters** may help make your search more focussed.
       options:
         - label: "I searched previous [Tasks plugin Bug Reports](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+bug%22+sort%3Acomments-desc) didn't find any similar reports."
