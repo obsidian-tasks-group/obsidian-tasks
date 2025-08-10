@@ -80,6 +80,17 @@ body:
         - label: Linux
         - label: macOS
         - label: Windows
+    validations:
+      required: true
+
+  - type: input
+    id: os-versions
+    attributes:
+      label: Operating System Version(s)
+      description: Which operating system version(s) are you using?
+      placeholder: 1.6.7
+    validations:
+      required: true
 
   - type: input
     id: obsidian-version
