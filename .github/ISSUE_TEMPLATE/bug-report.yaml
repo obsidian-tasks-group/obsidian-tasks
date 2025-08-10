@@ -22,9 +22,9 @@ body:
   - type: checkboxes
     id: no-duplicate-issues
     attributes:
-      label: "⚠️ Check that this issue hasn't been reported before."
+      label: "⚠️ Check that this issue hasn't been reported before. We know that Tasks has been broken by iOS and iPadOS 18.6 and 26 Public Beta 2."
       description: |
-        The **Label filters** may help make your search more focussed.
+        The **Label filters** may help make your search more focussed.<br>
         **Known Issue**: We already know **iOS and iPadOS** versions **18.6** and **26 Public Beta 2** have completely broken the Tasks plugin's ability to read task lines with more than one emoji.
         This breaks many thinks, including:
         * Recurrence
