@@ -5,6 +5,7 @@ import { Status } from '../../src/Statuses/Status';
 import { StatusType } from '../../src/Statuses/StatusConfiguration';
 import { Priority } from '../../src/Task/Priority';
 import { PriorityTools } from '../../src/lib/PriorityTools';
+import { Duration } from '../../src/Task/Duration';
 import { OnCompletion } from '../../src/Task/OnCompletion';
 import { TaskBuilder } from './TaskBuilder';
 import { fromLine, fromLines } from './TestHelpers';
@@ -144,6 +145,12 @@ export class SampleTasks {
     public static withAllRepresentativeCancelledDates(): Task[] {
         return representativeDates.map((date) => {
             return new TaskBuilder().cancelledDate(date).build();
+        });
+    }
+
+    public static withAllRepresentativeDurations(): Task[] {
+        return ['', '5m', '90m', '1h', '3h25', '4h90m', '96h'].map((duration) => {
+            return new TaskBuilder().duration(Duration.fromText(duration)!).build();
         });
     }
 

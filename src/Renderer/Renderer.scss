@@ -1,6 +1,5 @@
 :root {
     --tasks-details-icon: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z'/></svg>");
-
 }
 
 /* Fix indentation of wrapped task lines in Tasks search results, when in Live Preview. */
@@ -8,7 +7,7 @@ ul.contains-task-list .task-list-item-checkbox {
     margin-inline-start: calc(var(--checkbox-size) * -1.5) !important;
 }
 
-.plugin-tasks-query-explanation{
+.plugin-tasks-query-explanation {
     /* Prevent long explanation lines wrapping, so they are more readable,
        especially on small screens.
 
@@ -53,6 +52,7 @@ ul.contains-task-list .task-list-item-checkbox {
 .task-done,
 .task-due,
 .task-scheduled,
+.task-duration,
 .task-start {
     cursor: pointer;
     user-select: none;
@@ -61,11 +61,12 @@ ul.contains-task-list .task-list-item-checkbox {
 }
 
 /* Edit and postpone */
-.tasks-edit, .tasks-postpone {
+.tasks-edit,
+.tasks-postpone {
     width: 1em;
     height: 1em;
     vertical-align: middle;
-    margin-left: .33em;
+    margin-left: 0.33em;
     cursor: pointer;
     font-family: var(--font-interface);
     color: var(--text-accent);
@@ -74,7 +75,8 @@ ul.contains-task-list .task-list-item-checkbox {
     -webkit-touch-callout: none;
 }
 
-a.tasks-edit, a.tasks-postpone {
+a.tasks-edit,
+a.tasks-postpone {
     text-decoration: none;
 }
 
@@ -124,6 +126,6 @@ a.tasks-edit, a.tasks-postpone {
 
 /* Workaround for issue #2073: Enabling the plugin causes blockIds to be not hidden in reading view
    https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2073 */
-.task-list-item .task-block-link{
+.task-list-item .task-block-link {
     display: none;
 }
