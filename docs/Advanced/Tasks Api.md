@@ -35,12 +35,11 @@ export interface TasksApiV1 {
     createTaskLineModal(): Promise<string>;
 
     /**
-     * Opens the Tasks UI pre-filled with the provided task line for editing.
-     * Does not edit the task line in the file, but returns the edited task line as a Markdown string.
+     * Opens the Tasks UI and returns the Markdown string for the edited
+     * task line. Does not edit the task line in the file.
      *
-     * @param taskLine The markdown string of the task line to edit
-     * @returns {Promise<string>} A promise that contains the Markdown string for the edited task or
-     * an empty string in the case where the data entry was cancelled.
+     * @returns {Promise<string>} A promise that contains the Markdown string for the task edited or
+     * an empty string, if data entry was cancelled.
      */
     editTaskLineModal(taskLine: string): Promise<string>;
 
