@@ -1,6 +1,7 @@
 {
   "cachedMetadata": {
     "frontmatter": {
+      "link-in-frontmatter": "[[link_in_yaml]]",
       "root_dirs_to_search": [
         "Formats/",
         "Filters/"
@@ -10,12 +11,19 @@
       "task_instructions": "group by root\ngroup by folder\n  group by filename\n# a comment\n  # an indented comment\n",
       "task_instructions_with_continuation_line": "path \\\n  includes query_using_properties\n"
     },
-    "frontmatterLinks": [],
+    "frontmatterLinks": [
+      {
+        "displayText": "link_in_yaml",
+        "key": "link-in-frontmatter",
+        "link": "link_in_yaml",
+        "original": "[[link_in_yaml]]"
+      }
+    ],
     "frontmatterPosition": {
       "end": {
         "col": 3,
-        "line": 15,
-        "offset": 369
+        "line": 16,
+        "offset": 409
       },
       "start": {
         "col": 0,
@@ -30,13 +38,13 @@
         "position": {
           "end": {
             "col": 24,
-            "line": 17,
-            "offset": 395
+            "line": 18,
+            "offset": 435
           },
           "start": {
             "col": 0,
-            "line": 17,
-            "offset": 371
+            "line": 18,
+            "offset": 411
           }
         }
       },
@@ -46,13 +54,13 @@
         "position": {
           "end": {
             "col": 44,
-            "line": 21,
-            "offset": 487
+            "line": 24,
+            "offset": 636
           },
           "start": {
             "col": 0,
-            "line": 21,
-            "offset": 443
+            "line": 24,
+            "offset": 592
           }
         }
       },
@@ -62,13 +70,13 @@
         "position": {
           "end": {
             "col": 56,
-            "line": 32,
-            "offset": 750
+            "line": 35,
+            "offset": 899
           },
           "start": {
             "col": 0,
-            "line": 32,
-            "offset": 694
+            "line": 35,
+            "offset": 843
           }
         }
       },
@@ -78,13 +86,13 @@
         "position": {
           "end": {
             "col": 47,
-            "line": 43,
-            "offset": 1055
+            "line": 46,
+            "offset": 1204
           },
           "start": {
             "col": 0,
-            "line": 43,
-            "offset": 1008
+            "line": 46,
+            "offset": 1157
           }
         }
       },
@@ -94,13 +102,13 @@
         "position": {
           "end": {
             "col": 70,
-            "line": 55,
-            "offset": 1369
+            "line": 58,
+            "offset": 1518
           },
           "start": {
             "col": 0,
-            "line": 55,
-            "offset": 1299
+            "line": 58,
+            "offset": 1448
           }
         }
       },
@@ -110,30 +118,49 @@
         "position": {
           "end": {
             "col": 62,
-            "line": 69,
-            "offset": 1786
+            "line": 72,
+            "offset": 1935
           },
           "start": {
             "col": 0,
-            "line": 69,
-            "offset": 1724
+            "line": 72,
+            "offset": 1873
+          }
+        }
+      }
+    ],
+    "links": [
+      {
+        "displayText": "link_in_file_body_with_custom_display_text",
+        "link": "link_in_file_body_with_custom_display_text",
+        "original": "[[link_in_file_body_with_custom_display_text]]",
+        "position": {
+          "end": {
+            "col": 106,
+            "line": 22,
+            "offset": 589
+          },
+          "start": {
+            "col": 60,
+            "line": 22,
+            "offset": 543
           }
         }
       }
     ],
     "listItems": [
       {
-        "parent": -19,
+        "parent": -20,
         "position": {
           "end": {
             "col": 44,
-            "line": 19,
-            "offset": 441
+            "line": 20,
+            "offset": 481
           },
           "start": {
             "col": 0,
-            "line": 19,
-            "offset": 397
+            "line": 20,
+            "offset": 437
           }
         },
         "task": " "
@@ -144,8 +171,8 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 15,
-            "offset": 369
+            "line": 16,
+            "offset": 409
           },
           "start": {
             "col": 0,
@@ -159,13 +186,13 @@
         "position": {
           "end": {
             "col": 24,
-            "line": 17,
-            "offset": 395
+            "line": 18,
+            "offset": 435
           },
           "start": {
             "col": 0,
-            "line": 17,
-            "offset": 371
+            "line": 18,
+            "offset": 411
           }
         },
         "type": "heading"
@@ -174,13 +201,13 @@
         "position": {
           "end": {
             "col": 44,
-            "line": 19,
-            "offset": 441
+            "line": 20,
+            "offset": 481
           },
           "start": {
             "col": 0,
-            "line": 19,
-            "offset": 397
+            "line": 20,
+            "offset": 437
           }
         },
         "type": "list"
@@ -188,14 +215,29 @@
       {
         "position": {
           "end": {
-            "col": 44,
-            "line": 21,
-            "offset": 487
+            "col": 107,
+            "line": 22,
+            "offset": 590
           },
           "start": {
             "col": 0,
-            "line": 21,
-            "offset": 443
+            "line": 22,
+            "offset": 483
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 44,
+            "line": 24,
+            "offset": 636
+          },
+          "start": {
+            "col": 0,
+            "line": 24,
+            "offset": 592
           }
         },
         "type": "heading"
@@ -204,13 +246,13 @@
         "position": {
           "end": {
             "col": 108,
-            "line": 23,
-            "offset": 597
+            "line": 26,
+            "offset": 746
           },
           "start": {
             "col": 0,
-            "line": 23,
-            "offset": 489
+            "line": 26,
+            "offset": 638
           }
         },
         "type": "paragraph"
@@ -219,13 +261,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 30,
-            "offset": 692
+            "line": 33,
+            "offset": 841
           },
           "start": {
             "col": 0,
-            "line": 25,
-            "offset": 599
+            "line": 28,
+            "offset": 748
           }
         },
         "type": "code"
@@ -234,13 +276,13 @@
         "position": {
           "end": {
             "col": 56,
-            "line": 32,
-            "offset": 750
+            "line": 35,
+            "offset": 899
           },
           "start": {
             "col": 0,
-            "line": 32,
-            "offset": 694
+            "line": 35,
+            "offset": 843
           }
         },
         "type": "heading"
@@ -249,13 +291,13 @@
         "position": {
           "end": {
             "col": 147,
-            "line": 34,
-            "offset": 899
+            "line": 37,
+            "offset": 1048
           },
           "start": {
             "col": 0,
-            "line": 34,
-            "offset": 752
+            "line": 37,
+            "offset": 901
           }
         },
         "type": "paragraph"
@@ -264,13 +306,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 41,
-            "offset": 1006
+            "line": 44,
+            "offset": 1155
           },
           "start": {
             "col": 0,
-            "line": 36,
-            "offset": 901
+            "line": 39,
+            "offset": 1050
           }
         },
         "type": "code"
@@ -279,13 +321,13 @@
         "position": {
           "end": {
             "col": 47,
-            "line": 43,
-            "offset": 1055
+            "line": 46,
+            "offset": 1204
           },
           "start": {
             "col": 0,
-            "line": 43,
-            "offset": 1008
+            "line": 46,
+            "offset": 1157
           }
         },
         "type": "heading"
@@ -294,13 +336,13 @@
         "position": {
           "end": {
             "col": 118,
-            "line": 45,
-            "offset": 1175
+            "line": 48,
+            "offset": 1324
           },
           "start": {
             "col": 0,
-            "line": 45,
-            "offset": 1057
+            "line": 48,
+            "offset": 1206
           }
         },
         "type": "paragraph"
@@ -309,13 +351,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 53,
-            "offset": 1297
+            "line": 56,
+            "offset": 1446
           },
           "start": {
             "col": 0,
-            "line": 47,
-            "offset": 1177
+            "line": 50,
+            "offset": 1326
           }
         },
         "type": "code"
@@ -324,13 +366,13 @@
         "position": {
           "end": {
             "col": 70,
-            "line": 55,
-            "offset": 1369
+            "line": 58,
+            "offset": 1518
           },
           "start": {
             "col": 0,
-            "line": 55,
-            "offset": 1299
+            "line": 58,
+            "offset": 1448
           }
         },
         "type": "heading"
@@ -339,13 +381,13 @@
         "position": {
           "end": {
             "col": 143,
-            "line": 57,
-            "offset": 1514
+            "line": 60,
+            "offset": 1663
           },
           "start": {
             "col": 0,
-            "line": 57,
-            "offset": 1371
+            "line": 60,
+            "offset": 1520
           }
         },
         "type": "paragraph"
@@ -354,13 +396,13 @@
         "position": {
           "end": {
             "col": 61,
-            "line": 59,
-            "offset": 1577
+            "line": 62,
+            "offset": 1726
           },
           "start": {
             "col": 0,
-            "line": 59,
-            "offset": 1516
+            "line": 62,
+            "offset": 1665
           }
         },
         "type": "paragraph"
@@ -369,13 +411,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 67,
-            "offset": 1722
+            "line": 70,
+            "offset": 1871
           },
           "start": {
             "col": 0,
-            "line": 61,
-            "offset": 1579
+            "line": 64,
+            "offset": 1728
           }
         },
         "type": "code"
@@ -384,13 +426,13 @@
         "position": {
           "end": {
             "col": 62,
-            "line": 69,
-            "offset": 1786
+            "line": 72,
+            "offset": 1935
           },
           "start": {
             "col": 0,
-            "line": 69,
-            "offset": 1724
+            "line": 72,
+            "offset": 1873
           }
         },
         "type": "heading"
@@ -399,13 +441,13 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 84,
-            "offset": 2174
+            "line": 87,
+            "offset": 2323
           },
           "start": {
             "col": 0,
-            "line": 71,
-            "offset": 1788
+            "line": 74,
+            "offset": 1937
           }
         },
         "type": "code"
@@ -416,24 +458,27 @@
         "position": {
           "end": {
             "col": 11,
-            "line": 19,
-            "offset": 408
+            "line": 20,
+            "offset": 448
           },
           "start": {
             "col": 6,
-            "line": 19,
-            "offset": 403
+            "line": 20,
+            "offset": 443
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n    group by filename\n  # a comment\n    # an indented comment\ntask_instructions_with_continuation_line: |\n  path \\\n    includes query_using_properties\ntask_instruction_with_spaces: \"  path includes query_using_properties  \"\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a one-line property: task_instruction_with_spaces\n\nRead a Tasks instruction **that is surrounded by extra spaces** from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction_with_spaces')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nRead multiple Tasks instructions from a property in this file, and embed them in to any number of queries in the file:\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions_with_continuation_line\n\nRead multiple Tasks instructions with a continuation line from a property in this file, and embed them in to any number of queries in the file.\n\nContinuation lines are currently unsupported in placeholders.\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions_with_continuation_line')}}\nlimit 10\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
+  "fileContents": "---\nroot_dirs_to_search:\n  - Formats/\n  - Filters/\ntask_instruction: group by filename\ntask_instructions: |\n  group by root\n  group by folder\n    group by filename\n  # a comment\n    # an indented comment\ntask_instructions_with_continuation_line: |\n  path \\\n    includes query_using_properties\ntask_instruction_with_spaces: \"  path includes query_using_properties  \"\nlink-in-frontmatter: \"[[link_in_yaml]]\"\n---\n\n# query_using_properties\n\n- [ ] #task Task in 'query_using_properties'\n\nExample link in body of a file, for documentation purposes: [[link_in_file_body_with_custom_display_text]].\n\n## Use a one-line property: task_instruction\n\nRead a Tasks instruction from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction')}}\nlimit 10\n```\n\n## Use a one-line property: task_instruction_with_spaces\n\nRead a Tasks instruction **that is surrounded by extra spaces** from a property in this file, and embed it in to any number of queries in the file:\n\n```tasks\nexplain\nignore global query\n{{query.file.property('task_instruction_with_spaces')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions\n\nRead multiple Tasks instructions from a property in this file, and embed them in to any number of queries in the file:\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions')}}\nlimit 10\n```\n\n## Use a multi-line property: task_instructions_with_continuation_line\n\nRead multiple Tasks instructions with a continuation line from a property in this file, and embed them in to any number of queries in the file.\n\nContinuation lines are currently unsupported in placeholders.\n\n```tasks\nignore global query\nfolder includes Test Data\nexplain\n{{query.file.property('task_instructions_with_continuation_line')}}\nlimit 10\n```\n\n## Use a list property in a custom filter: root_dirs_to_search\n\n```tasks\nignore global query\nexplain\n\nfilter by function \\\n    if (!query.file.hasProperty('root_dirs_to_search')) { \\\n        throw Error('Please set the \"root_dirs_to_search\" list property, with each value ending in a backslash...'); \\\n    } \\\n    const roots = query.file.property('root_dirs_to_search'); \\\n    return roots.includes(task.file.root);\n\nlimit groups 5\ngroup by root\n```\n",
   "filePath": "Test Data/query_using_properties.md",
   "getAllTags": [
     "#task"
   ],
   "parseFrontMatterTags": null,
-  "resolveLinkToPath": {}
+  "resolveLinkToPath": {
+    "link_in_file_body_with_custom_display_text": "Test Data/link_in_file_body_with_custom_display_text.md",
+    "link_in_yaml": "Test Data/link_in_yaml.md"
+  }
 }

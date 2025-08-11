@@ -464,6 +464,20 @@
 `link.destinationPath      `: `'Test Data/numbered_tasks_issue_3481_searches.md'`
 `link.displayText          `: `'numbered_tasks_issue_3481_searches'`
 
+## Test Data/query_using_properties.md
+
+`link.originalMarkdown     `: `'[[link_in_yaml]]'`
+`link.markdown             `: `'[[link_in_yaml]]'`
+`link.destination          `: `'link_in_yaml'`
+`link.destinationPath      `: `'Test Data/link_in_yaml.md'`
+`link.displayText          `: `'link_in_yaml'`
+
+`link.originalMarkdown     `: `'[[link_in_file_body_with_custom_display_text]]'`
+`link.markdown             `: `'[[link_in_file_body_with_custom_display_text]]'`
+`link.destination          `: `'link_in_file_body_with_custom_display_text'`
+`link.destinationPath      `: `'Test Data/link_in_file_body_with_custom_display_text.md'`
+`link.displayText          `: `'link_in_file_body_with_custom_display_text'`
+
 ## Test Data/yaml_all_property_types_populated.md
 
 `link.originalMarkdown     `: `'[[yaml_all_property_types_populated]]'`
