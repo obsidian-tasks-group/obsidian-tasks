@@ -88,14 +88,14 @@ console.log(taskLine);
 One of the most common usage scenarios is probably in combination with the [QuickAdd](https://github.com/chhoumann/quickadd) plugin
 to automatically add tasks to a specific file.
 
-See [[QuickAdd#Launching the Edit task modal via QuickAdd|Launching the Edit task modal via QuickAdd]] for full details of how to do this.
+See [[QuickAdd#Launching the Create task modal via QuickAdd|Launching the Create task modal via QuickAdd]] for full details of how to do this.
 
 ## `editTaskLineModal(taskLine: string): Promise<string>;`
 
 > [!released]
 > This method was introduced in Tasks X.Y.Z.
 
-This method opens the Tasks [[Create or edit Task|Create or edit task UI]] with the provided task line pre-filled for editing.  
+This method opens the Tasks [[Create or edit Task|Create or edit task UI]] with the provided task line pre-filled for editing.
 If data entry is cancelled, an empty string is returned.
 
 ```javascript
