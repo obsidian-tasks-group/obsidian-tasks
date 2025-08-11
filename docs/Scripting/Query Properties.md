@@ -55,7 +55,7 @@ This page documents all the available pieces of information in Queries that you 
     - The 3 `outlinks` methods were added in Tasks X.Y.Z.
     - They all return an array of `Link` objects.
     - For details, see [[Links]].
-    - The table about shows the result of `link.destinationPath`
+    - The table above shows the result of `link.destinationPath`
     - `query.file.outlinksInProperties` returns all the links in the query file's [[Obsidian Properties]].
     - `query.file.outlinksInBody` returns all the links in the body of the note containing the query.
     - `query.file.outlinks` returns all this links in both [[Obsidian Properties]] and the body of the note containing the query.
