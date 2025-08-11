@@ -221,3 +221,18 @@ export function prepareSimpleSearch(query: string): (text: string) => SearchResu
 
 type IconName = string;
 export function setIcon(_parent: HTMLElement, _iconId: IconName): void {}
+
+/**
+ * A mock implementation of the Obsidian Modal class.
+ * Without this testing the TaskModal throws an error attempting to extend Modal
+ */
+export class Modal {
+    public open(): void {
+        // Mocked interface, no-op
+    }
+    public close(): void {
+        // Mocked interface, no-op
+    }
+    public onOpen(): void {}
+    public onClose(): void {}
+}
