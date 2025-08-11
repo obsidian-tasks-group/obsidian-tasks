@@ -35,6 +35,16 @@ export interface TasksApiV1 {
     createTaskLineModal(): Promise<string>;
 
     /**
+     * Opens the Tasks UI pre-filled with the provided task line for editing.
+     * Does not edit the task line in the file, but returns the edited task line as a Markdown string.
+     *
+     * @param taskLine The markdown string of the task line to edit
+     * @returns {Promise<string>} A promise that contains the Markdown string for the edited task or
+     * an empty string in the case where the data entry was cancelled.
+     */
+    editTaskLineModal(taskLine: string): Promise<string>;
+
+    /**
      * Executes the 'Tasks: Toggle task done' command on the supplied line string
      *
      * @param line The markdown string of the task line being toggled
@@ -54,8 +64,6 @@ This method was introduced in Tasks 2.0.0.
 
 This method opens the Tasks [[Create or edit Task|Create or edit task UI]] and returns the Markdown for the task entered.
 If data entry is cancelled, an empty string is returned.
-
-### Basic usage
 
 ```javascript
 const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
@@ -81,6 +89,26 @@ One of the most common usage scenarios is probably in combination with the [Quic
 to automatically add tasks to a specific file.
 
 See [[QuickAdd#Launching the Edit task modal via QuickAdd|Launching the Edit task modal via QuickAdd]] for full details of how to do this.
+
+## `editTaskLineModal(taskLine: string): Promise<string>;`
+
+> [!released]
+This method was introduced in Tasks X.X.X.
+
+This method opens the Tasks [[Create or edit Task|Create or edit task UI]] with the provided task line pre-filled for editing.  
+If data entry is cancelled, an empty string is returned.
+
+```javascript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+let editedTaskLine = await tasksApi.editTaskLineModal('- [ ] My existing task');
+
+// Do whatever you want with the returned value.
+// It's just a string containing the Markdown for the edited task.
+console.log(editedTaskLine);
+```
+
+> [!warning]
+> This function returns a `Promise` - always `await` the result!
 
 ## `executeToggleTaskDoneCommand: (line: string, path: string) => string;`
 
@@ -149,8 +177,6 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
 
 ## Limitations of the Tasks API
 
-- Editing tasks:
-  - It is not yet possible to use the API to edit an *existing task line* with Tasks [[Create or edit Task|Create or edit task UI]]. We are tracking this in [issue #1945](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1945).
 - Auto Suggest:
   - It is not yet possible for [[auto-suggest]] to add [[Task Dependencies|dependencies]] when Auto-Suggest is used in [[Kanban plugin]] cards - or any other plugins that use the [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]]. We are tracking this in [issue #3274](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3274).
 - Searching tasks:

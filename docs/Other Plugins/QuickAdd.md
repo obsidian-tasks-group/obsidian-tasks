@@ -1,14 +1,14 @@
 ---
 publish: true
 aliases:
-  - Advanced/Quickadd
+    - Advanced/Quickadd
 ---
 
 # QuickAdd
 
 <span class="related-pages">#plugin/quickadd</span>
 
-## Launching the Edit task modal via QuickAdd
+## Launching the Create task modal via QuickAdd
 
 This section shows how to use QuickAdd with the [[Create or edit Task]] modal to automatically add tasks to a specific file.
 
@@ -24,7 +24,7 @@ Or if you would like a newline character to be added after your new task line, u
 
 ````markdown
 ```js quickadd
-return await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal() + '\n';
+return (await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal()) + '\n';
 ```
 ````
 
