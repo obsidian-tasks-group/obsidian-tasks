@@ -3,6 +3,7 @@
  */
 
 import moment from 'moment';
+import type { Reference } from 'obsidian';
 import { Status } from '../../src/Statuses/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -14,11 +15,20 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import docs_sample_for_task_properties_reference from '../Obsidian/__test_data__/docs_sample_for_task_properties_reference.json';
+import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
+import { LinkResolver } from '../../src/Task/LinkResolver';
+import { getFirstLinkpathDest } from '../__mocks__/obsidian';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
 
 // TODO Show a task in a callout, or an ordered list
+
+beforeEach(() => {});
+
+afterEach(() => {
+    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
+});
 
 describe('task', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
@@ -144,6 +154,21 @@ describe('task', () => {
             'task.file.filenameWithoutExtension',
             'task.hasHeading',
             'task.heading',
+        ]);
+    });
+
+    it('links', () => {
+        // This is getting annoying, having to do this repeatedly.
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, sourcePath: string) =>
+            getFirstLinkpathDest(rawLink, sourcePath),
+        );
+
+        const tasks = readTasksFromSimulatedFile(links_everywhere);
+        verifyFieldDataFromTasksForReferenceDocs(tasks, [
+            'task.outlinks',
+            'task.file.outlinksInProperties',
+            'task.file.outlinksInBody',
+            'task.file.outlinks',
         ]);
     });
 
