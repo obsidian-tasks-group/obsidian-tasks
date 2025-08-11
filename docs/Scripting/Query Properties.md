@@ -38,6 +38,9 @@ This page documents all the available pieces of information in Queries that you 
 | `query.file.hasProperty('non_existent_property')` | `boolean` | `false` |
 | `query.file.property('task_instruction')` | `string` | `'group by filename'` |
 | `query.file.property('non_existent_property')` | `null` | `null` |
+| `query.file.outlinksInProperties` | `Link[]` | `['Test Data/link_in_yaml.md']` |
+| `query.file.outlinksInBody` | `Link[]` | `['Test Data/link_in_file_body_with_custom_display_text.md']` |
+| `query.file.outlinks` | `Link[]` | `['Test Data/link_in_yaml.md', 'Test Data/link_in_file_body_with_custom_display_text.md']` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -48,6 +51,14 @@ This page documents all the available pieces of information in Queries that you 
 1. `query.file.filenameWithoutExtension` was added in Tasks 4.8.0.
 1. `query.file.hasProperty()` was added in Tasks 7.15.0.
 1. `query.file.property()` was added in Tasks 7.15.0.
+1. Accessing links:
+    - The 3 `outlinks` methods were added in Tasks X.Y.Z.
+    - They all return an array of `Link` objects.
+    - For details, see [[Links]].
+    - The table about shows the result of `link.destinationPath`
+    - `query.file.outlinksInProperties` returns all the links in the query file's [[Obsidian Properties]].
+    - `query.file.outlinksInBody` returns all the links in the body of the note containing the query.
+    - `query.file.outlinks` returns all this links in both [[Obsidian Properties]] and the body of the note containing the query.
 
 ## Values for Query Search Properties
 
