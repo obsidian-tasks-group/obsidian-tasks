@@ -65,17 +65,17 @@ describe('validate emoji regular expressions', () => {
     it('regular expressions should have expected source', () => {
         expect(generateRegexApprovalTest()).toMatchInlineSnapshot(`
             "
-            priorityRegex: /([🔺⏫🔼🔽⏬])\\ufe0f?$/u
-            startDateRegex: /🛫\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
-            createdDateRegex: /➕\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
-            scheduledDateRegex: /[⏳⌛]\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
-            dueDateRegex: /[📅📆🗓]\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
-            doneDateRegex: /✅\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
-            cancelledDateRegex: /❌\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/u
-            recurrenceRegex: /🔁\\ufe0f? *([a-zA-Z0-9, !]+)$/u
-            onCompletionRegex: /🏁\\ufe0f? *([a-zA-Z]+)$/u
-            dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/u
-            idRegex: /🆔\\ufe0f? *([a-zA-Z0-9-_]+)$/u
+            priorityRegex: /(🔺|⏫|🔼|🔽|⏬)\\ufe0f?$/
+            startDateRegex: /🛫\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
+            createdDateRegex: /➕\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
+            scheduledDateRegex: /(?:⏳|⌛)\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
+            dueDateRegex: /(?:📅|📆|🗓)\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
+            doneDateRegex: /✅\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
+            cancelledDateRegex: /❌\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
+            recurrenceRegex: /🔁\\ufe0f? *([a-zA-Z0-9, !]+)$/
+            onCompletionRegex: /🏁\\ufe0f? *([a-zA-Z]+)$/
+            dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/
+            idRegex: /🆔\\ufe0f? *([a-zA-Z0-9-_]+)$/
             "
         `);
     });
