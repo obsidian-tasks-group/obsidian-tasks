@@ -67,7 +67,7 @@ function fieldRegex(symbols: string, valueRegexString: string) {
     // The regexes end with `$` because they will be matched and
     // removed from the end until none are left.
     source += '$';
-    return new RegExp(source, 'u');
+    return new RegExp(source); // Remove the 'u' flag, to fix parsing on iPadOS/iOS 18.6 and 26 Public Beta 2
 }
 
 /**
@@ -95,11 +95,11 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     dependsOnSymbol: '⛔',
     idSymbol: '🆔',
     TaskFormatRegularExpressions: {
-        priorityRegex: fieldRegex('([🔺⏫🔼🔽⏬])', ''),
+        priorityRegex: fieldRegex('(🔺|⏫|🔼|🔽|⏬)', ''),
         startDateRegex: dateFieldRegex('🛫'),
         createdDateRegex: dateFieldRegex('➕'),
-        scheduledDateRegex: dateFieldRegex('[⏳⌛]'),
-        dueDateRegex: dateFieldRegex('[📅📆🗓]'),
+        scheduledDateRegex: dateFieldRegex('(?:⏳|⌛)'),
+        dueDateRegex: dateFieldRegex('(?:📅|📆|🗓)'),
         doneDateRegex: dateFieldRegex('✅'),
         cancelledDateRegex: dateFieldRegex('❌'),
         recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)'),
