@@ -93,6 +93,14 @@ export class Link {
         return this.rawLink.displayText;
     }
 
+    /**
+     * Returns true if this link points to the given value
+     * - Pass in `query.file` or `task.file` for the most precise results.
+     * - If supplying a string, it is case-sensitive, and it will return true if:
+     *     - the string matches the link destination's filename (it ignores `.md` file extension)
+     *     - or the string matches the link destination's full path (it ignores `.md` file extension)
+     * @param destination
+     */
     public linksTo(destination: string | TasksFile): boolean {
         if (typeof destination === 'string') {
             const removeMd = /\.md$/;
