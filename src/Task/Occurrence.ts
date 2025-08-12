@@ -1,5 +1,6 @@
 import type { Moment } from 'moment/moment';
 import { compareByDate } from '../DateTime/DateTools';
+import { getSettings } from '../Config/Settings';
 
 /**
  * A set of dates on a single instance of {@link Recurrence}.
@@ -10,6 +11,20 @@ export class Occurrence {
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
+
+    constructor({
+        startDate = null,
+        scheduledDate = null,
+        dueDate = null,
+    }: {
+        startDate?: Moment | null;
+        scheduledDate?: Moment | null;
+        dueDate?: Moment | null;
+    }) {
+        this.startDate = startDate ?? null;
+        this.scheduledDate = scheduledDate ?? null;
+        this.dueDate = dueDate ?? null;
+    }
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -24,21 +39,8 @@ export class Occurrence {
      * same relative distance to the due date as the original task. For example
      * "starts one week before it is due".
      */
-    public readonly referenceDate: Moment | null;
-
-    constructor({
-        startDate = null,
-        scheduledDate = null,
-        dueDate = null,
-    }: {
-        startDate?: Moment | null;
-        scheduledDate?: Moment | null;
-        dueDate?: Moment | null;
-    }) {
-        this.startDate = startDate ?? null;
-        this.scheduledDate = scheduledDate ?? null;
-        this.dueDate = dueDate ?? null;
-        this.referenceDate = this.getReferenceDate();
+    public get referenceDate(): moment.Moment | null {
+        return this.getReferenceDate();
     }
 
     /**
@@ -87,9 +89,8 @@ export class Occurrence {
      * If the occurrence has no reference date, an empty {@link Occurrence} will be returned.
      *
      * @param nextReferenceDate
-     * @param removeScheduledDate - Optional boolean to remove the scheduled date from the next occurrence so long as a start or due date exists.
      */
-    public next(nextReferenceDate: Date, removeScheduledDate: boolean = false): Occurrence {
+    public next(nextReferenceDate: Date): Occurrence {
         // Only if a reference date is given. A reference date will exist if at
         // least one of the other dates is set.
         if (this.referenceDate === null) {
@@ -103,7 +104,9 @@ export class Occurrence {
         const hasStartDate = this.startDate !== null;
         const hasDueDate = this.dueDate !== null;
         const canRemoveScheduledDate = hasStartDate || hasDueDate;
-        const shouldRemoveScheduledDate = removeScheduledDate && canRemoveScheduledDate;
+
+        const { removeScheduledDateOnRecurrence } = getSettings();
+        const shouldRemoveScheduledDate = removeScheduledDateOnRecurrence && canRemoveScheduledDate;
 
         const startDate = this.nextOccurrenceDate(this.startDate, nextReferenceDate);
         const scheduledDate = shouldRemoveScheduledDate
