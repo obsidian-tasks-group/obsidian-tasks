@@ -12,6 +12,9 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
+- X.Y.Z:
+  - Add support for [[Links]] in custom filters, sorting and grouping.
+  - The Tasks API can now edit existing task lines with [[Tasks Api#`editTaskLineModal(taskLine string) Promise<string>;`|editTaskLineModal()]].
 - 7.20.0:
   - Add [[Presets]] feature to save commonly used task query instructions.
   - Document [[Missing tags, aliases and cssclasses in some Obsidian 1.9.x versions]] - for Insider users of Obsidian 1.9.x.
