@@ -5,10 +5,7 @@ TQ_extra_instructions:
 
 # Accessing Links
 
-> [!Warning]
->
-> - The queries in this file are **experimental**, and **may not continue to work**.
-> - For example, once the Obsidian Bases facility is finalised, we *may* update the vocabulary used here to match that of Obsidian.
+These facilities were introduced in Tasks X.Y.Z.
 
 ## Filtering
 
@@ -18,14 +15,14 @@ TQ_extra_instructions:
 ```tasks
 # Task line has a link
 filter by function task.outlinks.length > 0
-limit groups 1
+limit 10
 ```
 ````
 
 ```tasks
 # Task line has a link
 filter by function task.outlinks.length > 0
-limit groups 1
+limit 10
 ```
 
 ### `task.file.outlinksInProperties`: Tasks in files whose properties/frontmatter contains a link
@@ -33,13 +30,13 @@ limit groups 1
 ````text
 ```tasks
 filter by function task.file.outlinksInProperties.length > 0
-limit groups 1
+limit 10
 ```
 ````
 
 ```tasks
 filter by function task.file.outlinksInProperties.length > 0
-limit groups 1
+limit 10
 ```
 
 ### `task.file.outlinksInBody`: Tasks in files whose markdown body contains a link
@@ -47,13 +44,13 @@ limit groups 1
 ````text
 ```tasks
 filter by function task.file.outlinksInBody.length > 0
-limit groups 1
+limit 10
 ```
 ````
 
 ```tasks
 filter by function task.file.outlinksInBody.length > 0
-limit groups 1
+limit 10
 ```
 
 ### `task.file.outlinks`: Tasks in files whose file contains a link anywhere
@@ -61,13 +58,13 @@ limit groups 1
 ````text
 ```tasks
 filter by function task.file.outlinks.length > 0
-limit groups 1
+limit 10
 ```
 ````
 
 ```tasks
 filter by function task.file.outlinks.length > 0
-limit groups 1
+limit 10
 ```
 
 ### Task lines that contain broken links
@@ -90,12 +87,12 @@ This should match one task, in [[Link to Access links file]].
 
 ````text
 ```tasks
-filter by function task.outlinks.some(link => link.destinationPath === query.file.path)
+filter by function task.outlinks.some(link => link.linksTo(query.file))
 ```
 ````
 
 ```tasks
-filter by function task.outlinks.some(link => link.destinationPath === query.file.path)
+filter by function task.outlinks.some(link => link.linksTo(query.file))
 ```
 
 #### Tasks - version 2
@@ -104,12 +101,12 @@ This should match one task, in [[Link to Access links file]].
 
 ````text
 ```tasks
-filter by function task.outlinks.some(link => link.linksTo(query.file))
+filter by function task.outlinks.some(link => link.destinationPath === query.file.path)
 ```
 ````
 
 ```tasks
-filter by function task.outlinks.some(link => link.linksTo(query.file))
+filter by function task.outlinks.some(link => link.destinationPath === query.file.path)
 ```
 
 #### Dataview version
@@ -156,4 +153,11 @@ group by function task.outlinks.map(link => link.destinationPath).sort().join(' 
 ```tasks
 filter by function task.outlinks.length > 0
 group by function task.outlinks.map(link => link.destinationPath).sort().join(' · ')
+```
+
+### Demonstrate link.displayText
+
+```tasks
+filter by function task.outlinks.length > 0
+group by function task.outlinks.map(link => `\`${link.originalMarkdown}\` -><br> \`${link.displayText}\``)
 ```
