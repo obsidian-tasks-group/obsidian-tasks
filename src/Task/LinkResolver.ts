@@ -5,6 +5,14 @@ export type GetFirstLinkpathDestFn = (rawLink: Reference, sourcePath: string) =>
 
 const defaultGetFirstLinkpathDestFn = (_rawLink: Reference, _sourcePath: string) => null;
 
+/**
+ * An abstraction to populate {@link Link.destinationPath}.
+ *
+ * See also:
+ * - `src/main.ts` - search for `LinkResolver.getInstance()`
+ * - Uses of {@link getFirstLinkpathDest} and {@link getFirstLinkpathDestFromData} in
+ * `tests/__mocks__/obsidian.ts`.
+ */
 export class LinkResolver {
     private static instance: LinkResolver;
 

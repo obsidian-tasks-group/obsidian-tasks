@@ -40,6 +40,14 @@
 `link.destinationPath      `: `'Test Data/links_everywhere.md'`
 `link.displayText          `: `'A link in a link_in_heading'`
 
+## Test Data/query_using_properties.md
+
+`link.originalMarkdown     `: `'[[link_in_yaml]]'`
+`link.markdown             `: `'[[link_in_yaml]]'`
+`link.destination          `: `'link_in_yaml'`
+`link.destinationPath      `: `'Test Data/link_in_yaml.md'`
+`link.displayText          `: `'link_in_yaml'`
+
 ## Test Data/yaml_all_property_types_populated.md
 
 `link.originalMarkdown     `: `'[[yaml_all_property_types_populated]]'`

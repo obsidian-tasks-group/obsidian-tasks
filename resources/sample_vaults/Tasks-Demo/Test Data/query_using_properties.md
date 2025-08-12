@@ -13,11 +13,14 @@ task_instructions_with_continuation_line: |
   path \
     includes query_using_properties
 task_instruction_with_spaces: "  path includes query_using_properties  "
+link-in-frontmatter: "[[link_in_yaml]]"
 ---
 
 # query_using_properties
 
 - [ ] #task Task in 'query_using_properties'
+
+Example link in body of a file, for documentation purposes: [[link_in_file_body_with_custom_display_text]].
 
 ## Use a one-line property: task_instruction
 
