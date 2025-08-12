@@ -46,7 +46,7 @@ publish: true
 - [[Obsidian Properties]]
   - Learn how to use data in Obsidian [Properties](https://help.obsidian.md/Editing+and+formatting/Properties) in your queries, for example to only search tasks in Kanban plugin files.
 - [[Links]]
-  - Learn how to search for tasks based up [Links between notes](https://help.obsidian.md/link-notes).
+  - Learn how to search for tasks based upon [Links between notes](https://help.obsidian.md/link-notes).
 
 ## Easy editing of tasks
 
