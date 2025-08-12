@@ -52,7 +52,9 @@ export class Link {
      * Return the destination, exactly as specified in the original markdown.
      * For "[ab](cd.md)", it would return "cd.md".
      *
-     * It is not able to supply the full path of the link destination.
+     * Tip: Use {@link destinationPath} instead.
+     *
+     * This method is not able to supply the full path of the link destination.
      * Note that if you have two files called `cd.md`, Tasks does not yet do anything
      * to select the closest file of that name.
      *
@@ -65,12 +67,24 @@ export class Link {
         return this.rawLink.link;
     }
 
+    /**
+     * The actual full path that Obsidian would navigate to if the user clicked on the link,
+     * or `null` if the link is to a non-existent file.
+     *
+     * For "[[link_in_file_body]]", it might return "Test Data/link_in_file_body.md".
+     *
+     * Note that this value is not usually configured correctly in tests.
+     * See {@link LinkResolver} docs for more info.
+     */
     public get destinationPath(): string | null {
         return this._destinationPath;
     }
 
     /**
+     * For "[[Styling of Queries]]", it would return "Styling of Queries"
+     * For "[[link_in_task_wikilink|alias]]", it would return "alias"
      * For "[ab](cd.md)", it would return "ab".
+     * For "[[Project Search#Search 1]]", it would return "Project Search > Search 1"
      */
     public get displayText(): string | undefined {
         return this.rawLink.displayText;
