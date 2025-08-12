@@ -22,22 +22,36 @@ This section describes the *how*...
   - `filter by function`
   - `sort by function`
   - `group by function`
+- Links recognises these styles on links in your notes:
+  - `[[filename|optional alias]]`
+  - `[alias](filename.md)`
+  - Headings and nested headings in the links are also supported.
 
 The following values are available:
 
-| Value                             | Notes                                                                                                                                                 |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`task`**                        |                                                                                                                                                       |
-| `task.outlinks`                   | Returns a list of links in the task's line.<br>It does not contain links in any nested tasks or list items.                                           |
-| `task.file.outlinksInProperties`  | Returns all the links in the task file's [[Obsidian Properties]].                                                                                     |
-| `task.file.outlinksInBody`        | Returns all the links in the body of the note containing the task.<br>Naturally, this includes any links on the task line itself.                     |
-| `task.file.outlinks`              | Returns all the links anywhere in the task's file.<br>It contains all the links in `task.file.outlinksInProperties` and `task.file.outlinksInBody`.   |
-| **`query`**                       |                                                                                                                                                       |
-| `query.file.outlinksInProperties` | Returns all the links in the query file's [[Obsidian Properties]].                                                                                    |
-| `query.file.outlinksInBody`       | Returns all the links in the body of the note containing the query.                                                                                   |
-| `query.file.outlinks`             | Returns all the links anywhere in the query's file.<br>It contains all the links in `query.file.outlinksInProperties` and `query.file.outlinksInBody` |
+| Value                             | Return Type | Notes                                                                                                                                                 |
+| --------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`task`**                        |             |                                                                                                                                                       |
+| `task.outlinks`                   | `Link[]`    | Returns a list of links in the task's line.<br>It does not contain links in any nested tasks or list items.                                           |
+| `task.file.outlinksInProperties`  | `Link[]`    | Returns all the links in the task file's [[Obsidian Properties]].                                                                                     |
+| `task.file.outlinksInBody`        | `Link[]`    | Returns all the links in the body of the note containing the task.<br>Naturally, this includes any links on the task line itself.                     |
+| `task.file.outlinks`              | `Link[]`    | Returns all the links anywhere in the task's file.<br>It contains all the links in `task.file.outlinksInProperties` and `task.file.outlinksInBody`.   |
+| **`query`**                       |             |                                                                                                                                                       |
+| `query.file.outlinksInProperties` | `Link[]`    | Returns all the links in the query file's [[Obsidian Properties]].                                                                                    |
+| `query.file.outlinksInBody`       | `Link[]`    | Returns all the links in the body of the note containing the query.                                                                                   |
+| `query.file.outlinks`             | `Link[]`    | Returns all the links anywhere in the query's file.<br>It contains all the links in `query.file.outlinksInProperties` and `query.file.outlinksInBody` |
+
+The return values are all arrays of `Link` objects.
+
+## Link class
+
+> [!NOTE] Documentation coming soon
+> Documentation coming soon. In the meantime, you can see the comments in [Link.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Task/Link.ts) on GitHub.
 
 ## Links Query Examples
+
+> [!NOTE] Documentation coming soon
+> In the meantime, you can see some examples in [Accessing Links](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/How%20To/Access%20links.md) on GitHub.
 
 ## Limitations of Links Handling and Searches
 
