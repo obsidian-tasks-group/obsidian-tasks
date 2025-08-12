@@ -21,6 +21,9 @@ export class Link {
      * Return the original Markdown, exactly as specified in the original markdown.
      * For "[ab](cd.md)", it would return "[ab](cd.md)".
      *
+     * **Tip**: For use in `group by function`, {@link markdown} will also work for header-only links,
+     * like `[[#heading in this file]]`.
+     *
      * See also {@link markdown}
      */
     public get originalMarkdown(): string {
@@ -52,7 +55,7 @@ export class Link {
      * Return the destination, exactly as specified in the original markdown.
      * For "[ab](cd.md)", it would return "cd.md".
      *
-     * Tip: Use {@link destinationPath} instead.
+     * **Tip**: Use {@link destinationPath} instead.
      *
      * This method is not able to supply the full path of the link destination.
      * Note that if you have two files called `cd.md`, Tasks does not yet do anything
