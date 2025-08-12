@@ -245,7 +245,10 @@
   "Test Data/query_file_defaults_all_options_true.md": {},
   "Test Data/query_file_defaults_ignore_global_query.md": {},
   "Test Data/query_file_defaults_short_mode.md": {},
-  "Test Data/query_using_properties.md": {},
+  "Test Data/query_using_properties.md": {
+    "Test Data/link_in_yaml.md": 1,
+    "Test Data/link_in_file_body_with_custom_display_text.md": 1
+  },
   "Test Data/yaml_1_alias.md": {},
   "Test Data/yaml_2_aliases.md": {},
   "Test Data/yaml_aliases_with_two_values_on_one_line.md": {},
