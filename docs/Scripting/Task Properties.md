@@ -239,7 +239,7 @@ These are described in full in [[Obsidian Properties]].
 ## Values for Links
 
 > [!released]
-> Access to the Links was introduced in Tasks X.Y.Z.
+> Access to the Links was introduced in Tasks 7.21.0.
 
 These are described in full in [[Links]].
 

@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
-- X.Y.Z:
+- 7.21.0:
   - Add support for [[Links]] in custom filters, sorting and grouping.
   - The Tasks API can now edit existing task lines with [[Tasks Api#`editTaskLineModal(taskLine string) Promise<string>;`|editTaskLineModal()]].
   - Documentation: New section: [[Auto-Suggest#Managing Auto-Suggest Conflicts With Other Plugins|Managing Auto-Suggest conflicts with other plugins]].

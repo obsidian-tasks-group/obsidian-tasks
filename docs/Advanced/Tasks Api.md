@@ -93,7 +93,7 @@ See [[QuickAdd#Launching the Create task modal via QuickAdd|Launching the Create
 ## `editTaskLineModal(taskLine: string): Promise<string>;`
 
 > [!released]
-> This method was introduced in Tasks X.Y.Z.
+> This method was introduced in Tasks 7.21.0.
 
 This method opens the Tasks [[Create or edit Task|Create or edit task UI]] with the provided task line pre-filled for editing.
 If data entry is cancelled, an empty string is returned.

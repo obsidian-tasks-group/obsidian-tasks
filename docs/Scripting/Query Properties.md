@@ -52,7 +52,7 @@ This page documents all the available pieces of information in Queries that you 
 1. `query.file.hasProperty()` was added in Tasks 7.15.0.
 1. `query.file.property()` was added in Tasks 7.15.0.
 1. Accessing links:
-    - The 3 `outlinks` methods were added in Tasks X.Y.Z.
+    - The 3 `outlinks` methods were added in Tasks 7.21.0.
     - They all return an array of `Link` objects.
     - For details, see [[Links]].
     - The table above shows the result of `link.destinationPath`
