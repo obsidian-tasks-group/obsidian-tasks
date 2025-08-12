@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Occurrence } from '../../src/Task/Occurrence';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
+import { updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
 
@@ -230,6 +231,14 @@ describe('identicalTo', () => {
 });
 
 describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
+    beforeEach(() => {
+        updateSettings({ removeScheduledDateOnRecurrence: true });
+    });
+
+    afterEach(() => {
+        updateSettings({ removeScheduledDateOnRecurrence: false });
+    });
+
     it('should remove the scheduledDate when removeScheduledDate is true', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
@@ -242,7 +251,7 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
         });
 
         // Act
-        const next = recurrence!.next(undefined, true);
+        const next = recurrence!.next();
 
         // Assert
         expect(next!.startDate).toEqualMoment(moment('2022-02-01'));
@@ -260,9 +269,46 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
         });
 
         // Act
-        const next = recurrence!.next(undefined, true);
+        const next = recurrence!.next();
 
         // Assert
         expect(next!.scheduledDate).not.toBeNull();
+    });
+
+    describe('dropScheduledDate and when done', () => {
+        beforeEach(() => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date('2022-01-10'));
+        });
+        afterEach(() => {
+            jest.useRealTimers();
+        });
+
+        it.failing('calculates correct start date with "dropScheduledDate" and "when done", with no due date', () => {
+            // Arrange
+
+            // The task is being completed on the 10th of January.
+            // And the user has turned on the setting to remove the scheduled date in the new instance.
+            // This means that the user will apply a scheduled date at some point in the future,
+            // when they are ready to work on the task.
+            // Therefore, in the new task, as there is no Due date, the only date the user will see
+            // is the Start date.
+            // And so it makes sense to calculate the new 'happens' date using the Start date,
+            // not the old scheduled date.
+            const recurrence = Recurrence.fromText({
+                recurrenceRuleText: 'every 3 days when done',
+                occurrence: new Occurrence({
+                    startDate: moment('2022-01-01').startOf('day'),
+                    scheduledDate: moment('2022-01-04').startOf('day'),
+                }),
+            });
+
+            // Act
+            const next = recurrence!.next();
+
+            // Assert
+            expect(next!.startDate).toEqualMoment(moment('2022-01-13'));
+            expect(next!.scheduledDate).toBeNull();
+        });
     });
 });
