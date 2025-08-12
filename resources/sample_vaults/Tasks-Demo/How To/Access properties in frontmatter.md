@@ -1,6 +1,6 @@
 # Access properties in frontmatter
 
-These examples work with Tasks X.Y.Z and later.
+These examples work with Tasks 7.7.0 and later.
 
 ## Accessing a custom property for grouping
 

@@ -7,7 +7,7 @@ TQ_extra_instructions: |-
 ---
 # Reuse instructions across the vault
 
-These searches are for experimenting with, and understanding, the new "Includes" facility, which was released in Tasks X.Y.Z.
+These searches are for experimenting with, and understanding, the new "Includes" facility, which was released in Tasks 7.20.0.
 
 presets values can be defined in the Tasks settings.
 
