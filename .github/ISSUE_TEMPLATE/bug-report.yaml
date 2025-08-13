@@ -18,6 +18,8 @@ body:
       options:
         - label: "My request is about the [Tasks plugin for Obsidian](https://publish.obsidian.md/tasks/Introduction)."
           required: true
+        - label: "I have tested the bug with the [latest version](https://github.com/obsidian-tasks-group/obsidian-tasks/releases) of the Tasks plugin."
+          required: true
 
   - type: checkboxes
     id: no-duplicate-issues
