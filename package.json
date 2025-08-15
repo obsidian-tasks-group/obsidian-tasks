@@ -58,7 +58,7 @@
     "markdownlint-cli2": "^0.13.0",
     "moment": "^2.29.4",
     "obsidian": "^1.4.0",
-    "obsidian-typings": "^2.11.1",
+    "obsidian-typings": "^3.16.5",
     "prettier": "^2.8.8",
     "prettier-plugin-svelte": "^2.10.1",
     "svelte": "^3.59.1",
