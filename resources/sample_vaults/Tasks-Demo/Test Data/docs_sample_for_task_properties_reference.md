@@ -22,6 +22,11 @@ tags:
   - tag-from-file-properties
 creation date: 2024-05-25T15:17:00
 project: Secret Project
+nested_data:
+  surname: "Doe"
+  firstname: "Jane"
+  middle name: "Frances"
+object_serialization: {"nested1": "value1", "nested2": "value2"}
 ---
 
 # docs_sample_for_task_properties_reference
