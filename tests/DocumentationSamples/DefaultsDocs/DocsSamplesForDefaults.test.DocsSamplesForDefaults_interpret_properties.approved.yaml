@@ -28,10 +28,3 @@ nested_data:
   middle name: "Frances"
 object_serialization: {"nested1": "value1", "nested2": "value2"}
 ---
-
-# docs_sample_for_task_properties_reference
-
-#tag-from-file-body
-
-- [ ] #task Task in 'docs_sample_for_task_properties_reference' #tag-from-task-line
-- [ ] #task Another task in 'docs_sample_for_task_properties_reference'
