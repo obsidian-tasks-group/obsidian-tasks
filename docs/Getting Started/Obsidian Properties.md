@@ -187,8 +187,7 @@ group by function \
 
 Consider a file with the following example properties (or "Frontmatter"):
 
-<!-- TODO this was copied from docs_sample_for_task_properties_reference.md - embed the content automatically in future... -->
-
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_interpret_properties.approved.yaml -->
 ```yaml
 ---
 sample_checkbox_property: true
@@ -214,8 +213,14 @@ tags:
   - tag-from-file-properties
 creation date: 2024-05-25T15:17:00
 project: Secret Project
+nested_data:
+  surname: "Doe"
+  firstname: "Jane"
+  middle name: "Frances"
+object_serialization: {"nested1": "value1", "nested2": "value2"}
 ---
 ```
+<!-- endSnippet -->
 
 The following table shows how most of those properties are interpreted in Tasks queries:
 
@@ -235,6 +240,11 @@ The following table shows how most of those properties are interpreted in Tasks 
 | `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` |
 | `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
 | `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
+| `task.file.property('nested_data').surname` | `string` | `'Doe'` |
+| `task.file.property('nested_data').firstname` | `string` | `'Jane'` |
+| `task.file.property('nested_data')['middle name']` | `string` | `'Frances'` |
+| `task.file.property('object_serialization').nested1` | `string` | `'value1'` |
+| `task.file.property('object_serialization').nested2` | `string` | `'value2'` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

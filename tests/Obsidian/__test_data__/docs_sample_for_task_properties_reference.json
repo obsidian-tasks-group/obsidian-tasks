@@ -5,6 +5,15 @@
         "YAML All Property Types Populated"
       ],
       "creation date": "2024-05-25T15:17:00",
+      "nested_data": {
+        "firstname": "Jane",
+        "middle name": "Frances",
+        "surname": "Doe"
+      },
+      "object_serialization": {
+        "nested1": "value1",
+        "nested2": "value2"
+      },
       "project": "Secret Project",
       "sample_checkbox_property": true,
       "sample_date_and_time_property": "2024-07-21T12:37:00",
@@ -49,8 +58,8 @@
     "frontmatterPosition": {
       "end": {
         "col": 3,
-        "line": 24,
-        "offset": 614
+        "line": 29,
+        "offset": 754
       },
       "start": {
         "col": 0,
@@ -65,46 +74,46 @@
         "position": {
           "end": {
             "col": 43,
-            "line": 26,
-            "offset": 659
+            "line": 31,
+            "offset": 799
           },
           "start": {
             "col": 0,
-            "line": 26,
-            "offset": 616
+            "line": 31,
+            "offset": 756
           }
         }
       }
     ],
     "listItems": [
       {
-        "parent": -30,
+        "parent": -35,
         "position": {
           "end": {
             "col": 83,
-            "line": 30,
-            "offset": 765
+            "line": 35,
+            "offset": 905
           },
           "start": {
             "col": 0,
-            "line": 30,
-            "offset": 682
+            "line": 35,
+            "offset": 822
           }
         },
         "task": " "
       },
       {
-        "parent": -30,
+        "parent": -35,
         "position": {
           "end": {
             "col": 71,
-            "line": 31,
-            "offset": 837
+            "line": 36,
+            "offset": 977
           },
           "start": {
             "col": 0,
-            "line": 31,
-            "offset": 766
+            "line": 36,
+            "offset": 906
           }
         },
         "task": " "
@@ -115,8 +124,8 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 24,
-            "offset": 614
+            "line": 29,
+            "offset": 754
           },
           "start": {
             "col": 0,
@@ -130,13 +139,13 @@
         "position": {
           "end": {
             "col": 43,
-            "line": 26,
-            "offset": 659
+            "line": 31,
+            "offset": 799
           },
           "start": {
             "col": 0,
-            "line": 26,
-            "offset": 616
+            "line": 31,
+            "offset": 756
           }
         },
         "type": "heading"
@@ -145,13 +154,13 @@
         "position": {
           "end": {
             "col": 19,
-            "line": 28,
-            "offset": 680
+            "line": 33,
+            "offset": 820
           },
           "start": {
             "col": 0,
-            "line": 28,
-            "offset": 661
+            "line": 33,
+            "offset": 801
           }
         },
         "type": "paragraph"
@@ -160,13 +169,13 @@
         "position": {
           "end": {
             "col": 71,
-            "line": 31,
-            "offset": 837
+            "line": 36,
+            "offset": 977
           },
           "start": {
             "col": 0,
-            "line": 30,
-            "offset": 682
+            "line": 35,
+            "offset": 822
           }
         },
         "type": "list"
@@ -177,13 +186,13 @@
         "position": {
           "end": {
             "col": 19,
-            "line": 28,
-            "offset": 680
+            "line": 33,
+            "offset": 820
           },
           "start": {
             "col": 0,
-            "line": 28,
-            "offset": 661
+            "line": 33,
+            "offset": 801
           }
         },
         "tag": "#tag-from-file-body"
@@ -192,13 +201,13 @@
         "position": {
           "end": {
             "col": 11,
-            "line": 30,
-            "offset": 693
+            "line": 35,
+            "offset": 833
           },
           "start": {
             "col": 6,
-            "line": 30,
-            "offset": 688
+            "line": 35,
+            "offset": 828
           }
         },
         "tag": "#task"
@@ -207,13 +216,13 @@
         "position": {
           "end": {
             "col": 83,
-            "line": 30,
-            "offset": 765
+            "line": 35,
+            "offset": 905
           },
           "start": {
             "col": 64,
-            "line": 30,
-            "offset": 746
+            "line": 35,
+            "offset": 886
           }
         },
         "tag": "#tag-from-task-line"
@@ -222,20 +231,20 @@
         "position": {
           "end": {
             "col": 11,
-            "line": 31,
-            "offset": 777
+            "line": 36,
+            "offset": 917
           },
           "start": {
             "col": 6,
-            "line": 31,
-            "offset": 772
+            "line": 36,
+            "offset": 912
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\nsample_checkbox_property: true\nsample_date_property: 2024-07-21\nsample_date_and_time_property: 2024-07-21T12:37:00\nsample_list_property:\n  - Sample\n  - List\n  - Value\nsample_number_property: 246\nsample_text_property: Sample Text Value\nsample_text_multiline_property: |\n  Sample\n  Text\n  Value\nsample_link_property: \"[[yaml_all_property_types_populated]]\"\nsample_link_list_property:\n  - \"[[yaml_all_property_types_populated]]\"\n  - \"[[yaml_all_property_types_empty]]\"\naliases:\n  - YAML All Property Types Populated\ntags:\n  - tag-from-file-properties\ncreation date: 2024-05-25T15:17:00\nproject: Secret Project\n---\n\n# docs_sample_for_task_properties_reference\n\n#tag-from-file-body\n\n- [ ] #task Task in 'docs_sample_for_task_properties_reference' #tag-from-task-line\n- [ ] #task Another task in 'docs_sample_for_task_properties_reference'\n",
+  "fileContents": "---\nsample_checkbox_property: true\nsample_date_property: 2024-07-21\nsample_date_and_time_property: 2024-07-21T12:37:00\nsample_list_property:\n  - Sample\n  - List\n  - Value\nsample_number_property: 246\nsample_text_property: Sample Text Value\nsample_text_multiline_property: |\n  Sample\n  Text\n  Value\nsample_link_property: \"[[yaml_all_property_types_populated]]\"\nsample_link_list_property:\n  - \"[[yaml_all_property_types_populated]]\"\n  - \"[[yaml_all_property_types_empty]]\"\naliases:\n  - YAML All Property Types Populated\ntags:\n  - tag-from-file-properties\ncreation date: 2024-05-25T15:17:00\nproject: Secret Project\nnested_data:\n  surname: \"Doe\"\n  firstname: \"Jane\"\n  middle name: \"Frances\"\nobject_serialization: {\"nested1\": \"value1\", \"nested2\": \"value2\"}\n---\n\n# docs_sample_for_task_properties_reference\n\n#tag-from-file-body\n\n- [ ] #task Task in 'docs_sample_for_task_properties_reference' #tag-from-task-line\n- [ ] #task Another task in 'docs_sample_for_task_properties_reference'\n",
   "filePath": "Test Data/docs_sample_for_task_properties_reference.md",
   "getAllTags": [
     "#tag-from-file-properties",
