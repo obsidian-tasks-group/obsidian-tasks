@@ -187,8 +187,7 @@ group by function \
 
 Consider a file with the following example properties (or "Frontmatter"):
 
-<!-- TODO this was copied from docs_sample_for_task_properties_reference.md - embed the content automatically in future... -->
-
+<!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_interpret_properties.approved.yaml -->
 ```yaml
 ---
 sample_checkbox_property: true
@@ -216,6 +215,7 @@ creation date: 2024-05-25T15:17:00
 project: Secret Project
 ---
 ```
+<!-- endSnippet -->
 
 The following table shows how most of those properties are interpreted in Tasks queries:
 
