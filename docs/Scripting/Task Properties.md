@@ -229,6 +229,11 @@ These are described in full in [[Obsidian Properties]].
 | `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` |
 | `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
 | `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
+| `task.file.property('nested_data').surname` | `string` | `'Doe'` |
+| `task.file.property('nested_data').firstname` | `string` | `'Jane'` |
+| `task.file.property('nested_data')['middle name']` | `string` | `'Frances'` |
+| `task.file.property('object_serialization').nested1` | `string` | `'value1'` |
+| `task.file.property('object_serialization').nested2` | `string` | `'value2'` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
