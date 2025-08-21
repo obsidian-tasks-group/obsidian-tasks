@@ -188,6 +188,14 @@ describe('task', () => {
             "task.file.property('sample_link_property')",
             "task.file.property('sample_link_list_property')",
             "task.file.property('tags')",
+
+            "task.file.property('nested_data').surname",
+            "task.file.property('nested_data').firstname",
+            "task.file.property('nested_data')['middle name']",
+
+            "task.file.property('object_serialization').nested1",
+            "task.file.property('object_serialization').nested2",
+
             // 'task.file.tags', // TODO Replace
             // 'task.file.tags()', // TODO Implement
             // "task.file.tags('body')", // TODO Implement
