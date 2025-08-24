@@ -1,6 +1,7 @@
 import type { Reference } from 'obsidian';
 import link_in_file_body from '../Obsidian/__test_data__/link_in_file_body.json';
 import { LinkResolver } from '../../src/Task/LinkResolver';
+import { Link } from '../../src/Task/Link';
 
 describe('LinkResolver', () => {
     let rawLink: Reference;
@@ -10,15 +11,14 @@ describe('LinkResolver', () => {
     });
 
     it('should resolve a link via local instance', () => {
-        const resolver = new LinkResolver();
-        const link = resolver.resolve(rawLink, link_in_file_body.filePath);
+        const link = new Link(rawLink, link_in_file_body.filePath);
 
         expect(link.originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
         expect(link.destinationPath).toBeNull();
     });
 
     it('should resolve a link via global instance', () => {
-        const link = LinkResolver.getInstance().resolve(rawLink, link_in_file_body.filePath);
+        const link = new Link(rawLink, link_in_file_body.filePath);
 
         expect(link.originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
         expect(link.destinationPath).toBeNull();
@@ -28,7 +28,7 @@ describe('LinkResolver', () => {
         const resolver = LinkResolver.getInstance();
         resolver.setGetFirstLinkpathDestFn(() => 'Hello World.md');
 
-        const link = resolver.resolve(rawLink, link_in_file_body.filePath);
+        const link = new Link(rawLink, link_in_file_body.filePath);
         expect(link.destinationPath).toEqual('Hello World.md');
     });
 
@@ -36,12 +36,12 @@ describe('LinkResolver', () => {
         const globalInstance = LinkResolver.getInstance();
         globalInstance.setGetFirstLinkpathDestFn(() => 'From Global Instance.md');
 
-        const link1 = globalInstance.resolve(rawLink, link_in_file_body.filePath);
+        const link1 = new Link(rawLink, link_in_file_body.filePath);
         expect(link1.destinationPath).toEqual('From Global Instance.md');
 
         globalInstance.resetGetFirstLinkpathDestFn();
 
-        const link2 = globalInstance.resolve(rawLink, link_in_file_body.filePath);
+        const link2 = new Link(rawLink, link_in_file_body.filePath);
         expect(link2.destinationPath).toBeNull();
     });
 });

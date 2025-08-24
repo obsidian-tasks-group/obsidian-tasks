@@ -1,5 +1,4 @@
 import type { Reference } from 'obsidian';
-import { Link } from './Link';
 
 export type GetFirstLinkpathDestFn = (rawLink: Reference, sourcePath: string) => string | null;
 
@@ -25,11 +24,6 @@ export class LinkResolver {
     public resetGetFirstLinkpathDestFn() {
         this.getFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
     }
-
-    public resolve(rawLink: Reference, pathContainingLink: string) {
-        return new Link(rawLink, pathContainingLink);
-    }
-
     public getDestinationPath(rawLink: Reference, pathContainingLink: string) {
         return this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined;
     }
