@@ -5,18 +5,14 @@ import { LinkResolver } from './LinkResolver';
 export class Link {
     private readonly rawLink: Reference;
     private readonly pathContainingLink: string;
-    // @ts-expect-error
-    private readonly _destinationPath: string | null;
 
     /**
      * @param {Reference} rawLink - The raw link from Obsidian cache.
      * @param {string} pathContainingLink - The path of the file where this link is located.
-     * @param {string | undefined} destinationPath - The path of the note being linked tio.
      */
-    constructor(rawLink: Reference, pathContainingLink: string, destinationPath?: string) {
+    constructor(rawLink: Reference, pathContainingLink: string) {
         this.rawLink = rawLink;
         this.pathContainingLink = pathContainingLink;
-        this._destinationPath = destinationPath ?? null;
     }
 
     /**

@@ -27,7 +27,7 @@ export class LinkResolver {
     }
 
     public resolve(rawLink: Reference, pathContainingLink: string) {
-        return new Link(rawLink, pathContainingLink, this.getDestinationPath(rawLink, pathContainingLink));
+        return new Link(rawLink, pathContainingLink);
     }
 
     public getDestinationPath(rawLink: Reference, pathContainingLink: string) {
