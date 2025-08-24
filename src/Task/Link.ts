@@ -1,20 +1,18 @@
 import type { Reference } from 'obsidian';
 import type { TasksFile } from '../Scripting/TasksFile';
+import { LinkResolver } from './LinkResolver';
 
 export class Link {
     private readonly rawLink: Reference;
     private readonly pathContainingLink: string;
-    private readonly _destinationPath: string | null;
 
     /**
      * @param {Reference} rawLink - The raw link from Obsidian cache.
      * @param {string} pathContainingLink - The path of the file where this link is located.
-     * @param {string | undefined} destinationPath - The path of the note being linked tio.
      */
-    constructor(rawLink: Reference, pathContainingLink: string, destinationPath?: string) {
+    constructor(rawLink: Reference, pathContainingLink: string) {
         this.rawLink = rawLink;
         this.pathContainingLink = pathContainingLink;
-        this._destinationPath = destinationPath ?? null;
     }
 
     /**
@@ -80,7 +78,7 @@ export class Link {
      * See {@link LinkResolver} docs for more info.
      */
     public get destinationPath(): string | null {
-        return this._destinationPath;
+        return LinkResolver.getInstance().getDestinationPath(this.rawLink, this.pathContainingLink) ?? null;
     }
 
     /**

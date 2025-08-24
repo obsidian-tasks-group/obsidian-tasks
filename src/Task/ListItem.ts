@@ -3,8 +3,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from './Task';
 import type { TaskLocation } from './TaskLocation';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
-import type { Link } from './Link';
-import { LinkResolver } from './LinkResolver';
+import { Link } from './Link';
 
 export class ListItem {
     // The original line read from file.
@@ -211,7 +210,7 @@ export class ListItem {
     public get outlinks(): Readonly<Link[]> {
         return this.rawLinksInFileBody
             .filter((link) => link.position.start.line === this.lineNumber)
-            .map((link) => LinkResolver.getInstance().resolve(link, this.file.path));
+            .map((link) => new Link(link, this.file.path));
     }
 
     /**
