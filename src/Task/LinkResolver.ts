@@ -30,7 +30,7 @@ export class LinkResolver {
         return new Link(rawLink, pathContainingLink, this.getDestinationPath(rawLink, pathContainingLink));
     }
 
-    private getDestinationPath(rawLink: Reference, pathContainingLink: string) {
+    public getDestinationPath(rawLink: Reference, pathContainingLink: string) {
         return this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined;
     }
 

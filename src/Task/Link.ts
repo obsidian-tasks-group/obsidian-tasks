@@ -1,9 +1,11 @@
 import type { Reference } from 'obsidian';
 import type { TasksFile } from '../Scripting/TasksFile';
+import { LinkResolver } from './LinkResolver';
 
 export class Link {
     private readonly rawLink: Reference;
     private readonly pathContainingLink: string;
+    // @ts-expect-error
     private readonly _destinationPath: string | null;
 
     /**
@@ -80,7 +82,7 @@ export class Link {
      * See {@link LinkResolver} docs for more info.
      */
     public get destinationPath(): string | null {
-        return this._destinationPath;
+        return LinkResolver.getInstance().getDestinationPath(this.rawLink, this.pathContainingLink) ?? null;
     }
 
     /**

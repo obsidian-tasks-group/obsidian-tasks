@@ -25,7 +25,7 @@ describe('LinkResolver', () => {
     });
 
     it('should allow a function to be supplied, to find the destination of a link', () => {
-        const resolver = new LinkResolver();
+        const resolver = LinkResolver.getInstance();
         resolver.setGetFirstLinkpathDestFn((_rawLink: Reference, _sourcePath: string) => 'Hello World.md');
 
         const link = resolver.resolve(rawLink, link_in_file_body.filePath);
