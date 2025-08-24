@@ -27,11 +27,11 @@ export class LinkResolver {
     }
 
     public resolve(rawLink: Reference, pathContainingLink: string) {
-        return new Link(
-            rawLink,
-            pathContainingLink,
-            this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined,
-        );
+        return new Link(rawLink, pathContainingLink, this.getDestinationPath(rawLink, pathContainingLink));
+    }
+
+    private getDestinationPath(rawLink: Reference, pathContainingLink: string) {
+        return this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined;
     }
 
     /**
