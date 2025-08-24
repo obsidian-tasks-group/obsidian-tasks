@@ -6,7 +6,6 @@ import link_in_task_markdown_link from '../Obsidian/__test_data__/link_in_task_m
 import link_in_task_wikilink from '../Obsidian/__test_data__/link_in_task_wikilink.json';
 import link_is_broken from '../Obsidian/__test_data__/link_is_broken.json';
 
-import link_in_file_body from '../Obsidian/__test_data__/link_in_file_body.json';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
@@ -262,31 +261,6 @@ describe('linkClass', () => {
 
         // Empty Markdown Link Tests
         // []() and [alias]() are not detected by the obsidian parser as a link
-    });
-
-    describe('destinationPath tests', () => {
-        it.failing('should accept and return destinationPath', () => {
-            const data = link_in_file_body;
-            const rawLink = data.cachedMetadata.links[0];
-            expect(rawLink.original).toEqual('[[yaml_tags_is_empty]]');
-            expect(rawLink.link).toEqual('yaml_tags_is_empty');
-
-            const destinationPath = 'Test Data/yaml_tags_is_empty.md';
-            const link = new Link(rawLink, data.filePath);
-
-            expect(link.destinationPath).toEqual(destinationPath);
-        });
-
-        it.failing('should return null path if destinationPath not supplied', () => {
-            const data = link_in_file_body;
-            const rawLink = data.cachedMetadata.links[0];
-            expect(rawLink.original).toEqual('[[yaml_tags_is_empty]]');
-            expect(rawLink.link).toEqual('yaml_tags_is_empty');
-
-            const link = new Link(rawLink, data.filePath);
-
-            expect(link.destinationPath).toBeNull();
-        });
     });
 
     describe('linksTo() tests', () => {
