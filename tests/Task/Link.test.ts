@@ -1,4 +1,3 @@
-import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
@@ -329,9 +328,7 @@ describe('linkClass', () => {
 
 describe('visualise links', () => {
     beforeAll(() => {
-        LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, sourcePath: string) => {
-            return getFirstLinkpathDest(rawLink, sourcePath);
-        });
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn(getFirstLinkpathDest);
     });
 
     afterAll(() => {
