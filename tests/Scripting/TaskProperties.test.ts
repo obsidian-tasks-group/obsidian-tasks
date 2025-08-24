@@ -3,7 +3,6 @@
  */
 
 import moment from 'moment';
-import type { Reference } from 'obsidian';
 import { Status } from '../../src/Statuses/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -159,9 +158,7 @@ describe('task', () => {
 
     it('links', () => {
         // This is getting annoying, having to do this repeatedly.
-        LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, sourcePath: string) =>
-            getFirstLinkpathDest(rawLink, sourcePath),
-        );
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn(getFirstLinkpathDest);
 
         const tasks = readTasksFromSimulatedFile(links_everywhere);
         verifyFieldDataFromTasksForReferenceDocs(tasks, [
