@@ -1,12 +1,11 @@
 import type { Reference } from 'obsidian';
-import { Link } from './Link';
 
 export type GetFirstLinkpathDestFn = (rawLink: Reference, sourcePath: string) => string | null;
 
 const defaultGetFirstLinkpathDestFn = (_rawLink: Reference, _sourcePath: string) => null;
 
 /**
- * An abstraction to populate {@link Link.destinationPath}.
+ * An abstraction to implement {@link Link.destinationPath}.
  *
  * See also:
  * - `src/main.ts` - search for `LinkResolver.getInstance()`
@@ -25,13 +24,8 @@ export class LinkResolver {
     public resetGetFirstLinkpathDestFn() {
         this.getFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
     }
-
-    public resolve(rawLink: Reference, pathContainingLink: string) {
-        return new Link(
-            rawLink,
-            pathContainingLink,
-            this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined,
-        );
+    public getDestinationPath(rawLink: Reference, pathContainingLink: string) {
+        return this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined;
     }
 
     /**

@@ -1,6 +1,5 @@
 import { type CachedMetadata, type FrontMatterCache, type Reference, getAllTags, parseFrontMatterTags } from 'obsidian';
-import type { Link } from '../Task/Link';
-import { LinkResolver } from '../Task/LinkResolver';
+import { Link } from '../Task/Link';
 
 export type OptionalTasksFile = TasksFile | undefined;
 
@@ -36,7 +35,7 @@ export class TasksFile {
     }
 
     private createLinks(obsidianRawLinks: Reference[] | undefined) {
-        return obsidianRawLinks?.map((link) => LinkResolver.getInstance().resolve(link, this.path)) ?? [];
+        return obsidianRawLinks?.map((link) => new Link(link, this.path)) ?? [];
     }
 
     /**
