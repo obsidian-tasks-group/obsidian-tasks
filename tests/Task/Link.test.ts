@@ -23,7 +23,7 @@ function getLink(data: any, index: number) {
     const resolver = LinkResolver.getInstance();
     resolver.setGetFirstLinkpathDestFn(() => destinationPath);
 
-    return new Link(rawLink, data.filePath, destinationPath);
+    return new Link(rawLink, data.filePath);
 }
 
 describe('linkClass', () => {
@@ -272,7 +272,7 @@ describe('linkClass', () => {
             expect(rawLink.link).toEqual('yaml_tags_is_empty');
 
             const destinationPath = 'Test Data/yaml_tags_is_empty.md';
-            const link = new Link(rawLink, data.filePath, destinationPath);
+            const link = new Link(rawLink, data.filePath);
 
             expect(link.destinationPath).toEqual(destinationPath);
         });
