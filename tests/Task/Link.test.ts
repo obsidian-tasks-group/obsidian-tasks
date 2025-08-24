@@ -19,6 +19,10 @@ import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__
 function getLink(data: any, index: number) {
     const rawLink = data.cachedMetadata.links[index];
     const destinationPath = getFirstLinkpathDestFromData(data, rawLink);
+
+    const resolver = LinkResolver.getInstance();
+    resolver.setGetFirstLinkpathDestFn(() => destinationPath);
+
     return new Link(rawLink, data.filePath, destinationPath);
 }
 
