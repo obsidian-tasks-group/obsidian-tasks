@@ -57,6 +57,13 @@ export class Occurrence {
             return window.moment(this.dueDate);
         }
 
+        // If the `removeScheduledDateOnRecurrence` setting is enabled, pick the
+        // `startDate` before the `scheduledDate`.
+        const { removeScheduledDateOnRecurrence } = getSettings();
+        if (removeScheduledDateOnRecurrence && this.startDate) {
+            return window.moment(this.startDate);
+        }
+
         if (this.scheduledDate) {
             return window.moment(this.scheduledDate);
         }

@@ -284,7 +284,7 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
             jest.useRealTimers();
         });
 
-        it.failing('calculates correct start date with "dropScheduledDate" and "when done", with no due date', () => {
+        it('calculates correct start date with "dropScheduledDate" and "when done", with no due date', () => {
             // Arrange
 
             // The task is being completed on the 10th of January.
