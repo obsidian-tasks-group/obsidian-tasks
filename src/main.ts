@@ -22,7 +22,7 @@ import { QueryFileDefaults } from './Query/QueryFileDefaults';
 import { LinkResolver } from './Task/LinkResolver';
 
 export default class TasksPlugin extends Plugin {
-    private cache: Cache | undefined;
+    public cache: Cache | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
 
