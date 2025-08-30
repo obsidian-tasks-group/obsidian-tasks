@@ -115,6 +115,8 @@ export class SettingsTab extends PluginSettingTab {
                         GlobalFilter.getInstance().set(value);
                         await this.plugin.saveSettings();
                         setSettingVisibility(globalFilterHidden, value.length > 0);
+
+                        await this.plugin.cache?.loadVault();
                     });
             });
 
