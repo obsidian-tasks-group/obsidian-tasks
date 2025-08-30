@@ -34,12 +34,14 @@ export class SettingsTab extends PluginSettingTab {
 
     private readonly plugin: TasksPlugin;
     private readonly presetsSettingsUI;
+    private readonly events: TasksEvents;
 
     constructor({ plugin, events }: { plugin: TasksPlugin; events: TasksEvents }) {
         super(plugin.app, plugin);
 
         this.plugin = plugin;
         this.presetsSettingsUI = new PresetsSettingsUI(plugin, events);
+        this.events = events;
     }
 
     private static createFragmentWithHTML = (html: string) =>
@@ -152,6 +154,8 @@ export class SettingsTab extends PluginSettingTab {
                             updateSettings({ globalQuery: value });
                             GlobalQuery.getInstance().set(value);
                             await this.plugin.saveSettings();
+
+                            this.events.triggerReloadOpenSearchResults();
                         });
                 }),
         );
