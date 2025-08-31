@@ -231,6 +231,9 @@ export class Cache {
             handler({ tasks: this.tasks, state: this.state });
         });
         this.eventsEventReferences.push(requestReference);
+
+        const reloadVaultReference = this.events.onReloadVault(() => console.warn('Reload vault please'));
+        this.eventsEventReferences.push(reloadVaultReference);
     }
 
     public loadVault(): Promise<void> {

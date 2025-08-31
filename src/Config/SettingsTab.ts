@@ -118,6 +118,8 @@ export class SettingsTab extends PluginSettingTab {
                                 await this.plugin.saveSettings();
                                 setSettingVisibility(globalFilterHidden, value.length > 0);
 
+                                this.events.triggerReloadVault();
+
                                 await this.plugin.cache?.loadVault();
                             },
                             500,
