@@ -239,7 +239,7 @@ export class Cache {
         this.eventsEventReferences.push(reloadVaultReference);
     }
 
-    public loadVault(): Promise<void> {
+    private loadVault(): Promise<void> {
         this.logger.debug('Cache.loadVault()');
         return this.tasksMutex.runExclusive(async () => {
             this.state = State.Initializing;
