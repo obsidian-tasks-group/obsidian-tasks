@@ -56,7 +56,7 @@ export class Occurrence {
         const dates: (Moment | null)[] = [];
 
         if (this.dueDate) {
-            return window.moment(this.dueDate);
+            dates.push(this.dueDate);
         }
 
         // If the `removeScheduledDateOnRecurrence` setting is enabled, it does
