@@ -65,11 +65,11 @@ export class Occurrence {
         const { removeScheduledDateOnRecurrence } = getSettings();
         if (removeScheduledDateOnRecurrence) {
             dates.push(this.startDate);
+            dates.push(this.scheduledDate);
+        } else {
+            dates.push(this.scheduledDate);
+            dates.push(this.startDate);
         }
-
-        dates.push(this.scheduledDate);
-
-        dates.push(this.startDate);
 
         for (const date of dates) {
             if (date) {
