@@ -46,7 +46,9 @@ export class Occurrence {
     /**
      *  Pick the reference date for occurrence based on importance.
      *  Assuming due date has the highest priority, then scheduled date,
-     *  then start date.
+     *  then start date, by default.
+     *  The order differs if removeScheduledDateOnRecurrence is enabled.
+     *  See [Priority of Dates](https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks#Priority%20of%20Dates).
      *
      *  The Moment objects are cloned.
      *
