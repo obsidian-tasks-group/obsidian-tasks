@@ -31,9 +31,11 @@ export class Cache {
 
     private readonly metadataCache: MetadataCache;
     private readonly metadataCacheEventReferences: EventRef[];
+
     private readonly vault: Vault;
     private readonly workspace: Workspace;
     private readonly vaultEventReferences: EventRef[];
+
     private readonly events: TasksEvents;
     private readonly eventsEventReferences: EventRef[];
 
@@ -72,9 +74,11 @@ export class Cache {
 
         this.metadataCache = metadataCache;
         this.metadataCacheEventReferences = [];
+
         this.vault = vault;
         this.workspace = workspace;
         this.vaultEventReferences = [];
+
         this.events = events;
         this.eventsEventReferences = [];
 
