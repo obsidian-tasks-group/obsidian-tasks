@@ -57,13 +57,12 @@ export class Occurrence {
 
         dates.push(this.dueDate);
 
-        // If the `removeScheduledDateOnRecurrence` setting is enabled, it does
-        // not make sense to pick the scheduled date over the start date because
-        // the scheduled date will be deleted in the newly created task. So if
-        // this setting is enabled, and there is a start date, we pick that date
-        // now before falling back on the standard logic below.
         const { removeScheduledDateOnRecurrence } = getSettings();
         if (removeScheduledDateOnRecurrence) {
+            // If the `removeScheduledDateOnRecurrence` setting is enabled, it does
+            // not make sense to pick the scheduled date over the start date because
+            // the scheduled date will be deleted in the newly created task. So if
+            // this setting is enabled, we favour start date over scheduled date:
             dates.push(this.startDate);
             dates.push(this.scheduledDate);
         } else {
