@@ -70,7 +70,7 @@ export class Occurrence {
         }
 
         if (this.scheduledDate) {
-            return window.moment(this.scheduledDate);
+            dates.push(this.scheduledDate);
         }
 
         if (this.startDate) {
