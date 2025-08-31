@@ -55,9 +55,7 @@ export class Occurrence {
     private getReferenceDate(): Moment | null {
         const dates: (Moment | null)[] = [];
 
-        if (this.dueDate) {
-            dates.push(this.dueDate);
-        }
+        dates.push(this.dueDate);
 
         // If the `removeScheduledDateOnRecurrence` setting is enabled, it does
         // not make sense to pick the scheduled date over the start date because
@@ -65,17 +63,13 @@ export class Occurrence {
         // this setting is enabled, and there is a start date, we pick that date
         // now before falling back on the standard logic below.
         const { removeScheduledDateOnRecurrence } = getSettings();
-        if (removeScheduledDateOnRecurrence && this.startDate) {
+        if (removeScheduledDateOnRecurrence) {
             dates.push(this.startDate);
         }
 
-        if (this.scheduledDate) {
-            dates.push(this.scheduledDate);
-        }
+        dates.push(this.scheduledDate);
 
-        if (this.startDate) {
-            dates.push(this.startDate);
-        }
+        dates.push(this.startDate);
 
         for (const date of dates) {
             if (date) {
