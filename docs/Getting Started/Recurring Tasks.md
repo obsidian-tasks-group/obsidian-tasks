@@ -198,6 +198,8 @@ When a task has multiple dates, one of them is selected as reference date based 
 2. Scheduled date
 3. Start date
 
+> If the "Remove scheduled date on recurrence" setting is true, the Start Date will be chosen before the Scheduled date.
+
 If more dates than the reference date exist on the original recurring task, the next occurrence will have the same dates.
 All dates of the next occurring task will have the relative distance to the reference date that they had on the original task.
 
