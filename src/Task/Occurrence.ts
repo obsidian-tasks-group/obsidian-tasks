@@ -77,8 +77,7 @@ export class Occurrence {
             // not make sense to pick the scheduled date over the start date because
             // the scheduled date will be deleted in the newly created task. So if
             // this setting is enabled, we favour start date over scheduled date:
-            datesInPriorityOrder.push(this.startDate);
-            datesInPriorityOrder.push(this.scheduledDate);
+            return [this.dueDate, this.startDate, this.scheduledDate];
         } else {
             datesInPriorityOrder.push(this.scheduledDate);
             datesInPriorityOrder.push(this.startDate);
