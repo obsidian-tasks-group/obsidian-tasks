@@ -53,9 +53,9 @@ export class Occurrence {
      * @private
      */
     private getReferenceDate(): Moment | null {
-        const dates: (Moment | null)[] = [];
+        const datesInPriorityOrder: (Moment | null)[] = [];
 
-        dates.push(this.dueDate);
+        datesInPriorityOrder.push(this.dueDate);
 
         const { removeScheduledDateOnRecurrence } = getSettings();
         if (removeScheduledDateOnRecurrence) {
@@ -63,14 +63,14 @@ export class Occurrence {
             // not make sense to pick the scheduled date over the start date because
             // the scheduled date will be deleted in the newly created task. So if
             // this setting is enabled, we favour start date over scheduled date:
-            dates.push(this.startDate);
-            dates.push(this.scheduledDate);
+            datesInPriorityOrder.push(this.startDate);
+            datesInPriorityOrder.push(this.scheduledDate);
         } else {
-            dates.push(this.scheduledDate);
-            dates.push(this.startDate);
+            datesInPriorityOrder.push(this.scheduledDate);
+            datesInPriorityOrder.push(this.startDate);
         }
 
-        for (const date of dates) {
+        for (const date of datesInPriorityOrder) {
             if (date) {
                 return window.moment(date);
             }
