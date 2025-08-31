@@ -55,6 +55,18 @@ export class Occurrence {
      * @private
      */
     private getReferenceDate(): Moment | null {
+        const datesInPriorityOrder = this.getDatePriorityOrder();
+
+        for (const date of datesInPriorityOrder) {
+            if (date) {
+                return window.moment(date);
+            }
+        }
+
+        return null;
+    }
+
+    private getDatePriorityOrder(): (Moment | null)[] {
         const datesInPriorityOrder: (Moment | null)[] = [];
 
         datesInPriorityOrder.push(this.dueDate);
@@ -71,14 +83,7 @@ export class Occurrence {
             datesInPriorityOrder.push(this.scheduledDate);
             datesInPriorityOrder.push(this.startDate);
         }
-
-        for (const date of datesInPriorityOrder) {
-            if (date) {
-                return window.moment(date);
-            }
-        }
-
-        return null;
+        return datesInPriorityOrder;
     }
 
     public isIdenticalTo(other: Occurrence): boolean {
