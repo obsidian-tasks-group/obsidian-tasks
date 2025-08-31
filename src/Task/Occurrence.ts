@@ -66,7 +66,7 @@ export class Occurrence {
         // now before falling back on the standard logic below.
         const { removeScheduledDateOnRecurrence } = getSettings();
         if (removeScheduledDateOnRecurrence && this.startDate) {
-            return window.moment(this.startDate);
+            dates.push(this.startDate);
         }
 
         if (this.scheduledDate) {
