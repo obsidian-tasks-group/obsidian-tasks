@@ -232,7 +232,10 @@ export class Cache {
         });
         this.eventsEventReferences.push(requestReference);
 
-        const reloadVaultReference = this.events.onReloadVault(() => console.warn('Reload vault please'));
+        const reloadVaultReference = this.events.onReloadVault(async () => {
+            // The caller is responsible for debouncing this.
+            await this.loadVault();
+        });
         this.eventsEventReferences.push(reloadVaultReference);
     }
 
