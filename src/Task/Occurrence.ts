@@ -53,6 +53,8 @@ export class Occurrence {
      * @private
      */
     private getReferenceDate(): Moment | null {
+        const dates: (Moment | null)[] = [];
+
         if (this.dueDate) {
             return window.moment(this.dueDate);
         }
@@ -72,7 +74,13 @@ export class Occurrence {
         }
 
         if (this.startDate) {
-            return window.moment(this.startDate);
+            dates.push(this.startDate);
+        }
+
+        for (const date of dates) {
+            if (date) {
+                return window.moment(date);
+            }
         }
 
         return null;
