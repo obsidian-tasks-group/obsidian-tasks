@@ -67,10 +67,6 @@ export class Occurrence {
     }
 
     private getDatePriorityOrder(): (Moment | null)[] {
-        const datesInPriorityOrder: (Moment | null)[] = [];
-
-        datesInPriorityOrder.push(this.dueDate);
-
         const { removeScheduledDateOnRecurrence } = getSettings();
         if (removeScheduledDateOnRecurrence) {
             // If the `removeScheduledDateOnRecurrence` setting is enabled, it does
@@ -79,10 +75,8 @@ export class Occurrence {
             // this setting is enabled, we favour start date over scheduled date:
             return [this.dueDate, this.startDate, this.scheduledDate];
         } else {
-            datesInPriorityOrder.push(this.scheduledDate);
-            datesInPriorityOrder.push(this.startDate);
+            return [this.dueDate, this.scheduledDate, this.startDate];
         }
-        return datesInPriorityOrder;
     }
 
     public isIdenticalTo(other: Occurrence): boolean {
