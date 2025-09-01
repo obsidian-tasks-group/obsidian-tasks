@@ -17,6 +17,8 @@ import { DateFallback } from '../DateTime/DateFallback';
 import { getSettings } from '../Config/Settings';
 import { Lazy } from '../lib/Lazy';
 import { Logger, logging } from '../lib/logging';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
+import { GlobalFilter } from '../Config/GlobalFilter';
 import type { TasksEvents } from './TasksEvents';
 import { FileParser } from './FileParser';
 
@@ -31,9 +33,11 @@ export class Cache {
 
     private readonly metadataCache: MetadataCache;
     private readonly metadataCacheEventReferences: EventRef[];
+
     private readonly vault: Vault;
     private readonly workspace: Workspace;
     private readonly vaultEventReferences: EventRef[];
+
     private readonly events: TasksEvents;
     private readonly eventsEventReferences: EventRef[];
 
@@ -72,9 +76,11 @@ export class Cache {
 
         this.metadataCache = metadataCache;
         this.metadataCacheEventReferences = [];
+
         this.vault = vault;
         this.workspace = workspace;
         this.vaultEventReferences = [];
+
         this.events = events;
         this.eventsEventReferences = [];
 
@@ -227,11 +233,20 @@ export class Cache {
             handler({ tasks: this.tasks, state: this.state });
         });
         this.eventsEventReferences.push(requestReference);
+
+        // The caller is responsible for debouncing this:
+        const reloadVaultReference = this.events.onReloadVault(async () => await this.loadVault());
+        this.eventsEventReferences.push(reloadVaultReference);
     }
 
     private loadVault(): Promise<void> {
         this.logger.debug('Cache.loadVault()');
         return this.tasksMutex.runExclusive(async () => {
+            const measureLoad = new PerformanceTracker(
+                `Loading vault with global filter '${GlobalFilter.getInstance().get()}'`,
+            );
+            measureLoad.start();
+
             this.state = State.Initializing;
             this.logger.debug('Cache.loadVault(): state = Initializing');
 
@@ -243,6 +258,11 @@ export class Cache {
             this.state = State.Warm;
             // TODO Why is this displayed twice:
             this.logger.debug('Cache.loadVault(): state = Warm');
+
+            // Report that we have finished loading before notifying subscribers,
+            // so we don't double-count things like redrawing search results.
+            // These have their own timer code.
+            measureLoad.finish();
 
             // Notify that the cache is now warm:
             this.notifySubscribers();
