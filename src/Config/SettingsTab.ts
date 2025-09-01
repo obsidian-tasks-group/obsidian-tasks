@@ -110,12 +110,20 @@ export class SettingsTab extends PluginSettingTab {
                 // wide enough for the whole string to be visible.
                 text.setPlaceholder(i18n.t('settings.globalFilter.filter.placeholder'))
                     .setValue(GlobalFilter.getInstance().get())
-                    .onChange(async (value) => {
-                        updateSettings({ globalFilter: value });
-                        GlobalFilter.getInstance().set(value);
-                        await this.plugin.saveSettings();
-                        setSettingVisibility(globalFilterHidden, value.length > 0);
-                    });
+                    .onChange(
+                        debounce(
+                            async (value) => {
+                                updateSettings({ globalFilter: value });
+                                GlobalFilter.getInstance().set(value);
+                                await this.plugin.saveSettings();
+                                setSettingVisibility(globalFilterHidden, value.length > 0);
+
+                                this.events.triggerReloadVault();
+                            },
+                            500,
+                            true,
+                        ),
+                    );
             });
 
         globalFilterHidden = new Setting(containerEl)
