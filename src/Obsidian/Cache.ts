@@ -234,10 +234,8 @@ export class Cache {
         });
         this.eventsEventReferences.push(requestReference);
 
-        const reloadVaultReference = this.events.onReloadVault(async () => {
-            // The caller is responsible for debouncing this.
-            await this.loadVault();
-        });
+        // The caller is responsible for debouncing this:
+        const reloadVaultReference = this.events.onReloadVault(async () => await this.loadVault());
         this.eventsEventReferences.push(reloadVaultReference);
     }
 
