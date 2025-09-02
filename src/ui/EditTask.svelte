@@ -9,6 +9,7 @@
     import { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
+    import DurationEditor from './DurationEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -41,6 +42,7 @@
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
 
+    let isDurationValid: boolean = true;
     let isRecurrenceValid: boolean = true;
 
     let withAccessKeys: boolean = true;
@@ -102,6 +104,7 @@
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
         isDueDateValid &&
+        isDurationValid &&
         isRecurrenceValid &&
         isScheduledDateValid &&
         isStartDateValid &&
@@ -294,6 +297,14 @@ Availability of access keys:
                 accesskey={accesskey('f')}
             />
         </div>
+    </section>
+
+    <!-- --------------------------------------------------------------------------- -->
+    <!--  Duration  -->
+    <!-- --------------------------------------------------------------------------- -->
+    <hr />
+    <section class="tasks-modal-duartion-section">
+        <DurationEditor {editableTask} bind:isDurationValid />
     </section>
 
     <!-- --------------------------------------------------------------------------- -->
