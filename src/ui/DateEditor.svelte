@@ -2,6 +2,7 @@
     import { doAutocomplete } from '../DateTime/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import { i18n } from '../i18n/i18n';
 
     export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
     export let dateSymbol: string;
@@ -32,10 +33,10 @@
     }
 
     // 'weekend' abbreviation omitted due to lack of space.
-    const datePlaceholder = "Try 'Mon' or 'tm' then space";
+    const datePlaceholder = i18n.t('modals.taskModal.tryMonOrTm');
 </script>
 
-<label for={id}>{@html labelContentWithAccessKey(id, accesskey)}</label>
+<label for={id}>{@html labelContentWithAccessKey(i18n.t('modals.taskModal.' + id), accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <input
     bind:value={date}

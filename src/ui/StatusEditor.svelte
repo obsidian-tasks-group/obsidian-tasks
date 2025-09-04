@@ -4,6 +4,7 @@
     import type { Task } from '../Task/Task';
     import type { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import { i18n } from '../i18n/i18n';
 
     export let task: Task;
     export let editableTask: EditableTask;
@@ -58,7 +59,7 @@
     };
 </script>
 
-<label for="status">{@html labelContentWithAccessKey('Status', accesskey)}</label>
+<label for="status">{@html labelContentWithAccessKey(i18n.t('modals.taskModal.status'), accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <select
     bind:value={statusSymbol}

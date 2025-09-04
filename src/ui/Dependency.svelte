@@ -4,6 +4,7 @@
     import type { EditableTask } from './EditableTask';
     import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import { i18n } from '../i18n/i18n';
 
     export let task: Task;
     export let editableTask: EditableTask;
@@ -12,7 +13,7 @@
     export let type: 'blocking' | 'blockedBy';
     export let labelText: string;
     export let accesskey: string | null;
-    export let placeholder: string = 'Type to search...';
+    export let placeholder: string = i18n.t('modals.taskModal.typeToSearch');
 
     let search: string = '';
     let searchResults: Task[] | null = null;

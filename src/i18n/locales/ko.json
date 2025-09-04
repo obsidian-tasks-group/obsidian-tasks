@@ -26,6 +26,26 @@
         "name": "상태 유형"
       },
       "fixErrorsBeforeSaving": "저장하기 전에 오류를 수정하세요."
+    },
+    "taskModal": {
+      "title": "작업 생성 또는 편집",
+      "description": "설명",
+      "priority": "우선순위",
+      "lowest": "최하",
+      "low": "낮음",
+      "normal": "보통",
+      "medium": "중간",
+      "high": "높음",
+      "highest": "최상",
+      "onlyFutureDates": "미래 날짜만:",
+      "beforeThis": "이전 작업",
+      "afterThis": "이후 작업",
+      "status": "상태",
+      "apply": "적용",
+      "cancel": "취소",
+      "takeOutTheTrash": "쓰레기 버리기",
+      "searchDependsOn": "이 작업이 의존하는 작업을 검색...",
+      "searchDependedOn": "이 작업이 완료되어야 하는 작업을 검색..."
     }
   },
   "reports": {
@@ -260,5 +280,17 @@
       },
       "heading": "작업 상태"
     }
+  },
+  "status": {
+    "recurs": "반복",
+    "tryEveryDayWhenDone": "'매일 완료 시'와 같이 입력해보세요",
+    "typeToSearch": "검색어를 입력하세요...",
+    "start": "시작일",
+    "scheduled": "예정일",
+    "due": "마감일",
+    "done": "완료일",
+    "created": "생성일",
+    "cancelled": "취소일",
+    "tryMonOrTm": "'월' 또는 'tm' 입력 후 스페이스바를 눌러보세요"
   }
 }

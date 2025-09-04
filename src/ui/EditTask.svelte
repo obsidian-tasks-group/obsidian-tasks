@@ -10,6 +10,7 @@
     import { labelContentWithAccessKey } from './EditTaskHelpers';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
+    import { i18n } from '../i18n/i18n';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -57,42 +58,42 @@
     }[] = [
         {
             value: 'lowest',
-            label: 'Lowest',
+            label: i18n.t('modals.taskModal.lowest'),
             symbol: prioritySymbols.Lowest,
             accessKey: 'o',
             accessKeyIndex: 1,
         },
         {
             value: 'low',
-            label: 'Low',
+            label: i18n.t('modals.taskModal.low'),
             symbol: prioritySymbols.Low,
             accessKey: 'l',
             accessKeyIndex: 0,
         },
         {
             value: 'none',
-            label: 'Normal',
+            label: i18n.t('modals.taskModal.normal'),
             symbol: prioritySymbols.None,
             accessKey: 'n',
             accessKeyIndex: 0,
         },
         {
             value: 'medium',
-            label: 'Medium',
+            label: i18n.t('modals.taskModal.medium'),
             symbol: prioritySymbols.Medium,
             accessKey: 'm',
             accessKeyIndex: 0,
         },
         {
             value: 'high',
-            label: 'High',
+            label: i18n.t('modals.taskModal.high'),
             symbol: prioritySymbols.High,
             accessKey: 'h',
             accessKeyIndex: 0,
         },
         {
             value: 'highest',
-            label: 'Highest',
+            label: i18n.t('modals.taskModal.highest'),
             symbol: prioritySymbols.Highest,
             accessKey: 'i',
             accessKeyIndex: 1,
@@ -186,14 +187,14 @@ Availability of access keys:
     <!--  Description  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-description-section">
-        <label for="description">{@html labelContentWithAccessKey('Description', accesskey('t'))}</label>
+        <label for="description">{@html labelContentWithAccessKey(i18n.t('modals.taskModal.description'), accesskey('t'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
         <textarea
             bind:value={editableTask.description}
             bind:this={descriptionInput}
             id="description"
             class="tasks-modal-description"
-            placeholder="Take out the trash"
+            placeholder={i18n.t('modals.taskModal.takeOutTheTrash')}
             accesskey={accesskey('t')}
             on:keydown={_onDescriptionKeyDown}
             on:paste={_removeLinebreaksFromDescription}
@@ -205,7 +206,7 @@ Availability of access keys:
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-priority-section">
-        <label for="priority-{editableTask.priority}">Priority</label>
+        <label for="priority-{editableTask.priority}">{i18n.t('modals.taskModal.priority')}</label>
         {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
             <div class="task-modal-priority-option-container">
                 <!-- svelte-ignore a11y-accesskey -->
@@ -217,9 +218,6 @@ Availability of access keys:
                     accesskey={accesskey(accessKey)}
                 />
                 <label for="priority-{value}">
-                    <!-- These is no need to extract this behaviour to something like labelContentWithAccessKey(),
-                    since this whole section will just go in a separate Svelte component and
-                    will not be reused elsewhere like labelContentWithAccessKey(). -->
                     {#if withAccessKeys}
                         <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
                             >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span
@@ -284,7 +282,7 @@ Availability of access keys:
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
         <div class="future-dates-only">
-            <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
+            <label for="forwardOnly">{@html labelContentWithAccessKey(i18n.t('modals.taskModal.onlyFutureDates'), accesskey('f'))}</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:checked={editableTask.forwardOnly}
@@ -307,13 +305,13 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <Dependency
                 type="blockedBy"
-                labelText="Before this"
+                labelText={i18n.t('modals.taskModal.beforeThis')}
                 {task}
                 {editableTask}
                 {allTasks}
                 {_onDescriptionKeyDown}
                 accesskey={accesskey('b')}
-                placeholder="Search for tasks that the task being edited depends on..."
+                placeholder={i18n.t('modals.taskModal.searchDependsOn')}
             />
 
             <!-- --------------------------------------------------------------------------- -->
@@ -321,13 +319,13 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <Dependency
                 type="blocking"
-                labelText="After this"
+                labelText={i18n.t('modals.taskModal.afterThis')}
                 {task}
                 {editableTask}
                 {allTasks}
                 {_onDescriptionKeyDown}
                 accesskey={accesskey('e')}
-                placeholder="Search for tasks that depend on this task being done..."
+                placeholder={i18n.t('modals.taskModal.searchDependedOn')}
             />
         {:else}
             <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
@@ -379,7 +377,7 @@ Availability of access keys:
     </section>
 
     <section class="tasks-modal-button-section">
-        <button disabled={!formIsValid} type="submit" class="mod-cta">Apply </button>
-        <button type="button" on:click={_onClose}>Cancel</button>
+        <button disabled={!formIsValid} type="submit" class="mod-cta">{i18n.t('modals.taskModal.apply')}</button>
+        <button type="button" on:click={_onClose}>{i18n.t('modals.taskModal.cancel')}</button>
     </section>
 </form>

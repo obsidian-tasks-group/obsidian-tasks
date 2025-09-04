@@ -5,6 +5,7 @@ import EditTask from '../ui/EditTask.svelte';
 import type { Task } from '../Task/Task';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
+import { i18n } from '../i18n/i18n';
 
 export interface TaskModalParams {
     app: App;
@@ -30,7 +31,7 @@ export class TaskModal extends Modal {
     }
 
     public onOpen(): void {
-        this.titleEl.setText('Create or edit Task');
+        this.titleEl.setText(i18n.t('modals.taskModal.title'));
         this.modalEl.style.paddingBottom = '0';
 
         const { contentEl } = this;
