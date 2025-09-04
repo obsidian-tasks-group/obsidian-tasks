@@ -52,7 +52,9 @@
       "done": "완료일",
       "created": "생성일",
       "cancelled": "취소일",
-      "tryMonOrTm": "'월' 또는 'tm' 입력 후 스페이스바를 눌러보세요"
+      "tryMonOrTm": "'월' 또는 'tm' 입력 후 스페이스바를 눌러보세요",
+      "tryEveryDayWhenDone": "'매일 완료 시'와 같이 입력해보세요",
+      "notRecurring": "반복 없음"
     }
   },
   "reports": {
