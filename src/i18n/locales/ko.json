@@ -45,7 +45,14 @@
       "cancel": "취소",
       "takeOutTheTrash": "쓰레기 버리기",
       "searchDependsOn": "이 작업이 의존하는 작업을 검색...",
-      "searchDependedOn": "이 작업이 완료되어야 하는 작업을 검색..."
+      "searchDependedOn": "이 작업이 완료되어야 하는 작업을 검색...",
+      "start": "시작일",
+      "scheduled": "예정일",
+      "due": "마감일",
+      "done": "완료일",
+      "created": "생성일",
+      "cancelled": "취소일",
+      "tryMonOrTm": "'월' 또는 'tm' 입력 후 스페이스바를 눌러보세요"
     }
   },
   "reports": {
