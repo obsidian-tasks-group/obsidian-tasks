@@ -17,8 +17,6 @@
     function translateRecurrenceText(text: string): string {
         if (text === 'every day') return i18n.t('modals.taskModal.everyDay');
         if (text === 'every day when done') return i18n.t('modals.taskModal.everyDayWhenDone');
-        if (text === 'not recurring') return i18n.t('modals.taskModal.notRecurring');
-
         return text;
     }
 </script>
