@@ -46,6 +46,16 @@
         }
         return null;
     })();
+
+    function getDisplayText(): string {
+        if (isDateValid) return '';
+
+        const cleanText = parsedDate.replace(/<[^>]*>/g, '');
+        if (cleanText.startsWith('invalid')) {
+            if (invalidKey) return i18n.t('modals.taskModal.' + invalidKey);
+        }
+        return cleanText;
+    }
 </script>
 
 <label for={id}>{@html labelContentWithAccessKey(i18n.t('modals.taskModal.' + id), accesskey)}</label>
@@ -72,7 +82,7 @@
         />
     </div>
 {:else}
-    <span class="tasks-modal-parsed-date">{dateSymbol} {invalidKey ? i18n.t('modals.taskModal.' + invalidKey) : parsedDate}</span>
+    <span class="tasks-modal-parsed-date">{dateSymbol} {getDisplayText()}</span>
 {/if}
 
 <style>

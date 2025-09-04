@@ -15,9 +15,22 @@
     const { recurrenceSymbol } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     function translateRecurrenceText(text: string): string {
-        if (text === 'every day') return i18n.t('modals.taskModal.everyDay');
-        if (text === 'every day when done') return i18n.t('modals.taskModal.everyDayWhenDone');
-        return text;
+        // HTML 태그 제거
+        const cleanText = text.replace(/<[^>]*>/g, '');
+
+        if (cleanText === 'every day') return i18n.t('modals.taskModal.everyDay');
+        if (cleanText === 'every day when done') return i18n.t('modals.taskModal.everyDayWhenDone');
+        if (cleanText === 'not recurring') return i18n.t('modals.taskModal.notRecurring');
+        return cleanText;
+    }
+
+    function getDisplayText(): string {
+        if (!parsedRecurrence) return i18n.t('modals.taskModal.notRecurring');
+
+        const cleanText = parsedRecurrence.replace(/<[^>]*>/g, '');
+        if (cleanText.startsWith('invalid')) return i18n.t('modals.taskModal.invalidRecurrenceRule');
+
+        return translateRecurrenceText(cleanText);
     }
 </script>
 
@@ -32,4 +45,4 @@
     placeholder={i18n.t('modals.taskModal.tryEveryDayWhenDone')}
     {accesskey}
 />
-<span class="tasks-modal-parsed-date">{recurrenceSymbol} {parsedRecurrence.startsWith('invalid') ? i18n.t('modals.taskModal.invalidRecurrenceRule') : (parsedRecurrence ? translateRecurrenceText(parsedRecurrence) : i18n.t('modals.taskModal.notRecurring'))}</span>
+<span class="tasks-modal-parsed-date">{recurrenceSymbol} {getDisplayText()}</span>
