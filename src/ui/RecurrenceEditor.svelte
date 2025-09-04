@@ -18,8 +18,8 @@
         // HTML 태그 제거
         const cleanText = text.replace(/<[^>]*>/g, '');
 
-        if (cleanText === 'every day') return i18n.t('modals.taskModal.everyDay');
-        if (cleanText === 'every day when done') return i18n.t('modals.taskModal.everyDayWhenDone');
+        if (text === 'every day') return i18n.t('modals.taskModal.everyDay');
+        if (text === 'every day when done') return i18n.t('modals.taskModal.everyDayWhenDone');
         if (cleanText === 'not recurring') return i18n.t('modals.taskModal.notRecurring');
         return cleanText;
     }
