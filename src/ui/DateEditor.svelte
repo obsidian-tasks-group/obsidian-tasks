@@ -72,7 +72,7 @@
         />
     </div>
 {:else}
-    <code class="tasks-modal-parsed-date">{dateSymbol} {invalidKey ? i18n.t('modals.taskModal.' + invalidKey) : parsedDate}</code>
+    <span class="tasks-modal-parsed-date">{dateSymbol} {invalidKey ? i18n.t('modals.taskModal.' + invalidKey) : parsedDate}</span>
 {/if}
 
 <style>

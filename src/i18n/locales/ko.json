@@ -63,7 +63,9 @@
       "invalidDoneDate": "잘못된 완료일",
       "invalidCancelledDate": "잘못된 취소일",
       "recurs": "반복",
-      "typeToSearch": "검색어를 입력하세요..."
+      "typeToSearch": "검색어를 입력하세요...",
+      "everyDay": "매일",
+      "everyDayWhenDone": "매일(완료 시)"
     }
   },
   "reports": {
