@@ -34,6 +34,18 @@
 
     // 'weekend' abbreviation omitted due to lack of space.
     const datePlaceholder = i18n.t('modals.taskModal.tryMonOrTm');
+
+    $: invalidKey = (() => {
+        if (parsedDate.startsWith('invalid')) {
+            if (id === 'due') return 'invalidDueDate';
+            if (id === 'scheduled') return 'invalidScheduledDate';
+            if (id === 'start') return 'invalidStartDate';
+            if (id === 'created') return 'invalidCreatedDate';
+            if (id === 'done') return 'invalidDoneDate';
+            if (id === 'cancelled') return 'invalidCancelledDate';
+        }
+        return null;
+    })();
 </script>
 
 <label for={id}>{@html labelContentWithAccessKey(i18n.t('modals.taskModal.' + id), accesskey)}</label>
@@ -60,7 +72,7 @@
         />
     </div>
 {:else}
-    <code class="tasks-modal-parsed-date">{dateSymbol} {@html parsedDate}</code>
+    <code class="tasks-modal-parsed-date">{dateSymbol} {invalidKey ? i18n.t('modals.taskModal.' + invalidKey) : parsedDate}</code>
 {/if}
 
 <style>

@@ -26,4 +26,4 @@
     placeholder={i18n.t('modals.taskModal.tryEveryDayWhenDone')}
     {accesskey}
 />
-<code class="tasks-modal-parsed-date">{recurrenceSymbol} {@html parsedRecurrence || i18n.t('modals.taskModal.notRecurring')}</code>
+<code class="tasks-modal-parsed-date">{recurrenceSymbol} {parsedRecurrence.startsWith('invalid') ? i18n.t('modals.taskModal.invalidRecurrenceRule') : (parsedRecurrence || i18n.t('modals.taskModal.notRecurring'))}</code>

@@ -54,7 +54,16 @@
       "cancelled": "취소일",
       "tryMonOrTm": "'월' 또는 'tm' 입력 후 스페이스바를 눌러보세요",
       "tryEveryDayWhenDone": "'매일 완료 시'와 같이 입력해보세요",
-      "notRecurring": "반복 없음"
+      "notRecurring": "반복 없음",
+      "invalidRecurrenceRule": "잘못된 반복 규칙",
+      "invalidDueDate": "잘못된 마감일",
+      "invalidScheduledDate": "잘못된 예정일",
+      "invalidStartDate": "잘못된 시작일",
+      "invalidCreatedDate": "잘못된 생성일",
+      "invalidDoneDate": "잘못된 완료일",
+      "invalidCancelledDate": "잘못된 취소일",
+      "recurs": "반복",
+      "typeToSearch": "검색어를 입력하세요..."
     }
   },
   "reports": {
