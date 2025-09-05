@@ -6,6 +6,7 @@ module.exports = {
         'be',
         'de',
         'en',
+        'ko',
         'ru',
         'uk',
         'zh_cn',
