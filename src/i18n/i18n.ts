@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import be from './locales/be.json';
 import de from './locales/de.json';
 import en from './locales/en.json';
+import ko from './locales/ko.json';
 import ru from './locales/ru.json';
 import uk from './locales/uk.json';
 import zh_cn from './locales/zh_cn.json';
@@ -29,6 +30,7 @@ export const initializeI18n = async () => {
                 be: { translation: be }, // Belarusian
                 de: { translation: de }, // German
                 en: { translation: en }, // English
+                ko: { translation: ko }, // Korean
                 ru: { translation: ru }, // Russian
                 uk: { translation: uk }, // Ukrainian
                 zh: { translation: zh_cn }, // Chinese (Simplified)
