@@ -27,6 +27,7 @@ This theme offers the same checkboxes as [[SlRvb's Alternate Checkboxes]], which
 - [X] #task `X` Checked
 - [-] #task `-` Dropped
 - [>] #task `>` Forward
+- [<] #task `<` Migrated
 - [D] #task `D` Date
 - [?] #task `?` Question
 - [/] #task `/` Half Done
