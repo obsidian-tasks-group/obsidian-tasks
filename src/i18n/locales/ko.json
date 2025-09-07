@@ -191,7 +191,7 @@
     },
     "presets": {
       "buttons": {
-        "addNewPreset": ""
+        "addNewPreset": "새 프리셋 추가"
       },
       "line1": "여기서 이름 있는 지침을 정의해 여러 쿼리에서 재사용할 수 있습니다. '{{name}}' 프리셋은 Tasks 쿼리에서 '{{instruction1}}' 또는 '{{instruction2}}'로 사용할 수 있습니다.",
       "line2": "프리셋을 수정하면 열려 있는 모든 Tasks 쿼리가 자동으로 새로고침됩니다.",
