@@ -10,7 +10,7 @@ This theme offers the same checkboxes as [[ITS Theme]], but will work with other
 
 |                       Location | Link                                                                                                                                                                                                    |
 | ------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|                        GitHub: | <https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md>                                                                                                                  |
+|                       Website: | <https://publish.obsidian.md/slrvb-docs/ITS+Theme/Alternate+Checkboxes>                                                                                                                  |
 |                  Obsidian Hub: | [Alternate Checkboxes](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/CSS+Snippets/Alternate+Checkboxes+(SlRvb))                                              |
 | Test note in Tasks-Demo vault: | [Snippet - SlRvb's Alternate Checkboxes](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Styling/Snippet%20-%20SlRvb's%20Alternate%20Checkboxes.md) |
 
