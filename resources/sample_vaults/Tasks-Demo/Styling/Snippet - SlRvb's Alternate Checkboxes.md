@@ -17,6 +17,7 @@ File name of downloaded snippet: S - Checkboxes.css
 - [X] #task `X` Checked
 - [-] #task `-` Dropped
 - [>] #task `>` Forward
+- [<] #task `<` Migrated
 - [D] #task `D` Date
 - [?] #task `?` Question
 - [/] #task `/` Half Done

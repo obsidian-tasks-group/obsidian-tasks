@@ -22,7 +22,7 @@ The tasks below should look like one of the images in the [Alternate Checkboxes 
 - These are grouped by whether Tasks sees them as Done or Todo.
 - Their appearance can be modified by going to the options for the Style Settings plugin.
 
-Available task states, as of version `7cb837d73d3f39e056d0be8c98539577529c0f90` of SlRvb's Checkboxes snippet:
+Available task states, as of version `990fd3c0b9d9f1cbb17f956e3a2433c59868b82d` of SlRvb's Checkboxes snippet:
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md -->
 
@@ -31,6 +31,7 @@ Available task states, as of version `7cb837d73d3f39e056d0be8c98539577529c0f90` 
 - [X] #task `X` Checked
 - [-] #task `-` Dropped
 - [>] #task `>` Forward
+- [<] #task `<` Migrated
 - [D] #task `D` Date
 - [?] #task `?` Question
 - [/] #task `/` Half Done
