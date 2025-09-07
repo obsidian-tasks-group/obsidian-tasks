@@ -1,6 +1,6 @@
 # Snippet - SlRvb's Alternate Checkboxes
 
-<https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md>
+<https://publish.obsidian.md/slrvb-docs/ITS+Theme/Alternate+Checkboxes>
 
 This offers the same checkboxes as [[Theme - ITS Theme]].
 
