@@ -15,6 +15,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 - X.Y.Z:
   - Fix [[Recurring Tasks#Priority of Dates|priority of dates in recurring tasks]] when using [[Recurring Tasks#Remove scheduled date on recurrence|Remove scheduled date on recurrence]].
   - Update the [[Obsidian Properties#How does Tasks interpret Obsidian Properties?|table of examples]] to show how to use properties with nested data and object serialisation.
+  - Add Korean translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
 - 7.21.0:
   - Add support for [[Links]] in custom filters, sorting and grouping.
   - The Tasks API can now edit existing task lines with [[Tasks Api#`editTaskLineModal(taskLine string) Promise<string>;`|editTaskLineModal()]].
