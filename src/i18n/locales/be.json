@@ -190,6 +190,9 @@
       }
     },
     "presets": {
+      "buttons": {
+        "addNewPreset": ""
+      },
       "line1": "",
       "line2": "",
       "name": ""

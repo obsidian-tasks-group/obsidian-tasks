@@ -3,6 +3,7 @@ import type TasksPlugin from '../main';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { PresetsSettingsService, type RenamesInProgress } from '../Query/Presets/PresetsSettingsService';
 import type { PresetsMap } from '../Query/Presets/Presets';
+import { i18n } from '../i18n/i18n';
 import { type Settings, getSettings, updateSettings } from './Settings';
 
 type RefreshViewCallback = () => void;
@@ -353,7 +354,7 @@ export class PresetsSettingsUI {
      */
     private createAddNewPresetButton(containerEl: HTMLElement, settings: Settings, refreshView: RefreshViewCallback) {
         new Setting(containerEl).addButton((btn) => {
-            btn.setButtonText('Add new preset')
+            btn.setButtonText(i18n.t('settings.presets.buttons.addNewPreset'))
                 .setCta()
                 .onClick(async () => {
                     const { presets: updatedPresets } = this.presetsSettingsService.addPreset(settings.presets);
