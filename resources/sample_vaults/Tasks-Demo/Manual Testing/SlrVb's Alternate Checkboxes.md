@@ -1,8 +1,8 @@
-# SlrVb's Alternative Checkboxes
+# SlrVb's Alternate Checkboxes
 
 ## Background
 
-This page demonstrates SlRvb's [Alternate-Checkboxes](https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md) from the [ITS-Theme.](https://github.com/SlRvb/Obsidian--ITS-Theme), with the Tasks plugin installed.
+This page demonstrates SlRvb's [Alternate-Checkboxes](https://publish.obsidian.md/slrvb-docs/ITS+Theme/Alternate+Checkboxes) from the [ITS-Theme.](https://github.com/SlRvb/Obsidian--ITS-Theme), with the Tasks plugin installed.
 
 It was created to test the fix for [Tasks Issue #520: In combination with SlrVb's S-Checkbox CSS, Task Plugin breaks that style](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/520).
 
@@ -15,7 +15,7 @@ It was created to test the fix for [Tasks Issue #520: In combination with SlrVb'
 
 ### Use
 
-The tasks below should look like one of the images in the [Alternate Checkboxes documentation](https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md), depending on your display settings.
+The tasks below should look like one of the images in the [Alternate Checkboxes documentation](https://publish.obsidian.md/slrvb-docs/ITS+Theme/Alternate+Checkboxes), depending on your display settings.
 
 ## One of each task status
 
