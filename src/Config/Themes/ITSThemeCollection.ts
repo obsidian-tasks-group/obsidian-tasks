@@ -12,6 +12,7 @@ export function itsSupportedStatuses() {
         ['X', 'Checked', ' ', 'DONE'],
         ['-', 'Dropped', ' ', 'CANCELLED'],
         ['>', 'Forward', 'x', 'TODO'],
+        ['<', 'Migrated', 'x', 'TODO'],
         ['D', 'Date', 'x', 'TODO'],
         ['?', 'Question', 'x', 'TODO'],
         ['/', 'Half Done', 'x', 'IN_PROGRESS'],
