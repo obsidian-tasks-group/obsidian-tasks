@@ -7,6 +7,7 @@
 | `X` | `space` | Checked | `DONE` | Yes |
 | `-` | `space` | Dropped | `CANCELLED` | Yes |
 | `>` | `x` | Forward | `TODO` | Yes |
+| `<` | `x` | Migrated | `TODO` | Yes |
 | `D` | `x` | Date | `TODO` | Yes |
 | `?` | `x` | Question | `TODO` | Yes |
 | `/` | `x` | Half Done | `IN_PROGRESS` | Yes |
