@@ -151,6 +151,12 @@ describe('Expression', () => {
         const expressions = [
             'return 42',
             'const x = 1 + 1; return x * x',
+
+            // Presence of 'return', even if in a string, makes Tasks plugin think it does not need to add 'return':
+            "'any text that contains the word return'",
+            // So if the text 'return' appears anywhere in the expression, an explicit 'return' instruction must be supplied:
+            "return 'any text that contains the word return'",
+
             'if (1 === 1) { return "yes"; } else { return "no" }',
             `function f(value) {                 \\
     if (value === 1 ) {             \\
