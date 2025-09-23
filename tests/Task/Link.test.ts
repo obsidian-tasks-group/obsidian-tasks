@@ -38,15 +38,17 @@ describe('linkClass', () => {
         expect(link.linksTo('link_in_file_body.md')).toEqual(true);
     });
 
-    describe('getLink() configures Link.destinationPath automatically', () => {
+    describe('getLink() configures Link.destinationPath and destinationFile automatically', () => {
         it('should set the full path for a resolved link', () => {
             const link = getLink(link_in_heading, 0);
             expect(link.destinationPath).toEqual('Test Data/multiple_headings.md');
+            expect(link.destinationFile?.path).toEqual('Test Data/multiple_headings.md');
         });
 
         it('should not set the full path for a broken/unresolved link', () => {
             const link = getLink(link_is_broken, 0);
             expect(link.destinationPath).toEqual(null);
+            expect(link.destinationFile).toEqual(null);
         });
     });
 

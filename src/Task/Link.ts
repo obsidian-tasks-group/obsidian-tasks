@@ -1,5 +1,5 @@
 import type { Reference } from 'obsidian';
-import type { TasksFile } from '../Scripting/TasksFile';
+import { TasksFile } from '../Scripting/TasksFile';
 import { LinkResolver } from './LinkResolver';
 
 export class Link {
@@ -79,6 +79,23 @@ export class Link {
      */
     public get destinationPath(): string | null {
         return LinkResolver.getInstance().getDestinationPath(this.rawLink, this.pathContainingLink) ?? null;
+    }
+
+    /**
+     * Returns a TasksFile for the destination of this link, if it exists.
+     * Returns null if the link destination doesn't exist or can't be resolved.
+     *
+     * Note: The returned TasksFile will have minimal metadata since we're only
+     * constructing it from the path. Full metadata resolution can be added later.
+     */
+    public get destinationFile(): TasksFile | null {
+        const destPath = this.destinationPath;
+        if (!destPath) {
+            return null;
+        }
+
+        // Create a TasksFile with just the path - cachedMetadata defaults to {}
+        return new TasksFile(destPath);
     }
 
     /**
