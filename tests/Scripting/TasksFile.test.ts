@@ -24,6 +24,7 @@ import yaml_2_aliases from '../Obsidian/__test_data__/yaml_2_aliases.json';
 import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import link_in_yaml from '../Obsidian/__test_data__/link_in_yaml.json';
 import { LinkResolver } from '../../src/Task/LinkResolver';
+import { getFirstLinkpathDest } from '../__mocks__/obsidian';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 afterEach(() => {
@@ -325,6 +326,12 @@ describe('TasksFile - reading tags', () => {
 });
 
 describe('TasksFile - properties', () => {
+    beforeEach(() => {
+        LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, sourcePath: string) => {
+            return getFirstLinkpathDest(rawLink, sourcePath);
+        });
+    });
+
     it('should not have any properties in a file with empty frontmatter', () => {
         const tasksFile = getTasksFileFromMockData(yaml_all_property_types_empty);
 
@@ -403,6 +410,7 @@ describe('TasksFile - properties', () => {
 
         expect(link).not.toBeNull();
         expect(link?.originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
+        expect(link?.destinationPath).toEqual('Test Data/yaml_tags_is_empty.md');
     });
 
     it('should obtain a single property as an array of Links', () => {
@@ -421,7 +429,9 @@ describe('TasksFile - properties', () => {
 
         expect(links.length).toEqual(2);
         expect(links[0].originalMarkdown).toEqual('[[yaml_all_property_types_populated]]');
+        expect(links[0].destinationPath).toEqual('Test Data/yaml_all_property_types_populated.md');
         expect(links[1].originalMarkdown).toEqual('[[yaml_all_property_types_empty]]');
+        expect(links[1].destinationPath).toEqual('Test Data/yaml_all_property_types_empty.md');
     });
 });
 
