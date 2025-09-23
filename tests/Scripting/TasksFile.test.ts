@@ -395,6 +395,34 @@ describe('TasksFile - properties', () => {
         expect(tasksFile.hasProperty('capital_property')).toEqual(true);
         expect(tasksFile.property('capital_property')).toEqual('some value');
     });
+
+    it('should obtain a single property as a Link', () => {
+        const tasksFile = getTasksFileFromMockData(link_in_yaml);
+
+        const link = tasksFile.propertyAsLink('test-link');
+
+        expect(link).not.toBeNull();
+        expect(link?.originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
+    });
+
+    it('should obtain a single property as an array of Links', () => {
+        const tasksFile = getTasksFileFromMockData(link_in_yaml);
+
+        const links = tasksFile.propertyAsLinks('test-link');
+
+        expect(links.length).toEqual(1);
+        expect(links[0].originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
+    });
+
+    it('should obtain a list property as an array of Links', () => {
+        const tasksFile = getTasksFileFromMockData(yaml_all_property_types_populated);
+
+        const links = tasksFile.propertyAsLinks('sample_link_list_property');
+
+        expect(links.length).toEqual(2);
+        expect(links[0].originalMarkdown).toEqual('[[yaml_all_property_types_populated]]');
+        expect(links[1].originalMarkdown).toEqual('[[yaml_all_property_types_empty]]');
+    });
 });
 
 describe('TasksFile - identicalTo', () => {
