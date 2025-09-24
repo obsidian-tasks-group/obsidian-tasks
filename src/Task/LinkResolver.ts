@@ -34,7 +34,7 @@ export class LinkResolver {
         return this._app;
     }
 
-    public set app(value: App | null) {
+    public setApp(value: App | null) {
         this._app = value;
     }
 
