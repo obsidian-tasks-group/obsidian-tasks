@@ -16,7 +16,7 @@ export class LinkResolver {
     private static instance: LinkResolver;
 
     private getFirstLinkpathDestFn: GetFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
-    public app: App | null = null;
+    private _app: App | null = null;
 
     public setGetFirstLinkpathDestFn(getFirstLinkpathDestFn: GetFirstLinkpathDestFn) {
         this.getFirstLinkpathDestFn = getFirstLinkpathDestFn;
@@ -28,6 +28,14 @@ export class LinkResolver {
 
     public getDestinationPath(rawLink: Reference, pathContainingLink: string) {
         return this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined;
+    }
+
+    public get app(): App | null {
+        return this._app;
+    }
+
+    public set app(value: App | null) {
+        this._app = value;
     }
 
     /**
