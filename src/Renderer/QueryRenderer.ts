@@ -58,11 +58,7 @@ export class QueryRenderer {
         //  - Multi-line properties are supported, but they cannot contain
         //    continuation lines.
         const filePath = context.sourcePath;
-        const tFile = this.app.vault.getAbstractFileByPath(filePath);
-        let fileCache: CachedMetadata | null = null;
-        if (tFile && tFile instanceof TFile) {
-            fileCache = this.app.metadataCache.getFileCache(tFile);
-        }
+        const fileCache = this.getFileCache(filePath);
         const tasksFile = new TasksFile(filePath, fileCache ?? {});
 
         const queryRenderChild = new QueryRenderChild({
@@ -75,6 +71,15 @@ export class QueryRenderer {
         });
         context.addChild(queryRenderChild);
         queryRenderChild.load();
+    }
+
+    private getFileCache(filePath: string) {
+        const tFile = this.app.vault.getAbstractFileByPath(filePath);
+        let fileCache: CachedMetadata | null = null;
+        if (tFile && tFile instanceof TFile) {
+            fileCache = this.app.metadataCache.getFileCache(tFile);
+        }
+        return fileCache;
     }
 }
 
