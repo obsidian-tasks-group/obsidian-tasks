@@ -57,8 +57,8 @@ export class QueryRenderer {
         //    not yet available, so empty.
         //  - Multi-line properties are supported, but they cannot contain
         //    continuation lines.
-        const app = this.app;
         const filePath = context.sourcePath;
+        const app = this.app;
         const tFile = app.vault.getAbstractFileByPath(filePath);
         let fileCache: CachedMetadata | null = null;
         if (tFile && tFile instanceof TFile) {
