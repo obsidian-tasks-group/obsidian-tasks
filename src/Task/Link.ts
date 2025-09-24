@@ -1,6 +1,5 @@
 import type { Reference } from 'obsidian';
 import { TasksFile } from '../Scripting/TasksFile';
-import { globalGetFileCache } from '../Obsidian/CacheReader';
 import { LinkResolver } from './LinkResolver';
 
 export class Link {
@@ -95,14 +94,7 @@ export class Link {
             return null;
         }
 
-        // Use the injected function first, fall back to app if needed
-        let fileCache = LinkResolver.getInstance().getFileCache(destPath);
-
-        // If no injected function provided result, try the app (production)
-        if (!fileCache && LinkResolver.getInstance().app) {
-            fileCache = globalGetFileCache(LinkResolver.getInstance().app!, destPath);
-        }
-
+        const fileCache = LinkResolver.getInstance().getFileCache(destPath);
         return new TasksFile(destPath, fileCache ?? {});
     }
 

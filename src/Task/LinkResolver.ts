@@ -1,4 +1,4 @@
-import type { App, CachedMetadata, Reference } from 'obsidian';
+import type { CachedMetadata, Reference } from 'obsidian';
 
 export type GetFirstLinkpathDestFn = (rawLink: Reference, sourcePath: string) => string | null;
 export type GetFileCacheFn = (filePath: string) => CachedMetadata | null;
@@ -19,7 +19,6 @@ export class LinkResolver {
 
     private getFirstLinkpathDestFn: GetFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
     private getFileCacheFn: GetFileCacheFn = defaultGetFileCacheFn;
-    private _app: App | null = null;
 
     public setGetFirstLinkpathDestFn(getFirstLinkpathDestFn: GetFirstLinkpathDestFn) {
         this.getFirstLinkpathDestFn = getFirstLinkpathDestFn;
@@ -43,14 +42,6 @@ export class LinkResolver {
 
     public getFileCache(filePath: string): CachedMetadata | null {
         return this.getFileCacheFn(filePath);
-    }
-
-    public get app(): App | null {
-        return this._app;
-    }
-
-    public setApp(value: App | null) {
-        this._app = value;
     }
 
     /**
