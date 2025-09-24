@@ -83,8 +83,7 @@ export class QueryRenderer {
     }
 
     private getFileCache(filePath: string) {
-        const app = this.app;
-        return globalGetFileCache(app, filePath);
+        return globalGetFileCache(this.app, filePath);
     }
 }
 
