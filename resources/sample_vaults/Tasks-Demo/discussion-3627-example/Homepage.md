@@ -18,7 +18,7 @@ So in the example i provided, i only want Active task to be present.
 not done
 preset this_folder
 
-filter by function task.file.propertyAsLink("project")?.destinationFile?.property("status") === 'active'
+filter by function task.file.propertyAsLink("project")?.destinationFile?.property("status") === "active"
 ```
 
 Possibly slightly faster version?
@@ -28,5 +28,5 @@ not done
 preset this_folder
 
 filter by function task.file.hasProperty("project")
-filter by function task.file.propertyAsLink("project")?.destinationFile?.property("status") === 'active'
+filter by function task.file.propertyAsLink("project")?.destinationFile?.property("status") === "active"
 ```
