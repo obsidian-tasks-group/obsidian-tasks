@@ -1,8 +1,10 @@
-import type { App, Reference } from 'obsidian';
+import type { App, CachedMetadata, Reference } from 'obsidian';
 
 export type GetFirstLinkpathDestFn = (rawLink: Reference, sourcePath: string) => string | null;
+export type GetFileCacheFn = (filePath: string) => CachedMetadata | null;
 
 const defaultGetFirstLinkpathDestFn = (_rawLink: Reference, _sourcePath: string) => null;
+const defaultGetFileCacheFn = (_filePath: string) => null;
 
 /**
  * An abstraction to implement {@link Link.destinationPath}.
@@ -16,6 +18,7 @@ export class LinkResolver {
     private static instance: LinkResolver;
 
     private getFirstLinkpathDestFn: GetFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
+    private getFileCacheFn: GetFileCacheFn = defaultGetFileCacheFn;
     private _app: App | null = null;
 
     public setGetFirstLinkpathDestFn(getFirstLinkpathDestFn: GetFirstLinkpathDestFn) {
@@ -26,8 +29,20 @@ export class LinkResolver {
         this.getFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
     }
 
+    public setGetFileCacheFn(getFileCacheFn: GetFileCacheFn) {
+        this.getFileCacheFn = getFileCacheFn;
+    }
+
+    public resetGetFileCacheFn() {
+        this.getFileCacheFn = defaultGetFileCacheFn;
+    }
+
     public getDestinationPath(rawLink: Reference, pathContainingLink: string) {
         return this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined;
+    }
+
+    public getFileCache(filePath: string): CachedMetadata | null {
+        return this.getFileCacheFn(filePath);
     }
 
     public get app(): App | null {
