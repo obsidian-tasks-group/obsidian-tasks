@@ -20,3 +20,13 @@ preset this_folder
 
 filter by function task.file.propertyAsLink("project")?.destinationFile?.property("status") === 'active'
 ```
+
+Possibly slightly faster version?
+
+```tasks
+not done
+preset this_folder
+
+filter by function task.file.hasProperty("project")
+filter by function task.file.propertyAsLink("project")?.destinationFile?.property("status") === 'active'
+```
