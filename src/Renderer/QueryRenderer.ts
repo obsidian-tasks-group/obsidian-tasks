@@ -25,6 +25,15 @@ import { createAndAppendElement } from './TaskLineRenderer';
 
 type RenderParams = { tasks: Task[]; state: State };
 
+function globalGetFileCache(app: App, filePath: string) {
+    const tFile = app.vault.getAbstractFileByPath(filePath);
+    let fileCache: CachedMetadata | null = null;
+    if (tFile && tFile instanceof TFile) {
+        fileCache = app.metadataCache.getFileCache(tFile);
+    }
+    return fileCache;
+}
+
 /**
  * `QueryRenderer` is responsible for rendering queries in Markdown code blocks
  * annotated with the 'tasks' processor.
@@ -75,12 +84,7 @@ export class QueryRenderer {
 
     private getFileCache(filePath: string) {
         const app = this.app;
-        const tFile = app.vault.getAbstractFileByPath(filePath);
-        let fileCache: CachedMetadata | null = null;
-        if (tFile && tFile instanceof TFile) {
-            fileCache = app.metadataCache.getFileCache(tFile);
-        }
-        return fileCache;
+        return globalGetFileCache(app, filePath);
     }
 }
 
