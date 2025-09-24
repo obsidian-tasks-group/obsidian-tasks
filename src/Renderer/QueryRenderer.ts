@@ -20,19 +20,11 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
+import { globalGetFileCache } from '../Obsidian/CacheReader';
 import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 type RenderParams = { tasks: Task[]; state: State };
-
-function globalGetFileCache(app: App, filePath: string) {
-    const tFile = app.vault.getAbstractFileByPath(filePath);
-    let fileCache: CachedMetadata | null = null;
-    if (tFile && tFile instanceof TFile) {
-        fileCache = app.metadataCache.getFileCache(tFile);
-    }
-    return fileCache;
-}
 
 /**
  * `QueryRenderer` is responsible for rendering queries in Markdown code blocks
