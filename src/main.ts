@@ -48,6 +48,7 @@ export default class TasksPlugin extends Plugin {
             const tFile = this.app.metadataCache.getFirstLinkpathDest(linkpath, sourcePath);
             return tFile ? tFile.path : null;
         });
+        LinkResolver.getInstance().setApp(this.app);
 
         const events = new TasksEvents({ obsidianEvents: this.app.workspace });
 
