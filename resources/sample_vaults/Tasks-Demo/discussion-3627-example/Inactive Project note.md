@@ -10,4 +10,4 @@ themes:
 
 ---
 
-- [ ] Inactive task
+- [ ] #task Inactive task
