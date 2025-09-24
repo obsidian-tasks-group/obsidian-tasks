@@ -74,10 +74,11 @@ export class QueryRenderer {
     }
 
     private getFileCache(filePath: string) {
-        const tFile = this.app.vault.getAbstractFileByPath(filePath);
+        const app = this.app;
+        const tFile = app.vault.getAbstractFileByPath(filePath);
         let fileCache: CachedMetadata | null = null;
         if (tFile && tFile instanceof TFile) {
-            fileCache = this.app.metadataCache.getFileCache(tFile);
+            fileCache = app.metadataCache.getFileCache(tFile);
         }
         return fileCache;
     }
