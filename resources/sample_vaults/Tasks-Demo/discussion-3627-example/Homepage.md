@@ -1,5 +1,9 @@
 # Homepage
 
+## Tasks queries to visualise behaviour
+
+### Use 'group by' to visualise behaviour - see raw text
+
 ```tasks
 not done
 preset this_folder
@@ -9,6 +13,17 @@ group by function '2 `' + JSON.stringify(task.file.propertyAsLink("project")?.de
 group by function '3 `' + JSON.stringify(task.file.propertyAsLink("project")?.destinationFile.property("status")) + '`'
 ```
 
+### Use 'group by' to visualise behaviour - see rendered values
+
+```tasks
+not done
+preset this_folder
+
+group by function task.file.propertyAsLink("project")?.markdown ?? ''
+```
+
+## What the user requested
+
 I want to only filter tasks that:
 
 - are in active project (property status), every project has file representing it,
@@ -16,12 +31,18 @@ I want to only filter tasks that:
 
 So in the example i provided, i only want Active task to be present.
 
+## Tasks searches
+
+### One instruction
+
 ```tasks
 not done
 preset this_folder
 
 filter by function task.file.propertyAsLink("project")?.destinationFile?.property("status") === "active"
 ```
+
+### Two instructions
 
 Possibly slightly faster version?
 
