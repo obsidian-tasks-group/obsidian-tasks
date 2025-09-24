@@ -1,5 +1,6 @@
-import type { Reference } from 'obsidian';
+import type { CachedMetadata, Reference } from 'obsidian';
 import { TasksFile } from '../Scripting/TasksFile';
+import { globalGetFileCache } from '../Obsidian/CacheReader';
 import { LinkResolver } from './LinkResolver';
 
 export class Link {
@@ -95,7 +96,12 @@ export class Link {
         }
 
         // Create a TasksFile with just the path - cachedMetadata defaults to {}
-        return new TasksFile(destPath);
+        let fileCache: CachedMetadata | null = null;
+        if (LinkResolver.getInstance().app) {
+            // This is not yet configured to work in tests:
+            fileCache = globalGetFileCache(LinkResolver.getInstance().app!, destPath);
+        }
+        return new TasksFile(destPath, fileCache ?? {});
     }
 
     /**
