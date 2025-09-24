@@ -53,3 +53,17 @@ preset this_folder
 filter by function task.file.hasProperty("project")
 filter by function task.file.propertyAsLink("project")?.destinationFile?.property("status") === "active"
 ```
+
+## Dataview equivalent
+
+### Dataview - group by project
+
+```dataview
+task
+WHERE startswith(file.folder, this.file.folder)
+GROUP BY file.frontmatter.project
+```
+
+### Dataview - group by project status
+
+TODO...
