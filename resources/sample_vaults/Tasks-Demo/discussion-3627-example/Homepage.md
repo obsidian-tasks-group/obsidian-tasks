@@ -3,8 +3,8 @@ not done
 preset this_folder
 
 group by function '1 `' + JSON.stringify(task.file.property("project")) + '`'
-group by function '2 `' + JSON.stringify(task.file.propertyAsLink("project").destinationPath) + '`'
-group by function '3 `' + JSON.stringify(task.file.propertyAsLink("project").destinationFile.property("status")) + '`'
+group by function '2 `' + JSON.stringify(task.file.propertyAsLink("project")?.destinationPath) + '`'
+group by function '3 `' + JSON.stringify(task.file.propertyAsLink("project")?.destinationFile.property("status")) + '`'
 ```
 
 I want to only filter tasks that:
@@ -18,5 +18,5 @@ So in the example i provided, i only want Active task to be present.
 not done
 preset this_folder
 
-filter by function task.file.propertyAsLink("project").destinationFile.property("status") === 'active'
+filter by function task.file.propertyAsLink("project")?.destinationFile?.property("status") === 'active'
 ```
