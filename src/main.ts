@@ -20,6 +20,7 @@ import { tasksApiV1 } from './Api';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { QueryFileDefaults } from './Query/QueryFileDefaults';
 import { LinkResolver } from './Task/LinkResolver';
+import { globalGetFileCache } from './Obsidian/CacheReader';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -48,7 +49,11 @@ export default class TasksPlugin extends Plugin {
             const tFile = this.app.metadataCache.getFirstLinkpathDest(linkpath, sourcePath);
             return tFile ? tFile.path : null;
         });
-        LinkResolver.getInstance().setApp(this.app);
+
+        // Configure LinkResolver.getInstance().getFileCache():
+        LinkResolver.getInstance().setGetFileCacheFn((filePath: string) => {
+            return globalGetFileCache(this.app, filePath);
+        });
 
         const events = new TasksEvents({ obsidianEvents: this.app.workspace });
 
