@@ -55,6 +55,12 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     return el;
 }
 
+function showMenu(ev: MouseEvent, menu: StatusMenu) {
+    ev.preventDefault(); // suppress the default click behavior
+    ev.stopPropagation(); // suppress further event propagation
+    menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+}
+
 /**
  * `TaskLineRenderer` is responsible for rendering task details as HTML list items with
  * various customization options.
@@ -189,9 +195,7 @@ export class TaskLineRenderer {
 
             checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
                 const menu = new StatusMenu(StatusRegistry.getInstance(), task);
-                ev.preventDefault(); // suppress the default click behavior
-                ev.stopPropagation(); // suppress further event propagation
-                menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+                showMenu(ev, menu);
             });
             checkbox.setAttribute('title', 'Right-click for options');
         }
