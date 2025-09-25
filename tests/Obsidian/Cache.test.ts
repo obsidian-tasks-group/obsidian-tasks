@@ -29,7 +29,6 @@ import inheritance_task_mixed_children from './__test_data__/inheritance_task_mi
 import numbered_list_items_with_paren from './__test_data__/numbered_list_items_with_paren.json';
 import numbered_list_items_standard from './__test_data__/numbered_list_items_standard.json';
 import numbered_tasks_issue_3481 from './__test_data__/numbered_tasks_issue_3481.json';
-import one_task from './__test_data__/one_task.json';
 import callouts_nested_issue_2890_labelled from './__test_data__/callouts_nested_issue_2890_labelled.json';
 import callout from './__test_data__/callout.json';
 import callout_labelled from './__test_data__/callout_labelled.json';
@@ -38,6 +37,7 @@ import callouts_nested_issue_2890_unlabelled from './__test_data__/callouts_nest
 import links_everywhere from './__test_data__/links_everywhere.json';
 import { allCacheSampleData } from './AllCacheSampleData';
 import { type SimulatedFile, readTasksFromSimulatedFile } from './SimulatedFile';
+import { TestDataLoader } from './TestDataLoader';
 
 window.moment = moment;
 
@@ -106,7 +106,8 @@ afterEach(() => {
 
 describe('cache', () => {
     it('should read one task', () => {
-        const tasks = readTasksFromSimulatedFile(one_task);
+        const testData = TestDataLoader.get('one_task');
+        const tasks = readTasksFromSimulatedFile(testData);
         expect(tasks.length).toEqual(1);
         expect(tasks[0].description).toEqual('#task the only task here');
     });
