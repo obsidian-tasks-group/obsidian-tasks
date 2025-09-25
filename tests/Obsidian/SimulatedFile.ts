@@ -2,6 +2,8 @@ import type { CachedMetadata } from 'obsidian';
 import { logging } from '../../src/lib/logging';
 import { FileParser } from '../../src/Obsidian/FileParser';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
+import type { TestDataName } from './AllCacheSampleData';
+import { TestDataLoader } from './TestDataLoader';
 
 /**
  * @file This file provides functions for creating {@link Task} objects from data in `tests/Obsidian/__test_data__`.
@@ -64,6 +66,11 @@ export function readTasksFromSimulatedFile(testData: SimulatedFile) {
         errorReporter,
     );
     return fileParser.parseFileContent();
+}
+
+export function readTasksFromSimulatedFile2(filename: TestDataName) {
+    const testData = TestDataLoader.get(filename);
+    return readTasksFromSimulatedFile(testData);
 }
 
 function errorReporter() {
