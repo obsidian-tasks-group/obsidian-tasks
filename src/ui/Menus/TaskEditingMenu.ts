@@ -27,7 +27,7 @@ export async function defaultTaskSaver(originalTask: Task, newTasks: Task | Task
  * @param ev
  * @param menu
  */
-export function showMenu(ev: MouseEvent, menu: TaskEditingMenu) {
+export function showMenu(ev: MouseEvent, menu: Menu) {
     ev.preventDefault(); // suppress the default click behavior
     ev.stopPropagation(); // suppress further event propagation
     menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
