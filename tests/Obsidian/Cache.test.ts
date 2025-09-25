@@ -106,7 +106,8 @@ afterEach(() => {
 
 describe('cache', () => {
     it('should read one task', () => {
-        const testData = TestDataLoader.get('one_task');
+        const filename = 'one_task';
+        const testData = TestDataLoader.get(filename);
         const tasks = readTasksFromSimulatedFile(testData);
         expect(tasks.length).toEqual(1);
         expect(tasks[0].description).toEqual('#task the only task here');
