@@ -135,6 +135,9 @@ import type { SimulatedFile } from './SimulatedFile';
 
 ${imports.join('\n')}
 
+export type TestDataName =
+    | '${basenames.join("'\n    | '")}';
+
 /**
  * All the sample data in \`resources/sample_vaults/Tasks-Demo/Test Data\`.
  *
