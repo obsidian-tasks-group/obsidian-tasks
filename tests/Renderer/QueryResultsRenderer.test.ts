@@ -7,17 +7,13 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { State } from '../../src/Obsidian/Cache';
 import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
-import inheritance_non_task_child from '../Obsidian/__test_data__/inheritance_non_task_child.json';
-import inheritance_rendering_sample from '../Obsidian/__test_data__/inheritance_rendering_sample.json';
-import inheritance_task_2listitem_3task from '../Obsidian/__test_data__/inheritance_task_2listitem_3task.json';
-import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
-import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toMarkdown } from '../TestingTools/TestHelpers';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { mockApp } from '../__mocks__/obsidian';
+import { readTasksFromSimulatedFile2 } from '../Obsidian/SimulatedFile';
 import { mockHTMLRenderer } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -81,29 +77,29 @@ ${toMarkdown(allTasks)}
     const hideTree = 'hide tree\n';
 
     it('parent-child items hidden', async () => {
-        const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
+        const allTasks = readTasksFromSimulatedFile2('inheritance_rendering_sample');
         await verifyRenderedTasksHTML(allTasks, hideTree + 'sort by function task.lineNumber');
     });
 
     it('parent-child items', async () => {
-        const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
+        const allTasks = readTasksFromSimulatedFile2('inheritance_rendering_sample');
         await verifyRenderedTasksHTML(allTasks, showTree + 'sort by function task.lineNumber');
     });
 
     it('parent-child items reverse sorted', async () => {
-        const allTasks = readTasksFromSimulatedFile(inheritance_rendering_sample);
+        const allTasks = readTasksFromSimulatedFile2('inheritance_rendering_sample');
         await verifyRenderedTasksHTML(allTasks, showTree + 'sort by function reverse task.lineNumber');
     });
 
     it('should render tasks without their parents', async () => {
         // example chosen to match subtasks whose parents do not match the query
-        const allTasks = readTasksFromSimulatedFile(inheritance_task_2listitem_3task);
+        const allTasks = readTasksFromSimulatedFile2('inheritance_task_2listitem_3task');
         await verifyRenderedTasksHTML(allTasks, showTree + 'description includes grandchild');
     });
 
     it('should render non task check box when global filter is enabled', async () => {
         GlobalFilter.getInstance().set('#task');
-        const allTasks = readTasksFromSimulatedFile(inheritance_non_task_child);
+        const allTasks = readTasksFromSimulatedFile2('inheritance_non_task_child');
         await verifyRenderedTasksHTML(allTasks, showTree);
     });
 });
@@ -142,7 +138,7 @@ describe('QueryResultsRenderer - internal heading links', () => {
     let tasksByHeading: Record<string, Task>;
 
     beforeAll(() => {
-        const allTasks = readTasksFromSimulatedFile(internal_heading_links);
+        const allTasks = readTasksFromSimulatedFile2('internal_heading_links');
 
         tasksByHeading = allTasks.reduce((acc, task) => {
             const heading = task.taskLocation.precedingHeader ?? '';
