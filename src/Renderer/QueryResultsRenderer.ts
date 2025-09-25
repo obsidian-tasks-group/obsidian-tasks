@@ -15,6 +15,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
+import { showMenu } from '../ui/Menus/TaskEditingMenu';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
@@ -554,10 +555,7 @@ export class QueryResultsRenderer {
         /** Open a context menu on right-click.
          */
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
-            ev.preventDefault(); // suppress the default context menu
-            ev.stopPropagation(); // suppress further event propagation
-            const menu = new PostponeMenu(button, task);
-            menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+            showMenu(ev, new PostponeMenu(button, task));
         });
     }
 
