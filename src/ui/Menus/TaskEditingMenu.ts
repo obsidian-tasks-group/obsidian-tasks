@@ -22,6 +22,11 @@ export async function defaultTaskSaver(originalTask: Task, newTasks: Task | Task
     });
 }
 
+/**
+ * A helper function to ensure that menus behave correctly, not overlapping or being overlapped by other menus.
+ * @param ev
+ * @param menu
+ */
 export function showMenu(ev: MouseEvent, menu: TaskEditingMenu) {
     ev.preventDefault(); // suppress the default click behavior
     ev.stopPropagation(); // suppress further event propagation
@@ -30,6 +35,8 @@ export function showMenu(ev: MouseEvent, menu: TaskEditingMenu) {
 
 /**
  * Base class for Menus that offer editing one or more properties of a Task object.
+ *
+ * Once created, menus should be passed to {@link showMenu}.
  *
  * A {@link TaskSaver} function must be supplied, in order for any edits to be saved.
  * Derived classes should default to using {@link defaultTaskSaver}, but allow
