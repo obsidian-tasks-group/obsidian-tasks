@@ -6,30 +6,6 @@ import type { CachedMetadata } from 'obsidian';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { ListItem } from '../../src/Task/ListItem';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
-import inheritance_1parent1child from './__test_data__/inheritance_1parent1child.json';
-import inheritance_1parent1child1newroot_after_header from './__test_data__/inheritance_1parent1child1newroot_after_header.json';
-import inheritance_1parent1child1sibling_emptystring from './__test_data__/inheritance_1parent1child1sibling_emptystring.json';
-import inheritance_1parent2children from './__test_data__/inheritance_1parent2children.json';
-import inheritance_1parent2children1grandchild from './__test_data__/inheritance_1parent2children1grandchild.json';
-import inheritance_1parent2children1sibling from './__test_data__/inheritance_1parent2children1sibling.json';
-import inheritance_1parent2children2grandchildren from './__test_data__/inheritance_1parent2children2grandchildren.json';
-import inheritance_1parent2children2grandchildren1sibling from './__test_data__/inheritance_1parent2children2grandchildren1sibling.json';
-import inheritance_1parent2children2grandchildren1sibling_start_with_heading from './__test_data__/inheritance_1parent2children2grandchildren1sibling_start_with_heading.json';
-import inheritance_2roots_listitem_listitem_task from './__test_data__/inheritance_2roots_listitem_listitem_task.json';
-import inheritance_2siblings from './__test_data__/inheritance_2siblings.json';
-import inheritance_listitem_listitem_task from './__test_data__/inheritance_listitem_listitem_task.json';
-import inheritance_listitem_task from './__test_data__/inheritance_listitem_task.json';
-import inheritance_listitem_task_siblings from './__test_data__/inheritance_listitem_task_siblings.json';
-import inheritance_task_2listitem_3task from './__test_data__/inheritance_task_2listitem_3task.json';
-import inheritance_task_listitem from './__test_data__/inheritance_task_listitem.json';
-import inheritance_task_listitem_mixed_grandchildren from './__test_data__/inheritance_task_listitem_mixed_grandchildren.json';
-import inheritance_task_listitem_task from './__test_data__/inheritance_task_listitem_task.json';
-import inheritance_task_mixed_children from './__test_data__/inheritance_task_mixed_children.json';
-import callouts_nested_issue_2890_labelled from './__test_data__/callouts_nested_issue_2890_labelled.json';
-import callout from './__test_data__/callout.json';
-import callout_labelled from './__test_data__/callout_labelled.json';
-import callout_custom from './__test_data__/callout_custom.json';
-import callouts_nested_issue_2890_unlabelled from './__test_data__/callouts_nested_issue_2890_unlabelled.json';
 import { allCacheSampleData } from './AllCacheSampleData';
 import { type SimulatedFile, readTasksFromSimulatedFile, readTasksFromSimulatedFile2 } from './SimulatedFile';
 import { TestDataLoader } from './TestDataLoader';
@@ -107,7 +83,7 @@ describe('cache', () => {
     });
 
     it('should read two sibling tasks', () => {
-        const data = inheritance_2siblings;
+        const data = TestDataLoader.get('inheritance_2siblings');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task sibling 1
@@ -217,7 +193,7 @@ describe('cache', () => {
     });
 
     it('should read one parent and one child task', () => {
-        const data = inheritance_1parent1child;
+        const data = TestDataLoader.get('inheritance_1parent1child');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent
@@ -233,7 +209,7 @@ describe('cache', () => {
     });
 
     it('should read one parent and two children task', () => {
-        const data = inheritance_1parent2children;
+        const data = TestDataLoader.get('inheritance_1parent2children');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent
@@ -250,7 +226,7 @@ describe('cache', () => {
     });
 
     it('should read one parent, two children and one grandchild', () => {
-        const data = inheritance_1parent2children1grandchild;
+        const data = TestDataLoader.get('inheritance_1parent2children1grandchild');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
@@ -269,7 +245,7 @@ describe('cache', () => {
     });
 
     it('should read one parent, two children and two grandchildren', () => {
-        const data = inheritance_1parent2children2grandchildren;
+        const data = TestDataLoader.get('inheritance_1parent2children2grandchildren');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
@@ -290,7 +266,7 @@ describe('cache', () => {
     });
 
     it('should read one parent, two children, two grandchildren and one sibling', () => {
-        const data = inheritance_1parent2children2grandchildren1sibling;
+        const data = TestDataLoader.get('inheritance_1parent2children2grandchildren1sibling');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
@@ -314,7 +290,7 @@ describe('cache', () => {
     });
 
     it('should read one parent, 2 children and a sibling', () => {
-        const data = inheritance_1parent2children1sibling;
+        const data = TestDataLoader.get('inheritance_1parent2children1sibling');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent
@@ -333,7 +309,7 @@ describe('cache', () => {
     });
 
     it('should read sibling separated by empty line', () => {
-        const data = inheritance_1parent1child1sibling_emptystring;
+        const data = TestDataLoader.get('inheritance_1parent1child1sibling_emptystring');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
@@ -354,7 +330,7 @@ describe('cache', () => {
     });
 
     it('should read new root task after header', () => {
-        const data = inheritance_1parent1child1newroot_after_header;
+        const data = TestDataLoader.get('inheritance_1parent1child1newroot_after_header');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# first header
@@ -379,7 +355,7 @@ describe('cache', () => {
     });
 
     it('should read root on non-starting line', () => {
-        const data = inheritance_1parent2children2grandchildren1sibling_start_with_heading;
+        const data = TestDataLoader.get('inheritance_1parent2children2grandchildren1sibling_start_with_heading');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# Test heading
@@ -405,7 +381,7 @@ describe('cache', () => {
     });
 
     it('should read task and listItem siblings', () => {
-        const data = inheritance_listitem_task_siblings;
+        const data = TestDataLoader.get('inheritance_listitem_task_siblings');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- list item
@@ -421,7 +397,7 @@ describe('cache', () => {
     });
 
     it('should read child task and parent listItem', () => {
-        const data = inheritance_listitem_task;
+        const data = TestDataLoader.get('inheritance_listitem_task');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- parent list item
@@ -439,7 +415,7 @@ describe('cache', () => {
     });
 
     it('should read grandchild task under parent and child listItem', () => {
-        const data = inheritance_listitem_listitem_task;
+        const data = TestDataLoader.get('inheritance_listitem_listitem_task');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- parent list item
@@ -459,7 +435,7 @@ describe('cache', () => {
     });
 
     it('should read 2 roots with grandchild task under parent and child listItem', () => {
-        const data = inheritance_2roots_listitem_listitem_task;
+        const data = TestDataLoader.get('inheritance_2roots_listitem_listitem_task');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- parent list item 1
@@ -486,7 +462,7 @@ describe('cache', () => {
     });
 
     it('should read parent task and child listItem', () => {
-        const data = inheritance_task_listitem;
+        const data = TestDataLoader.get('inheritance_task_listitem');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -504,7 +480,7 @@ describe('cache', () => {
     });
 
     it('should read parent task, child listItem and grandchild task', () => {
-        const data = inheritance_task_listitem_task;
+        const data = TestDataLoader.get('inheritance_task_listitem_task');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -524,7 +500,7 @@ describe('cache', () => {
     });
 
     it('should read parent task, two child listItems and 3 grandchild tasks', () => {
-        const data = inheritance_task_2listitem_3task;
+        const data = TestDataLoader.get('inheritance_task_2listitem_3task');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -550,7 +526,7 @@ describe('cache', () => {
     });
 
     it('should read parent task with mixed children', () => {
-        const data = inheritance_task_mixed_children;
+        const data = TestDataLoader.get('inheritance_task_mixed_children');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -572,7 +548,7 @@ describe('cache', () => {
     });
 
     it('should read parent task and child list item with mixed children', () => {
-        const data = inheritance_task_listitem_mixed_grandchildren;
+        const data = TestDataLoader.get('inheritance_task_listitem_mixed_grandchildren');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -633,7 +609,7 @@ describe('cache', () => {
     });
 
     it('callout', () => {
-        const data = callout;
+        const data = TestDataLoader.get('callout');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# callout
@@ -657,7 +633,7 @@ describe('cache', () => {
     });
 
     it('callout_custom', () => {
-        const data = callout_custom;
+        const data = TestDataLoader.get('callout_custom');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# callout_custom
@@ -681,7 +657,7 @@ describe('cache', () => {
     });
 
     it('callout_labelled', () => {
-        const data = callout_labelled;
+        const data = TestDataLoader.get('callout_labelled');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# callout_labelled
@@ -705,7 +681,7 @@ describe('cache', () => {
     });
 
     it('callouts_nested_issue_2890_unlabelled', () => {
-        const data = callouts_nested_issue_2890_unlabelled;
+        const data = TestDataLoader.get('callouts_nested_issue_2890_unlabelled');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             " > [!Calendar]+
@@ -734,7 +710,7 @@ describe('cache', () => {
     });
 
     it('callouts_nested_issue_2890_labelled', () => {
-        const data = callouts_nested_issue_2890_labelled;
+        const data = TestDataLoader.get('callouts_nested_issue_2890_labelled');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             " > [!Calendar]+ MONTH
