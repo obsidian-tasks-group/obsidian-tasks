@@ -20,23 +20,19 @@ import inheritance_2siblings from './__test_data__/inheritance_2siblings.json';
 import inheritance_listitem_listitem_task from './__test_data__/inheritance_listitem_listitem_task.json';
 import inheritance_listitem_task from './__test_data__/inheritance_listitem_task.json';
 import inheritance_listitem_task_siblings from './__test_data__/inheritance_listitem_task_siblings.json';
-import inheritance_non_task_child from './__test_data__/inheritance_non_task_child.json';
 import inheritance_task_2listitem_3task from './__test_data__/inheritance_task_2listitem_3task.json';
 import inheritance_task_listitem from './__test_data__/inheritance_task_listitem.json';
 import inheritance_task_listitem_mixed_grandchildren from './__test_data__/inheritance_task_listitem_mixed_grandchildren.json';
 import inheritance_task_listitem_task from './__test_data__/inheritance_task_listitem_task.json';
 import inheritance_task_mixed_children from './__test_data__/inheritance_task_mixed_children.json';
-import numbered_list_items_with_paren from './__test_data__/numbered_list_items_with_paren.json';
-import numbered_list_items_standard from './__test_data__/numbered_list_items_standard.json';
-import numbered_tasks_issue_3481 from './__test_data__/numbered_tasks_issue_3481.json';
 import callouts_nested_issue_2890_labelled from './__test_data__/callouts_nested_issue_2890_labelled.json';
 import callout from './__test_data__/callout.json';
 import callout_labelled from './__test_data__/callout_labelled.json';
 import callout_custom from './__test_data__/callout_custom.json';
 import callouts_nested_issue_2890_unlabelled from './__test_data__/callouts_nested_issue_2890_unlabelled.json';
-import links_everywhere from './__test_data__/links_everywhere.json';
 import { allCacheSampleData } from './AllCacheSampleData';
 import { type SimulatedFile, readTasksFromSimulatedFile, readTasksFromSimulatedFile2 } from './SimulatedFile';
+import { TestDataLoader } from './TestDataLoader';
 
 window.moment = moment;
 
@@ -127,7 +123,7 @@ describe('cache', () => {
     });
 
     it('should read numbered list items with dot', () => {
-        const data = numbered_list_items_standard;
+        const data = TestDataLoader.get('numbered_list_items_standard');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# numbered_list_items_standard
@@ -154,7 +150,7 @@ describe('cache', () => {
     it('should read numbered list items with closing parenthesis', () => {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3401
         //      "Unexpected failure to create a list item from line" warning when parsing "1)" style numbered list
-        const data = numbered_list_items_with_paren;
+        const data = TestDataLoader.get('numbered_list_items_with_paren');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# numbered_list_items_with_paren
@@ -183,7 +179,7 @@ describe('cache', () => {
 
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3481
         //      "Tasks query turns single-line tasks into multi-line tasks"
-        const data = numbered_tasks_issue_3481;
+        const data = TestDataLoader.get('numbered_tasks_issue_3481');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# numbered_tasks_issue_3481
@@ -584,7 +580,7 @@ describe('cache', () => {
     it('should read non task check box when global filter is enabled', () => {
         GlobalFilter.getInstance().set('#task');
 
-        const data = inheritance_non_task_child;
+        const data = TestDataLoader.get('inheritance_non_task_child');
         const tasks = readTasksFromSimulatedFile(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "-  [ ] #task task parent
@@ -746,7 +742,7 @@ describe('cache', () => {
 
 describe('accessing links in file', function () {
     describe('explore accessing links in file "links_everywhere.md"', () => {
-        const data = links_everywhere as unknown as SimulatedFile;
+        const data = TestDataLoader.get('links_everywhere');
 
         const tasks = readTasksFromSimulatedFile(data);
         expect(tasks.length).toEqual(1);
