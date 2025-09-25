@@ -10,7 +10,7 @@ import { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
 import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
-import { TaskEditingMenu, defaultTaskSaver } from '../ui/Menus/TaskEditingMenu';
+import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
 import { splitDateText } from '../DateTime/Postponer';
 import { DateMenu } from '../ui/Menus/DateMenu';
@@ -53,12 +53,6 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     const el: HTMLElementTagNameMap[K] = document.createElement(tagName);
     parentElement.appendChild(el);
     return el;
-}
-
-function showMenu(ev: MouseEvent, menu: TaskEditingMenu) {
-    ev.preventDefault(); // suppress the default click behavior
-    ev.stopPropagation(); // suppress further event propagation
-    menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
 }
 
 /**
