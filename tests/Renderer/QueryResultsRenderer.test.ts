@@ -10,7 +10,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import inheritance_non_task_child from '../Obsidian/__test_data__/inheritance_non_task_child.json';
 import inheritance_rendering_sample from '../Obsidian/__test_data__/inheritance_rendering_sample.json';
 import inheritance_task_2listitem_3task from '../Obsidian/__test_data__/inheritance_task_2listitem_3task.json';
-import internal_heading_links_test from '../Obsidian/__test_data__/internal_heading_links.json';
+import internal_heading_links from '../Obsidian/__test_data__/internal_heading_links.json';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -142,7 +142,7 @@ describe('QueryResultsRenderer - internal heading links', () => {
     let tasksByHeading: Record<string, Task>;
 
     beforeAll(() => {
-        const allTasks = readTasksFromSimulatedFile(internal_heading_links_test);
+        const allTasks = readTasksFromSimulatedFile(internal_heading_links);
 
         tasksByHeading = allTasks.reduce((acc, task) => {
             const heading = task.taskLocation.precedingHeader ?? '';
