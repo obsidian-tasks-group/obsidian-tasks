@@ -35,9 +35,8 @@ import callout_labelled from './__test_data__/callout_labelled.json';
 import callout_custom from './__test_data__/callout_custom.json';
 import callouts_nested_issue_2890_unlabelled from './__test_data__/callouts_nested_issue_2890_unlabelled.json';
 import links_everywhere from './__test_data__/links_everywhere.json';
-import { type TestDataName, allCacheSampleData } from './AllCacheSampleData';
-import { type SimulatedFile, readTasksFromSimulatedFile } from './SimulatedFile';
-import { TestDataLoader } from './TestDataLoader';
+import { allCacheSampleData } from './AllCacheSampleData';
+import { type SimulatedFile, readTasksFromSimulatedFile, readTasksFromSimulatedFile2 } from './SimulatedFile';
 
 window.moment = moment;
 
@@ -103,11 +102,6 @@ function printRoots(listItems: ListItem[]) {
 afterEach(() => {
     GlobalFilter.getInstance().reset();
 });
-
-function readTasksFromSimulatedFile2(filename: TestDataName) {
-    const testData = TestDataLoader.get(filename);
-    return readTasksFromSimulatedFile(testData);
-}
 
 describe('cache', () => {
     it('should read one task', () => {
