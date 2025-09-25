@@ -188,6 +188,8 @@ export class TaskLineRenderer {
             });
 
             checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
+                ev.preventDefault(); // suppress the default click behavior
+                ev.stopPropagation(); // suppress further event propagation
                 const menu = new StatusMenu(StatusRegistry.getInstance(), task);
                 menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
             });
