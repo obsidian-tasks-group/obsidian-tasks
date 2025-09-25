@@ -188,9 +188,9 @@ export class TaskLineRenderer {
             });
 
             checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
+                const menu = new StatusMenu(StatusRegistry.getInstance(), task);
                 ev.preventDefault(); // suppress the default click behavior
                 ev.stopPropagation(); // suppress further event propagation
-                const menu = new StatusMenu(StatusRegistry.getInstance(), task);
                 menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
             });
             checkbox.setAttribute('title', 'Right-click for options');
