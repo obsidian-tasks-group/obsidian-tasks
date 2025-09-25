@@ -188,8 +188,7 @@ export class TaskLineRenderer {
             });
 
             checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
-                const menu = new StatusMenu(StatusRegistry.getInstance(), task);
-                showMenu(ev, menu);
+                showMenu(ev, new StatusMenu(StatusRegistry.getInstance(), task));
             });
             checkbox.setAttribute('title', 'Right-click for options');
         }
