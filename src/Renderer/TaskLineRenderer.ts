@@ -254,10 +254,7 @@ export class TaskLineRenderer {
                     });
 
                     span.addEventListener('contextmenu', (ev: MouseEvent) => {
-                        ev.preventDefault(); // suppress the default context menu
-                        ev.stopPropagation(); // suppress further event propagation
-                        const menu = new DateMenu(componentDateField, task, defaultTaskSaver);
-                        menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+                        showMenu(ev, new DateMenu(componentDateField, task, defaultTaskSaver));
                     });
                     span.setAttribute(
                         'title',
