@@ -35,7 +35,7 @@ import callout_labelled from './__test_data__/callout_labelled.json';
 import callout_custom from './__test_data__/callout_custom.json';
 import callouts_nested_issue_2890_unlabelled from './__test_data__/callouts_nested_issue_2890_unlabelled.json';
 import links_everywhere from './__test_data__/links_everywhere.json';
-import { allCacheSampleData } from './AllCacheSampleData';
+import { type TestDataName, allCacheSampleData } from './AllCacheSampleData';
 import { type SimulatedFile, readTasksFromSimulatedFile } from './SimulatedFile';
 import { TestDataLoader } from './TestDataLoader';
 
@@ -104,11 +104,15 @@ afterEach(() => {
     GlobalFilter.getInstance().reset();
 });
 
+function readTasksFromSimulatedFile2(filename: TestDataName) {
+    const testData = TestDataLoader.get(filename);
+    return readTasksFromSimulatedFile(testData);
+}
+
 describe('cache', () => {
     it('should read one task', () => {
         const filename = 'one_task';
-        const testData = TestDataLoader.get(filename);
-        const tasks = readTasksFromSimulatedFile(testData);
+        const tasks = readTasksFromSimulatedFile2(filename);
         expect(tasks.length).toEqual(1);
         expect(tasks[0].description).toEqual('#task the only task here');
     });
