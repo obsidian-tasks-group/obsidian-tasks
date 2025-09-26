@@ -851,9 +851,7 @@ describe('accessing links in file', function () {
 });
 
 describe('all mock files', () => {
-    const files: SimulatedFile[] = allCacheSampleData();
-
-    it.each(listPathAndDataRaw(files))(
+    it.each(listPathAndDataRaw(allCacheSampleData()))(
         'should create valid TasksFile for all mock files: "%s"',
         (_path: string, file: SimulatedFile) => {
             const tasksFile = getTasksFileFromMockDataRaw(file);
@@ -871,7 +869,7 @@ describe('all mock files', () => {
         },
     );
 
-    it.each(listPathAndDataRaw(files))(
+    it.each(listPathAndDataRaw(allCacheSampleData()))(
         'should be able to read tasks from all mock files: "%s"',
         (path: string, file: any) => {
             const tasks = readTasksFromSimulatedFileRaw(file);
