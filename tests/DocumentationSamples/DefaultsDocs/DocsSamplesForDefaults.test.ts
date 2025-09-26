@@ -8,6 +8,7 @@ import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
 import { TestDataLoader } from '../../Obsidian/TestDataLoader';
 import type { TestDataName } from '../../Obsidian/AllCacheSampleData';
 
+// TODO Rename extractFrontmatter2 - maybe remove extractFrontmatter
 function extractFrontmatter2(testDataName: TestDataName) {
     const data = TestDataLoader.get(testDataName);
     const queryFile = getTasksFileFromMockDataRaw(data);

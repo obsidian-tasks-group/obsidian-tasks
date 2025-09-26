@@ -4,6 +4,10 @@ import path from 'path';
 import type { SimulatedFile } from './SimulatedFile';
 import type { TestDataName } from './AllCacheSampleData';
 
+// TODO Rename this and its test to MockDataLoader
+// TODO Add jsdoc
+// TODO Do performance measurements, before and after addition of this class
+// TODO Cache the loaded data
 export class TestDataLoader {
     static get(testDataName: TestDataName): SimulatedFile {
         const filePath = this.path(testDataName);
