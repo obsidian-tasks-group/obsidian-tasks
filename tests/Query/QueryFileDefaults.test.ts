@@ -1,9 +1,15 @@
 import { getTasksFileFromMockDataRaw } from '../TestingTools/MockDataHelpers';
 
 import query_file_defaults_all_options_false from '../Obsidian/__test_data__/query_file_defaults_all_options_false.json';
-import query_file_defaults_all_options_null from '../Obsidian/__test_data__/query_file_defaults_all_options_null.json';
 import query_file_defaults_all_options_true from '../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
+import { TestDataLoader } from '../Obsidian/TestDataLoader';
+import type { TestDataName } from '../Obsidian/AllCacheSampleData';
+
+function generateQueryFileDefaultsSource(testDataName: TestDataName) {
+    const data = TestDataLoader.get(testDataName);
+    return generateQueryFileDefaultsSourceRaw(data);
+}
 
 function generateQueryFileDefaultsSourceRaw(data: any) {
     const tasksFile = getTasksFileFromMockDataRaw(data);
@@ -16,7 +22,7 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should give empty query if no relevant properties present', () => {
-        expect(generateQueryFileDefaultsSourceRaw(query_file_defaults_all_options_null)).toEqual('');
+        expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_null')).toEqual('');
     });
 
     it('should give the property names in original order', () => {
