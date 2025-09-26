@@ -86,7 +86,7 @@ export function getTasksFileFromMockData(testDataName: TestDataName) {
  *
  * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
  */
-export function listPathAndData(inputs: SimulatedFile[]): [string, SimulatedFile][] {
+export function listPathAndDataRaw(inputs: SimulatedFile[]): [string, SimulatedFile][] {
     // We use map() to extract the path, to use it as a test name in it.each()
     return inputs.map((data) => {
         return [data.filePath, data];
