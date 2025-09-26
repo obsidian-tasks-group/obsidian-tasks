@@ -14,33 +14,22 @@ import { MockDataLoader } from './MockDataLoader';
 /**
  * Retrieve a {@link TasksFile} instance from the provided mock data.
  *
- * Prefer {@link getTasksFileFromMockData}, whose parameter is type-safe.
- *
  * Example use:
  *
  * ```typescript
- * import example_kanban from '../Obsidian/__test_data__/example_kanban.json';
- *         const data = example_kanban;
- *         const tasksFile = getTasksFileFromMockData(data);
+ *         const tasksFile = getTasksFileFromMockData('example_kanban');
  * ```
  *
- * @param {any} data - Mock data containing the file information and metadata.
- *                     This will be a JSON file, read from `tests/Obsidian/__test_data__`
+ * @param {MockDataName} testDataName - The name of the test data file.
  * @return {TasksFile} An instance of {@link TasksFile} initialized with the file path and cached metadata.
  *
  * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
  */
-export function getTasksFileFromMockDataRaw(data: SimulatedFile) {
+export function getTasksFileFromMockData(testDataName: MockDataName) {
+    const data = MockDataLoader.get(testDataName);
     setCurrentCacheFile(data);
     const cachedMetadata = data.cachedMetadata;
     return new TasksFile(data.filePath, cachedMetadata);
-}
-
-// TODO - Needs jsdoc
-// TODO - Probably put it above getTasksFileFromMockDataRaw()
-export function getTasksFileFromMockData(testDataName: MockDataName) {
-    const data = MockDataLoader.get(testDataName);
-    return getTasksFileFromMockDataRaw(data);
 }
 
 /**
