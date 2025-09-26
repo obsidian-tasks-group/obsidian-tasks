@@ -6,10 +6,6 @@ import type { TestDataName } from '../Obsidian/AllCacheSampleData';
 
 function generateQueryFileDefaultsSource(testDataName: TestDataName) {
     const data = TestDataLoader.get(testDataName);
-    return generateQueryFileDefaultsSourceRaw(data);
-}
-
-function generateQueryFileDefaultsSourceRaw(data: any) {
     const tasksFile = getTasksFileFromMockDataRaw(data);
     return new QueryFileDefaults().source(tasksFile);
 }
