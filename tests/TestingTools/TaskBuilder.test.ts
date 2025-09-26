@@ -4,11 +4,11 @@
 
 import moment from 'moment';
 import type { Task } from '../../src/Task/Task';
-import example_kanban from '../Obsidian/__test_data__/example_kanban.json';
 import { ListItem } from '../../src/Task/ListItem';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { TaskBuilder } from './TaskBuilder';
+import { MockDataLoader } from './MockDataLoader';
 
 export {};
 
@@ -38,8 +38,7 @@ describe('TaskBuilder', () => {
     it('should populate CachedMetadata', () => {
         const builder = new TaskBuilder().mockData('example_kanban');
         const task = builder.build();
-        // TODO Revert to 'toBe' once TaskDataLoader caches data it has read.
-        expect(task.file.cachedMetadata).toStrictEqual(example_kanban.cachedMetadata);
+        expect(task.file.cachedMetadata).toBe(MockDataLoader.get('example_kanban').cachedMetadata);
     });
 
     it('should populate CachedMetadata in two different TaskBuilder objects simultaneously', () => {
