@@ -104,7 +104,8 @@ explain`;
     });
 
     describe('query file defaults', () => {
-        const data = MockDataLoader.get('docs_sample_for_explain_query_file_defaults');
+        const testDataName = 'docs_sample_for_explain_query_file_defaults';
+        const data = MockDataLoader.get(testDataName);
         const tasksFile = getTasksFileFromMockDataRaw(data);
 
         it('file content', () => {
