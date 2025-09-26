@@ -16,6 +16,7 @@ import type { TestDataName } from './AllCacheSampleData';
  * Represent Obsidian-specific data read from a JSON file in `tests/Obsidian/__test_data__/`
  *
  * See the related functions that uses some or all of this data:
+ * - {@link MockDataLoader}
  * - {@link readTasksFromSimulatedFile}
  * - {@link readTasksFromSimulatedFileRaw}
  * - {@link getTasksFileFromMockData}
