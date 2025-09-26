@@ -68,7 +68,7 @@ export function readTasksFromSimulatedFileRaw(testData: SimulatedFile) {
     return fileParser.parseFileContent();
 }
 
-export function readTasksFromSimulatedFile2(filename: TestDataName) {
+export function readTasksFromSimulatedFile(filename: TestDataName) {
     const testData = TestDataLoader.get(filename);
     return readTasksFromSimulatedFileRaw(testData);
 }

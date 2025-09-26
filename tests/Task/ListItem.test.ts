@@ -10,7 +10,7 @@ import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
-import { readTasksFromSimulatedFile2 } from '../Obsidian/SimulatedFile';
+import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { createChildListItem } from './ListItemHelpers';
 
@@ -213,7 +213,7 @@ describe('related items', () => {
 });
 describe('outlinks', () => {
     it('should return all links in the task line', () => {
-        const tasks = readTasksFromSimulatedFile2('links_everywhere');
+        const tasks = readTasksFromSimulatedFile('links_everywhere');
 
         expect(tasks[0].outlinks.length).toEqual(1);
         expect(tasks[0].outlinks[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
@@ -221,7 +221,7 @@ describe('outlinks', () => {
     });
 
     it('should return [] when no links in the task line', () => {
-        const tasks = readTasksFromSimulatedFile2('multi_line_task_and_list_item');
+        const tasks = readTasksFromSimulatedFile('multi_line_task_and_list_item');
         expect(tasks[0].outlinks).toEqual([]);
     });
 
@@ -230,7 +230,7 @@ describe('outlinks', () => {
             (_rawLink: Reference, _sourcePath: string) => 'Hello World.md',
         );
 
-        const tasks = readTasksFromSimulatedFile2('links_everywhere');
+        const tasks = readTasksFromSimulatedFile('links_everywhere');
 
         expect(tasks[0].outlinks.length).toEqual(1);
         expect(tasks[0].outlinks[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
