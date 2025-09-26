@@ -125,8 +125,6 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
 async function writeListOfAllTestFunctions(files) {
     const basenames = files.map((file) => getBasename(file));
 
-    const functions = basenames.map((filename) => `        ${filename},`);
-
     const content = `// DO NOT EDIT!
 // This file is machine-generated in the test vault, by convert_test_data_markdown_to_js.js.
 
