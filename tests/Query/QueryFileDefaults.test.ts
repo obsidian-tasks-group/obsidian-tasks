@@ -1,12 +1,10 @@
-import { getTasksFileFromMockDataRaw } from '../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
 import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
-import { TestDataLoader } from '../Obsidian/TestDataLoader';
 import type { TestDataName } from '../Obsidian/AllCacheSampleData';
 
 function generateQueryFileDefaultsSource(testDataName: TestDataName) {
-    const data = TestDataLoader.get(testDataName);
-    const tasksFile = getTasksFileFromMockDataRaw(data);
+    const tasksFile = getTasksFileFromMockData(testDataName);
     return new QueryFileDefaults().source(tasksFile);
 }
 
