@@ -96,7 +96,7 @@ export type MockDataName =
  * Example use:
  *
  * ```typescript
- *      const tasks: Task[] = AllTestDataNames.flatMap((testDataName) => {
+ *      const tasks: Task[] = AllMockDataNames.flatMap((testDataName) => {
  *          return readTasksFromSimulatedFile(testDataName);
  *      });
  * ```

@@ -46,11 +46,11 @@ export function getTasksFileFromMockData(testDataName: MockDataName) {
 /**
  * Transform an array of {@link SimulatedFile} objects into an array of tuples containing file paths and data.
  *
- * This function is used to prepare {@link AllTestDataNames} for use with jest's it.each().
+ * This function is used to prepare {@link AllMockDataNames} for use with jest's it.each().
  *
- *    it.each(listPathAndData(AllTestDataNames))(
+ *    it.each(listPathAndData(AllMockDataNames))(
  *         'should be able to read tasks from all mock files: "%s"',
- *         (path: string, testDataName: TestDataName) => {
+ *         (path: string, testDataName: MockDataName) => {
  *             const tasks = readTasksFromSimulatedFile(testDataName);
  *             const files_without_tasks = [
  *                 'Test Data/docs_sample_for_explain_query_file_defaults.md',
@@ -77,14 +77,14 @@ export function getTasksFileFromMockData(testDataName: MockDataName) {
  *             'yaml_tags_is_empty_list',
  *             'yaml_tags_is_empty',
  *         ]),
- *     )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, testDataName: TestDataName) => {
+ *     )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, testDataName: MockDataName) => {
  *         const tasksFile = getTasksFileFromMockData(testDataName);
  *         expect(tasksFile.frontmatter.tags).toEqual([]);
  *     });
  * ```
  *
- * @param {TestDataName[]} inputs - Array of {@link TestDataName} values.
- * @returns {[string, TestDataName][]} Array of tuples, where each tuple contains [filePath, TestDataName]
+ * @param {MockDataName[]} inputs - Array of {@link MockDataName} values.
+ * @returns {[string, MockDataName][]} Array of tuples, where each tuple contains [filePath, MockDataName]
  *
  * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
  */
