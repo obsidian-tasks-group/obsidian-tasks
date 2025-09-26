@@ -36,6 +36,11 @@ export function getTasksFileFromMockDataRaw(data: SimulatedFile) {
     return new TasksFile(data.filePath, cachedMetadata);
 }
 
+export function getTasksFileFromMockData2(testDataName: TestDataName) {
+    const data = TestDataLoader.get(testDataName);
+    return getTasksFileFromMockDataRaw(data);
+}
+
 /**
  * Transform an array of {@link SimulatedFile} objects into an array of tuples containing file paths and data.
  *
@@ -84,9 +89,4 @@ export function getTasksFileFromMockDataRaw(data: SimulatedFile) {
 export function listPathAndData(inputs: SimulatedFile[]): [string, SimulatedFile][] {
     // We use map() to extract the path, to use it as a test name in it.each()
     return inputs.map((data) => [data.filePath, data]);
-}
-
-export function getTasksFileFromMockData2(testDataName: TestDataName) {
-    const data = TestDataLoader.get(testDataName);
-    return getTasksFileFromMockDataRaw(data);
 }
