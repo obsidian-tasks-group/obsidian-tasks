@@ -4,6 +4,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
+import { getAllTags } from '../__mocks__/obsidian';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 afterEach(() => {
@@ -305,6 +306,17 @@ describe('TasksFile - reading tags', () => {
     )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, testDataName: MockDataName) => {
         const tasksFile = getTasksFileFromMockData(testDataName);
         expect(tasksFile.frontmatter.tags).toEqual([]);
+    });
+
+    it.failing('should be able to read tags for any loaded SimulatedFile', () => {
+        const file1 = getTasksFileFromMockData('yaml_tags_with_one_value_on_new_line');
+        expect(getAllTags(file1.cachedMetadata)).toEqual(['#single-value-new-line', '#task']);
+
+        const file2 = getTasksFileFromMockData('yaml_tags_with_one_value_on_single_line');
+        expect(getAllTags(file2.cachedMetadata)).toEqual(['#single-value-single-line', '#task']);
+
+        // Now see if we can again find the tags in file1
+        expect(getAllTags(file1.cachedMetadata)).toEqual(['#single-value-new-line', '#task']);
     });
 });
 
