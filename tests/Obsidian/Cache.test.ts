@@ -89,8 +89,7 @@ describe('cache', () => {
     });
 
     it('should read two sibling tasks', () => {
-        const name = 'inheritance_2siblings';
-        const { data, tasks } = getMockDataAndReadTasks(name);
+        const { data, tasks } = getMockDataAndReadTasks('inheritance_2siblings');
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task sibling 1
             - [ ] #task sibling 2
