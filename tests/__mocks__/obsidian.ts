@@ -1,5 +1,6 @@
 import type { App, CachedMetadata, Reference } from 'obsidian';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
 export {};
 
@@ -149,13 +150,13 @@ function reportInconsistentTestData(functionName: string) {
  *
  * See https://docs.obsidian.md/Reference/TypeScript+API/getAllTags
  *
- * @param cachedMetadata
+ * @param cachedMetadata - the CachedMetadata instance from a SimulatedFile that has
+ *                         already been loaded via MockDataLoader.get().
+ * @throws Error if no matching CachedMetadata is found in the MockDataLoader cache.
  */
 export function getAllTags(cachedMetadata: CachedMetadata): string[] {
-    if (cachedMetadata !== mockedFileData.cachedMetadata) {
-        reportInconsistentTestData('getAllTags');
-    }
-    return mockedFileData.getAllTags;
+    const simulatedFile = MockDataLoader.findCachedMetaData(cachedMetadata);
+    return simulatedFile.getAllTags;
 }
 
 /**
