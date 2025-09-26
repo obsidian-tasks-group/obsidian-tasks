@@ -107,7 +107,7 @@ export type MockDataName =
  * - {@link getTasksFileFromMockData}
  * - {@link listPathAndData}
  */
-export const AllTestDataNames: MockDataName[] = [
+export const AllMockDataNames: MockDataName[] = [
     'all_link_types',
     'blockquote',
     'callout',
