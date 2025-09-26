@@ -1,13 +1,11 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
-import example_kanban from '../Obsidian/__test_data__/example_kanban.json';
 import {
     getTasksFileFromMockData,
     getTasksFileFromMockDataRaw,
     listPathAndData,
 } from '../TestingTools/MockDataHelpers';
-import jason_properties from '../Obsidian/__test_data__/jason_properties.json';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { TestDataName } from '../Obsidian/AllCacheSampleData';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
@@ -404,8 +402,8 @@ describe('TasksFile - identicalTo', () => {
     });
 
     it('should check cachedMetadata', () => {
-        const lhs = getTasksFileFromMockDataRaw(example_kanban);
-        expect(lhs.identicalTo(getTasksFileFromMockDataRaw(example_kanban))).toEqual(true);
-        expect(lhs.identicalTo(getTasksFileFromMockDataRaw(jason_properties))).toEqual(false);
+        const lhs = getTasksFileFromMockData('example_kanban');
+        expect(lhs.identicalTo(getTasksFileFromMockData('example_kanban'))).toEqual(true);
+        expect(lhs.identicalTo(getTasksFileFromMockData('jason_properties'))).toEqual(false);
     });
 });
