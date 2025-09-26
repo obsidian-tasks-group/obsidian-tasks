@@ -43,20 +43,18 @@ export interface SimulatedFile {
 /**
  * Read tasks from Obsidian-specific data read from a JSON file in `tests/Obsidian/__test_data__`.
  *
- * @param {SimulatedFile} testData - Read from a JSON file in `tests/Obsidian/__test_data__`
- * @return {ParsedTasks} The parsed tasks extracted from the file content.
+ * @param {MockDataName} filename - Read from a JSON file in `tests/Obsidian/__test_data__`
+ * @return {Task[]} The parsed tasks extracted from the file content.
  *
  * Example use:
  * ```typescript
- * import numbered_list_items_with_paren from './__test_data__/numbered_list_items_with_paren.json';
- * ...
- *         const data = numbered_list_items_with_paren;
- *         const tasks = readTasksFromSimulatedFile(data);
+ *         const tasks = readTasksFromSimulatedFile('numbered_list_items_with_paren');
  * ```
  *
  * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
  */
-export function readTasksFromSimulatedFileRaw(testData: SimulatedFile) {
+export function readTasksFromSimulatedFile(filename: MockDataName) {
+    const testData = MockDataLoader.get(filename);
     const logger = logging.getLogger('testCache');
     setCurrentCacheFile(testData);
     const fileParser = new FileParser(
@@ -68,11 +66,6 @@ export function readTasksFromSimulatedFileRaw(testData: SimulatedFile) {
         errorReporter,
     );
     return fileParser.parseFileContent();
-}
-
-export function readTasksFromSimulatedFile(filename: MockDataName) {
-    const testData = MockDataLoader.get(filename);
-    return readTasksFromSimulatedFileRaw(testData);
 }
 
 function errorReporter() {
