@@ -14,7 +14,7 @@ import { TestDataLoader } from '../Obsidian/TestDataLoader';
 /**
  * Retrieve a {@link TasksFile} instance from the provided mock data.
  *
- * Prefer {@link getTasksFileFromMockData2}, whose parameter is type-safe..
+ * Prefer {@link getTasksFileFromMockData}, whose parameter is type-safe..
  *
  * Example use:
  *
@@ -36,7 +36,7 @@ export function getTasksFileFromMockDataRaw(data: SimulatedFile) {
     return new TasksFile(data.filePath, cachedMetadata);
 }
 
-export function getTasksFileFromMockData2(testDataName: TestDataName) {
+export function getTasksFileFromMockData(testDataName: TestDataName) {
     const data = TestDataLoader.get(testDataName);
     return getTasksFileFromMockDataRaw(data);
 }
