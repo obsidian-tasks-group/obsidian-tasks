@@ -8,15 +8,16 @@ publish: true
 
 ## Overview
 
-TODO This needs reviewing for the stopping importing JSON files
-
 The Tasks plugin uses data created by the Obsidian API. The Obsidian API does not run in any test framework.
 
 So we need a way to access Obsidian-generated data in our tests. This page tries to describe this mechanism.
 
 1. [resources/sample_vaults/Tasks-Demo/Test Data](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo/Test%20Data) contains representative samples Markdown files for different scenarios.
-2. The process described in [[#Test data creation sequence]] converts these files to matching JSON files in [tests/Obsidian/\_\_test_data\_\_](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__).
-3. See all the [uses of this data so far, in Tasks tests](https://github.com/search?q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+__test_data__+language%3ATypeScript&type=code&l=TypeScript).
+2. The process described in [[#Test data creation sequence]] below converts these files to matching JSON files in [tests/Obsidian/\_\_test_data\_\_](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__).
+3. In tests:
+    - use [MockDataLoader.get()](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/MockDataLoader.ts) and some related functions, to read in the saved JSON files to memory
+    - `MockDataName` in [AllCacheSampleData.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/AllCacheSampleData.ts) shows the names of all the available files, in a type-safe way.
+4. See all the [uses of this data so far, in Tasks tests](https://github.com/search?type=code&q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+%2F%28AllMockDataNames%7Cbuilder.mockData%7CgetMockDataAndReadTasks%7ClistPathAndData%7CMockDataLoader%7CMockDataName%7CreadTasksFromSimulatedFile%7CSimulatedFile%29%2F).
 
 ## Test data creation sequence
 
