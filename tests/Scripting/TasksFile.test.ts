@@ -9,7 +9,11 @@ import yaml_tags_had_value_then_was_emptied_by_obsidian from '../Obsidian/__test
 import yaml_tags_is_empty_list from '../Obsidian/__test_data__/yaml_tags_is_empty_list.json';
 import yaml_tags_is_empty from '../Obsidian/__test_data__/yaml_tags_is_empty.json';
 import example_kanban from '../Obsidian/__test_data__/example_kanban.json';
-import { getTasksFileFromMockData, getTasksFileFromMockData2, listPathAndData } from '../TestingTools/MockDataHelpers';
+import {
+    getTasksFileFromMockData2,
+    getTasksFileFromMockDataRaw,
+    listPathAndData,
+} from '../TestingTools/MockDataHelpers';
 import jason_properties from '../Obsidian/__test_data__/jason_properties.json';
 import yaml_complex_example from '../Obsidian/__test_data__/yaml_complex_example.json';
 import yaml_1_alias from '../Obsidian/__test_data__/yaml_1_alias.json';
@@ -70,8 +74,8 @@ describe('TasksFile', () => {
 
 describe('TasksFile - raw frontmatter - identicalTo', () => {
     function expectRawFrontmatterToBeIdentical(case1: any, case2: any, expectedToBeIdentical: boolean) {
-        const file1 = getTasksFileFromMockData(case1);
-        const file2 = getTasksFileFromMockData(case2);
+        const file1 = getTasksFileFromMockDataRaw(case1);
+        const file2 = getTasksFileFromMockDataRaw(case2);
         expect(file1.rawFrontmatterIdenticalTo(file2)).toEqual(expectedToBeIdentical);
         expect(file2.rawFrontmatterIdenticalTo(file1)).toEqual(expectedToBeIdentical);
     }
@@ -310,7 +314,7 @@ describe('TasksFile - reading tags', () => {
             yaml_tags_is_empty,
         ]),
     )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, data: any) => {
-        const tasksFile = getTasksFileFromMockData(data);
+        const tasksFile = getTasksFileFromMockDataRaw(data);
         expect(tasksFile.frontmatter.tags).toEqual([]);
     });
 });
@@ -405,8 +409,8 @@ describe('TasksFile - identicalTo', () => {
     });
 
     it('should check cachedMetadata', () => {
-        const lhs = getTasksFileFromMockData(example_kanban);
-        expect(lhs.identicalTo(getTasksFileFromMockData(example_kanban))).toEqual(true);
-        expect(lhs.identicalTo(getTasksFileFromMockData(jason_properties))).toEqual(false);
+        const lhs = getTasksFileFromMockDataRaw(example_kanban);
+        expect(lhs.identicalTo(getTasksFileFromMockDataRaw(example_kanban))).toEqual(true);
+        expect(lhs.identicalTo(getTasksFileFromMockDataRaw(jason_properties))).toEqual(false);
     });
 });
