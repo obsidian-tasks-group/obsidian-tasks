@@ -6,11 +6,15 @@ import type { TestDataName } from './AllCacheSampleData';
 
 export class TestDataLoader {
     static get(testDataName: TestDataName): SimulatedFile {
-        const filePath = path.resolve(__dirname, `./__test_data__/${testDataName}.json`);
+        const filePath = this.path(testDataName);
         if (!fs.existsSync(filePath)) {
             throw new Error(`Test data not found: '${testDataName}'.`);
         }
 
         return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    }
+
+    public static path(testDataName: TestDataName) {
+        return path.resolve(__dirname, `./__test_data__/${testDataName}.json`);
     }
 }
