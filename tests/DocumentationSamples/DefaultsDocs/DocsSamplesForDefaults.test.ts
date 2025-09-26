@@ -2,8 +2,6 @@ import type { Pos } from 'obsidian';
 
 import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
-import docs_sample_for_task_properties_reference from '../../Obsidian/__test_data__/docs_sample_for_task_properties_reference.json';
-import query_file_defaults_all_options_true from '../../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 import query_file_defaults_short_mode from '../../Obsidian/__test_data__/query_file_defaults_short_mode.json';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
@@ -36,20 +34,21 @@ describe('DocsSamplesForDefaults', () => {
     });
 
     it('supported-properties-full', () => {
-        verifyWithFileExtension(extractFrontmatter(query_file_defaults_all_options_true), '.yaml');
+        verifyWithFileExtension(extractFrontmatter2('query_file_defaults_all_options_true'), '.yaml');
     });
 
     it('interpret_properties', () => {
-        verifyWithFileExtension(extractFrontmatter(docs_sample_for_task_properties_reference), '.yaml');
+        verifyWithFileExtension(extractFrontmatter2('docs_sample_for_task_properties_reference'), '.yaml');
     });
 
     describe('demo-short-mode', () => {
         // Load query_file_defaults_short_mode.json
         const data = query_file_defaults_short_mode;
+        const testDataName = 'query_file_defaults_short_mode';
 
         it('yaml', () => {
             // Extract the frontmatter to a file, for docs
-            verifyWithFileExtension(extractFrontmatter(data), '.yaml');
+            verifyWithFileExtension(extractFrontmatter2(testDataName), '.yaml');
         });
 
         it('instructions', () => {
