@@ -93,10 +93,7 @@ export function listPathAndDataRaw(inputs: SimulatedFile[]): [string, SimulatedF
     });
 }
 
-export function listPathAndData(inputs: TestDataName[]): [string, SimulatedFile, TestDataName][] {
+export function listPathAndData(inputs: TestDataName[]): [string, TestDataName][] {
     // We use map() to extract the path, to use it as a test name in it.each()
-    return inputs.map((testDataName) => {
-        const data = TestDataLoader.get(testDataName);
-        return [TestDataLoader.path(testDataName), data, testDataName];
-    });
+    return inputs.map((testDataName) => [TestDataLoader.path(testDataName), testDataName]);
 }

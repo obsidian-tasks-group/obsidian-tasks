@@ -302,13 +302,10 @@ describe('TasksFile - reading tags', () => {
             'yaml_tags_is_empty_list',
             'yaml_tags_is_empty',
         ]),
-    )(
-        'should provide empty list if no tags in frontmatter: "%s"',
-        (_path: string, _data: any, testDataName: TestDataName) => {
-            const tasksFile = getTasksFileFromMockData(testDataName);
-            expect(tasksFile.frontmatter.tags).toEqual([]);
-        },
-    );
+    )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, testDataName: TestDataName) => {
+        const tasksFile = getTasksFileFromMockData(testDataName);
+        expect(tasksFile.frontmatter.tags).toEqual([]);
+    });
 });
 
 describe('TasksFile - properties', () => {
