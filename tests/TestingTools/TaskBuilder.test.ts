@@ -38,6 +38,7 @@ describe('TaskBuilder', () => {
     it('should populate CachedMetadata', () => {
         const builder = new TaskBuilder().mockData('example_kanban');
         const task = builder.build();
+        // TODO Revert to 'toBe' once TaskDataLoader caches data it has read.
         expect(task.file.cachedMetadata).toStrictEqual(example_kanban.cachedMetadata);
     });
 
