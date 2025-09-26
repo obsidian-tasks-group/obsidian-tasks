@@ -71,3 +71,13 @@ export function readTasksFromSimulatedFile(filename: MockDataName): Task[] {
 function errorReporter() {
     return;
 }
+
+/**
+ * Convenience wrapper around {@link readTasksFromSimulatedFile}, also returning the {@link SimulatedFile}.
+ * @param name
+ */
+export function getMockDataAndReadTasks(name: MockDataName) {
+    const data = MockDataLoader.get(name);
+    const tasks = readTasksFromSimulatedFile(name);
+    return { data, tasks };
+}
