@@ -21,7 +21,8 @@ afterEach(() => {
 describe('query', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const markdownTable = new MarkdownTable(['Field', 'Type', 'Example']);
-        const query_using_properties = MockDataLoader.get('query_using_properties');
+        const testDataName = 'query_using_properties';
+        const query_using_properties = MockDataLoader.get(testDataName);
         const cachedMetadata = getTasksFileFromMockDataRaw(query_using_properties).cachedMetadata;
 
         // This is getting annoying, having to do this repeatedly.
