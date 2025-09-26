@@ -38,7 +38,6 @@ describe('DocsSamplesForDefaults', () => {
     });
 
     describe('demo-short-mode', () => {
-        // Use query_file_defaults_short_mode.json
         const testDataName = 'query_file_defaults_short_mode';
 
         it('yaml', () => {
