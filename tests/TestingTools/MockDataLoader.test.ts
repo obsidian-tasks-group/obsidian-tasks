@@ -27,4 +27,12 @@ describe('MockDataLoader', () => {
         const path = MockDataLoader.markdownPath('query_using_properties');
         expect(path).toEqual('Test Data/query_using_properties.md');
     });
+
+    it.failing('should be able to locate loaded SimulatedFile from its CachedMetadata', () => {
+        const data1 = MockDataLoader.get('yaml_tags_has_multiple_values');
+        const data2 = MockDataLoader.get('yaml_tags_with_two_values_on_two_lines');
+
+        expect(MockDataLoader.findCachedMetaData(data1.cachedMetadata)).toBe(data1);
+        expect(MockDataLoader.findCachedMetaData(data2.cachedMetadata)).toBe(data2);
+    });
 });

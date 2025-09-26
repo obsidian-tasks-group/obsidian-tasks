@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
+import type { CachedMetadata } from 'obsidian';
+
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 
@@ -62,5 +64,9 @@ export class MockDataLoader {
      */
     public static markdownPath(_testDataName: MockDataName) {
         return `Test Data/${_testDataName}.md`;
+    }
+
+    public static findCachedMetaData(_cachedMetadata: CachedMetadata) {
+        return MockDataLoader.get('empty_yaml'); // temporary fixed value
     }
 }
