@@ -6,9 +6,9 @@ import type { CachedMetadata } from 'obsidian';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { ListItem } from '../../src/Task/ListItem';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { AllTestDataNames, type TestDataName } from './AllCacheSampleData';
 import { readTasksFromSimulatedFile, readTasksFromSimulatedFileRaw } from './SimulatedFile';
-import { MockDataLoader } from './MockDataLoader';
 
 window.moment = moment;
 

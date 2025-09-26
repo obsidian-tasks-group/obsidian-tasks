@@ -5,7 +5,7 @@ import { getTasksFileFromMockData, getTasksFileFromMockDataRaw } from '../../Tes
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
-import { MockDataLoader } from '../../Obsidian/MockDataLoader';
+import { MockDataLoader } from '../../TestingTools/MockDataLoader';
 import type { TestDataName } from '../../Obsidian/AllCacheSampleData';
 
 // TODO Rename extractFrontmatter2 - maybe remove extractFrontmatter

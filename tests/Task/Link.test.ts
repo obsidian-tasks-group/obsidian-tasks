@@ -7,7 +7,7 @@ import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
-import { MockDataLoader } from '../Obsidian/MockDataLoader';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
 function getLink(testDataName: TestDataName, index: number) {
     const data = MockDataLoader.get(testDataName);

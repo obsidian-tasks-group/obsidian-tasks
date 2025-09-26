@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import type { SimulatedFile } from './SimulatedFile';
-import type { TestDataName } from './AllCacheSampleData';
+import type { SimulatedFile } from '../Obsidian/SimulatedFile';
+import type { TestDataName } from '../Obsidian/AllCacheSampleData';
 
 // TODO Rename this and its test to MockDataLoader
 // TODO Add jsdoc
@@ -19,7 +19,7 @@ export class MockDataLoader {
     }
 
     public static path(testDataName: TestDataName) {
-        return path.resolve(__dirname, `./__test_data__/${testDataName}.json`);
+        return path.resolve(__dirname, `../Obsidian/__test_data__/${testDataName}.json`);
     }
 
     public static markdownPath(_testDataName: TestDataName) {

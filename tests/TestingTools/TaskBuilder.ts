@@ -14,7 +14,7 @@ import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import type { ListItem } from '../../src/Task/ListItem';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { TestDataName } from '../Obsidian/AllCacheSampleData';
-import { MockDataLoader } from '../Obsidian/MockDataLoader';
+import { MockDataLoader } from './MockDataLoader';
 
 /**
  * A fluent class for creating tasks for tests.
