@@ -14,7 +14,7 @@ import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import type { ListItem } from '../../src/Task/ListItem';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { TestDataName } from '../Obsidian/AllCacheSampleData';
-import { TestDataLoader } from '../Obsidian/TestDataLoader';
+import { MockDataLoader } from '../Obsidian/MockDataLoader';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -216,7 +216,7 @@ export class TaskBuilder {
      * @param testDataName
      */
     public mockData(testDataName?: TestDataName) {
-        this._mockData = testDataName ? TestDataLoader.get(testDataName) : undefined;
+        this._mockData = testDataName ? MockDataLoader.get(testDataName) : undefined;
         return this;
     }
 

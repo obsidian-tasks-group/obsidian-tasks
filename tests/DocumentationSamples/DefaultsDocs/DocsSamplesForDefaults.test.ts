@@ -5,12 +5,12 @@ import { getTasksFileFromMockData, getTasksFileFromMockDataRaw } from '../../Tes
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
-import { TestDataLoader } from '../../Obsidian/TestDataLoader';
+import { MockDataLoader } from '../../Obsidian/MockDataLoader';
 import type { TestDataName } from '../../Obsidian/AllCacheSampleData';
 
 // TODO Rename extractFrontmatter2 - maybe remove extractFrontmatter
 function extractFrontmatter2(testDataName: TestDataName) {
-    const data = TestDataLoader.get(testDataName);
+    const data = MockDataLoader.get(testDataName);
     const queryFile = getTasksFileFromMockDataRaw(data);
     const pos: Pos | undefined = queryFile.cachedMetadata.frontmatterPosition;
     return data.fileContents.slice(pos?.start.offset ?? 0, pos?.end.offset ?? 0);

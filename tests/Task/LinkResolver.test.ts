@@ -1,11 +1,11 @@
 import type { Reference } from 'obsidian';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { Link } from '../../src/Task/Link';
-import { TestDataLoader } from '../Obsidian/TestDataLoader';
+import { MockDataLoader } from '../Obsidian/MockDataLoader';
 
 describe('LinkResolver', () => {
     let rawLink: Reference;
-    const link_in_file_body = TestDataLoader.get('link_in_file_body');
+    const link_in_file_body = MockDataLoader.get('link_in_file_body');
 
     beforeEach(() => {
         rawLink = link_in_file_body.cachedMetadata.links![0];

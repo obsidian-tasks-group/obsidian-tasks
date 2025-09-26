@@ -9,7 +9,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockDataRaw } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
-import { TestDataLoader } from '../Obsidian/TestDataLoader';
+import { MockDataLoader } from '../Obsidian/MockDataLoader';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 beforeEach(() => {});
@@ -21,7 +21,7 @@ afterEach(() => {
 describe('query', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const markdownTable = new MarkdownTable(['Field', 'Type', 'Example']);
-        const query_using_properties = TestDataLoader.get('query_using_properties');
+        const query_using_properties = MockDataLoader.get('query_using_properties');
         const cachedMetadata = getTasksFileFromMockDataRaw(query_using_properties).cachedMetadata;
 
         // This is getting annoying, having to do this repeatedly.

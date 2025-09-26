@@ -8,7 +8,7 @@ import type { TestDataName } from './AllCacheSampleData';
 // TODO Add jsdoc
 // TODO Do performance measurements, before and after addition of this class
 // TODO Cache the loaded data
-export class TestDataLoader {
+export class MockDataLoader {
     static get(testDataName: TestDataName): SimulatedFile {
         const filePath = this.path(testDataName);
         if (!fs.existsSync(filePath)) {
