@@ -1,11 +1,7 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
-import {
-    getTasksFileFromMockData,
-    getTasksFileFromMockDataRaw,
-    listPathAndData,
-} from '../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { TestDataName } from '../Obsidian/AllCacheSampleData';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
@@ -306,10 +302,13 @@ describe('TasksFile - reading tags', () => {
             'yaml_tags_is_empty_list',
             'yaml_tags_is_empty',
         ]),
-    )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, data: any) => {
-        const tasksFile = getTasksFileFromMockDataRaw(data);
-        expect(tasksFile.frontmatter.tags).toEqual([]);
-    });
+    )(
+        'should provide empty list if no tags in frontmatter: "%s"',
+        (_path: string, _data: any, testDataName: TestDataName) => {
+            const tasksFile = getTasksFileFromMockData(testDataName);
+            expect(tasksFile.frontmatter.tags).toEqual([]);
+        },
+    );
 });
 
 describe('TasksFile - properties', () => {
