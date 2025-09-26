@@ -35,4 +35,17 @@ describe('MockDataLoader', () => {
         expect(MockDataLoader.findCachedMetaData(data1.cachedMetadata)).toBe(data1);
         expect(MockDataLoader.findCachedMetaData(data2.cachedMetadata)).toBe(data2);
     });
+
+    it('should detect CachedMetadata not previously loaded, even if it is a clone of a loaded file', () => {
+        const data1 = MockDataLoader.get('one_task');
+
+        const clonedMetadata = JSON.parse(JSON.stringify(data1.cachedMetadata));
+        expect(clonedMetadata).toStrictEqual(data1.cachedMetadata);
+        const t = () => {
+            MockDataLoader.findCachedMetaData(clonedMetadata);
+        };
+
+        expect(t).toThrow(Error);
+        expect(t).toThrowError('CachedMetadata not found in any loaded SimulatedFile');
+    });
 });
