@@ -7,9 +7,9 @@ import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../../src/Config/GlobalQuery';
 import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
 import { resetSettings } from '../../../src/Config/Settings';
-import docs_sample_for_explain_query_file_defaults from '../../Obsidian/__test_data__/docs_sample_for_explain_query_file_defaults.json';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { getTasksFileFromMockDataRaw } from '../../TestingTools/MockDataHelpers';
+import { TestDataLoader } from '../../Obsidian/TestDataLoader';
 
 window.moment = moment;
 
@@ -104,7 +104,7 @@ explain`;
     });
 
     describe('query file defaults', () => {
-        const data = docs_sample_for_explain_query_file_defaults;
+        const data = TestDataLoader.get('docs_sample_for_explain_query_file_defaults');
         const tasksFile = getTasksFileFromMockDataRaw(data);
 
         it('file content', () => {
