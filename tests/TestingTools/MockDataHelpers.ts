@@ -1,6 +1,8 @@
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
+import type { TestDataName } from '../Obsidian/AllCacheSampleData';
+import { TestDataLoader } from '../Obsidian/TestDataLoader';
 
 /**
  * @file This file provides functions for testing {@link TasksFile} from data in `tests/Obsidian/__test_data__`.
@@ -80,4 +82,9 @@ export function getTasksFileFromMockData(data: SimulatedFile) {
 export function listPathAndData(inputs: SimulatedFile[]): [string, SimulatedFile][] {
     // We use map() to extract the path, to use it as a test name in it.each()
     return inputs.map((data) => [data.filePath, data]);
+}
+
+export function getTasksFileFromMockData2(testDataName: TestDataName) {
+    const data = TestDataLoader.get(testDataName);
+    return getTasksFileFromMockData(data);
 }
