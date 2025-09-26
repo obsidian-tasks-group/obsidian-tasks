@@ -16,4 +16,9 @@ describe('TestDataLoader', () => {
         expect(path).toContain(expectedSubPath);
         expect(path.endsWith(expectedSubPath)).toBe(true);
     });
+
+    it('should provide path to the Markdown file in the test vault', () => {
+        const path = TestDataLoader.markdownPath('query_using_properties');
+        expect(path).toEqual('Test Data/query_using_properties.md');
+    });
 });

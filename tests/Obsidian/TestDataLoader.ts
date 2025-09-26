@@ -17,4 +17,8 @@ export class TestDataLoader {
     public static path(testDataName: TestDataName) {
         return path.resolve(__dirname, `./__test_data__/${testDataName}.json`);
     }
+
+    public static markdownPath(_testDataName: TestDataName) {
+        return `Test Data/${_testDataName}.md`;
+    }
 }
