@@ -19,7 +19,6 @@ import type { MockDataName } from './AllCacheSampleData';
  * See the related functions that uses some or all of this data:
  * - {@link MockDataLoader}
  * - {@link readTasksFromSimulatedFile}
- * - {@link readTasksFromSimulatedFileRaw}
  * - {@link getTasksFileFromMockData}
  * - {@link listPathAndData}
  *
