@@ -1,7 +1,7 @@
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 
-import { AllTestDataNames, type TestDataName } from '../Obsidian/AllCacheSampleData';
+import { AllTestDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
@@ -9,7 +9,7 @@ import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
-function getLink(testDataName: TestDataName, index: number) {
+function getLink(testDataName: MockDataName, index: number) {
     const data = MockDataLoader.get(testDataName);
     expect(data.cachedMetadata.links).toBeDefined();
     const rawLink = data.cachedMetadata.links![index];
@@ -315,7 +315,7 @@ describe('visualise links', () => {
         return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
     }
 
-    function visualiseLinks(outlinks: Readonly<Link[]>, testDataName: TestDataName) {
+    function visualiseLinks(outlinks: Readonly<Link[]>, testDataName: MockDataName) {
         let output = '';
 
         if (outlinks.length === 0) {

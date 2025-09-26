@@ -3,7 +3,7 @@ import { logging } from '../../src/lib/logging';
 import { FileParser } from '../../src/Obsidian/FileParser';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
-import type { TestDataName } from './AllCacheSampleData';
+import type { MockDataName } from './AllCacheSampleData';
 
 /**
  * @file This file provides functions for creating {@link Task} objects from data in `tests/Obsidian/__test_data__`.
@@ -70,7 +70,7 @@ export function readTasksFromSimulatedFileRaw(testData: SimulatedFile) {
     return fileParser.parseFileContent();
 }
 
-export function readTasksFromSimulatedFile(filename: TestDataName) {
+export function readTasksFromSimulatedFile(filename: MockDataName) {
     const testData = MockDataLoader.get(filename);
     return readTasksFromSimulatedFileRaw(testData);
 }

@@ -3,7 +3,7 @@ import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
-import type { TestDataName } from '../Obsidian/AllCacheSampleData';
+import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 afterEach(() => {
@@ -59,8 +59,8 @@ describe('TasksFile', () => {
 
 describe('TasksFile - raw frontmatter - identicalTo', () => {
     function expectRawFrontmatterToBeIdentical(
-        case1: TestDataName,
-        case2: TestDataName,
+        case1: MockDataName,
+        case2: MockDataName,
         expectedToBeIdentical: boolean,
     ) {
         const file1 = getTasksFileFromMockData(case1);
@@ -302,7 +302,7 @@ describe('TasksFile - reading tags', () => {
             'yaml_tags_is_empty_list',
             'yaml_tags_is_empty',
         ]),
-    )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, testDataName: TestDataName) => {
+    )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, testDataName: MockDataName) => {
         const tasksFile = getTasksFileFromMockData(testDataName);
         expect(tasksFile.frontmatter.tags).toEqual([]);
     });
