@@ -8,4 +8,12 @@ describe('TestDataLoader', () => {
 
         expect(readFromFile).toStrictEqual(one_task);
     });
+
+    it('should provide the path to the JSON file', () => {
+        const path = TestDataLoader.path('code_block_in_task');
+        const expectedSubPath = 'tests/Obsidian/__test_data__/code_block_in_task.json';
+
+        expect(path).toContain(expectedSubPath);
+        expect(path.endsWith(expectedSubPath)).toBe(true);
+    });
 });
