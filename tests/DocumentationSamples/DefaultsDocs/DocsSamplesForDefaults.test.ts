@@ -2,7 +2,6 @@ import type { Pos } from 'obsidian';
 
 import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
-import query_file_defaults_short_mode from '../../Obsidian/__test_data__/query_file_defaults_short_mode.json';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
@@ -42,8 +41,7 @@ describe('DocsSamplesForDefaults', () => {
     });
 
     describe('demo-short-mode', () => {
-        // Load query_file_defaults_short_mode.json
-        const data = query_file_defaults_short_mode;
+        // Use query_file_defaults_short_mode.json
         const testDataName = 'query_file_defaults_short_mode';
 
         it('yaml', () => {
@@ -53,6 +51,7 @@ describe('DocsSamplesForDefaults', () => {
 
         it('instructions', () => {
             // Create the instruction from it, for docs
+            const data = TestDataLoader.get(testDataName);
             const tasksFile = getTasksFileFromMockData(data);
             const generatedSource = new QueryFileDefaults().source(tasksFile);
             verify(generatedSource);
