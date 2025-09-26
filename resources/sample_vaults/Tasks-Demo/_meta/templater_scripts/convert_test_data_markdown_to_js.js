@@ -125,18 +125,23 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
 async function writeListOfAllTestFunctions(files) {
     const basenames = files.map((file) => getBasename(file));
 
-    const imports = basenames.map((filename) => `import ${filename} from './__test_data__/${filename}.json';`);
-    const functions = basenames.map((filename) => `        ${filename},`);
-
     const content = `// DO NOT EDIT!
 // This file is machine-generated in the test vault, by convert_test_data_markdown_to_js.js.
 
 import type { SimulatedFile } from './SimulatedFile';
 
-${imports.join('\n')}
+export type MockDataName =
+    | '${basenames.join("'\n    | '")}';
 
 /**
- * All the sample data in \`resources/sample_vaults/Tasks-Demo/Test Data\`.
+ * Names of all the sample data in \`resources/sample_vaults/Tasks-Demo/Test Data\`.
+ * Example use:
+ *
+ * \`\`\`typescript
+ *      const tasks: Task[] = AllMockDataNames.flatMap((testDataName) => {
+ *          return readTasksFromSimulatedFile(testDataName);
+ *      });
+ * \`\`\`
  *
  * Related code that uses some or all of this data:
  * - {@link SimulatedFile}
@@ -144,11 +149,9 @@ ${imports.join('\n')}
  * - {@link getTasksFileFromMockData}
  * - {@link listPathAndData}
  */
-export function allCacheSampleData(): SimulatedFile[] {
-    return [
-${functions.join('\n')}
-    ];
-}
+export const AllMockDataNames: MockDataName[] = [
+    '${basenames.join("',\n    '")}',
+];
 `;
 
     const testSourceFile = getOutputFilePath('AllCacheSampleData.ts');
