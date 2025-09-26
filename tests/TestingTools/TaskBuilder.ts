@@ -216,11 +216,7 @@ export class TaskBuilder {
      * @param testDataName
      */
     public mockData(testDataName?: TestDataName) {
-        if (testDataName) {
-            this._mockData = TestDataLoader.get(testDataName);
-        } else {
-            this._mockData = undefined;
-        }
+        this._mockData = testDataName ? TestDataLoader.get(testDataName) : undefined;
         return this;
     }
 
