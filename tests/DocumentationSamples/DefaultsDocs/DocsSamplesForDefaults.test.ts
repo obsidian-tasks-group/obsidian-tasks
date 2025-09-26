@@ -8,8 +8,7 @@ import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
 import { MockDataLoader } from '../../TestingTools/MockDataLoader';
 import type { TestDataName } from '../../Obsidian/AllCacheSampleData';
 
-// TODO Rename extractFrontmatter2 - maybe remove extractFrontmatter
-function extractFrontmatter2(testDataName: TestDataName) {
+function extractFrontmatter(testDataName: TestDataName) {
     const data = MockDataLoader.get(testDataName);
     const queryFile = getTasksFileFromMockDataRaw(data);
     const pos: Pos | undefined = queryFile.cachedMetadata.frontmatterPosition;
@@ -19,7 +18,7 @@ function extractFrontmatter2(testDataName: TestDataName) {
 describe('DocsSamplesForDefaults', () => {
     it('supported-properties-empty', () => {
         const testDataName = 'query_file_defaults_all_options_null';
-        const frontmatter = extractFrontmatter2(testDataName);
+        const frontmatter = extractFrontmatter(testDataName);
 
         // Make sure that any trailing spaces have been removed from the
         // properties in query_file_defaults_all_options_null.md, to avoid
@@ -31,11 +30,11 @@ describe('DocsSamplesForDefaults', () => {
     });
 
     it('supported-properties-full', () => {
-        verifyWithFileExtension(extractFrontmatter2('query_file_defaults_all_options_true'), '.yaml');
+        verifyWithFileExtension(extractFrontmatter('query_file_defaults_all_options_true'), '.yaml');
     });
 
     it('interpret_properties', () => {
-        verifyWithFileExtension(extractFrontmatter2('docs_sample_for_task_properties_reference'), '.yaml');
+        verifyWithFileExtension(extractFrontmatter('docs_sample_for_task_properties_reference'), '.yaml');
     });
 
     describe('demo-short-mode', () => {
@@ -44,7 +43,7 @@ describe('DocsSamplesForDefaults', () => {
 
         it('yaml', () => {
             // Extract the frontmatter to a file, for docs
-            verifyWithFileExtension(extractFrontmatter2(testDataName), '.yaml');
+            verifyWithFileExtension(extractFrontmatter(testDataName), '.yaml');
         });
 
         it('instructions', () => {
