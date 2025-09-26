@@ -1,8 +1,6 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
-import no_yaml from '../Obsidian/__test_data__/no_yaml.json';
-import empty_yaml from '../Obsidian/__test_data__/empty_yaml.json';
 import yaml_custom_number_property from '../Obsidian/__test_data__/yaml_custom_number_property.json';
 import yaml_tags_field_added_by_obsidian_but_not_populated from '../Obsidian/__test_data__/yaml_tags_field_added_by_obsidian_but_not_populated.json';
 import yaml_tags_had_value_then_was_emptied_by_obsidian from '../Obsidian/__test_data__/yaml_tags_had_value_then_was_emptied_by_obsidian.json';
@@ -15,10 +13,8 @@ import {
     listPathAndData,
 } from '../TestingTools/MockDataHelpers';
 import jason_properties from '../Obsidian/__test_data__/jason_properties.json';
-import yaml_complex_example from '../Obsidian/__test_data__/yaml_complex_example.json';
-import yaml_1_alias from '../Obsidian/__test_data__/yaml_1_alias.json';
-import yaml_2_aliases from '../Obsidian/__test_data__/yaml_2_aliases.json';
 import { LinkResolver } from '../../src/Task/LinkResolver';
+import type { TestDataName } from '../Obsidian/AllCacheSampleData';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 afterEach(() => {
@@ -73,35 +69,39 @@ describe('TasksFile', () => {
 });
 
 describe('TasksFile - raw frontmatter - identicalTo', () => {
-    function expectRawFrontmatterToBeIdentical(case1: any, case2: any, expectedToBeIdentical: boolean) {
-        const file1 = getTasksFileFromMockDataRaw(case1);
-        const file2 = getTasksFileFromMockDataRaw(case2);
+    function expectRawFrontmatterToBeIdentical(
+        case1: TestDataName,
+        case2: TestDataName,
+        expectedToBeIdentical: boolean,
+    ) {
+        const file1 = getTasksFileFromMockData(case1);
+        const file2 = getTasksFileFromMockData(case2);
         expect(file1.rawFrontmatterIdenticalTo(file2)).toEqual(expectedToBeIdentical);
         expect(file2.rawFrontmatterIdenticalTo(file1)).toEqual(expectedToBeIdentical);
     }
 
     it('should treat self as identical', () => {
-        expectRawFrontmatterToBeIdentical(no_yaml, no_yaml, true);
+        expectRawFrontmatterToBeIdentical('no_yaml', 'no_yaml', true);
     });
 
     it('should treat empty frontmatter same as no frontmatter', () => {
-        expectRawFrontmatterToBeIdentical(no_yaml, empty_yaml, true);
+        expectRawFrontmatterToBeIdentical('no_yaml', 'empty_yaml', true);
     });
 
     it('should recognise identical frontmatter - simple empty tags list', () => {
         expectRawFrontmatterToBeIdentical(
-            yaml_tags_is_empty_list,
-            yaml_tags_had_value_then_was_emptied_by_obsidian,
+            'yaml_tags_is_empty_list',
+            'yaml_tags_had_value_then_was_emptied_by_obsidian',
             true,
         );
     });
 
     it('should detect different alias values as different', () => {
-        expectRawFrontmatterToBeIdentical(yaml_1_alias, yaml_2_aliases, false);
+        expectRawFrontmatterToBeIdentical('yaml_1_alias', 'yaml_2_aliases', false);
     });
 
     it('should treat missing and populated frontmatter as different', () => {
-        expectRawFrontmatterToBeIdentical(no_yaml, yaml_complex_example, false);
+        expectRawFrontmatterToBeIdentical('no_yaml', 'yaml_complex_example', false);
     });
 });
 
