@@ -10,7 +10,7 @@ import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import { allCacheSampleData } from '../Obsidian/AllCacheSampleData';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
-import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockDataRaw } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
@@ -341,7 +341,7 @@ describe('visualise links', () => {
     it('note bodies', () => {
         let output = '';
         allCacheSampleData().forEach((file) => {
-            const tasksFile = getTasksFileFromMockData(file);
+            const tasksFile = getTasksFileFromMockDataRaw(file);
             output += visualiseLinks(tasksFile.outlinksInBody, file);
         });
         verifyMarkdown(output);
@@ -350,7 +350,7 @@ describe('visualise links', () => {
     it('properties', () => {
         let output = '';
         allCacheSampleData().forEach((file) => {
-            const tasksFile = getTasksFileFromMockData(file);
+            const tasksFile = getTasksFileFromMockDataRaw(file);
             output += visualiseLinks(tasksFile.outlinksInProperties, file);
         });
         verifyMarkdown(output);
@@ -359,7 +359,7 @@ describe('visualise links', () => {
     it('outlinks', () => {
         let output = '';
         allCacheSampleData().forEach((file) => {
-            const tasksFile = getTasksFileFromMockData(file);
+            const tasksFile = getTasksFileFromMockDataRaw(file);
             output += visualiseLinks(tasksFile.outlinks, file);
         });
         verifyMarkdown(output);

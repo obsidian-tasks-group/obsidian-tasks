@@ -1,4 +1,4 @@
-import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockDataRaw } from '../TestingTools/MockDataHelpers';
 
 import query_file_defaults_all_options_false from '../Obsidian/__test_data__/query_file_defaults_all_options_false.json';
 import query_file_defaults_all_options_null from '../Obsidian/__test_data__/query_file_defaults_all_options_null.json';
@@ -6,7 +6,7 @@ import query_file_defaults_all_options_true from '../Obsidian/__test_data__/quer
 import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
 
 function generateQueryFileDefaultsSource(data: any) {
-    const tasksFile = getTasksFileFromMockData(data);
+    const tasksFile = getTasksFileFromMockDataRaw(data);
     return new QueryFileDefaults().source(tasksFile);
 }
 

@@ -9,7 +9,7 @@ import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/Appr
 import { resetSettings } from '../../../src/Config/Settings';
 import docs_sample_for_explain_query_file_defaults from '../../Obsidian/__test_data__/docs_sample_for_explain_query_file_defaults.json';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
-import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockDataRaw } from '../../TestingTools/MockDataHelpers';
 
 window.moment = moment;
 
@@ -105,7 +105,7 @@ explain`;
 
     describe('query file defaults', () => {
         const data = docs_sample_for_explain_query_file_defaults;
-        const tasksFile = getTasksFileFromMockData(data);
+        const tasksFile = getTasksFileFromMockDataRaw(data);
 
         it('file content', () => {
             const markdown = '````text' + '\n' + data.fileContents + '````';

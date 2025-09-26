@@ -5,7 +5,7 @@ import moment from 'moment/moment';
 import type { CachedMetadata } from 'obsidian';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { ListItem } from '../../src/Task/ListItem';
-import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockDataRaw, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { allCacheSampleData } from './AllCacheSampleData';
 import { type SimulatedFile, readTasksFromSimulatedFile, readTasksFromSimulatedFile2 } from './SimulatedFile';
 import { TestDataLoader } from './TestDataLoader';
@@ -856,7 +856,7 @@ describe('all mock files', () => {
     it.each(listPathAndData(files))(
         'should create valid TasksFile for all mock files: "%s"',
         (_path: string, file: SimulatedFile) => {
-            const tasksFile = getTasksFileFromMockData(file);
+            const tasksFile = getTasksFileFromMockDataRaw(file);
 
             const frontmatter = tasksFile.frontmatter;
             expect(frontmatter).not.toBeUndefined();
