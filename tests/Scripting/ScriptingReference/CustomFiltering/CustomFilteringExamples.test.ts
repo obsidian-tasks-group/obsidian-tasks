@@ -4,8 +4,8 @@
 
 import moment from 'moment';
 import type { Task } from '../../../../src/Task/Task';
-import { allCacheSampleData } from '../../../Obsidian/AllCacheSampleData';
-import { type SimulatedFile, readTasksFromSimulatedFileRaw } from '../../../Obsidian/SimulatedFile';
+import { AllTestDataNames } from '../../../Obsidian/AllCacheSampleData';
+import { readTasksFromSimulatedFile } from '../../../Obsidian/SimulatedFile';
 import { fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
@@ -357,8 +357,8 @@ describe('file properties', () => {
 });
 
 describe('obsidian properties', () => {
-    const tasks: Task[] = allCacheSampleData().flatMap((simulatedFile) => {
-        return readTasksFromSimulatedFileRaw(simulatedFile as SimulatedFile);
+    const tasks: Task[] = AllTestDataNames.flatMap((testDataName) => {
+        return readTasksFromSimulatedFile(testDataName);
     });
 
     const testData: CustomPropertyDocsTestData[] = [
