@@ -1,7 +1,7 @@
 import type { Reference } from 'obsidian';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { Link } from '../../src/Task/Link';
-import { MockDataLoader } from '../Obsidian/MockDataLoader';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
 describe('LinkResolver', () => {
     let rawLink: Reference;

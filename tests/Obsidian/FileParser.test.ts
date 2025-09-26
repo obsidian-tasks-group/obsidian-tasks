@@ -1,5 +1,5 @@
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { readTasksFromSimulatedFile } from './SimulatedFile';
-import { MockDataLoader } from './MockDataLoader';
 
 describe('FileParser', () => {
     it('should set all non-TasksFile data in TaskLocation', () => {

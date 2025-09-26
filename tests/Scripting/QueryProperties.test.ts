@@ -9,7 +9,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockDataRaw } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
-import { MockDataLoader } from '../Obsidian/MockDataLoader';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 beforeEach(() => {});

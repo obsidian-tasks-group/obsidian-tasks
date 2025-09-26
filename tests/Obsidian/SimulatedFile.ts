@@ -2,8 +2,8 @@ import type { CachedMetadata } from 'obsidian';
 import { logging } from '../../src/lib/logging';
 import { FileParser } from '../../src/Obsidian/FileParser';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import type { TestDataName } from './AllCacheSampleData';
-import { MockDataLoader } from './MockDataLoader';
 
 /**
  * @file This file provides functions for creating {@link Task} objects from data in `tests/Obsidian/__test_data__`.

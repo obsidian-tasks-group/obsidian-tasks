@@ -2,7 +2,7 @@ import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { TestDataName } from '../Obsidian/AllCacheSampleData';
-import { MockDataLoader } from '../Obsidian/MockDataLoader';
+import { MockDataLoader } from './MockDataLoader';
 
 /**
  * @file This file provides functions for testing {@link TasksFile} from data in `tests/Obsidian/__test_data__`.

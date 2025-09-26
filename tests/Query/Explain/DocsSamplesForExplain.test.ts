@@ -9,7 +9,7 @@ import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/Appr
 import { resetSettings } from '../../../src/Config/Settings';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { getTasksFileFromMockDataRaw } from '../../TestingTools/MockDataHelpers';
-import { MockDataLoader } from '../../Obsidian/MockDataLoader';
+import { MockDataLoader } from '../../TestingTools/MockDataLoader';
 
 window.moment = moment;
 
