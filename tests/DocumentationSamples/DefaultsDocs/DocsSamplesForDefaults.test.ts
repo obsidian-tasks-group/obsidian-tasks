@@ -1,7 +1,7 @@
 import type { Pos } from 'obsidian';
 
 import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { getTasksFileFromMockData, getTasksFileFromMockDataRaw } from '../../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
@@ -10,7 +10,7 @@ import type { TestDataName } from '../../Obsidian/AllCacheSampleData';
 
 function extractFrontmatter(testDataName: TestDataName) {
     const data = MockDataLoader.get(testDataName);
-    const queryFile = getTasksFileFromMockDataRaw(data);
+    const queryFile = getTasksFileFromMockData(testDataName);
     const pos: Pos | undefined = queryFile.cachedMetadata.frontmatterPosition;
     return data.fileContents.slice(pos?.start.offset ?? 0, pos?.end.offset ?? 0);
 }
