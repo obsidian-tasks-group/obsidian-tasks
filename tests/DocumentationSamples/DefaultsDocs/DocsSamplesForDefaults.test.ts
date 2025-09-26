@@ -9,10 +9,7 @@ import { TestDataLoader } from '../../Obsidian/TestDataLoader';
 import type { TestDataName } from '../../Obsidian/AllCacheSampleData';
 
 function extractFrontmatter2(testDataName: TestDataName) {
-    return extractFrontmatter(TestDataLoader.get(testDataName));
-}
-
-function extractFrontmatter(data: any) {
+    const data = TestDataLoader.get(testDataName);
     const queryFile = getTasksFileFromMockData(data);
     const pos: Pos | undefined = queryFile.cachedMetadata.frontmatterPosition;
     return data.fileContents.slice(pos?.start.offset ?? 0, pos?.end.offset ?? 0);
