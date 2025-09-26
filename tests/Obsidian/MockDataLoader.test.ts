@@ -2,7 +2,7 @@ import { MockDataLoader } from './MockDataLoader';
 
 import one_task from './__test_data__/one_task.json';
 
-describe('TestDataLoader', () => {
+describe('MockDataLoader', () => {
     it('should return data for a known file', () => {
         const readFromFile = MockDataLoader.get('one_task');
 
