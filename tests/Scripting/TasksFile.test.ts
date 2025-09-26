@@ -1,16 +1,11 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
-import yaml_custom_number_property from '../Obsidian/__test_data__/yaml_custom_number_property.json';
-import yaml_tags_field_added_by_obsidian_but_not_populated from '../Obsidian/__test_data__/yaml_tags_field_added_by_obsidian_but_not_populated.json';
-import yaml_tags_had_value_then_was_emptied_by_obsidian from '../Obsidian/__test_data__/yaml_tags_had_value_then_was_emptied_by_obsidian.json';
-import yaml_tags_is_empty_list from '../Obsidian/__test_data__/yaml_tags_is_empty_list.json';
-import yaml_tags_is_empty from '../Obsidian/__test_data__/yaml_tags_is_empty.json';
 import example_kanban from '../Obsidian/__test_data__/example_kanban.json';
 import {
     getTasksFileFromMockData,
     getTasksFileFromMockDataRaw,
-    listPathAndDataRaw,
+    listPathAndData,
 } from '../TestingTools/MockDataHelpers';
 import jason_properties from '../Obsidian/__test_data__/jason_properties.json';
 import { LinkResolver } from '../../src/Task/LinkResolver';
@@ -306,12 +301,12 @@ describe('TasksFile - reading tags', () => {
     });
 
     it.each(
-        listPathAndDataRaw([
-            yaml_custom_number_property, // no tags value in frontmatter
-            yaml_tags_field_added_by_obsidian_but_not_populated,
-            yaml_tags_had_value_then_was_emptied_by_obsidian,
-            yaml_tags_is_empty_list,
-            yaml_tags_is_empty,
+        listPathAndData([
+            'yaml_custom_number_property', // no tags value in frontmatter
+            'yaml_tags_field_added_by_obsidian_but_not_populated',
+            'yaml_tags_had_value_then_was_emptied_by_obsidian',
+            'yaml_tags_is_empty_list',
+            'yaml_tags_is_empty',
         ]),
     )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, data: any) => {
         const tasksFile = getTasksFileFromMockDataRaw(data);
