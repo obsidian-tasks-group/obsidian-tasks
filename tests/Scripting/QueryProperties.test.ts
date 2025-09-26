@@ -6,7 +6,7 @@ import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { TasksFile } from '../../src/Scripting/TasksFile';
-import { getTasksFileFromMockDataRaw } from '../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
@@ -23,7 +23,7 @@ describe('query', () => {
         const markdownTable = new MarkdownTable(['Field', 'Type', 'Example']);
         const testDataName = 'query_using_properties';
         const query_using_properties = MockDataLoader.get(testDataName);
-        const cachedMetadata = getTasksFileFromMockDataRaw(query_using_properties).cachedMetadata;
+        const cachedMetadata = getTasksFileFromMockData(testDataName).cachedMetadata;
 
         // This is getting annoying, having to do this repeatedly.
         LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, _sourcePath: string) =>
