@@ -66,7 +66,23 @@ export class MockDataLoader {
         return `Test Data/${_testDataName}.md`;
     }
 
-    public static findCachedMetaData(_cachedMetadata: CachedMetadata) {
-        return MockDataLoader.get('empty_yaml'); // temporary fixed value
+    /**
+     * Find the {@link SimulatedFile} that contains the specified CachedMetadata.
+     *
+     * Searches through all cached {@link SimulatedFile} entries to find the one whose
+     * cachedMetadata property is identical (by reference) to the provided value.
+     *
+     * @param cachedMetadata - The CachedMetadata object to search for
+     * @returns The SimulatedFile containing the matching cachedMetadata
+     * @throws Error if no matching SimulatedFile is found in the cache
+     */
+    public static findCachedMetaData(cachedMetadata: CachedMetadata): SimulatedFile {
+        for (const simulatedFile of this.cache.values()) {
+            if (simulatedFile.cachedMetadata === cachedMetadata) {
+                return simulatedFile;
+            }
+        }
+
+        throw new Error('CachedMetadata not found in any loaded SimulatedFile');
     }
 }
