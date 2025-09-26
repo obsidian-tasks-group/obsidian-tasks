@@ -3,12 +3,12 @@ import type { Pos } from 'obsidian';
 import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
 import docs_sample_for_task_properties_reference from '../../Obsidian/__test_data__/docs_sample_for_task_properties_reference.json';
-import query_file_defaults_all_options_null from '../../Obsidian/__test_data__/query_file_defaults_all_options_null.json';
 import query_file_defaults_all_options_true from '../../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 import query_file_defaults_short_mode from '../../Obsidian/__test_data__/query_file_defaults_short_mode.json';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
+import { TestDataLoader } from '../../Obsidian/TestDataLoader';
 
 function extractFrontmatter(data: any) {
     const queryFile = getTasksFileFromMockData(data);
@@ -18,7 +18,8 @@ function extractFrontmatter(data: any) {
 
 describe('DocsSamplesForDefaults', () => {
     it('supported-properties-empty', () => {
-        const frontmatter = extractFrontmatter(query_file_defaults_all_options_null);
+        const testDataName = 'query_file_defaults_all_options_null';
+        const frontmatter = extractFrontmatter(TestDataLoader.get(testDataName));
 
         // Make sure that any trailing spaces have been removed from the
         // properties in query_file_defaults_all_options_null.md, to avoid
