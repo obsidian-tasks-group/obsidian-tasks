@@ -1,7 +1,7 @@
 import type { Pos } from 'obsidian';
 
 import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockData, getTasksFileFromMockData2 } from '../../TestingTools/MockDataHelpers';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
@@ -51,8 +51,7 @@ describe('DocsSamplesForDefaults', () => {
 
         it('instructions', () => {
             // Create the instruction from it, for docs
-            const data = TestDataLoader.get(testDataName);
-            const tasksFile = getTasksFileFromMockData(data);
+            const tasksFile = getTasksFileFromMockData2(testDataName);
             const generatedSource = new QueryFileDefaults().source(tasksFile);
             verify(generatedSource);
         });
