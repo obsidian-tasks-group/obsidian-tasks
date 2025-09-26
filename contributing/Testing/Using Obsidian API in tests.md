@@ -8,6 +8,8 @@ publish: true
 
 ## Overview
 
+TODO This needs reviewing for the stopping importing JSON files
+
 The Tasks plugin uses data created by the Obsidian API. The Obsidian API does not run in any test framework.
 
 So we need a way to access Obsidian-generated data in our tests. This page tries to describe this mechanism.
@@ -17,9 +19,9 @@ So we need a way to access Obsidian-generated data in our tests. This page tries
 3. See all the [uses of this data so far, in Tasks tests](https://github.com/search?q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+__test_data__+language%3ATypeScript&type=code&l=TypeScript).
 
 ## Test data creation sequence
-  
+
 If using this on an Obsidian version newer than the one in saved `tests/Obsidian/__test_data__/*.json`, go to Settings → Files and links → Advanced → Rebuild vault cache.
-  
+
 - Create a sample markdown file in Tasks demo vault (root/Test Data/) with the simplest content to represent your test case. Choose a meaningful file name in snake case. See example in `Test Data/one_task.md`.
   - There is a Templater template that may help with creating a new file, for single-tasks cases: `resources/sample_vaults/Tasks-Demo/_meta/templates/Test Data file.md`.
 - Open any other note in the vault, just so that Templater will run.
