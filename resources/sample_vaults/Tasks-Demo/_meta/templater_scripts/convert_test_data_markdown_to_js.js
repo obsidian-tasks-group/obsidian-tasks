@@ -136,7 +136,7 @@ import { TestDataLoader } from './TestDataLoader';
 export type TestDataName =
     | '${basenames.join("'\n    | '")}';
 
-const AllTestDataNames: TestDataName[] = [
+export const AllTestDataNames: TestDataName[] = [
     '${basenames.join("',\n    '")}',
 ];
 
