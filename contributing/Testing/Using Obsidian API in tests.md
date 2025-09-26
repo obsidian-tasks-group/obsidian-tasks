@@ -13,13 +13,16 @@ The Tasks plugin uses data created by the Obsidian API. The Obsidian API does no
 So we need a way to access Obsidian-generated data in our tests. This page tries to describe this mechanism.
 
 1. [resources/sample_vaults/Tasks-Demo/Test Data](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo/Test%20Data) contains representative samples Markdown files for different scenarios.
-2. The process described in [[#Test data creation sequence]] converts these files to matching JSON files in [tests/Obsidian/\_\_test_data\_\_](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__).
-3. See all the [uses of this data so far, in Tasks tests](https://github.com/search?q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+__test_data__+language%3ATypeScript&type=code&l=TypeScript).
+2. The process described in [[#Test data creation sequence]] below converts these files to matching JSON files in [tests/Obsidian/\_\_test_data\_\_](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__).
+3. In tests:
+    - use [MockDataLoader.get()](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/MockDataLoader.ts) and some related functions, to read in the saved JSON files to memory
+    - `MockDataName` in [AllCacheSampleData.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/AllCacheSampleData.ts) shows the names of all the available files, in a type-safe way.
+4. See all the [uses of this data so far, in Tasks tests](https://github.com/search?type=code&q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+%2F%28AllMockDataNames%7Cbuilder.mockData%7CgetMockDataAndReadTasks%7ClistPathAndData%7CMockDataLoader%7CMockDataName%7CreadTasksFromSimulatedFile%7CSimulatedFile%29%2F).
 
 ## Test data creation sequence
-  
+
 If using this on an Obsidian version newer than the one in saved `tests/Obsidian/__test_data__/*.json`, go to Settings → Files and links → Advanced → Rebuild vault cache.
-  
+
 - Create a sample markdown file in Tasks demo vault (root/Test Data/) with the simplest content to represent your test case. Choose a meaningful file name in snake case. See example in `Test Data/one_task.md`.
   - There is a Templater template that may help with creating a new file, for single-tasks cases: `resources/sample_vaults/Tasks-Demo/_meta/templates/Test Data file.md`.
 - Open any other note in the vault, just so that Templater will run.
