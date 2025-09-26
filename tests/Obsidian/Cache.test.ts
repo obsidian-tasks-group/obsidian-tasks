@@ -12,6 +12,12 @@ import { readTasksFromSimulatedFile, readTasksFromSimulatedFileRaw } from './Sim
 
 window.moment = moment;
 
+function getMockDataAndReadTasks(name: MockDataName) {
+    const data = MockDataLoader.get(name);
+    const tasks = readTasksFromSimulatedFileRaw(data);
+    return { data, tasks };
+}
+
 function testRootAndChildren(root: ListItem, children: ListItem[]) {
     expect(root.parent).toEqual(null);
 
@@ -83,8 +89,8 @@ describe('cache', () => {
     });
 
     it('should read two sibling tasks', () => {
-        const data = MockDataLoader.get('inheritance_2siblings');
-        const tasks = readTasksFromSimulatedFileRaw(data);
+        const name = 'inheritance_2siblings';
+        const { data, tasks } = getMockDataAndReadTasks(name);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task sibling 1
             - [ ] #task sibling 2
