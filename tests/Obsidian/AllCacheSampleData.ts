@@ -2,7 +2,6 @@
 // This file is machine-generated in the test vault, by convert_test_data_markdown_to_js.js.
 
 import type { SimulatedFile } from './SimulatedFile';
-import { TestDataLoader } from './TestDataLoader';
 
 export type TestDataName =
     | 'all_link_types'
@@ -196,16 +195,3 @@ export const AllTestDataNames: TestDataName[] = [
     'yaml_tags_with_two_values_on_two_lines',
     'zero_width',
 ];
-
-/**
- * All the sample data in `resources/sample_vaults/Tasks-Demo/Test Data`.
- *
- * Related code that uses some or all of this data:
- * - {@link SimulatedFile}
- * - {@link readTasksFromSimulatedFile}
- * - {@link getTasksFileFromMockData}
- * - {@link listPathAndData}
- */
-export function allCacheSampleData(): SimulatedFile[] {
-    return AllTestDataNames.map((testDataName) => TestDataLoader.get(testDataName));
-}
