@@ -16,7 +16,7 @@ import { TestDataLoader } from './TestDataLoader';
  * Represent Obsidian-specific data read from a JSON file in `tests/Obsidian/__test_data__/`
  *
  * See the related functions that uses some or all of this data:
- * - {@link readTasksFromSimulatedFile}
+ * - {@link readTasksFromSimulatedFileRaw}
  * - {@link getTasksFileFromMockData}
  * - {@link listPathAndData}
  *
@@ -54,7 +54,7 @@ export interface SimulatedFile {
  *
  * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
  */
-export function readTasksFromSimulatedFile(testData: SimulatedFile) {
+export function readTasksFromSimulatedFileRaw(testData: SimulatedFile) {
     const logger = logging.getLogger('testCache');
     setCurrentCacheFile(testData);
     const fileParser = new FileParser(
@@ -70,7 +70,7 @@ export function readTasksFromSimulatedFile(testData: SimulatedFile) {
 
 export function readTasksFromSimulatedFile2(filename: TestDataName) {
     const testData = TestDataLoader.get(filename);
-    return readTasksFromSimulatedFile(testData);
+    return readTasksFromSimulatedFileRaw(testData);
 }
 
 function errorReporter() {
