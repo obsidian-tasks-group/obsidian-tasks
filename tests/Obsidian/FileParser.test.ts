@@ -1,4 +1,4 @@
-import { readTasksFromSimulatedFile2 } from './SimulatedFile';
+import { readTasksFromSimulatedFile } from './SimulatedFile';
 import { TestDataLoader } from './TestDataLoader';
 
 describe('FileParser', () => {
@@ -7,7 +7,7 @@ describe('FileParser', () => {
         // I found that intentionally breaking the setting of _sectionIndex was
         // not caught by any other tests.
 
-        const tasks = readTasksFromSimulatedFile2('multiple_headings');
+        const tasks = readTasksFromSimulatedFile('multiple_headings');
         const locationDataExceptTasksFile = tasks.map((task) => task.taskLocation.allFieldsExceptTasksFileForTesting());
         expect(locationDataExceptTasksFile).toMatchInlineSnapshot(`
             [
@@ -54,7 +54,7 @@ describe('FileParser', () => {
         expect(data.fileContents).toContain(
             "- [ ] #task Task line 2 in 'zero_width' - indented by ZWSP + tab character",
         );
-        const tasks = readTasksFromSimulatedFile2(testDataName);
+        const tasks = readTasksFromSimulatedFile(testDataName);
         expect(tasks.length).toEqual(1);
         expect(tasks[0].description).toEqual("#task Task line 1 in 'zero_width' - indented by tab character");
     });

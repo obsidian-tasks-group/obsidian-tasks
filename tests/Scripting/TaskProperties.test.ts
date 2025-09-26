@@ -12,7 +12,7 @@ import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import { makeQueryContextWithTasks } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
-import { readTasksFromSimulatedFile2 } from '../Obsidian/SimulatedFile';
+import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest } from '../__mocks__/obsidian';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
@@ -158,7 +158,7 @@ describe('task', () => {
         // This is getting annoying, having to do this repeatedly.
         LinkResolver.getInstance().setGetFirstLinkpathDestFn(getFirstLinkpathDest);
 
-        const tasks = readTasksFromSimulatedFile2('links_everywhere');
+        const tasks = readTasksFromSimulatedFile('links_everywhere');
         verifyFieldDataFromTasksForReferenceDocs(tasks, [
             'task.outlinks',
             'task.file.outlinksInProperties',
@@ -168,7 +168,7 @@ describe('task', () => {
     });
 
     it('frontmatter properties', () => {
-        const tasks = readTasksFromSimulatedFile2('docs_sample_for_task_properties_reference');
+        const tasks = readTasksFromSimulatedFile('docs_sample_for_task_properties_reference');
         // Show just the first task:
         verifyFieldDataFromTasksForReferenceDocs(tasks.slice(0, 1), [
             "task.file.hasProperty('creation date')",
