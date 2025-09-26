@@ -1,7 +1,7 @@
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 
-import { AllTestDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
+import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
@@ -336,7 +336,7 @@ describe('visualise links', () => {
 
     it('note bodies', () => {
         let output = '';
-        AllTestDataNames.forEach((file) => {
+        AllMockDataNames.forEach((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinksInBody, file);
         });
@@ -345,7 +345,7 @@ describe('visualise links', () => {
 
     it('properties', () => {
         let output = '';
-        AllTestDataNames.forEach((file) => {
+        AllMockDataNames.forEach((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinksInProperties, file);
         });
@@ -354,7 +354,7 @@ describe('visualise links', () => {
 
     it('outlinks', () => {
         let output = '';
-        AllTestDataNames.forEach((file) => {
+        AllMockDataNames.forEach((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinks, file);
         });

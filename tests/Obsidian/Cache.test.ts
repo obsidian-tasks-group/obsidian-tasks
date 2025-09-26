@@ -7,7 +7,7 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { ListItem } from '../../src/Task/ListItem';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
-import { AllTestDataNames, type MockDataName } from './AllCacheSampleData';
+import { AllMockDataNames, type MockDataName } from './AllCacheSampleData';
 import { readTasksFromSimulatedFile, readTasksFromSimulatedFileRaw } from './SimulatedFile';
 
 window.moment = moment;
@@ -851,7 +851,7 @@ describe('accessing links in file', function () {
 });
 
 describe('all mock files', () => {
-    it.each(AllTestDataNames)(
+    it.each(AllMockDataNames)(
         'should create valid TasksFile for all mock files: "%s"',
         (testDataName: MockDataName) => {
             const tasksFile = getTasksFileFromMockData(testDataName);
@@ -869,7 +869,7 @@ describe('all mock files', () => {
         },
     );
 
-    it.each(listPathAndData(AllTestDataNames))(
+    it.each(listPathAndData(AllMockDataNames))(
         'should be able to read tasks from all mock files: "%s"',
         (path: string, testDataName: MockDataName) => {
             const tasks = readTasksFromSimulatedFile(testDataName);
