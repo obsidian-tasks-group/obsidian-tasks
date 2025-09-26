@@ -125,18 +125,20 @@ async function convertMarkdownFileToTestFunction(filePath, tp) {
 async function writeListOfAllTestFunctions(files) {
     const basenames = files.map((file) => getBasename(file));
 
-    const imports = basenames.map((filename) => `import ${filename} from './__test_data__/${filename}.json';`);
     const functions = basenames.map((filename) => `        ${filename},`);
 
     const content = `// DO NOT EDIT!
 // This file is machine-generated in the test vault, by convert_test_data_markdown_to_js.js.
 
 import type { SimulatedFile } from './SimulatedFile';
-
-${imports.join('\n')}
+import { TestDataLoader } from './TestDataLoader';
 
 export type TestDataName =
     | '${basenames.join("'\n    | '")}';
+
+const AllTestDataNames: TestDataName[] = [
+    '${basenames.join("',\n    '")}',
+];
 
 /**
  * All the sample data in \`resources/sample_vaults/Tasks-Demo/Test Data\`.
@@ -148,9 +150,7 @@ export type TestDataName =
  * - {@link listPathAndData}
  */
 export function allCacheSampleData(): SimulatedFile[] {
-    return [
-${functions.join('\n')}
-    ];
+    return AllTestDataNames.map((testDataName) => TestDataLoader.get(testDataName));
 }
 `;
 
