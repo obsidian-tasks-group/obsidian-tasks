@@ -8,7 +8,7 @@ describe('MockDataLoader', () => {
         expect(readFromFile).toStrictEqual(one_task);
     });
 
-    it.failing('should cache the results and return the same object subsequently', () => {
+    it('should cache the results and return the same object subsequently', () => {
         const copy1 = MockDataLoader.get('code_block_in_task');
         const copy2 = MockDataLoader.get('code_block_in_task');
 

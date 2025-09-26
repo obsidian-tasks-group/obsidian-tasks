@@ -7,15 +7,23 @@ import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 // TODO Rename this and its test to MockDataLoader
 // TODO Add jsdoc
 // TODO Do performance measurements, before and after addition of this class
-// TODO Cache the loaded data
 export class MockDataLoader {
+    private static cache = new Map<MockDataName, SimulatedFile>();
+
     static get(testDataName: MockDataName): SimulatedFile {
+        if (this.cache.has(testDataName)) {
+            return this.cache.get(testDataName)!;
+        }
+
         const filePath = this.path(testDataName);
         if (!fs.existsSync(filePath)) {
             throw new Error(`Test data not found: '${testDataName}'.`);
         }
 
-        return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        this.cache.set(testDataName, data);
+
+        return data;
     }
 
     public static path(testDataName: MockDataName) {
