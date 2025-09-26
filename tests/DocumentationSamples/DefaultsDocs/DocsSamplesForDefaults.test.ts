@@ -9,6 +9,11 @@ import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers'
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
 import { TestDataLoader } from '../../Obsidian/TestDataLoader';
+import type { TestDataName } from '../../Obsidian/AllCacheSampleData';
+
+function extractFrontmatter2(testDataName: TestDataName) {
+    return extractFrontmatter(TestDataLoader.get(testDataName));
+}
 
 function extractFrontmatter(data: any) {
     const queryFile = getTasksFileFromMockData(data);
@@ -19,7 +24,7 @@ function extractFrontmatter(data: any) {
 describe('DocsSamplesForDefaults', () => {
     it('supported-properties-empty', () => {
         const testDataName = 'query_file_defaults_all_options_null';
-        const frontmatter = extractFrontmatter(TestDataLoader.get(testDataName));
+        const frontmatter = extractFrontmatter2(testDataName);
 
         // Make sure that any trailing spaces have been removed from the
         // properties in query_file_defaults_all_options_null.md, to avoid
