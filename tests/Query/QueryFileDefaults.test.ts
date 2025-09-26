@@ -1,7 +1,5 @@
 import { getTasksFileFromMockDataRaw } from '../TestingTools/MockDataHelpers';
 
-import query_file_defaults_all_options_false from '../Obsidian/__test_data__/query_file_defaults_all_options_false.json';
-import query_file_defaults_all_options_true from '../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
 import { TestDataLoader } from '../Obsidian/TestDataLoader';
 import type { TestDataName } from '../Obsidian/AllCacheSampleData';
@@ -92,7 +90,7 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values false', () => {
-        expect(generateQueryFileDefaultsSourceRaw(query_file_defaults_all_options_false)).toMatchInlineSnapshot(`
+        expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_false')).toMatchInlineSnapshot(`
             "full mode
             hide tree
             hide tags
@@ -118,7 +116,7 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values true', () => {
-        expect(generateQueryFileDefaultsSourceRaw(query_file_defaults_all_options_true)).toMatchInlineSnapshot(`
+        expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_true')).toMatchInlineSnapshot(`
             "explain
             short mode
             show tree
