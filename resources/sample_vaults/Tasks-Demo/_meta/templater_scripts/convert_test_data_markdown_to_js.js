@@ -132,7 +132,7 @@ async function writeListOfAllTestFunctions(files) {
 
 import type { SimulatedFile } from './SimulatedFile';
 
-export type TestDataName =
+export type MockDataName =
     | '${basenames.join("'\n    | '")}';
 
 /**
@@ -151,7 +151,7 @@ export type TestDataName =
  * - {@link getTasksFileFromMockData}
  * - {@link listPathAndData}
  */
-export const AllTestDataNames: TestDataName[] = [
+export const AllMockDataNames: MockDataName[] = [
     '${basenames.join("',\n    '")}',
 ];
 `;
