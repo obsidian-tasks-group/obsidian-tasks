@@ -15,8 +15,9 @@ import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
 
-function getLink(data: any, index: number) {
-    const rawLink = data.cachedMetadata.links[index];
+function getLink(data: SimulatedFile, index: number) {
+    expect(data.cachedMetadata.links).toBeDefined();
+    const rawLink = data.cachedMetadata.links![index];
     const destinationPath = getFirstLinkpathDestFromData(data, rawLink);
 
     const resolver = LinkResolver.getInstance();
