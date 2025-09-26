@@ -1,10 +1,9 @@
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 
-import { type TestDataName, allCacheSampleData } from '../Obsidian/AllCacheSampleData';
-import type { SimulatedFile } from '../Obsidian/SimulatedFile';
+import { AllTestDataNames, type TestDataName } from '../Obsidian/AllCacheSampleData';
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
-import { getTasksFileFromMockDataRaw } from '../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
@@ -316,14 +315,14 @@ describe('visualise links', () => {
         return addBackticks(field.padEnd(26, ' ')) + ': ' + addBackticks(formatToRepresentType(value)) + '\n';
     }
 
-    function visualiseLinks(outlinks: Readonly<Link[]>, file: SimulatedFile) {
+    function visualiseLinks(outlinks: Readonly<Link[]>, testDataName: TestDataName) {
         let output = '';
 
         if (outlinks.length === 0) {
             return output;
         }
 
-        output += `## ${file.filePath}\n\n`;
+        output += `## ${TestDataLoader.markdownPath(testDataName)}\n\n`;
         outlinks.forEach((link) => {
             output += createRow('link.originalMarkdown', link.originalMarkdown);
             output += createRow('link.markdown', link.markdown);
@@ -337,8 +336,8 @@ describe('visualise links', () => {
 
     it('note bodies', () => {
         let output = '';
-        allCacheSampleData().forEach((file) => {
-            const tasksFile = getTasksFileFromMockDataRaw(file);
+        AllTestDataNames.forEach((file) => {
+            const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinksInBody, file);
         });
         verifyMarkdown(output);
@@ -346,8 +345,8 @@ describe('visualise links', () => {
 
     it('properties', () => {
         let output = '';
-        allCacheSampleData().forEach((file) => {
-            const tasksFile = getTasksFileFromMockDataRaw(file);
+        AllTestDataNames.forEach((file) => {
+            const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinksInProperties, file);
         });
         verifyMarkdown(output);
@@ -355,8 +354,8 @@ describe('visualise links', () => {
 
     it('outlinks', () => {
         let output = '';
-        allCacheSampleData().forEach((file) => {
-            const tasksFile = getTasksFileFromMockDataRaw(file);
+        AllTestDataNames.forEach((file) => {
+            const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinks, file);
         });
         verifyMarkdown(output);
