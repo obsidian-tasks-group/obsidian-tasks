@@ -16,7 +16,7 @@ import type { MockDataName } from '../Obsidian/AllCacheSampleData';
  *     `tests/__mocks__/obsidian.ts`.
  */
 export class MockDataLoader {
-    private static cache = new Map<MockDataName, SimulatedFile>();
+    private static readonly cache = new Map<MockDataName, SimulatedFile>();
 
     /**
      * Get test data for the specified mock data name.
