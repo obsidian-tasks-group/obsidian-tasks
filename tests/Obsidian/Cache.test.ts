@@ -5,9 +5,9 @@ import moment from 'moment/moment';
 import type { CachedMetadata } from 'obsidian';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { ListItem } from '../../src/Task/ListItem';
-import { getTasksFileFromMockDataRaw, listPathAndDataRaw } from '../TestingTools/MockDataHelpers';
-import { allCacheSampleData } from './AllCacheSampleData';
-import { type SimulatedFile, readTasksFromSimulatedFile, readTasksFromSimulatedFileRaw } from './SimulatedFile';
+import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
+import { AllTestDataNames, type TestDataName } from './AllCacheSampleData';
+import { readTasksFromSimulatedFile, readTasksFromSimulatedFileRaw } from './SimulatedFile';
 import { TestDataLoader } from './TestDataLoader';
 
 window.moment = moment;
@@ -851,10 +851,10 @@ describe('accessing links in file', function () {
 });
 
 describe('all mock files', () => {
-    it.each(listPathAndDataRaw(allCacheSampleData()))(
+    it.each(listPathAndData(AllTestDataNames))(
         'should create valid TasksFile for all mock files: "%s"',
-        (_path: string, file: SimulatedFile) => {
-            const tasksFile = getTasksFileFromMockDataRaw(file);
+        (_path: string, testDataName: TestDataName) => {
+            const tasksFile = getTasksFileFromMockData(testDataName);
 
             const frontmatter = tasksFile.frontmatter;
             expect(frontmatter).not.toBeUndefined();
@@ -869,10 +869,10 @@ describe('all mock files', () => {
         },
     );
 
-    it.each(listPathAndDataRaw(allCacheSampleData()))(
+    it.each(listPathAndData(AllTestDataNames))(
         'should be able to read tasks from all mock files: "%s"',
-        (path: string, file: any) => {
-            const tasks = readTasksFromSimulatedFileRaw(file);
+        (path: string, testDataName: TestDataName) => {
+            const tasks = readTasksFromSimulatedFile(testDataName);
             const files_without_tasks = [
                 'Test Data/docs_sample_for_explain_query_file_defaults.md',
                 'Test Data/non_tasks.md',
