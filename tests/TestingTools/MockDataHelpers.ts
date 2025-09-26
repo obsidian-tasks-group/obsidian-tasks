@@ -14,7 +14,7 @@ import { TestDataLoader } from '../Obsidian/TestDataLoader';
 /**
  * Retrieve a {@link TasksFile} instance from the provided mock data.
  *
- * Prefer {@link getTasksFileFromMockData}, whose parameter is type-safe..
+ * Prefer {@link getTasksFileFromMockData}, whose parameter is type-safe.
  *
  * Example use:
  *
