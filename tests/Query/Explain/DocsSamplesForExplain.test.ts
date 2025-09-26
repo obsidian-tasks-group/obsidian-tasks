@@ -8,7 +8,7 @@ import { GlobalQuery } from '../../../src/Config/GlobalQuery';
 import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
 import { resetSettings } from '../../../src/Config/Settings';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
-import { getTasksFileFromMockDataRaw } from '../../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
 import { MockDataLoader } from '../../TestingTools/MockDataLoader';
 
 window.moment = moment;
@@ -106,7 +106,7 @@ explain`;
     describe('query file defaults', () => {
         const testDataName = 'docs_sample_for_explain_query_file_defaults';
         const data = MockDataLoader.get(testDataName);
-        const tasksFile = getTasksFileFromMockDataRaw(data);
+        const tasksFile = getTasksFileFromMockData(testDataName);
 
         it('file content', () => {
             const markdown = '````text' + '\n' + data.fileContents + '````';
