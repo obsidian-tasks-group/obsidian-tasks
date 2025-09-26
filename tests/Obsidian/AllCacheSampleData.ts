@@ -92,6 +92,22 @@ export type TestDataName =
     | 'yaml_tags_with_two_values_on_two_lines'
     | 'zero_width';
 
+/**
+ * Names of all the sample data in `resources/sample_vaults/Tasks-Demo/Test Data`.
+ * Example use:
+ *
+ * ```typescript
+ *      const tasks: Task[] = AllTestDataNames.flatMap((testDataName) => {
+ *          return readTasksFromSimulatedFile(testDataName);
+ *      });
+ * ```
+ *
+ * Related code that uses some or all of this data:
+ * - {@link SimulatedFile}
+ * - {@link readTasksFromSimulatedFile}
+ * - {@link getTasksFileFromMockData}
+ * - {@link listPathAndData}
+ */
 export const AllTestDataNames: TestDataName[] = [
     'all_link_types',
     'blockquote',
