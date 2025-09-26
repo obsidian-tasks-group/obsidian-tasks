@@ -5,7 +5,7 @@ import moment from 'moment/moment';
 import type { CachedMetadata } from 'obsidian';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { ListItem } from '../../src/Task/ListItem';
-import { getTasksFileFromMockDataRaw, listPathAndData } from '../TestingTools/MockDataHelpers';
+import { getTasksFileFromMockDataRaw, listPathAndDataRaw } from '../TestingTools/MockDataHelpers';
 import { allCacheSampleData } from './AllCacheSampleData';
 import { type SimulatedFile, readTasksFromSimulatedFile, readTasksFromSimulatedFileRaw } from './SimulatedFile';
 import { TestDataLoader } from './TestDataLoader';
@@ -853,7 +853,7 @@ describe('accessing links in file', function () {
 describe('all mock files', () => {
     const files: SimulatedFile[] = allCacheSampleData();
 
-    it.each(listPathAndData(files))(
+    it.each(listPathAndDataRaw(files))(
         'should create valid TasksFile for all mock files: "%s"',
         (_path: string, file: SimulatedFile) => {
             const tasksFile = getTasksFileFromMockDataRaw(file);
@@ -871,7 +871,7 @@ describe('all mock files', () => {
         },
     );
 
-    it.each(listPathAndData(files))(
+    it.each(listPathAndDataRaw(files))(
         'should be able to read tasks from all mock files: "%s"',
         (path: string, file: any) => {
             const tasks = readTasksFromSimulatedFileRaw(file);
