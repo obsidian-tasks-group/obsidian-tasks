@@ -13,7 +13,7 @@ import { Priority } from '../../src/Task/Priority';
 import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import type { ListItem } from '../../src/Task/ListItem';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
-import type { TestDataName } from '../Obsidian/AllCacheSampleData';
+import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { MockDataLoader } from './MockDataLoader';
 
 /**
@@ -209,13 +209,13 @@ export class TaskBuilder {
     }
 
     /**
-     * See {@link TestDataName} for the list of available mock data files
+     * See {@link MockDataName} for the list of available mock data files
      *
      * @example
      *      const builder = new TaskBuilder().mockData('example_kanban');
      * @param testDataName
      */
-    public mockData(testDataName?: TestDataName) {
+    public mockData(testDataName?: MockDataName) {
         this._mockData = testDataName ? MockDataLoader.get(testDataName) : undefined;
         return this;
     }

@@ -3,7 +3,7 @@
 
 import type { SimulatedFile } from './SimulatedFile';
 
-export type TestDataName =
+export type MockDataName =
     | 'all_link_types'
     | 'blockquote'
     | 'callout'
@@ -107,7 +107,7 @@ export type TestDataName =
  * - {@link getTasksFileFromMockData}
  * - {@link listPathAndData}
  */
-export const AllTestDataNames: TestDataName[] = [
+export const AllTestDataNames: MockDataName[] = [
     'all_link_types',
     'blockquote',
     'callout',

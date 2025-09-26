@@ -6,9 +6,9 @@ import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers'
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
 import { MockDataLoader } from '../../TestingTools/MockDataLoader';
-import type { TestDataName } from '../../Obsidian/AllCacheSampleData';
+import type { MockDataName } from '../../Obsidian/AllCacheSampleData';
 
-function extractFrontmatter(testDataName: TestDataName) {
+function extractFrontmatter(testDataName: MockDataName) {
     const data = MockDataLoader.get(testDataName);
     const queryFile = getTasksFileFromMockData(testDataName);
     const pos: Pos | undefined = queryFile.cachedMetadata.frontmatterPosition;
