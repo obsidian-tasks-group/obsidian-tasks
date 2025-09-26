@@ -92,3 +92,11 @@ export function listPathAndDataRaw(inputs: SimulatedFile[]): [string, SimulatedF
         return [data.filePath, data];
     });
 }
+
+export function listPathAndData(inputs: TestDataName[]): [string, SimulatedFile][] {
+    // We use map() to extract the path, to use it as a test name in it.each()
+    return inputs.map((testDataName) => {
+        const data = TestDataLoader.get(testDataName);
+        return [data.filePath, data];
+    });
+}
