@@ -1,5 +1,5 @@
 import { readTasksFromSimulatedFile } from './SimulatedFile';
-import { TestDataLoader } from './TestDataLoader';
+import { MockDataLoader } from './MockDataLoader';
 
 describe('FileParser', () => {
     it('should set all non-TasksFile data in TaskLocation', () => {
@@ -49,7 +49,7 @@ describe('FileParser', () => {
         // Demo the behaviour of Obsidian when then Simple Tab Indent plugin indents what looks like a task line.
         // https://github.com/hoomersinpsom/simple-tab-indent
         const testDataName = 'zero_width';
-        const data = TestDataLoader.get(testDataName);
+        const data = MockDataLoader.get(testDataName);
         expect(data.fileContents).toContain("- [ ] #task Task line 1 in 'zero_width' - indented by tab character");
         expect(data.fileContents).toContain(
             "- [ ] #task Task line 2 in 'zero_width' - indented by ZWSP + tab character",

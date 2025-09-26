@@ -7,10 +7,10 @@ import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
-import { TestDataLoader } from '../Obsidian/TestDataLoader';
+import { MockDataLoader } from '../Obsidian/MockDataLoader';
 
 function getLink(testDataName: TestDataName, index: number) {
-    const data = TestDataLoader.get(testDataName);
+    const data = MockDataLoader.get(testDataName);
     expect(data.cachedMetadata.links).toBeDefined();
     const rawLink = data.cachedMetadata.links![index];
     const destinationPath = getFirstLinkpathDestFromData(data, rawLink);
@@ -322,7 +322,7 @@ describe('visualise links', () => {
             return output;
         }
 
-        output += `## ${TestDataLoader.markdownPath(testDataName)}\n\n`;
+        output += `## ${MockDataLoader.markdownPath(testDataName)}\n\n`;
         outlinks.forEach((link) => {
             output += createRow('link.originalMarkdown', link.originalMarkdown);
             output += createRow('link.markdown', link.markdown);

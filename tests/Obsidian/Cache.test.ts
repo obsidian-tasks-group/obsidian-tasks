@@ -8,7 +8,7 @@ import type { ListItem } from '../../src/Task/ListItem';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { AllTestDataNames, type TestDataName } from './AllCacheSampleData';
 import { readTasksFromSimulatedFile, readTasksFromSimulatedFileRaw } from './SimulatedFile';
-import { TestDataLoader } from './TestDataLoader';
+import { MockDataLoader } from './MockDataLoader';
 
 window.moment = moment;
 
@@ -83,7 +83,7 @@ describe('cache', () => {
     });
 
     it('should read two sibling tasks', () => {
-        const data = TestDataLoader.get('inheritance_2siblings');
+        const data = MockDataLoader.get('inheritance_2siblings');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task sibling 1
@@ -100,7 +100,7 @@ describe('cache', () => {
     });
 
     it('should read numbered list items with dot', () => {
-        const data = TestDataLoader.get('numbered_list_items_standard');
+        const data = MockDataLoader.get('numbered_list_items_standard');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# numbered_list_items_standard
@@ -127,7 +127,7 @@ describe('cache', () => {
     it('should read numbered list items with closing parenthesis', () => {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3401
         //      "Unexpected failure to create a list item from line" warning when parsing "1)" style numbered list
-        const data = TestDataLoader.get('numbered_list_items_with_paren');
+        const data = MockDataLoader.get('numbered_list_items_with_paren');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# numbered_list_items_with_paren
@@ -156,7 +156,7 @@ describe('cache', () => {
 
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3481
         //      "Tasks query turns single-line tasks into multi-line tasks"
-        const data = TestDataLoader.get('numbered_tasks_issue_3481');
+        const data = MockDataLoader.get('numbered_tasks_issue_3481');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# numbered_tasks_issue_3481
@@ -193,7 +193,7 @@ describe('cache', () => {
     });
 
     it('should read one parent and one child task', () => {
-        const data = TestDataLoader.get('inheritance_1parent1child');
+        const data = MockDataLoader.get('inheritance_1parent1child');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent
@@ -209,7 +209,7 @@ describe('cache', () => {
     });
 
     it('should read one parent and two children task', () => {
-        const data = TestDataLoader.get('inheritance_1parent2children');
+        const data = MockDataLoader.get('inheritance_1parent2children');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent
@@ -226,7 +226,7 @@ describe('cache', () => {
     });
 
     it('should read one parent, two children and one grandchild', () => {
-        const data = TestDataLoader.get('inheritance_1parent2children1grandchild');
+        const data = MockDataLoader.get('inheritance_1parent2children1grandchild');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
@@ -245,7 +245,7 @@ describe('cache', () => {
     });
 
     it('should read one parent, two children and two grandchildren', () => {
-        const data = TestDataLoader.get('inheritance_1parent2children2grandchildren');
+        const data = MockDataLoader.get('inheritance_1parent2children2grandchildren');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
@@ -266,7 +266,7 @@ describe('cache', () => {
     });
 
     it('should read one parent, two children, two grandchildren and one sibling', () => {
-        const data = TestDataLoader.get('inheritance_1parent2children2grandchildren1sibling');
+        const data = MockDataLoader.get('inheritance_1parent2children2grandchildren1sibling');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
@@ -290,7 +290,7 @@ describe('cache', () => {
     });
 
     it('should read one parent, 2 children and a sibling', () => {
-        const data = TestDataLoader.get('inheritance_1parent2children1sibling');
+        const data = MockDataLoader.get('inheritance_1parent2children1sibling');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent
@@ -309,7 +309,7 @@ describe('cache', () => {
     });
 
     it('should read sibling separated by empty line', () => {
-        const data = TestDataLoader.get('inheritance_1parent1child1sibling_emptystring');
+        const data = MockDataLoader.get('inheritance_1parent1child1sibling_emptystring');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] #task parent task
@@ -330,7 +330,7 @@ describe('cache', () => {
     });
 
     it('should read new root task after header', () => {
-        const data = TestDataLoader.get('inheritance_1parent1child1newroot_after_header');
+        const data = MockDataLoader.get('inheritance_1parent1child1newroot_after_header');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# first header
@@ -355,7 +355,7 @@ describe('cache', () => {
     });
 
     it('should read root on non-starting line', () => {
-        const data = TestDataLoader.get('inheritance_1parent2children2grandchildren1sibling_start_with_heading');
+        const data = MockDataLoader.get('inheritance_1parent2children2grandchildren1sibling_start_with_heading');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# Test heading
@@ -381,7 +381,7 @@ describe('cache', () => {
     });
 
     it('should read task and listItem siblings', () => {
-        const data = TestDataLoader.get('inheritance_listitem_task_siblings');
+        const data = MockDataLoader.get('inheritance_listitem_task_siblings');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- list item
@@ -397,7 +397,7 @@ describe('cache', () => {
     });
 
     it('should read child task and parent listItem', () => {
-        const data = TestDataLoader.get('inheritance_listitem_task');
+        const data = MockDataLoader.get('inheritance_listitem_task');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- parent list item
@@ -415,7 +415,7 @@ describe('cache', () => {
     });
 
     it('should read grandchild task under parent and child listItem', () => {
-        const data = TestDataLoader.get('inheritance_listitem_listitem_task');
+        const data = MockDataLoader.get('inheritance_listitem_listitem_task');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- parent list item
@@ -435,7 +435,7 @@ describe('cache', () => {
     });
 
     it('should read 2 roots with grandchild task under parent and child listItem', () => {
-        const data = TestDataLoader.get('inheritance_2roots_listitem_listitem_task');
+        const data = MockDataLoader.get('inheritance_2roots_listitem_listitem_task');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- parent list item 1
@@ -462,7 +462,7 @@ describe('cache', () => {
     });
 
     it('should read parent task and child listItem', () => {
-        const data = TestDataLoader.get('inheritance_task_listitem');
+        const data = MockDataLoader.get('inheritance_task_listitem');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -480,7 +480,7 @@ describe('cache', () => {
     });
 
     it('should read parent task, child listItem and grandchild task', () => {
-        const data = TestDataLoader.get('inheritance_task_listitem_task');
+        const data = MockDataLoader.get('inheritance_task_listitem_task');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -500,7 +500,7 @@ describe('cache', () => {
     });
 
     it('should read parent task, two child listItems and 3 grandchild tasks', () => {
-        const data = TestDataLoader.get('inheritance_task_2listitem_3task');
+        const data = MockDataLoader.get('inheritance_task_2listitem_3task');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -526,7 +526,7 @@ describe('cache', () => {
     });
 
     it('should read parent task with mixed children', () => {
-        const data = TestDataLoader.get('inheritance_task_mixed_children');
+        const data = MockDataLoader.get('inheritance_task_mixed_children');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -548,7 +548,7 @@ describe('cache', () => {
     });
 
     it('should read parent task and child list item with mixed children', () => {
-        const data = TestDataLoader.get('inheritance_task_listitem_mixed_grandchildren');
+        const data = MockDataLoader.get('inheritance_task_listitem_mixed_grandchildren');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "- [ ] parent task
@@ -574,7 +574,7 @@ describe('cache', () => {
     it('should read non task check box when global filter is enabled', () => {
         GlobalFilter.getInstance().set('#task');
 
-        const data = TestDataLoader.get('inheritance_non_task_child');
+        const data = MockDataLoader.get('inheritance_non_task_child');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "-  [ ] #task task parent
@@ -609,7 +609,7 @@ describe('cache', () => {
     });
 
     it('callout', () => {
-        const data = TestDataLoader.get('callout');
+        const data = MockDataLoader.get('callout');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# callout
@@ -633,7 +633,7 @@ describe('cache', () => {
     });
 
     it('callout_custom', () => {
-        const data = TestDataLoader.get('callout_custom');
+        const data = MockDataLoader.get('callout_custom');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# callout_custom
@@ -657,7 +657,7 @@ describe('cache', () => {
     });
 
     it('callout_labelled', () => {
-        const data = TestDataLoader.get('callout_labelled');
+        const data = MockDataLoader.get('callout_labelled');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# callout_labelled
@@ -681,7 +681,7 @@ describe('cache', () => {
     });
 
     it('callouts_nested_issue_2890_unlabelled', () => {
-        const data = TestDataLoader.get('callouts_nested_issue_2890_unlabelled');
+        const data = MockDataLoader.get('callouts_nested_issue_2890_unlabelled');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             " > [!Calendar]+
@@ -710,7 +710,7 @@ describe('cache', () => {
     });
 
     it('callouts_nested_issue_2890_labelled', () => {
-        const data = TestDataLoader.get('callouts_nested_issue_2890_labelled');
+        const data = MockDataLoader.get('callouts_nested_issue_2890_labelled');
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(data.fileContents).toMatchInlineSnapshot(`
             " > [!Calendar]+ MONTH
@@ -741,7 +741,7 @@ describe('cache', () => {
 
 describe('accessing links in file', function () {
     describe('explore accessing links in file "links_everywhere.md"', () => {
-        const data = TestDataLoader.get('links_everywhere');
+        const data = MockDataLoader.get('links_everywhere');
 
         const tasks = readTasksFromSimulatedFileRaw(data);
         expect(tasks.length).toEqual(1);
