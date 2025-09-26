@@ -5,7 +5,7 @@ import query_file_defaults_all_options_null from '../Obsidian/__test_data__/quer
 import query_file_defaults_all_options_true from '../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
 
-function generateQueryFileDefaultsSource(data: any) {
+function generateQueryFileDefaultsSourceRaw(data: any) {
     const tasksFile = getTasksFileFromMockDataRaw(data);
     return new QueryFileDefaults().source(tasksFile);
 }
@@ -16,7 +16,7 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should give empty query if no relevant properties present', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_null)).toEqual('');
+        expect(generateQueryFileDefaultsSourceRaw(query_file_defaults_all_options_null)).toEqual('');
     });
 
     it('should give the property names in original order', () => {
@@ -86,7 +86,7 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values false', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toMatchInlineSnapshot(`
+        expect(generateQueryFileDefaultsSourceRaw(query_file_defaults_all_options_false)).toMatchInlineSnapshot(`
             "full mode
             hide tree
             hide tags
@@ -112,7 +112,7 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values true', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_true)).toMatchInlineSnapshot(`
+        expect(generateQueryFileDefaultsSourceRaw(query_file_defaults_all_options_true)).toMatchInlineSnapshot(`
             "explain
             short mode
             show tree
