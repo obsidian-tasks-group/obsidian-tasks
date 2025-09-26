@@ -92,7 +92,7 @@ export type TestDataName =
     | 'yaml_tags_with_two_values_on_two_lines'
     | 'zero_width';
 
-const AllTestDataNames: TestDataName[] = [
+export const AllTestDataNames: TestDataName[] = [
     'all_link_types',
     'blockquote',
     'callout',
