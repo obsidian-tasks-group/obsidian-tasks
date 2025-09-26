@@ -30,7 +30,7 @@ export class MockDataLoader {
         return path.resolve(__dirname, `../Obsidian/__test_data__/${testDataName}.json`);
     }
 
-    public static markdownPath(_testDataName: MockDataName) {
-        return `Test Data/${_testDataName}.md`;
+    public static markdownPath(testDataName: MockDataName) {
+        return `Test Data/${testDataName}.md`;
     }
 }
