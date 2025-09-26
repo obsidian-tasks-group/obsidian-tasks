@@ -6,17 +6,10 @@ import type { CachedMetadata } from 'obsidian';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { ListItem } from '../../src/Task/ListItem';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
-import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { AllMockDataNames, type MockDataName } from './AllCacheSampleData';
-import { readTasksFromSimulatedFile } from './SimulatedFile';
+import { getMockDataAndReadTasks, readTasksFromSimulatedFile } from './SimulatedFile';
 
 window.moment = moment;
-
-function getMockDataAndReadTasks(name: MockDataName) {
-    const data = MockDataLoader.get(name);
-    const tasks = readTasksFromSimulatedFile(name);
-    return { data, tasks };
-}
 
 function testRootAndChildren(root: ListItem, children: ListItem[]) {
     expect(root.parent).toEqual(null);
