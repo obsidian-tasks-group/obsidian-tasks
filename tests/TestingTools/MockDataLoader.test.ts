@@ -28,7 +28,7 @@ describe('MockDataLoader', () => {
         expect(path).toEqual('Test Data/query_using_properties.md');
     });
 
-    it.failing('should be able to locate loaded SimulatedFile from its CachedMetadata', () => {
+    it('should be able to locate loaded SimulatedFile from its CachedMetadata', () => {
         const data1 = MockDataLoader.get('yaml_tags_has_multiple_values');
         const data2 = MockDataLoader.get('yaml_tags_with_two_values_on_two_lines');
 
