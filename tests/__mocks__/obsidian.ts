@@ -194,7 +194,7 @@ export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string): st
     return getFirstLinkpathDestFromData(simulatedFile, rawLink);
 }
 
-export function getFirstLinkpathDestFromData(data: any, rawLink: Reference) {
+export function getFirstLinkpathDestFromData(data: SimulatedFile, rawLink: Reference) {
     if (!(rawLink.link in data.resolveLinkToPath)) {
         console.log(`Cannot find resolved path for ${rawLink.link} in ${data.filePath} in mock getFirstLinkpathDest()`);
     }
