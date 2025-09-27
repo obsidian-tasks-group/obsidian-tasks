@@ -61,14 +61,10 @@ describe('linkClass', () => {
             const tasksFile = getTasksFileFromMockData('docs_sample_for_task_properties_reference');
 
             const link = tasksFile.propertyAsLink('sample_link_property');
-            expect(link).not.toBeNull();
             expect(link?.originalMarkdown).toEqual('[[yaml_all_property_types_populated]]');
             expect(link?.destinationPath).toEqual('Test Data/yaml_all_property_types_populated.md');
 
             const linkDestinationFile = link?.destinationFile;
-            expect(linkDestinationFile).toBeDefined();
-            expect(linkDestinationFile).not.toBeNull();
-
             expect(linkDestinationFile?.path).toEqual('Test Data/yaml_all_property_types_populated.md');
             expect(linkDestinationFile?.property('sample_text_property')).toEqual('Sample Text Value');
 
