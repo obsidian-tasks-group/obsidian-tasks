@@ -78,7 +78,7 @@ export class MockDataLoader {
      */
     public static findCachedMetaData(cachedMetadata: CachedMetadata): SimulatedFile {
         return this.findByPredicate(
-            (simulatedFile: SimulatedFile) => simulatedFile.cachedMetadata === cachedMetadata,
+            (simulatedFile) => simulatedFile.cachedMetadata === cachedMetadata,
             'CachedMetadata not found in any loaded SimulatedFile',
         );
     }
