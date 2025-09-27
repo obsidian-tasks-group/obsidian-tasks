@@ -177,7 +177,8 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
  * See https://docs.obsidian.md/Reference/TypeScript+API/MetadataCache/getFirstLinkpathDest
  *
  * @param rawLink
- * @param sourcePath
+ * @param sourcePath - the path to a Markdown file in the test vault whose SimulatedFile has already
+ *                     been loaded via MockDataLoader.get(). For example, 'Test Data/callout.md'
  *
  * @example
  * ```typescript
