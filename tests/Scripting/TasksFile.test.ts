@@ -340,7 +340,7 @@ describe('TasksFile - reading tags', () => {
         return { link, markdownPath, firstLinkpathDest };
     }
 
-    it.failing('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {
+    it('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {
         const destination1 = loadMockDataAndResolveFirstLink('link_in_file_body', '"[[yaml_tags_is_empty]]"');
         expect(destination1.firstLinkpathDest).toMatchInlineSnapshot('"Test Data/yaml_tags_is_empty.md"');
 
