@@ -335,15 +335,17 @@ describe('TasksFile - reading tags', () => {
         const file = getTasksFileFromMockData(testDataName);
         const link = file.cachedMetadata.links![0];
         expect(link.original).toMatchInlineSnapshot(expectedLinkSource);
-        return getFirstLinkpathDest(link, MockDataLoader.markdownPath(testDataName));
+        const markdownPath = MockDataLoader.markdownPath(testDataName);
+        const firstLinkpathDest = getFirstLinkpathDest(link, markdownPath);
+        return { file, markdownPath, firstLinkpathDest };
     }
 
     it('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {
         const destination1 = loadMockDataAndResolveFirstLink('link_in_file_body', '"[[yaml_tags_is_empty]]"');
-        expect(destination1).toMatchInlineSnapshot('"Test Data/yaml_tags_is_empty.md"');
+        expect(destination1.firstLinkpathDest).toMatchInlineSnapshot('"Test Data/yaml_tags_is_empty.md"');
 
         const destination2 = loadMockDataAndResolveFirstLink('link_in_heading', '"[[multiple_headings]]"');
-        expect(destination2).toMatchInlineSnapshot('"Test Data/multiple_headings.md"');
+        expect(destination2.firstLinkpathDest).toMatchInlineSnapshot('"Test Data/multiple_headings.md"');
     });
 });
 
