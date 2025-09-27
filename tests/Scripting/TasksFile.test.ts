@@ -4,7 +4,8 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
-import { getAllTags } from '../__mocks__/obsidian';
+import { getAllTags, parseFrontMatterTags } from '../__mocks__/obsidian';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 afterEach(() => {
@@ -308,7 +309,7 @@ describe('TasksFile - reading tags', () => {
         expect(tasksFile.frontmatter.tags).toEqual([]);
     });
 
-    it('should be able to read tags for any loaded SimulatedFile', () => {
+    it('should be able to read all tags for any loaded SimulatedFile', () => {
         const file1 = getTasksFileFromMockData('yaml_tags_with_one_value_on_new_line');
         expect(getAllTags(file1.cachedMetadata)).toEqual(['#single-value-new-line', '#task']);
 
@@ -317,6 +318,17 @@ describe('TasksFile - reading tags', () => {
 
         // Now see if we can again find the tags in file1
         expect(getAllTags(file1.cachedMetadata)).toEqual(['#single-value-new-line', '#task']);
+    });
+
+    it.failing('should be able to read frontmatter tags for any loaded SimulatedFile', () => {
+        const file1 = MockDataLoader.get('yaml_tags_with_one_value_on_new_line');
+        expect(parseFrontMatterTags(file1.cachedMetadata.frontmatter)).toEqual(['#single-value-new-line']);
+
+        const file2 = MockDataLoader.get('yaml_tags_with_one_value_on_single_line');
+        expect(parseFrontMatterTags(file2.cachedMetadata.frontmatter)).toEqual(['#single-value-single-line']);
+
+        // Now see if we can again find the tags in file1
+        expect(parseFrontMatterTags(file1.cachedMetadata.frontmatter)).toEqual(['#single-value-new-line']);
     });
 });
 
