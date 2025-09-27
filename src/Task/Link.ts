@@ -85,8 +85,8 @@ export class Link {
      * Returns a TasksFile for the destination of this link, if it exists.
      * Returns null if the link destination doesn't exist or can't be resolved.
      *
-     * Note: The returned TasksFile will have minimal metadata since we're only
-     * constructing it from the path. Full metadata resolution can be added later.
+     * Note: The returned TasksFile will have metadata if LinkResolver.getInstance().getFileCache
+     *       has been configured.
      */
     public get destinationFile(): TasksFile | null {
         const destPath = this.destinationPath;
