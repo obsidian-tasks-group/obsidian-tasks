@@ -77,9 +77,10 @@ export class MockDataLoader {
      * @throws Error if no matching SimulatedFile is found in the cache
      */
     public static findCachedMetaData(cachedMetadata: CachedMetadata): SimulatedFile {
-        const predicate = (simulatedFile: SimulatedFile) => simulatedFile.cachedMetadata === cachedMetadata;
-        const errorMessage = 'CachedMetadata not found in any loaded SimulatedFile';
-        return this.findByPredicate(predicate, errorMessage);
+        return this.findByPredicate(
+            (simulatedFile: SimulatedFile) => simulatedFile.cachedMetadata === cachedMetadata,
+            'CachedMetadata not found in any loaded SimulatedFile',
+        );
     }
 
     /**
