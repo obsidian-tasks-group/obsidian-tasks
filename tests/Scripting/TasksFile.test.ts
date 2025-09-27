@@ -320,7 +320,7 @@ describe('TasksFile - reading tags', () => {
         expect(getAllTags(file1.cachedMetadata)).toEqual(['#single-value-new-line', '#task']);
     });
 
-    it.failing('should be able to read frontmatter tags for any loaded SimulatedFile', () => {
+    it('should be able to read frontmatter tags for any loaded SimulatedFile', () => {
         const file1 = MockDataLoader.get('yaml_tags_with_one_value_on_new_line');
         expect(parseFrontMatterTags(file1.cachedMetadata.frontmatter)).toEqual(['#single-value-new-line']);
 

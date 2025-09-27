@@ -164,13 +164,21 @@ export function getAllTags(cachedMetadata: CachedMetadata): string[] {
  *
  * See https://docs.obsidian.md/Reference/TypeScript+API/parseFrontMatterTags
  *
- * @param frontmatter
+ * @example
+ * This works:
+ * ```typescript
+ *     const data = MockDataLoader.get('yaml_tags_with_one_value_on_new_line');
+ *     const tags = parseFrontMatterTags(data.cachedMetadata.frontmatter);
+ * ```
+ *
+ * @param frontmatter - the CachedMetadata.frontmatter instance from a SimulatedFile that has
+ *                      already been loaded via MockDataLoader.get().
+ * @throws Error if no matching frontmatter is found in the MockDataLoader cache,
+ *               or a `tasksFile.cachedMetadata.frontmatter` was supplied.
  */
 export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
-    if (frontmatter !== mockedFileData.cachedMetadata.frontmatter) {
-        reportInconsistentTestData('parseFrontMatterTags');
-    }
-    return mockedFileData.parseFrontMatterTags;
+    const simulatedFile = MockDataLoader.findFrontmatter(frontmatter);
+    return simulatedFile.parseFrontMatterTags;
 }
 
 /**
