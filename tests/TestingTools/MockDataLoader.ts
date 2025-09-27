@@ -86,7 +86,13 @@ export class MockDataLoader {
         throw new Error('CachedMetadata not found in any loaded SimulatedFile');
     }
 
-    public static findFrontmatter(_frontmatter: FrontMatterCache | undefined) {
-        return MockDataLoader.get('empty_yaml').cachedMetadata.frontmatter; // temporary fixed value
+    public static findFrontmatter(frontmatter: FrontMatterCache | undefined) {
+        for (const simulatedFile of this.cache.values()) {
+            if (simulatedFile.cachedMetadata.frontmatter === frontmatter) {
+                return simulatedFile;
+            }
+        }
+
+        throw new Error('FrontMatterCache not found in any loaded SimulatedFile');
     }
 }
