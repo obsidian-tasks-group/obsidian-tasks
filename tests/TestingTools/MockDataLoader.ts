@@ -86,6 +86,18 @@ export class MockDataLoader {
         throw new Error('CachedMetadata not found in any loaded SimulatedFile');
     }
 
+    /**
+     * Find the {@link SimulatedFile} that contains the specified FrontMatterCache.
+     *
+     * Searches through all cached {@link SimulatedFile} entries to find the one whose
+     * cachedMetadata.frontmatter property is identical (by reference) to the provided value.
+     * This is useful for reverse-lookup when you have a FrontMatterCache object and need
+     * to find which file it came from.
+     *
+     * @param frontmatter - The FrontMatterCache object to search for (can be undefined)
+     * @returns The SimulatedFile containing the matching frontmatter
+     * @throws Error if no matching SimulatedFile is found in the cache
+     */
     public static findFrontmatter(frontmatter: FrontMatterCache | undefined) {
         for (const simulatedFile of this.cache.values()) {
             if (simulatedFile.cachedMetadata.frontmatter === frontmatter) {
@@ -96,6 +108,17 @@ export class MockDataLoader {
         throw new Error('FrontMatterCache not found in any loaded SimulatedFile');
     }
 
+    /**
+     * Find the {@link SimulatedFile} that matches the specified Markdown file path.
+     *
+     * Searches through all cached {@link SimulatedFile} entries to find the one whose
+     * filePath property exactly matches the provided Markdown path. This enables
+     * lookup of test data by the original file path from the test vault.
+     *
+     * @param markdownPath - The Markdown file path to search for (such as "Test Data/example.md")
+     * @returns The SimulatedFile with the matching file path
+     * @throws Error if no matching SimulatedFile is found in the cache
+     */
     public static findDataFromMarkdownPath(markdownPath: string) {
         for (const simulatedFile of this.cache.values()) {
             if (simulatedFile.filePath === markdownPath) {
