@@ -77,7 +77,7 @@ describe('linkClass', () => {
             const tasksFile = getTasksFileFromMockData('chain_link1');
 
             // There are 4 files, all of which have a property called 'link_to_file', which:
-            //      - links to the next filein the list
+            //      - links to the next file in the list
             //      - the last file links to the first
             // chain_link1
             // chain_link2
@@ -85,30 +85,37 @@ describe('linkClass', () => {
             // chain_link4
 
             // Test 1: Direct link (1 hop)
-            expect(tasksFile.propertyAsLink('link_to_file')?.destinationFile?.path).toEqual('Test Data/chain_link2.md');
+            expect(
+                // prettier-ignore
+                tasksFile.
+                    propertyAsLink('link_to_file')?.destinationFile?.path, // hop 2
+            ).toEqual('Test Data/chain_link2.md');
 
             // Test 2: Chain through 1 intermediate file (2 hops)
             expect(
                 // prettier-ignore
-                tasksFile.propertyAsLink('link_to_file')?.destinationFile // hop 1
-                    ?.propertyAsLink('link_to_file')?.destinationFile?.path, // hop 2
+                tasksFile.
+                    propertyAsLink('link_to_file')?.destinationFile?. // hop 1
+                    propertyAsLink('link_to_file')?.destinationFile?.path, // hop 2
             ).toEqual('Test Data/chain_link3.md');
 
             // Test 3: Chain through 2 intermediate files (3 hops)
             expect(
                 // prettier-ignore
-                tasksFile.propertyAsLink('link_to_file')?.destinationFile // hop 1
-                    ?.propertyAsLink('link_to_file')?.destinationFile // hop 2
-                    ?.propertyAsLink('link_to_file')?.destinationFile?.path, // hop 3
+                tasksFile.
+                    propertyAsLink('link_to_file')?.destinationFile?. // hop 1
+                    propertyAsLink('link_to_file')?.destinationFile?. // hop 2
+                    propertyAsLink('link_to_file')?.destinationFile?.path, // hop 3
             ).toEqual('Test Data/chain_link4.md');
 
             // Test 4: Chain through 3 intermediate files (4 hops) - circular back to start
             expect(
                 // prettier-ignore
-                tasksFile.propertyAsLink('link_to_file')?.destinationFile // hop 1
-                    ?.propertyAsLink('link_to_file')?.destinationFile // hop 2
-                    ?.propertyAsLink('link_to_file')?.destinationFile // hop 3
-                    ?.propertyAsLink('link_to_file')?.destinationFile?.path, // hop 4
+                tasksFile.
+                    propertyAsLink('link_to_file')?.destinationFile?. // hop 1
+                    propertyAsLink('link_to_file')?.destinationFile?. // hop 2
+                    propertyAsLink('link_to_file')?.destinationFile?. // hop 3
+                    propertyAsLink('link_to_file')?.destinationFile?.path, // hop 4
             ).toEqual('Test Data/chain_link1.md');
         });
     });
