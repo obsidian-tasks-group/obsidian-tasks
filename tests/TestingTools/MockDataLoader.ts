@@ -79,13 +79,7 @@ export class MockDataLoader {
     public static findCachedMetaData(cachedMetadata: CachedMetadata): SimulatedFile {
         const predicate = (simulatedFile: SimulatedFile) => simulatedFile.cachedMetadata === cachedMetadata;
         const errorMessage = 'CachedMetadata not found in any loaded SimulatedFile';
-        for (const simulatedFile of this.cache.values()) {
-            if (predicate(simulatedFile)) {
-                return simulatedFile;
-            }
-        }
-
-        throw new Error(errorMessage);
+        return this.findByPredicate(predicate, errorMessage);
     }
 
     /**
@@ -129,5 +123,26 @@ export class MockDataLoader {
         }
 
         throw new Error('Markdown path not found in any loaded SimulatedFile');
+    }
+
+    /**
+     * Helper method to find a SimulatedFile using a custom predicate function.
+     *
+     * @param predicate - Function that returns true when the desired SimulatedFile is found
+     * @param errorMessage - Error message to throw if no matching SimulatedFile is found
+     * @returns The first SimulatedFile that matches the predicate
+     * @throws Error with the provided message if no match is found
+     */
+    private static findByPredicate(
+        predicate: (simulatedFile: SimulatedFile) => boolean,
+        errorMessage: string,
+    ): SimulatedFile {
+        for (const simulatedFile of this.cache.values()) {
+            if (predicate(simulatedFile)) {
+                return simulatedFile;
+            }
+        }
+
+        throw new Error(errorMessage);
     }
 }
