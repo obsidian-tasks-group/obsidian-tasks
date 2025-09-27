@@ -39,10 +39,9 @@ describe('MockDataLoader', () => {
     it('should detect CachedMetadata not previously loaded, even if it is a clone of a loaded file', () => {
         const data1 = MockDataLoader.get('one_task');
 
-        // Prefer `structuredClone(…)` over `JSON.parse(JSON.stringify(…))` to create a deep clone.
-        // But structuredClone() is not avaialble in Jest.
-        // sonar-disable-next-line typescript:S7784
-        const clonedMetadata = JSON.parse(JSON.stringify(data1.cachedMetadata));
+        // typescript:S7784 Prefer `structuredClone(…)` over `JSON.parse(JSON.stringify(…))` to create a deep clone.
+        // But structuredClone() is not available in Jest.
+        const clonedMetadata = JSON.parse(JSON.stringify(data1.cachedMetadata)); // NOSONAR
         expect(clonedMetadata).toStrictEqual(data1.cachedMetadata);
         const t = () => {
             MockDataLoader.findCachedMetaData(clonedMetadata);
