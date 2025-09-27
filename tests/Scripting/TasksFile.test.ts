@@ -339,8 +339,8 @@ describe('TasksFile - reading tags', () => {
     }
 
     it('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {
-        const firstLinkpathDest = resolveFirstLink('link_in_file_body', '"[[yaml_tags_is_empty]]"');
-        expect(firstLinkpathDest).toMatchInlineSnapshot('"Test Data/yaml_tags_is_empty.md"');
+        const destination1 = resolveFirstLink('link_in_file_body', '"[[yaml_tags_is_empty]]"');
+        expect(destination1).toMatchInlineSnapshot('"Test Data/yaml_tags_is_empty.md"');
     });
 });
 
