@@ -4,7 +4,7 @@ import path from 'path';
 import type { CachedMetadata, FrontMatterCache } from 'obsidian';
 
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
-import type { MockDataName } from '../Obsidian/AllCacheSampleData';
+import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
 
 /**
  * Utility class for loading and caching test data saved from Obsidian's cache.
@@ -114,10 +114,24 @@ export class MockDataLoader {
      * @throws Error if no matching SimulatedFile is found in the cache
      */
     public static findDataFromMarkdownPath(markdownPath: string) {
-        return this.findByPredicate(
-            (simulatedFile) => simulatedFile.filePath === markdownPath,
-            'Markdown path not found in any loaded SimulatedFile',
-        );
+        try {
+            return this.findByPredicate(
+                (simulatedFile) => simulatedFile.filePath === markdownPath,
+                'Markdown path not found in any loaded SimulatedFile',
+            );
+        } catch (e) {
+            // The file at markdownPath has not yet been loaded this session.
+            // But maybe it exists. So we will try to load it anyway.
+            for (const allMockDataName of AllMockDataNames) {
+                if (MockDataLoader.markdownPath(allMockDataName) === markdownPath) {
+                    return MockDataLoader.get(allMockDataName);
+                }
+            }
+            // We need to use the same exception message as above for now,
+            // to ensure tests pass, regardless of which route through the method we take,
+            // depending on the order of execution of tests.
+            throw new Error('Markdown path not found in any loaded SimulatedFile');
+        }
     }
 
     /**
