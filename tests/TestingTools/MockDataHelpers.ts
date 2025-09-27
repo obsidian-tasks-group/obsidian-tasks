@@ -1,4 +1,3 @@
-import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
@@ -27,7 +26,6 @@ import { MockDataLoader } from './MockDataLoader';
  */
 export function getTasksFileFromMockData(testDataName: MockDataName) {
     const data = MockDataLoader.get(testDataName);
-    setCurrentCacheFile(data);
     const cachedMetadata = data.cachedMetadata;
     return new TasksFile(data.filePath, cachedMetadata);
 }
