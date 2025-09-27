@@ -72,6 +72,42 @@ describe('linkClass', () => {
                 tasksFile.propertyAsLink('sample_link_property')?.destinationFile?.property('sample_text_property'),
             ).toEqual('Sample Text Value');
         });
+
+        it('should follow a chain of links', () => {
+            const tasksFile = getTasksFileFromMockData('chain_link1');
+
+            // There are 4 files, all of which have a property called 'link_to_file', which:
+            //      - links to the next filein the list
+            //      - the last file links to the first
+            // chain_link1
+            // chain_link2
+            // chain_link3
+            // chain_link4
+
+            expect(tasksFile.propertyAsLink('link_to_file')?.destinationPath).toEqual('Test Data/chain_link2.md');
+
+            expect(tasksFile.propertyAsLink('link_to_file')?.destinationFile?.path).toEqual('Test Data/chain_link2.md');
+
+            expect(
+                tasksFile.propertyAsLink('link_to_file')?.destinationFile?.propertyAsLink('link_to_file')
+                    ?.destinationFile?.path,
+            ).toEqual('Test Data/chain_link3.md');
+
+            expect(
+                tasksFile
+                    .propertyAsLink('link_to_file')
+                    ?.destinationFile?.propertyAsLink('link_to_file')
+                    ?.destinationFile?.propertyAsLink('link_to_file')?.destinationFile?.path,
+            ).toEqual('Test Data/chain_link4.md');
+
+            expect(
+                tasksFile
+                    .propertyAsLink('link_to_file')
+                    ?.destinationFile?.propertyAsLink('link_to_file')
+                    ?.destinationFile?.propertyAsLink('link_to_file')
+                    ?.destinationFile?.propertyAsLink('link_to_file')?.destinationFile?.path,
+            ).toEqual('Test Data/chain_link1.md');
+        });
     });
 
     describe('return markdown to navigate to a link', () => {
