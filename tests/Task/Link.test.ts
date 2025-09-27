@@ -1,3 +1,4 @@
+import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 
@@ -6,20 +7,25 @@ import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestH
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { LinkResolver } from '../../src/Task/LinkResolver';
-import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
+import { getFirstLinkpathDest } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
 function getLink(testDataName: MockDataName, index: number) {
     const data = MockDataLoader.get(testDataName);
     expect(data.cachedMetadata.links).toBeDefined();
     const rawLink = data.cachedMetadata.links![index];
-    const destinationPath = getFirstLinkpathDestFromData(data, rawLink);
-
-    const resolver = LinkResolver.getInstance();
-    resolver.setGetFirstLinkpathDestFn(() => destinationPath);
-
     return new Link(rawLink, data.filePath);
 }
+
+beforeAll(() => {
+    LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, sourcePath: string) => {
+        return getFirstLinkpathDest(rawLink, sourcePath);
+    });
+});
+
+afterAll(() => {
+    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
+});
 
 describe('linkClass', () => {
     it('should construct a Link object', () => {
