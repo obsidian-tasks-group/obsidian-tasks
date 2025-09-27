@@ -4,7 +4,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
-import { getAllTags, parseFrontMatterTags } from '../__mocks__/obsidian';
+import { getAllTags, getFirstLinkpathDest, parseFrontMatterTags } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
@@ -329,6 +329,16 @@ describe('TasksFile - reading tags', () => {
 
         // Now see if we can again find the tags in file1
         expect(parseFrontMatterTags(file1.cachedMetadata.frontmatter)).toEqual(['#single-value-new-line']);
+    });
+
+    it('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {
+        const testDataName = 'link_in_file_body';
+        const expectedLinkSource = '"[[yaml_tags_is_empty]]"';
+        const file = getTasksFileFromMockData(testDataName);
+        const link = file.cachedMetadata.links![0];
+        expect(link.original).toMatchInlineSnapshot(expectedLinkSource);
+        const firstLinkpathDest = getFirstLinkpathDest(link, MockDataLoader.markdownPath(testDataName));
+        expect(firstLinkpathDest).toMatchInlineSnapshot('"Test Data/yaml_tags_is_empty.md"');
     });
 });
 
