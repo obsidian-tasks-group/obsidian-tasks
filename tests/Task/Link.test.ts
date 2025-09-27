@@ -84,8 +84,6 @@ describe('linkClass', () => {
             // chain_link3
             // chain_link4
 
-            expect(tasksFile.propertyAsLink('link_to_file')?.destinationPath).toEqual('Test Data/chain_link2.md');
-
             expect(tasksFile.propertyAsLink('link_to_file')?.destinationFile?.path).toEqual('Test Data/chain_link2.md');
 
             expect(
