@@ -133,17 +133,7 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
         : null;
 }
 
-let mockedFileData: any = {};
-
-export function setCurrentCacheFile(mockData: SimulatedFile) {
-    mockedFileData = mockData;
-}
-
-function reportInconsistentTestData(functionName: string) {
-    throw new Error(
-        `Inconsistent test data used in mock ${functionName}(). Check setCurrentCacheFile() has been called with the correct {@link SimulatedFile} data.`,
-    );
-}
+export function setCurrentCacheFile(_mockData: SimulatedFile) {}
 
 /**
  * Fake implementation of Obsidian's `getAllTags()`.
@@ -201,10 +191,8 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
  * ```
  */
 export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string): string | null {
-    if (mockedFileData.filePath !== sourcePath) {
-        reportInconsistentTestData('getFirstLinkpathDest');
-    }
-    return getFirstLinkpathDestFromData(mockedFileData, rawLink);
+    const simulatedFile = MockDataLoader.findDataFromMarkdownPath(sourcePath);
+    return getFirstLinkpathDestFromData(simulatedFile, rawLink);
 }
 
 export function getFirstLinkpathDestFromData(data: any, rawLink: Reference) {
