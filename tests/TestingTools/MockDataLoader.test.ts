@@ -56,4 +56,12 @@ describe('MockDataLoader', () => {
         expect(MockDataLoader.findFrontmatter(data1.cachedMetadata.frontmatter)).toBe(data1);
         expect(MockDataLoader.findFrontmatter(data2.cachedMetadata.frontmatter)).toBe(data2);
     });
+
+    it('should be able to locate loaded SimulatedFile from its path', () => {
+        const data1 = MockDataLoader.get('callout');
+        const data2 = MockDataLoader.get('no_yaml');
+
+        expect(MockDataLoader.findDataFromMarkdownPath('Test Data/callout.md')).toBe(data1);
+        expect(MockDataLoader.findDataFromMarkdownPath('Test Data/no_yaml.md')).toBe(data2);
+    });
 });
