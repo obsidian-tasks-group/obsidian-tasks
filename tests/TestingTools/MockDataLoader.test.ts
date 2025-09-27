@@ -28,7 +28,7 @@ describe('MockDataLoader', () => {
         expect(path).toEqual('Test Data/query_using_properties.md');
     });
 
-    it('should be able to locate loaded SimulatedFile from its CachedMetadata', () => {
+    it('should locate loaded SimulatedFile from its CachedMetadata', () => {
         const data1 = MockDataLoader.get('yaml_tags_has_multiple_values');
         const data2 = MockDataLoader.get('yaml_tags_with_two_values_on_two_lines');
 
@@ -49,7 +49,7 @@ describe('MockDataLoader', () => {
         expect(t).toThrowError('CachedMetadata not found in any loaded SimulatedFile');
     });
 
-    it('should be able to locate loaded SimulatedFile from its Frontmatter', () => {
+    it('should locate loaded SimulatedFile from its Frontmatter', () => {
         const data1 = MockDataLoader.get('yaml_tags_has_multiple_values');
         const data2 = MockDataLoader.get('yaml_tags_with_two_values_on_two_lines');
 
@@ -65,7 +65,7 @@ describe('MockDataLoader', () => {
         expect(t).toThrowError('FrontMatterCache not found in any loaded SimulatedFile');
     });
 
-    it('should be able to locate loaded SimulatedFile from its path', () => {
+    it('should locate loaded SimulatedFile from its path', () => {
         const data1 = MockDataLoader.get('callout');
         const data2 = MockDataLoader.get('no_yaml');
 
