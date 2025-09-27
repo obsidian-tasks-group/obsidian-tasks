@@ -331,16 +331,16 @@ describe('TasksFile - reading tags', () => {
         expect(parseFrontMatterTags(file1.cachedMetadata.frontmatter)).toEqual(['#single-value-new-line']);
     });
 
-    function loadMockDataAndResolveFirstLink(testDataName: MockDataName, expectedLinkSource: string) {
-        const file = getTasksFileFromMockData(testDataName);
-        const link = file.cachedMetadata.links![0];
-        expect(link.original).toMatchInlineSnapshot(expectedLinkSource);
-        const markdownPath = MockDataLoader.markdownPath(testDataName);
-        const firstLinkpathDest = getFirstLinkpathDest(link, markdownPath);
-        return { link, markdownPath, firstLinkpathDest };
-    }
-
     it('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {
+        function loadMockDataAndResolveFirstLink(testDataName: MockDataName, expectedLinkSource: string) {
+            const file = getTasksFileFromMockData(testDataName);
+            const link = file.cachedMetadata.links![0];
+            expect(link.original).toMatchInlineSnapshot(expectedLinkSource);
+            const markdownPath = MockDataLoader.markdownPath(testDataName);
+            const firstLinkpathDest = getFirstLinkpathDest(link, markdownPath);
+            return { link, markdownPath, firstLinkpathDest };
+        }
+
         const destination1 = loadMockDataAndResolveFirstLink('link_in_file_body', '"[[yaml_tags_is_empty]]"');
         expect(destination1.firstLinkpathDest).toMatchInlineSnapshot('"Test Data/yaml_tags_is_empty.md"');
 
