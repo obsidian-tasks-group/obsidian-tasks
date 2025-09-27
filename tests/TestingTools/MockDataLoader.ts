@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import type { CachedMetadata } from 'obsidian';
+import type { CachedMetadata, FrontMatterCache } from 'obsidian';
 
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
@@ -84,5 +84,9 @@ export class MockDataLoader {
         }
 
         throw new Error('CachedMetadata not found in any loaded SimulatedFile');
+    }
+
+    public static findFrontmatter(_frontmatter: FrontMatterCache | undefined) {
+        return MockDataLoader.get('empty_yaml').cachedMetadata.frontmatter; // temporary fixed value
     }
 }
