@@ -334,7 +334,9 @@ describe('TasksFile - reading tags', () => {
             parseFrontMatterTags(file1.frontmatter);
         };
         expect(t).toThrow(Error);
-        expect(t).toThrowError('FrontMatterCache not found in any loaded SimulatedFile');
+        expect(t).toThrowError(
+            'FrontMatterCache not found in any loaded SimulatedFile. Did you supply TasksFile.frontmatter instead of TasksFile.cachedMetadata.frontmatter?',
+        );
     });
 
     it('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {

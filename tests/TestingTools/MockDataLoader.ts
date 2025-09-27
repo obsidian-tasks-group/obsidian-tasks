@@ -98,7 +98,7 @@ export class MockDataLoader {
     public static findFrontmatter(frontmatter: FrontMatterCache | undefined) {
         return this.findByPredicate(
             (simulatedFile) => simulatedFile.cachedMetadata.frontmatter === frontmatter,
-            'FrontMatterCache not found in any loaded SimulatedFile',
+            'FrontMatterCache not found in any loaded SimulatedFile. Did you supply TasksFile.frontmatter instead of TasksFile.cachedMetadata.frontmatter?',
         );
     }
 
