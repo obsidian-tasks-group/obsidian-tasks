@@ -290,5 +290,20 @@
   "_meta/templates/tasks with range of all dates - Templater plugin.md": {},
   "_meta/templates/tasks with range of due dates - Templater plugin.md": {},
   "_meta/templates/tasks with range of scheduled dates - Templater plugin.md": {},
-  "_meta/templates/tasks with range of start dates - Templater plugin.md": {}
+  "_meta/templates/tasks with range of start dates - Templater plugin.md": {},
+  "discussion-3627-example/Active  Project.md": {
+    "discussion-3627-example/Active Project note.md": 1
+  },
+  "discussion-3627-example/Active Project note.md": {
+    "discussion-3627-example/Active  Project.md": 1
+  },
+  "discussion-3627-example/Homepage.md": {},
+  "discussion-3627-example/Inactive Project note.md": {
+    "discussion-3627-example/Inactive project.md": 1
+  },
+  "discussion-3627-example/Inactive project.md": {
+    "discussion-3627-example/Inactive project.md": 1,
+    "discussion-3627-example/Inactive Project note.md": 1
+  },
+  "discussion-3627-example/No project.md": {}
 }
