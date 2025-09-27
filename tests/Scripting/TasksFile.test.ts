@@ -321,14 +321,20 @@ describe('TasksFile - reading tags', () => {
     });
 
     it('should be able to read frontmatter tags for any loaded SimulatedFile', () => {
-        const file1 = MockDataLoader.get('yaml_tags_with_one_value_on_new_line');
+        const file1 = getTasksFileFromMockData('yaml_tags_with_one_value_on_new_line');
         expect(parseFrontMatterTags(file1.cachedMetadata.frontmatter)).toEqual(['#single-value-new-line']);
 
-        const file2 = MockDataLoader.get('yaml_tags_with_one_value_on_single_line');
+        const file2 = getTasksFileFromMockData('yaml_tags_with_one_value_on_single_line');
         expect(parseFrontMatterTags(file2.cachedMetadata.frontmatter)).toEqual(['#single-value-single-line']);
 
         // Now see if we can again find the tags in file1
         expect(parseFrontMatterTags(file1.cachedMetadata.frontmatter)).toEqual(['#single-value-new-line']);
+
+        const t = () => {
+            parseFrontMatterTags(file1.frontmatter);
+        };
+        expect(t).toThrow(Error);
+        expect(t).toThrowError('FrontMatterCache not found in any loaded SimulatedFile');
     });
 
     it('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {
