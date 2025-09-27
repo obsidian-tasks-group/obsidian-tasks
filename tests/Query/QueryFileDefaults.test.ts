@@ -1,12 +1,10 @@
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
-import query_file_defaults_all_options_false from '../Obsidian/__test_data__/query_file_defaults_all_options_false.json';
-import query_file_defaults_all_options_null from '../Obsidian/__test_data__/query_file_defaults_all_options_null.json';
-import query_file_defaults_all_options_true from '../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
+import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 
-function generateQueryFileDefaultsSource(data: any) {
-    const tasksFile = getTasksFileFromMockData(data);
+function generateQueryFileDefaultsSource(testDataName: MockDataName) {
+    const tasksFile = getTasksFileFromMockData(testDataName);
     return new QueryFileDefaults().source(tasksFile);
 }
 
@@ -16,7 +14,7 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should give empty query if no relevant properties present', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_null)).toEqual('');
+        expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_null')).toEqual('');
     });
 
     it('should give the property names in original order', () => {
@@ -86,7 +84,7 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values false', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toMatchInlineSnapshot(`
+        expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_false')).toMatchInlineSnapshot(`
             "full mode
             hide tree
             hide tags
@@ -112,7 +110,7 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values true', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_true)).toMatchInlineSnapshot(`
+        expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_true')).toMatchInlineSnapshot(`
             "explain
             short mode
             show tree

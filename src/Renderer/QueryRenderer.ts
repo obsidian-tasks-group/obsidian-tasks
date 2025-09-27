@@ -381,11 +381,11 @@ function createBacklinksMousedownHandler(app: App): BacklinksEventHandler {
         // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
         // the 'click' event is more generic for touch devices etc.)
         if (ev.button === 1) {
+            ev.preventDefault();
             const result = await getTaskLineAndFile(task, app.vault);
             if (result) {
                 const [line, file] = result;
                 const leaf = app.workspace.getLeaf('tab');
-                ev.preventDefault();
                 await leaf.openFile(file, { eState: { line: line } });
             }
         }

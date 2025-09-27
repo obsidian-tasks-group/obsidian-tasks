@@ -1,5 +1,6 @@
 import type { App, CachedMetadata, Reference } from 'obsidian';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
 export {};
 
@@ -132,30 +133,18 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
         : null;
 }
 
-let mockedFileData: any = {};
-
-export function setCurrentCacheFile(mockData: SimulatedFile) {
-    mockedFileData = mockData;
-}
-
-function reportInconsistentTestData(functionName: string) {
-    throw new Error(
-        `Inconsistent test data used in mock ${functionName}(). Check setCurrentCacheFile() has been called with the correct {@link SimulatedFile} data.`,
-    );
-}
-
 /**
  * Fake implementation of Obsidian's `getAllTags()`.
  *
  * See https://docs.obsidian.md/Reference/TypeScript+API/getAllTags
  *
- * @param cachedMetadata
+ * @param cachedMetadata - the CachedMetadata instance from a SimulatedFile that has
+ *                         already been loaded via MockDataLoader.get().
+ * @throws Error if no matching CachedMetadata is found in the MockDataLoader cache.
  */
 export function getAllTags(cachedMetadata: CachedMetadata): string[] {
-    if (cachedMetadata !== mockedFileData.cachedMetadata) {
-        reportInconsistentTestData('getAllTags');
-    }
-    return mockedFileData.getAllTags;
+    const simulatedFile = MockDataLoader.findCachedMetaData(cachedMetadata);
+    return simulatedFile.getAllTags;
 }
 
 /**
@@ -163,13 +152,26 @@ export function getAllTags(cachedMetadata: CachedMetadata): string[] {
  *
  * See https://docs.obsidian.md/Reference/TypeScript+API/parseFrontMatterTags
  *
- * @param frontmatter
+ * @example
+ * This works:
+ * ```typescript
+ *     const tags = parseFrontMatterTags(tasksFile.cachedMetadata.frontmatter);
+ * ```
+ *
+ * @example
+ * This does not work:
+ * ```typescript
+ *     const tags = parseFrontMatterTags(tasksFile.frontmatter);
+ * ```
+ *
+ * @param frontmatter - the raw CachedMetadata.frontmatter instance from a SimulatedFile that has
+ *                      already been loaded via MockDataLoader.get().
+ * @throws Error if no matching frontmatter is found in the MockDataLoader cache,
+ *               or a `tasksFile.frontmatter` was supplied.
  */
 export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
-    if (frontmatter !== mockedFileData.cachedMetadata.frontmatter) {
-        reportInconsistentTestData('parseFrontMatterTags');
-    }
-    return mockedFileData.parseFrontMatterTags;
+    const simulatedFile = MockDataLoader.findFrontmatter(frontmatter);
+    return simulatedFile.parseFrontMatterTags;
 }
 
 /**
@@ -180,7 +182,8 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
  * See https://docs.obsidian.md/Reference/TypeScript+API/MetadataCache/getFirstLinkpathDest
  *
  * @param rawLink
- * @param sourcePath
+ * @param sourcePath - the path to a Markdown file in the test vault whose SimulatedFile has already
+ *                     been loaded via MockDataLoader.get(). For example, 'Test Data/callout.md'
  *
  * @example
  * ```typescript
@@ -192,13 +195,11 @@ export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
  * ```
  */
 export function getFirstLinkpathDest(rawLink: Reference, sourcePath: string): string | null {
-    if (mockedFileData.filePath !== sourcePath) {
-        reportInconsistentTestData('getFirstLinkpathDest');
-    }
-    return getFirstLinkpathDestFromData(mockedFileData, rawLink);
+    const simulatedFile = MockDataLoader.findDataFromMarkdownPath(sourcePath);
+    return getFirstLinkpathDestFromData(simulatedFile, rawLink);
 }
 
-export function getFirstLinkpathDestFromData(data: any, rawLink: Reference) {
+export function getFirstLinkpathDestFromData(data: SimulatedFile, rawLink: Reference) {
     if (!(rawLink.link in data.resolveLinkToPath)) {
         console.log(`Cannot find resolved path for ${rawLink.link} in ${data.filePath} in mock getFirstLinkpathDest()`);
     }

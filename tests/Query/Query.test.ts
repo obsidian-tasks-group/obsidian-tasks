@@ -22,7 +22,6 @@ import { shouldSupportFiltering } from '../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
-import query_using_properties from '../Obsidian/__test_data__/query_using_properties.json';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
 window.moment = moment;
@@ -844,7 +843,7 @@ Problem statement:
     });
 
     describe('properties in the query file', () => {
-        const file = getTasksFileFromMockData(query_using_properties);
+        const file = getTasksFileFromMockData('query_using_properties');
 
         function makeQueryFromPropertyWithValue(propertyName: string, propertyValue: string) {
             const source = "{{query.file.property('" + propertyName + "')}}";
