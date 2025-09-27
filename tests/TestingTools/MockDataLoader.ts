@@ -95,4 +95,14 @@ export class MockDataLoader {
 
         throw new Error('FrontMatterCache not found in any loaded SimulatedFile');
     }
+
+    public static findDataFromMarkdownPath(markdownPath: string) {
+        for (const simulatedFile of this.cache.values()) {
+            if (simulatedFile.filePath === markdownPath) {
+                return simulatedFile;
+            }
+        }
+
+        throw new Error('Markdown path not found in any loaded SimulatedFile');
+    }
 }
