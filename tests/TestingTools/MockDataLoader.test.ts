@@ -49,7 +49,7 @@ describe('MockDataLoader', () => {
         expect(t).toThrowError('CachedMetadata not found in any loaded SimulatedFile');
     });
 
-    it.failing('should be able to locate loaded SimulatedFile from its Frontmatter', () => {
+    it('should be able to locate loaded SimulatedFile from its Frontmatter', () => {
         const data1 = MockDataLoader.get('yaml_tags_has_multiple_values');
         const data2 = MockDataLoader.get('yaml_tags_with_two_values_on_two_lines');
 
