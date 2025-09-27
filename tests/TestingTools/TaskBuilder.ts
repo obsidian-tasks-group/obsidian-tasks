@@ -10,7 +10,6 @@ import { DateParser } from '../../src/DateTime/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { Priority } from '../../src/Task/Priority';
-import { setCurrentCacheFile } from '../__mocks__/obsidian';
 import type { ListItem } from '../../src/Task/ListItem';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
@@ -78,9 +77,6 @@ export class TaskBuilder {
         let description = this._description;
         if (this._tags.length > 0) {
             description += ' ' + this._tags.join(' ');
-        }
-        if (this._mockData !== undefined) {
-            setCurrentCacheFile(this._mockData);
         }
         const cachedMetadata = this._mockData?.cachedMetadata ?? {};
         const task = new Task({

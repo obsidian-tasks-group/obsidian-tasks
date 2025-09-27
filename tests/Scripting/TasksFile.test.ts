@@ -4,6 +4,8 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
+import { getAllTags, getFirstLinkpathDest, parseFrontMatterTags } from '../__mocks__/obsidian';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 afterEach(() => {
@@ -305,6 +307,58 @@ describe('TasksFile - reading tags', () => {
     )('should provide empty list if no tags in frontmatter: "%s"', (_path: string, testDataName: MockDataName) => {
         const tasksFile = getTasksFileFromMockData(testDataName);
         expect(tasksFile.frontmatter.tags).toEqual([]);
+    });
+
+    it('should be able to read all tags for any loaded SimulatedFile', () => {
+        const file1 = getTasksFileFromMockData('yaml_tags_with_one_value_on_new_line');
+        expect(getAllTags(file1.cachedMetadata)).toEqual(['#single-value-new-line', '#task']);
+
+        const file2 = getTasksFileFromMockData('yaml_tags_with_one_value_on_single_line');
+        expect(getAllTags(file2.cachedMetadata)).toEqual(['#single-value-single-line', '#task']);
+
+        // Now see if we can again find the tags in file1
+        expect(getAllTags(file1.cachedMetadata)).toEqual(['#single-value-new-line', '#task']);
+    });
+
+    it('should be able to read frontmatter tags for any loaded SimulatedFile', () => {
+        const file1 = getTasksFileFromMockData('yaml_tags_with_one_value_on_new_line');
+        expect(parseFrontMatterTags(file1.cachedMetadata.frontmatter)).toEqual(['#single-value-new-line']);
+
+        const file2 = getTasksFileFromMockData('yaml_tags_with_one_value_on_single_line');
+        expect(parseFrontMatterTags(file2.cachedMetadata.frontmatter)).toEqual(['#single-value-single-line']);
+
+        // Now see if we can again find the tags in file1
+        expect(parseFrontMatterTags(file1.cachedMetadata.frontmatter)).toEqual(['#single-value-new-line']);
+
+        const t = () => {
+            parseFrontMatterTags(file1.frontmatter);
+        };
+        expect(t).toThrow(Error);
+        expect(t).toThrowError(
+            'FrontMatterCache not found in any loaded SimulatedFile. Did you supply TasksFile.frontmatter instead of TasksFile.cachedMetadata.frontmatter?',
+        );
+    });
+
+    it('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {
+        function loadMockDataAndResolveFirstLink(testDataName: MockDataName, expectedLinkSource: string) {
+            const file = getTasksFileFromMockData(testDataName);
+            const link = file.cachedMetadata.links![0];
+            expect(link.original).toMatchInlineSnapshot(expectedLinkSource);
+            const markdownPath = MockDataLoader.markdownPath(testDataName);
+            const firstLinkpathDest = getFirstLinkpathDest(link, markdownPath);
+            return { link, markdownPath, firstLinkpathDest };
+        }
+
+        const destination1 = loadMockDataAndResolveFirstLink('link_in_file_body', '"[[yaml_tags_is_empty]]"');
+        expect(destination1.firstLinkpathDest).toMatchInlineSnapshot('"Test Data/yaml_tags_is_empty.md"');
+
+        const destination2 = loadMockDataAndResolveFirstLink('link_in_heading', '"[[multiple_headings]]"');
+        expect(destination2.firstLinkpathDest).toMatchInlineSnapshot('"Test Data/multiple_headings.md"');
+
+        // Now see if we can again resolve the link from file1
+        expect(getFirstLinkpathDest(destination1.link, destination1.markdownPath)).toMatchInlineSnapshot(
+            '"Test Data/yaml_tags_is_empty.md"',
+        );
     });
 });
 

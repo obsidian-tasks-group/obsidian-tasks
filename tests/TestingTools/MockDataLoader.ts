@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
+import type { CachedMetadata, FrontMatterCache } from 'obsidian';
+
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 
@@ -62,5 +64,80 @@ export class MockDataLoader {
      */
     public static markdownPath(_testDataName: MockDataName) {
         return `Test Data/${_testDataName}.md`;
+    }
+
+    /**
+     * Find the {@link SimulatedFile} that contains the specified CachedMetadata.
+     *
+     * Searches through all cached {@link SimulatedFile} entries to find the one whose
+     * cachedMetadata property is identical (by reference) to the provided value.
+     *
+     * @param cachedMetadata - The CachedMetadata object to search for
+     * @returns The SimulatedFile containing the matching cachedMetadata
+     * @throws Error if no matching SimulatedFile is found in the cache
+     */
+    public static findCachedMetaData(cachedMetadata: CachedMetadata): SimulatedFile {
+        return this.findByPredicate(
+            (simulatedFile) => simulatedFile.cachedMetadata === cachedMetadata,
+            'CachedMetadata not found in any loaded SimulatedFile',
+        );
+    }
+
+    /**
+     * Find the {@link SimulatedFile} that contains the specified FrontMatterCache.
+     *
+     * Searches through all cached {@link SimulatedFile} entries to find the one whose
+     * cachedMetadata.frontmatter property is identical (by reference) to the provided value.
+     * This is useful for reverse-lookup when you have a FrontMatterCache object and need
+     * to find which file it came from.
+     *
+     * @param frontmatter - The FrontMatterCache object to search for (can be undefined)
+     * @returns The SimulatedFile containing the matching frontmatter
+     * @throws Error if no matching SimulatedFile is found in the cache
+     */
+    public static findFrontmatter(frontmatter: FrontMatterCache | undefined) {
+        return this.findByPredicate(
+            (simulatedFile) => simulatedFile.cachedMetadata.frontmatter === frontmatter,
+            'FrontMatterCache not found in any loaded SimulatedFile. Did you supply TasksFile.frontmatter instead of TasksFile.cachedMetadata.frontmatter?',
+        );
+    }
+
+    /**
+     * Find the {@link SimulatedFile} that matches the specified Markdown file path.
+     *
+     * Searches through all cached {@link SimulatedFile} entries to find the one whose
+     * filePath property exactly matches the provided Markdown path. This enables
+     * lookup of test data by the original file path from the test vault.
+     *
+     * @param markdownPath - The Markdown file path to search for (such as "Test Data/example.md")
+     * @returns The SimulatedFile with the matching file path
+     * @throws Error if no matching SimulatedFile is found in the cache
+     */
+    public static findDataFromMarkdownPath(markdownPath: string) {
+        return this.findByPredicate(
+            (simulatedFile) => simulatedFile.filePath === markdownPath,
+            'Markdown path not found in any loaded SimulatedFile',
+        );
+    }
+
+    /**
+     * Helper method to find a SimulatedFile using a custom predicate function.
+     *
+     * @param predicate - Function that returns true when the desired SimulatedFile is found
+     * @param errorMessage - Error message to throw if no matching SimulatedFile is found
+     * @returns The first SimulatedFile that matches the predicate
+     * @throws Error with the provided message if no match is found
+     */
+    private static findByPredicate(
+        predicate: (simulatedFile: SimulatedFile) => boolean,
+        errorMessage: string,
+    ): SimulatedFile {
+        for (const simulatedFile of this.cache.values()) {
+            if (predicate(simulatedFile)) {
+                return simulatedFile;
+            }
+        }
+
+        throw new Error(errorMessage);
     }
 }
