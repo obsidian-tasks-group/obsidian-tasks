@@ -155,14 +155,19 @@ export function getAllTags(cachedMetadata: CachedMetadata): string[] {
  * @example
  * This works:
  * ```typescript
- *     const data = MockDataLoader.get('yaml_tags_with_one_value_on_new_line');
- *     const tags = parseFrontMatterTags(data.cachedMetadata.frontmatter);
+ *     const tags = parseFrontMatterTags(tasksFile.cachedMetadata.frontmatter);
  * ```
  *
- * @param frontmatter - the CachedMetadata.frontmatter instance from a SimulatedFile that has
+ * @example
+ * This does not work:
+ * ```typescript
+ *     const tags = parseFrontMatterTags(tasksFile.frontmatter);
+ * ```
+ *
+ * @param frontmatter - the raw CachedMetadata.frontmatter instance from a SimulatedFile that has
  *                      already been loaded via MockDataLoader.get().
  * @throws Error if no matching frontmatter is found in the MockDataLoader cache,
- *               or a `tasksFile.cachedMetadata.frontmatter` was supplied.
+ *               or a `tasksFile.frontmatter` was supplied.
  */
 export function parseFrontMatterTags(frontmatter: any | null): string[] | null {
     const simulatedFile = MockDataLoader.findFrontmatter(frontmatter);
