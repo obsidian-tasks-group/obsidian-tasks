@@ -133,8 +133,6 @@ function caseInsensitiveSubstringSearch(searchTerm: string, phrase: string): Sea
         : null;
 }
 
-export function setCurrentCacheFile(_mockData: SimulatedFile) {}
-
 /**
  * Fake implementation of Obsidian's `getAllTags()`.
  *
