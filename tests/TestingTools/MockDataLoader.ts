@@ -96,13 +96,10 @@ export class MockDataLoader {
      * @throws Error if no matching SimulatedFile is found in the cache
      */
     public static findFrontmatter(frontmatter: FrontMatterCache | undefined) {
-        for (const simulatedFile of this.cache.values()) {
-            if (simulatedFile.cachedMetadata.frontmatter === frontmatter) {
-                return simulatedFile;
-            }
-        }
-
-        throw new Error('FrontMatterCache not found in any loaded SimulatedFile');
+        return this.findByPredicate(
+            (simulatedFile) => simulatedFile.cachedMetadata.frontmatter === frontmatter,
+            'FrontMatterCache not found in any loaded SimulatedFile',
+        );
     }
 
     /**
@@ -117,13 +114,10 @@ export class MockDataLoader {
      * @throws Error if no matching SimulatedFile is found in the cache
      */
     public static findDataFromMarkdownPath(markdownPath: string) {
-        for (const simulatedFile of this.cache.values()) {
-            if (simulatedFile.filePath === markdownPath) {
-                return simulatedFile;
-            }
-        }
-
-        throw new Error('Markdown path not found in any loaded SimulatedFile');
+        return this.findByPredicate(
+            (simulatedFile) => simulatedFile.filePath === markdownPath,
+            'Markdown path not found in any loaded SimulatedFile',
+        );
     }
 
     /**
