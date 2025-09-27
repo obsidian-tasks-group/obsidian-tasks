@@ -337,7 +337,7 @@ describe('TasksFile - reading tags', () => {
         expect(link.original).toMatchInlineSnapshot(expectedLinkSource);
         const markdownPath = MockDataLoader.markdownPath(testDataName);
         const firstLinkpathDest = getFirstLinkpathDest(link, markdownPath);
-        return { file, link, markdownPath, firstLinkpathDest };
+        return { link, markdownPath, firstLinkpathDest };
     }
 
     it.failing('should be able to call getFirstLinkpathDest() for any loaded SimulatedFile', () => {
