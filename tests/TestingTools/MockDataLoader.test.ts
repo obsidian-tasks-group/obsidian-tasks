@@ -87,6 +87,6 @@ describe('MockDataLoader', () => {
             MockDataLoader.findDataFromMarkdownPath('Test Data/non-existent path.md');
         };
         expect(t).toThrow(Error);
-        expect(t).toThrowError('Markdown path not found in any loaded SimulatedFile');
+        expect(t).toThrowError('Markdown path not found in any SimulatedFile');
     });
 });

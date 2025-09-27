@@ -105,33 +105,21 @@ export class MockDataLoader {
     /**
      * Find the {@link SimulatedFile} that matches the specified Markdown file path.
      *
-     * Searches through all cached {@link SimulatedFile} entries to find the one whose
+     * Searches through all {@link SimulatedFile} entries to find the one whose
      * filePath property exactly matches the provided Markdown path. This enables
      * lookup of test data by the original file path from the test vault.
      *
      * @param markdownPath - The Markdown file path to search for (such as "Test Data/example.md")
      * @returns The SimulatedFile with the matching file path
-     * @throws Error if no matching SimulatedFile is found in the cache
+     * @throws Error if no matching SimulatedFile is found on disk
      */
     public static findDataFromMarkdownPath(markdownPath: string) {
-        try {
-            return this.findByPredicate(
-                (simulatedFile) => simulatedFile.filePath === markdownPath,
-                'Markdown path not found in any loaded SimulatedFile',
-            );
-        } catch (e) {
-            // The file at markdownPath has not yet been loaded this session.
-            // But maybe it exists. So we will try to load it anyway.
-            for (const allMockDataName of AllMockDataNames) {
-                if (MockDataLoader.markdownPath(allMockDataName) === markdownPath) {
-                    return MockDataLoader.get(allMockDataName);
-                }
+        for (const allMockDataName of AllMockDataNames) {
+            if (MockDataLoader.markdownPath(allMockDataName) === markdownPath) {
+                return MockDataLoader.get(allMockDataName);
             }
-            // We need to use the same exception message as above for now,
-            // to ensure tests pass, regardless of which route through the method we take,
-            // depending on the order of execution of tests.
-            throw new Error('Markdown path not found in any loaded SimulatedFile');
         }
+        throw new Error('Markdown path not found in any SimulatedFile');
     }
 
     /**
