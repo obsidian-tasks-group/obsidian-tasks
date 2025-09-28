@@ -392,7 +392,8 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.datesFromFileNames.scheduledDate.folders.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.folders.description')}</p>`,
+                    `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.folders.description')}</p>` +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
                 ),
             )
             .addText(async (input) => {
