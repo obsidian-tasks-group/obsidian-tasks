@@ -72,7 +72,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     `<p>${i18n.t('settings.format.description.line1')}</p>` +
                         `<p>${i18n.t('settings.format.description.line2')}</p>` +
-                        '<p>RESTART REQUIRED.</p>' +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
                         ),
