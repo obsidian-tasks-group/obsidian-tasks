@@ -61,11 +61,6 @@ export class SettingsTab extends PluginSettingTab {
         containerEl.empty();
         this.containerEl.addClass('tasks-settings');
 
-        containerEl.createEl('p', {
-            cls: 'tasks-setting-important',
-            text: i18n.t('settings.changeRequiresRestart'),
-        });
-
         new Setting(containerEl)
             .setName(i18n.t('settings.format.name'))
             .setDesc(
