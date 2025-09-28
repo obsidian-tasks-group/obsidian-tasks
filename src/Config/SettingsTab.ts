@@ -124,7 +124,11 @@ export class SettingsTab extends PluginSettingTab {
 
         globalFilterHidden = new Setting(containerEl)
             .setName(i18n.t('settings.globalFilter.removeFilter.name'))
-            .setDesc(i18n.t('settings.globalFilter.removeFilter.description'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    `<p>${i18n.t('settings.globalFilter.removeFilter.description')}</p>`,
+                ),
+            )
             .addToggle((toggle) => {
                 const settings = getSettings();
 
