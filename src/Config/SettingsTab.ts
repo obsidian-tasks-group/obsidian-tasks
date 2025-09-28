@@ -390,7 +390,11 @@ export class SettingsTab extends PluginSettingTab {
 
         scheduledDateFolders = new Setting(containerEl)
             .setName(i18n.t('settings.datesFromFileNames.scheduledDate.folders.name'))
-            .setDesc(i18n.t('settings.datesFromFileNames.scheduledDate.folders.description'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.folders.description')}</p>`,
+                ),
+            )
             .addText(async (input) => {
                 const settings = getSettings();
                 await this.plugin.saveSettings();
