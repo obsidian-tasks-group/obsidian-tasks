@@ -478,7 +478,9 @@ export class SettingsTab extends PluginSettingTab {
 
         autoSuggestMinimumMatchLength = new Setting(containerEl)
             .setName(i18n.t('settings.autoSuggest.minLength.name'))
-            .setDesc(i18n.t('settings.autoSuggest.minLength.description'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(`<p>${i18n.t('settings.autoSuggest.minLength.description')}</p>`),
+            )
             .addSlider((slider) => {
                 const settings = getSettings();
                 slider
@@ -493,7 +495,11 @@ export class SettingsTab extends PluginSettingTab {
 
         autoSuggestMaximumSuggestions = new Setting(containerEl)
             .setName(i18n.t('settings.autoSuggest.maxSuggestions.name'))
-            .setDesc(i18n.t('settings.autoSuggest.maxSuggestions.description'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    `<p>${i18n.t('settings.autoSuggest.maxSuggestions.description')}</p>`,
+                ),
+            )
             .addSlider((slider) => {
                 const settings = getSettings();
                 slider
