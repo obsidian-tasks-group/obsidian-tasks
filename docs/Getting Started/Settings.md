@@ -6,14 +6,9 @@ publish: true
 
 ## Restart after changing settings
 
-Regrettably, many of the settings for customising Tasks require one of the following to be done, for the new options to take effect:
+Changes to most of the Tasks settings take immediate effect.
 
-- Obsidian to be restarted,
-- or the vault to be closed and re-opened.
-
-The Tasks Settings pane warns of this:
-
-![Changing any settings requires a restart of obsidian](../images/settings-restart-after-change.png)
+Regrettably, a few require the vault to be reloaded. These settings are marked with `REQUIRES RESTART`.
 
 ## Available settings
 
