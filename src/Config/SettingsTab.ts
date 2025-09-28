@@ -126,7 +126,8 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.globalFilter.removeFilter.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.globalFilter.removeFilter.description')}</p>`,
+                    `<p>${i18n.t('settings.globalFilter.removeFilter.description')}</p>` +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
                 ),
             )
             .addToggle((toggle) => {
