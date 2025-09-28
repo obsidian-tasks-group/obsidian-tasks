@@ -211,6 +211,8 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.statuses.coreStatuses.description.line1') +
                         '</p><p>' +
                         i18n.t('settings.statuses.coreStatuses.description.line2') +
+                        '</p><p>' +
+                        i18n.t('settings.changeRequiresRestart') +
                         '</p>',
                 },
                 settings: [
@@ -241,6 +243,8 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.statuses.customStatuses.description.line2') +
                         '</p><p>' +
                         i18n.t('settings.statuses.customStatuses.description.line3') +
+                        '</p><p>' +
+                        i18n.t('settings.changeRequiresRestart') +
                         '</p><p></p><p>' +
                         `<a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">${i18n.t(
                             'settings.statuses.customStatuses.description.line4',
