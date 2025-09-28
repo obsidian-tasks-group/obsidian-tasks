@@ -213,7 +213,7 @@ When a task has multiple dates, one of them is selected as reference date based 
 > The Start date also provides a more stable reference for calculating future recurrences, especially since you'll typically add a new Scheduled date later when you're ready to work on the task.
 >
 > > [!released]
-> > This different order was introduced in Tasks X.Y.Z.
+> > This different order was introduced in Tasks 7.22.0.
 
 If more dates than the reference date exist on the original recurring task, the next occurrence will have the same dates.
 All dates of the next occurring task will have the relative distance to the reference date that they had on the original task.
