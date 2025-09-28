@@ -105,7 +105,7 @@
         "name": "작업 내용 자동 제안"
       }
     },
-    "changeRequiresRestart": "설정 변경 후에는 Obsidian을 다시 시작해야 합니다.",
+    "changeRequiresRestart": "이 설정 변경 후에는 Obsidian을 다시 시작해야 합니다.",
     "dates": {
       "cancelledDate": {
         "description": "활성화하면 작업을 '취소'로 전환할 때 마지막에 ❌ YYYY-MM-DD 타임스탬프가 추가됩니다.",
