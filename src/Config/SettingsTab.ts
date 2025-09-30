@@ -331,6 +331,28 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
+        new Setting(containerEl)
+            .setName(i18n.t('settings.dates.nextDayStartHour.name'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    i18n.t('settings.dates.nextDayStartHour.description') +
+                        '</br>' +
+                        this.seeTheDocumentation(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Next+day+start+at',
+                        ),
+                ),
+            )
+            .addSlider((slider) => {
+                const settings = getSettings();
+                slider.setLimits(0, 23, 1);
+                slider.setValue(settings.nextDayStartHour);
+                slider.setDynamicTooltip();
+                slider.onChange(async (value) => {
+                    updateSettings({ nextDayStartHour: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.datesFromFileNames.heading')).setHeading();
         // ---------------------------------------------------------------------------

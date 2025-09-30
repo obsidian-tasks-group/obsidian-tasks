@@ -3,6 +3,7 @@ import type { Moment } from 'moment';
 // end-snippet
 import { RRule } from 'rrule';
 import type { Occurrence } from './Occurrence';
+import { momentAdjusted } from '../DateTime/DateAdjusted';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -38,7 +39,7 @@ export class Recurrence {
                 if (!baseOnToday && referenceDate !== null) {
                     options.dtstart = window.moment(referenceDate).startOf('day').utc(true).toDate();
                 } else {
-                    options.dtstart = window.moment().startOf('day').utc(true).toDate();
+                    options.dtstart = momentAdjusted().startOf('day').utc(true).toDate();
                 }
 
                 const rrule = new RRule(options);
@@ -73,7 +74,7 @@ export class Recurrence {
      *
      * @param today - Optional date representing the completion date. Defaults to today.
      */
-    public next(today = window.moment()): Occurrence | null {
+    public next(today = momentAdjusted()): Occurrence | null {
         const nextReferenceDate = this.nextReferenceDate(today);
 
         if (nextReferenceDate === null) {

@@ -2,6 +2,7 @@ import type { unitOfTime } from 'moment';
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import { Task } from '../../Task/Task';
 import { postponeMenuItemTitleFromDate, removeDateMenuItemTitleForField } from '../../DateTime/Postponer';
+import { momentAdjusted } from '../../DateTime/DateAdjusted';
 import { TasksDate } from '../../DateTime/TasksDate';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 import { MenuDividerInstruction } from './MenuDividerInstruction';
@@ -57,7 +58,7 @@ export class SetRelativeTaskDate extends SetTaskDate {
         amount: number,
         timeUnit: unitOfTime.DurationConstructor,
     ) {
-        const currentDate = taskDueToday[dateFieldToEdit] ?? window.moment();
+        const currentDate = taskDueToday[dateFieldToEdit] ?? momentAdjusted();
         const title = postponeMenuItemTitleFromDate(dateFieldToEdit, currentDate, amount, timeUnit);
 
         const newDate = new TasksDate(window.moment(currentDate)).postpone(timeUnit, amount).toDate();
@@ -132,7 +133,7 @@ export function allLifeCycleDateInstructions(field: AllTaskDateFields, task: Tas
  * @param factor - +1 means today or future dates; -1 = today or earlier dates.
  */
 function allDateInstructions(task: Task, field: AllTaskDateFields, factor: number) {
-    const today = window.moment().startOf('day');
+    const today = momentAdjusted().startOf('day');
     const todayAsDate = today.toDate();
     const todayAsTasksDate = new TasksDate(today.clone());
 

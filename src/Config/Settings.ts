@@ -70,6 +70,7 @@ export interface Settings {
     setCreatedDate: boolean;
     setDoneDate: boolean;
     setCancelledDate: boolean;
+    nextDayStartHour: number;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
@@ -106,6 +107,7 @@ const defaultSettings: Readonly<Settings> = {
     setCreatedDate: false,
     setDoneDate: true,
     setCancelledDate: true,
+    nextDayStartHour: 0,
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 20,

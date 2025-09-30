@@ -1,3 +1,4 @@
+import { momentAdjusted } from '../DateTime/DateAdjusted';
 import type { Task } from './Task';
 
 export class Urgency {
@@ -13,7 +14,7 @@ export class Urgency {
 
         if (task.dueDate?.isValid()) {
             // Map a range of 21 days to the value 0.2 - 1.0
-            const startOfToday = window.moment().startOf('day');
+            const startOfToday = momentAdjusted().startOf('day');
             const daysOverdue = Math.round(startOfToday.diff(task.dueDate) / Urgency.milliSecondsPerDay);
 
             let dueMultiplier: number;
@@ -30,13 +31,13 @@ export class Urgency {
         }
 
         if (task.scheduledDate?.isValid()) {
-            if (window.moment().isSameOrAfter(task.scheduledDate)) {
+            if (momentAdjusted().isSameOrAfter(task.scheduledDate)) {
                 urgency += 1 * Urgency.scheduledCoefficient;
             }
         }
 
         if (task.startDate?.isValid()) {
-            if (window.moment().isBefore(task.startDate)) {
+            if (momentAdjusted().isBefore(task.startDate)) {
                 urgency += 1 * Urgency.startedCoefficient;
             }
         }

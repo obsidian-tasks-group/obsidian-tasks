@@ -2,6 +2,7 @@ import type { DurationInputArg2, Moment, unitOfTime } from 'moment';
 import { Notice } from 'obsidian';
 import { PropertyCategory } from '../lib/PropertyCategory';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { momentAdjusted } from './DateAdjusted';
 
 /**
  * TasksDate encapsulates a date, for simplifying the JavaScript expressions users need to
@@ -59,7 +60,7 @@ export class TasksDate {
 
     public get category(): PropertyCategory {
         // begin-snippet: use-moment-in-src
-        const today = window.moment();
+        const today = momentAdjusted();
         // end-snippet
         const date = this.moment;
         if (!date) {
@@ -96,7 +97,7 @@ export class TasksDate {
         //   - is the same for all dates with the same 'fromNow()' name,
         //   - sorts in ascending order of the date.
 
-        const now = window.moment();
+        const now = momentAdjusted();
         const earlier = date.isSameOrBefore(now, 'day');
         const startDateOfThisGroup = this.fromNowStartDateOfGroup(date, earlier, now);
         const splitPastAndFutureDates = earlier ? 1 : 3;
@@ -124,7 +125,7 @@ export class TasksDate {
     public postpone(unitOfTime: unitOfTime.DurationConstructor = 'days', amount: number = 1) {
         if (!this._date) throw new Notice('Cannot postpone a null date');
 
-        const today = window.moment().startOf('day');
+        const today = momentAdjusted().startOf('day');
         // According to the moment.js docs, isBefore is not stable so we use !isSameOrAfter: https://momentjs.com/docs/#/query/is-before/
         const isDateBeforeToday = !this._date.isSameOrAfter(today, 'day');
 

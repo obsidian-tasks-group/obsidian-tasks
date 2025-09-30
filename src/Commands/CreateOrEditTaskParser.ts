@@ -2,6 +2,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { Status } from '../Statuses/Status';
 import { OnCompletion } from '../Task/OnCompletion';
 import { Task } from '../Task/Task';
+import { momentAdjusted } from '../DateTime/DateAdjusted';
 import { DateFallback } from '../DateTime/DateFallback';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { TaskLocation } from '../Task/TaskLocation';
@@ -12,7 +13,7 @@ import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 
 function getDefaultCreatedDate() {
     const { setCreatedDate } = getSettings();
-    return setCreatedDate ? window.moment() : null;
+    return setCreatedDate ? momentAdjusted() : null;
 }
 
 function shouldUpdateCreatedDateForTask(task: Task) {

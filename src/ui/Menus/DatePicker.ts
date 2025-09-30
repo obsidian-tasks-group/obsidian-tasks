@@ -1,6 +1,7 @@
 import flatpickr from 'flatpickr';
 import type { Task } from '../../Task/Task';
 import { RemoveTaskDate, SetTaskDate } from '../EditInstructions/DateInstructions';
+import { momentAdjusted } from '../../DateTime/DateAdjusted';
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import type { TaskSaver } from './TaskEditingMenu';
 
@@ -21,7 +22,7 @@ export function promptForDate(
     // TODO figure out how Today's date is determined: if Obsidian is left
     //      running overnight, the flatpickr modal shows the previous day as Today.
     const fp = flatpickr(parentElement, {
-        defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
+        defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : momentAdjusted().toDate(),
         disableMobile: true,
         enableTime: false, // Optional: Enable time picker
         dateFormat: 'Y-m-d', // Adjust the date and time format as needed
@@ -52,7 +53,7 @@ export function promptForDate(
 
             // Create "Today" button
             addButton(buttonContainer, instance, task, taskSaver, 'Today', () => {
-                const today = new Date();
+                const today = momentAdjusted().toDate();
                 return new SetTaskDate(dateFieldToEdit, today).apply(task);
             });
 

@@ -3,6 +3,7 @@ import type { Moment } from 'moment';
 import type { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Task } from '../Task/Task';
+import { momentAdjusted } from '../DateTime/DateAdjusted';
 
 /**
  * A renderer for individual {@link Task} fields in an HTML context.
@@ -67,7 +68,7 @@ export class TaskFieldHTMLData {
         const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
 
         function dateToAttribute(date: Moment) {
-            const today = window.moment().startOf('day');
+            const today = momentAdjusted().startOf('day');
             const diffDays = today.diff(date, 'days');
 
             if (isNaN(diffDays)) {

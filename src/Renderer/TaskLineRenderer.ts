@@ -9,6 +9,7 @@ import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
+import { momentAdjusted } from '../DateTime/DateAdjusted';
 import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
 import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
@@ -430,7 +431,7 @@ export class TaskLineRenderer {
 
             function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
                 return `${signifier} ${date.format(TaskRegularExpressions.dateFormat)} (${date.from(
-                    window.moment().startOf('day'),
+                    momentAdjusted().startOf('day'),
                 )})`;
             }
 

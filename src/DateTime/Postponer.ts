@@ -1,6 +1,7 @@
 import type { Moment, unitOfTime } from 'moment';
 import { capitalizeFirstLetter } from '../lib/StringHelpers';
 import { Task } from '../Task/Task';
+import { momentAdjusted } from './DateAdjusted';
 import { DateFallback } from './DateFallback';
 import { TasksDate } from './TasksDate';
 import type { AllTaskDateFields, HappensDate } from './DateFieldTypes';
@@ -81,7 +82,7 @@ export function createFixedDateTask(
     timeUnit: unitOfTime.DurationConstructor,
     amount: number,
 ) {
-    const dateToPostpone = window.moment();
+    const dateToPostpone = momentAdjusted();
     return createPostponedTaskFromDate(dateToPostpone, task, dateFieldToPostpone, timeUnit, amount);
 }
 
@@ -164,7 +165,7 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unit
  */
 export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
-    const dateToUpdate = window.moment().startOf('day');
+    const dateToUpdate = momentAdjusted().startOf('day');
     return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
 }
 
@@ -207,7 +208,7 @@ export function postponeMenuItemTitleFromDate(
     const formattedNewDate = postponedDate.format('ddd Do MMM');
 
     const amountOrArticle = amount != 1 ? amount : 'a';
-    if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
+    if (dateToUpdate.isSameOrBefore(momentAdjusted(), 'day')) {
         const updatedDateDisplayText = prettyPrintDateFieldName(updatedDateType);
         const title =
             amount >= 0
