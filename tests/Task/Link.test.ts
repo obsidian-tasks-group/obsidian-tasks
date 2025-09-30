@@ -44,7 +44,7 @@ describe('linkClass', () => {
         expect(link.linksTo('link_in_file_body.md')).toEqual(true);
     });
 
-    describe('getLink() configures Link.destinationPath and destinationFile automatically', () => {
+    describe('getLink() configures Link.destinationPath and asFile automatically', () => {
         it('should set the full path for a resolved link', () => {
             const link = getLink('link_in_heading', 0);
             expect(link.destinationPath).toEqual('Test Data/multiple_headings.md');
@@ -64,9 +64,9 @@ describe('linkClass', () => {
             expect(link?.originalMarkdown).toEqual('[[yaml_all_property_types_populated]]');
             expect(link?.destinationPath).toEqual('Test Data/yaml_all_property_types_populated.md');
 
-            const linkDestinationFile = link?.asFile;
-            expect(linkDestinationFile?.path).toEqual('Test Data/yaml_all_property_types_populated.md');
-            expect(linkDestinationFile?.property('sample_text_property')).toEqual('Sample Text Value');
+            const linkAsFile = link?.asFile;
+            expect(linkAsFile?.path).toEqual('Test Data/yaml_all_property_types_populated.md');
+            expect(linkAsFile?.property('sample_text_property')).toEqual('Sample Text Value');
 
             expect(tasksFile.propertyAsLink('sample_link_property')?.asFile?.property('sample_text_property')).toEqual(
                 'Sample Text Value',
