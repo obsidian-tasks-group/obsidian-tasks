@@ -48,13 +48,13 @@ describe('linkClass', () => {
         it('should set the full path for a resolved link', () => {
             const link = getLink('link_in_heading', 0);
             expect(link.destinationPath).toEqual('Test Data/multiple_headings.md');
-            expect(link.asFile?.path).toEqual('Test Data/multiple_headings.md');
+            expect(link.asFile()?.path).toEqual('Test Data/multiple_headings.md');
         });
 
         it('should not set the full path for a broken/unresolved link', () => {
             const link = getLink('link_is_broken', 0);
             expect(link.destinationPath).toEqual(null);
-            expect(link.asFile).toEqual(null);
+            expect(link.asFile()).toEqual(null);
         });
 
         it('should follow a frontmatter link to get a property in the destination file', () => {
@@ -64,13 +64,13 @@ describe('linkClass', () => {
             expect(link?.originalMarkdown).toEqual('[[yaml_all_property_types_populated]]');
             expect(link?.destinationPath).toEqual('Test Data/yaml_all_property_types_populated.md');
 
-            const linkAsFile = link?.asFile;
+            const linkAsFile = link?.asFile();
             expect(linkAsFile?.path).toEqual('Test Data/yaml_all_property_types_populated.md');
             expect(linkAsFile?.property('sample_text_property')).toEqual('Sample Text Value');
 
-            expect(tasksFile.propertyAsLink('sample_link_property')?.asFile?.property('sample_text_property')).toEqual(
-                'Sample Text Value',
-            );
+            expect(
+                tasksFile.propertyAsLink('sample_link_property')?.asFile()?.property('sample_text_property'),
+            ).toEqual('Sample Text Value');
         });
 
         it('should follow a chain of links', () => {
@@ -88,34 +88,34 @@ describe('linkClass', () => {
             expect(
                 // prettier-ignore
                 tasksFile.
-                    propertyAsLink('link_to_file')?.asFile?.path, // hop 2
+                    propertyAsLink('link_to_file')?.asFile()?.path, // hop 2
             ).toEqual('Test Data/chain_link2.md');
 
             // Test 2: Chain through 1 intermediate file (2 hops)
             expect(
                 // prettier-ignore
                 tasksFile.
-                    propertyAsLink('link_to_file')?.asFile?. // hop 1
-                    propertyAsLink('link_to_file')?.asFile?.path, // hop 2
+                    propertyAsLink('link_to_file')?.asFile()?. // hop 1
+                    propertyAsLink('link_to_file')?.asFile()?.path, // hop 2
             ).toEqual('Test Data/chain_link3.md');
 
             // Test 3: Chain through 2 intermediate files (3 hops)
             expect(
                 // prettier-ignore
                 tasksFile.
-                    propertyAsLink('link_to_file')?.asFile?. // hop 1
-                    propertyAsLink('link_to_file')?.asFile?. // hop 2
-                    propertyAsLink('link_to_file')?.asFile?.path, // hop 3
+                    propertyAsLink('link_to_file')?.asFile()?. // hop 1
+                    propertyAsLink('link_to_file')?.asFile()?. // hop 2
+                    propertyAsLink('link_to_file')?.asFile()?.path, // hop 3
             ).toEqual('Test Data/chain_link4.md');
 
             // Test 4: Chain through 3 intermediate files (4 hops) - circular back to start
             expect(
                 // prettier-ignore
                 tasksFile.
-                    propertyAsLink('link_to_file')?.asFile?. // hop 1
-                    propertyAsLink('link_to_file')?.asFile?. // hop 2
-                    propertyAsLink('link_to_file')?.asFile?. // hop 3
-                    propertyAsLink('link_to_file')?.asFile?.path, // hop 4
+                    propertyAsLink('link_to_file')?.asFile()?. // hop 1
+                    propertyAsLink('link_to_file')?.asFile()?. // hop 2
+                    propertyAsLink('link_to_file')?.asFile()?. // hop 3
+                    propertyAsLink('link_to_file')?.asFile()?.path, // hop 4
             ).toEqual('Test Data/chain_link1.md');
         });
     });

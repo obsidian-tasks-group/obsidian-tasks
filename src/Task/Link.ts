@@ -88,7 +88,7 @@ export class Link {
      * Note: The returned TasksFile will have metadata if LinkResolver.getInstance().getFileCache
      *       has been configured.
      */
-    public get asFile(): TasksFile | null {
+    public asFile(): TasksFile | null {
         const destPath = this.destinationPath;
         if (!destPath) {
             return null;
