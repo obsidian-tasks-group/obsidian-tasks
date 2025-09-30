@@ -2,8 +2,8 @@
 import type { Moment } from 'moment';
 // end-snippet
 import { RRule } from 'rrule';
-import type { Occurrence } from './Occurrence';
 import { momentAdjusted } from '../DateTime/DateAdjusted';
+import type { Occurrence } from './Occurrence';
 
 export class Recurrence {
     private readonly rrule: RRule;

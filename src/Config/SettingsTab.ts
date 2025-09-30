@@ -335,8 +335,11 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.dates.nextDayStartHour.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.dates.nextDayStartHour.description') +
-                        '</br>' +
+                    '<p>' +
+                        i18n.t('settings.dates.nextDayStartHour.description') +
+                        '</p><p>' +
+                        i18n.t('settings.changeRequiresRestart') +
+                        '</p>' +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Getting+Started/Dates#Next+day+start+at',
                         ),
