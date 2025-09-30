@@ -105,7 +105,7 @@
         "name": "自动建议任务内容"
       }
     },
-    "changeRequiresRestart": "更改任何设置都需要重新启动Obsidian。",
+    "changeRequiresRestart": "需要重启。",
     "dates": {
       "cancelledDate": {
         "description": "启用此功能将在任务设置为取消时，在其末尾添加时间戳 ❌ YYYY-MM-DD。",
