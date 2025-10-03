@@ -54,6 +54,29 @@ filter by function task.file.hasProperty("project")
 filter by function task.file.propertyAsLink("project")?.asFile()?.property("status") === "active"
 ```
 
+## Bases equivalent
+
+With Obsidian 1.10.0.
+
+```base
+filters:
+  and:
+    - file.folder == this.file.folder
+formulas:
+  project status: project.asFile().properties.status
+views:
+  - type: table
+    name: Table
+    groupBy:
+      property: formula.project status
+      direction: ASC
+    order:
+      - file.name
+      - project
+      - formula.project status
+
+```
+
 ## Dataview equivalent
 
 ### Dataview - group by project
