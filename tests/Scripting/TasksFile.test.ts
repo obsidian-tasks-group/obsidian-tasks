@@ -8,10 +8,6 @@ import { getAllTags, getFirstLinkpathDest, parseFrontMatterTags } from '../__moc
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
-afterEach(() => {
-    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
-});
-
 describe('TasksFile', () => {
     it('should provide access to path', () => {
         const path = 'a/b/c/d.md';
@@ -258,21 +254,11 @@ describe('TasksFile - accessing links', () => {
         }
     });
 
-    it('should access all links in properties', () => {
+    it('should access all links in properties, for files obtained from MockDataLoader', () => {
         const tasksFile = getTasksFileFromMockData('link_in_yaml');
         expect(tasksFile.outlinksInProperties.length).toEqual(1);
         expect(tasksFile.outlinksInProperties[0].originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
-        expect(tasksFile.outlinksInProperties[0].destinationPath).toBeNull();
-    });
-
-    it('should save destinationPath when LinksResolver is supplied', () => {
-        LinkResolver.getInstance().setGetFirstLinkpathDestFn(
-            (_rawLink: Reference, _sourcePath: string) => 'Hello World.md',
-        );
-
-        const tasksFile = getTasksFileFromMockData('link_in_yaml');
-        expect(tasksFile.outlinksInProperties[0].originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
-        expect(tasksFile.outlinksInProperties[0].destinationPath).toEqual('Hello World.md');
+        expect(tasksFile.outlinksInProperties[0].destinationPath).toEqual('Test Data/yaml_tags_is_empty.md');
     });
 });
 
