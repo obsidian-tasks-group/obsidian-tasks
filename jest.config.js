@@ -18,7 +18,7 @@ module.exports = {
     // set up the testing framework before each test.
     setupFilesAfterEnv: [
         '<rootDir>/tests/CustomMatchers/jest.custom_matchers.setup.ts',
-        '<rootDir>/tests/LinkResolver.setup.ts',
+        '<rootDir>/tests/Task/LinkResolver.setup.ts',
     ],
     globalSetup: './tests/global-setup.js',
 };
