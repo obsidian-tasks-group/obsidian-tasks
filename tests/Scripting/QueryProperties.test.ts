@@ -25,7 +25,8 @@ describe('query', () => {
         const query_using_properties = MockDataLoader.get(testDataName);
         const cachedMetadata = getTasksFileFromMockData(testDataName).cachedMetadata;
 
-        // This is getting annoying, having to do this repeatedly.
+        // Because we are using a file path that differs from query_using_properties.md,
+        // we have to bypass MockDataLoader and specify which link resolver to user:
         LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, _sourcePath: string) =>
             getFirstLinkpathDestFromData(query_using_properties, rawLink),
         );
