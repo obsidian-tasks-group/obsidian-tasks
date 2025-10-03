@@ -5,8 +5,6 @@ import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleD
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
-import { LinkResolver } from '../../src/Task/LinkResolver';
-import { getFirstLinkpathDest } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
 function getLink(testDataName: MockDataName, index: number) {
@@ -360,14 +358,6 @@ describe('linkClass', () => {
 });
 
 describe('visualise links', () => {
-    beforeAll(() => {
-        LinkResolver.getInstance().setGetFirstLinkpathDestFn(getFirstLinkpathDest);
-    });
-
-    afterAll(() => {
-        LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
-    });
-
     function createRow(field: string, value: string | undefined): string {
         // We use NBSP - non-breaking spaces - so that the approved file content
         // is correctly aligned when viewed in Obsidian:
