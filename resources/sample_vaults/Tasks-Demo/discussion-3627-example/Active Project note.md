@@ -1,6 +1,6 @@
 ---
 created: 2025-09-22
-project: "[[Active  Project]]"
+project: "[[Active Project]]"
 themes:
 ---
 
