@@ -11,18 +11,18 @@ describe('LinkResolver', () => {
         rawLink = link_in_file_body.cachedMetadata.links![0];
     });
 
-    it.failing('should resolve a link via local instance', () => {
+    it('should resolve a link via local instance', () => {
         const link = new Link(rawLink, link_in_file_body.filePath);
 
         expect(link.originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
-        expect(link.destinationPath).toBeNull();
+        expect(link.destinationPath).toEqual('Test Data/yaml_tags_is_empty.md');
     });
 
-    it.failing('should resolve a link via global instance', () => {
+    it('should resolve a link via global instance', () => {
         const link = new Link(rawLink, link_in_file_body.filePath);
 
         expect(link.originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
-        expect(link.destinationPath).toBeNull();
+        expect(link.destinationPath).toEqual('Test Data/yaml_tags_is_empty.md');
     });
 
     it('should allow a function to be supplied, to find the destination of a link', () => {
