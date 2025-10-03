@@ -1,4 +1,3 @@
-import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 
@@ -16,20 +15,6 @@ function getLink(testDataName: MockDataName, index: number) {
     const rawLink = data.cachedMetadata.links![index];
     return new Link(rawLink, data.filePath);
 }
-
-beforeAll(() => {
-    LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, sourcePath: string) => {
-        return getFirstLinkpathDest(rawLink, sourcePath);
-    });
-    LinkResolver.getInstance().setGetFileCacheFn(
-        (filePath: string) => MockDataLoader.findDataFromMarkdownPath(filePath).cachedMetadata,
-    );
-});
-
-afterAll(() => {
-    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
-    LinkResolver.getInstance().resetGetFileCacheFn();
-});
 
 describe('linkClass', () => {
     it('should construct a Link object', () => {
