@@ -25,29 +25,4 @@ describe('LinkResolver', () => {
         const link = new Link(rawLink, link_in_file_body.filePath);
         expect(link.destinationPath).toEqual('Hello World.md');
     });
-
-    it('should allow the global instance to be reset', () => {
-        const globalInstance = LinkResolver.getInstance();
-        globalInstance.setGetFirstLinkpathDestFn(() => 'From Global Instance.md');
-
-        const link1 = new Link(rawLink, link_in_file_body.filePath);
-        expect(link1.destinationPath).toEqual('From Global Instance.md');
-
-        globalInstance.resetGetFirstLinkpathDestFn();
-
-        const link2 = new Link(rawLink, link_in_file_body.filePath);
-        expect(link2.destinationPath).toBeNull();
-    });
-
-    it('resetting global instance affects pre-existing links', () => {
-        const globalInstance = LinkResolver.getInstance();
-        globalInstance.setGetFirstLinkpathDestFn(() => 'From Global Instance.md');
-
-        const link1 = new Link(rawLink, link_in_file_body.filePath);
-        expect(link1.destinationPath).toEqual('From Global Instance.md');
-
-        globalInstance.resetGetFirstLinkpathDestFn();
-
-        expect(link1.destinationPath).toBeNull();
-    });
 });

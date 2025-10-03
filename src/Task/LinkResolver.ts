@@ -24,10 +24,6 @@ export class LinkResolver {
         this.getFirstLinkpathDestFn = getFirstLinkpathDestFn;
     }
 
-    public resetGetFirstLinkpathDestFn() {
-        this.getFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
-    }
-
     public setGetFileCacheFn(getFileCacheFn: GetFileCacheFn) {
         this.getFileCacheFn = getFileCacheFn;
     }

@@ -13,6 +13,5 @@ beforeAll(() => {
 });
 
 afterAll(() => {
-    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
     LinkResolver.getInstance().resetGetFileCacheFn();
 });
