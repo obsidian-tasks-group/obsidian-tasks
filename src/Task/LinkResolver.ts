@@ -7,12 +7,13 @@ const defaultGetFirstLinkpathDestFn = (_rawLink: Reference, _sourcePath: string)
 const defaultGetFileCacheFn = (_filePath: string) => null;
 
 /**
- * An abstraction to implement {@link Link.destinationPath}.
+ * An abstraction to implement {@link Link.destinationPath} and help {@link Link} to create {@link TasksFile} objects.
  *
  * See also:
- * - `src/main.ts` - search for `LinkResolver.getInstance()`
- * - Uses of {@link getFirstLinkpathDest} and {@link getFirstLinkpathDestFromData} in
- * `tests/__mocks__/obsidian.ts`.
+ * - For how this is configured in the **released plugin**:
+ *      - `src/main.ts`
+ * - For how this is configured in the **tests**:
+ *      - `LinkResolver.setup.ts`
  */
 export class LinkResolver {
     private static instance: LinkResolver;
