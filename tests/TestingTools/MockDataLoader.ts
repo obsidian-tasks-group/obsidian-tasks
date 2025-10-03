@@ -119,7 +119,7 @@ export class MockDataLoader {
                 return MockDataLoader.get(allMockDataName);
             }
         }
-        throw new Error('Markdown path not found in any SimulatedFile');
+        throw new Error(`Markdown path not found in any SimulatedFile: '${markdownPath}' `);
     }
 
     /**
