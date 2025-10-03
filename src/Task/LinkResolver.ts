@@ -28,10 +28,6 @@ export class LinkResolver {
         this.getFileCacheFn = getFileCacheFn;
     }
 
-    public resetGetFileCacheFn() {
-        this.getFileCacheFn = defaultGetFileCacheFn;
-    }
-
     public getDestinationPath(rawLink: Reference, pathContainingLink: string) {
         return this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined;
     }

@@ -11,7 +11,3 @@ beforeAll(() => {
         (filePath: string) => MockDataLoader.findDataFromMarkdownPath(filePath).cachedMetadata,
     );
 });
-
-afterAll(() => {
-    LinkResolver.getInstance().resetGetFileCacheFn();
-});
