@@ -33,7 +33,7 @@ So in the example i provided, i only want Active task to be present.
 
 ## Tasks searches
 
-### One instruction
+### One instruction - show active tasks
 
 ```tasks
 not done
@@ -42,7 +42,7 @@ preset this_folder
 filter by function task.file.propertyAsLink("project")?.asFile()?.property("status") === "active"
 ```
 
-### Two instructions
+### Two instructions - show active tasks
 
 Possibly slightly faster version?
 
@@ -52,4 +52,13 @@ preset this_folder
 
 filter by function task.file.hasProperty("project")
 filter by function task.file.propertyAsLink("project")?.asFile()?.property("status") === "active"
+```
+
+### Group tasks by their project status
+
+```tasks
+not done
+preset this_folder
+
+group by function task.file.propertyAsLink("project")?.asFile()?.property("status") ?? ''
 ```
