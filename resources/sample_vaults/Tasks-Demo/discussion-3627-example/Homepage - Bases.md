@@ -8,6 +8,9 @@ filters:
     - file.folder == this.file.folder
 formulas:
   project status: project.asFile().properties.status
+properties:
+  note.status:
+    displayName: note status
 views:
   - type: table
     name: All Notes
@@ -17,6 +20,7 @@ views:
     order:
       - file.name
       - project
+      - status
       - formula.project status
   - type: table
     name: Active Project Notes
@@ -29,6 +33,7 @@ views:
     order:
       - file.name
       - project
+      - status
       - formula.project status
   - type: table
     name: Ideas
@@ -41,6 +46,7 @@ views:
     order:
       - file.name
       - project
+      - status
       - formula.project status
 
 ```
