@@ -85,7 +85,7 @@ describe('status.name', () => {
         expect(filter?.error).toMatchInlineSnapshot(`
             "Invalid status.type instruction: 'status.type gobbledygook'.
                 Allowed options: 'is' and 'is not' (without quotes).
-                Allowed values:  TODO DONE IN_PROGRESS CANCELLED NON_TASK
+                Allowed values:  TODO DONE IN_PROGRESS ON_HOLD CANCELLED NON_TASK
                                  Note: values are case-insensitive,
                                        so 'in_progress' works too, for example.
                 Example:         status.type is not NON_TASK"

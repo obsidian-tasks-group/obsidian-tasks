@@ -148,6 +148,9 @@ export class Status {
             case StatusType.TODO:
                 prefix = '2';
                 break;
+            case StatusType.ON_HOLD:
+                prefix = '3';
+                break;
             case StatusType.DONE:
                 prefix = '4';
                 break;
