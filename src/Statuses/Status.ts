@@ -60,6 +60,16 @@ export class Status {
     );
 
     /**
+     * The default On Hold status. Goes to Todo when toggled.
+     *
+     * @static
+     * @type {Status}
+     */
+    public static readonly ON_HOLD: Status = new Status(
+        new StatusConfiguration('h', 'On Hold', ' ', true, StatusType.ON_HOLD),
+    );
+
+    /**
      * A sample Non-Task status. Goes to NON_TASK when toggled.
      *
      * @static
