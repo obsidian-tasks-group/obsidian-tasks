@@ -19,6 +19,7 @@ This was solved by the introduction of 'Status Types', which are simply a set of
 
 - `TODO`
 - `IN_PROGRESS`
+- `ON_HOLD`
 - `DONE`
 - `CANCELLED`
 - `NON_TASK`
@@ -32,6 +33,13 @@ Self explanatory, we hope: this can be thought of as 'things not yet started'.
 ### IN_PROGRESS
 
 Use of this is totally optional. You may find it useful to be able to prioritise completing tasks which have already been started.
+
+### ON_HOLD
+
+> [!released]
+> The `ON_HOLD` Status Type was introduced in Tasks X.Y.Z.
+
+You might use this to track tasks that cannot be worked on at the moment, for example, where you are waiting for a reply.
 
 ### DONE
 
