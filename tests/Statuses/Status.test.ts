@@ -125,7 +125,7 @@ describe('Status', () => {
 
     it('should provide text with sorting comments for convenience of custom grouping', () => {
         const status = Status.CANCELLED;
-        expect(status.typeGroupText).toEqual('%%4%%CANCELLED');
+        expect(status.typeGroupText).toEqual('%%5%%CANCELLED');
     });
 });
 

@@ -149,16 +149,16 @@ export class Status {
                 prefix = '2';
                 break;
             case StatusType.DONE:
-                prefix = '3';
-                break;
-            case StatusType.CANCELLED:
                 prefix = '4';
                 break;
-            case StatusType.NON_TASK:
+            case StatusType.CANCELLED:
                 prefix = '5';
                 break;
-            case StatusType.EMPTY:
+            case StatusType.NON_TASK:
                 prefix = '6';
+                break;
+            case StatusType.EMPTY:
+                prefix = '7';
                 break;
         }
         // Text inside the %%..%% comments is used to control the sorting in both sorting of tasks and naming of groups.
