@@ -754,6 +754,17 @@ group by function task.tags.filter( (tag) => ! tag.includes("#tag") )
 
 - Create headings for all tags that do not contain "#tag".
 
+```javascript
+group by function \
+    if (task.tags.length > 0) return task.tags; \
+    return task.findClosestParentTask()?.tags ?? [];
+```
+
+- Group tag-less child tasks by any tags on their parent task:
+  - If the task has any tags on its own line, then group by those tags.
+  - Otherwise, look for the first parent task, and group by its tags.
+  - If there is no parent task, treat the tags as empty.
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 These are more complicated examples, which you might like to copy if you use tasks with [nested tags](https://help.obsidian.md/Editing+and+formatting/Tags#Nested+tags) and wish to group them at different tag nesting levels.
