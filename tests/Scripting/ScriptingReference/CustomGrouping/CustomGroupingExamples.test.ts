@@ -626,6 +626,15 @@ describe('other properties', () => {
                     'group by function task.tags.filter( (tag) => ! tag.includes("#tag") )',
                     'Create headings for all tags that do not contain "#tag"',
                 ],
+                [
+                    `group by function \\
+    if (task.tags.length > 0) return task.tags; \\
+    return task.findClosestParentTask()?.tags ?? [];`,
+                    'Group tag-less child tasks by any tags on their parent task:',
+                    '  If the task has any tags on its own line, then group by those tags.',
+                    '  Otherwise, look for the first parent task, and group by its tags.',
+                    '  If there is no parent task, treat the tags as empty.',
+                ],
             ],
             SampleTasks.withRepresentativeTags(),
         ],
