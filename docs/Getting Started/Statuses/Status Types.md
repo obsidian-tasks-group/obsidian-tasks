@@ -79,14 +79,16 @@ The `status.type` filter uses a new pattern in the Tasks code which some refer t
 
 If Tasks does not understand a `status.type` instruction, it reports this kind of message:
 
+<!-- snippet: StatusTypeField.test.status.name_status.name_with_invalid_line_is_helpful.approved.text -->
 ```text
 Tasks query: Invalid status.type instruction: 'status.type in progress'.
     Allowed options: 'is' and 'is not' (without quotes).
-    Allowed values:  TODO DONE IN_PROGRESS CANCELLED NON_TASK
+    Allowed values:  TODO DONE IN_PROGRESS ON_HOLD CANCELLED NON_TASK
                      Note: values are case-insensitive,
                            so 'in_progress' works too, for example.
     Example:         status.type is not NON_TASK
 ```
+<!-- endSnippet -->
 
 ### Status Types in Tasks filters
 
