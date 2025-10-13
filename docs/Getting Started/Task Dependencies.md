@@ -237,7 +237,7 @@ is blocking
 
 A task is `blocked` if:
 
-- It is `TODO` or `IN_PROGRESS`.
+- It is `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 - And any of the tasks **it directly depends on** are also `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 
 Note that:
