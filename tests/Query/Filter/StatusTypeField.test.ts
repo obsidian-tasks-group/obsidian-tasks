@@ -83,7 +83,10 @@ describe('status.name', () => {
 
         // Assert
         expect(filter).not.toBeValid();
-        verifyWithFileExtension('Tasks query: ' + filter?.error ?? 'Unexpectedly, no error message generated', 'text');
+        verifyWithFileExtension(
+            'Tasks query: ' + (filter?.error ?? 'Unexpectedly, no error message generated'),
+            'text',
+        );
     });
 });
 
