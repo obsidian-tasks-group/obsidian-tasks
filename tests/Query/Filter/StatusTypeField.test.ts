@@ -10,6 +10,7 @@ import { Status } from '../../../src/Statuses/Status';
 import * as FilterParser from '../../../src/Query/FilterParser';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
+import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 
 // Abbreviated names so that the markdown text is aligned
 const todoTask = fromLine({ line: '- [ ] Todo' });
@@ -76,20 +77,13 @@ describe('status.name', () => {
         expect(filter).not.toBeValid();
     });
 
-    it('status.name with invalid line is parsed and user sees helpful message', () => {
+    it('status.name with invalid line is helpful', () => {
         // Arrange
         const filter = FilterParser.parseFilter('status.type in progress');
 
         // Assert
         expect(filter).not.toBeValid();
-        expect(filter?.error).toMatchInlineSnapshot(`
-            "Invalid status.type instruction: 'status.type in progress'.
-                Allowed options: 'is' and 'is not' (without quotes).
-                Allowed values:  TODO DONE IN_PROGRESS ON_HOLD CANCELLED NON_TASK
-                                 Note: values are case-insensitive,
-                                       so 'in_progress' works too, for example.
-                Example:         status.type is not NON_TASK"
-        `);
+        verifyWithFileExtension('Tasks query: ' + filter?.error ?? 'Unexpectedly, no error message generated', 'text');
     });
 });
 
