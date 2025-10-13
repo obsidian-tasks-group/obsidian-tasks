@@ -116,11 +116,13 @@ export function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     filterAllStatuses(FilterParser.parseFilter('done')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is TODO')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is IN_PROGRESS')!);
+    filterAllStatuses(FilterParser.parseFilter('status.type is ON_HOLD')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is DONE')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is CANCELLED')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is NON_TASK')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes todo')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes in progress')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes on hold')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes done')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
 
