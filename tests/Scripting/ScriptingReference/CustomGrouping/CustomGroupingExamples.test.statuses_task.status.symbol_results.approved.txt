@@ -8,6 +8,7 @@ Group by the status symbol, making space characters visible.
 Status symbol: 
 Status symbol: -
 Status symbol: /
+Status symbol: h
 Status symbol: Q
 Status symbol: space
 Status symbol: x
