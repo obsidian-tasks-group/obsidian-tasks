@@ -15,7 +15,7 @@ With the new ability to create a variety of [[Custom Statuses]], Tasks needs to 
 - how to treat tasks when searching,
 - and what to do when tasks with the status are toggled, both for adding or removing Done dates, and for creating new task recurrences.
 
-This was solved by the introduction of 'Status Types', which are simply a set of 5 possible types of status:
+This was solved by the introduction of 'Status Types', which are simply a set of 6 possible types of status:
 
 - `TODO`
 - `IN_PROGRESS`
