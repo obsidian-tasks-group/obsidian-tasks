@@ -30,6 +30,7 @@ Find tasks that are not type `NON_TASK` and not type `CANCELLED`.
 - [x] Status Done
 - [] Status EMPTY
 - [/] Status In Progress
+- [h] Status On Hold
 - [ ] Status Todo
 - [p] Unknown symbol
 - [s] Toggles to self

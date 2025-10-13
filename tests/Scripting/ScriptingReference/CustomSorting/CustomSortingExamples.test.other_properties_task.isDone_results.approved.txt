@@ -8,6 +8,7 @@ Hence, we use `!` to negate `task.isDone`, so tasks with [[Status Types|Status T
 =>
 - [/] Status In Progress
 - [ ] Status Todo
+- [h] Status On Hold
 - [] Status EMPTY
 - [x] Status Done
 - [-] Status Cancelled

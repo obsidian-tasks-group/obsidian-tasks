@@ -10,6 +10,7 @@ Identical to "Sort by status.name".
 - [] Status EMPTY
 - [/] Status In Progress
 - [Q] Status Non-Task
+- [h] Status On Hold
 - [ ] Status Todo
 ====================================================================================
 
