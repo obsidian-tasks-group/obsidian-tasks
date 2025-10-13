@@ -78,12 +78,12 @@ describe('status.name', () => {
 
     it('status.name with invalid line is parsed and user sees helpful message', () => {
         // Arrange
-        const filter = FilterParser.parseFilter('status.type gobbledygook');
+        const filter = FilterParser.parseFilter('status.type in progress');
 
         // Assert
         expect(filter).not.toBeValid();
         expect(filter?.error).toMatchInlineSnapshot(`
-            "Invalid status.type instruction: 'status.type gobbledygook'.
+            "Invalid status.type instruction: 'status.type in progress'.
                 Allowed options: 'is' and 'is not' (without quotes).
                 Allowed values:  TODO DONE IN_PROGRESS ON_HOLD CANCELLED NON_TASK
                                  Note: values are case-insensitive,
