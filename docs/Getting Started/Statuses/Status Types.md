@@ -39,7 +39,7 @@ Use of this is totally optional. You may find it useful to be able to prioritise
 > [!released]
 > The `ON_HOLD` Status Type was introduced in Tasks X.Y.Z.
 
-Use this for tasks awaiting external input or circumstances you cannot control—such as feedback, decisions, or third-party actions. Unlike priorities, which help you choose what to work on, or dependencies, which enforce sequencing, ON_HOLD signals that a task is simply not workable right now.
+Use this for tasks you've decided are currently unworkable—for example, when awaiting external input or any circumstances you cannot control, such as feedback, decisions, or third-party actions. Unlike [[Priority|priorities]], which help you choose what to work on, or [[Task Dependencies|dependencies]], which enforce sequencing, `ON_HOLD` signals that a task is simply not actionable right now.
 
 ### DONE
 
