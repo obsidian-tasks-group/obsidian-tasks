@@ -39,7 +39,8 @@ Use of this is totally optional. You may find it useful to be able to prioritise
 > [!released]
 > The `ON_HOLD` Status Type was introduced in Tasks X.Y.Z.
 
-You might use this to track tasks that cannot be worked on at the moment, for example, where you are waiting for a reply.
+Use this for tasks you intend to complete but cannot currently progress.
+Common examples include tasks awaiting feedback, blocked by dependencies, or temporarily deprioritized.
 
 ### DONE
 
