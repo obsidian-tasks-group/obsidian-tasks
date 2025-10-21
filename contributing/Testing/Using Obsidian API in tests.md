@@ -64,7 +64,7 @@ Obtain all the `Task` objects from all the Markdown files:
 
 <!-- snippet: readAllTasksFromAllSimulatedFiles -->
 ```ts
-const tasks = readAllTasksFromAllSimulatedFiles();
+const allTasks = readAllTasksFromAllSimulatedFiles();
 ```
 <!-- endSnippet -->
 
