@@ -24,6 +24,8 @@ So we need a way to access Obsidian-generated data in our tests. This page tries
 - Test data: [as markdown files](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo/Test%20Data)
 - Test data: [as json files](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__)
 
+### Using Obsidian's data about an individual test Markdown file
+
 Example of the lowest-level usage, returning a [SimulatedFile](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/SimulatedFile.ts) object:
 
 <!-- snippet: MockDataLoader.get -->
@@ -56,7 +58,9 @@ const { data, tasks } = getMockDataAndReadTasks('callout_labelled');
 ```
 <!-- endSnippet -->
 
-Obtain all the `Task` objects from one of the Markdown files:
+### Using Obsidian's data about some or all the test Markdown files
+
+Obtain all the `Task` objects from all the Markdown files:
 
 <!-- snippet: readAllTasksFromAllSimulatedFiles -->
 ```ts
