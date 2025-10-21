@@ -1,4 +1,5 @@
 {
+  "sleepingTime": 300,
   "pluginCmdr": [
     {
       "id": "obsidian-tasks-plugin",
