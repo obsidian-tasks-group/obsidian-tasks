@@ -24,7 +24,7 @@ So we need a way to access Obsidian-generated data in our tests. This page tries
 - Test data: [as markdown files](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo/Test%20Data)
 - Test data: [as json files](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__)
 
-1. Example of the lowest-level usage, returning a [SimulatedFile](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/SimulatedFile.ts) object:
+Example of the lowest-level usage, returning a [SimulatedFile](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/SimulatedFile.ts) object:
 
 <!-- snippet: MockDataLoader.get -->
 ```ts
@@ -32,7 +32,7 @@ const data1 = MockDataLoader.get('one_task');
 ```
 <!-- endSnippet -->
 
-1. Create a `TasksFile` object for one of the Markdown files, for writing tests:
+Create a `TasksFile` object for one of the Markdown files, for writing tests:
 
 <!-- snippet: getTasksFileFromMockData -->
 ```ts
@@ -40,7 +40,7 @@ const tasksFile = getTasksFileFromMockData('no_yaml');
 ```
 <!-- endSnippet -->
 
-1. Obtain all the `Task` objects from one of the Markdown files:
+Obtain all the `Task` objects from one of the Markdown files:
 
 <!-- snippet: readTasksFromSimulatedFile -->
 ```ts
@@ -48,7 +48,7 @@ const tasks = readTasksFromSimulatedFile('multiple_headings');
 ```
 <!-- endSnippet -->
 
-1. Obtain both a `TasksFile` object for one of the Markdown files, and the corresponding `Task` objects:
+Obtain both a `TasksFile` object for one of the Markdown files, and the corresponding `Task` objects:
 
 <!-- snippet: getMockDataAndReadTasks -->
 ```ts
@@ -56,7 +56,7 @@ const { data, tasks } = getMockDataAndReadTasks('callout_labelled');
 ```
 <!-- endSnippet -->
 
-1. Obtain all the `Task` objects from one of the Markdown files:
+Obtain all the `Task` objects from one of the Markdown files:
 
 <!-- snippet: readAllTasksFromAllSimulatedFiles -->
 ```ts
@@ -64,7 +64,7 @@ const tasks = readAllTasksFromAllSimulatedFiles();
 ```
 <!-- endSnippet -->
 
-1. Iterate over all the Markdown files:
+Iterate over all the Markdown files:
 
 <!-- snippet: AllMockDataNames -->
 ```ts
@@ -77,7 +77,7 @@ verifyMarkdown(output);
 ```
 <!-- endSnippet -->
 
-1. Selectively iterate over data from several of the Markdown files:
+Selectively iterate over data from several of the Markdown files:
 
 <!-- snippet: iterate-over-multiple-SimulatedFiles -->
 ```ts
