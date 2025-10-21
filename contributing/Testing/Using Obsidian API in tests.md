@@ -48,6 +48,14 @@ const tasks = readTasksFromSimulatedFile('multiple_headings');
 ```
 <!-- endSnippet -->
 
+1. Obtain both a `TasksFile` object for one of the Markdown files, and the corresponding `Task` objects:
+
+<!-- snippet: getMockDataAndReadTasks -->
+```ts
+const { data, tasks } = getMockDataAndReadTasks('callout_labelled');
+```
+<!-- endSnippet -->
+
 1. Obtain all the `Task` objects from one of the Markdown files:
 
 <!-- snippet: readAllTasksFromAllSimulatedFiles -->
