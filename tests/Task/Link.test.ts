@@ -344,12 +344,14 @@ describe('visualise links', () => {
     });
 
     it('properties', () => {
+        // begin-snippet: AllMockDataNames
         let output = '';
         AllMockDataNames.forEach((file) => {
             const tasksFile = getTasksFileFromMockData(file);
             output += visualiseLinks(tasksFile.outlinksInProperties, file);
         });
         verifyMarkdown(output);
+        // end-snippet
     });
 
     it('outlinks', () => {
