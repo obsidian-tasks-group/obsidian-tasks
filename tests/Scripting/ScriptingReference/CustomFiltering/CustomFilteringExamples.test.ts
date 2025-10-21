@@ -356,10 +356,14 @@ describe('file properties', () => {
     });
 });
 
-describe('obsidian properties', () => {
-    const tasks: Task[] = AllMockDataNames.flatMap((testDataName) => {
+function readAllTasksFromAllSimulatedFiles() {
+    return AllMockDataNames.flatMap((testDataName) => {
         return readTasksFromSimulatedFile(testDataName);
     });
+}
+
+describe('obsidian properties', () => {
+    const tasks = readAllTasksFromAllSimulatedFiles();
 
     const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
