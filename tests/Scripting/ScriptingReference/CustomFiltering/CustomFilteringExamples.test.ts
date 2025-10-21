@@ -357,7 +357,7 @@ describe('file properties', () => {
 
 describe('obsidian properties', () => {
     // begin-snippet: readAllTasksFromAllSimulatedFiles
-    const tasks = readAllTasksFromAllSimulatedFiles();
+    const allTasks = readAllTasksFromAllSimulatedFiles();
     // end-snippet
 
     const testData: CustomPropertyDocsTestData[] = [
@@ -385,7 +385,7 @@ describe('obsidian properties', () => {
                     "find tasks in files where the date property 'creation date' includes string '2024'",
                 ],
             ],
-            tasks,
+            allTasks,
         ],
     ];
 
