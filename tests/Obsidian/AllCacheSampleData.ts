@@ -95,7 +95,7 @@ export type MockDataName =
  * Names of all the sample data in `resources/sample_vaults/Tasks-Demo/Test Data`.
  *
  * To read all the tasks in all the sample data files,
- * use {@link getAllTasksFileFromMockData}
+ * use {@link readAllTasksFromAllSimulatedFiles}
  *
  * Example use:
  *
@@ -113,7 +113,7 @@ export type MockDataName =
  * - {@link readTasksFromSimulatedFile}
  * - {@link getTasksFileFromMockData}
  * - {@link listPathAndData}
- * - {@link getAllTasksFileFromMockData}
+ * - {@link readAllTasksFromAllSimulatedFiles}
  */
 export const AllMockDataNames: MockDataName[] = [
     'all_link_types',
