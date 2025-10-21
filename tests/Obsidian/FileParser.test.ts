@@ -7,7 +7,9 @@ describe('FileParser', () => {
         // I found that intentionally breaking the setting of _sectionIndex was
         // not caught by any other tests.
 
+        // begin-snippet: readTasksFromSimulatedFile
         const tasks = readTasksFromSimulatedFile('multiple_headings');
+        // end-snippet
         const locationDataExceptTasksFile = tasks.map((task) => task.taskLocation.allFieldsExceptTasksFileForTesting());
         expect(locationDataExceptTasksFile).toMatchInlineSnapshot(`
             [

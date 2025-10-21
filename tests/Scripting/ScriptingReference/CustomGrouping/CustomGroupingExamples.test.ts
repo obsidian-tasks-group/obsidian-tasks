@@ -5,8 +5,7 @@
 import moment from 'moment';
 
 import type { Task } from '../../../../src/Task/Task';
-import { AllMockDataNames } from '../../../Obsidian/AllCacheSampleData';
-import { readTasksFromSimulatedFile } from '../../../Obsidian/SimulatedFile';
+import { readAllTasksFromAllSimulatedFiles } from '../../../Obsidian/SimulatedFile';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import {
     type CustomPropertyDocsTestData,
@@ -380,9 +379,7 @@ describe('file properties', () => {
 });
 
 describe('obsidian properties', () => {
-    const tasks: Task[] = AllMockDataNames.flatMap((testDataName) => {
-        return readTasksFromSimulatedFile(testDataName);
-    });
+    const tasks = readAllTasksFromAllSimulatedFiles();
 
     const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------

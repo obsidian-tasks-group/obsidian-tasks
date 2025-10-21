@@ -3,7 +3,7 @@ import type { Task } from 'Task/Task';
 import { logging } from '../../src/lib/logging';
 import { FileParser } from '../../src/Obsidian/FileParser';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
-import type { MockDataName } from './AllCacheSampleData';
+import { AllMockDataNames, type MockDataName } from './AllCacheSampleData';
 
 /**
  * @file This file provides functions for creating {@link Task} objects from data in `tests/Obsidian/__test_data__`.
@@ -51,6 +51,7 @@ export interface SimulatedFile {
  * ```
  *
  * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
+ * @see readAllTasksFromAllSimulatedFiles
  */
 export function readTasksFromSimulatedFile(filename: MockDataName): Task[] {
     const testData = MockDataLoader.get(filename);
@@ -64,6 +65,18 @@ export function readTasksFromSimulatedFile(filename: MockDataName): Task[] {
         errorReporter,
     );
     return fileParser.parseFileContent();
+}
+
+/**
+ * Read all tasks from Obsidian-specific data read from all JSON files in `tests/Obsidian/__test_data__`.
+ *
+ * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
+ * @see readTasksFromSimulatedFile
+ */
+export function readAllTasksFromAllSimulatedFiles() {
+    return AllMockDataNames.flatMap((testDataName) => {
+        return readTasksFromSimulatedFile(testDataName);
+    });
 }
 
 function errorReporter() {
