@@ -356,7 +356,9 @@ describe('file properties', () => {
 });
 
 describe('obsidian properties', () => {
+    // begin-snippet: readAllTasksFromAllSimulatedFiles
     const tasks = readAllTasksFromAllSimulatedFiles();
+    // end-snippet
 
     const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
