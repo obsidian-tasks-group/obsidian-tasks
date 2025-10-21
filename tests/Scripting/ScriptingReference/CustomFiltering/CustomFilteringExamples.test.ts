@@ -4,8 +4,7 @@
 
 import moment from 'moment';
 import type { Task } from '../../../../src/Task/Task';
-import { AllMockDataNames } from '../../../Obsidian/AllCacheSampleData';
-import { readTasksFromSimulatedFile } from '../../../Obsidian/SimulatedFile';
+import { readAllTasksFromAllSimulatedFiles } from '../../../Obsidian/SimulatedFile';
 import { fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
@@ -355,12 +354,6 @@ describe('file properties', () => {
         verifyFunctionFieldFilterSamplesForDocs(groups);
     });
 });
-
-function readAllTasksFromAllSimulatedFiles() {
-    return AllMockDataNames.flatMap((testDataName) => {
-        return readTasksFromSimulatedFile(testDataName);
-    });
-}
 
 describe('obsidian properties', () => {
     const tasks = readAllTasksFromAllSimulatedFiles();
