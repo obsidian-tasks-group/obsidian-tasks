@@ -81,7 +81,7 @@ verifyMarkdown(output);
 ```
 <!-- endSnippet -->
 
-Selectively iterate over data from several of the Markdown files:
+Selectively iterate over data from several of the Markdown files - using `listPathAndData()` to include each test file's `path` in the test name:
 
 <!-- snippet: iterate-over-multiple-SimulatedFiles -->
 ```ts
