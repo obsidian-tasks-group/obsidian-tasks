@@ -32,11 +32,19 @@ const data1 = MockDataLoader.get('one_task');
 ```
 <!-- endSnippet -->
 
-1. Create a `TasksFile` object for one of the Markdown files, for writing tests:  
+1. Create a `TasksFile` object for one of the Markdown files, for writing tests:
 
 <!-- snippet: getTasksFileFromMockData -->
 ```ts
 const tasksFile = getTasksFileFromMockData('no_yaml');
+```
+<!-- endSnippet -->
+
+1. Obtain all the `Task` objects from one of the Markdown files:
+
+<!-- snippet: readTasksFromSimulatedFile -->
+```ts
+const tasks = readTasksFromSimulatedFile('multiple_headings');
 ```
 <!-- endSnippet -->
 
