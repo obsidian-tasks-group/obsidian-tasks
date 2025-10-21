@@ -19,6 +19,19 @@ So we need a way to access Obsidian-generated data in our tests. This page tries
     - `MockDataName` in [AllCacheSampleData.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/AllCacheSampleData.ts) shows the names of all the available files, in a type-safe way.
 4. See all the [uses of this data so far, in Tasks tests](https://github.com/search?type=code&q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+%2F%28AllMockDataNames%7Cbuilder.mockData%7CgetMockDataAndReadTasks%7ClistPathAndData%7CMockDataLoader%7CMockDataName%7CreadTasksFromSimulatedFile%7CSimulatedFile%29%2F).
 
+## Examples
+
+- Test data: [as markdown files](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo/Test%20Data)
+- Test data: [as json files](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__)
+
+1. Example of the lowest-level usage, returning a [SimulatedFile](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/SimulatedFile.ts) object:
+
+<!-- snippet: MockDataLoader.get -->
+```ts
+const data1 = MockDataLoader.get('one_task');
+```
+<!-- endSnippet -->
+
 ## Test data creation sequence
 
 If using this on an Obsidian version newer than the one in saved `tests/Obsidian/__test_data__/*.json`, go to Settings → Files and links → Advanced → Rebuild vault cache.
