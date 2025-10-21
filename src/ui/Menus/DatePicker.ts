@@ -5,6 +5,30 @@ import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import type { TaskSaver } from './TaskEditingMenu';
 
 /**
+ * Determines the first day of the week based on moment's current locale.
+ * Returns 0 for Sunday, 1 for Monday, etc.
+ * Falls back to Monday (1) if moment locale information is unavailable.
+ */
+function getFirstDayOfWeekFromMoment(): number {
+    try {
+        // Get the current moment locale
+        const currentLocale = window.moment.locale();
+        
+        // Get locale data for the current locale
+        const localeData = window.moment.localeData(currentLocale);
+        
+        // Get the first day of the week (0 = Sunday, 1 = Monday, etc.)
+        const firstDay = localeData.firstDayOfWeek();
+        
+        return firstDay;
+    } catch (error) {
+        // Fallback to Monday if there's any error accessing locale data
+        console.warn('Could not determine first day of week from moment locale, defaulting to Monday:', error);
+        return 1;
+    }
+}
+
+/**
  * A calendar date picker which edits a date value in a {@link Task} object.
  * @param parentElement
  * @param task
@@ -26,9 +50,9 @@ export function promptForDate(
         enableTime: false, // Optional: Enable time picker
         dateFormat: 'Y-m-d', // Adjust the date and time format as needed
         locale: {
-            // Try to determine the first day of the week based on the locale, or use Monday
-            // if unavailable
-            firstDayOfWeek: (new Intl.Locale(navigator.language) as any).weekInfo?.firstDay ?? 1,
+            // Use moment's locale to determine the first day of the week
+            // This respects the user's locale settings in Obsidian
+            firstDayOfWeek: getFirstDayOfWeekFromMoment(),
         },
         onClose: async (selectedDates, _dateStr, instance) => {
             if (selectedDates.length > 0) {
