@@ -77,6 +77,25 @@ verifyMarkdown(output);
 ```
 <!-- endSnippet -->
 
+1. Selectively iterate over data from several of the Markdown files:
+
+<!-- snippet: iterate-over-multiple-SimulatedFiles -->
+```ts
+it.each(
+    listPathAndData([
+        'yaml_custom_number_property', // no tags value in frontmatter
+        'yaml_tags_field_added_by_obsidian_but_not_populated',
+        'yaml_tags_had_value_then_was_emptied_by_obsidian',
+        'yaml_tags_is_empty_list',
+        'yaml_tags_is_empty',
+    ]),
+)('should provide empty list if no tags in frontmatter: "%s"', (_path: string, testDataName: MockDataName) => {
+    const tasksFile = getTasksFileFromMockData(testDataName);
+    expect(tasksFile.frontmatter.tags).toEqual([]);
+});
+```
+<!-- endSnippet -->
+
 ## Test data creation sequence
 
 If using this on an Obsidian version newer than the one in saved `tests/Obsidian/__test_data__/*.json`, go to Settings → Files and links → Advanced → Rebuild vault cache.
