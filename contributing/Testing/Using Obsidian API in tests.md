@@ -48,6 +48,14 @@ const tasks = readTasksFromSimulatedFile('multiple_headings');
 ```
 <!-- endSnippet -->
 
+1. Obtain all the `Task` objects from one of the Markdown files:
+
+<!-- snippet: readAllTasksFromAllSimulatedFiles -->
+```ts
+const tasks = readAllTasksFromAllSimulatedFiles();
+```
+<!-- endSnippet -->
+
 ## Test data creation sequence
 
 If using this on an Obsidian version newer than the one in saved `tests/Obsidian/__test_data__/*.json`, go to Settings → Files and links → Advanced → Rebuild vault cache.
