@@ -32,6 +32,14 @@ const data1 = MockDataLoader.get('one_task');
 ```
 <!-- endSnippet -->
 
+1. Create a `TasksFile` object for one of the Markdown files, for writing tests:  
+
+<!-- snippet: getTasksFileFromMockData -->
+```ts
+const tasksFile = getTasksFileFromMockData('no_yaml');
+```
+<!-- endSnippet -->
+
 ## Test data creation sequence
 
 If using this on an Obsidian version newer than the one in saved `tests/Obsidian/__test_data__/*.json`, go to Settings → Files and links → Advanced → Rebuild vault cache.
