@@ -37,7 +37,9 @@ describe('MockDataLoader', () => {
     });
 
     it('should detect CachedMetadata not previously loaded, even if it is a clone of a loaded file', () => {
+        // begin-snippet: MockDataLoader.get
         const data1 = MockDataLoader.get('one_task');
+        // end-snippet
 
         // typescript:S7784 Prefer `structuredClone(…)` over `JSON.parse(JSON.stringify(…))` to create a deep clone.
         // But structuredClone() is not available in Jest.
