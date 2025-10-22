@@ -1,4 +1,5 @@
 import type { Moment } from 'moment';
+import { momentAdjusted } from './DateAdjusted';
 
 /**
  * Represent an inclusive span of time between two days at 00:00 local time.
@@ -41,8 +42,8 @@ export class DateRange {
         const unitOfTime = range === 'week' ? 'isoWeek' : range;
 
         return new DateRange(
-            window.moment().startOf(unitOfTime).startOf('day'),
-            window.moment().endOf(unitOfTime).startOf('day'),
+            momentAdjusted().startOf(unitOfTime).startOf('day'),
+            momentAdjusted().endOf(unitOfTime).startOf('day'),
         );
     }
 

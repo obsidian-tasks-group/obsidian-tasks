@@ -1,4 +1,5 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
+import { momentAdjusted } from '../DateTime/DateAdjusted';
 import { parseTypedDateForSaving } from '../DateTime/DateTools';
 import { PriorityTools } from '../lib/PriorityTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
@@ -252,7 +253,7 @@ export class EditableTask {
         }
 
         // Otherwise, use the current date.
-        return window.moment();
+        return momentAdjusted();
     }
 
     public parseAndValidateRecurrence() {
