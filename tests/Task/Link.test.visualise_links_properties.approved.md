@@ -1,3 +1,35 @@
+## Test Data/chain_link1.md
+
+`link.originalMarkdown     `: `'[[chain_link2]]'`
+`link.markdown             `: `'[[chain_link2]]'`
+`link.destination          `: `'chain_link2'`
+`link.destinationPath      `: `'Test Data/chain_link2.md'`
+`link.displayText          `: `'chain_link2'`
+
+## Test Data/chain_link2.md
+
+`link.originalMarkdown     `: `'[[chain_link3]]'`
+`link.markdown             `: `'[[chain_link3]]'`
+`link.destination          `: `'chain_link3'`
+`link.destinationPath      `: `'Test Data/chain_link3.md'`
+`link.displayText          `: `'chain_link3'`
+
+## Test Data/chain_link3.md
+
+`link.originalMarkdown     `: `'[[chain_link4]]'`
+`link.markdown             `: `'[[chain_link4]]'`
+`link.destination          `: `'chain_link4'`
+`link.destinationPath      `: `'Test Data/chain_link4.md'`
+`link.displayText          `: `'chain_link4'`
+
+## Test Data/chain_link4.md
+
+`link.originalMarkdown     `: `'[[chain_link1]]'`
+`link.markdown             `: `'[[chain_link1]]'`
+`link.destination          `: `'chain_link1'`
+`link.destinationPath      `: `'Test Data/chain_link1.md'`
+`link.displayText          `: `'chain_link1'`
+
 ## Test Data/docs_sample_for_task_properties_reference.md
 
 `link.originalMarkdown     `: `'[[yaml_all_property_types_populated]]'`
