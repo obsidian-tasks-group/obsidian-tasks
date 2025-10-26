@@ -102,13 +102,12 @@ export class TaskGroup {
      */
     public toString(): string {
         let output = '\n';
-        output += `Group names: [${this.groups}]\n`;
 
         for (const heading of this.groupHeadings) {
             // These headings mimic the behaviour of QueryRenderer,
             // which uses 'h4', 'h5' and 'h6' for nested groups.
             const headingPrefix = '#'.repeat(4 + heading.nestingLevel);
-            output += `${headingPrefix} [${heading.property}] ${heading.displayName}\n`;
+            output += `${headingPrefix} ${heading.displayName}\n`;
         }
 
         output += this.tasksAsStringOfLines();

@@ -80,11 +80,7 @@ export class TaskGroups {
      */
     public toString(): string {
         let output = '';
-        output += 'Groupers (if any):\n';
-        for (const grouper of this._groupers) {
-            const reverseText = grouper.reverse ? ' reverse' : '';
-            output += `- ${grouper.property}${reverseText}\n`;
-        }
+
         for (const taskGroup of this.groups) {
             output += taskGroup.toString();
             output += '\n---\n';

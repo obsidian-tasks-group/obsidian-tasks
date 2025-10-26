@@ -45,18 +45,14 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.groupers).toStrictEqual(grouping);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - path
-
-            Group names: [file1]
-            #### [path] file1
+            "
+            #### file1
             - [ ] b
             - [ ] c
 
             ---
 
-            Group names: [file2]
-            #### [path] file2
+            #### file2
             - [ ] a
 
             ---
@@ -80,9 +76,7 @@ describe('Grouping tasks', () => {
         // Assert
         // No grouping specified, so no headings generated
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-
-            Group names: []
+            "
             - [ ] a 📅 1970-01-01
             - [ ] b 📅 1970-01-02
             - [ ] c 📅 1970-01-02
@@ -145,23 +139,18 @@ describe('Grouping tasks', () => {
         const grouping = [new PathField().createNormalGrouper()];
         const groups = makeTasksGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - path
-
-            Group names: [a/b/c]
-            #### [path] a/b/c
+            "
+            #### a/b/c
             - [ ] first file path, alphabetically
 
             ---
 
-            Group names: [b/c/d]
-            #### [path] b/c/d
+            #### b/c/d
             - [ ] second file path
 
             ---
 
-            Group names: [d/e/f]
-            #### [path] d/e/f
+            #### d/e/f
             - [ ] third file path
 
             ---
@@ -185,17 +174,13 @@ describe('Grouping tasks', () => {
         const grouping = [new FilenameField().createNormalGrouper()];
         const groups = makeTasksGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - filename
-
-            Group names: [[[9 something]]]
-            #### [filename] [[9 something]]
+            "
+            #### [[9 something]]
             - [ ] first, as 9 is less then 10
 
             ---
 
-            Group names: [[[10 something]]]
-            #### [filename] [[10 something]]
+            #### [[10 something]]
             - [ ] second, as 10 is more than 9
 
             ---
@@ -218,17 +203,13 @@ describe('Grouping tasks', () => {
         // Assert
         // No grouping specified, so no headings generated
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - due reverse
-
-            Group names: [2023-07-08 Saturday]
-            #### [due] 2023-07-08 Saturday
+            "
+            #### 2023-07-08 Saturday
             - [ ] b 📅 2023-07-08
 
             ---
 
-            Group names: [2023-04-05 Wednesday]
-            #### [due] 2023-04-05 Wednesday
+            #### 2023-04-05 Wednesday
             - [ ] a 📅 2023-04-05
 
             ---
@@ -278,18 +259,14 @@ describe('Grouping tasks', () => {
         const grouping = [new TagsField().createNormalGrouper()];
         const groups = makeTasksGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - tags
-
-            Group names: [#group1]
-            #### [tags] #group1
+            "
+            #### #group1
             - [ ] Task 1 #group1
             - [ ] Task 2 #group2 #group1
 
             ---
 
-            Group names: [#group2]
-            #### [tags] #group2
+            #### #group2
             - [ ] Task 2 #group2 #group1
             - [ ] Task 3 #group2
 
@@ -321,16 +298,12 @@ describe('Grouping tasks', () => {
         expect(groups.totalTasksCount()).toEqual(2);
 
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - custom tag grouper
-
-            Group names: []
+            "
             - [ ] Task without a tag
 
             ---
 
-            Group names: [#group1]
-            #### [custom tag grouper] #group1
+            #### #group1
             - [ ] Task with a tag #group1
 
             ---
@@ -366,26 +339,20 @@ describe('Grouping tasks', () => {
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - folder reverse
-            - filename
-
-            Group names: [folder\\_b/folder\\_c/,[[file_c]]]
-            #### [folder] folder\\_b/folder\\_c/
-            ##### [filename] [[file_c]]
+            "
+            #### folder\\_b/folder\\_c/
+            ##### [[file_c]]
             - [ ] Task 1 - but path is 2nd, alphabetically
 
             ---
 
-            Group names: [folder\\_b/folder\\_c/,[[file_d]]]
-            ##### [filename] [[file_d]]
+            ##### [[file_d]]
             - [ ] Task 2 - but path is 2nd, alphabetically
 
             ---
 
-            Group names: [folder\\_a/folder\\_b/,[[file_c]]]
-            #### [folder] folder\\_a/folder\\_b/
-            ##### [filename] [[file_c]]
+            #### folder\\_a/folder\\_b/
+            ##### [[file_c]]
             - [ ] Task 3 - but path is 1st, alphabetically
 
             ---
@@ -415,25 +382,19 @@ describe('Grouping tasks', () => {
         // This result is incorrect. The '2 TODO' heading is shown before
         // the last group instead of before the first one.
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - status.type
-            - happens
-
-            Group names: [%%2%%TODO,2022-09-19 Monday]
-            #### [status.type] %%2%%TODO
-            ##### [happens] 2022-09-19 Monday
+            "
+            #### %%2%%TODO
+            ##### 2022-09-19 Monday
             - [ ] Task a - early date 📅 2022-09-19
 
             ---
 
-            Group names: [%%2%%TODO,2022-10-06 Thursday]
-            ##### [happens] 2022-10-06 Thursday
+            ##### 2022-10-06 Thursday
             - [ ] Task c - intermediate date ⏳ 2022-10-06
 
             ---
 
-            Group names: [%%2%%TODO,2022-12-06 Tuesday]
-            ##### [happens] 2022-12-06 Tuesday
+            ##### 2022-12-06 Tuesday
             - [ ] Task b - later date ⏳ 2022-12-06
 
             ---
@@ -461,25 +422,20 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.totalTasksCount()).toEqual(5);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - path
-
-            Group names: [tasks\\_equal\\_to\\_limit]
-            #### [path] tasks\\_equal\\_to\\_limit
+            "
+            #### tasks\\_equal\\_to\\_limit
             - [ ] b
             - [ ] c
 
             ---
 
-            Group names: [tasks\\_over\\_the\\_limit]
-            #### [path] tasks\\_over\\_the\\_limit
+            #### tasks\\_over\\_the\\_limit
             - [ ] d
             - [ ] e
 
             ---
 
-            Group names: [tasks\\_under\\_the\\_limit]
-            #### [path] tasks\\_under\\_the\\_limit
+            #### tasks\\_under\\_the\\_limit
             - [ ] a
 
             ---
@@ -505,23 +461,18 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.totalTasksCount()).toEqual(2);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - tags
-
-            Group names: [#tag1]
-            #### [tags] #tag1
+            "
+            #### #tag1
             - [ ] task A #tag1 #tag2
 
             ---
 
-            Group names: [#tag2]
-            #### [tags] #tag2
+            #### #tag2
             - [ ] task A #tag1 #tag2
 
             ---
 
-            Group names: [#tag3]
-            #### [tags] #tag3
+            #### #tag3
             - [ ] task B #tag1 #tag3
 
             ---
@@ -547,9 +498,7 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.totalTasksCount()).toEqual(4);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-
-            Group names: []
+            "
             - [ ] task A
             - [ ] task B
             - [ ] task C

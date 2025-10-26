@@ -659,17 +659,13 @@ describe('grouping by tag', () => {
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "Groupers (if any):
-            - tags reverse
-
-            Group names: [#tag2]
-            #### [tags] #tag2
+            "
+            #### #tag2
             - [ ] b #tag2
 
             ---
 
-            Group names: [#tag1]
-            #### [tags] #tag1
+            #### #tag1
             - [ ] a #tag1
 
             ---
