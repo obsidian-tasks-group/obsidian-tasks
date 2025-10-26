@@ -667,8 +667,6 @@ describe('grouping by tag', () => {
             #### #tag1
 
             - [ ] a #tag1
-
-            2 tasks
             "
         `);
     });

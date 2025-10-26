@@ -54,8 +54,6 @@ describe('Grouping tasks', () => {
             #### file2
 
             - [ ] a
-
-            3 tasks
             "
         `);
     });
@@ -78,8 +76,6 @@ describe('Grouping tasks', () => {
             - [ ] a 📅 1970-01-01
             - [ ] b 📅 1970-01-02
             - [ ] c 📅 1970-01-02
-
-            3 tasks
             "
         `);
     });
@@ -147,8 +143,6 @@ describe('Grouping tasks', () => {
             #### d/e/f
 
             - [ ] third file path
-
-            3 tasks
             "
         `);
     });
@@ -175,8 +169,6 @@ describe('Grouping tasks', () => {
             #### [[10 something]]
 
             - [ ] second, as 10 is more than 9
-
-            2 tasks
             "
         `);
     });
@@ -202,8 +194,6 @@ describe('Grouping tasks', () => {
             #### 2023-04-05 Wednesday
 
             - [ ] a 📅 2023-04-05
-
-            2 tasks
             "
         `);
     });
@@ -258,8 +248,6 @@ describe('Grouping tasks', () => {
 
             - [ ] Task 2 #group2 #group1
             - [ ] Task 3 #group2
-
-            3 tasks
             "
         `);
     });
@@ -291,8 +279,6 @@ describe('Grouping tasks', () => {
             #### #group1
 
             - [ ] Task with a tag #group1
-
-            2 tasks
             "
         `);
     });
@@ -339,8 +325,6 @@ describe('Grouping tasks', () => {
             ##### [[file_c]]
 
             - [ ] Task 3 - but path is 1st, alphabetically
-
-            3 tasks
             "
         `);
     });
@@ -379,8 +363,6 @@ describe('Grouping tasks', () => {
             ##### 2022-12-06 Tuesday
 
             - [ ] Task b - later date ⏳ 2022-12-06
-
-            3 tasks
             "
         `);
     });
@@ -417,8 +399,6 @@ describe('Grouping tasks', () => {
             #### tasks\\_under\\_the\\_limit
 
             - [ ] a
-
-            5 tasks
             "
         `);
     });
@@ -451,8 +431,6 @@ describe('Grouping tasks', () => {
             #### #tag3
 
             - [ ] task B #tag1 #tag3
-
-            2 tasks
             "
         `);
     });
@@ -478,8 +456,6 @@ describe('Grouping tasks', () => {
             - [ ] task B
             - [ ] task C
             - [ ] task D
-
-            4 tasks
             "
         `);
     });
