@@ -13,6 +13,15 @@
     --code-white-space: pre;
 }
 
+.plugin-tasks-copy-button {
+    position: absolute;
+    right: 0;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+
+    margin-top: 16px;
+}
+
 .tasks-count {
     color: var(--text-faint);
     padding-left: 20px;

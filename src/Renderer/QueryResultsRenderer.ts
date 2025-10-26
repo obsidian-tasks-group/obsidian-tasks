@@ -1,4 +1,4 @@
-import type { App, Component, TFile } from 'obsidian';
+import { type App, type Component, Notice, type TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
@@ -202,6 +202,8 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
+        this.addCopyButton(content, queryResult.taskGroups);
+
         await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
 
         const totalTasksCount = queryResult.totalTasksCount;
@@ -233,6 +235,16 @@ export class QueryResultsRenderer {
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.setText(explanationAsString);
         content.appendChild(explanationsBlock);
+    }
+
+    private addCopyButton(content: HTMLDivElement, taskGroups: TaskGroups) {
+        const copyButton = createAndAppendElement('button', content);
+        copyButton.textContent = 'Copy results';
+        copyButton.classList.add('plugin-tasks-copy-button');
+        copyButton.addEventListener('click', async () => {
+            await navigator.clipboard.writeText(taskGroups.toString());
+            new Notice('Results copied to clipboard');
+        });
     }
 
     private async addAllTaskGroups(
