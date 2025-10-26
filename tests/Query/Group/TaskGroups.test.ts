@@ -47,15 +47,13 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### file1
+
             - [ ] b
             - [ ] c
 
-            ---
-
             #### file2
-            - [ ] a
 
-            ---
+            - [ ] a
 
             3 tasks
             "
@@ -80,8 +78,6 @@ describe('Grouping tasks', () => {
             - [ ] a 📅 1970-01-01
             - [ ] b 📅 1970-01-02
             - [ ] c 📅 1970-01-02
-
-            ---
 
             3 tasks
             "
@@ -141,19 +137,16 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### a/b/c
+
             - [ ] first file path, alphabetically
 
-            ---
-
             #### b/c/d
+
             - [ ] second file path
 
-            ---
-
             #### d/e/f
-            - [ ] third file path
 
-            ---
+            - [ ] third file path
 
             3 tasks
             "
@@ -176,14 +169,12 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### [[9 something]]
+
             - [ ] first, as 9 is less then 10
 
-            ---
-
             #### [[10 something]]
-            - [ ] second, as 10 is more than 9
 
-            ---
+            - [ ] second, as 10 is more than 9
 
             2 tasks
             "
@@ -205,14 +196,12 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### 2023-07-08 Saturday
+
             - [ ] b 📅 2023-07-08
 
-            ---
-
             #### 2023-04-05 Wednesday
-            - [ ] a 📅 2023-04-05
 
-            ---
+            - [ ] a 📅 2023-04-05
 
             2 tasks
             "
@@ -261,16 +250,14 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### #group1
+
             - [ ] Task 1 #group1
             - [ ] Task 2 #group2 #group1
 
-            ---
-
             #### #group2
+
             - [ ] Task 2 #group2 #group1
             - [ ] Task 3 #group2
-
-            ---
 
             3 tasks
             "
@@ -301,12 +288,9 @@ describe('Grouping tasks', () => {
             "
             - [ ] Task without a tag
 
-            ---
-
             #### #group1
-            - [ ] Task with a tag #group1
 
-            ---
+            - [ ] Task with a tag #group1
 
             2 tasks
             "
@@ -341,21 +325,20 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### folder\\_b/folder\\_c/
+
             ##### [[file_c]]
+
             - [ ] Task 1 - but path is 2nd, alphabetically
 
-            ---
-
             ##### [[file_d]]
+
             - [ ] Task 2 - but path is 2nd, alphabetically
 
-            ---
-
             #### folder\\_a/folder\\_b/
-            ##### [[file_c]]
-            - [ ] Task 3 - but path is 1st, alphabetically
 
-            ---
+            ##### [[file_c]]
+
+            - [ ] Task 3 - but path is 1st, alphabetically
 
             3 tasks
             "
@@ -384,20 +367,18 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### %%2%%TODO
+
             ##### 2022-09-19 Monday
+
             - [ ] Task a - early date 📅 2022-09-19
 
-            ---
-
             ##### 2022-10-06 Thursday
+
             - [ ] Task c - intermediate date ⏳ 2022-10-06
 
-            ---
-
             ##### 2022-12-06 Tuesday
-            - [ ] Task b - later date ⏳ 2022-12-06
 
-            ---
+            - [ ] Task b - later date ⏳ 2022-12-06
 
             3 tasks
             "
@@ -424,21 +405,18 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### tasks\\_equal\\_to\\_limit
+
             - [ ] b
             - [ ] c
 
-            ---
-
             #### tasks\\_over\\_the\\_limit
+
             - [ ] d
             - [ ] e
 
-            ---
-
             #### tasks\\_under\\_the\\_limit
-            - [ ] a
 
-            ---
+            - [ ] a
 
             5 tasks
             "
@@ -463,19 +441,16 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### #tag1
-            - [ ] task A #tag1 #tag2
 
-            ---
+            - [ ] task A #tag1 #tag2
 
             #### #tag2
+
             - [ ] task A #tag1 #tag2
 
-            ---
-
             #### #tag3
-            - [ ] task B #tag1 #tag3
 
-            ---
+            - [ ] task B #tag1 #tag3
 
             2 tasks
             "
@@ -503,8 +478,6 @@ describe('Grouping tasks', () => {
             - [ ] task B
             - [ ] task C
             - [ ] task D
-
-            ---
 
             4 tasks
             "
