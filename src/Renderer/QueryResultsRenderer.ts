@@ -223,7 +223,6 @@ export class QueryResultsRenderer {
     }
 
     // Use the 'explain' instruction to enable this
-
     private createExplanation(content: HTMLDivElement) {
         const explanationAsString = explainResults(
             this.source,
