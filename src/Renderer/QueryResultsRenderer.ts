@@ -241,6 +241,7 @@ export class QueryResultsRenderer {
     private addExportButton(content: HTMLDivElement, taskGroups: TaskGroups) {
         const exportButton = createAndAppendElement('button', content);
         exportButton.textContent = 'Copy results';
+        exportButton.classList.add('plugin-tasks-copy-button');
         exportButton.addEventListener('click', async () => {
             await navigator.clipboard.writeText(taskGroups.toString());
             new Notice('Results copied to clipboard');
