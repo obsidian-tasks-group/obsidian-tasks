@@ -202,6 +202,10 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
+        const exportButton = createAndAppendElement('button', content);
+        exportButton.textContent = 'Export';
+        exportButton.addEventListener('click', (event: MouseEvent) => console.log('export click ', event));
+
         await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
 
         const totalTasksCount = queryResult.totalTasksCount;
