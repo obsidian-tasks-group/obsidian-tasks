@@ -84,8 +84,7 @@ export class TaskGroups {
         for (const taskGroup of this.groups) {
             output += taskGroup.toString();
         }
-        const totalTasksCount = this.totalTasksCount();
-        output += `\n${totalTasksCount} tasks\n`;
+
         return output;
     }
 
