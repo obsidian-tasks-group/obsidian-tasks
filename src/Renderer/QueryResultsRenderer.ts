@@ -238,10 +238,10 @@ export class QueryResultsRenderer {
         content.appendChild(explanationsBlock);
     }
 
-    private addExportButton(content: HTMLDivElement, _taskGroups: TaskGroups) {
+    private addExportButton(content: HTMLDivElement, taskGroups: TaskGroups) {
         const exportButton = createAndAppendElement('button', content);
         exportButton.textContent = 'Export';
-        exportButton.addEventListener('click', () => console.log(_taskGroups.toString()));
+        exportButton.addEventListener('click', () => console.log(taskGroups.toString()));
     }
 
     private async addAllTaskGroups(
