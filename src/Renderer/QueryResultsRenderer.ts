@@ -202,7 +202,7 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
-        this.addExportButton(content);
+        this.addExportButton(content, queryResult.taskGroups);
 
         await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
 
@@ -238,7 +238,7 @@ export class QueryResultsRenderer {
         content.appendChild(explanationsBlock);
     }
 
-    private addExportButton(content: HTMLDivElement) {
+    private addExportButton(content: HTMLDivElement, _taskGroups: TaskGroups) {
         const exportButton = createAndAppendElement('button', content);
         exportButton.textContent = 'Export';
         exportButton.addEventListener('click', (event: MouseEvent) => console.log('export click ', event));
