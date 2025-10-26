@@ -1,4 +1,4 @@
-import type { App, Component, TFile } from 'obsidian';
+import { type App, type Component, Notice, type TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
@@ -240,8 +240,11 @@ export class QueryResultsRenderer {
 
     private addExportButton(content: HTMLDivElement, taskGroups: TaskGroups) {
         const exportButton = createAndAppendElement('button', content);
-        exportButton.textContent = 'Export';
-        exportButton.addEventListener('click', () => console.log(taskGroups.toString()));
+        exportButton.textContent = 'Copy results';
+        exportButton.addEventListener('click', async () => {
+            await navigator.clipboard.writeText(taskGroups.toString());
+            new Notice('Results copied to clipboard');
+        });
     }
 
     private async addAllTaskGroups(
