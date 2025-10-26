@@ -75,8 +75,8 @@ export class TaskGroups {
     /**
      * A human-readable representation of all the task groups.
      *
-     * Note that this is used in snapshot testing, so if the format is
-     * changed, the snapshots will need to be updated.
+     * Note that this is used in the 'Copy results' facility and snapshot testing, so if the format is
+     * changed, the documentation and snapshots will need to be updated.
      */
     public toString(): string {
         let output = '';
