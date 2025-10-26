@@ -16,6 +16,7 @@ Find tasks with anything but the space character as their status symbol, that is
 - [x] Status Done
 - [] Status EMPTY
 - [/] Status In Progress
+- [h] Status On Hold
 - [Q] Status Non-Task
 - [p] Unknown symbol
 - [s] Toggles to self
@@ -57,6 +58,7 @@ This is a convenient shortcut over a longer statement testing each allowed value
 filter by function !' -x/'.includes(task.status.symbol)
 Find tasks with any status symbol not supported by Tasks in the default settings.
 =>
+- [h] Status On Hold
 - [Q] Status Non-Task
 - [p] Unknown symbol
 - [s] Toggles to self

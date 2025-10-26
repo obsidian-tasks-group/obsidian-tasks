@@ -61,7 +61,7 @@ Here is some more detail.
 - **Next Status Symbol**
   - the status symbol to use when the task is toggled.
 - **Status Type**
-  - one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
+  - one of `TODO`, `IN_PROGRESS`, `ON_HOLD`, `DONE`, `CANCELLED`, `NON_TASK`.
   - Tasks needs to know the type of each status, so that it knows how to treat them when searching, and what to do when tasks with the status are toggled.
   - types are searchable with `status.type`, for example `status.type is IN_PROGRESS`.
   - Also available:

@@ -10,6 +10,7 @@ import { Status } from '../../../src/Statuses/Status';
 import * as FilterParser from '../../../src/Query/FilterParser';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
+import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 
 // Abbreviated names so that the markdown text is aligned
 const todoTask = fromLine({ line: '- [ ] Todo' });
@@ -76,20 +77,16 @@ describe('status.name', () => {
         expect(filter).not.toBeValid();
     });
 
-    it('status.name with invalid line is parsed and user sees helpful message', () => {
+    it('status.name with invalid line is helpful', () => {
         // Arrange
-        const filter = FilterParser.parseFilter('status.type gobbledygook');
+        const filter = FilterParser.parseFilter('status.type in progress');
 
         // Assert
         expect(filter).not.toBeValid();
-        expect(filter?.error).toMatchInlineSnapshot(`
-            "Invalid status.type instruction: 'status.type gobbledygook'.
-                Allowed options: 'is' and 'is not' (without quotes).
-                Allowed values:  TODO DONE IN_PROGRESS CANCELLED NON_TASK
-                                 Note: values are case-insensitive,
-                                       so 'in_progress' works too, for example.
-                Example:         status.type is not NON_TASK"
-        `);
+        verifyWithFileExtension(
+            'Tasks query: ' + (filter?.error ?? 'Unexpectedly, no error message generated'),
+            'text',
+        );
     });
 });
 
@@ -156,10 +153,10 @@ describe('grouping by status.type', () => {
         expect({ grouper, tasks: [inprTask] }).groupHeadingsToBe(['%%1%%IN_PROGRESS']);
         expect({ grouper, tasks: [todoTask] }).groupHeadingsToBe(['%%2%%TODO']);
         expect({ grouper, tasks: [unknTask] }).groupHeadingsToBe(['%%2%%TODO']);
-        expect({ grouper, tasks: [doneTask] }).groupHeadingsToBe(['%%3%%DONE']);
-        expect({ grouper, tasks: [cancTask] }).groupHeadingsToBe(['%%4%%CANCELLED']);
-        expect({ grouper, tasks: [non_Task] }).groupHeadingsToBe(['%%5%%NON_TASK']);
-        expect({ grouper, tasks: [emptTask] }).groupHeadingsToBe(['%%6%%EMPTY']); // won't be seen by users
+        expect({ grouper, tasks: [doneTask] }).groupHeadingsToBe(['%%4%%DONE']);
+        expect({ grouper, tasks: [cancTask] }).groupHeadingsToBe(['%%5%%CANCELLED']);
+        expect({ grouper, tasks: [non_Task] }).groupHeadingsToBe(['%%6%%NON_TASK']);
+        expect({ grouper, tasks: [emptTask] }).groupHeadingsToBe(['%%7%%EMPTY']); // won't be seen by users
     });
 
     it('should sort groups for StatusTypeField', () => {
@@ -169,10 +166,10 @@ describe('grouping by status.type', () => {
         expect({ grouper, tasks }).groupHeadingsToBe([
             '%%1%%IN_PROGRESS',
             '%%2%%TODO',
-            '%%3%%DONE',
-            '%%4%%CANCELLED',
-            '%%5%%NON_TASK',
-            '%%6%%EMPTY',
+            '%%4%%DONE',
+            '%%5%%CANCELLED',
+            '%%6%%NON_TASK',
+            '%%7%%EMPTY',
         ]);
     });
 });

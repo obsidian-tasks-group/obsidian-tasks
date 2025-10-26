@@ -103,6 +103,14 @@ describe('grouping by status.name', () => {
         const grouper = new StatusNameField().createNormalGrouper();
         const tasks = SampleTasks.withAllStatuses();
 
-        expect({ grouper, tasks }).groupHeadingsToBe(['Cancelled', 'Done', 'EMPTY', 'In Progress', 'Non-Task', 'Todo']);
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            'Cancelled',
+            'Done',
+            'EMPTY',
+            'In Progress',
+            'Non-Task',
+            'On Hold',
+            'Todo',
+        ]);
     });
 });

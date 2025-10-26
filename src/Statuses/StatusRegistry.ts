@@ -371,6 +371,7 @@ classDef DONE        stroke:#0c0,stroke-width:3px;
 classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
 classDef CANCELLED   stroke:#ddd,stroke-width:3px;
 classDef NON_TASK    stroke:#99e,stroke-width:3px;
+classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 ${nodes.join('\n')}
 ${edges.join('\n')}
