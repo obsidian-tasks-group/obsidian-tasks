@@ -202,9 +202,7 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
-        const exportButton = createAndAppendElement('button', content);
-        exportButton.textContent = 'Export';
-        exportButton.addEventListener('click', (event: MouseEvent) => console.log('export click ', event));
+        this.addExportButton(content);
 
         await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
 
@@ -225,6 +223,7 @@ export class QueryResultsRenderer {
     }
 
     // Use the 'explain' instruction to enable this
+
     private createExplanation(content: HTMLDivElement) {
         const explanationAsString = explainResults(
             this.source,
@@ -237,6 +236,12 @@ export class QueryResultsRenderer {
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.setText(explanationAsString);
         content.appendChild(explanationsBlock);
+    }
+
+    private addExportButton(content: HTMLDivElement) {
+        const exportButton = createAndAppendElement('button', content);
+        exportButton.textContent = 'Export';
+        exportButton.addEventListener('click', (event: MouseEvent) => console.log('export click ', event));
     }
 
     private async addAllTaskGroups(
