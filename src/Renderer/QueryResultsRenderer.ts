@@ -241,7 +241,7 @@ export class QueryResultsRenderer {
     private addExportButton(content: HTMLDivElement, _taskGroups: TaskGroups) {
         const exportButton = createAndAppendElement('button', content);
         exportButton.textContent = 'Export';
-        exportButton.addEventListener('click', (event: MouseEvent) => console.log('export click ', event));
+        exportButton.addEventListener('click', () => console.log(_taskGroups.toString()));
     }
 
     private async addAllTaskGroups(
