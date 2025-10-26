@@ -661,14 +661,12 @@ describe('grouping by tag', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             #### #tag2
+
             - [ ] b #tag2
 
-            ---
-
             #### #tag1
-            - [ ] a #tag1
 
-            ---
+            - [ ] a #tag1
 
             2 tasks
             "
