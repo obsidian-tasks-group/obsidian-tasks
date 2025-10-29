@@ -202,7 +202,7 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
-        this.addCopyButton(content, queryResult.taskGroups);
+        this.addCopyButton(content, queryResult);
 
         await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
 
@@ -237,12 +237,12 @@ export class QueryResultsRenderer {
         content.appendChild(explanationsBlock);
     }
 
-    private addCopyButton(content: HTMLDivElement, taskGroups: TaskGroups) {
+    private addCopyButton(content: HTMLDivElement, queryResult: QueryResult) {
         const copyButton = createAndAppendElement('button', content);
         copyButton.textContent = 'Copy results';
         copyButton.classList.add('plugin-tasks-copy-button');
         copyButton.addEventListener('click', async () => {
-            await navigator.clipboard.writeText(taskGroups.toString());
+            await navigator.clipboard.writeText(queryResult.asMarkdown());
             new Notice('Results copied to clipboard');
         });
     }
