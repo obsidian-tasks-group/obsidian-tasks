@@ -225,7 +225,7 @@ group by id
 `);
     });
 
-    it.failing('should use hyphen as list marker', () => {
+    it('should use hyphen as list marker', () => {
         const tasks = readTasksFromSimulatedFile('mixed_list_markers');
 
         const query = '';

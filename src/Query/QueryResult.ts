@@ -77,8 +77,18 @@ export class QueryResult {
     private tasksAsStringOfLines(tasks: Task[]): string {
         let output = '';
         for (const task of tasks) {
-            output += task.toFileLineString().trim() + '\n';
+            output += this.toFileLineString(task).trim() + '\n';
         }
         return output;
+    }
+
+    /**
+     * This is a duplicate of Task.toFileLineString() because tasks rendered in search results
+     * do not necessarily have the same indentation and list markers as the source task lines.
+     *
+     * @param task
+     */
+    public toFileLineString(task: Task): string {
+        return `${task.indentation}- [${task.status.symbol}] ${task.toString()}`;
     }
 }
