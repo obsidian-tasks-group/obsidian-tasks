@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+import moment from 'moment/moment';
 import type { Grouper } from '../../src/Query/Group/Grouper';
 import { TaskGroups } from '../../src/Query/Group/TaskGroups';
 import { Query } from '../../src/Query/Query';
@@ -5,6 +9,8 @@ import { QueryResult } from '../../src/Query/QueryResult';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { Task } from '../../src/Task/Task';
 import { fromLine, fromLines } from '../TestingTools/TestHelpers';
+
+window.moment = moment;
 
 describe('QueryResult', () => {
     function createUngroupedQueryResult(tasks: Task[]) {
@@ -126,6 +132,61 @@ describe('Copying results', () => {
             #### 5
 
             - [ ] 55555
+            "
+        `);
+    });
+
+    it('should copy four grouping levels', () => {
+        const tasks = `
+- [ ] 1 ⏳ 2025-10-29
+- [ ] 2 ⏬
+- [ ] 3 ⏫ ⏳ 2025-10-30
+- [ ] 4 ⏳ 2025-10-29
+- [ ] 5 #something
+- [ ] 6 🆔 id6
+`;
+
+        const query = `
+group by function task.tags.join(',')
+group by priority
+group by scheduled
+group by id
+`;
+
+        expect(copyResult(tasks, query)).toMatchInlineSnapshot(`
+            "
+            ##### %%1%%High priority
+
+            ###### 2025-10-30 Thursday
+
+            - [ ] 3 ⏫ ⏳ 2025-10-30
+
+            ##### %%3%%Normal priority
+
+            ###### 2025-10-29 Wednesday
+
+            - [ ] 1 ⏳ 2025-10-29
+            - [ ] 4 ⏳ 2025-10-29
+
+            ###### No scheduled date
+
+            ####### id6
+
+            - [ ] 6 🆔 id6
+
+            ##### %%5%%Lowest priority
+
+            ###### No scheduled date
+
+            - [ ] 2 ⏬
+
+            #### #something
+
+            ##### %%3%%Normal priority
+
+            ###### No scheduled date
+
+            - [ ] 5 #something
             "
         `);
     });
