@@ -237,4 +237,15 @@ group by id
 - [ ] numbered task
 `);
     });
+
+    it('should remove callout prefixes', () => {
+        const tasks = readTasksFromSimulatedFile('callout_labelled');
+
+        const query = '';
+
+        expect(searchTasksAndCopyResult(tasks, query)).toEqual(`
+- [ ] #task Task in 'callout_labelled'
+- [ ] #task Task indented in 'callout_labelled'
+`);
+    });
 });

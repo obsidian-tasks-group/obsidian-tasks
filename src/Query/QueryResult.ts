@@ -77,7 +77,7 @@ export class QueryResult {
     private tasksAsStringOfLines(tasks: Task[]): string {
         let output = '';
         for (const task of tasks) {
-            output += this.toFileLineString(task).trim() + '\n';
+            output += this.toFileLineString(task) + '\n';
         }
         return output;
     }
@@ -89,6 +89,6 @@ export class QueryResult {
      * @param task
      */
     public toFileLineString(task: Task): string {
-        return `${task.indentation}- [${task.status.symbol}] ${task.toString()}`;
+        return `- [${task.status.symbol}] ${task.toString()}`;
     }
 }
