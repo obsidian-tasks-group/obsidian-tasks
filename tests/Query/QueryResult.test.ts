@@ -48,6 +48,7 @@ describe('QueryResult', () => {
             const tasks: Task[] = [];
             const queryResult = createUngroupedQueryResult(tasks);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('0 tasks');
+            expect(queryResult.asMarkdown()).toEqual('');
         });
 
         it('should not pluralise "task" if only 1 match', () => {

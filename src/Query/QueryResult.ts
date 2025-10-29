@@ -48,4 +48,8 @@ export class QueryResult {
         result._searchErrorMessage = message;
         return result;
     }
+
+    public asMarkdown(): string {
+        return '';
+    }
 }
