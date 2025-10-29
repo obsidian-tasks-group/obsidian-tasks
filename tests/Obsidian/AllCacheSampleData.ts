@@ -54,6 +54,7 @@ export type MockDataName =
     | 'links_everywhere'
     | 'list_statuses'
     | 'list_styles'
+    | 'mixed_list_markers'
     | 'multi_line_task_and_list_item'
     | 'multiple_headings'
     | 'no_heading'
@@ -166,6 +167,7 @@ export const AllMockDataNames: MockDataName[] = [
     'links_everywhere',
     'list_statuses',
     'list_styles',
+    'mixed_list_markers',
     'multi_line_task_and_list_item',
     'multiple_headings',
     'no_heading',
