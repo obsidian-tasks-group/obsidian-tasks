@@ -53,9 +53,7 @@ export class QueryResult {
         let markdown = '';
 
         this.taskGroups.groups.forEach((group) => {
-            group.tasks.forEach((task) => {
-                markdown += task.originalMarkdown + '\n';
-            });
+            markdown += group.toString();
         });
 
         return markdown;

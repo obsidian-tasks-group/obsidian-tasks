@@ -1,9 +1,10 @@
-import { TaskGroups } from '../../src/Query/Group/TaskGroups';
 import type { Grouper } from '../../src/Query/Group/Grouper';
-import type { Task } from '../../src/Task/Task';
+import { TaskGroups } from '../../src/Query/Group/TaskGroups';
+import { Query } from '../../src/Query/Query';
 import { QueryResult } from '../../src/Query/QueryResult';
-import { fromLine } from '../TestingTools/TestHelpers';
 import { SearchInfo } from '../../src/Query/SearchInfo';
+import type { Task } from '../../src/Task/Task';
+import { fromLine, fromLines } from '../TestingTools/TestHelpers';
 
 describe('QueryResult', () => {
     function createUngroupedQueryResult(tasks: Task[]) {
@@ -48,7 +49,8 @@ describe('QueryResult', () => {
             const tasks: Task[] = [];
             const queryResult = createUngroupedQueryResult(tasks);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('0 tasks');
-            expect(queryResult.asMarkdown()).toEqual('');
+            expect(queryResult.asMarkdown()).toEqual(`
+`);
         });
 
         it('should not pluralise "task" if only 1 match', () => {
@@ -64,7 +66,8 @@ describe('QueryResult', () => {
             ];
             const queryResult = createUngroupedQueryResult(tasks);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('2 tasks');
-            expect(queryResult.asMarkdown()).toEqual(`- [ ] Do something more complicated 1
+            expect(queryResult.asMarkdown()).toEqual(`
+- [ ] Do something more complicated 1
 - [ ] Do something more complicated 2
 `);
         });
@@ -91,5 +94,39 @@ describe('QueryResult', () => {
             const queryResult = createUngroupedQueryResultWithLimit(tasks, 9);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('2 of 9 tasks');
         });
+    });
+});
+
+describe('Copying results', () => {
+    function copyResult(tasks: string, query: string) {
+        const lines = tasks.split('\n').filter((line) => line.length > 0);
+        const queryResult = new Query(query).applyQueryToTasks(fromLines({ lines }));
+        return queryResult.asMarkdown();
+    }
+
+    it('should copy one grouping level', () => {
+        const tasks = `
+- [ ] 4444
+- [ ] 333
+- [ ] 55555
+`;
+
+        const query = 'group by function task.description.length';
+
+        expect(copyResult(tasks, query)).toMatchInlineSnapshot(`
+            "
+            #### 3
+
+            - [ ] 333
+
+            #### 4
+
+            - [ ] 4444
+
+            #### 5
+
+            - [ ] 55555
+            "
+        `);
     });
 });
