@@ -207,4 +207,21 @@ group by id
 - [ ] grandchild task 2
 `);
     });
+
+    it.failing('should indent nested tasks', () => {
+        const tasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+
+        const query = '';
+
+        expect(searchTasksAndCopyResult(tasks, query)).toEqual(`
+- [ ] #task parent task
+    - [ ] #task child task 1
+        - [ ] #task grandchild 1
+    - [ ] #task child task 2
+        - [ ] #task grandchild 2
+- [ ] #task sibling
+`);
+    });
 });
