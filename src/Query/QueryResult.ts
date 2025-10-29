@@ -52,9 +52,9 @@ export class QueryResult {
     public asMarkdown(): string {
         let markdown = '';
 
-        this.taskGroups.groups.forEach((group) => {
-            markdown += group.toString();
-        });
+        markdown += this.taskGroups.groups // force line break
+            .map((group) => group.toString())
+            .join('');
 
         return markdown;
     }
