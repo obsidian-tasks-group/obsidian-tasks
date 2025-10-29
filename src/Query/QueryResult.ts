@@ -50,6 +50,14 @@ export class QueryResult {
     }
 
     public asMarkdown(): string {
-        return '';
+        let markdown = '';
+
+        this.taskGroups.groups.forEach((group) => {
+            group.tasks.forEach((task) => {
+                markdown += task.originalMarkdown + '\n';
+            });
+        });
+
+        return markdown;
     }
 }

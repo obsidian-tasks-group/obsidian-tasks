@@ -64,6 +64,9 @@ describe('QueryResult', () => {
             ];
             const queryResult = createUngroupedQueryResult(tasks);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('2 tasks');
+            expect(queryResult.asMarkdown()).toEqual(`- [ ] Do something more complicated 1
+- [ ] Do something more complicated 2
+`);
         });
 
         // Cases where a limit was applied
