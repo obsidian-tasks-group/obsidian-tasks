@@ -77,7 +77,7 @@ export class QueryResult {
     private tasksAsStringOfLines(tasks: Task[]): string {
         let output = '';
         for (const task of tasks) {
-            output += task.toFileLineString() + '\n';
+            output += task.toFileLineString().trim() + '\n';
         }
         return output;
     }

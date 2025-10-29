@@ -8,6 +8,7 @@ import { Query } from '../../src/Query/Query';
 import { QueryResult } from '../../src/Query/QueryResult';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { Task } from '../../src/Task/Task';
+import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { fromLine, fromLines } from '../TestingTools/TestHelpers';
 
 window.moment = moment;
@@ -194,5 +195,16 @@ group by id
             - [ ] 5 #something
             "
         `);
+    });
+
+    it('should remove indentation for nested tasks', () => {
+        const tasks = readTasksFromSimulatedFile('inheritance_2roots_listitem_listitem_task');
+
+        const query = '';
+
+        expect(searchTasksAndCopyResult(tasks, query)).toEqual(`
+- [ ] grandchild task 1
+- [ ] grandchild task 2
+`);
     });
 });
