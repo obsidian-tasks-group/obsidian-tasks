@@ -1,0 +1,137 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 0,
+            "offset": 12
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 14,
+            "line": 1,
+            "offset": 27
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 13
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 2,
+            "offset": 38
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 28
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -3,
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 3,
+            "offset": 59
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 39
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 0,
+            "offset": 12
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 14,
+            "line": 1,
+            "offset": 27
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 13
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 2,
+            "offset": 38
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 28
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 20,
+            "line": 3,
+            "offset": 59
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 39
+          }
+        },
+        "type": "list"
+      }
+    ]
+  },
+  "fileContents": "- [ ] hyphen\n* [ ] asterisk\n+ [ ] plus\n1. [ ] numbered task\n",
+  "filePath": "Test Data/mixed_list_markers.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}
