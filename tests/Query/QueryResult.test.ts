@@ -104,10 +104,15 @@ describe('QueryResult', () => {
 });
 
 describe('Copying results', () => {
-    function copyResult(tasks: string, query: string) {
-        const lines = tasks.split('\n').filter((line) => line.length > 0);
-        const queryResult = new Query(query).applyQueryToTasks(fromLines({ lines }));
+    function searchTasksAndCopyResult(tasks: Task[], query: string) {
+        const queryResult = new Query(query).applyQueryToTasks(tasks);
         return queryResult.asMarkdown();
+    }
+
+    function searchMarkdownAndCopyResult(tasksMarkdown: string, query: string) {
+        const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
+        const tasks = fromLines({ lines });
+        return searchTasksAndCopyResult(tasks, query);
     }
 
     it('should copy one grouping level', () => {
@@ -119,7 +124,7 @@ describe('Copying results', () => {
 
         const query = 'group by function task.description.length';
 
-        expect(copyResult(tasks, query)).toMatchInlineSnapshot(`
+        expect(searchMarkdownAndCopyResult(tasks, query)).toMatchInlineSnapshot(`
             "
             #### 3
 
@@ -153,7 +158,7 @@ group by scheduled
 group by id
 `;
 
-        expect(copyResult(tasks, query)).toMatchInlineSnapshot(`
+        expect(searchMarkdownAndCopyResult(tasks, query)).toMatchInlineSnapshot(`
             "
             ##### %%1%%High priority
 
