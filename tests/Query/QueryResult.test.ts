@@ -224,4 +224,17 @@ group by id
 - [ ] #task sibling
 `);
     });
+
+    it.failing('should use hyphen as list marker', () => {
+        const tasks = readTasksFromSimulatedFile('mixed_list_markers');
+
+        const query = '';
+
+        expect(searchTasksAndCopyResult(tasks, query)).toEqual(`
+- [ ] hyphen
+- [ ] asterisk
+- [ ] plus
+- [ ] numbered task
+`);
+    });
 });
