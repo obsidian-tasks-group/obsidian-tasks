@@ -24,13 +24,21 @@ async function verifyRenderedTasksMarkdown(
     source: string,
     tasksFile: TasksFile,
     tasks: Task[],
-    queryRendererParameters: QueryRendererParameters,
     testDataName: MockDataName,
 ) {
     const renderer = makeMarkdownResultsRenderer(source, tasksFile);
 
     // Render the query
     const content = document.createElement('div');
+
+    const queryRendererParameters: QueryRendererParameters = {
+        allTasks: tasks,
+        allMarkdownFiles: [],
+        backlinksClickHandler: async () => {},
+        backlinksMousedownHandler: async () => {},
+        editTaskPencilClickHandler: () => {},
+    };
+
     await renderer.render(State.Warm, tasks, content, queryRendererParameters);
 
     // Get the markdown
@@ -58,19 +66,11 @@ describe('rendering', () => {
     const tasksFile = getTasksFileFromMockData(testDataName);
     const tasks = readTasksFromSimulatedFile(testDataName);
 
-    const queryRendererParameters: QueryRendererParameters = {
-        allTasks: tasks,
-        allMarkdownFiles: [],
-        backlinksClickHandler: async () => {},
-        backlinksMousedownHandler: async () => {},
-        editTaskPencilClickHandler: () => {},
-    };
-
     it('should support render', async () => {
-        await verifyRenderedTasksMarkdown(source, tasksFile, tasks, queryRendererParameters, testDataName);
+        await verifyRenderedTasksMarkdown(source, tasksFile, tasks, testDataName);
     });
 
     it('should support renderToMarkdown()', async () => {
-        await verifyRenderedTasksMarkdown(source, tasksFile, tasks, queryRendererParameters, testDataName);
+        await verifyRenderedTasksMarkdown(source, tasksFile, tasks, testDataName);
     });
 });
