@@ -1,13 +1,8 @@
-Source Markdown note:
-# first header
+Tasks found by the search:
 
 - [ ] #task parent task
     - [ ] #task child task 1
-
-## second header
-
 - [ ] #task root task
-
 
 ---
 

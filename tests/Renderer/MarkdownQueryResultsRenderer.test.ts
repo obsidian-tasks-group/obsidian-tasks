@@ -2,11 +2,11 @@ import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryRe
 import { State } from '../../src/Obsidian/Cache';
 import type { QueryRendererParameters } from '../../src/Renderer/QueryResultsRenderer';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
-import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import type { Task } from '../../src/Task/Task';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
+import { toMarkdown } from '../TestingTools/TestHelpers';
 
 function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     return new MarkdownQueryResultsRenderer(
@@ -19,7 +19,7 @@ function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     );
 }
 
-async function verifyRenderedTasksMarkdown(source: string, tasks: Task[], testDataName: MockDataName) {
+async function verifyRenderedTasksMarkdown(source: string, tasks: Task[], _testDataName: MockDataName) {
     const renderer = makeMarkdownResultsRenderer(source, new TasksFile('query.md'));
 
     // Render the query
@@ -38,8 +38,9 @@ async function verifyRenderedTasksMarkdown(source: string, tasks: Task[], testDa
     // Get the markdown
     const markdown = renderer.getMarkdownOutput();
 
-    const output = `Source Markdown note:
-${MockDataLoader.get(testDataName).fileContents}
+    const output = `Tasks found by the search:
+
+${toMarkdown(tasks)}
 
 ---
 
