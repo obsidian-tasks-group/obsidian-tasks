@@ -6,6 +6,8 @@ import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import type { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import type { Task } from '../../src/Task/Task';
+import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 
 function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     return new MarkdownQueryResultsRenderer(
@@ -16,6 +18,38 @@ function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
         null, // obsidianComponent - not used
         null as any, // obsidianApp - not used
     );
+}
+
+async function verifyRenderedTasksMarkdown(
+    source: string,
+    tasksFile: TasksFile,
+    tasks: Task[],
+    queryRendererParameters: QueryRendererParameters,
+    testDataName: MockDataName,
+) {
+    const renderer = makeMarkdownResultsRenderer(source, tasksFile);
+
+    // Render the query
+    const content = document.createElement('div');
+    await renderer.render(State.Warm, tasks, content, queryRendererParameters);
+
+    // Get the markdown
+    const markdown = renderer.getMarkdownOutput();
+
+    const output = `Source Markdown note:
+${MockDataLoader.get(testDataName).fileContents}
+
+---
+
+Query:
+${source}
+
+---
+
+Copied search results, in Markdown format:
+${markdown}
+`;
+    verifyWithFileExtension(output, 'md');
 }
 
 describe('rendering', () => {
@@ -58,29 +92,7 @@ Copied search results, in Markdown format:
 `;
 
     it('should support render', async () => {
-        const renderer = makeMarkdownResultsRenderer(source, tasksFile);
-
-        // Render the query
-        const content = document.createElement('div');
-        await renderer.render(State.Warm, tasks, content, queryRendererParameters);
-
-        // Get the markdown
-        const markdown = renderer.getMarkdownOutput();
-
-        const output = `Source Markdown note:
-${MockDataLoader.get(testDataName).fileContents}
-
----
-
-Query:
-${source}
-
----
-
-Copied search results, in Markdown format:
-${markdown}
-`;
-        verifyWithFileExtension(output, 'md');
+        await verifyRenderedTasksMarkdown(source, tasksFile, tasks, queryRendererParameters, testDataName);
     });
 
     it('should support renderToMarkdown()', async () => {
