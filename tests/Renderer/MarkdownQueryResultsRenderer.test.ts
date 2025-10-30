@@ -18,14 +18,13 @@ function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
 }
 
 describe('MarkdownQueryResultsRenderer', () => {
+    const source = 'show tree';
+    const testDataName = 'inheritance_1parent1child1newroot_after_header';
+    const tasksFile = getTasksFileFromMockData(testDataName);
+    const tasks = readTasksFromSimulatedFile(testDataName);
+
     it('should support render() and provide results as markdown', async () => {
-        const source = 'show tree';
-        const testDataName = 'inheritance_1parent1child1newroot_after_header';
-
-        const tasksFile = getTasksFileFromMockData(testDataName);
         const renderer = makeMarkdownResultsRenderer(source, tasksFile);
-
-        const tasks = readTasksFromSimulatedFile(testDataName);
 
         // Render the query
         const content = document.createElement('div');
