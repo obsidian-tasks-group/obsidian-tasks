@@ -2,9 +2,8 @@ import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryRe
 import { State } from '../../src/Obsidian/Cache';
 import type { QueryRendererParameters } from '../../src/Renderer/QueryResultsRenderer';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
-import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
-import type { TasksFile } from '../../src/Scripting/TasksFile';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import type { Task } from '../../src/Task/Task';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
@@ -20,13 +19,8 @@ function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     );
 }
 
-async function verifyRenderedTasksMarkdown(
-    source: string,
-    tasksFile: TasksFile,
-    tasks: Task[],
-    testDataName: MockDataName,
-) {
-    const renderer = makeMarkdownResultsRenderer(source, tasksFile);
+async function verifyRenderedTasksMarkdown(source: string, tasks: Task[], testDataName: MockDataName) {
+    const renderer = makeMarkdownResultsRenderer(source, new TasksFile('query.md'));
 
     // Render the query
     const content = document.createElement('div');
@@ -63,14 +57,13 @@ ${markdown}
 describe('rendering', () => {
     const source = 'show tree';
     const testDataName = 'inheritance_1parent1child1newroot_after_header';
-    const tasksFile = getTasksFileFromMockData(testDataName);
     const tasks = readTasksFromSimulatedFile(testDataName);
 
     it('should support render', async () => {
-        await verifyRenderedTasksMarkdown(source, tasksFile, tasks, testDataName);
+        await verifyRenderedTasksMarkdown(source, tasks, testDataName);
     });
 
     it('should support renderToMarkdown()', async () => {
-        await verifyRenderedTasksMarkdown(source, tasksFile, tasks, testDataName);
+        await verifyRenderedTasksMarkdown(source, tasks, testDataName);
     });
 });
