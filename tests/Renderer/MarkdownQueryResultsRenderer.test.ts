@@ -31,6 +31,31 @@ describe('MarkdownQueryResultsRenderer', () => {
         editTaskPencilClickHandler: () => {},
     };
 
+    const expectedSourceAndMarkdown = `Source Markdown note:
+# first header
+
+- [ ] #task parent task
+    - [ ] #task child task 1
+
+## second header
+
+- [ ] #task root task
+
+
+---
+
+Query:
+show tree
+
+---
+
+Copied search results, in Markdown format:
+- [ ] #task parent task
+        - [ ] #task child task 1
+- [ ] #task root task
+
+`;
+
     it('should support render() and provide results as markdown', async () => {
         const renderer = makeMarkdownResultsRenderer(source, tasksFile);
 
@@ -55,30 +80,7 @@ Copied search results, in Markdown format:
 ${markdown}
 `;
 
-        expect(output).toEqual(`Source Markdown note:
-# first header
-
-- [ ] #task parent task
-    - [ ] #task child task 1
-
-## second header
-
-- [ ] #task root task
-
-
----
-
-Query:
-show tree
-
----
-
-Copied search results, in Markdown format:
-- [ ] #task parent task
-        - [ ] #task child task 1
-- [ ] #task root task
-
-`);
+        expect(output).toEqual(expectedSourceAndMarkdown);
     });
 
     it('should support renderToMarkdown()', async () => {
@@ -104,29 +106,6 @@ Copied search results, in Markdown format:
 ${markdown}
 `;
 
-        expect(output).toEqual(`Source Markdown note:
-# first header
-
-- [ ] #task parent task
-    - [ ] #task child task 1
-
-## second header
-
-- [ ] #task root task
-
-
----
-
-Query:
-show tree
-
----
-
-Copied search results, in Markdown format:
-- [ ] #task parent task
-        - [ ] #task child task 1
-- [ ] #task root task
-
-`);
+        expect(output).toEqual(expectedSourceAndMarkdown);
     });
 });
