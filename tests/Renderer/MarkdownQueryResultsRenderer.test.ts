@@ -4,6 +4,18 @@ import type { QueryRendererParameters } from '../../src/Renderer/QueryResultsRen
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
+import type { TasksFile } from '../../src/Scripting/TasksFile';
+
+function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
+    return new MarkdownQueryResultsRenderer(
+        'block-language-tasks',
+        source,
+        tasksFile,
+        async () => {}, // renderMarkdown - not used by markdown visitor
+        null, // obsidianComponent - not used
+        null as any, // obsidianApp - not used
+    );
+}
 
 describe('MarkdownQueryResultsRenderer', () => {
     it('should support render() and provide results as markdown', async () => {
@@ -11,15 +23,7 @@ describe('MarkdownQueryResultsRenderer', () => {
         const testDataName = 'inheritance_1parent1child1newroot_after_header';
 
         const tasksFile = getTasksFileFromMockData(testDataName);
-
-        const renderer = new MarkdownQueryResultsRenderer(
-            'block-language-tasks',
-            source,
-            tasksFile,
-            async () => {}, // renderMarkdown - not used by markdown visitor
-            null, // obsidianComponent - not used
-            null as any, // obsidianApp - not used
-        );
+        const renderer = makeMarkdownResultsRenderer(source, tasksFile);
 
         const tasks = readTasksFromSimulatedFile(testDataName);
 
