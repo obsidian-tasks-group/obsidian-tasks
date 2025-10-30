@@ -66,58 +66,11 @@ describe('rendering', () => {
         editTaskPencilClickHandler: () => {},
     };
 
-    const expectedSourceAndMarkdown = `Source Markdown note:
-# first header
-
-- [ ] #task parent task
-    - [ ] #task child task 1
-
-## second header
-
-- [ ] #task root task
-
-
----
-
-Query:
-show tree
-
----
-
-Copied search results, in Markdown format:
-- [ ] #task parent task
-        - [ ] #task child task 1
-- [ ] #task root task
-
-`;
-
     it('should support render', async () => {
         await verifyRenderedTasksMarkdown(source, tasksFile, tasks, queryRendererParameters, testDataName);
     });
 
     it('should support renderToMarkdown()', async () => {
-        const renderer = makeMarkdownResultsRenderer(source, tasksFile);
-
-        // Render the query
-        await renderer.renderToMarkdown(State.Warm, tasks, queryRendererParameters);
-
-        // Get the markdown
-        const markdown = renderer.getMarkdownOutput();
-
-        const output = `Source Markdown note:
-${MockDataLoader.get(testDataName).fileContents}
-
----
-
-Query:
-${source}
-
----
-
-Copied search results, in Markdown format:
-${markdown}
-`;
-
-        expect(output).toEqual(expectedSourceAndMarkdown);
+        await verifyRenderedTasksMarkdown(source, tasksFile, tasks, queryRendererParameters, testDataName);
     });
 });
