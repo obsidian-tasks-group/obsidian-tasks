@@ -18,6 +18,7 @@ import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
+import { momentAdjusted } from '../DateTime/DateAdjusted';
 import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
 import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
@@ -257,11 +258,10 @@ class QueryRenderChild extends MarkdownRenderChild {
      * to "now".
      */
     private reloadQueryAtMidnight(): void {
-        const midnight = new Date();
-        midnight.setHours(24, 0, 0, 0);
-        const now = new Date();
+        const midnight = momentAdjusted().add(1, 'days').startOf('day');
+        const now = momentAdjusted();
 
-        const millisecondsToMidnight = midnight.getTime() - now.getTime();
+        const millisecondsToMidnight = midnight.diff(now, 'milliseconds');
 
         this.queryReloadTimeout = setTimeout(() => {
             this.queryResultsRenderer.query = getQueryForQueryRenderer(

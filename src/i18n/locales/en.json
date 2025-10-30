@@ -107,6 +107,10 @@
     },
     "changeRequiresRestart": "REQUIRES RESTART.",
     "dates": {
+      "nextDayStartHour": {
+        "description": "Sets the hour at which the new day begins. Interacting with tasks after midnight but before this hour is treated as if interacting the day before.",
+        "name": "Next day starts at"
+      },
       "cancelledDate": {
         "description": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
         "name": "Set cancelled date on every cancelled task"
