@@ -55,15 +55,17 @@ ${markdown}
 }
 
 describe('rendering', () => {
-    const source = 'show tree';
-    const testDataName = 'inheritance_1parent1child1newroot_after_header';
-    const tasks = readTasksFromSimulatedFile(testDataName);
-
     it('should support render', async () => {
-        await verifyRenderedTasksMarkdown(source, tasks);
+        await verifyRenderedTasksMarkdown(
+            'show tree',
+            readTasksFromSimulatedFile('inheritance_1parent1child1newroot_after_header'),
+        );
     });
 
     it('should support renderToMarkdown()', async () => {
-        await verifyRenderedTasksMarkdown(source, tasks);
+        await verifyRenderedTasksMarkdown(
+            'show tree',
+            readTasksFromSimulatedFile('inheritance_1parent1child1newroot_after_header'),
+        );
     });
 });
