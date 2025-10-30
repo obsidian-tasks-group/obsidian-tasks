@@ -5,6 +5,7 @@ import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import type { TasksFile } from '../../src/Scripting/TasksFile';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 
 function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     return new MarkdownQueryResultsRenderer(
@@ -17,7 +18,7 @@ function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     );
 }
 
-describe('MarkdownQueryResultsRenderer', () => {
+describe('rendering', () => {
     const source = 'show tree';
     const testDataName = 'inheritance_1parent1child1newroot_after_header';
     const tasksFile = getTasksFileFromMockData(testDataName);
@@ -56,7 +57,7 @@ Copied search results, in Markdown format:
 
 `;
 
-    it('should support render() and provide results as markdown', async () => {
+    it('should support render', async () => {
         const renderer = makeMarkdownResultsRenderer(source, tasksFile);
 
         // Render the query
@@ -79,8 +80,7 @@ ${source}
 Copied search results, in Markdown format:
 ${markdown}
 `;
-
-        expect(output).toEqual(expectedSourceAndMarkdown);
+        verifyWithFileExtension(output, 'md');
     });
 
     it('should support renderToMarkdown()', async () => {
