@@ -10,12 +10,12 @@ describe('MarkdownQueryResultsRenderer', () => {
         const source = 'show tree';
         const testDataName = 'inheritance_1parent1child1newroot_after_header';
 
-        const queryFile = getTasksFileFromMockData(testDataName);
+        const tasksFile = getTasksFileFromMockData(testDataName);
 
         const renderer = new MarkdownQueryResultsRenderer(
             'block-language-tasks',
             source,
-            queryFile,
+            tasksFile,
             async () => {}, // renderMarkdown - not used by markdown visitor
             null, // obsidianComponent - not used
             null as any, // obsidianApp - not used
