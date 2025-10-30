@@ -14,7 +14,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { HtmlQueryResultsVisitor } from './HtmlQueryResultsVisitor';
-import type { QueryResultsVisitor } from './QueryResultsVisitor';
+import type { QueryResultsVisitor, VisitorRenderContext } from './QueryResultsVisitor';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
@@ -68,6 +68,9 @@ export class QueryResultsRenderer {
     private readonly renderMarkdown;
     private readonly obsidianComponent: Component | null;
     private readonly obsidianApp: App;
+
+    // Store the current query renderer parameters for nested rendering
+    private currentQueryRendererParameters: QueryRendererParameters | null = null;
 
     constructor(
         className: string,
@@ -251,37 +254,83 @@ export class QueryResultsRenderer {
         content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        // Create visitor for rendering
-        const visitor = this.createVisitor(content);
+        // Store for use in nested rendering
+        this.currentQueryRendererParameters = queryRendererParameters;
 
         for (const group of tasksSortedLimitedGrouped.groups) {
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
-            await this.addGroupHeadings(visitor, group.groupHeadings);
+
+            // Create a dummy visitor for headings (headings don't need taskList/renderer)
+            const dummyTaskList = document.createElement('ul');
+            const dummyTaskLineRenderer = new TaskLineRenderer({
+                textRenderer: this.textRenderer,
+                obsidianApp: this.obsidianApp,
+                obsidianComponent: this.obsidianComponent,
+                parentUlElement: dummyTaskList,
+                taskLayoutOptions: this.query.taskLayoutOptions,
+                queryLayoutOptions: this.query.queryLayoutOptions,
+            });
+            const headingVisitor = this.createVisitor(
+                content,
+                dummyTaskList,
+                dummyTaskLineRenderer,
+                queryRendererParameters,
+            );
+            await this.addGroupHeadings(headingVisitor, group.groupHeadings);
 
             const renderedListItems: Set<ListItem> = new Set();
-            await this.createTaskList(visitor, group.tasks, content, queryRendererParameters, renderedListItems);
+            await this.createTaskList(group.tasks, content, queryRendererParameters, renderedListItems);
         }
+    }
+
+    private getCurrentQueryRendererParameters(): QueryRendererParameters {
+        if (!this.currentQueryRendererParameters) {
+            throw new Error('QueryRendererParameters not set');
+        }
+        return this.currentQueryRendererParameters;
     }
 
     /**
      * Creates a visitor for rendering query results.
      * Override this method to provide a different visitor implementation.
      */
-    protected createVisitor(content: HTMLDivElement): QueryResultsVisitor {
+    protected createVisitor(
+        content: HTMLDivElement,
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
+        queryRendererParameters: QueryRendererParameters,
+    ): QueryResultsVisitor {
         return new HtmlQueryResultsVisitor(
             this.query,
             this.tasksFile,
             content,
+            taskList,
+            taskLineRenderer,
             this.renderMarkdown,
             this.obsidianComponent,
             this.obsidianApp,
             this.filePath,
+            queryRendererParameters,
         );
     }
 
+    /**
+     * Create a rendering context from query layout options.
+     * This provides the minimal data needed by visitors without Obsidian dependencies.
+     */
+    protected createRenderContext(): VisitorRenderContext {
+        return {
+            queryFilePath: this.filePath,
+            hideUrgency: this.query.queryLayoutOptions.hideUrgency,
+            hideBacklinks: this.query.queryLayoutOptions.hideBacklinks,
+            hideEditButton: this.query.queryLayoutOptions.hideEditButton,
+            hidePostponeButton: this.query.queryLayoutOptions.hidePostponeButton,
+            shortMode: this.query.queryLayoutOptions.shortMode,
+        };
+    }
+
     private async createTaskList(
-        visitor: QueryResultsVisitor,
         listItems: ListItem[],
         content: HTMLElement,
         queryRendererParameters: QueryRendererParameters,
@@ -305,6 +354,15 @@ export class QueryResultsRenderer {
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
+        // Create visitor with the actual taskList and taskLineRenderer
+        const visitor = this.createVisitor(
+            content as HTMLDivElement,
+            taskList,
+            taskLineRenderer,
+            queryRendererParameters,
+        );
+        const context = this.createRenderContext();
+
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (this.query.queryLayoutOptions.hideTree) {
                 /* Old-style rendering of tasks:
@@ -314,7 +372,7 @@ export class QueryResultsRenderer {
                  *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
                  */
                 if (listItem instanceof Task) {
-                    await visitor.addTask(taskList, taskLineRenderer, listItem, listItemIndex, queryRendererParameters);
+                    await visitor.addTask(listItem, listItemIndex, context);
                 }
             } else {
                 /* New-style rendering of tasks:
@@ -329,11 +387,9 @@ export class QueryResultsRenderer {
                  */
                 await this.addTaskOrListItemAndChildren(
                     visitor,
-                    taskList,
-                    taskLineRenderer,
+                    context,
                     listItem,
                     listItemIndex,
-                    queryRendererParameters,
                     listItems,
                     renderedListItems,
                 );
@@ -366,11 +422,9 @@ export class QueryResultsRenderer {
 
     private async addTaskOrListItemAndChildren(
         visitor: QueryResultsVisitor,
-        taskList: HTMLUListElement,
-        taskLineRenderer: TaskLineRenderer,
+        context: VisitorRenderContext,
         listItem: ListItem,
         taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
         listItems: ListItem[],
         renderedListItems: Set<ListItem>,
     ) {
@@ -382,43 +436,57 @@ export class QueryResultsRenderer {
             return;
         }
 
-        const listItemElement = await this.addTaskOrListItem(
-            visitor,
-            taskList,
-            taskLineRenderer,
-            listItem,
-            taskIndex,
-            queryRendererParameters,
-        );
+        await this.addTaskOrListItem(visitor, context, listItem, taskIndex);
         renderedListItems.add(listItem);
 
         if (listItem.children.length > 0) {
-            await this.createTaskList(
-                visitor,
-                listItem.children,
-                listItemElement,
-                queryRendererParameters,
-                renderedListItems,
-            );
-            listItem.children.forEach((childTask) => {
-                renderedListItems.add(childTask);
-            });
+            // For HTML visitor, create a nested <ul> element
+            if (visitor.getLastRenderedElement) {
+                const lastElement = visitor.getLastRenderedElement();
+                if (lastElement) {
+                    // Create nested task list inside the parent element
+                    await this.createTaskList(
+                        listItem.children,
+                        lastElement,
+                        this.getCurrentQueryRendererParameters(),
+                        renderedListItems,
+                    );
+                }
+            } else {
+                // For non-HTML visitors (like markdown), use indentation
+                if ('increaseIndent' in visitor && typeof visitor.increaseIndent === 'function') {
+                    (visitor as any).increaseIndent();
+                }
+
+                for (const [childIndex, childItem] of listItem.children.entries()) {
+                    await this.addTaskOrListItemAndChildren(
+                        visitor,
+                        context,
+                        childItem,
+                        childIndex,
+                        listItem.children,
+                        renderedListItems,
+                    );
+                }
+
+                if ('decreaseIndent' in visitor && typeof visitor.decreaseIndent === 'function') {
+                    (visitor as any).decreaseIndent();
+                }
+            }
         }
     }
 
     private async addTaskOrListItem(
         visitor: QueryResultsVisitor,
-        taskList: HTMLUListElement,
-        taskLineRenderer: TaskLineRenderer,
+        context: VisitorRenderContext,
         listItem: ListItem,
         taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
     ) {
         if (listItem instanceof Task) {
-            return await visitor.addTask(taskList, taskLineRenderer, listItem, taskIndex, queryRendererParameters);
+            return await visitor.addTask(listItem, taskIndex, context);
         }
 
-        return await visitor.addListItem(taskList, taskLineRenderer, listItem, taskIndex);
+        return await visitor.addListItem(listItem, taskIndex, context);
     }
 
     /**

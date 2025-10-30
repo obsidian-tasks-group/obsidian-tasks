@@ -8,7 +8,7 @@ import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
-import type { QueryResultsVisitor } from './QueryResultsVisitor';
+import type { QueryResultsVisitor, VisitorRenderContext } from './QueryResultsVisitor';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 /**
@@ -16,11 +16,16 @@ import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
  *
  * This visitor renders query results as HTML elements, creating
  * list items for tasks and headings for groups.
+ *
+ * This is the default visitor that provides all the Obsidian-specific
+ * functionality like edit buttons, backlinks, postpone buttons, etc.
  */
 export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
-    private readonly query: IQuery;
+    // private readonly query: IQuery;
     private readonly tasksFile: TasksFile;
     private readonly content: HTMLDivElement;
+    private readonly taskList: HTMLUListElement;
+    private readonly taskLineRenderer: TaskLineRenderer;
     private readonly renderMarkdown: (
         app: App,
         markdown: string,
@@ -31,11 +36,16 @@ export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
     private readonly obsidianComponent: Component | null;
     private readonly obsidianApp: App;
     private readonly filePath: string | undefined;
+    private readonly queryRendererParameters: QueryRendererParameters;
+    private readonly allMarkdownFiles: TFile[];
+    private lastRenderedElement: HTMLElement | undefined;
 
     constructor(
-        query: IQuery,
+        _query: IQuery,
         tasksFile: TasksFile,
         content: HTMLDivElement,
+        taskList: HTMLUListElement,
+        taskLineRenderer: TaskLineRenderer,
         renderMarkdown: (
             app: App,
             markdown: string,
@@ -46,14 +56,19 @@ export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
         obsidianComponent: Component | null,
         obsidianApp: App,
         filePath: string | undefined,
+        queryRendererParameters: QueryRendererParameters,
     ) {
-        this.query = query;
+        // this.query = query;
         this.tasksFile = tasksFile;
         this.content = content;
+        this.taskList = taskList;
+        this.taskLineRenderer = taskLineRenderer;
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
         this.filePath = filePath;
+        this.queryRendererParameters = queryRendererParameters;
+        this.allMarkdownFiles = queryRendererParameters.allMarkdownFiles;
     }
 
     async addGroupHeading(group: GroupDisplayHeading): Promise<void> {
@@ -80,15 +95,9 @@ export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
         );
     }
 
-    async addTask(
-        taskList: HTMLUListElement,
-        taskLineRenderer: TaskLineRenderer,
-        task: Task,
-        taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
-    ): Promise<HTMLLIElement> {
-        const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
-        const listItem = await taskLineRenderer.renderTaskLine({
+    async addTask(task: Task, taskIndex: number, context: VisitorRenderContext): Promise<void> {
+        const isFilenameUnique = this.isFilenameUnique({ task }, this.allMarkdownFiles);
+        const listItem = await this.taskLineRenderer.renderTaskLine({
             task,
             taskIndex,
             isTaskInQueryFile: this.filePath === task.path,
@@ -102,46 +111,43 @@ export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
         const extrasSpan = createAndAppendElement('span', listItem);
         extrasSpan.classList.add('task-extras');
 
-        if (!this.query.queryLayoutOptions.hideUrgency) {
+        if (!context.hideUrgency) {
             this.addUrgency(extrasSpan, task);
         }
 
-        const shortMode = this.query.queryLayoutOptions.shortMode;
-
-        if (!this.query.queryLayoutOptions.hideBacklinks) {
-            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique, queryRendererParameters);
+        if (!context.hideBacklinks) {
+            this.addBacklinks(extrasSpan, task, context.shortMode, isFilenameUnique);
         }
 
-        if (!this.query.queryLayoutOptions.hideEditButton) {
-            this.addEditButton(extrasSpan, task, queryRendererParameters);
+        if (!context.hideEditButton) {
+            this.addEditButton(extrasSpan, task);
         }
 
-        if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
-            this.addPostponeButton(extrasSpan, task, shortMode);
+        if (!context.hidePostponeButton && shouldShowPostponeButton(task)) {
+            this.addPostponeButton(extrasSpan, task, context.shortMode);
         }
 
-        taskList.appendChild(listItem);
-
-        return listItem;
+        this.taskList.appendChild(listItem);
+        this.lastRenderedElement = listItem;
     }
 
-    async addListItem(
-        taskList: HTMLUListElement,
-        taskLineRenderer: TaskLineRenderer,
-        listItem: ListItem,
-        listItemIndex: number,
-    ): Promise<HTMLLIElement> {
-        return await taskLineRenderer.renderListItem(taskList, listItem, listItemIndex);
+    async addListItem(listItem: ListItem, listItemIndex: number, _context: VisitorRenderContext): Promise<void> {
+        const rendered = await this.taskLineRenderer.renderListItem(this.taskList, listItem, listItemIndex);
+        this.lastRenderedElement = rendered;
     }
 
-    private addEditButton(listItem: HTMLElement, task: Task, queryRendererParameters: QueryRendererParameters) {
+    public getLastRenderedElement(): HTMLElement | undefined {
+        return this.lastRenderedElement;
+    }
+
+    private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = createAndAppendElement('a', listItem);
         editTaskPencil.classList.add('tasks-edit');
         editTaskPencil.title = 'Edit task';
         editTaskPencil.href = '#';
 
         editTaskPencil.addEventListener('click', (event: MouseEvent) =>
-            queryRendererParameters.editTaskPencilClickHandler(event, task, queryRendererParameters.allTasks),
+            this.queryRendererParameters.editTaskPencilClickHandler(event, task, this.queryRendererParameters.allTasks),
         );
     }
 
@@ -152,13 +158,7 @@ export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
         span.classList.add('tasks-urgency');
     }
 
-    private addBacklinks(
-        listItem: HTMLElement,
-        task: Task,
-        shortMode: boolean,
-        isFilenameUnique: boolean | undefined,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
         const backLink = createAndAppendElement('span', listItem);
         backLink.classList.add('tasks-backlink');
 
@@ -186,11 +186,11 @@ export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
 
         // Go to the line the task is defined at
         link.addEventListener('click', async (ev: MouseEvent) => {
-            await queryRendererParameters.backlinksClickHandler(ev, task);
+            await this.queryRendererParameters.backlinksClickHandler(ev, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
-            await queryRendererParameters.backlinksMousedownHandler(ev, task);
+            await this.queryRendererParameters.backlinksMousedownHandler(ev, task);
         });
 
         if (!shortMode) {
