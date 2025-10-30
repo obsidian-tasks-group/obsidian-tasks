@@ -23,18 +23,19 @@ describe('MarkdownQueryResultsRenderer', () => {
     const tasksFile = getTasksFileFromMockData(testDataName);
     const tasks = readTasksFromSimulatedFile(testDataName);
 
+    const queryRendererParameters: QueryRendererParameters = {
+        allTasks: tasks,
+        allMarkdownFiles: [],
+        backlinksClickHandler: async () => {},
+        backlinksMousedownHandler: async () => {},
+        editTaskPencilClickHandler: () => {},
+    };
+
     it('should support render() and provide results as markdown', async () => {
         const renderer = makeMarkdownResultsRenderer(source, tasksFile);
 
         // Render the query
         const content = document.createElement('div');
-        const queryRendererParameters: QueryRendererParameters = {
-            allTasks: tasks,
-            allMarkdownFiles: [],
-            backlinksClickHandler: async () => {},
-            backlinksMousedownHandler: async () => {},
-            editTaskPencilClickHandler: () => {},
-        };
         await renderer.render(State.Warm, tasks, content, queryRendererParameters);
 
         // Get the markdown
@@ -84,13 +85,6 @@ Copied search results, in Markdown format:
         const renderer = makeMarkdownResultsRenderer(source, tasksFile);
 
         // Render the query
-        const queryRendererParameters: QueryRendererParameters = {
-            allTasks: tasks,
-            allMarkdownFiles: [],
-            backlinksClickHandler: async () => {},
-            backlinksMousedownHandler: async () => {},
-            editTaskPencilClickHandler: () => {},
-        };
         await renderer.renderToMarkdown(State.Warm, tasks, queryRendererParameters);
 
         // Get the markdown
