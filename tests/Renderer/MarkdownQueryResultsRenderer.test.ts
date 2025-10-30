@@ -62,7 +62,7 @@ describe('rendering', () => {
         );
     });
 
-    it('should support renderToMarkdown()', async () => {
+    it('should support renderToMarkdown', async () => {
         await verifyRenderedTasksMarkdown(
             'show tree',
             readTasksFromSimulatedFile('inheritance_1parent1child1newroot_after_header'),
