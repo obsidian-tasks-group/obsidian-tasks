@@ -5,7 +5,6 @@ import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import type { Task } from '../../src/Task/Task';
-import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { toMarkdown } from '../TestingTools/TestHelpers';
 
 function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
@@ -19,7 +18,7 @@ function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     );
 }
 
-async function verifyRenderedTasksMarkdown(source: string, tasks: Task[], _testDataName: MockDataName) {
+async function verifyRenderedTasksMarkdown(source: string, tasks: Task[]) {
     const renderer = makeMarkdownResultsRenderer(source, new TasksFile('query.md'));
 
     // Render the query
@@ -61,10 +60,10 @@ describe('rendering', () => {
     const tasks = readTasksFromSimulatedFile(testDataName);
 
     it('should support render', async () => {
-        await verifyRenderedTasksMarkdown(source, tasks, testDataName);
+        await verifyRenderedTasksMarkdown(source, tasks);
     });
 
     it('should support renderToMarkdown()', async () => {
-        await verifyRenderedTasksMarkdown(source, tasks, testDataName);
+        await verifyRenderedTasksMarkdown(source, tasks);
     });
 });
