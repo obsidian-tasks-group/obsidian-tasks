@@ -1,3 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
+import moment from 'moment/moment';
+
 import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
 import { State } from '../../src/Obsidian/Cache';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
@@ -6,6 +11,8 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import type { Task } from '../../src/Task/Task';
 import { fromLines, toMarkdown } from '../TestingTools/TestHelpers';
 import { Query } from '../../src/Query/Query';
+
+window.moment = moment;
 
 function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     return new MarkdownQueryResultsRenderer(source, tasksFile, new Query(source, tasksFile));
@@ -82,6 +89,111 @@ describe('Copying results', () => {
 #### 5
 
 - [ ] 55555
+`);
+    });
+
+    it.failing('should copy four grouping levels', async () => {
+        const tasks = `
+- [ ] 1 ⏳ 2025-10-29
+- [ ] 2 ⏬
+- [ ] 3 ⏫ ⏳ 2025-10-30
+- [ ] 4 ⏳ 2025-10-29
+- [ ] 5 #something
+- [ ] 6 🆔 id6
+`;
+
+        const query = `
+group by function task.tags.join(',')
+group by priority
+group by scheduled
+group by id
+`;
+
+        expect(await searchMarkdownAndCopyResult(tasks, query)).toEqual(`
+##### %%1%%High priority
+
+###### 2025-10-30 Thursday
+
+- [ ] 3 ⏫ ⏳ 2025-10-30
+
+##### %%3%%Normal priority
+
+###### 2025-10-29 Wednesday
+
+- [ ] 1 ⏳ 2025-10-29
+- [ ] 4 ⏳ 2025-10-29
+
+###### No scheduled date
+
+###### id6
+
+- [ ] 6 🆔 id6
+
+##### %%5%%Lowest priority
+
+###### No scheduled date
+
+- [ ] 2 ⏬
+
+#### #something
+
+##### %%3%%Normal priority
+
+###### No scheduled date
+
+- [ ] 5 #something
+`);
+    });
+
+    it.failing('should remove indentation for nested tasks', async () => {
+        const tasks = readTasksFromSimulatedFile('inheritance_2roots_listitem_listitem_task');
+
+        const query = '';
+
+        expect(await searchTasksAndCopyResult(tasks, query)).toEqual(`
+- [ ] grandchild task 1
+- [ ] grandchild task 2
+`);
+    });
+
+    it.failing('should indent nested tasks', async () => {
+        const tasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+
+        const query = '';
+
+        expect(await searchTasksAndCopyResult(tasks, query)).toEqual(`
+- [ ] #task parent task
+    - [ ] #task child task 1
+        - [ ] #task grandchild 1
+    - [ ] #task child task 2
+        - [ ] #task grandchild 2
+- [ ] #task sibling
+`);
+    });
+
+    it.failing('should use hyphen as list marker', async () => {
+        const tasks = readTasksFromSimulatedFile('mixed_list_markers');
+
+        const query = '';
+
+        expect(await searchTasksAndCopyResult(tasks, query)).toEqual(`
+- [ ] hyphen
+- [ ] asterisk
+- [ ] plus
+- [ ] numbered task
+`);
+    });
+
+    it.failing('should remove callout prefixes', async () => {
+        const tasks = readTasksFromSimulatedFile('callout_labelled');
+
+        const query = '';
+
+        expect(await searchTasksAndCopyResult(tasks, query)).toEqual(`
+- [ ] #task Task in 'callout_labelled'
+- [ ] #task Task indented in 'callout_labelled'
 `);
     });
 });
