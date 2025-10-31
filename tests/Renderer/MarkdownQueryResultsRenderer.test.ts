@@ -164,12 +164,12 @@ group by id
 `);
     });
 
-    it.failing('should indent nested tasks', async () => {
+    it('should indent nested tasks', async () => {
         const tasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
 
-        const query = '';
+        const query = 'show tree';
 
         expect(await searchTasksAndCopyResult(tasks, query)).toEqual(`
 - [ ] #task parent task
