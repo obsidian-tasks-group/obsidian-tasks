@@ -13,6 +13,7 @@ import { HtmlQueryResultsVisitor } from './HtmlQueryResultsVisitor';
 import { QueryResultsRendererBase } from './QueryResultsRendererBase';
 import type { QueryResultsVisitor } from './QueryResultsVisitor';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -214,7 +215,9 @@ export class HtmlResultsRenderer extends QueryResultsRendererBase {
         copyButton.textContent = 'Copy results';
         copyButton.classList.add('plugin-tasks-copy-button');
         copyButton.addEventListener('click', async () => {
-            await navigator.clipboard.writeText(queryResult.asMarkdown());
+            const markdownRenderer = new MarkdownQueryResultsRenderer(this.source, this.tasksFile, this.query);
+            await markdownRenderer.renderWithQueryResult(queryResult);
+            await navigator.clipboard.writeText(markdownRenderer.getMarkdown());
             new Notice('Results copied to clipboard');
         });
     }
