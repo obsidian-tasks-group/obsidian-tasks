@@ -4,28 +4,22 @@ import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
-import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { explainResults, getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
-import { State } from '../Obsidian/Cache';
-import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import type { TaskGroups } from '../Query/Group/TaskGroups';
+import type { State } from '../Obsidian/Cache';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { HtmlQueryResultsVisitor } from './HtmlQueryResultsVisitor';
-import type { QueryResultsVisitor, VisitorRenderContext } from './QueryResultsVisitor';
+import { QueryResultsRendererBase } from './QueryResultsRendererBase';
+import type { QueryResultsVisitor } from './QueryResultsVisitor';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
 
 /**
- * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.
- *
- * This interface contains all the necessary properties and handlers to manage
- * and display query results such as tasks, markdown files, and certain event handlers
- * for user interactions, like handling backlinks and editing tasks.
+ * Parameters required for Obsidian HTML rendering with event handlers.
  */
 export interface QueryRendererParameters {
     allTasks: Task[];
@@ -36,41 +30,27 @@ export interface QueryRendererParameters {
 }
 
 /**
- * The `QueryResultsRenderer` class is responsible for rendering the results
- * of a query applied to a set of tasks.
+ * Obsidian-specific renderer that outputs HTML to the DOM.
  *
- * It handles the construction of task groupings and the application of visual styles.
+ * This is the original QueryResultsRenderer functionality.
  */
-export class QueryResultsRenderer {
-    /**
-     * The complete text in the instruction block, such as:
-     * ```
-     *   not done
-     *   short mode
-     * ```
-     *
-     * This does not contain the Global Query from the user's settings.
-     * Use {@link getQueryForQueryRenderer} to get this value prefixed with the Global Query.
-     */
-    public readonly source: string;
+export class QueryResultsRenderer extends QueryResultsRendererBase {
+    protected queryType: string;
 
-    // The path of the file that contains the instruction block, and cached data from that file.
-    // This can be updated when the query file's frontmatter is modified.
-    // It is up to the caller to determine when to do this though.
-    private _tasksFile: TasksFile;
-
-    public query: IQuery;
-    protected queryType: string; // whilst there is only one query type, there is no point logging this value
-
-    // Renders the description in TaskLineRenderer:
-    private readonly textRenderer;
-    // Renders the group heading in this class:
-    private readonly renderMarkdown;
+    private readonly textRenderer: TextRenderer;
+    private readonly renderMarkdown: (
+        app: App,
+        markdown: string,
+        el: HTMLElement,
+        sourcePath: string,
+        component: Component,
+    ) => Promise<void>;
     private readonly obsidianComponent: Component | null;
     private readonly obsidianApp: App;
 
-    // Store the current query renderer parameters for nested rendering
-    private currentQueryRendererParameters: QueryRendererParameters | null = null;
+    // HTML-specific state
+    private content: HTMLDivElement | null = null;
+    private queryRendererParameters: QueryRendererParameters | null = null;
 
     constructor(
         className: string,
@@ -87,263 +67,63 @@ export class QueryResultsRenderer {
         obsidianApp: App,
         textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
     ) {
-        this.source = source;
-        this._tasksFile = tasksFile;
+        const query = QueryResultsRenderer.makeQuery(source, tasksFile);
+        super(source, tasksFile, query);
+
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
 
-        // The engine is chosen on the basis of the code block language. Currently,
-        // there is only the main engine for the plugin, this allows others to be
-        // added later.
         switch (className) {
             case 'block-language-tasks':
-                this.query = this.makeQueryFromSourceAndTasksFile();
                 this.queryType = 'tasks';
                 break;
-
             default:
-                this.query = this.makeQueryFromSourceAndTasksFile();
                 this.queryType = 'tasks';
                 break;
         }
     }
 
-    private makeQueryFromSourceAndTasksFile() {
-        return getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
-    }
-
-    public get tasksFile(): TasksFile {
-        return this._tasksFile;
+    private static makeQuery(source: string, tasksFile: TasksFile): IQuery {
+        return getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
     }
 
     /**
-     * Reload the query with new file information, such as to update query placeholders.
-     * @param newFile
-     */
-    public setTasksFile(newFile: TasksFile) {
-        this._tasksFile = newFile;
-        this.rereadQueryFromFile();
-    }
-
-    /**
-     * Reads the query from the source file and tasks file.
-     *
-     * This is for when some change in the vault invalidates the current
-     * Query object, and so it needs to be reloaded.
-     *
-     * For example, the user edited their Tasks plugin settings in some
-     * way that changes how the query is interpreted, such as changing a
-     * 'presets' definition.
+     * Reload the query from file (e.g., when settings change).
      */
     public rereadQueryFromFile() {
-        this.query = this.makeQueryFromSourceAndTasksFile();
+        this.query = QueryResultsRenderer.makeQuery(this.source, this.tasksFile);
     }
 
-    public get filePath(): string | undefined {
-        return this.tasksFile?.path ?? undefined;
-    }
-
+    /**
+     * Original render method for backward compatibility.
+     */
     public async render(
         state: State | State.Warm,
         tasks: Task[],
         content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        // Don't log anything here, for any state, as it generates huge amounts of
-        // console messages in large vaults, if Obsidian was opened with any
-        // notes with tasks code blocks in Reading or Live Preview mode.
-        if (state === State.Warm && this.query.error === undefined) {
-            await this.renderQuerySearchResults(tasks, state, content, queryRendererParameters);
-        } else if (this.query.error !== undefined) {
-            this.renderErrorMessage(content, this.query.error);
-        } else {
-            this.renderLoadingMessage(content);
-        }
+        this.content = content;
+        this.queryRendererParameters = queryRendererParameters;
+        await this.renderQuery(state, tasks);
     }
 
-    private async renderQuerySearchResults(
-        tasks: Task[],
-        state: State.Warm,
-        content: HTMLDivElement,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
-        const queryResult = this.explainAndPerformSearch(state, tasks, content);
-
-        if (queryResult.searchErrorMessage !== undefined) {
-            // There was an error in the search, for example due to a problem custom function.
-            this.renderErrorMessage(content, queryResult.searchErrorMessage);
-            return;
+    protected createVisitor(): QueryResultsVisitor {
+        if (!this.content || !this.queryRendererParameters) {
+            throw new Error('Must call render() before creating visitor');
         }
 
-        await this.renderSearchResults(queryResult, content, queryRendererParameters);
-    }
-
-    private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
-        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
-        measureSearch.start();
-
-        this.query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
-
-        if (this.query.queryLayoutOptions.explainQuery) {
-            this.createExplanation(content);
-        }
-
-        const queryResult = this.query.applyQueryToTasks(tasks);
-
-        measureSearch.finish();
-        return queryResult;
-    }
-
-    private async renderSearchResults(
-        queryResult: QueryResult,
-        content: HTMLDivElement,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
-        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
-        measureRender.start();
-
-        this.addCopyButton(content, queryResult);
-
-        await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
-
-        const totalTasksCount = queryResult.totalTasksCount;
-        this.addTaskCount(content, queryResult);
-
-        this.query.debug(`[render] ${totalTasksCount} tasks displayed`);
-
-        measureRender.finish();
-    }
-
-    private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
-        content.createDiv().innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
-    }
-
-    private renderLoadingMessage(content: HTMLDivElement) {
-        content.setText('Loading Tasks ...');
-    }
-
-    // Use the 'explain' instruction to enable this
-    private createExplanation(content: HTMLDivElement) {
-        const explanationAsString = explainResults(
-            this.source,
-            GlobalFilter.getInstance(),
-            GlobalQuery.getInstance(),
-            this.tasksFile,
-        );
-
-        const explanationsBlock = createAndAppendElement('pre', content);
-        explanationsBlock.classList.add('plugin-tasks-query-explanation');
-        explanationsBlock.setText(explanationAsString);
-        content.appendChild(explanationsBlock);
-    }
-
-    private addCopyButton(content: HTMLDivElement, queryResult: QueryResult) {
-        const copyButton = createAndAppendElement('button', content);
-        copyButton.textContent = 'Copy results';
-        copyButton.classList.add('plugin-tasks-copy-button');
-        copyButton.addEventListener('click', async () => {
-            await navigator.clipboard.writeText(queryResult.asMarkdown());
-            new Notice('Results copied to clipboard');
-        });
-    }
-
-    private async addAllTaskGroups(
-        tasksSortedLimitedGrouped: TaskGroups,
-        content: HTMLDivElement,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
-        // Store for use in nested rendering
-        this.currentQueryRendererParameters = queryRendererParameters;
-
-        for (const group of tasksSortedLimitedGrouped.groups) {
-            // If there were no 'group by' instructions, group.groupHeadings
-            // will be empty, and no headings will be added.
-
-            // Create a dummy visitor for headings (headings don't need taskList/renderer)
-            const dummyTaskList = document.createElement('ul');
-            const dummyTaskLineRenderer = new TaskLineRenderer({
-                textRenderer: this.textRenderer,
-                obsidianApp: this.obsidianApp,
-                obsidianComponent: this.obsidianComponent,
-                parentUlElement: dummyTaskList,
-                taskLayoutOptions: this.query.taskLayoutOptions,
-                queryLayoutOptions: this.query.queryLayoutOptions,
-            });
-            const headingVisitor = this.createVisitor(
-                content,
-                dummyTaskList,
-                dummyTaskLineRenderer,
-                queryRendererParameters,
-            );
-            await this.addGroupHeadings(headingVisitor, group.groupHeadings);
-
-            const renderedListItems: Set<ListItem> = new Set();
-            await this.createTaskList(group.tasks, content, queryRendererParameters, renderedListItems);
-        }
-    }
-
-    private getCurrentQueryRendererParameters(): QueryRendererParameters {
-        if (!this.currentQueryRendererParameters) {
-            throw new Error('QueryRendererParameters not set');
-        }
-        return this.currentQueryRendererParameters;
-    }
-
-    /**
-     * Creates a visitor for rendering query results.
-     * Override this method to provide a different visitor implementation.
-     */
-    protected createVisitor(
-        content: HTMLDivElement,
-        taskList: HTMLUListElement,
-        taskLineRenderer: TaskLineRenderer,
-        queryRendererParameters: QueryRendererParameters,
-    ): QueryResultsVisitor {
-        return new HtmlQueryResultsVisitor(
-            this.query,
-            this.tasksFile,
-            content,
-            taskList,
-            taskLineRenderer,
-            this.renderMarkdown,
-            this.obsidianComponent,
-            this.obsidianApp,
-            this.filePath,
-            queryRendererParameters,
-        );
-    }
-
-    /**
-     * Create a rendering context from query layout options.
-     * This provides the minimal data needed by visitors without Obsidian dependencies.
-     */
-    protected createRenderContext(): VisitorRenderContext {
-        return {
-            queryFilePath: this.filePath,
-            hideUrgency: this.query.queryLayoutOptions.hideUrgency,
-            hideBacklinks: this.query.queryLayoutOptions.hideBacklinks,
-            hideEditButton: this.query.queryLayoutOptions.hideEditButton,
-            hidePostponeButton: this.query.queryLayoutOptions.hidePostponeButton,
-            shortMode: this.query.queryLayoutOptions.shortMode,
-        };
-    }
-
-    private async createTaskList(
-        listItems: ListItem[],
-        content: HTMLElement,
-        queryRendererParameters: QueryRendererParameters,
-        renderedListItems: Set<ListItem>,
-    ): Promise<void> {
-        const taskList = createAndAppendElement('ul', content);
-
+        const taskList = createAndAppendElement('ul', this.content);
         taskList.classList.add('contains-task-list', 'plugin-tasks-query-result');
         taskList.classList.add(...new TaskLayout(this.query.taskLayoutOptions).generateHiddenClasses());
         taskList.classList.add(...new QueryLayout(this.query.queryLayoutOptions).getHiddenClasses());
 
         const groupingAttribute = this.getGroupingAttribute();
-        if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
+        if (groupingAttribute && groupingAttribute.length > 0) {
+            taskList.dataset.taskGroupBy = groupingAttribute;
+        }
 
         const taskLineRenderer = new TaskLineRenderer({
             textRenderer: this.textRenderer,
@@ -354,167 +134,136 @@ export class QueryResultsRenderer {
             queryLayoutOptions: this.query.queryLayoutOptions,
         });
 
-        // Create visitor with the actual taskList and taskLineRenderer
-        const visitor = this.createVisitor(
-            content as HTMLDivElement,
+        return new HtmlQueryResultsVisitor(
+            this.query,
+            this.tasksFile,
+            this.content,
             taskList,
             taskLineRenderer,
-            queryRendererParameters,
+            this.renderMarkdown,
+            this.obsidianComponent,
+            this.obsidianApp,
+            this.filePath,
+            this.queryRendererParameters,
         );
-        const context = this.createRenderContext();
-
-        for (const [listItemIndex, listItem] of listItems.entries()) {
-            if (this.query.queryLayoutOptions.hideTree) {
-                /* Old-style rendering of tasks:
-                 *  - What is rendered:
-                 *      - Only task lines that match the query are rendered, as a flat list
-                 *  - The order that lines are rendered:
-                 *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
-                 */
-                if (listItem instanceof Task) {
-                    await visitor.addTask(listItem, listItemIndex, context);
-                }
-            } else {
-                /* New-style rendering of tasks:
-                 *  - What is rendered:
-                 *      - Task lines that match the query are rendered, as a tree.
-                 *      - Currently, all child tasks and list items of the found tasks are shown,
-                 *        including any child tasks that did not match the query.
-                 *  - The order that lines are rendered:
-                 *      - The top-level/outermost tasks are sorted in the order specified in 'sort by'
-                 *        instructions and default sort order.
-                 *      - Child tasks (and list items) are shown in their original order in their Markdown file.
-                 */
-                await this.addTaskOrListItemAndChildren(
-                    visitor,
-                    context,
-                    listItem,
-                    listItemIndex,
-                    listItems,
-                    renderedListItems,
-                );
-            }
-        }
-
-        content.appendChild(taskList);
     }
 
-    private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, listItems: ListItem[]) {
-        const closestParentTask = listItem.findClosestParentTask();
-        if (!closestParentTask) {
-            return false;
-        }
-
-        if (!renderedListItems.has(closestParentTask)) {
-            // This task is a direct or indirect child of another task that we are waiting to draw,
-            // so don't draw it yet, it will be done recursively later.
-            if (listItems.includes(closestParentTask)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private alreadyRendered(listItem: ListItem, renderedListItems: Set<ListItem>) {
-        return renderedListItems.has(listItem);
-    }
-
-    private async addTaskOrListItemAndChildren(
-        visitor: QueryResultsVisitor,
-        context: VisitorRenderContext,
-        listItem: ListItem,
-        taskIndex: number,
-        listItems: ListItem[],
-        renderedListItems: Set<ListItem>,
-    ) {
-        if (this.alreadyRendered(listItem, renderedListItems)) {
-            return;
-        }
-
-        if (this.willBeRenderedLater(listItem, renderedListItems, listItems)) {
-            return;
-        }
-
-        await this.addTaskOrListItem(visitor, context, listItem, taskIndex);
-        renderedListItems.add(listItem);
-
-        if (listItem.children.length > 0) {
-            // For HTML visitor, create a nested <ul> element
-            if (visitor.getLastRenderedElement) {
-                const lastElement = visitor.getLastRenderedElement();
-                if (lastElement) {
-                    // Create nested task list inside the parent element
-                    await this.createTaskList(
-                        listItem.children,
-                        lastElement,
-                        this.getCurrentQueryRendererParameters(),
-                        renderedListItems,
-                    );
-                }
-            } else {
-                // For non-HTML visitors (like markdown), use indentation
-                if ('increaseIndent' in visitor && typeof visitor.increaseIndent === 'function') {
-                    (visitor as any).increaseIndent();
-                }
-
-                for (const [childIndex, childItem] of listItem.children.entries()) {
-                    await this.addTaskOrListItemAndChildren(
-                        visitor,
-                        context,
-                        childItem,
-                        childIndex,
-                        listItem.children,
-                        renderedListItems,
-                    );
-                }
-
-                if ('decreaseIndent' in visitor && typeof visitor.decreaseIndent === 'function') {
-                    (visitor as any).decreaseIndent();
-                }
-            }
+    protected renderError(errorMessage: string): void {
+        if (this.content) {
+            this.content.createDiv().innerHTML =
+                '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
         }
     }
 
-    private async addTaskOrListItem(
-        visitor: QueryResultsVisitor,
-        context: VisitorRenderContext,
-        listItem: ListItem,
-        taskIndex: number,
-    ) {
-        if (listItem instanceof Task) {
-            return await visitor.addTask(listItem, taskIndex, context);
-        }
-
-        return await visitor.addListItem(listItem, taskIndex, context);
-    }
-
-    /**
-     * Display headings for a group of tasks.
-     * @param visitor - The visitor to use for rendering
-     * @param groupHeadings - The headings to display. This can be an empty array,
-     *                        in which case no headings will be added.
-     * @private
-     */
-    private async addGroupHeadings(visitor: QueryResultsVisitor, groupHeadings: GroupDisplayHeading[]) {
-        for (const heading of groupHeadings) {
-            await visitor.addGroupHeading(heading);
+    protected renderLoading(): void {
+        if (this.content) {
+            this.content.setText('Loading Tasks ...');
         }
     }
 
-    private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
+    protected renderExplanation(): void {
+        if (!this.content) return;
+
+        const explanationAsString = explainResults(
+            this.source,
+            GlobalFilter.getInstance(),
+            GlobalQuery.getInstance(),
+            this.tasksFile,
+        );
+
+        const explanationsBlock = createAndAppendElement('pre', this.content);
+        explanationsBlock.classList.add('plugin-tasks-query-explanation');
+        explanationsBlock.setText(explanationAsString);
+        this.content.appendChild(explanationsBlock);
+    }
+
+    protected beforeResults(queryResult: QueryResult): void {
+        if (!this.content) return;
+
+        const copyButton = createAndAppendElement('button', this.content);
+        copyButton.textContent = 'Copy results';
+        copyButton.classList.add('plugin-tasks-copy-button');
+        copyButton.addEventListener('click', async () => {
+            await navigator.clipboard.writeText(queryResult.asMarkdown());
+            new Notice('Results copied to clipboard');
+        });
+    }
+
+    protected afterResults(queryResult: QueryResult): void {
+        if (!this.content) return;
+
         if (!this.query.queryLayoutOptions.hideTaskCount) {
-            const taskCount = createAndAppendElement('div', content);
+            const taskCount = createAndAppendElement('div', this.content);
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
         }
     }
 
-    private getGroupingAttribute() {
+    private getGroupingAttribute(): string {
         const groupingRules: string[] = [];
         for (const group of this.query.grouping) {
             groupingRules.push(group.property);
         }
         return groupingRules.join(',');
+    }
+
+    /**
+     * Override to create nested <ul> elements for HTML rendering.
+     */
+    protected async renderChildrenForHtmlVisitor(
+        parentElement: HTMLElement,
+        children: ListItem[],
+        renderedListItems: Set<ListItem>,
+    ): Promise<void> {
+        if (!this.queryRendererParameters) {
+            throw new Error('queryRendererParameters not set');
+        }
+
+        // Create a nested task list inside the parent element
+        const nestedTaskList = createAndAppendElement('ul', parentElement);
+        nestedTaskList.classList.add('contains-task-list', 'plugin-tasks-query-result');
+        nestedTaskList.classList.add(...new TaskLayout(this.query.taskLayoutOptions).generateHiddenClasses());
+        nestedTaskList.classList.add(...new QueryLayout(this.query.queryLayoutOptions).getHiddenClasses());
+
+        const nestedTaskLineRenderer = new TaskLineRenderer({
+            textRenderer: this.textRenderer,
+            obsidianApp: this.obsidianApp,
+            obsidianComponent: this.obsidianComponent,
+            parentUlElement: nestedTaskList,
+            taskLayoutOptions: this.query.taskLayoutOptions,
+            queryLayoutOptions: this.query.queryLayoutOptions,
+        });
+
+        const nestedVisitor = new HtmlQueryResultsVisitor(
+            this.query,
+            this.tasksFile,
+            this.content!,
+            nestedTaskList,
+            nestedTaskLineRenderer,
+            this.renderMarkdown,
+            this.obsidianComponent,
+            this.obsidianApp,
+            this.filePath,
+            this.queryRendererParameters,
+        );
+
+        const context = this.createRenderContext();
+
+        for (const [childIndex, childItem] of children.entries()) {
+            if (childItem instanceof Task) {
+                await nestedVisitor.addTask(childItem, childIndex, context);
+            } else {
+                await nestedVisitor.addListItem(childItem, childIndex, context);
+            }
+            renderedListItems.add(childItem);
+
+            // Recursively handle grandchildren
+            if (childItem.children.length > 0) {
+                const lastElement = nestedVisitor.getLastRenderedElement();
+                if (lastElement) {
+                    await this.renderChildrenForHtmlVisitor(lastElement, childItem.children, renderedListItems);
+                }
+            }
+        }
     }
 }
