@@ -27,6 +27,11 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         super(source, tasksFile, query);
     }
 
+    public rereadQueryFromFile(): void {
+        // Markdown renderer doesn't recreate the query - it's passed in constructor
+        // If needed, subclasses can override
+    }
+
     protected createVisitor(): QueryResultsVisitor {
         if (!this.visitor) {
             this.visitor = new MarkdownQueryResultsVisitor();

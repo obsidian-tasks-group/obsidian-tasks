@@ -36,11 +36,18 @@ export abstract class QueryResultsRendererBase {
 
     public setTasksFile(newFile: TasksFile) {
         this._tasksFile = newFile;
+        this.rereadQueryFromFile();
     }
 
     public get filePath(): string | undefined {
         return this.tasksFile?.path ?? undefined;
     }
+
+    /**
+     * Reload the query (e.g., when file or settings change).
+     * Subclasses must implement this.
+     */
+    public abstract rereadQueryFromFile(): void;
 
     /**
      * Main rendering method - performs query and renders results.
