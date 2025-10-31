@@ -11,11 +11,9 @@ import type { QueryResultsVisitor, VisitorRenderContext } from './QueryResultsVi
  *
  * This implementation is completely independent of Obsidian's DOM
  * and can be used in any context (testing, CLI tools, etc.)
- *
- * It uses Task.toFileLineString() and ListItem.toFileLineString()
- * to generate the markdown representation of each item.
  */
 export class MarkdownQueryResultsVisitor implements QueryResultsVisitor {
+    // The newline here and in reset() are to mimic to behaviour of Q
     private markdown: string = '\n';
     private currentIndentLevel: number = 0;
 
@@ -51,7 +49,6 @@ export class MarkdownQueryResultsVisitor implements QueryResultsVisitor {
     async addTask(task: Task, _taskIndex: number, _context: VisitorRenderContext): Promise<void> {
         const indent = '    '.repeat(this.currentIndentLevel);
 
-        // Use the task's own method to generate its markdown representation
         const taskLine = `- [${task.status.symbol}] ${task.toString()}`;
 
         this.markdown += `${indent}${taskLine}\n`;

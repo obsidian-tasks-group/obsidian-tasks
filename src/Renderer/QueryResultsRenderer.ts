@@ -19,7 +19,11 @@ export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
 
 /**
- * Parameters required for Obsidian HTML rendering with event handlers.
+ * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.
+ *
+ * This interface contains all the necessary properties and handlers to manage
+ * and display query results such as tasks, markdown files, and certain event handlers
+ * for user interactions, like handling backlinks and editing tasks.
  */
 export interface QueryRendererParameters {
     allTasks: Task[];
@@ -30,9 +34,10 @@ export interface QueryRendererParameters {
 }
 
 /**
- * Obsidian-specific renderer that outputs HTML to the DOM.
+ * The `QueryResultsRenderer` class is responsible for rendering the results
+ * of a query applied to a set of tasks.
  *
- * This is the original QueryResultsRenderer functionality.
+ * It handles the construction of task groupings and the application of visual styles.
  */
 export class QueryResultsRenderer extends QueryResultsRendererBase {
     protected queryType: string;
@@ -249,6 +254,7 @@ export class QueryResultsRenderer extends QueryResultsRendererBase {
 
         const context = this.createRenderContext();
 
+        // TODO Oh dear - This is logic repeated from QueryResultsRendererBase
         for (const [childIndex, childItem] of children.entries()) {
             if (childItem instanceof Task) {
                 await nestedVisitor.addTask(childItem, childIndex, context);
