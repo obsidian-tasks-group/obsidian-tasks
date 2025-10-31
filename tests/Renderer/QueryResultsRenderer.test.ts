@@ -41,6 +41,10 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
     );
 }
 
+// TODO A lot of these tests are now duplicated in HtmlResultsRenderer.test.ts:
+//      decide whether to diff that file against this, and delete from here all tests
+//      those which are covered inHtmlResultsRenderer.test.ts.
+//      Remember to delete the corresponding approved files.
 describe('QueryResultsRenderer tests', () => {
     async function verifyRenderedTasksHTML(allTasks: Task[], source: string = '') {
         const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
