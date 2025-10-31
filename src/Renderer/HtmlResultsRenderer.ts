@@ -81,6 +81,22 @@ export class HtmlResultsRenderer extends QueryResultsRendererBase {
     }
 
     /**
+     * Set the HTML content container for the next render.
+     * MUST be called before each render operation.
+     */
+    public setContent(content: HTMLDivElement): void {
+        this.content = content;
+    }
+
+    /**
+     * Set the query renderer parameters for the next render.
+     * MUST be called before each render operation.
+     */
+    public setQueryRendererParameters(queryRendererParameters: QueryRendererParameters): void {
+        this.queryRendererParameters = queryRendererParameters;
+    }
+
+    /**
      * Render method that sets up HTML-specific state.
      */
     public async render(
@@ -92,6 +108,36 @@ export class HtmlResultsRenderer extends QueryResultsRendererBase {
         this.content = content;
         this.queryRendererParameters = queryRendererParameters;
         await this.renderQuery(state, tasks);
+    }
+
+    /**
+     * Stage 2 API: Render a pre-executed QueryResult.
+     */
+    public async renderWithQueryResult(queryResult: QueryResult): Promise<void> {
+        if (!this.content || !this.queryRendererParameters) {
+            throw new Error('Must call setContent() and setQueryRendererParameters() before renderWithQueryResult()');
+        }
+        await super.renderWithQueryResult(queryResult);
+    }
+
+    /**
+     * Stage 2 API: Render error state.
+     */
+    public renderWithError(errorMessage: string): void {
+        if (!this.content || !this.queryRendererParameters) {
+            throw new Error('Must call setContent() and setQueryRendererParameters() before renderWithError()');
+        }
+        super.renderWithError(errorMessage);
+    }
+
+    /**
+     * Stage 2 API: Render loading state.
+     */
+    public renderWithLoading(): void {
+        if (!this.content || !this.queryRendererParameters) {
+            throw new Error('Must call setContent() and setQueryRendererParameters() before renderWithLoading()');
+        }
+        super.renderWithLoading();
     }
 
     protected createVisitor(): QueryResultsVisitor {

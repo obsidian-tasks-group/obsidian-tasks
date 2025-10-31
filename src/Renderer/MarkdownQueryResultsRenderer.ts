@@ -85,4 +85,31 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         await this.renderQuery(State.Warm, tasks);
         return this.getMarkdown();
     }
+
+    /**
+     * Stage 2 API: Render a pre-executed QueryResult.
+     * For markdown renderer, no additional setup needed beyond base class.
+     */
+    public async renderWithQueryResult(queryResult: QueryResult): Promise<void> {
+        // Markdown renderer doesn't need extra setup, just delegate
+        await super.renderWithQueryResult(queryResult);
+    }
+
+    /**
+     * Stage 2 API: Render error state.
+     * For markdown renderer, no additional setup needed beyond base class.
+     */
+    public renderWithError(errorMessage: string): void {
+        // Markdown renderer doesn't need extra setup, just delegate
+        super.renderWithError(errorMessage);
+    }
+
+    /**
+     * Stage 2 API: Render loading state.
+     * For markdown renderer, no additional setup needed beyond base class.
+     */
+    public renderWithLoading(): void {
+        // Markdown renderer doesn't need extra setup, just delegate
+        super.renderWithLoading();
+    }
 }

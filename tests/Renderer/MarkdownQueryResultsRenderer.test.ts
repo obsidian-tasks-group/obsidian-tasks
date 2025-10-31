@@ -60,10 +60,36 @@ describe('rendering', () => {
     });
 
     it('should support renderToMarkdown', async () => {
+        // TODO The call to renderToMarkdown() got refactored away at some point by mistake
         await verifyRenderedTasksMarkdown(
             readTasksFromSimulatedFile('inheritance_1parent1child1newroot_after_header'),
             'show tree',
         );
+    });
+
+    it('should render a QueryResult', async () => {
+        const tasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+
+        const sourceTasksFile = new TasksFile('query.md');
+        const source = 'show tree';
+        const query = new Query(source, sourceTasksFile);
+        expect(query.error).toBeUndefined();
+
+        const results = query.applyQueryToTasks(tasks);
+
+        const renderer = new MarkdownQueryResultsRenderer(source, sourceTasksFile, query);
+        await renderer.renderWithQueryResult(results);
+
+        expect(renderer.getMarkdown()).toEqual(`
+- [ ] #task parent task
+    - [ ] #task child task 1
+        - [ ] #task grandchild 1
+    - [ ] #task child task 2
+        - [ ] #task grandchild 2
+- [ ] #task sibling
+`);
     });
 });
 

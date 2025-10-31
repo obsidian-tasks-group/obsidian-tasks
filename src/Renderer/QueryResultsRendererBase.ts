@@ -65,6 +65,30 @@ export abstract class QueryResultsRendererBase {
     }
 
     /**
+     * Stage 2 API: Render a pre-executed QueryResult.
+     * Subclasses can override to set up environment-specific state before rendering.
+     */
+    public async renderWithQueryResult(queryResult: QueryResult): Promise<void> {
+        await this.renderQueryResult(queryResult);
+    }
+
+    /**
+     * Stage 2 API: Render error state.
+     * Subclasses can override to set up environment-specific state before rendering.
+     */
+    public renderWithError(errorMessage: string): void {
+        this.renderError(errorMessage);
+    }
+
+    /**
+     * Stage 2 API: Render loading state.
+     * Subclasses can override to set up environment-specific state before rendering.
+     */
+    public renderWithLoading(): void {
+        this.renderLoading();
+    }
+
+    /**
      * Render a QueryResult.
      * This method handles all rendering logic, separated from query execution.
      */
@@ -97,7 +121,7 @@ export abstract class QueryResultsRendererBase {
         return queryResult;
     }
 
-    private async renderResults(queryResult: QueryResult) {
+    protected async renderResults(queryResult: QueryResult) {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 

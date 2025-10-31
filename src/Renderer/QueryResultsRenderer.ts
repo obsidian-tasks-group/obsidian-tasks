@@ -2,7 +2,7 @@ import type { App, Component } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
-import type { State } from '../Obsidian/Cache';
+import { State } from '../Obsidian/Cache';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import {
@@ -102,7 +102,7 @@ export class QueryResultsRenderer {
     }
 
     /**
-     * Render method - delegates to HtmlResultsRenderer.
+     * Render method - executes query and delegates rendering to HtmlResultsRenderer.
      */
     public async render(
         state: State | State.Warm,
@@ -110,6 +110,20 @@ export class QueryResultsRenderer {
         content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        await this.htmlRenderer.render(state, tasks, content, queryRendererParameters);
+        // Stage 2: Execute query in wrapper, set up renderer state, pass result to renderer
+
+        // Set up per-render state in the renderer
+        this.htmlRenderer.setContent(content);
+        this.htmlRenderer.setQueryRendererParameters(queryRendererParameters);
+
+        // Execute query and render
+        if (state === State.Warm && this.query.error === undefined) {
+            const queryResult = this.query.applyQueryToTasks(tasks);
+            await this.htmlRenderer.renderWithQueryResult(queryResult);
+        } else if (this.query.error !== undefined) {
+            this.htmlRenderer.renderWithError(this.query.error);
+        } else {
+            this.htmlRenderer.renderWithLoading();
+        }
     }
 }
