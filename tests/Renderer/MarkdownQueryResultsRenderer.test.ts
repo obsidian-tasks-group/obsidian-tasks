@@ -93,7 +93,7 @@ describe('Copying results', () => {
 `);
     });
 
-    it.failing('should copy four grouping levels', async () => {
+    it('should copy four grouping levels', async () => {
         const tasks = `
 - [ ] 1 ⏳ 2025-10-29
 - [ ] 2 ⏬
@@ -111,13 +111,16 @@ group by id
 `;
 
         expect(await searchMarkdownAndCopyResult(tasks, query)).toEqual(`
+
 ##### %%1%%High priority
+
 
 ###### 2025-10-30 Thursday
 
 - [ ] 3 ⏫ ⏳ 2025-10-30
 
 ##### %%3%%Normal priority
+
 
 ###### 2025-10-29 Wednesday
 
@@ -126,11 +129,13 @@ group by id
 
 ###### No scheduled date
 
+
 ###### id6
 
 - [ ] 6 🆔 id6
 
 ##### %%5%%Lowest priority
+
 
 ###### No scheduled date
 
@@ -138,7 +143,9 @@ group by id
 
 #### #something
 
+
 ##### %%3%%Normal priority
+
 
 ###### No scheduled date
 
