@@ -45,7 +45,7 @@ export class MarkdownQueryResultsVisitor implements QueryResultsVisitor {
         }
 
         const headingPrefix = '#'.repeat(headingLevel);
-        this.markdown += `${headingPrefix} ${group.displayName}\n`;
+        this.markdown += `\n${headingPrefix} ${group.displayName}\n\n`;
     }
 
     async addTask(task: Task, _taskIndex: number, _context: VisitorRenderContext): Promise<void> {

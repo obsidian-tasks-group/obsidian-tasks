@@ -61,7 +61,7 @@ describe('rendering', () => {
 });
 
 describe('Copying results', () => {
-    it.failing('should copy one grouping level', async () => {
+    it('should copy one grouping level', async () => {
         const tasks = `
 - [ ] 4444
 - [ ] 333
