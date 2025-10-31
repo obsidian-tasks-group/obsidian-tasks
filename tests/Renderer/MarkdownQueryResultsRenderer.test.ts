@@ -4,7 +4,7 @@ import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import type { Task } from '../../src/Task/Task';
-import { toMarkdown } from '../TestingTools/TestHelpers';
+import { fromLines, toMarkdown } from '../TestingTools/TestHelpers';
 import { Query } from '../../src/Query/Query';
 
 function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
@@ -16,6 +16,12 @@ async function searchTasksAndCopyResult(tasks: Task[], source: string) {
     await renderer.renderQuery(State.Warm, tasks);
 
     return renderer.getMarkdown();
+}
+
+async function searchMarkdownAndCopyResult(tasksMarkdown: string, query: string) {
+    const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
+    const tasks = fromLines({ lines });
+    return await searchTasksAndCopyResult(tasks, query);
 }
 
 async function verifyRenderedTasksMarkdown(tasks: Task[], source: string) {
@@ -51,5 +57,31 @@ describe('rendering', () => {
             readTasksFromSimulatedFile('inheritance_1parent1child1newroot_after_header'),
             'show tree',
         );
+    });
+});
+
+describe('Copying results', () => {
+    it.failing('should copy one grouping level', async () => {
+        const tasks = `
+- [ ] 4444
+- [ ] 333
+- [ ] 55555
+`;
+
+        const query = 'group by function task.description.length';
+
+        expect(await searchMarkdownAndCopyResult(tasks, query)).toEqual(`
+#### 3
+
+- [ ] 333
+
+#### 4
+
+- [ ] 4444
+
+#### 5
+
+- [ ] 55555
+`);
     });
 });
