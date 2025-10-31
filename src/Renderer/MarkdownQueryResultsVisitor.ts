@@ -16,7 +16,7 @@ import type { QueryResultsVisitor, VisitorRenderContext } from './QueryResultsVi
  * to generate the markdown representation of each item.
  */
 export class MarkdownQueryResultsVisitor implements QueryResultsVisitor {
-    private markdown: string = '';
+    private markdown: string = '\n';
     private currentIndentLevel: number = 0;
 
     /**
@@ -30,7 +30,7 @@ export class MarkdownQueryResultsVisitor implements QueryResultsVisitor {
      * Clear the accumulated markdown output.
      */
     public reset(): void {
-        this.markdown = '';
+        this.markdown = '\n';
         this.currentIndentLevel = 0;
     }
 

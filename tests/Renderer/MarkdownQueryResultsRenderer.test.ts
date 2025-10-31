@@ -78,6 +78,7 @@ describe('Copying results', () => {
         const query = 'group by function task.description.length';
 
         expect(await searchMarkdownAndCopyResult(tasks, query)).toEqual(`
+
 #### 3
 
 - [ ] 333
@@ -145,7 +146,7 @@ group by id
 `);
     });
 
-    it.failing('should remove indentation for nested tasks', async () => {
+    it('should remove indentation for nested tasks', async () => {
         const tasks = readTasksFromSimulatedFile('inheritance_2roots_listitem_listitem_task');
 
         const query = '';
@@ -186,7 +187,7 @@ group by id
 `);
     });
 
-    it.failing('should remove callout prefixes', async () => {
+    it('should remove callout prefixes', async () => {
         const tasks = readTasksFromSimulatedFile('callout_labelled');
 
         const query = '';
