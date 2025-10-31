@@ -50,6 +50,11 @@ export class QueryResult {
         return result;
     }
 
+    /**
+     * This is a basic implementation of conversion to Markdown, mainly used in tests.
+     *
+     * SeeMarkdownQueryResultsRenderer for a more thorough implementation.
+     */
     public asMarkdown(): string {
         let markdown = '';
 
