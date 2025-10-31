@@ -64,18 +64,16 @@ export class MarkdownQueryResultsVisitor implements QueryResultsVisitor {
     }
 
     /**
-     * Increase the indentation level for nested items.
-     * Call this before rendering children.
+     * Begin rendering children - increases indentation.
      */
-    public increaseIndent(): void {
+    public beginChildren(): void {
         this.currentIndentLevel++;
     }
 
     /**
-     * Decrease the indentation level after rendering children.
-     * Call this after rendering children.
+     * End rendering children - decreases indentation.
      */
-    public decreaseIndent(): void {
+    public endChildren(): void {
         if (this.currentIndentLevel > 0) {
             this.currentIndentLevel--;
         }

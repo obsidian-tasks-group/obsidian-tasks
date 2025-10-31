@@ -61,10 +61,16 @@ export interface QueryResultsVisitor {
     addListItem(listItem: ListItem, listItemIndex: number, context: VisitorRenderContext): Promise<void>;
 
     /**
-     * Get the last rendered element (for HTML visitors that need to append children).
-     * Optional - only needed for DOM-based visitors.
-     *
-     * @returns The last rendered HTML element, or undefined for non-DOM visitors
+     * Begin rendering children of the last rendered item.
+     * For HTML visitors, this creates a nested list structure.
+     * For text-based visitors, this increases indentation.
      */
-    getLastRenderedElement?(): HTMLElement | undefined;
+    beginChildren(): void;
+
+    /**
+     * End rendering children of the last rendered item.
+     * For HTML visitors, this returns to the parent list context.
+     * For text-based visitors, this decreases indentation.
+     */
+    endChildren(): void;
 }

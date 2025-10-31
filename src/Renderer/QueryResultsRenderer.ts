@@ -8,8 +8,7 @@ import { explainResults, getQueryForQueryRenderer } from '../Query/QueryRenderer
 import type { State } from '../Obsidian/Cache';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
-import type { ListItem } from '../Task/ListItem';
-import { Task } from '../Task/Task';
+import type { Task } from '../Task/Task';
 import { HtmlQueryResultsVisitor } from './HtmlQueryResultsVisitor';
 import { QueryResultsRendererBase } from './QueryResultsRendererBase';
 import type { QueryResultsVisitor } from './QueryResultsVisitor';
@@ -210,66 +209,5 @@ export class QueryResultsRenderer extends QueryResultsRendererBase {
             groupingRules.push(group.property);
         }
         return groupingRules.join(',');
-    }
-
-    /**
-     * Override to create nested <ul> elements for HTML rendering.
-     */
-    protected async renderChildrenForHtmlVisitor(
-        parentElement: HTMLElement,
-        children: ListItem[],
-        renderedListItems: Set<ListItem>,
-    ): Promise<void> {
-        if (!this.queryRendererParameters) {
-            throw new Error('queryRendererParameters not set');
-        }
-
-        // Create a nested task list inside the parent element
-        const nestedTaskList = createAndAppendElement('ul', parentElement);
-        nestedTaskList.classList.add('contains-task-list', 'plugin-tasks-query-result');
-        nestedTaskList.classList.add(...new TaskLayout(this.query.taskLayoutOptions).generateHiddenClasses());
-        nestedTaskList.classList.add(...new QueryLayout(this.query.queryLayoutOptions).getHiddenClasses());
-
-        const nestedTaskLineRenderer = new TaskLineRenderer({
-            textRenderer: this.textRenderer,
-            obsidianApp: this.obsidianApp,
-            obsidianComponent: this.obsidianComponent,
-            parentUlElement: nestedTaskList,
-            taskLayoutOptions: this.query.taskLayoutOptions,
-            queryLayoutOptions: this.query.queryLayoutOptions,
-        });
-
-        const nestedVisitor = new HtmlQueryResultsVisitor(
-            this.query,
-            this.tasksFile,
-            this.content!,
-            nestedTaskList,
-            nestedTaskLineRenderer,
-            this.renderMarkdown,
-            this.obsidianComponent,
-            this.obsidianApp,
-            this.filePath,
-            this.queryRendererParameters,
-        );
-
-        const context = this.createRenderContext();
-
-        // TODO Oh dear - This is logic repeated from QueryResultsRendererBase
-        for (const [childIndex, childItem] of children.entries()) {
-            if (childItem instanceof Task) {
-                await nestedVisitor.addTask(childItem, childIndex, context);
-            } else {
-                await nestedVisitor.addListItem(childItem, childIndex, context);
-            }
-            renderedListItems.add(childItem);
-
-            // Recursively handle grandchildren
-            if (childItem.children.length > 0) {
-                const lastElement = nestedVisitor.getLastRenderedElement();
-                if (lastElement) {
-                    await this.renderChildrenForHtmlVisitor(lastElement, childItem.children, renderedListItems);
-                }
-            }
-        }
     }
 }

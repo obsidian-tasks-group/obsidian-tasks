@@ -183,20 +183,8 @@ export abstract class QueryResultsRendererBase {
         listItem: ListItem,
         renderedListItems: Set<ListItem>,
     ) {
-        // Check if this is an HTML visitor that needs nested DOM elements
-        if (visitor.getLastRenderedElement) {
-            const lastElement = visitor.getLastRenderedElement();
-            if (lastElement) {
-                // HTML visitor - delegate to subclass to create nested list
-                await this.renderChildrenForHtmlVisitor(lastElement, listItem.children, renderedListItems);
-                return;
-            }
-        }
-
-        // Text-based visitor - use indentation
-        if ('increaseIndent' in visitor && typeof visitor.increaseIndent === 'function') {
-            (visitor as any).increaseIndent();
-        }
+        // Begin rendering children (creates nested list or increases indent)
+        visitor.beginChildren();
 
         for (const [childIndex, childItem] of listItem.children.entries()) {
             await this.renderTaskOrListItemAndChildren(
@@ -209,9 +197,8 @@ export abstract class QueryResultsRendererBase {
             );
         }
 
-        if ('decreaseIndent' in visitor && typeof visitor.decreaseIndent === 'function') {
-            (visitor as any).decreaseIndent();
-        }
+        // End rendering children (returns to parent context or decreases indent)
+        visitor.endChildren();
     }
 
     /**

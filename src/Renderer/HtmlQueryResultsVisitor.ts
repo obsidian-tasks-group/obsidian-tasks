@@ -1,6 +1,8 @@
 import type { App, Component, TFile } from 'obsidian';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { IQuery } from '../IQuery';
+import { QueryLayout } from '../Layout/QueryLayout';
+import { TaskLayout } from '../Layout/TaskLayout';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
@@ -21,10 +23,9 @@ import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
  * functionality like edit buttons, backlinks, postpone buttons, etc.
  */
 export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
-    // private readonly query: IQuery;
+    private readonly query: IQuery;
     private readonly tasksFile: TasksFile;
     private readonly content: HTMLDivElement;
-    private readonly taskList: HTMLUListElement;
     private readonly taskLineRenderer: TaskLineRenderer;
     private readonly renderMarkdown: (
         app: App,
@@ -40,8 +41,12 @@ export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
     private readonly allMarkdownFiles: TFile[];
     private lastRenderedElement: HTMLElement | undefined;
 
+    // Stack to manage nested list contexts
+    private listStack: HTMLUListElement[] = [];
+    private currentList: HTMLUListElement;
+
     constructor(
-        _query: IQuery,
+        query: IQuery,
         tasksFile: TasksFile,
         content: HTMLDivElement,
         taskList: HTMLUListElement,
@@ -58,10 +63,10 @@ export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
         filePath: string | undefined,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        // this.query = query;
+        this.query = query;
         this.tasksFile = tasksFile;
         this.content = content;
-        this.taskList = taskList;
+        this.currentList = taskList; // Start with the root list
         this.taskLineRenderer = taskLineRenderer;
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
@@ -127,17 +132,44 @@ export class HtmlQueryResultsVisitor implements QueryResultsVisitor {
             this.addPostponeButton(extrasSpan, task, context.shortMode);
         }
 
-        this.taskList.appendChild(listItem);
+        this.currentList.appendChild(listItem);
         this.lastRenderedElement = listItem;
     }
 
     async addListItem(listItem: ListItem, listItemIndex: number, _context: VisitorRenderContext): Promise<void> {
-        const rendered = await this.taskLineRenderer.renderListItem(this.taskList, listItem, listItemIndex);
+        const rendered = await this.taskLineRenderer.renderListItem(this.currentList, listItem, listItemIndex);
         this.lastRenderedElement = rendered;
     }
 
-    public getLastRenderedElement(): HTMLElement | undefined {
-        return this.lastRenderedElement;
+    public beginChildren(): void {
+        if (!this.lastRenderedElement) {
+            throw new Error('Cannot begin children without a parent element');
+        }
+
+        // Push current list onto stack
+        this.listStack.push(this.currentList);
+
+        // Create nested list inside the last rendered element
+        const nestedList = createAndAppendElement('ul', this.lastRenderedElement);
+        nestedList.classList.add('contains-task-list', 'plugin-tasks-query-result');
+
+        // Apply the same styling classes as the parent list
+        const taskLayout = new TaskLayout(this.query.taskLayoutOptions);
+        const queryLayout = new QueryLayout(this.query.queryLayoutOptions);
+        nestedList.classList.add(...taskLayout.generateHiddenClasses());
+        nestedList.classList.add(...queryLayout.getHiddenClasses());
+
+        // Make this the current list for subsequent renders
+        this.currentList = nestedList;
+    }
+
+    public endChildren(): void {
+        // Pop back to parent list
+        const parentList = this.listStack.pop();
+        if (!parentList) {
+            throw new Error('endChildren called without matching beginChildren');
+        }
+        this.currentList = parentList;
     }
 
     private addEditButton(listItem: HTMLElement, task: Task) {
