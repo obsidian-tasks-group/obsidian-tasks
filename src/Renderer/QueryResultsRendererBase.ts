@@ -55,7 +55,8 @@ export abstract class QueryResultsRendererBase {
      */
     public async renderQuery(state: State | State.Warm, tasks: Task[]): Promise<void> {
         if (state === State.Warm && this.query.error === undefined) {
-            await this.renderQuerySearchResults(tasks, state);
+            const queryResult = this.executeQuery(state, tasks);
+            await this.renderQueryResult(queryResult);
         } else if (this.query.error !== undefined) {
             this.renderError(this.query.error);
         } else {
@@ -63,9 +64,11 @@ export abstract class QueryResultsRendererBase {
         }
     }
 
-    private async renderQuerySearchResults(tasks: Task[], state: State.Warm) {
-        const queryResult = this.explainAndPerformSearch(state, tasks);
-
+    /**
+     * Render a QueryResult.
+     * This method handles all rendering logic, separated from query execution.
+     */
+    protected async renderQueryResult(queryResult: QueryResult): Promise<void> {
         if (queryResult.searchErrorMessage !== undefined) {
             this.renderError(queryResult.searchErrorMessage);
             return;
@@ -74,7 +77,11 @@ export abstract class QueryResultsRendererBase {
         await this.renderResults(queryResult);
     }
 
-    private explainAndPerformSearch(state: State.Warm, tasks: Task[]): QueryResult {
+    /**
+     * Execute the query against tasks to produce a QueryResult.
+     * This is separated from rendering to allow testing and future flexibility.
+     */
+    protected executeQuery(state: State.Warm, tasks: Task[]): QueryResult {
         const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
 
