@@ -125,21 +125,19 @@ describe('Copying results', () => {
 
         const query = 'group by function task.description.length';
 
-        expect(searchMarkdownAndCopyResult(tasks, query)).toMatchInlineSnapshot(`
-            "
-            #### 3
+        expect(searchMarkdownAndCopyResult(tasks, query)).toEqual(`
+#### 3
 
-            - [ ] 333
+- [ ] 333
 
-            #### 4
+#### 4
 
-            - [ ] 4444
+- [ ] 4444
 
-            #### 5
+#### 5
 
-            - [ ] 55555
-            "
-        `);
+- [ ] 55555
+`);
     });
 
     it('should copy four grouping levels', () => {
@@ -159,42 +157,40 @@ group by scheduled
 group by id
 `;
 
-        expect(searchMarkdownAndCopyResult(tasks, query)).toMatchInlineSnapshot(`
-            "
-            ##### %%1%%High priority
+        expect(searchMarkdownAndCopyResult(tasks, query)).toEqual(`
+##### %%1%%High priority
 
-            ###### 2025-10-30 Thursday
+###### 2025-10-30 Thursday
 
-            - [ ] 3 ⏫ ⏳ 2025-10-30
+- [ ] 3 ⏫ ⏳ 2025-10-30
 
-            ##### %%3%%Normal priority
+##### %%3%%Normal priority
 
-            ###### 2025-10-29 Wednesday
+###### 2025-10-29 Wednesday
 
-            - [ ] 1 ⏳ 2025-10-29
-            - [ ] 4 ⏳ 2025-10-29
+- [ ] 1 ⏳ 2025-10-29
+- [ ] 4 ⏳ 2025-10-29
 
-            ###### No scheduled date
+###### No scheduled date
 
-            ###### id6
+###### id6
 
-            - [ ] 6 🆔 id6
+- [ ] 6 🆔 id6
 
-            ##### %%5%%Lowest priority
+##### %%5%%Lowest priority
 
-            ###### No scheduled date
+###### No scheduled date
 
-            - [ ] 2 ⏬
+- [ ] 2 ⏬
 
-            #### #something
+#### #something
 
-            ##### %%3%%Normal priority
+##### %%3%%Normal priority
 
-            ###### No scheduled date
+###### No scheduled date
 
-            - [ ] 5 #something
-            "
-        `);
+- [ ] 5 #something
+`);
     });
 
     it('should remove indentation for nested tasks', () => {
