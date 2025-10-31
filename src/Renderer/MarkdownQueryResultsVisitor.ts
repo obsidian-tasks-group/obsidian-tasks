@@ -52,7 +52,7 @@ export class MarkdownQueryResultsVisitor implements QueryResultsVisitor {
         const indent = '    '.repeat(this.currentIndentLevel);
 
         // Use the task's own method to generate its markdown representation
-        const taskLine = `${task.indentation}${task.listMarker} [${task.status.symbol}] ${task.toString()}`.trimStart();
+        const taskLine = `${task.listMarker} [${task.status.symbol}] ${task.toString()}`;
 
         this.markdown += `${indent}${taskLine}\n`;
     }
