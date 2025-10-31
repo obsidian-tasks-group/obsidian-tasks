@@ -11,7 +11,7 @@ function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     return new MarkdownQueryResultsRenderer(source, tasksFile, new Query(source, tasksFile));
 }
 
-async function verifyRenderedTasksMarkdown(source: string, tasks: Task[]) {
+async function verifyRenderedTasksMarkdown(tasks: Task[], source: string) {
     const renderer = makeMarkdownResultsRenderer(source, new TasksFile('query.md'));
 
     await renderer.renderQuery(State.Warm, tasks);
@@ -39,15 +39,15 @@ ${markdown}
 describe('rendering', () => {
     it('should support render', async () => {
         await verifyRenderedTasksMarkdown(
-            'show tree',
             readTasksFromSimulatedFile('inheritance_1parent1child1newroot_after_header'),
+            'show tree',
         );
     });
 
     it('should support renderToMarkdown', async () => {
         await verifyRenderedTasksMarkdown(
-            'show tree',
             readTasksFromSimulatedFile('inheritance_1parent1child1newroot_after_header'),
+            'show tree',
         );
     });
 });
