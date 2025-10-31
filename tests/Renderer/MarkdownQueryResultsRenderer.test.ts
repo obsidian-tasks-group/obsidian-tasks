@@ -181,7 +181,7 @@ group by id
 `);
     });
 
-    it.failing('should use hyphen as list marker', async () => {
+    it('should use hyphen as list marker', async () => {
         const tasks = readTasksFromSimulatedFile('mixed_list_markers');
 
         const query = '';
