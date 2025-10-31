@@ -2,7 +2,7 @@ import type { App, Component } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
-import { State } from '../Obsidian/Cache';
+import type { State } from '../Obsidian/Cache';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import {
@@ -116,14 +116,6 @@ export class QueryResultsRenderer {
         this.htmlRenderer.setContent(content);
         this.htmlRenderer.setQueryRendererParameters(queryRendererParameters);
 
-        // Execute query and render
-        if (state === State.Warm && this.query.error === undefined) {
-            const queryResult = this.query.applyQueryToTasks(tasks);
-            await this.htmlRenderer.renderWithQueryResult(queryResult);
-        } else if (this.query.error !== undefined) {
-            this.htmlRenderer.renderWithError(this.query.error);
-        } else {
-            this.htmlRenderer.renderWithLoading();
-        }
+        await this.htmlRenderer.renderQuery(state, tasks);
     }
 }
