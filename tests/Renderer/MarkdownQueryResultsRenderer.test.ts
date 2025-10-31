@@ -11,13 +11,15 @@ function makeMarkdownResultsRenderer(source: string, tasksFile: TasksFile) {
     return new MarkdownQueryResultsRenderer(source, tasksFile, new Query(source, tasksFile));
 }
 
-async function verifyRenderedTasksMarkdown(tasks: Task[], source: string) {
+async function searchTasksAndCopyResult(tasks: Task[], source: string) {
     const renderer = makeMarkdownResultsRenderer(source, new TasksFile('query.md'));
-
     await renderer.renderQuery(State.Warm, tasks);
 
-    // Get the markdown
-    const markdown = renderer.getMarkdown();
+    return renderer.getMarkdown();
+}
+
+async function verifyRenderedTasksMarkdown(tasks: Task[], source: string) {
+    const markdown = await searchTasksAndCopyResult(tasks, source);
 
     const output = `Tasks found by the search:
 
