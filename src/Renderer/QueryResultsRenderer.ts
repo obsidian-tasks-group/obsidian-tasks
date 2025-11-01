@@ -58,6 +58,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
 
     private getters = {
         source: () => this.source,
+        tasksFile: () => this._tasksFile,
     };
 
     // The path of the file that contains the instruction block, and cached data from that file.
@@ -105,7 +106,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
     }
 
     private makeQueryFromSourceAndTasksFile() {
-        return getQueryForQueryRenderer(this.getters.source(), GlobalQuery.getInstance(), this.tasksFile);
+        return getQueryForQueryRenderer(this.getters.source(), GlobalQuery.getInstance(), this.getters.tasksFile());
     }
 
     public get tasksFile(): TasksFile {
@@ -234,7 +235,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
             this.getters.source(),
             GlobalFilter.getInstance(),
             GlobalQuery.getInstance(),
-            this.tasksFile,
+            this.getters.tasksFile(),
         );
 
         const explanationsBlock = createAndAppendElement('pre', content);
@@ -503,7 +504,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
             this.obsidianApp,
             group.displayName,
             headerEl,
-            this.tasksFile.path,
+            this.getters.tasksFile().path,
             this.obsidianComponent,
         );
     }
