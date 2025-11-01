@@ -16,7 +16,7 @@ import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
+import { HtmlQueryResultsRenderer, type QueryResultsRendererGetters } from './HtmlQueryResultsRenderer';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
@@ -35,12 +35,6 @@ export interface QueryRendererParameters {
     backlinksClickHandler: BacklinksEventHandler;
     backlinksMousedownHandler: BacklinksEventHandler;
     editTaskPencilClickHandler: EditButtonClickHandler;
-}
-
-export interface QueryResultsRendererGetters {
-    source: () => string;
-    tasksFile: () => TasksFile;
-    query: () => IQuery;
 }
 
 /**
