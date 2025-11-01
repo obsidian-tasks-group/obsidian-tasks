@@ -70,8 +70,7 @@ export class QueryResultsRenderer {
         obsidianApp: App,
         textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
     ) {
-        this.htmlRenderer = new HtmlQueryResultsRenderer(renderMarkdown, obsidianComponent, obsidianApp, textRenderer);
-        this.htmlRenderer.setGetters({
+        this.htmlRenderer = new HtmlQueryResultsRenderer(renderMarkdown, obsidianComponent, obsidianApp, textRenderer, {
             source: () => this.source,
             tasksFile: () => this._tasksFile,
             query: () => this.query,
