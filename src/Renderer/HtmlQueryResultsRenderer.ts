@@ -46,14 +46,12 @@ export class HtmlQueryResultsRenderer {
         obsidianComponent: Component | null,
         obsidianApp: App,
         textRenderer: TextRenderer,
+        getters: QueryResultsRendererGetters,
     ) {
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
-    }
-
-    public setGetters(getters: QueryResultsRendererGetters) {
         this.getters = getters;
     }
 
