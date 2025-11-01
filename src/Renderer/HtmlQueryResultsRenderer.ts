@@ -23,7 +23,7 @@ import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './T
  * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
  * we pass in getter functions instead of storing duplicate copies of the values.
  */
-export interface QueryResultsRendererGetters {
+interface QueryResultsRendererGetters {
     source: () => string;
     tasksFile: () => TasksFile;
     query: () => IQuery;
