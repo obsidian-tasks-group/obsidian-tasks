@@ -44,12 +44,6 @@ export abstract class QueryResultsRendererBase {
     }
 
     /**
-     * Reload the query (e.g., when file or settings change).
-     * Subclasses must implement this.
-     */
-    public abstract rereadQueryFromFile(): void;
-
-    /**
      * Main rendering method - performs query and renders results.
      * Subclasses typically don't need to override this.
      */
@@ -62,43 +56,6 @@ export abstract class QueryResultsRendererBase {
         } else {
             this.renderLoading();
         }
-    }
-
-    /**
-     * Stage 2 API: Render a pre-executed QueryResult.
-     * Subclasses can override to set up environment-specific state before rendering.
-     */
-    public async renderWithQueryResult(queryResult: QueryResult): Promise<void> {
-        await this.renderQueryResult(queryResult);
-    }
-
-    /**
-     * Stage 2 API: Render error state.
-     * Subclasses can override to set up environment-specific state before rendering.
-     */
-    public renderWithError(errorMessage: string): void {
-        this.renderError(errorMessage);
-    }
-
-    /**
-     * Stage 2 API: Render loading state.
-     * Subclasses can override to set up environment-specific state before rendering.
-     */
-    public renderWithLoading(): void {
-        this.renderLoading();
-    }
-
-    /**
-     * Render a QueryResult.
-     * This method handles all rendering logic, separated from query execution.
-     */
-    protected async renderQueryResult(queryResult: QueryResult): Promise<void> {
-        if (queryResult.searchErrorMessage !== undefined) {
-            this.renderError(queryResult.searchErrorMessage);
-            return;
-        }
-
-        await this.renderResults(queryResult);
     }
 
     /**
@@ -119,6 +76,19 @@ export abstract class QueryResultsRendererBase {
 
         measureSearch.finish();
         return queryResult;
+    }
+
+    /**
+     * Render a QueryResult.
+     * This method handles all rendering logic, separated from query execution.
+     */
+    protected async renderQueryResult(queryResult: QueryResult): Promise<void> {
+        if (queryResult.searchErrorMessage !== undefined) {
+            this.renderError(queryResult.searchErrorMessage);
+            return;
+        }
+
+        await this.renderResults(queryResult);
     }
 
     protected async renderResults(queryResult: QueryResult) {
@@ -232,19 +202,6 @@ export abstract class QueryResultsRendererBase {
         visitor.endChildren();
     }
 
-    /**
-     * Render children for HTML visitors that need nested DOM structure.
-     * Subclasses that support HTML should override this.
-     */
-    protected async renderChildrenForHtmlVisitor(
-        _parentElement: HTMLElement,
-        _children: ListItem[],
-        _renderedListItems: Set<ListItem>,
-    ): Promise<void> {
-        // Default implementation just recurses (for non-HTML subclasses)
-        // HTML subclasses should override this to create nested <ul> elements
-    }
-
     private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, listItems: ListItem[]): boolean {
         const closestParentTask = listItem.findClosestParentTask();
         if (!closestParentTask) {
@@ -260,6 +217,30 @@ export abstract class QueryResultsRendererBase {
         return false;
     }
 
+    /**
+     * Stage 2 API: Render a pre-executed QueryResult.
+     * Subclasses can override to set up environment-specific state before rendering.
+     */
+    public async renderWithQueryResult(queryResult: QueryResult): Promise<void> {
+        await this.renderQueryResult(queryResult);
+    }
+
+    /**
+     * Stage 2 API: Render error state.
+     * Subclasses can override to set up environment-specific state before rendering.
+     */
+    public renderWithError(errorMessage: string): void {
+        this.renderError(errorMessage);
+    }
+
+    /**
+     * Stage 2 API: Render loading state.
+     * Subclasses can override to set up environment-specific state before rendering.
+     */
+    public renderWithLoading(): void {
+        this.renderLoading();
+    }
+
     protected createRenderContext(): VisitorRenderContext {
         return {
             queryFilePath: this.filePath,
@@ -271,7 +252,26 @@ export abstract class QueryResultsRendererBase {
         };
     }
 
+    /**
+     * Render children for HTML visitors that need nested DOM structure.
+     * Subclasses that support HTML should override this.
+     */
+    protected async renderChildrenForHtmlVisitor(
+        _parentElement: HTMLElement,
+        _children: ListItem[],
+        _renderedListItems: Set<ListItem>,
+    ): Promise<void> {
+        // Default implementation just recurses (for non-HTML subclasses)
+        // HTML subclasses should override this to create nested <ul> elements
+    }
+
     // Abstract methods that subclasses must implement
+
+    /**
+     * Reload the query (e.g., when file or settings change).
+     * Subclasses must implement this.
+     */
+    public abstract rereadQueryFromFile(): void;
 
     /**
      * Create the visitor for rendering.
