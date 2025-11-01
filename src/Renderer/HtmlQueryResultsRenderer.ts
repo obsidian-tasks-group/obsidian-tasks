@@ -37,7 +37,7 @@ export interface QueryRendererParameters {
  *
  * Parallel to MarkdownQueryResultsRenderer.
  */
-export class HtmlResultsRenderer extends QueryResultsRendererBase {
+export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly textRenderer: TextRenderer;
     private readonly renderMarkdown: (
         app: App,

@@ -8,9 +8,9 @@ import type { Task } from '../Task/Task';
 import {
     type BacklinksEventHandler,
     type EditButtonClickHandler,
-    HtmlResultsRenderer,
+    HtmlQueryResultsRenderer,
     type QueryRendererParameters,
-} from './HtmlResultsRenderer';
+} from './HtmlQueryResultsRenderer';
 import { TaskLineRenderer, type TextRenderer } from './TaskLineRenderer';
 
 // Re-export types for backward compatibility
@@ -29,7 +29,7 @@ export class QueryResultsRenderer {
     public tasksFile: TasksFile;
     public query: IQuery;
 
-    private readonly htmlRenderer: HtmlResultsRenderer;
+    private readonly htmlRenderer: HtmlQueryResultsRenderer;
 
     constructor(
         className: string,
@@ -51,7 +51,7 @@ export class QueryResultsRenderer {
         this.query = QueryResultsRenderer.makeQuery(source, tasksFile);
 
         // Create the HTML renderer
-        this.htmlRenderer = new HtmlResultsRenderer(
+        this.htmlRenderer = new HtmlQueryResultsRenderer(
             source,
             tasksFile,
             this.query,

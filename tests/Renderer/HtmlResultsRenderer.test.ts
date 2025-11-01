@@ -5,7 +5,7 @@ import moment from 'moment';
 import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { State } from '../../src/Obsidian/Cache';
-import { HtmlResultsRenderer } from '../../src/Renderer/HtmlResultsRenderer';
+import { HtmlQueryResultsRenderer } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -32,7 +32,15 @@ afterEach(() => {
 
 function makeHtmlResultsRenderer(source: string, tasksFile: TasksFile) {
     const query = new Query(source, tasksFile);
-    return new HtmlResultsRenderer(source, tasksFile, query, () => Promise.resolve(), null, mockApp, mockHTMLRenderer);
+    return new HtmlQueryResultsRenderer(
+        source,
+        tasksFile,
+        query,
+        () => Promise.resolve(),
+        null,
+        mockApp,
+        mockHTMLRenderer,
+    );
 }
 
 describe('HtmlResultsRenderer tests', () => {
