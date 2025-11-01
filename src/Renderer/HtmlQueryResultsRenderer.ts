@@ -76,11 +76,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.textRenderer = textRenderer;
     }
 
-    public rereadQueryFromFile(): void {
-        // HtmlResultsRenderer doesn't recreate the query - it's passed in constructor
-        // Query management is handled by the wrapper class
-    }
-
     /**
      * Set the HTML content container for the next render.
      * MUST be called before each render operation.
@@ -139,6 +134,21 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             throw new Error('Must call setContent() and setQueryRendererParameters() before renderWithLoading()');
         }
         super.renderWithLoading();
+    }
+
+    private getGroupingAttribute(): string {
+        const groupingRules: string[] = [];
+        for (const group of this.query.grouping) {
+            groupingRules.push(group.property);
+        }
+        return groupingRules.join(',');
+    }
+
+    // Abstract method implementations
+
+    public rereadQueryFromFile(): void {
+        // HtmlResultsRenderer doesn't recreate the query - it's passed in constructor
+        // Query management is handled by the wrapper class
     }
 
     protected createVisitor(): QueryResultsVisitor {
@@ -230,13 +240,5 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
         }
-    }
-
-    private getGroupingAttribute(): string {
-        const groupingRules: string[] = [];
-        for (const group of this.query.grouping) {
-            groupingRules.push(group.property);
-        }
-        return groupingRules.join(',');
     }
 }
