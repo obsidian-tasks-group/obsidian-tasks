@@ -137,13 +137,13 @@ describe('QueryResultsRenderer - responding to file edits', () => {
         // Arrange
         const source = 'path includes {{query.file.path}}';
         const renderer = makeQueryResultsRenderer(source, new TasksFile('oldPath.md'));
-        expect(renderer.getters.query().explainQuery()).toContain('path includes oldPath.md');
+        expect(renderer.query.explainQuery()).toContain('path includes oldPath.md');
 
         // Act
         renderer.setTasksFile(new TasksFile('newPath.md'));
 
         // Assert
-        expect(renderer.getters.query().explainQuery()).toContain('path includes newPath.md');
+        expect(renderer.query.explainQuery()).toContain('path includes newPath.md');
     });
 
     it('should be able to reread the query when query settings are changed', () => {
@@ -151,14 +151,14 @@ describe('QueryResultsRenderer - responding to file edits', () => {
         updateSettings({ presets: { CurrentGrouping: 'group by PATH' } });
         const source = 'preset CurrentGrouping';
         const renderer = makeQueryResultsRenderer(source, new TasksFile('any file.md'));
-        expect(renderer.getters.query().explainQuery()).toContain('group by PATH');
+        expect(renderer.query.explainQuery()).toContain('group by PATH');
 
         // Act
         updateSettings({ presets: { CurrentGrouping: 'group by DUE' } });
         renderer.rereadQueryFromFile();
 
         // Assert
-        expect(renderer.getters.query().explainQuery()).toContain('group by DUE');
+        expect(renderer.query.explainQuery()).toContain('group by DUE');
     });
 });
 
