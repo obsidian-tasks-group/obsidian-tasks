@@ -112,7 +112,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
     }
 
     public get tasksFile(): TasksFile {
-        return this._tasksFile;
+        return this.getters.tasksFile();
     }
 
     /**
