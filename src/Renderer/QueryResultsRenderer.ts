@@ -98,11 +98,11 @@ export class QueryResultsRenderer {
     }
 
     private makeQueryFromSourceAndTasksFile() {
-        return getQueryForQueryRenderer(this.getters.source(), GlobalQuery.getInstance(), this.getters.tasksFile());
+        return getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
     }
 
     public get tasksFile(): TasksFile {
-        return this.getters.tasksFile();
+        return this._tasksFile;
     }
 
     /**
