@@ -76,6 +76,15 @@ export class QueryResultsRenderer {
     }
 
     /**
+     * Update the tasks file and reload the query.
+     */
+    public setTasksFile(newFile: TasksFile) {
+        this.tasksFile = newFile;
+        this.htmlRenderer.setTasksFile(newFile);
+        this.rereadQueryFromFile();
+    }
+
+    /**
      * Reload the query from file (e.g., when settings change).
      */
     public rereadQueryFromFile() {
@@ -83,15 +92,6 @@ export class QueryResultsRenderer {
 
         // Update the HTML renderer with the new query
         this.htmlRenderer.query = this.query;
-    }
-
-    /**
-     * Update the tasks file and reload the query.
-     */
-    public setTasksFile(newFile: TasksFile) {
-        this.tasksFile = newFile;
-        this.htmlRenderer.setTasksFile(newFile);
-        this.rereadQueryFromFile();
     }
 
     /**
