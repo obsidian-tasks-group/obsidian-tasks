@@ -32,7 +32,7 @@ export interface QueryRendererParameters {
  *
  * It handles the construction of task groupings and the application of visual styles.
  */
-export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
+export class QueryResultsRenderer {
     /**
      * The complete text in the instruction block, such as:
      * ```
@@ -50,6 +50,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
         tasksFile: () => this._tasksFile,
         query: () => this.query,
     };
+    private htmlRenderer: HtmlQueryResultsRenderer;
 
     // The path of the file that contains the instruction block, and cached data from that file.
     // This can be updated when the query file's frontmatter is modified.
@@ -74,8 +75,8 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
         obsidianApp: App,
         textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
     ) {
-        super(renderMarkdown, obsidianComponent, obsidianApp, textRenderer);
-        this.setGetters(this.getters);
+        this.htmlRenderer = new HtmlQueryResultsRenderer(renderMarkdown, obsidianComponent, obsidianApp, textRenderer);
+        this.htmlRenderer.setGetters(this.getters);
 
         this.source = source;
         this._tasksFile = tasksFile;
@@ -137,6 +138,6 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
         content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        await this.renderQuery(state, tasks, content, queryRendererParameters);
+        await this.htmlRenderer.renderQuery(state, tasks, content, queryRendererParameters);
     }
 }
