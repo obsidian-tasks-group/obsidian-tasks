@@ -37,6 +37,12 @@ export interface QueryRendererParameters {
     editTaskPencilClickHandler: EditButtonClickHandler;
 }
 
+export interface QueryResultsRendererGetters {
+    source: () => string;
+    tasksFile: () => TasksFile;
+    query: () => IQuery;
+}
+
 /**
  * The `QueryResultsRenderer` class is responsible for rendering the results
  * of a query applied to a set of tasks.
@@ -56,7 +62,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
      */
     public readonly source: string;
 
-    public getters = {
+    public getters: QueryResultsRendererGetters = {
         source: () => this.source,
         tasksFile: () => this._tasksFile,
         query: () => this.query,
