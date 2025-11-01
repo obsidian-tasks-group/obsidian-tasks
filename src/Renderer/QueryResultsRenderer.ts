@@ -56,6 +56,10 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
      */
     public readonly source: string;
 
+    private getters = {
+        source: () => this.source,
+    };
+
     // The path of the file that contains the instruction block, and cached data from that file.
     // This can be updated when the query file's frontmatter is modified.
     // It is up to the caller to determine when to do this though.
@@ -101,7 +105,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
     }
 
     private makeQueryFromSourceAndTasksFile() {
-        return getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
+        return getQueryForQueryRenderer(this.getters.source(), GlobalQuery.getInstance(), this.tasksFile);
     }
 
     public get tasksFile(): TasksFile {
@@ -227,7 +231,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
     // Use the 'explain' instruction to enable this
     private createExplanation(content: HTMLDivElement) {
         const explanationAsString = explainResults(
-            this.source,
+            this.getters.source(),
             GlobalFilter.getInstance(),
             GlobalQuery.getInstance(),
             this.tasksFile,
