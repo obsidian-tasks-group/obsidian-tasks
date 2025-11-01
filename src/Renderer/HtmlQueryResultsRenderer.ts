@@ -53,7 +53,7 @@ export class HtmlQueryResultsRenderer {
         this.textRenderer = textRenderer;
     }
 
-    protected setGetters(getters: QueryResultsRendererGetters) {
+    public setGetters(getters: QueryResultsRendererGetters) {
         this.getters = getters;
     }
 
@@ -62,7 +62,7 @@ export class HtmlQueryResultsRenderer {
         return this.getters!.tasksFile().path;
     }
 
-    protected async renderQuery(
+    public async renderQuery(
         state: State | State.Warm,
         tasks: Task[],
         content: HTMLDivElement,
