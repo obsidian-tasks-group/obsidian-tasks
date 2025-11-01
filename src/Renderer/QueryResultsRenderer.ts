@@ -92,6 +92,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
         textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
     ) {
         super(renderMarkdown, obsidianComponent, obsidianApp, textRenderer);
+        this.setGetters(this.getters);
 
         this.source = source;
         this._tasksFile = tasksFile;

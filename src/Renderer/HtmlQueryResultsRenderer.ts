@@ -1,4 +1,5 @@
 import type { App, Component } from 'obsidian';
+import type { QueryResultsRendererGetters } from './QueryResultsRenderer';
 import type { TextRenderer } from './TaskLineRenderer';
 
 export class HtmlQueryResultsRenderer {
@@ -9,6 +10,7 @@ export class HtmlQueryResultsRenderer {
     protected readonly renderMarkdown;
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
+    public getters: QueryResultsRendererGetters | null = null;
 
     constructor(
         renderMarkdown: (
@@ -26,5 +28,9 @@ export class HtmlQueryResultsRenderer {
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
+    }
+
+    protected setGetters(getters: QueryResultsRendererGetters) {
+        this.getters = getters;
     }
 }
