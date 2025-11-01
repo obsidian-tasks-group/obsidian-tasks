@@ -149,6 +149,15 @@ export class QueryResultsRenderer {
         content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
+        await this.renderQuery(state, tasks, content, queryRendererParameters);
+    }
+
+    private async renderQuery(
+        state: State | State.Warm,
+        tasks: Task[],
+        content: HTMLDivElement,
+        queryRendererParameters: QueryRendererParameters,
+    ) {
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
