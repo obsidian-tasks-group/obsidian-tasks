@@ -27,6 +27,35 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         super(source, tasksFile, query);
     }
 
+    /**
+     * Get the rendered markdown output.
+     */
+    public getMarkdown(): string {
+        if (this.errorMessage) {
+            return `Error: ${this.errorMessage}\n`;
+        }
+        return this.visitor?.getMarkdown() ?? '';
+    }
+
+    /**
+     * Reset the output for re-rendering.
+     */
+    public reset(): void {
+        this.visitor?.reset();
+        this.errorMessage = null;
+    }
+
+    /**
+     * Convenience method to render and get markdown in one call.
+     */
+    public async renderToMarkdown(tasks: Task[]): Promise<string> {
+        this.reset();
+        await this.renderQuery(State.Warm, tasks);
+        return this.getMarkdown();
+    }
+
+    // Abstract method implementations
+
     public rereadQueryFromFile(): void {
         // Markdown renderer doesn't recreate the query - it's passed in constructor
         // If needed, subclasses can override
@@ -57,32 +86,5 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected afterResults(_queryResult: QueryResult): void {
         // No-op for markdown
-    }
-
-    /**
-     * Get the rendered markdown output.
-     */
-    public getMarkdown(): string {
-        if (this.errorMessage) {
-            return `Error: ${this.errorMessage}\n`;
-        }
-        return this.visitor?.getMarkdown() ?? '';
-    }
-
-    /**
-     * Reset the output for re-rendering.
-     */
-    public reset(): void {
-        this.visitor?.reset();
-        this.errorMessage = null;
-    }
-
-    /**
-     * Convenience method to render and get markdown in one call.
-     */
-    public async renderToMarkdown(tasks: Task[]): Promise<string> {
-        this.reset();
-        await this.renderQuery(State.Warm, tasks);
-        return this.getMarkdown();
     }
 }
