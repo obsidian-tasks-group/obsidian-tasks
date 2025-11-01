@@ -5,7 +5,7 @@ import type { State } from '../Obsidian/Cache';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
-import { HtmlQueryResultsRenderer, type QueryResultsRendererGetters } from './HtmlQueryResultsRenderer';
+import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
 import { TaskLineRenderer, type TextRenderer } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
@@ -45,11 +45,6 @@ export class QueryResultsRenderer {
      */
     public readonly source: string;
 
-    public getters: QueryResultsRendererGetters = {
-        source: () => this.source,
-        tasksFile: () => this._tasksFile,
-        query: () => this.query,
-    };
     private htmlRenderer: HtmlQueryResultsRenderer;
 
     // The path of the file that contains the instruction block, and cached data from that file.
@@ -76,7 +71,11 @@ export class QueryResultsRenderer {
         textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
     ) {
         this.htmlRenderer = new HtmlQueryResultsRenderer(renderMarkdown, obsidianComponent, obsidianApp, textRenderer);
-        this.htmlRenderer.setGetters(this.getters);
+        this.htmlRenderer.setGetters({
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        });
 
         this.source = source;
         this._tasksFile = tasksFile;
