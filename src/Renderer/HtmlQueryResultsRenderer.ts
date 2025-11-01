@@ -33,7 +33,7 @@ export class HtmlQueryResultsRenderer {
     protected readonly renderMarkdown;
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
-    public getters: QueryResultsRendererGetters | null = null;
+    public getters: QueryResultsRendererGetters;
 
     constructor(
         renderMarkdown: (
@@ -56,8 +56,7 @@ export class HtmlQueryResultsRenderer {
     }
 
     public get filePath(): string | undefined {
-        // TODO remove !
-        return this.getters!.tasksFile().path;
+        return this.getters.tasksFile().path;
     }
 
     public async renderQuery(
@@ -69,7 +68,7 @@ export class HtmlQueryResultsRenderer {
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
-        const error = this.getters!.query().error;
+        const error = this.getters.query().error;
         if (state === State.Warm && error === undefined) {
             await this.renderQuerySearchResults(tasks, state, content, queryRendererParameters);
         } else if (error !== undefined) {
@@ -97,16 +96,16 @@ export class HtmlQueryResultsRenderer {
     }
 
     private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
-        const measureSearch = new PerformanceTracker(`Search: ${this.getters!.query().queryId} - ${this.filePath}`);
+        const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
         measureSearch.start();
 
-        this.getters!.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
+        this.getters.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
-        if (this.getters!.query().queryLayoutOptions.explainQuery) {
+        if (this.getters.query().queryLayoutOptions.explainQuery) {
             this.createExplanation(content);
         }
 
-        const queryResult = this.getters!.query().applyQueryToTasks(tasks);
+        const queryResult = this.getters.query().applyQueryToTasks(tasks);
 
         measureSearch.finish();
         return queryResult;
@@ -117,7 +116,7 @@ export class HtmlQueryResultsRenderer {
         content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        const measureRender = new PerformanceTracker(`Render: ${this.getters!.query().queryId} - ${this.filePath}`);
+        const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
         measureRender.start();
 
         this.addCopyButton(content, queryResult);
@@ -127,7 +126,7 @@ export class HtmlQueryResultsRenderer {
         const totalTasksCount = queryResult.totalTasksCount;
         this.addTaskCount(content, queryResult);
 
-        this.getters!.query().debug(`[render] ${totalTasksCount} tasks displayed`);
+        this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
 
         measureRender.finish();
     }
@@ -144,10 +143,10 @@ export class HtmlQueryResultsRenderer {
     // Use the 'explain' instruction to enable this
     private createExplanation(content: HTMLDivElement) {
         const explanationAsString = explainResults(
-            this.getters!.source(),
+            this.getters.source(),
             GlobalFilter.getInstance(),
             GlobalQuery.getInstance(),
-            this.getters!.tasksFile(),
+            this.getters.tasksFile(),
         );
 
         const explanationsBlock = createAndAppendElement('pre', content);
@@ -190,8 +189,8 @@ export class HtmlQueryResultsRenderer {
         const taskList = createAndAppendElement('ul', content);
 
         taskList.classList.add('contains-task-list', 'plugin-tasks-query-result');
-        taskList.classList.add(...new TaskLayout(this.getters!.query().taskLayoutOptions).generateHiddenClasses());
-        taskList.classList.add(...new QueryLayout(this.getters!.query().queryLayoutOptions).getHiddenClasses());
+        taskList.classList.add(...new TaskLayout(this.getters.query().taskLayoutOptions).generateHiddenClasses());
+        taskList.classList.add(...new QueryLayout(this.getters.query().queryLayoutOptions).getHiddenClasses());
 
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
@@ -201,12 +200,12 @@ export class HtmlQueryResultsRenderer {
             obsidianApp: this.obsidianApp,
             obsidianComponent: this.obsidianComponent,
             parentUlElement: taskList,
-            taskLayoutOptions: this.getters!.query().taskLayoutOptions,
-            queryLayoutOptions: this.getters!.query().queryLayoutOptions,
+            taskLayoutOptions: this.getters.query().taskLayoutOptions,
+            queryLayoutOptions: this.getters.query().queryLayoutOptions,
         });
 
         for (const [listItemIndex, listItem] of listItems.entries()) {
-            if (this.getters!.query().queryLayoutOptions.hideTree) {
+            if (this.getters.query().queryLayoutOptions.hideTree) {
                 /* Old-style rendering of tasks:
                  *  - What is rendered:
                  *      - Only task lines that match the query are rendered, as a flat list
@@ -342,21 +341,21 @@ export class HtmlQueryResultsRenderer {
         const extrasSpan = createAndAppendElement('span', listItem);
         extrasSpan.classList.add('task-extras');
 
-        if (!this.getters!.query().queryLayoutOptions.hideUrgency) {
+        if (!this.getters.query().queryLayoutOptions.hideUrgency) {
             this.addUrgency(extrasSpan, task);
         }
 
-        const shortMode = this.getters!.query().queryLayoutOptions.shortMode;
+        const shortMode = this.getters.query().queryLayoutOptions.shortMode;
 
-        if (!this.getters!.query().queryLayoutOptions.hideBacklinks) {
+        if (!this.getters.query().queryLayoutOptions.hideBacklinks) {
             this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique, queryRendererParameters);
         }
 
-        if (!this.getters!.query().queryLayoutOptions.hideEditButton) {
+        if (!this.getters.query().queryLayoutOptions.hideEditButton) {
             this.addEditButton(extrasSpan, task, queryRendererParameters);
         }
 
-        if (!this.getters!.query().queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+        if (!this.getters.query().queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
             this.addPostponeButton(extrasSpan, task, shortMode);
         }
 
@@ -416,7 +415,7 @@ export class HtmlQueryResultsRenderer {
             this.obsidianApp,
             group.displayName,
             headerEl,
-            this.getters!.tasksFile().path,
+            this.getters.tasksFile().path,
             this.obsidianComponent,
         );
     }
@@ -493,7 +492,7 @@ export class HtmlQueryResultsRenderer {
     }
 
     private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
-        if (!this.getters!.query().queryLayoutOptions.hideTaskCount) {
+        if (!this.getters.query().queryLayoutOptions.hideTaskCount) {
             const taskCount = createAndAppendElement('div', content);
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
@@ -520,7 +519,7 @@ export class HtmlQueryResultsRenderer {
 
     private getGroupingAttribute() {
         const groupingRules: string[] = [];
-        for (const group of this.getters!.query().grouping) {
+        for (const group of this.getters.query().grouping) {
             groupingRules.push(group.property);
         }
         return groupingRules.join(',');
