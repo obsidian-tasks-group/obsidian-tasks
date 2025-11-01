@@ -139,7 +139,7 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
     }
 
     public get filePath(): string | undefined {
-        return this.tasksFile?.path ?? undefined;
+        return this.tasksFile.path;
     }
 
     public async render(
