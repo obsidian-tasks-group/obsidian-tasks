@@ -1,6 +1,13 @@
 import type { App, Component } from 'obsidian';
-import type { QueryResultsRendererGetters } from './QueryResultsRenderer';
+import type { IQuery } from '../IQuery';
+import type { TasksFile } from '../Scripting/TasksFile';
 import type { TextRenderer } from './TaskLineRenderer';
+
+export interface QueryResultsRendererGetters {
+    source: () => string;
+    tasksFile: () => TasksFile;
+    query: () => IQuery;
+}
 
 export class HtmlQueryResultsRenderer {
     // Renders the description in TaskLineRenderer:
