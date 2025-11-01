@@ -40,4 +40,9 @@ export class HtmlQueryResultsRenderer {
     protected setGetters(getters: QueryResultsRendererGetters) {
         this.getters = getters;
     }
+
+    public get filePath(): string | undefined {
+        // TODO remove !
+        return this.getters!.tasksFile().path;
+    }
 }
