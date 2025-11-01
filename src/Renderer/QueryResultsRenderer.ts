@@ -64,13 +64,6 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
     public query: IQuery;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
-    // Renders the description in TaskLineRenderer:
-    private readonly textRenderer;
-    // Renders the group heading in this class:
-    private readonly renderMarkdown;
-    private readonly obsidianComponent: Component | null;
-    private readonly obsidianApp: App;
-
     constructor(
         className: string,
         source: string,
@@ -86,14 +79,10 @@ export class QueryResultsRenderer extends HtmlQueryResultsRenderer {
         obsidianApp: App,
         textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
     ) {
-        super();
+        super(renderMarkdown, obsidianComponent, obsidianApp, textRenderer);
 
         this.source = source;
         this._tasksFile = tasksFile;
-        this.renderMarkdown = renderMarkdown;
-        this.obsidianComponent = obsidianComponent;
-        this.obsidianApp = obsidianApp;
-        this.textRenderer = textRenderer;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
