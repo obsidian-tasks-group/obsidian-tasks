@@ -68,9 +68,11 @@ export class HtmlQueryResultsRenderer {
     public async renderQuery(
         state: State | State.Warm,
         tasks: Task[],
-        content: HTMLDivElement,
+        _content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
+        // TODO remove !
+        const content = this.content!;
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
