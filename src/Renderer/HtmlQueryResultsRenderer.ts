@@ -74,17 +74,16 @@ export class HtmlQueryResultsRenderer {
         if (!this.content) {
             throw new Error('Must initialize content field before calling renderQuery()');
         }
-        const content = this.content;
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
         const error = this.getters.query().error;
         if (state === State.Warm && error === undefined) {
-            await this.renderQuerySearchResults(tasks, state, content, queryRendererParameters);
+            await this.renderQuerySearchResults(tasks, state, this.content, queryRendererParameters);
         } else if (error !== undefined) {
-            this.renderErrorMessage(content, error);
+            this.renderErrorMessage(this.content, error);
         } else {
-            this.renderLoadingMessage(content);
+            this.renderLoadingMessage(this.content);
         }
     }
 
