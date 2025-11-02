@@ -191,20 +191,10 @@ export class HtmlQueryResultsRenderer {
             await this.addGroupHeadings(group.groupHeadings);
 
             const renderedListItems: Set<ListItem> = new Set();
-            await this.createTaskList(group.tasks, content, queryRendererParameters, renderedListItems);
+            // TODO re-extract the method to include this back
+            const taskList = createAndAppendElement('ul', content);
+            await this.createTaskList2(taskList, group.tasks, queryRendererParameters, renderedListItems);
         }
-    }
-
-    private async createTaskList(
-        listItems: ListItem[],
-        content: HTMLElement,
-        queryRendererParameters: QueryRendererParameters,
-        renderedListItems: Set<ListItem>,
-    ): Promise<void> {
-        // TODO re-extract the method to include this back
-        const taskList = createAndAppendElement('ul', content);
-
-        await this.createTaskList2(taskList, listItems, queryRendererParameters, renderedListItems);
     }
 
     private async createTaskList2(
@@ -312,7 +302,9 @@ export class HtmlQueryResultsRenderer {
         renderedListItems.add(listItem);
 
         if (listItem.children.length > 0) {
-            await this.createTaskList(listItem.children, listItemElement, queryRendererParameters, renderedListItems);
+            // TODO re-extract the method to include this back
+            const taskList1 = createAndAppendElement('ul', listItemElement);
+            await this.createTaskList2(taskList1, listItem.children, queryRendererParameters, renderedListItems);
             listItem.children.forEach((childTask) => {
                 renderedListItems.add(childTask);
             });
