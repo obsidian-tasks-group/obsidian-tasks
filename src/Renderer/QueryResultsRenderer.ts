@@ -220,7 +220,7 @@ export class QueryResultsRenderer {
     }
 
     private renderLoadingMessage(content: HTMLDivElement) {
-        content.setText('Loading Tasks ...');
+        content.innerText = 'Loading Tasks ...';
     }
 
     // Use the 'explain' instruction to enable this
