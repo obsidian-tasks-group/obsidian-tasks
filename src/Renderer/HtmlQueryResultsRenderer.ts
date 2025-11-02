@@ -136,7 +136,7 @@ export class HtmlQueryResultsRenderer {
 
         this.addCopyButton(content, queryResult);
 
-        await this.addAllTaskGroups(queryResult.taskGroups, content, queryRendererParameters);
+        await this.addAllTaskGroups(queryResult.taskGroups, queryRendererParameters);
 
         const totalTasksCount = queryResult.totalTasksCount;
         this.addTaskCount(content, queryResult);
@@ -182,7 +182,6 @@ export class HtmlQueryResultsRenderer {
 
     private async addAllTaskGroups(
         tasksSortedLimitedGrouped: TaskGroups,
-        _content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
         for (const group of tasksSortedLimitedGrouped.groups) {
