@@ -188,7 +188,7 @@ export class HtmlQueryResultsRenderer {
         for (const group of tasksSortedLimitedGrouped.groups) {
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
-            await this.addGroupHeadings(content, group.groupHeadings);
+            await this.addGroupHeadings(group.groupHeadings);
 
             const renderedListItems: Set<ListItem> = new Set();
             await this.createTaskList(group.tasks, content, queryRendererParameters, renderedListItems);
@@ -399,18 +399,17 @@ export class HtmlQueryResultsRenderer {
 
     /**
      * Display headings for a group of tasks.
-     * @param content
      * @param groupHeadings - The headings to display. This can be an empty array,
      *                        in which case no headings will be added.
      * @private
      */
-    private async addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupDisplayHeading[]) {
+    private async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
         for (const heading of groupHeadings) {
-            await this.addGroupHeading(content, heading);
+            await this.addGroupHeading(heading);
         }
     }
 
-    private async addGroupHeading(_content: HTMLDivElement, group: GroupDisplayHeading) {
+    private async addGroupHeading(group: GroupDisplayHeading) {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
