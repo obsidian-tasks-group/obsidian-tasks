@@ -201,8 +201,18 @@ export class HtmlQueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
         renderedListItems: Set<ListItem>,
     ): Promise<void> {
+        // TODO re-extract the method to include this back
         const taskList = createAndAppendElement('ul', content);
 
+        await this.createTaskList2(taskList, listItems, queryRendererParameters, renderedListItems);
+    }
+
+    private async createTaskList2(
+        taskList: HTMLUListElement,
+        listItems: ListItem[],
+        queryRendererParameters: QueryRendererParameters,
+        renderedListItems: Set<ListItem>,
+    ): Promise<void> {
         taskList.classList.add('contains-task-list', 'plugin-tasks-query-result');
         taskList.classList.add(...new TaskLayout(this.getters.query().taskLayoutOptions).generateHiddenClasses());
         taskList.classList.add(...new QueryLayout(this.getters.query().queryLayoutOptions).getHiddenClasses());
