@@ -252,8 +252,6 @@ export class HtmlQueryResultsRenderer {
                 );
             }
         }
-
-        content.appendChild(taskList);
     }
 
     private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, listItems: ListItem[]) {
