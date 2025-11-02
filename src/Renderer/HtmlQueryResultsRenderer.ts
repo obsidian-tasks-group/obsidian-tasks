@@ -191,7 +191,7 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async createTaskList(
-        taskList: HTMLUListElement,
+        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         listItems: ListItem[],
         queryRendererParameters: QueryRendererParameters,
         renderedListItems: Set<ListItem>,
@@ -269,7 +269,7 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async addTaskOrListItemAndChildren(
-        taskList: HTMLUListElement,
+        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         taskIndex: number,
@@ -304,8 +304,9 @@ export class HtmlQueryResultsRenderer {
         }
     }
 
+    // TODO make this return Promise<void>
     private async addTaskOrListItem(
-        taskList: HTMLUListElement,
+        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         taskIndex: number,
@@ -318,8 +319,9 @@ export class HtmlQueryResultsRenderer {
         return await this.addListItem(taskList, taskLineRenderer, listItem, taskIndex);
     }
 
+    // TODO make this return Promise<void>
     private async addListItem(
-        taskList: HTMLUListElement,
+        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         listItemIndex: number,
@@ -327,8 +329,9 @@ export class HtmlQueryResultsRenderer {
         return await taskLineRenderer.renderListItem(taskList, listItem, listItemIndex);
     }
 
+    // TODO make this return Promise<void>
     private async addTask(
-        taskList: HTMLUListElement,
+        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         taskLineRenderer: TaskLineRenderer,
         task: Task,
         taskIndex: number,
