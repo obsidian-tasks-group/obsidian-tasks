@@ -410,7 +410,7 @@ export class HtmlQueryResultsRenderer {
         }
     }
 
-    private async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
+    private async addGroupHeading(_content: HTMLDivElement, group: GroupDisplayHeading) {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
@@ -419,7 +419,7 @@ export class HtmlQueryResultsRenderer {
             header = 'h5';
         }
 
-        const headerEl = createAndAppendElement(header, content);
+        const headerEl = createAndAppendElement(header, this.getContent());
         headerEl.classList.add('tasks-group-heading');
 
         if (this.obsidianComponent === null) {
