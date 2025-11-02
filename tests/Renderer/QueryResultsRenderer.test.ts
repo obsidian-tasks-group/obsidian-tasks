@@ -42,7 +42,7 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
 }
 
 describe('QueryResultsRenderer tests', () => {
-    async function verifyRenderedTasksHTML(allTasks: Task[], source: string = '') {
+    async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
         const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
         const queryRendererParameters = {
             allTasks,
@@ -53,7 +53,7 @@ describe('QueryResultsRenderer tests', () => {
         };
         const container = document.createElement('div');
 
-        await renderer.render(State.Warm, allTasks, container, queryRendererParameters);
+        await renderer.render(state, allTasks, container, queryRendererParameters);
 
         const taskAsMarkdown = `<!--
 ${toMarkdown(allTasks)}
@@ -62,6 +62,21 @@ ${toMarkdown(allTasks)}
         const prettyHTML = prettifyHTML(container.outerHTML);
         verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
     }
+
+    it('loading message', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks, 'show urgency', State.Initializing);
+    });
+
+    it('error message', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks, 'apple sauce');
+    });
+
+    it('explain', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks, 'scheduled 1970-01-01\nexplain');
+    });
 
     it('fully populated task', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
@@ -101,6 +116,19 @@ ${toMarkdown(allTasks)}
         GlobalFilter.getInstance().set('#task');
         const allTasks = readTasksFromSimulatedFile('inheritance_non_task_child');
         await verifyRenderedTasksHTML(allTasks, showTree);
+    });
+
+    it('should render four group headings', async () => {
+        const allTasks = readTasksFromSimulatedFile('inheritance_task_2listitem_3task');
+        await verifyRenderedTasksHTML(
+            allTasks,
+            `
+group by function task.description.length
+group by function 'level2'
+group by function 'level3'
+group by function 'level4'
+`,
+        );
     });
 });
 
