@@ -6,10 +6,10 @@ import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
-import { explainResults, getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
+import { explainResults, getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
@@ -215,9 +215,8 @@ export class QueryResultsRenderer {
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
-        const innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
         const container = createAndAppendElement('div', content);
-        container.innerHTML = innerHTML;
+        container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
     private renderLoadingMessage(content: HTMLDivElement) {
