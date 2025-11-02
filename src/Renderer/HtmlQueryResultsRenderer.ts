@@ -128,7 +128,7 @@ export class HtmlQueryResultsRenderer {
 
     private async renderSearchResults(
         queryResult: QueryResult,
-        content: HTMLDivElement,
+        _content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
         const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
@@ -139,7 +139,7 @@ export class HtmlQueryResultsRenderer {
         await this.addAllTaskGroups(queryResult.taskGroups, queryRendererParameters);
 
         const totalTasksCount = queryResult.totalTasksCount;
-        this.addTaskCount(content, queryResult);
+        this.addTaskCount(queryResult);
 
         this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
 
@@ -504,9 +504,9 @@ export class HtmlQueryResultsRenderer {
         });
     }
 
-    private addTaskCount(content: HTMLDivElement, queryResult: QueryResult) {
+    private addTaskCount(queryResult: QueryResult) {
         if (!this.getters.query().queryLayoutOptions.hideTaskCount) {
-            const taskCount = createAndAppendElement('div', content);
+            const taskCount = createAndAppendElement('div', this.getContent());
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
         }
