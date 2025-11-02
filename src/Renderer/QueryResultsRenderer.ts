@@ -6,10 +6,10 @@ import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
-import { explainResults, getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
+import { explainResults, getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
@@ -215,11 +215,12 @@ export class QueryResultsRenderer {
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
-        content.createDiv().innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
+        const container = createAndAppendElement('div', content);
+        container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
     private renderLoadingMessage(content: HTMLDivElement) {
-        content.setText('Loading Tasks ...');
+        content.textContent = 'Loading Tasks ...';
     }
 
     // Use the 'explain' instruction to enable this
@@ -233,7 +234,7 @@ export class QueryResultsRenderer {
 
         const explanationsBlock = createAndAppendElement('pre', content);
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
-        explanationsBlock.setText(explanationAsString);
+        explanationsBlock.textContent = explanationAsString;
         content.appendChild(explanationsBlock);
     }
 
@@ -490,6 +491,7 @@ export class QueryResultsRenderer {
         headerEl.classList.add('tasks-group-heading');
 
         if (this.obsidianComponent === null) {
+            headerEl.textContent = 'For test purposes: ' + group.displayName;
             return;
         }
         await this.renderMarkdown(
