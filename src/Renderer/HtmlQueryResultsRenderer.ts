@@ -39,6 +39,7 @@ export class HtmlQueryResultsRenderer {
     protected readonly obsidianApp: App;
     public getters: QueryResultsRendererGetters;
 
+    // TODO access this via getContent() for now
     public content: HTMLDivElement | null = null;
 
     constructor(
