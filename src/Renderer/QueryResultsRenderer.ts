@@ -491,6 +491,7 @@ export class QueryResultsRenderer {
         headerEl.classList.add('tasks-group-heading');
 
         if (this.obsidianComponent === null) {
+            headerEl.textContent = 'For test purposes: ' + group.displayName;
             return;
         }
         await this.renderMarkdown(
