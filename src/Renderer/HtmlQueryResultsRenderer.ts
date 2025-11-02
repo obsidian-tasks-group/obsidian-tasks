@@ -78,7 +78,7 @@ export class HtmlQueryResultsRenderer {
         if (state === State.Warm && error === undefined) {
             await this.renderQuerySearchResults(tasks, state, content, queryRendererParameters);
         } else if (error !== undefined) {
-            this.renderErrorMessage(content, error);
+            this.renderErrorMessage(error);
         } else {
             this.renderLoadingMessage(content);
         }
@@ -103,7 +103,7 @@ export class HtmlQueryResultsRenderer {
 
         if (queryResult.searchErrorMessage !== undefined) {
             // There was an error in the search, for example due to a problem custom function.
-            this.renderErrorMessage(content, queryResult.searchErrorMessage);
+            this.renderErrorMessage(queryResult.searchErrorMessage);
             return;
         }
 
@@ -146,8 +146,8 @@ export class HtmlQueryResultsRenderer {
         measureRender.finish();
     }
 
-    private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
-        const container = createAndAppendElement('div', content);
+    private renderErrorMessage(errorMessage: string) {
+        const container = createAndAppendElement('div', this.getContent());
         container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
