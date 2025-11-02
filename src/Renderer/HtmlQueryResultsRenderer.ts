@@ -193,11 +193,11 @@ export class HtmlQueryResultsRenderer {
             const renderedListItems: Set<ListItem> = new Set();
             // TODO re-extract the method to include this back
             const taskList = createAndAppendElement('ul', content);
-            await this.createTaskList2(taskList, group.tasks, queryRendererParameters, renderedListItems);
+            await this.createTaskList(taskList, group.tasks, queryRendererParameters, renderedListItems);
         }
     }
 
-    private async createTaskList2(
+    private async createTaskList(
         taskList: HTMLUListElement,
         listItems: ListItem[],
         queryRendererParameters: QueryRendererParameters,
@@ -304,7 +304,7 @@ export class HtmlQueryResultsRenderer {
         if (listItem.children.length > 0) {
             // TODO re-extract the method to include this back
             const taskList1 = createAndAppendElement('ul', listItemElement);
-            await this.createTaskList2(taskList1, listItem.children, queryRendererParameters, renderedListItems);
+            await this.createTaskList(taskList1, listItem.children, queryRendererParameters, renderedListItems);
             listItem.children.forEach((childTask) => {
                 renderedListItems.add(childTask);
             });
