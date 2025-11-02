@@ -215,7 +215,8 @@ export class QueryResultsRenderer {
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
-        content.createDiv().innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
+        const innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
+        content.createDiv().innerHTML = innerHTML;
     }
 
     private renderLoadingMessage(content: HTMLDivElement) {
