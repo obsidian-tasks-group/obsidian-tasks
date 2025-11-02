@@ -63,6 +63,11 @@ ${toMarkdown(allTasks)}
         verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
     }
 
+    it('loading message', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks, 'show urgency', State.Initializing);
+    });
+
     it('error message', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         await verifyRenderedTasksHTML(allTasks, 'apple sauce');
