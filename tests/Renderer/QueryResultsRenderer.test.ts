@@ -117,6 +117,19 @@ ${toMarkdown(allTasks)}
         const allTasks = readTasksFromSimulatedFile('inheritance_non_task_child');
         await verifyRenderedTasksHTML(allTasks, showTree);
     });
+
+    it('should render four group headings', async () => {
+        const allTasks = readTasksFromSimulatedFile('inheritance_task_2listitem_3task');
+        await verifyRenderedTasksHTML(
+            allTasks,
+            `
+group by function task.description.length
+group by function 'level2'
+group by function 'level3'
+group by function 'level4'
+`,
+        );
+    });
 });
 
 describe('QueryResultsRenderer - responding to file edits', () => {
