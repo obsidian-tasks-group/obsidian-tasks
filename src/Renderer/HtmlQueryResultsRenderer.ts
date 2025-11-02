@@ -39,6 +39,8 @@ export class HtmlQueryResultsRenderer {
     protected readonly obsidianApp: App;
     public getters: QueryResultsRendererGetters;
 
+    public content: HTMLDivElement | null = null;
+
     constructor(
         renderMarkdown: (
             app: App,
