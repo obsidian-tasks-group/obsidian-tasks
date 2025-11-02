@@ -134,7 +134,7 @@ export class HtmlQueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
         measureRender.start();
 
-        this.addCopyButton(content, queryResult);
+        this.addCopyButton(queryResult);
 
         await this.addAllTaskGroups(queryResult.taskGroups, queryRendererParameters);
 
@@ -170,8 +170,8 @@ export class HtmlQueryResultsRenderer {
         content.appendChild(explanationsBlock);
     }
 
-    private addCopyButton(content: HTMLDivElement, queryResult: QueryResult) {
-        const copyButton = createAndAppendElement('button', content);
+    private addCopyButton(queryResult: QueryResult) {
+        const copyButton = createAndAppendElement('button', this.getContent());
         copyButton.textContent = 'Copy results';
         copyButton.classList.add('plugin-tasks-copy-button');
         copyButton.addEventListener('click', async () => {
