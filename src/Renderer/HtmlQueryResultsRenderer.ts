@@ -182,7 +182,7 @@ export class HtmlQueryResultsRenderer {
 
     private async addAllTaskGroups(
         tasksSortedLimitedGrouped: TaskGroups,
-        content: HTMLDivElement,
+        _content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
         for (const group of tasksSortedLimitedGrouped.groups) {
@@ -192,7 +192,7 @@ export class HtmlQueryResultsRenderer {
 
             const renderedListItems: Set<ListItem> = new Set();
             // TODO re-extract the method to include this back
-            const taskList = createAndAppendElement('ul', content);
+            const taskList = createAndAppendElement('ul', this.getContent());
             await this.createTaskList(taskList, group.tasks, queryRendererParameters, renderedListItems);
         }
     }
