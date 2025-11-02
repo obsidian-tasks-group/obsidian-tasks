@@ -70,13 +70,12 @@ export class HtmlQueryResultsRenderer {
         tasks: Task[],
         queryRendererParameters: QueryRendererParameters,
     ) {
-        const content = this.getContent();
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
         const error = this.getters.query().error;
         if (state === State.Warm && error === undefined) {
-            await this.renderQuerySearchResults(tasks, state, content, queryRendererParameters);
+            await this.renderQuerySearchResults(tasks, state, queryRendererParameters);
         } else if (error !== undefined) {
             this.renderErrorMessage(error);
         } else {
@@ -96,10 +95,9 @@ export class HtmlQueryResultsRenderer {
     private async renderQuerySearchResults(
         tasks: Task[],
         state: State.Warm,
-        content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
-        const queryResult = this.explainAndPerformSearch(state, tasks, content);
+        const queryResult = this.explainAndPerformSearch(state, tasks);
 
         if (queryResult.searchErrorMessage !== undefined) {
             // There was an error in the search, for example due to a problem custom function.
@@ -110,14 +108,14 @@ export class HtmlQueryResultsRenderer {
         await this.renderSearchResults(queryResult, queryRendererParameters);
     }
 
-    private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
+    private explainAndPerformSearch(state: State.Warm, tasks: Task[]) {
         const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
         measureSearch.start();
 
         this.getters.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
         if (this.getters.query().queryLayoutOptions.explainQuery) {
-            this.createExplanation(content);
+            this.createExplanation();
         }
 
         const queryResult = this.getters.query().applyQueryToTasks(tasks);
@@ -152,7 +150,7 @@ export class HtmlQueryResultsRenderer {
     }
 
     // Use the 'explain' instruction to enable this
-    private createExplanation(content: HTMLDivElement) {
+    private createExplanation() {
         const explanationAsString = explainResults(
             this.getters.source(),
             GlobalFilter.getInstance(),
@@ -160,7 +158,7 @@ export class HtmlQueryResultsRenderer {
             this.getters.tasksFile(),
         );
 
-        const explanationsBlock = createAndAppendElement('pre', content);
+        const explanationsBlock = createAndAppendElement('pre', this.getContent());
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.textContent = explanationAsString;
     }
