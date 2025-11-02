@@ -163,7 +163,6 @@ export class HtmlQueryResultsRenderer {
         const explanationsBlock = createAndAppendElement('pre', content);
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.textContent = explanationAsString;
-        content.appendChild(explanationsBlock);
     }
 
     private addCopyButton(queryResult: QueryResult) {
