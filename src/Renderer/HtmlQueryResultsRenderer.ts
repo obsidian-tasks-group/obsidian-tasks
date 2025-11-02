@@ -107,7 +107,7 @@ export class HtmlQueryResultsRenderer {
             return;
         }
 
-        await this.renderSearchResults(queryResult, content, queryRendererParameters);
+        await this.renderSearchResults(queryResult, queryRendererParameters);
     }
 
     private explainAndPerformSearch(state: State.Warm, tasks: Task[], content: HTMLDivElement) {
@@ -126,11 +126,7 @@ export class HtmlQueryResultsRenderer {
         return queryResult;
     }
 
-    private async renderSearchResults(
-        queryResult: QueryResult,
-        _content: HTMLDivElement,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    private async renderSearchResults(queryResult: QueryResult, queryRendererParameters: QueryRendererParameters) {
         const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
         measureRender.start();
 
