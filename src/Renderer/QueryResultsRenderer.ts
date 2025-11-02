@@ -234,7 +234,7 @@ export class QueryResultsRenderer {
 
         const explanationsBlock = createAndAppendElement('pre', content);
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
-        explanationsBlock.setText(explanationAsString);
+        explanationsBlock.textContent = explanationAsString;
         content.appendChild(explanationsBlock);
     }
 
