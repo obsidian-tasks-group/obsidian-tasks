@@ -130,6 +130,13 @@ group by function 'level4'
 `,
         );
     });
+
+    it('should indent nested tasks', async () => {
+        const allTasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+        await verifyRenderedTasksHTML(allTasks, 'show tree');
+    });
 });
 
 describe('QueryResultsRenderer - responding to file edits', () => {
