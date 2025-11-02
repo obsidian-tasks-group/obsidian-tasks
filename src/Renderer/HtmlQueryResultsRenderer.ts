@@ -80,7 +80,7 @@ export class HtmlQueryResultsRenderer {
         } else if (error !== undefined) {
             this.renderErrorMessage(error);
         } else {
-            this.renderLoadingMessage(content);
+            this.renderLoadingMessage();
         }
     }
 
@@ -151,8 +151,8 @@ export class HtmlQueryResultsRenderer {
         container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
-    private renderLoadingMessage(content: HTMLDivElement) {
-        content.textContent = 'Loading Tasks ...';
+    private renderLoadingMessage() {
+        this.getContent().textContent = 'Loading Tasks ...';
     }
 
     // Use the 'explain' instruction to enable this
