@@ -42,7 +42,7 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
 }
 
 describe('QueryResultsRenderer tests', () => {
-    async function verifyRenderedTasksHTML(allTasks: Task[], source: string) {
+    async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
         const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
         const queryRendererParameters = {
             allTasks,
@@ -53,7 +53,7 @@ describe('QueryResultsRenderer tests', () => {
         };
         const container = document.createElement('div');
 
-        await renderer.render(State.Warm, allTasks, container, queryRendererParameters);
+        await renderer.render(state, allTasks, container, queryRendererParameters);
 
         const taskAsMarkdown = `<!--
 ${toMarkdown(allTasks)}
