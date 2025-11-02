@@ -70,8 +70,11 @@ export class HtmlQueryResultsRenderer {
         tasks: Task[],
         queryRendererParameters: QueryRendererParameters,
     ) {
-        // TODO remove !
-        const content = this.content!;
+        // TODO remove throw
+        if (!this.content) {
+            throw new Error('Must initialize content field before calling renderQuery()');
+        }
+        const content = this.content;
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
