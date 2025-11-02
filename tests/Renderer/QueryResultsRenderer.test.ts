@@ -42,7 +42,7 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
 }
 
 describe('QueryResultsRenderer tests', () => {
-    async function verifyRenderedTasksHTML(allTasks: Task[], source: string = '') {
+    async function verifyRenderedTasksHTML(allTasks: Task[], source: string) {
         const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
         const queryRendererParameters = {
             allTasks,
