@@ -137,7 +137,7 @@ export class QueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
     ) {
         this.htmlRenderer.content = content;
-        await this.htmlRenderer.renderQuery(state, tasks, content, queryRendererParameters);
+        await this.htmlRenderer.renderQuery(state, tasks, queryRendererParameters);
         this.htmlRenderer.content = null;
     }
 }

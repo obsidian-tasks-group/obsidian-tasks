@@ -68,7 +68,6 @@ export class HtmlQueryResultsRenderer {
     public async renderQuery(
         state: State | State.Warm,
         tasks: Task[],
-        _content: HTMLDivElement,
         queryRendererParameters: QueryRendererParameters,
     ) {
         // TODO remove !
