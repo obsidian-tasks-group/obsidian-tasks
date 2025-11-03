@@ -191,7 +191,7 @@ export class HtmlQueryResultsRenderer {
             const taskList = createAndAppendElement('ul', this.getContent());
             this.taskListStack.push(taskList);
             try {
-                await this.createTaskList(taskList, group.tasks, queryRendererParameters, renderedListItems);
+                await this.createTaskList(group.tasks, queryRendererParameters, renderedListItems);
             } finally {
                 this.taskListStack.pop();
             }
@@ -199,7 +199,6 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async createTaskList(
-        _taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         listItems: ListItem[],
         queryRendererParameters: QueryRendererParameters,
         renderedListItems: Set<ListItem>,
@@ -305,7 +304,7 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItemElement);
             this.taskListStack.push(taskList1);
             try {
-                await this.createTaskList(taskList1, listItem.children, queryRendererParameters, renderedListItems);
+                await this.createTaskList(listItem.children, queryRendererParameters, renderedListItems);
             } finally {
                 this.taskListStack.pop();
             }
