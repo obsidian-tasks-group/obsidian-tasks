@@ -309,11 +309,9 @@ export class HtmlQueryResultsRenderer {
 
         renderedListItems.add(listItem);
 
-        if (listItem.children.length > 0) {
-            listItem.children.forEach((childTask) => {
-                renderedListItems.add(childTask);
-            });
-        }
+        listItem.children.forEach((childTask) => {
+            renderedListItems.add(childTask);
+        });
     }
 
     // TODO make this return Promise<void>
