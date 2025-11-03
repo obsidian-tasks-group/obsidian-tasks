@@ -42,6 +42,9 @@ export class HtmlQueryResultsRenderer {
     // TODO access this via getContent() for now
     public content: HTMLDivElement | null = null;
 
+    // TODO Rename this to ULElementStack
+    private taskListStack: HTMLUListElement[] = [];
+
     constructor(
         renderMarkdown: (
             app: App,
@@ -186,7 +189,12 @@ export class HtmlQueryResultsRenderer {
             const renderedListItems: Set<ListItem> = new Set();
             // TODO re-extract the method to include this back
             const taskList = createAndAppendElement('ul', this.getContent());
-            await this.createTaskList(taskList, group.tasks, queryRendererParameters, renderedListItems);
+            this.taskListStack.push(taskList);
+            try {
+                await this.createTaskList(taskList, group.tasks, queryRendererParameters, renderedListItems);
+            } finally {
+                this.taskListStack.pop();
+            }
         }
     }
 
@@ -297,7 +305,12 @@ export class HtmlQueryResultsRenderer {
         if (listItem.children.length > 0) {
             // TODO re-extract the method to include this back
             const taskList1 = createAndAppendElement('ul', listItemElement);
-            await this.createTaskList(taskList1, listItem.children, queryRendererParameters, renderedListItems);
+            this.taskListStack.push(taskList1);
+            try {
+                await this.createTaskList(taskList1, listItem.children, queryRendererParameters, renderedListItems);
+            } finally {
+                this.taskListStack.pop();
+            }
             listItem.children.forEach((childTask) => {
                 renderedListItems.add(childTask);
             });
