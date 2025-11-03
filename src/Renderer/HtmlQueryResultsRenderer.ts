@@ -42,8 +42,7 @@ export class HtmlQueryResultsRenderer {
     // TODO access this via getContent() for now
     public content: HTMLDivElement | null = null;
 
-    // TODO Rename this to ULElementStack
-    private taskListStack: HTMLUListElement[] = [];
+    private ulElementStack: HTMLUListElement[] = [];
 
     constructor(
         renderMarkdown: (
@@ -189,11 +188,11 @@ export class HtmlQueryResultsRenderer {
             const renderedListItems: Set<ListItem> = new Set();
             // TODO re-extract the method to include this back
             const taskList = createAndAppendElement('ul', this.getContent());
-            this.taskListStack.push(taskList);
+            this.ulElementStack.push(taskList);
             try {
                 await this.createTaskList(group.tasks, queryRendererParameters, renderedListItems);
             } finally {
-                this.taskListStack.pop();
+                this.ulElementStack.pop();
             }
         }
     }
@@ -302,11 +301,11 @@ export class HtmlQueryResultsRenderer {
         if (listItem.children.length > 0) {
             // TODO re-extract the method to include this back
             const taskList1 = createAndAppendElement('ul', listItemElement);
-            this.taskListStack.push(taskList1);
+            this.ulElementStack.push(taskList1);
             try {
                 await this.createTaskList(listItem.children, queryRendererParameters, renderedListItems);
             } finally {
-                this.taskListStack.pop();
+                this.ulElementStack.pop();
             }
             listItem.children.forEach((childTask) => {
                 renderedListItems.add(childTask);
@@ -539,6 +538,6 @@ export class HtmlQueryResultsRenderer {
     }
 
     private currentULElement(): HTMLUListElement {
-        return this.taskListStack[this.taskListStack.length - 1];
+        return this.ulElementStack[this.ulElementStack.length - 1];
     }
 }
