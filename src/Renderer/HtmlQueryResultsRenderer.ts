@@ -343,7 +343,7 @@ export class HtmlQueryResultsRenderer {
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         listItemIndex: number,
-        children: any,
+        children: ListItem[],
         queryRendererParameters: QueryRendererParameters,
         renderedListItems: Set<ListItem>,
     ): Promise<void> {
