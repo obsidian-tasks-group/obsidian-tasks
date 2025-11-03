@@ -229,7 +229,7 @@ export class HtmlQueryResultsRenderer {
                  *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
                  */
                 if (listItem instanceof Task) {
-                    await this.addTask(taskList, taskLineRenderer, listItem, listItemIndex, queryRendererParameters);
+                    await this.addTask(taskLineRenderer, listItem, listItemIndex, queryRendererParameters);
                 }
             } else {
                 /* New-style rendering of tasks:
@@ -243,7 +243,6 @@ export class HtmlQueryResultsRenderer {
                  *      - Child tasks (and list items) are shown in their original order in their Markdown file.
                  */
                 await this.addTaskOrListItemAndChildren(
-                    taskList,
                     taskLineRenderer,
                     listItem,
                     listItemIndex,
@@ -277,7 +276,6 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async addTaskOrListItemAndChildren(
-        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         taskIndex: number,
@@ -294,7 +292,6 @@ export class HtmlQueryResultsRenderer {
         }
 
         const listItemElement = await this.addTaskOrListItem(
-            taskList,
             taskLineRenderer,
             listItem,
             taskIndex,
@@ -319,32 +316,25 @@ export class HtmlQueryResultsRenderer {
 
     // TODO make this return Promise<void>
     private async addTaskOrListItem(
-        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
     ) {
         if (listItem instanceof Task) {
-            return await this.addTask(taskList, taskLineRenderer, listItem, taskIndex, queryRendererParameters);
+            return await this.addTask(taskLineRenderer, listItem, taskIndex, queryRendererParameters);
         }
 
-        return await this.addListItem(taskList, taskLineRenderer, listItem, taskIndex);
+        return await this.addListItem(taskLineRenderer, listItem, taskIndex);
     }
 
     // TODO make this return Promise<void>
-    private async addListItem(
-        _taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
-        taskLineRenderer: TaskLineRenderer,
-        listItem: ListItem,
-        listItemIndex: number,
-    ) {
+    private async addListItem(taskLineRenderer: TaskLineRenderer, listItem: ListItem, listItemIndex: number) {
         return await taskLineRenderer.renderListItem(this.currentULElement(), listItem, listItemIndex);
     }
 
     // TODO make this return Promise<void>
     private async addTask(
-        _taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         taskLineRenderer: TaskLineRenderer,
         task: Task,
         taskIndex: number,
