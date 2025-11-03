@@ -296,8 +296,6 @@ export class HtmlQueryResultsRenderer {
             taskIndex,
             queryRendererParameters,
         );
-        renderedListItems.add(listItem);
-
         if (listItem.children.length > 0) {
             // TODO re-extract the method to include this back
             const taskList1 = createAndAppendElement('ul', listItemElement);
@@ -307,6 +305,11 @@ export class HtmlQueryResultsRenderer {
             } finally {
                 this.ulElementStack.pop();
             }
+        }
+
+        renderedListItems.add(listItem);
+
+        if (listItem.children.length > 0) {
             listItem.children.forEach((childTask) => {
                 renderedListItems.add(childTask);
             });
