@@ -290,7 +290,7 @@ export class HtmlQueryResultsRenderer {
             return;
         }
 
-        await this.createTaskOrListItem2(
+        await this.createTaskOrListItem(
             taskLineRenderer,
             listItem,
             taskIndex,
@@ -305,7 +305,7 @@ export class HtmlQueryResultsRenderer {
         });
     }
 
-    private async createTaskOrListItem2(
+    private async createTaskOrListItem(
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         taskIndex: number,
