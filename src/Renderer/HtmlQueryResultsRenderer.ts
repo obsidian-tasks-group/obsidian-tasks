@@ -228,7 +228,14 @@ export class HtmlQueryResultsRenderer {
                  *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
                  */
                 if (listItem instanceof Task) {
-                    await this.addTask(taskLineRenderer, listItem, listItemIndex, queryRendererParameters);
+                    await this.addTask(
+                        taskLineRenderer,
+                        listItem,
+                        listItemIndex,
+                        queryRendererParameters,
+                        [],
+                        renderedListItems,
+                    );
                 }
             } else {
                 /* New-style rendering of tasks:
@@ -312,26 +319,48 @@ export class HtmlQueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
         renderedListItems: Set<ListItem>,
     ): Promise<void> {
-        const listItemElement =
-            listItem instanceof Task
-                ? await this.addTask(taskLineRenderer, listItem, taskIndex, queryRendererParameters)
-                : await this.addListItem(taskLineRenderer, listItem, taskIndex);
+        listItem instanceof Task
+            ? await this.addTask(
+                  taskLineRenderer,
+                  listItem,
+                  taskIndex,
+                  queryRendererParameters,
+                  listItem.children,
+                  renderedListItems,
+              )
+            : await this.addListItem(
+                  taskLineRenderer,
+                  listItem,
+                  taskIndex,
+                  listItem.children,
+                  queryRendererParameters,
+                  renderedListItems,
+              );
+    }
 
-        if (listItem.children.length > 0) {
+    // TODO make this return Promise<void>
+    private async addListItem(
+        taskLineRenderer: TaskLineRenderer,
+        listItem: ListItem,
+        listItemIndex: number,
+        children: any,
+        queryRendererParameters: QueryRendererParameters,
+        renderedListItems: Set<ListItem>,
+    ) {
+        const listItemElement = await taskLineRenderer.renderListItem(this.currentULElement(), listItem, listItemIndex);
+
+        if (children.length > 0) {
             // TODO re-extract the method to include this back
             const taskList1 = createAndAppendElement('ul', listItemElement);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(listItem.children, queryRendererParameters, renderedListItems);
+                await this.createTaskList(children, queryRendererParameters, renderedListItems);
             } finally {
                 this.ulElementStack.pop();
             }
         }
-    }
 
-    // TODO make this return Promise<void>
-    private async addListItem(taskLineRenderer: TaskLineRenderer, listItem: ListItem, listItemIndex: number) {
-        return await taskLineRenderer.renderListItem(this.currentULElement(), listItem, listItemIndex);
+        return listItemElement;
     }
 
     // TODO make this return Promise<void>
@@ -340,6 +369,8 @@ export class HtmlQueryResultsRenderer {
         task: Task,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
+        children: ListItem[],
+        renderedListItems: Set<ListItem>,
     ) {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
         const listItem = await taskLineRenderer.renderTaskLine({
@@ -375,6 +406,17 @@ export class HtmlQueryResultsRenderer {
         }
 
         this.currentULElement().appendChild(listItem);
+
+        if (children.length > 0) {
+            // TODO re-extract the method to include this back
+            const taskList1 = createAndAppendElement('ul', listItem);
+            this.ulElementStack.push(taskList1);
+            try {
+                await this.createTaskList(children, queryRendererParameters, renderedListItems);
+            } finally {
+                this.ulElementStack.pop();
+            }
+        }
 
         return listItem;
     }
