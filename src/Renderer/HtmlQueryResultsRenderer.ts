@@ -304,7 +304,6 @@ export class HtmlQueryResultsRenderer {
             queryRendererParameters,
             renderedListItems,
         );
-
         renderedListItems.add(listItem);
 
         listItem.children.forEach((childTask) => {
@@ -319,23 +318,25 @@ export class HtmlQueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
         renderedListItems: Set<ListItem>,
     ): Promise<void> {
-        listItem instanceof Task
-            ? await this.addTask(
-                  taskLineRenderer,
-                  listItem,
-                  taskIndex,
-                  queryRendererParameters,
-                  listItem.children,
-                  renderedListItems,
-              )
-            : await this.addListItem(
-                  taskLineRenderer,
-                  listItem,
-                  taskIndex,
-                  listItem.children,
-                  queryRendererParameters,
-                  renderedListItems,
-              );
+        if (listItem instanceof Task) {
+            await this.addTask(
+                taskLineRenderer,
+                listItem,
+                taskIndex,
+                queryRendererParameters,
+                listItem.children,
+                renderedListItems,
+            );
+        } else {
+            await this.addListItem(
+                taskLineRenderer,
+                listItem,
+                taskIndex,
+                listItem.children,
+                queryRendererParameters,
+                renderedListItems,
+            );
+        }
     }
 
     private async addListItem(
