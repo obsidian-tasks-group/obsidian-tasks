@@ -290,22 +290,13 @@ export class HtmlQueryResultsRenderer {
             return;
         }
 
-        const listItemElement = await this.addTaskOrListItem(
+        await this.createTaskOrListItem2(
             taskLineRenderer,
             listItem,
             taskIndex,
             queryRendererParameters,
+            renderedListItems,
         );
-        if (listItem.children.length > 0) {
-            // TODO re-extract the method to include this back
-            const taskList1 = createAndAppendElement('ul', listItemElement);
-            this.ulElementStack.push(taskList1);
-            try {
-                await this.createTaskList(listItem.children, queryRendererParameters, renderedListItems);
-            } finally {
-                this.ulElementStack.pop();
-            }
-        }
 
         renderedListItems.add(listItem);
 
@@ -326,6 +317,31 @@ export class HtmlQueryResultsRenderer {
         }
 
         return await this.addListItem(taskLineRenderer, listItem, taskIndex);
+    }
+
+    private async createTaskOrListItem2(
+        taskLineRenderer: TaskLineRenderer,
+        listItem: ListItem,
+        taskIndex: number,
+        queryRendererParameters: QueryRendererParameters,
+        renderedListItems: Set<ListItem>,
+    ): Promise<void> {
+        const listItemElement = await this.addTaskOrListItem(
+            taskLineRenderer,
+            listItem,
+            taskIndex,
+            queryRendererParameters,
+        );
+        if (listItem.children.length > 0) {
+            // TODO re-extract the method to include this back
+            const taskList1 = createAndAppendElement('ul', listItemElement);
+            this.ulElementStack.push(taskList1);
+            try {
+                await this.createTaskList(listItem.children, queryRendererParameters, renderedListItems);
+            } finally {
+                this.ulElementStack.pop();
+            }
+        }
     }
 
     // TODO make this return Promise<void>
