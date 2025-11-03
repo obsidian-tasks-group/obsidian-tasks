@@ -305,20 +305,6 @@ export class HtmlQueryResultsRenderer {
         });
     }
 
-    // TODO make this return Promise<void>
-    private async addTaskOrListItem(
-        taskLineRenderer: TaskLineRenderer,
-        listItem: ListItem,
-        taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
-        if (listItem instanceof Task) {
-            return await this.addTask(taskLineRenderer, listItem, taskIndex, queryRendererParameters);
-        }
-
-        return await this.addListItem(taskLineRenderer, listItem, taskIndex);
-    }
-
     private async createTaskOrListItem2(
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
@@ -326,12 +312,11 @@ export class HtmlQueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
         renderedListItems: Set<ListItem>,
     ): Promise<void> {
-        const listItemElement = await this.addTaskOrListItem(
-            taskLineRenderer,
-            listItem,
-            taskIndex,
-            queryRendererParameters,
-        );
+        const listItemElement =
+            listItem instanceof Task
+                ? await this.addTask(taskLineRenderer, listItem, taskIndex, queryRendererParameters)
+                : await this.addListItem(taskLineRenderer, listItem, taskIndex);
+
         if (listItem.children.length > 0) {
             // TODO re-extract the method to include this back
             const taskList1 = createAndAppendElement('ul', listItemElement);
