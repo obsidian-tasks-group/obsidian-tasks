@@ -199,11 +199,12 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async createTaskList(
-        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
+        _taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         listItems: ListItem[],
         queryRendererParameters: QueryRendererParameters,
         renderedListItems: Set<ListItem>,
     ): Promise<void> {
+        const taskList = this.currentULElement();
         taskList.classList.add('contains-task-list', 'plugin-tasks-query-result');
         taskList.classList.add(...new TaskLayout(this.getters.query().taskLayoutOptions).generateHiddenClasses());
         taskList.classList.add(...new QueryLayout(this.getters.query().queryLayoutOptions).getHiddenClasses());
