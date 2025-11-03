@@ -344,7 +344,7 @@ export class HtmlQueryResultsRenderer {
 
     // TODO make this return Promise<void>
     private async addTask(
-        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
+        _taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         taskLineRenderer: TaskLineRenderer,
         task: Task,
         taskIndex: number,
@@ -383,7 +383,7 @@ export class HtmlQueryResultsRenderer {
             this.addPostponeButton(extrasSpan, task, shortMode);
         }
 
-        taskList.appendChild(listItem);
+        this.currentULElement().appendChild(listItem);
 
         return listItem;
     }
