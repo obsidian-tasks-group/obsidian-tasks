@@ -338,7 +338,6 @@ export class HtmlQueryResultsRenderer {
               );
     }
 
-    // TODO make this return Promise<void>
     private async addListItem(
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
@@ -346,7 +345,7 @@ export class HtmlQueryResultsRenderer {
         children: any,
         queryRendererParameters: QueryRendererParameters,
         renderedListItems: Set<ListItem>,
-    ) {
+    ): Promise<void> {
         const listItemElement = await taskLineRenderer.renderListItem(this.currentULElement(), listItem, listItemIndex);
 
         if (children.length > 0) {
@@ -359,11 +358,8 @@ export class HtmlQueryResultsRenderer {
                 this.ulElementStack.pop();
             }
         }
-
-        return listItemElement;
     }
 
-    // TODO make this return Promise<void>
     private async addTask(
         taskLineRenderer: TaskLineRenderer,
         task: Task,
@@ -371,7 +367,7 @@ export class HtmlQueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
         children: ListItem[],
         renderedListItems: Set<ListItem>,
-    ) {
+    ): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
         const listItem = await taskLineRenderer.renderTaskLine({
             task,
@@ -417,8 +413,6 @@ export class HtmlQueryResultsRenderer {
                 this.ulElementStack.pop();
             }
         }
-
-        return listItem;
     }
 
     private addEditButton(listItem: HTMLElement, task: Task, queryRendererParameters: QueryRendererParameters) {
