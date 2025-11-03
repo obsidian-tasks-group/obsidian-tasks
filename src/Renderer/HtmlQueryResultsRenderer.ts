@@ -339,8 +339,7 @@ export class HtmlQueryResultsRenderer {
         listItem: ListItem,
         listItemIndex: number,
     ) {
-        const taskList = this.taskListStack[this.taskListStack.length - 1];
-        return await taskLineRenderer.renderListItem(taskList, listItem, listItemIndex);
+        return await taskLineRenderer.renderListItem(this.currentULElement(), listItem, listItemIndex);
     }
 
     // TODO make this return Promise<void>
@@ -547,5 +546,9 @@ export class HtmlQueryResultsRenderer {
             groupingRules.push(group.property);
         }
         return groupingRules.join(',');
+    }
+
+    private currentULElement(): HTMLUListElement {
+        return this.taskListStack[this.taskListStack.length - 1];
     }
 }
