@@ -334,11 +334,12 @@ export class HtmlQueryResultsRenderer {
 
     // TODO make this return Promise<void>
     private async addListItem(
-        taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
+        _taskList: HTMLUListElement, // TODO remove this parameter by introducing local "pointer"
         taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         listItemIndex: number,
     ) {
+        const taskList = this.taskListStack[this.taskListStack.length - 1];
         return await taskLineRenderer.renderListItem(taskList, listItem, listItemIndex);
     }
 
