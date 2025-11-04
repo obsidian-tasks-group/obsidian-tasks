@@ -189,7 +189,7 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 
 describe('Reusing QueryResultsRenderer', () => {
     it('should render the same thing twice', async () => {
-        const renderer = makeQueryResultsRenderer('', new TasksFile('anywhere.md'));
+        const renderer = makeQueryResultsRenderer('show tree', new TasksFile('anywhere.md'));
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
