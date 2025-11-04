@@ -203,9 +203,12 @@ export class HtmlQueryResultsRenderer {
         renderedListItems: Set<ListItem>,
     ): Promise<void> {
         const taskList = this.currentULElement();
-        taskList.classList.add('contains-task-list', 'plugin-tasks-query-result');
-        taskList.classList.add(...new TaskLayout(this.getters.query().taskLayoutOptions).generateHiddenClasses());
-        taskList.classList.add(...new QueryLayout(this.getters.query().queryLayoutOptions).getHiddenClasses());
+        taskList.classList.add(
+            'contains-task-list',
+            'plugin-tasks-query-result',
+            ...new TaskLayout(this.getters.query().taskLayoutOptions).generateHiddenClasses(),
+            ...new QueryLayout(this.getters.query().queryLayoutOptions).getHiddenClasses(),
+        );
 
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
