@@ -55,17 +55,20 @@ async function renderTasks(state: State, renderer: QueryResultsRenderer, allTask
     return container;
 }
 
+function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): void {
+    const taskAsMarkdown = `<!--
+${toMarkdown(allTasks)}
+-->\n\n`;
+
+    const prettyHTML = prettifyHTML(container.outerHTML);
+    verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
+}
+
 describe('QueryResultsRenderer tests', () => {
     async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
         const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
         const container = await renderTasks(state, renderer, allTasks);
-
-        const taskAsMarkdown = `<!--
-${toMarkdown(allTasks)}
--->\n\n`;
-
-        const prettyHTML = prettifyHTML(container.outerHTML);
-        verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
+        verifyRenderedTasks(container, allTasks);
     }
 
     it('loading message', async () => {
