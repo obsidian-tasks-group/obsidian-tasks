@@ -265,13 +265,13 @@ export class HtmlQueryResultsRenderer {
         }
     }
 
-    private willBeRenderedLater(listItem: ListItem, renderedListItems: Set<ListItem>, listItems: ListItem[]) {
+    private willBeRenderedLater(listItem: ListItem, _renderedListItems: Set<ListItem>, listItems: ListItem[]) {
         const closestParentTask = listItem.findClosestParentTask();
         if (!closestParentTask) {
             return false;
         }
 
-        if (!renderedListItems.has(closestParentTask)) {
+        if (!this.renderedListItems.has(closestParentTask)) {
             // This task is a direct or indirect child of another task that we are waiting to draw,
             // so don't draw it yet, it will be done recursively later.
             if (listItems.includes(closestParentTask)) {
