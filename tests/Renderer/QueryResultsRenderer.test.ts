@@ -88,6 +88,11 @@ ${toMarkdown(allTasks)}
         await verifyRenderedTasksHTML(allTasks, 'show urgency\nshort mode');
     });
 
+    it('fully populated task - hidden fields', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks, 'hide scheduled date\nhide priority');
+    });
+
     const showTree = 'show tree\n';
     const hideTree = 'hide tree\n';
 
