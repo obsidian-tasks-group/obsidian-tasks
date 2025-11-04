@@ -202,7 +202,7 @@ export class HtmlQueryResultsRenderer {
     private async createTaskList(
         listItems: ListItem[],
         queryRendererParameters: QueryRendererParameters,
-        renderedListItems: Set<ListItem>,
+        _renderedListItems: Set<ListItem>,
     ): Promise<void> {
         const taskList = this.currentULElement();
         taskList.classList.add(
@@ -239,7 +239,7 @@ export class HtmlQueryResultsRenderer {
                         listItemIndex,
                         queryRendererParameters,
                         [],
-                        renderedListItems,
+                        this.renderedListItems,
                     );
                 }
             } else {
