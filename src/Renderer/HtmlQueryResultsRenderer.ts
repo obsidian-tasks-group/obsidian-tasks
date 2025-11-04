@@ -217,7 +217,6 @@ export class HtmlQueryResultsRenderer {
             textRenderer: this.textRenderer,
             obsidianApp: this.obsidianApp,
             obsidianComponent: this.obsidianComponent,
-            parentUlElement: taskList,
             taskLayoutOptions: this.getters.query().taskLayoutOptions,
             queryLayoutOptions: this.getters.query().queryLayoutOptions,
         });
