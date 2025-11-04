@@ -42,7 +42,7 @@ export class HtmlQueryResultsRenderer {
     // TODO access this via getContent() for now
     public content: HTMLDivElement | null = null;
 
-    private ulElementStack: HTMLUListElement[] = [];
+    private readonly ulElementStack: HTMLUListElement[] = [];
 
     constructor(
         renderMarkdown: (
