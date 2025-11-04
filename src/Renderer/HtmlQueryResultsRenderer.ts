@@ -309,9 +309,9 @@ export class HtmlQueryResultsRenderer {
         );
         renderedListItems.add(listItem);
 
-        listItem.children.forEach((childTask) => {
+        for (const childTask of listItem.children) {
             renderedListItems.add(childTask);
-        });
+        }
     }
 
     private async createTaskOrListItem(
