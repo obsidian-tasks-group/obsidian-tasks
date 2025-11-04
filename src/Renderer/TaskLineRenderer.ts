@@ -133,6 +133,7 @@ export class TaskLineRenderer {
      *
      * @returns an HTML rendered List Item element (LI) for a task.
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
+     * @param parentUlElement HTML element where the task shall be rendered.
      * @param task The task to be rendered.
      * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
      * @param isTaskInQueryFile
@@ -141,19 +142,19 @@ export class TaskLineRenderer {
      *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine({
-        parentElement,
+        parentUlElement,
         task,
         taskIndex,
         isTaskInQueryFile,
         isFilenameUnique,
     }: {
-        parentElement: HTMLElement;
+        parentUlElement: HTMLElement;
         task: Task;
         taskIndex: number;
         isTaskInQueryFile: boolean;
         isFilenameUnique?: boolean;
     }): Promise<HTMLLIElement> {
-        const li = createAndAppendElement('li', parentElement);
+        const li = createAndAppendElement('li', parentUlElement);
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
         const textSpan = createAndAppendElement('span', li);

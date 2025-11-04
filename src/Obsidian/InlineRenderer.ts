@@ -139,7 +139,7 @@ export class InlineRenderer {
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const taskIndex: number = Number.parseInt(dataLine, 10);
             const taskElement = await taskLineRenderer.renderTaskLine({
-                parentElement: element,
+                parentUlElement: element,
                 task,
                 taskIndex,
                 isTaskInQueryFile: true,
