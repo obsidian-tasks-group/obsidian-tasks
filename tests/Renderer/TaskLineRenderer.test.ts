@@ -45,7 +45,6 @@ async function renderListItem(
         textRenderer: testRenderer ?? mockTextRenderer,
         obsidianApp: mockApp,
         obsidianComponent: null,
-        parentUlElement: parentUlElement,
         taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
@@ -94,7 +93,6 @@ describe('task line rendering - HTML', () => {
             textRenderer: mockTextRenderer,
             obsidianApp: mockApp,
             obsidianComponent: null,
-            parentUlElement: ulElement,
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });

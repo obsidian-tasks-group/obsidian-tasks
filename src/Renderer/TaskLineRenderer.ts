@@ -68,8 +68,6 @@ export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianApp: App;
     private readonly obsidianComponent: Component | null;
-    // @ts-expect-error parentUlElement unused
-    private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
@@ -96,8 +94,6 @@ export class TaskLineRenderer {
      * @param obsidianComponent One of the parameters needed by `MarkdownRenderer.renderMarkdown()` Obsidian API,
      * that is called by the Obsidian renderer. Set this to null in test code.
      *
-     * @param parentUlElement HTML element where the task shall be rendered.
-     *
      * @param taskLayoutOptions See {@link TaskLayoutOptions}.
      *
      * @param queryLayoutOptions See {@link QueryLayoutOptions}.
@@ -106,21 +102,18 @@ export class TaskLineRenderer {
         textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
         obsidianApp,
         obsidianComponent,
-        parentUlElement,
         taskLayoutOptions,
         queryLayoutOptions,
     }: {
         textRenderer?: TextRenderer;
         obsidianApp: App;
         obsidianComponent: Component | null;
-        parentUlElement: HTMLElement;
         taskLayoutOptions: TaskLayoutOptions;
         queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianApp = obsidianApp;
         this.obsidianComponent = obsidianComponent;
-        this.parentUlElement = parentUlElement;
         this.taskLayoutOptions = taskLayoutOptions;
         this.queryLayoutOptions = queryLayoutOptions;
     }
