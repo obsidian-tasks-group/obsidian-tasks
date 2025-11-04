@@ -144,6 +144,11 @@ group by function 'level4'
         );
     });
 
+    it('should allow a task to be in multiple groups', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks, "group by function ['heading a', 'heading b']");
+    });
+
     it('should indent nested tasks', async () => {
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
