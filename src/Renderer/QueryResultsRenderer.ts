@@ -45,7 +45,7 @@ export class QueryResultsRenderer {
      */
     public readonly source: string;
 
-    private htmlRenderer: HtmlQueryResultsRenderer;
+    private readonly htmlRenderer: HtmlQueryResultsRenderer;
 
     // The path of the file that contains the instruction block, and cached data from that file.
     // This can be updated when the query file's frontmatter is modified.
