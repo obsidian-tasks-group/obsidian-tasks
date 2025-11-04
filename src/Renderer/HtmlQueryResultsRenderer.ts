@@ -259,13 +259,12 @@ export class HtmlQueryResultsRenderer {
                     listItemIndex,
                     queryRendererParameters,
                     listItems,
-                    renderedListItems,
                 );
             }
         }
     }
 
-    private willBeRenderedLater(listItem: ListItem, _renderedListItems: Set<ListItem>, listItems: ListItem[]) {
+    private willBeRenderedLater(listItem: ListItem, listItems: ListItem[]) {
         const closestParentTask = listItem.findClosestParentTask();
         if (!closestParentTask) {
             return false;
@@ -282,7 +281,7 @@ export class HtmlQueryResultsRenderer {
         return false;
     }
 
-    private alreadyRendered(listItem: ListItem, _renderedListItems: Set<ListItem>) {
+    private alreadyRendered(listItem: ListItem) {
         return this.renderedListItems.has(listItem);
     }
 
@@ -292,13 +291,12 @@ export class HtmlQueryResultsRenderer {
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
         listItems: ListItem[],
-        renderedListItems: Set<ListItem>,
     ) {
-        if (this.alreadyRendered(listItem, renderedListItems)) {
+        if (this.alreadyRendered(listItem)) {
             return;
         }
 
-        if (this.willBeRenderedLater(listItem, renderedListItems, listItems)) {
+        if (this.willBeRenderedLater(listItem, listItems)) {
             return;
         }
 
