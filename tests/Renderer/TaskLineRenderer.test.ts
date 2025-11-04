@@ -40,15 +40,21 @@ async function renderListItem(
     queryLayoutOptions?: QueryLayoutOptions,
     testRenderer?: TextRenderer,
 ) {
+    const parentUlElement = document.createElement('div');
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: testRenderer ?? mockTextRenderer,
         obsidianApp: mockApp,
         obsidianComponent: null,
-        parentUlElement: document.createElement('div'),
+        parentUlElement: parentUlElement,
         taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
-    return await taskLineRenderer.renderTaskLine({ task: task, taskIndex: 0, isTaskInQueryFile: true });
+    return await taskLineRenderer.renderTaskLine({
+        parentElement: parentUlElement,
+        task: task,
+        taskIndex: 0,
+        isTaskInQueryFile: true,
+    });
 }
 
 function getTextSpan(listItem: HTMLElement) {
@@ -93,6 +99,7 @@ describe('task line rendering - HTML', () => {
             queryLayoutOptions: new QueryLayoutOptions(),
         });
         const listItem = await taskLineRenderer.renderTaskLine({
+            parentElement: ulElement,
             task: new TaskBuilder().build(),
             taskIndex: 0,
             isTaskInQueryFile: true,

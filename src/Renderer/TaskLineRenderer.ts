@@ -68,6 +68,7 @@ export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianApp: App;
     private readonly obsidianComponent: Component | null;
+    // @ts-expect-error parentUlElement unused
     private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
@@ -140,17 +141,19 @@ export class TaskLineRenderer {
      *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine({
+        parentElement,
         task,
         taskIndex,
         isTaskInQueryFile,
         isFilenameUnique,
     }: {
+        parentElement: HTMLElement;
         task: Task;
         taskIndex: number;
         isTaskInQueryFile: boolean;
         isFilenameUnique?: boolean;
     }): Promise<HTMLLIElement> {
-        const li = createAndAppendElement('li', this.parentUlElement);
+        const li = createAndAppendElement('li', parentElement);
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
         const textSpan = createAndAppendElement('span', li);
