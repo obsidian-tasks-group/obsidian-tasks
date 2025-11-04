@@ -40,7 +40,6 @@ async function renderListItem(
     queryLayoutOptions?: QueryLayoutOptions,
     testRenderer?: TextRenderer,
 ) {
-    const parentUlElement = document.createElement('div');
     const taskLineRenderer = new TaskLineRenderer({
         textRenderer: testRenderer ?? mockTextRenderer,
         obsidianApp: mockApp,
@@ -49,7 +48,7 @@ async function renderListItem(
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     return await taskLineRenderer.renderTaskLine({
-        parentUlElement: parentUlElement,
+        parentUlElement: document.createElement('div'),
         task: task,
         taskIndex: 0,
         isTaskInQueryFile: true,
