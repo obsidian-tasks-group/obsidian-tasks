@@ -188,8 +188,20 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 });
 
 describe('Reusing QueryResultsRenderer', () => {
-    it('should render the same thing twice', async () => {
+    it('should render the same thing twice - tree', async () => {
         const renderer = makeQueryResultsRenderer('show tree', new TasksFile('anywhere.md'));
+        const allTasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+        const container = await renderTasks(State.Warm, renderer, allTasks);
+        verifyRenderedTasks(container, allTasks);
+
+        const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks);
+        verifyRenderedTasks(rerenderedContainer, allTasks);
+    });
+
+    it('should render the same thing twice - flat', async () => {
+        const renderer = makeQueryResultsRenderer('hide tree', new TasksFile('anywhere.md'));
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
