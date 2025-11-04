@@ -282,8 +282,8 @@ export class HtmlQueryResultsRenderer {
         return false;
     }
 
-    private alreadyRendered(listItem: ListItem, renderedListItems: Set<ListItem>) {
-        return renderedListItems.has(listItem);
+    private alreadyRendered(listItem: ListItem, _renderedListItems: Set<ListItem>) {
+        return this.renderedListItems.has(listItem);
     }
 
     private async addTaskOrListItemAndChildren(
