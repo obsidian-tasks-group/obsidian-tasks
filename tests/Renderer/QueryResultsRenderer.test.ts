@@ -41,26 +41,34 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
     );
 }
 
-describe('QueryResultsRenderer tests', () => {
-    async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
-        const queryRendererParameters = {
-            allTasks,
-            allMarkdownFiles: [],
-            backlinksClickHandler: () => Promise.resolve(),
-            backlinksMousedownHandler: () => Promise.resolve(),
-            editTaskPencilClickHandler: () => Promise.resolve(),
-        };
-        const container = document.createElement('div');
+async function renderTasks(state: State, renderer: QueryResultsRenderer, allTasks: Task[]): Promise<HTMLDivElement> {
+    const queryRendererParameters = {
+        allTasks,
+        allMarkdownFiles: [],
+        backlinksClickHandler: () => Promise.resolve(),
+        backlinksMousedownHandler: () => Promise.resolve(),
+        editTaskPencilClickHandler: () => Promise.resolve(),
+    };
+    const container = document.createElement('div');
 
-        await renderer.render(state, allTasks, container, queryRendererParameters);
+    await renderer.render(state, allTasks, container, queryRendererParameters);
+    return container;
+}
 
-        const taskAsMarkdown = `<!--
+function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): void {
+    const taskAsMarkdown = `<!--
 ${toMarkdown(allTasks)}
 -->\n\n`;
 
-        const prettyHTML = prettifyHTML(container.outerHTML);
-        verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
+    const prettyHTML = prettifyHTML(container.outerHTML);
+    verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
+}
+
+describe('QueryResultsRenderer tests', () => {
+    async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
+        const container = await renderTasks(state, renderer, allTasks);
+        verifyRenderedTasks(container, allTasks);
     }
 
     it('loading message', async () => {
@@ -136,6 +144,11 @@ group by function 'level4'
         );
     });
 
+    it('should allow a task to be in multiple groups', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks, "group by function ['heading a', 'heading b']");
+    });
+
     it('should indent nested tasks', async () => {
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
@@ -171,6 +184,32 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 
         // Assert
         expect(renderer.query.explainQuery()).toContain('group by DUE');
+    });
+});
+
+describe('Reusing QueryResultsRenderer', () => {
+    it('should render the same thing twice - tree', async () => {
+        const renderer = makeQueryResultsRenderer('show tree', new TasksFile('anywhere.md'));
+        const allTasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+        const container = await renderTasks(State.Warm, renderer, allTasks);
+        verifyRenderedTasks(container, allTasks);
+
+        const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks);
+        verifyRenderedTasks(rerenderedContainer, allTasks);
+    });
+
+    it('should render the same thing twice - flat', async () => {
+        const renderer = makeQueryResultsRenderer('hide tree', new TasksFile('anywhere.md'));
+        const allTasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+        const container = await renderTasks(State.Warm, renderer, allTasks);
+        verifyRenderedTasks(container, allTasks);
+
+        const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks);
+        verifyRenderedTasks(rerenderedContainer, allTasks);
     });
 });
 
