@@ -42,7 +42,6 @@ export class HtmlQueryResultsRenderer {
     // TODO access this via getContent() for now
     public content: HTMLDivElement | null = null;
 
-    // @ts-expect-error taskLineRenderer is unused
     private taskLineRenderer: TaskLineRenderer | undefined = undefined;
 
     private readonly ulElementStack: HTMLUListElement[] = [];
@@ -344,14 +343,14 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async addTask(
-        taskLineRenderer: TaskLineRenderer,
+        _taskLineRenderer: TaskLineRenderer,
         task: Task,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
         children: ListItem[],
     ): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
-        const listItem = await taskLineRenderer.renderTaskLine({
+        const listItem = await this.taskLineRenderer!.renderTaskLine({
             parentUlElement: this.currentULElement(),
             task,
             taskIndex,
