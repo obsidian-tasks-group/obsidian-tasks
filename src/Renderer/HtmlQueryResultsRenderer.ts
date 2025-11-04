@@ -42,6 +42,9 @@ export class HtmlQueryResultsRenderer {
     // TODO access this via getContent() for now
     public content: HTMLDivElement | null = null;
 
+    // @ts-expect-error taskLineRenderer is unused
+    private taskLineRenderer: TaskLineRenderer | undefined = undefined;
+
     private readonly ulElementStack: HTMLUListElement[] = [];
     private readonly renderedListItems: Set<ListItem> = new Set<ListItem>();
 
@@ -131,6 +134,14 @@ export class HtmlQueryResultsRenderer {
     private async renderSearchResults(queryResult: QueryResult, queryRendererParameters: QueryRendererParameters) {
         const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
         measureRender.start();
+
+        this.taskLineRenderer = new TaskLineRenderer({
+            textRenderer: this.textRenderer,
+            obsidianApp: this.obsidianApp,
+            obsidianComponent: this.obsidianComponent,
+            taskLayoutOptions: this.getters.query().taskLayoutOptions,
+            queryLayoutOptions: this.getters.query().queryLayoutOptions,
+        });
 
         this.addCopyButton(queryResult);
 
