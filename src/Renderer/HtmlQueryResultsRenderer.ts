@@ -79,7 +79,7 @@ export class HtmlQueryResultsRenderer {
         const error = this.getters.query().error;
         if (state === State.Warm && error === undefined) {
             await this.renderQuerySearchResults(tasks, state, queryRendererParameters);
-        } else if (error !== undefined) {
+        } else if (error) {
             this.renderErrorMessage(error);
         } else {
             this.renderLoadingMessage();
