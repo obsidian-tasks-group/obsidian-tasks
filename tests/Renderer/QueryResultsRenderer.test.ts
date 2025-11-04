@@ -41,19 +41,24 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
     );
 }
 
+async function renderTasks(state: State, renderer: QueryResultsRenderer, allTasks: Task[]): Promise<HTMLDivElement> {
+    const queryRendererParameters = {
+        allTasks,
+        allMarkdownFiles: [],
+        backlinksClickHandler: () => Promise.resolve(),
+        backlinksMousedownHandler: () => Promise.resolve(),
+        editTaskPencilClickHandler: () => Promise.resolve(),
+    };
+    const container = document.createElement('div');
+
+    await renderer.render(state, allTasks, container, queryRendererParameters);
+    return container;
+}
+
 describe('QueryResultsRenderer tests', () => {
     async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
         const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
-        const queryRendererParameters = {
-            allTasks,
-            allMarkdownFiles: [],
-            backlinksClickHandler: () => Promise.resolve(),
-            backlinksMousedownHandler: () => Promise.resolve(),
-            editTaskPencilClickHandler: () => Promise.resolve(),
-        };
-        const container = document.createElement('div');
-
-        await renderer.render(state, allTasks, container, queryRendererParameters);
+        const container = await renderTasks(state, renderer, allTasks);
 
         const taskAsMarkdown = `<!--
 ${toMarkdown(allTasks)}
