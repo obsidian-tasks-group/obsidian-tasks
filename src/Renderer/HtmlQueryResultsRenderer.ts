@@ -307,12 +307,12 @@ export class HtmlQueryResultsRenderer {
             listItem,
             taskIndex,
             queryRendererParameters,
-            renderedListItems,
+            this.renderedListItems,
         );
-        renderedListItems.add(listItem);
+        this.renderedListItems.add(listItem);
 
         for (const childTask of listItem.children) {
-            renderedListItems.add(childTask);
+            this.renderedListItems.add(childTask);
         }
     }
 
