@@ -223,15 +223,6 @@ export class HtmlQueryResultsRenderer {
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
-        // @ts-expect-error taskLineRenderer unused
-        const taskLineRenderer = new TaskLineRenderer({
-            textRenderer: this.textRenderer,
-            obsidianApp: this.obsidianApp,
-            obsidianComponent: this.obsidianComponent,
-            taskLayoutOptions: this.getters.query().taskLayoutOptions,
-            queryLayoutOptions: this.getters.query().queryLayoutOptions,
-        });
-
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (this.getters.query().queryLayoutOptions.hideTree) {
                 /* Old-style rendering of tasks:
