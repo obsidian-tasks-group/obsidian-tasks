@@ -342,7 +342,7 @@ export class HtmlQueryResultsRenderer {
     ): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
         const listItem = await taskLineRenderer.renderTaskLine({
-            parentElement: this.currentULElement(),
+            parentUlElement: this.currentULElement(),
             task,
             taskIndex,
             isTaskInQueryFile: this.filePath === task.path,

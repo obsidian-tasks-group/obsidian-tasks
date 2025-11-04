@@ -50,7 +50,7 @@ async function renderListItem(
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     return await taskLineRenderer.renderTaskLine({
-        parentElement: parentUlElement,
+        parentUlElement: parentUlElement,
         task: task,
         taskIndex: 0,
         isTaskInQueryFile: true,
@@ -99,7 +99,7 @@ describe('task line rendering - HTML', () => {
             queryLayoutOptions: new QueryLayoutOptions(),
         });
         const listItem = await taskLineRenderer.renderTaskLine({
-            parentElement: ulElement,
+            parentUlElement: ulElement,
             task: new TaskBuilder().build(),
             taskIndex: 0,
             isTaskInQueryFile: true,
