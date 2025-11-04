@@ -88,6 +88,11 @@ ${toMarkdown(allTasks)}
         await verifyRenderedTasksHTML(allTasks, 'show urgency\nshort mode');
     });
 
+    it('fully populated task - hidden fields', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedTasksHTML(allTasks, 'hide scheduled date\nhide priority');
+    });
+
     const showTree = 'show tree\n';
     const hideTree = 'hide tree\n';
 
@@ -129,6 +134,13 @@ group by function 'level3'
 group by function 'level4'
 `,
         );
+    });
+
+    it('should indent nested tasks', async () => {
+        const allTasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+        await verifyRenderedTasksHTML(allTasks, 'show tree');
     });
 });
 
