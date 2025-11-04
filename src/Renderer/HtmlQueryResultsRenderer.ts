@@ -322,13 +322,17 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async addListItem(
-        taskLineRenderer: TaskLineRenderer,
+        _taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         listItemIndex: number,
         children: ListItem[],
         queryRendererParameters: QueryRendererParameters,
     ): Promise<void> {
-        const listItemElement = await taskLineRenderer.renderListItem(this.currentULElement(), listItem, listItemIndex);
+        const listItemElement = await this.taskLineRenderer!.renderListItem(
+            this.currentULElement(),
+            listItem,
+            listItemIndex,
+        );
 
         if (children.length > 0) {
             // TODO re-extract the method to include this back
