@@ -43,6 +43,7 @@ export class HtmlQueryResultsRenderer {
     public content: HTMLDivElement | null = null;
 
     private readonly ulElementStack: HTMLUListElement[] = [];
+    private readonly renderedListItems: Set<ListItem> = new Set<ListItem>();
 
     constructor(
         renderMarkdown: (
@@ -185,7 +186,8 @@ export class HtmlQueryResultsRenderer {
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(group.groupHeadings);
 
-            const renderedListItems: Set<ListItem> = new Set();
+            this.renderedListItems.clear();
+            const renderedListItems: Set<ListItem> = this.renderedListItems;
             // TODO re-extract the method to include this back
             const taskList = createAndAppendElement('ul', this.getContent());
             this.ulElementStack.push(taskList);
