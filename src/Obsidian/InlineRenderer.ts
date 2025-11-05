@@ -120,7 +120,6 @@ export class InlineRenderer {
         const taskLineRenderer = new TaskLineRenderer({
             obsidianApp: this.app,
             obsidianComponent: childComponent,
-            parentUlElement: element,
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
@@ -139,6 +138,7 @@ export class InlineRenderer {
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const taskIndex: number = Number.parseInt(dataLine, 10);
             const taskElement = await taskLineRenderer.renderTaskLine({
+                parentUlElement: element,
                 task,
                 taskIndex,
                 isTaskInQueryFile: true,

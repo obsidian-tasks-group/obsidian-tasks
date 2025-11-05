@@ -68,7 +68,6 @@ export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianApp: App;
     private readonly obsidianComponent: Component | null;
-    private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
@@ -95,8 +94,6 @@ export class TaskLineRenderer {
      * @param obsidianComponent One of the parameters needed by `MarkdownRenderer.renderMarkdown()` Obsidian API,
      * that is called by the Obsidian renderer. Set this to null in test code.
      *
-     * @param parentUlElement HTML element where the task shall be rendered.
-     *
      * @param taskLayoutOptions See {@link TaskLayoutOptions}.
      *
      * @param queryLayoutOptions See {@link QueryLayoutOptions}.
@@ -105,21 +102,18 @@ export class TaskLineRenderer {
         textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
         obsidianApp,
         obsidianComponent,
-        parentUlElement,
         taskLayoutOptions,
         queryLayoutOptions,
     }: {
         textRenderer?: TextRenderer;
         obsidianApp: App;
         obsidianComponent: Component | null;
-        parentUlElement: HTMLElement;
         taskLayoutOptions: TaskLayoutOptions;
         queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianApp = obsidianApp;
         this.obsidianComponent = obsidianComponent;
-        this.parentUlElement = parentUlElement;
         this.taskLayoutOptions = taskLayoutOptions;
         this.queryLayoutOptions = queryLayoutOptions;
     }
@@ -132,6 +126,7 @@ export class TaskLineRenderer {
      *
      * @returns an HTML rendered List Item element (LI) for a task.
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
+     * @param parentUlElement HTML element where the task shall be rendered.
      * @param task The task to be rendered.
      * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
      * @param isTaskInQueryFile
@@ -140,17 +135,19 @@ export class TaskLineRenderer {
      *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine({
+        parentUlElement,
         task,
         taskIndex,
         isTaskInQueryFile,
         isFilenameUnique,
     }: {
+        parentUlElement: HTMLElement;
         task: Task;
         taskIndex: number;
         isTaskInQueryFile: boolean;
         isFilenameUnique?: boolean;
     }): Promise<HTMLLIElement> {
-        const li = createAndAppendElement('li', this.parentUlElement);
+        const li = createAndAppendElement('li', parentUlElement);
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
         const textSpan = createAndAppendElement('span', li);
