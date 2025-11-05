@@ -70,12 +70,6 @@ export class QueryResultsRenderer {
         obsidianApp: App,
         textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
     ) {
-        this.htmlRenderer = new HtmlQueryResultsRenderer(renderMarkdown, obsidianComponent, obsidianApp, textRenderer, {
-            source: () => this.source,
-            tasksFile: () => this._tasksFile,
-            query: () => this.query,
-        });
-
         this.source = source;
         this._tasksFile = tasksFile;
 
@@ -93,6 +87,12 @@ export class QueryResultsRenderer {
                 this.queryType = 'tasks';
                 break;
         }
+
+        this.htmlRenderer = new HtmlQueryResultsRenderer(renderMarkdown, obsidianComponent, obsidianApp, textRenderer, {
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        });
     }
 
     private makeQueryFromSourceAndTasksFile() {
