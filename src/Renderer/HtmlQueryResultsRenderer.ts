@@ -311,7 +311,7 @@ export class HtmlQueryResultsRenderer {
         children: ListItem[],
         queryRendererParameters: QueryRendererParameters,
     ): Promise<void> {
-        const listItemElement = await this.taskLineRenderer!.renderListItem(
+        const listItemElement = await this.taskLineRenderer.renderListItem(
             this.currentULElement(),
             listItem,
             listItemIndex,
@@ -336,7 +336,7 @@ export class HtmlQueryResultsRenderer {
         children: ListItem[],
     ): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
-        const listItem = await this.taskLineRenderer!.renderTaskLine({
+        const listItem = await this.taskLineRenderer.renderTaskLine({
             parentUlElement: this.currentULElement(),
             task,
             taskIndex,
