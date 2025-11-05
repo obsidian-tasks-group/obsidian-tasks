@@ -43,7 +43,7 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
 
 async function renderTasks(state: State, renderer: QueryResultsRenderer, allTasks: Task[]): Promise<HTMLDivElement> {
     const queryRendererParameters = {
-        allTasks,
+        allTasks: () => allTasks,
         allMarkdownFiles: [],
         backlinksClickHandler: () => Promise.resolve(),
         backlinksMousedownHandler: () => Promise.resolve(),
@@ -246,7 +246,7 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
     async function renderTask(task: Task, queryFilePath: string = 'query.md') {
         const renderer = makeQueryResultsRenderer('', new TasksFile(queryFilePath));
         const queryRendererParameters = {
-            allTasks: [task],
+            allTasks: () => [task],
             allMarkdownFiles: [],
             backlinksClickHandler: () => Promise.resolve(),
             backlinksMousedownHandler: () => Promise.resolve(),
