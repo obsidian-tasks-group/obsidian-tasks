@@ -390,7 +390,7 @@ export class HtmlQueryResultsRenderer {
         editTaskPencil.href = '#';
 
         editTaskPencil.addEventListener('click', (event: MouseEvent) =>
-            queryRendererParameters.editTaskPencilClickHandler(event, task, queryRendererParameters.allTasks),
+            queryRendererParameters.editTaskPencilClickHandler(event, task, queryRendererParameters.allTasks()),
         );
     }
 
