@@ -319,7 +319,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const content = createAndAppendElement('div', this.containerEl);
         await this.queryResultsRenderer.render(state, tasks, content, {
             allTasks: this.plugin.getTasks,
-            allMarkdownFiles: this.app.vault.getMarkdownFiles(),
+            allMarkdownFiles: this.app.vault.getMarkdownFiles,
             backlinksClickHandler: createBacklinksClickHandler(this.app),
             backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
             editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),

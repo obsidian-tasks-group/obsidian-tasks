@@ -335,7 +335,7 @@ export class HtmlQueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
         children: ListItem[],
     ): Promise<void> {
-        const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
+        const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles());
         const listItem = await this.taskLineRenderer.renderTaskLine({
             parentUlElement: this.currentULElement(),
             task,

@@ -20,7 +20,7 @@ export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: T
  */
 export interface QueryRendererParameters {
     allTasks: () => Task[];
-    allMarkdownFiles: TFile[];
+    allMarkdownFiles: () => TFile[];
     backlinksClickHandler: BacklinksEventHandler;
     backlinksMousedownHandler: BacklinksEventHandler;
     editTaskPencilClickHandler: EditButtonClickHandler;
