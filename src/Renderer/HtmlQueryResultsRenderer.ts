@@ -42,6 +42,8 @@ export class HtmlQueryResultsRenderer {
     // TODO access this via getContent() for now
     public content: HTMLDivElement | null = null;
 
+    private readonly taskLineRenderer: TaskLineRenderer;
+
     private readonly ulElementStack: HTMLUListElement[] = [];
     private readonly renderedListItems: Set<ListItem> = new Set<ListItem>();
 
@@ -63,6 +65,14 @@ export class HtmlQueryResultsRenderer {
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
         this.getters = getters;
+
+        this.taskLineRenderer = new TaskLineRenderer({
+            textRenderer: this.textRenderer,
+            obsidianApp: this.obsidianApp,
+            obsidianComponent: this.obsidianComponent,
+            taskLayoutOptions: this.getters.query().taskLayoutOptions,
+            queryLayoutOptions: this.getters.query().queryLayoutOptions,
+        });
     }
 
     public get filePath(): string | undefined {
@@ -213,15 +223,6 @@ export class HtmlQueryResultsRenderer {
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
-        const taskLineRenderer = new TaskLineRenderer({
-            textRenderer: this.textRenderer,
-            obsidianApp: this.obsidianApp,
-            obsidianComponent: this.obsidianComponent,
-            parentUlElement: taskList,
-            taskLayoutOptions: this.getters.query().taskLayoutOptions,
-            queryLayoutOptions: this.getters.query().queryLayoutOptions,
-        });
-
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (this.getters.query().queryLayoutOptions.hideTree) {
                 /* Old-style rendering of tasks:
@@ -231,7 +232,7 @@ export class HtmlQueryResultsRenderer {
                  *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
                  */
                 if (listItem instanceof Task) {
-                    await this.addTask(taskLineRenderer, listItem, listItemIndex, queryRendererParameters, []);
+                    await this.addTask(listItem, listItemIndex, queryRendererParameters, []);
                 }
             } else {
                 /* New-style rendering of tasks:
@@ -244,13 +245,7 @@ export class HtmlQueryResultsRenderer {
                  *        instructions and default sort order.
                  *      - Child tasks (and list items) are shown in their original order in their Markdown file.
                  */
-                await this.addTaskOrListItemAndChildren(
-                    taskLineRenderer,
-                    listItem,
-                    listItemIndex,
-                    queryRendererParameters,
-                    listItems,
-                );
+                await this.addTaskOrListItemAndChildren(listItem, listItemIndex, queryRendererParameters, listItems);
             }
         }
     }
@@ -277,7 +272,6 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async addTaskOrListItemAndChildren(
-        taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
@@ -291,7 +285,7 @@ export class HtmlQueryResultsRenderer {
             return;
         }
 
-        await this.createTaskOrListItem(taskLineRenderer, listItem, taskIndex, queryRendererParameters);
+        await this.createTaskOrListItem(listItem, taskIndex, queryRendererParameters);
         this.renderedListItems.add(listItem);
 
         for (const childTask of listItem.children) {
@@ -300,26 +294,28 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async createTaskOrListItem(
-        taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
     ): Promise<void> {
         if (listItem instanceof Task) {
-            await this.addTask(taskLineRenderer, listItem, taskIndex, queryRendererParameters, listItem.children);
+            await this.addTask(listItem, taskIndex, queryRendererParameters, listItem.children);
         } else {
-            await this.addListItem(taskLineRenderer, listItem, taskIndex, listItem.children, queryRendererParameters);
+            await this.addListItem(listItem, taskIndex, listItem.children, queryRendererParameters);
         }
     }
 
     private async addListItem(
-        taskLineRenderer: TaskLineRenderer,
         listItem: ListItem,
         listItemIndex: number,
         children: ListItem[],
         queryRendererParameters: QueryRendererParameters,
     ): Promise<void> {
-        const listItemElement = await taskLineRenderer.renderListItem(this.currentULElement(), listItem, listItemIndex);
+        const listItemElement = await this.taskLineRenderer.renderListItem(
+            this.currentULElement(),
+            listItem,
+            listItemIndex,
+        );
 
         if (children.length > 0) {
             // TODO re-extract the method to include this back
@@ -334,14 +330,14 @@ export class HtmlQueryResultsRenderer {
     }
 
     private async addTask(
-        taskLineRenderer: TaskLineRenderer,
         task: Task,
         taskIndex: number,
         queryRendererParameters: QueryRendererParameters,
         children: ListItem[],
     ): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
-        const listItem = await taskLineRenderer.renderTaskLine({
+        const listItem = await this.taskLineRenderer.renderTaskLine({
+            parentUlElement: this.currentULElement(),
             task,
             taskIndex,
             isTaskInQueryFile: this.filePath === task.path,
