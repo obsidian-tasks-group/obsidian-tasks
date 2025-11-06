@@ -94,12 +94,12 @@ export class QueryResultsRenderer {
             obsidianComponent,
             obsidianApp,
             textRenderer,
+            queryRendererParameters,
             {
                 source: () => this.source,
                 tasksFile: () => this._tasksFile,
                 query: () => this.query,
             },
-            queryRendererParameters,
         );
     }
 
