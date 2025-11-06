@@ -259,7 +259,11 @@ export class HtmlQueryResultsRenderer {
                 continue;
             }
 
-            await this.createTaskOrListItem(listItem, listItemIndex);
+            if (listItem instanceof Task) {
+                await this.addTask(listItem, listItemIndex, listItem.children);
+            } else {
+                await this.addListItem(listItem, listItemIndex, listItem.children);
+            }
             this.renderedListItems.add(listItem);
 
             for (const childTask of listItem.children) {
@@ -287,14 +291,6 @@ export class HtmlQueryResultsRenderer {
 
     private alreadyRendered(listItem: ListItem) {
         return this.renderedListItems.has(listItem);
-    }
-
-    private async createTaskOrListItem(listItem: ListItem, taskIndex: number): Promise<void> {
-        if (listItem instanceof Task) {
-            await this.addTask(listItem, taskIndex, listItem.children);
-        } else {
-            await this.addListItem(listItem, taskIndex, listItem.children);
-        }
     }
 
     private async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
