@@ -52,13 +52,7 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
 }
 
 async function renderTasks(state: State, renderer: QueryResultsRenderer, allTasks: Task[]): Promise<HTMLDivElement> {
-    const queryRendererParameters = {
-        allTasks: () => allTasks,
-        allMarkdownFiles: () => [],
-        backlinksClickHandler: () => Promise.resolve(),
-        backlinksMousedownHandler: () => Promise.resolve(),
-        editTaskPencilClickHandler: () => Promise.resolve(),
-    };
+    const queryRendererParameters = makeQueryRendererParameters(allTasks);
     const container = document.createElement('div');
 
     await renderer.render(state, allTasks, container, queryRendererParameters);
