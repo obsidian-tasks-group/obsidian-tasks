@@ -305,16 +305,11 @@ export class HtmlQueryResultsRenderer {
         if (listItem instanceof Task) {
             await this.addTask(listItem, taskIndex, queryRendererParameters, listItem.children);
         } else {
-            await this.addListItem(listItem, taskIndex, listItem.children, queryRendererParameters);
+            await this.addListItem(listItem, taskIndex, listItem.children);
         }
     }
 
-    private async addListItem(
-        listItem: ListItem,
-        listItemIndex: number,
-        children: ListItem[],
-        _queryRendererParameters: QueryRendererParameters,
-    ): Promise<void> {
+    private async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
         const listItemElement = await this.taskLineRenderer.renderListItem(
             this.currentULElement(),
             listItem,
@@ -362,11 +357,11 @@ export class HtmlQueryResultsRenderer {
         const shortMode = this.getters.query().queryLayoutOptions.shortMode;
 
         if (!this.getters.query().queryLayoutOptions.hideBacklinks) {
-            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique, queryRendererParameters);
+            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
         }
 
         if (!this.getters.query().queryLayoutOptions.hideEditButton) {
-            this.addEditButton(extrasSpan, task, queryRendererParameters);
+            this.addEditButton(extrasSpan, task);
         }
 
         if (!this.getters.query().queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
@@ -387,7 +382,7 @@ export class HtmlQueryResultsRenderer {
         }
     }
 
-    private addEditButton(listItem: HTMLElement, task: Task, _queryRendererParameters: QueryRendererParameters) {
+    private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = createAndAppendElement('a', listItem);
         editTaskPencil.classList.add('tasks-edit');
         editTaskPencil.title = 'Edit task';
@@ -446,13 +441,7 @@ export class HtmlQueryResultsRenderer {
         );
     }
 
-    private addBacklinks(
-        listItem: HTMLElement,
-        task: Task,
-        shortMode: boolean,
-        isFilenameUnique: boolean | undefined,
-        _queryRendererParameters: QueryRendererParameters,
-    ) {
+    private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
         const backLink = createAndAppendElement('span', listItem);
         backLink.classList.add('tasks-backlink');
 
