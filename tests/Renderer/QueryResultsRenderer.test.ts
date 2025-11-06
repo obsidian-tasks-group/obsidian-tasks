@@ -35,7 +35,7 @@ function makeQueryRendererParameters(allTasks: Task[]): QueryRendererParameters 
         allMarkdownFiles: () => [],
         backlinksClickHandler: () => Promise.resolve(),
         backlinksMousedownHandler: () => Promise.resolve(),
-        editTaskPencilClickHandler: () => Promise.resolve(),
+        editTaskPencilClickHandler: () => {},
     };
 }
 
