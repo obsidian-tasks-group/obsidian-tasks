@@ -300,10 +300,10 @@ export class HtmlQueryResultsRenderer {
     private async createTaskOrListItem(
         listItem: ListItem,
         taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
+        _queryRendererParameters: QueryRendererParameters,
     ): Promise<void> {
         if (listItem instanceof Task) {
-            await this.addTask(listItem, taskIndex, queryRendererParameters, listItem.children);
+            await this.addTask(listItem, taskIndex, this.queryRendererParameters, listItem.children);
         } else {
             await this.addListItem(listItem, taskIndex, listItem.children);
         }
