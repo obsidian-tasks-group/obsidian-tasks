@@ -125,7 +125,7 @@ export class HtmlQueryResultsRenderer {
         this.getters.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
         if (this.getters.query().queryLayoutOptions.explainQuery) {
-            this.createExplanation();
+            this.renderExplanation();
         }
 
         const queryResult = this.getters.query().applyQueryToTasks(tasks);
@@ -160,7 +160,7 @@ export class HtmlQueryResultsRenderer {
     }
 
     // Use the 'explain' instruction to enable this
-    private createExplanation() {
+    private renderExplanation() {
         const explanationAsString = explainResults(
             this.getters.source(),
             GlobalFilter.getInstance(),
