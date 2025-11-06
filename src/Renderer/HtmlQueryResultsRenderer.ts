@@ -313,7 +313,7 @@ export class HtmlQueryResultsRenderer {
         listItem: ListItem,
         listItemIndex: number,
         children: ListItem[],
-        queryRendererParameters: QueryRendererParameters,
+        _queryRendererParameters: QueryRendererParameters,
     ): Promise<void> {
         const listItemElement = await this.taskLineRenderer.renderListItem(
             this.currentULElement(),
@@ -326,7 +326,7 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItemElement);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(children, queryRendererParameters);
+                await this.createTaskList(children, this.queryRendererParameters);
             } finally {
                 this.ulElementStack.pop();
             }
