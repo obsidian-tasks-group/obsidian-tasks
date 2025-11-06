@@ -138,12 +138,7 @@ export class QueryResultsRenderer {
         return this.tasksFile.path;
     }
 
-    public async render(
-        state: State | State.Warm,
-        tasks: Task[],
-        content: HTMLDivElement,
-        _queryRendererParameters: QueryRendererParameters,
-    ) {
+    public async render(state: State | State.Warm, tasks: Task[], content: HTMLDivElement) {
         this.htmlRenderer.content = content;
         await this.htmlRenderer.renderQuery(state, tasks);
         this.htmlRenderer.content = null;
