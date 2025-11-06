@@ -83,17 +83,13 @@ export class HtmlQueryResultsRenderer {
         return this.getters.tasksFile().path;
     }
 
-    public async renderQuery(
-        state: State | State.Warm,
-        tasks: Task[],
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    public async renderQuery(state: State | State.Warm, tasks: Task[]) {
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
         const error = this.getters.query().error;
         if (state === State.Warm && error === undefined) {
-            await this.renderQuerySearchResults(tasks, state, queryRendererParameters);
+            await this.renderQuerySearchResults(tasks, state);
         } else if (error) {
             this.renderErrorMessage(error);
         } else {
@@ -110,11 +106,7 @@ export class HtmlQueryResultsRenderer {
         return content;
     }
 
-    private async renderQuerySearchResults(
-        tasks: Task[],
-        state: State.Warm,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    private async renderQuerySearchResults(tasks: Task[], state: State.Warm) {
         const queryResult = this.explainAndPerformSearch(state, tasks);
 
         if (queryResult.searchErrorMessage !== undefined) {
@@ -123,7 +115,7 @@ export class HtmlQueryResultsRenderer {
             return;
         }
 
-        await this.renderSearchResults(queryResult, queryRendererParameters);
+        await this.renderSearchResults(queryResult);
     }
 
     private explainAndPerformSearch(state: State.Warm, tasks: Task[]) {
@@ -142,13 +134,13 @@ export class HtmlQueryResultsRenderer {
         return queryResult;
     }
 
-    private async renderSearchResults(queryResult: QueryResult, queryRendererParameters: QueryRendererParameters) {
+    private async renderSearchResults(queryResult: QueryResult) {
         const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
         measureRender.start();
 
         this.addCopyButton(queryResult);
 
-        await this.addAllTaskGroups(queryResult.taskGroups, queryRendererParameters);
+        await this.addAllTaskGroups(queryResult.taskGroups);
 
         const totalTasksCount = queryResult.totalTasksCount;
         this.addTaskCount(queryResult);
@@ -191,10 +183,7 @@ export class HtmlQueryResultsRenderer {
         });
     }
 
-    private async addAllTaskGroups(
-        tasksSortedLimitedGrouped: TaskGroups,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         for (const group of tasksSortedLimitedGrouped.groups) {
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
@@ -205,17 +194,14 @@ export class HtmlQueryResultsRenderer {
             const taskList = createAndAppendElement('ul', this.getContent());
             this.ulElementStack.push(taskList);
             try {
-                await this.createTaskList(group.tasks, queryRendererParameters);
+                await this.createTaskList(group.tasks);
             } finally {
                 this.ulElementStack.pop();
             }
         }
     }
 
-    private async createTaskList(
-        listItems: ListItem[],
-        queryRendererParameters: QueryRendererParameters,
-    ): Promise<void> {
+    private async createTaskList(listItems: ListItem[]): Promise<void> {
         const taskList = this.currentULElement();
         taskList.classList.add(
             'contains-task-list',
@@ -236,7 +222,7 @@ export class HtmlQueryResultsRenderer {
                  *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
                  */
                 if (listItem instanceof Task) {
-                    await this.addTask(listItem, listItemIndex, queryRendererParameters, []);
+                    await this.addTask(listItem, listItemIndex, []);
                 }
             } else {
                 /* New-style rendering of tasks:
@@ -294,7 +280,7 @@ export class HtmlQueryResultsRenderer {
 
     private async createTaskOrListItem(listItem: ListItem, taskIndex: number): Promise<void> {
         if (listItem instanceof Task) {
-            await this.addTask(listItem, taskIndex, this.queryRendererParameters, listItem.children);
+            await this.addTask(listItem, taskIndex, listItem.children);
         } else {
             await this.addListItem(listItem, taskIndex, listItem.children);
         }
@@ -312,19 +298,14 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItemElement);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(children, this.queryRendererParameters);
+                await this.createTaskList(children);
             } finally {
                 this.ulElementStack.pop();
             }
         }
     }
 
-    private async addTask(
-        task: Task,
-        taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
-        children: ListItem[],
-    ): Promise<void> {
+    private async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const listItem = await this.taskLineRenderer.renderTaskLine({
             parentUlElement: this.currentULElement(),
@@ -366,7 +347,7 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItem);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(children, queryRendererParameters);
+                await this.createTaskList(children);
             } finally {
                 this.ulElementStack.pop();
             }

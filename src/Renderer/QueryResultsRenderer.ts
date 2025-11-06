@@ -142,10 +142,10 @@ export class QueryResultsRenderer {
         state: State | State.Warm,
         tasks: Task[],
         content: HTMLDivElement,
-        queryRendererParameters: QueryRendererParameters,
+        _queryRendererParameters: QueryRendererParameters,
     ) {
         this.htmlRenderer.content = content;
-        await this.htmlRenderer.renderQuery(state, tasks, queryRendererParameters);
+        await this.htmlRenderer.renderQuery(state, tasks);
         this.htmlRenderer.content = null;
     }
 }
