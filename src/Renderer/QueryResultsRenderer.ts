@@ -6,7 +6,7 @@ import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
-import { TaskLineRenderer, type TextRenderer } from './TaskLineRenderer';
+import type { TextRenderer } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -19,8 +19,8 @@ export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: T
  * for user interactions, like handling backlinks and editing tasks.
  */
 export interface QueryRendererParameters {
-    allTasks: Task[];
-    allMarkdownFiles: TFile[];
+    allTasks: () => Task[];
+    allMarkdownFiles: () => TFile[];
     backlinksClickHandler: BacklinksEventHandler;
     backlinksMousedownHandler: BacklinksEventHandler;
     editTaskPencilClickHandler: EditButtonClickHandler;
@@ -68,7 +68,8 @@ export class QueryResultsRenderer {
         ) => Promise<void>,
         obsidianComponent: Component | null,
         obsidianApp: App,
-        textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
+        textRenderer: TextRenderer,
+        queryRendererParameters: QueryRendererParameters,
     ) {
         this.source = source;
         this._tasksFile = tasksFile;
@@ -88,11 +89,18 @@ export class QueryResultsRenderer {
                 break;
         }
 
-        this.htmlRenderer = new HtmlQueryResultsRenderer(renderMarkdown, obsidianComponent, obsidianApp, textRenderer, {
-            source: () => this.source,
-            tasksFile: () => this._tasksFile,
-            query: () => this.query,
-        });
+        this.htmlRenderer = new HtmlQueryResultsRenderer(
+            renderMarkdown,
+            obsidianComponent,
+            obsidianApp,
+            textRenderer,
+            queryRendererParameters,
+            {
+                source: () => this.source,
+                tasksFile: () => this._tasksFile,
+                query: () => this.query,
+            },
+        );
     }
 
     private makeQueryFromSourceAndTasksFile() {
@@ -130,14 +138,9 @@ export class QueryResultsRenderer {
         return this.tasksFile.path;
     }
 
-    public async render(
-        state: State | State.Warm,
-        tasks: Task[],
-        content: HTMLDivElement,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    public async render(state: State | State.Warm, tasks: Task[], content: HTMLDivElement) {
         this.htmlRenderer.content = content;
-        await this.htmlRenderer.renderQuery(state, tasks, queryRendererParameters);
+        await this.htmlRenderer.renderQuery(state, tasks);
         this.htmlRenderer.content = null;
     }
 }

@@ -5,7 +5,7 @@ import moment from 'moment';
 import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { State } from '../../src/Obsidian/Cache';
-import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
+import { type QueryRendererParameters, QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -29,7 +29,18 @@ afterEach(() => {
     resetSettings();
 });
 
-function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
+function makeQueryRendererParameters(allTasks: Task[]): QueryRendererParameters {
+    return {
+        allTasks: () => allTasks,
+        allMarkdownFiles: () => [],
+        backlinksClickHandler: () => Promise.resolve(),
+        backlinksMousedownHandler: () => Promise.resolve(),
+        editTaskPencilClickHandler: () => {},
+    };
+}
+
+function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]) {
+    const queryRendererParameters = makeQueryRendererParameters(allTasks);
     return new QueryResultsRenderer(
         'block-language-tasks',
         source,
@@ -38,20 +49,14 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
         null,
         mockApp,
         mockHTMLRenderer,
+        queryRendererParameters,
     );
 }
 
 async function renderTasks(state: State, renderer: QueryResultsRenderer, allTasks: Task[]): Promise<HTMLDivElement> {
-    const queryRendererParameters = {
-        allTasks,
-        allMarkdownFiles: [],
-        backlinksClickHandler: () => Promise.resolve(),
-        backlinksMousedownHandler: () => Promise.resolve(),
-        editTaskPencilClickHandler: () => Promise.resolve(),
-    };
     const container = document.createElement('div');
 
-    await renderer.render(state, allTasks, container, queryRendererParameters);
+    await renderer.render(state, allTasks, container);
     return container;
 }
 
@@ -66,7 +71,7 @@ ${toMarkdown(allTasks)}
 
 describe('QueryResultsRenderer tests', () => {
     async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'));
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'), allTasks);
         const container = await renderTasks(state, renderer, allTasks);
         verifyRenderedTasks(container, allTasks);
     }
@@ -161,7 +166,7 @@ describe('QueryResultsRenderer - responding to file edits', () => {
     it('should update the query when its file path is changed', () => {
         // Arrange
         const source = 'path includes {{query.file.path}}';
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('oldPath.md'));
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('oldPath.md'), []);
         expect(renderer.query.explainQuery()).toContain('path includes oldPath.md');
 
         // Act
@@ -175,7 +180,7 @@ describe('QueryResultsRenderer - responding to file edits', () => {
         // Arrange
         updateSettings({ presets: { CurrentGrouping: 'group by PATH' } });
         const source = 'preset CurrentGrouping';
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('any file.md'));
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('any file.md'), []);
         expect(renderer.query.explainQuery()).toContain('group by PATH');
 
         // Act
@@ -189,10 +194,10 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 
 describe('Reusing QueryResultsRenderer', () => {
     it('should render the same thing twice - tree', async () => {
-        const renderer = makeQueryResultsRenderer('show tree', new TasksFile('anywhere.md'));
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
+        const renderer = makeQueryResultsRenderer('show tree', new TasksFile('anywhere.md'), allTasks);
         const container = await renderTasks(State.Warm, renderer, allTasks);
         verifyRenderedTasks(container, allTasks);
 
@@ -201,10 +206,10 @@ describe('Reusing QueryResultsRenderer', () => {
     });
 
     it('should render the same thing twice - flat', async () => {
-        const renderer = makeQueryResultsRenderer('hide tree', new TasksFile('anywhere.md'));
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
+        const renderer = makeQueryResultsRenderer('hide tree', new TasksFile('anywhere.md'), allTasks);
         const container = await renderTasks(State.Warm, renderer, allTasks);
         verifyRenderedTasks(container, allTasks);
 
@@ -244,17 +249,11 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
     });
 
     async function renderTask(task: Task, queryFilePath: string = 'query.md') {
-        const renderer = makeQueryResultsRenderer('', new TasksFile(queryFilePath));
-        const queryRendererParameters = {
-            allTasks: [task],
-            allMarkdownFiles: [],
-            backlinksClickHandler: () => Promise.resolve(),
-            backlinksMousedownHandler: () => Promise.resolve(),
-            editTaskPencilClickHandler: () => Promise.resolve(),
-        };
+        const allTasks = [task];
+        const renderer = makeQueryResultsRenderer('', new TasksFile(queryFilePath), allTasks);
         const container = document.createElement('div');
 
-        await renderer.render(State.Warm, [task], container, queryRendererParameters);
+        await renderer.render(State.Warm, allTasks, container);
 
         return container.querySelector('.task-description')?.innerHTML ?? '';
     }
