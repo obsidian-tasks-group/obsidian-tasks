@@ -249,7 +249,7 @@ export class HtmlQueryResultsRenderer {
                  *        instructions and default sort order.
                  *      - Child tasks (and list items) are shown in their original order in their Markdown file.
                  */
-                await this.addTaskOrListItemAndChildren(listItem, listItemIndex, queryRendererParameters, listItems);
+                await this.addTaskOrListItemAndChildren(listItem, listItemIndex, listItems);
             }
         }
     }
@@ -275,12 +275,7 @@ export class HtmlQueryResultsRenderer {
         return this.renderedListItems.has(listItem);
     }
 
-    private async addTaskOrListItemAndChildren(
-        listItem: ListItem,
-        taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
-        listItems: ListItem[],
-    ) {
+    private async addTaskOrListItemAndChildren(listItem: ListItem, taskIndex: number, listItems: ListItem[]) {
         if (this.alreadyRendered(listItem)) {
             return;
         }
@@ -289,7 +284,7 @@ export class HtmlQueryResultsRenderer {
             return;
         }
 
-        await this.createTaskOrListItem(listItem, taskIndex, queryRendererParameters);
+        await this.createTaskOrListItem(listItem, taskIndex);
         this.renderedListItems.add(listItem);
 
         for (const childTask of listItem.children) {
@@ -297,11 +292,7 @@ export class HtmlQueryResultsRenderer {
         }
     }
 
-    private async createTaskOrListItem(
-        listItem: ListItem,
-        taskIndex: number,
-        _queryRendererParameters: QueryRendererParameters,
-    ): Promise<void> {
+    private async createTaskOrListItem(listItem: ListItem, taskIndex: number): Promise<void> {
         if (listItem instanceof Task) {
             await this.addTask(listItem, taskIndex, this.queryRendererParameters, listItem.children);
         } else {
