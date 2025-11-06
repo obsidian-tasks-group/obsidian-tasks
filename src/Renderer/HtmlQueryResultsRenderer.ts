@@ -45,7 +45,7 @@ export class HtmlQueryResultsRenderer {
     private readonly taskLineRenderer: TaskLineRenderer;
 
     private readonly ulElementStack: HTMLUListElement[] = [];
-    private readonly renderedListItems: Set<ListItem> = new Set<ListItem>();
+    private readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
@@ -189,7 +189,7 @@ export class HtmlQueryResultsRenderer {
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(group.groupHeadings);
 
-            this.renderedListItems.clear();
+            this.addedListItems.clear();
             // TODO re-extract the method to include this back
             const taskList = createAndAppendElement('ul', this.getContent());
             this.ulElementStack.push(taskList);
@@ -251,11 +251,11 @@ export class HtmlQueryResultsRenderer {
      */
     private async addTreeTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
-            if (this.alreadyRendered(listItem)) {
+            if (this.alreadyAdded(listItem)) {
                 continue;
             }
 
-            if (this.willBeRenderedLater(listItem, listItems)) {
+            if (this.willBeAddedLater(listItem, listItems)) {
                 continue;
             }
 
@@ -264,21 +264,21 @@ export class HtmlQueryResultsRenderer {
             } else {
                 await this.addListItem(listItem, listItemIndex, listItem.children);
             }
-            this.renderedListItems.add(listItem);
+            this.addedListItems.add(listItem);
 
             for (const childTask of listItem.children) {
-                this.renderedListItems.add(childTask);
+                this.addedListItems.add(childTask);
             }
         }
     }
 
-    private willBeRenderedLater(listItem: ListItem, listItems: ListItem[]) {
+    private willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
         const closestParentTask = listItem.findClosestParentTask();
         if (!closestParentTask) {
             return false;
         }
 
-        if (!this.renderedListItems.has(closestParentTask)) {
+        if (!this.addedListItems.has(closestParentTask)) {
             // This task is a direct or indirect child of another task that we are waiting to draw,
             // so don't draw it yet, it will be done recursively later.
             if (listItems.includes(closestParentTask)) {
@@ -289,8 +289,8 @@ export class HtmlQueryResultsRenderer {
         return false;
     }
 
-    private alreadyRendered(listItem: ListItem) {
-        return this.renderedListItems.has(listItem);
+    private alreadyAdded(listItem: ListItem) {
+        return this.addedListItems.has(listItem);
     }
 
     private async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
