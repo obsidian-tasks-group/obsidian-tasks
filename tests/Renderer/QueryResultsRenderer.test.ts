@@ -5,7 +5,7 @@ import moment from 'moment';
 import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { State } from '../../src/Obsidian/Cache';
-import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
+import { type QueryRendererParameters, QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -28,6 +28,16 @@ afterEach(() => {
     GlobalFilter.getInstance().reset();
     resetSettings();
 });
+
+function makeQueryRendererParameters(allTasks: Task[]): QueryRendererParameters {
+    return {
+        allTasks: () => allTasks,
+        allMarkdownFiles: () => [],
+        backlinksClickHandler: () => Promise.resolve(),
+        backlinksMousedownHandler: () => Promise.resolve(),
+        editTaskPencilClickHandler: () => Promise.resolve(),
+    };
+}
 
 function makeQueryResultsRenderer(source: string, tasksFile: TasksFile) {
     return new QueryResultsRenderer(
@@ -244,13 +254,7 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
     });
 
     async function renderTask(task: Task, queryFilePath: string = 'query.md') {
-        const queryRendererParameters = {
-            allTasks: () => [task],
-            allMarkdownFiles: () => [],
-            backlinksClickHandler: () => Promise.resolve(),
-            backlinksMousedownHandler: () => Promise.resolve(),
-            editTaskPencilClickHandler: () => Promise.resolve(),
-        };
+        const queryRendererParameters = makeQueryRendererParameters([task]);
         const renderer = makeQueryResultsRenderer('', new TasksFile(queryFilePath));
         const container = document.createElement('div');
 
