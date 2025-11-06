@@ -46,6 +46,8 @@ export class HtmlQueryResultsRenderer {
 
     private readonly ulElementStack: HTMLUListElement[] = [];
     private readonly renderedListItems: Set<ListItem> = new Set<ListItem>();
+    // @ts-expect-error temp
+    private readonly queryRendererParameters: QueryRendererParameters;
 
     constructor(
         renderMarkdown: (
@@ -59,13 +61,14 @@ export class HtmlQueryResultsRenderer {
         obsidianApp: App,
         textRenderer: TextRenderer,
         getters: QueryResultsRendererGetters,
-        _queryRendererParameters: QueryRendererParameters,
+        queryRendererParameters: QueryRendererParameters,
     ) {
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
         this.getters = getters;
+        this.queryRendererParameters = queryRendererParameters;
 
         this.taskLineRenderer = new TaskLineRenderer({
             textRenderer: this.textRenderer,
