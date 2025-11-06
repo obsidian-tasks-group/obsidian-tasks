@@ -220,11 +220,7 @@ export class HtmlQueryResultsRenderer {
              *  - The order that lines are rendered:
              *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
              */
-            for (const [listItemIndex, listItem] of listItems.entries()) {
-                if (listItem instanceof Task) {
-                    await this.addTask(listItem, listItemIndex, []);
-                }
-            }
+            await this.addFlatTaskList(listItems);
         } else {
             /* New-style rendering of tasks:
              *  - What is rendered:
@@ -236,9 +232,21 @@ export class HtmlQueryResultsRenderer {
              *        instructions and default sort order.
              *      - Child tasks (and list items) are shown in their original order in their Markdown file.
              */
-            for (const [listItemIndex, listItem] of listItems.entries()) {
-                await this.addTaskOrListItemAndChildren(listItem, listItemIndex, listItems);
+            await this.addTreeTaskList(listItems);
+        }
+    }
+
+    private async addFlatTaskList(listItems: ListItem[]): Promise<void> {
+        for (const [listItemIndex, listItem] of listItems.entries()) {
+            if (listItem instanceof Task) {
+                await this.addTask(listItem, listItemIndex, []);
             }
+        }
+    }
+
+    private async addTreeTaskList(listItems: ListItem[]): Promise<void> {
+        for (const [listItemIndex, listItem] of listItems.entries()) {
+            await this.addTaskOrListItemAndChildren(listItem, listItemIndex, listItems);
         }
     }
 
