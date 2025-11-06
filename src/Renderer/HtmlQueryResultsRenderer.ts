@@ -59,6 +59,7 @@ export class HtmlQueryResultsRenderer {
         obsidianApp: App,
         textRenderer: TextRenderer,
         getters: QueryResultsRendererGetters,
+        _queryRendererParameters: QueryRendererParameters,
     ) {
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
