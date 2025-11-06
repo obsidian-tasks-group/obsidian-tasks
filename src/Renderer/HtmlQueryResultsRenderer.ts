@@ -251,7 +251,20 @@ export class HtmlQueryResultsRenderer {
      */
     private async addTreeTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
-            await this.addTaskOrListItemAndChildren(listItem, listItemIndex, listItems);
+            if (this.alreadyRendered(listItem)) {
+                continue;
+            }
+
+            if (this.willBeRenderedLater(listItem, listItems)) {
+                continue;
+            }
+
+            await this.createTaskOrListItem(listItem, listItemIndex);
+            this.renderedListItems.add(listItem);
+
+            for (const childTask of listItem.children) {
+                this.renderedListItems.add(childTask);
+            }
         }
     }
 
@@ -274,23 +287,6 @@ export class HtmlQueryResultsRenderer {
 
     private alreadyRendered(listItem: ListItem) {
         return this.renderedListItems.has(listItem);
-    }
-
-    private async addTaskOrListItemAndChildren(listItem: ListItem, taskIndex: number, listItems: ListItem[]) {
-        if (this.alreadyRendered(listItem)) {
-            return;
-        }
-
-        if (this.willBeRenderedLater(listItem, listItems)) {
-            return;
-        }
-
-        await this.createTaskOrListItem(listItem, taskIndex);
-        this.renderedListItems.add(listItem);
-
-        for (const childTask of listItem.children) {
-            this.renderedListItems.add(childTask);
-        }
     }
 
     private async createTaskOrListItem(listItem: ListItem, taskIndex: number): Promise<void> {
