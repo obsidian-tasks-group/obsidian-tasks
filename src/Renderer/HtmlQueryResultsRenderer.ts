@@ -46,7 +46,7 @@ export class HtmlQueryResultsRenderer {
 
     private readonly ulElementStack: HTMLUListElement[] = [];
     private readonly renderedListItems: Set<ListItem> = new Set<ListItem>();
-    // @ts-expect-error temp
+
     private readonly queryRendererParameters: QueryRendererParameters;
 
     constructor(
@@ -387,14 +387,18 @@ export class HtmlQueryResultsRenderer {
         }
     }
 
-    private addEditButton(listItem: HTMLElement, task: Task, queryRendererParameters: QueryRendererParameters) {
+    private addEditButton(listItem: HTMLElement, task: Task, _queryRendererParameters: QueryRendererParameters) {
         const editTaskPencil = createAndAppendElement('a', listItem);
         editTaskPencil.classList.add('tasks-edit');
         editTaskPencil.title = 'Edit task';
         editTaskPencil.href = '#';
 
         editTaskPencil.addEventListener('click', (event: MouseEvent) =>
-            queryRendererParameters.editTaskPencilClickHandler(event, task, queryRendererParameters.allTasks()),
+            this.queryRendererParameters.editTaskPencilClickHandler(
+                event,
+                task,
+                this.queryRendererParameters.allTasks(),
+            ),
         );
     }
 
