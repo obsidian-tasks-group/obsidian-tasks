@@ -6,7 +6,7 @@ import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
-import { TaskLineRenderer, type TextRenderer } from './TaskLineRenderer';
+import type { TextRenderer } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -68,7 +68,7 @@ export class QueryResultsRenderer {
         ) => Promise<void>,
         obsidianComponent: Component | null,
         obsidianApp: App,
-        textRenderer: TextRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
+        textRenderer: TextRenderer,
     ) {
         this.source = source;
         this._tasksFile = tasksFile;
