@@ -194,14 +194,14 @@ export class HtmlQueryResultsRenderer {
             const taskList = createAndAppendElement('ul', this.getContent());
             this.ulElementStack.push(taskList);
             try {
-                await this.createTaskList(group.tasks);
+                await this.addTaskList(group.tasks);
             } finally {
                 this.ulElementStack.pop();
             }
         }
     }
 
-    private async createTaskList(listItems: ListItem[]): Promise<void> {
+    private async addTaskList(listItems: ListItem[]): Promise<void> {
         const taskList = this.currentULElement();
         taskList.classList.add(
             'contains-task-list',
@@ -298,7 +298,7 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItemElement);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(children);
+                await this.addTaskList(children);
             } finally {
                 this.ulElementStack.pop();
             }
@@ -347,7 +347,7 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItem);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(children);
+                await this.addTaskList(children);
             } finally {
                 this.ulElementStack.pop();
             }
