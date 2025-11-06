@@ -130,6 +130,13 @@ class QueryRenderChild extends MarkdownRenderChild {
             this,
             this.app,
             TaskLineRenderer.obsidianMarkdownRenderer,
+            {
+                allTasks: () => this.plugin.getTasks(),
+                allMarkdownFiles: () => this.app.vault.getMarkdownFiles(),
+                backlinksClickHandler: createBacklinksClickHandler(this.app),
+                backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
+                editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),
+            },
         );
 
         this.queryResultsRenderer.query.debug('[render] QueryRenderChild.constructor() entered');

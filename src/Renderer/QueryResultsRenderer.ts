@@ -69,6 +69,7 @@ export class QueryResultsRenderer {
         obsidianComponent: Component | null,
         obsidianApp: App,
         textRenderer: TextRenderer,
+        _queryRendererParameters: QueryRendererParameters,
     ) {
         this.source = source;
         this._tasksFile = tasksFile;
