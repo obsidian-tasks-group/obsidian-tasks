@@ -214,28 +214,21 @@ export class HtmlQueryResultsRenderer {
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
         if (this.getters.query().queryLayoutOptions.hideTree) {
-            /* Old-style rendering of tasks:
-             *  - What is rendered:
-             *      - Only task lines that match the query are rendered, as a flat list
-             *  - The order that lines are rendered:
-             *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
-             */
             await this.addFlatTaskList(listItems);
         } else {
-            /* New-style rendering of tasks:
-             *  - What is rendered:
-             *      - Task lines that match the query are rendered, as a tree.
-             *      - Currently, all child tasks and list items of the found tasks are shown,
-             *        including any child tasks that did not match the query.
-             *  - The order that lines are rendered:
-             *      - The top-level/outermost tasks are sorted in the order specified in 'sort by'
-             *        instructions and default sort order.
-             *      - Child tasks (and list items) are shown in their original order in their Markdown file.
-             */
             await this.addTreeTaskList(listItems);
         }
     }
 
+    /**
+     * Old-style rendering of tasks:
+     * - What is rendered:
+     *     - Only task lines that match the query are rendered, as a flat list
+     * - The order that lines are rendered:
+     *     - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
+     * @param listItems
+     * @private
+     */
     private async addFlatTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (listItem instanceof Task) {
@@ -244,6 +237,18 @@ export class HtmlQueryResultsRenderer {
         }
     }
 
+    /** New-style rendering of tasks:
+     *  - What is rendered:
+     *      - Task lines that match the query are rendered, as a tree.
+     *      - Currently, all child tasks and list items of the found tasks are shown,
+     *        including any child tasks that did not match the query.
+     *  - The order that lines are rendered:
+     *      - The top-level/outermost tasks are sorted in the order specified in 'sort by'
+     *        instructions and default sort order.
+     *      - Child tasks (and list items) are shown in their original order in their Markdown file.
+     * @param listItems
+     * @private
+     */
     private async addTreeTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
             await this.addTaskOrListItemAndChildren(listItem, listItemIndex, listItems);
