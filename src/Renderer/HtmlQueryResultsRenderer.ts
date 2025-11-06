@@ -47,6 +47,8 @@ export class HtmlQueryResultsRenderer {
     private readonly ulElementStack: HTMLUListElement[] = [];
     private readonly renderedListItems: Set<ListItem> = new Set<ListItem>();
 
+    private readonly queryRendererParameters: QueryRendererParameters;
+
     constructor(
         renderMarkdown: (
             app: App,
@@ -58,6 +60,7 @@ export class HtmlQueryResultsRenderer {
         obsidianComponent: Component | null,
         obsidianApp: App,
         textRenderer: TextRenderer,
+        queryRendererParameters: QueryRendererParameters,
         getters: QueryResultsRendererGetters,
     ) {
         this.renderMarkdown = renderMarkdown;
@@ -65,6 +68,7 @@ export class HtmlQueryResultsRenderer {
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
         this.getters = getters;
+        this.queryRendererParameters = queryRendererParameters;
 
         this.taskLineRenderer = new TaskLineRenderer({
             textRenderer: this.textRenderer,
@@ -79,17 +83,13 @@ export class HtmlQueryResultsRenderer {
         return this.getters.tasksFile().path;
     }
 
-    public async renderQuery(
-        state: State | State.Warm,
-        tasks: Task[],
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    public async renderQuery(state: State | State.Warm, tasks: Task[]) {
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
         const error = this.getters.query().error;
         if (state === State.Warm && error === undefined) {
-            await this.renderQuerySearchResults(tasks, state, queryRendererParameters);
+            await this.renderQuerySearchResults(tasks, state);
         } else if (error) {
             this.renderErrorMessage(error);
         } else {
@@ -106,11 +106,7 @@ export class HtmlQueryResultsRenderer {
         return content;
     }
 
-    private async renderQuerySearchResults(
-        tasks: Task[],
-        state: State.Warm,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    private async renderQuerySearchResults(tasks: Task[], state: State.Warm) {
         const queryResult = this.explainAndPerformSearch(state, tasks);
 
         if (queryResult.searchErrorMessage !== undefined) {
@@ -119,7 +115,7 @@ export class HtmlQueryResultsRenderer {
             return;
         }
 
-        await this.renderSearchResults(queryResult, queryRendererParameters);
+        await this.renderSearchResults(queryResult);
     }
 
     private explainAndPerformSearch(state: State.Warm, tasks: Task[]) {
@@ -138,13 +134,13 @@ export class HtmlQueryResultsRenderer {
         return queryResult;
     }
 
-    private async renderSearchResults(queryResult: QueryResult, queryRendererParameters: QueryRendererParameters) {
+    private async renderSearchResults(queryResult: QueryResult) {
         const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
         measureRender.start();
 
         this.addCopyButton(queryResult);
 
-        await this.addAllTaskGroups(queryResult.taskGroups, queryRendererParameters);
+        await this.addAllTaskGroups(queryResult.taskGroups);
 
         const totalTasksCount = queryResult.totalTasksCount;
         this.addTaskCount(queryResult);
@@ -187,10 +183,7 @@ export class HtmlQueryResultsRenderer {
         });
     }
 
-    private async addAllTaskGroups(
-        tasksSortedLimitedGrouped: TaskGroups,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         for (const group of tasksSortedLimitedGrouped.groups) {
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
@@ -201,17 +194,14 @@ export class HtmlQueryResultsRenderer {
             const taskList = createAndAppendElement('ul', this.getContent());
             this.ulElementStack.push(taskList);
             try {
-                await this.createTaskList(group.tasks, queryRendererParameters);
+                await this.createTaskList(group.tasks);
             } finally {
                 this.ulElementStack.pop();
             }
         }
     }
 
-    private async createTaskList(
-        listItems: ListItem[],
-        queryRendererParameters: QueryRendererParameters,
-    ): Promise<void> {
+    private async createTaskList(listItems: ListItem[]): Promise<void> {
         const taskList = this.currentULElement();
         taskList.classList.add(
             'contains-task-list',
@@ -232,7 +222,7 @@ export class HtmlQueryResultsRenderer {
                  *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
                  */
                 if (listItem instanceof Task) {
-                    await this.addTask(listItem, listItemIndex, queryRendererParameters, []);
+                    await this.addTask(listItem, listItemIndex, []);
                 }
             } else {
                 /* New-style rendering of tasks:
@@ -245,7 +235,7 @@ export class HtmlQueryResultsRenderer {
                  *        instructions and default sort order.
                  *      - Child tasks (and list items) are shown in their original order in their Markdown file.
                  */
-                await this.addTaskOrListItemAndChildren(listItem, listItemIndex, queryRendererParameters, listItems);
+                await this.addTaskOrListItemAndChildren(listItem, listItemIndex, listItems);
             }
         }
     }
@@ -271,12 +261,7 @@ export class HtmlQueryResultsRenderer {
         return this.renderedListItems.has(listItem);
     }
 
-    private async addTaskOrListItemAndChildren(
-        listItem: ListItem,
-        taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
-        listItems: ListItem[],
-    ) {
+    private async addTaskOrListItemAndChildren(listItem: ListItem, taskIndex: number, listItems: ListItem[]) {
         if (this.alreadyRendered(listItem)) {
             return;
         }
@@ -285,7 +270,7 @@ export class HtmlQueryResultsRenderer {
             return;
         }
 
-        await this.createTaskOrListItem(listItem, taskIndex, queryRendererParameters);
+        await this.createTaskOrListItem(listItem, taskIndex);
         this.renderedListItems.add(listItem);
 
         for (const childTask of listItem.children) {
@@ -293,24 +278,15 @@ export class HtmlQueryResultsRenderer {
         }
     }
 
-    private async createTaskOrListItem(
-        listItem: ListItem,
-        taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
-    ): Promise<void> {
+    private async createTaskOrListItem(listItem: ListItem, taskIndex: number): Promise<void> {
         if (listItem instanceof Task) {
-            await this.addTask(listItem, taskIndex, queryRendererParameters, listItem.children);
+            await this.addTask(listItem, taskIndex, listItem.children);
         } else {
-            await this.addListItem(listItem, taskIndex, listItem.children, queryRendererParameters);
+            await this.addListItem(listItem, taskIndex, listItem.children);
         }
     }
 
-    private async addListItem(
-        listItem: ListItem,
-        listItemIndex: number,
-        children: ListItem[],
-        queryRendererParameters: QueryRendererParameters,
-    ): Promise<void> {
+    private async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
         const listItemElement = await this.taskLineRenderer.renderListItem(
             this.currentULElement(),
             listItem,
@@ -322,20 +298,15 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItemElement);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(children, queryRendererParameters);
+                await this.createTaskList(children);
             } finally {
                 this.ulElementStack.pop();
             }
         }
     }
 
-    private async addTask(
-        task: Task,
-        taskIndex: number,
-        queryRendererParameters: QueryRendererParameters,
-        children: ListItem[],
-    ): Promise<void> {
-        const isFilenameUnique = this.isFilenameUnique({ task }, queryRendererParameters.allMarkdownFiles);
+    private async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
+        const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const listItem = await this.taskLineRenderer.renderTaskLine({
             parentUlElement: this.currentULElement(),
             task,
@@ -358,11 +329,11 @@ export class HtmlQueryResultsRenderer {
         const shortMode = this.getters.query().queryLayoutOptions.shortMode;
 
         if (!this.getters.query().queryLayoutOptions.hideBacklinks) {
-            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique, queryRendererParameters);
+            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
         }
 
         if (!this.getters.query().queryLayoutOptions.hideEditButton) {
-            this.addEditButton(extrasSpan, task, queryRendererParameters);
+            this.addEditButton(extrasSpan, task);
         }
 
         if (!this.getters.query().queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
@@ -376,21 +347,25 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItem);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(children, queryRendererParameters);
+                await this.createTaskList(children);
             } finally {
                 this.ulElementStack.pop();
             }
         }
     }
 
-    private addEditButton(listItem: HTMLElement, task: Task, queryRendererParameters: QueryRendererParameters) {
+    private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = createAndAppendElement('a', listItem);
         editTaskPencil.classList.add('tasks-edit');
         editTaskPencil.title = 'Edit task';
         editTaskPencil.href = '#';
 
         editTaskPencil.addEventListener('click', (event: MouseEvent) =>
-            queryRendererParameters.editTaskPencilClickHandler(event, task, queryRendererParameters.allTasks),
+            this.queryRendererParameters.editTaskPencilClickHandler(
+                event,
+                task,
+                this.queryRendererParameters.allTasks(),
+            ),
         );
     }
 
@@ -438,13 +413,7 @@ export class HtmlQueryResultsRenderer {
         );
     }
 
-    private addBacklinks(
-        listItem: HTMLElement,
-        task: Task,
-        shortMode: boolean,
-        isFilenameUnique: boolean | undefined,
-        queryRendererParameters: QueryRendererParameters,
-    ) {
+    private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
         const backLink = createAndAppendElement('span', listItem);
         backLink.classList.add('tasks-backlink');
 
@@ -472,11 +441,11 @@ export class HtmlQueryResultsRenderer {
 
         // Go to the line the task is defined at
         link.addEventListener('click', async (ev: MouseEvent) => {
-            await queryRendererParameters.backlinksClickHandler(ev, task);
+            await this.queryRendererParameters.backlinksClickHandler(ev, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
-            await queryRendererParameters.backlinksMousedownHandler(ev, task);
+            await this.queryRendererParameters.backlinksMousedownHandler(ev, task);
         });
 
         if (!shortMode) {
