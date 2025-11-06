@@ -451,7 +451,7 @@ export class HtmlQueryResultsRenderer {
         task: Task,
         shortMode: boolean,
         isFilenameUnique: boolean | undefined,
-        queryRendererParameters: QueryRendererParameters,
+        _queryRendererParameters: QueryRendererParameters,
     ) {
         const backLink = createAndAppendElement('span', listItem);
         backLink.classList.add('tasks-backlink');
@@ -480,11 +480,11 @@ export class HtmlQueryResultsRenderer {
 
         // Go to the line the task is defined at
         link.addEventListener('click', async (ev: MouseEvent) => {
-            await queryRendererParameters.backlinksClickHandler(ev, task);
+            await this.queryRendererParameters.backlinksClickHandler(ev, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
-            await queryRendererParameters.backlinksMousedownHandler(ev, task);
+            await this.queryRendererParameters.backlinksMousedownHandler(ev, task);
         });
 
         if (!shortMode) {
