@@ -244,7 +244,6 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
     });
 
     async function renderTask(task: Task, queryFilePath: string = 'query.md') {
-        const renderer = makeQueryResultsRenderer('', new TasksFile(queryFilePath));
         const queryRendererParameters = {
             allTasks: () => [task],
             allMarkdownFiles: () => [],
@@ -252,6 +251,7 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
             backlinksMousedownHandler: () => Promise.resolve(),
             editTaskPencilClickHandler: () => Promise.resolve(),
         };
+        const renderer = makeQueryResultsRenderer('', new TasksFile(queryFilePath));
         const container = document.createElement('div');
 
         await renderer.render(State.Warm, [task], container, queryRendererParameters);
