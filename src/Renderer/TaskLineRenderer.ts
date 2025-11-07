@@ -146,7 +146,7 @@ export class TaskLineRenderer {
         taskIndex: number;
         isTaskInQueryFile: boolean;
         isFilenameUnique?: boolean;
-    }): Promise<HTMLLIElement> {
+    }): Promise<void> {
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
         const textSpan = createAndAppendElement('span', li);
@@ -201,8 +201,6 @@ export class TaskLineRenderer {
         if (this.queryLayoutOptions.shortMode) {
             this.addTooltip(task, textSpan, isFilenameUnique);
         }
-
-        return li;
     }
 
     private async taskToHtml(
