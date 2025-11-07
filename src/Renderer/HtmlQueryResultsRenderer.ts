@@ -131,7 +131,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.ulElementStack.pop();
     }
 
-    protected beginTask() {
+    protected beginListItem() {
         const taskList = this.currentULElement();
         const listItemElement = createAndAppendElement('li', taskList);
         this.liElementStack.push(listItemElement);
