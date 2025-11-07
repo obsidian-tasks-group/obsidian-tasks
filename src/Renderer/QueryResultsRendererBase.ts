@@ -1,11 +1,12 @@
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { IQuery } from '../IQuery';
-import type { State } from '../Obsidian/Cache';
+import { State } from '../Obsidian/Cache';
 import type { Task } from '../Task/Task';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { ListItem } from '../Task/ListItem';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
 
 /**
  * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
@@ -26,11 +27,51 @@ export abstract class QueryResultsRendererBase {
         this.getters = getters;
     }
 
-    public abstract renderQuery(state: State | State.Warm, tasks: Task[]): Promise<void>;
+    protected get filePath(): string | undefined {
+        return this.getters.tasksFile().path;
+    }
 
-    protected abstract renderQuerySearchResults(tasks: Task[], state: State.Warm): Promise<void>;
+    public async renderQuery(state: State | State.Warm, tasks: Task[]) {
+        // Don't log anything here, for any state, as it generates huge amounts of
+        // console messages in large vaults, if Obsidian was opened with any
+        // notes with tasks code blocks in Reading or Live Preview mode.
+        const error = this.getters.query().error;
+        if (state === State.Warm && error === undefined) {
+            await this.renderQuerySearchResults(tasks, state);
+        } else if (error) {
+            this.renderErrorMessage(error);
+        } else {
+            this.renderLoadingMessage();
+        }
+    }
 
-    protected abstract explainAndPerformSearch(state: State.Warm, tasks: Task[]): any;
+    private async renderQuerySearchResults(tasks: Task[], state: State.Warm) {
+        const queryResult = this.explainAndPerformSearch(state, tasks);
+
+        if (queryResult.searchErrorMessage !== undefined) {
+            // There was an error in the search, for example due to a problem custom function.
+            this.renderErrorMessage(queryResult.searchErrorMessage);
+            return;
+        }
+
+        await this.renderSearchResults(queryResult);
+    }
+
+    private explainAndPerformSearch(state: State.Warm, tasks: Task[]) {
+        const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
+        measureSearch.start();
+
+        this.getters.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
+
+        if (this.getters.query().queryLayoutOptions.explainQuery) {
+            this.renderExplanation();
+        }
+
+        const queryResult = this.getters.query().applyQueryToTasks(tasks);
+
+        measureSearch.finish();
+        return queryResult;
+    }
 
     protected abstract renderSearchResults(queryResult: QueryResult): Promise<void>;
 
