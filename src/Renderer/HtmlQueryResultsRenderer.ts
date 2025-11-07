@@ -4,7 +4,6 @@ import { GlobalQuery } from '../Config/GlobalQuery';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
-import { PerformanceTracker } from '../lib/PerformanceTracker';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import { explainResults } from '../Query/QueryRendererHelper';
@@ -74,22 +73,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             throw new Error('Must initialize content field before calling renderQuery()');
         }
         return content;
-    }
-
-    protected async renderSearchResults(queryResult: QueryResult) {
-        const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
-        measureRender.start();
-
-        this.renderSearchResultsHeader(queryResult);
-
-        await this.addAllTaskGroups(queryResult.taskGroups);
-
-        const totalTasksCount = queryResult.totalTasksCount;
-        this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
-
-        this.renderSearchResultsFooter(queryResult);
-
-        measureRender.finish();
     }
 
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
