@@ -113,15 +113,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             this.ulElementStack.pop();
         }
     }
-
-    private addULElementToContainer(taskListContainer: HTMLElement) {
-        const taskList1 = createAndAppendElement('ul', taskListContainer);
-        this.ulElementStack.push(taskList1);
-    }
-
     protected beginTaskList(): void {
         const taskListContainer = this.ulElementStack.length > 0 ? this.currentLIElement() : this.getContent();
-        this.addULElementToContainer(taskListContainer);
+        const taskList1 = createAndAppendElement('ul', taskListContainer);
+        this.ulElementStack.push(taskList1);
 
         const taskList = this.currentULElement();
         taskList.classList.add(
