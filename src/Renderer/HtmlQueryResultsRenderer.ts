@@ -107,13 +107,22 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected async addTaskGroup(group: TaskGroup): Promise<void> {
         // TODO re-extract the method to include this back
-        const taskList = createAndAppendElement('ul', this.getContent());
-        this.ulElementStack.push(taskList);
+        this.addULElementToContentAndPush();
         try {
             await this.addTaskList(group.tasks);
         } finally {
             this.ulElementStack.pop();
         }
+    }
+
+    private addULElementToContentAndPush() {
+        const taskList = createAndAppendElement('ul', this.getContent());
+        this.ulElementStack.push(taskList);
+    }
+
+    private addULElementToCurrentLIElementAndPush() {
+        const taskList1 = createAndAppendElement('ul', this.currentLIElement());
+        this.ulElementStack.push(taskList1);
     }
 
     protected beginTaskList(): void {
@@ -189,8 +198,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private async addChildren(children: ListItem[]) {
         if (children.length > 0) {
-            const taskList1 = createAndAppendElement('ul', this.currentLIElement());
-            this.ulElementStack.push(taskList1);
+            this.addULElementToCurrentLIElementAndPush();
             try {
                 await this.addTaskList(children);
             } finally {
