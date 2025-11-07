@@ -196,27 +196,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    protected willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
-        const closestParentTask = listItem.findClosestParentTask();
-        if (!closestParentTask) {
-            return false;
-        }
-
-        if (!this.addedListItems.has(closestParentTask)) {
-            // This task is a direct or indirect child of another task that we are waiting to draw,
-            // so don't draw it yet, it will be done recursively later.
-            if (listItems.includes(closestParentTask)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected alreadyAdded(listItem: ListItem) {
-        return this.addedListItems.has(listItem);
-    }
-
     protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
         const listItemElement = await this.taskLineRenderer.renderListItem(
             this.currentULElement(),

@@ -139,11 +139,28 @@ export abstract class QueryResultsRendererBase {
      */
     protected abstract addTreeTaskList(listItems: ListItem[]): Promise<void>;
 
-    // TODO Remove abstract
-    protected abstract willBeAddedLater(listItem: ListItem, listItems: ListItem[]): boolean;
+    // TODO make private
+    protected willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
+        const closestParentTask = listItem.findClosestParentTask();
+        if (!closestParentTask) {
+            return false;
+        }
 
-    // TODO Remove abstract
-    protected abstract alreadyAdded(listItem: ListItem): boolean;
+        if (!this.addedListItems.has(closestParentTask)) {
+            // This task is a direct or indirect child of another task that we are waiting to draw,
+            // so don't draw it yet, it will be done recursively later.
+            if (listItems.includes(closestParentTask)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // TODO make private
+    protected alreadyAdded(listItem: ListItem) {
+        return this.addedListItems.has(listItem);
+    }
 
     protected abstract addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void>;
 
