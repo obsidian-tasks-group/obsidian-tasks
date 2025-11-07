@@ -125,7 +125,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         );
 
         const groupingAttribute = this.getGroupingAttribute();
-        if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
+        if (groupingAttribute && groupingAttribute.length > 0) {
+            taskList.dataset.taskGroupBy = groupingAttribute;
+        }
 
         if (this.getters.query().queryLayoutOptions.hideTree) {
             await this.addFlatTaskList(listItems);
