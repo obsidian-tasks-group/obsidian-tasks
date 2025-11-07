@@ -1,12 +1,9 @@
 import { type App, type Component, Notice, type TFile } from 'obsidian';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { GlobalQuery } from '../Config/GlobalQuery';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
-import { explainResults } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
@@ -92,18 +89,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.getContent().textContent = 'Loading Tasks ...';
     }
 
-    // Use the 'explain' instruction to enable this
-    protected renderExplanation() {
-        const explanationAsString = explainResults(
-            this.getters.source(),
-            GlobalFilter.getInstance(),
-            GlobalQuery.getInstance(),
-            this.getters.tasksFile(),
-        );
-
+    protected renderExplanation(explanation: string | null) {
         const explanationsBlock = createAndAppendElement('pre', this.getContent());
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
-        explanationsBlock.textContent = explanationAsString;
+        explanationsBlock.textContent = explanation;
     }
 
     private addCopyButton(queryResult: QueryResult) {
