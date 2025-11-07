@@ -115,17 +115,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    protected async addTaskList(listItems: ListItem[]): Promise<void> {
-        this.beginTaskList();
-
-        if (this.getters.query().queryLayoutOptions.hideTree) {
-            await this.addFlatTaskList(listItems);
-        } else {
-            await this.addTreeTaskList(listItems);
-        }
-    }
-
-    private beginTaskList(): void {
+    protected beginTaskList(): void {
         const taskList = this.currentULElement();
         taskList.classList.add(
             'contains-task-list',
