@@ -92,11 +92,11 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         measureRender.finish();
     }
 
-    private renderSearchResultsHeader(queryResult: QueryResult): void {
+    protected renderSearchResultsHeader(queryResult: QueryResult): void {
         this.addCopyButton(queryResult);
     }
 
-    private renderSearchResultsFooter(queryResult: QueryResult): void {
+    protected renderSearchResultsFooter(queryResult: QueryResult): void {
         this.addTaskCount(queryResult);
     }
 
