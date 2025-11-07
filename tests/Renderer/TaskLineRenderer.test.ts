@@ -6,18 +6,17 @@ import moment from 'moment';
 import { DebugSettings } from '../../src/Config/DebugSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { DateParser } from '../../src/DateTime/DateParser';
 import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
-import { DateParser } from '../../src/DateTime/DateParser';
-import { type TextRenderer, createAndAppendElement } from '../../src/Renderer/TaskLineRenderer';
-import { TaskLineRenderer } from '../../src/Renderer/TaskLineRenderer';
+import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from '../../src/Renderer/TaskLineRenderer';
 import type { Task } from '../../src/Task/Task';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { mockApp } from '../__mocks__/obsidian';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
-import { mockApp } from '../__mocks__/obsidian';
 import { mockHTMLRenderer, mockTextRenderer } from './RenderingTestHelpers';
 
 jest.mock('obsidian');
@@ -99,15 +98,13 @@ describe('task line rendering - HTML', () => {
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
-        const li = createAndAppendElement('li', ulElement);
+        const listItem = createAndAppendElement('li', ulElement);
         await taskLineRenderer.renderTaskLine({
-            li: li,
+            li: listItem,
             task: new TaskBuilder().build(),
             taskIndex: 0,
             isTaskInQueryFile: true,
         });
-
-        const listItem = li;
 
         // Just one element
         expect(ulElement.children.length).toEqual(1);
