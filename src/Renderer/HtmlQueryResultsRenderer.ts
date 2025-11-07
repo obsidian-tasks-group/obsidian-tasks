@@ -3,15 +3,15 @@ import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postp
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
+import type { TaskGroup } from '../Query/Group/TaskGroup';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import type { TaskGroup } from '../Query/Group/TaskGroup';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
-import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
+import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     // Renders the description in TaskLineRenderer:
@@ -114,10 +114,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    private addULElementToContentAndPush() {
-        this.addULElementToContainer(this.getContent());
-    }
-
     private addULElementToContainer(taskListContainer: HTMLElement) {
         const taskList1 = createAndAppendElement('ul', taskListContainer);
         this.ulElementStack.push(taskList1);
@@ -127,7 +123,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         if (this.ulElementStack.length > 0) {
             this.addULElementToContainer(this.currentLIElement());
         } else {
-            this.addULElementToContentAndPush();
+            this.addULElementToContainer(this.getContent());
         }
 
         const taskList = this.currentULElement();
