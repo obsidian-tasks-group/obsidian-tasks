@@ -135,19 +135,18 @@ export class TaskLineRenderer {
      *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine({
-        liElement,
+        li,
         task,
         taskIndex,
         isTaskInQueryFile,
         isFilenameUnique,
     }: {
-        liElement: HTMLLIElement;
+        li: HTMLLIElement;
         task: Task;
         taskIndex: number;
         isTaskInQueryFile: boolean;
         isFilenameUnique?: boolean;
     }): Promise<HTMLLIElement> {
-        const li = liElement;
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
         const textSpan = createAndAppendElement('span', li);

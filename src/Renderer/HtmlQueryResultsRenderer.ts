@@ -153,7 +153,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const parentUlElement = this.currentULElement();
         const listItem = await this.taskLineRenderer.renderTaskLine({
-            liElement: createAndAppendElement('li', parentUlElement),
+            li: createAndAppendElement('li', parentUlElement),
             task,
             taskIndex,
             isTaskInQueryFile: this.filePath === task.path,
