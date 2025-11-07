@@ -142,16 +142,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
 
-        if (children.length > 0) {
-            // TODO re-extract the method to include this back
-            const taskList1 = createAndAppendElement('ul', this.currentLIElement());
-            this.ulElementStack.push(taskList1);
-            try {
-                await this.addTaskList(children);
-            } finally {
-                this.ulElementStack.pop();
-            }
-        }
+        await this.addChildren(children);
     }
 
     protected async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
@@ -198,7 +189,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private async addChildren(children: ListItem[]) {
         if (children.length > 0) {
-            // TODO re-extract the method to include this back
             const taskList1 = createAndAppendElement('ul', this.currentLIElement());
             this.ulElementStack.push(taskList1);
             try {
