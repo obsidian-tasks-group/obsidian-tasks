@@ -231,18 +231,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         span.classList.add('tasks-urgency');
     }
 
-    /**
-     * Display headings for a group of tasks.
-     * @param groupHeadings - The headings to display. This can be an empty array,
-     *                        in which case no headings will be added.
-     * @private
-     */
-    protected async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
-        for (const heading of groupHeadings) {
-            await this.addGroupHeading(heading);
-        }
-    }
-
     protected async addGroupHeading(group: GroupDisplayHeading) {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';

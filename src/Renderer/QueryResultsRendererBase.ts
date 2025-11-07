@@ -204,7 +204,12 @@ export abstract class QueryResultsRendererBase {
      *                        in which case no headings will be added.
      * @private
      */
-    protected abstract addGroupHeadings(groupHeadings: GroupDisplayHeading[]): Promise<void>;
+    // TODO make private
+    protected async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
+        for (const heading of groupHeadings) {
+            await this.addGroupHeading(heading);
+        }
+    }
 
     protected abstract addGroupHeading(group: GroupDisplayHeading): Promise<void>;
 }
