@@ -18,6 +18,7 @@ import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+import { QueryResultsRendererBase } from './QueryResultsRendererBase';
 
 /**
  * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
@@ -29,7 +30,7 @@ interface QueryResultsRendererGetters {
     query: () => IQuery;
 }
 
-export class HtmlQueryResultsRenderer {
+export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     // Renders the description in TaskLineRenderer:
     protected readonly textRenderer;
 
@@ -63,6 +64,8 @@ export class HtmlQueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
         getters: QueryResultsRendererGetters,
     ) {
+        super();
+
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
