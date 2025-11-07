@@ -5,7 +5,6 @@ import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postp
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
-import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import { explainResults } from '../Query/QueryRendererHelper';
@@ -68,24 +67,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         });
     }
 
-    public get filePath(): string | undefined {
-        return this.getters.tasksFile().path;
-    }
-
-    public async renderQuery(state: State | State.Warm, tasks: Task[]) {
-        // Don't log anything here, for any state, as it generates huge amounts of
-        // console messages in large vaults, if Obsidian was opened with any
-        // notes with tasks code blocks in Reading or Live Preview mode.
-        const error = this.getters.query().error;
-        if (state === State.Warm && error === undefined) {
-            await this.renderQuerySearchResults(tasks, state);
-        } else if (error) {
-            this.renderErrorMessage(error);
-        } else {
-            this.renderLoadingMessage();
-        }
-    }
-
     private getContent() {
         // TODO remove throw
         const content = this.content;
@@ -93,34 +74,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             throw new Error('Must initialize content field before calling renderQuery()');
         }
         return content;
-    }
-
-    protected async renderQuerySearchResults(tasks: Task[], state: State.Warm) {
-        const queryResult = this.explainAndPerformSearch(state, tasks);
-
-        if (queryResult.searchErrorMessage !== undefined) {
-            // There was an error in the search, for example due to a problem custom function.
-            this.renderErrorMessage(queryResult.searchErrorMessage);
-            return;
-        }
-
-        await this.renderSearchResults(queryResult);
-    }
-
-    protected explainAndPerformSearch(state: State.Warm, tasks: Task[]) {
-        const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
-        measureSearch.start();
-
-        this.getters.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
-
-        if (this.getters.query().queryLayoutOptions.explainQuery) {
-            this.renderExplanation();
-        }
-
-        const queryResult = this.getters.query().applyQueryToTasks(tasks);
-
-        measureSearch.finish();
-        return queryResult;
     }
 
     protected async renderSearchResults(queryResult: QueryResult) {
