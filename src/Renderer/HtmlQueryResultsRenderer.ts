@@ -6,7 +6,7 @@ import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
-import { Task } from '../Task/Task';
+import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
@@ -138,61 +138,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             await this.addFlatTaskList(listItems);
         } else {
             await this.addTreeTaskList(listItems);
-        }
-    }
-
-    /**
-     * Old-style rendering of tasks:
-     * - What is rendered:
-     *     - Only task lines that match the query are rendered, as a flat list
-     * - The order that lines are rendered:
-     *     - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
-     * @param listItems
-     * @private
-     */
-    protected async addFlatTaskList(listItems: ListItem[]): Promise<void> {
-        for (const [listItemIndex, listItem] of listItems.entries()) {
-            if (listItem instanceof Task) {
-                await this.addTask(listItem, listItemIndex, []);
-            }
-        }
-    }
-
-    /** New-style rendering of tasks:
-     *  - What is rendered:
-     *      - Task lines that match the query are rendered, as a tree.
-     *      - Currently, all child tasks and list items of the found tasks are shown,
-     *        including any child tasks that did not match the query.
-     *  - The order that lines are rendered:
-     *      - The top-level/outermost tasks are sorted in the order specified in 'sort by'
-     *        instructions and default sort order.
-     *      - Child tasks (and list items) are shown in their original order in their Markdown file.
-     * @param listItems
-     * @private
-     */
-    protected async addTreeTaskList(listItems: ListItem[]): Promise<void> {
-        for (const [listItemIndex, listItem] of listItems.entries()) {
-            if (this.alreadyAdded(listItem)) {
-                continue;
-            }
-
-            if (this.willBeAddedLater(listItem, listItems)) {
-                continue;
-            }
-
-            if (listItem instanceof Task) {
-                await this.addTask(listItem, listItemIndex, listItem.children);
-            } else {
-                await this.addListItem(listItem, listItemIndex, listItem.children);
-            }
-
-            // The children of this item will be added thanks to recursion and the fact that we always render all children currently
-            this.addedListItems.add(listItem);
-
-            // We think this code may be needed in future, we have been unable to write a failing test for it
-            // for (const childTask of listItem.children) {
-            //     this.addedListItems.add(childTask);
-            // }
         }
     }
 

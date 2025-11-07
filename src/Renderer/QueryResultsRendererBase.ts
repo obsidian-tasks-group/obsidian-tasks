@@ -1,7 +1,7 @@
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { IQuery } from '../IQuery';
 import { State } from '../Obsidian/Cache';
-import type { Task } from '../Task/Task';
+import { Task } from '../Task/Task';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { ListItem } from '../Task/ListItem';
@@ -123,7 +123,14 @@ export abstract class QueryResultsRendererBase {
      * @param listItems
      * @private
      */
-    protected abstract addFlatTaskList(listItems: ListItem[]): Promise<void>;
+    // TODO make private
+    protected async addFlatTaskList(listItems: ListItem[]): Promise<void> {
+        for (const [listItemIndex, listItem] of listItems.entries()) {
+            if (listItem instanceof Task) {
+                await this.addTask(listItem, listItemIndex, []);
+            }
+        }
+    }
 
     /** New-style rendering of tasks:
      *  - What is rendered:
@@ -137,7 +144,32 @@ export abstract class QueryResultsRendererBase {
      * @param listItems
      * @private
      */
-    protected abstract addTreeTaskList(listItems: ListItem[]): Promise<void>;
+    // TODO make private
+    protected async addTreeTaskList(listItems: ListItem[]): Promise<void> {
+        for (const [listItemIndex, listItem] of listItems.entries()) {
+            if (this.alreadyAdded(listItem)) {
+                continue;
+            }
+
+            if (this.willBeAddedLater(listItem, listItems)) {
+                continue;
+            }
+
+            if (listItem instanceof Task) {
+                await this.addTask(listItem, listItemIndex, listItem.children);
+            } else {
+                await this.addListItem(listItem, listItemIndex, listItem.children);
+            }
+
+            // The children of this item will be added thanks to recursion and the fact that we always render all children currently
+            this.addedListItems.add(listItem);
+
+            // We think this code may be needed in future, we have been unable to write a failing test for it
+            // for (const childTask of listItem.children) {
+            //     this.addedListItems.add(childTask);
+            // }
+        }
+    }
 
     // TODO make private
     protected willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
