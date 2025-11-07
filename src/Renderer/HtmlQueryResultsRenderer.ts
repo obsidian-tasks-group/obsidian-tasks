@@ -45,7 +45,7 @@ export class HtmlQueryResultsRenderer {
     private readonly taskLineRenderer: TaskLineRenderer;
 
     private readonly ulElementStack: HTMLUListElement[] = [];
-    private readonly renderedListItems: Set<ListItem> = new Set<ListItem>();
+    private readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
@@ -125,7 +125,7 @@ export class HtmlQueryResultsRenderer {
         this.getters.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
         if (this.getters.query().queryLayoutOptions.explainQuery) {
-            this.createExplanation();
+            this.renderExplanation();
         }
 
         const queryResult = this.getters.query().applyQueryToTasks(tasks);
@@ -160,7 +160,7 @@ export class HtmlQueryResultsRenderer {
     }
 
     // Use the 'explain' instruction to enable this
-    private createExplanation() {
+    private renderExplanation() {
         const explanationAsString = explainResults(
             this.getters.source(),
             GlobalFilter.getInstance(),
@@ -189,19 +189,19 @@ export class HtmlQueryResultsRenderer {
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(group.groupHeadings);
 
-            this.renderedListItems.clear();
+            this.addedListItems.clear();
             // TODO re-extract the method to include this back
             const taskList = createAndAppendElement('ul', this.getContent());
             this.ulElementStack.push(taskList);
             try {
-                await this.createTaskList(group.tasks);
+                await this.addTaskList(group.tasks);
             } finally {
                 this.ulElementStack.pop();
             }
         }
     }
 
-    private async createTaskList(listItems: ListItem[]): Promise<void> {
+    private async addTaskList(listItems: ListItem[]): Promise<void> {
         const taskList = this.currentULElement();
         taskList.classList.add(
             'contains-task-list',
@@ -213,40 +213,72 @@ export class HtmlQueryResultsRenderer {
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
 
+        if (this.getters.query().queryLayoutOptions.hideTree) {
+            await this.addFlatTaskList(listItems);
+        } else {
+            await this.addTreeTaskList(listItems);
+        }
+    }
+
+    /**
+     * Old-style rendering of tasks:
+     * - What is rendered:
+     *     - Only task lines that match the query are rendered, as a flat list
+     * - The order that lines are rendered:
+     *     - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
+     * @param listItems
+     * @private
+     */
+    private async addFlatTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
-            if (this.getters.query().queryLayoutOptions.hideTree) {
-                /* Old-style rendering of tasks:
-                 *  - What is rendered:
-                 *      - Only task lines that match the query are rendered, as a flat list
-                 *  - The order that lines are rendered:
-                 *      - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
-                 */
-                if (listItem instanceof Task) {
-                    await this.addTask(listItem, listItemIndex, []);
-                }
-            } else {
-                /* New-style rendering of tasks:
-                 *  - What is rendered:
-                 *      - Task lines that match the query are rendered, as a tree.
-                 *      - Currently, all child tasks and list items of the found tasks are shown,
-                 *        including any child tasks that did not match the query.
-                 *  - The order that lines are rendered:
-                 *      - The top-level/outermost tasks are sorted in the order specified in 'sort by'
-                 *        instructions and default sort order.
-                 *      - Child tasks (and list items) are shown in their original order in their Markdown file.
-                 */
-                await this.addTaskOrListItemAndChildren(listItem, listItemIndex, listItems);
+            if (listItem instanceof Task) {
+                await this.addTask(listItem, listItemIndex, []);
             }
         }
     }
 
-    private willBeRenderedLater(listItem: ListItem, listItems: ListItem[]) {
+    /** New-style rendering of tasks:
+     *  - What is rendered:
+     *      - Task lines that match the query are rendered, as a tree.
+     *      - Currently, all child tasks and list items of the found tasks are shown,
+     *        including any child tasks that did not match the query.
+     *  - The order that lines are rendered:
+     *      - The top-level/outermost tasks are sorted in the order specified in 'sort by'
+     *        instructions and default sort order.
+     *      - Child tasks (and list items) are shown in their original order in their Markdown file.
+     * @param listItems
+     * @private
+     */
+    private async addTreeTaskList(listItems: ListItem[]): Promise<void> {
+        for (const [listItemIndex, listItem] of listItems.entries()) {
+            if (this.alreadyAdded(listItem)) {
+                continue;
+            }
+
+            if (this.willBeAddedLater(listItem, listItems)) {
+                continue;
+            }
+
+            if (listItem instanceof Task) {
+                await this.addTask(listItem, listItemIndex, listItem.children);
+            } else {
+                await this.addListItem(listItem, listItemIndex, listItem.children);
+            }
+            this.addedListItems.add(listItem);
+
+            for (const childTask of listItem.children) {
+                this.addedListItems.add(childTask);
+            }
+        }
+    }
+
+    private willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
         const closestParentTask = listItem.findClosestParentTask();
         if (!closestParentTask) {
             return false;
         }
 
-        if (!this.renderedListItems.has(closestParentTask)) {
+        if (!this.addedListItems.has(closestParentTask)) {
             // This task is a direct or indirect child of another task that we are waiting to draw,
             // so don't draw it yet, it will be done recursively later.
             if (listItems.includes(closestParentTask)) {
@@ -257,33 +289,8 @@ export class HtmlQueryResultsRenderer {
         return false;
     }
 
-    private alreadyRendered(listItem: ListItem) {
-        return this.renderedListItems.has(listItem);
-    }
-
-    private async addTaskOrListItemAndChildren(listItem: ListItem, taskIndex: number, listItems: ListItem[]) {
-        if (this.alreadyRendered(listItem)) {
-            return;
-        }
-
-        if (this.willBeRenderedLater(listItem, listItems)) {
-            return;
-        }
-
-        await this.createTaskOrListItem(listItem, taskIndex);
-        this.renderedListItems.add(listItem);
-
-        for (const childTask of listItem.children) {
-            this.renderedListItems.add(childTask);
-        }
-    }
-
-    private async createTaskOrListItem(listItem: ListItem, taskIndex: number): Promise<void> {
-        if (listItem instanceof Task) {
-            await this.addTask(listItem, taskIndex, listItem.children);
-        } else {
-            await this.addListItem(listItem, taskIndex, listItem.children);
-        }
+    private alreadyAdded(listItem: ListItem) {
+        return this.addedListItems.has(listItem);
     }
 
     private async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
@@ -298,7 +305,7 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItemElement);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(children);
+                await this.addTaskList(children);
             } finally {
                 this.ulElementStack.pop();
             }
@@ -347,7 +354,7 @@ export class HtmlQueryResultsRenderer {
             const taskList1 = createAndAppendElement('ul', listItem);
             this.ulElementStack.push(taskList1);
             try {
-                await this.createTaskList(children);
+                await this.addTaskList(children);
             } finally {
                 this.ulElementStack.pop();
             }
