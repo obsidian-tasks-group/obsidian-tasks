@@ -2,19 +2,19 @@ import type { Moment } from 'moment';
 import { type App, Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from '../Config/Settings';
+import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
+import { splitDateText } from '../DateTime/Postponer';
 import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, type TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
+import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import { StatusMenu } from '../ui/Menus/StatusMenu';
-import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
-import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
-import { promptForDate } from '../ui/Menus/DatePicker';
-import { splitDateText } from '../DateTime/Postponer';
 import { DateMenu } from '../ui/Menus/DateMenu';
-import type { ListItem } from '../Task/ListItem';
+import { promptForDate } from '../ui/Menus/DatePicker';
+import { StatusMenu } from '../ui/Menus/StatusMenu';
+import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 
 /**
@@ -456,13 +456,7 @@ export class TaskLineRenderer {
         });
     }
 
-    public async renderListItem(
-        HtmlLIElement: HTMLLIElement,
-        listItem: ListItem,
-        listItemIndex: number,
-    ): Promise<HTMLLIElement> {
-        const li = HtmlLIElement;
-
+    public async renderListItem(li: HTMLLIElement, listItem: ListItem, listItemIndex: number): Promise<HTMLLIElement> {
         if (listItem.statusCharacter) {
             const checkbox = createAndAppendElement('input', li);
             checkbox.classList.add('task-list-item-checkbox');
