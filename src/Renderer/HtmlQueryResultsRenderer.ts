@@ -131,11 +131,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
-        const listItemElement = await this.taskLineRenderer.renderListItem(
-            this.currentULElement(),
-            listItem,
-            listItemIndex,
-        );
+        const taskList = this.currentULElement();
+        const listItemElement = createAndAppendElement('li', taskList);
+        await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
 
         if (children.length > 0) {
             // TODO re-extract the method to include this back
@@ -151,8 +149,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
-        const listItem = await this.taskLineRenderer.renderTaskLine({
-            parentUlElement: this.currentULElement(),
+        const parentUlElement = this.currentULElement();
+        const listItem = createAndAppendElement('li', parentUlElement);
+        await this.taskLineRenderer.renderTaskLine({
+            li: listItem,
             task,
             taskIndex,
             isTaskInQueryFile: this.filePath === task.path,
