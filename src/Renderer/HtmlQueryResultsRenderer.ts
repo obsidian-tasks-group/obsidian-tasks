@@ -144,7 +144,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         if (children.length > 0) {
             // TODO re-extract the method to include this back
-            const taskList1 = createAndAppendElement('ul', listItemElement);
+            const taskList1 = createAndAppendElement('ul', this.currentLIElement());
             this.ulElementStack.push(taskList1);
             try {
                 await this.addTaskList(children);
@@ -195,7 +195,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         if (children.length > 0) {
             // TODO re-extract the method to include this back
-            const taskList1 = createAndAppendElement('ul', listItem);
+            const taskList1 = createAndAppendElement('ul', this.currentLIElement());
             this.ulElementStack.push(taskList1);
             try {
                 await this.addTaskList(children);
