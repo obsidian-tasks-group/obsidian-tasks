@@ -107,7 +107,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected async addTaskGroup(group: TaskGroup): Promise<void> {
         // TODO re-extract the method to include this back
-        this.addULElementToContentAndPush();
         try {
             await this.addTaskList(group.tasks);
         } finally {
@@ -126,6 +125,12 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected beginTaskList(): void {
+        if (this.ulElementStack.length > 0) {
+            this.addULElementToCurrentLIElementAndPush();
+        } else {
+            this.addULElementToContentAndPush();
+        }
+
         const taskList = this.currentULElement();
         taskList.classList.add(
             'contains-task-list',
@@ -198,7 +203,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private async addChildren(children: ListItem[]) {
         if (children.length > 0) {
-            this.addULElementToCurrentLIElementAndPush();
             try {
                 await this.addTaskList(children);
             } finally {
