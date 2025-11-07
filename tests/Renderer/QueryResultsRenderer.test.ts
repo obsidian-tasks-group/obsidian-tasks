@@ -160,6 +160,30 @@ group by function 'level4'
         );
         await verifyRenderedTasksHTML(allTasks, 'show tree');
     });
+
+    it('should render grandchildren once under the parent', async () => {
+        const allTasks = readTasksFromSimulatedFile('inheritance_1parent2children2grandchildren1sibling');
+        await verifyRenderedTasksHTML(
+            allTasks,
+            `
+show tree
+sort by function task.lineNumber
+(description includes grandchild) OR (description includes parent)
+        `,
+        );
+    });
+
+    it('should render grandchildren once and on the same level as parent', async () => {
+        const allTasks = readTasksFromSimulatedFile('inheritance_1parent2children2grandchildren1sibling');
+        await verifyRenderedTasksHTML(
+            allTasks,
+            `
+show tree
+sort by function reverse task.lineNumber
+(description includes grandchild) OR (description includes parent)
+        `,
+        );
+    });
 });
 
 describe('QueryResultsRenderer - responding to file edits', () => {

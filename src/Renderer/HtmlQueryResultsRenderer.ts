@@ -264,11 +264,14 @@ export class HtmlQueryResultsRenderer {
             } else {
                 await this.addListItem(listItem, listItemIndex, listItem.children);
             }
+
+            // The children of this item will be added thanks to recursion and the fact that we always render all children currently
             this.addedListItems.add(listItem);
 
-            for (const childTask of listItem.children) {
-                this.addedListItems.add(childTask);
-            }
+            // We think this code may be needed in future, we have been unable to write a failing test for it
+            // for (const childTask of listItem.children) {
+            //     this.addedListItems.add(childTask);
+            // }
         }
     }
 
