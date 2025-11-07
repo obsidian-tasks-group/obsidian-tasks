@@ -47,8 +47,9 @@ async function renderListItem(
         taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
+    const divElement = document.createElement('div');
     return await taskLineRenderer.renderTaskLine({
-        parentUlElement: document.createElement('div'),
+        parentUlElement: divElement,
         task: task,
         taskIndex: 0,
         isTaskInQueryFile: true,
