@@ -50,7 +50,6 @@ async function renderListItem(
     const divElement = document.createElement('div');
     return await taskLineRenderer.renderTaskLine({
         liElement: createAndAppendElement('li', divElement),
-        parentUlElement: divElement,
         task: task,
         taskIndex: 0,
         isTaskInQueryFile: true,
@@ -99,7 +98,6 @@ describe('task line rendering - HTML', () => {
         });
         const listItem = await taskLineRenderer.renderTaskLine({
             liElement: createAndAppendElement('li', ulElement),
-            parentUlElement: ulElement,
             task: new TaskBuilder().build(),
             taskIndex: 0,
             isTaskInQueryFile: true,
