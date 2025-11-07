@@ -106,12 +106,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addTaskGroup(group: TaskGroup): Promise<void> {
-        // TODO re-extract the method to include this back
-        try {
-            await this.addTaskList(group.tasks);
-        } finally {
-            /* empty */
-        }
+        await this.addTaskList(group.tasks);
     }
 
     protected beginTaskList(): void {
@@ -194,11 +189,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private async addChildren(children: ListItem[]) {
         if (children.length > 0) {
-            try {
-                await this.addTaskList(children);
-            } finally {
-                /* empty */
-            }
+            await this.addTaskList(children);
         }
     }
 
