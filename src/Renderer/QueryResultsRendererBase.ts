@@ -23,7 +23,7 @@ export interface QueryResultsRendererGetters {
 }
 
 export abstract class QueryResultsRendererBase {
-    public getters: QueryResultsRendererGetters;
+    protected getters: QueryResultsRendererGetters;
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
