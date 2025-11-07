@@ -73,7 +73,21 @@ export abstract class QueryResultsRendererBase {
         return queryResult;
     }
 
-    protected abstract renderSearchResults(queryResult: QueryResult): Promise<void>;
+    private async renderSearchResults(queryResult: QueryResult) {
+        const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
+        measureRender.start();
+
+        this.renderSearchResultsHeader(queryResult);
+
+        await this.addAllTaskGroups(queryResult.taskGroups);
+
+        const totalTasksCount = queryResult.totalTasksCount;
+        this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
+
+        this.renderSearchResultsFooter(queryResult);
+
+        measureRender.finish();
+    }
 
     protected abstract renderSearchResultsHeader(queryResult: QueryResult): void;
 
