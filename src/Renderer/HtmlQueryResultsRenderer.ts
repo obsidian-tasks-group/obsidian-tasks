@@ -3,7 +3,6 @@ import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postp
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
@@ -103,17 +102,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             await navigator.clipboard.writeText(queryResult.asMarkdown());
             new Notice('Results copied to clipboard');
         });
-    }
-
-    protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
-        for (const group of tasksSortedLimitedGrouped.groups) {
-            // If there were no 'group by' instructions, group.groupHeadings
-            // will be empty, and no headings will be added.
-            await this.addGroupHeadings(group.groupHeadings);
-
-            this.addedListItems.clear();
-            await this.addTaskGroup(group);
-        }
     }
 
     protected async addTaskGroup(group: TaskGroup): Promise<void> {

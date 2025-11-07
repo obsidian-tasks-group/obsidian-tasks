@@ -111,7 +111,16 @@ export abstract class QueryResultsRendererBase {
 
     protected abstract renderExplanation(explanation: string | null): void;
 
-    protected abstract addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups): Promise<void>;
+    private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
+        for (const group of tasksSortedLimitedGrouped.groups) {
+            // If there were no 'group by' instructions, group.groupHeadings
+            // will be empty, and no headings will be added.
+            await this.addGroupHeadings(group.groupHeadings);
+
+            this.addedListItems.clear();
+            await this.addTaskGroup(group);
+        }
+    }
 
     protected abstract addTaskGroup(group: TaskGroup): Promise<void>;
 
