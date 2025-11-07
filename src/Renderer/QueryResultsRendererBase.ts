@@ -125,14 +125,20 @@ export abstract class QueryResultsRendererBase {
     protected async addTaskList(listItems: ListItem[]): Promise<void> {
         this.beginTaskList();
 
-        if (this.getters.query().queryLayoutOptions.hideTree) {
-            await this.addFlatTaskList(listItems);
-        } else {
-            await this.addTreeTaskList(listItems);
+        try {
+            if (this.getters.query().queryLayoutOptions.hideTree) {
+                await this.addFlatTaskList(listItems);
+            } else {
+                await this.addTreeTaskList(listItems);
+            }
+        } finally {
+            this.endTaskList();
         }
     }
 
     protected abstract beginTaskList(): void;
+
+    protected abstract endTaskList(): void;
 
     /**
      * Old-style rendering of tasks:
