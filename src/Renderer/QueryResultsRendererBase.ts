@@ -225,6 +225,8 @@ export abstract class QueryResultsRendererBase {
 
     protected abstract addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void>;
 
+    protected abstract addChildren(listItems: ListItem[]): Promise<void>;
+
     /**
      * Display headings for a group of tasks.
      * @param groupHeadings - The headings to display. This can be an empty array,
