@@ -146,6 +146,7 @@ export abstract class QueryResultsRendererBase {
     private async addFlatTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (listItem instanceof Task) {
+                this.beginTask();
                 await this.addTask(listItem, listItemIndex, []);
             }
         }
@@ -172,6 +173,8 @@ export abstract class QueryResultsRendererBase {
             if (this.willBeAddedLater(listItem, listItems)) {
                 continue;
             }
+
+            this.beginTask();
 
             if (listItem instanceof Task) {
                 await this.addTask(listItem, listItemIndex, listItem.children);
