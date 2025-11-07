@@ -115,8 +115,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private addULElementToContentAndPush() {
-        const taskList = createAndAppendElement('ul', this.getContent());
-        this.ulElementStack.push(taskList);
+        this.addULElementToContainer(this.getContent());
     }
 
     private addULElementToContainer(taskListContainer: HTMLElement) {
