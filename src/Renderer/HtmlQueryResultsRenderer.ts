@@ -28,6 +28,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly taskLineRenderer: TaskLineRenderer;
 
     private readonly ulElementStack: HTMLUListElement[] = [];
+    private readonly liElementStack: HTMLLIElement[] = [];
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
@@ -133,6 +134,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
         const taskList = this.currentULElement();
         const listItemElement = createAndAppendElement('li', taskList);
+        this.liElementStack.push(listItemElement);
         await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
 
         if (children.length > 0) {
@@ -151,6 +153,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const parentUlElement = this.currentULElement();
         const listItem = createAndAppendElement('li', parentUlElement);
+        this.liElementStack.push(listItem);
         await this.taskLineRenderer.renderTaskLine({
             li: listItem,
             task,
