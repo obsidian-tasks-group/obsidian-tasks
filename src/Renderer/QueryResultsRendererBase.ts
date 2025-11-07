@@ -13,4 +13,10 @@ export interface QueryResultsRendererGetters {
     query: () => IQuery;
 }
 
-export class QueryResultsRendererBase {}
+export class QueryResultsRendererBase {
+    public getters: QueryResultsRendererGetters;
+
+    constructor(getters: QueryResultsRendererGetters) {
+        this.getters = getters;
+    }
+}

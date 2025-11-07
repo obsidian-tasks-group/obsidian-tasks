@@ -26,7 +26,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected readonly renderMarkdown;
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
-    public getters: QueryResultsRendererGetters;
 
     // TODO access this via getContent() for now
     public content: HTMLDivElement | null = null;
@@ -52,13 +51,12 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         queryRendererParameters: QueryRendererParameters,
         getters: QueryResultsRendererGetters,
     ) {
-        super();
+        super(getters);
 
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
-        this.getters = getters;
         this.queryRendererParameters = queryRendererParameters;
 
         this.taskLineRenderer = new TaskLineRenderer({
