@@ -210,6 +210,8 @@ export abstract class QueryResultsRendererBase {
         return this.addedListItems.has(listItem);
     }
 
+    protected abstract beginTask(): void;
+
     protected abstract addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void>;
 
     protected abstract addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void>;
