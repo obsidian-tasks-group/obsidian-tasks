@@ -41,7 +41,10 @@ export abstract class QueryResultsRendererBase {
         // notes with tasks code blocks in Reading or Live Preview mode.
         const error = this.getters.query().error;
         if (state === State.Warm && error === undefined) {
-            await this.renderQuerySearchResults(tasks, state);
+            this.getters
+                .query()
+                .debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
+            await this.renderQuerySearchResults(tasks);
         } else if (error) {
             this.renderErrorMessage(error);
         } else {
@@ -49,8 +52,8 @@ export abstract class QueryResultsRendererBase {
         }
     }
 
-    private async renderQuerySearchResults(tasks: Task[], state: State.Warm) {
-        const queryResult = this.explainAndPerformSearch(state, tasks);
+    private async renderQuerySearchResults(tasks: Task[]) {
+        const queryResult = this.explainAndPerformSearch(tasks);
 
         if (queryResult.searchErrorMessage !== undefined) {
             // There was an error in the search, for example due to a problem custom function.
@@ -61,11 +64,9 @@ export abstract class QueryResultsRendererBase {
         await this.renderSearchResults(queryResult);
     }
 
-    private explainAndPerformSearch(state: State.Warm, tasks: Task[]) {
+    private explainAndPerformSearch(tasks: Task[]) {
         const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
         measureSearch.start();
-
-        this.getters.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
         if (this.getters.query().queryLayoutOptions.explainQuery) {
             const explanation = explainResults(
