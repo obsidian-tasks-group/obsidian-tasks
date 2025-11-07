@@ -193,6 +193,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         this.currentULElement().appendChild(listItem);
 
+        await this.addChildren(children);
+    }
+
+    private async addChildren(children: ListItem[]) {
         if (children.length > 0) {
             // TODO re-extract the method to include this back
             const taskList1 = createAndAppendElement('ul', this.currentLIElement());
