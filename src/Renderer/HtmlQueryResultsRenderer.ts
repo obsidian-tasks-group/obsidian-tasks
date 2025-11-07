@@ -140,7 +140,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
         this.beginTask();
 
-        const listItemElement = this.liElementStack[this.liElementStack.length - 1];
+        const listItemElement = this.currentLIElement();
 
         await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
 
@@ -356,5 +356,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private currentULElement(): HTMLUListElement {
         return this.ulElementStack[this.ulElementStack.length - 1];
+    }
+
+    private currentLIElement() {
+        return this.liElementStack[this.liElementStack.length - 1];
     }
 }
