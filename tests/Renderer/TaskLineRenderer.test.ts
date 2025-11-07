@@ -9,7 +9,7 @@ import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
 import { DateParser } from '../../src/DateTime/DateParser';
-import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
+import { type TextRenderer, createAndAppendElement } from '../../src/Renderer/TaskLineRenderer';
 import { TaskLineRenderer } from '../../src/Renderer/TaskLineRenderer';
 import type { Task } from '../../src/Task/Task';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
@@ -49,6 +49,7 @@ async function renderListItem(
     });
     const divElement = document.createElement('div');
     return await taskLineRenderer.renderTaskLine({
+        liElement: createAndAppendElement('li', divElement),
         parentUlElement: divElement,
         task: task,
         taskIndex: 0,
@@ -97,6 +98,7 @@ describe('task line rendering - HTML', () => {
             queryLayoutOptions: new QueryLayoutOptions(),
         });
         const listItem = await taskLineRenderer.renderTaskLine({
+            liElement: createAndAppendElement('li', ulElement),
             parentUlElement: ulElement,
             task: new TaskBuilder().build(),
             taskIndex: 0,
