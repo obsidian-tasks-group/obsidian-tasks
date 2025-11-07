@@ -9,6 +9,7 @@ import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
+import type { TaskGroup } from '../Query/Group/TaskGroup';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
@@ -111,14 +112,18 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             await this.addGroupHeadings(group.groupHeadings);
 
             this.addedListItems.clear();
-            // TODO re-extract the method to include this back
-            const taskList = createAndAppendElement('ul', this.getContent());
-            this.ulElementStack.push(taskList);
-            try {
-                await this.addTaskList(group.tasks);
-            } finally {
-                this.ulElementStack.pop();
-            }
+            await this.addTaskGroup(group);
+        }
+    }
+
+    private async addTaskGroup(group: TaskGroup): Promise<void> {
+        // TODO re-extract the method to include this back
+        const taskList = createAndAppendElement('ul', this.getContent());
+        this.ulElementStack.push(taskList);
+        try {
+            await this.addTaskList(group.tasks);
+        } finally {
+            this.ulElementStack.pop();
         }
     }
 
