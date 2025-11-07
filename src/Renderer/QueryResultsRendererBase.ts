@@ -189,8 +189,7 @@ export abstract class QueryResultsRendererBase {
         }
     }
 
-    // TODO make private
-    protected willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
+    private willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
         const closestParentTask = listItem.findClosestParentTask();
         if (!closestParentTask) {
             return false;
@@ -207,8 +206,7 @@ export abstract class QueryResultsRendererBase {
         return false;
     }
 
-    // TODO make private
-    protected alreadyAdded(listItem: ListItem) {
+    private alreadyAdded(listItem: ListItem) {
         return this.addedListItems.has(listItem);
     }
 
@@ -222,8 +220,7 @@ export abstract class QueryResultsRendererBase {
      *                        in which case no headings will be added.
      * @private
      */
-    // TODO make private
-    protected async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
+    private async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
         for (const heading of groupHeadings) {
             await this.addGroupHeading(heading);
         }
