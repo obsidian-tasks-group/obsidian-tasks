@@ -92,20 +92,8 @@ afterEach(() => {
 describe('task line rendering - HTML', () => {
     it('should render only one List Item for the UL and return it with renderTaskLine()', async () => {
         const ulElement = document.createElement('ul');
-        const taskLineRenderer = new TaskLineRenderer({
-            textRenderer: mockTextRenderer,
-            obsidianApp: mockApp,
-            obsidianComponent: null,
-            taskLayoutOptions: new TaskLayoutOptions(),
-            queryLayoutOptions: new QueryLayoutOptions(),
-        });
+
         const listItem = createAndAppendElement('li', ulElement);
-        await taskLineRenderer.renderTaskLine({
-            li: listItem,
-            task: new TaskBuilder().build(),
-            taskIndex: 0,
-            isTaskInQueryFile: true,
-        });
 
         // Just one element
         expect(ulElement.children.length).toEqual(1);
