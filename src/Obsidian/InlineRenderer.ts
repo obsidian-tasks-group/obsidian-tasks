@@ -145,8 +145,6 @@ export class InlineRenderer {
                 isTaskInQueryFile: true,
             });
 
-            const taskElement = li;
-
             // If the rendered element contains a sub-list or sub-div (e.g. the
             // folding arrow), we need to keep it.
             const renderedChildren = renderedElement.childNodes;
@@ -154,9 +152,9 @@ export class InlineRenderer {
                 const renderedChild = renderedChildren[i];
                 const nodeName = renderedChild.nodeName.toLowerCase();
                 if (nodeName === 'div') {
-                    taskElement.prepend(renderedChild);
+                    li.prepend(renderedChild);
                 } else if (nodeName === 'ul' || nodeName === 'ol') {
-                    taskElement.append(renderedChild);
+                    li.append(renderedChild);
                 }
             }
 
@@ -164,14 +162,14 @@ export class InlineRenderer {
             // The newly rendered HTML won't have the correct indexes and links
             // from the original document.
             const originalFootnotes = renderedElement.querySelectorAll('[data-footnote-id]');
-            const newFootnotes = taskElement.querySelectorAll('[data-footnote-id]');
+            const newFootnotes = li.querySelectorAll('[data-footnote-id]');
             if (originalFootnotes.length === newFootnotes.length) {
                 for (let i = 0; i < originalFootnotes.length; i++) {
                     newFootnotes[i].replaceWith(originalFootnotes[i]);
                 }
             }
 
-            renderedElement.replaceWith(taskElement);
+            renderedElement.replaceWith(li);
         }
     }
 }
