@@ -227,7 +227,11 @@ export abstract class QueryResultsRendererBase {
 
     protected abstract addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void>;
 
-    protected abstract addChildren(listItems: ListItem[]): Promise<void>;
+    private async addChildren(children: ListItem[]) {
+        if (children.length > 0) {
+            await this.addTaskList(children);
+        }
+    }
 
     /**
      * Display headings for a group of tasks.
