@@ -136,6 +136,7 @@ export class TaskLineRenderer {
      */
     public async renderTaskLine({
         parentUlElement,
+        liElement,
         task,
         taskIndex,
         isTaskInQueryFile,
@@ -148,7 +149,7 @@ export class TaskLineRenderer {
         isTaskInQueryFile: boolean;
         isFilenameUnique?: boolean;
     }): Promise<HTMLLIElement> {
-        const li = createAndAppendElement('li', parentUlElement);
+        const li = liElement ?? createAndAppendElement('li', parentUlElement);
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
         const textSpan = createAndAppendElement('span', li);
