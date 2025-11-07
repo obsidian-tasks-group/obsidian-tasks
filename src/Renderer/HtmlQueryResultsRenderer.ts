@@ -110,7 +110,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         try {
             await this.addTaskList(group.tasks);
         } finally {
-            this.ulElementStack.pop();
+            /* empty */
         }
     }
 
@@ -132,7 +132,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    protected endTaskList(): void {}
+    protected endTaskList(): void {
+        this.ulElementStack.pop();
+    }
 
     protected beginTask() {
         const taskList = this.currentULElement();
@@ -195,7 +197,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             try {
                 await this.addTaskList(children);
             } finally {
-                this.ulElementStack.pop();
+                /* empty */
             }
         }
     }
