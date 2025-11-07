@@ -49,12 +49,14 @@ async function renderListItem(
     });
     const divElement = document.createElement('div');
     const li = createAndAppendElement('li', divElement);
-    return await taskLineRenderer.renderTaskLine({
+    await taskLineRenderer.renderTaskLine({
         li: li,
         task: task,
         taskIndex: 0,
         isTaskInQueryFile: true,
     });
+
+    return li;
 }
 
 function getTextSpan(listItem: HTMLElement) {
@@ -98,12 +100,14 @@ describe('task line rendering - HTML', () => {
             queryLayoutOptions: new QueryLayoutOptions(),
         });
         const li = createAndAppendElement('li', ulElement);
-        const listItem = await taskLineRenderer.renderTaskLine({
+        await taskLineRenderer.renderTaskLine({
             li: li,
             task: new TaskBuilder().build(),
             taskIndex: 0,
             isTaskInQueryFile: true,
         });
+
+        const listItem = li;
 
         // Just one element
         expect(ulElement.children.length).toEqual(1);

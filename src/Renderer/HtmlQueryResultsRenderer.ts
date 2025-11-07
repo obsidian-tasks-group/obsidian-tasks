@@ -153,13 +153,15 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const parentUlElement = this.currentULElement();
         const li = createAndAppendElement('li', parentUlElement);
-        const listItem = await this.taskLineRenderer.renderTaskLine({
+        await this.taskLineRenderer.renderTaskLine({
             li: li,
             task,
             taskIndex,
             isTaskInQueryFile: this.filePath === task.path,
             isFilenameUnique,
         });
+
+        const listItem = li;
 
         // Remove all footnotes. They don't re-appear in another document.
         const footnotes = listItem.querySelectorAll('[data-footnote-id]');
