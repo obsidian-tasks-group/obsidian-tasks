@@ -95,7 +95,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         return content;
     }
 
-    private async renderQuerySearchResults(tasks: Task[], state: State.Warm) {
+    protected async renderQuerySearchResults(tasks: Task[], state: State.Warm) {
         const queryResult = this.explainAndPerformSearch(state, tasks);
 
         if (queryResult.searchErrorMessage !== undefined) {
@@ -107,7 +107,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         await this.renderSearchResults(queryResult);
     }
 
-    private explainAndPerformSearch(state: State.Warm, tasks: Task[]) {
+    protected explainAndPerformSearch(state: State.Warm, tasks: Task[]) {
         const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
         measureSearch.start();
 
@@ -123,7 +123,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         return queryResult;
     }
 
-    private async renderSearchResults(queryResult: QueryResult) {
+    protected async renderSearchResults(queryResult: QueryResult) {
         const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
         measureRender.start();
 
@@ -139,17 +139,17 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         measureRender.finish();
     }
 
-    private renderErrorMessage(errorMessage: string) {
+    protected renderErrorMessage(errorMessage: string) {
         const container = createAndAppendElement('div', this.getContent());
         container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
-    private renderLoadingMessage() {
+    protected renderLoadingMessage() {
         this.getContent().textContent = 'Loading Tasks ...';
     }
 
     // Use the 'explain' instruction to enable this
-    private renderExplanation() {
+    protected renderExplanation() {
         const explanationAsString = explainResults(
             this.getters.source(),
             GlobalFilter.getInstance(),
@@ -172,7 +172,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         });
     }
 
-    private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
+    protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         for (const group of tasksSortedLimitedGrouped.groups) {
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
@@ -190,7 +190,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    private async addTaskList(listItems: ListItem[]): Promise<void> {
+    protected async addTaskList(listItems: ListItem[]): Promise<void> {
         const taskList = this.currentULElement();
         taskList.classList.add(
             'contains-task-list',
@@ -218,7 +218,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
      * @param listItems
      * @private
      */
-    private async addFlatTaskList(listItems: ListItem[]): Promise<void> {
+    protected async addFlatTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (listItem instanceof Task) {
                 await this.addTask(listItem, listItemIndex, []);
@@ -238,7 +238,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
      * @param listItems
      * @private
      */
-    private async addTreeTaskList(listItems: ListItem[]): Promise<void> {
+    protected async addTreeTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (this.alreadyAdded(listItem)) {
                 continue;
@@ -264,7 +264,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    private willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
+    protected willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
         const closestParentTask = listItem.findClosestParentTask();
         if (!closestParentTask) {
             return false;
@@ -281,11 +281,11 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         return false;
     }
 
-    private alreadyAdded(listItem: ListItem) {
+    protected alreadyAdded(listItem: ListItem) {
         return this.addedListItems.has(listItem);
     }
 
-    private async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
+    protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
         const listItemElement = await this.taskLineRenderer.renderListItem(
             this.currentULElement(),
             listItem,
@@ -304,7 +304,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    private async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
+    protected async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const listItem = await this.taskLineRenderer.renderTaskLine({
             parentUlElement: this.currentULElement(),
@@ -381,13 +381,13 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
      *                        in which case no headings will be added.
      * @private
      */
-    private async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
+    protected async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
         for (const heading of groupHeadings) {
             await this.addGroupHeading(heading);
         }
     }
 
-    private async addGroupHeading(group: GroupDisplayHeading) {
+    protected async addGroupHeading(group: GroupDisplayHeading) {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
