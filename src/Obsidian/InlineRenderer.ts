@@ -137,9 +137,9 @@ export class InlineRenderer {
             }
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const taskIndex: number = Number.parseInt(dataLine, 10);
-            const li = createAndAppendElement('li', element);
+            const taskElement = createAndAppendElement('li', element);
             await taskLineRenderer.renderTaskLine({
-                li: li,
+                li: taskElement,
                 task,
                 taskIndex,
                 isTaskInQueryFile: true,
@@ -152,9 +152,9 @@ export class InlineRenderer {
                 const renderedChild = renderedChildren[i];
                 const nodeName = renderedChild.nodeName.toLowerCase();
                 if (nodeName === 'div') {
-                    li.prepend(renderedChild);
+                    taskElement.prepend(renderedChild);
                 } else if (nodeName === 'ul' || nodeName === 'ol') {
-                    li.append(renderedChild);
+                    taskElement.append(renderedChild);
                 }
             }
 
@@ -162,14 +162,14 @@ export class InlineRenderer {
             // The newly rendered HTML won't have the correct indexes and links
             // from the original document.
             const originalFootnotes = renderedElement.querySelectorAll('[data-footnote-id]');
-            const newFootnotes = li.querySelectorAll('[data-footnote-id]');
+            const newFootnotes = taskElement.querySelectorAll('[data-footnote-id]');
             if (originalFootnotes.length === newFootnotes.length) {
                 for (let i = 0; i < originalFootnotes.length; i++) {
                     newFootnotes[i].replaceWith(originalFootnotes[i]);
                 }
             }
 
-            renderedElement.replaceWith(li);
+            renderedElement.replaceWith(taskElement);
         }
     }
 }
