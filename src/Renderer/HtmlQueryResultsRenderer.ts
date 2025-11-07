@@ -2,7 +2,6 @@ import { type App, type Component, Notice, type TFile } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
-import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
@@ -11,24 +10,13 @@ import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import { explainResults } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
-import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
-import { QueryResultsRendererBase } from './QueryResultsRendererBase';
-
-/**
- * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
- * we pass in getter functions instead of storing duplicate copies of the values.
- */
-interface QueryResultsRendererGetters {
-    source: () => string;
-    tasksFile: () => TasksFile;
-    query: () => IQuery;
-}
+import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 
 export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     // Renders the description in TaskLineRenderer:
