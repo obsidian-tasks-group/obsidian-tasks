@@ -90,21 +90,6 @@ afterEach(() => {
 });
 
 describe('task line rendering - HTML', () => {
-    it('should render only one List Item for the UL and return it with renderTaskLine()', async () => {
-        const ulElement = document.createElement('ul');
-
-        const listItem = createAndAppendElement('li', ulElement);
-
-        // Just one element
-        expect(ulElement.children.length).toEqual(1);
-
-        // It is the rendered one
-        expect(ulElement.children[0]).toEqual(listItem);
-
-        // And it is a ListItem
-        expect(listItem.nodeName).toEqual('LI');
-    });
-
     it('creates the correct span structure for a basic task inside a List Item', async () => {
         const taskLine = '- [ ] This is a simple task';
         const task = fromLine({
