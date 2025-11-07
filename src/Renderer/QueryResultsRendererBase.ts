@@ -143,8 +143,7 @@ export abstract class QueryResultsRendererBase {
      * @param listItems
      * @private
      */
-    // TODO make private
-    protected async addFlatTaskList(listItems: ListItem[]): Promise<void> {
+    private async addFlatTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (listItem instanceof Task) {
                 await this.addTask(listItem, listItemIndex, []);
@@ -164,8 +163,7 @@ export abstract class QueryResultsRendererBase {
      * @param listItems
      * @private
      */
-    // TODO make private
-    protected async addTreeTaskList(listItems: ListItem[]): Promise<void> {
+    private async addTreeTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (this.alreadyAdded(listItem)) {
                 continue;
