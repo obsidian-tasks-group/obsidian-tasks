@@ -131,10 +131,17 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
+    private beginTask() {
         const taskList = this.currentULElement();
         const listItemElement = createAndAppendElement('li', taskList);
         this.liElementStack.push(listItemElement);
+    }
+
+    protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
+        this.beginTask();
+
+        const listItemElement = this.liElementStack[this.liElementStack.length - 1];
+
         await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
 
         if (children.length > 0) {
