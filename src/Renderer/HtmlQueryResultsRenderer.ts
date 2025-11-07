@@ -187,7 +187,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         await this.addChildren(children);
     }
 
-    private async addChildren(children: ListItem[]) {
+    protected async addChildren(children: ListItem[]) {
         if (children.length > 0) {
             await this.addTaskList(children);
         }
