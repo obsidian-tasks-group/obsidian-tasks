@@ -39,11 +39,10 @@ export abstract class QueryResultsRendererBase {
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
-        const error = this.getters.query().error;
+        const query = this.getters.query();
+        const error = query.error;
         if (state === State.Warm && error === undefined) {
-            this.getters
-                .query()
-                .debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
+            query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
             await this.renderQuerySearchResults(tasks);
         } else if (error) {
             this.renderErrorMessage(error);
