@@ -132,10 +132,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
         const taskList = this.currentULElement();
-        const htmlLIElement = createAndAppendElement('li', taskList);
-        await this.taskLineRenderer.renderListItem(htmlLIElement, listItem, listItemIndex);
-
-        const listItemElement = htmlLIElement;
+        const listItemElement = createAndAppendElement('li', taskList);
+        await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
 
         if (children.length > 0) {
             // TODO re-extract the method to include this back
