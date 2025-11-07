@@ -143,7 +143,7 @@ export class TaskLineRenderer {
         isFilenameUnique,
     }: {
         parentUlElement: HTMLElement;
-        liElement?: HTMLLIElement;
+        liElement: HTMLLIElement;
         task: Task;
         taskIndex: number;
         isTaskInQueryFile: boolean;
