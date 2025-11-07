@@ -7,6 +7,9 @@ import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { ListItem } from '../Task/ListItem';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
+import { explainResults } from '../Query/QueryRendererHelper';
+import { GlobalFilter } from '../Config/GlobalFilter';
+import { GlobalQuery } from '../Config/GlobalQuery';
 
 /**
  * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
@@ -64,7 +67,13 @@ export abstract class QueryResultsRendererBase {
         this.getters.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
 
         if (this.getters.query().queryLayoutOptions.explainQuery) {
-            this.renderExplanation();
+            const explanation = explainResults(
+                this.getters.source(),
+                GlobalFilter.getInstance(),
+                GlobalQuery.getInstance(),
+                this.getters.tasksFile(),
+            );
+            this.renderExplanation(explanation);
         }
 
         const queryResult = this.getters.query().applyQueryToTasks(tasks);
@@ -97,7 +106,7 @@ export abstract class QueryResultsRendererBase {
 
     protected abstract renderLoadingMessage(): void;
 
-    protected abstract renderExplanation(): void;
+    protected abstract renderExplanation(explanation: string | null): void;
 
     protected abstract addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups): Promise<void>;
 
