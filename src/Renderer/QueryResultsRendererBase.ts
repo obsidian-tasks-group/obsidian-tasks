@@ -27,7 +27,7 @@ export abstract class QueryResultsRendererBase {
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
-    constructor(getters: QueryResultsRendererGetters) {
+    protected constructor(getters: QueryResultsRendererGetters) {
         this.getters = getters;
     }
 
