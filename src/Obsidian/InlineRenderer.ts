@@ -137,8 +137,9 @@ export class InlineRenderer {
             }
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const taskIndex: number = Number.parseInt(dataLine, 10);
+            const li = createAndAppendElement('li', element);
             const taskElement = await taskLineRenderer.renderTaskLine({
-                li: createAndAppendElement('li', element),
+                li: li,
                 task,
                 taskIndex,
                 isTaskInQueryFile: true,
