@@ -456,7 +456,11 @@ export class TaskLineRenderer {
         });
     }
 
-    public async renderListItem(taskList: HTMLUListElement, listItem: ListItem, listItemIndex: number) {
+    public async renderListItem(
+        taskList: HTMLUListElement,
+        listItem: ListItem,
+        listItemIndex: number,
+    ): Promise<HTMLLIElement> {
         const li = createAndAppendElement('li', taskList);
 
         if (listItem.statusCharacter) {
