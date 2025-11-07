@@ -116,6 +116,16 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addTaskList(listItems: ListItem[]): Promise<void> {
+        this.beginTaskList();
+
+        if (this.getters.query().queryLayoutOptions.hideTree) {
+            await this.addFlatTaskList(listItems);
+        } else {
+            await this.addTreeTaskList(listItems);
+        }
+    }
+
+    private beginTaskList(): void {
         const taskList = this.currentULElement();
         taskList.classList.add(
             'contains-task-list',
@@ -127,12 +137,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) {
             taskList.dataset.taskGroupBy = groupingAttribute;
-        }
-
-        if (this.getters.query().queryLayoutOptions.hideTree) {
-            await this.addFlatTaskList(listItems);
-        } else {
-            await this.addTreeTaskList(listItems);
         }
     }
 
