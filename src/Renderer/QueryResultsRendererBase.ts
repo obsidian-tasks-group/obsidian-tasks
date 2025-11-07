@@ -16,8 +16,6 @@ import type { TaskGroup } from '../Query/Group/TaskGroup';
  * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
  * we pass in getter functions instead of storing duplicate copies of the values.
  */
-
-// TODO Remove export
 export interface QueryResultsRendererGetters {
     source: () => string;
     tasksFile: () => TasksFile;
