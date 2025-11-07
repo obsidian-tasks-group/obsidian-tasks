@@ -75,6 +75,10 @@ export abstract class QueryResultsRendererBase {
 
     protected abstract renderSearchResults(queryResult: QueryResult): Promise<void>;
 
+    protected abstract renderSearchResultsHeader(queryResult: QueryResult): void;
+
+    protected abstract renderSearchResultsFooter(queryResult: QueryResult): void;
+
     protected abstract renderErrorMessage(errorMessage: string): void;
 
     protected abstract renderLoadingMessage(): void;
