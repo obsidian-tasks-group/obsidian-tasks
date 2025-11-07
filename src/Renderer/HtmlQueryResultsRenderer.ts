@@ -116,7 +116,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    private async addTaskGroup(group: TaskGroup): Promise<void> {
+    protected async addTaskGroup(group: TaskGroup): Promise<void> {
         // TODO re-extract the method to include this back
         const taskList = createAndAppendElement('ul', this.getContent());
         this.ulElementStack.push(taskList);
