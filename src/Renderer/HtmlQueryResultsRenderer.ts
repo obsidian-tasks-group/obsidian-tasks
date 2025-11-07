@@ -137,15 +137,13 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.liElementStack.push(listItemElement);
     }
 
-    protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
+    protected async addListItem(listItem: ListItem, listItemIndex: number, _children: ListItem[]): Promise<void> {
         const listItemElement = this.currentLIElement();
 
         await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
-
-        await this.addChildren(children);
     }
 
-    protected async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
+    protected async addTask(task: Task, taskIndex: number, _children: ListItem[]): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const listItem = this.currentLIElement();
 
@@ -183,8 +181,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
 
         this.currentULElement().appendChild(listItem);
-
-        await this.addChildren(children);
     }
 
     protected async addChildren(children: ListItem[]) {
