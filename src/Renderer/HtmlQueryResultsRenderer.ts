@@ -120,8 +120,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected beginTaskList(): void {
+        const taskListContainer = this.currentLIElement();
         if (this.ulElementStack.length > 0) {
-            this.addULElementToContainer(this.currentLIElement());
+            this.addULElementToContainer(taskListContainer);
         } else {
             this.addULElementToContainer(this.getContent());
         }
