@@ -80,16 +80,24 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
         measureRender.start();
 
-        this.addCopyButton(queryResult);
+        this.renderSearchResultsHeader(queryResult);
 
         await this.addAllTaskGroups(queryResult.taskGroups);
 
         const totalTasksCount = queryResult.totalTasksCount;
-        this.addTaskCount(queryResult);
-
         this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
 
+        this.renderSearchResultsFooter(queryResult);
+
         measureRender.finish();
+    }
+
+    private renderSearchResultsHeader(queryResult: QueryResult): void {
+        this.addCopyButton(queryResult);
+    }
+
+    private renderSearchResultsFooter(queryResult: QueryResult): void {
+        this.addTaskCount(queryResult);
     }
 
     protected renderErrorMessage(errorMessage: string) {
