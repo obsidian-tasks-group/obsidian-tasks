@@ -457,7 +457,6 @@ export class TaskLineRenderer {
     }
 
     public async renderListItem(
-        _taskList: HTMLUListElement,
         HtmlLIElement: HTMLLIElement,
         listItem: ListItem,
         listItemIndex: number,
