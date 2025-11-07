@@ -457,11 +457,12 @@ export class TaskLineRenderer {
     }
 
     public async renderListItem(
-        taskList: HTMLUListElement,
+        _taskList: HTMLUListElement,
+        HtmlLIElement: HTMLLIElement,
         listItem: ListItem,
         listItemIndex: number,
     ): Promise<HTMLLIElement> {
-        const li = createAndAppendElement('li', taskList);
+        const li = HtmlLIElement;
 
         if (listItem.statusCharacter) {
             const checkbox = createAndAppendElement('input', li);
