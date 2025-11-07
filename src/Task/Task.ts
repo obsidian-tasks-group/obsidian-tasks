@@ -9,6 +9,7 @@ import { StatusType } from '../Statuses/StatusConfiguration';
 import { PriorityTools } from '../lib/PriorityTools';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
+import { momentAdjusted } from '../DateTime/DateAdjusted';
 import { DateFallback } from '../DateTime/DateFallback';
 import { ListItem } from './ListItem';
 import type { Occurrence } from './Occurrence';
@@ -343,7 +344,7 @@ export class Task extends ListItem {
      *                However, any created date on a new recurrence is, for now, calculated from the
      *                actual current date, rather than this parameter.
      */
-    public handleNewStatus(newStatus: Status, today = window.moment()): Task[] {
+    public handleNewStatus(newStatus: Status, today = momentAdjusted()): Task[] {
         if (newStatus.identicalTo(this.status)) {
             // There is no need to create a new Task object if the new status behaviour is identical to the current one.
             return [this];
@@ -419,7 +420,7 @@ export class Task extends ListItem {
         const { setCreatedDate } = getSettings();
         let createdDate: moment.Moment | null = null;
         if (setCreatedDate) {
-            createdDate = window.moment();
+            createdDate = momentAdjusted();
         }
         // In case the task being toggled was previously cancelled, ensure the new task has no cancelled date:
         const cancelledDate = null;
@@ -471,7 +472,7 @@ export class Task extends ListItem {
         return this.putRecurrenceInUsersOrder(newTasks);
     }
 
-    public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status, today = window.moment()): Task[] {
+    public handleNewStatusWithRecurrenceInUsersOrder(newStatus: Status, today = momentAdjusted()): Task[] {
         const logger = logging.getLogger('tasks.Task');
         logger.debug(
             `changed task ${this.taskLocation.path} ${this.taskLocation.lineNumber} ${this.originalMarkdown} status to '${newStatus.symbol}'`,

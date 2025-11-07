@@ -1,4 +1,5 @@
 import * as chrono from 'chrono-node';
+import { momentAdjusted } from './DateAdjusted';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
@@ -77,7 +78,7 @@ export function parseTypedDateForDisplayUsingFutureDate(
     typedDate: string,
     forwardOnly: boolean,
 ): string {
-    return parseTypedDateForDisplay(fieldName, typedDate, forwardOnly ? new Date() : undefined);
+    return parseTypedDateForDisplay(fieldName, typedDate, forwardOnly ? momentAdjusted().toDate() : undefined);
 }
 
 /**
@@ -87,7 +88,7 @@ export function parseTypedDateForDisplayUsingFutureDate(
  */
 export function parseTypedDateForSaving(typedDate: string, forwardDate: boolean): moment.Moment | null {
     let date: moment.Moment | null = null;
-    const parsedDate = chrono.parseDate(typedDate, new Date(), { forwardDate });
+    const parsedDate = chrono.parseDate(typedDate, momentAdjusted().toDate(), { forwardDate });
     if (parsedDate !== null) {
         date = window.moment(parsedDate);
     }
