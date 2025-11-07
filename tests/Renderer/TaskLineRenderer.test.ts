@@ -48,8 +48,9 @@ async function renderListItem(
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     const divElement = document.createElement('div');
+    const li = createAndAppendElement('li', divElement);
     return await taskLineRenderer.renderTaskLine({
-        li: createAndAppendElement('li', divElement),
+        li: li,
         task: task,
         taskIndex: 0,
         isTaskInQueryFile: true,
@@ -96,8 +97,9 @@ describe('task line rendering - HTML', () => {
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
+        const li = createAndAppendElement('li', ulElement);
         const listItem = await taskLineRenderer.renderTaskLine({
-            li: createAndAppendElement('li', ulElement),
+            li: li,
             task: new TaskBuilder().build(),
             taskIndex: 0,
             isTaskInQueryFile: true,
