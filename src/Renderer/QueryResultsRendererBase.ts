@@ -10,6 +10,7 @@ import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { explainResults } from '../Query/QueryRendererHelper';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
+import type { TaskGroup } from '../Query/Group/TaskGroup';
 
 /**
  * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
@@ -111,6 +112,8 @@ export abstract class QueryResultsRendererBase {
     protected abstract renderExplanation(explanation: string | null): void;
 
     protected abstract addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups): Promise<void>;
+
+    protected abstract addTaskGroup(group: TaskGroup): Promise<void>;
 
     protected abstract addTaskList(listItems: ListItem[]): Promise<void>;
 
