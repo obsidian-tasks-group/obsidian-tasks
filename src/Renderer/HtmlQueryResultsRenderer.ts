@@ -112,7 +112,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected beginTaskList(): void {
         const taskListContainer = this.ulElementStack.length > 0 ? this.currentLIElement() : this.getContent();
         const taskList = createAndAppendElement('ul', taskListContainer);
-        this.ulElementStack.push(taskList);
 
         taskList.classList.add(
             'contains-task-list',
@@ -125,6 +124,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         if (groupingAttribute && groupingAttribute.length > 0) {
             taskList.dataset.taskGroupBy = groupingAttribute;
         }
+
+        this.ulElementStack.push(taskList);
     }
 
     protected endTaskList(): void {
