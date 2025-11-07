@@ -183,12 +183,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.currentULElement().appendChild(listItem);
     }
 
-    protected async addChildren(children: ListItem[]) {
-        if (children.length > 0) {
-            await this.addTaskList(children);
-        }
-    }
-
     private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = createAndAppendElement('a', listItem);
         editTaskPencil.classList.add('tasks-edit');
