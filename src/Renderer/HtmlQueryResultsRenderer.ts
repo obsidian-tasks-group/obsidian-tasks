@@ -28,7 +28,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly taskLineRenderer: TaskLineRenderer;
 
     private readonly ulElementStack: HTMLUListElement[] = [];
-    private readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
