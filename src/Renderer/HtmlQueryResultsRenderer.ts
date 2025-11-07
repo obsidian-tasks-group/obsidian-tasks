@@ -1,35 +1,19 @@
 import { type App, type Component, Notice, type TFile } from 'obsidian';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { GlobalQuery } from '../Config/GlobalQuery';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
-import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
-import { PerformanceTracker } from '../lib/PerformanceTracker';
-import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import type { TaskGroups } from '../Query/Group/TaskGroups';
-import { explainResults } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
-import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
-import { Task } from '../Task/Task';
+import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
+import type { TaskGroup } from '../Query/Group/TaskGroup';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 
-/**
- * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
- * we pass in getter functions instead of storing duplicate copies of the values.
- */
-interface QueryResultsRendererGetters {
-    source: () => string;
-    tasksFile: () => TasksFile;
-    query: () => IQuery;
-}
-
-export class HtmlQueryResultsRenderer {
+export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     // Renders the description in TaskLineRenderer:
     protected readonly textRenderer;
 
@@ -37,7 +21,6 @@ export class HtmlQueryResultsRenderer {
     protected readonly renderMarkdown;
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
-    public getters: QueryResultsRendererGetters;
 
     // TODO access this via getContent() for now
     public content: HTMLDivElement | null = null;
@@ -45,7 +28,6 @@ export class HtmlQueryResultsRenderer {
     private readonly taskLineRenderer: TaskLineRenderer;
 
     private readonly ulElementStack: HTMLUListElement[] = [];
-    private readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
@@ -63,11 +45,12 @@ export class HtmlQueryResultsRenderer {
         queryRendererParameters: QueryRendererParameters,
         getters: QueryResultsRendererGetters,
     ) {
+        super(getters);
+
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
-        this.getters = getters;
         this.queryRendererParameters = queryRendererParameters;
 
         this.taskLineRenderer = new TaskLineRenderer({
@@ -79,24 +62,6 @@ export class HtmlQueryResultsRenderer {
         });
     }
 
-    public get filePath(): string | undefined {
-        return this.getters.tasksFile().path;
-    }
-
-    public async renderQuery(state: State | State.Warm, tasks: Task[]) {
-        // Don't log anything here, for any state, as it generates huge amounts of
-        // console messages in large vaults, if Obsidian was opened with any
-        // notes with tasks code blocks in Reading or Live Preview mode.
-        const error = this.getters.query().error;
-        if (state === State.Warm && error === undefined) {
-            await this.renderQuerySearchResults(tasks, state);
-        } else if (error) {
-            this.renderErrorMessage(error);
-        } else {
-            this.renderLoadingMessage();
-        }
-    }
-
     private getContent() {
         // TODO remove throw
         const content = this.content;
@@ -106,71 +71,27 @@ export class HtmlQueryResultsRenderer {
         return content;
     }
 
-    private async renderQuerySearchResults(tasks: Task[], state: State.Warm) {
-        const queryResult = this.explainAndPerformSearch(state, tasks);
-
-        if (queryResult.searchErrorMessage !== undefined) {
-            // There was an error in the search, for example due to a problem custom function.
-            this.renderErrorMessage(queryResult.searchErrorMessage);
-            return;
-        }
-
-        await this.renderSearchResults(queryResult);
-    }
-
-    private explainAndPerformSearch(state: State.Warm, tasks: Task[]) {
-        const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
-        measureSearch.start();
-
-        this.getters.query().debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
-
-        if (this.getters.query().queryLayoutOptions.explainQuery) {
-            this.renderExplanation();
-        }
-
-        const queryResult = this.getters.query().applyQueryToTasks(tasks);
-
-        measureSearch.finish();
-        return queryResult;
-    }
-
-    private async renderSearchResults(queryResult: QueryResult) {
-        const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
-        measureRender.start();
-
+    protected renderSearchResultsHeader(queryResult: QueryResult): void {
         this.addCopyButton(queryResult);
-
-        await this.addAllTaskGroups(queryResult.taskGroups);
-
-        const totalTasksCount = queryResult.totalTasksCount;
-        this.addTaskCount(queryResult);
-
-        this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
-
-        measureRender.finish();
     }
 
-    private renderErrorMessage(errorMessage: string) {
+    protected renderSearchResultsFooter(queryResult: QueryResult): void {
+        this.addTaskCount(queryResult);
+    }
+
+    protected renderErrorMessage(errorMessage: string) {
         const container = createAndAppendElement('div', this.getContent());
         container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
-    private renderLoadingMessage() {
+    protected renderLoadingMessage() {
         this.getContent().textContent = 'Loading Tasks ...';
     }
 
-    // Use the 'explain' instruction to enable this
-    private renderExplanation() {
-        const explanationAsString = explainResults(
-            this.getters.source(),
-            GlobalFilter.getInstance(),
-            GlobalQuery.getInstance(),
-            this.getters.tasksFile(),
-        );
-
+    protected renderExplanation(explanation: string | null) {
         const explanationsBlock = createAndAppendElement('pre', this.getContent());
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
-        explanationsBlock.textContent = explanationAsString;
+        explanationsBlock.textContent = explanation;
     }
 
     private addCopyButton(queryResult: QueryResult) {
@@ -183,25 +104,18 @@ export class HtmlQueryResultsRenderer {
         });
     }
 
-    private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
-        for (const group of tasksSortedLimitedGrouped.groups) {
-            // If there were no 'group by' instructions, group.groupHeadings
-            // will be empty, and no headings will be added.
-            await this.addGroupHeadings(group.groupHeadings);
-
-            this.addedListItems.clear();
-            // TODO re-extract the method to include this back
-            const taskList = createAndAppendElement('ul', this.getContent());
-            this.ulElementStack.push(taskList);
-            try {
-                await this.addTaskList(group.tasks);
-            } finally {
-                this.ulElementStack.pop();
-            }
+    protected async addTaskGroup(group: TaskGroup): Promise<void> {
+        // TODO re-extract the method to include this back
+        const taskList = createAndAppendElement('ul', this.getContent());
+        this.ulElementStack.push(taskList);
+        try {
+            await this.addTaskList(group.tasks);
+        } finally {
+            this.ulElementStack.pop();
         }
     }
 
-    private async addTaskList(listItems: ListItem[]): Promise<void> {
+    protected beginTaskList(): void {
         const taskList = this.currentULElement();
         taskList.classList.add(
             'contains-task-list',
@@ -211,92 +125,12 @@ export class HtmlQueryResultsRenderer {
         );
 
         const groupingAttribute = this.getGroupingAttribute();
-        if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
-
-        if (this.getters.query().queryLayoutOptions.hideTree) {
-            await this.addFlatTaskList(listItems);
-        } else {
-            await this.addTreeTaskList(listItems);
+        if (groupingAttribute && groupingAttribute.length > 0) {
+            taskList.dataset.taskGroupBy = groupingAttribute;
         }
     }
 
-    /**
-     * Old-style rendering of tasks:
-     * - What is rendered:
-     *     - Only task lines that match the query are rendered, as a flat list
-     * - The order that lines are rendered:
-     *     - Tasks are rendered in the order specified in 'sort by' instructions and default sort order.
-     * @param listItems
-     * @private
-     */
-    private async addFlatTaskList(listItems: ListItem[]): Promise<void> {
-        for (const [listItemIndex, listItem] of listItems.entries()) {
-            if (listItem instanceof Task) {
-                await this.addTask(listItem, listItemIndex, []);
-            }
-        }
-    }
-
-    /** New-style rendering of tasks:
-     *  - What is rendered:
-     *      - Task lines that match the query are rendered, as a tree.
-     *      - Currently, all child tasks and list items of the found tasks are shown,
-     *        including any child tasks that did not match the query.
-     *  - The order that lines are rendered:
-     *      - The top-level/outermost tasks are sorted in the order specified in 'sort by'
-     *        instructions and default sort order.
-     *      - Child tasks (and list items) are shown in their original order in their Markdown file.
-     * @param listItems
-     * @private
-     */
-    private async addTreeTaskList(listItems: ListItem[]): Promise<void> {
-        for (const [listItemIndex, listItem] of listItems.entries()) {
-            if (this.alreadyAdded(listItem)) {
-                continue;
-            }
-
-            if (this.willBeAddedLater(listItem, listItems)) {
-                continue;
-            }
-
-            if (listItem instanceof Task) {
-                await this.addTask(listItem, listItemIndex, listItem.children);
-            } else {
-                await this.addListItem(listItem, listItemIndex, listItem.children);
-            }
-
-            // The children of this item will be added thanks to recursion and the fact that we always render all children currently
-            this.addedListItems.add(listItem);
-
-            // We think this code may be needed in future, we have been unable to write a failing test for it
-            // for (const childTask of listItem.children) {
-            //     this.addedListItems.add(childTask);
-            // }
-        }
-    }
-
-    private willBeAddedLater(listItem: ListItem, listItems: ListItem[]) {
-        const closestParentTask = listItem.findClosestParentTask();
-        if (!closestParentTask) {
-            return false;
-        }
-
-        if (!this.addedListItems.has(closestParentTask)) {
-            // This task is a direct or indirect child of another task that we are waiting to draw,
-            // so don't draw it yet, it will be done recursively later.
-            if (listItems.includes(closestParentTask)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private alreadyAdded(listItem: ListItem) {
-        return this.addedListItems.has(listItem);
-    }
-
-    private async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
+    protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
         const listItemElement = await this.taskLineRenderer.renderListItem(
             this.currentULElement(),
             listItem,
@@ -315,7 +149,7 @@ export class HtmlQueryResultsRenderer {
         }
     }
 
-    private async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
+    protected async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const listItem = await this.taskLineRenderer.renderTaskLine({
             parentUlElement: this.currentULElement(),
@@ -386,19 +220,7 @@ export class HtmlQueryResultsRenderer {
         span.classList.add('tasks-urgency');
     }
 
-    /**
-     * Display headings for a group of tasks.
-     * @param groupHeadings - The headings to display. This can be an empty array,
-     *                        in which case no headings will be added.
-     * @private
-     */
-    private async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
-        for (const heading of groupHeadings) {
-            await this.addGroupHeading(heading);
-        }
-    }
-
-    private async addGroupHeading(group: GroupDisplayHeading) {
+    protected async addGroupHeading(group: GroupDisplayHeading) {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
