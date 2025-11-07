@@ -138,8 +138,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
-        this.beginTask();
-
         const listItemElement = this.currentLIElement();
 
         await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
@@ -157,8 +155,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
-        this.beginTask();
-
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const listItem = this.currentLIElement();
 
