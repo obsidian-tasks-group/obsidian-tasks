@@ -188,6 +188,8 @@ export abstract class QueryResultsRendererBase {
                 await this.addListItem(listItem, listItemIndex, listItem.children);
             }
 
+            await this.addChildren(listItem.children);
+
             // The children of this item will be added thanks to recursion and the fact that we always render all children currently
             this.addedListItems.add(listItem);
 
