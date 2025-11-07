@@ -153,7 +153,7 @@ export abstract class QueryResultsRendererBase {
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (listItem instanceof Task) {
                 this.beginTask();
-                await this.addTask(listItem, listItemIndex, []);
+                await this.addTask(listItem, listItemIndex);
             }
         }
     }
@@ -183,9 +183,9 @@ export abstract class QueryResultsRendererBase {
             this.beginTask();
 
             if (listItem instanceof Task) {
-                await this.addTask(listItem, listItemIndex, listItem.children);
+                await this.addTask(listItem, listItemIndex);
             } else {
-                await this.addListItem(listItem, listItemIndex, listItem.children);
+                await this.addListItem(listItem, listItemIndex);
             }
 
             await this.addChildren(listItem.children);
@@ -223,9 +223,9 @@ export abstract class QueryResultsRendererBase {
 
     protected abstract beginTask(): void;
 
-    protected abstract addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void>;
+    protected abstract addListItem(listItem: ListItem, listItemIndex: number): Promise<void>;
 
-    protected abstract addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void>;
+    protected abstract addTask(task: Task, taskIndex: number): Promise<void>;
 
     private async addChildren(children: ListItem[]) {
         if (children.length > 0) {
