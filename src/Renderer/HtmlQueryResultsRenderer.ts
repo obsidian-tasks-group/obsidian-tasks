@@ -157,10 +157,11 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
+        this.beginTask();
+
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
-        const parentUlElement = this.currentULElement();
-        const listItem = createAndAppendElement('li', parentUlElement);
-        this.liElementStack.push(listItem);
+        const listItem = this.currentLIElement();
+
         await this.taskLineRenderer.renderTaskLine({
             li: listItem,
             task,
