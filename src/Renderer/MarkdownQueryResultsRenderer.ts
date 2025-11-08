@@ -86,10 +86,13 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
      * @param listItem
      */
     private formatListItem(listItem: ListItem): string {
-        const indentationLevel = Math.max(0, this.taskIndentationLevel - 1);
-        const indentation = '    '.repeat(indentationLevel);
         const statusCharacterToString = listItem.statusCharacter ? `[${listItem.statusCharacter}] ` : '';
-        return `${indentation}- ${statusCharacterToString}${listItem.description}`;
+        return `${this.listItemIndentation()}- ${statusCharacterToString}${listItem.description}`;
+    }
+
+    private listItemIndentation() {
+        const indentationLevel = Math.max(0, this.taskIndentationLevel - 1);
+        return '    '.repeat(indentationLevel);
     }
 
     protected addGroupHeading(group: GroupDisplayHeading): Promise<void> {
