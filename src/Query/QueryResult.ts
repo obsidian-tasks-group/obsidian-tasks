@@ -50,6 +50,11 @@ export class QueryResult {
         return result;
     }
 
+    /**
+     * This doesn't support nested results and list items.
+     * TODO reimplement this with {@link MarkdownQueryResultsRenderer}
+     *
+     */
     public asMarkdown(): string {
         let markdown = '';
 
