@@ -1,5 +1,6 @@
 import moment from 'moment/moment';
 import type { Task } from 'Task/Task';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { State } from '../../src/Obsidian/Cache';
 import { Query } from '../../src/Query/Query';
 import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
@@ -31,6 +32,10 @@ function readMarkdown(tasksMarkdown: string) {
     const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
     return fromLines({ lines });
 }
+
+afterEach(() => {
+    GlobalFilter.getInstance().reset();
+});
 
 describe('MarkdownQueryResultsRenderer tests', () => {
     it('should render single task', async () => {
@@ -196,6 +201,22 @@ group by id
                     - [ ] grandchild task 2
                 - child list item 2
                     - [ ] grandchild task 3
+            "
+        `);
+    });
+
+    it('should render status of non-task list items', async () => {
+        GlobalFilter.getInstance().set('#task');
+        const tasks = readTasksFromSimulatedFile('inheritance_non_task_child');
+
+        const markdown = await renderMarkdown('show tree', tasks);
+        expect(markdown).toMatchInlineSnapshot(`
+            "
+            - [ ] #task task parent
+                - [ ] #task task child
+                - [ ] non-task child
+                - [x] non-task child status x
+                - list item child
             "
         `);
     });
