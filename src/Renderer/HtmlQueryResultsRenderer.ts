@@ -2,12 +2,14 @@ import { type App, type Component, Notice, type TFile } from 'obsidian';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
+import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
+import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
@@ -38,6 +40,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
+    private readonly markdownRenderer: MarkdownQueryResultsRenderer;
+
     constructor(
         renderMarkdown: (
             app: App,
@@ -67,6 +71,12 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             taskLayoutOptions: this.getters.query().taskLayoutOptions,
             queryLayoutOptions: this.getters.query().queryLayoutOptions,
         });
+
+        this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+    }
+
+    protected beginRender(): void {
+        return;
     }
 
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
@@ -77,12 +87,12 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.addTaskCount(queryResult);
     }
 
-    protected renderErrorMessage(errorMessage: string) {
+    protected renderErrorMessage(errorMessage: string): void {
         const container = createAndAppendElement('div', this.content);
         container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
-    protected renderLoadingMessage() {
+    protected renderLoadingMessage(): void {
         this.content.textContent = 'Loading Tasks ...';
     }
 
@@ -92,12 +102,14 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         explanationsBlock.textContent = explanation;
     }
 
-    private addCopyButton(queryResult: QueryResult) {
+    private addCopyButton(_queryResult: QueryResult) {
         const copyButton = createAndAppendElement('button', this.content);
         copyButton.textContent = 'Copy results';
         copyButton.classList.add('plugin-tasks-copy-button');
         copyButton.addEventListener('click', async () => {
-            await navigator.clipboard.writeText(queryResult.asMarkdown());
+            // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
+            await this.markdownRenderer.renderQuery(State.Warm, this.queryRendererParameters.allTasks());
+            await navigator.clipboard.writeText(this.markdownRenderer.markdown);
             new Notice('Results copied to clipboard');
         });
     }
@@ -126,7 +138,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.ulElementStack.pop();
     }
 
-    protected beginListItem() {
+    protected beginListItem(): void {
         const taskList = this.currentULElement();
         this.lastLIElement = createAndAppendElement('li', taskList);
     }
