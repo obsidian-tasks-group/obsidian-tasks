@@ -67,8 +67,21 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         return `- [${task.status.symbol}] ${task.toString()}`;
     }
 
-    protected addListItem(_listItem: ListItem, _listItemIndex: number): Promise<void> {
+    protected addListItem(listItem: ListItem, _listItemIndex: number): Promise<void> {
+        this.markdownLines.push(this.formatListItem(listItem));
         return Promise.resolve();
+    }
+
+    /**
+     * This is based on ListItem.toFileLineString() because tasks rendered in search results
+     * do not necessarily have the same indentation and list markers as the source lines.
+     *
+     * @param listItem
+     */
+    private formatListItem(listItem: ListItem): string {
+        const indentationLevel = Math.max(0, this.taskIndentationLevel - 1);
+        const indentation = '    '.repeat(indentationLevel);
+        return `${indentation}- ${listItem.description}`;
     }
 
     protected addGroupHeading(group: GroupDisplayHeading): Promise<void> {
