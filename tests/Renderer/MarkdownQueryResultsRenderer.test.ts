@@ -23,7 +23,7 @@ function createMarkdownRenderer(source: string) {
 async function renderMarkdown(source: string, tasks: Task[]) {
     const renderer = createMarkdownRenderer(source);
     await renderer.renderQuery(State.Warm, tasks);
-    return renderer.markdown;
+    return '\n' + renderer.markdown;
 }
 
 function readMarkdown(tasksMarkdown: string) {
@@ -37,7 +37,8 @@ describe('MarkdownQueryResultsRenderer tests', () => {
             new TaskBuilder().description('hello').priority(Priority.Medium).build(),
         ]);
         expect(markdown).toMatchInlineSnapshot(`
-            "- [ ] hello 🔼
+            "
+            - [ ] hello 🔼
             "
         `);
     });
@@ -63,7 +64,8 @@ describe('MarkdownQueryResultsRenderer tests', () => {
             new TaskBuilder().description('bye').priority(Priority.High).build(),
         ]);
         expect(markdown).toMatchInlineSnapshot(`
-            "- [ ] hello 🔼
+            "
+            - [ ] hello 🔼
             - [ ] bye ⏫
             "
         `);
@@ -78,7 +80,8 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 
         const markdown = await renderMarkdown('hide tree\ngroup by function task.description.length', tasks);
         expect(markdown).toMatchInlineSnapshot(`
-            "#### 3
+            "
+            #### 3
 
             - [ ] 333
 
@@ -113,7 +116,8 @@ group by id
             tasks,
         );
         expect(markdown).toMatchInlineSnapshot(`
-            "##### %%1%%High priority
+            "
+            ##### %%1%%High priority
 
             ###### 2025-10-30 Thursday
 
