@@ -184,6 +184,22 @@ group by id
 `);
     });
 
+    it('should indent nested list items', async () => {
+        const tasks = readTasksFromSimulatedFile('inheritance_task_2listitem_3task');
+
+        const markdown = await renderMarkdown('show tree', tasks);
+        expect(markdown).toMatchInlineSnapshot(`
+            "
+            - [ ] parent task
+                - child list item 1
+                    - [ ] grandchild task 1
+                    - [ ] grandchild task 2
+                - child list item 2
+                    - [ ] grandchild task 3
+            "
+        `);
+    });
+
     it('should use hyphen as list marker', async () => {
         const tasks = readTasksFromSimulatedFile('mixed_list_markers');
 
