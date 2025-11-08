@@ -69,6 +69,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         });
     }
 
+    protected beginRender() {}
+
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
         this.addCopyButton(queryResult);
     }

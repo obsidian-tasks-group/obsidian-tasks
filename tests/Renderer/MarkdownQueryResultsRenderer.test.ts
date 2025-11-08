@@ -34,6 +34,21 @@ describe('MarkdownQueryResultsRenderer tests', () => {
         );
     });
 
+    it('should render single task twice', async () => {
+        const source = 'hide tree';
+        const renderer = createMarkdownRenderer(source);
+
+        const task = new TaskBuilder().description('hello').priority(Priority.Medium).build();
+
+        await renderer.renderQuery(State.Warm, [task]);
+        const r1 = renderer.markdown;
+
+        await renderer.renderQuery(State.Warm, [task]);
+        const r2 = renderer.markdown;
+
+        expect(r1).toEqual(r2);
+    });
+
     it('should render two tasks', async () => {
         await testMarkdown(
             'hide tree\nsort by priority reverse',
