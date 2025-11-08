@@ -10,7 +10,6 @@ import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { explainResults } from '../Query/QueryRendererHelper';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
-import type { TaskGroup } from '../Query/Group/TaskGroup';
 
 /**
  * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
@@ -116,11 +115,9 @@ export abstract class QueryResultsRendererBase {
             await this.addGroupHeadings(group.groupHeadings);
 
             this.addedListItems.clear();
-            await this.addTaskGroup(group);
+            await this.addTaskList(group.tasks);
         }
     }
-
-    protected abstract addTaskGroup(group: TaskGroup): Promise<void>;
 
     protected async addTaskList(listItems: ListItem[]): Promise<void> {
         this.beginTaskList();
