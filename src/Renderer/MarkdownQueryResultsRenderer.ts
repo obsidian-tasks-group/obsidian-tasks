@@ -29,15 +29,19 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected renderErrorMessage(_errorMessage: string): void {}
 
-    protected endTaskList(): void {
-        this.markdownLines.push('');
-    }
-
     protected beginTaskList(): void {
         const isFirstLine = this.markdownLines.length === 0;
         if (!isFirstLine) {
-            this.markdownLines.push('');
+            this.addEmptyLine();
         }
+    }
+
+    protected endTaskList(): void {
+        this.addEmptyLine();
+    }
+
+    private addEmptyLine() {
+        this.markdownLines.push('');
     }
 
     protected beginListItem(): void {}
