@@ -5,6 +5,7 @@ import { Query } from '../../src/Query/Query';
 import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Priority } from '../../src/Task/Priority';
+import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLines } from '../TestingTools/TestHelpers';
 
@@ -149,6 +150,18 @@ group by id
             ###### No scheduled date
 
             - [ ] 5 #something
+            "
+        `);
+    });
+
+    it('should remove indentation for nested tasks', async () => {
+        const tasks = readTasksFromSimulatedFile('inheritance_2roots_listitem_listitem_task');
+
+        const markdown = await renderMarkdown('', tasks);
+        expect(markdown).toMatchInlineSnapshot(`
+            "
+            - [ ] grandchild task 1
+            - [ ] grandchild task 2
             "
         `);
     });
