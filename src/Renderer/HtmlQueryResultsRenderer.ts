@@ -40,7 +40,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
-    private readonly markdownRenderer;
+    private readonly markdownRenderer: MarkdownQueryResultsRenderer;
 
     constructor(
         renderMarkdown: (
