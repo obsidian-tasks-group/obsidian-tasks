@@ -36,7 +36,10 @@ describe('MarkdownQueryResultsRenderer tests', () => {
         const markdown = await renderMarkdown('hide tree', [
             new TaskBuilder().description('hello').priority(Priority.Medium).build(),
         ]);
-        expect(markdown).toEqual('- [ ] hello 🔼\n');
+        expect(markdown).toMatchInlineSnapshot(`
+            "- [ ] hello 🔼
+            "
+        `);
     });
 
     it('should render single task twice', async () => {
@@ -59,7 +62,11 @@ describe('MarkdownQueryResultsRenderer tests', () => {
             new TaskBuilder().description('hello').priority(Priority.Medium).build(),
             new TaskBuilder().description('bye').priority(Priority.High).build(),
         ]);
-        expect(markdown).toEqual('- [ ] hello 🔼\n- [ ] bye ⏫\n');
+        expect(markdown).toMatchInlineSnapshot(`
+            "- [ ] hello 🔼
+            - [ ] bye ⏫
+            "
+        `);
     });
 
     it('should write one grouping level', async () => {
@@ -70,18 +77,20 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 `);
 
         const markdown = await renderMarkdown('hide tree\ngroup by function task.description.length', tasks);
-        expect(markdown).toEqual(`#### 3
+        expect(markdown).toMatchInlineSnapshot(`
+            "#### 3
 
-- [ ] 333
+            - [ ] 333
 
-#### 4
+            #### 4
 
-- [ ] 4444
+            - [ ] 4444
 
-#### 5
+            #### 5
 
-- [ ] 55555
-`);
+            - [ ] 55555
+            "
+        `);
     });
 
     it('should write four grouping levels', async () => {
@@ -103,38 +112,40 @@ group by id
 `,
             tasks,
         );
-        expect(markdown).toEqual(`##### %%1%%High priority
+        expect(markdown).toMatchInlineSnapshot(`
+            "##### %%1%%High priority
 
-###### 2025-10-30 Thursday
+            ###### 2025-10-30 Thursday
 
-- [ ] 3 ⏫ ⏳ 2025-10-30
+            - [ ] 3 ⏫ ⏳ 2025-10-30
 
-##### %%3%%Normal priority
+            ##### %%3%%Normal priority
 
-###### 2025-10-29 Wednesday
+            ###### 2025-10-29 Wednesday
 
-- [ ] 1 ⏳ 2025-10-29
-- [ ] 4 ⏳ 2025-10-29
+            - [ ] 1 ⏳ 2025-10-29
+            - [ ] 4 ⏳ 2025-10-29
 
-###### No scheduled date
+            ###### No scheduled date
 
-###### id6
+            ###### id6
 
-- [ ] 6 🆔 id6
+            - [ ] 6 🆔 id6
 
-##### %%5%%Lowest priority
+            ##### %%5%%Lowest priority
 
-###### No scheduled date
+            ###### No scheduled date
 
-- [ ] 2 ⏬
+            - [ ] 2 ⏬
 
-#### #something
+            #### #something
 
-##### %%3%%Normal priority
+            ##### %%3%%Normal priority
 
-###### No scheduled date
+            ###### No scheduled date
 
-- [ ] 5 #something
-`);
+            - [ ] 5 #something
+            "
+        `);
     });
 });
