@@ -35,6 +35,8 @@ export abstract class QueryResultsRendererBase {
     }
 
     public async renderQuery(state: State | State.Warm, tasks: Task[]) {
+        this.beginRender();
+
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
@@ -49,6 +51,13 @@ export abstract class QueryResultsRendererBase {
             this.renderLoadingMessage();
         }
     }
+
+    /**
+     * This is called at the start of every render, implement this if you want to reset some state for each render.
+     *
+     * @protected
+     */
+    protected abstract beginRender(): void;
 
     private async renderQuerySearchResults(tasks: Task[]) {
         const queryResult = this.explainAndPerformSearch(tasks);
