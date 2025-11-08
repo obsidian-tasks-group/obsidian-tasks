@@ -29,12 +29,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected renderErrorMessage(_errorMessage: string): void {}
 
-    protected beginTaskList(): void {
-        const isFirstLine = this.markdownLines.length === 0;
-        if (!isFirstLine) {
-            this.addEmptyLine();
-        }
-    }
+    protected beginTaskList(): void {}
 
     protected endTaskList(): void {
         this.addEmptyLine();
@@ -56,7 +51,9 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected addGroupHeading(group: GroupDisplayHeading): Promise<void> {
-        this.markdownLines.push(`#### ${group.displayName}`);
+        const headingPrefix = '#'.repeat(Math.min(4 + group.nestingLevel, 6));
+        this.markdownLines.push(`${headingPrefix} ${group.displayName}`);
+        this.addEmptyLine();
         return Promise.resolve();
     }
 }
