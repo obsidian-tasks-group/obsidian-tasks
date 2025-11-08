@@ -12,6 +12,13 @@ import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
+/**
+ * HTML-specific implementation of {@link QueryResultsRendererBase} abstract class.
+ *
+ * @example
+ *   this.htmlRenderer.content = content;
+ *   await this.htmlRenderer.renderQuery(state, tasks);
+ */
 export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     // Renders the description in TaskLineRenderer:
     protected readonly textRenderer;
