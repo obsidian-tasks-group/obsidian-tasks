@@ -20,25 +20,23 @@ function createMarkdownRenderer(source: string) {
     });
 }
 
-async function testMarkdown(source: string, tasks: Task[], expectedMarkdown: string) {
+async function renderMarkdown(source: string, tasks: Task[]) {
     const renderer = createMarkdownRenderer(source);
     await renderer.renderQuery(State.Warm, tasks);
-    expect(renderer.markdown).toEqual(expectedMarkdown);
+    return renderer.markdown;
 }
 
 function readMarkdown(tasksMarkdown: string) {
     const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
-    const tasks = fromLines({ lines });
-    return tasks;
+    return fromLines({ lines });
 }
 
 describe('MarkdownQueryResultsRenderer tests', () => {
     it('should render single task', async () => {
-        await testMarkdown(
-            'hide tree',
-            [new TaskBuilder().description('hello').priority(Priority.Medium).build()],
-            '- [ ] hello 🔼\n',
-        );
+        const markdown = await renderMarkdown('hide tree', [
+            new TaskBuilder().description('hello').priority(Priority.Medium).build(),
+        ]);
+        expect(markdown).toEqual('- [ ] hello 🔼\n');
     });
 
     it('should render single task twice', async () => {
@@ -57,14 +55,11 @@ describe('MarkdownQueryResultsRenderer tests', () => {
     });
 
     it('should render two tasks', async () => {
-        await testMarkdown(
-            'hide tree\nsort by priority reverse',
-            [
-                new TaskBuilder().description('hello').priority(Priority.Medium).build(),
-                new TaskBuilder().description('bye').priority(Priority.High).build(),
-            ],
-            '- [ ] hello 🔼\n- [ ] bye ⏫\n',
-        );
+        const markdown = await renderMarkdown('hide tree\nsort by priority reverse', [
+            new TaskBuilder().description('hello').priority(Priority.Medium).build(),
+            new TaskBuilder().description('bye').priority(Priority.High).build(),
+        ]);
+        expect(markdown).toEqual('- [ ] hello 🔼\n- [ ] bye ⏫\n');
     });
 
     it('should write one grouping level', async () => {
@@ -74,10 +69,8 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 - [ ] 55555
 `);
 
-        await testMarkdown(
-            'hide tree\ngroup by function task.description.length',
-            tasks,
-            `#### 3
+        const markdown = await renderMarkdown('hide tree\ngroup by function task.description.length', tasks);
+        expect(markdown).toEqual(`#### 3
 
 - [ ] 333
 
@@ -88,8 +81,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 #### 5
 
 - [ ] 55555
-`,
-        );
+`);
     });
 
     it('should write four grouping levels', async () => {
@@ -102,7 +94,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 - [ ] 6 🆔 id6
 `);
 
-        await testMarkdown(
+        const markdown = await renderMarkdown(
             `
 group by function task.tags.join(',')
 group by priority
@@ -110,7 +102,8 @@ group by scheduled
 group by id
 `,
             tasks,
-            `##### %%1%%High priority
+        );
+        expect(markdown).toEqual(`##### %%1%%High priority
 
 ###### 2025-10-30 Thursday
 
@@ -142,7 +135,6 @@ group by id
 ###### No scheduled date
 
 - [ ] 5 #something
-`,
-        );
+`);
     });
 });
