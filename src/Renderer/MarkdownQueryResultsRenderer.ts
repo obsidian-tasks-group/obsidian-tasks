@@ -68,7 +68,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
      *
      * @param task
      */
-    public formatTask(task: Task): string {
+    private formatTask(task: Task): string {
         return `${this.listItemIndentation()}- [${task.status.symbol}] ${task.toString()}`;
     }
 
