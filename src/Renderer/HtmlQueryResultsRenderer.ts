@@ -28,7 +28,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly ulElementStack: HTMLUListElement[] = [];
     private readonly liElementStack: HTMLLIElement[] = [];
-    // @ts-expect-error not read yet
     private lastLIElement: HTMLLIElement = document.createElement('li');
 
     private readonly queryRendererParameters: QueryRendererParameters;
@@ -333,6 +332,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private currentLIElement() {
-        return this.liElementStack[this.liElementStack.length - 1];
+        return this.lastLIElement;
     }
 }
