@@ -102,9 +102,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         copyButton.classList.add('plugin-tasks-copy-button');
         copyButton.addEventListener('click', async () => {
             // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
-            const renderer = new MarkdownQueryResultsRenderer(this.getters);
-            await renderer.renderQuery(State.Warm, this.queryRendererParameters.allTasks());
-            await navigator.clipboard.writeText(renderer.markdown);
+            const markdownRenderer = new MarkdownQueryResultsRenderer(this.getters);
+            await markdownRenderer.renderQuery(State.Warm, this.queryRendererParameters.allTasks());
+            await navigator.clipboard.writeText(markdownRenderer.markdown);
             new Notice('Results copied to clipboard');
         });
     }
