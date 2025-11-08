@@ -26,6 +26,12 @@ async function testMarkdown(source: string, tasks: Task[], expectedMarkdown: str
     expect(renderer.markdown).toEqual(expectedMarkdown);
 }
 
+function readMarkdown(tasksMarkdown: string) {
+    const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
+    const tasks = fromLines({ lines });
+    return tasks;
+}
+
 describe('MarkdownQueryResultsRenderer tests', () => {
     it('should render single task', async () => {
         await testMarkdown(
@@ -62,14 +68,12 @@ describe('MarkdownQueryResultsRenderer tests', () => {
     });
 
     it('should write one grouping level', async () => {
-        const tasksMarkdown = `
+        const tasks = readMarkdown(`
 - [ ] 4444
 - [ ] 333
 - [ ] 55555
-`;
+`);
 
-        const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
-        const tasks = fromLines({ lines });
         await testMarkdown(
             'hide tree\ngroup by function task.description.length',
             tasks,
