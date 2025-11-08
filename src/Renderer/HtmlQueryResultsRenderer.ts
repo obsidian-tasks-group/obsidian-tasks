@@ -28,6 +28,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly ulElementStack: HTMLUListElement[] = [];
     private readonly liElementStack: HTMLLIElement[] = [];
+    // @ts-expect-error not read yet
+    private lastLIElement: HTMLLIElement = document.createElement('li');
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
@@ -131,6 +133,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const taskList = this.currentULElement();
         const listItemElement = createAndAppendElement('li', taskList);
         this.liElementStack.push(listItemElement);
+        this.lastLIElement = listItemElement;
     }
 
     protected async addListItem(listItem: ListItem, listItemIndex: number): Promise<void> {
