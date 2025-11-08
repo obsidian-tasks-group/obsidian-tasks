@@ -75,7 +75,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
     }
 
-    protected beginRender() {
+    protected beginRender(): void {
         return;
     }
 
@@ -87,12 +87,12 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.addTaskCount(queryResult);
     }
 
-    protected renderErrorMessage(errorMessage: string) {
+    protected renderErrorMessage(errorMessage: string): void {
         const container = createAndAppendElement('div', this.content);
         container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
-    protected renderLoadingMessage() {
+    protected renderLoadingMessage(): void {
         this.content.textContent = 'Loading Tasks ...';
     }
 
@@ -138,7 +138,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.ulElementStack.pop();
     }
 
-    protected beginListItem() {
+    protected beginListItem(): void {
         const taskList = this.currentULElement();
         this.lastLIElement = createAndAppendElement('li', taskList);
     }
