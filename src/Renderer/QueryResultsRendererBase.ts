@@ -125,14 +125,20 @@ export abstract class QueryResultsRendererBase {
     protected async addTaskList(listItems: ListItem[]): Promise<void> {
         this.beginTaskList();
 
-        if (this.getters.query().queryLayoutOptions.hideTree) {
-            await this.addFlatTaskList(listItems);
-        } else {
-            await this.addTreeTaskList(listItems);
+        try {
+            if (this.getters.query().queryLayoutOptions.hideTree) {
+                await this.addFlatTaskList(listItems);
+            } else {
+                await this.addTreeTaskList(listItems);
+            }
+        } finally {
+            this.endTaskList();
         }
     }
 
     protected abstract beginTaskList(): void;
+
+    protected abstract endTaskList(): void;
 
     /**
      * Old-style rendering of tasks:
@@ -146,7 +152,8 @@ export abstract class QueryResultsRendererBase {
     private async addFlatTaskList(listItems: ListItem[]): Promise<void> {
         for (const [listItemIndex, listItem] of listItems.entries()) {
             if (listItem instanceof Task) {
-                await this.addTask(listItem, listItemIndex, []);
+                this.beginListItem();
+                await this.addTask(listItem, listItemIndex);
             }
         }
     }
@@ -173,11 +180,15 @@ export abstract class QueryResultsRendererBase {
                 continue;
             }
 
+            this.beginListItem();
+
             if (listItem instanceof Task) {
-                await this.addTask(listItem, listItemIndex, listItem.children);
+                await this.addTask(listItem, listItemIndex);
             } else {
-                await this.addListItem(listItem, listItemIndex, listItem.children);
+                await this.addListItem(listItem, listItemIndex);
             }
+
+            await this.addChildren(listItem.children);
 
             // The children of this item will be added thanks to recursion and the fact that we always render all children currently
             this.addedListItems.add(listItem);
@@ -210,9 +221,17 @@ export abstract class QueryResultsRendererBase {
         return this.addedListItems.has(listItem);
     }
 
-    protected abstract addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void>;
+    protected abstract beginListItem(): void;
 
-    protected abstract addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void>;
+    protected abstract addListItem(listItem: ListItem, listItemIndex: number): Promise<void>;
+
+    protected abstract addTask(task: Task, taskIndex: number): Promise<void>;
+
+    private async addChildren(children: ListItem[]) {
+        if (children.length > 0) {
+            await this.addTaskList(children);
+        }
+    }
 
     /**
      * Display headings for a group of tasks.
