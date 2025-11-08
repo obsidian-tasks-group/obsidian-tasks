@@ -4,6 +4,13 @@ import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 
+/**
+ * @example
+ *   const markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+ *   await markdownRenderer.renderQuery(State.Warm, allTasks);
+ *   const markdown = markdownRenderer.markdown;
+ *
+ */
 export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly markdownLines: string[] = [];
     private taskIndentationLevel = 0;
