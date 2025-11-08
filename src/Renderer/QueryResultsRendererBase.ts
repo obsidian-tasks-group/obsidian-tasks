@@ -120,7 +120,9 @@ export abstract class QueryResultsRendererBase {
         }
     }
 
-    protected abstract addTaskGroup(group: TaskGroup): Promise<void>;
+    private async addTaskGroup(group: TaskGroup): Promise<void> {
+        await this.addTaskList(group.tasks);
+    }
 
     protected async addTaskList(listItems: ListItem[]): Promise<void> {
         this.beginTaskList();
