@@ -73,8 +73,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
         await testMarkdown(
             'hide tree\ngroup by function task.description.length',
             tasks,
-            `
-#### 3
+            `#### 3
 
 - [ ] 333
 

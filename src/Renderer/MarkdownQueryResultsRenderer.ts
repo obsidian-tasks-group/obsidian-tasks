@@ -45,7 +45,13 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected addGroupHeading(group: GroupDisplayHeading): Promise<void> {
-        this._markdown += `\n#### ${group.displayName}\n\n`;
+        const isFirstLine = this._markdown === '';
+        if (!isFirstLine) {
+            this._markdown += '\n';
+        }
+
+        this._markdown += `#### ${group.displayName}\n\n`;
+
         return Promise.resolve();
     }
 }
