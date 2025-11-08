@@ -9,19 +9,19 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
-async function testMarkdown(source: string, tasks: Task[], expectedMarkdown: string) {
+function createMarkdownRenderer(source: string) {
     const tasksFile = new TasksFile('query.md');
-
     const query = new Query(source, tasksFile);
-
-    const renderer = new MarkdownQueryResultsRenderer({
+    return new MarkdownQueryResultsRenderer({
         query: () => query,
         tasksFile: () => tasksFile,
         source: () => source,
     });
+}
 
+async function testMarkdown(source: string, tasks: Task[], expectedMarkdown: string) {
+    const renderer = createMarkdownRenderer(source);
     await renderer.renderQuery(State.Warm, tasks);
-
     expect(renderer.markdown).toEqual(expectedMarkdown);
 }
 
