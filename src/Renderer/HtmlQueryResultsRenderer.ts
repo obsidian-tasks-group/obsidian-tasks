@@ -21,7 +21,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
 
-    // TODO access this via getContent() for now
     public content: HTMLDivElement = document.createElement('div');
 
     private readonly taskLineRenderer: TaskLineRenderer;
@@ -62,10 +61,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         });
     }
 
-    private getContent() {
-        return this.content;
-    }
-
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
         this.addCopyButton(queryResult);
     }
@@ -75,22 +70,22 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderErrorMessage(errorMessage: string) {
-        const container = createAndAppendElement('div', this.getContent());
+        const container = createAndAppendElement('div', this.content);
         container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
     protected renderLoadingMessage() {
-        this.getContent().textContent = 'Loading Tasks ...';
+        this.content.textContent = 'Loading Tasks ...';
     }
 
     protected renderExplanation(explanation: string | null) {
-        const explanationsBlock = createAndAppendElement('pre', this.getContent());
+        const explanationsBlock = createAndAppendElement('pre', this.content);
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.textContent = explanation;
     }
 
     private addCopyButton(queryResult: QueryResult) {
-        const copyButton = createAndAppendElement('button', this.getContent());
+        const copyButton = createAndAppendElement('button', this.content);
         copyButton.textContent = 'Copy results';
         copyButton.classList.add('plugin-tasks-copy-button');
         copyButton.addEventListener('click', async () => {
@@ -100,7 +95,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected beginTaskList(): void {
-        const taskListContainer = this.ulElementStack.length > 0 ? this.lastLIElement : this.getContent();
+        const taskListContainer = this.ulElementStack.length > 0 ? this.lastLIElement : this.content;
         const taskList = createAndAppendElement('ul', taskListContainer);
 
         taskList.classList.add(
@@ -202,7 +197,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             header = 'h5';
         }
 
-        const headerEl = createAndAppendElement(header, this.getContent());
+        const headerEl = createAndAppendElement(header, this.content);
         headerEl.classList.add('tasks-group-heading');
 
         if (this.obsidianComponent === null) {
@@ -285,7 +280,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private addTaskCount(queryResult: QueryResult) {
         if (!this.getters.query().queryLayoutOptions.hideTaskCount) {
-            const taskCount = createAndAppendElement('div', this.getContent());
+            const taskCount = createAndAppendElement('div', this.content);
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
         }
