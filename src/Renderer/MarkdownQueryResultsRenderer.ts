@@ -15,6 +15,10 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         return this._markdown;
     }
 
+    protected beginRender() {
+        this._markdown = '';
+    }
+
     protected renderSearchResultsHeader(_queryResult: QueryResult): void {}
 
     protected renderSearchResultsFooter(_queryResult: QueryResult): void {}
