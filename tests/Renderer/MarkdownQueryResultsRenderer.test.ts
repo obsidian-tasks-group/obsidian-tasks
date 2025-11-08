@@ -198,4 +198,17 @@ group by id
             "
         `);
     });
+
+    it('should remove callout prefixes', async () => {
+        const tasks = readTasksFromSimulatedFile('callout_labelled');
+
+        const markdown = await renderMarkdown('', tasks);
+
+        expect(markdown).toMatchInlineSnapshot(`
+            "
+            - [ ] #task Task in 'callout_labelled'
+            - [ ] #task Task indented in 'callout_labelled'
+            "
+        `);
+    });
 });
