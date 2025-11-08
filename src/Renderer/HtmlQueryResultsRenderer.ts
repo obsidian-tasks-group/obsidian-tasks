@@ -106,7 +106,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected beginTaskList(): void {
-        const taskListContainer = this.ulElementStack.length > 0 ? this.currentLIElement() : this.getContent();
+        const taskListContainer = this.ulElementStack.length > 0 ? this.lastLIElement : this.getContent();
         const taskList = createAndAppendElement('ul', taskListContainer);
 
         taskList.classList.add(
@@ -136,14 +136,14 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addListItem(listItem: ListItem, listItemIndex: number): Promise<void> {
-        const listItemElement = this.currentLIElement();
+        const listItemElement = this.lastLIElement;
 
         await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
     }
 
     protected async addTask(task: Task, taskIndex: number): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
-        const listItem = this.currentLIElement();
+        const listItem = this.lastLIElement;
 
         await this.taskLineRenderer.renderTaskLine({
             li: listItem,
@@ -329,9 +329,5 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private currentULElement(): HTMLUListElement {
         return this.ulElementStack[this.ulElementStack.length - 1];
-    }
-
-    private currentLIElement() {
-        return this.lastLIElement;
     }
 }
