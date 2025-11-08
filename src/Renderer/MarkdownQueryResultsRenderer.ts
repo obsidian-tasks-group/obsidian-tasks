@@ -28,15 +28,25 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         this.taskIndentationLevel = 0;
     }
 
-    protected renderSearchResultsHeader(_queryResult: QueryResult): void {}
+    protected renderSearchResultsHeader(_queryResult: QueryResult): void {
+        return;
+    }
 
-    protected renderSearchResultsFooter(_queryResult: QueryResult): void {}
+    protected renderSearchResultsFooter(_queryResult: QueryResult): void {
+        return;
+    }
 
-    protected renderLoadingMessage(): void {}
+    protected renderLoadingMessage(): void {
+        return;
+    }
 
-    protected renderExplanation(_explanation: string | null): void {}
+    protected renderExplanation(_explanation: string | null): void {
+        return;
+    }
 
-    protected renderErrorMessage(_errorMessage: string): void {}
+    protected renderErrorMessage(_errorMessage: string): void {
+        return;
+    }
 
     protected beginTaskList(): void {
         this.taskIndentationLevel += 1;
@@ -55,7 +65,9 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         this.markdownLines.push('');
     }
 
-    protected beginListItem(): void {}
+    protected beginListItem(): void {
+        return;
+    }
 
     protected addTask(task: Task, _taskIndex: number): Promise<void> {
         this.markdownLines.push(this.formatTask(task));
