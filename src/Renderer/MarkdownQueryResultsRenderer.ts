@@ -53,8 +53,18 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     protected addTask(task: Task, _taskIndex: number): Promise<void> {
         const indentationLevel = Math.max(0, this.taskIndentationLevel - 1);
         const indentation = '    '.repeat(indentationLevel);
-        this.markdownLines.push(`${indentation}${task.originalMarkdown.trim()}`);
+        this.markdownLines.push(`${indentation}${this.formatTask(task)}`);
         return Promise.resolve();
+    }
+
+    /**
+     * This is a duplicate of Task.toFileLineString() because tasks rendered in search results
+     * do not necessarily have the same indentation and list markers as the source task lines.
+     *
+     * @param task
+     */
+    public formatTask(task: Task): string {
+        return `- [${task.status.symbol}] ${task.toString()}`;
     }
 
     protected addListItem(_listItem: ListItem, _listItemIndex: number): Promise<void> {

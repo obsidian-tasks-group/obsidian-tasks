@@ -183,4 +183,19 @@ group by id
             "
 `);
     });
+
+    it('should use hyphen as list marker', async () => {
+        const tasks = readTasksFromSimulatedFile('mixed_list_markers');
+
+        const markdown = await renderMarkdown('', tasks);
+
+        expect(markdown).toMatchInlineSnapshot(`
+            "
+            - [ ] hyphen
+            - [ ] asterisk
+            - [ ] plus
+            - [ ] numbered task
+            "
+        `);
+    });
 });
