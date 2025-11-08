@@ -3,7 +3,6 @@ import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postp
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import type { TaskGroup } from '../Query/Group/TaskGroup';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
@@ -103,10 +102,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             await navigator.clipboard.writeText(queryResult.asMarkdown());
             new Notice('Results copied to clipboard');
         });
-    }
-
-    protected async addTaskGroup(group: TaskGroup): Promise<void> {
-        await this.addTaskList(group.tasks);
     }
 
     protected beginTaskList(): void {
