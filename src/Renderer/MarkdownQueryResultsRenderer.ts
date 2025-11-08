@@ -5,18 +5,18 @@ import type { Task } from '../Task/Task';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 
 export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
-    private _markdown: string = '';
+    private readonly markdownLines: string[] = [];
 
     constructor(getters: QueryResultsRendererGetters) {
         super(getters);
     }
 
     get markdown(): string {
-        return this._markdown;
+        return this.markdownLines.join('\n');
     }
 
     protected beginRender() {
-        this._markdown = '';
+        this.markdownLines.length = 0;
     }
 
     protected renderSearchResultsHeader(_queryResult: QueryResult): void {}
@@ -29,14 +29,21 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected renderErrorMessage(_errorMessage: string): void {}
 
-    protected endTaskList(): void {}
+    protected endTaskList(): void {
+        this.markdownLines.push('');
+    }
 
-    protected beginTaskList(): void {}
+    protected beginTaskList(): void {
+        const isFirstLine = this.markdownLines.length === 0;
+        if (!isFirstLine) {
+            this.markdownLines.push('');
+        }
+    }
 
     protected beginListItem(): void {}
 
     protected addTask(_task: Task, _taskIndex: number): Promise<void> {
-        this._markdown += _task.originalMarkdown + '\n';
+        this.markdownLines.push(_task.originalMarkdown);
         return Promise.resolve();
     }
 
@@ -45,13 +52,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected addGroupHeading(group: GroupDisplayHeading): Promise<void> {
-        const isFirstLine = this._markdown === '';
-        if (!isFirstLine) {
-            this._markdown += '\n';
-        }
-
-        this._markdown += `#### ${group.displayName}\n\n`;
-
+        this.markdownLines.push(`#### ${group.displayName}`);
         return Promise.resolve();
     }
 }
