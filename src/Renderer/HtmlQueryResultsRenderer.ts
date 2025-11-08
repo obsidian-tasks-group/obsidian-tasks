@@ -21,10 +21,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
 
-    public content: HTMLDivElement = document.createElement('div');
-
     private readonly taskLineRenderer: TaskLineRenderer;
 
+    public content: HTMLDivElement = document.createElement('div');
     private readonly ulElementStack: HTMLUListElement[] = [];
     private lastLIElement: HTMLLIElement = document.createElement('li');
 
