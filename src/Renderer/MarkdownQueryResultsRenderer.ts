@@ -6,6 +6,7 @@ import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './Qu
 
 export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly markdownLines: string[] = [];
+    private taskIndentationLevel = 0;
 
     constructor(getters: QueryResultsRendererGetters) {
         super(getters);
@@ -17,6 +18,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected beginRender() {
         this.markdownLines.length = 0;
+        this.taskIndentationLevel = 0;
     }
 
     protected renderSearchResultsHeader(_queryResult: QueryResult): void {}
@@ -29,10 +31,17 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected renderErrorMessage(_errorMessage: string): void {}
 
-    protected beginTaskList(): void {}
+    protected beginTaskList(): void {
+        this.taskIndentationLevel += 1;
+    }
 
     protected endTaskList(): void {
-        this.addEmptyLine();
+        this.taskIndentationLevel -= 1;
+
+        const isOutermostList = this.taskIndentationLevel === 0;
+        if (isOutermostList) {
+            this.addEmptyLine();
+        }
     }
 
     private addEmptyLine() {
@@ -42,7 +51,9 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     protected beginListItem(): void {}
 
     protected addTask(task: Task, _taskIndex: number): Promise<void> {
-        this.markdownLines.push(task.originalMarkdown.trim());
+        const indentationLevel = Math.max(0, this.taskIndentationLevel - 1);
+        const indentation = '    '.repeat(indentationLevel);
+        this.markdownLines.push(`${indentation}${task.originalMarkdown.trim()}`);
         return Promise.resolve();
     }
 
