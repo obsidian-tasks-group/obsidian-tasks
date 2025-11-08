@@ -40,6 +40,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
+    private readonly markdownRenderer;
+
     constructor(
         renderMarkdown: (
             app: App,
@@ -69,6 +71,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             taskLayoutOptions: this.getters.query().taskLayoutOptions,
             queryLayoutOptions: this.getters.query().queryLayoutOptions,
         });
+
+        this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
     }
 
     protected beginRender() {}
@@ -102,9 +106,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         copyButton.classList.add('plugin-tasks-copy-button');
         copyButton.addEventListener('click', async () => {
             // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
-            const markdownRenderer = new MarkdownQueryResultsRenderer(this.getters);
-            await markdownRenderer.renderQuery(State.Warm, this.queryRendererParameters.allTasks());
-            await navigator.clipboard.writeText(markdownRenderer.markdown);
+            await this.markdownRenderer.renderQuery(State.Warm, this.queryRendererParameters.allTasks());
+            await navigator.clipboard.writeText(this.markdownRenderer.markdown);
             new Notice('Results copied to clipboard');
         });
     }
