@@ -44,7 +44,8 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         return Promise.resolve();
     }
 
-    protected addGroupHeading(_group: GroupDisplayHeading): Promise<void> {
+    protected addGroupHeading(group: GroupDisplayHeading): Promise<void> {
+        this._markdown += `\n#### ${group.displayName}\n\n`;
         return Promise.resolve();
     }
 }

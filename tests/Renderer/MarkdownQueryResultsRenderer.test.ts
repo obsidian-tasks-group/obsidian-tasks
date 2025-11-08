@@ -6,6 +6,7 @@ import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryRe
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Priority } from '../../src/Task/Priority';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { fromLines } from '../TestingTools/TestHelpers';
 
 window.moment = moment;
 
@@ -57,6 +58,34 @@ describe('MarkdownQueryResultsRenderer tests', () => {
                 new TaskBuilder().description('bye').priority(Priority.High).build(),
             ],
             '- [ ] hello 🔼\n- [ ] bye ⏫\n',
+        );
+    });
+
+    it('should write one grouping level', async () => {
+        const tasksMarkdown = `
+- [ ] 4444
+- [ ] 333
+- [ ] 55555
+`;
+
+        const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
+        const tasks = fromLines({ lines });
+        await testMarkdown(
+            'hide tree\ngroup by function task.description.length',
+            tasks,
+            `
+#### 3
+
+- [ ] 333
+
+#### 4
+
+- [ ] 4444
+
+#### 5
+
+- [ ] 55555
+`,
         );
     });
 });
