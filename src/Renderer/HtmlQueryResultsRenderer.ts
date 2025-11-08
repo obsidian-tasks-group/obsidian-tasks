@@ -27,7 +27,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly taskLineRenderer: TaskLineRenderer;
 
     private readonly ulElementStack: HTMLUListElement[] = [];
-    private readonly liElementStack: HTMLLIElement[] = [];
     private lastLIElement: HTMLLIElement = document.createElement('li');
 
     private readonly queryRendererParameters: QueryRendererParameters;
@@ -131,7 +130,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected beginListItem() {
         const taskList = this.currentULElement();
         const listItemElement = createAndAppendElement('li', taskList);
-        this.liElementStack.push(listItemElement);
         this.lastLIElement = listItemElement;
     }
 
