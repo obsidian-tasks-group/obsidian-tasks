@@ -2,12 +2,14 @@ import { type App, type Component, Notice, type TFile } from 'obsidian';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
+import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
+import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
@@ -94,12 +96,14 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         explanationsBlock.textContent = explanation;
     }
 
-    private addCopyButton(queryResult: QueryResult) {
+    private addCopyButton(_queryResult: QueryResult) {
         const copyButton = createAndAppendElement('button', this.content);
         copyButton.textContent = 'Copy results';
         copyButton.classList.add('plugin-tasks-copy-button');
         copyButton.addEventListener('click', async () => {
-            await navigator.clipboard.writeText(queryResult.asMarkdown());
+            const renderer = new MarkdownQueryResultsRenderer(this.getters);
+            await renderer.renderQuery(State.Warm, this.queryRendererParameters.allTasks());
+            await navigator.clipboard.writeText(renderer.markdown);
             new Notice('Results copied to clipboard');
         });
     }
