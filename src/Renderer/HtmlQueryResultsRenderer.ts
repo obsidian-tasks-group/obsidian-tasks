@@ -22,7 +22,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected readonly obsidianApp: App;
 
     // TODO access this via getContent() for now
-    public content: HTMLDivElement | null = null;
+    public content: HTMLDivElement = document.createElement('div');
 
     private readonly taskLineRenderer: TaskLineRenderer;
 

@@ -141,6 +141,5 @@ export class QueryResultsRenderer {
     public async render(state: State | State.Warm, tasks: Task[], content: HTMLDivElement) {
         this.htmlRenderer.content = content;
         await this.htmlRenderer.renderQuery(state, tasks);
-        this.htmlRenderer.content = null;
     }
 }
