@@ -23,7 +23,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         return this.markdownLines.join('\n');
     }
 
-    protected beginRender() {
+    protected beginRender(): void {
         this.markdownLines.length = 0;
         this.taskIndentationLevel = 0;
     }
