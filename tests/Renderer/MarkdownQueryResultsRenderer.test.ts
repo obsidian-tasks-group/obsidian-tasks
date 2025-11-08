@@ -91,4 +91,58 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 `,
         );
     });
+
+    it('should write four grouping levels', async () => {
+        const tasks = readMarkdown(`
+- [ ] 1 ⏳ 2025-10-29
+- [ ] 2 ⏬
+- [ ] 3 ⏫ ⏳ 2025-10-30
+- [ ] 4 ⏳ 2025-10-29
+- [ ] 5 #something
+- [ ] 6 🆔 id6
+`);
+
+        await testMarkdown(
+            `
+group by function task.tags.join(',')
+group by priority
+group by scheduled
+group by id
+`,
+            tasks,
+            `##### %%1%%High priority
+
+###### 2025-10-30 Thursday
+
+- [ ] 3 ⏫ ⏳ 2025-10-30
+
+##### %%3%%Normal priority
+
+###### 2025-10-29 Wednesday
+
+- [ ] 1 ⏳ 2025-10-29
+- [ ] 4 ⏳ 2025-10-29
+
+###### No scheduled date
+
+###### id6
+
+- [ ] 6 🆔 id6
+
+##### %%5%%Lowest priority
+
+###### No scheduled date
+
+- [ ] 2 ⏬
+
+#### #something
+
+##### %%3%%Normal priority
+
+###### No scheduled date
+
+- [ ] 5 #something
+`,
+        );
+    });
 });
