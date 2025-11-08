@@ -3,15 +3,15 @@ import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postp
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
+import type { TaskGroup } from '../Query/Group/TaskGroup';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import type { TaskGroup } from '../Query/Group/TaskGroup';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
-import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
+import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     // Renders the description in TaskLineRenderer:
@@ -28,6 +28,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly taskLineRenderer: TaskLineRenderer;
 
     private readonly ulElementStack: HTMLUListElement[] = [];
+    private readonly liElementStack: HTMLLIElement[] = [];
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
@@ -105,18 +106,13 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addTaskGroup(group: TaskGroup): Promise<void> {
-        // TODO re-extract the method to include this back
-        const taskList = createAndAppendElement('ul', this.getContent());
-        this.ulElementStack.push(taskList);
-        try {
-            await this.addTaskList(group.tasks);
-        } finally {
-            this.ulElementStack.pop();
-        }
+        await this.addTaskList(group.tasks);
     }
 
     protected beginTaskList(): void {
-        const taskList = this.currentULElement();
+        const taskListContainer = this.ulElementStack.length > 0 ? this.currentLIElement() : this.getContent();
+        const taskList = createAndAppendElement('ul', taskListContainer);
+
         taskList.classList.add(
             'contains-task-list',
             'plugin-tasks-query-result',
@@ -128,29 +124,30 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         if (groupingAttribute && groupingAttribute.length > 0) {
             taskList.dataset.taskGroupBy = groupingAttribute;
         }
+
+        this.ulElementStack.push(taskList);
     }
 
-    protected async addListItem(listItem: ListItem, listItemIndex: number, children: ListItem[]): Promise<void> {
+    protected endTaskList(): void {
+        this.ulElementStack.pop();
+    }
+
+    protected beginListItem() {
         const taskList = this.currentULElement();
         const listItemElement = createAndAppendElement('li', taskList);
-        await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
-
-        if (children.length > 0) {
-            // TODO re-extract the method to include this back
-            const taskList1 = createAndAppendElement('ul', listItemElement);
-            this.ulElementStack.push(taskList1);
-            try {
-                await this.addTaskList(children);
-            } finally {
-                this.ulElementStack.pop();
-            }
-        }
+        this.liElementStack.push(listItemElement);
     }
 
-    protected async addTask(task: Task, taskIndex: number, children: ListItem[]): Promise<void> {
+    protected async addListItem(listItem: ListItem, listItemIndex: number): Promise<void> {
+        const listItemElement = this.currentLIElement();
+
+        await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
+    }
+
+    protected async addTask(task: Task, taskIndex: number): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
-        const parentUlElement = this.currentULElement();
-        const listItem = createAndAppendElement('li', parentUlElement);
+        const listItem = this.currentLIElement();
+
         await this.taskLineRenderer.renderTaskLine({
             li: listItem,
             task,
@@ -185,17 +182,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
 
         this.currentULElement().appendChild(listItem);
-
-        if (children.length > 0) {
-            // TODO re-extract the method to include this back
-            const taskList1 = createAndAppendElement('ul', listItem);
-            this.ulElementStack.push(taskList1);
-            try {
-                await this.addTaskList(children);
-            } finally {
-                this.ulElementStack.pop();
-            }
-        }
     }
 
     private addEditButton(listItem: HTMLElement, task: Task) {
@@ -346,5 +332,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private currentULElement(): HTMLUListElement {
         return this.ulElementStack[this.ulElementStack.length - 1];
+    }
+
+    private currentLIElement() {
+        return this.liElementStack[this.liElementStack.length - 1];
     }
 }
