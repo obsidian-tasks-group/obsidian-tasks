@@ -3,7 +3,6 @@ import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postp
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import type { TaskGroup } from '../Query/Group/TaskGroup';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
@@ -13,6 +12,13 @@ import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
+/**
+ * HTML-specific implementation of {@link QueryResultsRendererBase} abstract class.
+ *
+ * @example
+ *   this.htmlRenderer.content = content;
+ *   await this.htmlRenderer.renderQuery(state, tasks);
+ */
 export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     // Renders the description in TaskLineRenderer:
     protected readonly textRenderer;
@@ -22,13 +28,13 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
 
-    // TODO access this via getContent() for now
-    public content: HTMLDivElement | null = null;
-
     private readonly taskLineRenderer: TaskLineRenderer;
 
+    // document.createElement() creates dummy elements that must be overwritten later
+    // with the values of elements that will be rendered
+    public content: HTMLDivElement = document.createElement('div');
     private readonly ulElementStack: HTMLUListElement[] = [];
-    private readonly liElementStack: HTMLLIElement[] = [];
+    private lastLIElement: HTMLLIElement = document.createElement('li');
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
@@ -63,15 +69,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         });
     }
 
-    private getContent() {
-        // TODO remove throw
-        const content = this.content;
-        if (!content) {
-            throw new Error('Must initialize content field before calling renderQuery()');
-        }
-        return content;
-    }
-
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
         this.addCopyButton(queryResult);
     }
@@ -81,22 +78,22 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderErrorMessage(errorMessage: string) {
-        const container = createAndAppendElement('div', this.getContent());
+        const container = createAndAppendElement('div', this.content);
         container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
     protected renderLoadingMessage() {
-        this.getContent().textContent = 'Loading Tasks ...';
+        this.content.textContent = 'Loading Tasks ...';
     }
 
     protected renderExplanation(explanation: string | null) {
-        const explanationsBlock = createAndAppendElement('pre', this.getContent());
+        const explanationsBlock = createAndAppendElement('pre', this.content);
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.textContent = explanation;
     }
 
     private addCopyButton(queryResult: QueryResult) {
-        const copyButton = createAndAppendElement('button', this.getContent());
+        const copyButton = createAndAppendElement('button', this.content);
         copyButton.textContent = 'Copy results';
         copyButton.classList.add('plugin-tasks-copy-button');
         copyButton.addEventListener('click', async () => {
@@ -105,12 +102,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         });
     }
 
-    protected async addTaskGroup(group: TaskGroup): Promise<void> {
-        await this.addTaskList(group.tasks);
-    }
-
     protected beginTaskList(): void {
-        const taskListContainer = this.ulElementStack.length > 0 ? this.currentLIElement() : this.getContent();
+        const isFirstTaskListInContainer = this.ulElementStack.length === 0;
+        const taskListContainer = isFirstTaskListInContainer ? this.content : this.lastLIElement;
         const taskList = createAndAppendElement('ul', taskListContainer);
 
         taskList.classList.add(
@@ -134,19 +128,16 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected beginListItem() {
         const taskList = this.currentULElement();
-        const listItemElement = createAndAppendElement('li', taskList);
-        this.liElementStack.push(listItemElement);
+        this.lastLIElement = createAndAppendElement('li', taskList);
     }
 
     protected async addListItem(listItem: ListItem, listItemIndex: number): Promise<void> {
-        const listItemElement = this.currentLIElement();
-
-        await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
+        await this.taskLineRenderer.renderListItem(this.lastLIElement, listItem, listItemIndex);
     }
 
     protected async addTask(task: Task, taskIndex: number): Promise<void> {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
-        const listItem = this.currentLIElement();
+        const listItem = this.lastLIElement;
 
         await this.taskLineRenderer.renderTaskLine({
             li: listItem,
@@ -215,7 +206,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             header = 'h5';
         }
 
-        const headerEl = createAndAppendElement(header, this.getContent());
+        const headerEl = createAndAppendElement(header, this.content);
         headerEl.classList.add('tasks-group-heading');
 
         if (this.obsidianComponent === null) {
@@ -298,7 +289,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private addTaskCount(queryResult: QueryResult) {
         if (!this.getters.query().queryLayoutOptions.hideTaskCount) {
-            const taskCount = createAndAppendElement('div', this.getContent());
+            const taskCount = createAndAppendElement('div', this.content);
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
         }
@@ -332,9 +323,5 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private currentULElement(): HTMLUListElement {
         return this.ulElementStack[this.ulElementStack.length - 1];
-    }
-
-    private currentLIElement() {
-        return this.liElementStack[this.liElementStack.length - 1];
     }
 }
