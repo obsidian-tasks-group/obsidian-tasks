@@ -165,4 +165,22 @@ group by id
             "
         `);
     });
+
+    it('should indent nested tasks', async () => {
+        const tasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+
+        const markdown = await renderMarkdown('show tree', tasks);
+        expect(markdown).toMatchInlineSnapshot(`
+            "
+            - [ ] #task parent task
+                - [ ] #task child task 1
+                    - [ ] #task grandchild 1
+                - [ ] #task child task 2
+                    - [ ] #task grandchild 2
+            - [ ] #task sibling
+            "
+`);
+    });
 });
