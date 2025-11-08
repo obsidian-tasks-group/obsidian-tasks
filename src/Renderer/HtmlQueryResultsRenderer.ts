@@ -103,7 +103,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected beginTaskList(): void {
-        const taskListContainer = this.ulElementStack.length > 0 ? this.lastLIElement : this.content;
+        const isFirstTaskListInContainer = this.ulElementStack.length === 0;
+        const taskListContainer = isFirstTaskListInContainer ? this.content : this.lastLIElement;
         const taskList = createAndAppendElement('ul', taskListContainer);
 
         taskList.classList.add(
