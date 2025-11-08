@@ -65,9 +65,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     private getContent() {
         // TODO remove throw
         const content = this.content;
-        if (!content) {
-            throw new Error('Must initialize content field before calling renderQuery()');
-        }
+
         return content;
     }
 
