@@ -58,7 +58,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     protected beginListItem(): void {}
 
     protected addTask(task: Task, _taskIndex: number): Promise<void> {
-        this.markdownLines.push(`${this.formatTask(task)}`);
+        this.markdownLines.push(this.formatTask(task));
         return Promise.resolve();
     }
 
