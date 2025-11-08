@@ -136,9 +136,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addListItem(listItem: ListItem, listItemIndex: number): Promise<void> {
-        const listItemElement = this.lastLIElement;
-
-        await this.taskLineRenderer.renderListItem(listItemElement, listItem, listItemIndex);
+        await this.taskLineRenderer.renderListItem(this.lastLIElement, listItem, listItemIndex);
     }
 
     protected async addTask(task: Task, taskIndex: number): Promise<void> {
