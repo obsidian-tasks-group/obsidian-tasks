@@ -129,8 +129,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected beginListItem() {
         const taskList = this.currentULElement();
-        const listItemElement = createAndAppendElement('li', taskList);
-        this.lastLIElement = listItemElement;
+        this.lastLIElement = createAndAppendElement('li', taskList);
     }
 
     protected async addListItem(listItem: ListItem, listItemIndex: number): Promise<void> {
