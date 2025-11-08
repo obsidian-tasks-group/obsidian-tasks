@@ -75,7 +75,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
     }
 
-    protected beginRender() {}
+    protected beginRender() {
+        return;
+    }
 
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
         this.addCopyButton(queryResult);
