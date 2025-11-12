@@ -109,6 +109,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         const toolbar = createAndAppendElement('div', this.content);
         toolbar.classList.add('plugin-tasks-toolbar');
+        this.addCopyButton(toolbar);
+    }
+
+    private addCopyButton(toolbar: HTMLDivElement): void {
         const copyButton = createAndAppendElement('button', toolbar);
         setIcon(copyButton, 'lucide-copy');
         setTooltip(copyButton, 'Copy results');
