@@ -103,6 +103,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private addToolbar(_queryResult: QueryResult) {
+        if (this.getters.query().queryLayoutOptions.hideToolbar) {
+            return;
+        }
+
         const toolbar = createAndAppendElement('div', this.content);
         toolbar.classList.add('plugin-tasks-toolbar');
         const copyButton = createAndAppendElement('button', toolbar);
