@@ -13,13 +13,11 @@
     --code-white-space: pre;
 }
 
-.plugin-tasks-copy-button {
-    position: absolute;
-    right: 0;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-
-    margin-top: 16px;
+.plugin-tasks-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: var(--size-4-1);
 }
 
 .tasks-count {
