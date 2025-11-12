@@ -514,6 +514,7 @@ description includes \
             'hide start date',
             'hide tags',
             'hide task count',
+            'hide toolbar',
             'hide tree',
             'hide urgency',
             'ignore global query',
@@ -539,6 +540,7 @@ description includes \
             'show start date',
             'show tags',
             'show task count',
+            'show toolbar',
             'show tree',
             'show urgency',
         ];
