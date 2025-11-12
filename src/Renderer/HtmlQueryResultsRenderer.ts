@@ -80,7 +80,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
-        this.addCopyButton(queryResult);
+        this.addToolbar(queryResult);
     }
 
     protected renderSearchResultsFooter(queryResult: QueryResult): void {
@@ -102,9 +102,17 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         explanationsBlock.textContent = explanation;
     }
 
-    private addCopyButton(_queryResult: QueryResult) {
+    private addToolbar(_queryResult: QueryResult) {
+        if (this.getters.query().queryLayoutOptions.hideToolbar) {
+            return;
+        }
+
         const toolbar = createAndAppendElement('div', this.content);
         toolbar.classList.add('plugin-tasks-toolbar');
+        this.addCopyButton(toolbar);
+    }
+
+    private addCopyButton(toolbar: HTMLDivElement): void {
         const copyButton = createAndAppendElement('button', toolbar);
         setIcon(copyButton, 'lucide-copy');
         setTooltip(copyButton, 'Copy results');
