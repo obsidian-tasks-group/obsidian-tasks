@@ -221,8 +221,14 @@ export function prepareSimpleSearch(query: string): (text: string) => SearchResu
 }
 
 type IconName = string;
-export function setIcon(_parent: HTMLElement, _iconId: IconName): void {}
-export function setTooltip(_parent: HTMLElement, _text: string): void {}
+
+export function setIcon(element: HTMLElement, iconId: IconName): void {
+    element.setAttribute('test-icon', iconId);
+}
+
+export function setTooltip(element: HTMLElement, text: string): void {
+    element.setAttribute('test-tooltip', text);
+}
 
 /**
  * A mock implementation of the Obsidian Modal class.
