@@ -80,7 +80,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
-        this.addCopyButton(queryResult);
+        this.addToolbar(queryResult);
     }
 
     protected renderSearchResultsFooter(queryResult: QueryResult): void {
@@ -102,7 +102,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         explanationsBlock.textContent = explanation;
     }
 
-    private addCopyButton(_queryResult: QueryResult) {
+    private addToolbar(_queryResult: QueryResult) {
         const toolbar = createAndAppendElement('div', this.content);
         toolbar.classList.add('plugin-tasks-toolbar');
         const copyButton = createAndAppendElement('button', toolbar);
