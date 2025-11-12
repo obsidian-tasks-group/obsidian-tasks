@@ -5,7 +5,7 @@
 -->
 
 <div>
-  <button class="plugin-tasks-copy-button">Copy results</button>
+  <div class="plugin-tasks-toolbar"><button test-icon="lucide-copy" test-tooltip="Copy results"></button></div>
   <ul class="contains-task-list plugin-tasks-query-result tasks-layout-short-mode">
     <li
       class="task-list-item plugin-tasks-list-item"
