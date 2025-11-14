@@ -139,7 +139,7 @@ export class QueryResultsRenderer {
         return this.tasksFile.path;
     }
 
-    public async render(state: State | State.Warm, tasks: Task[], content: HTMLDivElement) {
+    public async render(state: State, tasks: Task[], content: HTMLDivElement) {
         const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
         const queryResult = this.query.applyQueryToTasks(tasks);

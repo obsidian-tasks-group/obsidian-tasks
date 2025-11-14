@@ -33,7 +33,7 @@ export abstract class QueryResultsRendererBase {
         return this.getters.tasksFile().path;
     }
 
-    public async renderQuery(state: State | State.Warm, queryResult: QueryResult) {
+    public async renderQuery(state: State, queryResult: QueryResult) {
         this.beginRender();
 
         // Don't log anything here, for any state, as it generates huge amounts of
