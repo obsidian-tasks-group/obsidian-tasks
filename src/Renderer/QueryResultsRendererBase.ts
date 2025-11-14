@@ -71,9 +71,6 @@ export abstract class QueryResultsRendererBase {
     }
 
     private explainAndPerformSearch(_tasks: Task[], queryResult: QueryResult) {
-        const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
-        measureSearch.start();
-
         if (this.getters.query().queryLayoutOptions.explainQuery) {
             const explanation = explainResults(
                 this.getters.source(),
@@ -84,7 +81,6 @@ export abstract class QueryResultsRendererBase {
             this.renderExplanation(explanation);
         }
 
-        measureSearch.finish();
         return queryResult;
     }
 

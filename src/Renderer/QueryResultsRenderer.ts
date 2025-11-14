@@ -1,6 +1,7 @@
 import type { App, Component, TFile } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
 import type { State } from '../Obsidian/Cache';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { TasksFile } from '../Scripting/TasksFile';
@@ -141,7 +142,10 @@ export class QueryResultsRenderer {
     public async render(state: State | State.Warm, tasks: Task[], content: HTMLDivElement) {
         this.htmlRenderer.content = content;
 
+        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
+        measureSearch.start();
         const queryResult = this.query.applyQueryToTasks(tasks);
+        measureSearch.finish();
 
         await this.htmlRenderer.renderQuery(state, tasks, queryResult);
     }
