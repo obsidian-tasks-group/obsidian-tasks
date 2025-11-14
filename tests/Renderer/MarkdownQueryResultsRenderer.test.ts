@@ -20,11 +20,11 @@ function createMarkdownRenderer(source: string) {
         tasksFile: () => tasksFile,
         source: () => source,
     });
-    return renderer;
+    return { renderer };
 }
 
 async function renderMarkdown(source: string, tasks: Task[]) {
-    const renderer = createMarkdownRenderer(source);
+    const { renderer } = createMarkdownRenderer(source);
     await renderer.renderQuery(State.Warm, tasks);
     return '\n' + renderer.markdown;
 }
@@ -52,7 +52,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 
     it('should render single task twice', async () => {
         const source = 'hide tree';
-        const renderer = createMarkdownRenderer(source);
+        const { renderer } = createMarkdownRenderer(source);
 
         const task = new TaskBuilder().description('hello').priority(Priority.Medium).build();
 
