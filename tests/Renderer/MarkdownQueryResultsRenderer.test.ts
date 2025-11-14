@@ -25,7 +25,7 @@ function createMarkdownRenderer(source: string) {
 
 async function renderMarkdown(source: string, tasks: Task[]) {
     const { renderer, query } = createMarkdownRenderer(source);
-    await renderer.renderQuery(State.Warm, tasks, query.applyQueryToTasks(tasks));
+    await renderer.renderQuery(State.Warm, query.applyQueryToTasks(tasks));
     return '\n' + renderer.markdown;
 }
 
@@ -56,10 +56,10 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 
         const task = [new TaskBuilder().description('hello').priority(Priority.Medium).build()];
 
-        await renderer.renderQuery(State.Warm, task, query.applyQueryToTasks(task));
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(task));
         const r1 = renderer.markdown;
 
-        await renderer.renderQuery(State.Warm, task, query.applyQueryToTasks(task));
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(task));
         const r2 = renderer.markdown;
 
         expect(r1).toEqual(r2);

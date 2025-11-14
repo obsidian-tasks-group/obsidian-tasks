@@ -120,7 +120,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
             await this.markdownRenderer.renderQuery(
                 State.Warm,
-                this.queryRendererParameters.allTasks(),
                 this.getters.query().applyQueryToTasks(this.queryRendererParameters.allTasks()),
             );
             await navigator.clipboard.writeText(this.markdownRenderer.markdown);

@@ -33,7 +33,7 @@ export abstract class QueryResultsRendererBase {
         return this.getters.tasksFile().path;
     }
 
-    public async renderQuery(state: State | State.Warm, tasks: Task[], queryResult: QueryResult) {
+    public async renderQuery(state: State | State.Warm, queryResult: QueryResult) {
         this.beginRender();
 
         // Don't log anything here, for any state, as it generates huge amounts of
@@ -42,7 +42,7 @@ export abstract class QueryResultsRendererBase {
         const query = this.getters.query();
         const error = query.error;
         if (state === State.Warm && error === undefined) {
-            await this.renderQuerySearchResults(tasks, queryResult);
+            await this.renderQuerySearchResults(queryResult);
         } else if (error) {
             this.renderErrorMessage(error);
         } else {
@@ -57,8 +57,8 @@ export abstract class QueryResultsRendererBase {
      */
     protected abstract beginRender(): void;
 
-    private async renderQuerySearchResults(tasks: Task[], queryResult: QueryResult) {
-        this.explainAndPerformSearch(tasks, queryResult);
+    private async renderQuerySearchResults(queryResult: QueryResult) {
+        this.explainAndPerformSearch(queryResult);
 
         if (queryResult.searchErrorMessage !== undefined) {
             // There was an error in the search, for example due to a problem custom function.
@@ -69,7 +69,7 @@ export abstract class QueryResultsRendererBase {
         await this.renderSearchResults(queryResult);
     }
 
-    private explainAndPerformSearch(_tasks: Task[], queryResult: QueryResult) {
+    private explainAndPerformSearch(queryResult: QueryResult) {
         if (this.getters.query().queryLayoutOptions.explainQuery) {
             const explanation = explainResults(
                 this.getters.source(),
