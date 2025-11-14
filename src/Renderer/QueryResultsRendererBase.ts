@@ -1,15 +1,15 @@
-import type { TasksFile } from '../Scripting/TasksFile';
-import type { IQuery } from '../IQuery';
-import { State } from '../Obsidian/Cache';
-import { Task } from '../Task/Task';
-import type { QueryResult } from '../Query/QueryResult';
-import type { TaskGroups } from '../Query/Group/TaskGroups';
-import type { ListItem } from '../Task/ListItem';
-import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import { PerformanceTracker } from '../lib/PerformanceTracker';
-import { explainResults } from '../Query/QueryRendererHelper';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
+import type { IQuery } from '../IQuery';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
+import { State } from '../Obsidian/Cache';
+import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
+import type { TaskGroups } from '../Query/Group/TaskGroups';
+import { explainResults } from '../Query/QueryRendererHelper';
+import type { QueryResult } from '../Query/QueryResult';
+import type { TasksFile } from '../Scripting/TasksFile';
+import type { ListItem } from '../Task/ListItem';
+import { Task } from '../Task/Task';
 
 /**
  * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
@@ -60,7 +60,7 @@ export abstract class QueryResultsRendererBase {
     protected abstract beginRender(): void;
 
     private async renderQuerySearchResults(tasks: Task[]) {
-        const queryResult = this.explainAndPerformSearch(tasks);
+        const queryResult = this.explainAndPerformSearch(tasks, this.getters.query().applyQueryToTasks(tasks));
 
         if (queryResult.searchErrorMessage !== undefined) {
             // There was an error in the search, for example due to a problem custom function.
@@ -71,7 +71,7 @@ export abstract class QueryResultsRendererBase {
         await this.renderSearchResults(queryResult);
     }
 
-    private explainAndPerformSearch(tasks: Task[]) {
+    private explainAndPerformSearch(_tasks: Task[], queryResult: QueryResult) {
         const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
         measureSearch.start();
 
@@ -84,8 +84,6 @@ export abstract class QueryResultsRendererBase {
             );
             this.renderExplanation(explanation);
         }
-
-        const queryResult = this.getters.query().applyQueryToTasks(tasks);
 
         measureSearch.finish();
         return queryResult;
