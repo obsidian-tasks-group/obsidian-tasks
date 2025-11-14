@@ -15,16 +15,17 @@ window.moment = moment;
 function createMarkdownRenderer(source: string) {
     const tasksFile = new TasksFile('query.md');
     const query = new Query(source, tasksFile);
-    return new MarkdownQueryResultsRenderer({
+    const renderer = new MarkdownQueryResultsRenderer({
         query: () => query,
         tasksFile: () => tasksFile,
         source: () => source,
     });
+    return { renderer, query };
 }
 
 async function renderMarkdown(source: string, tasks: Task[]) {
-    const renderer = createMarkdownRenderer(source);
-    await renderer.renderQuery(State.Warm, tasks);
+    const { renderer, query } = createMarkdownRenderer(source);
+    await renderer.renderQuery(State.Warm, query.applyQueryToTasks(tasks));
     return '\n' + renderer.markdown;
 }
 
@@ -51,14 +52,14 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 
     it('should render single task twice', async () => {
         const source = 'hide tree';
-        const renderer = createMarkdownRenderer(source);
+        const { renderer, query } = createMarkdownRenderer(source);
 
-        const task = new TaskBuilder().description('hello').priority(Priority.Medium).build();
+        const task = [new TaskBuilder().description('hello').priority(Priority.Medium).build()];
 
-        await renderer.renderQuery(State.Warm, [task]);
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(task));
         const r1 = renderer.markdown;
 
-        await renderer.renderQuery(State.Warm, [task]);
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(task));
         const r2 = renderer.markdown;
 
         expect(r1).toEqual(r2);
