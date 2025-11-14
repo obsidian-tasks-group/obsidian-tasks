@@ -15,11 +15,12 @@ window.moment = moment;
 function createMarkdownRenderer(source: string) {
     const tasksFile = new TasksFile('query.md');
     const query = new Query(source, tasksFile);
-    return new MarkdownQueryResultsRenderer({
+    const renderer = new MarkdownQueryResultsRenderer({
         query: () => query,
         tasksFile: () => tasksFile,
         source: () => source,
     });
+    return renderer;
 }
 
 async function renderMarkdown(source: string, tasks: Task[]) {
