@@ -34,7 +34,7 @@ export abstract class QueryResultsRendererBase {
         return this.getters.tasksFile().path;
     }
 
-    public async renderQuery(state: State | State.Warm, tasks: Task[]) {
+    public async renderQuery(state: State | State.Warm, tasks: Task[], queryResult: QueryResult) {
         this.beginRender();
 
         // Don't log anything here, for any state, as it generates huge amounts of
@@ -44,7 +44,7 @@ export abstract class QueryResultsRendererBase {
         const error = query.error;
         if (state === State.Warm && error === undefined) {
             query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
-            await this.renderQuerySearchResults(tasks, this.getters.query().applyQueryToTasks(tasks));
+            await this.renderQuerySearchResults(tasks, queryResult);
         } else if (error) {
             this.renderErrorMessage(error);
         } else {
