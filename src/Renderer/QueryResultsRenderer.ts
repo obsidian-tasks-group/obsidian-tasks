@@ -140,8 +140,6 @@ export class QueryResultsRenderer {
     }
 
     public async render(state: State | State.Warm, tasks: Task[], content: HTMLDivElement) {
-        this.htmlRenderer.content = content;
-
         const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
         const queryResult = this.query.applyQueryToTasks(tasks);
@@ -149,6 +147,7 @@ export class QueryResultsRenderer {
 
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
+        this.htmlRenderer.content = content;
         await this.htmlRenderer.renderQuery(state, tasks, queryResult);
         measureRender.finish();
     }
