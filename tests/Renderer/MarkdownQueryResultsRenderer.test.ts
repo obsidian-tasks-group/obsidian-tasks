@@ -20,7 +20,7 @@ function createMarkdownRenderer(source: string) {
         tasksFile: () => tasksFile,
         source: () => source,
     });
-    return { renderer };
+    return { renderer, query };
 }
 
 async function renderMarkdown(source: string, tasks: Task[]) {
