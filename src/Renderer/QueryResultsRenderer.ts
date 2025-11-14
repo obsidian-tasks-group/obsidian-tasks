@@ -147,6 +147,9 @@ export class QueryResultsRenderer {
         const queryResult = this.query.applyQueryToTasks(tasks);
         measureSearch.finish();
 
+        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
+        measureRender.start();
         await this.htmlRenderer.renderQuery(state, tasks, queryResult);
+        measureRender.finish();
     }
 }
