@@ -1,7 +1,6 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
-import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { TaskGroups } from '../Query/Group/TaskGroups';
@@ -85,9 +84,6 @@ export abstract class QueryResultsRendererBase {
     }
 
     private async renderSearchResults(queryResult: QueryResult) {
-        const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
-        measureRender.start();
-
         this.renderSearchResultsHeader(queryResult);
 
         await this.addAllTaskGroups(queryResult.taskGroups);
@@ -96,8 +92,6 @@ export abstract class QueryResultsRendererBase {
         this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
 
         this.renderSearchResultsFooter(queryResult);
-
-        measureRender.finish();
     }
 
     protected abstract renderSearchResultsHeader(queryResult: QueryResult): void;
