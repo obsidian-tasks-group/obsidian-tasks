@@ -43,7 +43,6 @@ export abstract class QueryResultsRendererBase {
         const query = this.getters.query();
         const error = query.error;
         if (state === State.Warm && error === undefined) {
-            query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
             await this.renderQuerySearchResults(tasks, queryResult);
         } else if (error) {
             this.renderErrorMessage(error);
