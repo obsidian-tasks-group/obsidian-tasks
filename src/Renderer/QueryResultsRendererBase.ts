@@ -1,15 +1,14 @@
-import type { TasksFile } from '../Scripting/TasksFile';
-import type { IQuery } from '../IQuery';
-import { State } from '../Obsidian/Cache';
-import { Task } from '../Task/Task';
-import type { QueryResult } from '../Query/QueryResult';
-import type { TaskGroups } from '../Query/Group/TaskGroups';
-import type { ListItem } from '../Task/ListItem';
-import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import { PerformanceTracker } from '../lib/PerformanceTracker';
-import { explainResults } from '../Query/QueryRendererHelper';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
+import type { IQuery } from '../IQuery';
+import { State } from '../Obsidian/Cache';
+import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
+import type { TaskGroups } from '../Query/Group/TaskGroups';
+import { explainResults } from '../Query/QueryRendererHelper';
+import type { QueryResult } from '../Query/QueryResult';
+import type { TasksFile } from '../Scripting/TasksFile';
+import type { ListItem } from '../Task/ListItem';
+import { Task } from '../Task/Task';
 
 /**
  * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
@@ -34,7 +33,7 @@ export abstract class QueryResultsRendererBase {
         return this.getters.tasksFile().path;
     }
 
-    public async renderQuery(state: State | State.Warm, tasks: Task[]) {
+    public async renderQuery(state: State, queryResult: QueryResult) {
         this.beginRender();
 
         // Don't log anything here, for any state, as it generates huge amounts of
@@ -43,8 +42,7 @@ export abstract class QueryResultsRendererBase {
         const query = this.getters.query();
         const error = query.error;
         if (state === State.Warm && error === undefined) {
-            query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
-            await this.renderQuerySearchResults(tasks);
+            await this.renderQuerySearchResults(queryResult);
         } else if (error) {
             this.renderErrorMessage(error);
         } else {
@@ -59,8 +57,8 @@ export abstract class QueryResultsRendererBase {
      */
     protected abstract beginRender(): void;
 
-    private async renderQuerySearchResults(tasks: Task[]) {
-        const queryResult = this.explainAndPerformSearch(tasks);
+    private async renderQuerySearchResults(queryResult: QueryResult) {
+        this.explainQuery();
 
         if (queryResult.searchErrorMessage !== undefined) {
             // There was an error in the search, for example due to a problem custom function.
@@ -71,10 +69,7 @@ export abstract class QueryResultsRendererBase {
         await this.renderSearchResults(queryResult);
     }
 
-    private explainAndPerformSearch(tasks: Task[]) {
-        const measureSearch = new PerformanceTracker(`Search: ${this.getters.query().queryId} - ${this.filePath}`);
-        measureSearch.start();
-
+    private explainQuery() {
         if (this.getters.query().queryLayoutOptions.explainQuery) {
             const explanation = explainResults(
                 this.getters.source(),
@@ -84,17 +79,9 @@ export abstract class QueryResultsRendererBase {
             );
             this.renderExplanation(explanation);
         }
-
-        const queryResult = this.getters.query().applyQueryToTasks(tasks);
-
-        measureSearch.finish();
-        return queryResult;
     }
 
     private async renderSearchResults(queryResult: QueryResult) {
-        const measureRender = new PerformanceTracker(`Render: ${this.getters.query().queryId} - ${this.filePath}`);
-        measureRender.start();
-
         this.renderSearchResultsHeader(queryResult);
 
         await this.addAllTaskGroups(queryResult.taskGroups);
@@ -103,8 +90,6 @@ export abstract class QueryResultsRendererBase {
         this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
 
         this.renderSearchResultsFooter(queryResult);
-
-        measureRender.finish();
     }
 
     protected abstract renderSearchResultsHeader(queryResult: QueryResult): void;

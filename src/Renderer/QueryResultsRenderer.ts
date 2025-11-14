@@ -1,6 +1,7 @@
 import type { App, Component, TFile } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
+import { PerformanceTracker } from '../lib/PerformanceTracker';
 import type { State } from '../Obsidian/Cache';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { TasksFile } from '../Scripting/TasksFile';
@@ -138,8 +139,16 @@ export class QueryResultsRenderer {
         return this.tasksFile.path;
     }
 
-    public async render(state: State | State.Warm, tasks: Task[], content: HTMLDivElement) {
+    public async render(state: State, tasks: Task[], content: HTMLDivElement) {
+        const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
+        measureSearch.start();
+        const queryResult = this.query.applyQueryToTasks(tasks);
+        measureSearch.finish();
+
+        const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
+        measureRender.start();
         this.htmlRenderer.content = content;
-        await this.htmlRenderer.renderQuery(state, tasks);
+        await this.htmlRenderer.renderQuery(state, queryResult);
+        measureRender.finish();
     }
 }
