@@ -102,26 +102,23 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         explanationsBlock.textContent = explanation;
     }
 
-    private addToolbar(_queryResult: QueryResult) {
+    private addToolbar(queryResult: QueryResult) {
         if (this.getters.query().queryLayoutOptions.hideToolbar) {
             return;
         }
 
         const toolbar = createAndAppendElement('div', this.content);
         toolbar.classList.add('plugin-tasks-toolbar');
-        this.addCopyButton(toolbar);
+        this.addCopyButton(toolbar, queryResult);
     }
 
-    private addCopyButton(toolbar: HTMLDivElement): void {
+    private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult): void {
         const copyButton = createAndAppendElement('button', toolbar);
         setIcon(copyButton, 'lucide-copy');
         setTooltip(copyButton, 'Copy results');
         copyButton.addEventListener('click', async () => {
             // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
-            await this.markdownRenderer.renderQuery(
-                State.Warm,
-                this.getters.query().applyQueryToTasks(this.queryRendererParameters.allTasks()),
-            );
+            await this.markdownRenderer.renderQuery(State.Warm, queryResult);
             await navigator.clipboard.writeText(this.markdownRenderer.markdown);
             new Notice('Results copied to clipboard');
         });
