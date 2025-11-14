@@ -58,7 +58,7 @@ export abstract class QueryResultsRendererBase {
     protected abstract beginRender(): void;
 
     private async renderQuerySearchResults(queryResult: QueryResult) {
-        this.explainAndPerformSearch(queryResult);
+        this.explainAndPerformSearch();
 
         if (queryResult.searchErrorMessage !== undefined) {
             // There was an error in the search, for example due to a problem custom function.
@@ -69,7 +69,7 @@ export abstract class QueryResultsRendererBase {
         await this.renderSearchResults(queryResult);
     }
 
-    private explainAndPerformSearch(queryResult: QueryResult) {
+    private explainAndPerformSearch() {
         if (this.getters.query().queryLayoutOptions.explainQuery) {
             const explanation = explainResults(
                 this.getters.source(),
@@ -79,8 +79,6 @@ export abstract class QueryResultsRendererBase {
             );
             this.renderExplanation(explanation);
         }
-
-        return queryResult;
     }
 
     private async renderSearchResults(queryResult: QueryResult) {
