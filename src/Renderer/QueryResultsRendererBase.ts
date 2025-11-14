@@ -44,7 +44,7 @@ export abstract class QueryResultsRendererBase {
         const error = query.error;
         if (state === State.Warm && error === undefined) {
             query.debug(`[render] Render called: plugin state: ${state}; searching ${tasks.length} tasks`);
-            await this.renderQuerySearchResults(tasks);
+            await this.renderQuerySearchResults(tasks, this.getters.query().applyQueryToTasks(tasks));
         } else if (error) {
             this.renderErrorMessage(error);
         } else {
@@ -59,8 +59,8 @@ export abstract class QueryResultsRendererBase {
      */
     protected abstract beginRender(): void;
 
-    private async renderQuerySearchResults(tasks: Task[]) {
-        const queryResult = this.explainAndPerformSearch(tasks, this.getters.query().applyQueryToTasks(tasks));
+    private async renderQuerySearchResults(tasks: Task[], queryResult: QueryResult) {
+        this.explainAndPerformSearch(tasks, queryResult);
 
         if (queryResult.searchErrorMessage !== undefined) {
             // There was an error in the search, for example due to a problem custom function.
