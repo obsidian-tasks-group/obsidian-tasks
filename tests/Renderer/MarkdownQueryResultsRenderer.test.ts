@@ -54,12 +54,12 @@ describe('MarkdownQueryResultsRenderer tests', () => {
         const source = 'hide tree';
         const { renderer, query } = createMarkdownRenderer(source);
 
-        const task = new TaskBuilder().description('hello').priority(Priority.Medium).build();
+        const task = [new TaskBuilder().description('hello').priority(Priority.Medium).build()];
 
-        await renderer.renderQuery(State.Warm, [task], query.applyQueryToTasks([task]));
+        await renderer.renderQuery(State.Warm, task, query.applyQueryToTasks(task));
         const r1 = renderer.markdown;
 
-        await renderer.renderQuery(State.Warm, [task], query.applyQueryToTasks([task]));
+        await renderer.renderQuery(State.Warm, task, query.applyQueryToTasks(task));
         const r2 = renderer.markdown;
 
         expect(r1).toEqual(r2);
