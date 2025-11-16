@@ -101,13 +101,15 @@ describe('QueryResultsRenderer tests', () => {
     });
 
     it('fully populated task', async () => {
+        // The approved file from this test is embedded in the user documentation.
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'show urgency');
+        await verifyRenderedTasksHTML(allTasks, 'show toolbar\nshow urgency');
     });
 
     it('fully populated task - short mode', async () => {
+        // The approved file from this test is embedded in the user documentation.
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'show urgency\nshort mode');
+        await verifyRenderedTasksHTML(allTasks, 'show toolbar\nshow urgency\nshort mode');
     });
 
     it('fully populated task - hidden fields', async () => {
