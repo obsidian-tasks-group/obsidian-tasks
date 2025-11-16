@@ -91,6 +91,11 @@ describe('QueryResultsRenderer tests', () => {
         await verifyRenderedTasksHTML(allTasks, 'scheduled 1970-01-01\nexplain');
     });
 
+    it('toolbar', async () => {
+        const allTasks = [new TaskBuilder().path('sample.md').build()];
+        await verifyRenderedTasksHTML(allTasks, 'show toolbar', State.Warm);
+    });
+
     it('fully populated task', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         await verifyRenderedTasksHTML(allTasks, 'show urgency');
