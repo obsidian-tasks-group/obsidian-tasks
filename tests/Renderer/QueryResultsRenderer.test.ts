@@ -22,6 +22,7 @@ window.moment = moment;
 beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date('2023-07-05'));
+    GlobalQuery.getInstance().set('hide toolbar');
 });
 
 afterEach(() => {
