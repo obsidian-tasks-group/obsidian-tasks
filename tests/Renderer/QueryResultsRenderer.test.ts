@@ -28,7 +28,7 @@ beforeEach(() => {
 afterEach(() => {
     jest.useRealTimers();
     GlobalFilter.getInstance().reset();
-    GlobalQuery.getInstance().set('');
+    GlobalQuery.getInstance().reset();
     resetSettings();
 });
 
