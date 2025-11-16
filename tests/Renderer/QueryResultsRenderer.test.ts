@@ -14,6 +14,7 @@ import { toMarkdown } from '../TestingTools/TestHelpers';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { mockApp } from '../__mocks__/obsidian';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
+import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { mockHTMLRenderer } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -26,6 +27,7 @@ beforeEach(() => {
 afterEach(() => {
     jest.useRealTimers();
     GlobalFilter.getInstance().reset();
+    GlobalQuery.getInstance().set('');
     resetSettings();
 });
 
@@ -87,6 +89,7 @@ describe('QueryResultsRenderer tests', () => {
     });
 
     it('explain', async () => {
+        GlobalQuery.getInstance().set('hide toolbar');
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         await verifyRenderedTasksHTML(allTasks, 'scheduled 1970-01-01\nexplain');
     });
