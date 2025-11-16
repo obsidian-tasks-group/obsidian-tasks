@@ -44,6 +44,10 @@ export class GlobalQuery {
         this._source = source;
     }
 
+    public reset(): void {
+        this._source = GlobalQuery.empty;
+    }
+
     /**
      * Returns {@link Query} object with the Global Query
      * @param tasksFile
