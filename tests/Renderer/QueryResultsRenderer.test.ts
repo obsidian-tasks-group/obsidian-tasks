@@ -101,15 +101,21 @@ describe('QueryResultsRenderer tests', () => {
     });
 
     it('fully populated task', async () => {
-        // The approved file from this test is embedded in the user documentation.
+        // The approved file from this test is embedded in the user documentation,
+        // so we ignore any GlobalQuery, to avoid accidental changes to the docs:
+        GlobalQuery.getInstance().reset();
+
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'show toolbar\nshow urgency');
+        await verifyRenderedTasksHTML(allTasks, 'show urgency');
     });
 
     it('fully populated task - short mode', async () => {
-        // The approved file from this test is embedded in the user documentation.
+        // The approved file from this test is embedded in the user documentation,
+        // so we ignore any GlobalQuery, to avoid accidental changes to the docs:
+        GlobalQuery.getInstance().reset();
+
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'show toolbar\nshow urgency\nshort mode');
+        await verifyRenderedTasksHTML(allTasks, 'show urgency\nshort mode');
     });
 
     it('fully populated task - hidden fields', async () => {
