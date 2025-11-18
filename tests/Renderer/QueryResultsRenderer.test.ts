@@ -106,18 +106,18 @@ describe('QueryResultsRenderer tests', () => {
 
     it('error message', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedHtml(allTasks, 'apple sauce', State.Warm);
+        await verifyRenderedHtml(allTasks, 'apple sauce');
     });
 
     it('explain', async () => {
         GlobalQuery.getInstance().set('hide toolbar');
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedHtml(allTasks, 'scheduled 1970-01-01\nexplain', State.Warm);
+        await verifyRenderedHtml(allTasks, 'scheduled 1970-01-01\nexplain');
     });
 
     it('toolbar', async () => {
         const allTasks = [new TaskBuilder().path('sample.md').build()];
-        await verifyRenderedHtml(allTasks, 'show toolbar', State.Warm);
+        await verifyRenderedHtml(allTasks, 'show toolbar');
     });
 
     it('fully populated task', async () => {
@@ -126,7 +126,7 @@ describe('QueryResultsRenderer tests', () => {
         GlobalQuery.getInstance().reset();
 
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedHtml(allTasks, 'show urgency', State.Warm);
+        await verifyRenderedHtml(allTasks, 'show urgency');
     });
 
     it('fully populated task - short mode', async () => {
@@ -135,12 +135,12 @@ describe('QueryResultsRenderer tests', () => {
         GlobalQuery.getInstance().reset();
 
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedHtml(allTasks, 'show urgency\nshort mode', State.Warm);
+        await verifyRenderedHtml(allTasks, 'show urgency\nshort mode');
     });
 
     it('fully populated task - hidden fields', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedHtml(allTasks, 'hide scheduled date\nhide priority', State.Warm);
+        await verifyRenderedHtml(allTasks, 'hide scheduled date\nhide priority');
     });
 
     const showTree = 'show tree\n';
@@ -148,29 +148,29 @@ describe('QueryResultsRenderer tests', () => {
 
     it('parent-child items hidden', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_rendering_sample');
-        await verifyRenderedHtml(allTasks, hideTree + 'sort by function task.lineNumber', State.Warm);
+        await verifyRenderedHtml(allTasks, hideTree + 'sort by function task.lineNumber');
     });
 
     it('parent-child items', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_rendering_sample');
-        await verifyRenderedHtml(allTasks, showTree + 'sort by function task.lineNumber', State.Warm);
+        await verifyRenderedHtml(allTasks, showTree + 'sort by function task.lineNumber');
     });
 
     it('parent-child items reverse sorted', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_rendering_sample');
-        await verifyRenderedHtml(allTasks, showTree + 'sort by function reverse task.lineNumber', State.Warm);
+        await verifyRenderedHtml(allTasks, showTree + 'sort by function reverse task.lineNumber');
     });
 
     it('should render tasks without their parents', async () => {
         // example chosen to match subtasks whose parents do not match the query
         const allTasks = readTasksFromSimulatedFile('inheritance_task_2listitem_3task');
-        await verifyRenderedHtml(allTasks, showTree + 'description includes grandchild', State.Warm);
+        await verifyRenderedHtml(allTasks, showTree + 'description includes grandchild');
     });
 
     it('should render non task check box when global filter is enabled', async () => {
         GlobalFilter.getInstance().set('#task');
         const allTasks = readTasksFromSimulatedFile('inheritance_non_task_child');
-        await verifyRenderedHtml(allTasks, showTree, State.Warm);
+        await verifyRenderedHtml(allTasks, showTree);
     });
 
     it('should render four group headings', async () => {
@@ -183,20 +183,19 @@ group by function 'level2'
 group by function 'level3'
 group by function 'level4'
 `,
-            State.Warm,
         );
     });
 
     it('should allow a task to be in multiple groups', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedHtml(allTasks, "group by function ['heading a', 'heading b']", State.Warm);
+        await verifyRenderedHtml(allTasks, "group by function ['heading a', 'heading b']");
     });
 
     it('should indent nested tasks', async () => {
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
-        await verifyRenderedHtml(allTasks, 'show tree', State.Warm);
+        await verifyRenderedHtml(allTasks, 'show tree');
     });
 
     it('should render grandchildren once under the parent', async () => {
@@ -208,7 +207,6 @@ show tree
 sort by function task.lineNumber
 (description includes grandchild) OR (description includes parent)
         `,
-            State.Warm,
         );
     });
 
@@ -221,7 +219,6 @@ show tree
 sort by function reverse task.lineNumber
 (description includes grandchild) OR (description includes parent)
         `,
-            State.Warm,
         );
     });
 });
