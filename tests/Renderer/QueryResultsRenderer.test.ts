@@ -74,6 +74,30 @@ ${toMarkdown(allTasks)}
     verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
 }
 
+async function verifyRenderedHtml(allTasks: Task[], source: string) {
+    const tasksFile = new TasksFile('query.md');
+    const query = new Query(source, tasksFile);
+
+    const renderer = new HtmlQueryResultsRenderer(
+        () => Promise.resolve(),
+        null,
+        mockApp,
+        mockHTMLRenderer,
+        makeQueryRendererParameters(allTasks),
+        {
+            source: () => source,
+            tasksFile: () => tasksFile,
+            query: () => query,
+        },
+    );
+
+    const container = document.createElement('div');
+    renderer.content = container;
+    await renderer.renderQuery(State.Initializing, query.applyQueryToTasks(allTasks));
+
+    verifyRenderedTasks(container, allTasks);
+}
+
 describe('QueryResultsRenderer tests', () => {
     async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
         const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'), allTasks);
@@ -84,27 +108,7 @@ describe('QueryResultsRenderer tests', () => {
     it('loading message', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         const source = 'show urgency';
-        const tasksFile = new TasksFile('query.md');
-        const query = new Query(source, tasksFile);
-
-        const renderer = new HtmlQueryResultsRenderer(
-            () => Promise.resolve(),
-            null,
-            mockApp,
-            mockHTMLRenderer,
-            makeQueryRendererParameters(allTasks),
-            {
-                source: () => source,
-                tasksFile: () => tasksFile,
-                query: () => query,
-            },
-        );
-
-        const container = document.createElement('div');
-        renderer.content = container;
-        await renderer.renderQuery(State.Initializing, query.applyQueryToTasks(allTasks));
-
-        verifyRenderedTasks(container, allTasks);
+        await verifyRenderedHtml(allTasks, source);
     });
 
     it('error message', async () => {
