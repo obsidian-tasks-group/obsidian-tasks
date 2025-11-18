@@ -74,8 +74,7 @@ ${toMarkdown(allTasks)}
     verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
 }
 
-async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm) {
-    const tasksFile = new TasksFile('query.md');
+function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]) {
     const query = getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
 
     const renderer = new HtmlQueryResultsRenderer(
@@ -90,6 +89,12 @@ async function verifyRenderedHtml(allTasks: Task[], source: string, state: State
             query: () => query,
         },
     );
+    return { query, renderer };
+}
+
+async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm) {
+    const tasksFile = new TasksFile('query.md');
+    const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
 
     const container = document.createElement('div');
     renderer.content = container;
