@@ -7,7 +7,7 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
-import { Query } from '../../src/Query/Query';
+import { getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
 import { HtmlQueryResultsRenderer } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { type QueryRendererParameters, QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
@@ -76,7 +76,7 @@ ${toMarkdown(allTasks)}
 
 async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm) {
     const tasksFile = new TasksFile('query.md');
-    const query = new Query(source, tasksFile);
+    const query = getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
 
     const renderer = new HtmlQueryResultsRenderer(
         () => Promise.resolve(),
@@ -100,9 +100,7 @@ async function verifyRenderedHtml(allTasks: Task[], source: string, state: State
 
 describe('QueryResultsRenderer tests', () => {
     async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('query.md'), allTasks);
-        const container = await renderTasks(state, renderer, allTasks);
-        verifyRenderedTasks(container, allTasks);
+        await verifyRenderedHtml(allTasks, source, state);
     }
 
     it('loading message', async () => {
