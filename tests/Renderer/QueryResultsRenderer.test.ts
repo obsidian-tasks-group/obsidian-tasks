@@ -74,7 +74,7 @@ ${toMarkdown(allTasks)}
     verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
 }
 
-async function verifyRenderedHtml(allTasks: Task[], source: string) {
+async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm) {
     const tasksFile = new TasksFile('query.md');
     const query = new Query(source, tasksFile);
 
@@ -93,7 +93,7 @@ async function verifyRenderedHtml(allTasks: Task[], source: string) {
 
     const container = document.createElement('div');
     renderer.content = container;
-    await renderer.renderQuery(State.Initializing, query.applyQueryToTasks(allTasks));
+    await renderer.renderQuery(state, query.applyQueryToTasks(allTasks));
 
     verifyRenderedTasks(container, allTasks);
 }
@@ -107,7 +107,7 @@ describe('QueryResultsRenderer tests', () => {
 
     it('loading message', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedHtml(allTasks, 'show urgency');
+        await verifyRenderedHtml(allTasks, 'show urgency', State.Initializing);
     });
 
     it('error message', async () => {
