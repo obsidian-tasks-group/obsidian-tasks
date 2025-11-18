@@ -7,7 +7,7 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
-import { Query } from '../../src/Query/Query';
+import type { Query } from '../../src/Query/Query';
 import { getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
 import { HtmlQueryResultsRenderer } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { type QueryRendererParameters, QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
@@ -61,13 +61,14 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
 
 async function renderTasks(
     state: State,
-    renderer: QueryResultsRenderer,
+    renderer: HtmlQueryResultsRenderer,
     allTasks: Task[],
-    _query: Query,
+    query: Query,
 ): Promise<HTMLDivElement> {
     const container = document.createElement('div');
 
-    await renderer.render(state, allTasks, container);
+    renderer.content = container;
+    await renderer.renderQuery(state, query.applyQueryToTasks(allTasks));
     return container;
 }
 
@@ -272,8 +273,7 @@ describe('Reusing QueryResultsRenderer', () => {
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
         const source = 'show tree';
-        const renderer = makeQueryResultsRenderer(source, tasksFile, allTasks);
-        const query = new Query(source, tasksFile);
+        const { renderer, query } = makeHtmlRenderer(source, tasksFile, allTasks);
 
         const container = await renderTasks(State.Warm, renderer, allTasks, query);
         verifyRenderedTasks(container, allTasks);
@@ -287,8 +287,7 @@ describe('Reusing QueryResultsRenderer', () => {
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
         const source = 'hide tree';
-        const renderer = makeQueryResultsRenderer(source, tasksFile, allTasks);
-        const query = new Query(source, tasksFile);
+        const { renderer, query } = makeHtmlRenderer(source, tasksFile, allTasks);
 
         const container = await renderTasks(State.Warm, renderer, allTasks, query);
         verifyRenderedTasks(container, allTasks);
