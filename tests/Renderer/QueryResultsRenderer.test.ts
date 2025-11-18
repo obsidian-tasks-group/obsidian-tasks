@@ -107,8 +107,7 @@ describe('QueryResultsRenderer tests', () => {
 
     it('loading message', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        const source = 'show urgency';
-        await verifyRenderedHtml(allTasks, source);
+        await verifyRenderedHtml(allTasks, 'show urgency');
     });
 
     it('error message', async () => {
