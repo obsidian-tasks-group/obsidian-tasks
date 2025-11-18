@@ -7,6 +7,7 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
+import { Query } from '../../src/Query/Query';
 import { getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
 import { HtmlQueryResultsRenderer } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { type QueryRendererParameters, QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
@@ -58,7 +59,12 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
     );
 }
 
-async function renderTasks(state: State, renderer: QueryResultsRenderer, allTasks: Task[]): Promise<HTMLDivElement> {
+async function renderTasks(
+    state: State,
+    renderer: QueryResultsRenderer,
+    allTasks: Task[],
+    _query: Query,
+): Promise<HTMLDivElement> {
     const container = document.createElement('div');
 
     await renderer.render(state, allTasks, container);
@@ -259,15 +265,20 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 });
 
 describe('Reusing QueryResultsRenderer', () => {
+    const tasksFile = new TasksFile('anywhere.md');
+
     it('should render the same thing twice - tree', async () => {
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
-        const renderer = makeQueryResultsRenderer('show tree', new TasksFile('anywhere.md'), allTasks);
-        const container = await renderTasks(State.Warm, renderer, allTasks);
+        const source = 'show tree';
+        const renderer = makeQueryResultsRenderer(source, tasksFile, allTasks);
+        const query = new Query(source, tasksFile);
+
+        const container = await renderTasks(State.Warm, renderer, allTasks, query);
         verifyRenderedTasks(container, allTasks);
 
-        const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks);
+        const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
         verifyRenderedTasks(rerenderedContainer, allTasks);
     });
 
@@ -275,11 +286,14 @@ describe('Reusing QueryResultsRenderer', () => {
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
-        const renderer = makeQueryResultsRenderer('hide tree', new TasksFile('anywhere.md'), allTasks);
-        const container = await renderTasks(State.Warm, renderer, allTasks);
+        const source = 'hide tree';
+        const renderer = makeQueryResultsRenderer(source, tasksFile, allTasks);
+        const query = new Query(source, tasksFile);
+
+        const container = await renderTasks(State.Warm, renderer, allTasks, query);
         verifyRenderedTasks(container, allTasks);
 
-        const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks);
+        const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
         verifyRenderedTasks(rerenderedContainer, allTasks);
     });
 });
