@@ -7,6 +7,8 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
+import { Query } from '../../src/Query/Query';
+import { HtmlQueryResultsRenderer } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { type QueryRendererParameters, QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { mockApp } from '../__mocks__/obsidian';
@@ -81,8 +83,27 @@ describe('QueryResultsRenderer tests', () => {
 
     it('loading message', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        const renderer = makeQueryResultsRenderer('show urgency', new TasksFile('query.md'), allTasks);
-        const container = await renderTasks(State.Initializing, renderer, allTasks);
+        const source = 'show urgency';
+        const tasksFile = new TasksFile('query.md');
+        const query = new Query(source, tasksFile);
+
+        const renderer = new HtmlQueryResultsRenderer(
+            () => Promise.resolve(),
+            null,
+            mockApp,
+            mockHTMLRenderer,
+            makeQueryRendererParameters(allTasks),
+            {
+                source: () => source,
+                tasksFile: () => tasksFile,
+                query: () => query,
+            },
+        );
+
+        const container = document.createElement('div');
+        renderer.content = container;
+        await renderer.renderQuery(State.Initializing, query.applyQueryToTasks(allTasks));
+
         verifyRenderedTasks(container, allTasks);
     });
 
