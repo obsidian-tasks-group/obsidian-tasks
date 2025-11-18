@@ -4,17 +4,17 @@
 import moment from 'moment';
 import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { GlobalQuery } from '../../src/Config/GlobalQuery';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
 import { type QueryRendererParameters, QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { mockApp } from '../__mocks__/obsidian';
+import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { toMarkdown } from '../TestingTools/TestHelpers';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { mockApp } from '../__mocks__/obsidian';
-import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
-import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { mockHTMLRenderer } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -81,7 +81,9 @@ describe('QueryResultsRenderer tests', () => {
 
     it('loading message', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'show urgency', State.Initializing);
+        const renderer = makeQueryResultsRenderer('show urgency', new TasksFile('query.md'), allTasks);
+        const container = await renderTasks(State.Initializing, renderer, allTasks);
+        verifyRenderedTasks(container, allTasks);
     });
 
     it('error message', async () => {
