@@ -316,10 +316,11 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
 
     async function renderTask(task: Task, queryFilePath: string = 'query.md') {
         const allTasks = [task];
-        const renderer = makeQueryResultsRenderer('', new TasksFile(queryFilePath), allTasks);
+        const { renderer, query } = makeHtmlRenderer('', new TasksFile(queryFilePath), allTasks);
         const container = document.createElement('div');
 
-        await renderer.render(State.Warm, allTasks, container);
+        renderer.content = container;
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
 
         return container.querySelector('.task-description')?.innerHTML ?? '';
     }
