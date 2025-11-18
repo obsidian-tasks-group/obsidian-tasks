@@ -99,10 +99,6 @@ async function verifyRenderedHtml(allTasks: Task[], source: string, state: State
 }
 
 describe('QueryResultsRenderer tests', () => {
-    async function verifyRenderedTasksHTML(allTasks: Task[], source: string, state: State = State.Warm) {
-        await verifyRenderedHtml(allTasks, source, state);
-    }
-
     it('loading message', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         await verifyRenderedHtml(allTasks, 'show urgency', State.Initializing);
@@ -110,18 +106,18 @@ describe('QueryResultsRenderer tests', () => {
 
     it('error message', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'apple sauce');
+        await verifyRenderedHtml(allTasks, 'apple sauce', State.Warm);
     });
 
     it('explain', async () => {
         GlobalQuery.getInstance().set('hide toolbar');
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'scheduled 1970-01-01\nexplain');
+        await verifyRenderedHtml(allTasks, 'scheduled 1970-01-01\nexplain', State.Warm);
     });
 
     it('toolbar', async () => {
         const allTasks = [new TaskBuilder().path('sample.md').build()];
-        await verifyRenderedTasksHTML(allTasks, 'show toolbar', State.Warm);
+        await verifyRenderedHtml(allTasks, 'show toolbar', State.Warm);
     });
 
     it('fully populated task', async () => {
@@ -130,7 +126,7 @@ describe('QueryResultsRenderer tests', () => {
         GlobalQuery.getInstance().reset();
 
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'show urgency');
+        await verifyRenderedHtml(allTasks, 'show urgency', State.Warm);
     });
 
     it('fully populated task - short mode', async () => {
@@ -139,12 +135,12 @@ describe('QueryResultsRenderer tests', () => {
         GlobalQuery.getInstance().reset();
 
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'show urgency\nshort mode');
+        await verifyRenderedHtml(allTasks, 'show urgency\nshort mode', State.Warm);
     });
 
     it('fully populated task - hidden fields', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, 'hide scheduled date\nhide priority');
+        await verifyRenderedHtml(allTasks, 'hide scheduled date\nhide priority', State.Warm);
     });
 
     const showTree = 'show tree\n';
@@ -152,34 +148,34 @@ describe('QueryResultsRenderer tests', () => {
 
     it('parent-child items hidden', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_rendering_sample');
-        await verifyRenderedTasksHTML(allTasks, hideTree + 'sort by function task.lineNumber');
+        await verifyRenderedHtml(allTasks, hideTree + 'sort by function task.lineNumber', State.Warm);
     });
 
     it('parent-child items', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_rendering_sample');
-        await verifyRenderedTasksHTML(allTasks, showTree + 'sort by function task.lineNumber');
+        await verifyRenderedHtml(allTasks, showTree + 'sort by function task.lineNumber', State.Warm);
     });
 
     it('parent-child items reverse sorted', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_rendering_sample');
-        await verifyRenderedTasksHTML(allTasks, showTree + 'sort by function reverse task.lineNumber');
+        await verifyRenderedHtml(allTasks, showTree + 'sort by function reverse task.lineNumber', State.Warm);
     });
 
     it('should render tasks without their parents', async () => {
         // example chosen to match subtasks whose parents do not match the query
         const allTasks = readTasksFromSimulatedFile('inheritance_task_2listitem_3task');
-        await verifyRenderedTasksHTML(allTasks, showTree + 'description includes grandchild');
+        await verifyRenderedHtml(allTasks, showTree + 'description includes grandchild', State.Warm);
     });
 
     it('should render non task check box when global filter is enabled', async () => {
         GlobalFilter.getInstance().set('#task');
         const allTasks = readTasksFromSimulatedFile('inheritance_non_task_child');
-        await verifyRenderedTasksHTML(allTasks, showTree);
+        await verifyRenderedHtml(allTasks, showTree, State.Warm);
     });
 
     it('should render four group headings', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_task_2listitem_3task');
-        await verifyRenderedTasksHTML(
+        await verifyRenderedHtml(
             allTasks,
             `
 group by function task.description.length
@@ -187,42 +183,45 @@ group by function 'level2'
 group by function 'level3'
 group by function 'level4'
 `,
+            State.Warm,
         );
     });
 
     it('should allow a task to be in multiple groups', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedTasksHTML(allTasks, "group by function ['heading a', 'heading b']");
+        await verifyRenderedHtml(allTasks, "group by function ['heading a', 'heading b']", State.Warm);
     });
 
     it('should indent nested tasks', async () => {
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
-        await verifyRenderedTasksHTML(allTasks, 'show tree');
+        await verifyRenderedHtml(allTasks, 'show tree', State.Warm);
     });
 
     it('should render grandchildren once under the parent', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_1parent2children2grandchildren1sibling');
-        await verifyRenderedTasksHTML(
+        await verifyRenderedHtml(
             allTasks,
             `
 show tree
 sort by function task.lineNumber
 (description includes grandchild) OR (description includes parent)
         `,
+            State.Warm,
         );
     });
 
     it('should render grandchildren once and on the same level as parent', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_1parent2children2grandchildren1sibling');
-        await verifyRenderedTasksHTML(
+        await verifyRenderedHtml(
             allTasks,
             `
 show tree
 sort by function reverse task.lineNumber
 (description includes grandchild) OR (description includes parent)
         `,
+            State.Warm,
         );
     });
 });
