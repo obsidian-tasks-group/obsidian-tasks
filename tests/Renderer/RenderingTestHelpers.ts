@@ -50,7 +50,7 @@ export async function renderMarkdown(source: string, tasks: Task[]) {
         rerenderWithFilter: async (filter: FilterOrErrorMessage) => {
             expect(filter).toBeValid();
 
-            const filteredResult = queryResult.applyFilter(filter);
+            const filteredResult = queryResult.applyFilter(filter.filter!);
             await renderer.renderQuery(State.Warm, filteredResult);
             return { filteredMarkdown: '\n' + renderer.markdown };
         },
