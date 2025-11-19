@@ -1,4 +1,5 @@
 import type { Task } from '../Task/Task';
+import type { FilterOrErrorMessage } from './Filter/FilterOrErrorMessage';
 import { TaskGroups } from './Group/TaskGroups';
 import type { TaskGroup } from './Group/TaskGroup';
 import { SearchInfo } from './SearchInfo';
@@ -95,5 +96,9 @@ export class QueryResult {
      */
     public toFileLineString(task: Task): string {
         return `- [${task.status.symbol}] ${task.toString()}`;
+    }
+
+    public applyFilter(_filter: FilterOrErrorMessage): QueryResult {
+        return this;
     }
 }

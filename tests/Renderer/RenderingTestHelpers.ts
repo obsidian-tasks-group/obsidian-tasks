@@ -1,5 +1,6 @@
 import type { App } from 'obsidian';
 import { State } from '../../src/Obsidian/Cache';
+import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import { Query } from '../../src/Query/Query';
 import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
 import type { QueryRendererParameters } from '../../src/Renderer/QueryResultsRenderer';
@@ -43,5 +44,15 @@ export async function renderMarkdown(source: string, tasks: Task[]) {
     const { renderer, query } = createMarkdownRenderer(source);
     const queryResult = query.applyQueryToTasks(tasks);
     await renderer.renderQuery(State.Warm, queryResult);
-    return { markdown: '\n' + renderer.markdown, queryResult };
+    return {
+        markdown: '\n' + renderer.markdown,
+        queryResult,
+        rerenderWithFilter: async (filter: FilterOrErrorMessage) => {
+            expect(filter).toBeValid();
+
+            const filteredResult = queryResult.applyFilter(filter);
+            await renderer.renderQuery(State.Warm, filteredResult);
+            return { filteredMarkdown: '\n' + renderer.markdown };
+        },
+    };
 }
