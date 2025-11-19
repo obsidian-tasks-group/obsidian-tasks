@@ -1,5 +1,6 @@
+import { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
-import type { FilterOrErrorMessage } from './Filter/FilterOrErrorMessage';
+import type { Filter } from './Filter/Filter';
 import { TaskGroups } from './Group/TaskGroups';
 import type { TaskGroup } from './Group/TaskGroup';
 import { SearchInfo } from './SearchInfo';
@@ -98,7 +99,18 @@ export class QueryResult {
         return `- [${task.status.symbol}] ${task.toString()}`;
     }
 
-    public applyFilter(_filter: FilterOrErrorMessage): QueryResult {
-        return this;
+    /**
+     * TODO remove me
+     * ideas for implementation
+     * 1. append filter to the current query or a copy of it
+     * 2. assemble a list of matched tasks and apply the filter in a new query
+     *
+     * factors to consider: sort order, grouping and global query
+     */
+    public applyFilter(filter: Filter): QueryResult {
+        const allTasks = this.taskGroups.groups[0].tasks;
+        const searchInfo = new SearchInfo(new TasksFile('fix_me.md'), allTasks);
+        const filteredTasks = allTasks.filter((task) => filter.filterFunction(task, searchInfo));
+        return new QueryResult(new TaskGroups([], filteredTasks, searchInfo), filteredTasks.length);
     }
 }

@@ -254,7 +254,7 @@ group by id
 });
 
 describe('QueryResult - filters', () => {
-    it.failing('should filter a flat list result', async () => {
+    it('should filter an ungrouped flat list result', async () => {
         const taskBuilder = new TaskBuilder();
         const task1 = taskBuilder.description('task 1').build();
         const task2 = taskBuilder.description('task 2').build();
