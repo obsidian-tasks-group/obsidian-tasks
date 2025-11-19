@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment/moment';
+import { DescriptionField } from '../../src/Query/Filter/DescriptionField';
 import type { Grouper } from '../../src/Query/Group/Grouper';
 import { TaskGroups } from '../../src/Query/Group/TaskGroups';
 import { Query } from '../../src/Query/Query';
@@ -9,6 +10,8 @@ import { QueryResult } from '../../src/Query/QueryResult';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { Task } from '../../src/Task/Task';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
+import { renderMarkdown } from '../Renderer/RenderingTestHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine, fromLines } from '../TestingTools/TestHelpers';
 
 window.moment = moment;
@@ -246,6 +249,31 @@ group by id
         expect(searchTasksAndCopyResult(tasks, query)).toEqual(`
 - [ ] #task Task in 'callout_labelled'
 - [ ] #task Task indented in 'callout_labelled'
+`);
+    });
+});
+
+describe('QueryResult - filters', () => {
+    it.failing('should filter a flat list result', async () => {
+        const taskBuilder = new TaskBuilder();
+        const task1 = taskBuilder.description('task 1').build();
+        const task2 = taskBuilder.description('task 2').build();
+        const task3 = taskBuilder.description('task 3').build();
+        const tasks = [task1, task2, task3];
+
+        const { markdown, rerenderWithFilter } = await renderMarkdown('description does not include 3', tasks);
+
+        expect(markdown).toEqual(`
+- [ ] task 1
+- [ ] task 2
+`);
+
+        const filter = new DescriptionField().createFilterOrErrorMessage('description includes 2');
+
+        const { filteredMarkdown } = await rerenderWithFilter(filter);
+
+        expect(filteredMarkdown).toEqual(`
+- [ ] task 2
 `);
     });
 });
