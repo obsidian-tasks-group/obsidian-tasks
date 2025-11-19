@@ -1,5 +1,9 @@
 import type { App } from 'obsidian';
+import { State } from '../../src/Obsidian/Cache';
+import { Query } from '../../src/Query/Query';
+import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
 import type { QueryRendererParameters } from '../../src/Renderer/QueryResultsRenderer';
+import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
 
 export const mockHTMLRenderer = async (_obsidianApp: App, text: string, element: HTMLSpanElement, _path: string) => {
@@ -22,4 +26,21 @@ export function makeQueryRendererParameters(allTasks: Task[]): QueryRendererPara
         backlinksMousedownHandler: () => Promise.resolve(),
         editTaskPencilClickHandler: () => {},
     };
+}
+
+export function createMarkdownRenderer(source: string) {
+    const tasksFile = new TasksFile('query.md');
+    const query = new Query(source, tasksFile);
+    const renderer = new MarkdownQueryResultsRenderer({
+        query: () => query,
+        tasksFile: () => tasksFile,
+        source: () => source,
+    });
+    return { renderer, query };
+}
+
+export async function renderMarkdown(source: string, tasks: Task[]) {
+    const { renderer, query } = createMarkdownRenderer(source);
+    await renderer.renderQuery(State.Warm, query.applyQueryToTasks(tasks));
+    return '\n' + renderer.markdown;
 }
