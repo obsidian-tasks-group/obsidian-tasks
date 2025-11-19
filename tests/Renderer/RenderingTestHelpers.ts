@@ -41,6 +41,7 @@ export function createMarkdownRenderer(source: string) {
 
 export async function renderMarkdown(source: string, tasks: Task[]) {
     const { renderer, query } = createMarkdownRenderer(source);
-    await renderer.renderQuery(State.Warm, query.applyQueryToTasks(tasks));
-    return { markdown: '\n' + renderer.markdown };
+    const queryResult = query.applyQueryToTasks(tasks);
+    await renderer.renderQuery(State.Warm, queryResult);
+    return { markdown: '\n' + renderer.markdown, queryResult };
 }
