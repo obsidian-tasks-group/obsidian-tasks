@@ -20,7 +20,7 @@ afterEach(() => {
 
 describe('MarkdownQueryResultsRenderer tests', () => {
     it('should render single task', async () => {
-        const markdown = await renderMarkdown('hide tree', [
+        const { markdown } = await renderMarkdown('hide tree', [
             new TaskBuilder().description('hello').priority(Priority.Medium).build(),
         ]);
         expect(markdown).toMatchInlineSnapshot(`
@@ -46,7 +46,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
     });
 
     it('should render two tasks', async () => {
-        const markdown = await renderMarkdown('hide tree\nsort by priority reverse', [
+        const { markdown } = await renderMarkdown('hide tree\nsort by priority reverse', [
             new TaskBuilder().description('hello').priority(Priority.Medium).build(),
             new TaskBuilder().description('bye').priority(Priority.High).build(),
         ]);
@@ -65,7 +65,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 - [ ] 55555
 `);
 
-        const markdown = await renderMarkdown('hide tree\ngroup by function task.description.length', tasks);
+        const { markdown } = await renderMarkdown('hide tree\ngroup by function task.description.length', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             #### 3
@@ -93,7 +93,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 - [ ] 6 🆔 id6
 `);
 
-        const markdown = await renderMarkdown(
+        const { markdown } = await renderMarkdown(
             `
 group by function task.tags.join(',')
 group by priority
@@ -143,7 +143,7 @@ group by id
     it('should remove indentation for nested tasks', async () => {
         const tasks = readTasksFromSimulatedFile('inheritance_2roots_listitem_listitem_task');
 
-        const markdown = await renderMarkdown('', tasks);
+        const { markdown } = await renderMarkdown('', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             - [ ] grandchild task 1
@@ -157,7 +157,7 @@ group by id
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
 
-        const markdown = await renderMarkdown('show tree', tasks);
+        const { markdown } = await renderMarkdown('show tree', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             - [ ] #task parent task
@@ -173,7 +173,7 @@ group by id
     it('should indent nested list items', async () => {
         const tasks = readTasksFromSimulatedFile('inheritance_task_2listitem_3task');
 
-        const markdown = await renderMarkdown('show tree', tasks);
+        const { markdown } = await renderMarkdown('show tree', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             - [ ] parent task
@@ -190,7 +190,7 @@ group by id
         GlobalFilter.getInstance().set('#task');
         const tasks = readTasksFromSimulatedFile('inheritance_non_task_child');
 
-        const markdown = await renderMarkdown('show tree', tasks);
+        const { markdown } = await renderMarkdown('show tree', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             - [ ] #task task parent
@@ -205,7 +205,7 @@ group by id
     it('should use hyphen as list marker', async () => {
         const tasks = readTasksFromSimulatedFile('mixed_list_markers');
 
-        const markdown = await renderMarkdown('', tasks);
+        const { markdown } = await renderMarkdown('', tasks);
 
         expect(markdown).toMatchInlineSnapshot(`
             "
@@ -220,7 +220,7 @@ group by id
     it('should remove callout prefixes', async () => {
         const tasks = readTasksFromSimulatedFile('callout_labelled');
 
-        const markdown = await renderMarkdown('', tasks);
+        const { markdown } = await renderMarkdown('', tasks);
 
         expect(markdown).toMatchInlineSnapshot(`
             "
@@ -233,7 +233,7 @@ group by id
     it('should render the explanation', async () => {
         const tasks = readTasksFromSimulatedFile('callout_labelled');
 
-        const markdown = await renderMarkdown('explain\ndescription includes indented', tasks);
+        const { markdown } = await renderMarkdown('explain\ndescription includes indented', tasks);
 
         expect(markdown).toMatchInlineSnapshot(`
             "
