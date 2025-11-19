@@ -1,33 +1,13 @@
 import moment from 'moment/moment';
-import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { State } from '../../src/Obsidian/Cache';
-import { Query } from '../../src/Query/Query';
-import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Priority } from '../../src/Task/Priority';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLines } from '../TestingTools/TestHelpers';
+import { createMarkdownRenderer, renderMarkdown } from './RenderingTestHelpers';
 
 window.moment = moment;
-
-function createMarkdownRenderer(source: string) {
-    const tasksFile = new TasksFile('query.md');
-    const query = new Query(source, tasksFile);
-    const renderer = new MarkdownQueryResultsRenderer({
-        query: () => query,
-        tasksFile: () => tasksFile,
-        source: () => source,
-    });
-    return { renderer, query };
-}
-
-async function renderMarkdown(source: string, tasks: Task[]) {
-    const { renderer, query } = createMarkdownRenderer(source);
-    await renderer.renderQuery(State.Warm, query.applyQueryToTasks(tasks));
-    return '\n' + renderer.markdown;
-}
 
 function readMarkdown(tasksMarkdown: string) {
     const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
