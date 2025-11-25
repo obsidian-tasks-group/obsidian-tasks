@@ -40,8 +40,10 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         return;
     }
 
-    protected renderExplanation(_explanation: string | null): void {
-        return;
+    protected renderExplanation(explanation: string | null): void {
+        if (explanation) {
+            this.markdownLines.push(explanation);
+        }
     }
 
     protected renderErrorMessage(_errorMessage: string): void {
