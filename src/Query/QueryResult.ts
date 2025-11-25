@@ -1,4 +1,6 @@
+import { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
+import type { Filter } from './Filter/Filter';
 import { TaskGroups } from './Group/TaskGroups';
 import type { TaskGroup } from './Group/TaskGroup';
 import { SearchInfo } from './SearchInfo';
@@ -95,5 +97,22 @@ export class QueryResult {
      */
     public toFileLineString(task: Task): string {
         return `- [${task.status.symbol}] ${task.toString()}`;
+    }
+
+    /**
+     * This is known to not work reliably for filters that use query.allTasks and query.file.*
+     *
+     * @param filter
+     */
+    public applyFilter(filter: Filter): QueryResult {
+        const queryResultTasks = this.taskGroups.groups.flatMap((group) => group.tasks);
+        const searchInfo = new SearchInfo(new TasksFile('fix_me.md'), queryResultTasks);
+        const filterFunction = (task: Task) => filter.filterFunction(task, searchInfo);
+        const filteredTasks = [...new Set(queryResultTasks.filter(filterFunction))];
+
+        return new QueryResult(
+            new TaskGroups(this.taskGroups.groupers, filteredTasks, searchInfo),
+            filteredTasks.length,
+        );
     }
 }

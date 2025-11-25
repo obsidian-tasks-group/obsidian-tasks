@@ -1,33 +1,13 @@
 import moment from 'moment/moment';
-import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { State } from '../../src/Obsidian/Cache';
-import { Query } from '../../src/Query/Query';
-import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Priority } from '../../src/Task/Priority';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLines } from '../TestingTools/TestHelpers';
+import { createMarkdownRenderer, renderMarkdown } from './RenderingTestHelpers';
 
 window.moment = moment;
-
-function createMarkdownRenderer(source: string) {
-    const tasksFile = new TasksFile('query.md');
-    const query = new Query(source, tasksFile);
-    const renderer = new MarkdownQueryResultsRenderer({
-        query: () => query,
-        tasksFile: () => tasksFile,
-        source: () => source,
-    });
-    return { renderer, query };
-}
-
-async function renderMarkdown(source: string, tasks: Task[]) {
-    const { renderer, query } = createMarkdownRenderer(source);
-    await renderer.renderQuery(State.Warm, query.applyQueryToTasks(tasks));
-    return '\n' + renderer.markdown;
-}
 
 function readMarkdown(tasksMarkdown: string) {
     const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
@@ -40,7 +20,7 @@ afterEach(() => {
 
 describe('MarkdownQueryResultsRenderer tests', () => {
     it('should render single task', async () => {
-        const markdown = await renderMarkdown('hide tree', [
+        const { markdown } = await renderMarkdown('hide tree', [
             new TaskBuilder().description('hello').priority(Priority.Medium).build(),
         ]);
         expect(markdown).toMatchInlineSnapshot(`
@@ -66,7 +46,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
     });
 
     it('should render two tasks', async () => {
-        const markdown = await renderMarkdown('hide tree\nsort by priority reverse', [
+        const { markdown } = await renderMarkdown('hide tree\nsort by priority reverse', [
             new TaskBuilder().description('hello').priority(Priority.Medium).build(),
             new TaskBuilder().description('bye').priority(Priority.High).build(),
         ]);
@@ -85,7 +65,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 - [ ] 55555
 `);
 
-        const markdown = await renderMarkdown('hide tree\ngroup by function task.description.length', tasks);
+        const { markdown } = await renderMarkdown('hide tree\ngroup by function task.description.length', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             #### 3
@@ -113,7 +93,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
 - [ ] 6 🆔 id6
 `);
 
-        const markdown = await renderMarkdown(
+        const { markdown } = await renderMarkdown(
             `
 group by function task.tags.join(',')
 group by priority
@@ -163,7 +143,7 @@ group by id
     it('should remove indentation for nested tasks', async () => {
         const tasks = readTasksFromSimulatedFile('inheritance_2roots_listitem_listitem_task');
 
-        const markdown = await renderMarkdown('', tasks);
+        const { markdown } = await renderMarkdown('', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             - [ ] grandchild task 1
@@ -177,7 +157,7 @@ group by id
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
 
-        const markdown = await renderMarkdown('show tree', tasks);
+        const { markdown } = await renderMarkdown('show tree', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             - [ ] #task parent task
@@ -193,7 +173,7 @@ group by id
     it('should indent nested list items', async () => {
         const tasks = readTasksFromSimulatedFile('inheritance_task_2listitem_3task');
 
-        const markdown = await renderMarkdown('show tree', tasks);
+        const { markdown } = await renderMarkdown('show tree', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             - [ ] parent task
@@ -210,7 +190,7 @@ group by id
         GlobalFilter.getInstance().set('#task');
         const tasks = readTasksFromSimulatedFile('inheritance_non_task_child');
 
-        const markdown = await renderMarkdown('show tree', tasks);
+        const { markdown } = await renderMarkdown('show tree', tasks);
         expect(markdown).toMatchInlineSnapshot(`
             "
             - [ ] #task task parent
@@ -225,7 +205,7 @@ group by id
     it('should use hyphen as list marker', async () => {
         const tasks = readTasksFromSimulatedFile('mixed_list_markers');
 
-        const markdown = await renderMarkdown('', tasks);
+        const { markdown } = await renderMarkdown('', tasks);
 
         expect(markdown).toMatchInlineSnapshot(`
             "
@@ -240,7 +220,7 @@ group by id
     it('should remove callout prefixes', async () => {
         const tasks = readTasksFromSimulatedFile('callout_labelled');
 
-        const markdown = await renderMarkdown('', tasks);
+        const { markdown } = await renderMarkdown('', tasks);
 
         expect(markdown).toMatchInlineSnapshot(`
             "
@@ -253,7 +233,7 @@ group by id
     it('should render the explanation', async () => {
         const tasks = readTasksFromSimulatedFile('callout_labelled');
 
-        const markdown = await renderMarkdown('explain\ndescription includes indented', tasks);
+        const { markdown } = await renderMarkdown('explain\ndescription includes indented', tasks);
 
         expect(markdown).toMatchInlineSnapshot(`
             "

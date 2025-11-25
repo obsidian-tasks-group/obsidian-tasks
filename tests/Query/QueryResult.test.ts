@@ -2,6 +2,8 @@
  * @jest-environment jsdom
  */
 import moment from 'moment/moment';
+import { DescriptionField } from '../../src/Query/Filter/DescriptionField';
+import { TagsField } from '../../src/Query/Filter/TagsField';
 import type { Grouper } from '../../src/Query/Group/Grouper';
 import { TaskGroups } from '../../src/Query/Group/TaskGroups';
 import { Query } from '../../src/Query/Query';
@@ -9,6 +11,8 @@ import { QueryResult } from '../../src/Query/QueryResult';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { Task } from '../../src/Task/Task';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
+import { renderMarkdown } from '../Renderer/RenderingTestHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine, fromLines } from '../TestingTools/TestHelpers';
 
 window.moment = moment;
@@ -246,6 +250,103 @@ group by id
         expect(searchTasksAndCopyResult(tasks, query)).toEqual(`
 - [ ] #task Task in 'callout_labelled'
 - [ ] #task Task indented in 'callout_labelled'
+`);
+    });
+});
+
+describe('QueryResult - filters', () => {
+    const taskBuilder = new TaskBuilder();
+    const threeSimpleTasks = [
+        taskBuilder.description('task 1').build(),
+        taskBuilder.description('task 2').build(),
+        taskBuilder.description('task 3').build(),
+    ];
+
+    it('should filter an ungrouped flat list result', async () => {
+        const { markdown, rerenderWithFilter } = await renderMarkdown(
+            'description does not include 3',
+            threeSimpleTasks,
+        );
+
+        expect(markdown).toEqual(`
+- [ ] task 1
+- [ ] task 2
+`);
+
+        const filter = new DescriptionField().createFilterOrErrorMessage('description includes 2');
+
+        const { filteredMarkdown } = await rerenderWithFilter(filter);
+
+        expect(filteredMarkdown).toEqual(`
+- [ ] task 2
+`);
+    });
+
+    it('should filter a grouped flat list result', async () => {
+        const { markdown, rerenderWithFilter } = await renderMarkdown(
+            'group by function task.description',
+            threeSimpleTasks,
+        );
+
+        expect(markdown).toEqual(`
+#### task 1
+
+- [ ] task 1
+
+#### task 2
+
+- [ ] task 2
+
+#### task 3
+
+- [ ] task 3
+`);
+
+        const filter = new DescriptionField().createFilterOrErrorMessage('description includes 2');
+
+        const { filteredMarkdown } = await rerenderWithFilter(filter);
+
+        expect(filteredMarkdown).toEqual(`
+#### task 2
+
+- [ ] task 2
+`);
+    });
+
+    it('should filter a grouped flat list result with a task in multiple groups', async () => {
+        const taskBuilder = new TaskBuilder();
+        const task1 = taskBuilder.description('task 1').tags(['#one', '#two']).build();
+        const task2 = taskBuilder.description('task 2').tags(['#three']).build();
+        const tasks = [task1, task2];
+
+        const { markdown, rerenderWithFilter } = await renderMarkdown('group by tags', tasks);
+
+        expect(markdown).toEqual(`
+#### #one
+
+- [ ] task 1 #one #two
+
+#### #three
+
+- [ ] task 2 #three
+
+#### #two
+
+- [ ] task 1 #one #two
+`);
+
+        const filter = new TagsField().createFilterOrErrorMessage('tag includes two');
+
+        const { filteredMarkdown } = await rerenderWithFilter(filter);
+
+        expect(filteredMarkdown).toEqual(`
+#### #one
+
+- [ ] task 1 #one #two
+
+#### #two
+
+- [ ] task 1 #one #two
 `);
     });
 });
