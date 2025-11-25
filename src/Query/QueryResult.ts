@@ -103,7 +103,7 @@ export class QueryResult {
         const allTasks = this.taskGroups.groups.flatMap((group) => group.tasks);
         const searchInfo = new SearchInfo(new TasksFile('fix_me.md'), allTasks);
         const filterFunction = (task: Task) => filter.filterFunction(task, searchInfo);
-        const filteredTasks = allTasks.filter(filterFunction);
+        const filteredTasks = [...new Set([...allTasks.filter(filterFunction)])];
 
         return new QueryResult(
             new TaskGroups(this.taskGroups.groupers, filteredTasks, searchInfo),
