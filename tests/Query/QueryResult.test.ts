@@ -276,4 +276,42 @@ describe('QueryResult - filters', () => {
 - [ ] task 2
 `);
     });
+
+    it.failing('should filter a grouped flat list result', async () => {
+        const taskBuilder = new TaskBuilder();
+        const task1 = taskBuilder.description('task 1').build();
+        const task2 = taskBuilder.description('task 2').build();
+        const task3 = taskBuilder.description('task 3').build();
+        const tasks = [task1, task2, task3];
+
+        const { markdown, rerenderWithFilter } = await renderMarkdown(
+            `
+group by function task.description`,
+            tasks,
+        );
+
+        expect(markdown).toEqual(`
+#### task 1
+
+- [ ] task 1
+
+#### task 2
+
+- [ ] task 2
+
+#### task 3
+
+- [ ] task 3
+`);
+
+        const filter = new DescriptionField().createFilterOrErrorMessage('description includes 2');
+
+        const { filteredMarkdown } = await rerenderWithFilter(filter);
+
+        expect(filteredMarkdown).toEqual(`
+#### task 2
+
+- [ ] task 2
+`);
+    });
 });
