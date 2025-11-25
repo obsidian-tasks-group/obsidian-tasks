@@ -316,7 +316,7 @@ group by function task.description`,
 `);
     });
 
-    it.failing('should filter a grouped flat list result with a task in multiple groups', async () => {
+    it('should filter a grouped flat list result with a task in multiple groups', async () => {
         const taskBuilder = new TaskBuilder();
         const task1 = taskBuilder.description('task 1').tags(['#one', '#two']).build();
         const task2 = taskBuilder.description('task 2').tags(['#three']).build();
