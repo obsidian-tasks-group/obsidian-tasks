@@ -99,11 +99,16 @@ export class QueryResult {
         return `- [${task.status.symbol}] ${task.toString()}`;
     }
 
+    /**
+     * This is known to not work reliably for filters that use query.allTasks and query.file.*
+     *
+     * @param filter
+     */
     public applyFilter(filter: Filter): QueryResult {
-        const allTasks = this.taskGroups.groups.flatMap((group) => group.tasks);
-        const searchInfo = new SearchInfo(new TasksFile('fix_me.md'), allTasks);
+        const queryResultTasks = this.taskGroups.groups.flatMap((group) => group.tasks);
+        const searchInfo = new SearchInfo(new TasksFile('fix_me.md'), queryResultTasks);
         const filterFunction = (task: Task) => filter.filterFunction(task, searchInfo);
-        const filteredTasks = [...new Set([...allTasks.filter(filterFunction)])];
+        const filteredTasks = [...new Set([...queryResultTasks.filter(filterFunction)])];
 
         return new QueryResult(
             new TaskGroups(this.taskGroups.groupers, filteredTasks, searchInfo),
