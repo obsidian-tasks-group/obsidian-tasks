@@ -284,8 +284,7 @@ describe('QueryResult - filters', () => {
 
     it('should filter a grouped flat list result', async () => {
         const { markdown, rerenderWithFilter } = await renderMarkdown(
-            `
-group by function task.description`,
+            'group by function task.description',
             threeSimpleTasks,
         );
 
