@@ -249,4 +249,20 @@ group by id
             "
         `);
     });
+
+    it('should render the explanation', async () => {
+        const tasks = readTasksFromSimulatedFile('callout_labelled');
+
+        const markdown = await renderMarkdown('explain\ndescription includes indented', tasks);
+
+        expect(markdown).toMatchInlineSnapshot(`
+            "
+            Explanation of this Tasks code block query:
+
+              description includes indented
+
+            - [ ] #task Task indented in 'callout_labelled'
+            "
+        `);
+    });
 });
