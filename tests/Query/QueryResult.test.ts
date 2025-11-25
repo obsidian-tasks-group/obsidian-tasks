@@ -3,6 +3,7 @@
  */
 import moment from 'moment/moment';
 import { DescriptionField } from '../../src/Query/Filter/DescriptionField';
+import { TagsField } from '../../src/Query/Filter/TagsField';
 import type { Grouper } from '../../src/Query/Group/Grouper';
 import { TaskGroups } from '../../src/Query/Group/TaskGroups';
 import { Query } from '../../src/Query/Query';
@@ -312,6 +313,43 @@ group by function task.description`,
 #### task 2
 
 - [ ] task 2
+`);
+    });
+
+    it.failing('should filter a grouped flat list result with a task in multiple groups', async () => {
+        const taskBuilder = new TaskBuilder();
+        const task1 = taskBuilder.description('task 1').tags(['#one', '#two']).build();
+        const task2 = taskBuilder.description('task 2').tags(['#three']).build();
+        const tasks = [task1, task2];
+
+        const { markdown, rerenderWithFilter } = await renderMarkdown('group by tags', tasks);
+
+        expect(markdown).toEqual(`
+#### #one
+
+- [ ] task 1 #one #two
+
+#### #three
+
+- [ ] task 2 #three
+
+#### #two
+
+- [ ] task 1 #one #two
+`);
+
+        const filter = new TagsField().createFilterOrErrorMessage('tag includes two');
+
+        const { filteredMarkdown } = await rerenderWithFilter(filter);
+
+        expect(filteredMarkdown).toEqual(`
+#### #one
+
+- [ ] task 1 #one #two
+
+#### #two
+
+- [ ] task 1 #one #two
 `);
     });
 });
