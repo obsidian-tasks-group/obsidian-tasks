@@ -255,14 +255,18 @@ group by id
 });
 
 describe('QueryResult - filters', () => {
-    it('should filter an ungrouped flat list result', async () => {
-        const taskBuilder = new TaskBuilder();
-        const task1 = taskBuilder.description('task 1').build();
-        const task2 = taskBuilder.description('task 2').build();
-        const task3 = taskBuilder.description('task 3').build();
-        const tasks = [task1, task2, task3];
+    const taskBuilder = new TaskBuilder();
+    const threeSimpleTasks = [
+        taskBuilder.description('task 1').build(),
+        taskBuilder.description('task 2').build(),
+        taskBuilder.description('task 3').build(),
+    ];
 
-        const { markdown, rerenderWithFilter } = await renderMarkdown('description does not include 3', tasks);
+    it('should filter an ungrouped flat list result', async () => {
+        const { markdown, rerenderWithFilter } = await renderMarkdown(
+            'description does not include 3',
+            threeSimpleTasks,
+        );
 
         expect(markdown).toEqual(`
 - [ ] task 1
@@ -279,16 +283,10 @@ describe('QueryResult - filters', () => {
     });
 
     it('should filter a grouped flat list result', async () => {
-        const taskBuilder = new TaskBuilder();
-        const task1 = taskBuilder.description('task 1').build();
-        const task2 = taskBuilder.description('task 2').build();
-        const task3 = taskBuilder.description('task 3').build();
-        const tasks = [task1, task2, task3];
-
         const { markdown, rerenderWithFilter } = await renderMarkdown(
             `
 group by function task.description`,
-            tasks,
+            threeSimpleTasks,
         );
 
         expect(markdown).toEqual(`
