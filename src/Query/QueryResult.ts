@@ -99,18 +99,15 @@ export class QueryResult {
         return `- [${task.status.symbol}] ${task.toString()}`;
     }
 
-    /**
-     * TODO remove me
-     * ideas for implementation
-     * 1. append filter to the current query or a copy of it
-     * 2. assemble a list of matched tasks and apply the filter in a new query
-     *
-     * factors to consider: sort order, grouping and global query
-     */
     public applyFilter(filter: Filter): QueryResult {
-        const allTasks = this.taskGroups.groups[0].tasks;
+        const allTasks = this.taskGroups.groups.flatMap((group) => group.tasks);
         const searchInfo = new SearchInfo(new TasksFile('fix_me.md'), allTasks);
-        const filteredTasks = allTasks.filter((task) => filter.filterFunction(task, searchInfo));
-        return new QueryResult(new TaskGroups([], filteredTasks, searchInfo), filteredTasks.length);
+        const filterFunction = (task: Task) => filter.filterFunction(task, searchInfo);
+        const filteredTasks = allTasks.filter(filterFunction);
+
+        return new QueryResult(
+            new TaskGroups(this.taskGroups.groupers, filteredTasks, searchInfo),
+            filteredTasks.length,
+        );
     }
 }
