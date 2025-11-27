@@ -12,6 +12,7 @@ export interface TaskModalParams {
     task: Task;
     onSaveSettings: () => Promise<void>;
     onSubmit: (updatedTasks: Task[]) => void;
+    onCancel?: () => void;
     allTasks: Task[];
 }
 
@@ -21,14 +22,18 @@ export class TaskModal extends Modal {
     public readonly onSubmit: (updatedTasks: Task[]) => void;
     public readonly allTasks: Task[];
 
-    constructor({ app, task, onSaveSettings, onSubmit, allTasks }: TaskModalParams) {
+    constructor({ app, task, onSaveSettings, onSubmit, onCancel, allTasks }: TaskModalParams) {
         super(app);
 
         this.task = task;
         this.allTasks = allTasks;
         this.onSaveSettings = onSaveSettings;
         this.onSubmit = (updatedTasks: Task[]) => {
-            updatedTasks.length && onSubmit(updatedTasks);
+            if (updatedTasks.length > 0) {
+                onSubmit(updatedTasks);
+            } else if (onCancel) {
+                onCancel();
+            }
             this.close();
         };
     }
