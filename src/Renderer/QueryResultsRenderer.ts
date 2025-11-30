@@ -202,7 +202,7 @@ export class QueryResultsRenderer {
                     break;
                 }
 
-                content.removeChild(lastChild);
+                lastChild.remove();
             }
             const filteredQueryResult = queryResult.applyFilter(filter!);
             await this.renderQueryResult(State.Warm, filteredQueryResult, content);
