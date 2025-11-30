@@ -196,6 +196,9 @@ export class QueryResultsRenderer {
                 return;
             }
 
+            // We want to retain the Toolbar, to not lose the search string.
+            // But we need to delete any pre-existing headings, tasks and task count.
+            // The following while loop relies on the Toolbar being the first element.
             while (content.firstElementChild !== content.lastElementChild) {
                 const lastChild = content.lastChild;
                 if (lastChild === null) {
@@ -204,6 +207,7 @@ export class QueryResultsRenderer {
 
                 lastChild.remove();
             }
+
             const filteredQueryResult = queryResult.applyFilter(filter!);
             await this.renderQueryResult(State.Warm, filteredQueryResult, content);
         });
