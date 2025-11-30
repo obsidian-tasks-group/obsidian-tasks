@@ -1,8 +1,8 @@
-import type { App, Component, TFile } from 'obsidian';
+import { type App, type Component, Notice, type TFile, setIcon, setTooltip } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
-import type { State } from '../Obsidian/Cache';
+import { State } from '../Obsidian/Cache';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
@@ -49,7 +49,6 @@ export class QueryResultsRenderer {
     public readonly source: string;
 
     private readonly htmlRenderer: HtmlQueryResultsRenderer;
-    // @ts-expect-error temp
     private readonly markdownRenderer: MarkdownQueryResultsRenderer;
 
     // The path of the file that contains the instruction block, and cached data from that file.
@@ -168,6 +167,18 @@ export class QueryResultsRenderer {
 
         const toolbar = createAndAppendElement('div', content);
         toolbar.classList.add('plugin-tasks-toolbar');
-        this.htmlRenderer.addCopyButton(toolbar, queryResult);
+        this.addCopyButton(toolbar, queryResult);
+    }
+
+    private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult) {
+        const copyButton = createAndAppendElement('button', toolbar);
+        setIcon(copyButton, 'lucide-copy');
+        setTooltip(copyButton, 'Copy results');
+        copyButton.addEventListener('click', async () => {
+            // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
+            await this.markdownRenderer.renderQuery(State.Warm, queryResult);
+            await navigator.clipboard.writeText(this.markdownRenderer.markdown);
+            new Notice('Results copied to clipboard');
+        });
     }
 }

@@ -1,8 +1,7 @@
-import { type App, type Component, Notice, type TFile, setIcon, setTooltip } from 'obsidian';
+import type { App, Component, TFile } from 'obsidian';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
-import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
@@ -40,6 +39,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
+    // @ts-expect-error temp
     private readonly markdownRenderer: MarkdownQueryResultsRenderer;
 
     constructor(
@@ -100,18 +100,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const explanationsBlock = createAndAppendElement('pre', this.content);
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.textContent = explanation;
-    }
-
-    public addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult): void {
-        const copyButton = createAndAppendElement('button', toolbar);
-        setIcon(copyButton, 'lucide-copy');
-        setTooltip(copyButton, 'Copy results');
-        copyButton.addEventListener('click', async () => {
-            // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
-            await this.markdownRenderer.renderQuery(State.Warm, queryResult);
-            await navigator.clipboard.writeText(this.markdownRenderer.markdown);
-            new Notice('Results copied to clipboard');
-        });
     }
 
     protected beginTaskList(): void {
