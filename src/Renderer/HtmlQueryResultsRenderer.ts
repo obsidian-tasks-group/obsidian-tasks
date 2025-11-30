@@ -79,8 +79,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         return;
     }
 
-    protected renderSearchResultsHeader(queryResult: QueryResult): void {
-        this.addToolbar(queryResult);
+    protected renderSearchResultsHeader(_queryResult: QueryResult): void {
+        return;
     }
 
     protected renderSearchResultsFooter(queryResult: QueryResult): void {
@@ -102,7 +102,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         explanationsBlock.textContent = explanation;
     }
 
-    private addToolbar(queryResult: QueryResult) {
+    public addToolbar(queryResult: QueryResult) {
         if (this.getters.query().queryLayoutOptions.hideToolbar) {
             return;
         }
