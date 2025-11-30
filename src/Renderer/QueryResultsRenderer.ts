@@ -8,6 +8,7 @@ import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
+import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import { type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
@@ -48,6 +49,8 @@ export class QueryResultsRenderer {
     public readonly source: string;
 
     private readonly htmlRenderer: HtmlQueryResultsRenderer;
+    // @ts-expect-error temp
+    private readonly markdownRenderer: MarkdownQueryResultsRenderer;
 
     // The path of the file that contains the instruction block, and cached data from that file.
     // This can be updated when the query file's frontmatter is modified.
@@ -91,18 +94,22 @@ export class QueryResultsRenderer {
                 break;
         }
 
+        const getters = {
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        };
+
         this.htmlRenderer = new HtmlQueryResultsRenderer(
             renderMarkdown,
             obsidianComponent,
             obsidianApp,
             textRenderer,
             queryRendererParameters,
-            {
-                source: () => this.source,
-                tasksFile: () => this._tasksFile,
-                query: () => this.query,
-            },
+            getters,
         );
+
+        this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
     }
 
     private makeQueryFromSourceAndTasksFile() {
