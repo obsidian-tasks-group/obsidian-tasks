@@ -9,11 +9,8 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
 import { mockApp } from '../__mocks__/obsidian';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
-import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
-import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { toMarkdown } from '../TestingTools/TestHelpers';
-import { makeQueryRendererParameters, mockHTMLRenderer } from './RenderingTestHelpers';
+import { makeQueryRendererParameters, mockHTMLRenderer, verifyRenderedTasks } from './RenderingTestHelpers';
 
 window.moment = moment;
 
@@ -57,15 +54,6 @@ async function renderTasks(
     renderer.content = container;
     await renderer.renderQuery(state, query.applyQueryToTasks(allTasks));
     return container;
-}
-
-function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): void {
-    const taskAsMarkdown = `<!--
-${toMarkdown(allTasks)}
--->\n\n`;
-
-    const prettyHTML = prettifyHTML(container.outerHTML);
-    verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
 }
 
 beforeEach(() => {

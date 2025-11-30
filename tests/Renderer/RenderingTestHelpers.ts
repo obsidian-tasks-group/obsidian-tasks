@@ -6,6 +6,9 @@ import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryRe
 import type { QueryRendererParameters } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { prettifyHTML } from '../TestingTools/HTMLHelpers';
+import { toMarkdown } from '../TestingTools/TestHelpers';
 
 export const mockHTMLRenderer = async (_obsidianApp: App, text: string, element: HTMLSpanElement, _path: string) => {
     // Contrary to the default mockTextRenderer(),
@@ -55,4 +58,13 @@ export async function renderMarkdown(source: string, tasks: Task[]) {
             return { filteredMarkdown: '\n' + renderer.markdown };
         },
     };
+}
+
+export function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): void {
+    const taskAsMarkdown = `<!--
+${toMarkdown(allTasks)}
+-->\n\n`;
+
+    const prettyHTML = prettifyHTML(container.outerHTML);
+    verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
 }
