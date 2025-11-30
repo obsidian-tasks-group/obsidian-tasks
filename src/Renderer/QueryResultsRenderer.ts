@@ -149,6 +149,7 @@ export class QueryResultsRenderer {
     public async render(state: State, tasks: Task[], content: HTMLDivElement) {
         const queryResult = this.performSearch(tasks);
 
+        this.addToolbar(queryResult, content);
         await this.renderQueryResult(state, queryResult, content);
     }
 
@@ -163,7 +164,6 @@ export class QueryResultsRenderer {
     private async renderQueryResult(state: State, queryResult: QueryResult, content: HTMLDivElement) {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
-        this.addToolbar(queryResult, content);
         this.htmlRenderer.content = content;
         await this.htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();
