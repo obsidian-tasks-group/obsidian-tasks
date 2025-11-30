@@ -188,9 +188,11 @@ export class QueryResultsRenderer {
         searchBox.placeholder = 'Filter by description...';
         setTooltip(searchBox, 'Filter results');
         searchBox.addEventListener('input', async () => {
-            const filter = new DescriptionField().createFilterOrErrorMessage('description includes ' + searchBox.value);
-            if (filter.error) {
-                new Notice('error searching for ' + searchBox.value + ': ' + filter.error);
+            const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
+                'description includes ' + searchBox.value,
+            );
+            if (error) {
+                new Notice('error searching for ' + searchBox.value + ': ' + error);
                 return;
             }
 
@@ -202,7 +204,7 @@ export class QueryResultsRenderer {
 
                 content.removeChild(lastChild);
             }
-            const filteredQueryResult = queryResult.applyFilter(filter.filter!);
+            const filteredQueryResult = queryResult.applyFilter(filter!);
             await this.renderQueryResult(State.Warm, filteredQueryResult, content);
         });
     }
