@@ -147,11 +147,20 @@ export class QueryResultsRenderer {
     }
 
     public async render(state: State, tasks: Task[], content: HTMLDivElement) {
+        const queryResult = this.performSearch(tasks);
+
+        await this.renderQueryResult(state, queryResult, content);
+    }
+
+    private performSearch(tasks: Task[]) {
         const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
         const queryResult = this.query.applyQueryToTasks(tasks);
         measureSearch.finish();
+        return queryResult;
+    }
 
+    private async renderQueryResult(state: State, queryResult: QueryResult, content: HTMLDivElement) {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
         this.addToolbar(queryResult, content);
