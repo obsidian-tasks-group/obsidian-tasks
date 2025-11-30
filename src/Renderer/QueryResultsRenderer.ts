@@ -182,7 +182,11 @@ export class QueryResultsRenderer {
     }
 
     private addSearchBox(toolbar: HTMLDivElement, queryResult: QueryResult, content: HTMLDivElement) {
-        const searchBox = createAndAppendElement('input', toolbar);
+        const label = createAndAppendElement('label', toolbar);
+        setIcon(label, 'lucide-filter');
+        const searchBox = createAndAppendElement('input', label);
+        searchBox.placeholder = 'Filter by description...';
+        setTooltip(searchBox, 'Filter results');
         searchBox.addEventListener('input', async () => {
             const filter = new DescriptionField().createFilterOrErrorMessage('description includes ' + searchBox.value);
             if (filter.error) {
