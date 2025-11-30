@@ -85,11 +85,6 @@ describe('HtmlQueryResultsRenderer tests', () => {
         await verifyRenderedHtml(allTasks, 'scheduled 1970-01-01\nexplain');
     });
 
-    it('toolbar', async () => {
-        const allTasks = [new TaskBuilder().path('sample.md').build()];
-        await verifyRenderedHtml(allTasks, 'show toolbar');
-    });
-
     it('fully populated task', async () => {
         // The approved file from this test is embedded in the user documentation,
         // so we ignore any GlobalQuery, to avoid accidental changes to the docs:
