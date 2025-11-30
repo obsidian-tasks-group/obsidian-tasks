@@ -3,6 +3,7 @@ import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { State } from '../Obsidian/Cache';
+import { DescriptionField } from '../Query/Filter/DescriptionField';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
@@ -169,14 +170,37 @@ export class QueryResultsRenderer {
         measureRender.finish();
     }
 
-    private addToolbar(queryResult: QueryResult, content: HTMLElement) {
+    private addToolbar(queryResult: QueryResult, content: HTMLDivElement) {
         if (this.query.queryLayoutOptions.hideToolbar) {
             return;
         }
 
         const toolbar = createAndAppendElement('div', content);
         toolbar.classList.add('plugin-tasks-toolbar');
+        this.addSearchBox(toolbar, queryResult, content);
         this.addCopyButton(toolbar, queryResult);
+    }
+
+    private addSearchBox(toolbar: HTMLDivElement, queryResult: QueryResult, content: HTMLDivElement) {
+        const searchBox = createAndAppendElement('input', toolbar);
+        searchBox.addEventListener('input', async () => {
+            const filter = new DescriptionField().createFilterOrErrorMessage('description includes ' + searchBox.value);
+            if (filter.error) {
+                new Notice('error searching for ' + searchBox.value + ': ' + filter.error);
+                return;
+            }
+
+            while (content.firstElementChild !== content.lastElementChild) {
+                const lastChild = content.lastChild;
+                if (lastChild === null) {
+                    break;
+                }
+
+                content.removeChild(lastChild);
+            }
+            const filteredQueryResult = queryResult.applyFilter(filter.filter!);
+            await this.renderQueryResult(State.Warm, filteredQueryResult, content);
+        });
     }
 
     private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult) {
