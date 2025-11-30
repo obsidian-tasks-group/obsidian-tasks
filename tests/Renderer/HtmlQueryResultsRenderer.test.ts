@@ -9,11 +9,8 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
 import { mockApp } from '../__mocks__/obsidian';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
-import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
-import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { toMarkdown } from '../TestingTools/TestHelpers';
-import { makeQueryRendererParameters, mockHTMLRenderer } from './RenderingTestHelpers';
+import { makeQueryRendererParameters, mockHTMLRenderer, verifyRenderedTasks } from './RenderingTestHelpers';
 
 window.moment = moment;
 
@@ -59,19 +56,9 @@ async function renderTasks(
     return container;
 }
 
-function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): void {
-    const taskAsMarkdown = `<!--
-${toMarkdown(allTasks)}
--->\n\n`;
-
-    const prettyHTML = prettifyHTML(container.outerHTML);
-    verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
-}
-
 beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date('2023-07-05'));
-    GlobalQuery.getInstance().set('hide toolbar');
 });
 
 afterEach(() => {
@@ -95,11 +82,6 @@ describe('HtmlQueryResultsRenderer tests', () => {
         GlobalQuery.getInstance().set('hide toolbar');
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         await verifyRenderedHtml(allTasks, 'scheduled 1970-01-01\nexplain');
-    });
-
-    it('toolbar', async () => {
-        const allTasks = [new TaskBuilder().path('sample.md').build()];
-        await verifyRenderedHtml(allTasks, 'show toolbar');
     });
 
     it('fully populated task', async () => {
