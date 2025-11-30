@@ -4,6 +4,7 @@ import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
 import type { State } from '../Obsidian/Cache';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
+import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
@@ -148,8 +149,12 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
         this.htmlRenderer.content = content;
-        this.htmlRenderer.addToolbar(queryResult);
+        this.addToolbar(queryResult);
         await this.htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();
+    }
+
+    private addToolbar(queryResult: QueryResult) {
+        this.htmlRenderer.addToolbar(queryResult);
     }
 }
