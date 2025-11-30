@@ -148,6 +148,7 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
         this.htmlRenderer.content = content;
+        this.htmlRenderer.addToolbar(queryResult);
         await this.htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();
     }
