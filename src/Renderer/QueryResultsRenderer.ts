@@ -1,13 +1,15 @@
-import type { App, Component, TFile } from 'obsidian';
+import { type App, type Component, Notice, type TFile, setIcon, setTooltip } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
-import type { State } from '../Obsidian/Cache';
+import { State } from '../Obsidian/Cache';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
+import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
-import type { TextRenderer } from './TaskLineRenderer';
+import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
+import { type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -47,6 +49,7 @@ export class QueryResultsRenderer {
     public readonly source: string;
 
     private readonly htmlRenderer: HtmlQueryResultsRenderer;
+    private readonly markdownRenderer: MarkdownQueryResultsRenderer;
 
     // The path of the file that contains the instruction block, and cached data from that file.
     // This can be updated when the query file's frontmatter is modified.
@@ -90,18 +93,22 @@ export class QueryResultsRenderer {
                 break;
         }
 
+        const getters = {
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        };
+
         this.htmlRenderer = new HtmlQueryResultsRenderer(
             renderMarkdown,
             obsidianComponent,
             obsidianApp,
             textRenderer,
             queryRendererParameters,
-            {
-                source: () => this.source,
-                tasksFile: () => this._tasksFile,
-                query: () => this.query,
-            },
+            getters,
         );
+
+        this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
     }
 
     private makeQueryFromSourceAndTasksFile() {
@@ -147,8 +154,31 @@ export class QueryResultsRenderer {
 
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
+        this.addToolbar(queryResult, content);
         this.htmlRenderer.content = content;
         await this.htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();
+    }
+
+    private addToolbar(queryResult: QueryResult, content: HTMLElement) {
+        if (this.query.queryLayoutOptions.hideToolbar) {
+            return;
+        }
+
+        const toolbar = createAndAppendElement('div', content);
+        toolbar.classList.add('plugin-tasks-toolbar');
+        this.addCopyButton(toolbar, queryResult);
+    }
+
+    private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult) {
+        const copyButton = createAndAppendElement('button', toolbar);
+        setIcon(copyButton, 'lucide-copy');
+        setTooltip(copyButton, 'Copy results');
+        copyButton.addEventListener('click', async () => {
+            // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
+            await this.markdownRenderer.renderQuery(State.Warm, queryResult);
+            await navigator.clipboard.writeText(this.markdownRenderer.markdown);
+            new Notice('Results copied to clipboard');
+        });
     }
 }

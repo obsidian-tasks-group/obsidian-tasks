@@ -1,15 +1,13 @@
-import { type App, type Component, Notice, type TFile, setIcon, setTooltip } from 'obsidian';
+import type { App, Component, TFile } from 'obsidian';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
-import { State } from '../Obsidian/Cache';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
@@ -40,8 +38,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
-    private readonly markdownRenderer: MarkdownQueryResultsRenderer;
-
     constructor(
         renderMarkdown: (
             app: App,
@@ -71,16 +67,14 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             taskLayoutOptions: this.getters.query().taskLayoutOptions,
             queryLayoutOptions: this.getters.query().queryLayoutOptions,
         });
-
-        this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
     }
 
     protected beginRender(): void {
         return;
     }
 
-    protected renderSearchResultsHeader(queryResult: QueryResult): void {
-        this.addToolbar(queryResult);
+    protected renderSearchResultsHeader(_queryResult: QueryResult): void {
+        return;
     }
 
     protected renderSearchResultsFooter(queryResult: QueryResult): void {
@@ -100,28 +94,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const explanationsBlock = createAndAppendElement('pre', this.content);
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.textContent = explanation;
-    }
-
-    private addToolbar(queryResult: QueryResult) {
-        if (this.getters.query().queryLayoutOptions.hideToolbar) {
-            return;
-        }
-
-        const toolbar = createAndAppendElement('div', this.content);
-        toolbar.classList.add('plugin-tasks-toolbar');
-        this.addCopyButton(toolbar, queryResult);
-    }
-
-    private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult): void {
-        const copyButton = createAndAppendElement('button', toolbar);
-        setIcon(copyButton, 'lucide-copy');
-        setTooltip(copyButton, 'Copy results');
-        copyButton.addEventListener('click', async () => {
-            // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
-            await this.markdownRenderer.renderQuery(State.Warm, queryResult);
-            await navigator.clipboard.writeText(this.markdownRenderer.markdown);
-            new Notice('Results copied to clipboard');
-        });
     }
 
     protected beginTaskList(): void {

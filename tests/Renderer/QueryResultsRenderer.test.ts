@@ -4,10 +4,11 @@
 import moment from 'moment';
 import type { Task } from 'Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { State } from '../../src/Obsidian/Cache';
 import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { mockApp } from '../__mocks__/obsidian';
-import { makeQueryRendererParameters, mockHTMLRenderer } from './RenderingTestHelpers';
+import { makeQueryRendererParameters, mockHTMLRenderer, verifyRenderedTasks } from './RenderingTestHelpers';
 
 window.moment = moment;
 
@@ -28,6 +29,30 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
         queryRendererParameters,
     );
 }
+
+describe('QueryResultsRenderer - rendering queries', () => {
+    it('should render the toolbar', async () => {
+        const source = 'show toolbar';
+        const noTasks: Task[] = [];
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), noTasks);
+        const container = document.createElement('div');
+
+        await renderer.render(State.Warm, noTasks, container);
+
+        verifyRenderedTasks(container, noTasks);
+    });
+
+    it('should not render the toolbar', async () => {
+        const source = 'hide toolbar';
+        const noTasks: Task[] = [];
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), noTasks);
+        const container = document.createElement('div');
+
+        await renderer.render(State.Warm, noTasks, container);
+
+        verifyRenderedTasks(container, noTasks);
+    });
+});
 
 describe('QueryResultsRenderer - responding to file edits', () => {
     it('should update the query when its file path is changed', () => {
