@@ -41,6 +41,17 @@ describe('QueryResultsRenderer - rendering queries', () => {
 
         verifyRenderedTasks(container, noTasks);
     });
+
+    it('should not render the toolbar', async () => {
+        const source = 'hide toolbar';
+        const noTasks: Task[] = [];
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), noTasks);
+        const container = document.createElement('div');
+
+        await renderer.render(State.Warm, noTasks, container);
+
+        verifyRenderedTasks(container, noTasks);
+    });
 });
 
 describe('QueryResultsRenderer - responding to file edits', () => {
