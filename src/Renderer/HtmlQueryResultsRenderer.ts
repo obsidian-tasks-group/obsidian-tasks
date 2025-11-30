@@ -8,7 +8,6 @@ import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
@@ -39,9 +38,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly queryRendererParameters: QueryRendererParameters;
 
-    // @ts-expect-error temp
-    private readonly markdownRenderer: MarkdownQueryResultsRenderer;
-
     constructor(
         renderMarkdown: (
             app: App,
@@ -71,8 +67,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             taskLayoutOptions: this.getters.query().taskLayoutOptions,
             queryLayoutOptions: this.getters.query().queryLayoutOptions,
         });
-
-        this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
     }
 
     protected beginRender(): void {
