@@ -3,6 +3,7 @@ import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { State } from '../Obsidian/Cache';
+import { DescriptionField } from '../Query/Filter/DescriptionField';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
@@ -147,27 +148,69 @@ export class QueryResultsRenderer {
     }
 
     public async render(state: State, tasks: Task[], content: HTMLDivElement) {
+        const queryResult = this.performSearch(tasks);
+
+        this.addToolbar(queryResult, content);
+        await this.renderQueryResult(state, queryResult, content);
+    }
+
+    private performSearch(tasks: Task[]) {
         const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
         const queryResult = this.query.applyQueryToTasks(tasks);
         measureSearch.finish();
+        return queryResult;
+    }
 
+    private async renderQueryResult(state: State, queryResult: QueryResult, content: HTMLDivElement) {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
-        this.addToolbar(queryResult, content);
         this.htmlRenderer.content = content;
         await this.htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();
     }
 
-    private addToolbar(queryResult: QueryResult, content: HTMLElement) {
+    private addToolbar(queryResult: QueryResult, content: HTMLDivElement) {
         if (this.query.queryLayoutOptions.hideToolbar) {
             return;
         }
 
         const toolbar = createAndAppendElement('div', content);
         toolbar.classList.add('plugin-tasks-toolbar');
+        this.addSearchBox(toolbar, queryResult, content);
         this.addCopyButton(toolbar, queryResult);
+    }
+
+    private addSearchBox(toolbar: HTMLDivElement, queryResult: QueryResult, content: HTMLDivElement) {
+        const label = createAndAppendElement('label', toolbar);
+        setIcon(label, 'lucide-filter');
+        const searchBox = createAndAppendElement('input', label);
+        searchBox.placeholder = 'Filter by description...';
+        setTooltip(searchBox, 'Filter results');
+        searchBox.addEventListener('input', async () => {
+            const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
+                'description includes ' + searchBox.value,
+            );
+            if (error) {
+                new Notice('error searching for ' + searchBox.value + ': ' + error);
+                return;
+            }
+
+            // We want to retain the Toolbar, to not lose the search string.
+            // But we need to delete any pre-existing headings, tasks and task count.
+            // The following while loop relies on the Toolbar being the first element.
+            while (content.firstElementChild !== content.lastElementChild) {
+                const lastChild = content.lastChild;
+                if (lastChild === null) {
+                    break;
+                }
+
+                lastChild.remove();
+            }
+
+            const filteredQueryResult = queryResult.applyFilter(filter!);
+            await this.renderQueryResult(State.Warm, filteredQueryResult, content);
+        });
     }
 
     private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult) {
