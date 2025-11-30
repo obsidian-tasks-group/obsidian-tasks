@@ -102,17 +102,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         explanationsBlock.textContent = explanation;
     }
 
-    public addToolbar(queryResult: QueryResult) {
-        if (this.getters.query().queryLayoutOptions.hideToolbar) {
-            return;
-        }
-
-        const toolbar = createAndAppendElement('div', this.content);
-        toolbar.classList.add('plugin-tasks-toolbar');
-        this.addCopyButton(toolbar, queryResult);
-    }
-
-    private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult): void {
+    public addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult): void {
         const copyButton = createAndAppendElement('button', toolbar);
         setIcon(copyButton, 'lucide-copy');
         setTooltip(copyButton, 'Copy results');

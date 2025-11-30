@@ -8,7 +8,7 @@ import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
-import type { TextRenderer } from './TaskLineRenderer';
+import { type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -149,12 +149,18 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
         this.htmlRenderer.content = content;
-        this.addToolbar(queryResult);
+        this.addToolbar(queryResult, content);
         await this.htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();
     }
 
-    private addToolbar(queryResult: QueryResult) {
-        this.htmlRenderer.addToolbar(queryResult);
+    private addToolbar(queryResult: QueryResult, content: HTMLElement) {
+        if (this.query.queryLayoutOptions.hideToolbar) {
+            return;
+        }
+
+        const toolbar = createAndAppendElement('div', content);
+        toolbar.classList.add('plugin-tasks-toolbar');
+        this.htmlRenderer.addCopyButton(toolbar, queryResult);
     }
 }
