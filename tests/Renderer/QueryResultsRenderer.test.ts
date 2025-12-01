@@ -3,12 +3,20 @@
  */
 import moment from 'moment';
 import type { Task } from 'Task/Task';
+import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
 import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { mockApp } from '../__mocks__/obsidian';
-import { makeQueryRendererParameters, mockHTMLRenderer, verifyRenderedTasks } from './RenderingTestHelpers';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import {
+    makeQueryRendererParameters,
+    mockHTMLRenderer,
+    tasksMarkdownAndPrettifiedHtml,
+    verifyRenderedTasks,
+} from './RenderingTestHelpers';
 
 window.moment = moment;
 
@@ -81,5 +89,39 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 
         // Assert
         expect(renderer.query.explainQuery()).toContain('group by DUE');
+    });
+});
+
+describe('QueryResultsRenderer - sequences', () => {
+    const parent = new TaskBuilder().description('parent').dueDate('2025-12-01').build();
+    const child = new TaskBuilder().description('child').indentation('  ').id('childID').parent(parent).build();
+    const parentAndChild: Task[] = [parent, child];
+
+    it('global query change to task layout option', async () => {
+        // see issue #3702
+        const source = 'explain';
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), parentAndChild);
+        let output = '';
+
+        {
+            const container = document.createElement('div');
+            await renderer.render(State.Warm, parentAndChild, container);
+
+            const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
+            output += '<h2>Initial results:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+        }
+
+        GlobalQuery.getInstance().set('hide due date');
+        renderer.rereadQueryFromFile();
+
+        {
+            const container = document.createElement('div');
+            await renderer.render(State.Warm, parentAndChild, container);
+
+            const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
+            output += '<h2>Check that due date is hidden by global query:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+        }
+
+        verifyWithFileExtension(output, 'html');
     });
 });
