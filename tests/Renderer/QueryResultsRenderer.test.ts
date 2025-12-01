@@ -3,6 +3,7 @@
  */
 import moment from 'moment';
 import type { Task } from 'Task/Task';
+import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
 import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
@@ -96,21 +97,30 @@ describe('QueryResultsRenderer - sequences', () => {
     const child = new TaskBuilder().description('child').indentation('  ').id('childID').parent(parent).build();
     const parentAndChild: Task[] = [parent, child];
 
-    it('should detect query file default changes', async () => {
-        // render search result (parent + child)
-        const source = '';
+    it('global query change to task layout option', async () => {
+        // see issue #3702
+        const source = 'explain';
         const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), parentAndChild);
-        const container = document.createElement('div');
+        let output = '';
 
-        await renderer.render(State.Warm, parentAndChild, container);
+        {
+            const container = document.createElement('div');
+            await renderer.render(State.Warm, parentAndChild, container);
 
-        const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
-        const output = '<h2>Initial results:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+            const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
+            output += '<h2>Initial results:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+        }
 
-        // add a frame
-        // change a task layout option via query file default
-        // manually trigger rerendering
-        // add a frame
+        GlobalQuery.getInstance().set('hide due date');
+        renderer.rereadQueryFromFile();
+
+        {
+            const container = document.createElement('div');
+            await renderer.render(State.Warm, parentAndChild, container);
+
+            const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
+            output += '<h2>Check that due date is hidden by global query:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+        }
 
         verifyWithFileExtension(output, 'html');
     });
