@@ -8,7 +8,14 @@ import { State } from '../../src/Obsidian/Cache';
 import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { mockApp } from '../__mocks__/obsidian';
-import { makeQueryRendererParameters, mockHTMLRenderer, verifyRenderedTasks } from './RenderingTestHelpers';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import {
+    makeQueryRendererParameters,
+    mockHTMLRenderer,
+    tasksMarkdownAndPrettifiedHtml,
+    verifyRenderedTasks,
+} from './RenderingTestHelpers';
 
 window.moment = moment;
 
@@ -81,5 +88,30 @@ describe('QueryResultsRenderer - responding to file edits', () => {
 
         // Assert
         expect(renderer.query.explainQuery()).toContain('group by DUE');
+    });
+});
+
+describe('QueryResultsRenderer - sequences', () => {
+    const parent = new TaskBuilder().description('parent').dueDate('2025-12-01').build();
+    const child = new TaskBuilder().description('child').indentation('  ').id('childID').parent(parent).build();
+    const parentAndChild: Task[] = [parent, child];
+
+    it('should detect query file default changes', async () => {
+        // render search result (parent + child)
+        const source = '';
+        const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), parentAndChild);
+        const container = document.createElement('div');
+
+        await renderer.render(State.Warm, parentAndChild, container);
+
+        const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
+        const output = '<h2>Initial results:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+
+        // add a frame
+        // change a task layout option via query file default
+        // manually trigger rerendering
+        // add a frame
+
+        verifyWithFileExtension(output, 'html');
     });
 });
