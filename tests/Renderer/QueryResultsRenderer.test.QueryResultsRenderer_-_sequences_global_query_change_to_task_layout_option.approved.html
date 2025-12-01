@@ -1,0 +1,146 @@
+<h2>Initial results:</h2>
+
+<!--
+- [ ] parent 📅 2025-12-01
+  - [ ] child 🆔 childID
+-->
+
+<div>
+  <div class="plugin-tasks-toolbar">
+    <label test-icon="lucide-filter">
+      <input placeholder="Filter by description..." test-tooltip="Filter results" />
+    </label>
+    <button test-icon="lucide-copy" test-tooltip="Copy results"></button>
+  </div>
+  <pre class="plugin-tasks-query-explanation">
+Explanation of this Tasks code block query:
+
+  No filters supplied. All tasks will match the query.
+</pre
+  >
+  <ul class="contains-task-list plugin-tasks-query-result tasks-layout-hide-urgency">
+    <li
+      class="task-list-item plugin-tasks-list-item"
+      data-task-due="today"
+      data-task-priority="normal"
+      data-task=""
+      data-line="0"
+      data-task-status-name="Todo"
+      data-task-status-type="TODO">
+      <input class="task-list-item-checkbox" type="checkbox" data-line="0" />
+      <span class="tasks-list-text">
+        <span class="task-description"><span>parent</span></span>
+        <span class="task-due" data-task-due="today" title="Click to edit due date, Right-click for more options">
+          <span>📅 2025-12-01</span>
+        </span>
+      </span>
+      <span class="task-extras">
+        <span class="tasks-backlink">
+          (
+          <a rel="noopener" target="_blank" class="internal-link">/</a>
+          )
+        </span>
+        <a class="tasks-edit" title="Edit task" href="#"></a>
+        <a class="tasks-postpone" title="ℹ️ Due tomorrow, on Tue 2nd Dec (right-click for more options)"></a>
+      </span>
+    </li>
+    <li
+      class="task-list-item plugin-tasks-list-item"
+      data-task-priority="normal"
+      data-task=""
+      data-line="1"
+      data-task-status-name="Todo"
+      data-task-status-type="TODO">
+      <input class="task-list-item-checkbox" type="checkbox" data-line="1" />
+      <span class="tasks-list-text">
+        <span class="task-description"><span>child</span></span>
+        <span class="task-id"><span>🆔 childID</span></span>
+      </span>
+      <span class="task-extras">
+        <span class="tasks-backlink">
+          (
+          <a rel="noopener" target="_blank" class="internal-link">/</a>
+          )
+        </span>
+        <a class="tasks-edit" title="Edit task" href="#"></a>
+      </span>
+    </li>
+  </ul>
+  <div class="task-count">2 tasks</div>
+</div>
+<h2>Check that due date is hidden by global query:</h2>
+
+<!--
+- [ ] parent 📅 2025-12-01
+  - [ ] child 🆔 childID
+-->
+
+<div>
+  <div class="plugin-tasks-toolbar">
+    <label test-icon="lucide-filter">
+      <input placeholder="Filter by description..." test-tooltip="Filter results" />
+    </label>
+    <button test-icon="lucide-copy" test-tooltip="Copy results"></button>
+  </div>
+  <pre class="plugin-tasks-query-explanation">
+Explanation of the global query:
+
+  No filters supplied. All tasks will match the query.
+
+  hide due date
+
+Explanation of this Tasks code block query:
+
+  No filters supplied. All tasks will match the query.
+</pre
+  >
+  <ul class="contains-task-list plugin-tasks-query-result tasks-layout-hide-dueDate tasks-layout-hide-urgency">
+    <li
+      class="task-list-item plugin-tasks-list-item"
+      data-task-due="today"
+      data-task-priority="normal"
+      data-task=""
+      data-line="0"
+      data-task-status-name="Todo"
+      data-task-status-type="TODO">
+      <input class="task-list-item-checkbox" type="checkbox" data-line="0" />
+      <span class="tasks-list-text">
+        <span class="task-description"><span>parent</span></span>
+        <span class="task-due" data-task-due="today" title="Click to edit due date, Right-click for more options">
+          <span>📅 2025-12-01</span>
+        </span>
+      </span>
+      <span class="task-extras">
+        <span class="tasks-backlink">
+          (
+          <a rel="noopener" target="_blank" class="internal-link">/</a>
+          )
+        </span>
+        <a class="tasks-edit" title="Edit task" href="#"></a>
+        <a class="tasks-postpone" title="ℹ️ Due tomorrow, on Tue 2nd Dec (right-click for more options)"></a>
+      </span>
+    </li>
+    <li
+      class="task-list-item plugin-tasks-list-item"
+      data-task-priority="normal"
+      data-task=""
+      data-line="1"
+      data-task-status-name="Todo"
+      data-task-status-type="TODO">
+      <input class="task-list-item-checkbox" type="checkbox" data-line="1" />
+      <span class="tasks-list-text">
+        <span class="task-description"><span>child</span></span>
+        <span class="task-id"><span>🆔 childID</span></span>
+      </span>
+      <span class="task-extras">
+        <span class="tasks-backlink">
+          (
+          <a rel="noopener" target="_blank" class="internal-link">/</a>
+          )
+        </span>
+        <a class="tasks-edit" title="Edit task" href="#"></a>
+      </span>
+    </li>
+  </ul>
+  <div class="task-count">2 tasks</div>
+</div>
