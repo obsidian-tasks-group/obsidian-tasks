@@ -159,7 +159,7 @@ describe('QueryResultsRenderer - sequences', () => {
         storyboard.verify();
     });
 
-    it.failing('global query change to query layout option', async () => {
+    it('global query change to query layout option', async () => {
         // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
@@ -175,7 +175,7 @@ describe('QueryResultsRenderer - sequences', () => {
 
         {
             const prettyHTML = await storyboard.addFrame('Check that urgency is shown by global query');
-            expect(prettyHTML).not.toContain(urgency);
+            expect(prettyHTML).toContain(urgency);
         }
 
         storyboard.verify();
