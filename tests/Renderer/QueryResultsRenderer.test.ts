@@ -91,6 +91,11 @@ describe('QueryResultsRenderer - accessing results', () => {
 });
 
 describe('QueryResultsRenderer - rendering queries', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-07-05'));
+    });
+
     it('should render the toolbar', async () => {
         const source = 'show toolbar';
         const noTasks: Task[] = [];
@@ -101,6 +106,24 @@ describe('QueryResultsRenderer - rendering queries', () => {
         const source = 'hide toolbar';
         const noTasks: Task[] = [];
         await verifyRenderedHtml(noTasks, source);
+    });
+
+    it('fully populated task', async () => {
+        // The approved file from this test is embedded in the user documentation,
+        // so we ignore any GlobalQuery, to avoid accidental changes to the docs:
+        GlobalQuery.getInstance().reset();
+
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedHtml(allTasks, 'show urgency');
+    });
+
+    it('fully populated task - short mode', async () => {
+        // The approved file from this test is embedded in the user documentation,
+        // so we ignore any GlobalQuery, to avoid accidental changes to the docs:
+        GlobalQuery.getInstance().reset();
+
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedHtml(allTasks, 'show urgency\nshort mode');
     });
 });
 

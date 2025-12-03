@@ -84,24 +84,6 @@ describe('HtmlQueryResultsRenderer tests', () => {
         await verifyRenderedHtml(allTasks, 'scheduled 1970-01-01\nexplain');
     });
 
-    it('fully populated task', async () => {
-        // The approved file from this test is embedded in the user documentation,
-        // so we ignore any GlobalQuery, to avoid accidental changes to the docs:
-        GlobalQuery.getInstance().reset();
-
-        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedHtml(allTasks, 'show urgency');
-    });
-
-    it('fully populated task - short mode', async () => {
-        // The approved file from this test is embedded in the user documentation,
-        // so we ignore any GlobalQuery, to avoid accidental changes to the docs:
-        GlobalQuery.getInstance().reset();
-
-        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
-        await verifyRenderedHtml(allTasks, 'show urgency\nshort mode');
-    });
-
     it('fully populated task - hidden fields', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         await verifyRenderedHtml(allTasks, 'hide scheduled date\nhide priority');
