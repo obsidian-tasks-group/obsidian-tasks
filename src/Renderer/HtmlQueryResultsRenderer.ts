@@ -60,7 +60,11 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.textRenderer = textRenderer;
         this.queryRendererParameters = queryRendererParameters;
 
-        this.taskLineRenderer = new TaskLineRenderer({
+        this.taskLineRenderer = this.createTaskLineRenderer();
+    }
+
+    private createTaskLineRenderer() {
+        return new TaskLineRenderer({
             textRenderer: this.textRenderer,
             obsidianApp: this.obsidianApp,
             obsidianComponent: this.obsidianComponent,
