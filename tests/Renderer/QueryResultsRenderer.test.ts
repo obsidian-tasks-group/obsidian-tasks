@@ -102,7 +102,7 @@ describe('QueryResultsRenderer - responding to file edits', () => {
  * See https://github.com/approvals/ApprovalTests.Python/blob/main/docs/reference/storyboard.md
  */
 class RendererStoryboard {
-    output: string = '';
+    private output: string = '';
     private readonly allTasks: Task[];
     readonly renderer: QueryResultsRenderer;
 
@@ -119,6 +119,10 @@ class RendererStoryboard {
 
         const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;
+    }
+
+    public verify() {
+        verifyWithFileExtension(this.output, 'html');
     }
 }
 
@@ -137,6 +141,6 @@ describe('QueryResultsRenderer - sequences', () => {
         storyboard.renderer.rereadQueryFromFile();
         await storyboard.addFrame('Check that due date is hidden by global query');
 
-        verifyWithFileExtension(storyboard.output, 'html');
+        storyboard.verify();
     });
 });
