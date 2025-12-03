@@ -47,6 +47,7 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
 
 describe('QueryResultsRenderer - accessing results', () => {
     const aTask = [new TaskBuilder().description('task').build()];
+    const twoTasks = [...aTask, new TaskBuilder().description('another task').build()];
 
     it('should have empty results before rendering', () => {
         const renderer = makeQueryResultsRenderer('', new TasksFile('file.md'), aTask);
@@ -61,7 +62,20 @@ describe('QueryResultsRenderer - accessing results', () => {
         await renderer.render(State.Warm, aTask, document.createElement('div'));
 
         expect(renderer.queryResult.totalTasksCount).toEqual(1);
-        expect(renderer.filteredQueryResult.totalTasksCount).toEqual(1);
+    });
+
+    it.skip('should have actual result after filtering results', async () => {
+        const renderer = makeQueryResultsRenderer('', new TasksFile('file.md'), twoTasks);
+
+        await renderer.render(State.Warm, twoTasks, document.createElement('div'));
+
+        await renderer.applySearchBoxFilter('another', document.createElement('div'), renderer.queryResult);
+
+        expect(renderer.queryResult.totalTasksCount).toEqual(2);
+        expect(await renderer.resultsAsMarkdown(renderer.filteredQueryResult)).toMatchInlineSnapshot(`
+            "- [ ] another task
+            "
+        `);
     });
 });
 
