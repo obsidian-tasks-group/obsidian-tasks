@@ -28,6 +28,7 @@ beforeEach(() => {
 afterEach(() => {
     jest.useRealTimers();
     resetSettings();
+    GlobalQuery.getInstance().reset();
 });
 
 function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]) {
