@@ -220,8 +220,8 @@ export class QueryResultsRenderer {
             lastChild.remove();
         }
 
-        const filteredQueryResult = queryResult.applyFilter(filter!);
-        await this.renderQueryResult(State.Warm, filteredQueryResult, content);
+        this.filteredQueryResult = queryResult.applyFilter(filter!);
+        await this.renderQueryResult(State.Warm, this.filteredQueryResult, content);
     }
 
     private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult) {
@@ -235,8 +235,8 @@ export class QueryResultsRenderer {
         });
     }
 
-    public async resultsAsMarkdown(queryResult: QueryResult) {
-        await this.markdownRenderer.renderQuery(State.Warm, queryResult);
+    public async resultsAsMarkdown(_queryResult: QueryResult) {
+        await this.markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
         return this.markdownRenderer.markdown;
     }
 }
