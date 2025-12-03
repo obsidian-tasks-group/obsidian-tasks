@@ -131,17 +131,11 @@ describe('QueryResultsRenderer - sequences', () => {
         // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
-
-        {
-            await storyboard.addFrame('Initial results');
-        }
+        await storyboard.addFrame('Initial results');
 
         GlobalQuery.getInstance().set('hide due date');
         storyboard.renderer.rereadQueryFromFile();
-
-        {
-            await storyboard.addFrame('Check that due date is hidden by global query');
-        }
+        await storyboard.addFrame('Check that due date is hidden by global query');
 
         verifyWithFileExtension(storyboard.output, 'html');
     });
