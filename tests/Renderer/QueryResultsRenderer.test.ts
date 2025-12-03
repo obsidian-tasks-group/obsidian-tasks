@@ -103,14 +103,22 @@ describe('QueryResultsRenderer - responding to file edits', () => {
  */
 class RendererStoryboard {
     output: string = '';
+    private readonly allTasks: Task[];
     readonly renderer: QueryResultsRenderer;
 
     constructor(source: string, allTasks: Task[]) {
+        this.allTasks = allTasks;
         this.renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), allTasks);
     }
 
-    public addFrame(initialResults: string): void {
+    public async addFrame(initialResults: string): Promise<void> {
         this.output += `<h2>${initialResults}:</h2>\n\n`;
+
+        const container = document.createElement('div');
+        await this.renderer.render(State.Warm, this.allTasks, container);
+
+        const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
+        this.output += tasksAsMarkdown + prettyHTML;
     }
 }
 
@@ -125,26 +133,14 @@ describe('QueryResultsRenderer - sequences', () => {
         const storyboard = new RendererStoryboard(source, parentAndChild);
 
         {
-            storyboard.addFrame('Initial results');
-
-            const container = document.createElement('div');
-            await storyboard.renderer.render(State.Warm, parentAndChild, container);
-
-            const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
-            storyboard.output += tasksAsMarkdown + prettyHTML;
+            await storyboard.addFrame('Initial results');
         }
 
         GlobalQuery.getInstance().set('hide due date');
         storyboard.renderer.rereadQueryFromFile();
 
         {
-            storyboard.addFrame('Check that due date is hidden by global query');
-
-            const container = document.createElement('div');
-            await storyboard.renderer.render(State.Warm, parentAndChild, container);
-
-            const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
-            storyboard.output += tasksAsMarkdown + prettyHTML;
+            await storyboard.addFrame('Check that due date is hidden by global query');
         }
 
         verifyWithFileExtension(storyboard.output, 'html');
