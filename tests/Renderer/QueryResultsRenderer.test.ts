@@ -45,6 +45,15 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
     );
 }
 
+async function verifyRenderedHtml(allTasks: Task[], source: string): Promise<void> {
+    const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), allTasks);
+    const container = document.createElement('div');
+
+    await renderer.render(State.Warm, allTasks, container);
+
+    verifyRenderedTasks(container, allTasks);
+}
+
 describe('QueryResultsRenderer - accessing results', () => {
     const aTask = [new TaskBuilder().description('task').build()];
     const twoTasks = [...aTask, new TaskBuilder().description('another task').build()];
@@ -96,12 +105,7 @@ describe('QueryResultsRenderer - rendering queries', () => {
     it('should not render the toolbar', async () => {
         const source = 'hide toolbar';
         const noTasks: Task[] = [];
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), noTasks);
-        const container = document.createElement('div');
-
-        await renderer.render(State.Warm, noTasks, container);
-
-        verifyRenderedTasks(container, noTasks);
+        await verifyRenderedHtml(noTasks, source);
     });
 });
 
