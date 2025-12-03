@@ -108,6 +108,10 @@ class RendererStoryboard {
     constructor(source: string, allTasks: Task[]) {
         this.renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), allTasks);
     }
+
+    public addFrame(initialResults: string): void {
+        this.output += `<h2>${initialResults}:</h2>\n\n`;
+    }
 }
 
 describe('QueryResultsRenderer - sequences', () => {
@@ -121,23 +125,26 @@ describe('QueryResultsRenderer - sequences', () => {
         const storyboard = new RendererStoryboard(source, parentAndChild);
 
         {
+            storyboard.addFrame('Initial results');
+
             const container = document.createElement('div');
             await storyboard.renderer.render(State.Warm, parentAndChild, container);
 
             const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
-            storyboard.output += '<h2>Initial results:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+            storyboard.output += tasksAsMarkdown + prettyHTML;
         }
 
         GlobalQuery.getInstance().set('hide due date');
         storyboard.renderer.rereadQueryFromFile();
 
         {
+            storyboard.addFrame('Check that due date is hidden by global query');
+
             const container = document.createElement('div');
             await storyboard.renderer.render(State.Warm, parentAndChild, container);
 
             const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
-            storyboard.output +=
-                '<h2>Check that due date is hidden by global query:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+            storyboard.output += tasksAsMarkdown + prettyHTML;
         }
 
         verifyWithFileExtension(storyboard.output, 'html');
