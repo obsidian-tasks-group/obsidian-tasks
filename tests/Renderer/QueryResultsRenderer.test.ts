@@ -141,10 +141,11 @@ describe('QueryResultsRenderer - sequences', () => {
         // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
+        const dueDate = '📅 2025-12-01';
 
         {
             const prettyHTML = await storyboard.addFrame('Initial results');
-            expect(prettyHTML).toContain('📅 2025-12-01');
+            expect(prettyHTML).toContain(dueDate);
         }
 
         GlobalQuery.getInstance().set('hide due date');
@@ -152,7 +153,7 @@ describe('QueryResultsRenderer - sequences', () => {
 
         {
             const prettyHTML = await storyboard.addFrame('Check that due date is hidden by global query');
-            expect(prettyHTML).not.toContain('📅 2025-12-01');
+            expect(prettyHTML).not.toContain(dueDate);
         }
 
         storyboard.verify();
@@ -162,10 +163,11 @@ describe('QueryResultsRenderer - sequences', () => {
         // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
+        const urgency = '<span class="tasks-urgency">10.75</span>';
 
         {
             const prettyHTML = await storyboard.addFrame('Initial results');
-            expect(prettyHTML).not.toContain('<span class="tasks-urgency">10.75</span>');
+            expect(prettyHTML).not.toContain(urgency);
         }
 
         GlobalQuery.getInstance().set('show urgency');
@@ -173,7 +175,7 @@ describe('QueryResultsRenderer - sequences', () => {
 
         {
             const prettyHTML = await storyboard.addFrame('Check that urgency is shown by global query');
-            expect(prettyHTML).not.toContain('<span class="tasks-urgency">10.75</span>');
+            expect(prettyHTML).not.toContain(urgency);
         }
 
         storyboard.verify();
