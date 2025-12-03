@@ -69,7 +69,7 @@ describe('QueryResultsRenderer - accessing results', () => {
 
         await renderer.render(State.Warm, twoTasks, document.createElement('div'));
 
-        await renderer.applySearchBoxFilter('another', document.createElement('div'), renderer.queryResult);
+        await renderer.applySearchBoxFilter('another', document.createElement('div'));
 
         expect(renderer.queryResult.totalTasksCount).toEqual(2);
         expect(await renderer.resultsAsMarkdown()).toMatchInlineSnapshot(`

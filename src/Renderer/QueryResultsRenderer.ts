@@ -156,7 +156,7 @@ export class QueryResultsRenderer {
 
     public async render(state: State, tasks: Task[], content: HTMLDivElement) {
         this.performSearch(tasks);
-        this.addToolbar(this.queryResult, content);
+        this.addToolbar(content);
         await this.renderQueryResult(state, this.queryResult, content);
     }
 
@@ -176,18 +176,18 @@ export class QueryResultsRenderer {
         measureRender.finish();
     }
 
-    private addToolbar(queryResult: QueryResult, content: HTMLDivElement) {
+    private addToolbar(content: HTMLDivElement) {
         if (this.query.queryLayoutOptions.hideToolbar) {
             return;
         }
 
         const toolbar = createAndAppendElement('div', content);
         toolbar.classList.add('plugin-tasks-toolbar');
-        this.addSearchBox(toolbar, queryResult, content);
+        this.addSearchBox(toolbar, content);
         this.addCopyButton(toolbar);
     }
 
-    private addSearchBox(toolbar: HTMLDivElement, queryResult: QueryResult, content: HTMLDivElement) {
+    private addSearchBox(toolbar: HTMLDivElement, content: HTMLDivElement) {
         const label = createAndAppendElement('label', toolbar);
         setIcon(label, 'lucide-filter');
         const searchBox = createAndAppendElement('input', label);
@@ -195,11 +195,11 @@ export class QueryResultsRenderer {
         setTooltip(searchBox, 'Filter results');
         searchBox.addEventListener('input', async () => {
             const filterString = searchBox.value;
-            await this.applySearchBoxFilter(filterString, content, queryResult);
+            await this.applySearchBoxFilter(filterString, content);
         });
     }
 
-    public async applySearchBoxFilter(filterString: string, content: HTMLDivElement, _queryResult: QueryResult) {
+    public async applySearchBoxFilter(filterString: string, content: HTMLDivElement) {
         const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
             'description includes ' + filterString,
         );
