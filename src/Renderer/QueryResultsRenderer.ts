@@ -218,10 +218,14 @@ export class QueryResultsRenderer {
         setIcon(copyButton, 'lucide-copy');
         setTooltip(copyButton, 'Copy results');
         copyButton.addEventListener('click', async () => {
-            // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
-            await this.markdownRenderer.renderQuery(State.Warm, queryResult);
-            await navigator.clipboard.writeText(this.markdownRenderer.markdown);
+            const markdown = await this.resultsAsMarkdown(queryResult);
+            await navigator.clipboard.writeText(markdown);
             new Notice('Results copied to clipboard');
         });
+    }
+
+    private async resultsAsMarkdown(queryResult: QueryResult) {
+        await this.markdownRenderer.renderQuery(State.Warm, queryResult);
+        return this.markdownRenderer.markdown;
     }
 }
