@@ -136,7 +136,7 @@ class RendererStoryboard {
 describe('QueryResultsRenderer - sequences', () => {
     const parent = new TaskBuilder().description('parent').dueDate('2025-12-01').build();
     const child = new TaskBuilder().description('child').indentation('  ').id('childID').parent(parent).build();
-    const parentAndChild: Task[] = [parent, child];
+    const parentAndChild = [parent, child];
 
     it('global query change to task layout option', async () => {
         // see issue #3702
