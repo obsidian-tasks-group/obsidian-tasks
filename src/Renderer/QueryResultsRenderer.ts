@@ -199,7 +199,7 @@ export class QueryResultsRenderer {
         });
     }
 
-    private async applySearchBoxFilter(filterString: string, content: HTMLDivElement, queryResult: QueryResult) {
+    public async applySearchBoxFilter(filterString: string, content: HTMLDivElement, queryResult: QueryResult) {
         const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
             'description includes ' + filterString,
         );
