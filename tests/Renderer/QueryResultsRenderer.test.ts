@@ -113,10 +113,10 @@ class RendererStoryboard {
 
     /**
      * Returns the prettified rendered HTML, to allow 'expect' calls to be added.
-     * @param initialResults
+     * @param description
      */
-    public async addFrame(initialResults: string): Promise<string> {
-        this.output += `<h2>${initialResults}:</h2>\n\n`;
+    public async addFrame(description: string): Promise<string> {
+        this.output += `<h2>${description}:</h2>\n\n`;
 
         const container = document.createElement('div');
         await this.renderer.render(State.Warm, this.allTasks, container);
