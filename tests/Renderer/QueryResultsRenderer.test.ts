@@ -161,7 +161,6 @@ describe('QueryResultsRenderer - sequences', () => {
     });
 
     it('global query change to query layout option', async () => {
-        // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
         const urgency = '<span class="tasks-urgency">10.75</span>';
