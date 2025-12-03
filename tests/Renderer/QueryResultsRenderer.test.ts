@@ -138,7 +138,7 @@ describe('QueryResultsRenderer - sequences', () => {
     const child = new TaskBuilder().description('child').indentation('  ').id('childID').parent(parent).build();
     const parentAndChild: Task[] = [parent, child];
 
-    it.failing('global query change to task layout option', async () => {
+    it('global query change to task layout option', async () => {
         // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);

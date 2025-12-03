@@ -28,7 +28,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
 
-    private readonly taskLineRenderer: TaskLineRenderer;
+    private taskLineRenderer: TaskLineRenderer;
 
     // document.createElement() creates dummy elements that must be overwritten later
     // with the values of elements that will be rendered
@@ -74,7 +74,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected beginRender(): void {
-        return;
+        this.taskLineRenderer = this.createTaskLineRenderer();
     }
 
     protected renderSearchResultsHeader(_queryResult: QueryResult): void {
