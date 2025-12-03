@@ -103,6 +103,11 @@ describe('QueryResultsRenderer - responding to file edits', () => {
  */
 class RendererStoryboard {
     output: string = '';
+    readonly renderer: QueryResultsRenderer;
+
+    constructor(source: string, allTasks: Task[]) {
+        this.renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), allTasks);
+    }
 }
 
 describe('QueryResultsRenderer - sequences', () => {
@@ -113,23 +118,22 @@ describe('QueryResultsRenderer - sequences', () => {
     it('global query change to task layout option', async () => {
         // see issue #3702
         const source = 'explain';
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), parentAndChild);
-        const storyboard = new RendererStoryboard();
+        const storyboard = new RendererStoryboard(source, parentAndChild);
 
         {
             const container = document.createElement('div');
-            await renderer.render(State.Warm, parentAndChild, container);
+            await storyboard.renderer.render(State.Warm, parentAndChild, container);
 
             const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
             storyboard.output += '<h2>Initial results:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
         }
 
         GlobalQuery.getInstance().set('hide due date');
-        renderer.rereadQueryFromFile();
+        storyboard.renderer.rereadQueryFromFile();
 
         {
             const container = document.createElement('div');
-            await renderer.render(State.Warm, parentAndChild, container);
+            await storyboard.renderer.render(State.Warm, parentAndChild, container);
 
             const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
             storyboard.output +=
