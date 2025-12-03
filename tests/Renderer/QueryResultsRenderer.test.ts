@@ -98,6 +98,13 @@ describe('QueryResultsRenderer - responding to file edits', () => {
     });
 });
 
+/**
+ * See https://github.com/approvals/ApprovalTests.Python/blob/main/docs/reference/storyboard.md
+ */
+class RendererStoryboard {
+    output: string = '';
+}
+
 describe('QueryResultsRenderer - sequences', () => {
     const parent = new TaskBuilder().description('parent').dueDate('2025-12-01').build();
     const child = new TaskBuilder().description('child').indentation('  ').id('childID').parent(parent).build();
@@ -107,14 +114,14 @@ describe('QueryResultsRenderer - sequences', () => {
         // see issue #3702
         const source = 'explain';
         const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), parentAndChild);
-        let output = '';
+        const storyboard = new RendererStoryboard();
 
         {
             const container = document.createElement('div');
             await renderer.render(State.Warm, parentAndChild, container);
 
             const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
-            output += '<h2>Initial results:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+            storyboard.output += '<h2>Initial results:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
         }
 
         GlobalQuery.getInstance().set('hide due date');
@@ -125,9 +132,10 @@ describe('QueryResultsRenderer - sequences', () => {
             await renderer.render(State.Warm, parentAndChild, container);
 
             const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, parentAndChild);
-            output += '<h2>Check that due date is hidden by global query:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
+            storyboard.output +=
+                '<h2>Check that due date is hidden by global query:</h2>\n\n' + tasksAsMarkdown + prettyHTML;
         }
 
-        verifyWithFileExtension(output, 'html');
+        verifyWithFileExtension(storyboard.output, 'html');
     });
 });
