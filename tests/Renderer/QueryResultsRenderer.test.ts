@@ -94,12 +94,7 @@ describe('QueryResultsRenderer - rendering queries', () => {
     it('should render the toolbar', async () => {
         const source = 'show toolbar';
         const noTasks: Task[] = [];
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), noTasks);
-        const container = document.createElement('div');
-
-        await renderer.render(State.Warm, noTasks, container);
-
-        verifyRenderedTasks(container, noTasks);
+        await verifyRenderedHtml(noTasks, source);
     });
 
     it('should not render the toolbar', async () => {
