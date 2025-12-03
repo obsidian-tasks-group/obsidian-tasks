@@ -72,7 +72,7 @@ describe('QueryResultsRenderer - accessing results', () => {
         await renderer.applySearchBoxFilter('another', document.createElement('div'), renderer.queryResult);
 
         expect(renderer.queryResult.totalTasksCount).toEqual(2);
-        expect(await renderer.resultsAsMarkdown(renderer.filteredQueryResult)).toMatchInlineSnapshot(`
+        expect(await renderer.resultsAsMarkdown()).toMatchInlineSnapshot(`
             "- [ ] another task
             "
         `);
