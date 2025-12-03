@@ -188,29 +188,34 @@ export class QueryResultsRenderer {
         searchBox.placeholder = 'Filter by description...';
         setTooltip(searchBox, 'Filter results');
         searchBox.addEventListener('input', async () => {
-            const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
-                'description includes ' + searchBox.value,
-            );
-            if (error) {
-                new Notice('error searching for ' + searchBox.value + ': ' + error);
-                return;
-            }
-
-            // We want to retain the Toolbar, to not lose the search string.
-            // But we need to delete any pre-existing headings, tasks and task count.
-            // The following while loop relies on the Toolbar being the first element.
-            while (content.firstElementChild !== content.lastElementChild) {
-                const lastChild = content.lastChild;
-                if (lastChild === null) {
-                    break;
-                }
-
-                lastChild.remove();
-            }
-
-            const filteredQueryResult = queryResult.applyFilter(filter!);
-            await this.renderQueryResult(State.Warm, filteredQueryResult, content);
+            const filterString = searchBox.value;
+            await this.applySearchBoxFilter(filterString, content, queryResult);
         });
+    }
+
+    private async applySearchBoxFilter(filterString: string, content: HTMLDivElement, queryResult: QueryResult) {
+        const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
+            'description includes ' + filterString,
+        );
+        if (error) {
+            new Notice('error searching for ' + filterString + ': ' + error);
+            return;
+        }
+
+        // We want to retain the Toolbar, to not lose the search string.
+        // But we need to delete any pre-existing headings, tasks and task count.
+        // The following while loop relies on the Toolbar being the first element.
+        while (content.firstElementChild !== content.lastElementChild) {
+            const lastChild = content.lastChild;
+            if (lastChild === null) {
+                break;
+            }
+
+            lastChild.remove();
+        }
+
+        const filteredQueryResult = queryResult.applyFilter(filter!);
+        await this.renderQueryResult(State.Warm, filteredQueryResult, content);
     }
 
     private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult) {
@@ -224,7 +229,7 @@ export class QueryResultsRenderer {
         });
     }
 
-    private async resultsAsMarkdown(queryResult: QueryResult) {
+    public async resultsAsMarkdown(queryResult: QueryResult) {
         await this.markdownRenderer.renderQuery(State.Warm, queryResult);
         return this.markdownRenderer.markdown;
     }
