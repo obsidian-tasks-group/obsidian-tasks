@@ -20,7 +20,13 @@ import {
 
 window.moment = moment;
 
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2025-12-01'));
+});
+
 afterEach(() => {
+    jest.useRealTimers();
     resetSettings();
 });
 
