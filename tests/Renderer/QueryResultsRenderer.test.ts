@@ -28,6 +28,7 @@ beforeEach(() => {
 afterEach(() => {
     jest.useRealTimers();
     resetSettings();
+    GlobalQuery.getInstance().reset();
 });
 
 function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]) {
@@ -135,9 +136,9 @@ class RendererStoryboard {
 describe('QueryResultsRenderer - sequences', () => {
     const parent = new TaskBuilder().description('parent').dueDate('2025-12-01').build();
     const child = new TaskBuilder().description('child').indentation('  ').id('childID').parent(parent).build();
-    const parentAndChild: Task[] = [parent, child];
+    const parentAndChild = [parent, child];
 
-    it.failing('global query change to task layout option', async () => {
+    it('global query change to task layout option', async () => {
         // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
@@ -160,7 +161,6 @@ describe('QueryResultsRenderer - sequences', () => {
     });
 
     it('global query change to query layout option', async () => {
-        // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
         const urgency = '<span class="tasks-urgency">10.75</span>';
