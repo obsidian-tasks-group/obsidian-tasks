@@ -60,6 +60,7 @@ export class QueryResultsRenderer {
 
     public query: IQuery;
     public queryResult: QueryResult;
+    public filteredQueryResult: QueryResult;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
     constructor(
@@ -83,6 +84,7 @@ export class QueryResultsRenderer {
 
         // Store empty query result for now
         this.queryResult = new Query('').applyQueryToTasks([]);
+        this.filteredQueryResult = this.queryResult;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
@@ -162,6 +164,7 @@ export class QueryResultsRenderer {
         const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
         this.queryResult = this.query.applyQueryToTasks(tasks);
+        this.filteredQueryResult = this.queryResult;
         measureSearch.finish();
     }
 

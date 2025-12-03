@@ -48,18 +48,20 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
 describe('QueryResultsRenderer - accessing results', () => {
     const aTask = [new TaskBuilder().description('task').build()];
 
-    it('should have an empty result before rendering', () => {
+    it('should have empty results before rendering', () => {
         const renderer = makeQueryResultsRenderer('', new TasksFile('file.md'), aTask);
 
         expect(renderer.queryResult.totalTasksCount).toEqual(0);
+        expect(renderer.filteredQueryResult.totalTasksCount).toEqual(0);
     });
 
-    it('should have actual result after rendering', async () => {
+    it('should have actual results after rendering', async () => {
         const renderer = makeQueryResultsRenderer('', new TasksFile('file.md'), aTask);
 
         await renderer.render(State.Warm, aTask, document.createElement('div'));
 
         expect(renderer.queryResult.totalTasksCount).toEqual(1);
+        expect(renderer.filteredQueryResult.totalTasksCount).toEqual(1);
     });
 });
 
