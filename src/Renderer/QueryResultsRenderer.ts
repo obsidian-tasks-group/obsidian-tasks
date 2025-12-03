@@ -184,7 +184,7 @@ export class QueryResultsRenderer {
         const toolbar = createAndAppendElement('div', content);
         toolbar.classList.add('plugin-tasks-toolbar');
         this.addSearchBox(toolbar, queryResult, content);
-        this.addCopyButton(toolbar, queryResult);
+        this.addCopyButton(toolbar);
     }
 
     private addSearchBox(toolbar: HTMLDivElement, queryResult: QueryResult, content: HTMLDivElement) {
@@ -224,18 +224,18 @@ export class QueryResultsRenderer {
         await this.renderQueryResult(State.Warm, this.filteredQueryResult, content);
     }
 
-    private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult) {
+    private addCopyButton(toolbar: HTMLDivElement) {
         const copyButton = createAndAppendElement('button', toolbar);
         setIcon(copyButton, 'lucide-copy');
         setTooltip(copyButton, 'Copy results');
         copyButton.addEventListener('click', async () => {
-            const markdown = await this.resultsAsMarkdown(queryResult);
+            const markdown = await this.resultsAsMarkdown();
             await navigator.clipboard.writeText(markdown);
             new Notice('Results copied to clipboard');
         });
     }
 
-    public async resultsAsMarkdown(_queryResult: QueryResult) {
+    public async resultsAsMarkdown() {
         await this.markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
         return this.markdownRenderer.markdown;
     }
