@@ -157,4 +157,25 @@ describe('QueryResultsRenderer - sequences', () => {
 
         storyboard.verify();
     });
+
+    it.failing('global query change to query layout option', async () => {
+        // see issue #3702
+        const source = 'explain';
+        const storyboard = new RendererStoryboard(source, parentAndChild);
+
+        {
+            const prettyHTML = await storyboard.addFrame('Initial results');
+            expect(prettyHTML).not.toContain('<span class="tasks-urgency">10.75</span>');
+        }
+
+        GlobalQuery.getInstance().set('show urgency');
+        storyboard.renderer.rereadQueryFromFile();
+
+        {
+            const prettyHTML = await storyboard.addFrame('Check that urgency is shown by global query');
+            expect(prettyHTML).not.toContain('<span class="tasks-urgency">10.75</span>');
+        }
+
+        storyboard.verify();
+    });
 });
