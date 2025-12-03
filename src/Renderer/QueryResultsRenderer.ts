@@ -59,9 +59,9 @@ export class QueryResultsRenderer {
     private _tasksFile: TasksFile;
 
     public query: IQuery;
+    protected queryType: string; // whilst there is only one query type, there is no point logging this value
     public queryResult: QueryResult;
     public filteredQueryResult: QueryResult;
-    protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
     constructor(
         className: string,
