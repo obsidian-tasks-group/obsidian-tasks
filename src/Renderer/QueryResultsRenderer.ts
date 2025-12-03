@@ -199,7 +199,7 @@ export class QueryResultsRenderer {
         });
     }
 
-    public async applySearchBoxFilter(filterString: string, content: HTMLDivElement, queryResult: QueryResult) {
+    public async applySearchBoxFilter(filterString: string, content: HTMLDivElement, _queryResult: QueryResult) {
         const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
             'description includes ' + filterString,
         );
@@ -220,7 +220,7 @@ export class QueryResultsRenderer {
             lastChild.remove();
         }
 
-        this.filteredQueryResult = queryResult.applyFilter(filter!);
+        this.filteredQueryResult = this.queryResult.applyFilter(filter!);
         await this.renderQueryResult(State.Warm, this.filteredQueryResult, content);
     }
 
