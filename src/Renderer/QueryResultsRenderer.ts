@@ -4,6 +4,7 @@ import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { State } from '../Obsidian/Cache';
 import { DescriptionField } from '../Query/Filter/DescriptionField';
+import { Query } from '../Query/Query';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
@@ -58,6 +59,7 @@ export class QueryResultsRenderer {
     private _tasksFile: TasksFile;
 
     public query: IQuery;
+    public queryResult: QueryResult;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
     constructor(
@@ -78,6 +80,9 @@ export class QueryResultsRenderer {
     ) {
         this.source = source;
         this._tasksFile = tasksFile;
+
+        // Store empty query result for now
+        this.queryResult = new Query('').applyQueryToTasks([]);
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be

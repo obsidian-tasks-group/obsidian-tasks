@@ -45,6 +45,15 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
     );
 }
 
+describe('QueryResultsRenderer - accessing results', () => {
+    it('should have an empty result before rendering', () => {
+        const aTask = [new TaskBuilder().description('task').build()];
+        const renderer = makeQueryResultsRenderer('', new TasksFile('file.md'), aTask);
+
+        expect(renderer.queryResult.totalTasksCount).toEqual(0);
+    });
+});
+
 describe('QueryResultsRenderer - rendering queries', () => {
     it('should render the toolbar', async () => {
         const source = 'show toolbar';
