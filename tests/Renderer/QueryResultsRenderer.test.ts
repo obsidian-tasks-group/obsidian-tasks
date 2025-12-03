@@ -45,11 +45,11 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
     );
 }
 
-async function verifyRenderedHtml(allTasks: Task[], source: string): Promise<void> {
+async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm): Promise<void> {
     const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), allTasks);
     const container = document.createElement('div');
 
-    await renderer.render(State.Warm, allTasks, container);
+    await renderer.render(state, allTasks, container);
 
     verifyRenderedTasks(container, allTasks);
 }
