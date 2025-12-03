@@ -64,7 +64,7 @@ describe('QueryResultsRenderer - accessing results', () => {
         expect(renderer.queryResult.totalTasksCount).toEqual(1);
     });
 
-    it.skip('should have actual result after filtering results', async () => {
+    it('should have actual result after filtering results', async () => {
         const renderer = makeQueryResultsRenderer('', new TasksFile('file.md'), twoTasks);
 
         await renderer.render(State.Warm, twoTasks, document.createElement('div'));
