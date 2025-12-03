@@ -111,7 +111,11 @@ class RendererStoryboard {
         this.renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), allTasks);
     }
 
-    public async addFrame(initialResults: string): Promise<void> {
+    /**
+     * Returns the prettified rendered HTML, to allow 'expect' calls to be added.
+     * @param initialResults
+     */
+    public async addFrame(initialResults: string): Promise<string> {
         this.output += `<h2>${initialResults}:</h2>\n\n`;
 
         const container = document.createElement('div');
@@ -119,6 +123,8 @@ class RendererStoryboard {
 
         const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;
+
+        return prettyHTML;
     }
 
     public verify() {
@@ -131,15 +137,23 @@ describe('QueryResultsRenderer - sequences', () => {
     const child = new TaskBuilder().description('child').indentation('  ').id('childID').parent(parent).build();
     const parentAndChild: Task[] = [parent, child];
 
-    it('global query change to task layout option', async () => {
+    it.failing('global query change to task layout option', async () => {
         // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
-        await storyboard.addFrame('Initial results');
+
+        {
+            const prettyHTML = await storyboard.addFrame('Initial results');
+            expect(prettyHTML).toContain('📅 2025-12-01');
+        }
 
         GlobalQuery.getInstance().set('hide due date');
         storyboard.renderer.rereadQueryFromFile();
-        await storyboard.addFrame('Check that due date is hidden by global query');
+
+        {
+            const prettyHTML = await storyboard.addFrame('Check that due date is hidden by global query');
+            expect(prettyHTML).not.toContain('📅 2025-12-01');
+        }
 
         storyboard.verify();
     });
