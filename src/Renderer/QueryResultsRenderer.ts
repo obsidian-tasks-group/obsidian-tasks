@@ -4,6 +4,7 @@ import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { State } from '../Obsidian/Cache';
 import { DescriptionField } from '../Query/Filter/DescriptionField';
+import { Query } from '../Query/Query';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
@@ -58,6 +59,8 @@ export class QueryResultsRenderer {
     private _tasksFile: TasksFile;
 
     public query: IQuery;
+    public queryResult: QueryResult;
+    public filteredQueryResult: QueryResult;
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
 
     constructor(
@@ -78,6 +81,10 @@ export class QueryResultsRenderer {
     ) {
         this.source = source;
         this._tasksFile = tasksFile;
+
+        // Store empty query result for now
+        this.queryResult = new Query('').applyQueryToTasks([]);
+        this.filteredQueryResult = this.queryResult;
 
         // The engine is chosen on the basis of the code block language. Currently,
         // there is only the main engine for the plugin, this allows others to be
@@ -148,18 +155,17 @@ export class QueryResultsRenderer {
     }
 
     public async render(state: State, tasks: Task[], content: HTMLDivElement) {
-        const queryResult = this.performSearch(tasks);
-
-        this.addToolbar(queryResult, content);
-        await this.renderQueryResult(state, queryResult, content);
+        this.performSearch(tasks);
+        this.addToolbar(content);
+        await this.renderQueryResult(state, this.queryResult, content);
     }
 
     private performSearch(tasks: Task[]) {
         const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
-        const queryResult = this.query.applyQueryToTasks(tasks);
+        this.queryResult = this.query.applyQueryToTasks(tasks);
+        this.filteredQueryResult = this.queryResult;
         measureSearch.finish();
-        return queryResult;
     }
 
     private async renderQueryResult(state: State, queryResult: QueryResult, content: HTMLDivElement) {
@@ -170,58 +176,67 @@ export class QueryResultsRenderer {
         measureRender.finish();
     }
 
-    private addToolbar(queryResult: QueryResult, content: HTMLDivElement) {
+    private addToolbar(content: HTMLDivElement) {
         if (this.query.queryLayoutOptions.hideToolbar) {
             return;
         }
 
         const toolbar = createAndAppendElement('div', content);
         toolbar.classList.add('plugin-tasks-toolbar');
-        this.addSearchBox(toolbar, queryResult, content);
-        this.addCopyButton(toolbar, queryResult);
+        this.addSearchBox(toolbar, content);
+        this.addCopyButton(toolbar);
     }
 
-    private addSearchBox(toolbar: HTMLDivElement, queryResult: QueryResult, content: HTMLDivElement) {
+    private addSearchBox(toolbar: HTMLDivElement, content: HTMLDivElement) {
         const label = createAndAppendElement('label', toolbar);
         setIcon(label, 'lucide-filter');
         const searchBox = createAndAppendElement('input', label);
         searchBox.placeholder = 'Filter by description...';
         setTooltip(searchBox, 'Filter results');
         searchBox.addEventListener('input', async () => {
-            const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
-                'description includes ' + searchBox.value,
-            );
-            if (error) {
-                new Notice('error searching for ' + searchBox.value + ': ' + error);
-                return;
-            }
-
-            // We want to retain the Toolbar, to not lose the search string.
-            // But we need to delete any pre-existing headings, tasks and task count.
-            // The following while loop relies on the Toolbar being the first element.
-            while (content.firstElementChild !== content.lastElementChild) {
-                const lastChild = content.lastChild;
-                if (lastChild === null) {
-                    break;
-                }
-
-                lastChild.remove();
-            }
-
-            const filteredQueryResult = queryResult.applyFilter(filter!);
-            await this.renderQueryResult(State.Warm, filteredQueryResult, content);
+            const filterString = searchBox.value;
+            await this.applySearchBoxFilter(filterString, content);
         });
     }
 
-    private addCopyButton(toolbar: HTMLDivElement, queryResult: QueryResult) {
+    public async applySearchBoxFilter(filterString: string, content: HTMLDivElement) {
+        const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
+            'description includes ' + filterString,
+        );
+        if (error) {
+            new Notice('error searching for ' + filterString + ': ' + error);
+            return;
+        }
+
+        // We want to retain the Toolbar, to not lose the search string.
+        // But we need to delete any pre-existing headings, tasks and task count.
+        // The following while loop relies on the Toolbar being the first element.
+        while (content.firstElementChild !== content.lastElementChild) {
+            const lastChild = content.lastChild;
+            if (lastChild === null) {
+                break;
+            }
+
+            lastChild.remove();
+        }
+
+        this.filteredQueryResult = this.queryResult.applyFilter(filter!);
+        await this.renderQueryResult(State.Warm, this.filteredQueryResult, content);
+    }
+
+    private addCopyButton(toolbar: HTMLDivElement) {
         const copyButton = createAndAppendElement('button', toolbar);
         setIcon(copyButton, 'lucide-copy');
         setTooltip(copyButton, 'Copy results');
         copyButton.addEventListener('click', async () => {
-            // TODO reimplement this using QueryResult.asMarkdown() when it supports trees and list items.
-            await this.markdownRenderer.renderQuery(State.Warm, queryResult);
-            await navigator.clipboard.writeText(this.markdownRenderer.markdown);
+            const markdown = await this.resultsAsMarkdown();
+            await navigator.clipboard.writeText(markdown);
             new Notice('Results copied to clipboard');
         });
+    }
+
+    public async resultsAsMarkdown() {
+        await this.markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
+        return this.markdownRenderer.markdown;
     }
 }
