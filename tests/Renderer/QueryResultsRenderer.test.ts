@@ -62,6 +62,7 @@ describe('QueryResultsRenderer - accessing results', () => {
         await renderer.render(State.Warm, aTask, document.createElement('div'));
 
         expect(renderer.queryResult.totalTasksCount).toEqual(1);
+        expect(renderer.filteredQueryResult.totalTasksCount).toEqual(1);
     });
 
     it('should have actual result after filtering results', async () => {
@@ -72,6 +73,7 @@ describe('QueryResultsRenderer - accessing results', () => {
         await renderer.applySearchBoxFilter('another', document.createElement('div'));
 
         expect(renderer.queryResult.totalTasksCount).toEqual(2);
+        expect(renderer.filteredQueryResult.totalTasksCount).toEqual(1);
         expect(await renderer.resultsAsMarkdown()).toMatchInlineSnapshot(`
             "- [ ] another task
             "
