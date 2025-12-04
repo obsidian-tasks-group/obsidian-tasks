@@ -206,7 +206,8 @@ export class QueryResultsRenderer {
             'description includes ' + filterString,
         );
         if (error) {
-            new Notice('error searching for ' + filterString + ': ' + error);
+            // If we can't create a filter, just silently show all the matching tasks
+            this.filteredQueryResult = this.queryResult;
             return;
         }
 
