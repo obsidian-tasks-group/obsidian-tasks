@@ -206,7 +206,7 @@ export class QueryResultsRenderer {
 
         this.filterResults();
 
-        // We want to retain the Toolbar, to not lose the search string.
+        // We want to retain the Toolbar, to not lose the cursor position in the search string.
         // But we need to delete any pre-existing headings, tasks and task count.
         // The following while loop relies on the Toolbar being the first element.
         while (content.firstElementChild !== content.lastElementChild) {
