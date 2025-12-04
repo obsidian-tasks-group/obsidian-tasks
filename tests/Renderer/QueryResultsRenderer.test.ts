@@ -183,7 +183,16 @@ class RendererStoryboard {
         const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;
 
-        return { prettyHTML };
+        return { prettyHTML, container };
+    }
+
+    public async addFrameOfCurrentState(description: string, container: HTMLDivElement) {
+        this.output += `<h2>${description}:</h2>\n\n`;
+
+        const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
+        this.output += tasksAsMarkdown + prettyHTML;
+
+        return { prettyHTML, container };
     }
 
     public verify() {
@@ -235,6 +244,24 @@ describe('QueryResultsRenderer - sequences', () => {
             const { prettyHTML } = await storyboard.addFrame('Check that urgency is shown by global query');
             expect(prettyHTML).toContain(urgency);
         }
+
+        storyboard.verify();
+    });
+
+    it('rerendered results retain the filter', async () => {
+        const source = 'explain';
+        const storyboard = new RendererStoryboard(source, parentAndChild);
+
+        const { container } = await storyboard.addFrame('Initial results');
+
+        await storyboard.renderer.applySearchBoxFilter('parent', container);
+        await storyboard.addFrameOfCurrentState('Filtered results (parent)', container);
+
+        GlobalQuery.getInstance().set('sort by function reverse task.description.length');
+        storyboard.renderer.rereadQueryFromFile();
+
+        // The following renders two tasks, not one because the filter is lost
+        await storyboard.addFrame('Filtered results after editing Global Query');
 
         storyboard.verify();
     });
