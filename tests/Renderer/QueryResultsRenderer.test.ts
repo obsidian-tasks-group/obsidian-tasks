@@ -175,22 +175,16 @@ class RendererStoryboard {
      * Returns the prettified rendered HTML, to allow 'expect' calls to be added.
      * @param description
      */
-    public async addFrame(description: string) {
-        this.output += `<h2>${description}:</h2>\n\n`;
-
+    public async renderAndAddFrame(description: string) {
         const container = document.createElement('div');
         await this.renderer.render(State.Warm, this.allTasks, container);
 
-        return this.prettifyContainer(container);
+        return this.addFrame(description, container);
     }
 
-    public async addFrameOfCurrentState(description: string, container: HTMLDivElement) {
+    public addFrame(description: string, container: HTMLDivElement) {
         this.output += `<h2>${description}:</h2>\n\n`;
 
-        return this.prettifyContainer(container);
-    }
-
-    private prettifyContainer(container: HTMLDivElement) {
         const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;
 
@@ -214,7 +208,7 @@ describe('QueryResultsRenderer - sequences', () => {
         const dueDate = '📅 2025-12-01';
 
         {
-            const { prettyHTML } = await storyboard.addFrame('Initial results');
+            const { prettyHTML } = await storyboard.renderAndAddFrame('Initial results');
             expect(prettyHTML).toContain(dueDate);
         }
 
@@ -222,7 +216,7 @@ describe('QueryResultsRenderer - sequences', () => {
         storyboard.renderer.rereadQueryFromFile();
 
         {
-            const { prettyHTML } = await storyboard.addFrame('Check that due date is hidden by global query');
+            const { prettyHTML } = await storyboard.renderAndAddFrame('Check that due date is hidden by global query');
             expect(prettyHTML).not.toContain(dueDate);
         }
 
@@ -235,7 +229,7 @@ describe('QueryResultsRenderer - sequences', () => {
         const urgency = '<span class="tasks-urgency">10.75</span>';
 
         {
-            const { prettyHTML } = await storyboard.addFrame('Initial results');
+            const { prettyHTML } = await storyboard.renderAndAddFrame('Initial results');
             expect(prettyHTML).not.toContain(urgency);
         }
 
@@ -243,7 +237,7 @@ describe('QueryResultsRenderer - sequences', () => {
         storyboard.renderer.rereadQueryFromFile();
 
         {
-            const { prettyHTML } = await storyboard.addFrame('Check that urgency is shown by global query');
+            const { prettyHTML } = await storyboard.renderAndAddFrame('Check that urgency is shown by global query');
             expect(prettyHTML).toContain(urgency);
         }
 
@@ -254,16 +248,16 @@ describe('QueryResultsRenderer - sequences', () => {
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
 
-        const { container } = await storyboard.addFrame('Initial results');
+        const { container } = await storyboard.renderAndAddFrame('Initial results');
 
         await storyboard.renderer.applySearchBoxFilter('parent', container);
-        await storyboard.addFrameOfCurrentState('Filtered results (parent)', container);
+        storyboard.addFrame('Filtered results (parent)', container);
 
         GlobalQuery.getInstance().set('sort by function reverse task.description.length');
         storyboard.renderer.rereadQueryFromFile();
 
         // The following renders two tasks, not one because the filter is lost
-        await storyboard.addFrame('Filtered results after editing Global Query');
+        await storyboard.renderAndAddFrame('Filtered results after editing Global Query');
 
         storyboard.verify();
     });
