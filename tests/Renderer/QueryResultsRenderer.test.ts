@@ -161,7 +161,9 @@ describe('QueryResultsRenderer - responding to file edits', () => {
  * See https://github.com/approvals/ApprovalTests.Python/blob/main/docs/reference/storyboard.md
  */
 class RendererStoryboard {
-    private output: string = '';
+    private output: string = `<html>
+<meta charset="UTF-8">
+`;
     private readonly allTasks: Task[];
     readonly renderer: QueryResultsRenderer;
 
@@ -193,6 +195,7 @@ class RendererStoryboard {
     }
 
     public verify() {
+        this.output += '</html>\n';
         verifyWithFileExtension(this.output, 'html');
     }
 }
