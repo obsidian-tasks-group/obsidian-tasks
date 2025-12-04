@@ -256,7 +256,6 @@ describe('QueryResultsRenderer - sequences', () => {
         GlobalQuery.getInstance().set('sort by function reverse task.description.length');
         storyboard.renderer.rereadQueryFromFile();
 
-        // The following renders two tasks, not one because the filter is lost
         await storyboard.renderAndAddFrame('Filtered results after editing Global Query');
 
         storyboard.verify();

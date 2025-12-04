@@ -158,14 +158,14 @@ export class QueryResultsRenderer {
     public async render(state: State, tasks: Task[], content: HTMLDivElement) {
         this.performSearch(tasks);
         this.addToolbar(content);
-        await this.renderQueryResult(state, this.queryResult, content);
+        await this.renderQueryResult(state, this.filteredQueryResult, content);
     }
 
     private performSearch(tasks: Task[]) {
         const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
         this.queryResult = this.query.applyQueryToTasks(tasks);
-        this.filteredQueryResult = this.queryResult;
+        this.filterResults();
         measureSearch.finish();
     }
 
