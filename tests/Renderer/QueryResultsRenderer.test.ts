@@ -174,7 +174,7 @@ class RendererStoryboard {
      * Returns the prettified rendered HTML, to allow 'expect' calls to be added.
      * @param description
      */
-    public async addFrame(description: string): Promise<string> {
+    public async addFrame(description: string) {
         this.output += `<h2>${description}:</h2>\n\n`;
 
         const container = document.createElement('div');
@@ -183,7 +183,7 @@ class RendererStoryboard {
         const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;
 
-        return prettyHTML;
+        return { prettyHTML };
     }
 
     public verify() {
@@ -203,7 +203,7 @@ describe('QueryResultsRenderer - sequences', () => {
         const dueDate = '📅 2025-12-01';
 
         {
-            const prettyHTML = await storyboard.addFrame('Initial results');
+            const { prettyHTML } = await storyboard.addFrame('Initial results');
             expect(prettyHTML).toContain(dueDate);
         }
 
@@ -211,7 +211,7 @@ describe('QueryResultsRenderer - sequences', () => {
         storyboard.renderer.rereadQueryFromFile();
 
         {
-            const prettyHTML = await storyboard.addFrame('Check that due date is hidden by global query');
+            const { prettyHTML } = await storyboard.addFrame('Check that due date is hidden by global query');
             expect(prettyHTML).not.toContain(dueDate);
         }
 
@@ -224,7 +224,7 @@ describe('QueryResultsRenderer - sequences', () => {
         const urgency = '<span class="tasks-urgency">10.75</span>';
 
         {
-            const prettyHTML = await storyboard.addFrame('Initial results');
+            const { prettyHTML } = await storyboard.addFrame('Initial results');
             expect(prettyHTML).not.toContain(urgency);
         }
 
@@ -232,7 +232,7 @@ describe('QueryResultsRenderer - sequences', () => {
         storyboard.renderer.rereadQueryFromFile();
 
         {
-            const prettyHTML = await storyboard.addFrame('Check that urgency is shown by global query');
+            const { prettyHTML } = await storyboard.addFrame('Check that urgency is shown by global query');
             expect(prettyHTML).toContain(urgency);
         }
 
