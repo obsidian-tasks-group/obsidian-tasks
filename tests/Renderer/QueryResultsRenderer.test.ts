@@ -79,7 +79,7 @@ describe('QueryResultsRenderer - accessing results', () => {
 
         await renderer.render(State.Warm, twoTasks, document.createElement('div'));
 
-        await renderer.applySearchBoxFilter('another', document.createElement('div'));
+        await renderer.applySearchBoxFilterAndRerender('another', document.createElement('div'));
 
         expect(renderer.queryResult.totalTasksCount).toEqual(2);
         expect(renderer.filteredQueryResult.totalTasksCount).toEqual(1);
@@ -250,7 +250,7 @@ describe('QueryResultsRenderer - sequences', () => {
 
         const { container } = await storyboard.renderAndAddFrame('Initial results');
 
-        await storyboard.renderer.applySearchBoxFilter('parent', container);
+        await storyboard.renderer.applySearchBoxFilterAndRerender('parent', container);
         storyboard.addFrame('Filtered results (parent)', container);
 
         GlobalQuery.getInstance().set('sort by function reverse task.description.length');
