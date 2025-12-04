@@ -197,11 +197,11 @@ export class QueryResultsRenderer {
         setTooltip(searchBox, 'Filter results');
         searchBox.addEventListener('input', async () => {
             const filterString = searchBox.value;
-            await this.applySearchBoxFilter(filterString, content);
+            await this.applySearchBoxFilterAndRerender(filterString, content);
         });
     }
 
-    public async applySearchBoxFilter(filterString: string, content: HTMLDivElement) {
+    public async applySearchBoxFilterAndRerender(filterString: string, content: HTMLDivElement) {
         this.filterString = filterString;
 
         this.filterResults();
