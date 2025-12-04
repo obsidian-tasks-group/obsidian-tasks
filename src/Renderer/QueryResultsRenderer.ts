@@ -192,6 +192,7 @@ export class QueryResultsRenderer {
         const label = createAndAppendElement('label', toolbar);
         setIcon(label, 'lucide-filter');
         const searchBox = createAndAppendElement('input', label);
+        searchBox.value = this.filterString;
         searchBox.placeholder = 'Filter by description...';
         setTooltip(searchBox, 'Filter results');
         searchBox.addEventListener('input', async () => {
