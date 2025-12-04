@@ -202,6 +202,8 @@ export class QueryResultsRenderer {
     }
 
     public async applySearchBoxFilter(filterString: string, content: HTMLDivElement) {
+        this.filterString = filterString;
+
         const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
             'description includes ' + filterString,
         );
@@ -210,8 +212,6 @@ export class QueryResultsRenderer {
             this.filteredQueryResult = this.queryResult;
             return;
         }
-
-        this.filterString = filterString;
 
         // We want to retain the Toolbar, to not lose the search string.
         // But we need to delete any pre-existing headings, tasks and task count.
