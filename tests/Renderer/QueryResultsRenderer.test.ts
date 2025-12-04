@@ -248,15 +248,15 @@ describe('QueryResultsRenderer - sequences', () => {
     it('rerendered results retain the filter', async () => {
         const storyboard = new RendererStoryboard('', parentAndChild);
 
-        const { container } = await storyboard.renderAndAddFrame('Initial results');
+        const { container } = await storyboard.renderAndAddFrame('Initial results - expect 2 tasks');
 
         await storyboard.renderer.applySearchBoxFilterAndRerender('parent', container);
-        storyboard.addFrame('Filtered results (parent)', container);
+        storyboard.addFrame('Filtered results (parent) - expect 1 task', container);
 
         GlobalQuery.getInstance().set('sort by function reverse task.description.length');
         storyboard.renderer.rereadQueryFromFile();
 
-        await storyboard.renderAndAddFrame('Filtered results after editing Global Query');
+        await storyboard.renderAndAddFrame('Filtered results after editing Global Query - expect same 1 task');
 
         storyboard.verify();
     });
