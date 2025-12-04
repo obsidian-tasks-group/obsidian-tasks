@@ -204,16 +204,7 @@ export class QueryResultsRenderer {
     public async applySearchBoxFilter(filterString: string, content: HTMLDivElement) {
         this.filterString = filterString;
 
-        const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
-            'description includes ' + this.filterString,
-        );
-        if (error) {
-            // If we can't create a filter, just silently show all the matching tasks
-            this.filteredQueryResult = this.queryResult;
-            return;
-        }
-
-        this.filteredQueryResult = this.queryResult.applyFilter(filter!);
+        this.filterResults();
 
         // We want to retain the Toolbar, to not lose the search string.
         // But we need to delete any pre-existing headings, tasks and task count.
@@ -228,6 +219,19 @@ export class QueryResultsRenderer {
         }
 
         await this.renderQueryResult(State.Warm, this.filteredQueryResult, content);
+    }
+
+    private filterResults() {
+        const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
+            'description includes ' + this.filterString,
+        );
+        if (error) {
+            // If we can't create a filter, just silently show all the matching tasks
+            this.filteredQueryResult = this.queryResult;
+            return;
+        }
+
+        this.filteredQueryResult = this.queryResult.applyFilter(filter!);
     }
 
     private addCopyButton(toolbar: HTMLDivElement) {
