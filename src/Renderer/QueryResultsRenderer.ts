@@ -62,6 +62,7 @@ export class QueryResultsRenderer {
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
     public queryResult: QueryResult;
     public filteredQueryResult: QueryResult;
+    private _filterString: string = '';
 
     constructor(
         className: string,
@@ -119,6 +120,10 @@ export class QueryResultsRenderer {
         this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
     }
 
+    public get filterString(): string {
+        return this._filterString;
+    }
+
     private makeQueryFromSourceAndTasksFile() {
         return getQueryForQueryRenderer(this.source, GlobalQuery.getInstance(), this.tasksFile);
     }
@@ -157,14 +162,14 @@ export class QueryResultsRenderer {
     public async render(state: State, tasks: Task[], content: HTMLDivElement) {
         this.performSearch(tasks);
         this.addToolbar(content);
-        await this.renderQueryResult(state, this.queryResult, content);
+        await this.renderQueryResult(state, this.filteredQueryResult, content);
     }
 
     private performSearch(tasks: Task[]) {
         const measureSearch = new PerformanceTracker(`Search: ${this.query.queryId} - ${this.filePath}`);
         measureSearch.start();
         this.queryResult = this.query.applyQueryToTasks(tasks);
-        this.filteredQueryResult = this.queryResult;
+        this.filterResults();
         measureSearch.finish();
     }
 
@@ -191,24 +196,21 @@ export class QueryResultsRenderer {
         const label = createAndAppendElement('label', toolbar);
         setIcon(label, 'lucide-filter');
         const searchBox = createAndAppendElement('input', label);
+        searchBox.value = this._filterString;
         searchBox.placeholder = 'Filter by description...';
         setTooltip(searchBox, 'Filter results');
         searchBox.addEventListener('input', async () => {
             const filterString = searchBox.value;
-            await this.applySearchBoxFilter(filterString, content);
+            await this.applySearchBoxFilterAndRerender(filterString, content);
         });
     }
 
-    public async applySearchBoxFilter(filterString: string, content: HTMLDivElement) {
-        const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
-            'description includes ' + filterString,
-        );
-        if (error) {
-            new Notice('error searching for ' + filterString + ': ' + error);
-            return;
-        }
+    public async applySearchBoxFilterAndRerender(filterString: string, content: HTMLDivElement) {
+        this._filterString = filterString;
 
-        // We want to retain the Toolbar, to not lose the search string.
+        this.filterResults();
+
+        // We want to retain the Toolbar, to not lose the cursor position in the search string.
         // But we need to delete any pre-existing headings, tasks and task count.
         // The following while loop relies on the Toolbar being the first element.
         while (content.firstElementChild !== content.lastElementChild) {
@@ -220,8 +222,20 @@ export class QueryResultsRenderer {
             lastChild.remove();
         }
 
-        this.filteredQueryResult = this.queryResult.applyFilter(filter!);
         await this.renderQueryResult(State.Warm, this.filteredQueryResult, content);
+    }
+
+    private filterResults() {
+        const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
+            'description includes ' + this._filterString,
+        );
+        if (error) {
+            // If we can't create a filter, just silently show all the matching tasks
+            this.filteredQueryResult = this.queryResult;
+            return;
+        }
+
+        this.filteredQueryResult = this.queryResult.applyFilter(filter!);
     }
 
     private addCopyButton(toolbar: HTMLDivElement) {
