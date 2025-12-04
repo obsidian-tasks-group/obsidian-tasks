@@ -171,6 +171,7 @@ class RendererStoryboard {
     }
 
     /**
+     * This simulates QueryRenderer.renderResults()
      * Returns the prettified rendered HTML, to allow 'expect' calls to be added.
      * @param description
      */
