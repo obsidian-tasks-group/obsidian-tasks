@@ -79,7 +79,7 @@ describe('QueryResultsRenderer - accessing results', () => {
 
         await renderer.render(State.Warm, twoTasks, document.createElement('div'));
 
-        await renderer.applySearchBoxFilter('another', document.createElement('div'));
+        await renderer.applySearchBoxFilterAndRerender('another', document.createElement('div'));
 
         expect(renderer.queryResult.totalTasksCount).toEqual(2);
         expect(renderer.filteredQueryResult.totalTasksCount).toEqual(1);
@@ -171,19 +171,25 @@ class RendererStoryboard {
     }
 
     /**
+     * This simulates QueryRenderer.renderResults()
      * Returns the prettified rendered HTML, to allow 'expect' calls to be added.
      * @param description
      */
-    public async addFrame(description: string): Promise<string> {
-        this.output += `<h2>${description}:</h2>\n\n`;
-
+    public async renderAndAddFrame(description: string) {
         const container = document.createElement('div');
         await this.renderer.render(State.Warm, this.allTasks, container);
+
+        return this.addFrame(description, container);
+    }
+
+    public addFrame(description: string, container: HTMLDivElement) {
+        this.output += `<h2>${description}:</h2>\n\n`;
+        this.output += `<p>Results filter: '${this.renderer.filterString}'</p>\n`;
 
         const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;
 
-        return prettyHTML;
+        return { prettyHTML, container };
     }
 
     public verify() {
@@ -203,7 +209,7 @@ describe('QueryResultsRenderer - sequences', () => {
         const dueDate = '📅 2025-12-01';
 
         {
-            const prettyHTML = await storyboard.addFrame('Initial results');
+            const { prettyHTML } = await storyboard.renderAndAddFrame('Initial results');
             expect(prettyHTML).toContain(dueDate);
         }
 
@@ -211,7 +217,7 @@ describe('QueryResultsRenderer - sequences', () => {
         storyboard.renderer.rereadQueryFromFile();
 
         {
-            const prettyHTML = await storyboard.addFrame('Check that due date is hidden by global query');
+            const { prettyHTML } = await storyboard.renderAndAddFrame('Check that due date is hidden by global query');
             expect(prettyHTML).not.toContain(dueDate);
         }
 
@@ -224,7 +230,7 @@ describe('QueryResultsRenderer - sequences', () => {
         const urgency = '<span class="tasks-urgency">10.75</span>';
 
         {
-            const prettyHTML = await storyboard.addFrame('Initial results');
+            const { prettyHTML } = await storyboard.renderAndAddFrame('Initial results');
             expect(prettyHTML).not.toContain(urgency);
         }
 
@@ -232,9 +238,25 @@ describe('QueryResultsRenderer - sequences', () => {
         storyboard.renderer.rereadQueryFromFile();
 
         {
-            const prettyHTML = await storyboard.addFrame('Check that urgency is shown by global query');
+            const { prettyHTML } = await storyboard.renderAndAddFrame('Check that urgency is shown by global query');
             expect(prettyHTML).toContain(urgency);
         }
+
+        storyboard.verify();
+    });
+
+    it('rerendered results retain the filter', async () => {
+        const storyboard = new RendererStoryboard('', parentAndChild);
+
+        const { container } = await storyboard.renderAndAddFrame('Initial results - expect 2 tasks');
+
+        await storyboard.renderer.applySearchBoxFilterAndRerender('parent', container);
+        storyboard.addFrame('Filtered results (parent) - expect 1 task', container);
+
+        GlobalQuery.getInstance().set('sort by function reverse task.description.length');
+        storyboard.renderer.rereadQueryFromFile();
+
+        await storyboard.renderAndAddFrame('Filtered results after editing Global Query - expect same 1 task');
 
         storyboard.verify();
     });
