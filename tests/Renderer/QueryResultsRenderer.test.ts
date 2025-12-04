@@ -245,8 +245,7 @@ describe('QueryResultsRenderer - sequences', () => {
     });
 
     it('rerendered results retain the filter', async () => {
-        const source = 'explain';
-        const storyboard = new RendererStoryboard(source, parentAndChild);
+        const storyboard = new RendererStoryboard('', parentAndChild);
 
         const { container } = await storyboard.renderAndAddFrame('Initial results');
 
