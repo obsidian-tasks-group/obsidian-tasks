@@ -184,6 +184,7 @@ class RendererStoryboard {
 
     public addFrame(description: string, container: HTMLDivElement) {
         this.output += `<h2>${description}:</h2>\n\n`;
+        this.output += `<p>Results filter: '${this.renderer.filterString}'</p>\n`;
 
         const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;

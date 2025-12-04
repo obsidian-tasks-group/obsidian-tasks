@@ -62,6 +62,7 @@ export class QueryResultsRenderer {
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
     public queryResult: QueryResult;
     public filteredQueryResult: QueryResult;
+    public filterString: string = '';
 
     constructor(
         className: string,
@@ -207,6 +208,8 @@ export class QueryResultsRenderer {
             new Notice('error searching for ' + filterString + ': ' + error);
             return;
         }
+
+        this.filterString = filterString;
 
         // We want to retain the Toolbar, to not lose the search string.
         // But we need to delete any pre-existing headings, tasks and task count.
