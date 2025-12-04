@@ -62,7 +62,7 @@ export class QueryResultsRenderer {
     protected queryType: string; // whilst there is only one query type, there is no point logging this value
     public queryResult: QueryResult;
     public filteredQueryResult: QueryResult;
-    public filterString: string = '';
+    private _filterString: string = '';
 
     constructor(
         className: string,
@@ -118,6 +118,10 @@ export class QueryResultsRenderer {
         );
 
         this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+    }
+
+    public get filterString(): string {
+        return this._filterString;
     }
 
     private makeQueryFromSourceAndTasksFile() {
@@ -192,7 +196,7 @@ export class QueryResultsRenderer {
         const label = createAndAppendElement('label', toolbar);
         setIcon(label, 'lucide-filter');
         const searchBox = createAndAppendElement('input', label);
-        searchBox.value = this.filterString;
+        searchBox.value = this._filterString;
         searchBox.placeholder = 'Filter by description...';
         setTooltip(searchBox, 'Filter results');
         searchBox.addEventListener('input', async () => {
@@ -202,7 +206,7 @@ export class QueryResultsRenderer {
     }
 
     public async applySearchBoxFilterAndRerender(filterString: string, content: HTMLDivElement) {
-        this.filterString = filterString;
+        this._filterString = filterString;
 
         this.filterResults();
 
@@ -223,7 +227,7 @@ export class QueryResultsRenderer {
 
     private filterResults() {
         const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
-            'description includes ' + this.filterString,
+            'description includes ' + this._filterString,
         );
         if (error) {
             // If we can't create a filter, just silently show all the matching tasks
