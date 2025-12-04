@@ -180,15 +180,16 @@ class RendererStoryboard {
         const container = document.createElement('div');
         await this.renderer.render(State.Warm, this.allTasks, container);
 
-        const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
-        this.output += tasksAsMarkdown + prettyHTML;
-
-        return { prettyHTML, container };
+        return this.prettifyContainer(container);
     }
 
     public async addFrameOfCurrentState(description: string, container: HTMLDivElement) {
         this.output += `<h2>${description}:</h2>\n\n`;
 
+        return this.prettifyContainer(container);
+    }
+
+    private prettifyContainer(container: HTMLDivElement) {
         const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;
 
