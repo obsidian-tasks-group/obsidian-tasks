@@ -205,7 +205,7 @@ export class QueryResultsRenderer {
         this.filterString = filterString;
 
         const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
-            'description includes ' + filterString,
+            'description includes ' + this.filterString,
         );
         if (error) {
             // If we can't create a filter, just silently show all the matching tasks
