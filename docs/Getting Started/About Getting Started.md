@@ -32,7 +32,7 @@ publish: true
 - [[Statuses]]
   - Also known as Custom Checkboxes.
   - In vanilla Obsidian tasks are either 'TODO' or 'DONE'.
-  - Statuses allow you to track `IN_PROGRESS`, `CANCELLED` and `NON_TASK` actions too.
+  - Statuses allow you to track `IN_PROGRESS`, `ON_HOLD`, `CANCELLED` and `NON_TASK` actions too.
 - [[Use Filename as Default Date]]
   - Automatically set a scheduled date for tasks based on the name of their files.
 - [[Tags]]

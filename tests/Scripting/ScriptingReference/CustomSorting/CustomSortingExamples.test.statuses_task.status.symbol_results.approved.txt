@@ -9,6 +9,7 @@ Sort by the status symbol.
 - [ ] Status Todo
 - [-] Status Cancelled
 - [/] Status In Progress
+- [h] Status On Hold
 - [Q] Status Non-Task
 - [x] Status Done
 ====================================================================================
