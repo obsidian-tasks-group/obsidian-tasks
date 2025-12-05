@@ -1,1 +1,45 @@
-button.add-plugin-button{width:100%;border-bottom:none}.setting-item-info:has(button.add-plugin-button){display:none}.setting-item.open-plugin-settings-header{border-top:none}.setting-item.open-plugin-settings-item{border-top:none;border-bottom:1px solid var(--background-modifier-border)}.setting-item.open-plugin-settings-item.disabled{opacity:.5;font-style:italic}.setting-item.open-plugin-settings-item .setting-item-info{width:0}.setting-item.open-plugin-settings-item input{width:100%}.clickable-icon.setting-editor-extra-setting-button.is-disabled:active,.clickable-icon.setting-editor-extra-setting-button.is-disabled:hover{background-color:transparent;color:var(--icon-color);opacity:.8}
+button.add-plugin-button {
+	width: 100%;
+	border-bottom: none;
+}
+
+.setting-item-info:has(button.add-plugin-button) {
+	display: none;
+}
+
+.setting-item.open-plugin-settings-header {
+	border-top: none;
+}
+
+.setting-item.open-plugin-settings-item {
+	border-top: none;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.setting-item.open-plugin-settings-item.disabled {
+	opacity: 0.5;
+	font-style: italic;
+}
+
+.setting-item.open-plugin-settings-item .setting-item-info {
+	width: 0;
+}
+
+.setting-item.open-plugin-settings-item input {
+	width: 100%;
+}
+
+.clickable-icon.setting-editor-extra-setting-button.is-disabled:active,
+.clickable-icon.setting-editor-extra-setting-button.is-disabled:hover {
+	background-color: transparent;
+	color: var(--icon-color);
+	opacity: 0.8;
+}
+
+.open-plugin-settings-tab p.center {
+	text-align: center;
+}
+
+.open-plugin-settings-tab .open-plugin-settings-header .setting-item-info {
+	display: none;
+}

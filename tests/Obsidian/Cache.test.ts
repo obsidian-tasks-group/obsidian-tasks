@@ -633,7 +633,9 @@ describe('cache', () => {
     });
 
     it('callout_labelled', () => {
+        // begin-snippet: getMockDataAndReadTasks
         const { data, tasks } = getMockDataAndReadTasks('callout_labelled');
+        // end-snippet
         expect(data.fileContents).toMatchInlineSnapshot(`
             "# callout_labelled
 

@@ -5,8 +5,7 @@
 import moment from 'moment';
 
 import type { Task } from '../../../../src/Task/Task';
-import { AllMockDataNames } from '../../../Obsidian/AllCacheSampleData';
-import { readTasksFromSimulatedFile } from '../../../Obsidian/SimulatedFile';
+import { readAllTasksFromAllSimulatedFiles } from '../../../Obsidian/SimulatedFile';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import {
     type CustomPropertyDocsTestData,
@@ -380,9 +379,7 @@ describe('file properties', () => {
 });
 
 describe('obsidian properties', () => {
-    const tasks: Task[] = AllMockDataNames.flatMap((testDataName) => {
-        return readTasksFromSimulatedFile(testDataName);
-    });
+    const tasks = readAllTasksFromAllSimulatedFiles();
 
     const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
@@ -625,6 +622,15 @@ describe('other properties', () => {
                 [
                     'group by function task.tags.filter( (tag) => ! tag.includes("#tag") )',
                     'Create headings for all tags that do not contain "#tag"',
+                ],
+                [
+                    `group by function \\
+    if (task.tags.length > 0) return task.tags; \\
+    return task.findClosestParentTask()?.tags ?? [];`,
+                    'Group tag-less child tasks by any tags on their parent task:',
+                    '  If the task has any tags on its own line, then group by those tags.',
+                    '  Otherwise, look for the first parent task, and group by its tags.',
+                    '  If there is no parent task, treat the tags as empty.',
                 ],
             ],
             SampleTasks.withRepresentativeTags(),

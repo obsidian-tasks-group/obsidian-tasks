@@ -135,12 +135,19 @@ export type MockDataName =
 
 /**
  * Names of all the sample data in \`resources/sample_vaults/Tasks-Demo/Test Data\`.
+ *
+ * To read all the tasks in all the sample data files,
+ * use {@link readAllTasksFromAllSimulatedFiles}
+ *
  * Example use:
  *
  * \`\`\`typescript
- *      const tasks: Task[] = AllMockDataNames.flatMap((testDataName) => {
- *          return readTasksFromSimulatedFile(testDataName);
+ *      let output = '';
+ *      AllMockDataNames.forEach((file) => {
+ *          const tasksFile = getTasksFileFromMockData(file);
+ *          output += visualiseLinks(tasksFile.outlinksInProperties, file);
  *      });
+ *      verifyMarkdown(output);
  * \`\`\`
  *
  * Related code that uses some or all of this data:
@@ -148,6 +155,7 @@ export type MockDataName =
  * - {@link readTasksFromSimulatedFile}
  * - {@link getTasksFileFromMockData}
  * - {@link listPathAndData}
+ * - {@link readAllTasksFromAllSimulatedFiles}
  */
 export const AllMockDataNames: MockDataName[] = [
     '${basenames.join("',\n    '")}',
