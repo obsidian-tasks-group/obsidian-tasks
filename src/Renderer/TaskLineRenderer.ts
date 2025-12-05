@@ -2,19 +2,19 @@ import type { Moment } from 'moment';
 import { type App, Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from '../Config/Settings';
+import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
+import { splitDateText } from '../DateTime/Postponer';
 import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, type TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
+import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import { StatusMenu } from '../ui/Menus/StatusMenu';
-import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
-import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
-import { promptForDate } from '../ui/Menus/DatePicker';
-import { splitDateText } from '../DateTime/Postponer';
 import { DateMenu } from '../ui/Menus/DateMenu';
-import type { ListItem } from '../Task/ListItem';
+import { promptForDate } from '../ui/Menus/DatePicker';
+import { StatusMenu } from '../ui/Menus/StatusMenu';
+import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 
 /**
@@ -68,7 +68,6 @@ export class TaskLineRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly obsidianApp: App;
     private readonly obsidianComponent: Component | null;
-    private readonly parentUlElement: HTMLElement;
     private readonly taskLayoutOptions: TaskLayoutOptions;
     private readonly queryLayoutOptions: QueryLayoutOptions;
 
@@ -95,8 +94,6 @@ export class TaskLineRenderer {
      * @param obsidianComponent One of the parameters needed by `MarkdownRenderer.renderMarkdown()` Obsidian API,
      * that is called by the Obsidian renderer. Set this to null in test code.
      *
-     * @param parentUlElement HTML element where the task shall be rendered.
-     *
      * @param taskLayoutOptions See {@link TaskLayoutOptions}.
      *
      * @param queryLayoutOptions See {@link QueryLayoutOptions}.
@@ -105,21 +102,18 @@ export class TaskLineRenderer {
         textRenderer = TaskLineRenderer.obsidianMarkdownRenderer,
         obsidianApp,
         obsidianComponent,
-        parentUlElement,
         taskLayoutOptions,
         queryLayoutOptions,
     }: {
         textRenderer?: TextRenderer;
         obsidianApp: App;
         obsidianComponent: Component | null;
-        parentUlElement: HTMLElement;
         taskLayoutOptions: TaskLayoutOptions;
         queryLayoutOptions: QueryLayoutOptions;
     }) {
         this.textRenderer = textRenderer;
         this.obsidianApp = obsidianApp;
         this.obsidianComponent = obsidianComponent;
-        this.parentUlElement = parentUlElement;
         this.taskLayoutOptions = taskLayoutOptions;
         this.queryLayoutOptions = queryLayoutOptions;
     }
@@ -132,6 +126,7 @@ export class TaskLineRenderer {
      *
      * @returns an HTML rendered List Item element (LI) for a task.
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
+     * @param li HTML element for the rendered task.
      * @param task The task to be rendered.
      * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
      * @param isTaskInQueryFile
@@ -140,17 +135,18 @@ export class TaskLineRenderer {
      *                         the file name only. If set to `true`, the full path will be returned.
      */
     public async renderTaskLine({
+        li,
         task,
         taskIndex,
         isTaskInQueryFile,
         isFilenameUnique,
     }: {
+        li: HTMLLIElement;
         task: Task;
         taskIndex: number;
         isTaskInQueryFile: boolean;
         isFilenameUnique?: boolean;
-    }): Promise<HTMLLIElement> {
-        const li = createAndAppendElement('li', this.parentUlElement);
+    }): Promise<void> {
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
         const textSpan = createAndAppendElement('span', li);
@@ -205,8 +201,6 @@ export class TaskLineRenderer {
         if (this.queryLayoutOptions.shortMode) {
             this.addTooltip(task, textSpan, isFilenameUnique);
         }
-
-        return li;
     }
 
     private async taskToHtml(
@@ -462,9 +456,7 @@ export class TaskLineRenderer {
         });
     }
 
-    public async renderListItem(taskList: HTMLUListElement, listItem: ListItem, listItemIndex: number) {
-        const li = createAndAppendElement('li', taskList);
-
+    public async renderListItem(li: HTMLLIElement, listItem: ListItem, listItemIndex: number): Promise<HTMLLIElement> {
         if (listItem.statusCharacter) {
             const checkbox = createAndAppendElement('input', li);
             checkbox.classList.add('task-list-item-checkbox');

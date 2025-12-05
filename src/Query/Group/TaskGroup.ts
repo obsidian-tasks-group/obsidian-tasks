@@ -97,18 +97,17 @@ export class TaskGroup {
      * A human-readable representation of this task group, including names
      * and headings that should be displayed.
      *
-     * Note that this is used in snapshot testing, so if the format is
-     * changed, the snapshots will need to be updated.
+     * Note that this is used in the 'Copy results' facility and snapshot testing, so if the format is
+     * changed, the documentation and snapshots will need to be updated.
      */
     public toString(): string {
         let output = '\n';
-        output += `Group names: [${this.groups}]\n`;
 
         for (const heading of this.groupHeadings) {
             // These headings mimic the behaviour of QueryRenderer,
             // which uses 'h4', 'h5' and 'h6' for nested groups.
-            const headingPrefix = '#'.repeat(4 + heading.nestingLevel);
-            output += `${headingPrefix} [${heading.property}] ${heading.displayName}\n`;
+            const headingPrefix = '#'.repeat(Math.min(4 + heading.nestingLevel, 6));
+            output += `${headingPrefix} ${heading.displayName}\n\n`;
         }
 
         output += this.tasksAsStringOfLines();

@@ -14,6 +14,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 - X.Y.Z:
   - Add [[Status Types#ON_HOLD|ON_HOLD]] status type.
+  - Add 'Copy results' button: an initial implementation, which is not yet documented.
 - 7.22.0:
   - Fix [[Recurring Tasks#Priority of Dates|priority of dates in recurring tasks]] when using [[Recurring Tasks#Remove scheduled date on recurrence|Remove scheduled date on recurrence]].
   - Update the [[Obsidian Properties#How does Tasks interpret Obsidian Properties?|table of examples]] to show how to use properties with nested data and object serialisation.

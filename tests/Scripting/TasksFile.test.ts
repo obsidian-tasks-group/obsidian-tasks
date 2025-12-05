@@ -296,6 +296,7 @@ describe('TasksFile - reading tags', () => {
         expect(tasksFile.tags).toEqual(['#task']);
     });
 
+    // begin-snippet: iterate-over-multiple-SimulatedFiles
     it.each(
         listPathAndData([
             'yaml_custom_number_property', // no tags value in frontmatter
@@ -308,6 +309,7 @@ describe('TasksFile - reading tags', () => {
         const tasksFile = getTasksFileFromMockData(testDataName);
         expect(tasksFile.frontmatter.tags).toEqual([]);
     });
+    // end-snippet
 
     it('should be able to read all tags for any loaded SimulatedFile', () => {
         const file1 = getTasksFileFromMockData('yaml_tags_with_one_value_on_new_line');
@@ -384,7 +386,9 @@ describe('TasksFile - properties', () => {
     });
 
     it('should treat non-exising properties correctly', () => {
+        // begin-snippet: getTasksFileFromMockData
         const tasksFile = getTasksFileFromMockData('no_yaml');
+        // end-snippet
         expect(tasksFile.hasProperty('appleSauce')).toEqual(false);
     });
 
