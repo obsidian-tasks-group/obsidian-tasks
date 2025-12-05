@@ -22,8 +22,12 @@ export const createTaskLineModal = (app: App, allTasks: Task[]): Promise<string>
         resolvePromise(line);
     };
 
+    const onCancel = (): void => {
+        resolvePromise('');
+    };
+
     const task = taskFromLine({ line: '', path: '' });
-    const taskModal = new TaskModal({ app, task, onSubmit, allTasks });
+    const taskModal = new TaskModal({ app, task, onSubmit, onCancel, allTasks });
 
     taskModal.open();
 
