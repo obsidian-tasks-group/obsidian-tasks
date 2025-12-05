@@ -16,6 +16,7 @@ Same as the `not done` filter, but might be useful in conjunction with other exp
 =>
 - [] Status EMPTY
 - [/] Status In Progress
+- [h] Status On Hold
 - [ ] Status Todo
 ====================================================================================
 

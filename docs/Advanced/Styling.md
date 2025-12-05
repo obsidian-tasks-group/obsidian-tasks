@@ -329,6 +329,8 @@ li.task-list-item[data-task-status-type="IN_PROGRESS"] .task-list-item-checkbox 
 ```
 <!-- endSnippet -->
 
+We take the view that the status type [[Status Types#ON_HOLD|ON_HOLD]] is not (yet) actionable, and so have not included that value in the snippet.
+
 For example, in Reading mode:
 
 ![Example of tasks-plugin-style-status-types.css snippet](../../images/tasks-plugin-style-status-types-snippet.png)
