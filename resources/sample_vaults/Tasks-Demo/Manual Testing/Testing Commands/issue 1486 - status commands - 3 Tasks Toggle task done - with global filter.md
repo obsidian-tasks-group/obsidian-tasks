@@ -5,11 +5,12 @@ Using the `Tasks: Toggle task done` command **with a global filter `#task`**....
 ## Apply repeatedly on initially empty line
 
 <!-- Turn off 
+  - MD003/heading-style
   - MD009/no-trailing-spaces
   - MD012/no-multiple-blank
   - MD032/blanks-around-list
 -->
-<!-- markdownlint-disable MD009 MD012 MD032 -->
+<!-- markdownlint-disable MD003 MD009 MD012 MD032 -->
 
 (blank line)
 
