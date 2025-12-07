@@ -106,13 +106,13 @@ describe('ToggleDone', () => {
     it('should add checkbox to hyphen and space', () => {
         testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
-        testToggleLine('- |foobar', '- [ ] foobar|');
+        testToggleLine('1. |foobar', '1. [ ] foobar|');
 
         GlobalFilter.getInstance().set('#task');
 
         testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
-        testToggleLine('- |foobar', '- [ ] foobar|');
+        testToggleLine('1. |foobar', '1. [ ] foobar|');
     });
 
     it('should complete a task', () => {
