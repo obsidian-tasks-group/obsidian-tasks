@@ -93,14 +93,14 @@ describe('ToggleDone', () => {
     // Most of the tests are run twice. The second time, they are tested with tasks that
     // do not match the global filter.
 
-    it('should add hyphen and space to empty line', () => {
-        testToggleLine('|', '- |');
-        testToggleLine('foo|bar', '- foobar|');
+    it('should add checkbox to empty line, and lines without list items', () => {
+        testToggleLine('|', '- [ ] |');
+        testToggleLine('foo|bar', '- [ ] foobar|');
 
         GlobalFilter.getInstance().set('#task');
 
-        testToggleLine('|', '- |');
-        testToggleLine('foo|bar', '- foobar|');
+        testToggleLine('|', '- [ ] |');
+        testToggleLine('foo|bar', '- [ ] foobar|');
     });
 
     it('should add checkbox to hyphen and space', () => {
