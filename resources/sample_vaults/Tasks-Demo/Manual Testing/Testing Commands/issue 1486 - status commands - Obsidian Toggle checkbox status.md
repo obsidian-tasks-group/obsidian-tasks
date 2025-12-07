@@ -25,7 +25,7 @@ test
 - [ ] test
 - [x] test
 
-<!-- markdownlint-enable blanks-around-lists -->
+<!-- markdownlint-restore -->
 
 ## Apply repeatedly on checkbox with non-standard symbol/status character
 
@@ -44,4 +44,4 @@ test
 + [ ] plus symbol as list marker
 + [x] plus symbol as list marker
 
-<!-- markdownlint-enable ul-style -->
+<!-- markdownlint-restore -->
