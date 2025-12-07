@@ -29,9 +29,24 @@
         "Mod"
       ],
       "key": "Enter"
+    },
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "3"
     }
   ],
-  "editor:toggle-checklist-status": [],
+  "editor:toggle-checklist-status": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "1"
+    }
+  ],
   "templater-obsidian:_meta/templates/convert_test_data_markdown_to_js.md": [
     {
       "modifiers": [
@@ -51,5 +66,14 @@
       "key": "/"
     }
   ],
-  "editor:open-link-in-new-leaf": []
+  "editor:open-link-in-new-leaf": [],
+  "editor:cycle-list-checklist": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "2"
+    }
+  ]
 }
