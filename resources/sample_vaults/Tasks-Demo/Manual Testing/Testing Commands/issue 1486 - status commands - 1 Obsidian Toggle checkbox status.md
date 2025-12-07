@@ -1,4 +1,4 @@
-# issue 1486 - status commands - Obsidian Toggle checkbox status
+# issue 1486 - status commands - 1 Obsidian Toggle checkbox status
 
 Using the `Obsidian: Toggle checkbox status` command....
 
