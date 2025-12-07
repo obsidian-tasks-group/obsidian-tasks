@@ -45,3 +45,5 @@ Use Cmd + Opt + number to invoke these commands:
 2. Obsidian: Cycle bullet/checkbox
     - [[issue 1486 - status commands - 2 Obsidian Cycle bullet checkbox]]
 3. Tasks: Toggle task done
+    - [[issue 1486 - status commands - 3 Tasks Toggle task done - no global filter]]
+    - [[issue 1486 - status commands - 3 Tasks Toggle task done - with global filter]]
