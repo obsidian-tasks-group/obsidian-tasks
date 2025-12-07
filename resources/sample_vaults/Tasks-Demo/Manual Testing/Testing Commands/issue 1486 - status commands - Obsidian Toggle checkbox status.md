@@ -4,8 +4,12 @@ Using the `Obsidian: Toggle checkbox status` command....
 
 ## Apply repeatedly on initially empty line
 
-<!-- Turn off MD009/no-trailing-spaces  MD032/blanks-around-list -->
-<!-- markdownlint-disable MD009 MD032 -->
+<!-- Turn off 
+  - MD009/no-trailing-spaces
+  - MD012/no-multiple-blank
+  - MD032/blanks-around-list
+-->
+<!-- markdownlint-disable MD009 MD012 MD032 -->
 
 (blank line)
 - [ ] 
