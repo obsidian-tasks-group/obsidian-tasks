@@ -118,14 +118,20 @@ describe('ToggleDone', () => {
     it('should complete a task', () => {
         testToggleLine('|- [ ] ', '|- [x]  ✅ 2022-09-04');
         testToggleLine('- [ ] |', '- [x] | ✅ 2022-09-04');
+        testToggleLine('- [ ] description|', '- [x] description| ✅ 2022-09-04');
 
         // Issue #449 - cursor jumped 13 characters to the right on completion
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description ✅ 2022-09-04');
 
         GlobalFilter.getInstance().set('#task');
 
+        // Done date is not added if task does not match global filter
         testToggleLine('|- [ ] ', '|- [x] ');
         testToggleLine('- [ ] |', '- [x] |');
+
+        // Done date is added if task does not match global filter
+        testToggleLine('- [ ] #task|', '- [x]  #tas|k ✅ 2022-09-04'); // Extra space added before #; cursor moves left
+        testToggleLine('- [ ] #task description|', '- [x] #task description| ✅ 2022-09-04');
 
         // Issue #449 - cursor jumped 13 characters to the right on completion
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description');
@@ -143,6 +149,10 @@ describe('ToggleDone', () => {
         // Done date is not removed if task does not match global filter
         testToggleLine('|- [x]  ✅ 2022-09-04', '|- [ ] ✅ 2022-09-04');
         testToggleLine('- [x]  ✅ 2022-09-04|', '- [ ] ✅ 2022-09-04|');
+
+        // Done date is added if task matches the global filter
+        testToggleLine('|- [x] #task ✅ 2022-09-04', '|- [ ]  #task'); // Extra space added before #
+        testToggleLine('- [x] #task description ✅ 2022-09-04|', '- [ ] #task description|');
 
         // Issue #449 - cursor jumped 13 characters to the left on un-completion
         testToggleLine(
