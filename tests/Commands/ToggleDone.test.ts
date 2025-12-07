@@ -115,7 +115,7 @@ describe('ToggleDone', () => {
         testToggleLine('1. |foobar', '1. [ ] foobar|');
     });
 
-    it.failing('should complete a task', () => {
+    it('should complete a task', () => {
         testToggleLine('|- [ ] ', '|- [x]  ✅ 2022-09-04');
         testToggleLine('- [ ] |', '- [x] | ✅ 2022-09-04');
         testToggleLine('- [ ] description|', '- [x] description| ✅ 2022-09-04');
@@ -137,7 +137,7 @@ describe('ToggleDone', () => {
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description');
     });
 
-    it.failing('should un-complete a completed task', () => {
+    it('should un-complete a completed task', () => {
         testToggleLine('|- [x]  ✅ 2022-09-04', '|- [ ] ');
         testToggleLine('1. [x]  ✅ 2022-09-04|', '1. [ ] |');
 
