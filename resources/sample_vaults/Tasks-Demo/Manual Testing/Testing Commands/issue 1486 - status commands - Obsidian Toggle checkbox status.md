@@ -4,15 +4,16 @@ Using the `Obsidian: Toggle checkbox status` command....
 
 ## Apply repeatedly on initially empty line
 
-<!-- markdownlint-disable blanks-around-lists -->
+<!-- Turn off MD009/no-trailing-spaces  MD032/blanks-around-list -->
+<!-- markdownlint-disable MD009 MD032 -->
 
-(Empty Line)
-- [ ]
-- [x]
-- [ ]
-- [x]
+(blank line)
+- [ ] 
+- [x] 
+- [ ] 
+- [x] 
 
-<!-- markdownlint-enable blanks-around-lists -->
+<!-- markdownlint-restore -->
 
 ## Apply repeatedly on some plain text
 

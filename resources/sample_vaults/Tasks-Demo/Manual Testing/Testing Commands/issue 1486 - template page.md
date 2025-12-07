@@ -4,7 +4,8 @@ Using the `XXX` command....
 
 ## Apply repeatedly on initially empty line
 
-<!-- markdownlint-disable blanks-around-lists -->
+<!-- Turn off MD009/no-trailing-spaces  MD032/blanks-around-list -->
+<!-- markdownlint-disable MD009 MD032 -->
 
 (Replace this with empty Line)
 (Replace this with empty Line)
@@ -12,7 +13,7 @@ Using the `XXX` command....
 (Replace this with empty Line)
 (Replace this with empty Line)
 
-<!-- markdownlint-enable blanks-around-lists -->
+<!-- markdownlint-restore -->
 
 ## Apply repeatedly on some plain text
 
