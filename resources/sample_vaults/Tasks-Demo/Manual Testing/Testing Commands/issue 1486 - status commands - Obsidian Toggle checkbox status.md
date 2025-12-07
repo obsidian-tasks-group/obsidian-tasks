@@ -4,21 +4,27 @@ Using the `Obsidian: Toggle checkbox status` command....
 
 ## Apply repeatedly on initially empty line
 
-(Empty Line)
+<!-- markdownlint-disable blanks-around-lists -->
 
+(Empty Line)
 - [ ]
 - [x]
 - [ ]
 - [x]
+
+<!-- markdownlint-enable blanks-around-lists -->
 
 ## Apply repeatedly on some plain text
 
-test
+<!-- markdownlint-disable blanks-around-lists -->
 
+test
 - [ ] test
 - [x] test
 - [ ] test
 - [x] test
+
+<!-- markdownlint-enable blanks-around-lists -->
 
 ## Apply repeatedly on checkbox with non-standard symbol/status character
 
