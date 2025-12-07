@@ -27,8 +27,12 @@ test
 
 ## Apply repeatedly on different list marker
 
-- plus symbol as list marker
-- plus symbol as list marker
-- plus symbol as list marker
-- plus symbol as list marker
-- plus symbol as list marker
+<!-- markdownlint-disable ul-style -->
+
++ plus symbol as list marker
++ plus symbol as list marker
++ plus symbol as list marker
++ plus symbol as list marker
++ plus symbol as list marker
+
+<!-- markdownlint-enable ul-style -->
