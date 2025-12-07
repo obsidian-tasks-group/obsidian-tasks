@@ -18,7 +18,7 @@
   },
   "globalQuery": "# Exclude templates files:\nroot does not include _meta\n\n# Ignore the sample tasks that demonstrate Theme and Snippet support:\npath does not include Manual Testing/SlrVb's Alternative Checkboxes\npath does not include Styling/Snippet -\npath does not include Styling/Theme -\n",
   "globalFilter": "#task",
-  "removeGlobalFilter": true,
+  "removeGlobalFilter": false,
   "taskFormat": "tasksPluginEmoji",
   "setCreatedDate": false,
   "setDoneDate": true,
@@ -63,6 +63,27 @@
         "nextStatusSymbol": " ",
         "availableAsCommand": true,
         "type": "CANCELLED"
+      },
+      {
+        "symbol": "1",
+        "name": "1 TODO",
+        "nextStatusSymbol": "2",
+        "availableAsCommand": false,
+        "type": "TODO"
+      },
+      {
+        "symbol": "2",
+        "name": "2 IN_PROGRESS",
+        "nextStatusSymbol": "3",
+        "availableAsCommand": false,
+        "type": "IN_PROGRESS"
+      },
+      {
+        "symbol": "3",
+        "name": "3 DONE",
+        "nextStatusSymbol": "1",
+        "availableAsCommand": false,
+        "type": "DONE"
       }
     ]
   },
