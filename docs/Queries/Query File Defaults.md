@@ -237,6 +237,7 @@ The `type` values are explained in the [Property types](https://help.obsidian.md
     "TQ_show_start_date": "checkbox",
     "TQ_show_tags": "checkbox",
     "TQ_show_task_count": "checkbox",
+    "TQ_show_toolbar": "checkbox",
     "TQ_show_tree": "checkbox",
     "TQ_show_urgency": "checkbox"
   }
