@@ -36,6 +36,7 @@ describe('QueryFileDefaults', () => {
               "TQ_show_due_date",
               "TQ_show_cancelled_date",
               "TQ_show_done_date",
+              "TQ_show_toolbar",
               "TQ_show_urgency",
               "TQ_show_backlink",
               "TQ_show_edit_button",
@@ -69,6 +70,7 @@ describe('QueryFileDefaults', () => {
               "TQ_show_start_date",
               "TQ_show_tags",
               "TQ_show_task_count",
+              "TQ_show_toolbar",
               "TQ_show_tree",
               "TQ_show_urgency",
             ]
