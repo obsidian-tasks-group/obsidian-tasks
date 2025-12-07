@@ -57,13 +57,10 @@ test #task
 
 <!-- markdownlint-disable ul-style -->
 
-Note that this wrongly changes the list marker from `+` to `-`, in Tasks 7.22.0.
-
 + plus symbol as list marker
 + [ ] plus symbol as list marker
-
-- [x] plus symbol as list marker
-- [ ] plus symbol as list marker
-- [x] plus symbol as list marker
++ [x] plus symbol as list marker
++ [ ] plus symbol as list marker
++ [x] plus symbol as list marker
 
 <!-- markdownlint-restore -->
