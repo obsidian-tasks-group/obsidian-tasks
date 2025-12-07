@@ -31,6 +31,18 @@ test
 
 <!-- markdownlint-restore -->
 
+## Apply repeatedly on some plain text with the global filter
+
+<!-- markdownlint-disable blanks-around-lists -->
+
+test #task
+test #task
+test #task
+test #task
+test #task
+
+<!-- markdownlint-restore -->
+
 ## Apply repeatedly on checkbox with non-standard symbol/status character
 
 - [1] #task test
