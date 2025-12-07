@@ -20,7 +20,7 @@ insert_final_newline = false
 indent_size = 2
 
 [*.{md,mdx}]
-trim_trailing_whitespace = true
+trim_trailing_whitespace = false
 
 [*.{htm,html,js,jsm,ts,tsx,mjs}]
 indent_size = 4
