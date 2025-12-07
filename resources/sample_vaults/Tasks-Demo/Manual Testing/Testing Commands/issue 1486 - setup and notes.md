@@ -41,5 +41,7 @@ linkStyle default stroke:gray
 Use Cmd + Opt + number to invoke these commands:
 
 1. Obsidian: Toggle checkbox status
+    - [[issue 1486 - status commands - 1 Obsidian Toggle checkbox status]]
 2. Obsidian: Cycle bullet/checkbox
+    - [[issue 1486 - status commands - 2 Obsidian Cycle bullet checkbox]]
 3. Tasks: Toggle task done
