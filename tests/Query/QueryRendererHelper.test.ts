@@ -71,6 +71,8 @@ describe('explain', () => {
 
               not done
 
+              show toolbar
+
               short mode
 
               show tree
@@ -98,8 +100,6 @@ describe('explain', () => {
               show cancelled date
 
               show done date
-
-              show toolbar
 
               show urgency
 

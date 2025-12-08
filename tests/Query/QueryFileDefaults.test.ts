@@ -21,6 +21,7 @@ describe('QueryFileDefaults', () => {
         const names = new QueryFileDefaults().allPropertyNames();
         expect(names).toMatchInlineSnapshot(`
             [
+              "TQ_show_toolbar",
               "TQ_explain",
               "TQ_short_mode",
               "TQ_show_tree",
@@ -36,7 +37,6 @@ describe('QueryFileDefaults', () => {
               "TQ_show_due_date",
               "TQ_show_cancelled_date",
               "TQ_show_done_date",
-              "TQ_show_toolbar",
               "TQ_show_urgency",
               "TQ_show_backlink",
               "TQ_show_edit_button",
@@ -87,7 +87,8 @@ describe('QueryFileDefaults', () => {
 
     it('should generate instructions - all values false', () => {
         expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_false')).toMatchInlineSnapshot(`
-            "full mode
+            "hide toolbar
+            full mode
             hide tree
             hide tags
             hide id
@@ -101,7 +102,6 @@ describe('QueryFileDefaults', () => {
             hide due date
             hide cancelled date
             hide done date
-            hide toolbar
             hide urgency
             hide backlink
             hide edit button
@@ -114,7 +114,8 @@ describe('QueryFileDefaults', () => {
 
     it('should generate instructions - all values true', () => {
         expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_true')).toMatchInlineSnapshot(`
-            "explain
+            "show toolbar
+            explain
             short mode
             show tree
             show tags
@@ -129,7 +130,6 @@ describe('QueryFileDefaults', () => {
             show due date
             show cancelled date
             show done date
-            show toolbar
             show urgency
             show backlink
             show edit button
