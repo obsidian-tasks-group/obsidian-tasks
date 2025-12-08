@@ -39,6 +39,7 @@ TQ_group_by:
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-include.approved.md -->
 
+toolbar: `INPUT[toggle:TQ_show_toolbar]`
 short mode: `INPUT[toggle:TQ_short_mode]`
 tree: `INPUT[toggle:TQ_show_tree]`
 tags: `INPUT[toggle:TQ_show_tags]`
