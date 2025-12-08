@@ -21,6 +21,7 @@ enum Handler {
 // 6. Sort the properties in each file in alphabetical order
 // 7. Run the 'Tasks: Add all Query File Defaults properties' command, to update query_file_defaults_all_options_*.json
 // 8. Run the tests, to update all inline snapshots and approved files.
+// 9. Run mdsnippets to update the docs and sample vault - or let the GitHub Action do it after merging to main
 
 // Note: This file is excluded from SonarCloud duplication-checks,
 //       as the duplication here provides clarity.
@@ -222,7 +223,7 @@ export class QueryFileDefaults {
     /**
      * Return text that creates MetaBind widgets for users to edit query file defaults.
      *
-     * This is used to generate consent in the user documentation.
+     * This is used to generate content in the user documentation.
      */
     public metaBindPluginWidgets() {
         // This is initially hard-coded, though I intend to machine-generate it eventually.
