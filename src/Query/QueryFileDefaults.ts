@@ -221,11 +221,14 @@ export class QueryFileDefaults {
 
     /**
      * Return text that creates MetaBind widgets for users to edit query file defaults.
+     *
+     * This is used to generate consent in the user documentation.
      */
     public metaBindPluginWidgets() {
         // This is initially hard-coded, though I intend to machine-generate it eventually.
         // Its text is embedded in the test vault and in the user guide.
         return `
+toolbar: \`INPUT[toggle:TQ_show_toolbar]\`
 short mode: \`INPUT[toggle:TQ_short_mode]\`
 tree: \`INPUT[toggle:TQ_show_tree]\`
 tags: \`INPUT[toggle:TQ_show_tags]\`
