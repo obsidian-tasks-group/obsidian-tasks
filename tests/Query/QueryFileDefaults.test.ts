@@ -21,6 +21,7 @@ describe('QueryFileDefaults', () => {
         const names = new QueryFileDefaults().allPropertyNames();
         expect(names).toMatchInlineSnapshot(`
             [
+              "TQ_show_toolbar",
               "TQ_explain",
               "TQ_short_mode",
               "TQ_show_tree",
@@ -69,6 +70,7 @@ describe('QueryFileDefaults', () => {
               "TQ_show_start_date",
               "TQ_show_tags",
               "TQ_show_task_count",
+              "TQ_show_toolbar",
               "TQ_show_tree",
               "TQ_show_urgency",
             ]
@@ -85,7 +87,8 @@ describe('QueryFileDefaults', () => {
 
     it('should generate instructions - all values false', () => {
         expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_false')).toMatchInlineSnapshot(`
-            "full mode
+            "hide toolbar
+            full mode
             hide tree
             hide tags
             hide id
@@ -111,7 +114,8 @@ describe('QueryFileDefaults', () => {
 
     it('should generate instructions - all values true', () => {
         expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_true')).toMatchInlineSnapshot(`
-            "explain
+            "show toolbar
+            explain
             short mode
             show tree
             show tags
