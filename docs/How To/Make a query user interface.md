@@ -24,6 +24,12 @@ We can combine:
 - enable or disable other search features, such as nested tasks, short mode, backlink and buttons,
 - and allow arbitrary extra instructions to be added:
 
+<!--
+    The following screenshot is copied from
+    Manual Testing/Frontmatter/Placeholder examples to capture in tests and docs.md
+    in the sample vault
+-->
+
 ![Meta Bind widgets to edit Query File Defaults](../images/query-file-defaults-meta-bind-controls.png)
 <span class="caption">Meta Bind widgets to edit Query File Defaults</span>
 
