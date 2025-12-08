@@ -101,6 +101,7 @@ describe('QueryFileDefaults', () => {
             hide due date
             hide cancelled date
             hide done date
+            hide toolbar
             hide urgency
             hide backlink
             hide edit button
@@ -128,6 +129,7 @@ describe('QueryFileDefaults', () => {
             show due date
             show cancelled date
             show done date
+            show toolbar
             show urgency
             show backlink
             show edit button
