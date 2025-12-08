@@ -99,6 +99,8 @@ describe('explain', () => {
 
               show done date
 
+              show toolbar
+
               show urgency
 
               show backlink

@@ -18,6 +18,7 @@ TQ_show_scheduled_date:
 TQ_show_start_date:
 TQ_show_tags:
 TQ_show_task_count:
+TQ_show_toolbar:
 TQ_show_tree:
 TQ_show_urgency:
 ---

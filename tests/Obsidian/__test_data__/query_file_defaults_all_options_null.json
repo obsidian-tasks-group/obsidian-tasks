@@ -20,6 +20,7 @@
       "TQ_show_start_date": null,
       "TQ_show_tags": null,
       "TQ_show_task_count": null,
+      "TQ_show_toolbar": null,
       "TQ_show_tree": null,
       "TQ_show_urgency": null
     },
@@ -27,8 +28,8 @@
     "frontmatterPosition": {
       "end": {
         "col": 3,
-        "line": 22,
-        "offset": 411
+        "line": 23,
+        "offset": 428
       },
       "start": {
         "col": 0,
@@ -43,30 +44,30 @@
         "position": {
           "end": {
             "col": 38,
-            "line": 24,
-            "offset": 451
+            "line": 25,
+            "offset": 468
           },
           "start": {
             "col": 0,
-            "line": 24,
-            "offset": 413
+            "line": 25,
+            "offset": 430
           }
         }
       }
     ],
     "listItems": [
       {
-        "parent": -26,
+        "parent": -27,
         "position": {
           "end": {
             "col": 58,
-            "line": 26,
-            "offset": 511
+            "line": 27,
+            "offset": 528
           },
           "start": {
             "col": 0,
-            "line": 26,
-            "offset": 453
+            "line": 27,
+            "offset": 470
           }
         },
         "task": " "
@@ -77,8 +78,8 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 22,
-            "offset": 411
+            "line": 23,
+            "offset": 428
           },
           "start": {
             "col": 0,
@@ -92,13 +93,13 @@
         "position": {
           "end": {
             "col": 38,
-            "line": 24,
-            "offset": 451
+            "line": 25,
+            "offset": 468
           },
           "start": {
             "col": 0,
-            "line": 24,
-            "offset": 413
+            "line": 25,
+            "offset": 430
           }
         },
         "type": "heading"
@@ -107,13 +108,13 @@
         "position": {
           "end": {
             "col": 58,
-            "line": 26,
-            "offset": 511
+            "line": 27,
+            "offset": 528
           },
           "start": {
             "col": 0,
-            "line": 26,
-            "offset": 453
+            "line": 27,
+            "offset": 470
           }
         },
         "type": "list"
@@ -124,20 +125,20 @@
         "position": {
           "end": {
             "col": 11,
-            "line": 26,
-            "offset": 464
+            "line": 27,
+            "offset": 481
           },
           "start": {
             "col": 6,
-            "line": 26,
-            "offset": 459
+            "line": 27,
+            "offset": 476
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\nTQ_explain:\nTQ_extra_instructions:\nTQ_short_mode:\nTQ_show_backlink:\nTQ_show_cancelled_date:\nTQ_show_created_date:\nTQ_show_depends_on:\nTQ_show_done_date:\nTQ_show_due_date:\nTQ_show_edit_button:\nTQ_show_id:\nTQ_show_on_completion:\nTQ_show_postpone_button:\nTQ_show_priority:\nTQ_show_recurrence_rule:\nTQ_show_scheduled_date:\nTQ_show_start_date:\nTQ_show_tags:\nTQ_show_task_count:\nTQ_show_tree:\nTQ_show_urgency:\n---\n\n# query_file_defaults_all_options_null\n\n- [ ] #task Task in 'query_file_defaults_all_options_null'\n",
+  "fileContents": "---\nTQ_explain:\nTQ_extra_instructions:\nTQ_short_mode:\nTQ_show_backlink:\nTQ_show_cancelled_date:\nTQ_show_created_date:\nTQ_show_depends_on:\nTQ_show_done_date:\nTQ_show_due_date:\nTQ_show_edit_button:\nTQ_show_id:\nTQ_show_on_completion:\nTQ_show_postpone_button:\nTQ_show_priority:\nTQ_show_recurrence_rule:\nTQ_show_scheduled_date:\nTQ_show_start_date:\nTQ_show_tags:\nTQ_show_task_count:\nTQ_show_toolbar:\nTQ_show_tree:\nTQ_show_urgency:\n---\n\n# query_file_defaults_all_options_null\n\n- [ ] #task Task in 'query_file_defaults_all_options_null'\n",
   "filePath": "Test Data/query_file_defaults_all_options_null.md",
   "getAllTags": [
     "#task"
