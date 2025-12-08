@@ -20,6 +20,7 @@ TQ_show_scheduled_date: true
 TQ_show_start_date: true
 TQ_show_tags: true
 TQ_show_task_count: true
+TQ_show_toolbar: true
 TQ_show_tree: true
 TQ_show_urgency: true
 ---
