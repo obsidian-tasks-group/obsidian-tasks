@@ -27,6 +27,12 @@ enum Handler {
 // Instructions are listed in the order that items are displayed in Tasks search results
 const queryProperties = [
     {
+        name: 'TQ_show_toolbar',
+        type: 'checkbox',
+        display: 'toolbar',
+        handler: Handler.ShowAndHide,
+    },
+    {
         name: 'TQ_explain',
         type: 'checkbox',
         display: 'explain',
@@ -126,12 +132,6 @@ const queryProperties = [
     },
 
     // Elements of query results:
-    {
-        name: 'TQ_show_toolbar',
-        type: 'checkbox',
-        display: 'toolbar',
-        handler: Handler.ShowAndHide,
-    },
     {
         name: 'TQ_show_urgency',
         type: 'checkbox',
