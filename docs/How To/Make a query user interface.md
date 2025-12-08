@@ -39,6 +39,7 @@ Follow these steps, which assume you have already [turned off Obsidian's Restric
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-snippet.approved.md -->
 ```md
+toolbar: `INPUT[toggle:TQ_show_toolbar]`
 short mode: `INPUT[toggle:TQ_short_mode]`
 tree: `INPUT[toggle:TQ_show_tree]`
 tags: `INPUT[toggle:TQ_show_tags]`
