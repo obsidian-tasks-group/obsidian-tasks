@@ -8,6 +8,20 @@ enum Handler {
     AddValue = 'addValue',
 }
 
+// Steps for adding a new property to Query File Defaults:
+// 1. Add the new value to queryProperties below.
+// 2. Add it to metaBindPluginWidgets() below
+// 3. Build the plugin and add it to the test vault: resources/sample_vaults/Tasks-Demo/
+// 4. Open the test vault in Obsidian
+// 5. Open each of these files, and run the 'Tasks: Add all Query File Defaults properties' command,
+//    and set its value to be consistent with the existing properties:
+//      - Test Data/query_file_defaults_all_options_false.md
+//      - Test Data/query_file_defaults_all_options_null.md
+//      - Test Data/query_file_defaults_all_options_true.md
+// 6. Sort the properties in each file in alphabetical order
+// 7. Run the 'Tasks: Add all Query File Defaults properties' command, to update query_file_defaults_all_options_*.json
+// 8. Run the tests, to update all inline snapshots and approved files.
+
 // Note: This file is excluded from SonarCloud duplication-checks,
 //       as the duplication here provides clarity.
 // Instructions are listed in the order that items are displayed in Tasks search results
