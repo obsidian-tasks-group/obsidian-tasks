@@ -12,12 +12,6 @@ import { getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
-beforeEach(() => {});
-
-afterEach(() => {
-    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
-});
-
 describe('query', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const markdownTable = new MarkdownTable(['Field', 'Type', 'Example']);
@@ -25,7 +19,8 @@ describe('query', () => {
         const query_using_properties = MockDataLoader.get(testDataName);
         const cachedMetadata = getTasksFileFromMockData(testDataName).cachedMetadata;
 
-        // This is getting annoying, having to do this repeatedly.
+        // Because we are using a file path that differs from query_using_properties.md,
+        // we have to bypass MockDataLoader and specify which link resolver to user:
         LinkResolver.getInstance().setGetFirstLinkpathDestFn((rawLink: Reference, _sourcePath: string) =>
             getFirstLinkpathDestFromData(query_using_properties, rawLink),
         );
