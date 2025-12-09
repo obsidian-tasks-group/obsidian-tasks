@@ -108,8 +108,8 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
             const text = line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]');
             return { text, moveTo: { ch: text.length } };
         } else {
-            // Convert the line to a list item.
-            const text = line.replace(TaskRegularExpressions.indentationRegex, '$1- ');
+            // Convert the line to a checklist item.
+            const text = line.replace(TaskRegularExpressions.indentationRegex, '$1- [ ] ');
             return { text, moveTo: { ch: text.length } };
         }
     }
