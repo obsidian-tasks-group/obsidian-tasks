@@ -1,0 +1,267 @@
+{
+  "main": {
+    "loadingPlugin": "Đang tải plugin: {{name}} v{{version}}",
+    "unloadingPlugin": "Đang gỡ plugin: {{name}} v{{version}}"
+  },
+  "modals": {
+    "customStatusModal": {
+      "editAvailableAsCommand": {
+        "description": "Nếu bật, trạng thái này sẽ khả dụng dưới dạng lệnh để bạn có thể gán phím tắt và chuyển đổi trạng thái bằng lệnh đó.",
+        "name": "Khả dụng dưới dạng lệnh"
+      },
+      "editNextStatusSymbol": {
+        "description": "Khi kích vào đây là ký hiệu sẽ được sử dụng tiếp theo.",
+        "name": "Ký hiệu trạng thái tiếp theo"
+      },
+      "editStatusName": {
+        "description": "Đây là tên thân thiện của trạng thái nhiệm vụ.",
+        "name": "Tên trạng thái nhiệm vụ"
+      },
+      "editStatusSymbol": {
+        "description": "Đây là ký tự nằm giữa dấu ngoặc vuông. (Chỉ có thể chỉnh sửa cho trạng thái Tùy chỉnh, không phải trạng thái Cốt lõi.)",
+        "name": "Ký hiệu trạng thái nhiệm vụ"
+      },
+      "editStatusType": {
+        "description": "Kiểm soát cách trạng thái hoạt động khi tìm kiếm và chuyển trạng thái.",
+        "name": "Loại trạng thái nhiệm vụ"
+      },
+      "fixErrorsBeforeSaving": "Vui lòng sửa lỗi trước khi lưu."
+    }
+  },
+  "reports": {
+    "statusRegistry": {
+      "about": {
+        "createdBy": "File này được tạo bởi plugin Obsidian Tasks (phiên bản {{version}}) để giúp trực quan hóa các trạng thái nhiệm vụ trong vault này.",
+        "deleteFileAnyTime": "Bạn có thể xóa file này bất cứ lúc nào.",
+        "title": "Về file này",
+        "updateReport": {
+          "line1": "Nếu bạn thay đổi cài đặt trạng thái Tasks, bạn có thể nhận báo cáo cập nhật bằng cách:",
+          "line2": "Vào `Cài đặt` -> `Tasks`.",
+          "line3": "Nhấp vào `Xem xét và kiểm tra Trạng thái của bạn`."
+        }
+      },
+      "columnHeadings": {
+        "nextStatusSymbol": "Ký hiệu trạng thái tiếp theo",
+        "problems": "Vấn đề (nếu có)",
+        "statusName": "Tên trạng thái",
+        "statusSymbol": "Ký hiệu trạng thái",
+        "statusType": "Loại trạng thái"
+      },
+      "loadedSettings": {
+        "settingsActuallyUsed": "Đây là các cài đặt thực sự được Tasks sử dụng.",
+        "switchToLivePreview": "Chuyển sang Xem trước trực tiếp hoặc Chế độ đọc để xem sơ đồ.",
+        "title": "Cài đặt đã tải"
+      },
+      "messages": {
+        "cannotFindNextStatus": "Lỗi không mong muốn khi tìm trạng thái tiếp theo.",
+        "duplicateSymbol": "Ký hiệu trùng lặp '{{symbol}}': trạng thái này sẽ bị bỏ qua.",
+        "emptySymbol": "Ký hiệu trống: trạng thái này sẽ bị bỏ qua.",
+        "nextSymbolUnknown": "Ký hiệu tiếp theo {{symbol}} không xác định: hãy tạo trạng thái với ký hiệu {{symbol}}.",
+        "notConventionalType": "Để biết thêm thông tin, loại thông thường cho ký hiệu trạng thái {{symbol}} là {{type}}: bạn có thể muốn xem xét lại loại này.",
+        "wrongTypeAfterDone": {
+          "line1": "Trạng thái `DONE` này được theo sau bởi {{nextType}}, không phải `TODO` hoặc `IN_PROGRESS`.",
+          "line2": "Nếu được sử dụng để hoàn thành nhiệm vụ định kỳ, nó sẽ được theo sau bởi `TODO` hoặc `IN_PROGRESS`, để đảm bảo nhiệm vụ tiếp theo khớp với bộ lọc `chưa hoàn thành`.",
+          "line3": "Xem [Nhiệm vụ định kỳ và Trạng thái tùy chỉnh]({{helpURL}})."
+        }
+      },
+      "sampleTasks": {
+        "line1": "Đây là một ví dụ dòng nhiệm vụ cho mỗi trạng thái thực sự được tasks sử dụng, để bạn thử nghiệm.",
+        "line2": "Các ký hiệu và tên trạng thái trong mô tả nhiệm vụ là chính xác khi file này được tạo.",
+        "line3": "Nếu bạn đã sửa đổi các nhiệm vụ mẫu kể từ khi chúng được tạo, bạn có thể xem các loại và tên trạng thái hiện tại trong tiêu đề nhóm trong tìm kiếm Tasks bên dưới.",
+        "tip": {
+          "line1": "Mẹo: Nếu tất cả các ô đánh dấu của bạn trông giống nhau...",
+          "line2": "Nếu tất cả các ô đánh dấu trông giống nhau trong Chế độ đọc hoặc Xem trước trực tiếp, xem [Tạo kiểu trạng thái tùy chỉnh]({{url}}) để biết cách chọn theme hoặc CSS snippet để tạo kiểu cho trạng thái của bạn."
+        },
+        "title": "Nhiệm vụ mẫu"
+      },
+      "searchSampleTasks": {
+        "line1": "Tìm kiếm Tasks này hiển thị tất cả các nhiệm vụ trong file này, được nhóm theo loại trạng thái và tên trạng thái.",
+        "title": "Tìm kiếm nhiệm vụ mẫu"
+      },
+      "statusSettings": {
+        "comment": {
+          "line1": "Chuyển sang Xem trước trực tiếp hoặc Chế độ đọc để xem bảng.",
+          "line2": "Nếu có bất kỳ ký tự định dạng Markdown nào trong tên trạng thái, chẳng hạn như '*' hoặc '_',",
+          "line3": "Obsidian có thể chỉ hiển thị bảng chính xác trong Chế độ đọc."
+        },
+        "theseAreStatusValues": "Đây là các giá trị trạng thái trong phần trạng thái Cốt lõi và Tùy chỉnh.",
+        "title": "Cài đặt trạng thái"
+      }
+    }
+  },
+  "settings": {
+    "autoSuggest": {
+      "heading": "Gợi ý tự động",
+      "maxSuggestions": {
+        "description": "Số lượng gợi ý sẽ được hiển thị khi menu gợi ý tự động xuất hiện (bao gồm tùy chọn \"⏎\").",
+        "name": "Số lượng gợi ý tự động tối đa để hiển thị"
+      },
+      "minLength": {
+        "description": "Nếu cao hơn 0, gợi ý tự động sẽ chỉ được kích hoạt khi phần đầu của bất kỳ từ khóa được hỗ trợ nào được nhận ra.",
+        "name": "Độ dài khớp tối thiểu cho gợi ý tự động"
+      },
+      "toggle": {
+        "description": "Bật tính năng này sẽ mở menu gợi ý thông minh khi gõ bên trong dòng nhiệm vụ được nhận dạng.",
+        "name": "Gợi ý tự động nội dung nhiệm vụ"
+      }
+    },
+    "changeRequiresRestart": "YÊU CẦU KHỞI ĐỘNG LẠI.",
+    "dates": {
+      "cancelledDate": {
+        "description": "Bật tính năng này sẽ thêm dấu thời gian ❌ YYYY-MM-DD vào cuối khi nhiệm vụ được chuyển sang bị hủy.",
+        "name": "Đặt ngày hủy cho mọi nhiệm vụ bị hủy"
+      },
+      "createdDate": {
+        "description": "Bật tính năng này sẽ thêm dấu thời gian ➕ YYYY-MM-DD trước các giá trị ngày khác, khi nhiệm vụ được tạo bằng 'Tạo hoặc chỉnh sửa nhiệm vụ', hoặc bằng cách hoàn thành nhiệm vụ định kỳ.",
+        "name": "Đặt ngày tạo cho mọi nhiệm vụ được thêm"
+      },
+      "doneDate": {
+        "description": "Bật tính năng này sẽ thêm dấu thời gian ✅ YYYY-MM-DD vào cuối khi nhiệm vụ được chuyển sang hoàn thành.",
+        "name": "Đặt ngày hoàn thành cho mọi nhiệm vụ đã hoàn thành"
+      },
+      "heading": "Ngày tháng"
+    },
+    "datesFromFileNames": {
+      "heading": "Ngày từ tên file",
+      "scheduledDate": {
+        "extraFormat": {
+          "description": {
+            "line1": "Định dạng ngày bổ sung mà plugin Tasks sẽ nhận dạng khi sử dụng tên file làm ngày Đã lên lịch cho các nhiệm vụ chưa có ngày.",
+            "line2": "Tham khảo cú pháp"
+          },
+          "name": "Định dạng ngày tên file bổ sung làm ngày Đã lên lịch cho nhiệm vụ chưa có ngày",
+          "placeholder": "ví dụ: MMM DD YYYY"
+        },
+        "folders": {
+          "description": "Để trống nếu bạn muốn sử dụng ngày Đã lên lịch mặc định ở mọi nơi, hoặc nhập danh sách các thư mục được phân tách bằng dấu phẩy.",
+          "name": "Thư mục có ngày Đã lên lịch mặc định"
+        },
+        "toggle": {
+          "description": {
+            "line1": "Tiết kiệm thời gian nhập ngày Đã lên lịch (⏳).",
+            "line2": "Nếu tùy chọn này được bật, bất kỳ nhiệm vụ nào chưa có ngày sẽ được cung cấp ngày Đã lên lịch mặc định được trích xuất từ tên file của chúng.",
+            "line3": "Theo mặc định, plugin Tasks sẽ khớp cả định dạng ngày <code>YYYY-MM-DD</code> và <code>YYYYMMDD</code>.",
+            "line4": "Nhiệm vụ chưa có ngày không có bất kỳ ngày nào trong số Đến hạn (📅), Đã lên lịch (⏳) và Bắt đầu (🛫)."
+          },
+          "name": "Sử dụng tên file làm ngày Đã lên lịch cho nhiệm vụ chưa có ngày"
+        }
+      }
+    },
+    "dialogs": {
+      "accessKeys": {
+        "description": "Nếu các phím truy cập (phím tắt) cho các điều khiển khác nhau trong hộp thoại xung đột với phím tắt hệ thống hoặc chức năng công nghệ hỗ trợ quan trọng đối với bạn, bạn có thể vô hiệu hóa chúng tại đây.",
+        "name": "Cung cấp phím truy cập trong hộp thoại"
+      },
+      "heading": "Hộp thoại"
+    },
+    "format": {
+      "description": {
+        "line1": "Định dạng mà Tasks sử dụng để đọc và viết nhiệm vụ.",
+        "line2": "<b>Quan trọng:</b> Tasks hiện chỉ hỗ trợ một định dạng tại một thời điểm. Chọn Dataview hiện sẽ <b>ngừng Tasks đọc các ký hiệu emoji riêng của nó</b>."
+      },
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Định dạng Emoji của Tasks"
+      },
+      "name": "Định dạng nhiệm vụ"
+    },
+    "globalFilter": {
+      "filter": {
+        "description": {
+          "line1": "Khuyến nghị: Để trống nếu bạn muốn tất cả các mục danh sách kiểm tra trong vault của bạn là nhiệm vụ được quản lý bởi plugin này.",
+          "line2": "Sử dụng bộ lọc toàn cục nếu bạn muốn Tasks chỉ hoạt động trên một tập hợp con các mục danh sách kiểm tra \"<code>- [ ]</code>\" của bạn, để một mục danh sách kiểm tra phải bao gồm chuỗi được chỉ định trong mô tả của nó để được coi là một nhiệm vụ.",
+          "line3": "Ví dụ: nếu bạn đặt bộ lọc toàn cục thành <code>#task</code>, plugin Tasks sẽ chỉ xử lý các mục danh sách kiểm tra được gắn thẻ <code>#task</code>.",
+          "line4": "Các mục danh sách kiểm tra khác sẽ vẫn là mục danh sách kiểm tra bình thường và không xuất hiện trong truy vấn hoặc được đặt ngày hoàn thành."
+        },
+        "name": "Bộ lọc toàn cục",
+        "placeholder": "ví dụ: #task hoặc TODO"
+      },
+      "heading": "Bộ lọc nhiệm vụ toàn cục",
+      "removeFilter": {
+        "description": "Bật tính năng này sẽ xóa chuỗi mà bạn đặt làm bộ lọc toàn cục khỏi mô tả nhiệm vụ khi hiển thị nhiệm vụ.",
+        "name": "Xóa bộ lọc toàn cục khỏi mô tả"
+      }
+    },
+    "globalQuery": {
+      "heading": "Truy vấn toàn cục",
+      "query": {
+        "description": "Một truy vấn được tự động bao gồm ở đầu mỗi khối Tasks trong vault. Hữu ích để thêm bộ lọc mặc định hoặc tùy chọn bố cục.",
+        "placeholder": "Ví dụ...\npath does not include _templates/\nlimit 300\nshow urgency"
+      }
+    },
+    "presets": {
+      "buttons": {
+        "addNewPreset": "Thêm preset mới"
+      },
+      "line1": "Bạn có thể định nghĩa các hướng dẫn được đặt tên ở đây, mà bạn có thể sử dụng lại trong nhiều truy vấn. Một preset có tên '{{name}}' có thể được sử dụng trong truy vấn Tasks với '{{instruction1}}' hoặc '{{instruction2}}'.",
+      "line2": "Bất kỳ truy vấn Tasks nào đang mở sẽ được tải lại tự động khi các preset được chỉnh sửa.",
+      "name": "Preset"
+    },
+    "recurringTasks": {
+      "heading": "Nhiệm vụ định kỳ",
+      "nextLine": {
+        "description": "Bật tính năng này sẽ làm cho lần lặp lại tiếp theo của nhiệm vụ xuất hiện trên dòng bên dưới nhiệm vụ đã hoàn thành. Nếu không, lần lặp lại tiếp theo sẽ xuất hiện trước lần đã hoàn thành.",
+        "name": "Lần lặp lại tiếp theo xuất hiện trên dòng bên dưới"
+      },
+      "removeScheduledDate": {
+        "description": {
+          "line1": "Bật tính năng này sẽ làm cho lần lặp lại tiếp theo của nhiệm vụ không có ngày Đã lên lịch (⏳), khi ít nhất một trong các ngày Bắt đầu (🛫) hoặc Đến hạn (📅) có mặt.",
+          "line2": "Điều này dành cho khi bạn muốn ngày Bắt đầu và Đến hạn được chuyển tiếp sang lần lặp lại tiếp theo, nhưng bạn sẽ đặt ngày Đã lên lịch trong tương lai, một khi bạn dự định làm việc với nó."
+        },
+        "name": "Xóa ngày đã lên lịch khi lặp lại"
+      }
+    },
+    "seeTheDocumentation": "Xem tài liệu",
+    "statuses": {
+      "collections": {
+        "anuppuccinTheme": "Theme AnuPpuccin",
+        "auraTheme": "Theme Aura",
+        "borderTheme": "Theme Border",
+        "buttons": {
+          "addCollection": {
+            "name": "{{themeName}}: Thêm {{numberOfStatuses}} Trạng thái được hỗ trợ"
+          }
+        },
+        "ebullientworksTheme": "Theme Ebullientworks",
+        "itsThemeAndSlrvbCheckboxes": "Theme ITS & SlRvb Checkboxes",
+        "lytModeTheme": "Theme LYT Mode (Chỉ chế độ tối)",
+        "minimalTheme": "Theme Minimal",
+        "thingsTheme": "Theme Things"
+      },
+      "coreStatuses": {
+        "buttons": {
+          "checkStatuses": {
+            "name": "Xem xét và kiểm tra Trạng thái của bạn",
+            "tooltip": "Tạo file mới trong thư mục gốc của vault, chứa sơ đồ Mermaid của các cài đặt trạng thái hiện tại."
+          }
+        },
+        "description": {
+          "line1": "Đây là các trạng thái cốt lõi mà Tasks hỗ trợ nguyên bản, không cần CSS tùy chỉnh hoặc theme.",
+          "line2": "Bạn có thể thêm chỉnh sửa và thêm các trạng thái tùy chỉnh của riêng bạn trong phần bên dưới."
+        },
+        "heading": "Trạng thái cốt lõi"
+      },
+      "customStatuses": {
+        "buttons": {
+          "addAllUnknown": {
+            "name": "Thêm tất cả loại trạng thái không xác định"
+          },
+          "addNewStatus": {
+            "name": "Thêm trạng thái nhiệm vụ mới"
+          },
+          "resetCustomStatuses": {
+            "name": "Đặt lại loại trạng thái tùy chỉnh về mặc định"
+          }
+        },
+        "description": {
+          "line1": "Trước tiên, bạn nên <b>chọn và cài đặt CSS Snippet hoặc Theme</b> để tạo kiểu cho các ô đánh dấu tùy chỉnh.",
+          "line2": "Sau đó, sử dụng các nút bên dưới để thiết lập trạng thái tùy chỉnh của bạn, để khớp với các ô đánh dấu CSS bạn đã chọn.",
+          "line3": "<b>Lưu ý</b> Bất kỳ trạng thái nào có cùng ký hiệu với bất kỳ trạng thái trước đó nào sẽ bị bỏ qua. Bạn có thể xác nhận các trạng thái thực sự được tải bằng cách chạy lệnh 'Tạo hoặc chỉnh sửa nhiệm vụ' và xem menu thả xuống Trạng thái.",
+          "line4": "Xem tài liệu để bắt đầu!"
+        },
+        "heading": "Trạng thái tùy chỉnh"
+      },
+      "heading": "Trạng thái nhiệm vụ"
+    }
+  }
+}
