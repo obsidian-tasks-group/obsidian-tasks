@@ -5,6 +5,7 @@ import en from './locales/en.json';
 import ko from './locales/ko.json';
 import ru from './locales/ru.json';
 import uk from './locales/uk.json';
+import vi from './locales/vi.json';
 import zh_cn from './locales/zh_cn.json';
 
 let isInitialized = false;
@@ -33,6 +34,7 @@ export const initializeI18n = async () => {
                 ko: { translation: ko }, // Korean
                 ru: { translation: ru }, // Russian
                 uk: { translation: uk }, // Ukrainian
+                vi: { translation: vi }, // Vietnamese
                 zh: { translation: zh_cn }, // Chinese (Simplified)
             },
             interpolation: {
