@@ -114,6 +114,8 @@
   "Test Data/code_block_in_task.md": {},
   "Test Data/comments_html_style.md": {},
   "Test Data/comments_markdown_style.md": {},
+  "Test Data/corrupt_rerender_issue_3715_search.md": {},
+  "Test Data/corrupt_rerender_issue_3715_tasks.md": {},
   "Test Data/docs_sample_for_explain_query_file_defaults.md": {},
   "Test Data/docs_sample_for_task_properties_reference.md": {},
   "Test Data/embed_link_in_task.md": {},
