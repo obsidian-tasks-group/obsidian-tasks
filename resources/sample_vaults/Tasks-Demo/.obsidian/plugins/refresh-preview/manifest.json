@@ -1,0 +1,11 @@
+{
+  "id": "refresh-preview",
+  "name": "Refresh Any View",
+  "version": "3.5.15",
+  "minAppVersion": "1.10.3",
+  "description": "Allows to refresh any view without reopening it.",
+  "author": "mnaoumov",
+  "authorUrl": "https://github.com/mnaoumov/",
+  "isDesktopOnly": false,
+  "fundingUrl": "https://www.buymeacoffee.com/mnaoumov"
+}
