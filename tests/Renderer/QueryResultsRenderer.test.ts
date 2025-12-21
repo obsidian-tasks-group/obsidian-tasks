@@ -33,7 +33,8 @@ afterEach(() => {
 
 function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]) {
     const queryRendererParameters = makeQueryRendererParameters(allTasks);
-    return new QueryResultsRenderer(
+
+    const queryResultsRenderer = new QueryResultsRenderer(
         'block-language-tasks',
         source,
         tasksFile,
@@ -43,6 +44,9 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
         mockHTMLRenderer,
         queryRendererParameters,
     );
+
+    expect(queryResultsRenderer.query.error).toBeUndefined();
+    return queryResultsRenderer;
 }
 
 async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm): Promise<void> {
