@@ -332,6 +332,199 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName('Custom Format Settings').setHeading();
+        // ---------------------------------------------------------------------------
+        const isCustomFormat = getSettings().taskFormat === 'custom';
+        const customFormatSettings = getSettings().customFormatSettings;
+
+        const dateDescription = new Setting(containerEl)
+            .setName('Format Explanation')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    '<p>Configure the text format for task components.</p>' +
+                        '<p>Use <code>%value%</code> as a placeholder for the date or value.</p>' +
+                        '<p><b>Note:</b> Changing these strings will not affect existing entries and status text of such existing entries will not be recognized by the plugin (need to be migrated manually).</p>',
+                ),
+            );
+
+        const dateFormatSetting = new Setting(containerEl)
+            .setName('Date Format')
+            .setDesc('Moment.js compatible date format (e.g. DD.MM.YY, YYYY-MM-DD)')
+            .addText((text) => {
+                text.setValue(customFormatSettings.dateFormat).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, dateFormat: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const createdDateSetting = new Setting(containerEl)
+            .setName('Created Date Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.createdDatePattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, createdDatePattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const doneDateSetting = new Setting(containerEl)
+            .setName('Done Date Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.doneDatePattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, doneDatePattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const cancelledDateSetting = new Setting(containerEl)
+            .setName('Cancelled Date Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.cancelledDatePattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, cancelledDatePattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const scheduledDateSetting = new Setting(containerEl)
+            .setName('Scheduled Date Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.scheduledDatePattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, scheduledDatePattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const dueDateSetting = new Setting(containerEl)
+            .setName('Due Date Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.dueDatePattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, dueDatePattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const startDateSetting = new Setting(containerEl)
+            .setName('Start Date Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.startDatePattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, startDatePattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const recurrenceSetting = new Setting(containerEl)
+            .setName('Recurrence Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.recurrencePattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, recurrencePattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const priorityHighestSetting = new Setting(containerEl)
+            .setName('Priority Highest Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.priorityHighest).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, priorityHighest: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const priorityHighSetting = new Setting(containerEl)
+            .setName('Priority High Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.priorityHigh).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, priorityHigh: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const priorityMediumSetting = new Setting(containerEl)
+            .setName('Priority Medium Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.priorityMedium).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, priorityMedium: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const priorityLowSetting = new Setting(containerEl)
+            .setName('Priority Low Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.priorityLow).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, priorityLow: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const priorityLowestSetting = new Setting(containerEl)
+            .setName('Priority Lowest Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.priorityLowest).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, priorityLowest: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const priorityNoneSetting = new Setting(containerEl)
+            .setName('Priority None Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.priorityNone).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, priorityNone: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const onCompletionSetting = new Setting(containerEl)
+            .setName('On Completion Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.onCompletionPattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, onCompletionPattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const dependsOnSetting = new Setting(containerEl)
+            .setName('Depends On Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.dependsOnPattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, dependsOnPattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const idSetting = new Setting(containerEl)
+            .setName('ID Pattern')
+            .addText((text) => {
+                text.setValue(customFormatSettings.idPattern).onChange(async (value) => {
+                    updateSettings({ customFormatSettings: { ...getSettings().customFormatSettings, idPattern: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        const customSettingsList = [
+            dateDescription,
+            dateFormatSetting,
+            createdDateSetting,
+            doneDateSetting,
+            cancelledDateSetting,
+            scheduledDateSetting,
+            dueDateSetting,
+            startDateSetting,
+            recurrenceSetting,
+            priorityHighestSetting,
+            priorityHighSetting,
+            priorityMediumSetting,
+            priorityLowSetting,
+            priorityLowestSetting,
+            priorityNoneSetting,
+            onCompletionSetting,
+            dependsOnSetting,
+            idSetting,
+        ];
+
+        customSettingsList.forEach(setting => setSettingVisibility(setting, isCustomFormat));
+
+        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.datesFromFileNames.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let scheduledDateExtraFormat: Setting | null = null;
