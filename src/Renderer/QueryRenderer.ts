@@ -102,6 +102,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private readonly queryResultsRenderer: QueryResultsRenderer;
     private readonly debouncedRenderFn: Debouncer<[RenderParams], void>;
+    private isRendering: boolean = false;
 
     constructor({
         app,
@@ -297,6 +298,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         requestAnimationFrame(async () => {
             console.log('QueryRenderChild.render() requestAnimationFrame() block entered');
 
+            if (this.isRendering) {
+                console.log('QueryRenderChild.render() returning as already rendering');
+                return;
+            }
+            this.isRendering = true;
+
             // We have to wrap the rendering inside requestAnimationFrame() to ensure
             // that we get correct values for isConnected and isShown().
             if (!this.containerEl.isConnected) {
@@ -308,6 +315,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                     '[render] Ignoring redraw request, as code block is not connected.',
                 );
                 console.log('QueryRenderChild.render() requestAnimationFrame() block return 1');
+                this.isRendering = false;
                 return;
             }
 
@@ -319,6 +327,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 // - The user has not yet scrolled to this code block's position in the file.
                 this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not shown.');
                 console.log('QueryRenderChild.render() requestAnimationFrame() block return 2');
+                this.isRendering = false;
                 return;
             }
 
@@ -327,6 +336,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             // Our results are now up-to-date:
             this.isCacheChangedSinceLastRedraw = false;
+            this.isRendering = false;
         });
         console.log('QueryRenderChild.render() Done');
     }
