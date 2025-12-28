@@ -2,8 +2,8 @@ import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { OnCompletion } from '../Task/OnCompletion';
 import type { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
-import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from './DefaultTaskSerializer';
 import { getSettings } from '../Config/Settings';
+import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from './DefaultTaskSerializer';
 
 export class CustomTaskSerializer extends DefaultTaskSerializer {
     constructor() {
