@@ -14,6 +14,8 @@ export type MockDataName =
     | 'code_block_in_task'
     | 'comments_html_style'
     | 'comments_markdown_style'
+    | 'corrupt_rerender_issue_3715_search'
+    | 'corrupt_rerender_issue_3715_tasks'
     | 'docs_sample_for_explain_query_file_defaults'
     | 'docs_sample_for_task_properties_reference'
     | 'embed_link_in_task'
@@ -127,6 +129,8 @@ export const AllMockDataNames: MockDataName[] = [
     'code_block_in_task',
     'comments_html_style',
     'comments_markdown_style',
+    'corrupt_rerender_issue_3715_search',
+    'corrupt_rerender_issue_3715_tasks',
     'docs_sample_for_explain_query_file_defaults',
     'docs_sample_for_task_properties_reference',
     'embed_link_in_task',
