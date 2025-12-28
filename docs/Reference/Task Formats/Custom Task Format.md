@@ -1,6 +1,6 @@
 # Custom Task Format
 
-The **Custom Task Format** allows you to configure the exact text patterns used for various task components, such as dates, priorities, and recurrence rules. This is useful if you want to use a specific syntax that is not covered by the standard [Tasks Emoji Format](Tasks%20Emoji%20Format.md) or [Dataview Format](Dataview%20Format.md).
+The **Custom Task Format** allows you to configure the exact text patterns used for various task components, such as dates, priorities, and recurrence rules. This is useful if you want to use a specific syntax in your raw md files that is not covered by the standard [Tasks Emoji Format](Tasks%20Emoji%20Format.md) or [Dataview Format](Dataview%20Format.md).
 
 ## Configuration
 
