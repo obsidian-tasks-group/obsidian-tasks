@@ -5,6 +5,7 @@ The **Custom Task Format** allows you to configure the exact text patterns used 
 ## Configuration
 
 To use the Custom Format:
+
 1. Go to **Settings** -> **Tasks**.
 2. Under **Task Format**, select **Custom**.
 3. A new section **Custom Format Settings** will appear below the "Dates" section.
@@ -12,7 +13,7 @@ To use the Custom Format:
 ### Date Format
 You can specify the date format used for all dates (Created, Done, Due, etc.). It supports [Moment.js date formats](https://momentjs.com/docs/#/displaying/format/).
 
-*   **Default:** `DD.MM.YY` (e.g., `25.12.25`)
+- **Default:** `DD.MM.YY` (e.g., `25.12.25`)
 
 ### Patterns
 You can define the pattern for each component. Use the placeholder `%value%` to indicate where the actual value (date, priority symbol, etc.) should be placed.
