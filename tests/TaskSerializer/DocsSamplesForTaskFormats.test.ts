@@ -39,18 +39,20 @@ describe('Serializer', () => {
         });
     });
 
+    const formatsToDocument = Object.keys(TASK_FORMATS).filter((key) => key !== 'custom');
+
     describe('Dates', () => {
         function allDatesLines() {
             const tasks = SampleTasks.withEachDateTypeAndCorrespondingStatus();
             return tasks.map((t) => t.toFileLineString()).join('\n');
         }
 
-        it.each(Object.keys(TASK_FORMATS))('%s-snippet', (key: string) => {
+        it.each(formatsToDocument)('%s-snippet', (key: string) => {
             updateSettings({ taskFormat: key as keyof TASK_FORMATS });
             verifyMarkdown(allDatesLines());
         });
 
-        it.each(Object.keys(TASK_FORMATS))('%s-include', (key: string) => {
+        it.each(formatsToDocument)('%s-include', (key: string) => {
             updateSettings({ taskFormat: key as keyof TASK_FORMATS });
             verifyMarkdownForDocs(allDatesLines());
         });
@@ -62,12 +64,12 @@ describe('Serializer', () => {
             return tasks.map((t) => t.toFileLineString()).join('\n');
         }
 
-        it.each(Object.keys(TASK_FORMATS))('%s-snippet', (key: string) => {
+        it.each(formatsToDocument)('%s-snippet', (key: string) => {
             updateSettings({ taskFormat: key as keyof TASK_FORMATS });
             verifyMarkdown(allPriorityLines());
         });
 
-        it.each(Object.keys(TASK_FORMATS))('%s-include', (key: string) => {
+        it.each(formatsToDocument)('%s-include', (key: string) => {
             updateSettings({ taskFormat: key as keyof TASK_FORMATS });
             verifyMarkdownForDocs(allPriorityLines());
         });
@@ -79,12 +81,12 @@ describe('Serializer', () => {
             return tasks.map((t) => t.toFileLineString()).join('\n');
         }
 
-        it.each(Object.keys(TASK_FORMATS))('%s-snippet', (key: string) => {
+        it.each(formatsToDocument)('%s-snippet', (key: string) => {
             updateSettings({ taskFormat: key as keyof TASK_FORMATS });
             verifyMarkdown(allOnCompletionLines());
         });
 
-        it.each(Object.keys(TASK_FORMATS))('%s-include', (key: string) => {
+        it.each(formatsToDocument)('%s-include', (key: string) => {
             updateSettings({ taskFormat: key as keyof TASK_FORMATS });
             verifyMarkdownForDocs(allOnCompletionLines());
         });
@@ -96,12 +98,12 @@ describe('Serializer', () => {
             return tasks.map((t) => t.toFileLineString()).join('\n');
         }
 
-        it.each(Object.keys(TASK_FORMATS))('%s-snippet', (key: string) => {
+        it.each(formatsToDocument)('%s-snippet', (key: string) => {
             updateSettings({ taskFormat: key as keyof TASK_FORMATS });
             verifyMarkdown(allDependencyLines());
         });
 
-        it.each(Object.keys(TASK_FORMATS))('%s-include', (key: string) => {
+        it.each(formatsToDocument)('%s-include', (key: string) => {
             updateSettings({ taskFormat: key as keyof TASK_FORMATS });
             verifyMarkdownForDocs(allDependencyLines());
         });
