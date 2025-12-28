@@ -154,6 +154,11 @@
   "Test Data/comments_markdown_style.md": {
     "Test Data/comments_html_style.md": 1
   },
+  "Test Data/corrupt_rerender_issue_3715_search.md": {},
+  "Test Data/corrupt_rerender_issue_3715_tasks.md": {
+    "Test Attachments/corrupt_rerender_issue_3715_1.png": 1,
+    "Test Attachments/corrupt_rerender_issue_3715_2.png": 1
+  },
   "Test Data/docs_sample_for_explain_query_file_defaults.md": {},
   "Test Data/docs_sample_for_task_properties_reference.md": {
     "Test Data/yaml_all_property_types_populated.md": 2,
