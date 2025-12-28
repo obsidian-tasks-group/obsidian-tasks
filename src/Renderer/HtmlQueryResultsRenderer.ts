@@ -74,7 +74,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected beginRender(): void {
+        console.log('in HtmlQueryResultsRenderer.beginRender');
         this.taskLineRenderer = this.createTaskLineRenderer();
+        console.log('this.ulElementStack.length', this.ulElementStack.length);
     }
 
     protected renderSearchResultsHeader(_queryResult: QueryResult): void {
@@ -82,26 +84,32 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderSearchResultsFooter(queryResult: QueryResult): void {
+        console.log('in HtmlQueryResultsRenderer.renderSearchResultsFooter');
         this.addTaskCount(queryResult);
     }
 
     protected renderErrorMessage(errorMessage: string): void {
+        console.log('in HtmlQueryResultsRenderer.renderErrorMessage');
         const container = createAndAppendElement('div', this.content);
         container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
     protected renderLoadingMessage(): void {
+        console.log('in HtmlQueryResultsRenderer.renderLoadingMessage');
         this.content.textContent = 'Loading Tasks ...';
     }
 
     protected renderExplanation(explanation: string | null) {
+        console.log('in HtmlQueryResultsRenderer.renderExplanation');
         const explanationsBlock = createAndAppendElement('pre', this.content);
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.textContent = explanation;
     }
 
     protected beginTaskList(): void {
+        console.log('in HtmlQueryResultsRenderer.beginTaskList');
         const isFirstTaskListInContainer = this.ulElementStack.length === 0;
+        console.log('isFirstTaskListInContainer', isFirstTaskListInContainer);
         const taskListContainer = isFirstTaskListInContainer ? this.content : this.lastLIElement;
         const taskList = createAndAppendElement('ul', taskListContainer);
 
@@ -121,19 +129,23 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected endTaskList(): void {
+        console.log('in HtmlQueryResultsRenderer.endTaskList');
         this.ulElementStack.pop();
     }
 
     protected beginListItem(): void {
+        console.log('in HtmlQueryResultsRenderer.beginListItem');
         const taskList = this.currentULElement();
         this.lastLIElement = createAndAppendElement('li', taskList);
     }
 
     protected async addListItem(listItem: ListItem, listItemIndex: number): Promise<void> {
+        console.log('in HtmlQueryResultsRenderer.addListItem');
         await this.taskLineRenderer.renderListItem(this.lastLIElement, listItem, listItemIndex);
     }
 
     protected async addTask(task: Task, taskIndex: number): Promise<void> {
+        console.log('in HtmlQueryResultsRenderer.addTask');
         const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
         const listItem = this.lastLIElement;
 
@@ -196,6 +208,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addGroupHeading(group: GroupDisplayHeading) {
+        console.log('in HtmlQueryResultsRenderer.addGroupHeading');
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {

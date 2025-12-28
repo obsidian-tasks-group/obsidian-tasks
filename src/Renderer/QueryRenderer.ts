@@ -288,11 +288,15 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async render({ tasks, state }: RenderParams) {
+        console.log('QueryRenderChild.render() entered');
+
         // We got here because the Cache reported a change in at least one task in the vault.
         // So note that any results we have already drawn are now out-of-date:
         this.isCacheChangedSinceLastRedraw = true;
 
         requestAnimationFrame(async () => {
+            console.log('QueryRenderChild.render() requestAnimationFrame() block entered');
+
             // We have to wrap the rendering inside requestAnimationFrame() to ensure
             // that we get correct values for isConnected and isShown().
             if (!this.containerEl.isConnected) {
@@ -303,6 +307,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 this.queryResultsRenderer.query.debug(
                     '[render] Ignoring redraw request, as code block is not connected.',
                 );
+                console.log('QueryRenderChild.render() requestAnimationFrame() block return 1');
                 return;
             }
 
@@ -313,14 +318,17 @@ class QueryRenderChild extends MarkdownRenderChild {
                 // - We are in a Tabs plugin, in a tab which is not at the front.
                 // - The user has not yet scrolled to this code block's position in the file.
                 this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not shown.');
+                console.log('QueryRenderChild.render() requestAnimationFrame() block return 2');
                 return;
             }
 
+            console.log('QueryRenderChild.render() requestAnimationFrame() calling this.renderResults()');
             await this.renderResults(state, tasks);
 
             // Our results are now up-to-date:
             this.isCacheChangedSinceLastRedraw = false;
         });
+        console.log('QueryRenderChild.render() Done');
     }
 
     private async renderResults(state: State, tasks: Task[]) {
