@@ -88,7 +88,6 @@ export abstract class QueryResultsRendererBase {
 
         const totalTasksCount = queryResult.totalTasksCount;
         this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
-        console.log('total task count', totalTasksCount);
 
         this.renderSearchResultsFooter(queryResult);
     }

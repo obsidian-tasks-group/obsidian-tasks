@@ -289,17 +289,12 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async render({ tasks, state }: RenderParams) {
-        console.log('QueryRenderChild.render() entered');
-
         // We got here because the Cache reported a change in at least one task in the vault.
         // So note that any results we have already drawn are now out-of-date:
         this.isCacheChangedSinceLastRedraw = true;
 
         requestAnimationFrame(async () => {
-            console.log('QueryRenderChild.render() requestAnimationFrame() block entered');
-
             if (this.isRendering) {
-                console.log('QueryRenderChild.render() returning as already rendering');
                 return;
             }
             this.isRendering = true;
@@ -314,7 +309,6 @@ class QueryRenderChild extends MarkdownRenderChild {
                 this.queryResultsRenderer.query.debug(
                     '[render] Ignoring redraw request, as code block is not connected.',
                 );
-                console.log('QueryRenderChild.render() requestAnimationFrame() block return 1');
                 this.isRendering = false;
                 return;
             }
@@ -326,19 +320,16 @@ class QueryRenderChild extends MarkdownRenderChild {
                 // - We are in a Tabs plugin, in a tab which is not at the front.
                 // - The user has not yet scrolled to this code block's position in the file.
                 this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not shown.');
-                console.log('QueryRenderChild.render() requestAnimationFrame() block return 2');
                 this.isRendering = false;
                 return;
             }
 
-            console.log('QueryRenderChild.render() requestAnimationFrame() calling this.renderResults()');
             await this.renderResults(state, tasks);
 
             // Our results are now up-to-date:
             this.isCacheChangedSinceLastRedraw = false;
             this.isRendering = false;
         });
-        console.log('QueryRenderChild.render() Done');
     }
 
     private async renderResults(state: State, tasks: Task[]) {
