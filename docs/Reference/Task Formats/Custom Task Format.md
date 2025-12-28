@@ -42,6 +42,14 @@ The default configuration for Custom Format uses text-based markers instead of e
 ## Custom Format for Dates
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dates_custom-snippet.approved.md -->
+```md
+- [ ] #task Has a created date (Created 13.04.23)
+- [ ] #task Has a scheduled date (Plan 14.04.23)
+- [ ] #task Has a start date (Start 15.04.23)
+- [ ] #task Has a due date (Due 16.04.23)
+- [x] #task Has a done date (Done 17.04.23)
+- [-] #task Has a cancelled date (Cancelled 18.04.23)
+```
 <!-- endSnippet -->
 
 For more information, see [[Dates]].
@@ -49,6 +57,14 @@ For more information, see [[Dates]].
 ## Custom Format for Priorities
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Priorities_custom-snippet.approved.md -->
+```md
+- [ ] #task Lowest priority (Prio LL)
+- [ ] #task Low priority (Prio L)
+- [ ] #task Normal priority
+- [ ] #task Medium priority (Prio M)
+- [ ] #task High priority (Prio H)
+- [ ] #task Highest priority (Prio HH)
+```
 <!-- endSnippet -->
 
 For more information, see [[Priority]].
@@ -56,6 +72,12 @@ For more information, see [[Priority]].
 ## Custom Format for OnCompletion
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_custom-snippet.approved.md -->
+```md
+- [ ] #task Keep this task when done
+- [ ] #task Keep this task when done too (OnCompletion keep)
+- [ ] #task Remove this task when done (OnCompletion delete)
+- [ ] #task Remove completed instance of this recurring task when done (Repeat every day) (OnCompletion delete)
+```
 <!-- endSnippet -->
 
 For more information, see [[On Completion]].
@@ -63,6 +85,10 @@ For more information, see [[On Completion]].
 ## Custom Format for Dependencies
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_custom-snippet.approved.md -->
+```md
+- [ ] #task do this first (ID dcf64c)
+- [ ] #task do this after first and some other task (DependsOn dcf64c,0h17ye)
+```
 <!-- endSnippet -->
 
 For more information, see [[Task Dependencies]].
