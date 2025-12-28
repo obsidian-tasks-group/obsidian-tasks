@@ -1,0 +1,10 @@
+<!-- placeholder to force blank line before included text -->
+
+- [ ] #task Has a created date (Created 13.04.23)
+- [ ] #task Has a scheduled date (Plan 14.04.23)
+- [ ] #task Has a start date (Start 15.04.23)
+- [ ] #task Has a due date (Due 16.04.23)
+- [x] #task Has a done date (Done 17.04.23)
+- [-] #task Has a cancelled date (Cancelled 18.04.23)
+
+<!-- placeholder to force blank line after included text -->

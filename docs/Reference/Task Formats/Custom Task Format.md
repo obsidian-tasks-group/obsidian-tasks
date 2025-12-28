@@ -39,9 +39,30 @@ The default configuration for Custom Format uses text-based markers instead of e
 | **Priority Low** | `(Prio L)` | `(Prio L)` |
 | **Priority Lowest** | `(Prio LL)` | `(Prio LL)` |
 
-## Example
-With the default Custom Format settings, a task might look like this:
+## Custom Format for Dates
 
-```markdown
-- [ ] Call Alice (Prio H) (Due 25.12.25) (Repeat every week)
-```
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dates_custom-snippet.approved.md -->
+<!-- endSnippet -->
+
+For more information, see [[Dates]].
+
+## Custom Format for Priorities
+
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Priorities_custom-snippet.approved.md -->
+<!-- endSnippet -->
+
+For more information, see [[Priority]].
+
+## Custom Format for OnCompletion
+
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_custom-snippet.approved.md -->
+<!-- endSnippet -->
+
+For more information, see [[On Completion]].
+
+## Custom Format for Dependencies
+
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_custom-snippet.approved.md -->
+<!-- endSnippet -->
+
+For more information, see [[Task Dependencies]].
