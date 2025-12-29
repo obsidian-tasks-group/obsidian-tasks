@@ -2,6 +2,7 @@
     import { TASK_FORMATS } from '../Config/Settings';
     import type { EditableTask } from './EditableTask';
 
+    export let priority: string;
     export let editableTask: EditableTask;
     export let withAccessKeys: boolean;
 
