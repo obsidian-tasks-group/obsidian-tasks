@@ -16,6 +16,7 @@ import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { mockApp } from '../__mocks__/obsidian';
 import {
+    editInputElement,
     getAndCheckApplyButton,
     getAndCheckRenderedDescriptionElement,
     getAndCheckRenderedElement,
@@ -54,10 +55,6 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
     const { container } = result;
     expect(() => container).toBeTruthy();
     return { result, container };
-}
-
-async function editInputElement(inputElement: HTMLInputElement, newValue: string) {
-    await fireEvent.input(inputElement, { target: { value: newValue } });
 }
 
 async function editInputElementAndSubmit(
