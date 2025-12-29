@@ -8,6 +8,7 @@
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import PriorityEditor from './PriorityEditor.svelte';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
 
@@ -19,7 +20,6 @@
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
-        prioritySymbols,
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
@@ -47,57 +47,6 @@
     let formIsValid: boolean = true;
 
     let mountComplete = false;
-
-    const priorityOptions: {
-        value: typeof editableTask.priority;
-        label: string;
-        symbol: string;
-        accessKey: string;
-        accessKeyIndex: number;
-    }[] = [
-        {
-            value: 'lowest',
-            label: 'Lowest',
-            symbol: prioritySymbols.Lowest,
-            accessKey: 'o',
-            accessKeyIndex: 1,
-        },
-        {
-            value: 'low',
-            label: 'Low',
-            symbol: prioritySymbols.Low,
-            accessKey: 'l',
-            accessKeyIndex: 0,
-        },
-        {
-            value: 'none',
-            label: 'Normal',
-            symbol: prioritySymbols.None,
-            accessKey: 'n',
-            accessKeyIndex: 0,
-        },
-        {
-            value: 'medium',
-            label: 'Medium',
-            symbol: prioritySymbols.Medium,
-            accessKey: 'm',
-            accessKeyIndex: 0,
-        },
-        {
-            value: 'high',
-            label: 'High',
-            symbol: prioritySymbols.High,
-            accessKey: 'h',
-            accessKeyIndex: 0,
-        },
-        {
-            value: 'highest',
-            label: 'Highest',
-            symbol: prioritySymbols.Highest,
-            accessKey: 'i',
-            accessKeyIndex: 1,
-        },
-    ];
 
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
@@ -205,34 +154,7 @@ Availability of access keys:
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-priority-section">
-        <label for="priority-{editableTask.priority}">Priority</label>
-        {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
-            <div class="task-modal-priority-option-container">
-                <!-- svelte-ignore a11y-accesskey -->
-                <input
-                    type="radio"
-                    id="priority-{value}"
-                    {value}
-                    bind:group={editableTask.priority}
-                    accesskey={accesskey(accessKey)}
-                />
-                <label for="priority-{value}">
-                    <!-- These is no need to extract this behaviour to something like labelContentWithAccessKey(),
-                    since this whole section will just go in a separate Svelte component and
-                    will not be reused elsewhere like labelContentWithAccessKey(). -->
-                    {#if withAccessKeys}
-                        <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
-                            >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span
-                        ><span>{label.substring(accessKeyIndex + 1)}</span>
-                    {:else}
-                        <span>{label}</span>
-                    {/if}
-                    {#if symbol && symbol.charCodeAt(0) >= 0x100}
-                        <span>{symbol}</span>
-                    {/if}
-                </label>
-            </div>
-        {/each}
+        <PriorityEditor {editableTask} {withAccessKeys} />
     </section>
 
     <!-- --------------------------------------------------------------------------- -->
