@@ -12,11 +12,11 @@
     let options: any = { ...isShownInEditModal };
 
     const onChange = (fieldName: string) => (event: Event) => {
-        const value = (event.target as HTMLInputElement).checked;
-        updateSettings({ isShownInEditModal: { ...options, [fieldName]: value } });
+        options[fieldName] = (event.target as HTMLInputElement).checked;
     };
 
     const _onSave = () => {
+        updateSettings({ isShownInEditModal: options });
         onSave(options);
     };
 
