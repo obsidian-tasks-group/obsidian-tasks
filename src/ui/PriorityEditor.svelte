@@ -11,7 +11,7 @@
     const { prioritySymbols } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     const priorityOptions: {
-        value: typeof editableTask.priority;
+        value: typeof priority;
         label: string;
         symbol: string;
         accessKey: string;
@@ -62,17 +62,11 @@
     ];
 </script>
 
-<label for="priority-{editableTask.priority}">Priority</label>
+<label for="priority-{priority}">Priority</label>
 {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
     <div class="task-modal-priority-option-container">
         <!-- svelte-ignore a11y-accesskey -->
-        <input
-            type="radio"
-            id="priority-{value}"
-            {value}
-            bind:group={editableTask.priority}
-            accesskey={accesskey(accessKey)}
-        />
+        <input type="radio" id="priority-{value}" {value} bind:group={priority} accesskey={accesskey(accessKey)} />
         <label for="priority-{value}">
             <!-- These is no need to extract this behaviour to something like labelContentWithAccessKey(),
             since this whole section will just go in a separate Svelte component and
