@@ -87,9 +87,7 @@
     const _onOptions = () => {
         const optionsModal = new OptionsModal({
             app,
-            onSave: () => {
-                refreshSettings();
-            },
+            onSave: refreshSettings,
         });
         optionsModal.open();
     };
