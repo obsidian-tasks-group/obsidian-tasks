@@ -29,7 +29,7 @@
     <div class="checkbox-group">
         {#each Object.keys(options) as fieldName}
             <label class="checkbox-item">
-                <input type="checkbox" checked={options[fieldName]} />
+                <input type="checkbox" checked={options[fieldName]} id={fieldName} />
                 <span>{formatFieldName(fieldName)}</span>
             </label>
         {/each}
