@@ -61,6 +61,10 @@ export const TASK_FORMATS = {
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
+export interface EditModalShowSettings {
+    due: boolean;
+}
+
 export interface Settings {
     presets: PresetsMap;
     globalQuery: string;
@@ -84,7 +88,7 @@ export interface Settings {
     statusSettings: StatusSettings;
 
     // Edit modal field render settings.
-    isShownInEditModal: { due: boolean };
+    isShownInEditModal: EditModalShowSettings;
 
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
