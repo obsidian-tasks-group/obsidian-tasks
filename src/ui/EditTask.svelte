@@ -1,9 +1,11 @@
 <script lang="ts">
+    import type { App } from 'obsidian';
     import { onMount } from 'svelte';
 
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
+    import { OptionsModal } from '../Obsidian/OptionsModal';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';
@@ -17,6 +19,7 @@
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
     export let allTasks: Task[];
+    export let app: App;
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -75,7 +78,15 @@
         onSubmit([]);
     };
 
-    const _onOptions = () => {};
+    const _onOptions = () => {
+        const optionsModal = new OptionsModal({
+            app,
+            onSave: (options) => {
+                console.log('Options saved:', options);
+            },
+        });
+        optionsModal.open();
+    };
 
     const _onDescriptionKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter' && !e.isComposing) {
