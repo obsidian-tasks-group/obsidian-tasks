@@ -95,6 +95,8 @@
         const newTasks = await editableTask.applyEdits(task, allTasks);
         onSubmit(newTasks);
     };
+
+    const { isShownInEditModal } = getSettings();
 </script>
 
 <!--
@@ -169,14 +171,16 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="due"
-            dateSymbol={dueDateSymbol}
-            bind:date={editableTask.dueDate}
-            bind:isDateValid={isDueDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('d')}
-        />
+        {#if isShownInEditModal.due}
+            <DateEditor
+                id="due"
+                dateSymbol={dueDateSymbol}
+                bind:date={editableTask.dueDate}
+                bind:isDateValid={isDueDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('d')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->

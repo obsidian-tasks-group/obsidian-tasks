@@ -719,7 +719,7 @@ describe('Hiding modal fields', () => {
         expect(element).toBeNull();
     }
 
-    it.failing('should hide due field', () => {
+    it('should hide due field', () => {
         updateSettings({ isShownInEditModal: { due: false } });
 
         testElementNotRendered('due');
