@@ -1,21 +1,15 @@
 <script lang="ts">
-    import { getSettings } from '../Config/Settings';
+    import { type EditModalShowSettings, getSettings } from '../Config/Settings';
 
-    export let onSave: (options: { [key: string]: boolean }) => void;
+    export let onSave: (options: EditModalShowSettings) => void;
     export let onClose: () => void;
 
     const { isShownInEditModal } = getSettings();
 
     // Create a reactive object for the options
-    let options: { [key: string]: boolean } = {};
-
-    // Initialize options from settings
-    $: {
-        options = {};
-        for (const [field, value] of Object.entries(isShownInEditModal)) {
-            options[field] = value;
-        }
-    }
+    // Forced to use any here instead of EditModalShowSettings. Otherwise there is a compiler error at
+    // <input type="checkbox" checked={options[fieldName]} /> below. This is solved in Svelte 5.
+    let options: any = { ...isShownInEditModal };
 
     const _onSave = () => {
         onSave(options);
@@ -35,7 +29,7 @@
     <div class="checkbox-group">
         {#each Object.keys(options) as fieldName}
             <label class="checkbox-item">
-                <input type="checkbox" bind:checked={options[fieldName]} />
+                <input type="checkbox" checked={options[fieldName]} />
                 <span>{formatFieldName(fieldName)}</span>
             </label>
         {/each}
