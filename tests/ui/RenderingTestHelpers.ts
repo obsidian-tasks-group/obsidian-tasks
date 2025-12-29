@@ -30,6 +30,15 @@ export function getAndCheckApplyButton2(result: RenderResult<ModalOptionsEditor>
     return submit;
 }
 
+export function checkAndClickApplyButton(result: RenderResult<ModalOptionsEditor>) {
+    const apply = getAndCheckApplyButton2(result);
+    apply.click();
+}
+
 export async function editInputElement(inputElement: HTMLInputElement, newValue: string | boolean) {
     await fireEvent.input(inputElement, { target: { value: newValue } });
+}
+
+export async function uncheckInput(inputElement: HTMLInputElement) {
+    await fireEvent.change(inputElement, { target: { checked: false } });
 }
