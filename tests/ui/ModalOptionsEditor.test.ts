@@ -1,9 +1,9 @@
-import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
+import { type RenderResult, render } from '@testing-library/svelte';
 import { getSettings, resetSettings } from '../../src/Config/Settings';
 import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
-import { getAndCheckApplyButton2, getAndCheckRenderedElement } from './RenderingTestHelpers';
+import { checkAndClickApplyButton, getAndCheckRenderedElement, uncheckInput } from './RenderingTestHelpers';
 
 function renderAndCheckModal() {
     const result: RenderResult<ModalOptionsEditor> = render(ModalOptionsEditor, {
@@ -38,12 +38,11 @@ describe('ModalOptionsEditor settings edit tests', () => {
 
         const inputElement = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
 
-        await fireEvent.change(inputElement, { target: { checked: false } });
+        await uncheckInput(inputElement);
 
         expect(getSettings().isShownInEditModal.due).toEqual(true);
 
-        const apply = getAndCheckApplyButton2(result);
-        apply.click();
+        checkAndClickApplyButton(result);
 
         expect(getSettings().isShownInEditModal.due).toEqual(false);
     });
