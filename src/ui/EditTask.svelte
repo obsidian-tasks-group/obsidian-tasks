@@ -74,6 +74,12 @@
         }, 10);
     });
 
+    $: isShownInEditModal = getSettings().isShownInEditModal;
+
+    const refreshSettings = () => {
+        isShownInEditModal = getSettings().isShownInEditModal;
+    };
+
     const _onClose = () => {
         onSubmit([]);
     };
@@ -82,6 +88,7 @@
         const optionsModal = new OptionsModal({
             app,
             onSave: (options) => {
+                refreshSettings();
                 console.log('Options saved:', options);
             },
         });
@@ -108,8 +115,6 @@
         const newTasks = await editableTask.applyEdits(task, allTasks);
         onSubmit(newTasks);
     };
-
-    const { isShownInEditModal } = getSettings();
 </script>
 
 <!--
