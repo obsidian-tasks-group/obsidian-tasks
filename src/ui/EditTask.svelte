@@ -63,6 +63,20 @@
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
+    $: isShownInEditModal = getSettings().isShownInEditModal;
+
+    const refreshSettings = () => {
+        isShownInEditModal = getSettings().isShownInEditModal;
+    };
+
+    const _onOptions = () => {
+        const optionsModal = new OptionsModal({
+            app,
+            onSave: refreshSettings,
+        });
+        optionsModal.open();
+    };
+
     onMount(() => {
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
@@ -74,22 +88,8 @@
         }, 10);
     });
 
-    $: isShownInEditModal = getSettings().isShownInEditModal;
-
-    const refreshSettings = () => {
-        isShownInEditModal = getSettings().isShownInEditModal;
-    };
-
     const _onClose = () => {
         onSubmit([]);
-    };
-
-    const _onOptions = () => {
-        const optionsModal = new OptionsModal({
-            app,
-            onSave: refreshSettings,
-        });
-        optionsModal.open();
     };
 
     const _onDescriptionKeyDown = (e: KeyboardEvent) => {
