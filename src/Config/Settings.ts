@@ -83,6 +83,9 @@ export interface Settings {
     // The custom status states.
     statusSettings: StatusSettings;
 
+    // Edit modal field render settings.
+    isShownInEditModal: { due: boolean };
+
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
 
@@ -116,6 +119,7 @@ const defaultSettings: Readonly<Settings> = {
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
     statusSettings: new StatusSettings(),
+    isShownInEditModal: { due: true },
     features: Feature.settingsFlags,
     generalSettings: {
         /* Prevent duplicate values in user settings for now,
