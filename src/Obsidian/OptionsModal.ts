@@ -4,11 +4,11 @@ import ModalOptionsEditor from '../ui/ModalOptionsEditor.svelte';
 
 export interface OptionsModalParams {
     app: App;
-    onSave: (options: { option1: boolean; option2: boolean; option3: boolean }) => void;
+    onSave: (options: { [key: string]: boolean }) => void;
 }
 
 export class OptionsModal extends Modal {
-    private readonly onSave: (options: { option1: boolean; option2: boolean; option3: boolean }) => void;
+    private readonly onSave: (options: { [key: string]: boolean }) => void;
 
     constructor({ app, onSave }: OptionsModalParams) {
         super(app);
