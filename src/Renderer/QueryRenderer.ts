@@ -102,6 +102,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private readonly queryResultsRenderer: QueryResultsRenderer;
     private readonly debouncedRenderFn: Debouncer<[RenderParams], void>;
+    private isRendering: boolean = false;
 
     constructor({
         app,
@@ -293,6 +294,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.isCacheChangedSinceLastRedraw = true;
 
         requestAnimationFrame(async () => {
+            if (this.isRendering) {
+                return;
+            }
+            this.isRendering = true;
+
             // We have to wrap the rendering inside requestAnimationFrame() to ensure
             // that we get correct values for isConnected and isShown().
             if (!this.containerEl.isConnected) {
@@ -303,6 +309,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 this.queryResultsRenderer.query.debug(
                     '[render] Ignoring redraw request, as code block is not connected.',
                 );
+                this.isRendering = false;
                 return;
             }
 
@@ -313,6 +320,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 // - We are in a Tabs plugin, in a tab which is not at the front.
                 // - The user has not yet scrolled to this code block's position in the file.
                 this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not shown.');
+                this.isRendering = false;
                 return;
             }
 
@@ -320,6 +328,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             // Our results are now up-to-date:
             this.isCacheChangedSinceLastRedraw = false;
+            this.isRendering = false;
         });
     }
 
