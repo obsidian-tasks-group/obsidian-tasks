@@ -174,6 +174,10 @@ function getElementValue(container: HTMLElement, elementId: string) {
     return element.value;
 }
 
+afterEach(() => {
+    resetSettings();
+});
+
 describe('Task rendering', () => {
     afterEach(() => {
         GlobalFilter.getInstance().reset();
@@ -700,5 +704,24 @@ describe('Edit Modal HTML snapshot tests', () => {
     it('should match snapshot - without access keys', () => {
         updateSettings({ provideAccessKeys: false });
         verifyModalHTML();
+    });
+});
+
+describe('Hiding modal fields', () => {
+    function testElementNotRendered(elementId: string) {
+        const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+        const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
+
+        const onSubmit = (_: Task[]): void => {};
+        const { container } = renderAndCheckModal(task, onSubmit);
+
+        const element = container.ownerDocument.getElementById(elementId) as unknown;
+        expect(element).toBeNull();
+    }
+
+    it.failing('should hide due field', () => {
+        updateSettings({ isShownInEditModal: { due: false } });
+
+        testElementNotRendered('due');
     });
 });
