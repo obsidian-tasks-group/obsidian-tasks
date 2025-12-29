@@ -1,7 +1,9 @@
-import { type RenderResult, render } from '@testing-library/svelte';
+import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
+import { getSettings, resetSettings } from '../../src/Config/Settings';
 import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
+import { getAndCheckRenderedElement } from './RenderingTestHelpers';
 
 function renderAndCheckModal() {
     const result: RenderResult<ModalOptionsEditor> = render(ModalOptionsEditor, {
@@ -20,8 +22,24 @@ function verifyModalHTML() {
     verifyWithFileExtension(prettyHTML, 'html');
 }
 
+afterEach(() => {
+    resetSettings();
+});
+
 describe('ModalOptionsEditor snapshot tests', () => {
     it('should match snapshot', () => {
         verifyModalHTML();
+    });
+});
+
+describe('ModalOptionsEditor settings edit tests', () => {
+    it.failing('should set due as hidden', async () => {
+        const { container } = renderAndCheckModal();
+
+        const inputElement = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
+
+        await fireEvent.change(inputElement, { target: { checked: false } });
+
+        expect(getSettings().isShownInEditModal.due).toEqual(false);
     });
 });
