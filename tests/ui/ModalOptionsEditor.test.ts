@@ -33,7 +33,7 @@ describe('ModalOptionsEditor snapshot tests', () => {
 });
 
 describe('ModalOptionsEditor settings edit tests', () => {
-    it.failing('should set due as hidden', async () => {
+    it('should set due as hidden', async () => {
         const { container } = renderAndCheckModal();
 
         const inputElement = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');

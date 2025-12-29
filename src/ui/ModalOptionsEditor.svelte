@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type EditModalShowSettings, getSettings } from '../Config/Settings';
+    import { type EditModalShowSettings, getSettings, updateSettings } from '../Config/Settings';
 
     export let onSave: (options: EditModalShowSettings) => void;
     export let onClose: () => void;
@@ -10,6 +10,11 @@
     // Forced to use any here instead of EditModalShowSettings. Otherwise there is a compiler error at
     // <input type="checkbox" checked={options[fieldName]} /> below. This is solved in Svelte 5.
     let options: any = { ...isShownInEditModal };
+
+    const onChange = (fieldName: string) => (event: Event) => {
+        const value = (event.target as HTMLInputElement).checked;
+        updateSettings({ isShownInEditModal: { ...options, [fieldName]: value } });
+    };
 
     const _onSave = () => {
         onSave(options);
@@ -29,7 +34,7 @@
     <div class="checkbox-group">
         {#each Object.keys(options) as fieldName}
             <label class="checkbox-item">
-                <input type="checkbox" checked={options[fieldName]} id={fieldName} />
+                <input type="checkbox" checked={options[fieldName]} id={fieldName} on:change={onChange(fieldName)} />
                 <span>{formatFieldName(fieldName)}</span>
             </label>
         {/each}
