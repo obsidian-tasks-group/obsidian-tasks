@@ -20,10 +20,6 @@
         onSave(options);
     };
 
-    const _onCancel = () => {
-        onClose();
-    };
-
     // Helper to format field names for display
     const formatFieldName = (fieldName: string): string => {
         return fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
@@ -42,6 +38,6 @@
 
     <div class="modal-footer">
         <button type="button" class="mod-cta" on:click={_onSave}>Apply</button>
-        <button type="button" on:click={_onCancel}>Cancel</button>
+        <button type="button" on:click={onClose}>Cancel</button>
     </div>
 </div>
