@@ -14,6 +14,7 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { mockApp } from '../__mocks__/obsidian';
 import {
     getAndCheckApplyButton,
     getAndCheckRenderedDescriptionElement,
@@ -48,6 +49,7 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
         statusOptions: StatusRegistry.getInstance().registeredStatuses,
         onSubmit,
         allTasks,
+        app: mockApp,
     });
     const { container } = result;
     expect(() => container).toBeTruthy();
