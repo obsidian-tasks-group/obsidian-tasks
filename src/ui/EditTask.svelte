@@ -154,7 +154,7 @@ Availability of access keys:
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-priority-section">
-        <PriorityEditor bind:priority={editableTask.priority} {editableTask} {withAccessKeys} />
+        <PriorityEditor bind:priority={editableTask.priority} {withAccessKeys} />
     </section>
 
     <!-- --------------------------------------------------------------------------- -->
