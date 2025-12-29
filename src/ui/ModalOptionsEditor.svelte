@@ -1,39 +1,44 @@
 <script lang="ts">
-    export let onSave: (options: { option1: boolean; option2: boolean; option3: boolean }) => void;
+    import { getSettings } from '../Config/Settings';
+
+    export let onSave: (options: { [key: string]: boolean }) => void;
     export let onClose: () => void;
 
-    let option1 = false;
-    let option2 = false;
-    let option3 = false;
+    const { isShownInEditModal } = getSettings();
+
+    // Create a reactive object for the options
+    let options: { [key: string]: boolean } = {};
+
+    // Initialize options from settings
+    $: {
+        options = {};
+        for (const [field, value] of Object.entries(isShownInEditModal)) {
+            options[field] = value;
+        }
+    }
 
     const _onSave = () => {
-        onSave({ option1, option2, option3 });
+        onSave(options);
     };
 
     const _onCancel = () => {
         onClose();
     };
+
+    // Helper to format field names for display
+    const formatFieldName = (fieldName: string): string => {
+        return fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+    };
 </script>
 
 <div class="options-modal">
     <div class="checkbox-group">
-        <!-- Option 1 -->
-        <label class="checkbox-item">
-            <input type="checkbox" bind:checked={option1} />
-            <span>Option 1</span>
-        </label>
-
-        <!-- Option 2 -->
-        <label class="checkbox-item">
-            <input type="checkbox" bind:checked={option2} />
-            <span>Option 2</span>
-        </label>
-
-        <!-- Option 3 -->
-        <label class="checkbox-item">
-            <input type="checkbox" bind:checked={option3} />
-            <span>Option 3</span>
-        </label>
+        {#each Object.keys(options) as fieldName}
+            <label class="checkbox-item">
+                <input type="checkbox" bind:checked={options[fieldName]} />
+                <span>{formatFieldName(fieldName)}</span>
+            </label>
+        {/each}
     </div>
 
     <div class="modal-footer">
