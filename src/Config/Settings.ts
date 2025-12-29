@@ -61,7 +61,7 @@ export const TASK_FORMATS = {
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
-export interface EditModalShowSettings {
+interface EditModalShowSettings {
     due: boolean;
 }
 
