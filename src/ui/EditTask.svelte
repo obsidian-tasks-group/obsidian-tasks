@@ -75,6 +75,8 @@
         onSubmit([]);
     };
 
+    const _onOptions = () => {};
+
     const _onDescriptionKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter' && !e.isComposing) {
             e.preventDefault();
@@ -307,5 +309,6 @@ Availability of access keys:
     <section class="tasks-modal-button-section">
         <button disabled={!formIsValid} type="submit" class="mod-cta">Apply </button>
         <button type="button" on:click={_onClose}>Cancel</button>
+        <button type="button" on:click={_onOptions}>Options</button>
     </section>
 </form>
