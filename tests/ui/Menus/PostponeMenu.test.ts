@@ -116,6 +116,7 @@ describe('PostponeMenu', () => {
               Scheduled today, on Sun 3rd Dec
             x Scheduled tomorrow, on Mon 4th Dec
               ---
+              Postpone scheduled date by a day, to Tue 5th Dec
               Postpone scheduled date by 2 days, to Wed 6th Dec
               Postpone scheduled date by 3 days, to Thu 7th Dec
               Postpone scheduled date by 4 days, to Fri 8th Dec
