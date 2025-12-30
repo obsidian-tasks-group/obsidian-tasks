@@ -67,6 +67,11 @@ export class PostponeMenu extends TaskEditingMenu {
 
         const titlingFunction = postponeMenuItemTitle;
         const postponingFunction = createPostponedTask;
+        if (titlingFunction(task, 1, 'day') !== fixedTitle(task, 1, 'day')) {
+            this.addItem((item) =>
+                postponeMenuItemCallback(button, item, 'day', 1, titlingFunction, postponingFunction),
+            );
+        }
         this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 2, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 3, titlingFunction, postponingFunction));
         this.addItem((item) => postponeMenuItemCallback(button, item, 'days', 4, titlingFunction, postponingFunction));
