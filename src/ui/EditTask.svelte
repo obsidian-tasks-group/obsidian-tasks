@@ -322,6 +322,6 @@ Availability of access keys:
     <section class="tasks-modal-button-section">
         <button disabled={!formIsValid} type="submit" class="mod-cta">Apply </button>
         <button type="button" on:click={_onClose}>Cancel</button>
-        <button type="button" on:click={_onOptions}>Options</button>
+        <button type="button" on:click={_onOptions}>Options...</button>
     </section>
 </form>
