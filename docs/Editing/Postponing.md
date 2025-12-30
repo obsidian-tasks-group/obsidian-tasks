@@ -30,19 +30,21 @@ The ⏩ button provides two choices:
 1. **Click the button** to advance the date to the **earlier** of:
     - tomorrow
     - the day after its current date
-    ![Tooltip on the Postpone button shows tomorrow's date, for dates before or on today](../images/postpone-overdue-task-default-action.png)
-    <span class="caption">**Tooltip** on the Postpone button shows **tomorrow's date**, for dates **before or on today**.</span>
-    ![Tooltip on the Postpone button shows 'postpone by day', for future dates.](../images/postpone-future-task-default-action.png)
-    <span class="caption">**Tooltip** on the Postpone button shows '**postpone by day**', for **future dates**.</span>
+
+        ![Tooltip on the Postpone button shows tomorrow's date, for dates before or on today](../images/postpone-overdue-task-default-action.png)
+        <span class="caption">**Tooltip** on the Postpone button shows **tomorrow's date**, for dates **before or on today**.</span>
+        ![Tooltip on the Postpone button shows 'postpone by day', for future dates.](../images/postpone-future-task-default-action.png)
+        <span class="caption">**Tooltip** on the Postpone button shows '**postpone by day**', for **future dates**.</span>
 
 2. **Right-click** or **press-and-hold** the button to select from a context menu with:
     - future dates in the next 6 days
     - more future dates, further ahead
-    - an option to remove the date instead:
-    ![Context menu on the Postpone button shows options for dates before or on today](../images/postpone-overdue-task-context-menu.png)
-    <span class="caption">**Context menu** on the Postpone button shows options for dates **before or on today**</span>
-    ![Context menu on the Postpone button shows options for future dates.](../images/postpone-future-task-context-menu.png)
-    <span class="caption">**Context menu** on the Postpone button shows options for **future dates**.</span>
+    - an option to remove the date instead
+
+        ![Context menu on the Postpone button shows options for dates before or on today](../images/postpone-overdue-task-context-menu.png)
+        <span class="caption">**Context menu** on the Postpone button shows options for dates **before or on today**</span>
+        ![Context menu on the Postpone button shows options for future dates.](../images/postpone-future-task-context-menu.png)
+        <span class="caption">**Context menu** on the Postpone button shows options for **future dates**.</span>
 
 ### Which date field is edited?
 

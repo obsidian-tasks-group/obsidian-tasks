@@ -16,7 +16,7 @@ const farPast = '2022-01-17';
 const yesterday = '2023-12-02';
 const today = '2023-12-03';
 const tomorrow = '2023-12-04';
-const farFuture = '2017-03-25';
+const farFuture = '2024-03-25';
 
 // const invalidDate = '2023-12-36';
 
@@ -116,6 +116,7 @@ describe('PostponeMenu', () => {
               Scheduled today, on Sun 3rd Dec
             x Scheduled tomorrow, on Mon 4th Dec
               ---
+              Postpone scheduled date by a day, to Tue 5th Dec
               Postpone scheduled date by 2 days, to Wed 6th Dec
               Postpone scheduled date by 3 days, to Thu 7th Dec
               Postpone scheduled date by 4 days, to Fri 8th Dec
@@ -139,16 +140,17 @@ describe('PostponeMenu', () => {
               Due today, on Sun 3rd Dec
               Due tomorrow, on Mon 4th Dec
               ---
-              Due in 2 days, on Tue 5th Dec
-              Due in 3 days, on Wed 6th Dec
-              Due in 4 days, on Thu 7th Dec
-              Due in 5 days, on Fri 8th Dec
-              Due in 6 days, on Sat 9th Dec
+              Postpone due date by a day, to Tue 26th Mar
+              Postpone due date by 2 days, to Wed 27th Mar
+              Postpone due date by 3 days, to Thu 28th Mar
+              Postpone due date by 4 days, to Fri 29th Mar
+              Postpone due date by 5 days, to Sat 30th Mar
+              Postpone due date by 6 days, to Sun 31st Mar
               ---
-              Due in a week, on Sun 10th Dec
-              Due in 2 weeks, on Sun 17th Dec
-              Due in 3 weeks, on Sun 24th Dec
-              Due in a month, on Wed 3rd Jan
+              Postpone due date by a week, to Mon 1st Apr
+              Postpone due date by 2 weeks, to Mon 8th Apr
+              Postpone due date by 3 weeks, to Mon 15th Apr
+              Postpone due date by a month, to Thu 25th Apr
               ---
               Remove due date"
         `);
