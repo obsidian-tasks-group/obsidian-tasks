@@ -61,6 +61,13 @@ export const TASK_FORMATS = {
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
+/**
+ * This is a list of {@link Task} fields that are shown (or not) in {@link TaskModal}.
+ *
+ * Stored within {@link Settings}.isShownInEditModal.
+ *
+ * Edited within {@link OptionsModal}.
+ */
 interface EditModalShowSettings {
     due: boolean;
 }
