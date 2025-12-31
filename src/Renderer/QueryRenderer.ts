@@ -140,7 +140,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
                 editTaskPencilClickHandler: createEditTaskPencilClickHandler(
                     this.app,
-                    async () => await Promise.resolve(),
+                    async () => await this.plugin.saveSettings(),
                 ),
             },
         );
