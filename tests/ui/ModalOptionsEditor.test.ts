@@ -1,5 +1,5 @@
 import { type RenderResult, render } from '@testing-library/svelte';
-import { getSettings, resetSettings } from '../../src/Config/Settings';
+import { type Settings, getSettings, resetSettings } from '../../src/Config/Settings';
 import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -33,9 +33,14 @@ describe('ModalOptionsEditor snapshot tests', () => {
 });
 
 describe('ModalOptionsEditor settings edit tests', () => {
+    let savedSettings: Settings;
+    beforeEach(() => {
+        savedSettings = getSettings();
+    });
+
+    const saveSettings = () => (savedSettings = getSettings());
+
     it('should set due as hidden when Apply is clicked', async () => {
-        let savedSettings = getSettings();
-        const saveSettings = () => (savedSettings = getSettings());
         const { result, container } = renderAndCheckModal(saveSettings);
 
         await uncheckCheckbox(container, 'due');
@@ -50,8 +55,6 @@ describe('ModalOptionsEditor settings edit tests', () => {
     });
 
     it('should not save changes when Cancel is clicked', async () => {
-        let savedSettings = getSettings();
-        const saveSettings = () => (savedSettings = getSettings());
         const { result, container } = renderAndCheckModal(saveSettings);
 
         await uncheckCheckbox(container, 'due');
