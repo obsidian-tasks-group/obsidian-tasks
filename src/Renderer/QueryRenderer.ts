@@ -122,6 +122,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         super(container);
 
         this.app = app;
+        this.plugin = plugin;
+        this.events = events;
 
         this.queryResultsRenderer = new QueryResultsRenderer(
             this.containerEl.className,
@@ -141,9 +143,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         );
 
         this.queryResultsRenderer.query.debug('[render] QueryRenderChild.constructor() entered');
-
-        this.plugin = plugin;
-        this.events = events;
 
         this.debouncedRenderFn = debounce((params: RenderParams) => this.render(params), 300, true);
     }
