@@ -66,9 +66,6 @@
         <!-- svelte-ignore a11y-accesskey -->
         <input type="radio" id="priority-{value}" {value} bind:group={priority} accesskey={accesskey(accessKey)} />
         <label for="priority-{value}">
-            <!-- These is no need to extract this behaviour to something like labelContentWithAccessKey(),
-            since this whole section will just go in a separate Svelte component and
-            will not be reused elsewhere like labelContentWithAccessKey(). -->
             {#if withAccessKeys}
                 <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
                     >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span
