@@ -1,4 +1,5 @@
 import type { App } from 'obsidian';
+import type TasksPlugin from '../main';
 import type { Task } from '../Task/Task';
 import { taskFromLine } from '../Commands/CreateOrEditTaskParser';
 import { TaskModal } from '../Obsidian/TaskModal';
@@ -7,11 +8,13 @@ import { TaskModal } from '../Obsidian/TaskModal';
  * Opens the Tasks UI and returns the Markdown string for the task entered.
  *
  * @param app - The Obsidian App
+ * @param allTasks - All Tasks Plugin tasks in the vault
+ * @param plugin - Tasks Plugin instance
  *
  * @returns {Promise<string>} A promise that contains the Markdown string for the task entered or
  * an empty string, if data entry was cancelled.
  */
-export const createTaskLineModal = (app: App, allTasks: Task[]): Promise<string> => {
+export const createTaskLineModal = (app: App, allTasks: Task[], plugin: TasksPlugin): Promise<string> => {
     let resolvePromise: (input: string) => void;
     const waitForClose = new Promise<string>((resolve, _) => {
         resolvePromise = resolve;
@@ -23,7 +26,13 @@ export const createTaskLineModal = (app: App, allTasks: Task[]): Promise<string>
     };
 
     const task = taskFromLine({ line: '', path: '' });
-    const taskModal = new TaskModal({ app, task, onSubmit, allTasks });
+    const taskModal = new TaskModal({
+        app,
+        task,
+        onSaveSettings: async () => await plugin.saveSettings(),
+        onSubmit,
+        allTasks,
+    });
 
     taskModal.open();
 
