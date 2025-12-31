@@ -9,20 +9,24 @@ import { Status } from '../Statuses/Status';
 export interface TaskModalParams {
     app: App;
     task: Task;
+    onSaveSettings?: () => Promise<void>;
     onSubmit: (updatedTasks: Task[]) => void;
     allTasks: Task[];
 }
 
 export class TaskModal extends Modal {
     public readonly task: Task;
+    public readonly onSaveSettings: () => Promise<void>;
     public readonly onSubmit: (updatedTasks: Task[]) => void;
     public readonly allTasks: Task[];
 
-    constructor({ app, task, onSubmit, allTasks }: TaskModalParams) {
+    constructor({ app, task, onSaveSettings, onSubmit, allTasks }: TaskModalParams) {
         super(app);
 
         this.task = task;
         this.allTasks = allTasks;
+        const defaultOnSaveSettings = async () => await Promise.resolve();
+        this.onSaveSettings = onSaveSettings ?? defaultOnSaveSettings;
         this.onSubmit = (updatedTasks: Task[]) => {
             updatedTasks.length && onSubmit(updatedTasks);
             this.close();
@@ -43,6 +47,7 @@ export class TaskModal extends Modal {
             props: {
                 task: this.task,
                 statusOptions: statusOptions,
+                onSaveSettings: this.onSaveSettings,
                 onSubmit: this.onSubmit,
                 allTasks: this.allTasks,
                 app: this.app,
