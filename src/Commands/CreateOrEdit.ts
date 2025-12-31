@@ -4,7 +4,14 @@ import type { Task } from '../Task/Task';
 import { DateFallback } from '../DateTime/DateFallback';
 import { taskFromLine } from './CreateOrEditTaskParser';
 
-export const createOrEdit = (checking: boolean, editor: Editor, view: View, app: App, allTasks: Task[]) => {
+export const createOrEdit = (
+    checking: boolean,
+    editor: Editor,
+    view: View,
+    app: App,
+    allTasks: Task[],
+    onSaveSettings: () => Promise<void>,
+) => {
     if (checking) {
         return view instanceof MarkdownView;
     }
@@ -35,6 +42,7 @@ export const createOrEdit = (checking: boolean, editor: Editor, view: View, app:
     const taskModal = new TaskModal({
         app,
         task,
+        onSaveSettings,
         onSubmit,
         allTasks,
     });
