@@ -7,7 +7,7 @@ import { editTaskLineModal } from './editTaskLineModal';
 /**
  * Factory method for API v1
  *
- * @param app - The Obsidian App
+ * @param plugin - Tasks Plugin instance
  */
 export const tasksApiV1 = (plugin: TasksPlugin): TasksApiV1 => {
     const app = plugin.app;
