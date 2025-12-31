@@ -42,3 +42,9 @@ export async function editInputElement(inputElement: HTMLInputElement, newValue:
 export async function uncheckInput(inputElement: HTMLInputElement) {
     await fireEvent.change(inputElement, { target: { checked: false } });
 }
+
+export async function uncheckCheckbox(container: HTMLElement, elementId: string) {
+    const inputElement = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
+
+    await uncheckInput(inputElement);
+}
