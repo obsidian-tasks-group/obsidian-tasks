@@ -48,6 +48,7 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
     const result: RenderResult<EditTask> = render(EditTask, {
         task,
         statusOptions: StatusRegistry.getInstance().registeredStatuses,
+        onSaveSettings: async () => await Promise.resolve(),
         onSubmit,
         allTasks,
         app: mockApp,

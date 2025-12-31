@@ -16,6 +16,7 @@
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
+    export let onSaveSettings: () => Promise<void>;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
     export let allTasks: Task[];
@@ -66,6 +67,7 @@
     $: isShownInEditModal = getSettings().isShownInEditModal;
 
     const refreshSettings = () => {
+        onSaveSettings();
         isShownInEditModal = getSettings().isShownInEditModal;
     };
 
