@@ -67,8 +67,10 @@
     $: isShownInEditModal = getSettings().isShownInEditModal;
 
     const refreshSettings = () => {
-        onSaveSettings();
-        isShownInEditModal = getSettings().isShownInEditModal;
+        // Make sure we save settings before updating the UI
+        onSaveSettings().then(() => {
+            isShownInEditModal = getSettings().isShownInEditModal;
+        });
     };
 
     const _onOptions = () => {
