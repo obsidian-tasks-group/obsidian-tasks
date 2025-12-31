@@ -42,6 +42,6 @@ describe('definition of public Api', () => {
         const publicApi = tasksApiV1(mockPlugin);
 
         await publicApi.editTaskLineModal(taskLine);
-        expect(editTaskLineModal).toHaveBeenCalledWith(app, taskLine, tasks);
+        expect(editTaskLineModal).toHaveBeenCalledWith(app, taskLine, tasks, mockPlugin);
     });
 });
