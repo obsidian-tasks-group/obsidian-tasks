@@ -9,7 +9,7 @@ import { Status } from '../Statuses/Status';
 export interface TaskModalParams {
     app: App;
     task: Task;
-    onSaveSettings?: () => Promise<void>;
+    onSaveSettings: () => Promise<void>;
     onSubmit: (updatedTasks: Task[]) => void;
     allTasks: Task[];
 }
@@ -25,8 +25,7 @@ export class TaskModal extends Modal {
 
         this.task = task;
         this.allTasks = allTasks;
-        const defaultOnSaveSettings = async () => await Promise.resolve();
-        this.onSaveSettings = onSaveSettings ?? defaultOnSaveSettings;
+        this.onSaveSettings = onSaveSettings;
         this.onSubmit = (updatedTasks: Task[]) => {
             updatedTasks.length && onSubmit(updatedTasks);
             this.close();
