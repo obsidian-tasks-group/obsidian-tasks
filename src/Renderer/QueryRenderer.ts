@@ -138,7 +138,10 @@ class QueryRenderChild extends MarkdownRenderChild {
                 allMarkdownFiles: () => this.app.vault.getMarkdownFiles(),
                 backlinksClickHandler: createBacklinksClickHandler(this.app),
                 backlinksMousedownHandler: createBacklinksMousedownHandler(this.app),
-                editTaskPencilClickHandler: createEditTaskPencilClickHandler(this.app),
+                editTaskPencilClickHandler: createEditTaskPencilClickHandler(
+                    this.app,
+                    async () => await Promise.resolve(),
+                ),
             },
         );
 
@@ -345,7 +348,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 }
 
-function createEditTaskPencilClickHandler(app: App): EditButtonClickHandler {
+function createEditTaskPencilClickHandler(app: App, onSaveSettings: () => Promise<void>): EditButtonClickHandler {
     return function editTaskPencilClickHandler(event: MouseEvent, task: Task, allTasks: Task[]) {
         event.preventDefault();
 
@@ -360,6 +363,7 @@ function createEditTaskPencilClickHandler(app: App): EditButtonClickHandler {
         const taskModal = new TaskModal({
             app,
             task,
+            onSaveSettings,
             onSubmit,
             allTasks,
         });
