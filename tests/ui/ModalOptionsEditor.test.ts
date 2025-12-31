@@ -3,7 +3,7 @@ import { getSettings, resetSettings } from '../../src/Config/Settings';
 import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
-import { checkAndClickApplyButton, uncheckCheckbox } from './RenderingTestHelpers';
+import { checkAndClickApplyButton, checkAndClickCancelButton, uncheckCheckbox } from './RenderingTestHelpers';
 
 function renderAndCheckModal(onSave: () => void = () => {}) {
     const result: RenderResult<ModalOptionsEditor> = render(ModalOptionsEditor, {
@@ -47,5 +47,19 @@ describe('ModalOptionsEditor settings edit tests', () => {
         expect(getSettings().isShownInEditModal.due).toEqual(false);
         // checking that the settings edit would be saved in data.json
         expect(savedSettings.isShownInEditModal.due).toEqual(false);
+    });
+
+    it('should not save changes when Cancel is clicked', async () => {
+        let savedSettings = getSettings();
+        const saveSettings = () => (savedSettings = getSettings());
+        const { result, container } = renderAndCheckModal(saveSettings);
+
+        await uncheckCheckbox(container, 'due');
+
+        checkAndClickCancelButton(result);
+        // clicking the cancel button has not saved the settings globally
+        expect(getSettings().isShownInEditModal.due).toEqual(true);
+        // checking that the settings edit would not be saved in data.json
+        expect(savedSettings.isShownInEditModal.due).toEqual(true);
     });
 });

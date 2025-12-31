@@ -24,15 +24,20 @@ export function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButt
     return submit;
 }
 
-export function getAndCheckApplyButton2(result: RenderResult<ModalOptionsEditor>): HTMLButtonElement {
-    const submit = result.getByText('Apply') as HTMLButtonElement;
+export function getAndCheckButton(result: RenderResult<ModalOptionsEditor>, buttonId: string): HTMLButtonElement {
+    const submit = result.getByText(buttonId) as HTMLButtonElement;
     expect(submit).toBeTruthy();
     return submit;
 }
 
 export function checkAndClickApplyButton(result: RenderResult<ModalOptionsEditor>) {
-    const apply = getAndCheckApplyButton2(result);
+    const apply = getAndCheckButton(result, 'Apply');
     apply.click();
+}
+
+export function checkAndClickCancelButton(result: RenderResult<ModalOptionsEditor>) {
+    const cancel = getAndCheckButton(result, 'Cancel');
+    cancel.click();
 }
 
 export async function editInputElement(inputElement: HTMLInputElement, newValue: string | boolean) {
