@@ -112,7 +112,7 @@ export class QueryResult {
 
         return new QueryResult(
             new TaskGroups(this.taskGroups.groupers, filteredTasks, searchInfo),
-            filteredTasks.length,
+            this.totalTasksCountBeforeLimit,
         );
     }
 }
