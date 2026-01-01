@@ -103,14 +103,13 @@ describe('QueryResult', () => {
             expect(queryResult.totalTasksCountDisplayText()).toEqual('2 of 9 tasks');
         });
 
-        it.failing('should retain original number of matching tasks if filter applied after limit exceeded', () => {
+        it('should retain original number of matching tasks if filter applied after limit exceeded', () => {
             // See issue #3724
             const queryResult = createUngroupedQueryResultWithLimit(twoMoreComplicatedTasks, 9);
             const filteredResult = queryResult.applyFilter(
                 new DescriptionField().createFilterOrErrorMessage('description includes some').filter!,
             );
 
-            // Received: "2 tasks"
             expect(filteredResult.totalTasksCountDisplayText()).toEqual('2 of 9 tasks');
         });
     });
