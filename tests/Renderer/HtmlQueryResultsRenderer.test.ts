@@ -84,6 +84,31 @@ describe('HtmlQueryResultsRenderer tests', () => {
         await verifyRenderedHtml(allTasks, 'scheduled 1970-01-01\nexplain');
     });
 
+    it('task count', async () => {
+        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
+        const query = `
+hide toolbar
+hide backlinks
+hide edit button
+`;
+        await verifyRenderedHtml(allTasks, query);
+    });
+
+    it('task count - limit exceeded', async () => {
+        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
+        const query = `
+hide toolbar
+hide backlinks
+hide edit button
+
+limit 1
+`;
+        // In the built plugin, the task count shows '1 task` - see #3724
+        // In this approved file, the task count is correctly '1 of 2 tasks'.
+        // This suggests the error may be outside HtmlQueryResultsRenderer
+        await verifyRenderedHtml(allTasks, query);
+    });
+
     it('fully populated task - hidden fields', async () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         await verifyRenderedHtml(allTasks, 'hide scheduled date\nhide priority');
