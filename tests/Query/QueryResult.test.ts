@@ -54,6 +54,11 @@ describe('QueryResult', () => {
     });
 
     describe('Text representation of tasks count', () => {
+        const twoMoreComplicatedTasks = [
+            fromLine({ line: '- [ ] Do something more complicated 1' }),
+            fromLine({ line: '- [ ] Do something more complicated 2' }),
+        ];
+
         // Simple cases - where no limit was applied
 
         it('should pluralise "tasks" if 0 matches', () => {
@@ -71,11 +76,7 @@ describe('QueryResult', () => {
         });
 
         it('should pluralise "tasks" if 2 matches', () => {
-            const tasks = [
-                fromLine({ line: '- [ ] Do something more complicated 1' }),
-                fromLine({ line: '- [ ] Do something more complicated 2' }),
-            ];
-            const queryResult = createUngroupedQueryResult(tasks);
+            const queryResult = createUngroupedQueryResult(twoMoreComplicatedTasks);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('2 tasks');
             expect(queryResult.asMarkdown()).toEqual(`
 - [ ] Do something more complicated 1
@@ -98,11 +99,7 @@ describe('QueryResult', () => {
         });
 
         it('should show original number of matching tasks if limit was applied', () => {
-            const tasks = [
-                fromLine({ line: '- [ ] Do something more complicated 1' }),
-                fromLine({ line: '- [ ] Do something more complicated 2' }),
-            ];
-            const queryResult = createUngroupedQueryResultWithLimit(tasks, 9);
+            const queryResult = createUngroupedQueryResultWithLimit(twoMoreComplicatedTasks, 9);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('2 of 9 tasks');
         });
     });
