@@ -49,7 +49,6 @@ export class TaskModal extends Modal {
                 onSave: () => {
                     this.onSaveSettings();
                 },
-                onClose: () => {},
             });
             optionsModal.open();
         };
