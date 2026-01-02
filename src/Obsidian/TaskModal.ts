@@ -1,4 +1,4 @@
-import type { App } from 'obsidian';
+import { type App, setIcon } from 'obsidian';
 import { Modal } from 'obsidian';
 
 import EditTask from '../ui/EditTask.svelte';
@@ -35,6 +35,14 @@ export class TaskModal extends Modal {
     public onOpen(): void {
         this.titleEl.setText('Create or edit Task');
         this.modalEl.style.paddingBottom = '0';
+
+        const optionsButton = document.createElement('button');
+        // These are classes of the default close button.
+        // We need to overwrite only the 'inset-inline-end' to position the button properly.
+        optionsButton.addClasses(['modal-close-button', 'mod-raised', 'clickable-icon']);
+        optionsButton.style.insetInlineEnd = '32px';
+        setIcon(optionsButton, 'settings');
+        this.modalEl.appendChild(optionsButton);
 
         const { contentEl } = this;
         this.contentEl.style.paddingBottom = '0';
