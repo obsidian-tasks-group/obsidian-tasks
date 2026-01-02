@@ -4,7 +4,12 @@ import { type Settings, getSettings, resetSettings, updateSettings } from '../..
 import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
-import { checkAndClickApplyButton, checkAndClickCancelButton, uncheckCheckbox } from './RenderingTestHelpers';
+import {
+    checkAndClickApplyButton,
+    checkAndClickCancelButton,
+    randomIndex,
+    uncheckCheckbox,
+} from './RenderingTestHelpers';
 
 function renderAndCheckModal(onSave: () => void = () => {}) {
     const result: RenderResult<ModalOptionsEditor> = render(ModalOptionsEditor, {
@@ -31,10 +36,6 @@ describe('ModalOptionsEditor snapshot tests', () => {
     it('should match snapshot', () => {
         verifyModalHTML();
     });
-
-    function randomIndex(max: number) {
-        return Math.floor(Math.random() * max);
-    }
 
     it('should match snapshot - all options present even when a random option is absent', () => {
         const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
