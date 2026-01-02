@@ -40,22 +40,7 @@ describe('ModalOptionsEditor settings edit tests', () => {
 
     const saveSettings = () => (savedSettings = getSettings());
 
-    const fields: (keyof EditModalShowSettings)[] = [
-        'priority',
-
-        'recurrence',
-        'due',
-        'scheduled',
-        'start',
-
-        'before_this',
-        'after_this',
-
-        'status',
-        'created',
-        'done',
-        'cancelled',
-    ];
+    const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
 
     it.each(fields)('should set %s as hidden when Apply is clicked', async (field) => {
         const { result, container } = renderAndCheckModal(saveSettings);
