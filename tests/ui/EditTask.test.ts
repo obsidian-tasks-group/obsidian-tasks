@@ -756,4 +756,11 @@ describe('Hiding modal fields', () => {
         testElementNotRendered('only-future-dates');
         testElementNotRendered('line-after-happens-dates');
     });
+
+    it('should hide line after dependencies', () => {
+        const withHiddenField = { ...getSettings().isShownInEditModal, before_this: false, after_this: false };
+        updateSettings({ isShownInEditModal: withHiddenField });
+
+        testElementNotRendered('line-after-dependencies');
+    });
 });
