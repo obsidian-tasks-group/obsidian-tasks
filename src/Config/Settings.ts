@@ -15,6 +15,7 @@ import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer
 import { i18n } from '../i18n/i18n';
 import { type PresetsMap, defaultPresets } from '../Query/Presets/Presets';
 import { DebugSettings } from './DebugSettings';
+import { type EditModalShowSettings, defaultEditModalShowSettings } from './EditModalShowSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
@@ -61,31 +62,6 @@ export const TASK_FORMATS = {
 } as const;
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
-
-/**
- * This is a list of {@link Task} fields that are shown (or not) in {@link TaskModal}.
- *
- * Stored within {@link Settings}.isShownInEditModal.
- *
- * Edited within {@link OptionsModal}.
- */
-export interface EditModalShowSettings {
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    priority: boolean;
-
-    recurrence: boolean;
-    due: boolean;
-    scheduled: boolean;
-    start: boolean;
-
-    before_this: boolean;
-    after_this: boolean;
-
-    status: boolean;
-    created: boolean;
-    done: boolean;
-    cancelled: boolean;
-}
 
 export interface Settings {
     presets: PresetsMap;
@@ -145,22 +121,7 @@ const defaultSettings: Readonly<Settings> = {
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
     statusSettings: new StatusSettings(),
-    isShownInEditModal: {
-        priority: true,
-
-        recurrence: true,
-        due: true,
-        scheduled: true,
-        start: true,
-
-        before_this: true,
-        after_this: true,
-
-        status: true,
-        created: true,
-        done: true,
-        cancelled: true,
-    },
+    isShownInEditModal: defaultEditModalShowSettings,
     features: Feature.settingsFlags,
     generalSettings: {
         /* Prevent duplicate values in user settings for now,
