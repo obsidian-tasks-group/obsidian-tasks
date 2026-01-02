@@ -186,7 +186,9 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
+        {#if isShownInEditModal.recurrence}
+            <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
+        {/if}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
