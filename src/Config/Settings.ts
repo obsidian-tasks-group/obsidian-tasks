@@ -1,3 +1,4 @@
+import { writable } from 'svelte/store';
 import {
     DEFAULT_MAX_GENERIC_SUGGESTIONS,
     makeDefaultSuggestionBuilder,
@@ -196,6 +197,8 @@ const defaultSettings: Readonly<Settings> = {
 
 let settings: Settings = { ...defaultSettings };
 
+export const settingsStore = writable(settings);
+
 function addNewOptionsToUserSettings<KeysAndValues>(defaultValues: KeysAndValues, userValues: KeysAndValues) {
     for (const flag in defaultValues) {
         if (userValues[flag] === undefined) {
@@ -238,17 +241,20 @@ export const updateSettings = (newSettings: Partial<Settings>): Settings => {
     const migratedSettings = migrateSettings(newSettings);
 
     settings = { ...settings, ...migratedSettings };
+    settingsStore.set(settings);
 
     return getSettings();
 };
 
 export const resetSettings = (): Settings => {
     settings = JSON.parse(JSON.stringify(defaultSettings));
+    settingsStore.set(settings);
     return settings;
 };
 
 export const updateGeneralSetting = (name: string, value: string | boolean): Settings => {
     settings.generalSettings[name] = value;
+    settingsStore.set(settings);
 
     /* Prevent duplicate values in user settings for now,
        at least until I start porting the pre-1.23.0 settings
@@ -283,6 +289,7 @@ export const isFeatureEnabled = (internalName: string): boolean => {
  */
 export const toggleFeature = (internalName: string, enabled: boolean): FeatureFlag => {
     settings.features[internalName] = enabled;
+    settingsStore.set(settings);
     return settings.features;
 };
 
