@@ -6,7 +6,8 @@ import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { getSettings, resetSettings, settingsStore, updateSettings } from '../../src/Config/Settings';
+import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { settingsStore } from '../../src/ui/SettingsStore';
 import { DateFallback } from '../../src/DateTime/DateFallback';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import type { Task } from '../../src/Task/Task';
@@ -175,6 +176,7 @@ function getElementValue(container: HTMLElement, elementId: string) {
 
 afterEach(() => {
     resetSettings();
+    settingsStore.set(getSettings());
 });
 
 describe('Task rendering', () => {
@@ -693,7 +695,6 @@ function verifyModalHTML() {
 describe('Edit Modal HTML snapshot tests', () => {
     afterEach(() => {
         resetSettings();
-        settingsStore.set(getSettings());
     });
 
     it('should match snapshot', () => {
