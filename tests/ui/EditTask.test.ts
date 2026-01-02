@@ -4,6 +4,7 @@
 import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
+import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { DateFallback } from '../../src/DateTime/DateFallback';
@@ -19,6 +20,7 @@ import {
     getAndCheckApplyButton,
     getAndCheckRenderedDescriptionElement,
     getAndCheckRenderedElement,
+    randomIndex,
 } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -729,6 +731,16 @@ describe('Hiding modal fields', () => {
     }
 
     it.each(fields)('should show %s field by default', (field) => {
+        testElementRendered(field);
+    });
+
+    it.each(fields)('should show %s field even if it is absent in the settings', (field) => {
+        const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
+        const randomField = fields[randomIndex(fields.length - 1)];
+        const optionsWithoutARandomField = { ...getSettings().isShownInEditModal };
+        delete optionsWithoutARandomField[randomField];
+        updateSettings({ isShownInEditModal: optionsWithoutARandomField });
+
         testElementRendered(field);
     });
 

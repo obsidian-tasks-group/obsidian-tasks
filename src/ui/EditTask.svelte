@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { defaultEditModalShowSettings } from '../Config/EditModalShowSettings';
 
     import { TASK_FORMATS, getSettings, settingsStore } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
@@ -60,7 +61,7 @@
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
-    $: isShownInEditModal = $settingsStore.isShownInEditModal;
+    $: isShownInEditModal = { ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal };
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
