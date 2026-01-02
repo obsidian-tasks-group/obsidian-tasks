@@ -77,6 +77,8 @@
         const optionsModal = new OptionsModal({
             app,
             onSave: refreshSettings,
+            // not needed here since the closing is managed automatically in this context
+            onClose: () => {},
         });
         optionsModal.open();
     };
