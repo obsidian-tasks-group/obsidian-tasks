@@ -720,10 +720,13 @@ describe('Hiding modal fields', () => {
     }
 
     const fields: (keyof EditModalShowSettings)[] = [
+        'priority',
+
         'recurrence',
         'due',
         'scheduled',
         'start',
+
         'created',
         'done',
         'cancelled',

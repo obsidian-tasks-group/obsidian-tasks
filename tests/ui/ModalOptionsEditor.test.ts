@@ -41,10 +41,13 @@ describe('ModalOptionsEditor settings edit tests', () => {
     const saveSettings = () => (savedSettings = getSettings());
 
     const fields: (keyof EditModalShowSettings)[] = [
+        'priority',
+
         'recurrence',
         'due',
         'scheduled',
         'start',
+
         'created',
         'done',
         'cancelled',
