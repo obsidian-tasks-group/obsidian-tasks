@@ -1,5 +1,6 @@
 import { type RenderResult, render } from '@testing-library/svelte';
-import { type EditModalShowSettings, type Settings, getSettings, resetSettings } from '../../src/Config/Settings';
+import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
+import { type Settings, getSettings, resetSettings } from '../../src/Config/Settings';
 import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
