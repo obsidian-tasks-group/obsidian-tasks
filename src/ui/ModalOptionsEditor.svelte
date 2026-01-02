@@ -4,12 +4,10 @@
     export let onSave: () => void;
     export let onClose: () => void;
 
-    const { isShownInEditModal } = getSettings();
-
     // Create a reactive object for the options
     // Forced to use any here instead of EditModalShowSettings. Otherwise there is a compiler error at
     // <input type="checkbox" checked={options[fieldName]} /> below. This is solved in Svelte 5.
-    let options: any = { ...isShownInEditModal };
+    let options: any = { ...getSettings().isShownInEditModal };
 
     const onChange = (fieldName: string) => (event: Event) => {
         options[fieldName] = (event.target as HTMLInputElement).checked;
