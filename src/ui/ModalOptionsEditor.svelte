@@ -22,6 +22,8 @@
     const formatFieldName = (fieldName: string): string => {
         return fieldName.charAt(0).toUpperCase() + fieldName.slice(1).replace('_', ' ');
     };
+
+    const withLinesAfterFields = ['priority', 'start', 'after_this'];
 </script>
 
 <div class="options-modal">
@@ -31,6 +33,10 @@
                 <input type="checkbox" checked={options[fieldName]} id={fieldName} on:change={onChange(fieldName)} />
                 <span>{formatFieldName(fieldName)}</span>
             </label>
+
+            {#if withLinesAfterFields.includes(fieldName)}
+                <hr />
+            {/if}
         {/each}
     </div>
 
