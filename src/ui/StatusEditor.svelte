@@ -58,7 +58,7 @@
     };
 </script>
 
-<label for="status">{@html labelContentWithAccessKey('Status', accesskey)}</label>
+<label for="status" id="status">{@html labelContentWithAccessKey('Status', accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <select
     bind:value={statusSymbol}
