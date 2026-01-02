@@ -69,10 +69,8 @@ export class TaskModal extends Modal {
             props: {
                 task: this.task,
                 statusOptions: statusOptions,
-                onSaveSettings: this.onSaveSettings,
                 onSubmit: this.onSubmit,
                 allTasks: this.allTasks,
-                app: this.app,
             },
         });
     }
