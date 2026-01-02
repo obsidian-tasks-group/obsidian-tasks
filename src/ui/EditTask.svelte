@@ -294,8 +294,10 @@ Availability of access keys:
             <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
         {/if}
     </section>
+    {#if isShownInEditModal.before_this || isShownInEditModal.after_this}
+        <hr id="line-after-dependencies" />
+    {/if}
 
-    <hr id="line-after-dependencies" />
     <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
