@@ -718,6 +718,20 @@ describe('Hiding modal fields', () => {
 
     const fields = Object.keys(getSettings().isShownInEditModal);
 
+    function testElementRendered(elementId: string) {
+        const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+        const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
+
+        const onSubmit = (_: Task[]): void => {};
+        const { container } = renderAndCheckModal(task, onSubmit);
+
+        getAndCheckRenderedElement(container, elementId);
+    }
+
+    it.each(fields)('should show %s field by default', (field) => {
+        testElementRendered(field);
+    });
+
     it.each(fields)('should hide %s field', (field) => {
         const withHiddenField = { ...getSettings().isShownInEditModal, [field]: false };
         updateSettings({ isShownInEditModal: withHiddenField });
