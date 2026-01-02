@@ -5,6 +5,7 @@ import EditTask from '../ui/EditTask.svelte';
 import type { Task } from '../Task/Task';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
+import { OptionsModal } from './OptionsModal';
 
 export interface TaskModalParams {
     app: App;
@@ -42,6 +43,20 @@ export class TaskModal extends Modal {
         optionsButton.addClasses(['modal-close-button', 'mod-raised', 'clickable-icon']);
         optionsButton.style.insetInlineEnd = '32px';
         setIcon(optionsButton, 'settings');
+        optionsButton.onclick = () => {
+            this.close();
+
+            const optionsModal = new OptionsModal({
+                app: this.app,
+                onSave: () => {
+                    this.onSaveSettings().then(() => this.open());
+                },
+                onClose: () => {
+                    this.open();
+                },
+            });
+            optionsModal.open();
+        };
         this.modalEl.appendChild(optionsButton);
 
         const { contentEl } = this;
