@@ -236,23 +236,27 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
-        <div class="future-dates-only" id="only-future-dates">
-            <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:checked={editableTask.forwardOnly}
-                id="forwardOnly"
-                type="checkbox"
-                class="task-list-item-checkbox tasks-modal-checkbox"
-                accesskey={accesskey('f')}
-            />
-        </div>
+        {#if isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start}
+            <div class="future-dates-only" id="only-future-dates">
+                <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
+                <!-- svelte-ignore a11y-accesskey -->
+                <input
+                    bind:checked={editableTask.forwardOnly}
+                    id="forwardOnly"
+                    type="checkbox"
+                    class="task-list-item-checkbox tasks-modal-checkbox"
+                    accesskey={accesskey('f')}
+                />
+            </div>
+        {/if}
     </section>
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dependencies  -->
     <!-- --------------------------------------------------------------------------- -->
-    <hr id="line-after-happens-dates" />
+    {#if isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start}
+        <hr id="line-after-happens-dates" />
+    {/if}
     <section class="tasks-modal-dependencies-section">
         {#if allTasks.length > 0 && mountComplete}
             <!-- --------------------------------------------------------------------------- -->
