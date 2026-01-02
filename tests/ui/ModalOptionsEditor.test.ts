@@ -48,6 +48,9 @@ describe('ModalOptionsEditor settings edit tests', () => {
         'scheduled',
         'start',
 
+        'before_this',
+        'after_this',
+
         'created',
         'done',
         'cancelled',
