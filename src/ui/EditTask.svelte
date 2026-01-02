@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { App } from 'obsidian';
     import { onMount } from 'svelte';
 
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
@@ -15,11 +14,9 @@
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
-    export let onSaveSettings: () => Promise<void>;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
     export let allTasks: Task[];
-    export let app: App;
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED

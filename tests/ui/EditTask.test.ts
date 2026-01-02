@@ -14,7 +14,6 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { mockApp } from '../__mocks__/obsidian';
 import {
     editInputElement,
     getAndCheckApplyButton,
@@ -48,10 +47,8 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
     const result: RenderResult<EditTask> = render(EditTask, {
         task,
         statusOptions: StatusRegistry.getInstance().registeredStatuses,
-        onSaveSettings: async () => await Promise.resolve(),
         onSubmit,
         allTasks,
-        app: mockApp,
     });
     const { container } = result;
     expect(() => container).toBeTruthy();
