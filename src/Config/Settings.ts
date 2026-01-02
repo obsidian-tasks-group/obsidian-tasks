@@ -76,6 +76,9 @@ export interface EditModalShowSettings {
     scheduled: boolean;
     start: boolean;
 
+    before_this: boolean;
+    after_this: boolean;
+
     created: boolean;
     done: boolean;
     cancelled: boolean;
@@ -146,6 +149,9 @@ const defaultSettings: Readonly<Settings> = {
         due: true,
         scheduled: true,
         start: true,
+
+        before_this: true,
+        after_this: true,
 
         created: true,
         done: true,

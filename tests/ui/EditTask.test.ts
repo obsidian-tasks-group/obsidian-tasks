@@ -727,6 +727,9 @@ describe('Hiding modal fields', () => {
         'scheduled',
         'start',
 
+        'before_this',
+        'after_this',
+
         'created',
         'done',
         'cancelled',

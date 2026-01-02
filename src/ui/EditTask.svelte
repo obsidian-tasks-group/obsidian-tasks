@@ -258,30 +258,34 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocked By Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <Dependency
-                type="blockedBy"
-                labelText="Before this"
-                {task}
-                {editableTask}
-                {allTasks}
-                {_onDescriptionKeyDown}
-                accesskey={accesskey('b')}
-                placeholder="Search for tasks that the task being edited depends on..."
-            />
+            {#if isShownInEditModal.before_this}
+                <Dependency
+                    type="blockedBy"
+                    labelText="Before this"
+                    {task}
+                    {editableTask}
+                    {allTasks}
+                    {_onDescriptionKeyDown}
+                    accesskey={accesskey('b')}
+                    placeholder="Search for tasks that the task being edited depends on..."
+                />
+            {/if}
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocking Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <Dependency
-                type="blocking"
-                labelText="After this"
-                {task}
-                {editableTask}
-                {allTasks}
-                {_onDescriptionKeyDown}
-                accesskey={accesskey('e')}
-                placeholder="Search for tasks that depend on this task being done..."
-            />
+            {#if isShownInEditModal.after_this}
+                <Dependency
+                    type="blocking"
+                    labelText="After this"
+                    {task}
+                    {editableTask}
+                    {allTasks}
+                    {_onDescriptionKeyDown}
+                    accesskey={accesskey('e')}
+                    placeholder="Search for tasks that depend on this task being done..."
+                />
+            {/if}
         {:else}
             <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
         {/if}
