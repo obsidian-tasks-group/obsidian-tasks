@@ -202,20 +202,17 @@ export const updateSettings = (newSettings: Partial<Settings>): Settings => {
     const migratedSettings = migrateSettings(newSettings);
 
     settings = { ...settings, ...migratedSettings };
-    settingsStore.set(settings);
 
     return getSettings();
 };
 
 export const resetSettings = (): Settings => {
     settings = JSON.parse(JSON.stringify(defaultSettings));
-    settingsStore.set(settings);
     return settings;
 };
 
 export const updateGeneralSetting = (name: string, value: string | boolean): Settings => {
     settings.generalSettings[name] = value;
-    settingsStore.set(settings);
 
     /* Prevent duplicate values in user settings for now,
        at least until I start porting the pre-1.23.0 settings
