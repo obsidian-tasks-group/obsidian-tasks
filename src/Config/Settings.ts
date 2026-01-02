@@ -69,6 +69,7 @@ export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some 
  * Edited within {@link OptionsModal}.
  */
 export interface EditModalShowSettings {
+    // NEW_TASK_FIELD_EDIT_REQUIRED
     priority: boolean;
 
     recurrence: boolean;
