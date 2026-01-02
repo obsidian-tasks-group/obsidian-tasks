@@ -730,6 +730,7 @@ describe('Hiding modal fields', () => {
         'before_this',
         'after_this',
 
+        'status',
         'created',
         'done',
         'cancelled',
