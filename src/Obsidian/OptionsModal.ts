@@ -26,6 +26,7 @@ export class OptionsModal extends Modal {
     public onOpen(): void {
         this.titleEl.setText('Options');
         this.modalEl.style.paddingBottom = '0';
+        this.modalEl.style.width = 'fit-content';
 
         const { contentEl } = this;
         this.contentEl.style.paddingBottom = '0';
