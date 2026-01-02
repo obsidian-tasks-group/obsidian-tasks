@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
 
-    import { TASK_FORMATS, getSettings } from '../Config/Settings';
+    import { TASK_FORMATS, getSettings, settingsStore } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
     import DateEditor from './DateEditor.svelte';
@@ -60,7 +60,7 @@
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
-    const { isShownInEditModal } = getSettings();
+    $: isShownInEditModal = $settingsStore.isShownInEditModal;
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
