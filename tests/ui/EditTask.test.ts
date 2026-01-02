@@ -5,7 +5,7 @@ import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { DateFallback } from '../../src/DateTime/DateFallback';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import type { Task } from '../../src/Task/Task';
@@ -720,7 +720,7 @@ describe('Hiding modal fields', () => {
     }
 
     it('should hide due field', () => {
-        updateSettings({ isShownInEditModal: { due: false } });
+        updateSettings({ isShownInEditModal: { ...getSettings().isShownInEditModal, due: false } });
 
         testElementNotRendered('due');
     });

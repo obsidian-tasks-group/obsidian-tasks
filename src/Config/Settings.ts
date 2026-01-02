@@ -70,6 +70,12 @@ export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some 
  */
 export interface EditModalShowSettings {
     due: boolean;
+    scheduled: boolean;
+    start: boolean;
+
+    created: boolean;
+    done: boolean;
+    cancelled: boolean;
 }
 
 export interface Settings {
@@ -130,7 +136,7 @@ const defaultSettings: Readonly<Settings> = {
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
     statusSettings: new StatusSettings(),
-    isShownInEditModal: { due: true },
+    isShownInEditModal: { due: true, scheduled: true, start: true, created: true, done: true, cancelled: true },
     features: Feature.settingsFlags,
     generalSettings: {
         /* Prevent duplicate values in user settings for now,
