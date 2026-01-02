@@ -26,10 +26,10 @@
     const withLinesAfterFields = ['priority', 'start', 'after_this'];
 </script>
 
-<div class="options-modal">
-    <div class="checkbox-group">
+<div class="tasks-options-modal">
+    <div class="tasks-options-modal-checkboxes">
         {#each Object.keys(options) as fieldName}
-            <label class="checkbox-item">
+            <label>
                 <input type="checkbox" checked={options[fieldName]} id={fieldName} on:change={onChange(fieldName)} />
                 <span>{formatFieldName(fieldName)}</span>
             </label>
@@ -40,7 +40,7 @@
         {/each}
     </div>
 
-    <div class="modal-footer">
+    <div class="tasks-options-modal-footer">
         <button type="button" class="mod-cta" on:click={_onSave}>Apply</button>
         <button type="button" on:click={onClose}>Cancel</button>
     </div>
