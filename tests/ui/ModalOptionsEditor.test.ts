@@ -1,6 +1,6 @@
 import { type RenderResult, render } from '@testing-library/svelte';
 import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
-import { type Settings, getSettings, resetSettings } from '../../src/Config/Settings';
+import { type Settings, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -29,6 +29,20 @@ afterEach(() => {
 
 describe('ModalOptionsEditor snapshot tests', () => {
     it('should match snapshot', () => {
+        verifyModalHTML();
+    });
+
+    function randomIndex(max: number) {
+        return Math.floor(Math.random() * max);
+    }
+
+    it('should match snapshot - all options present even when a random option is absent', () => {
+        const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
+        const randomField = fields[randomIndex(fields.length - 1)];
+        const optionsWithoutARandomField = { ...getSettings().isShownInEditModal };
+        delete optionsWithoutARandomField[randomField];
+        updateSettings({ isShownInEditModal: optionsWithoutARandomField });
+
         verifyModalHTML();
     });
 });
