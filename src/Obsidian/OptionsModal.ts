@@ -21,10 +21,6 @@ export class OptionsModal extends Modal {
     constructor({ app, onSave }: OptionsModalParams) {
         super(app);
         this.onSave = onSave;
-        this.onClose = () => {
-            const { contentEl } = this;
-            contentEl.empty();
-        };
     }
 
     public onOpen(): void {
@@ -50,5 +46,10 @@ export class OptionsModal extends Modal {
                 },
             },
         });
+    }
+
+    public onClose(): void {
+        const { contentEl } = this;
+        contentEl.empty();
     }
 }
