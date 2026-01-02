@@ -6,7 +6,7 @@ import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { getSettings, resetSettings, settingsStore, updateSettings } from '../../src/Config/Settings';
 import { DateFallback } from '../../src/DateTime/DateFallback';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import type { Task } from '../../src/Task/Task';
@@ -693,6 +693,7 @@ function verifyModalHTML() {
 describe('Edit Modal HTML snapshot tests', () => {
     afterEach(() => {
         resetSettings();
+        settingsStore.set(getSettings());
     });
 
     it('should match snapshot', () => {
@@ -750,18 +751,21 @@ describe('Hiding modal fields', () => {
 
     it.each(fields)('should hide %s field', (field) => {
         updateSettings({ isShownInEditModal: hideFields(field) });
+        settingsStore.set(getSettings());
 
         testElementNotRendered(field);
     });
 
     it('should hide line after priority', () => {
         updateSettings({ isShownInEditModal: hideFields('priority') });
+        settingsStore.set(getSettings());
 
         testElementNotRendered('line-after-priority');
     });
 
     it('should hide "Only future dates checkbox" and line after happens dates', () => {
         updateSettings({ isShownInEditModal: hideFields('due', 'scheduled', 'start') });
+        settingsStore.set(getSettings());
 
         testElementNotRendered('only-future-dates');
         testElementNotRendered('line-after-happens-dates');
@@ -769,6 +773,7 @@ describe('Hiding modal fields', () => {
 
     it('should hide line after dependencies', () => {
         updateSettings({ isShownInEditModal: hideFields('before_this', 'after_this') });
+        settingsStore.set(getSettings());
 
         testElementNotRendered('line-after-dependencies');
     });

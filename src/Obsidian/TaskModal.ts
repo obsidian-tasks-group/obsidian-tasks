@@ -1,5 +1,7 @@
 import { type App, setIcon } from 'obsidian';
 import { Modal } from 'obsidian';
+import type { EditModalShowSettings } from '../Config/EditModalShowSettings';
+import { getSettings, settingsStore } from '../Config/Settings';
 
 import EditTask from '../ui/EditTask.svelte';
 import type { Task } from '../Task/Task';
@@ -34,6 +36,8 @@ export class TaskModal extends Modal {
     }
 
     public onOpen(): void {
+        settingsStore.set(getSettings());
+
         this.titleEl.setText('Create or edit Task');
         this.modalEl.style.paddingBottom = '0';
 
@@ -46,8 +50,8 @@ export class TaskModal extends Modal {
         optionsButton.onclick = () => {
             const optionsModal = new OptionsModal({
                 app: this.app,
-                onSave: () => {
-                    this.onSaveSettings();
+                onSave: (isShownInEditModal: EditModalShowSettings) => {
+                    this.onSaveSettings().then(() => settingsStore.set({ ...getSettings(), isShownInEditModal }));
                 },
             });
             optionsModal.open();
