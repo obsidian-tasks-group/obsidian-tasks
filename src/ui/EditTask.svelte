@@ -204,26 +204,30 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="scheduled"
-            dateSymbol={scheduledDateSymbol}
-            bind:date={editableTask.scheduledDate}
-            bind:isDateValid={isScheduledDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('s')}
-        />
+        {#if isShownInEditModal.scheduled}
+            <DateEditor
+                id="scheduled"
+                dateSymbol={scheduledDateSymbol}
+                bind:date={editableTask.scheduledDate}
+                bind:isDateValid={isScheduledDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('s')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Start Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="start"
-            dateSymbol={startDateSymbol}
-            bind:date={editableTask.startDate}
-            bind:isDateValid={isStartDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('a')}
-        />
+        {#if isShownInEditModal.start}
+            <DateEditor
+                id="start"
+                dateSymbol={startDateSymbol}
+                bind:date={editableTask.startDate}
+                bind:isDateValid={isStartDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('a')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Only future dates  -->
@@ -289,38 +293,44 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="created"
-            dateSymbol={createdDateSymbol}
-            bind:date={editableTask.createdDate}
-            bind:isDateValid={isCreatedDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('c')}
-        />
+        {#if isShownInEditModal.created}
+            <DateEditor
+                id="created"
+                dateSymbol={createdDateSymbol}
+                bind:date={editableTask.createdDate}
+                bind:isDateValid={isCreatedDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('c')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Done Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="done"
-            dateSymbol={doneDateSymbol}
-            bind:date={editableTask.doneDate}
-            bind:isDateValid={isDoneDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('x')}
-        />
+        {#if isShownInEditModal.done}
+            <DateEditor
+                id="done"
+                dateSymbol={doneDateSymbol}
+                bind:date={editableTask.doneDate}
+                bind:isDateValid={isDoneDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('x')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Cancelled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="cancelled"
-            dateSymbol={cancelledDateSymbol}
-            bind:date={editableTask.cancelledDate}
-            bind:isDateValid={isCancelledDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('-')}
-        />
+        {#if isShownInEditModal.cancelled}
+            <DateEditor
+                id="cancelled"
+                dateSymbol={cancelledDateSymbol}
+                bind:date={editableTask.cancelledDate}
+                bind:isDateValid={isCancelledDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('-')}
+            />
+        {/if}
     </section>
 
     <section class="tasks-modal-button-section">
