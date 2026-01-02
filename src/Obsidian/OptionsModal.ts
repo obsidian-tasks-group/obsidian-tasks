@@ -30,7 +30,9 @@ export class OptionsModal extends Modal {
     }
 
     public onOpen(): void {
-        this.titleEl.setText('Options');
+        this.titleEl.setText('Hide unused fields');
+        this.titleEl.style.marginRight = '24px';
+
         this.modalEl.style.paddingBottom = '0';
         this.modalEl.style.width = 'fit-content';
 
