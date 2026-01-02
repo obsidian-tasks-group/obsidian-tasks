@@ -46,7 +46,7 @@
         </label>
       </div>
     </section>
-    <hr />
+    <hr id="line-after-priority" />
     <section class="tasks-modal-dates-section">
       <label for="recurrence">Recurs</label>
       <input id="recurrence" type="text" class="tasks-modal-date-input" placeholder="Try 'every day when done'" />
@@ -76,12 +76,12 @@
         🛫
         <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
       </div>
-      <div class="future-dates-only">
+      <div class="future-dates-only" id="only-future-dates">
         <label for="forwardOnly">Only future dates:</label>
         <input id="forwardOnly" type="checkbox" class="task-list-item-checkbox tasks-modal-checkbox" />
       </div>
     </section>
-    <hr />
+    <hr id="line-after-happens-dates" />
     <section class="tasks-modal-dependencies-section">
       <label for="blockedBy">Before this</label>
       <span>
@@ -134,7 +134,7 @@
           src="about:blank"></iframe>
       </span>
     </section>
-    <hr />
+    <hr id="line-after-dependencies" />
     <section class="tasks-modal-dates-section">
       <label for="status">Status</label>
       <select id="status-type" class="status-editor-status-selector">

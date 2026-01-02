@@ -183,7 +183,7 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dates  -->
     <!-- --------------------------------------------------------------------------- -->
-    <hr />
+    <hr id="line-after-priority" />
     <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
@@ -236,7 +236,7 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
-        <div class="future-dates-only">
+        <div class="future-dates-only" id="only-future-dates">
             <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
@@ -252,7 +252,7 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dependencies  -->
     <!-- --------------------------------------------------------------------------- -->
-    <hr />
+    <hr id="line-after-happens-dates" />
     <section class="tasks-modal-dependencies-section">
         {#if allTasks.length > 0 && mountComplete}
             <!-- --------------------------------------------------------------------------- -->
@@ -291,7 +291,7 @@ Availability of access keys:
         {/if}
     </section>
 
-    <hr />
+    <hr id="line-after-dependencies" />
     <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
