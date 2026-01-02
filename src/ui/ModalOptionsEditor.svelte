@@ -22,7 +22,7 @@
 
     // Helper to format field names for display
     const formatFieldName = (fieldName: string): string => {
-        return fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+        return fieldName.charAt(0).toUpperCase() + fieldName.slice(1).replace('_', ' ');
     };
 </script>
 
