@@ -245,6 +245,7 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             {#if isShownInEditModal.before_this}
                 <Dependency
+                    id="before_this"
                     type="blockedBy"
                     labelText="Before this"
                     {task}
@@ -261,6 +262,7 @@ Availability of access keys:
             <!-- --------------------------------------------------------------------------- -->
             {#if isShownInEditModal.after_this}
                 <Dependency
+                    id="after_this"
                     type="blocking"
                     labelText="After this"
                     {task}
