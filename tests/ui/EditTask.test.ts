@@ -719,7 +719,15 @@ describe('Hiding modal fields', () => {
         expect(element).toBeNull();
     }
 
-    const fields: (keyof EditModalShowSettings)[] = ['due', 'scheduled', 'start', 'created', 'done', 'cancelled'];
+    const fields: (keyof EditModalShowSettings)[] = [
+        'recurrence',
+        'due',
+        'scheduled',
+        'start',
+        'created',
+        'done',
+        'cancelled',
+    ];
 
     it.each(fields)('should hide %s field', (field) => {
         const withHiddenField = { ...getSettings().isShownInEditModal, [field]: false };
