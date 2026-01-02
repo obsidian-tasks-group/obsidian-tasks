@@ -68,7 +68,7 @@ export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some 
  *
  * Edited within {@link OptionsModal}.
  */
-interface EditModalShowSettings {
+export interface EditModalShowSettings {
     due: boolean;
 }
 

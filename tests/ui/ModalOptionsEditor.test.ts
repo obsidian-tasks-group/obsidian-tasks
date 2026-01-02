@@ -1,5 +1,5 @@
 import { type RenderResult, render } from '@testing-library/svelte';
-import { type Settings, getSettings, resetSettings } from '../../src/Config/Settings';
+import { type EditModalShowSettings, type Settings, getSettings, resetSettings } from '../../src/Config/Settings';
 import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -40,29 +40,31 @@ describe('ModalOptionsEditor settings edit tests', () => {
 
     const saveSettings = () => (savedSettings = getSettings());
 
-    it('should set due as hidden when Apply is clicked', async () => {
+    const fields: (keyof EditModalShowSettings)[] = ['due'];
+
+    it.each(fields)('should set %s as hidden when Apply is clicked', async (field) => {
         const { result, container } = renderAndCheckModal(saveSettings);
 
-        await uncheckCheckbox(container, 'due');
+        await uncheckCheckbox(container, field);
         // unchecking has not changed the global settings
-        expect(getSettings().isShownInEditModal['due']).toEqual(true);
+        expect(getSettings().isShownInEditModal[field]).toEqual(true);
 
         checkAndClickApplyButton(result);
         // clicking the apply button actually saves the settings globally
-        expect(getSettings().isShownInEditModal['due']).toEqual(false);
+        expect(getSettings().isShownInEditModal[field]).toEqual(false);
         // checking that the settings edit would be saved in data.json
-        expect(savedSettings.isShownInEditModal['due']).toEqual(false);
+        expect(savedSettings.isShownInEditModal[field]).toEqual(false);
     });
 
-    it('should not save changes when Cancel is clicked', async () => {
+    it.each(fields)('should not save changes when Cancel is clicked', async (field) => {
         const { result, container } = renderAndCheckModal(saveSettings);
 
-        await uncheckCheckbox(container, 'due');
+        await uncheckCheckbox(container, field);
 
         checkAndClickCancelButton(result);
         // clicking the cancel button has not saved the settings globally
-        expect(getSettings().isShownInEditModal['due']).toEqual(true);
+        expect(getSettings().isShownInEditModal[field]).toEqual(true);
         // checking that the settings edit would not be saved in data.json
-        expect(savedSettings.isShownInEditModal['due']).toEqual(true);
+        expect(savedSettings.isShownInEditModal[field]).toEqual(true);
     });
 });
