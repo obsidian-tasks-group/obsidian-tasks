@@ -250,13 +250,13 @@ Availability of access keys:
             </div>
         {/if}
     </section>
+    {#if isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start}
+        <hr id="line-after-happens-dates" />
+    {/if}
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dependencies  -->
     <!-- --------------------------------------------------------------------------- -->
-    {#if isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start}
-        <hr id="line-after-happens-dates" />
-    {/if}
     <section class="tasks-modal-dependencies-section">
         {#if allTasks.length > 0 && mountComplete}
             <!-- --------------------------------------------------------------------------- -->
