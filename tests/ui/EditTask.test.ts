@@ -741,4 +741,11 @@ describe('Hiding modal fields', () => {
 
         testElementNotRendered(field);
     });
+
+    it('should hide line after priority', () => {
+        const withHiddenField = { ...getSettings().isShownInEditModal, priority: false };
+        updateSettings({ isShownInEditModal: withHiddenField });
+
+        testElementNotRendered('line-after-priority');
+    });
 });
