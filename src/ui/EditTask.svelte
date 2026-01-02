@@ -2,9 +2,10 @@
     import { onMount } from 'svelte';
     import { defaultEditModalShowSettings } from '../Config/EditModalShowSettings';
 
-    import { TASK_FORMATS, getSettings, settingsStore } from '../Config/Settings';
+    import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
+    import { settingsStore } from './SettingsStore';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';

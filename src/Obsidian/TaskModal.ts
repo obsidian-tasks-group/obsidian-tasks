@@ -1,7 +1,8 @@
 import { type App, setIcon } from 'obsidian';
 import { Modal } from 'obsidian';
 import type { EditModalShowSettings } from '../Config/EditModalShowSettings';
-import { getSettings, settingsStore } from '../Config/Settings';
+import { getSettings } from '../Config/Settings';
+import { settingsStore } from '../ui/SettingsStore';
 
 import EditTask from '../ui/EditTask.svelte';
 import type { Task } from '../Task/Task';

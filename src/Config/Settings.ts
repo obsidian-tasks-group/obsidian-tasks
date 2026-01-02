@@ -1,4 +1,3 @@
-import { writable } from 'svelte/store';
 import {
     DEFAULT_MAX_GENERIC_SUGGESTIONS,
     makeDefaultSuggestionBuilder,
@@ -158,8 +157,6 @@ const defaultSettings: Readonly<Settings> = {
 
 let settings: Settings = { ...defaultSettings };
 
-export const settingsStore = writable(settings);
-
 function addNewOptionsToUserSettings<KeysAndValues>(defaultValues: KeysAndValues, userValues: KeysAndValues) {
     for (const flag in defaultValues) {
         if (userValues[flag] === undefined) {
@@ -247,7 +244,6 @@ export const isFeatureEnabled = (internalName: string): boolean => {
  */
 export const toggleFeature = (internalName: string, enabled: boolean): FeatureFlag => {
     settings.features[internalName] = enabled;
-    settingsStore.set(settings);
     return settings.features;
 };
 
