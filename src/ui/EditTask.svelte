@@ -302,7 +302,9 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        <StatusEditor {task} bind:editableTask {statusOptions} accesskey={accesskey('u')} />
+        {#if isShownInEditModal.status}
+            <StatusEditor {task} bind:editableTask {statusOptions} accesskey={accesskey('u')} />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->

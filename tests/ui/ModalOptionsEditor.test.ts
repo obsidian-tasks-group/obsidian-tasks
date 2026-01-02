@@ -51,6 +51,7 @@ describe('ModalOptionsEditor settings edit tests', () => {
         'before_this',
         'after_this',
 
+        'status',
         'created',
         'done',
         'cancelled',
