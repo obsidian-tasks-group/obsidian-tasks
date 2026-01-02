@@ -45,13 +45,13 @@ describe('ModalOptionsEditor settings edit tests', () => {
 
         await uncheckCheckbox(container, 'due');
         // unchecking has not changed the global settings
-        expect(getSettings().isShownInEditModal.due).toEqual(true);
+        expect(getSettings().isShownInEditModal['due']).toEqual(true);
 
         checkAndClickApplyButton(result);
         // clicking the apply button actually saves the settings globally
-        expect(getSettings().isShownInEditModal.due).toEqual(false);
+        expect(getSettings().isShownInEditModal['due']).toEqual(false);
         // checking that the settings edit would be saved in data.json
-        expect(savedSettings.isShownInEditModal.due).toEqual(false);
+        expect(savedSettings.isShownInEditModal['due']).toEqual(false);
     });
 
     it('should not save changes when Cancel is clicked', async () => {
@@ -61,8 +61,8 @@ describe('ModalOptionsEditor settings edit tests', () => {
 
         checkAndClickCancelButton(result);
         // clicking the cancel button has not saved the settings globally
-        expect(getSettings().isShownInEditModal.due).toEqual(true);
+        expect(getSettings().isShownInEditModal['due']).toEqual(true);
         // checking that the settings edit would not be saved in data.json
-        expect(savedSettings.isShownInEditModal.due).toEqual(true);
+        expect(savedSettings.isShownInEditModal['due']).toEqual(true);
     });
 });
