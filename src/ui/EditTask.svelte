@@ -178,12 +178,12 @@ Availability of access keys:
         <section class="tasks-modal-priority-section">
             <PriorityEditor bind:priority={editableTask.priority} {withAccessKeys} />
         </section>
+        <hr id="line-after-priority" />
     {/if}
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dates  -->
     <!-- --------------------------------------------------------------------------- -->
-    <hr id="line-after-priority" />
     <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
