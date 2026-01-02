@@ -69,6 +69,8 @@ export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some 
  * Edited within {@link OptionsModal}.
  */
 export interface EditModalShowSettings {
+    priority: boolean;
+
     recurrence: boolean;
     due: boolean;
     scheduled: boolean;
@@ -138,10 +140,13 @@ const defaultSettings: Readonly<Settings> = {
     removeScheduledDateOnRecurrence: false,
     statusSettings: new StatusSettings(),
     isShownInEditModal: {
+        priority: true,
+
         recurrence: true,
         due: true,
         scheduled: true,
         start: true,
+
         created: true,
         done: true,
         cancelled: true,
