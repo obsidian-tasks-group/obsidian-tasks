@@ -5,7 +5,6 @@
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
-    import { OptionsModal } from '../Obsidian/OptionsModal';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';
@@ -64,24 +63,7 @@
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
-    $: isShownInEditModal = getSettings().isShownInEditModal;
-
-    const refreshSettings = () => {
-        // Make sure we save settings before updating the UI
-        onSaveSettings().then(() => {
-            isShownInEditModal = getSettings().isShownInEditModal;
-        });
-    };
-
-    const _onOptions = () => {
-        const optionsModal = new OptionsModal({
-            app,
-            onSave: refreshSettings,
-            // not needed here since the closing is managed automatically in this context
-            onClose: () => {},
-        });
-        optionsModal.open();
-    };
+    const { isShownInEditModal } = getSettings();
 
     onMount(() => {
         const { provideAccessKeys } = getSettings();
@@ -354,6 +336,5 @@ Availability of access keys:
     <section class="tasks-modal-button-section">
         <button disabled={!formIsValid} type="submit" class="mod-cta">Apply </button>
         <button type="button" on:click={_onClose}>Cancel</button>
-        <button type="button" on:click={_onOptions}>Options...</button>
     </section>
 </form>
