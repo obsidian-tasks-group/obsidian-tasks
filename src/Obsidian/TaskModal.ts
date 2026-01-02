@@ -44,16 +44,12 @@ export class TaskModal extends Modal {
         optionsButton.style.insetInlineEnd = '32px';
         setIcon(optionsButton, 'settings');
         optionsButton.onclick = () => {
-            this.close();
-
             const optionsModal = new OptionsModal({
                 app: this.app,
                 onSave: () => {
-                    this.onSaveSettings().then(() => this.open());
+                    this.onSaveSettings();
                 },
-                onClose: () => {
-                    this.open();
-                },
+                onClose: () => {},
             });
             optionsModal.open();
         };
