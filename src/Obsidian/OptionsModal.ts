@@ -8,7 +8,6 @@ import ModalOptionsEditor from '../ui/ModalOptionsEditor.svelte';
 export interface OptionsModalParams {
     app: App;
     onSave: () => void;
-    onClose: () => void;
 }
 
 /**
@@ -19,13 +18,12 @@ export interface OptionsModalParams {
 export class OptionsModal extends Modal {
     private readonly onSave: () => void;
 
-    constructor({ app, onSave, onClose }: OptionsModalParams) {
+    constructor({ app, onSave }: OptionsModalParams) {
         super(app);
         this.onSave = onSave;
         this.onClose = () => {
             const { contentEl } = this;
             contentEl.empty();
-            onClose();
         };
     }
 
