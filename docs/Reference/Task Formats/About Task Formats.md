@@ -34,6 +34,11 @@ Tasks supports these task formats:
   - `[start:: 2023-04-05], [scheduled:: 2023-04-06], [due:: 2023-04-07]`
   - `[created:: 2023-04-03], [completion:: 2023-04-08]`
   - **Note:** do read this format's documentation, as there are some important differences between Tasks and Dataview interpretations.
+- [[Custom Task Format]]
+  - Allows full configuration of the text patterns used for task components.
+  - `(Prio H) (Repeat every day when done)`
+  - `(Start 25.12.25) (Plan 25.12.25) (Due 25.12.25)`
+  - `(Created 25.12.25) (Done 25.12.25)`
 
 ## Impact of non-default task formats on Tasks behaviour
 
