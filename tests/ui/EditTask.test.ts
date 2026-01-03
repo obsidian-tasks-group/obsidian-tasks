@@ -755,7 +755,7 @@ describe('Hiding modal fields', () => {
     });
 
     function hideFields(fields: (keyof EditModalShowSettings)[]) {
-        const withHiddenField = { ...getSettings().isShownInEditModal, scheduled: false, start: false };
+        const withHiddenField = { ...getSettings().isShownInEditModal };
         for (const field of fields) {
             withHiddenField[field] = false;
         }
@@ -763,7 +763,7 @@ describe('Hiding modal fields', () => {
     }
 
     it('should hide "Only future dates checkbox" and line after happens dates', () => {
-        const withHiddenField = hideFields(['due']);
+        const withHiddenField = hideFields(['due', 'scheduled', 'start']);
         updateSettings({ isShownInEditModal: withHiddenField });
 
         testElementNotRendered('only-future-dates');
