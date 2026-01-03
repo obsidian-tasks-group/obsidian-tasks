@@ -770,8 +770,7 @@ describe('Hiding modal fields', () => {
     });
 
     it('should hide line after dependencies', () => {
-        const withHiddenField = { ...getSettings().isShownInEditModal, before_this: false, after_this: false };
-        updateSettings({ isShownInEditModal: withHiddenField });
+        updateSettings({ isShownInEditModal: hideFields(['before_this', 'after_this']) });
 
         testElementNotRendered('line-after-dependencies');
     });
