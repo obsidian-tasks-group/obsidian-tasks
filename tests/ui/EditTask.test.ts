@@ -761,6 +761,7 @@ describe('Hiding modal fields', () => {
     });
 
     it('should hide "Only future dates checkbox" and line after happens dates', () => {
+        // NEW_TASK_FIELD_EDIT_REQUIRED - add new happens date below
         updateSettings({ isShownInEditModal: hideFields('due', 'scheduled', 'start') });
 
         testElementNotRendered('only-future-dates');
