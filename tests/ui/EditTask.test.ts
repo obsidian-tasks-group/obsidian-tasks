@@ -763,8 +763,7 @@ describe('Hiding modal fields', () => {
     }
 
     it('should hide "Only future dates checkbox" and line after happens dates', () => {
-        const withHiddenField = hideFields(['due', 'scheduled', 'start']);
-        updateSettings({ isShownInEditModal: withHiddenField });
+        updateSettings({ isShownInEditModal: hideFields(['due', 'scheduled', 'start']) });
 
         testElementNotRendered('only-future-dates');
         testElementNotRendered('line-after-happens-dates');
