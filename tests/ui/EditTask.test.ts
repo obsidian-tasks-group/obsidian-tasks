@@ -4,6 +4,7 @@
 import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
+import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { DateFallback } from '../../src/DateTime/DateFallback';
@@ -753,13 +754,13 @@ describe('Hiding modal fields', () => {
         testElementNotRendered('line-after-priority');
     });
 
-    function hideFields() {
-        const withHiddenField = { ...getSettings().isShownInEditModal, due: false, scheduled: false, start: false };
+    function hideFields(field: keyof EditModalShowSettings) {
+        const withHiddenField = { ...getSettings().isShownInEditModal, [field]: false, scheduled: false, start: false };
         return withHiddenField;
     }
 
     it('should hide "Only future dates checkbox" and line after happens dates', () => {
-        const withHiddenField = hideFields();
+        const withHiddenField = hideFields('due');
         updateSettings({ isShownInEditModal: withHiddenField });
 
         testElementNotRendered('only-future-dates');
