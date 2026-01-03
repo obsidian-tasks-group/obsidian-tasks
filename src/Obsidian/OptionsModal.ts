@@ -1,6 +1,5 @@
 import type { App } from 'obsidian';
 import { Modal } from 'obsidian';
-import type { EditModalShowSettings } from '../Config/EditModalShowSettings';
 import ModalOptionsEditor from '../ui/ModalOptionsEditor.svelte';
 
 /**
@@ -8,7 +7,7 @@ import ModalOptionsEditor from '../ui/ModalOptionsEditor.svelte';
  */
 export interface OptionsModalParams {
     app: App;
-    onSave: (isShownInEditModal: EditModalShowSettings) => void;
+    onSave: () => void;
 }
 
 /**
@@ -17,7 +16,7 @@ export interface OptionsModalParams {
  * Implemented using {@link ModalOptionsEditor} Svelte component.
  */
 export class OptionsModal extends Modal {
-    private readonly onSave: (isShownInEditModal: EditModalShowSettings) => void;
+    private readonly onSave: () => void;
 
     constructor({ app, onSave }: OptionsModalParams) {
         super(app);
@@ -37,8 +36,8 @@ export class OptionsModal extends Modal {
         new ModalOptionsEditor({
             target: contentEl,
             props: {
-                onSave: (isShownInEditModal: EditModalShowSettings) => {
-                    this.onSave(isShownInEditModal);
+                onSave: () => {
+                    this.onSave();
                     this.close();
                 },
                 onClose: () => {
