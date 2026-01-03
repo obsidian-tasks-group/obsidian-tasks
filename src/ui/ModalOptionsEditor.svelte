@@ -1,6 +1,5 @@
 <script lang="ts">
     import { type EditModalShowSettings, defaultEditModalShowSettings } from '../Config/EditModalShowSettings';
-    import { updateSettings } from '../Config/Settings';
     import { settingsStore } from './SettingsStore';
 
     export let onSave: (isShownInEditModal: EditModalShowSettings) => void;
@@ -16,7 +15,7 @@
     };
 
     const _onSave = () => {
-        updateSettings({ isShownInEditModal: options });
+        settingsStore.set({ ...$settingsStore, isShownInEditModal: options });
         onSave(options);
     };
 
