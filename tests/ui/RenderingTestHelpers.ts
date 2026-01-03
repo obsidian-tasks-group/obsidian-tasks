@@ -56,7 +56,7 @@ export async function uncheckCheckbox(container: HTMLElement, elementId: string)
     await uncheckInput(inputElement);
 }
 
-export function randomIndex(max: number) {
+function randomIndex(max: number) {
     return Math.floor(Math.random() * max);
 }
 
