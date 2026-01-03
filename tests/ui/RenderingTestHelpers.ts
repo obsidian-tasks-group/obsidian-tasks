@@ -46,14 +46,10 @@ export async function editInputElement(inputElement: HTMLInputElement, newValue:
     await fireEvent.input(inputElement, { target: { value: newValue } });
 }
 
-export async function uncheckInput(inputElement: HTMLInputElement) {
-    await fireEvent.change(inputElement, { target: { checked: false } });
-}
-
 export async function uncheckCheckbox(container: HTMLElement, elementId: string) {
     const inputElement = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
 
-    await uncheckInput(inputElement);
+    await fireEvent.change(inputElement, { target: { checked: false } });
 }
 
 function randomIndex(max: number) {
