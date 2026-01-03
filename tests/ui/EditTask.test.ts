@@ -728,7 +728,7 @@ describe('Hiding modal fields', () => {
         expect(element).toBeNull();
     }
 
-    const fields = Object.keys(getSettings().isShownInEditModal);
+    const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
 
     it.each(fields)('should show %s field by default', (field) => {
         testElementRendered(field);
@@ -749,15 +749,13 @@ describe('Hiding modal fields', () => {
     }
 
     it.each(fields)('should hide %s field', (field) => {
-        const withHiddenField = { ...getSettings().isShownInEditModal, [field]: false };
-        updateSettings({ isShownInEditModal: withHiddenField });
+        updateSettings({ isShownInEditModal: hideFields([field]) });
 
         testElementNotRendered(field);
     });
 
     it('should hide line after priority', () => {
-        const withHiddenField = { ...getSettings().isShownInEditModal, priority: false };
-        updateSettings({ isShownInEditModal: withHiddenField });
+        updateSettings({ isShownInEditModal: hideFields(['priority']) });
 
         testElementNotRendered('line-after-priority');
     });
