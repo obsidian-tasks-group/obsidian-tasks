@@ -7,6 +7,14 @@
     }
 }
 
+.is-mobile {
+    .tasks-options-modal-container {
+        .modal-title {
+            margin-right: var(--size-4-12);
+        }
+    }
+}
+
 .tasks-options-modal {
     padding: 0;
 
