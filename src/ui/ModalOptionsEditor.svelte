@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { type EditModalShowSettings, defaultEditModalShowSettings } from '../Config/EditModalShowSettings';
+    import { defaultEditModalShowSettings } from '../Config/EditModalShowSettings';
     import { settingsStore } from './SettingsStore';
 
-    export let onSave: (isShownInEditModal: EditModalShowSettings) => void;
+    export let onSave: () => void;
     export let onClose: () => void;
 
     // Create a reactive object for the options
@@ -16,7 +16,7 @@
 
     const _onSave = () => {
         settingsStore.set({ ...$settingsStore, isShownInEditModal: options });
-        onSave(options);
+        onSave();
     };
 
     // Helper to format field names for display
