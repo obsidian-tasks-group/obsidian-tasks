@@ -51,8 +51,8 @@ export class TaskModal extends Modal {
         optionsButton.onclick = () => {
             const optionsModal = new OptionsModal({
                 app: this.app,
-                onSave: (isShownInEditModal: EditModalShowSettings) => {
-                    this.onSaveSettings().then(() => settingsStore.set({ ...getSettings(), isShownInEditModal }));
+                onSave: (_isShownInEditModal: EditModalShowSettings) => {
+                    this.onSaveSettings().then(() => {});
                 },
             });
             optionsModal.open();
