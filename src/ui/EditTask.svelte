@@ -65,6 +65,8 @@
     $: isShownInEditModal = { ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal };
 
     onMount(() => {
+        settingsStore.set(getSettings());
+
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
 
