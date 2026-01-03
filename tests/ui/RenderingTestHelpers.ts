@@ -1,4 +1,6 @@
 import { type RenderResult, fireEvent } from '@testing-library/svelte';
+import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
+import { getSettings } from '../../src/Config/Settings';
 import type EditTask from '../../src/ui/EditTask.svelte';
 import type ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
 
@@ -56,4 +58,12 @@ export async function uncheckCheckbox(container: HTMLElement, elementId: string)
 
 export function randomIndex(max: number) {
     return Math.floor(Math.random() * max);
+}
+
+export function optionsWithoutARandomField() {
+    const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
+    const randomField = fields[randomIndex(fields.length - 1)];
+    const optionsWithoutARandomField = { ...getSettings().isShownInEditModal };
+    delete optionsWithoutARandomField[randomField];
+    return optionsWithoutARandomField;
 }

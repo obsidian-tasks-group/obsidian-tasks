@@ -7,7 +7,7 @@ import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import {
     checkAndClickApplyButton,
     checkAndClickCancelButton,
-    randomIndex,
+    optionsWithoutARandomField,
     uncheckCheckbox,
 } from './RenderingTestHelpers';
 
@@ -38,11 +38,7 @@ describe('ModalOptionsEditor snapshot tests', () => {
     });
 
     it('should match snapshot - all options present even when a random option is absent', () => {
-        const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
-        const randomField = fields[randomIndex(fields.length - 1)];
-        const optionsWithoutARandomField = { ...getSettings().isShownInEditModal };
-        delete optionsWithoutARandomField[randomField];
-        updateSettings({ isShownInEditModal: optionsWithoutARandomField });
+        updateSettings({ isShownInEditModal: optionsWithoutARandomField() });
 
         verifyModalHTML();
     });
