@@ -1,7 +1,5 @@
 import { type App, setIcon } from 'obsidian';
 import { Modal } from 'obsidian';
-import { getSettings } from '../Config/Settings';
-import { settingsStore } from '../ui/SettingsStore';
 
 import EditTask from '../ui/EditTask.svelte';
 import type { Task } from '../Task/Task';
@@ -36,8 +34,6 @@ export class TaskModal extends Modal {
     }
 
     public onOpen(): void {
-        settingsStore.set(getSettings());
-
         this.titleEl.setText('Create or edit Task');
         this.modalEl.style.paddingBottom = '0';
 
