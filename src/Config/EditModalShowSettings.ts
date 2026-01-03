@@ -23,7 +23,7 @@ export interface EditModalShowSettings {
     cancelled: boolean;
 }
 
-export const defaultEditModalShowSettings: EditModalShowSettings = {
+export const defaultEditModalShowSettings: Readonly<EditModalShowSettings> = {
     priority: true,
 
     recurrence: true,
