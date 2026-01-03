@@ -740,7 +740,7 @@ describe('Hiding modal fields', () => {
         testElementRendered(field);
     });
 
-    function hideFields(fields: (keyof EditModalShowSettings)[]) {
+    function hideFields(...fields: (keyof EditModalShowSettings)[]) {
         const withHiddenField = { ...getSettings().isShownInEditModal };
         for (const field of fields) {
             withHiddenField[field] = false;
@@ -749,26 +749,26 @@ describe('Hiding modal fields', () => {
     }
 
     it.each(fields)('should hide %s field', (field) => {
-        updateSettings({ isShownInEditModal: hideFields([field]) });
+        updateSettings({ isShownInEditModal: hideFields(field) });
 
         testElementNotRendered(field);
     });
 
     it('should hide line after priority', () => {
-        updateSettings({ isShownInEditModal: hideFields(['priority']) });
+        updateSettings({ isShownInEditModal: hideFields('priority') });
 
         testElementNotRendered('line-after-priority');
     });
 
     it('should hide "Only future dates checkbox" and line after happens dates', () => {
-        updateSettings({ isShownInEditModal: hideFields(['due', 'scheduled', 'start']) });
+        updateSettings({ isShownInEditModal: hideFields('due', 'scheduled', 'start') });
 
         testElementNotRendered('only-future-dates');
         testElementNotRendered('line-after-happens-dates');
     });
 
     it('should hide line after dependencies', () => {
-        updateSettings({ isShownInEditModal: hideFields(['before_this', 'after_this']) });
+        updateSettings({ isShownInEditModal: hideFields('before_this', 'after_this') });
 
         testElementNotRendered('line-after-dependencies');
     });
