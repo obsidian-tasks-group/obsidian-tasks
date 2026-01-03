@@ -1,32 +1,12 @@
-import { type RenderResult, render } from '@testing-library/svelte';
 import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
 import { type Settings, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
-import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
-import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
-import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import {
     checkAndClickApplyButton,
     checkAndClickCancelButton,
-    optionsWithoutARandomField,
-    uncheckCheckbox,
-} from './RenderingTestHelpers';
-
-function renderAndCheckModal(onSave: () => void = () => {}) {
-    const result: RenderResult<ModalOptionsEditor> = render(ModalOptionsEditor, {
-        onSave,
-        onClose: () => {},
-    });
-    const { container } = result;
-    expect(() => container).toBeTruthy();
-    return { result, container };
-}
-
-function verifyModalHTML() {
-    const { container } = renderAndCheckModal();
-
-    const prettyHTML = prettifyHTML(container.innerHTML);
-    verifyWithFileExtension(prettyHTML, 'html');
-}
+    renderAndCheckModal,
+    verifyModalHTML,
+} from './ModalOptionsEditorTestHelpers';
+import { optionsWithoutARandomField, uncheckCheckbox } from './RenderingTestHelpers';
 
 afterEach(() => {
     resetSettings();
