@@ -38,10 +38,10 @@ export class TaskModal extends Modal {
         this.modalEl.style.paddingBottom = '0';
 
         const optionsButton = document.createElement('button');
-        // These are classes of the default close button.
-        // We need to overwrite only the 'inset-inline-end' to position the button properly.
+        // Add same classes as the default Obsidian modal close button.
         optionsButton.addClasses(['modal-close-button', 'mod-raised', 'clickable-icon']);
-        optionsButton.style.insetInlineEnd = '32px';
+        // But overload the 'inset-inline-end' property for a correct position.
+        optionsButton.addClass('modal-option-button');
         setIcon(optionsButton, 'settings');
         optionsButton.onclick = () => {
             const optionsModal = new OptionsModal({
