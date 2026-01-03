@@ -60,7 +60,7 @@
     ];
 </script>
 
-<label for="priority-{priority}">Priority</label>
+<label for="priority-{priority}" id="priority">Priority</label>
 {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
     <div class="task-modal-priority-option-container">
         <!-- svelte-ignore a11y-accesskey -->

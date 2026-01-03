@@ -1,0 +1,34 @@
+.tasks-options-modal {
+    padding: 0;
+
+    .tasks-options-modal-checkboxes {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            padding: 4px;
+            border-radius: 4px;
+
+            display: flex;
+            gap: 8px;
+
+            input[type="checkbox"] {
+                margin: 0;
+            }
+        }
+
+        hr {
+            margin: 2px 0;
+        }
+    }
+
+    .tasks-options-modal-footer {
+        position: sticky;
+        bottom: 0;
+
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5em;
+        padding: 16px 0;
+    }
+}
