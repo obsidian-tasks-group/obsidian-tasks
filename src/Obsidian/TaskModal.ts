@@ -1,6 +1,5 @@
 import { type App, setIcon } from 'obsidian';
 import { Modal } from 'obsidian';
-import type { EditModalShowSettings } from '../Config/EditModalShowSettings';
 import { getSettings } from '../Config/Settings';
 import { settingsStore } from '../ui/SettingsStore';
 
@@ -51,8 +50,8 @@ export class TaskModal extends Modal {
         optionsButton.onclick = () => {
             const optionsModal = new OptionsModal({
                 app: this.app,
-                onSave: (_isShownInEditModal: EditModalShowSettings) => {
-                    this.onSaveSettings().then(() => {});
+                onSave: () => {
+                    this.onSaveSettings();
                 },
             });
             optionsModal.open();
