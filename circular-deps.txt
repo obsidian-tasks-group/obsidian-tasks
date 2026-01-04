@@ -1,4 +1,4 @@
-Processed 187 files (649ms) (2 warnings)
+Processed 192 files (645ms) (2 warnings)
 
 1) Config/Settings.ts > Suggestor/Suggestor.ts
 2) Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts
@@ -19,5 +19,6 @@ Processed 187 files (649ms) (2 warnings)
 17) Obsidian/TasksEvents.ts > Obsidian/Cache.ts
 18) main.ts > Config/SettingsTab.ts > Config/PresetsSettingsUI.ts
 19) main.ts > Config/SettingsTab.ts
-20) main.ts > Renderer/QueryRenderer.ts
+20) Renderer/QueryResultsRenderer.ts > Renderer/HtmlQueryResultsRenderer.ts
+21) main.ts > Renderer/QueryRenderer.ts
 
