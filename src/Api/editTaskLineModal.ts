@@ -1,5 +1,4 @@
 import type { App } from 'obsidian';
-import type TasksPlugin from '../main';
 import type { Task } from '../Task/Task';
 import { taskFromLine } from '../Commands/CreateOrEditTaskParser';
 import { TaskModal } from '../Obsidian/TaskModal';
@@ -12,7 +11,6 @@ import { TaskModal } from '../Obsidian/TaskModal';
  * @param app - The Obsidian App
  * @param taskLine - Markdown string of the task to edit.
  * @param allTasks - An array of all tasks, used to populate the modal dependencies fields
- * @param _plugin - Tasks Plugin instance
  * @param onSaveSettings - function to save the plugin settings
  *
  * @returns {Promise<string>} A promise that contains the Markdown string for the task entered or
@@ -22,7 +20,6 @@ export function editTaskLineModal(
     app: App,
     taskLine: string,
     allTasks: Task[],
-    _plugin: TasksPlugin,
     onSaveSettings: () => Promise<void>,
 ): Promise<string> {
     let resolvePromise: (input: string) => void;
