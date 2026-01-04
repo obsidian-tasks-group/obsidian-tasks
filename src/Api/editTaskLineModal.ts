@@ -12,12 +12,19 @@ import { TaskModal } from '../Obsidian/TaskModal';
  * @param app - The Obsidian App
  * @param taskLine - Markdown string of the task to edit.
  * @param allTasks - An array of all tasks, used to populate the modal dependencies fields
- * @param plugin - Tasks Plugin instance
+ * @param _plugin - Tasks Plugin instance
+ * @param onSaveSettings - function to save the plugin settings
  *
  * @returns {Promise<string>} A promise that contains the Markdown string for the task entered or
  * an empty string, if data entry was cancelled.
  */
-export function editTaskLineModal(app: App, taskLine: string, allTasks: Task[], plugin: TasksPlugin): Promise<string> {
+export function editTaskLineModal(
+    app: App,
+    taskLine: string,
+    allTasks: Task[],
+    _plugin: TasksPlugin,
+    onSaveSettings: () => Promise<void>,
+): Promise<string> {
     let resolvePromise: (input: string) => void;
     const waitForClose = new Promise<string>((resolve, _) => {
         resolvePromise = resolve;
@@ -32,7 +39,7 @@ export function editTaskLineModal(app: App, taskLine: string, allTasks: Task[], 
     const taskModal = new TaskModal({
         app,
         task,
-        onSaveSettings: async () => await plugin.saveSettings(),
+        onSaveSettings,
         onSubmit,
         allTasks,
     });
