@@ -14,7 +14,12 @@ import { TaskModal } from '../Obsidian/TaskModal';
  * @returns {Promise<string>} A promise that contains the Markdown string for the task entered or
  * an empty string, if data entry was cancelled.
  */
-export const createTaskLineModal = (app: App, allTasks: Task[], plugin: TasksPlugin): Promise<string> => {
+export const createTaskLineModal = (
+    app: App,
+    allTasks: Task[],
+    _plugin: TasksPlugin,
+    onSaveSettings: () => Promise<void>,
+): Promise<string> => {
     let resolvePromise: (input: string) => void;
     const waitForClose = new Promise<string>((resolve, _) => {
         resolvePromise = resolve;
@@ -29,7 +34,7 @@ export const createTaskLineModal = (app: App, allTasks: Task[], plugin: TasksPlu
     const taskModal = new TaskModal({
         app,
         task,
-        onSaveSettings: async () => await plugin.saveSettings(),
+        onSaveSettings,
         onSubmit,
         allTasks,
     });
