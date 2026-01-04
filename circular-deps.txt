@@ -1,4 +1,4 @@
-Processed 196 files (602ms) (2 warnings)
+Processed 196 files (634ms) (2 warnings)
 
 1) Config/Settings.ts > Suggestor/Suggestor.ts
 2) Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts
@@ -11,15 +11,14 @@ Processed 196 files (602ms) (2 warnings)
 9) Task/Task.ts > Task/OnCompletion.ts
 10) Task/Task.ts > Task/Urgency.ts
 11) TaskSerializer/DefaultTaskSerializer.ts > TaskSerializer/index.ts
-12) Api/editTaskLineModal.ts > main.ts > Api/index.ts
-13) main.ts > Api/index.ts
-14) Query/Query.ts > Query/Explain/Explainer.ts
-15) Query/FilterParser.ts > Query/Filter/BooleanField.ts
-16) main.ts > Commands/index.ts
-17) Obsidian/Cache.ts > Obsidian/FileParser.ts
-18) Obsidian/TasksEvents.ts > Obsidian/Cache.ts
-19) main.ts > Config/SettingsTab.ts > Config/PresetsSettingsUI.ts
-20) main.ts > Config/SettingsTab.ts
-21) Renderer/QueryResultsRenderer.ts > Renderer/HtmlQueryResultsRenderer.ts
-22) main.ts > Renderer/QueryRenderer.ts
+12) Api/index.ts > main.ts
+13) Query/Query.ts > Query/Explain/Explainer.ts
+14) Query/FilterParser.ts > Query/Filter/BooleanField.ts
+15) main.ts > Commands/index.ts
+16) Obsidian/Cache.ts > Obsidian/FileParser.ts
+17) Obsidian/TasksEvents.ts > Obsidian/Cache.ts
+18) main.ts > Config/SettingsTab.ts > Config/PresetsSettingsUI.ts
+19) main.ts > Config/SettingsTab.ts
+20) Renderer/QueryResultsRenderer.ts > Renderer/HtmlQueryResultsRenderer.ts
+21) main.ts > Renderer/QueryRenderer.ts
 
