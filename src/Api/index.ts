@@ -14,7 +14,7 @@ export const tasksApiV1 = (plugin: TasksPlugin): TasksApiV1 => {
 
     return {
         createTaskLineModal: (): Promise<string> => {
-            return createTaskLineModal(app, plugin.getTasks(), plugin, async () => await plugin.saveSettings());
+            return createTaskLineModal(app, plugin.getTasks(), async () => await plugin.saveSettings());
         },
         editTaskLineModal: (taskLine: string): Promise<string> => {
             return editTaskLineModal(app, taskLine, plugin.getTasks(), plugin);
