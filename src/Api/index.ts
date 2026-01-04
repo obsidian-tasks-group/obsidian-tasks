@@ -11,13 +11,14 @@ import { editTaskLineModal } from './editTaskLineModal';
  */
 export const tasksApiV1 = (plugin: TasksPlugin): TasksApiV1 => {
     const app = plugin.app;
+    const onSaveSettings = async () => await plugin.saveSettings();
 
     return {
         createTaskLineModal: (): Promise<string> => {
-            return createTaskLineModal(app, plugin.getTasks(), async () => await plugin.saveSettings());
+            return createTaskLineModal(app, plugin.getTasks(), onSaveSettings);
         },
         editTaskLineModal: (taskLine: string): Promise<string> => {
-            return editTaskLineModal(app, taskLine, plugin.getTasks(), async () => await plugin.saveSettings());
+            return editTaskLineModal(app, taskLine, plugin.getTasks(), onSaveSettings);
         },
         executeToggleTaskDoneCommand: (line: string, path: string) => toggleLine(line, path).text,
     };
