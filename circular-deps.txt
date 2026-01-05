@@ -1,4 +1,4 @@
-Processed 192 files (645ms) (2 warnings)
+Processed 196 files (634ms) (2 warnings)
 
 1) Config/Settings.ts > Suggestor/Suggestor.ts
 2) Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts

@@ -1,4 +1,6 @@
-import type { RenderResult } from '@testing-library/svelte';
+import { type RenderResult, fireEvent } from '@testing-library/svelte';
+import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
+import { getSettings } from '../../src/Config/Settings';
 import type EditTask from '../../src/ui/EditTask.svelte';
 
 /**
@@ -21,4 +23,26 @@ export function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButt
     const submit = result.getByText('Apply') as HTMLButtonElement;
     expect(submit).toBeTruthy();
     return submit;
+}
+
+export async function editInputElement(inputElement: HTMLInputElement, newValue: string | boolean) {
+    await fireEvent.input(inputElement, { target: { value: newValue } });
+}
+
+export async function uncheckCheckbox(container: HTMLElement, elementId: string) {
+    const inputElement = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
+
+    await fireEvent.change(inputElement, { target: { checked: false } });
+}
+
+function randomIndex(max: number) {
+    return Math.floor(Math.random() * max);
+}
+
+export function optionsWithoutARandomField() {
+    const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
+    const randomField = fields[randomIndex(fields.length - 1)];
+    const optionsWithoutARandomField = { ...getSettings().isShownInEditModal };
+    delete optionsWithoutARandomField[randomField];
+    return optionsWithoutARandomField;
 }
