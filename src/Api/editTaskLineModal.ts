@@ -26,8 +26,12 @@ export function editTaskLineModal(app: App, taskLine: string, allTasks: Task[]):
         resolvePromise(line);
     };
 
+    const onCancel = (): void => {
+        resolvePromise('');
+    };
+
     const task = taskFromLine({ line: taskLine ?? '', path: '' });
-    const taskModal = new TaskModal({ app, task, onSubmit, allTasks });
+    const taskModal = new TaskModal({ app, task, onSubmit, onCancel, allTasks });
 
     taskModal.open();
     return waitForClose;
