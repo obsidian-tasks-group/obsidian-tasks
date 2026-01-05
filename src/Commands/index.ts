@@ -21,7 +21,14 @@ export class Commands {
             icon: 'pencil',
             editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
                 // TODO Need to explore what happens if a tasks code block is rendered before the Cache has been created.
-                return createOrEdit(checking, editor, view as View, this.app, this.plugin.getTasks());
+                return createOrEdit(
+                    checking,
+                    editor,
+                    view as View,
+                    this.app,
+                    this.plugin.getTasks(),
+                    async () => await this.plugin.saveSettings(),
+                );
             },
         });
 

@@ -5,7 +5,7 @@
       <textarea id="description" class="tasks-modal-description" placeholder="Take out the trash"></textarea>
     </section>
     <section class="tasks-modal-priority-section">
-      <label for="priority-none">Priority</label>
+      <label for="priority-none" id="priority">Priority</label>
       <div class="task-modal-priority-option-container">
         <input type="radio" id="priority-lowest" value="lowest" />
         <label for="priority-lowest">
@@ -46,7 +46,7 @@
         </label>
       </div>
     </section>
-    <hr />
+    <hr id="line-after-priority" />
     <section class="tasks-modal-dates-section">
       <label for="recurrence">Recurs</label>
       <input id="recurrence" type="text" class="tasks-modal-date-input" placeholder="Try 'every day when done'" />
@@ -76,17 +76,17 @@
         🛫
         <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
       </div>
-      <div class="future-dates-only">
+      <div class="future-dates-only" id="only-future-dates">
         <label for="forwardOnly">Only future dates:</label>
         <input id="forwardOnly" type="checkbox" class="task-list-item-checkbox tasks-modal-checkbox" />
       </div>
     </section>
-    <hr />
+    <hr id="line-after-happens-dates" />
     <section class="tasks-modal-dependencies-section">
       <label for="blockedBy">Before this</label>
       <span>
         <input
-          id="blockedBy"
+          id="before_this"
           class="tasks-modal-dependency-input"
           type="text"
           placeholder="Search for tasks that the task being edited depends on..." />
@@ -111,7 +111,7 @@
       <label for="blocking">After this</label>
       <span>
         <input
-          id="blocking"
+          id="after_this"
           class="tasks-modal-dependency-input"
           type="text"
           placeholder="Search for tasks that depend on this task being done..." />
@@ -134,9 +134,9 @@
           src="about:blank"></iframe>
       </span>
     </section>
-    <hr />
+    <hr id="line-after-dependencies" />
     <section class="tasks-modal-dates-section">
-      <label for="status">Status</label>
+      <label for="status" id="status">Status</label>
       <select id="status-type" class="status-editor-status-selector">
         <option value=" ">Todo [ ]</option>
         <option value="/">In Progress [/]</option>

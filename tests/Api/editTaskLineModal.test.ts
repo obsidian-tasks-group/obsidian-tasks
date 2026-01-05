@@ -6,6 +6,7 @@ import { TaskModal } from '../__mocks__/TaskModal';
 import type { TaskModalParams } from '../../src/Obsidian/TaskModal';
 
 const app = {} as App;
+const noOpOnSaveSettings = async () => {};
 
 const createNewTask = (line = ''): Task => {
     return taskFromLine({ line, path: '' });
@@ -26,14 +27,14 @@ describe('APIv1 - editTaskLineModal', () => {
 
     it('TaskModal.open() should be called', () => {
         const taskLine = '- [ ] ';
-        editTaskLineModal(app, taskLine, []);
+        editTaskLineModal(app, taskLine, [], noOpOnSaveSettings);
 
         expect(TaskModal.instance.open).toHaveBeenCalled();
     });
 
     it('should return the edited Markdown', async () => {
         const taskLine = '- [ ] Updated Task';
-        const taskLinePromise = editTaskLineModal(app, '- [ ] Task Name', []);
+        const taskLinePromise = editTaskLineModal(app, '- [ ] Task Name', [], noOpOnSaveSettings);
 
         TaskModal.instance.onSubmit([createNewTask(taskLine)]);
 
@@ -43,7 +44,7 @@ describe('APIv1 - editTaskLineModal', () => {
 
     it('should return empty string on cancel', async () => {
         const taskLine = '- [ ] ';
-        const taskLinePromise = editTaskLineModal(app, taskLine, []);
+        const taskLinePromise = editTaskLineModal(app, taskLine, [], noOpOnSaveSettings);
 
         TaskModal.instance.cancel();
 
@@ -55,7 +56,7 @@ describe('APIv1 - editTaskLineModal', () => {
         const taskLine = '- [ ] Task Name';
         const allTasks = [createNewTask('- [ ] Task 1')];
 
-        editTaskLineModal(app, taskLine, allTasks);
+        editTaskLineModal(app, taskLine, allTasks, noOpOnSaveSettings);
 
         expect(TaskModal.instance.allTasks).toEqual(allTasks);
     });

@@ -9,6 +9,7 @@
     export let editableTask: EditableTask;
     export let allTasks: Task[];
     export let _onDescriptionKeyDown: (e: KeyboardEvent) => void;
+    export let id: string;
     export let type: 'blocking' | 'blockedBy';
     export let labelText: string;
     export let accesskey: string | null;
@@ -154,7 +155,7 @@
         on:focus={onFocused}
         on:blur={() => (inputFocused = false)}
         {accesskey}
-        id={type}
+        {id}
         class="tasks-modal-dependency-input"
         type="text"
         {placeholder}
