@@ -10,6 +10,7 @@ import { replaceTaskWithTasks } from '../Obsidian/File';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
+import { Duration } from '../Task/Duration';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { DateMenu } from '../ui/Menus/DateMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
@@ -218,6 +219,10 @@ export class TaskLineRenderer {
                 this.queryLayoutOptions.shortMode,
                 component,
             );
+            // skip empty duration
+            if (component == TaskLayoutComponent.Duration && task.duration === Duration.None) {
+                continue;
+            }
             if (componentString) {
                 // Create the text span that will hold the rendered component
                 const span = createAndAppendElement('span', parentElement);
@@ -270,6 +275,10 @@ export class TaskLineRenderer {
         // priority field.
         if (li.dataset.taskPriority === undefined) {
             fieldRenderer.addDataAttribute(li, task, TaskLayoutComponent.Priority);
+        }
+        // Same logic for duration of 0h0m. It will not be rendered, but data-attribute should be present.
+        if (li.dataset.taskDuration === undefined) {
+            fieldRenderer.addDataAttribute(li, task, TaskLayoutComponent.Duration);
         }
     }
 

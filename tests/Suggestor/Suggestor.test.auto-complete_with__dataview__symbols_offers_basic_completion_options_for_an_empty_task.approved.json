@@ -12,6 +12,10 @@
     "appendText": "scheduled:: "
   },
   {
+    "displayText": "duration:: duration",
+    "appendText": "duration:: "
+  },
+  {
     "displayText": "priority:: high priority",
     "appendText": "priority:: high] ",
     "insertSkip": 0

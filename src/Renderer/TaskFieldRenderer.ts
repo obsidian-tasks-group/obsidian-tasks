@@ -97,7 +97,7 @@ export class TaskFieldHTMLData {
         // TS2345: Argument of type 'string[] | Moment' is not assignable to parameter of type 'Moment'.
         // Type 'string[]' is missing the following properties from type 'Moment': format, startOf, endOf, add, and 78 more.
         if (!Array.isArray(date) && date instanceof window.moment) {
-            const attributeValue = dateToAttribute(date);
+            const attributeValue = dateToAttribute(date as Moment);
             if (attributeValue) {
                 return attributeValue;
             }
@@ -183,6 +183,9 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),
 
+    duration: new TaskFieldHTMLData('task-duration', 'taskDuration', (_component, task) => {
+        return task.duration.toText();
+    }),
     description: createFieldWithoutDataAttributes('task-description'),
     recurrenceRule: createFieldWithoutDataAttributes('task-recurring'),
     onCompletion: createFieldWithoutDataAttributes('task-onCompletion'),

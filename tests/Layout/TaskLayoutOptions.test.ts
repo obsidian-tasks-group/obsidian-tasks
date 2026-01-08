@@ -15,6 +15,7 @@ describe('TaskLayoutOptions', () => {
             createdDate
             startDate
             scheduledDate
+            duration
             dueDate
             cancelledDate
             doneDate
@@ -71,6 +72,7 @@ describe('TaskLayoutOptions', () => {
             createdDate
             startDate
             scheduledDate
+            duration
             dueDate
             cancelledDate
             doneDate
@@ -90,6 +92,7 @@ describe('TaskLayoutOptions', () => {
             createdDate
             startDate
             scheduledDate
+            duration
             cancelledDate
             doneDate"
         `);
@@ -145,6 +148,7 @@ describe('TaskLayoutOptions', () => {
             createdDate
             startDate
             scheduledDate
+            duration
             dueDate
             cancelledDate
             doneDate"
@@ -161,6 +165,7 @@ describe('parsing task show/hide layout options', () => {
         ['depends on', TaskLayoutComponent.DependsOn],
         ['done date', TaskLayoutComponent.DoneDate],
         ['due date', TaskLayoutComponent.DueDate],
+        ['duration', TaskLayoutComponent.Duration],
         ['id', TaskLayoutComponent.Id],
         ['on completion', TaskLayoutComponent.OnCompletion],
         ['priority', TaskLayoutComponent.Priority],
