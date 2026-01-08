@@ -9,6 +9,7 @@ import { HeadingField } from './Filter/HeadingField';
 import { PathField } from './Filter/PathField';
 import { PriorityField } from './Filter/PriorityField';
 import { ScheduledDateField } from './Filter/ScheduledDateField';
+import { DurationField } from './Filter/DurationField';
 import { StartDateField } from './Filter/StartDateField';
 import { HappensDateField } from './Filter/HappensDateField';
 import { RecurringField } from './Filter/RecurringField';
@@ -50,6 +51,7 @@ export const fieldCreators: EndsWith<BooleanField> = [
     () => new CreatedDateField(),
     () => new StartDateField(),
     () => new ScheduledDateField(),
+    () => new DurationField(),
     () => new DueDateField(),
     () => new DoneDateField(),
     () => new PathField(),
