@@ -1,4 +1,4 @@
-import type { App, CachedMetadata, Reference } from 'obsidian';
+import type { App, CachedMetadata, Debouncer, Reference } from 'obsidian';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
@@ -228,6 +228,19 @@ export function setIcon(element: HTMLElement, iconId: IconName): void {
 
 export function setTooltip(element: HTMLElement, text: string): void {
     element.setAttribute('test-tooltip', text);
+}
+
+export function debounce<T extends unknown[], V>(
+    cb: (...args: [...T]) => V,
+    _timeout?: number,
+    _resetTimer?: boolean,
+): Debouncer<T, V> {
+    const debouncer = ((..._args: T) => debouncer) as Debouncer<T, V>;
+    debouncer.cancel = () => debouncer;
+    debouncer.run = () => {
+        return cb(...([] as any));
+    };
+    return debouncer;
 }
 
 /**
