@@ -1,4 +1,4 @@
-import { type App, type Component, Notice, type TFile, setIcon, setTooltip } from 'obsidian';
+import { type App, type Component, Notice, type TFile, debounce, setIcon, setTooltip } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
@@ -199,10 +199,11 @@ export class QueryResultsRenderer {
         searchBox.value = this._filterString;
         searchBox.placeholder = 'Filter by description...';
         setTooltip(searchBox, 'Filter results');
-        searchBox.addEventListener('input', async () => {
+        const doSearch = async () => {
             const filterString = searchBox.value;
             await this.applySearchBoxFilterAndRerender(filterString, content);
-        });
+        };
+        searchBox.addEventListener('input', debounce(doSearch, 500, true));
     }
 
     public async applySearchBoxFilterAndRerender(filterString: string, content: HTMLDivElement) {
