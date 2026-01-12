@@ -85,7 +85,7 @@ Dates must be in `YYYY-MM-DD` format.
 ### Date Types
 
 | Date | Purpose |
-|------|--------|
+|------|---------|
 | **Due** (📅) | When task must be completed |
 | **Scheduled** (⏳) | When you plan to work on it |
 | **Start** (🛫) | When task becomes available |
@@ -139,7 +139,7 @@ Dates must be in `YYYY-MM-DD` format.
 ### Recurrence Periods
 
 | Period | Aliases |
-|--------|--------|
+|--------|---------|
 | `day` | `daily` |
 | `week` | `weekly` |
 | `month` | `monthly` |
@@ -149,6 +149,7 @@ Dates must be in `YYYY-MM-DD` format.
 
 ```markdown
 - [ ] Daily standup 🔁 every day 📅 2024-02-15
+- [ ] Weekday task 🔁 every weekday 📅 2024-02-15
 - [ ] Weekly review 🔁 every week 📅 2024-02-16
 - [ ] Monthly report 🔁 every month 📅 2024-02-28
 - [ ] Annual review 🔁 every year 📅 2024-12-31
@@ -160,6 +161,7 @@ Dates must be in `YYYY-MM-DD` format.
 - [ ] Every Monday 🔁 every week on Monday 📅 2024-02-19
 - [ ] Every Mon/Wed/Fri 🔁 every week on Monday, Wednesday, Friday 📅 2024-02-16
 - [ ] First of month 🔁 every month on the 1st 📅 2024-03-01
+- [ ] Last day of month 🔁 every month on the last 📅 2024-02-29
 - [ ] Last Friday 🔁 every month on the last Friday 📅 2024-02-23
 ```
 
@@ -227,7 +229,7 @@ Default behavior keeps the completed task. Use `🏁 delete` to remove it.
 Custom statuses must be configured in Tasks settings before use. Common examples:
 
 | Status | Character | Type | Meaning |
-|--------|-----------|------|--------|
+|--------|-----------|------|---------|
 | In Progress | `[/]` | `IN_PROGRESS` | Working on it |
 | Cancelled | `[-]` | `CANCELLED` | Won't do |
 | Forwarded | `[>]` | `TODO` | Moved to later |
@@ -286,6 +288,20 @@ has depends on
 no depends on
 is blocked
 is not blocked
+exclude sub-items
+```
+
+#### Date Validation Filters
+
+Check for invalid dates (e.g., 2024-02-30):
+
+```
+due date is invalid
+scheduled date is invalid
+start date is invalid
+created date is invalid
+done date is invalid
+cancelled date is invalid
 ```
 
 #### Date Filters
@@ -297,6 +313,8 @@ due after today
 due on 2024-02-15
 due before 2024-02-15
 due after 2024-02-15
+due on or before 2024-02-15
+due on or after 2024-02-15
 due in 2024-02
 due in 2024
 
@@ -304,21 +322,29 @@ scheduled today
 scheduled before today
 scheduled after today
 scheduled on 2024-02-15
+scheduled on or before 2024-02-15
+scheduled on or after 2024-02-15
 
 starts today
 starts before today
 starts after today
 starts on 2024-02-15
+starts on or before 2024-02-15
+starts on or after 2024-02-15
 
 created today
 created before today
 created after today
 created on 2024-02-15
+created on or before 2024-02-15
+created on or after 2024-02-15
 
 done today
 done before today
 done after today
 done on 2024-02-15
+done on or before 2024-02-15
+done on or after 2024-02-15
 ```
 
 #### Relative Date Filters
@@ -337,7 +363,23 @@ due this year
 due in 7 days
 due in 2 weeks
 due in 3 months
+
+due in or before 7 days
+due in or after 2 weeks
 ```
+
+#### Numbered Date Ranges
+
+Filter by ISO week, month, quarter, or year:
+
+```
+due in 2024-W05
+due in 2024-02
+due in 2024-Q1
+due in 2024
+```
+
+Works with all date types (due, scheduled, starts, created, done, cancelled, happens).
 
 #### Happens Filter
 
@@ -405,6 +447,7 @@ status.name includes in progress
 status.type is TODO
 status.type is DONE
 status.type is IN_PROGRESS
+status.type is ON_HOLD
 status.type is CANCELLED
 status.type is NON_TASK
 ```
@@ -840,6 +883,77 @@ Urgency scoring can be customized in Tasks settings.
 View with: `show urgency`
 
 Sort with: `sort by urgency reverse`
+
+## Presets
+
+Presets allow you to save commonly used query instructions and reuse them across multiple queries.
+
+### Defining Presets
+
+Define presets in Tasks settings with a name and instructions.
+
+### Using Presets
+
+Basic syntax:
+```
+preset preset_name
+```
+
+Placeholder syntax (for Boolean combinations):
+```
+{{preset.preset_name}}
+```
+
+### Default Presets
+
+| Name | Instructions |
+|------|--------------|
+| `this_file` | `path includes {{query.file.path}}` |
+| `this_folder` | `folder includes {{query.file.folder}}` |
+| `this_folder_only` | `filter by function task.file.folder === query.file.folder` |
+| `this_root` | `root includes {{query.file.root}}` |
+| `hide_date_fields` | Hides all date fields |
+| `hide_non_date_fields` | Hides id, depends on, recurrence, on completion, priority |
+| `hide_query_elements` | Hides postpone button, edit button, backlinks |
+| `hide_everything` | Combines hide_date_fields, hide_non_date_fields, hide_query_elements |
+
+### Preset Examples
+
+````markdown
+```tasks
+preset this_folder
+not done
+sort by due
+```
+````
+
+Using in Boolean combinations:
+```
+({{preset.work_tasks}}) AND ({{preset.high_priority}})
+```
+
+### Listing Available Presets
+
+Use a non-existent preset name to see all available presets:
+```
+preset xxxx
+```
+
+## Line Continuations
+
+Use backslash (`\`) at the end of a line to continue on the next line:
+
+```
+(priority is highest) OR       \
+    (priority is lowest)
+```
+
+This is useful for long Boolean combinations or complex function expressions.
+
+To search for a literal trailing backslash, use `\\`:
+```
+description includes \\
+```
 
 ## Custom Filters and Groups
 
