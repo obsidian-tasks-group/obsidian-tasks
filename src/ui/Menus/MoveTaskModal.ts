@@ -1,8 +1,8 @@
 import { type App, Notice, SuggestModal, TFile } from 'obsidian';
 import type { Task } from '../../Task/Task';
-import { moveTaskToSection } from '../../Obsidian/File';
 import { getSettings } from '../../Config/Settings';
 import { GlobalFilter } from '../../Config/GlobalFilter';
+import { moveTaskToSection } from '../../Obsidian/MoveTask';
 
 /**
  * Represents a destination option in the move task modal.
