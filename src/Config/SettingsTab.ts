@@ -451,6 +451,25 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('settings.moveTask.heading')).setHeading();
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.moveTask.excludedPaths.name'))
+            .setDesc(SettingsTab.createFragmentWithHTML(i18n.t('settings.moveTask.excludedPaths.description')))
+            .addTextArea((textArea) => {
+                const settings = getSettings();
+                textArea
+                    .setPlaceholder(i18n.t('settings.moveTask.excludedPaths.placeholder'))
+                    .setValue(SettingsTab.renderFolderArray(settings.moveTaskExcludedPaths))
+                    .onChange(async (value) => {
+                        const paths = SettingsTab.parseCommaSeparatedFolders(value);
+                        updateSettings({ moveTaskExcludedPaths: paths });
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.autoSuggest.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let autoSuggestMinimumMatchLength: Setting | null = null;

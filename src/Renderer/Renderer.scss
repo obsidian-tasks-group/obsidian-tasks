@@ -108,6 +108,17 @@ a.tasks-edit, a.tasks-move, a.tasks-postpone {
     content: '⏩';
 }
 
+/* Move task modal */
+.move-task-suggestion.is-current {
+    opacity: 0.6;
+}
+
+.move-task-suggestion.is-current .suggestion-content::after {
+    content: ' ← current';
+    font-style: italic;
+    color: var(--text-muted);
+}
+
 /* Urgency score */
 .tasks-urgency {
     font-size: var(--font-ui-smaller);

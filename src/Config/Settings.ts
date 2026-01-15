@@ -80,6 +80,7 @@ export interface Settings {
     filenameAsDateFolders: string[];
     recurrenceOnNextLine: boolean;
     removeScheduledDateOnRecurrence: boolean;
+    moveTaskExcludedPaths: string[];
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -119,6 +120,7 @@ const defaultSettings: Readonly<Settings> = {
     filenameAsDateFolders: [],
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
+    moveTaskExcludedPaths: [],
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
     features: Feature.settingsFlags,

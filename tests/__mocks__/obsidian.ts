@@ -257,3 +257,25 @@ export class Modal {
     public onOpen(): void {}
     public onClose(): void {}
 }
+
+/**
+ * A mock implementation of the Obsidian SuggestModal class.
+ * Used for testing components that extend SuggestModal like MoveTaskModal.
+ */
+export class SuggestModal<T> extends Modal {
+    public setPlaceholder(_placeholder: string): void {
+        // Mocked interface, no-op
+    }
+    public setInstructions(_instructions: { command: string; purpose: string }[]): void {
+        // Mocked interface, no-op
+    }
+    public getSuggestions(_query: string): T[] {
+        return [];
+    }
+    public renderSuggestion(_item: T, _el: HTMLElement): void {
+        // Mocked interface, no-op
+    }
+    public onChooseSuggestion(_item: T, _evt: MouseEvent | KeyboardEvent): void {
+        // Mocked interface, no-op
+    }
+}
