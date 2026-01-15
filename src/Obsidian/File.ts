@@ -402,10 +402,13 @@ export interface MoveTaskParams {
     vault: Vault;
     /** The metadata cache instance */
     metadataCache: MetadataCache;
+    /** Optional: the current cursor line in the editor (for more reliable deletion when moving from editor) */
+    editorCursorLine?: number;
 }
 
 /**
  * Moves a task from its current location to a different file and/or section.
+ * Also moves any child items (indented lines below the task).
  *
  * The task is inserted after the last task in the target section, or at the end
  * of the file if appendToEnd is true or the target section has no tasks.
@@ -414,15 +417,48 @@ export interface MoveTaskParams {
  * @throws Error if the operation fails
  */
 export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
-    const { originalTask, targetFile, targetSectionHeader, appendToEnd = false, vault, metadataCache } = params;
+    const {
+        originalTask,
+        targetFile,
+        targetSectionHeader,
+        appendToEnd = false,
+        vault,
+        metadataCache,
+        editorCursorLine,
+    } = params;
 
     const logger = getFileLogger();
     logger.debug(
         `moveTaskToSection: Moving task to ${targetFile.path}, section: ${targetSectionHeader ?? '(end of file)'}`,
     );
 
-    // Get the task line to insert
-    const taskLine = originalTask.toFileLineString();
+    // Get the source file
+    const sourceFile = vault.getAbstractFileByPath(originalTask.path);
+    if (!(sourceFile instanceof TFile)) {
+        throw new Error(`Source file not found: ${originalTask.path}`);
+    }
+
+    // Read source file to find the task and its children
+    const sourceContent = await vault.read(sourceFile);
+    const sourceLines = sourceContent.split('\n');
+
+    // Find the task line in the source file
+    const taskLineIndex = findTaskLineIndex(
+        sourceLines,
+        originalTask.originalMarkdown,
+        originalTask.lineNumber,
+        editorCursorLine,
+    );
+
+    if (taskLineIndex === -1) {
+        throw new Error('Could not find the task in the source file.');
+    }
+
+    // Find all lines to move (task + children)
+    const linesToMove = getTaskWithChildren(sourceLines, taskLineIndex);
+    const numLinesToMove = linesToMove.length;
+
+    logger.debug(`moveTaskToSection: Moving ${numLinesToMove} lines (task + ${numLinesToMove - 1} children)`);
 
     // Read target file
     const targetContent = await vault.read(targetFile);
@@ -436,56 +472,147 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
 
     logger.debug(`moveTaskToSection: Inserting at line ${insertionLine}`);
 
-    // Insert the task at the target location
-    const newTargetLines = [...targetLines.slice(0, insertionLine), taskLine, ...targetLines.slice(insertionLine)];
-
-    // Write the modified target file
-    await vault.modify(targetFile, newTargetLines.join('\n'));
-
-    // Now delete the original task from the source file
-    // We need to handle the case where source and target are the same file
-    const sourceFile = vault.getAbstractFileByPath(originalTask.path);
-    if (!(sourceFile instanceof TFile)) {
-        throw new Error(`Source file not found: ${originalTask.path}`);
-    }
-
+    // Handle the move based on whether source and target are the same file
     if (sourceFile.path === targetFile.path) {
-        // Same file - we need to re-read and adjust for the insertion we just made
-        const updatedContent = await vault.read(sourceFile);
-        const updatedLines = updatedContent.split('\n');
+        // Same file - do both operations atomically
+        let newLines: string[];
 
-        // Find the original task line (it may have shifted due to insertion)
-        const originalLineNumber = originalTask.lineNumber;
-        const adjustedLineNumber = insertionLine <= originalLineNumber ? originalLineNumber + 1 : originalLineNumber;
-
-        // Verify the line matches
-        if (updatedLines[adjustedLineNumber] === originalTask.originalMarkdown) {
-            const finalLines = [
-                ...updatedLines.slice(0, adjustedLineNumber),
-                ...updatedLines.slice(adjustedLineNumber + 1),
+        if (insertionLine <= taskLineIndex) {
+            // Inserting before the task - insert first, then delete (accounting for offset)
+            newLines = [
+                ...sourceLines.slice(0, insertionLine),
+                ...linesToMove,
+                ...sourceLines.slice(insertionLine, taskLineIndex),
+                ...sourceLines.slice(taskLineIndex + numLinesToMove),
             ];
-            await vault.modify(sourceFile, finalLines.join('\n'));
         } else {
-            // Try to find the line by content
-            const foundIndex = updatedLines.findIndex((line) => line === originalTask.originalMarkdown);
-            if (foundIndex !== -1) {
-                const finalLines = [...updatedLines.slice(0, foundIndex), ...updatedLines.slice(foundIndex + 1)];
-                await vault.modify(sourceFile, finalLines.join('\n'));
-            } else {
-                logger.debug('moveTaskToSection: Could not find original task line to delete after same-file move');
-                // The task was moved but we couldn't clean up the original - this is a partial success
-                throw new Error('Task was copied but original could not be deleted. Please delete manually.');
-            }
+            // Inserting after the task - the slicing handles the offset naturally
+            newLines = [
+                ...sourceLines.slice(0, taskLineIndex),
+                ...sourceLines.slice(taskLineIndex + numLinesToMove, insertionLine),
+                ...linesToMove,
+                ...sourceLines.slice(insertionLine),
+            ];
         }
+
+        await vault.modify(sourceFile, newLines.join('\n'));
     } else {
-        // Different file - use the standard replacement mechanism with empty array to delete
-        await replaceTaskWithTasks({
-            originalTask,
-            newTasks: [],
-        });
+        // Different files - insert into target first, then delete from source
+        const newTargetLines = [
+            ...targetLines.slice(0, insertionLine),
+            ...linesToMove,
+            ...targetLines.slice(insertionLine),
+        ];
+        await vault.modify(targetFile, newTargetLines.join('\n'));
+
+        // Delete from source
+        const newSourceLines = [
+            ...sourceLines.slice(0, taskLineIndex),
+            ...sourceLines.slice(taskLineIndex + numLinesToMove),
+        ];
+        await vault.modify(sourceFile, newSourceLines.join('\n'));
     }
 
     logger.debug('moveTaskToSection: Move completed successfully');
+}
+
+/**
+ * Find the line index of a task in the file.
+ * Uses multiple strategies: editor cursor, exact line number, content search.
+ */
+function findTaskLineIndex(
+    lines: string[],
+    taskMarkdown: string,
+    taskLineNumber: number,
+    editorCursorLine?: number,
+): number {
+    // Strategy 1: If we have editor cursor position and it matches, use it
+    if (editorCursorLine !== undefined && editorCursorLine >= 0 && editorCursorLine < lines.length) {
+        if (lines[editorCursorLine] === taskMarkdown) {
+            return editorCursorLine;
+        }
+    }
+
+    // Strategy 2: Try the task's line number
+    if (taskLineNumber >= 0 && taskLineNumber < lines.length) {
+        if (lines[taskLineNumber] === taskMarkdown) {
+            return taskLineNumber;
+        }
+    }
+
+    // Strategy 3: Search by content
+    const matchingIndices: number[] = [];
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i] === taskMarkdown) {
+            matchingIndices.push(i);
+        }
+    }
+
+    if (matchingIndices.length === 1) {
+        return matchingIndices[0];
+    } else if (matchingIndices.length > 1) {
+        // Multiple matches - prefer the one closest to the expected line number
+        const expectedLine = editorCursorLine ?? taskLineNumber;
+        return matchingIndices.reduce((closest, current) => {
+            const closestDiff = Math.abs(closest - expectedLine);
+            const currentDiff = Math.abs(current - expectedLine);
+            return currentDiff < closestDiff ? current : closest;
+        }, matchingIndices[0]);
+    }
+
+    return -1;
+}
+
+/**
+ * Get the task line and all its children (indented lines below it).
+ * Returns an array of lines to move together.
+ */
+function getTaskWithChildren(lines: string[], taskLineIndex: number): string[] {
+    const result: string[] = [lines[taskLineIndex]];
+
+    // Get the indentation of the task
+    const taskLine = lines[taskLineIndex];
+    const taskIndentMatch = taskLine.match(/^(\s*)/);
+    const taskIndent = taskIndentMatch ? taskIndentMatch[1].length : 0;
+
+    // Collect all following lines that are more indented (children)
+    for (let i = taskLineIndex + 1; i < lines.length; i++) {
+        const line = lines[i];
+
+        // Empty lines within children are included
+        if (line.trim() === '') {
+            // Check if there are more children after this empty line
+            let hasMoreChildren = false;
+            for (let j = i + 1; j < lines.length; j++) {
+                const nextLine = lines[j];
+                if (nextLine.trim() === '') continue;
+                const nextIndentMatch = nextLine.match(/^(\s*)/);
+                const nextIndent = nextIndentMatch ? nextIndentMatch[1].length : 0;
+                if (nextIndent > taskIndent) {
+                    hasMoreChildren = true;
+                }
+                break;
+            }
+            if (!hasMoreChildren) {
+                break;
+            }
+            result.push(line);
+            continue;
+        }
+
+        const lineIndentMatch = line.match(/^(\s*)/);
+        const lineIndent = lineIndentMatch ? lineIndentMatch[1].length : 0;
+
+        // If this line is more indented than the task, it's a child
+        if (lineIndent > taskIndent) {
+            result.push(line);
+        } else {
+            // Less or equal indentation means we've left the children
+            break;
+        }
+    }
+
+    return result;
 }
 
 /**

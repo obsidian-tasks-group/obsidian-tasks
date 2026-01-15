@@ -2,6 +2,7 @@ import { type App, Notice, SuggestModal, TFile } from 'obsidian';
 import type { Task } from '../../Task/Task';
 import { moveTaskToSection } from '../../Obsidian/File';
 import { getSettings } from '../../Config/Settings';
+import { GlobalFilter } from '../../Config/GlobalFilter';
 
 /**
  * Represents a destination option in the move task modal.
@@ -33,11 +34,13 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
     private readonly task: Task;
     private readonly allTasks: Task[];
     private readonly destinations: MoveDestination[];
+    private readonly editorCursorLine?: number;
 
-    constructor(app: App, task: Task, allTasks: Task[]) {
+    constructor(app: App, task: Task, allTasks: Task[], editorCursorLine?: number) {
         super(app);
         this.task = task;
         this.allTasks = allTasks;
+        this.editorCursorLine = editorCursorLine;
         this.destinations = this.buildDestinations();
 
         this.setPlaceholder('Type to filter files and sections...');
@@ -50,19 +53,26 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
 
     /**
      * Build the list of all possible destinations.
+     * Only includes files/sections with tasks that match the global filter.
      */
     private buildDestinations(): MoveDestination[] {
         const destinations: MoveDestination[] = [];
         const settings = getSettings();
         const excludedPaths = settings.moveTaskExcludedPaths || [];
+        const globalFilter = GlobalFilter.getInstance();
 
-        // Group tasks by file path
+        // Group tasks by file path, filtering by global filter
         const tasksByFile = new Map<string, Task[]>();
         for (const task of this.allTasks) {
             const path = task.path;
 
             // Check if path is excluded
             if (this.isPathExcluded(path, excludedPaths)) {
+                continue;
+            }
+
+            // Check if task matches global filter (same logic as Tasks plugin uses)
+            if (!globalFilter.isEmpty() && !globalFilter.includedIn(task.originalMarkdown)) {
                 continue;
             }
 
@@ -107,7 +117,7 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
         // Sort by last modified (most recent first)
         filesData.sort((a, b) => b.lastModified - a.lastModified);
 
-        // Build disambiguated paths
+        // Build disambiguated paths - use full paths for display
         const pathMap = this.buildDisambiguatedPaths(filesData.map((f) => f.file));
 
         // Build destinations
@@ -177,7 +187,7 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
     private buildDisambiguatedPaths(files: TFile[]): Map<string, string> {
         const pathMap = new Map<string, string>();
 
-        // Group files by basename
+        // Group files by basename (without extension)
         const byBasename = new Map<string, TFile[]>();
         for (const file of files) {
             const basename = file.basename;
@@ -206,31 +216,36 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
 
     /**
      * Get the minimal path that uniquely identifies this file among files with the same basename.
+     * Returns format like "folder/filename" or "parent/folder/filename" as needed.
      */
     private getMinimalUniquePath(file: TFile, filesWithSameName: TFile[]): string {
-        const pathParts = file.path.split('/');
+        // Remove the .md extension for the path parts
+        const fullPath = file.path.replace(/\.md$/, '');
+        const pathParts = fullPath.split('/');
+
+        // Get the paths of other files with the same name (without .md)
+        const otherPaths = filesWithSameName
+            .filter((f) => f.path !== file.path)
+            .map((f) => f.path.replace(/\.md$/, ''));
 
         // Start with just the filename and add parent folders until unique
-        for (let i = pathParts.length - 1; i >= 0; i--) {
-            const candidatePath = pathParts.slice(i).join('/');
+        for (let numParts = 1; numParts <= pathParts.length; numParts++) {
+            const candidatePath = pathParts.slice(-numParts).join('/');
 
             // Check if this candidate is unique among files with the same name
-            let isUnique = true;
-            for (const otherFile of filesWithSameName) {
-                if (otherFile.path === file.path) continue;
-                if (otherFile.path.endsWith(candidatePath)) {
-                    isUnique = false;
-                    break;
-                }
-            }
+            const isUnique = !otherPaths.some((otherPath) => {
+                const otherParts = otherPath.split('/');
+                const otherCandidate = otherParts.slice(-numParts).join('/');
+                return otherCandidate === candidatePath;
+            });
 
             if (isUnique) {
                 return candidatePath;
             }
         }
 
-        // Fallback to full path
-        return file.path;
+        // Fallback to full path without extension
+        return fullPath;
     }
 
     /**
@@ -280,6 +295,7 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
                 appendToEnd: destination.appendToEnd,
                 vault: this.app.vault,
                 metadataCache: this.app.metadataCache,
+                editorCursorLine: this.editorCursorLine,
             });
             new Notice(`Task moved to ${destination.file.basename}`, 2000);
         } catch (error) {
@@ -292,7 +308,11 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
 
 /**
  * Helper function to open the move task modal.
+ * @param app - The Obsidian app instance
+ * @param task - The task to move
+ * @param allTasks - All tasks in the vault (for building destination list)
+ * @param editorCursorLine - Optional cursor line for reliable deletion when moving from editor
  */
-export function openMoveTaskModal(app: App, task: Task, allTasks: Task[]): void {
-    new MoveTaskModal(app, task, allTasks).open();
+export function openMoveTaskModal(app: App, task: Task, allTasks: Task[], editorCursorLine?: number): void {
+    new MoveTaskModal(app, task, allTasks, editorCursorLine).open();
 }

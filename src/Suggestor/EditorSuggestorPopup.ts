@@ -140,8 +140,10 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
         if (value.suggestionType === 'move' && value.taskToMove) {
             // Close the suggestion dialog and open the move modal
+            // Pass the current cursor line for reliable deletion
+            const cursorLine = editor.getCursor().line;
             this.close();
-            openMoveTaskModal(this.app, value.taskToMove, this.plugin.getTasks());
+            openMoveTaskModal(this.app, value.taskToMove, this.plugin.getTasks(), cursorLine);
             return;
         }
 
