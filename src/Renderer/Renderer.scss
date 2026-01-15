@@ -78,8 +78,8 @@
     -webkit-touch-callout: none;
 }
 
-/* Edit and postpone */
-.tasks-edit, .tasks-postpone {
+/* Edit, move, and postpone */
+.tasks-edit, .tasks-move, .tasks-postpone {
     width: 1em;
     height: 1em;
     vertical-align: middle;
@@ -92,12 +92,16 @@
     -webkit-touch-callout: none;
 }
 
-a.tasks-edit, a.tasks-postpone {
+a.tasks-edit, a.tasks-move, a.tasks-postpone {
     text-decoration: none;
 }
 
 .tasks-edit::after {
     content: '📝';
+}
+
+.tasks-move::after {
+    content: '↔️';
 }
 
 .tasks-postpone::after {

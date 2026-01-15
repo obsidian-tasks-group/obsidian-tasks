@@ -6,6 +6,7 @@ import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
+import { showMoveMenu } from '../ui/Menus/MoveTaskMenu';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
 import type { QueryRendererParameters } from './QueryResultsRenderer';
@@ -166,6 +167,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             this.addEditButton(extrasSpan, task);
         }
 
+        if (!this.getters.query().queryLayoutOptions.hideMoveButton) {
+            this.addMoveButton(extrasSpan, task);
+        }
+
         if (!this.getters.query().queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
             this.addPostponeButton(extrasSpan, task, shortMode);
         }
@@ -185,6 +190,17 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
                 task,
                 this.queryRendererParameters.allTasks(),
             ),
+        );
+    }
+
+    private addMoveButton(listItem: HTMLElement, task: Task) {
+        const moveButton = createAndAppendElement('a', listItem);
+        moveButton.classList.add('tasks-move');
+        moveButton.title = 'Move task to another file or section';
+        moveButton.href = '#';
+
+        moveButton.addEventListener('click', (event: MouseEvent) =>
+            showMoveMenu(event, this.obsidianApp, task, this.queryRendererParameters.allTasks()),
         );
     }
 
