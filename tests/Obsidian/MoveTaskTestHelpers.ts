@@ -50,11 +50,7 @@ function findLastTaskLineInRange(listItems: MockListItem[], startLine: number, e
 /**
  * Finds the insertion point for tasks with no heading.
  */
-function findInsertionPointNoHeading(
-    fileLines: string[],
-    headings: MockHeading[],
-    listItems: MockListItem[],
-): number {
+function findInsertionPointNoHeading(fileLines: string[], headings: MockHeading[], listItems: MockListItem[]): number {
     const firstHeadingLine = headings.length > 0 ? headings[0].position.start.line : Infinity;
     const lastTaskLine = findLastTaskLineBefore(listItems, firstHeadingLine);
 

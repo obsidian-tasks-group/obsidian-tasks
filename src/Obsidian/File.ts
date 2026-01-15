@@ -471,7 +471,16 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
     if (sourceFile.path === targetFile.path) {
         await moveTaskWithinSameFile(vault, sourceFile, sourceLines, taskLineIndex, insertionLine, linesToMove);
     } else {
-        await moveTaskBetweenFiles(vault, sourceFile, targetFile, sourceLines, targetLines, taskLineIndex, insertionLine, linesToMove);
+        await moveTaskBetweenFiles(
+            vault,
+            sourceFile,
+            targetFile,
+            sourceLines,
+            targetLines,
+            taskLineIndex,
+            insertionLine,
+            linesToMove,
+        );
     }
 
     logger.debug('moveTaskToSection: Move completed successfully');
@@ -480,11 +489,7 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
 /**
  * Finds the task line index using multiple fallback strategies.
  */
-function findTaskLineWithFallbacks(
-    sourceLines: string[],
-    originalTask: Task,
-    editorCursorLine?: number,
-): number {
+function findTaskLineWithFallbacks(sourceLines: string[], originalTask: Task, editorCursorLine?: number): number {
     // Try originalMarkdown first
     let taskLineIndex = findTaskLineIndex(
         sourceLines,

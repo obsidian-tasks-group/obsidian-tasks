@@ -166,7 +166,15 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
             for (const [sectionHeader, tasks] of sortedSections) {
                 const isCurrentSection = isCurrentFile && this.task.precedingHeader === sectionHeader;
                 destinations.push(
-                    this.createSectionDestination(fileData.file, sectionHeader, folderPath, fileName, fullPath, tasks.length, isCurrentSection),
+                    this.createSectionDestination(
+                        fileData.file,
+                        sectionHeader,
+                        folderPath,
+                        fileName,
+                        fullPath,
+                        tasks.length,
+                        isCurrentSection,
+                    ),
                 );
             }
 
@@ -219,7 +227,12 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
     /**
      * Creates a destination entry for end of file.
      */
-    private createEndOfFileDestination(file: TFile, folderPath: string, fileName: string, fullPath: string): MoveDestination {
+    private createEndOfFileDestination(
+        file: TFile,
+        folderPath: string,
+        fileName: string,
+        fullPath: string,
+    ): MoveDestination {
         return {
             file,
             sectionHeader: null,
