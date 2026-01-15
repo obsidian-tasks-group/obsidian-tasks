@@ -240,13 +240,30 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
         for (const excludedPath of excludedPaths) {
             if (!excludedPath) continue;
             // Normalize the excluded path (remove leading/trailing slashes)
-            // Using separate replacements instead of alternation to avoid regex complexity
-            const normalizedExcluded = excludedPath.replace(/^\/+/, '').replace(/\/+$/, '');
+            // Using string methods instead of regex to avoid ReDoS vulnerability
+            const normalizedExcluded = this.trimSlashes(excludedPath);
             if (filePath.startsWith(normalizedExcluded + '/') || filePath === normalizedExcluded) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Removes leading and trailing slashes from a path string.
+     */
+    private trimSlashes(path: string): string {
+        let start = 0;
+        let end = path.length;
+
+        while (start < end && path[start] === '/') {
+            start++;
+        }
+        while (end > start && path[end - 1] === '/') {
+            end--;
+        }
+
+        return path.slice(start, end);
     }
 
     /**
