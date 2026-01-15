@@ -1,4 +1,4 @@
-import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
+import { type CachedMetadata, type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from '../lib/MockDataCreator';
 import type { ListItem } from '../Task/ListItem';
@@ -384,4 +384,185 @@ ${line}`,
         }
     }
     return taskLineNumber;
+}
+
+/**
+ * Parameters for moving a task to a different file or section.
+ */
+export interface MoveTaskParams {
+    /** The task to move */
+    originalTask: Task;
+    /** The target file to move the task to */
+    targetFile: TFile;
+    /** The section header to move the task under. If null, moves to end of file or section with no heading. */
+    targetSectionHeader: string | null;
+    /** If true, append to the end of the file regardless of section header */
+    appendToEnd?: boolean;
+    /** The vault instance */
+    vault: Vault;
+    /** The metadata cache instance */
+    metadataCache: MetadataCache;
+}
+
+/**
+ * Moves a task from its current location to a different file and/or section.
+ *
+ * The task is inserted after the last task in the target section, or at the end
+ * of the file if appendToEnd is true or the target section has no tasks.
+ *
+ * @param params - The parameters for moving the task
+ * @throws Error if the operation fails
+ */
+export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
+    const { originalTask, targetFile, targetSectionHeader, appendToEnd = false, vault, metadataCache } = params;
+
+    const logger = getFileLogger();
+    logger.debug(
+        `moveTaskToSection: Moving task to ${targetFile.path}, section: ${targetSectionHeader ?? '(end of file)'}`,
+    );
+
+    // Get the task line to insert
+    const taskLine = originalTask.toFileLineString();
+
+    // Read target file
+    const targetContent = await vault.read(targetFile);
+    const targetLines = targetContent.split('\n');
+
+    // Get file cache for target file
+    const targetCache = metadataCache.getFileCache(targetFile);
+
+    // Find insertion point
+    const insertionLine = findInsertionPoint(targetLines, targetCache, targetSectionHeader, appendToEnd);
+
+    logger.debug(`moveTaskToSection: Inserting at line ${insertionLine}`);
+
+    // Insert the task at the target location
+    const newTargetLines = [...targetLines.slice(0, insertionLine), taskLine, ...targetLines.slice(insertionLine)];
+
+    // Write the modified target file
+    await vault.modify(targetFile, newTargetLines.join('\n'));
+
+    // Now delete the original task from the source file
+    // We need to handle the case where source and target are the same file
+    const sourceFile = vault.getAbstractFileByPath(originalTask.path);
+    if (!(sourceFile instanceof TFile)) {
+        throw new Error(`Source file not found: ${originalTask.path}`);
+    }
+
+    if (sourceFile.path === targetFile.path) {
+        // Same file - we need to re-read and adjust for the insertion we just made
+        const updatedContent = await vault.read(sourceFile);
+        const updatedLines = updatedContent.split('\n');
+
+        // Find the original task line (it may have shifted due to insertion)
+        const originalLineNumber = originalTask.lineNumber;
+        const adjustedLineNumber = insertionLine <= originalLineNumber ? originalLineNumber + 1 : originalLineNumber;
+
+        // Verify the line matches
+        if (updatedLines[adjustedLineNumber] === originalTask.originalMarkdown) {
+            const finalLines = [
+                ...updatedLines.slice(0, adjustedLineNumber),
+                ...updatedLines.slice(adjustedLineNumber + 1),
+            ];
+            await vault.modify(sourceFile, finalLines.join('\n'));
+        } else {
+            // Try to find the line by content
+            const foundIndex = updatedLines.findIndex((line) => line === originalTask.originalMarkdown);
+            if (foundIndex !== -1) {
+                const finalLines = [...updatedLines.slice(0, foundIndex), ...updatedLines.slice(foundIndex + 1)];
+                await vault.modify(sourceFile, finalLines.join('\n'));
+            } else {
+                logger.debug('moveTaskToSection: Could not find original task line to delete after same-file move');
+                // The task was moved but we couldn't clean up the original - this is a partial success
+                throw new Error('Task was copied but original could not be deleted. Please delete manually.');
+            }
+        }
+    } else {
+        // Different file - use the standard replacement mechanism with empty array to delete
+        await replaceTaskWithTasks({
+            originalTask,
+            newTasks: [],
+        });
+    }
+
+    logger.debug('moveTaskToSection: Move completed successfully');
+}
+
+/**
+ * Finds the line number where a task should be inserted in a file.
+ *
+ * @param fileLines - The lines of the target file
+ * @param fileCache - The cached metadata for the target file
+ * @param targetSectionHeader - The section header to insert under (null for end of file or no-heading section)
+ * @param appendToEnd - If true, always append to end of file
+ * @returns The line number to insert at
+ */
+function findInsertionPoint(
+    fileLines: string[],
+    fileCache: CachedMetadata | null,
+    targetSectionHeader: string | null,
+    appendToEnd: boolean,
+): number {
+    // If appendToEnd is true, always append to end of file
+    if (appendToEnd) {
+        return fileLines.length;
+    }
+
+    const headings = fileCache?.headings ?? [];
+    const listItems = fileCache?.listItems ?? [];
+
+    // If no target section header specified, find tasks with no heading
+    if (targetSectionHeader === null) {
+        // Find tasks that are before the first heading or have no heading
+        const firstHeadingLine = headings.length > 0 ? headings[0].position.start.line : Infinity;
+
+        // Find the last list item before the first heading
+        let lastTaskLine = -1;
+        for (const listItem of listItems) {
+            if (listItem.task !== undefined && listItem.position.start.line < firstHeadingLine) {
+                lastTaskLine = Math.max(lastTaskLine, listItem.position.start.line);
+            }
+        }
+
+        if (lastTaskLine >= 0) {
+            // Insert after the last task in the no-heading section
+            return lastTaskLine + 1;
+        }
+
+        // No tasks before first heading, insert at end of file
+        return fileLines.length;
+    }
+
+    // Find the target heading
+    const targetHeadingIndex = headings.findIndex((h) => h.heading === targetSectionHeader);
+    if (targetHeadingIndex === -1) {
+        // Target heading not found, append to end
+        return fileLines.length;
+    }
+
+    const targetHeading = headings[targetHeadingIndex];
+    const targetHeadingLine = targetHeading.position.start.line;
+
+    // Find the line number of the next heading (or end of file)
+    const nextHeadingLine =
+        targetHeadingIndex < headings.length - 1
+            ? headings[targetHeadingIndex + 1].position.start.line
+            : fileLines.length;
+
+    // Find the last task in this section
+    let lastTaskLineInSection = -1;
+    for (const listItem of listItems) {
+        const itemLine = listItem.position.start.line;
+        if (listItem.task !== undefined && itemLine > targetHeadingLine && itemLine < nextHeadingLine) {
+            lastTaskLineInSection = Math.max(lastTaskLineInSection, itemLine);
+        }
+    }
+
+    if (lastTaskLineInSection >= 0) {
+        // Insert after the last task in the section
+        return lastTaskLineInSection + 1;
+    }
+
+    // No tasks in the section, insert right after the heading
+    return targetHeadingLine + 1;
 }
