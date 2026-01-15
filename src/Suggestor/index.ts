@@ -5,7 +5,7 @@ import type { Settings } from '../Config/Settings';
  * A suggestion presented to the user and some metadata about it.
  */
 export type SuggestInfo = {
-    suggestionType?: 'match' | 'default' | 'empty';
+    suggestionType?: 'match' | 'default' | 'empty' | 'move';
     /** What to display to the user  */
     displayText: string;
     /** What to append to the note  */
@@ -18,6 +18,8 @@ export type SuggestInfo = {
     textToMatch?: string;
     /** Task which needs too be Updated on Select */
     taskItDependsOn?: Task;
+    /** Task to move (used when suggestionType is 'move') */
+    taskToMove?: Task;
 };
 
 /*

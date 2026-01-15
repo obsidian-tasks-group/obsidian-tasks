@@ -4,6 +4,7 @@ import type TasksPlugin from 'main';
 import { ensureTaskHasId } from '../Task/TaskDependency';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
+import { MoveTaskMenu } from '../ui/Menus/MoveTaskMenu';
 import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';
 
@@ -134,6 +135,22 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
                 key: 'Enter',
             });
             (editor as any)?.cm?.contentDOM?.dispatchEvent(eventClone);
+            return;
+        }
+
+        if (value.suggestionType === 'move' && value.taskToMove) {
+            // Close the suggestion dialog and open the move menu
+            this.close();
+            const menu = new MoveTaskMenu(this.app, value.taskToMove, this.plugin.getTasks());
+            // Get the cursor position to show menu near the cursor
+            // @ts-expect-error: TS2339: Property cm does not exist on type Editor
+            const coords = editor.cm?.coordsAtPos?.(editor.getCursor());
+            if (coords) {
+                menu.showAtPosition({ x: coords.left, y: coords.bottom });
+            } else {
+                // Fallback: show at center of screen
+                menu.showAtPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+            }
             return;
         }
 

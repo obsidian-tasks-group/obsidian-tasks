@@ -101,6 +101,16 @@ export function makeDefaultSuggestionBuilder(
         // add task property suggestions ('due', 'recurrence' etc)
         suggestions = suggestions.concat(addTaskPropertySuggestions(symbols, canSaveEdits, parameters));
 
+        // add move task suggestion as the last item (only if we have a task to suggest for)
+        if (taskToSuggestFor && canSaveEdits) {
+            suggestions.push({
+                suggestionType: 'move',
+                displayText: '↔️ Move task to another file/section',
+                appendText: '', // No text to append - this triggers the move menu
+                taskToMove: taskToSuggestFor,
+            });
+        }
+
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
         // rather than insert a suggestion
