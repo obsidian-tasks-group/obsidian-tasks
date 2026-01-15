@@ -29,6 +29,15 @@ interface MoveDestination {
 }
 
 /**
+ * File data with sections for building destinations.
+ */
+interface FileData {
+    file: TFile;
+    sections: Map<string | null, Task[]>;
+    lastModified: number;
+}
+
+/**
  * A modal for selecting a destination to move a task to.
  *
  * Uses Obsidian's SuggestModal for fuzzy filtering support.
@@ -60,13 +69,29 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
      * Only includes files/sections with tasks that match the global filter.
      */
     private buildDestinations(): MoveDestination[] {
-        const destinations: MoveDestination[] = [];
         const settings = getSettings();
         const excludedPaths = settings.moveTaskExcludedPaths || [];
-        const globalFilter = GlobalFilter.getInstance();
 
         // Group tasks by file path, filtering by global filter
+        const tasksByFile = this.groupTasksByFile(excludedPaths);
+
+        // Build file data with sections
+        const filesData = this.buildFilesData(tasksByFile);
+
+        // Sort by last modified (most recent first)
+        filesData.sort((a, b) => b.lastModified - a.lastModified);
+
+        // Build destinations from files data
+        return this.buildDestinationsFromFilesData(filesData);
+    }
+
+    /**
+     * Groups tasks by file path, excluding paths and filtering by global filter.
+     */
+    private groupTasksByFile(excludedPaths: string[]): Map<string, Task[]> {
+        const globalFilter = GlobalFilter.getInstance();
         const tasksByFile = new Map<string, Task[]>();
+
         for (const task of this.allTasks) {
             const path = task.path;
 
@@ -86,13 +111,13 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
             tasksByFile.get(path)!.push(task);
         }
 
-        // Build file data with sections
-        interface FileData {
-            file: TFile;
-            sections: Map<string | null, Task[]>;
-            lastModified: number;
-        }
+        return tasksByFile;
+    }
 
+    /**
+     * Builds file data with sections from grouped tasks.
+     */
+    private buildFilesData(tasksByFile: Map<string, Task[]>): FileData[] {
         const filesData: FileData[] = [];
 
         for (const [path, tasks] of tasksByFile) {
@@ -118,61 +143,94 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
             });
         }
 
-        // Sort by last modified (most recent first)
-        filesData.sort((a, b) => b.lastModified - a.lastModified);
+        return filesData;
+    }
 
-        // Build destinations with full paths (always unambiguous)
+    /**
+     * Builds destination entries from files data.
+     */
+    private buildDestinationsFromFilesData(filesData: FileData[]): MoveDestination[] {
+        const destinations: MoveDestination[] = [];
+
         for (const fileData of filesData) {
             const isCurrentFile = fileData.file.path === this.task.path;
-
-            // Split path into folder and filename
             const fullPath = fileData.file.path;
             const lastSlash = fullPath.lastIndexOf('/');
             const folderPath = lastSlash >= 0 ? fullPath.substring(0, lastSlash) : '';
             const fileName = fileData.file.basename;
 
             // Sort sections by line number
-            const sortedSections = Array.from(fileData.sections.entries()).sort((a, b) => {
-                if (a[0] === null && b[0] !== null) return 1;
-                if (a[0] !== null && b[0] === null) return -1;
-                const minLineA = Math.min(...a[1].map((t) => t.lineNumber));
-                const minLineB = Math.min(...b[1].map((t) => t.lineNumber));
-                return minLineA - minLineB;
-            });
+            const sortedSections = this.sortSectionsByLineNumber(fileData.sections);
 
             // Add section destinations
             for (const [sectionHeader, tasks] of sortedSections) {
                 const isCurrentSection = isCurrentFile && this.task.precedingHeader === sectionHeader;
-                const sectionDisplay = sectionHeader ?? '(no heading)';
-
-                destinations.push({
-                    file: fileData.file,
-                    sectionHeader,
-                    appendToEnd: false,
-                    folderPath,
-                    fileName,
-                    sectionDisplay,
-                    searchText: `${fullPath} ${sectionDisplay}`,
-                    taskCount: tasks.length,
-                    isCurrent: isCurrentSection,
-                });
+                destinations.push(
+                    this.createSectionDestination(fileData.file, sectionHeader, folderPath, fileName, fullPath, tasks.length, isCurrentSection),
+                );
             }
 
             // Add "end of file" option
-            destinations.push({
-                file: fileData.file,
-                sectionHeader: null,
-                appendToEnd: true,
-                folderPath,
-                fileName,
-                sectionDisplay: '(end of file)',
-                searchText: `${fullPath} end of file`,
-                taskCount: 0,
-                isCurrent: false,
-            });
+            destinations.push(this.createEndOfFileDestination(fileData.file, folderPath, fileName, fullPath));
         }
 
         return destinations;
+    }
+
+    /**
+     * Sorts sections by line number.
+     */
+    private sortSectionsByLineNumber(sections: Map<string | null, Task[]>): Array<[string | null, Task[]]> {
+        return Array.from(sections.entries()).sort((a, b) => {
+            if (a[0] === null && b[0] !== null) return 1;
+            if (a[0] !== null && b[0] === null) return -1;
+            const minLineA = Math.min(...a[1].map((t) => t.lineNumber));
+            const minLineB = Math.min(...b[1].map((t) => t.lineNumber));
+            return minLineA - minLineB;
+        });
+    }
+
+    /**
+     * Creates a destination entry for a section.
+     */
+    private createSectionDestination(
+        file: TFile,
+        sectionHeader: string | null,
+        folderPath: string,
+        fileName: string,
+        fullPath: string,
+        taskCount: number,
+        isCurrent: boolean,
+    ): MoveDestination {
+        const sectionDisplay = sectionHeader ?? '(no heading)';
+        return {
+            file,
+            sectionHeader,
+            appendToEnd: false,
+            folderPath,
+            fileName,
+            sectionDisplay,
+            searchText: `${fullPath} ${sectionDisplay}`,
+            taskCount,
+            isCurrent,
+        };
+    }
+
+    /**
+     * Creates a destination entry for end of file.
+     */
+    private createEndOfFileDestination(file: TFile, folderPath: string, fileName: string, fullPath: string): MoveDestination {
+        return {
+            file,
+            sectionHeader: null,
+            appendToEnd: true,
+            folderPath,
+            fileName,
+            sectionDisplay: '(end of file)',
+            searchText: `${fullPath} end of file`,
+            taskCount: 0,
+            isCurrent: false,
+        };
     }
 
     /**
@@ -182,7 +240,8 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
         for (const excludedPath of excludedPaths) {
             if (!excludedPath) continue;
             // Normalize the excluded path (remove leading/trailing slashes)
-            const normalizedExcluded = excludedPath.replace(/^\/+|\/+$/g, '');
+            // Using separate replacements instead of alternation to avoid regex complexity
+            const normalizedExcluded = excludedPath.replace(/^\/+/, '').replace(/\/+$/, '');
             if (filePath.startsWith(normalizedExcluded + '/') || filePath === normalizedExcluded) {
                 return true;
             }
@@ -272,7 +331,8 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
      */
     async onChooseSuggestion(destination: MoveDestination, _evt: MouseEvent | KeyboardEvent): Promise<void> {
         if (destination.isCurrent) {
-            new Notice('Task is already in this location', 2000);
+            // Notice constructor displays the notification as a side effect
+            void new Notice('Task is already in this location', 2000);
             return;
         }
 
@@ -286,10 +346,12 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
                 metadataCache: this.app.metadataCache,
                 editorCursorLine: this.editorCursorLine,
             });
-            new Notice(`Task moved to ${destination.file.basename}`, 2000);
+            // Notice constructor displays the notification as a side effect
+            void new Notice(`Task moved to ${destination.file.basename}`, 2000);
         } catch (error) {
             const message = error instanceof Error ? error.message : 'Unknown error';
-            new Notice(`Failed to move task: ${message}`, 5000);
+            // Notice constructor displays the notification as a side effect
+            void new Notice(`Failed to move task: ${message}`, 5000);
             console.error('Failed to move task:', error);
         }
     }

@@ -435,54 +435,15 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
     // Get the source file
     const sourceFile = vault.getAbstractFileByPath(originalTask.path);
     if (!(sourceFile instanceof TFile)) {
-        throw new Error(`Source file not found: ${originalTask.path}`);
+        throw new TypeError(`Source file not found: ${originalTask.path}`);
     }
 
     // Read source file to find the task and its children
     const sourceContent = await vault.read(sourceFile);
     const sourceLines = sourceContent.split('\n');
 
-    // Find the task line in the source file
-    // Try originalMarkdown first, then toFileLineString() as fallback
-    let taskLineIndex = findTaskLineIndex(
-        sourceLines,
-        originalTask.originalMarkdown,
-        originalTask.lineNumber,
-        editorCursorLine,
-    );
-
-    // If not found with originalMarkdown, try with toFileLineString()
-    // (they can differ if the task was modified in memory)
-    if (taskLineIndex === -1) {
-        const fileLineString = originalTask.toFileLineString();
-        console.log('[Tasks Move] originalMarkdown not found, trying toFileLineString:', fileLineString);
-        taskLineIndex = findTaskLineIndex(sourceLines, fileLineString, originalTask.lineNumber, editorCursorLine);
-    }
-
-    // Still not found? Try a more flexible search
-    if (taskLineIndex === -1) {
-        console.log('[Tasks Move] Still not found, trying flexible search with description:', originalTask.description);
-        // Look for a line that contains the task description and is a task
-        for (let i = 0; i < sourceLines.length; i++) {
-            const line = sourceLines[i];
-            if (line.includes('- [') && line.includes(originalTask.description)) {
-                console.log('[Tasks Move] Found via flexible search at line', i, ':', line);
-                taskLineIndex = i;
-                break;
-            }
-        }
-    }
-
-    if (taskLineIndex === -1) {
-        // Last resort: if we have a cursor line, trust it (user is looking at the task)
-        if (editorCursorLine !== undefined && editorCursorLine >= 0 && editorCursorLine < sourceLines.length) {
-            const cursorLine = sourceLines[editorCursorLine];
-            if (cursorLine.includes('- [')) {
-                console.log('[Tasks Move] Using cursor line as last resort:', editorCursorLine, cursorLine);
-                taskLineIndex = editorCursorLine;
-            }
-        }
-    }
+    // Find the task line in the source file using multiple strategies
+    const taskLineIndex = findTaskLineWithFallbacks(sourceLines, originalTask, editorCursorLine);
 
     if (taskLineIndex === -1) {
         throw new Error('Could not find the task in the source file.');
@@ -508,46 +469,143 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
 
     // Handle the move based on whether source and target are the same file
     if (sourceFile.path === targetFile.path) {
-        // Same file - do both operations atomically
-        let newLines: string[];
-
-        if (insertionLine <= taskLineIndex) {
-            // Inserting before the task - insert first, then delete (accounting for offset)
-            newLines = [
-                ...sourceLines.slice(0, insertionLine),
-                ...linesToMove,
-                ...sourceLines.slice(insertionLine, taskLineIndex),
-                ...sourceLines.slice(taskLineIndex + numLinesToMove),
-            ];
-        } else {
-            // Inserting after the task - the slicing handles the offset naturally
-            newLines = [
-                ...sourceLines.slice(0, taskLineIndex),
-                ...sourceLines.slice(taskLineIndex + numLinesToMove, insertionLine),
-                ...linesToMove,
-                ...sourceLines.slice(insertionLine),
-            ];
-        }
-
-        await vault.modify(sourceFile, newLines.join('\n'));
+        await moveTaskWithinSameFile(vault, sourceFile, sourceLines, taskLineIndex, insertionLine, linesToMove);
     } else {
-        // Different files - insert into target first, then delete from source
-        const newTargetLines = [
-            ...targetLines.slice(0, insertionLine),
-            ...linesToMove,
-            ...targetLines.slice(insertionLine),
-        ];
-        await vault.modify(targetFile, newTargetLines.join('\n'));
-
-        // Delete from source
-        const newSourceLines = [
-            ...sourceLines.slice(0, taskLineIndex),
-            ...sourceLines.slice(taskLineIndex + numLinesToMove),
-        ];
-        await vault.modify(sourceFile, newSourceLines.join('\n'));
+        await moveTaskBetweenFiles(vault, sourceFile, targetFile, sourceLines, targetLines, taskLineIndex, insertionLine, linesToMove);
     }
 
     logger.debug('moveTaskToSection: Move completed successfully');
+}
+
+/**
+ * Finds the task line index using multiple fallback strategies.
+ */
+function findTaskLineWithFallbacks(
+    sourceLines: string[],
+    originalTask: Task,
+    editorCursorLine?: number,
+): number {
+    // Try originalMarkdown first
+    let taskLineIndex = findTaskLineIndex(
+        sourceLines,
+        originalTask.originalMarkdown,
+        originalTask.lineNumber,
+        editorCursorLine,
+    );
+
+    // Try with toFileLineString() as fallback
+    if (taskLineIndex === -1) {
+        const fileLineString = originalTask.toFileLineString();
+        console.log('[Tasks Move] originalMarkdown not found, trying toFileLineString:', fileLineString);
+        taskLineIndex = findTaskLineIndex(sourceLines, fileLineString, originalTask.lineNumber, editorCursorLine);
+    }
+
+    // Try flexible search by description
+    if (taskLineIndex === -1) {
+        taskLineIndex = findTaskByFlexibleSearch(sourceLines, originalTask.description);
+    }
+
+    // Last resort: trust the cursor line
+    if (taskLineIndex === -1) {
+        taskLineIndex = findTaskByCursorLine(sourceLines, editorCursorLine);
+    }
+
+    return taskLineIndex;
+}
+
+/**
+ * Finds a task line by flexible search using the task description.
+ */
+function findTaskByFlexibleSearch(sourceLines: string[], description: string): number {
+    console.log('[Tasks Move] Still not found, trying flexible search with description:', description);
+    for (let i = 0; i < sourceLines.length; i++) {
+        const line = sourceLines[i];
+        if (line.includes('- [') && line.includes(description)) {
+            console.log('[Tasks Move] Found via flexible search at line', i, ':', line);
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Finds a task line by trusting the editor cursor position as last resort.
+ */
+function findTaskByCursorLine(sourceLines: string[], editorCursorLine?: number): number {
+    if (editorCursorLine !== undefined && editorCursorLine >= 0 && editorCursorLine < sourceLines.length) {
+        const cursorLine = sourceLines[editorCursorLine];
+        if (cursorLine.includes('- [')) {
+            console.log('[Tasks Move] Using cursor line as last resort:', editorCursorLine, cursorLine);
+            return editorCursorLine;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Moves a task within the same file atomically.
+ */
+async function moveTaskWithinSameFile(
+    vault: Vault,
+    file: TFile,
+    sourceLines: string[],
+    taskLineIndex: number,
+    insertionLine: number,
+    linesToMove: string[],
+): Promise<void> {
+    const numLinesToMove = linesToMove.length;
+    let newLines: string[];
+
+    if (insertionLine <= taskLineIndex) {
+        // Inserting before the task - insert first, then delete (accounting for offset)
+        newLines = [
+            ...sourceLines.slice(0, insertionLine),
+            ...linesToMove,
+            ...sourceLines.slice(insertionLine, taskLineIndex),
+            ...sourceLines.slice(taskLineIndex + numLinesToMove),
+        ];
+    } else {
+        // Inserting after the task - the slicing handles the offset naturally
+        newLines = [
+            ...sourceLines.slice(0, taskLineIndex),
+            ...sourceLines.slice(taskLineIndex + numLinesToMove, insertionLine),
+            ...linesToMove,
+            ...sourceLines.slice(insertionLine),
+        ];
+    }
+
+    await vault.modify(file, newLines.join('\n'));
+}
+
+/**
+ * Moves a task between two different files.
+ */
+async function moveTaskBetweenFiles(
+    vault: Vault,
+    sourceFile: TFile,
+    targetFile: TFile,
+    sourceLines: string[],
+    targetLines: string[],
+    taskLineIndex: number,
+    insertionLine: number,
+    linesToMove: string[],
+): Promise<void> {
+    const numLinesToMove = linesToMove.length;
+
+    // Insert into target first
+    const newTargetLines = [
+        ...targetLines.slice(0, insertionLine),
+        ...linesToMove,
+        ...targetLines.slice(insertionLine),
+    ];
+    await vault.modify(targetFile, newTargetLines.join('\n'));
+
+    // Delete from source
+    const newSourceLines = [
+        ...sourceLines.slice(0, taskLineIndex),
+        ...sourceLines.slice(taskLineIndex + numLinesToMove),
+    ];
+    await vault.modify(sourceFile, newSourceLines.join('\n'));
 }
 
 /**
@@ -630,41 +688,47 @@ function findTaskLineIndex(
  * Get the task line and all its children (indented lines below it).
  * Returns an array of lines to move together.
  */
+// Regex pattern for matching leading whitespace
+const LEADING_WHITESPACE_REGEX = /^(\s*)/;
+
+/**
+ * Gets the indentation level (number of leading whitespace characters) of a line.
+ */
+function getIndentLevel(line: string): number {
+    const match = LEADING_WHITESPACE_REGEX.exec(line);
+    return match ? match[1].length : 0;
+}
+
+/**
+ * Checks if there are more child lines after a given empty line index.
+ */
+function hasMoreChildrenAfterEmptyLine(lines: string[], startIndex: number, taskIndent: number): boolean {
+    for (let j = startIndex; j < lines.length; j++) {
+        const nextLine = lines[j];
+        if (nextLine.trim() === '') continue;
+        return getIndentLevel(nextLine) > taskIndent;
+    }
+    return false;
+}
+
 function getTaskWithChildren(lines: string[], taskLineIndex: number): string[] {
     const result: string[] = [lines[taskLineIndex]];
-
-    // Get the indentation of the task
-    const taskLine = lines[taskLineIndex];
-    const taskIndentMatch = taskLine.match(/^(\s*)/);
-    const taskIndent = taskIndentMatch ? taskIndentMatch[1].length : 0;
+    const taskIndent = getIndentLevel(lines[taskLineIndex]);
 
     // Collect all following lines that are more indented (children)
     for (let i = taskLineIndex + 1; i < lines.length; i++) {
         const line = lines[i];
 
-        // Empty lines within children are included
+        // Handle empty lines: include them if there are more children after
         if (line.trim() === '') {
-            // Check if there are more children after this empty line
-            let hasMoreChildren = false;
-            for (let j = i + 1; j < lines.length; j++) {
-                const nextLine = lines[j];
-                if (nextLine.trim() === '') continue;
-                const nextIndentMatch = nextLine.match(/^(\s*)/);
-                const nextIndent = nextIndentMatch ? nextIndentMatch[1].length : 0;
-                if (nextIndent > taskIndent) {
-                    hasMoreChildren = true;
-                }
-                break;
-            }
-            if (!hasMoreChildren) {
+            if (!hasMoreChildrenAfterEmptyLine(lines, i + 1, taskIndent)) {
                 break;
             }
             result.push(line);
             continue;
         }
 
-        const lineIndentMatch = line.match(/^(\s*)/);
-        const lineIndent = lineIndentMatch ? lineIndentMatch[1].length : 0;
+        const lineIndent = getIndentLevel(line);
 
         // If this line is more indented than the task, it's a child
         if (lineIndent > taskIndent) {
@@ -676,6 +740,50 @@ function getTaskWithChildren(lines: string[], taskLineIndex: number): string[] {
     }
 
     return result;
+}
+
+/**
+ * Finds the last task line before a given line number.
+ */
+function findLastTaskLineBefore(listItems: ListItemCache[], beforeLine: number): number {
+    let lastTaskLine = -1;
+    for (const listItem of listItems) {
+        if (listItem.task !== undefined && listItem.position.start.line < beforeLine) {
+            lastTaskLine = Math.max(lastTaskLine, listItem.position.start.line);
+        }
+    }
+    return lastTaskLine;
+}
+
+/**
+ * Finds the last task line within a range.
+ */
+function findLastTaskLineInRange(listItems: ListItemCache[], startLine: number, endLine: number): number {
+    let lastTaskLine = -1;
+    for (const listItem of listItems) {
+        const itemLine = listItem.position.start.line;
+        if (listItem.task !== undefined && itemLine > startLine && itemLine < endLine) {
+            lastTaskLine = Math.max(lastTaskLine, itemLine);
+        }
+    }
+    return lastTaskLine;
+}
+
+/**
+ * Finds the insertion point for tasks with no heading.
+ */
+function findInsertionPointNoHeading(
+    fileLines: string[],
+    headings: { position: { start: { line: number } } }[],
+    listItems: ListItemCache[],
+): number {
+    const firstHeadingLine = headings.length > 0 ? headings[0].position.start.line : Infinity;
+    const lastTaskLine = findLastTaskLineBefore(listItems, firstHeadingLine);
+
+    if (lastTaskLine >= 0) {
+        return lastTaskLine + 1;
+    }
+    return fileLines.length;
 }
 
 /**
@@ -693,7 +801,6 @@ function findInsertionPoint(
     targetSectionHeader: string | null,
     appendToEnd: boolean,
 ): number {
-    // If appendToEnd is true, always append to end of file
     if (appendToEnd) {
         return fileLines.length;
     }
@@ -703,56 +810,26 @@ function findInsertionPoint(
 
     // If no target section header specified, find tasks with no heading
     if (targetSectionHeader === null) {
-        // Find tasks that are before the first heading or have no heading
-        const firstHeadingLine = headings.length > 0 ? headings[0].position.start.line : Infinity;
-
-        // Find the last list item before the first heading
-        let lastTaskLine = -1;
-        for (const listItem of listItems) {
-            if (listItem.task !== undefined && listItem.position.start.line < firstHeadingLine) {
-                lastTaskLine = Math.max(lastTaskLine, listItem.position.start.line);
-            }
-        }
-
-        if (lastTaskLine >= 0) {
-            // Insert after the last task in the no-heading section
-            return lastTaskLine + 1;
-        }
-
-        // No tasks before first heading, insert at end of file
-        return fileLines.length;
+        return findInsertionPointNoHeading(fileLines, headings, listItems);
     }
 
     // Find the target heading
     const targetHeadingIndex = headings.findIndex((h) => h.heading === targetSectionHeader);
     if (targetHeadingIndex === -1) {
-        // Target heading not found, append to end
         return fileLines.length;
     }
 
-    const targetHeading = headings[targetHeadingIndex];
-    const targetHeadingLine = targetHeading.position.start.line;
-
-    // Find the line number of the next heading (or end of file)
+    const targetHeadingLine = headings[targetHeadingIndex].position.start.line;
     const nextHeadingLine =
         targetHeadingIndex < headings.length - 1
             ? headings[targetHeadingIndex + 1].position.start.line
             : fileLines.length;
 
-    // Find the last task in this section
-    let lastTaskLineInSection = -1;
-    for (const listItem of listItems) {
-        const itemLine = listItem.position.start.line;
-        if (listItem.task !== undefined && itemLine > targetHeadingLine && itemLine < nextHeadingLine) {
-            lastTaskLineInSection = Math.max(lastTaskLineInSection, itemLine);
-        }
-    }
+    const lastTaskLineInSection = findLastTaskLineInRange(listItems, targetHeadingLine, nextHeadingLine);
 
     if (lastTaskLineInSection >= 0) {
-        // Insert after the last task in the section
         return lastTaskLineInSection + 1;
     }
 
-    // No tasks in the section, insert right after the heading
     return targetHeadingLine + 1;
 }

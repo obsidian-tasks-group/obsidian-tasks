@@ -128,97 +128,132 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const editor = value.context.editor;
 
         if (value.suggestionType === 'empty') {
-            // Close the suggestion dialog and simulate an Enter press to the editor
-            this.close();
-            const eventClone = new KeyboardEvent('keydown', {
-                code: 'Enter',
-                key: 'Enter',
-            });
-            (editor as any)?.cm?.contentDOM?.dispatchEvent(eventClone);
+            this.handleEmptySuggestion(editor);
             return;
         }
 
         if (value.suggestionType === 'move' && value.taskToMove) {
-            // Close the suggestion dialog and open the move modal
-            // Pass the current cursor line for reliable deletion
-            const cursorLine = editor.getCursor().line;
-            this.close();
-            openMoveTaskModal(this.app, value.taskToMove, this.plugin.getTasks(), cursorLine);
+            this.handleMoveSuggestion(editor, value.taskToMove);
             return;
         }
 
-        if (value.taskItDependsOn != null) {
-            const newTask = ensureTaskHasId(
-                value.taskItDependsOn,
-                this.plugin.getTasks().map((task) => task.id),
-            );
-            value.appendText += ` ${newTask.id}`;
+        const shouldAbort = this.handleDependencySuggestion(value);
+        if (shouldAbort) {
+            return;
+        }
 
-            if (value.taskItDependsOn !== newTask) {
-                // The task being depended on must not have had an ID previously,
-                // so we have to save its new ID field:
-                if (value.context.file.path == newTask.path) {
-                    // Avoid "Has Been Modified Externally Error" and Replace Task in Editor Context
-                    const originalLine = value.taskItDependsOn.originalMarkdown;
-                    const start = {
-                        line: value.taskItDependsOn.lineNumber,
-                        ch: 0,
-                    };
-                    const end = {
-                        line: value.taskItDependsOn.lineNumber,
-                        ch: originalLine.length,
-                    };
+        this.insertSuggestionText(value);
+        await this.saveFileIfNeeded(value.context.editor);
+    }
 
-                    // Safety check: before we overwrite content in the editor, make sure
-                    //               it has the expected content.
-                    // This might happen, for example, if the file had been edited and the
-                    // file not yet saved, so that the Tasks Cache is temporarily out-of-date.
-                    const markdownInEditor: string = value.context.editor.getRange(start, end);
-                    if (markdownInEditor !== originalLine) {
-                        const message = `Error adding new ID, due to mismatched data in Tasks memory and the editor:
-task line in memory: '${value.taskItDependsOn.originalMarkdown}'
+    /**
+     * Handles the empty suggestion type by simulating Enter key press.
+     */
+    private handleEmptySuggestion(editor: Editor): void {
+        this.close();
+        const eventClone = new KeyboardEvent('keydown', {
+            code: 'Enter',
+            key: 'Enter',
+        });
+        (editor as any)?.cm?.contentDOM?.dispatchEvent(eventClone);
+    }
+
+    /**
+     * Handles the move suggestion type by opening the move modal.
+     */
+    private handleMoveSuggestion(editor: Editor, taskToMove: any): void {
+        const cursorLine = editor.getCursor().line;
+        this.close();
+        openMoveTaskModal(this.app, taskToMove, this.plugin.getTasks(), cursorLine);
+    }
+
+    /**
+     * Handles dependency suggestions by ensuring the task has an ID.
+     * Returns true if the operation should abort, false otherwise.
+     */
+    private handleDependencySuggestion(value: SuggestInfoWithContext): boolean {
+        if (value.taskItDependsOn == null) {
+            return false;
+        }
+
+        const newTask = ensureTaskHasId(
+            value.taskItDependsOn,
+            this.plugin.getTasks().map((task) => task.id),
+        );
+        value.appendText += ` ${newTask.id}`;
+
+        if (value.taskItDependsOn === newTask) {
+            return false;
+        }
+
+        // The task being depended on must not have had an ID previously
+        return this.updateTaskWithNewId(value, newTask);
+    }
+
+    /**
+     * Updates a task with a new ID in either the editor or file.
+     * Returns true if the operation should abort, false otherwise.
+     */
+    private updateTaskWithNewId(value: SuggestInfoWithContext, newTask: any): boolean {
+        if (value.context.file.path === newTask.path) {
+            return this.updateTaskInEditor(value, newTask);
+        }
+        // Replace Task in File Context
+        replaceTaskWithTasks({ originalTask: value.taskItDependsOn!, newTasks: newTask });
+        return false;
+    }
+
+    /**
+     * Updates a task with a new ID in the editor context.
+     * Returns true if the operation should abort due to mismatch, false otherwise.
+     */
+    private updateTaskInEditor(value: SuggestInfoWithContext, newTask: any): boolean {
+        const originalLine = value.taskItDependsOn!.originalMarkdown;
+        const start = { line: value.taskItDependsOn!.lineNumber, ch: 0 };
+        const end = { line: value.taskItDependsOn!.lineNumber, ch: originalLine.length };
+
+        const markdownInEditor: string = value.context.editor.getRange(start, end);
+        if (markdownInEditor !== originalLine) {
+            const message = `Error adding new ID, due to mismatched data in Tasks memory and the editor:
+task line in memory: '${value.taskItDependsOn!.originalMarkdown}'
 
 task line in editor: '${markdownInEditor}'
 
 file: '${newTask.path}'
 `;
-                        showError(message);
-                        return;
-                    }
-
-                    value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
-                } else {
-                    // Replace Task in File Context
-                    replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
-                }
-            }
+            showError(message);
+            return true;
         }
 
+        value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
+        return false;
+    }
+
+    /**
+     * Inserts the suggestion text at the cursor position.
+     */
+    private insertSuggestionText(value: SuggestInfoWithContext): void {
         const currentCursor = value.context.editor.getCursor();
         const replaceFrom = {
             line: currentCursor.line,
             ch: value.insertAt ?? currentCursor.ch,
         };
         const replaceTo = value.insertSkip
-            ? {
-                  line: currentCursor.line,
-                  ch: replaceFrom.ch + value.insertSkip,
-              }
+            ? { line: currentCursor.line, ch: replaceFrom.ch + value.insertSkip }
             : undefined;
         value.context.editor.replaceRange(value.appendText, replaceFrom, replaceTo);
         value.context.editor.setCursor({
             line: currentCursor.line,
             ch: replaceFrom.ch + value.appendText.length,
         });
+    }
 
-        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
-        // We need to save the file being edited, in case a Task.id was just added
-        // to another Task in this same file.
-        // Otherwise, if the user types a comma to add another dependency,
-        // the same task can be offered again, and if done in rapid succession,
-        // multiple ID fields can be added to individual task lines.
-
-        const markdownFileInfo = this.getMarkdownFileInfo(value.context.editor);
+    /**
+     * Saves the file if edits can be saved.
+     * See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2872
+     */
+    private async saveFileIfNeeded(editor: Editor): Promise<void> {
+        const markdownFileInfo = this.getMarkdownFileInfo(editor);
         if (this.canSaveEdits(markdownFileInfo)) {
             await markdownFileInfo.save();
         }

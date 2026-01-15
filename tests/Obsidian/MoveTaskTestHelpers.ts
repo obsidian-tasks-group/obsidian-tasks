@@ -21,6 +21,50 @@ interface MockCachedMetadata {
 }
 
 /**
+ * Finds the last task line before a given line number.
+ */
+function findLastTaskLineBefore(listItems: MockListItem[], beforeLine: number): number {
+    let lastTaskLine = -1;
+    for (const listItem of listItems) {
+        if (listItem.task !== undefined && listItem.position.start.line < beforeLine) {
+            lastTaskLine = Math.max(lastTaskLine, listItem.position.start.line);
+        }
+    }
+    return lastTaskLine;
+}
+
+/**
+ * Finds the last task line within a range.
+ */
+function findLastTaskLineInRange(listItems: MockListItem[], startLine: number, endLine: number): number {
+    let lastTaskLine = -1;
+    for (const listItem of listItems) {
+        const itemLine = listItem.position.start.line;
+        if (listItem.task !== undefined && itemLine > startLine && itemLine < endLine) {
+            lastTaskLine = Math.max(lastTaskLine, itemLine);
+        }
+    }
+    return lastTaskLine;
+}
+
+/**
+ * Finds the insertion point for tasks with no heading.
+ */
+function findInsertionPointNoHeading(
+    fileLines: string[],
+    headings: MockHeading[],
+    listItems: MockListItem[],
+): number {
+    const firstHeadingLine = headings.length > 0 ? headings[0].position.start.line : Infinity;
+    const lastTaskLine = findLastTaskLineBefore(listItems, firstHeadingLine);
+
+    if (lastTaskLine >= 0) {
+        return lastTaskLine + 1;
+    }
+    return fileLines.length;
+}
+
+/**
  * Finds the line number where a task should be inserted in a file.
  * This is a test-friendly version of the function in File.ts.
  *
@@ -36,7 +80,6 @@ export function findInsertionPointForTesting(
     targetSectionHeader: string | null,
     appendToEnd: boolean,
 ): number {
-    // If appendToEnd is true, always append to end of file
     if (appendToEnd) {
         return fileLines.length;
     }
@@ -46,56 +89,26 @@ export function findInsertionPointForTesting(
 
     // If no target section header specified, find tasks with no heading
     if (targetSectionHeader === null) {
-        // Find tasks that are before the first heading or have no heading
-        const firstHeadingLine = headings.length > 0 ? headings[0].position.start.line : Infinity;
-
-        // Find the last list item before the first heading
-        let lastTaskLine = -1;
-        for (const listItem of listItems) {
-            if (listItem.task !== undefined && listItem.position.start.line < firstHeadingLine) {
-                lastTaskLine = Math.max(lastTaskLine, listItem.position.start.line);
-            }
-        }
-
-        if (lastTaskLine >= 0) {
-            // Insert after the last task in the no-heading section
-            return lastTaskLine + 1;
-        }
-
-        // No tasks before first heading, insert at end of file
-        return fileLines.length;
+        return findInsertionPointNoHeading(fileLines, headings, listItems);
     }
 
     // Find the target heading
     const targetHeadingIndex = headings.findIndex((h) => h.heading === targetSectionHeader);
     if (targetHeadingIndex === -1) {
-        // Target heading not found, append to end
         return fileLines.length;
     }
 
-    const targetHeading = headings[targetHeadingIndex];
-    const targetHeadingLine = targetHeading.position.start.line;
-
-    // Find the line number of the next heading (or end of file)
+    const targetHeadingLine = headings[targetHeadingIndex].position.start.line;
     const nextHeadingLine =
         targetHeadingIndex < headings.length - 1
             ? headings[targetHeadingIndex + 1].position.start.line
             : fileLines.length;
 
-    // Find the last task in this section
-    let lastTaskLineInSection = -1;
-    for (const listItem of listItems) {
-        const itemLine = listItem.position.start.line;
-        if (listItem.task !== undefined && itemLine > targetHeadingLine && itemLine < nextHeadingLine) {
-            lastTaskLineInSection = Math.max(lastTaskLineInSection, itemLine);
-        }
-    }
+    const lastTaskLineInSection = findLastTaskLineInRange(listItems, targetHeadingLine, nextHeadingLine);
 
     if (lastTaskLineInSection >= 0) {
-        // Insert after the last task in the section
         return lastTaskLineInSection + 1;
     }
 
-    // No tasks in the section, insert right after the heading
     return targetHeadingLine + 1;
 }
