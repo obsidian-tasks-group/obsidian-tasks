@@ -23,3 +23,8 @@ Tasks has a growing number of ways to conveniently add data to your task lines.
   - All the ways to edit dates on tasks.
 - [[Postponing]]
   - Easy deferring or snoozing of due, scheduled and start dates.
+
+## Reorganizing tasks
+
+- [[Moving Tasks]]
+  - Move tasks between files and sections.

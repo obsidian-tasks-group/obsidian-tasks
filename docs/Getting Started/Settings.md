@@ -23,5 +23,6 @@ For convenience, here is a list of all those documentation pages (in the order t
 - [[Dates#Date-tracking settings|Dates]]
 - [[Use Filename as Default Date#Settings|Use Filename as Default Date]]
 - [[Recurring Tasks#Recurrence Settings|Recurring Tasks]]
+- [[Moving Tasks#Settings|Moving Tasks]]
 - [[Auto-Suggest#Settings|Auto-Suggest]]
 - [[Create or edit Task#Turning off keyboard shortcuts|Create or edit Task modal]]
