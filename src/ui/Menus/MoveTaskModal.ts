@@ -14,8 +14,12 @@ interface MoveDestination {
     sectionHeader: string | null;
     /** If true, append to the end of the file */
     appendToEnd: boolean;
-    /** Display text for the option */
-    displayText: string;
+    /** The folder path (without filename) */
+    folderPath: string;
+    /** The filename without extension */
+    fileName: string;
+    /** Section display name */
+    sectionDisplay: string;
     /** The full path for filtering */
     searchText: string;
     /** Number of tasks in this section */
@@ -117,13 +121,15 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
         // Sort by last modified (most recent first)
         filesData.sort((a, b) => b.lastModified - a.lastModified);
 
-        // Build disambiguated paths - use full paths for display
-        const pathMap = this.buildDisambiguatedPaths(filesData.map((f) => f.file));
-
-        // Build destinations
+        // Build destinations with full paths (always unambiguous)
         for (const fileData of filesData) {
             const isCurrentFile = fileData.file.path === this.task.path;
-            const disambiguatedPath = pathMap.get(fileData.file.path) || fileData.file.path;
+
+            // Split path into folder and filename
+            const fullPath = fileData.file.path;
+            const lastSlash = fullPath.lastIndexOf('/');
+            const folderPath = lastSlash >= 0 ? fullPath.substring(0, lastSlash) : '';
+            const fileName = fileData.file.basename;
 
             // Sort sections by line number
             const sortedSections = Array.from(fileData.sections.entries()).sort((a, b) => {
@@ -137,14 +143,16 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
             // Add section destinations
             for (const [sectionHeader, tasks] of sortedSections) {
                 const isCurrentSection = isCurrentFile && this.task.precedingHeader === sectionHeader;
-                const sectionName = sectionHeader ?? '(No heading)';
+                const sectionDisplay = sectionHeader ?? '(no heading)';
 
                 destinations.push({
                     file: fileData.file,
                     sectionHeader,
                     appendToEnd: false,
-                    displayText: `${disambiguatedPath} → ${sectionName} (${tasks.length})`,
-                    searchText: `${fileData.file.path} ${sectionName}`,
+                    folderPath,
+                    fileName,
+                    sectionDisplay,
+                    searchText: `${fullPath} ${sectionDisplay}`,
                     taskCount: tasks.length,
                     isCurrent: isCurrentSection,
                 });
@@ -155,8 +163,10 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
                 file: fileData.file,
                 sectionHeader: null,
                 appendToEnd: true,
-                displayText: `${disambiguatedPath} → End of file`,
-                searchText: `${fileData.file.path} end of file`,
+                folderPath,
+                fileName,
+                sectionDisplay: '(end of file)',
+                searchText: `${fullPath} end of file`,
                 taskCount: 0,
                 isCurrent: false,
             });
@@ -181,74 +191,6 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
     }
 
     /**
-     * Build a map of file paths to their disambiguated display names.
-     * Shows the minimum path needed to uniquely identify each file.
-     */
-    private buildDisambiguatedPaths(files: TFile[]): Map<string, string> {
-        const pathMap = new Map<string, string>();
-
-        // Group files by basename (without extension)
-        const byBasename = new Map<string, TFile[]>();
-        for (const file of files) {
-            const basename = file.basename;
-            if (!byBasename.has(basename)) {
-                byBasename.set(basename, []);
-            }
-            byBasename.get(basename)!.push(file);
-        }
-
-        // For each file, determine the minimum path needed
-        for (const file of files) {
-            const filesWithSameName = byBasename.get(file.basename)!;
-
-            if (filesWithSameName.length === 1) {
-                // Unique basename, just use the filename
-                pathMap.set(file.path, file.basename);
-            } else {
-                // Need to disambiguate - find minimum unique path
-                const disambiguated = this.getMinimalUniquePath(file, filesWithSameName);
-                pathMap.set(file.path, disambiguated);
-            }
-        }
-
-        return pathMap;
-    }
-
-    /**
-     * Get the minimal path that uniquely identifies this file among files with the same basename.
-     * Returns format like "folder/filename" or "parent/folder/filename" as needed.
-     */
-    private getMinimalUniquePath(file: TFile, filesWithSameName: TFile[]): string {
-        // Remove the .md extension for the path parts
-        const fullPath = file.path.replace(/\.md$/, '');
-        const pathParts = fullPath.split('/');
-
-        // Get the paths of other files with the same name (without .md)
-        const otherPaths = filesWithSameName
-            .filter((f) => f.path !== file.path)
-            .map((f) => f.path.replace(/\.md$/, ''));
-
-        // Start with just the filename and add parent folders until unique
-        for (let numParts = 1; numParts <= pathParts.length; numParts++) {
-            const candidatePath = pathParts.slice(-numParts).join('/');
-
-            // Check if this candidate is unique among files with the same name
-            const isUnique = !otherPaths.some((otherPath) => {
-                const otherParts = otherPath.split('/');
-                const otherCandidate = otherParts.slice(-numParts).join('/');
-                return otherCandidate === candidatePath;
-            });
-
-            if (isUnique) {
-                return candidatePath;
-            }
-        }
-
-        // Fallback to full path without extension
-        return fullPath;
-    }
-
-    /**
      * Get suggestions based on the query.
      */
     getSuggestions(query: string): MoveDestination[] {
@@ -265,16 +207,63 @@ export class MoveTaskModal extends SuggestModal<MoveDestination> {
     }
 
     /**
-     * Render a suggestion item.
+     * Render a suggestion item with clear visual hierarchy:
+     * - Folder path (dimmer, smaller)
+     * - Filename (prominent)
+     * - Section (italic, with task count)
      */
     renderSuggestion(destination: MoveDestination, el: HTMLElement): void {
         el.addClass('move-task-suggestion');
 
         if (destination.isCurrent) {
             el.addClass('is-current');
-            el.createEl('span', { text: destination.displayText + ' ← current', cls: 'suggestion-content' });
-        } else {
-            el.createEl('span', { text: destination.displayText, cls: 'suggestion-content' });
+        }
+
+        // Create the main container
+        const container = el.createDiv({ cls: 'move-task-destination' });
+
+        // File info line
+        const fileRow = container.createDiv({ cls: 'move-task-file-row' });
+
+        // Folder path (dimmer)
+        if (destination.folderPath) {
+            fileRow.createSpan({
+                text: destination.folderPath + '/',
+                cls: 'move-task-folder',
+            });
+        }
+
+        // Filename (prominent)
+        fileRow.createSpan({
+            text: destination.fileName,
+            cls: 'move-task-filename',
+        });
+
+        // Section line
+        const sectionRow = container.createDiv({ cls: 'move-task-section-row' });
+
+        // Arrow and section name (italic)
+        sectionRow.createSpan({
+            text: '→ ',
+            cls: 'move-task-arrow',
+        });
+
+        const sectionText =
+            destination.taskCount > 0
+                ? `${destination.sectionDisplay} (${destination.taskCount})`
+                : destination.sectionDisplay;
+
+        sectionRow.createSpan({
+            text: sectionText,
+            cls: 'move-task-section',
+        });
+
+        // Current indicator
+        if (destination.isCurrent) {
+            sectionRow.createSpan({
+                text: ' ← current',
+                cls: 'move-task-current',
+            });
         }
     }
 
