@@ -4,6 +4,19 @@
 
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { findInsertionPoint } from '../../src/EditFiles/FindInsertionPoint';
+import type { SimulatedFile } from './SimulatedFile';
+
+function insertionPointShouldBe(
+    simulatedFile: SimulatedFile,
+    targetSectionHeader: null,
+    appendToEnd: boolean,
+    expectedInsertionPoint: number,
+): void {
+    const fileLines = simulatedFile.fileContents.split('\n');
+    const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, targetSectionHeader, appendToEnd);
+
+    expect(result).toBe(expectedInsertionPoint);
+}
 
 describe('findInsertionPoint', () => {
     describe('appendToEnd is true', () => {
@@ -38,16 +51,7 @@ describe('findInsertionPoint', () => {
 
             const targetSectionHeader = null;
             const appendToEnd = false;
-
-            const fileLines = simulatedFile.fileContents.split('\n');
-            const result = findInsertionPoint(
-                fileLines,
-                simulatedFile.cachedMetadata,
-                targetSectionHeader,
-                appendToEnd,
-            );
-
-            expect(result).toBe(expectedInsertionPoint);
+            insertionPointShouldBe(simulatedFile, targetSectionHeader, appendToEnd, expectedInsertionPoint);
         });
 
         it('should append to end if no tasks before first heading', () => {
