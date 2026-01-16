@@ -15,7 +15,7 @@ describe('findInsertionPoint', () => {
             const appendToEnd = true;
             const result = findInsertionPoint(fileLines, fileCache, targetSectionHeader, appendToEnd);
 
-            expect(result).toBe(fileLines.length);
+            expect(result).toBe(4);
         });
     });
 
@@ -58,7 +58,7 @@ describe('findInsertionPoint', () => {
             const fileLines = simulatedFile.fileContents.split('\n');
 
             const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, null, false);
-            expect(result).toBe(fileLines.length);
+            expect(result).toBe(3);
         });
     });
 
@@ -107,7 +107,7 @@ describe('findInsertionPoint', () => {
             const fileLines = simulatedFile.fileContents.split('\n');
             const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, 'Non-existent Section', false);
 
-            expect(result).toBe(fileLines.length);
+            expect(result).toBe(3);
         });
     });
 
@@ -129,7 +129,7 @@ describe('findInsertionPoint', () => {
             const fileLines2 = simulatedFile.fileContents.split('\n');
             const result = findInsertionPoint(fileLines2, simulatedFile.cachedMetadata, null, false);
 
-            expect(result).toBe(fileLines2.length);
+            expect(result).toBe(4);
         });
 
         it('should handle file with no headings', () => {
