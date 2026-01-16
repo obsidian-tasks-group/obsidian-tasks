@@ -99,26 +99,15 @@ describe('findInsertionPoint', () => {
         });
 
         it('should append to end if target heading not found', () => {
-            const fileLines = ['# Section 1', '- [ ] Task'];
-
             const simulatedFile = MockDataLoader.get('editing_tasks_one_heading_one_task');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
                 "# Section 1
                 - [ ] Task
                 "
             `);
-            const fileLines2 = simulatedFile.fileContents.split('\n');
-            expect(fileLines2).toEqual([...fileLines, '']);
+            const fileLines = simulatedFile.fileContents.split('\n');
+            const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, 'Non-existent Section', false);
 
-            const headings = [{ heading: 'Section 1', position: { start: { line: 0 } } }];
-            const listItems = [{ task: 'x', position: { start: { line: 1 } } }];
-
-            const result = findInsertionPointForTesting(
-                fileLines,
-                { headings, listItems },
-                'Non-existent Section',
-                false,
-            );
             expect(result).toBe(fileLines.length);
         });
     });
