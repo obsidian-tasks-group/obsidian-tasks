@@ -10,7 +10,12 @@ describe('findInsertionPoint', () => {
     describe('appendToEnd is true', () => {
         it('should always return end of file when appendToEnd is true', () => {
             const fileLines = ['# Heading', '- [ ] Task 1', '- [ ] Task 2', ''];
-            const result = findInsertionPointForTesting(fileLines, null, null, true);
+
+            const fileCache = null;
+            const targetSectionHeader = null;
+            const appendToEnd = true;
+            const result = findInsertionPointForTesting(fileLines, fileCache, targetSectionHeader, appendToEnd);
+
             expect(result).toBe(fileLines.length);
         });
     });
