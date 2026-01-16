@@ -47,11 +47,7 @@ describe('findInsertionPoint', () => {
             `);
 
             // Should insert after line 1 (the last task before first heading)
-            const expectedInsertionPoint = 2;
-
-            const targetSectionHeader = null;
-            const appendToEnd = false;
-            insertionPointShouldBe(simulatedFile, targetSectionHeader, appendToEnd, expectedInsertionPoint);
+            insertionPointShouldBe(simulatedFile, null, false, 2);
         });
 
         it('should append to end if no tasks before first heading', () => {
