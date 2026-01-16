@@ -18,7 +18,12 @@ export type MockDataName =
     | 'corrupt_rerender_issue_3715_tasks'
     | 'docs_sample_for_explain_query_file_defaults'
     | 'docs_sample_for_task_properties_reference'
+    | 'editing_tasks_no_headings_two_tasks'
     | 'editing_tasks_no_tasks_before_first_heading'
+    | 'editing_tasks_one_heading_no_tasks'
+    | 'editing_tasks_one_heading_one_task'
+    | 'editing_tasks_section_has_no_tasks'
+    | 'editing_tasks_two_sections'
     | 'editing_tests_tasks_before_first_heading'
     | 'embed_link_in_task'
     | 'empty_yaml'
@@ -135,7 +140,12 @@ export const AllMockDataNames: MockDataName[] = [
     'corrupt_rerender_issue_3715_tasks',
     'docs_sample_for_explain_query_file_defaults',
     'docs_sample_for_task_properties_reference',
+    'editing_tasks_no_headings_two_tasks',
     'editing_tasks_no_tasks_before_first_heading',
+    'editing_tasks_one_heading_no_tasks',
+    'editing_tasks_one_heading_one_task',
+    'editing_tasks_section_has_no_tasks',
+    'editing_tasks_two_sections',
     'editing_tests_tasks_before_first_heading',
     'embed_link_in_task',
     'empty_yaml',
