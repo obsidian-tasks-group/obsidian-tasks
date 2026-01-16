@@ -6,7 +6,11 @@ import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { findInsertionPoint } from '../../src/EditFiles/FindInsertionPoint';
 import type { SimulatedFile } from './SimulatedFile';
 
-function insertionPointFor(simulatedFile: SimulatedFile, targetSectionHeader: null, appendToEnd: boolean): number {
+function insertionPointFor(
+    simulatedFile: SimulatedFile,
+    targetSectionHeader: string | null,
+    appendToEnd: boolean,
+): number {
     const fileLines = simulatedFile.fileContents.split('\n');
     return findInsertionPoint(fileLines, simulatedFile.cachedMetadata, targetSectionHeader, appendToEnd);
 }
@@ -51,9 +55,7 @@ describe('findInsertionPoint', () => {
                 "
             `);
 
-            const fileLines = simulatedFile.fileContents.split('\n');
-
-            const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, null, false);
+            const result = insertionPointFor(simulatedFile, null, false);
             expect(result).toBe(3);
         });
     });
@@ -70,8 +72,7 @@ describe('findInsertionPoint', () => {
                 - [ ] Task 1 in S2
                 "
             `);
-            const fileLines = simulatedFile.fileContents.split('\n');
-            const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, 'Section 1', false);
+            const result = insertionPointFor(simulatedFile, 'Section 1', false);
 
             // Should insert after line 2 (last task in Section 1)
             expect(result).toBe(3);
@@ -86,8 +87,7 @@ describe('findInsertionPoint', () => {
                 - [ ] Task in S2
                 "
             `);
-            const fileLines = simulatedFile.fileContents.split('\n');
-            const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, 'Section 1', false);
+            const result = insertionPointFor(simulatedFile, 'Section 1', false);
 
             // Should insert right after the Section 1 heading (line 0)
             expect(result).toBe(1);
@@ -100,8 +100,7 @@ describe('findInsertionPoint', () => {
                 - [ ] Task
                 "
             `);
-            const fileLines = simulatedFile.fileContents.split('\n');
-            const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, 'Non-existent Section', false);
+            const result = insertionPointFor(simulatedFile, 'Non-existent Section', false);
 
             expect(result).toBe(3);
         });
@@ -122,8 +121,7 @@ describe('findInsertionPoint', () => {
                 Some text
                 "
             `);
-            const fileLines2 = simulatedFile.fileContents.split('\n');
-            const result = findInsertionPoint(fileLines2, simulatedFile.cachedMetadata, null, false);
+            const result = insertionPointFor(simulatedFile, null, false);
 
             expect(result).toBe(4);
         });
@@ -135,8 +133,7 @@ describe('findInsertionPoint', () => {
                 - [ ] Task 2
                 "
             `);
-            const fileLines2 = simulatedFile.fileContents.split('\n');
-            const result = findInsertionPoint(fileLines2, simulatedFile.cachedMetadata, null, false);
+            const result = insertionPointFor(simulatedFile, null, false);
 
             // With no headings, all tasks are "before first heading"
             expect(result).toBe(2);
