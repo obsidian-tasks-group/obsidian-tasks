@@ -146,19 +146,13 @@ async function moveTaskWithinSameFileAndSave(
     await vault.modify(file, newLines.join('\n'));
 }
 
-/**
- * Moves a task between two different files.
- */
-async function moveTaskBetweenFilesAndSave(
-    vault: Vault,
-    sourceFile: TFile,
-    targetFile: TFile,
+function moveTaskBetweenFiles(
     sourceLines: string[],
     targetLines: string[],
     taskLineIndex: number,
     insertionLine: number,
     linesToMove: string[],
-): Promise<void> {
+): { newTargetLines: string[]; newSourceLines: string[] } {
     const numLinesToMove = linesToMove.length;
 
     // Insert into target first
@@ -173,6 +167,29 @@ async function moveTaskBetweenFilesAndSave(
         ...sourceLines.slice(0, taskLineIndex),
         ...sourceLines.slice(taskLineIndex + numLinesToMove),
     ];
+    return { newTargetLines, newSourceLines };
+}
+
+/**
+ * Moves a task between two different files.
+ */
+async function moveTaskBetweenFilesAndSave(
+    vault: Vault,
+    sourceFile: TFile,
+    targetFile: TFile,
+    sourceLines: string[],
+    targetLines: string[],
+    taskLineIndex: number,
+    insertionLine: number,
+    linesToMove: string[],
+): Promise<void> {
+    const { newTargetLines, newSourceLines } = moveTaskBetweenFiles(
+        sourceLines,
+        targetLines,
+        taskLineIndex,
+        insertionLine,
+        linesToMove,
+    );
 
     await vault.modify(targetFile, newTargetLines.join('\n'));
     await vault.modify(sourceFile, newSourceLines.join('\n'));
