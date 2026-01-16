@@ -64,9 +64,13 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
         throw new TypeError(`Source file not found: ${originalTask.path}`);
     }
 
-    // Read source file to find the task and its children
+    // Read source file
     const sourceContent = await vault.read(sourceFile);
     const sourceLines = sourceContent.split('\n');
+
+    // Read target file
+    const targetContent = await vault.read(targetFile);
+    const targetLines = targetContent.split('\n');
 
     // Find the task line in the source file using multiple strategies
     const taskLineIndex = findTaskLineWithFallbacks(sourceLines, originalTask, editorCursorLine);
@@ -80,10 +84,6 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
     const numLinesToMove = linesToMove.length;
 
     logger.debug(`moveTaskToSection: Moving ${numLinesToMove} lines (task + ${numLinesToMove - 1} children)`);
-
-    // Read target file
-    const targetContent = await vault.read(targetFile);
-    const targetLines = targetContent.split('\n');
 
     // Get file cache for target file
     const targetCache = metadataCache.getFileCache(targetFile);
