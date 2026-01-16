@@ -1,6 +1,6 @@
-import { MetadataCache, TFile, Vault } from 'obsidian';
+import { type CachedMetadata, MetadataCache, TFile, Vault } from 'obsidian';
 import type { Task } from '../Task/Task';
-import { logging } from '../lib/logging';
+import { Logger, logging } from '../lib/logging';
 import { findInsertionPoint } from './FindInsertionPoint';
 import { getTaskWithChildren } from './FindTaskWithChildren';
 import { findTaskLineWithFallbacks } from './FindTaskLine';
@@ -30,6 +30,40 @@ export interface MoveTaskParams {
     metadataCache: MetadataCache;
     /** Optional: the current cursor line in the editor (for more reliable deletion when moving from editor) */
     editorCursorLine?: number;
+}
+
+function moveTask(
+    sourceLines: string[],
+    originalTask: Task,
+    editorCursorLine: number | undefined,
+    logger: Logger,
+    targetLines: string[],
+    targetCache: CachedMetadata | null,
+    targetSectionHeader: string | null,
+    appendToEnd: boolean,
+): { taskLineIndex: number; linesToMove: string[]; insertionLine: number } {
+    // Find the task line in the source file using multiple strategies
+    const taskLineIndex = findTaskLineWithFallbacks(sourceLines, originalTask, editorCursorLine);
+
+    if (taskLineIndex === -1) {
+        throw new Error('Could not find the task in the source file.');
+    }
+
+    // Find all lines to move (task + children)
+    const linesToMove = getTaskWithChildren(sourceLines, taskLineIndex);
+    const numLinesToMove = linesToMove.length;
+
+    logger.debug(`moveTaskToSection: Moving ${numLinesToMove} lines (task + ${numLinesToMove - 1} children)`);
+
+    // Find insertion point
+    const insertionLine = findInsertionPoint(targetLines, targetCache, targetSectionHeader, appendToEnd);
+
+    logger.debug(`moveTaskToSection: Inserting at line ${insertionLine}`);
+    return {
+        taskLineIndex,
+        linesToMove,
+        insertionLine,
+    };
 }
 
 /**
@@ -75,23 +109,17 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
     // Get file cache for target file
     const targetCache = metadataCache.getFileCache(targetFile);
 
-    // Find the task line in the source file using multiple strategies
-    const taskLineIndex = findTaskLineWithFallbacks(sourceLines, originalTask, editorCursorLine);
-
-    if (taskLineIndex === -1) {
-        throw new Error('Could not find the task in the source file.');
-    }
-
-    // Find all lines to move (task + children)
-    const linesToMove = getTaskWithChildren(sourceLines, taskLineIndex);
-    const numLinesToMove = linesToMove.length;
-
-    logger.debug(`moveTaskToSection: Moving ${numLinesToMove} lines (task + ${numLinesToMove - 1} children)`);
-
-    // Find insertion point
-    const insertionLine = findInsertionPoint(targetLines, targetCache, targetSectionHeader, appendToEnd);
-
-    logger.debug(`moveTaskToSection: Inserting at line ${insertionLine}`);
+    // Move the task
+    const { taskLineIndex, linesToMove, insertionLine } = moveTask(
+        sourceLines,
+        originalTask,
+        editorCursorLine,
+        logger,
+        targetLines,
+        targetCache,
+        targetSectionHeader,
+        appendToEnd,
+    );
 
     // Handle the move based on whether source and target are the same file
     if (sourceFile.path === targetFile.path) {
