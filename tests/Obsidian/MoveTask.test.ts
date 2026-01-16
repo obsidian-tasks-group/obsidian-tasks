@@ -14,7 +14,7 @@ describe('findInsertionPoint', () => {
             const fileCache = null;
             const targetSectionHeader = null;
             const appendToEnd = true;
-            const result = findInsertionPointForTesting(fileLines, fileCache, targetSectionHeader, appendToEnd);
+            const result = findInsertionPoint(fileLines, fileCache, targetSectionHeader, appendToEnd);
 
             expect(result).toBe(fileLines.length);
         });
