@@ -1,9 +1,9 @@
 import type { CachedMetadata } from 'obsidian';
 import type { Task } from '../Task/Task';
 import type { Logger } from '../lib/logging';
-import { findTaskLineWithFallbacks } from './FindTaskLine';
-import { getTaskWithChildren } from './FindTaskWithChildren';
-import { findInsertionPoint } from './FindInsertionPoint';
+import { findTaskLineWithFallbacks } from '../Obsidian/FindTaskLine';
+import { getTaskWithChildren } from '../Obsidian/FindTaskWithChildren';
+import { findInsertionPoint } from '../Obsidian/FindInsertionPoint';
 
 export function moveTask(
     sourceLines: string[],

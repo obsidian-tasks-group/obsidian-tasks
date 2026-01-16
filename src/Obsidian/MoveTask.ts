@@ -1,7 +1,7 @@
 import { MetadataCache, TFile, Vault } from 'obsidian';
 import type { Task } from '../Task/Task';
 import { logging } from '../lib/logging';
-import { moveTask, moveTaskBetweenFiles, moveTaskWithinSameFile } from './MoveTaskImpl';
+import { moveTask, moveTaskBetweenFiles, moveTaskWithinSameFile } from '../EditFiles/MoveTaskImpl';
 
 function getFileLogger() {
     // For logging to actually produce debug output when enabled in settings,
