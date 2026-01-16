@@ -18,6 +18,7 @@ export type MockDataName =
     | 'corrupt_rerender_issue_3715_tasks'
     | 'docs_sample_for_explain_query_file_defaults'
     | 'docs_sample_for_task_properties_reference'
+    | 'editing_tests_tasks_before_first_heading'
     | 'embed_link_in_task'
     | 'empty_yaml'
     | 'example_kanban'
@@ -133,6 +134,7 @@ export const AllMockDataNames: MockDataName[] = [
     'corrupt_rerender_issue_3715_tasks',
     'docs_sample_for_explain_query_file_defaults',
     'docs_sample_for_task_properties_reference',
+    'editing_tests_tasks_before_first_heading',
     'embed_link_in_task',
     'empty_yaml',
     'example_kanban',
