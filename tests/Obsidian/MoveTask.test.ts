@@ -73,6 +73,20 @@ describe('findInsertionPoint', () => {
                 '# Section 2',
                 '- [ ] Task 1 in S2',
             ];
+
+            const simulatedFile = MockDataLoader.get('editing_tasks_two_sections');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# Section 1
+                - [ ] Task 1 in S1
+                - [ ] Task 2 in S1
+
+                # Section 2
+                - [ ] Task 1 in S2
+                "
+            `);
+            const fileLines2 = simulatedFile.fileContents.split('\n');
+            expect(fileLines2).toEqual([...fileLines, '']);
+
             const headings = [
                 { heading: 'Section 1', position: { start: { line: 0 } } },
                 { heading: 'Section 2', position: { start: { line: 4 } } },
@@ -90,6 +104,18 @@ describe('findInsertionPoint', () => {
 
         it('should insert right after heading if section has no tasks', () => {
             const fileLines = ['# Section 1', '', '# Section 2', '- [ ] Task in S2'];
+
+            const simulatedFile = MockDataLoader.get('editing_tasks_section_has_no_tasks');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# Section 1
+
+                # Section 2
+                - [ ] Task in S2
+                "
+            `);
+            const fileLines2 = simulatedFile.fileContents.split('\n');
+            expect(fileLines2).toEqual([...fileLines, '']);
+
             const headings = [
                 { heading: 'Section 1', position: { start: { line: 0 } } },
                 { heading: 'Section 2', position: { start: { line: 2 } } },
@@ -103,6 +129,16 @@ describe('findInsertionPoint', () => {
 
         it('should append to end if target heading not found', () => {
             const fileLines = ['# Section 1', '- [ ] Task'];
+
+            const simulatedFile = MockDataLoader.get('editing_tasks_one_heading_one_task');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# Section 1
+                - [ ] Task
+                "
+            `);
+            const fileLines2 = simulatedFile.fileContents.split('\n');
+            expect(fileLines2).toEqual([...fileLines, '']);
+
             const headings = [{ heading: 'Section 1', position: { start: { line: 0 } } }];
             const listItems = [{ task: 'x', position: { start: { line: 1 } } }];
 
@@ -125,6 +161,17 @@ describe('findInsertionPoint', () => {
 
         it('should handle file with no tasks', () => {
             const fileLines = ['# Just a heading', '', 'Some text'];
+
+            const simulatedFile = MockDataLoader.get('editing_tasks_one_heading_no_tasks');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# Just a heading
+
+                Some text
+                "
+            `);
+            const fileLines2 = simulatedFile.fileContents.split('\n');
+            expect(fileLines2).toEqual([...fileLines, '']);
+
             const headings = [{ heading: 'Just a heading', position: { start: { line: 0 } } }];
 
             const result = findInsertionPointForTesting(fileLines, { headings, listItems: [] }, null, false);
@@ -133,6 +180,16 @@ describe('findInsertionPoint', () => {
 
         it('should handle file with no headings', () => {
             const fileLines = ['- [ ] Task 1', '- [ ] Task 2', ''];
+
+            const simulatedFile = MockDataLoader.get('editing_tasks_no_headings_two_tasks');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "- [ ] Task 1
+                - [ ] Task 2
+                "
+            `);
+            const fileLines2 = simulatedFile.fileContents.split('\n');
+            expect(fileLines2).toEqual(fileLines);
+
             const listItems = [
                 { task: 'x', position: { start: { line: 0 } } },
                 { task: 'x', position: { start: { line: 1 } } },
