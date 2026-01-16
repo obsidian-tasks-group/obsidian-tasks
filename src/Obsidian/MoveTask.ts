@@ -167,12 +167,13 @@ async function moveTaskBetweenFilesAndSave(
         ...linesToMove,
         ...targetLines.slice(insertionLine),
     ];
-    await vault.modify(targetFile, newTargetLines.join('\n'));
 
     // Delete from source
     const newSourceLines = [
         ...sourceLines.slice(0, taskLineIndex),
         ...sourceLines.slice(taskLineIndex + numLinesToMove),
     ];
+
+    await vault.modify(targetFile, newTargetLines.join('\n'));
     await vault.modify(sourceFile, newSourceLines.join('\n'));
 }
