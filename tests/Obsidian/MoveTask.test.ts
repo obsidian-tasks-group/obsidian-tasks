@@ -2,6 +2,8 @@
  * @jest-environment jsdom
  */
 
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
+import { findInsertionPoint } from '../../src/EditFiles/FindInsertionPoint';
 import { findInsertionPointForTesting } from './MoveTaskTestHelpers';
 
 describe('findInsertionPoint', () => {
@@ -15,21 +17,21 @@ describe('findInsertionPoint', () => {
 
     describe('no target section header (null)', () => {
         it('should insert after last task before first heading', () => {
-            const fileLines = [
-                '- [ ] Task before heading',
-                '- [ ] Another task',
-                '',
-                '# Heading 1',
-                '- [ ] Task in heading',
-            ];
-            const headings = [{ heading: 'Heading 1', position: { start: { line: 3 } } }];
-            const listItems = [
-                { task: 'x', position: { start: { line: 0 } } },
-                { task: 'x', position: { start: { line: 1 } } },
-                { task: 'x', position: { start: { line: 4 } } },
-            ];
+            const simulatedFile = MockDataLoader.get('editing_tests_tasks_before_first_heading');
 
-            const result = findInsertionPointForTesting(fileLines, { headings, listItems }, null, false);
+            // The snapshot makes the test file contents visible, so the test is easier to understand:
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "- [ ] Task before heading
+                - [ ] Another task
+
+                # Heading 1
+                - [ ] Task in heading
+                "
+            `);
+
+            const fileLines = simulatedFile.fileContents.split('\n');
+            const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, null, false);
+
             // Should insert after line 1 (the last task before first heading)
             expect(result).toBe(2);
         });
