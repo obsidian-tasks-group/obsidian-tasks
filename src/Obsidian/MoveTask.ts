@@ -4,6 +4,7 @@ import { logging } from '../lib/logging';
 import { findInsertionPoint } from './FindInsertionPoint';
 import { getTaskWithChildren } from './FindTaskWithChildren';
 import { findTaskLineWithFallbacks } from './FindTaskLine';
+import { moveTaskBetweenFiles, moveTaskWithinSameFile } from './MoveTaskImpl';
 
 function getFileLogger() {
     // For logging to actually produce debug output when enabled in settings,
@@ -111,33 +112,6 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
     logger.debug('moveTaskToSection: Move completed successfully');
 }
 
-function moveTaskWithinSameFile(
-    sourceLines: string[],
-    taskLineIndex: number,
-    insertionLine: number,
-    linesToMove: string[],
-): string[] {
-    const numLinesToMove = linesToMove.length;
-
-    if (insertionLine <= taskLineIndex) {
-        // Inserting before the task - insert first, then delete (accounting for offset)
-        return [
-            ...sourceLines.slice(0, insertionLine),
-            ...linesToMove,
-            ...sourceLines.slice(insertionLine, taskLineIndex),
-            ...sourceLines.slice(taskLineIndex + numLinesToMove),
-        ];
-    } else {
-        // Inserting after the task - the slicing handles the offset naturally
-        return [
-            ...sourceLines.slice(0, taskLineIndex),
-            ...sourceLines.slice(taskLineIndex + numLinesToMove, insertionLine),
-            ...linesToMove,
-            ...sourceLines.slice(insertionLine),
-        ];
-    }
-}
-
 /**
  * Moves a task within the same file atomically.
  */
@@ -152,30 +126,6 @@ async function moveTaskWithinSameFileAndSave(
     const newLines = moveTaskWithinSameFile(sourceLines, taskLineIndex, insertionLine, linesToMove);
 
     await vault.modify(file, newLines.join('\n'));
-}
-
-function moveTaskBetweenFiles(
-    sourceLines: string[],
-    targetLines: string[],
-    taskLineIndex: number,
-    insertionLine: number,
-    linesToMove: string[],
-): { newTargetLines: string[]; newSourceLines: string[] } {
-    const numLinesToMove = linesToMove.length;
-
-    // Insert into target first
-    const newTargetLines = [
-        ...targetLines.slice(0, insertionLine),
-        ...linesToMove,
-        ...targetLines.slice(insertionLine),
-    ];
-
-    // Delete from source
-    const newSourceLines = [
-        ...sourceLines.slice(0, taskLineIndex),
-        ...sourceLines.slice(taskLineIndex + numLinesToMove),
-    ];
-    return { newTargetLines, newSourceLines };
 }
 
 /**
