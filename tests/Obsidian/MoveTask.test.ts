@@ -155,7 +155,7 @@ describe('findInsertionPoint', () => {
     describe('edge cases', () => {
         it('should handle empty file', () => {
             const fileLines: string[] = [];
-            const result = findInsertionPointForTesting(fileLines, null, null, false);
+            const result = findInsertionPoint(fileLines, {}, null, false);
             expect(result).toBe(0);
         });
 
