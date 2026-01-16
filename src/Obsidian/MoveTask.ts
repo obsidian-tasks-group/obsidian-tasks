@@ -1,10 +1,7 @@
-import { type CachedMetadata, MetadataCache, TFile, Vault } from 'obsidian';
+import { MetadataCache, TFile, Vault } from 'obsidian';
 import type { Task } from '../Task/Task';
-import { Logger, logging } from '../lib/logging';
-import { findInsertionPoint } from './FindInsertionPoint';
-import { getTaskWithChildren } from './FindTaskWithChildren';
-import { findTaskLineWithFallbacks } from './FindTaskLine';
-import { moveTaskBetweenFiles, moveTaskWithinSameFile } from './MoveTaskImpl';
+import { logging } from '../lib/logging';
+import { moveTask, moveTaskBetweenFiles, moveTaskWithinSameFile } from './MoveTaskImpl';
 
 function getFileLogger() {
     // For logging to actually produce debug output when enabled in settings,
@@ -30,40 +27,6 @@ export interface MoveTaskParams {
     metadataCache: MetadataCache;
     /** Optional: the current cursor line in the editor (for more reliable deletion when moving from editor) */
     editorCursorLine?: number;
-}
-
-function moveTask(
-    sourceLines: string[],
-    originalTask: Task,
-    editorCursorLine: number | undefined,
-    logger: Logger,
-    targetLines: string[],
-    targetCache: CachedMetadata | null,
-    targetSectionHeader: string | null,
-    appendToEnd: boolean,
-): { taskLineIndex: number; linesToMove: string[]; insertionLine: number } {
-    // Find the task line in the source file using multiple strategies
-    const taskLineIndex = findTaskLineWithFallbacks(sourceLines, originalTask, editorCursorLine);
-
-    if (taskLineIndex === -1) {
-        throw new Error('Could not find the task in the source file.');
-    }
-
-    // Find all lines to move (task + children)
-    const linesToMove = getTaskWithChildren(sourceLines, taskLineIndex);
-    const numLinesToMove = linesToMove.length;
-
-    logger.debug(`moveTaskToSection: Moving ${numLinesToMove} lines (task + ${numLinesToMove - 1} children)`);
-
-    // Find insertion point
-    const insertionLine = findInsertionPoint(targetLines, targetCache, targetSectionHeader, appendToEnd);
-
-    logger.debug(`moveTaskToSection: Inserting at line ${insertionLine}`);
-    return {
-        taskLineIndex,
-        linesToMove,
-        insertionLine,
-    };
 }
 
 /**

@@ -1,3 +1,44 @@
+import type { CachedMetadata } from 'obsidian';
+import type { Task } from '../Task/Task';
+import type { Logger } from '../lib/logging';
+import { findTaskLineWithFallbacks } from './FindTaskLine';
+import { getTaskWithChildren } from './FindTaskWithChildren';
+import { findInsertionPoint } from './FindInsertionPoint';
+
+export function moveTask(
+    sourceLines: string[],
+    originalTask: Task,
+    editorCursorLine: number | undefined,
+    logger: Logger,
+    targetLines: string[],
+    targetCache: CachedMetadata | null,
+    targetSectionHeader: string | null,
+    appendToEnd: boolean,
+): { taskLineIndex: number; linesToMove: string[]; insertionLine: number } {
+    // Find the task line in the source file using multiple strategies
+    const taskLineIndex = findTaskLineWithFallbacks(sourceLines, originalTask, editorCursorLine);
+
+    if (taskLineIndex === -1) {
+        throw new Error('Could not find the task in the source file.');
+    }
+
+    // Find all lines to move (task + children)
+    const linesToMove = getTaskWithChildren(sourceLines, taskLineIndex);
+    const numLinesToMove = linesToMove.length;
+
+    logger.debug(`moveTaskToSection: Moving ${numLinesToMove} lines (task + ${numLinesToMove - 1} children)`);
+
+    // Find insertion point
+    const insertionLine = findInsertionPoint(targetLines, targetCache, targetSectionHeader, appendToEnd);
+
+    logger.debug(`moveTaskToSection: Inserting at line ${insertionLine}`);
+    return {
+        taskLineIndex,
+        linesToMove,
+        insertionLine,
+    };
+}
+
 export function moveTaskWithinSameFile(
     sourceLines: string[],
     taskLineIndex: number,
