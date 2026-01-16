@@ -33,9 +33,16 @@ describe('findInsertionPoint', () => {
                 - [ ] Task in heading
                 "
             `);
-
             const fileLines = simulatedFile.fileContents.split('\n');
-            const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, null, false);
+
+            const targetSectionHeader = null;
+            const appendToEnd = false;
+            const result = findInsertionPoint(
+                fileLines,
+                simulatedFile.cachedMetadata,
+                targetSectionHeader,
+                appendToEnd,
+            );
 
             // Should insert after line 1 (the last task before first heading)
             expect(result).toBe(2);
