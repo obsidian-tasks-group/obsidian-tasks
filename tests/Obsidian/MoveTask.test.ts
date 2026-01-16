@@ -65,15 +65,6 @@ describe('findInsertionPoint', () => {
 
     describe('with target section header', () => {
         it('should insert after last task in target section', () => {
-            const fileLines = [
-                '# Section 1',
-                '- [ ] Task 1 in S1',
-                '- [ ] Task 2 in S1',
-                '',
-                '# Section 2',
-                '- [ ] Task 1 in S2',
-            ];
-
             const simulatedFile = MockDataLoader.get('editing_tasks_two_sections');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
                 "# Section 1
@@ -84,20 +75,9 @@ describe('findInsertionPoint', () => {
                 - [ ] Task 1 in S2
                 "
             `);
-            const fileLines2 = simulatedFile.fileContents.split('\n');
-            expect(fileLines2).toEqual([...fileLines, '']);
+            const fileLines = simulatedFile.fileContents.split('\n');
+            const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, 'Section 1', false);
 
-            const headings = [
-                { heading: 'Section 1', position: { start: { line: 0 } } },
-                { heading: 'Section 2', position: { start: { line: 4 } } },
-            ];
-            const listItems = [
-                { task: 'x', position: { start: { line: 1 } } },
-                { task: 'x', position: { start: { line: 2 } } },
-                { task: 'x', position: { start: { line: 5 } } },
-            ];
-
-            const result = findInsertionPointForTesting(fileLines, { headings, listItems }, 'Section 1', false);
             // Should insert after line 2 (last task in Section 1)
             expect(result).toBe(3);
         });
