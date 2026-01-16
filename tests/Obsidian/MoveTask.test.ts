@@ -32,6 +32,10 @@ describe('findInsertionPoint', () => {
                 - [ ] Task in heading
                 "
             `);
+
+            // Should insert after line 1 (the last task before first heading)
+            const expectedInsertionPoint = 2;
+
             const fileLines = simulatedFile.fileContents.split('\n');
 
             const targetSectionHeader = null;
@@ -43,8 +47,7 @@ describe('findInsertionPoint', () => {
                 appendToEnd,
             );
 
-            // Should insert after line 1 (the last task before first heading)
-            expect(result).toBe(2);
+            expect(result).toBe(expectedInsertionPoint);
         });
 
         it('should append to end if no tasks before first heading', () => {
