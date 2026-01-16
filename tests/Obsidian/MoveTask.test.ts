@@ -4,7 +4,6 @@
 
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { findInsertionPoint } from '../../src/EditFiles/FindInsertionPoint';
-import { findInsertionPointForTesting } from './MoveTaskTestHelpers';
 
 describe('findInsertionPoint', () => {
     describe('appendToEnd is true', () => {
@@ -134,8 +133,6 @@ describe('findInsertionPoint', () => {
         });
 
         it('should handle file with no headings', () => {
-            const fileLines = ['- [ ] Task 1', '- [ ] Task 2', ''];
-
             const simulatedFile = MockDataLoader.get('editing_tasks_no_headings_two_tasks');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
                 "- [ ] Task 1
@@ -143,14 +140,8 @@ describe('findInsertionPoint', () => {
                 "
             `);
             const fileLines2 = simulatedFile.fileContents.split('\n');
-            expect(fileLines2).toEqual(fileLines);
+            const result = findInsertionPoint(fileLines2, simulatedFile.cachedMetadata, null, false);
 
-            const listItems = [
-                { task: 'x', position: { start: { line: 0 } } },
-                { task: 'x', position: { start: { line: 1 } } },
-            ];
-
-            const result = findInsertionPointForTesting(fileLines, { headings: [], listItems }, null, false);
             // With no headings, all tasks are "before first heading"
             expect(result).toBe(2);
         });
