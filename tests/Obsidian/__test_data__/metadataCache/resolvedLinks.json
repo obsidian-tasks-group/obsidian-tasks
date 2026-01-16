@@ -164,6 +164,7 @@
     "Test Data/yaml_all_property_types_populated.md": 2,
     "Test Data/yaml_all_property_types_empty.md": 1
   },
+  "Test Data/editing_tasks_no_tasks_before_first_heading.md": {},
   "Test Data/editing_tests_tasks_before_first_heading.md": {},
   "Test Data/embed_link_in_task.md": {
     "Test Data/empty_yaml.md": 1
