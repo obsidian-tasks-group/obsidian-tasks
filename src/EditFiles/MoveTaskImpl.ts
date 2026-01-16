@@ -2,7 +2,7 @@ import type { CachedMetadata } from 'obsidian';
 import type { Task } from '../Task/Task';
 import type { Logger } from '../lib/logging';
 import { getTaskWithChildren } from '../Obsidian/FindTaskWithChildren';
-import { findInsertionPoint } from '../Obsidian/FindInsertionPoint';
+import { findInsertionPoint } from './FindInsertionPoint';
 import { findTaskLineWithFallbacks } from './FindTaskLine';
 
 export function moveTask(
