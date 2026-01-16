@@ -50,6 +50,16 @@ describe('findInsertionPoint', () => {
 
         it('should append to end if no tasks before first heading', () => {
             const fileLines = ['# Heading 1', '- [ ] Task in heading', ''];
+            const simulatedFile = MockDataLoader.get('editing_tasks_no_tasks_before_first_heading');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# Heading 1
+                - [ ] Task in heading
+                "
+            `);
+
+            const fileLines2 = simulatedFile.fileContents.split('\n');
+            expect(fileLines2).toEqual(fileLines);
+
             const headings = [{ heading: 'Heading 1', position: { start: { line: 0 } } }];
             const listItems = [{ task: 'x', position: { start: { line: 1 } } }];
 
