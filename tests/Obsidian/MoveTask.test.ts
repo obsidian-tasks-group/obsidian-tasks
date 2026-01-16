@@ -83,8 +83,6 @@ describe('findInsertionPoint', () => {
         });
 
         it('should insert right after heading if section has no tasks', () => {
-            const fileLines = ['# Section 1', '', '# Section 2', '- [ ] Task in S2'];
-
             const simulatedFile = MockDataLoader.get('editing_tasks_section_has_no_tasks');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
                 "# Section 1
@@ -93,16 +91,9 @@ describe('findInsertionPoint', () => {
                 - [ ] Task in S2
                 "
             `);
-            const fileLines2 = simulatedFile.fileContents.split('\n');
-            expect(fileLines2).toEqual([...fileLines, '']);
+            const fileLines = simulatedFile.fileContents.split('\n');
+            const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, 'Section 1', false);
 
-            const headings = [
-                { heading: 'Section 1', position: { start: { line: 0 } } },
-                { heading: 'Section 2', position: { start: { line: 2 } } },
-            ];
-            const listItems = [{ task: 'x', position: { start: { line: 3 } } }];
-
-            const result = findInsertionPointForTesting(fileLines, { headings, listItems }, 'Section 1', false);
             // Should insert right after the Section 1 heading (line 0)
             expect(result).toBe(1);
         });
