@@ -55,8 +55,7 @@ describe('findInsertionPoint', () => {
                 "
             `);
 
-            const result = insertionPointFor(simulatedFile, null, false);
-            expect(result).toBe(3);
+            expect(insertionPointFor(simulatedFile, null, false)).toBe(3);
         });
     });
 
@@ -72,10 +71,9 @@ describe('findInsertionPoint', () => {
                 - [ ] Task 1 in S2
                 "
             `);
-            const result = insertionPointFor(simulatedFile, 'Section 1', false);
 
             // Should insert after line 2 (last task in Section 1)
-            expect(result).toBe(3);
+            expect(insertionPointFor(simulatedFile, 'Section 1', false)).toBe(3);
         });
 
         it('should insert right after heading if section has no tasks', () => {
@@ -87,10 +85,9 @@ describe('findInsertionPoint', () => {
                 - [ ] Task in S2
                 "
             `);
-            const result = insertionPointFor(simulatedFile, 'Section 1', false);
 
             // Should insert right after the Section 1 heading (line 0)
-            expect(result).toBe(1);
+            expect(insertionPointFor(simulatedFile, 'Section 1', false)).toBe(1);
         });
 
         it('should append to end if target heading not found', () => {
@@ -100,9 +97,8 @@ describe('findInsertionPoint', () => {
                 - [ ] Task
                 "
             `);
-            const result = insertionPointFor(simulatedFile, 'Non-existent Section', false);
 
-            expect(result).toBe(3);
+            expect(insertionPointFor(simulatedFile, 'Non-existent Section', false)).toBe(3);
         });
     });
 
@@ -121,9 +117,8 @@ describe('findInsertionPoint', () => {
                 Some text
                 "
             `);
-            const result = insertionPointFor(simulatedFile, null, false);
 
-            expect(result).toBe(4);
+            expect(insertionPointFor(simulatedFile, null, false)).toBe(4);
         });
 
         it('should handle file with no headings', () => {
@@ -133,10 +128,9 @@ describe('findInsertionPoint', () => {
                 - [ ] Task 2
                 "
             `);
-            const result = insertionPointFor(simulatedFile, null, false);
 
             // With no headings, all tasks are "before first heading"
-            expect(result).toBe(2);
+            expect(insertionPointFor(simulatedFile, null, false)).toBe(2);
         });
     });
 });
