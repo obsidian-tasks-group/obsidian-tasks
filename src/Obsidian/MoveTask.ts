@@ -94,9 +94,9 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
 
     // Handle the move based on whether source and target are the same file
     if (sourceFile.path === targetFile.path) {
-        await moveTaskWithinSameFile(vault, sourceFile, sourceLines, taskLineIndex, insertionLine, linesToMove);
+        await moveTaskWithinSameFileAndSave(vault, sourceFile, sourceLines, taskLineIndex, insertionLine, linesToMove);
     } else {
-        await moveTaskBetweenFiles(
+        await moveTaskBetweenFilesAndSave(
             vault,
             sourceFile,
             targetFile,
@@ -114,7 +114,7 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
 /**
  * Moves a task within the same file atomically.
  */
-async function moveTaskWithinSameFile(
+async function moveTaskWithinSameFileAndSave(
     vault: Vault,
     file: TFile,
     sourceLines: string[],
@@ -149,7 +149,7 @@ async function moveTaskWithinSameFile(
 /**
  * Moves a task between two different files.
  */
-async function moveTaskBetweenFiles(
+async function moveTaskBetweenFilesAndSave(
     vault: Vault,
     sourceFile: TFile,
     targetFile: TFile,
