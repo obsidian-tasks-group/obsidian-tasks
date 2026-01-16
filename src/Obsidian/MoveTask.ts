@@ -72,6 +72,9 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
     const targetContent = await vault.read(targetFile);
     const targetLines = targetContent.split('\n');
 
+    // Get file cache for target file
+    const targetCache = metadataCache.getFileCache(targetFile);
+
     // Find the task line in the source file using multiple strategies
     const taskLineIndex = findTaskLineWithFallbacks(sourceLines, originalTask, editorCursorLine);
 
@@ -84,9 +87,6 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
     const numLinesToMove = linesToMove.length;
 
     logger.debug(`moveTaskToSection: Moving ${numLinesToMove} lines (task + ${numLinesToMove - 1} children)`);
-
-    // Get file cache for target file
-    const targetCache = metadataCache.getFileCache(targetFile);
 
     // Find insertion point
     const insertionLine = findInsertionPoint(targetLines, targetCache, targetSectionHeader, appendToEnd);
