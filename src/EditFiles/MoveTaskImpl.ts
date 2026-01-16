@@ -1,7 +1,7 @@
 import type { CachedMetadata } from 'obsidian';
 import type { Task } from '../Task/Task';
 import type { Logger } from '../lib/logging';
-import { getTaskWithChildren } from '../Obsidian/FindTaskWithChildren';
+import { getTaskWithChildren } from './FindTaskWithChildren';
 import { findInsertionPoint } from './FindInsertionPoint';
 import { findTaskLineWithFallbacks } from './FindTaskLine';
 
