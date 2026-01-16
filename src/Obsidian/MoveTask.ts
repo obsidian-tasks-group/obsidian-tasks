@@ -111,6 +111,33 @@ export async function moveTaskToSection(params: MoveTaskParams): Promise<void> {
     logger.debug('moveTaskToSection: Move completed successfully');
 }
 
+function moveTaskWithinSameFile(
+    sourceLines: string[],
+    taskLineIndex: number,
+    insertionLine: number,
+    linesToMove: string[],
+): string[] {
+    const numLinesToMove = linesToMove.length;
+
+    if (insertionLine <= taskLineIndex) {
+        // Inserting before the task - insert first, then delete (accounting for offset)
+        return [
+            ...sourceLines.slice(0, insertionLine),
+            ...linesToMove,
+            ...sourceLines.slice(insertionLine, taskLineIndex),
+            ...sourceLines.slice(taskLineIndex + numLinesToMove),
+        ];
+    } else {
+        // Inserting after the task - the slicing handles the offset naturally
+        return [
+            ...sourceLines.slice(0, taskLineIndex),
+            ...sourceLines.slice(taskLineIndex + numLinesToMove, insertionLine),
+            ...linesToMove,
+            ...sourceLines.slice(insertionLine),
+        ];
+    }
+}
+
 /**
  * Moves a task within the same file atomically.
  */
@@ -122,26 +149,7 @@ async function moveTaskWithinSameFileAndSave(
     insertionLine: number,
     linesToMove: string[],
 ): Promise<void> {
-    const numLinesToMove = linesToMove.length;
-    let newLines: string[];
-
-    if (insertionLine <= taskLineIndex) {
-        // Inserting before the task - insert first, then delete (accounting for offset)
-        newLines = [
-            ...sourceLines.slice(0, insertionLine),
-            ...linesToMove,
-            ...sourceLines.slice(insertionLine, taskLineIndex),
-            ...sourceLines.slice(taskLineIndex + numLinesToMove),
-        ];
-    } else {
-        // Inserting after the task - the slicing handles the offset naturally
-        newLines = [
-            ...sourceLines.slice(0, taskLineIndex),
-            ...sourceLines.slice(taskLineIndex + numLinesToMove, insertionLine),
-            ...linesToMove,
-            ...sourceLines.slice(insertionLine),
-        ];
-    }
+    const newLines = moveTaskWithinSameFile(sourceLines, taskLineIndex, insertionLine, linesToMove);
 
     await vault.modify(file, newLines.join('\n'));
 }
