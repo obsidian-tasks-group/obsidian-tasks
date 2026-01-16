@@ -6,16 +6,9 @@ import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { findInsertionPoint } from '../../src/EditFiles/FindInsertionPoint';
 import type { SimulatedFile } from './SimulatedFile';
 
-function insertionPointShouldBe(
-    simulatedFile: SimulatedFile,
-    targetSectionHeader: null,
-    appendToEnd: boolean,
-    expectedInsertionPoint: number,
-): void {
+function insertionPointShouldBe(simulatedFile: SimulatedFile, targetSectionHeader: null, appendToEnd: boolean): number {
     const fileLines = simulatedFile.fileContents.split('\n');
-    const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, targetSectionHeader, appendToEnd);
-
-    expect(result).toBe(expectedInsertionPoint);
+    return findInsertionPoint(fileLines, simulatedFile.cachedMetadata, targetSectionHeader, appendToEnd);
 }
 
 describe('findInsertionPoint', () => {
@@ -47,7 +40,7 @@ describe('findInsertionPoint', () => {
             `);
 
             // Should insert after line 1 (the last task before first heading)
-            insertionPointShouldBe(simulatedFile, null, false, 2);
+            expect(insertionPointShouldBe(simulatedFile, null, false)).toEqual(2);
         });
 
         it('should append to end if no tasks before first heading', () => {
