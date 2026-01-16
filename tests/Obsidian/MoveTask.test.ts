@@ -120,8 +120,6 @@ describe('findInsertionPoint', () => {
         });
 
         it('should handle file with no tasks', () => {
-            const fileLines = ['# Just a heading', '', 'Some text'];
-
             const simulatedFile = MockDataLoader.get('editing_tasks_one_heading_no_tasks');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
                 "# Just a heading
@@ -130,12 +128,9 @@ describe('findInsertionPoint', () => {
                 "
             `);
             const fileLines2 = simulatedFile.fileContents.split('\n');
-            expect(fileLines2).toEqual([...fileLines, '']);
+            const result = findInsertionPoint(fileLines2, simulatedFile.cachedMetadata, null, false);
 
-            const headings = [{ heading: 'Just a heading', position: { start: { line: 0 } } }];
-
-            const result = findInsertionPointForTesting(fileLines, { headings, listItems: [] }, null, false);
-            expect(result).toBe(fileLines.length);
+            expect(result).toBe(fileLines2.length);
         });
 
         it('should handle file with no headings', () => {
