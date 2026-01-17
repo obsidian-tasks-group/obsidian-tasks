@@ -160,9 +160,13 @@ describe('findInsertionPoint', () => {
             `);
 
             // TODO This is an error. It should not insert the line in the middle of an existing task's children.
-            //      The likely fix is to refactor the code so that it uses both:
+            //      I first thought that the likely fix was to refactor the code so that it uses both:
             //          - listItem.position.start.line
             //          - listItem.position.end.line
+            //      However, it turns out that the parent end only reflects the actual line, not the children.
+            //      So perhaps a better fix is to look at the 'list' sections within the heading's start and end lines,
+            //      and append to the end of the last 'list' section within the heading.
+            //      Look at 'editing_tasks_task_with_nested_list_item.json' to see the data that is available.
             const expected = `# Heading
 
 - [ ] #task Task 1
@@ -189,6 +193,12 @@ describe('findInsertionPoint', () => {
             //      The last task is found correctly.
             //      The likely fix will require finding the parent list item or task of the last task, and
             //      then using the last line of that parent item.
+            //
+            //      See 'parent' in https://docs.obsidian.md/Reference/TypeScript+API/ListItemCache.
+            //
+            //      Note that the yellow text in that page is an error in the presentation of the Obsidian API docs.
+            //      Strings === are rendered as =, with two of the equal signs being interpreted as an
+            //      instruction to highlight the text in yellow.
 
             const expected = `# Heading
 
