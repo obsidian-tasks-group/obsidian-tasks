@@ -188,13 +188,15 @@ describe('findInsertionPoint', () => {
             //      The last task is found correctly.
             //      The likely fix will require finding the parent list item or task of the last task, and
             //      then using the last line of that parent item.
-            expect(insertionPointFor(simulatedFile, 'Heading', false)).toEqual(`# Heading
+
+            const expected = `# Heading
 
 - List item 1
     - [ ] #task List item 1's nested task
 ==> insert here
         - List item 1's nested task's nested list item
-`);
+`;
+            expect(insertionPointFor(simulatedFile, 'Heading', false)).toEqual(expected);
         });
 
         it('should insert after last task in target section, even if multiple lists in the heading', () => {
