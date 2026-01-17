@@ -204,5 +204,57 @@ describe('findInsertionPoint', () => {
                 "
             `);
         });
+
+        describe('adjacent heading lines', () => {
+            const simulatedFile = MockDataLoader.get('editing_tasks_three_adjacent_headings');
+
+            // Demonstrate the input
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# heading 1
+                # heading 2
+                # heading 3
+                "
+            `);
+
+            it('heading 1', () => {
+                expect(insertionPointFor(simulatedFile, 'heading 1', false)).toMatchInlineSnapshot(`
+                    "# heading 1
+                    ==> insert here
+                    # heading 2
+                    # heading 3
+                    "
+                `);
+            });
+
+            it('heading 2', () => {
+                expect(insertionPointFor(simulatedFile, 'heading 2', false)).toMatchInlineSnapshot(`
+                    "# heading 1
+                    # heading 2
+                    ==> insert here
+                    # heading 3
+                    "
+                `);
+            });
+
+            it('heading 3', () => {
+                expect(insertionPointFor(simulatedFile, 'heading 3', false)).toMatchInlineSnapshot(`
+                    "# heading 1
+                    # heading 2
+                    # heading 3
+                    ==> insert here
+                    "
+                `);
+            });
+
+            it('no such heading', () => {
+                expect(insertionPointFor(simulatedFile, 'no such heading', false)).toMatchInlineSnapshot(`
+                    "# heading 1
+                    # heading 2
+                    # heading 3
+
+                    ==> insert here"
+                `);
+            });
+        });
     });
 });
