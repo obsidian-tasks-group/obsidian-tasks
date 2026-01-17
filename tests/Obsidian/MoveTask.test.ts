@@ -123,6 +123,37 @@ describe('findInsertionPoint', () => {
             `);
         });
 
+        it('should insert after last task in target section, even if multiple lists in the heading', () => {
+            const simulatedFile = MockDataLoader.get('editing_tasks_heading_with_multiple_task_lists');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# heading with multiple task lists
+
+                - [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 1a
+                - [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 1b
+
+                Not a task
+
+                - [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 2a
+                - [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 2b
+                "
+            `);
+
+            // Should insert after line 2 (last task in Section 1)
+            expect(insertionPointFor(simulatedFile, 'heading with multiple task lists', false)).toMatchInlineSnapshot(`
+                "# heading with multiple task lists
+
+                - [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 1a
+                - [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 1b
+
+                Not a task
+
+                - [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 2a
+                - [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 2b
+                ==> insert here
+                "
+            `);
+        });
+
         it('should insert right after heading if section has no tasks', () => {
             const simulatedFile = MockDataLoader.get('editing_tasks_section_has_no_tasks');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
