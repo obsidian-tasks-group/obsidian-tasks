@@ -42,10 +42,7 @@ describe('findInsertionPoint', () => {
                 "
             `);
 
-            const fileCache = null;
-            const targetSectionHeader = null;
-            const appendToEnd = true;
-            const result = findInsertionPoint(fileLines, fileCache, targetSectionHeader, appendToEnd);
+            const result = findInsertionPoint(fileLines, null, null, true);
 
             expect(visualiseInsertion(fileLines, result)).toMatchInlineSnapshot(`
                 "# Heading
