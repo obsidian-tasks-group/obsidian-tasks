@@ -173,7 +173,7 @@ describe('findInsertionPoint', () => {
             `);
         });
 
-        it('should not split a list item when it contains child tasks or list items', () => {
+        it.failing('should not split a list item when it contains child tasks or list items', () => {
             const simulatedFile = MockDataLoader.get('editing_tasks_list_item_with_nested_task_and_list_item');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
                 "# Heading
@@ -193,9 +193,11 @@ describe('findInsertionPoint', () => {
 
 - List item 1
     - [ ] #task List item 1's nested task
-==> insert here
         - List item 1's nested task's nested list item
+==> insert here
 `;
+            // Inline snapshots do not support .failing, so this has to be an explicit toEqual() check until the
+            // code is fixed.
             expect(insertionPointFor(simulatedFile, 'Heading', false)).toEqual(expected);
         });
 
