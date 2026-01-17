@@ -173,6 +173,32 @@ describe('findInsertionPoint', () => {
             `);
         });
 
+        it('should not split a list item when it contains child tasks or list items', () => {
+            const simulatedFile = MockDataLoader.get('editing_tasks_list_item_with_nested_task_and_list_item');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# Heading
+
+                - List item 1
+                    - [ ] #task List item 1's nested task
+                        - List item 1's nested task's nested list item
+                "
+            `);
+
+            // TODO This is also an error, as the task will be inserted in the middle of list item's children.
+            //      The last task is found correctly.
+            //      The likely fix will require finding the parent list item or task of the last task, and
+            //      then using the last line of that parent item.
+            expect(insertionPointFor(simulatedFile, 'Heading', false)).toMatchInlineSnapshot(`
+                "# Heading
+
+                - List item 1
+                    - [ ] #task List item 1's nested task
+                ==> insert here
+                        - List item 1's nested task's nested list item
+                "
+            `);
+        });
+
         it('should insert after last task in target section, even if multiple lists in the heading', () => {
             const simulatedFile = MockDataLoader.get('editing_tasks_heading_with_multiple_task_lists');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
