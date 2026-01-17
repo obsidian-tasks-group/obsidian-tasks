@@ -123,6 +123,56 @@ describe('findInsertionPoint', () => {
             `);
         });
 
+        it('should insert after last task in target section even if list items are present', () => {
+            const simulatedFile = MockDataLoader.get('editing_tasks_mix_of_list_items_and_tasks_with_heading');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# Heading
+
+                - List item 1
+                - [ ] #task Task 1
+                - List item 2
+                - [ ] #task Task 2
+                - List item 3
+                "
+            `);
+
+            expect(insertionPointFor(simulatedFile, 'Heading', false)).toMatchInlineSnapshot(`
+                "# Heading
+
+                - List item 1
+                - [ ] #task Task 1
+                - List item 2
+                - [ ] #task Task 2
+                ==> insert here
+                - List item 3
+                "
+            `);
+        });
+
+        it('should not split a task from its nested list item', () => {
+            const simulatedFile = MockDataLoader.get('editing_tasks_task_with_nested_list_item');
+            expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
+                "# Heading
+
+                - [ ] #task Task 1
+                    - Task 1's nested list item
+                "
+            `);
+
+            // TODO This is an error. It should not insert the line in the middle of an existing task's children.
+            //      The likely fix is to refactor the code so that it uses both:
+            //          - listItem.position.start.line
+            //          - listItem.position.end.line
+            expect(insertionPointFor(simulatedFile, 'Heading', false)).toMatchInlineSnapshot(`
+                "# Heading
+
+                - [ ] #task Task 1
+                ==> insert here
+                    - Task 1's nested list item
+                "
+            `);
+        });
+
         it('should insert after last task in target section, even if multiple lists in the heading', () => {
             const simulatedFile = MockDataLoader.get('editing_tasks_heading_with_multiple_task_lists');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
