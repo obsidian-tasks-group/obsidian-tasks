@@ -19,6 +19,7 @@ export type MockDataName =
     | 'docs_sample_for_explain_query_file_defaults'
     | 'docs_sample_for_task_properties_reference'
     | 'editing_tasks_heading_with_multiple_task_lists'
+    | 'editing_tasks_list_item_with_nested_task_and_list_item'
     | 'editing_tasks_mix_of_list_items_and_tasks_with_heading'
     | 'editing_tasks_no_headings_two_tasks'
     | 'editing_tasks_no_tasks_before_first_heading'
@@ -145,6 +146,7 @@ export const AllMockDataNames: MockDataName[] = [
     'docs_sample_for_explain_query_file_defaults',
     'docs_sample_for_task_properties_reference',
     'editing_tasks_heading_with_multiple_task_lists',
+    'editing_tasks_list_item_with_nested_task_and_list_item',
     'editing_tasks_mix_of_list_items_and_tasks_with_heading',
     'editing_tasks_no_headings_two_tasks',
     'editing_tasks_no_tasks_before_first_heading',
