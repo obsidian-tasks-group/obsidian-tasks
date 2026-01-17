@@ -10,9 +10,25 @@ function insertionPointFor(
     simulatedFile: SimulatedFile,
     targetSectionHeader: string | null,
     appendToEnd: boolean,
-): number {
+): string {
     const fileLines = simulatedFile.fileContents.split('\n');
-    return findInsertionPoint(fileLines, simulatedFile.cachedMetadata, targetSectionHeader, appendToEnd);
+    const result = findInsertionPoint(fileLines, simulatedFile.cachedMetadata, targetSectionHeader, appendToEnd);
+    return visualiseInsertion(fileLines, result);
+}
+
+function visualiseInsertion(lines: string[], insertionIndex: number): string {
+    const result: string[] = [];
+
+    for (let i = 0; i <= lines.length; i++) {
+        if (i === insertionIndex) {
+            result.push('==> insert here');
+        }
+        if (i < lines.length) {
+            result.push(lines[i]);
+        }
+    }
+
+    return result.join('\n');
 }
 
 describe('findInsertionPoint', () => {
@@ -44,7 +60,15 @@ describe('findInsertionPoint', () => {
             `);
 
             // Should insert after line 1 (the last task before first heading)
-            expect(insertionPointFor(simulatedFile, null, false)).toEqual(2);
+            expect(insertionPointFor(simulatedFile, null, false)).toMatchInlineSnapshot(`
+                "- [ ] Task before heading
+                - [ ] Another task
+                ==> insert here
+
+                # Heading 1
+                - [ ] Task in heading
+                "
+            `);
         });
 
         it('should append to end if no tasks before first heading', () => {
@@ -55,7 +79,12 @@ describe('findInsertionPoint', () => {
                 "
             `);
 
-            expect(insertionPointFor(simulatedFile, null, false)).toBe(3);
+            expect(insertionPointFor(simulatedFile, null, false)).toMatchInlineSnapshot(`
+                "# Heading 1
+                - [ ] Task in heading
+
+                ==> insert here"
+            `);
         });
     });
 
@@ -73,7 +102,16 @@ describe('findInsertionPoint', () => {
             `);
 
             // Should insert after line 2 (last task in Section 1)
-            expect(insertionPointFor(simulatedFile, 'Section 1', false)).toBe(3);
+            expect(insertionPointFor(simulatedFile, 'Section 1', false)).toMatchInlineSnapshot(`
+                "# Section 1
+                - [ ] Task 1 in S1
+                - [ ] Task 2 in S1
+                ==> insert here
+
+                # Section 2
+                - [ ] Task 1 in S2
+                "
+            `);
         });
 
         it('should insert right after heading if section has no tasks', () => {
@@ -87,7 +125,14 @@ describe('findInsertionPoint', () => {
             `);
 
             // Should insert right after the Section 1 heading (line 0)
-            expect(insertionPointFor(simulatedFile, 'Section 1', false)).toBe(1);
+            expect(insertionPointFor(simulatedFile, 'Section 1', false)).toMatchInlineSnapshot(`
+                "# Section 1
+                ==> insert here
+
+                # Section 2
+                - [ ] Task in S2
+                "
+            `);
         });
 
         it('should append to end if target heading not found', () => {
@@ -98,7 +143,12 @@ describe('findInsertionPoint', () => {
                 "
             `);
 
-            expect(insertionPointFor(simulatedFile, 'Non-existent Section', false)).toBe(3);
+            expect(insertionPointFor(simulatedFile, 'Non-existent Section', false)).toMatchInlineSnapshot(`
+                "# Section 1
+                - [ ] Task
+
+                ==> insert here"
+            `);
         });
     });
 
@@ -118,7 +168,13 @@ describe('findInsertionPoint', () => {
                 "
             `);
 
-            expect(insertionPointFor(simulatedFile, null, false)).toBe(4);
+            expect(insertionPointFor(simulatedFile, null, false)).toMatchInlineSnapshot(`
+                "# Just a heading
+
+                Some text
+
+                ==> insert here"
+            `);
         });
 
         it('should handle file with no headings', () => {
@@ -130,7 +186,12 @@ describe('findInsertionPoint', () => {
             `);
 
             // With no headings, all tasks are "before first heading"
-            expect(insertionPointFor(simulatedFile, null, false)).toBe(2);
+            expect(insertionPointFor(simulatedFile, null, false)).toMatchInlineSnapshot(`
+                "- [ ] Task 1
+                - [ ] Task 2
+                ==> insert here
+                "
+            `);
         });
     });
 });
