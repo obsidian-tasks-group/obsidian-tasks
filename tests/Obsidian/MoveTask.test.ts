@@ -188,15 +188,13 @@ describe('findInsertionPoint', () => {
             //      The last task is found correctly.
             //      The likely fix will require finding the parent list item or task of the last task, and
             //      then using the last line of that parent item.
-            expect(insertionPointFor(simulatedFile, 'Heading', false)).toMatchInlineSnapshot(`
-                "# Heading
+            expect(insertionPointFor(simulatedFile, 'Heading', false)).toEqual(`# Heading
 
-                - List item 1
-                    - [ ] #task List item 1's nested task
-                ==> insert here
-                        - List item 1's nested task's nested list item
-                "
-            `);
+- List item 1
+    - [ ] #task List item 1's nested task
+==> insert here
+        - List item 1's nested task's nested list item
+`);
         });
 
         it('should insert after last task in target section, even if multiple lists in the heading', () => {
