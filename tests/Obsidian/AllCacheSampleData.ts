@@ -18,6 +18,7 @@ export type MockDataName =
     | 'corrupt_rerender_issue_3715_tasks'
     | 'docs_sample_for_explain_query_file_defaults'
     | 'docs_sample_for_task_properties_reference'
+    | 'editing_tasks_heading_with_multiple_task_lists'
     | 'editing_tasks_no_headings_two_tasks'
     | 'editing_tasks_no_tasks_before_first_heading'
     | 'editing_tasks_one_heading_no_tasks'
@@ -141,6 +142,7 @@ export const AllMockDataNames: MockDataName[] = [
     'corrupt_rerender_issue_3715_tasks',
     'docs_sample_for_explain_query_file_defaults',
     'docs_sample_for_task_properties_reference',
+    'editing_tasks_heading_with_multiple_task_lists',
     'editing_tasks_no_headings_two_tasks',
     'editing_tasks_no_tasks_before_first_heading',
     'editing_tasks_one_heading_no_tasks',
