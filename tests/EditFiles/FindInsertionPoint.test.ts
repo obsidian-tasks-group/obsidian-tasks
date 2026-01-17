@@ -4,7 +4,7 @@
 
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { findInsertionPoint } from '../../src/EditFiles/FindInsertionPoint';
-import type { SimulatedFile } from './SimulatedFile';
+import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 
 function insertionPointFor(
     simulatedFile: SimulatedFile,
