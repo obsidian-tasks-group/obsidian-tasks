@@ -163,14 +163,13 @@ describe('findInsertionPoint', () => {
             //      The likely fix is to refactor the code so that it uses both:
             //          - listItem.position.start.line
             //          - listItem.position.end.line
-            expect(insertionPointFor(simulatedFile, 'Heading', false)).toMatchInlineSnapshot(`
-                "# Heading
+            const expected = `# Heading
 
-                - [ ] #task Task 1
-                ==> insert here
-                    - Task 1's nested list item
-                "
-            `);
+- [ ] #task Task 1
+==> insert here
+    - Task 1's nested list item
+`;
+            expect(insertionPointFor(simulatedFile, 'Heading', false)).toEqual(expected);
         });
 
         it.failing('should not split a list item when it contains child tasks or list items', () => {
