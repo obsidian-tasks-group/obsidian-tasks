@@ -23,6 +23,7 @@ export type MockDataName =
     | 'editing_tasks_one_heading_no_tasks'
     | 'editing_tasks_one_heading_one_task'
     | 'editing_tasks_section_has_no_tasks'
+    | 'editing_tasks_three_adjacent_headings'
     | 'editing_tasks_two_sections'
     | 'editing_tests_tasks_before_first_heading'
     | 'embed_link_in_task'
@@ -145,6 +146,7 @@ export const AllMockDataNames: MockDataName[] = [
     'editing_tasks_one_heading_no_tasks',
     'editing_tasks_one_heading_one_task',
     'editing_tasks_section_has_no_tasks',
+    'editing_tasks_three_adjacent_headings',
     'editing_tasks_two_sections',
     'editing_tests_tasks_before_first_heading',
     'embed_link_in_task',

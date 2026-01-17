@@ -850,6 +850,7 @@ describe('all mock files', () => {
                 'Test Data/corrupt_rerender_issue_3715_search.md',
                 'Test Data/docs_sample_for_explain_query_file_defaults.md',
                 'Test Data/editing_tasks_one_heading_no_tasks.md',
+                'Test Data/editing_tasks_three_adjacent_headings.md',
                 'Test Data/non_tasks.md',
                 'Test Data/numbered_tasks_issue_3481_searches.md',
             ];
