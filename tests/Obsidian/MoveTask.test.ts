@@ -35,13 +35,25 @@ describe('findInsertionPoint', () => {
     describe('appendToEnd is true', () => {
         it('should always return end of file when appendToEnd is true', () => {
             const fileLines = ['# Heading', '- [ ] Task 1', '- [ ] Task 2', ''];
+            expect(fileLines.join('\n')).toMatchInlineSnapshot(`
+                "# Heading
+                - [ ] Task 1
+                - [ ] Task 2
+                "
+            `);
 
             const fileCache = null;
             const targetSectionHeader = null;
             const appendToEnd = true;
             const result = findInsertionPoint(fileLines, fileCache, targetSectionHeader, appendToEnd);
 
-            expect(result).toBe(4);
+            expect(visualiseInsertion(fileLines, result)).toMatchInlineSnapshot(`
+                "# Heading
+                - [ ] Task 1
+                - [ ] Task 2
+
+                ==> insert here"
+            `);
         });
     });
 
@@ -156,7 +168,9 @@ describe('findInsertionPoint', () => {
         it('should handle empty file', () => {
             const fileLines: string[] = [];
             const result = findInsertionPoint(fileLines, {}, null, false);
+
             expect(result).toBe(0);
+            expect(visualiseInsertion(fileLines, result)).toMatchInlineSnapshot('"==> insert here"');
         });
 
         it('should handle file with no tasks', () => {
