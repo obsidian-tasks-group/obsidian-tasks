@@ -12,7 +12,7 @@ import type { EditorInsertion, LineTransformer } from './CreateEditorCallback';
  * @returns A LineTransformer function for use with createEditorCallback
  */
 export const createSetStatusLineTransformer = (newStatus: Status): LineTransformer => {
-    return (line: string, path: string): EditorInsertion => {
+    return (line: string, path: string): EditorInsertion | undefined => {
         const task = Task.fromLine({
             line,
             taskLocation: TaskLocation.fromUnknownPosition(new TasksFile(path)),
@@ -25,7 +25,8 @@ export const createSetStatusLineTransformer = (newStatus: Status): LineTransform
             return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
         }
 
-        // Line is not a task - notify the user
-        throw new Notice('Cannot set status: line is not a task or does not match global filter');
+        // Line is not a task - notify the user and make no changes
+        new Notice('Cannot set status: line is not a task or does not match global filter');
+        return undefined;
     };
 };
