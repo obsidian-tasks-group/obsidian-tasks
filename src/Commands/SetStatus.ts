@@ -1,3 +1,4 @@
+import { Notice } from 'obsidian';
 import type { Status } from '../Statuses/Status';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
@@ -24,7 +25,7 @@ export const createSetStatusLineTransformer = (newStatus: Status): LineTransform
             return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
         }
 
-        // Line is not a task - return unchanged
-        return { text: line };
+        // Line is not a task - notify the user
+        throw new Notice('Cannot set status: line is not a task or does not match global filter');
     };
 };
