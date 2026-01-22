@@ -6,57 +6,6 @@ import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 
-export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
-    if (checking) {
-        if (!(view instanceof MarkdownView)) {
-            // If we are not in a markdown view, the command shouldn't be shown.
-            return false;
-        }
-
-        // The command should always trigger in a markdown view:
-        // - Convert lines to list items.
-        // - Convert list items to tasks.
-        // - Toggle tasks' status.
-        return true;
-    }
-
-    if (!(view instanceof MarkdownView)) {
-        // Should never happen due to check above.
-        return;
-    }
-
-    // We are certain we are in the editor due to the check above.
-    const path = view.file?.path;
-    if (path === undefined) {
-        return;
-    }
-
-    const origCursorPos = editor.getCursor();
-    const lineNumber = origCursorPos.line;
-    const line = editor.getLine(lineNumber);
-
-    const insertion = toggleLine(line, path);
-
-    const replacementTextIsNonEmpty = insertion.text.length > 0;
-    const taskIsOnLastLine = lineNumber >= editor.lineCount() - 1;
-    if (replacementTextIsNonEmpty || taskIsOnLastLine) {
-        editor.setLine(lineNumber, insertion.text);
-    } else {
-        // The replacement text is empty, and our line was followed by a new line character,
-        // so we delete the line and the new-line, to avoid leaving a blank line in the file.
-        const from = { line: lineNumber, ch: 0 };
-        const to = { line: lineNumber + 1, ch: 0 };
-        editor.replaceRange('', from, to);
-    }
-
-    /* Cursor positions are 0-based for both "line" and "ch" offsets.
-     * If "ch" offset bigger than the line length, will just continue to next line(s).
-     * By default "editor.setLine()" appears to either keep the cursor at the end of the line if it is already there,
-     * ...or move it to the beginning if it is anywhere else. Licat explained this on Discord as "sticking" to one side or another.
-     */
-    editor.setCursor(getNewCursorPosition(origCursorPos, insertion));
-};
-
 /**
  * Represents text to be inserted into the editor
  *
@@ -76,6 +25,72 @@ interface EditorInsertion {
     text: string;
     moveTo?: Partial<EditorPosition>;
 }
+
+/**
+ * A function that transforms a line of text, returning the new text and cursor position.
+ */
+type LineTransformer = (line: string, path: string) => EditorInsertion;
+
+/**
+ * Creates an editor callback function that applies a line transformation to the current line.
+ *
+ * @param lineTransformer - A function that takes the current line and file path, and returns the transformed text
+ * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
+ */
+const createEditorCallback = (lineTransformer: LineTransformer) => {
+    function editorCallback(checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) {
+        if (checking) {
+            if (!(view instanceof MarkdownView)) {
+                // If we are not in a markdown view, the command shouldn't be shown.
+                return false;
+            }
+
+            // The command should always trigger in a markdown view:
+            // - Convert lines to list items.
+            // - Convert list items to tasks.
+            // - Toggle tasks' status.
+            return true;
+        }
+
+        if (!(view instanceof MarkdownView)) {
+            // Should never happen due to check above.
+            return;
+        }
+
+        // We are certain we are in the editor due to the check above.
+        const path = view.file?.path;
+        if (path === undefined) {
+            return;
+        }
+
+        const origCursorPos = editor.getCursor();
+        const lineNumber = origCursorPos.line;
+        const line = editor.getLine(lineNumber);
+
+        const insertion = lineTransformer(line, path);
+
+        const replacementTextIsNonEmpty = insertion.text.length > 0;
+        const taskIsOnLastLine = lineNumber >= editor.lineCount() - 1;
+        if (replacementTextIsNonEmpty || taskIsOnLastLine) {
+            editor.setLine(lineNumber, insertion.text);
+        } else {
+            // The replacement text is empty, and our line was followed by a new line character,
+            // so we delete the line and the new-line, to avoid leaving a blank line in the file.
+            const from = { line: lineNumber, ch: 0 };
+            const to = { line: lineNumber + 1, ch: 0 };
+            editor.replaceRange('', from, to);
+        }
+
+        /* Cursor positions are 0-based for both "line" and "ch" offsets.
+         * If "ch" offset bigger than the line length, will just continue to next line(s).
+         * By default "editor.setLine()" appears to either keep the cursor at the end of the line if it is already there,
+         * ...or move it to the beginning if it is anywhere else. Licat explained this on Discord as "sticking" to one side or another.
+         */
+        editor.setCursor(getNewCursorPosition(origCursorPos, insertion));
+    }
+
+    return editorCallback;
+};
 
 export const toggleLine = (line: string, path: string): EditorInsertion => {
     const task = Task.fromLine({
@@ -143,3 +158,5 @@ export const getNewCursorPosition = (startPos: EditorPosition, insertion: Editor
         ch: Math.min(moveTo.ch, destinationLineLength),
     };
 };
+
+export const toggleDone = createEditorCallback(toggleLine);
