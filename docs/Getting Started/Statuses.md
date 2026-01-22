@@ -171,9 +171,7 @@ The [[Create or edit Task#Status|‘Create or edit Task’ Modal]] allows you to
 
 ### Related commands
 
-> [!info]
-There are not yet any new commands for applying custom statuses.
-We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1486) .
+See [[Toggling and Editing Statuses#'Tasks Change status to' commands|'Tasks: Change status to...' commands]] for setting task statuses via commands.
 
 ### Related searches
 

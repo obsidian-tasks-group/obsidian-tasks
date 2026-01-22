@@ -12,7 +12,7 @@ This page describes ways to mark a task line as `TODO` or `DONE`, or any other [
 
 You can [[#Toggling Tasks with mouse|left-click]] or [[#'Change task status' context menu|right-click]] on task checkboxes.
 
-Other options are a [[#'Tasks Toggle task done' command|command]] and a [[#Edit task modal|modal]].
+Other options are commands ([[#'Tasks Toggle task done' command|toggle]] or [[#'Tasks Change status to' commands|set to a specific status]]) and a [[#Edit task modal|modal]].
 
 > [!tip] What is "toggling"?
 > The simplest meaning of 'toggling' is converting a task between these two states:
@@ -80,6 +80,35 @@ Obsidian allows you to assign a [hotkey](https://help.obsidian.md/Customization/
 | In Tasks query search results | Reading mode | ❌     |
 
 Since Tasks 7.2.0, this command can also be triggered programmatically via the [[Tasks Api#`executeToggleTaskDoneCommand (line string, path string) => string;`|Tasks API]].
+
+## 'Tasks: Change status to...' commands
+
+There is a set of commands to directly set a task's status to any specific registered status.
+
+For example:
+
+- 'Tasks: Change status to: [ ] TODO'
+- 'Tasks: Change status to: [/] In Progress'
+- 'Tasks: Change status to: [x] Done'
+- 'Tasks: Change status to: [-] Cancelled'
+
+One command is created for each status in your [[Status Settings]], including both [[Core Statuses]] and any [[Custom Statuses]] you have configured.
+
+Obsidian allows you to assign a [hotkey](https://help.obsidian.md/Customization/Custom+hotkeys) to commands, for ease of use. This makes it easy to, for example, assign a hotkey to quickly mark a task as 'In Progress' or 'Cancelled'.
+
+| Where                         | Viewing Mode | Works? |
+| ----------------------------- | ------------ | ------ |
+| Task lines in markdown files  | Source mode  | ✅     |
+| Task lines in markdown files  | Live Preview | ✅     |
+| Task lines in markdown files  | Reading mode | ❌     |
+| In Tasks query search results | Live Preview | ❌     |
+| In Tasks query search results | Reading mode | ❌     |
+
+> [!tip]
+> These commands correctly add Done dates and create new instances of recurring tasks when changing to a `DONE` status, just like the [[#'Change task status' context menu]].
+
+> [!released]
+> The 'Change status to...' commands were introduced in Tasks X.Y.Z.
 
 ## Edit task modal
 
