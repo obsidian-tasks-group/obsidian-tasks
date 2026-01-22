@@ -1,8 +1,8 @@
 import { Notice } from 'obsidian';
+import { TasksFile } from '../Scripting/TasksFile';
 import type { Status } from '../Statuses/Status';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
-import { TasksFile } from '../Scripting/TasksFile';
 import type { EditorInsertion, LineTransformer } from './CreateEditorCallback';
 
 /**

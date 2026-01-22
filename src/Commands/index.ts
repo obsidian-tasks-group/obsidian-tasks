@@ -7,7 +7,7 @@ import { createOrEdit } from './CreateOrEdit';
 import { toggleDone } from './ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
 import { createEditorCallback } from './CreateEditorCallback';
-import { createSetStatusLineTransformer } from './SetStatus';
+import { createSetStatusLineTransformer } from './CreateSetStatusLineTransformer';
 
 export class Commands {
     private readonly plugin: TasksPlugin;
