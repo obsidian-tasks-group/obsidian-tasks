@@ -28,6 +28,38 @@ function findLastTaskLineInRange(listItems: ListItemCache[], startLine: number, 
 }
 
 /**
+ * Finds the last line of all descendants of a given list item.
+ * Uses the `parent` field in ListItemCache to find children.
+ * Returns the item's own line if it has no children.
+ *
+ * @param listItems - All list items in the file
+ * @param itemLine - The line number of the item to find descendants for
+ * @returns The last line number occupied by the item or any of its descendants
+ */
+function findLastDescendantLine(listItems: ListItemCache[], itemLine: number): number {
+    let lastLine = itemLine;
+
+    // Find all descendants by checking which items have this line (or a descendant) as their parent.
+    // The parent field contains the line number of the parent item, or a negative value if no parent.
+    const descendantLines = new Set<number>([itemLine]);
+    let foundNew = true;
+
+    while (foundNew) {
+        foundNew = false;
+        for (const item of listItems) {
+            const line = item.position.start.line;
+            if (item.parent >= 0 && descendantLines.has(item.parent) && !descendantLines.has(line)) {
+                descendantLines.add(line);
+                lastLine = Math.max(lastLine, line);
+                foundNew = true;
+            }
+        }
+    }
+
+    return lastLine;
+}
+
+/**
  * Finds the insertion point for tasks with no heading.
  */
 function findInsertionPointNoHeading(
@@ -86,7 +118,9 @@ export function findInsertionPoint(
     const lastTaskLineInSection = findLastTaskLineInRange(listItems, targetHeadingLine, nextHeadingLine);
 
     if (lastTaskLineInSection >= 0) {
-        return lastTaskLineInSection + 1;
+        // Find the last descendant of this task to avoid splitting it from its nested children
+        const lastDescendantLine = findLastDescendantLine(listItems, lastTaskLineInSection);
+        return lastDescendantLine + 1;
     }
 
     return targetHeadingLine + 1;

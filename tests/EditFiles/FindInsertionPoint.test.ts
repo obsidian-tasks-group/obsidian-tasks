@@ -149,7 +149,7 @@ describe('findInsertionPoint', () => {
             `);
         });
 
-        it.failing('should not split a task from its nested list item', () => {
+        it('should not split a task from its nested list item', () => {
             const simulatedFile = MockDataLoader.get('editing_tasks_task_with_nested_list_item');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
                 "# Heading
@@ -178,7 +178,7 @@ describe('findInsertionPoint', () => {
             expect(insertionPointFor(simulatedFile, 'Heading', false)).toEqual(expected);
         });
 
-        it.failing('should not split a list item when it contains child tasks or list items', () => {
+        it('should not split a list item when it contains child tasks or list items', () => {
             const simulatedFile = MockDataLoader.get('editing_tasks_list_item_with_nested_task_and_list_item');
             expect(simulatedFile.fileContents).toMatchInlineSnapshot(`
                 "# Heading
