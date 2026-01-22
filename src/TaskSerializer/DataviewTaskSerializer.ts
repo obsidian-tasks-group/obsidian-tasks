@@ -1,4 +1,6 @@
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
+import { getSettings } from '../Config/Settings';
+import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Priority } from '../Task/Priority';
 import type { Task } from '../Task/Task';
@@ -55,6 +57,78 @@ function toInlineFieldRegex(innerFieldRegex: RegExp): RegExp {
     return new RegExp(fieldRegex, innerFieldRegex.flags);
 }
 
+// Helpers to build a regex for the configured date format (Moment-like tokens),
+// including optional wiki-link brackets [[...]] around the date value.
+function escapeRegex(text: string): string {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function momentFormatToRegex(format: string): string {
+    let i = 0;
+    let out = '';
+    while (i < format.length) {
+        const substr = format.substring(i);
+        if (substr.startsWith('YYYY')) {
+            out += '\\d{4}';
+            i += 4;
+            continue;
+        }
+        if (substr.startsWith('YY')) {
+            out += '\\d{2}';
+            i += 2;
+            continue;
+        }
+        if (substr.startsWith('MMMM')) {
+            out += '[A-Za-z]+';
+            i += 4;
+            continue;
+        }
+        if (substr.startsWith('MMM')) {
+            out += '[A-Za-z]{3}';
+            i += 3;
+            continue;
+        }
+        if (substr.startsWith('MM')) {
+            out += '\\d{2}';
+            i += 2;
+            continue;
+        }
+        if (substr.startsWith('M')) {
+            out += '\\d{1,2}';
+            i += 1;
+            continue;
+        }
+        if (substr.startsWith('DD')) {
+            out += '\\d{2}';
+            i += 2;
+            continue;
+        }
+        if (substr.startsWith('D')) {
+            out += '\\d{1,2}';
+            i += 1;
+            continue;
+        }
+        // Literal character
+        out += escapeRegex(format[i]);
+        i += 1;
+    }
+    return out;
+}
+
+function buildConfiguredDateValueRegex(): string {
+    const { taskDateFormat } = getSettings();
+    const fmt = taskDateFormat && taskDateFormat.trim().length > 0 ? taskDateFormat : TaskRegularExpressions.dateFormat;
+    const inner = momentFormatToRegex(fmt);
+    // [[DATE]] capturing only the DATE part; optional wrappers
+    return '(?:\\[\\[)?(' + inner + ')(?:\\]\\])?';
+}
+
+function dynamicInlineDateFieldRegex(key: string): RegExp {
+    const value = buildConfiguredDateValueRegex();
+    const inner = new RegExp(key.replace(/([.*+?^${}()|[\]\\])/g, '\\$1') + ':: *' + value);
+    return toInlineFieldRegex(inner);
+}
+
 /**
  * A symbol map that corresponds to a task format that strives to be compatible with
  *   [Dataview]{@link https://github.com/blacksmithgu/obsidian-dataview}
@@ -79,19 +153,19 @@ export const DATAVIEW_SYMBOLS = {
     onCompletionSymbol: 'onCompletion::',
     idSymbol: 'id::',
     dependsOnSymbol: 'dependsOn::',
-    TaskFormatRegularExpressions: {
+    TaskFormatRegularExpressions: () => ({
         priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
-        startDateRegex: toInlineFieldRegex(/start:: *(\d{4}-\d{2}-\d{2})/),
-        createdDateRegex: toInlineFieldRegex(/created:: *(\d{4}-\d{2}-\d{2})/),
-        scheduledDateRegex: toInlineFieldRegex(/scheduled:: *(\d{4}-\d{2}-\d{2})/),
-        dueDateRegex: toInlineFieldRegex(/due:: *(\d{4}-\d{2}-\d{2})/),
-        doneDateRegex: toInlineFieldRegex(/completion:: *(\d{4}-\d{2}-\d{2})/),
-        cancelledDateRegex: toInlineFieldRegex(/cancelled:: *(\d{4}-\d{2}-\d{2})/),
+        startDateRegex: dynamicInlineDateFieldRegex('start'),
+        createdDateRegex: dynamicInlineDateFieldRegex('created'),
+        scheduledDateRegex: dynamicInlineDateFieldRegex('scheduled'),
+        dueDateRegex: dynamicInlineDateFieldRegex('due'),
+        doneDateRegex: dynamicInlineDateFieldRegex('completion'),
+        cancelledDateRegex: dynamicInlineDateFieldRegex('cancelled'),
         recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
         onCompletionRegex: toInlineFieldRegex(/onCompletion:: *([a-zA-Z]+)/),
         dependsOnRegex: toInlineFieldRegex(new RegExp('dependsOn:: *(' + taskIdSequenceRegex.source + ')')),
         idRegex: toInlineFieldRegex(new RegExp('id:: *(' + taskIdRegex.source + ')')),
-    },
+    }),
 } as const;
 
 /**

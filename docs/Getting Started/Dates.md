@@ -205,13 +205,12 @@ The date values on task lines must be calendar or absolute dates, referring to a
 
 ## Limitations of task date support
 
-### Date format is not configurable
+### Configurable date format and wiki-link wrapping
 
-- The date format on task lines is not yet configurable.
-- The only format recognised is `YYYY-MM-DD`, for example `2024-09-17`.
-- It is not possible to customise the format of date values on task lines.
-- It is also not possible to format dates as links, such as `[[2024-09-17]]`.
-- We are tracking this in [discussion #69](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/69).
+- The format of dates on task lines is configurable in Settings → Dates → Format. Use Moment-style tokens, for example `YYYY-MM-DD` (default) or `DD/MM/YYYY`.
+- Tasks will parse dates using your configured format. Examples on this page use the default format; adjust them to match your chosen format.
+- You can optionally wrap dates in wiki-links (for example `[[2024-09-17]]`) via Settings → Dates → Wrap date in wiki-link. Parsing accepts both plain and wrapped dates.
+- When enabled, created/done/cancelled/scheduled/start/due dates will be saved using your format, and wrapped in `[[...]]` when the setting is on.
 
 ### Dates cannot include times
 

@@ -1,4 +1,5 @@
 import type { Moment } from 'moment';
+import { getSettings } from '../Config/Settings';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { OnCompletion, parseOnCompletionValue } from '../Task/OnCompletion';
 import { Occurrence } from '../Task/Occurrence';
@@ -33,7 +34,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly onCompletionSymbol: string;
     readonly idSymbol: string;
     readonly dependsOnSymbol: string;
-    readonly TaskFormatRegularExpressions: {
+    readonly TaskFormatRegularExpressions: () => {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
         createdDateRegex: RegExp;
@@ -54,10 +55,6 @@ export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 // The allowed characters in a comma-separated sequence of task ids:
 export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
 
-function dateFieldRegex(symbols: string) {
-    return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2})');
-}
-
 function fieldRegex(symbols: string, valueRegexString: string) {
     // \uFE0F? allows an optional Variant Selector 16 on emojis.
     let source = symbols + '\uFE0F?';
@@ -68,6 +65,77 @@ function fieldRegex(symbols: string, valueRegexString: string) {
     // removed from the end until none are left.
     source += '$';
     return new RegExp(source); // Remove the 'u' flag, to fix parsing on iPadOS/iOS 18.6 and 26 Public Beta 2
+}
+
+// Helpers to build a regex for the configured date format (Moment-like tokens),
+// including optional wiki-link brackets [[...]] around the date value.
+function escapeRegex(text: string): string {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function momentFormatToRegex(format: string): string {
+    let i = 0;
+    let out = '';
+    while (i < format.length) {
+        const substr = format.substring(i);
+        if (substr.startsWith('YYYY')) {
+            out += '\\d{4}';
+            i += 4;
+            continue;
+        }
+        if (substr.startsWith('YY')) {
+            out += '\\d{2}';
+            i += 2;
+            continue;
+        }
+        if (substr.startsWith('MMMM')) {
+            out += '[A-Za-z]+';
+            i += 4;
+            continue;
+        }
+        if (substr.startsWith('MMM')) {
+            out += '[A-Za-z]{3}';
+            i += 3;
+            continue;
+        }
+        if (substr.startsWith('MM')) {
+            out += '\\d{2}';
+            i += 2;
+            continue;
+        }
+        if (substr.startsWith('M')) {
+            out += '\\d{1,2}';
+            i += 1;
+            continue;
+        }
+        if (substr.startsWith('DD')) {
+            out += '\\d{2}';
+            i += 2;
+            continue;
+        }
+        if (substr.startsWith('D')) {
+            out += '\\d{1,2}';
+            i += 1;
+            continue;
+        }
+        // Literal character
+        out += escapeRegex(format[i]);
+        i += 1;
+    }
+    return out;
+}
+
+function buildConfiguredDateValueRegex(): string {
+    const { taskDateFormat } = getSettings();
+    const fmt = taskDateFormat && taskDateFormat.trim().length > 0 ? taskDateFormat : TaskRegularExpressions.dateFormat;
+    const inner = momentFormatToRegex(fmt);
+    // [[DATE]] capturing only the DATE part; optional wrappers
+    return '(?:\\[\\[)?(' + inner + ')(?:\\]\\])?';
+}
+
+function dynamicDateFieldRegex(symbols: string): RegExp {
+    const value = buildConfiguredDateValueRegex();
+    return fieldRegex(symbols, value);
 }
 
 /**
@@ -94,19 +162,19 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     onCompletionSymbol: '🏁',
     dependsOnSymbol: '⛔',
     idSymbol: '🆔',
-    TaskFormatRegularExpressions: {
+    TaskFormatRegularExpressions: () => ({
         priorityRegex: fieldRegex('(🔺|⏫|🔼|🔽|⏬)', ''),
-        startDateRegex: dateFieldRegex('🛫'),
-        createdDateRegex: dateFieldRegex('➕'),
-        scheduledDateRegex: dateFieldRegex('(?:⏳|⌛)'),
-        dueDateRegex: dateFieldRegex('(?:📅|📆|🗓)'),
-        doneDateRegex: dateFieldRegex('✅'),
-        cancelledDateRegex: dateFieldRegex('❌'),
+        startDateRegex: dynamicDateFieldRegex('🛫'),
+        createdDateRegex: dynamicDateFieldRegex('➕'),
+        scheduledDateRegex: dynamicDateFieldRegex('(?:⏳|⌛)'),
+        dueDateRegex: dynamicDateFieldRegex('(?:📅|📆|🗓)'),
+        doneDateRegex: dynamicDateFieldRegex('✅'),
+        cancelledDateRegex: dynamicDateFieldRegex('❌'),
         recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)'),
         onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)'),
         dependsOnRegex: fieldRegex('⛔', '(' + taskIdSequenceRegex.source + ')'),
         idRegex: fieldRegex('🆔', '(' + taskIdRegex.source + ')'),
-    },
+    }),
 } as const;
 
 function symbolAndStringValue(shortMode: boolean, symbol: string, value: string) {
@@ -116,10 +184,14 @@ function symbolAndStringValue(shortMode: boolean, symbol: string, value: string)
 
 function symbolAndDateValue(shortMode: boolean, symbol: string, date: moment.Moment | null) {
     if (!date) return '';
-    // We could call symbolAndStringValue() to remove a little code repetition,
-    // but doing so would do some wasted date-formatting when in 'short mode',
-    // so instead we repeat the check on shortMode value.
-    return shortMode ? ' ' + symbol : ` ${symbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
+    if (shortMode) return ' ' + symbol;
+    const { taskDateFormat, wrapDateInWikiLink } = getSettings();
+    const fmt = taskDateFormat && taskDateFormat.trim().length > 0 ? taskDateFormat : TaskRegularExpressions.dateFormat;
+    let text = date.format(fmt);
+    if (wrapDateInWikiLink) {
+        text = `[[${text}]]`;
+    }
+    return ` ${symbol} ${text}`;
 }
 
 export function allTaskPluginEmojis() {
@@ -264,7 +336,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
      * @return {TaskDetails}
      */
     public deserialize(line: string): TaskDetails {
-        const { TaskFormatRegularExpressions } = this.symbols;
+        const TaskFormatRegularExpressions = this.symbols.TaskFormatRegularExpressions();
+        const { taskDateFormat } = getSettings();
+        const configuredFormat =
+            taskDateFormat && taskDateFormat.trim().length > 0 ? taskDateFormat : TaskRegularExpressions.dateFormat;
 
         // Keep matching and removing special strings from the end of the
         // description in any order. The loop should only run once if the
@@ -303,42 +378,42 @@ export class DefaultTaskSerializer implements TaskSerializer {
 
             const doneDateMatch = line.match(TaskFormatRegularExpressions.doneDateRegex);
             if (doneDateMatch !== null) {
-                doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
+                doneDate = window.moment(doneDateMatch[1], configuredFormat);
                 line = line.replace(TaskFormatRegularExpressions.doneDateRegex, '').trim();
                 matched = true;
             }
 
             const cancelledDateMatch = line.match(TaskFormatRegularExpressions.cancelledDateRegex);
             if (cancelledDateMatch !== null) {
-                cancelledDate = window.moment(cancelledDateMatch[1], TaskRegularExpressions.dateFormat);
+                cancelledDate = window.moment(cancelledDateMatch[1], configuredFormat);
                 line = line.replace(TaskFormatRegularExpressions.cancelledDateRegex, '').trim();
                 matched = true;
             }
 
             const dueDateMatch = line.match(TaskFormatRegularExpressions.dueDateRegex);
             if (dueDateMatch !== null) {
-                dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
+                dueDate = window.moment(dueDateMatch[1], configuredFormat);
                 line = line.replace(TaskFormatRegularExpressions.dueDateRegex, '').trim();
                 matched = true;
             }
 
             const scheduledDateMatch = line.match(TaskFormatRegularExpressions.scheduledDateRegex);
             if (scheduledDateMatch !== null) {
-                scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
+                scheduledDate = window.moment(scheduledDateMatch[1], configuredFormat);
                 line = line.replace(TaskFormatRegularExpressions.scheduledDateRegex, '').trim();
                 matched = true;
             }
 
             const startDateMatch = line.match(TaskFormatRegularExpressions.startDateRegex);
             if (startDateMatch !== null) {
-                startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
+                startDate = window.moment(startDateMatch[1], configuredFormat);
                 line = line.replace(TaskFormatRegularExpressions.startDateRegex, '').trim();
                 matched = true;
             }
 
             const createdDateMatch = line.match(TaskFormatRegularExpressions.createdDateRegex);
             if (createdDateMatch !== null) {
-                createdDate = window.moment(createdDateMatch[1], TaskRegularExpressions.dateFormat);
+                createdDate = window.moment(createdDateMatch[1], configuredFormat);
                 line = line.replace(TaskFormatRegularExpressions.createdDateRegex, '').trim();
                 matched = true;
             }

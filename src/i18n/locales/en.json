@@ -119,6 +119,17 @@
         "description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
         "name": "Set done date on every completed task"
       },
+      "format": {
+        "name": "Task date format",
+        "description": {
+          "line1": "Format used when writing dates next to emoji signifiers (📅 ⏳ 🛫 ✅ ❌ ➕).",
+          "line2": "Moment.js Format Syntax"
+        }
+      },
+      "wrapInWikiLink": {
+        "name": "Wrap dates in [[...]]",
+        "description": "When enabled, dates are wrapped like [[2021-04-05]] to link to daily notes."
+      },
       "heading": "Dates"
     },
     "datesFromFileNames": {

@@ -80,6 +80,9 @@ export interface Settings {
     filenameAsDateFolders: string[];
     recurrenceOnNextLine: boolean;
     removeScheduledDateOnRecurrence: boolean;
+    // Formatting of dates written next to emoji signifiers (📅 ⏳ 🛫 ✅ ❌ ➕)
+    taskDateFormat: string;
+    wrapDateInWikiLink: boolean;
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -119,6 +122,8 @@ const defaultSettings: Readonly<Settings> = {
     filenameAsDateFolders: [],
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
+    taskDateFormat: 'YYYY-MM-DD',
+    wrapDateInWikiLink: false,
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
     features: Feature.settingsFlags,

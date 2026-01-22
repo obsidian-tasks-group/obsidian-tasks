@@ -25,6 +25,11 @@ These samples demonstrate all the fields supported by the Tasks plugin's parsing
 
 For more information, see [[Dates]].
 
+Note:
+
+- Dates are shown in the default format `YYYY-MM-DD`. If you change the format in Settings → Dates → Format (for example to `DD/MM/YYYY`), Tasks will read and write dates using your configured format.
+- If Settings → Dates → Wrap date in wiki-link is enabled, dates may appear wrapped in `[[...]]` (for example `📅 [[2023-04-16]]`). Parsing accepts both plain and wrapped dates.
+
 ## Tasks Emoji Format for Priorities
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Priorities_tasksPluginEmoji-snippet.approved.md -->
