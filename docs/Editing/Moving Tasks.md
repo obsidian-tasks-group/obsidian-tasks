@@ -21,7 +21,7 @@ The ↔️ button in Tasks Search results allows you to quickly move a task (and
 
 > [!released]
 >
-> - Move was introduced in Tasks X.X.X.
+> - Move was introduced in Tasks X.Y.Z.
 
 ## Using the Move Button
 
