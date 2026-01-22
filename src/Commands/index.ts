@@ -1,9 +1,13 @@
 import type { App, Editor, MarkdownFileInfo, MarkdownView, TFile, View } from 'obsidian';
 import type TasksPlugin from '../main';
+import { allStatusInstructions } from '../ui/EditInstructions/StatusInstructions';
+import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { createOrEdit } from './CreateOrEdit';
 
 import { toggleDone } from './ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
+import { createEditorCallback } from './CreateEditorCallback';
+import { createSetStatusLineTransformer } from './SetStatus';
 
 export class Commands {
     private readonly plugin: TasksPlugin;
@@ -51,6 +55,19 @@ export class Commands {
                 return true;
             },
         });
+
+        // Register set-status commands for each registered status
+        const statusInstructions = allStatusInstructions(StatusRegistry.getInstance());
+        for (const instruction of statusInstructions) {
+            const status = instruction.newStatus;
+            const nameSlug = status.name.toLowerCase().replace(/\s+/g, '-');
+
+            plugin.addCommand({
+                id: `set-status-${nameSlug}`,
+                name: instruction.instructionDisplayName(),
+                editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
+            });
+        }
     }
 
     async ensureQueryFileDefaultsFrontmatter(file: TFile): Promise<void> {
