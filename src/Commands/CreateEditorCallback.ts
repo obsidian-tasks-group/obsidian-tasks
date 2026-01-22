@@ -22,8 +22,9 @@ export interface EditorInsertion {
 
 /**
  * A function that transforms a line of text, returning the new text and cursor position.
+ * Returns undefined to indicate no changes should be made.
  */
-export type LineTransformer = (line: string, path: string) => EditorInsertion;
+export type LineTransformer = (line: string, path: string) => EditorInsertion | undefined;
 
 /**
  * Computes the new absolute position of the cursor so that it is positioned within the inserted text as specified
@@ -91,6 +92,11 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
         const line = editor.getLine(lineNumber);
 
         const insertion = lineTransformer(line, path);
+
+        // If the transformer returns undefined, make no changes
+        if (insertion === undefined) {
+            return;
+        }
 
         const replacementTextIsNonEmpty = insertion.text.length > 0;
         const taskIsOnLastLine = lineNumber >= editor.lineCount() - 1;
