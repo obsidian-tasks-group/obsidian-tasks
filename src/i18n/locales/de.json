@@ -4,16 +4,16 @@
     "unloadingPlugin": "Entlade Plugin: {{name}} v{{version}}"
   },
   "move": {
-    "buttonTitle": "Move task to another file or section",
-    "suggestionText": "Move task to another file/section",
-    "noFilesFound": "No other files with tasks found",
-    "currentFile": "current",
-    "currentSection": "current",
-    "noHeading": "(No heading)",
-    "endOfFile": "End of file",
-    "taskCount": "{{count}} tasks",
-    "success": "Task moved to {{filename}}",
-    "error": "Failed to move task: {{message}}"
+    "buttonTitle": "",
+    "suggestionText": "",
+    "noFilesFound": "",
+    "currentFile": "",
+    "currentSection": "",
+    "noHeading": "",
+    "endOfFile": "",
+    "taskCount": "",
+    "success": "",
+    "error": ""
   },
   "modals": {
     "customStatusModal": {
