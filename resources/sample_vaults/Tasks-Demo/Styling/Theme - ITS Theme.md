@@ -45,6 +45,7 @@ This offers the same checkboxes as [[Snippet - SlRvb's Alternate Checkboxes]].
 - [&] #task `&` Symbolism
 - [s] #task `s` Secret
 
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type
