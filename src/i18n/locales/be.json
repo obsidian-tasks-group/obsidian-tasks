@@ -13,7 +13,9 @@
     "endOfFile": "",
     "taskCount": "",
     "success": "",
-    "error": ""
+    "error": "",
+    "modalTitle": "",
+    "modalPlaceholder": ""
   },
   "modals": {
     "customStatusModal": {
@@ -221,6 +223,14 @@
           "line2": ""
         },
         "name": ""
+      }
+    },
+    "moveTask": {
+      "heading": "",
+      "excludedPaths": {
+        "name": "",
+        "description": "",
+        "placeholder": ""
       }
     },
     "seeTheDocumentation": "Глядзіце дакументацыю",

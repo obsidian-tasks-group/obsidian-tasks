@@ -13,7 +13,9 @@
     "endOfFile": "",
     "taskCount": "",
     "success": "",
-    "error": ""
+    "error": "",
+    "modalTitle": "",
+    "modalPlaceholder": ""
   },
   "modals": {
     "customStatusModal": {
@@ -221,6 +223,14 @@
           "line2": "시작일과 마감일은 다음 반복으로 넘기되, 예정일은 추후 작업 계획 시점에 설정하려는 경우에 유용합니다."
         },
         "name": "반복 시 예정일 제거"
+      }
+    },
+    "moveTask": {
+      "heading": "",
+      "excludedPaths": {
+        "name": "",
+        "description": "",
+        "placeholder": ""
       }
     },
     "seeTheDocumentation": "문서 보기",

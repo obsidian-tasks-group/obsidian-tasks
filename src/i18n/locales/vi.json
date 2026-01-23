@@ -13,7 +13,9 @@
     "endOfFile": "",
     "taskCount": "",
     "success": "",
-    "error": ""
+    "error": "",
+    "modalTitle": "",
+    "modalPlaceholder": ""
   },
   "modals": {
     "customStatusModal": {
@@ -221,6 +223,14 @@
           "line2": "Điều này dành cho khi bạn muốn ngày Bắt đầu và Đến hạn được chuyển tiếp sang lần lặp lại tiếp theo, nhưng bạn sẽ đặt ngày Đã lên lịch trong tương lai, một khi bạn dự định làm việc với nó."
         },
         "name": "Xóa ngày đã lên lịch khi lặp lại"
+      }
+    },
+    "moveTask": {
+      "heading": "",
+      "excludedPaths": {
+        "name": "",
+        "description": "",
+        "placeholder": ""
       }
     },
     "seeTheDocumentation": "Xem tài liệu",
