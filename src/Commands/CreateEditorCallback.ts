@@ -45,7 +45,7 @@ export type LineTransformer = (line: string, path: string) => EditorInsertion | 
 export const getNewCursorPosition = (startPos: EditorPosition, insertion: EditorInsertion): EditorPosition => {
     const defaultMoveTo = { line: 0, ch: startPos.ch };
     // Fill in any missing moveTo values using the default
-    const moveTo = { ...defaultMoveTo, ...(insertion.moveTo ?? {}) };
+    const moveTo = { ...defaultMoveTo, ...insertion.moveTo };
     // Find the length of the line we're moving the cursor to, so that cursor isn't moved out of bounds
     const destinationLineLength = insertion.text.split('\n')[moveTo.line].length;
 
