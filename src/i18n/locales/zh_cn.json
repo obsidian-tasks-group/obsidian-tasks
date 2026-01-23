@@ -4,16 +4,18 @@
     "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
   },
   "move": {
-    "buttonTitle": "Move task to another file or section",
-    "suggestionText": "Move task to another file/section",
-    "noFilesFound": "No other files with tasks found",
-    "currentFile": "current",
-    "currentSection": "current",
-    "noHeading": "(No heading)",
-    "endOfFile": "End of file",
-    "taskCount": "{{count}} tasks",
-    "success": "Task moved to {{filename}}",
-    "error": "Failed to move task: {{message}}"
+    "buttonTitle": "",
+    "suggestionText": "",
+    "noFilesFound": "",
+    "currentFile": "",
+    "currentSection": "",
+    "noHeading": "",
+    "endOfFile": "",
+    "taskCount": "",
+    "success": "",
+    "error": "",
+    "modalTitle": "",
+    "modalPlaceholder": ""
   },
   "modals": {
     "customStatusModal": {
@@ -221,6 +223,14 @@
           "line2": "此功能适用于你希望将开始和截止日期延续到下一个周期，但计划日期暂不设置，等实际开始处理时再确定的情况。"
         },
         "name": "在重复性任务中移除计划日期"
+      }
+    },
+    "moveTask": {
+      "heading": "",
+      "excludedPaths": {
+        "name": "",
+        "description": "",
+        "placeholder": ""
       }
     },
     "seeTheDocumentation": "参阅文档",

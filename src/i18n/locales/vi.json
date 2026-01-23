@@ -4,16 +4,18 @@
     "unloadingPlugin": "Đang gỡ plugin: {{name}} v{{version}}"
   },
   "move": {
-    "buttonTitle": "Move task to another file or section",
-    "suggestionText": "Move task to another file/section",
-    "noFilesFound": "No other files with tasks found",
-    "currentFile": "current",
-    "currentSection": "current",
-    "noHeading": "(No heading)",
-    "endOfFile": "End of file",
-    "taskCount": "{{count}} tasks",
-    "success": "Task moved to {{filename}}",
-    "error": "Failed to move task: {{message}}"
+    "buttonTitle": "",
+    "suggestionText": "",
+    "noFilesFound": "",
+    "currentFile": "",
+    "currentSection": "",
+    "noHeading": "",
+    "endOfFile": "",
+    "taskCount": "",
+    "success": "",
+    "error": "",
+    "modalTitle": "",
+    "modalPlaceholder": ""
   },
   "modals": {
     "customStatusModal": {
@@ -221,6 +223,14 @@
           "line2": "Điều này dành cho khi bạn muốn ngày Bắt đầu và Đến hạn được chuyển tiếp sang lần lặp lại tiếp theo, nhưng bạn sẽ đặt ngày Đã lên lịch trong tương lai, một khi bạn dự định làm việc với nó."
         },
         "name": "Xóa ngày đã lên lịch khi lặp lại"
+      }
+    },
+    "moveTask": {
+      "heading": "",
+      "excludedPaths": {
+        "name": "",
+        "description": "",
+        "placeholder": ""
       }
     },
     "seeTheDocumentation": "Xem tài liệu",

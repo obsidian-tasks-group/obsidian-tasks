@@ -4,16 +4,18 @@
     "unloadingPlugin": "플러그인 언로드 중: {{name}} v{{version}}"
   },
   "move": {
-    "buttonTitle": "Move task to another file or section",
-    "suggestionText": "Move task to another file/section",
-    "noFilesFound": "No other files with tasks found",
-    "currentFile": "current",
-    "currentSection": "current",
-    "noHeading": "(No heading)",
-    "endOfFile": "End of file",
-    "taskCount": "{{count}} tasks",
-    "success": "Task moved to {{filename}}",
-    "error": "Failed to move task: {{message}}"
+    "buttonTitle": "",
+    "suggestionText": "",
+    "noFilesFound": "",
+    "currentFile": "",
+    "currentSection": "",
+    "noHeading": "",
+    "endOfFile": "",
+    "taskCount": "",
+    "success": "",
+    "error": "",
+    "modalTitle": "",
+    "modalPlaceholder": ""
   },
   "modals": {
     "customStatusModal": {
@@ -221,6 +223,14 @@
           "line2": "시작일과 마감일은 다음 반복으로 넘기되, 예정일은 추후 작업 계획 시점에 설정하려는 경우에 유용합니다."
         },
         "name": "반복 시 예정일 제거"
+      }
+    },
+    "moveTask": {
+      "heading": "",
+      "excludedPaths": {
+        "name": "",
+        "description": "",
+        "placeholder": ""
       }
     },
     "seeTheDocumentation": "문서 보기",

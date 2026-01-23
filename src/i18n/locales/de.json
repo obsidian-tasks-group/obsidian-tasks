@@ -4,16 +4,18 @@
     "unloadingPlugin": "Entlade Plugin: {{name}} v{{version}}"
   },
   "move": {
-    "buttonTitle": "Move task to another file or section",
-    "suggestionText": "Move task to another file/section",
-    "noFilesFound": "No other files with tasks found",
-    "currentFile": "current",
-    "currentSection": "current",
-    "noHeading": "(No heading)",
-    "endOfFile": "End of file",
-    "taskCount": "{{count}} tasks",
-    "success": "Task moved to {{filename}}",
-    "error": "Failed to move task: {{message}}"
+    "buttonTitle": "",
+    "suggestionText": "",
+    "noFilesFound": "",
+    "currentFile": "",
+    "currentSection": "",
+    "noHeading": "",
+    "endOfFile": "",
+    "taskCount": "",
+    "success": "",
+    "error": "",
+    "modalTitle": "",
+    "modalPlaceholder": ""
   },
   "modals": {
     "customStatusModal": {
@@ -221,6 +223,14 @@
           "line2": "Dies gilt, wenn Sie möchten, dass Start- und Fälligkeitsdaten beim nächsten Auftreten beibehalten werden, aber das geplante Datum später festgelegt wird, sobald Sie planen, daran zu arbeiten."
         },
         "name": "Geplantes Datum bei Wiederholung entfernen"
+      }
+    },
+    "moveTask": {
+      "heading": "",
+      "excludedPaths": {
+        "name": "",
+        "description": "",
+        "placeholder": ""
       }
     },
     "seeTheDocumentation": "Vgl. die Dokumentation",

@@ -1,0 +1,55 @@
+/* Move task modal */
+.move-task-suggestion {
+    padding: 6px 12px;
+}
+
+.move-task-suggestion.is-current {
+    opacity: 0.6;
+}
+
+.move-task-destination {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* File row: folder path + filename */
+.move-task-file-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    font-size: var(--font-ui-small);
+}
+
+.move-task-folder {
+    color: var(--text-muted);
+    font-size: var(--font-ui-smaller);
+}
+
+.move-task-filename {
+    color: var(--text-normal);
+    font-weight: var(--font-semibold);
+}
+
+/* Section row: arrow + section name */
+.move-task-section-row {
+    display: flex;
+    align-items: baseline;
+    padding-left: 12px;
+}
+
+.move-task-arrow {
+    color: var(--text-faint);
+    margin-right: 4px;
+}
+
+.move-task-section {
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+.move-task-current {
+    font-style: italic;
+    color: var(--text-accent);
+    margin-left: 8px;
+}
