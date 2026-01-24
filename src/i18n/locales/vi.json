@@ -123,7 +123,7 @@
         "name": "Ngày đầu tiên của tuần",
         "description": "Chọn ngày nào nên được hiển thị là ngày đầu tiên của tuần trong bộ chọn ngày.",
         "options": {
-          "localeDefault": "Mặc định ngôn ngữ",
+          "localeDefault": "Hệ thống",
           "sunday": "Chủ Nhật",
           "monday": "Thứ Hai",
           "tuesday": "Thứ Ba",
