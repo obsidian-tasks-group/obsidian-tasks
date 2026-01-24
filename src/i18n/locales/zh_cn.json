@@ -123,7 +123,7 @@
         "name": "每周的第一天",
         "description": "选择在日期选择器中应将哪一天显示为每周的第一天。",
         "options": {
-          "localeDefault": "语言环境默认",
+          "localeDefault": "系统",
           "sunday": "星期日",
           "monday": "星期一",
           "tuesday": "星期二",

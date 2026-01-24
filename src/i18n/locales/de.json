@@ -123,7 +123,7 @@
         "name": "Erster Wochentag",
         "description": "Wählen Sie, welcher Tag als erster Wochentag in Datumsauswahlen angezeigt werden soll.",
         "options": {
-          "localeDefault": "Gebietsschema-Standard",
+          "localeDefault": "System",
           "sunday": "Sonntag",
           "monday": "Montag",
           "tuesday": "Dienstag",

@@ -123,7 +123,7 @@
         "name": "첫째 요일",
         "description": "날짜 선택기에서 첫째 요일로 표시할 요일을 선택하세요.",
         "options": {
-          "localeDefault": "로케일 기본값",
+          "localeDefault": "시스템",
           "sunday": "일요일",
           "monday": "월요일",
           "tuesday": "화요일",
