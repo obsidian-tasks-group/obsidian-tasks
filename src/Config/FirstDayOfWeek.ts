@@ -17,5 +17,5 @@ export function getFirstDayOfWeekValue(setting: FirstDayOfWeekOption): number {
         }
     }
     // Old behavior (locale detection) if 'locale-default' or not a weekday
-    return (new (Intl as any).Locale(navigator.language) as any).weekInfo?.firstDay ?? 1;
+    return (new Intl.Locale(navigator.language) as any).weekInfo?.firstDay ?? 1;
 }
