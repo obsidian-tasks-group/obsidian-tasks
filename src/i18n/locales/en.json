@@ -119,6 +119,20 @@
         "description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
         "name": "Set done date on every completed task"
       },
+      "firstDayOfWeek": {
+        "name": "First day of week",
+        "description": "Choose which day should be displayed as the first day of the week in date pickers.",
+        "options": {
+          "localeDefault": "Locale default",
+          "sunday": "Sunday",
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday"
+        }
+      },
       "heading": "Dates"
     },
     "datesFromFileNames": {
