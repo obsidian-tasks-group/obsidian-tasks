@@ -338,7 +338,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.format.description.line1') +
                         '</br>' +
-                        `<p><a href="https://momentjs.com/docs/#/displaying/format/">${i18n.t(
+                        `<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Configurable+date+format+and+wiki-link+wrapping">${i18n.t(
                             'settings.dates.format.description.line2',
                         )}</a></p>`,
                 ),
