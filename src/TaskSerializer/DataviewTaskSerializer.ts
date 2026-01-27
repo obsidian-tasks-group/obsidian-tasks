@@ -5,6 +5,7 @@ import { PriorityTools } from '../lib/PriorityTools';
 import type { Priority } from '../Task/Priority';
 import type { Task } from '../Task/Task';
 import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from './DefaultTaskSerializer';
+import { dateValuePatternForFormat } from './DateRegexUtil';
 
 /**
  * Takes a regex of the form 'key:: value' and turns it into a regex that can parse
@@ -57,76 +58,42 @@ function toInlineFieldRegex(innerFieldRegex: RegExp): RegExp {
     return new RegExp(fieldRegex, innerFieldRegex.flags);
 }
 
-// Helpers to build a regex for the configured date format (Moment-like tokens),
-// including optional wiki-link brackets [[...]] around the date value.
-function escapeRegex(text: string): string {
-    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
+// Memoized builder for Dataview inline-field regex map, keyed by effective format
+let cachedDvRegexFormat: string | null = null;
+let cachedDvRegexMap: {
+    priorityRegex: RegExp;
+    startDateRegex: RegExp;
+    createdDateRegex: RegExp;
+    scheduledDateRegex: RegExp;
+    dueDateRegex: RegExp;
+    doneDateRegex: RegExp;
+    cancelledDateRegex: RegExp;
+    recurrenceRegex: RegExp;
+    onCompletionRegex: RegExp;
+    idRegex: RegExp;
+    dependsOnRegex: RegExp;
+} | null = null;
 
-function momentFormatToRegex(format: string): string {
-    let i = 0;
-    let out = '';
-    while (i < format.length) {
-        const substr = format.substring(i);
-        if (substr.startsWith('YYYY')) {
-            out += '\\d{4}';
-            i += 4;
-            continue;
-        }
-        if (substr.startsWith('YY')) {
-            out += '\\d{2}';
-            i += 2;
-            continue;
-        }
-        if (substr.startsWith('MMMM')) {
-            out += '[A-Za-z]+';
-            i += 4;
-            continue;
-        }
-        if (substr.startsWith('MMM')) {
-            out += '[A-Za-z]{3}';
-            i += 3;
-            continue;
-        }
-        if (substr.startsWith('MM')) {
-            out += '\\d{2}';
-            i += 2;
-            continue;
-        }
-        if (substr.startsWith('M')) {
-            out += '\\d{1,2}';
-            i += 1;
-            continue;
-        }
-        if (substr.startsWith('DD')) {
-            out += '\\d{2}';
-            i += 2;
-            continue;
-        }
-        if (substr.startsWith('D')) {
-            out += '\\d{1,2}';
-            i += 1;
-            continue;
-        }
-        // Literal character
-        out += escapeRegex(format[i]);
-        i += 1;
-    }
-    return out;
-}
-
-function buildConfiguredDateValueRegex(): string {
-    const { taskDateFormat } = getSettings();
-    const fmt = taskDateFormat && taskDateFormat.trim().length > 0 ? taskDateFormat : TaskRegularExpressions.dateFormat;
-    const inner = momentFormatToRegex(fmt);
-    // [[DATE]] capturing only the DATE part; optional wrappers
-    return '(?:\\[\\[)?(' + inner + ')(?:\\]\\])?';
-}
-
-function dynamicInlineDateFieldRegex(key: string): RegExp {
-    const value = buildConfiguredDateValueRegex();
-    const inner = new RegExp(key.replace(/([.*+?^${}()|[\]\\])/g, '\\$1') + ':: *' + value);
-    return toInlineFieldRegex(inner);
+function getDataviewRegexMapForFormat(fmt: string) {
+    if (cachedDvRegexMap && cachedDvRegexFormat === fmt) return cachedDvRegexMap;
+    const valuePattern = dateValuePatternForFormat(fmt);
+    console.log('Building Dataview regex map for format: ' + fmt, valuePattern);
+    const keyRegex = (key: string) => new RegExp(key.replace(/([.*+?^${}()|[\]\\])/g, '\\$1') + ':: *' + valuePattern);
+    cachedDvRegexMap = {
+        priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
+        startDateRegex: toInlineFieldRegex(keyRegex('start')),
+        createdDateRegex: toInlineFieldRegex(keyRegex('created')),
+        scheduledDateRegex: toInlineFieldRegex(keyRegex('scheduled')),
+        dueDateRegex: toInlineFieldRegex(keyRegex('due')),
+        doneDateRegex: toInlineFieldRegex(keyRegex('completion')),
+        cancelledDateRegex: toInlineFieldRegex(keyRegex('cancelled')),
+        recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
+        onCompletionRegex: toInlineFieldRegex(/onCompletion:: *([a-zA-Z]+)/),
+        dependsOnRegex: toInlineFieldRegex(new RegExp('dependsOn:: *(' + taskIdSequenceRegex.source + ')')),
+        idRegex: toInlineFieldRegex(new RegExp('id:: *(' + taskIdRegex.source + ')')),
+    };
+    cachedDvRegexFormat = fmt;
+    return cachedDvRegexMap;
 }
 
 /**
@@ -153,19 +120,12 @@ export const DATAVIEW_SYMBOLS = {
     onCompletionSymbol: 'onCompletion::',
     idSymbol: 'id::',
     dependsOnSymbol: 'dependsOn::',
-    TaskFormatRegularExpressions: () => ({
-        priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
-        startDateRegex: dynamicInlineDateFieldRegex('start'),
-        createdDateRegex: dynamicInlineDateFieldRegex('created'),
-        scheduledDateRegex: dynamicInlineDateFieldRegex('scheduled'),
-        dueDateRegex: dynamicInlineDateFieldRegex('due'),
-        doneDateRegex: dynamicInlineDateFieldRegex('completion'),
-        cancelledDateRegex: dynamicInlineDateFieldRegex('cancelled'),
-        recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
-        onCompletionRegex: toInlineFieldRegex(/onCompletion:: *([a-zA-Z]+)/),
-        dependsOnRegex: toInlineFieldRegex(new RegExp('dependsOn:: *(' + taskIdSequenceRegex.source + ')')),
-        idRegex: toInlineFieldRegex(new RegExp('id:: *(' + taskIdRegex.source + ')')),
-    }),
+    TaskFormatRegularExpressions: () => {
+        const { taskDateFormat } = getSettings();
+        const fmt =
+            taskDateFormat && taskDateFormat.trim().length > 0 ? taskDateFormat : TaskRegularExpressions.dateFormat;
+        return getDataviewRegexMapForFormat(fmt);
+    },
 } as const;
 
 /**

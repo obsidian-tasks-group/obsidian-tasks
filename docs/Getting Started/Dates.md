@@ -212,6 +212,17 @@ The date values on task lines must be calendar or absolute dates, referring to a
 - You can optionally wrap dates in wiki-links (for example `[[2024-09-17]]`) via Settings → Dates → Wrap date in wiki-link. Parsing accepts both plain and wrapped dates.
 - When enabled, created/done/cancelled/scheduled/start/due dates will be saved using your format, and wrapped in `[[...]]` when the setting is on.
 
+Supported date formats are:
+
+- `YYYY`: 4-digit year
+- `YY`: 2-digit year
+- `MMMM`: full month name (e.g., January)
+- `MMM`: 3-letter month name (e.g., Jan)
+- `MM`: 2-digit month (01=January, etc.)
+- `M`: 1 or 2-digit month (1=January, etc.)
+- `DD`: 2-digit day of month (01 through 31)
+- `D`: 1 or 2-digit day of month (1 through 31)
+
 ### Dates cannot include times
 
 - It is not yet possible to include times on task lines to indicate when they *should* be acted on.

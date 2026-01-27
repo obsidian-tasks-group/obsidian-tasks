@@ -123,7 +123,7 @@
         "name": "Task date format",
         "description": {
           "line1": "Format used when writing dates next to emoji signifiers (📅 ⏳ 🛫 ✅ ❌ ➕).",
-          "line2": "Moment.js Format Syntax"
+          "line2": "Uses a subset of Moment.js date format tokens. See the Tasks documentation for the supported syntax."
         }
       },
       "wrapInWikiLink": {
