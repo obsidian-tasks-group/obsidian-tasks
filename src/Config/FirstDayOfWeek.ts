@@ -16,6 +16,14 @@ export function getFirstDayOfWeekValue(setting: FirstDayOfWeekOption): number {
             return index;
         }
     }
-    // Old behavior (locale detection) if 'locale-default' or not a weekday
-    return (new Intl.Locale(navigator.language) as any).weekInfo?.firstDay ?? 1;
+
+    // Locale detection for 'locale-default'
+    // Note: Intl.Locale().weekInfo.firstDay returns 1-7 (Monday=1, Sunday=7)
+    // but flatpickr expects 0-6 (Sunday=0, Saturday=6)
+    // We need to convert: 7 -> 0, 1 -> 1, 2 -> 2, ... 6 -> 6
+    const localeFirstDay = (new Intl.Locale(navigator.language) as any).weekInfo?.firstDay ?? 1;
+
+    // Convert from 1-7 (Monday=1, Sunday=7) to 0-6 (Sunday=0, Saturday=6)
+    // Sunday (7) becomes 0, Monday (1) stays 1, etc.
+    return localeFirstDay === 7 ? 0 : localeFirstDay;
 }
