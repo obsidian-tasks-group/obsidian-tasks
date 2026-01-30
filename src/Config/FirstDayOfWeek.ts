@@ -11,7 +11,13 @@
  */
 export const WEEKDAY_ORDER = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] as const;
 
-export type FirstDayOfWeekOption = 'locale-default' | (typeof WEEKDAY_ORDER)[number];
+/**
+ * Constant for the locale-default option value.
+ * Exported to ensure consistent usage across tests and code.
+ */
+export const LOCALE_DEFAULT = 'locale-default' as const;
+
+export type FirstDayOfWeekOption = typeof LOCALE_DEFAULT | (typeof WEEKDAY_ORDER)[number];
 
 /**
  * Converts the first day of week setting to the numeric value expected by flatpickr.
