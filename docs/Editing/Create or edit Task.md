@@ -113,6 +113,14 @@ The screenshot below is from a Mac.
 ![The date-picker allows easy mouse and keyboard adding and editing of dates](../images/modal-date-picker.png)
 <span class="caption">The date-picker allows easy mouse and keyboard adding and editing of dates</span>
 
+##### Calendar first day of week
+
+The date picker calendar respects the "First day of week" setting from Settings → Tasks.
+
+If the calendar doesn't start on your preferred day, change the setting at Settings → Tasks → First day of week.
+
+See [[Settings#First day of week|First day of week setting]] for available options.
+
 #### Date abbreviations
 
 > [!released]
