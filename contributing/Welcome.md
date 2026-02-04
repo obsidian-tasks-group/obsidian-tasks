@@ -4,6 +4,8 @@ Welcome, and thank you for wanting to contribute to the [Obsidian Tasks plugin](
 
 Every contribution is much appreciated!
 
+Please be sure to read [[Updating code]] before starting to create a Pull Request. Thank you.
+
 ## How to read this documentation
 
 Getting the most from this documentation:
