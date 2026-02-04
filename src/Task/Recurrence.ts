@@ -105,11 +105,24 @@ export class Recurrence {
     }
 
     private nextReferenceDateFromToday(today: Moment): Moment {
-        const ruleBasedOnToday = new RRule({
-            ...this.rrule.origOptions,
-            dtstart: today.startOf('day').utc(true).toDate(),
-        });
+        const options = { ...this.rrule.origOptions };
+        const dtstart = today.clone().startOf('day').utc(true);
 
+        if (options.freq === RRule.WEEKLY) {
+            dtstart.startOf('week');
+        } else if (options.freq === RRule.MONTHLY) {
+            dtstart.startOf('month');
+        } else if (options.freq === RRule.YEARLY) {
+            dtstart.startOf('year');
+        }
+
+        options.dtstart = dtstart.toDate();
+
+        const ruleBasedOnToday = new RRule(options);
+
+        // We must not use the 'today' parameter here, as it is side-effected by startOf(),
+        // utc() and endOf() calls.
+        // Instead, use the original completion date, which is what 'today' represents.
         return this.nextAfter(today.endOf('day'), ruleBasedOnToday);
     }
 
@@ -246,7 +259,7 @@ export class Recurrence {
     private static isSkippingTooManyYears(after: Moment, next: Moment, skippingYears: number): boolean {
         const diff = next.year() - after.year();
 
-        return diff > skippingYears;
+        return diff > skippingYears; 
     }
 
     /**
