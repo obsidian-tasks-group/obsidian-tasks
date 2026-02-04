@@ -17,6 +17,7 @@ This prevents wasted effort on changes we don't want or approaches that won't wo
 ## Branch is required
 
 1. [ ] Create your PR from a feature/fix branch, not from `main`.
+   - See [Don’t Start Pull Requests from Your Main Branch](https://hynek.me/articles/pull-requests-branch/)
 
 ## PR scope: one thing per PR
 
