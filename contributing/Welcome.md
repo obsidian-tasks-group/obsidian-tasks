@@ -2,9 +2,10 @@
 
 Welcome, and thank you for wanting to contribute to the [Obsidian Tasks plugin](https://github.com/obsidian-tasks-group/obsidian-tasks)!
 
-Every contribution is much appreciated!
+Every contribution that follows the project [[Updating code|guidelines]] is much appreciated!
 
-Please be sure to read [[Updating code]] before starting to create a Pull Request. Thank you.
+> [!Important] Important - updated February 2026
+> Please read [[Updating code]] thoroughly before starting work a Pull Request, to save your time and ours. Thank you.
 
 ## How to read this documentation
 
