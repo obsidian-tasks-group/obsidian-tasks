@@ -5,7 +5,6 @@
   },
   "move": {
     "buttonTitle": "Move task to another file or section",
-    "suggestionText": "Move task to another file/section",
     "noFilesFound": "No files with tasks found",
     "currentFile": "current",
     "currentSection": "current",

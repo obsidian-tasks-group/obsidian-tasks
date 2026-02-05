@@ -279,3 +279,11 @@ export class SuggestModal<T> extends Modal {
         // Mocked interface, no-op
     }
 }
+
+/**
+ * A mock implementation of the Obsidian MarkdownView class.
+ * Used for testing commands that check instanceof MarkdownView.
+ */
+export class MarkdownView {
+    public file: { path: string } | null = null;
+}

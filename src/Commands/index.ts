@@ -1,6 +1,7 @@
 import type { App, Editor, MarkdownFileInfo, MarkdownView, TFile, View } from 'obsidian';
 import type TasksPlugin from '../main';
 import { createOrEdit } from './CreateOrEdit';
+import { moveTask } from './MoveTask';
 
 import { toggleDone } from './ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
@@ -29,6 +30,15 @@ export class Commands {
                     this.plugin.getTasks(),
                     async () => await this.plugin.saveSettings(),
                 );
+            },
+        });
+
+        plugin.addCommand({
+            id: 'move-task',
+            name: 'Move task to another file or section',
+            icon: 'arrow-right-left',
+            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
+                return moveTask(checking, editor, view as View, this.app, this.plugin.getTasks());
             },
         });
 

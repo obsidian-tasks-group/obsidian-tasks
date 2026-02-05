@@ -64,15 +64,24 @@ If the task has indented subtasks or list items below it, they will be moved tog
 
 Your task's current location is marked with "← current" and is dimmed. Selecting it will show a notice that the task is already there.
 
-## Move from the Editor
+## Move Task Command
 
-The Move option is also available in the [[Auto-Suggest]] dropdown when editing a task:
+You can also move the task under your cursor using the **Tasks: Move task to another file or section** command.
 
-1. Start typing a task in a markdown file
-2. Open the auto-suggest dropdown
-3. Select "↔️ Move task to another file/section" (the last option)
+### Using the Command
 
-This is useful when you realize mid-edit that a task belongs elsewhere.
+1. Place your cursor on a task line in a markdown file
+2. Open the Command Palette (`Cmd/Ctrl + P`)
+3. Search for "Tasks: Move task to another file or section"
+4. Press Enter to open the destination modal
+
+### Assigning a Hotkey
+
+For frequent use, assign a hotkey in Settings → Hotkeys.
+
+### Command Availability
+
+The command only appears when your cursor is on a recognized task line.
 
 ## Excluding Folders from Destinations
 
@@ -108,8 +117,8 @@ hide move button
 | Edit task modal                         | All modes    | ❌     |
 | ↔️ button in Tasks query search results | Live Preview | ✅     |
 | ↔️ button in Tasks query search results | Reading mode | ✅     |
-| Auto-suggest dropdown                   | Source mode  | ✅     |
-| Auto-suggest dropdown                   | Live Preview | ✅     |
+| Move task command                       | Source mode  | ✅     |
+| Move task command                       | Live Preview | ✅     |
 
 ## Technical Details
 

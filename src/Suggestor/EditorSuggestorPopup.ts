@@ -4,7 +4,6 @@ import type TasksPlugin from 'main';
 import { ensureTaskHasId } from '../Task/TaskDependency';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
-import { openMoveTaskModal } from '../ui/Menus/MoveTaskModal';
 import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';
 
@@ -132,11 +131,6 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return;
         }
 
-        if (value.suggestionType === 'move' && value.taskToMove) {
-            this.handleMoveSuggestion(editor, value.taskToMove);
-            return;
-        }
-
         const shouldAbort = this.handleDependencySuggestion(value);
         if (shouldAbort) {
             return;
@@ -156,15 +150,6 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             key: 'Enter',
         });
         (editor as any)?.cm?.contentDOM?.dispatchEvent(eventClone);
-    }
-
-    /**
-     * Handles the move suggestion type by opening the move modal.
-     */
-    private handleMoveSuggestion(editor: Editor, taskToMove: any): void {
-        const cursorLine = editor.getCursor().line;
-        this.close();
-        openMoveTaskModal(this.app, taskToMove, this.plugin.getTasks(), cursorLine);
     }
 
     /**
