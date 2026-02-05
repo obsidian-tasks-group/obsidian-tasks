@@ -33,6 +33,7 @@
 - [8] #task `8` Speech bubble 8
 - [9] #task `9` Speech bubble 9
 
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type

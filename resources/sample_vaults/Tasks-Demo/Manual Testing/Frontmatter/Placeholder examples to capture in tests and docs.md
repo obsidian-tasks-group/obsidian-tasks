@@ -40,6 +40,7 @@ TQ_group_by:
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-include.approved.md -->
 
+
 toolbar: `INPUT[toggle:TQ_show_toolbar]`
 short mode: `INPUT[toggle:TQ_short_mode]`
 tree: `INPUT[toggle:TQ_show_tree]`
@@ -55,6 +56,7 @@ edit button: `INPUT[toggle:TQ_show_edit_button]` postpone button: `INPUT[toggle:
 task count: `INPUT[toggle:TQ_show_task_count]`
 extra instructions: `INPUT[textArea:TQ_extra_instructions]`
 explain: `INPUT[toggle:TQ_explain]`
+
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

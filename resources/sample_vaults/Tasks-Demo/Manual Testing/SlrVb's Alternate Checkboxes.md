@@ -65,6 +65,7 @@ Available task states, as of version `990fd3c0b9d9f1cbb17f956e3a2433c59868b82d` 
 - [&] #task `&` Symbolism
 - [s] #task `s` Secret
 
+
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Rendered in Tasks results block

@@ -6,8 +6,6 @@
         "!docs-snippets",
         "!node_modules",
         "!tests",
-        "!resources/sample_vaults/Tasks-Demo/_meta/templates",
-        "!resources/sample_vaults/Tasks-Demo/Test Data",
-        "!resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke test Kanban Integration.md"
+        "!resources/sample_vaults/Tasks-Demo/"
     ]
 }
