@@ -65,6 +65,8 @@ describe('Set Status Commands', () => {
         expect(commands[1].name).toBe('Change status to: [/] In Progress');
     });
 
+    // TODO Add a basic test of the command callback, just confirm that it does actually return a correctly modified task line
+
     it('should only create commands for the first of any statuses with duplicate symbols', () => {
         registry.add(new StatusConfiguration('A', 'Status 1', ' ', true, StatusType.TODO));
         registry.add(new StatusConfiguration('A', 'Status 2 - I should be ignored', ' ', true, StatusType.TODO));
