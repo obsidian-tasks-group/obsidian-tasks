@@ -1,30 +1,11 @@
-import type { App, Command, Editor, MarkdownFileInfo, MarkdownView, TFile, View } from 'obsidian';
+import type { App, Editor, MarkdownFileInfo, MarkdownView, TFile, View } from 'obsidian';
 import type TasksPlugin from '../main';
-import { allStatusInstructions } from '../ui/EditInstructions/StatusInstructions';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { createOrEdit } from './CreateOrEdit';
 
 import { toggleDone } from './ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
-import { createEditorCallback } from './CreateEditorCallback';
-import { createSetStatusLineTransformer } from './CreateSetStatusLineTransformer';
-
-function createSetStatusCommands(statusRegistry: StatusRegistry): Command[] {
-    const statusInstructions = allStatusInstructions(statusRegistry);
-    const setStatusCommands: Command[] = [];
-    for (const instruction of statusInstructions) {
-        const status = instruction.newStatus;
-        const nameSlug = status.name.toLowerCase().replace(/\s+/g, '-');
-
-        const command = {
-            id: `set-status-${nameSlug}`,
-            name: instruction.instructionDisplayName(),
-            editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
-        };
-        setStatusCommands.push(command);
-    }
-    return setStatusCommands;
-}
+import { createSetStatusCommands } from './CreateSetStatusLineTransformer';
 
 export class Commands {
     private readonly plugin: TasksPlugin;
