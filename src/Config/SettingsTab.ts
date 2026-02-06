@@ -34,12 +34,14 @@ export class SettingsTab extends PluginSettingTab {
 
     private readonly plugin: TasksPlugin;
     private readonly presetsSettingsUI;
+    private readonly events: TasksEvents;
 
     constructor({ plugin, events }: { plugin: TasksPlugin; events: TasksEvents }) {
         super(plugin.app, plugin);
 
         this.plugin = plugin;
         this.presetsSettingsUI = new PresetsSettingsUI(plugin, events);
+        this.events = events;
     }
 
     private static createFragmentWithHTML = (html: string) =>
@@ -59,17 +61,13 @@ export class SettingsTab extends PluginSettingTab {
         containerEl.empty();
         this.containerEl.addClass('tasks-settings');
 
-        containerEl.createEl('p', {
-            cls: 'tasks-setting-important',
-            text: i18n.t('settings.changeRequiresRestart'),
-        });
-
         new Setting(containerEl)
             .setName(i18n.t('settings.format.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     `<p>${i18n.t('settings.format.description.line1')}</p>` +
                         `<p>${i18n.t('settings.format.description.line2')}</p>` +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
                         ),
@@ -108,17 +106,30 @@ export class SettingsTab extends PluginSettingTab {
                 // wide enough for the whole string to be visible.
                 text.setPlaceholder(i18n.t('settings.globalFilter.filter.placeholder'))
                     .setValue(GlobalFilter.getInstance().get())
-                    .onChange(async (value) => {
-                        updateSettings({ globalFilter: value });
-                        GlobalFilter.getInstance().set(value);
-                        await this.plugin.saveSettings();
-                        setSettingVisibility(globalFilterHidden, value.length > 0);
-                    });
+                    .onChange(
+                        debounce(
+                            async (value) => {
+                                updateSettings({ globalFilter: value });
+                                GlobalFilter.getInstance().set(value);
+                                await this.plugin.saveSettings();
+                                setSettingVisibility(globalFilterHidden, value.length > 0);
+
+                                this.events.triggerReloadVault();
+                            },
+                            500,
+                            true,
+                        ),
+                    );
             });
 
         globalFilterHidden = new Setting(containerEl)
             .setName(i18n.t('settings.globalFilter.removeFilter.name'))
-            .setDesc(i18n.t('settings.globalFilter.removeFilter.description'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    `<p>${i18n.t('settings.globalFilter.removeFilter.description')}</p>` +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                ),
+            )
             .addToggle((toggle) => {
                 const settings = getSettings();
 
@@ -152,6 +163,8 @@ export class SettingsTab extends PluginSettingTab {
                             updateSettings({ globalQuery: value });
                             GlobalQuery.getInstance().set(value);
                             await this.plugin.saveSettings();
+
+                            this.events.triggerReloadOpenSearchResults();
                         });
                 }),
         );
@@ -198,6 +211,8 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.statuses.coreStatuses.description.line1') +
                         '</p><p>' +
                         i18n.t('settings.statuses.coreStatuses.description.line2') +
+                        '</p><p>' +
+                        i18n.t('settings.changeRequiresRestart') +
                         '</p>',
                 },
                 settings: [
@@ -228,6 +243,8 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.statuses.customStatuses.description.line2') +
                         '</p><p>' +
                         i18n.t('settings.statuses.customStatuses.description.line3') +
+                        '</p><p>' +
+                        i18n.t('settings.changeRequiresRestart') +
                         '</p><p></p><p>' +
                         `<a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">${i18n.t(
                             'settings.statuses.customStatuses.description.line4',
@@ -332,6 +349,7 @@ export class SettingsTab extends PluginSettingTab {
                         '</br>' +
                         i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4') +
                         '</br>' +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
                         ),
@@ -353,6 +371,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.description.line1') +
                         '</br>' +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
                         `<p><a href="https://momentjs.com/docs/#/displaying/format/">${i18n.t(
                             'settings.datesFromFileNames.scheduledDate.extraFormat.description.line2',
                         )}</a></p>`,
@@ -371,7 +390,12 @@ export class SettingsTab extends PluginSettingTab {
 
         scheduledDateFolders = new Setting(containerEl)
             .setName(i18n.t('settings.datesFromFileNames.scheduledDate.folders.name'))
-            .setDesc(i18n.t('settings.datesFromFileNames.scheduledDate.folders.description'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.folders.description')}</p>` +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                ),
+            )
             .addText(async (input) => {
                 const settings = getSettings();
                 await this.plugin.saveSettings();
@@ -438,6 +462,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.autoSuggest.toggle.description') +
                         '</br>' +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
                 ),
             )
@@ -453,7 +478,12 @@ export class SettingsTab extends PluginSettingTab {
 
         autoSuggestMinimumMatchLength = new Setting(containerEl)
             .setName(i18n.t('settings.autoSuggest.minLength.name'))
-            .setDesc(i18n.t('settings.autoSuggest.minLength.description'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    `<p>${i18n.t('settings.autoSuggest.minLength.description')}</p>` +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                ),
+            )
             .addSlider((slider) => {
                 const settings = getSettings();
                 slider
@@ -468,7 +498,12 @@ export class SettingsTab extends PluginSettingTab {
 
         autoSuggestMaximumSuggestions = new Setting(containerEl)
             .setName(i18n.t('settings.autoSuggest.maxSuggestions.name'))
-            .setDesc(i18n.t('settings.autoSuggest.maxSuggestions.description'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    `<p>${i18n.t('settings.autoSuggest.maxSuggestions.description')}</p>` +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                ),
+            )
             .addSlider((slider) => {
                 const settings = getSettings();
                 slider

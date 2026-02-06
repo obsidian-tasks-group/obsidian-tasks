@@ -1,10 +1,16 @@
-<!-- snippet: QueryResultsRenderer.test.QueryResultsRenderer_tests_fully_populated_task_-_short_mode.approved.html -->
+<!-- snippet: QueryResultsRenderer.test.QueryResultsRenderer_-_rendering_queries_fully_populated_task_-_short_mode.approved.html -->
 ```html
 <!--
   - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
 -->
 
 <div>
+  <div class="plugin-tasks-toolbar">
+    <label test-icon="lucide-filter">
+      <input placeholder="Filter by description..." test-tooltip="Filter results" />
+    </label>
+    <button test-icon="lucide-copy" test-tooltip="Copy results"></button>
+  </div>
   <ul class="contains-task-list plugin-tasks-query-result tasks-layout-short-mode">
     <li
       class="task-list-item plugin-tasks-list-item"

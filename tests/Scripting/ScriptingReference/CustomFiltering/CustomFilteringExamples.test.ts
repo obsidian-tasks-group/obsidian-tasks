@@ -4,8 +4,7 @@
 
 import moment from 'moment';
 import type { Task } from '../../../../src/Task/Task';
-import { allCacheSampleData } from '../../../Obsidian/AllCacheSampleData';
-import { type SimulatedFile, readTasksFromSimulatedFile } from '../../../Obsidian/SimulatedFile';
+import { readAllTasksFromAllSimulatedFiles } from '../../../Obsidian/SimulatedFile';
 import { fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
@@ -357,9 +356,9 @@ describe('file properties', () => {
 });
 
 describe('obsidian properties', () => {
-    const tasks: Task[] = allCacheSampleData().flatMap((simulatedFile) => {
-        return readTasksFromSimulatedFile(simulatedFile as SimulatedFile);
-    });
+    // begin-snippet: readAllTasksFromAllSimulatedFiles
+    const allTasks = readAllTasksFromAllSimulatedFiles();
+    // end-snippet
 
     const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
@@ -386,7 +385,7 @@ describe('obsidian properties', () => {
                     "find tasks in files where the date property 'creation date' includes string '2024'",
                 ],
             ],
-            tasks,
+            allTasks,
         ],
     ];
 

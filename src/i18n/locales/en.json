@@ -105,7 +105,7 @@
         "name": "Auto-suggest task content"
       }
     },
-    "changeRequiresRestart": "Changing any settings requires a restart of obsidian.",
+    "changeRequiresRestart": "REQUIRES RESTART.",
     "dates": {
       "cancelledDate": {
         "description": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
@@ -190,6 +190,9 @@
       }
     },
     "presets": {
+      "buttons": {
+        "addNewPreset": "Add new preset"
+      },
       "line1": "You can define named instructions here, that you can re-use in multiple queries. A preset called '{{name}}' can be used in Tasks queries with either '{{instruction1}}' or '{{instruction2}}'.",
       "line2": "Any open Tasks queries are reloaded automatically when presets are edited.",
       "name": "Presets"

@@ -7,44 +7,46 @@ classDef DONE        stroke:#0c0,stroke-width:3px;
 classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
 classDef CANCELLED   stroke:#ddd,stroke-width:3px;
 classDef NON_TASK    stroke:#99e,stroke-width:3px;
+classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 1["Unchecked"]:::TODO
 2["Regular"]:::DONE
 3["Checked"]:::DONE
 4["Dropped"]:::CANCELLED
 5["Forward"]:::TODO
-6["Date"]:::TODO
-7["Question"]:::TODO
-8["Half Done"]:::IN_PROGRESS
-9["Add"]:::TODO
-10["Research"]:::TODO
-11["Important"]:::TODO
-12["Idea"]:::TODO
-13["Brainstorm"]:::TODO
-14["Pro"]:::TODO
-15["Con"]:::TODO
-16["Quote"]:::TODO
-17["Note"]:::TODO
-18["Bookmark"]:::TODO
-19["Information"]:::TODO
-20["Paraphrase"]:::TODO
-21["Location"]:::TODO
-22["Example"]:::TODO
-23["Answer"]:::TODO
-24["Reward"]:::TODO
-25["Choice"]:::TODO
-26["Doing"]:::IN_PROGRESS
-27["Time"]:::TODO
-28["Character / Person"]:::TODO
-29["Talk"]:::TODO
-30["Outline / Plot"]:::TODO
-31["Conflict"]:::TODO
-32["World"]:::TODO
-33["Clue / Find"]:::TODO
-34["Foreshadow"]:::TODO
-35["Favorite / Health"]:::TODO
-36["Symbolism"]:::TODO
-37["Secret"]:::TODO
+6["Migrated"]:::TODO
+7["Date"]:::TODO
+8["Question"]:::TODO
+9["Half Done"]:::IN_PROGRESS
+10["Add"]:::TODO
+11["Research"]:::TODO
+12["Important"]:::TODO
+13["Idea"]:::TODO
+14["Brainstorm"]:::TODO
+15["Pro"]:::TODO
+16["Con"]:::TODO
+17["Quote"]:::TODO
+18["Note"]:::TODO
+19["Bookmark"]:::TODO
+20["Information"]:::TODO
+21["Paraphrase"]:::TODO
+22["Location"]:::TODO
+23["Example"]:::TODO
+24["Answer"]:::TODO
+25["Reward"]:::TODO
+26["Choice"]:::TODO
+27["Doing"]:::IN_PROGRESS
+28["Time"]:::TODO
+29["Character / Person"]:::TODO
+30["Talk"]:::TODO
+31["Outline / Plot"]:::TODO
+32["Conflict"]:::TODO
+33["World"]:::TODO
+34["Clue / Find"]:::TODO
+35["Foreshadow"]:::TODO
+36["Favorite / Health"]:::TODO
+37["Symbolism"]:::TODO
+38["Secret"]:::TODO
 1 --> 2
 2 --> 1
 3 --> 1
@@ -82,6 +84,7 @@ classDef NON_TASK    stroke:#99e,stroke-width:3px;
 35 --> 2
 36 --> 2
 37 --> 2
+38 --> 2
 
 linkStyle default stroke:gray
 ```

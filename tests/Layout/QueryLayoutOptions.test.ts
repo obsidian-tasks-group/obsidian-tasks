@@ -12,9 +12,15 @@ describe('parsing query show/hide layout options', () => {
         ['edit button', 'hideEditButton', false],
         ['postpone button', 'hidePostponeButton', false],
         ['task count', 'hideTaskCount', false],
+        ['toolbar', 'hideToolbar', false],
         ['tree', 'hideTree', true],
         ['urgency', 'hideUrgency', true],
     ];
+
+    it('should have tests for all show/hide instructions', () => {
+        const testedKeys = Object.keys(new QueryLayoutOptions()).filter((key) => key.startsWith('hide'));
+        expect(testedKeys.length).toBe(testCases.length);
+    });
 
     it.each(testCases)('should parse "%s" option', (option, property, hiddenByDefault) => {
         const options = new QueryLayoutOptions();

@@ -5,7 +5,7 @@ import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { TasksFile } from '../Scripting/TasksFile';
 import { Task } from '../Task/Task';
-import { TaskLineRenderer } from '../Renderer/TaskLineRenderer';
+import { TaskLineRenderer, createAndAppendElement } from '../Renderer/TaskLineRenderer';
 import { TaskLocation } from '../Task/TaskLocation';
 
 /**
@@ -120,7 +120,6 @@ export class InlineRenderer {
         const taskLineRenderer = new TaskLineRenderer({
             obsidianApp: this.app,
             obsidianComponent: childComponent,
-            parentUlElement: element,
             taskLayoutOptions: new TaskLayoutOptions(),
             queryLayoutOptions: new QueryLayoutOptions(),
         });
@@ -138,7 +137,9 @@ export class InlineRenderer {
             }
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const taskIndex: number = Number.parseInt(dataLine, 10);
-            const taskElement = await taskLineRenderer.renderTaskLine({
+            const taskElement = createAndAppendElement('li', element);
+            await taskLineRenderer.renderTaskLine({
+                li: taskElement,
                 task,
                 taskIndex,
                 isTaskInQueryFile: true,

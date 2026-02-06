@@ -27,6 +27,7 @@ classDef DONE        stroke:#0c0,stroke-width:3px;
 classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
 classDef CANCELLED   stroke:#ddd,stroke-width:3px;
 classDef NON_TASK    stroke:#99e,stroke-width:3px;
+classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 1["Todo"]:::TODO
 2["In Progress"]:::IN_PROGRESS
@@ -64,6 +65,7 @@ classDef DONE        stroke:#0c0,stroke-width:3px;
 classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
 classDef CANCELLED   stroke:#ddd,stroke-width:3px;
 classDef NON_TASK    stroke:#99e,stroke-width:3px;
+classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 1["Important"]:::TODO
 2["Doing - Important"]:::IN_PROGRESS
@@ -103,6 +105,7 @@ classDef DONE        stroke:#0c0,stroke-width:3px;
 classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
 classDef CANCELLED   stroke:#ddd,stroke-width:3px;
 classDef NON_TASK    stroke:#99e,stroke-width:3px;
+classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 1["Pro"]:::NON_TASK
 2["Con"]:::NON_TASK
@@ -139,6 +142,7 @@ classDef DONE        stroke:#0c0,stroke-width:3px;
 classDef IN_PROGRESS stroke:#fa0,stroke-width:3px;
 classDef CANCELLED   stroke:#ddd,stroke-width:3px;
 classDef NON_TASK    stroke:#99e,stroke-width:3px;
+classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 1["Bookmark"]:::NON_TASK
 2["Example"]:::NON_TASK

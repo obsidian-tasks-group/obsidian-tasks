@@ -97,6 +97,7 @@ describe('Status Transitions', () => {
         const statuses = [
             Status.TODO,
             Status.IN_PROGRESS,
+            Status.ON_HOLD,
             Status.DONE,
             Status.CANCELLED,
             new Status(new StatusConfiguration('~', 'My custom status', ' ', false, StatusType.NON_TASK)),

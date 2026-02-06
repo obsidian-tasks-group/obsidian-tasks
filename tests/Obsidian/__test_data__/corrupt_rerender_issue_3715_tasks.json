@@ -1,0 +1,194 @@
+{
+  "cachedMetadata": {
+    "embeds": [
+      {
+        "displayText": "corrupt_rerender_issue_3715_1.png",
+        "link": "corrupt_rerender_issue_3715_1.png",
+        "original": "![[corrupt_rerender_issue_3715_1.png]]",
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 3,
+            "offset": 115
+          },
+          "start": {
+            "col": 4,
+            "line": 3,
+            "offset": 77
+          }
+        }
+      },
+      {
+        "displayText": "corrupt_rerender_issue_3715_2.png",
+        "link": "corrupt_rerender_issue_3715_2.png",
+        "original": "![[corrupt_rerender_issue_3715_2.png]]",
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 5,
+            "offset": 216
+          },
+          "start": {
+            "col": 4,
+            "line": 5,
+            "offset": 178
+          }
+        }
+      }
+    ],
+    "headings": [
+      {
+        "heading": "Test Tasks",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 0,
+            "offset": 13
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 57,
+            "line": 2,
+            "offset": 72
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 15
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 3,
+            "offset": 115
+          },
+          "start": {
+            "col": 2,
+            "line": 3,
+            "offset": 75
+          }
+        }
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 57,
+            "line": 4,
+            "offset": 173
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 116
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 4,
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 5,
+            "offset": 216
+          },
+          "start": {
+            "col": 2,
+            "line": 5,
+            "offset": 176
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 0,
+            "offset": 13
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 42,
+            "line": 5,
+            "offset": 216
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 15
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 26
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 21
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 4,
+            "offset": 127
+          },
+          "start": {
+            "col": 6,
+            "line": 4,
+            "offset": 122
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "## Test Tasks\n\n- [ ] #task Task in 'corrupt_rerender_issue_3715_tasks' 1\n  - ![[corrupt_rerender_issue_3715_1.png]]\n- [ ] #task Task in 'corrupt_rerender_issue_3715_tasks' 2\n  - ![[corrupt_rerender_issue_3715_2.png]]\n",
+  "filePath": "Test Data/corrupt_rerender_issue_3715_tasks.md",
+  "getAllTags": [
+    "#task",
+    "#task"
+  ],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

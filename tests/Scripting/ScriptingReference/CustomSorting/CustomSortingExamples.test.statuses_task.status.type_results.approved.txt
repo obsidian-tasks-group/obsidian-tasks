@@ -10,6 +10,7 @@ Unlike "Sort by status.type", this sorts the status types in alphabetical order.
 - [] Status EMPTY
 - [/] Status In Progress
 - [Q] Status Non-Task
+- [h] Status On Hold
 - [ ] Status Todo
 ====================================================================================
 

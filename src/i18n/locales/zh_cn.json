@@ -105,7 +105,7 @@
         "name": "自动建议任务内容"
       }
     },
-    "changeRequiresRestart": "更改任何设置都需要重新启动Obsidian。",
+    "changeRequiresRestart": "需要重启。",
     "dates": {
       "cancelledDate": {
         "description": "启用此功能将在任务设置为取消时，在其末尾添加时间戳 ❌ YYYY-MM-DD。",
@@ -190,6 +190,9 @@
       }
     },
     "presets": {
+      "buttons": {
+        "addNewPreset": ""
+      },
       "line1": "您可以在这里定义命名指令，可以在多个查询中重复使用。一个名为 '{{name}}' 的预设可以在任务查询中使用 '{{instruction1}}' 或 '{{instruction2}}'。",
       "line2": "任何打开的任务查询在预设被编辑时都会自动重新加载。",
       "name": "预设"

@@ -1,13 +1,14 @@
 import type { Reference } from 'obsidian';
-import link_in_file_body from '../Obsidian/__test_data__/link_in_file_body.json';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { Link } from '../../src/Task/Link';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
 describe('LinkResolver', () => {
     let rawLink: Reference;
+    const link_in_file_body = MockDataLoader.get('link_in_file_body');
 
     beforeEach(() => {
-        rawLink = link_in_file_body.cachedMetadata.links[0];
+        rawLink = link_in_file_body.cachedMetadata.links![0];
     });
 
     it('should resolve a link via local instance', () => {

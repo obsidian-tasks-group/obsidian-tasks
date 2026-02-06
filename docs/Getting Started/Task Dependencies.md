@@ -209,8 +209,8 @@ When using those dependencies in searches, we define two more relationships: `bl
 
 A task is `blocking` if:
 
-- It is `TODO` or `IN_PROGRESS`.
-- And any of the tasks that **directly depend on it** are also `TODO` or `IN_PROGRESS`.
+- It is `TODO`, `IN_PROGRESS` or `ON_HOLD`.
+- And any of the tasks that **directly depend on it** are also `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 
 Note that:
 
@@ -237,8 +237,8 @@ is blocking
 
 A task is `blocked` if:
 
-- It is `TODO` or `IN_PROGRESS`.
-- And any of the tasks **it directly depends on** are also `TODO` or `IN_PROGRESS`.
+- It is `TODO`, `IN_PROGRESS` or `ON_HOLD`.
+- And any of the tasks **it directly depends on** are also `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 
 Note that:
 
@@ -267,7 +267,7 @@ is not blocked
 ### Demonstration of blocking and blocked
 
 > [!Example] Blocking occurs
-> If *both* ends of a `dependsOn` link are `TODO` or `IN_PROGRESS`, blocking occurs:
+> If *both* ends of a `dependsOn` link are `TODO`, `IN_PROGRESS` or `ON_HOLD`, blocking occurs:
 >
 > ```mermaid
 > flowchart BT

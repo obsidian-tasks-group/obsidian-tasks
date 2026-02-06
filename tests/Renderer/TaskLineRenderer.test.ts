@@ -10,7 +10,7 @@ import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
 import { DateParser } from '../../src/DateTime/DateParser';
 import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
-import { TaskLineRenderer } from '../../src/Renderer/TaskLineRenderer';
+import { TaskLineRenderer, createAndAppendElement } from '../../src/Renderer/TaskLineRenderer';
 import type { Task } from '../../src/Task/Task';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
@@ -44,11 +44,19 @@ async function renderListItem(
         textRenderer: testRenderer ?? mockTextRenderer,
         obsidianApp: mockApp,
         obsidianComponent: null,
-        parentUlElement: document.createElement('div'),
         taskLayoutOptions: taskLayoutOptions ?? new TaskLayoutOptions(),
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
-    return await taskLineRenderer.renderTaskLine({ task: task, taskIndex: 0, isTaskInQueryFile: true });
+    const divElement = document.createElement('div');
+    const li = createAndAppendElement('li', divElement);
+    await taskLineRenderer.renderTaskLine({
+        li: li,
+        task: task,
+        taskIndex: 0,
+        isTaskInQueryFile: true,
+    });
+
+    return li;
 }
 
 function getTextSpan(listItem: HTMLElement) {
@@ -82,32 +90,6 @@ afterEach(() => {
 });
 
 describe('task line rendering - HTML', () => {
-    it('should render only one List Item for the UL and return it with renderTaskLine()', async () => {
-        const ulElement = document.createElement('ul');
-        const taskLineRenderer = new TaskLineRenderer({
-            textRenderer: mockTextRenderer,
-            obsidianApp: mockApp,
-            obsidianComponent: null,
-            parentUlElement: ulElement,
-            taskLayoutOptions: new TaskLayoutOptions(),
-            queryLayoutOptions: new QueryLayoutOptions(),
-        });
-        const listItem = await taskLineRenderer.renderTaskLine({
-            task: new TaskBuilder().build(),
-            taskIndex: 0,
-            isTaskInQueryFile: true,
-        });
-
-        // Just one element
-        expect(ulElement.children.length).toEqual(1);
-
-        // It is the rendered one
-        expect(ulElement.children[0]).toEqual(listItem);
-
-        // And it is a ListItem
-        expect(listItem.nodeName).toEqual('LI');
-    });
-
     it('creates the correct span structure for a basic task inside a List Item', async () => {
         const taskLine = '- [ ] This is a simple task';
         const task = fromLine({

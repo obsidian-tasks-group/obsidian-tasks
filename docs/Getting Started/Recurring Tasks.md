@@ -192,11 +192,28 @@ This is intentional. As well as matching what the user requested, it matches the
 ## Priority of Dates
 
 A task can have [[Dates|various dates]].
+
 When a task has multiple dates, one of them is selected as reference date based on the following priorities:
 
-1. Due date
-2. Scheduled date
-3. Start date
+> [!Info] Priority of date fields, with default settings
+>
+> 1. **Due** date
+> 2. **Scheduled** date
+> 3. **Start** date
+
+> [!Info] Priority of date fields if Scheduled date might be removed
+> When the [[#Remove scheduled date on recurrence]] setting is enabled, the Start date is prioritized over the Scheduled date because the Scheduled date will be removed from the next occurrence:
+>
+> 1. **Due** date
+> 2. **Start** date
+> 3. **Scheduled** date
+>
+> It makes more sense to calculate the next occurrence based on a date that will actually exist in the new task.
+>
+> The Start date also provides a more stable reference for calculating future recurrences, especially since you'll typically add a new Scheduled date later when you're ready to work on the task.
+>
+> > [!released]
+> > This different order was introduced in Tasks 7.22.0.
 
 If more dates than the reference date exist on the original recurring task, the next occurrence will have the same dates.
 All dates of the next occurring task will have the relative distance to the reference date that they had on the original task.

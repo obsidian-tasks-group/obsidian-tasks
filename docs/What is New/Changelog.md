@@ -12,6 +12,17 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
+- X.Y.Z:
+  - Changes to most of the Tasks [[settings]] now take immediate effect. A few remaining settings are now marked with `REQUIRES RESTART`.
+  - Add [[Status Types#ON_HOLD|ON_HOLD]] status type.
+  - Add toolbar containing a 'Filter by description' box and 'Copy results' button: these are not yet documented.
+  - All fields in the [[Create or edit Task]] modal are now optional. You can hide fields that you do not use.
+  - Add Vietnamese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
+  - Update the [pull request](https://publish.obsidian.md/tasks-contributing/Contributing/Updating+code) guidelines, because of the growth in AI-generated contributions.
+- 7.22.0:
+  - Fix [[Recurring Tasks#Priority of Dates|priority of dates in recurring tasks]] when using [[Recurring Tasks#Remove scheduled date on recurrence|Remove scheduled date on recurrence]].
+  - Update the [[Obsidian Properties#How does Tasks interpret Obsidian Properties?|table of examples]] to show how to use properties with nested data and object serialisation.
+  - Add Korean translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
 - 7.21.0:
   - Add support for [[Links]] in custom filters, sorting and grouping.
   - The Tasks API can now edit existing task lines with [[Tasks Api#`editTaskLineModal(taskLine string) Promise<string>;`|editTaskLineModal()]].

@@ -20,6 +20,7 @@
       "TQ_show_start_date": true,
       "TQ_show_tags": true,
       "TQ_show_task_count": true,
+      "TQ_show_toolbar": true,
       "TQ_show_tree": true,
       "TQ_show_urgency": true
     },
@@ -27,8 +28,8 @@
     "frontmatterPosition": {
       "end": {
         "col": 3,
-        "line": 24,
-        "offset": 565
+        "line": 25,
+        "offset": 587
       },
       "start": {
         "col": 0,
@@ -43,30 +44,30 @@
         "position": {
           "end": {
             "col": 38,
-            "line": 26,
-            "offset": 605
+            "line": 27,
+            "offset": 627
           },
           "start": {
             "col": 0,
-            "line": 26,
-            "offset": 567
+            "line": 27,
+            "offset": 589
           }
         }
       }
     ],
     "listItems": [
       {
-        "parent": -28,
+        "parent": -29,
         "position": {
           "end": {
             "col": 58,
-            "line": 28,
-            "offset": 665
+            "line": 29,
+            "offset": 687
           },
           "start": {
             "col": 0,
-            "line": 28,
-            "offset": 607
+            "line": 29,
+            "offset": 629
           }
         },
         "task": " "
@@ -77,8 +78,8 @@
         "position": {
           "end": {
             "col": 3,
-            "line": 24,
-            "offset": 565
+            "line": 25,
+            "offset": 587
           },
           "start": {
             "col": 0,
@@ -92,13 +93,13 @@
         "position": {
           "end": {
             "col": 38,
-            "line": 26,
-            "offset": 605
+            "line": 27,
+            "offset": 627
           },
           "start": {
             "col": 0,
-            "line": 26,
-            "offset": 567
+            "line": 27,
+            "offset": 589
           }
         },
         "type": "heading"
@@ -107,13 +108,13 @@
         "position": {
           "end": {
             "col": 58,
-            "line": 28,
-            "offset": 665
+            "line": 29,
+            "offset": 687
           },
           "start": {
             "col": 0,
-            "line": 28,
-            "offset": 607
+            "line": 29,
+            "offset": 629
           }
         },
         "type": "list"
@@ -124,20 +125,20 @@
         "position": {
           "end": {
             "col": 11,
-            "line": 28,
-            "offset": 618
+            "line": 29,
+            "offset": 640
           },
           "start": {
             "col": 6,
-            "line": 28,
-            "offset": 613
+            "line": 29,
+            "offset": 635
           }
         },
         "tag": "#task"
       }
     ]
   },
-  "fileContents": "---\nTQ_explain: true\nTQ_extra_instructions: |-\n  # press shift-return to add new lines\n  not done\nTQ_short_mode: true\nTQ_show_backlink: true\nTQ_show_cancelled_date: true\nTQ_show_created_date: true\nTQ_show_depends_on: true\nTQ_show_done_date: true\nTQ_show_due_date: true\nTQ_show_edit_button: true\nTQ_show_id: true\nTQ_show_on_completion: true\nTQ_show_postpone_button: true\nTQ_show_priority: true\nTQ_show_recurrence_rule: true\nTQ_show_scheduled_date: true\nTQ_show_start_date: true\nTQ_show_tags: true\nTQ_show_task_count: true\nTQ_show_tree: true\nTQ_show_urgency: true\n---\n\n# query_file_defaults_all_options_true\n\n- [ ] #task Task in 'query_file_defaults_all_options_true'\n",
+  "fileContents": "---\nTQ_explain: true\nTQ_extra_instructions: |-\n  # press shift-return to add new lines\n  not done\nTQ_short_mode: true\nTQ_show_backlink: true\nTQ_show_cancelled_date: true\nTQ_show_created_date: true\nTQ_show_depends_on: true\nTQ_show_done_date: true\nTQ_show_due_date: true\nTQ_show_edit_button: true\nTQ_show_id: true\nTQ_show_on_completion: true\nTQ_show_postpone_button: true\nTQ_show_priority: true\nTQ_show_recurrence_rule: true\nTQ_show_scheduled_date: true\nTQ_show_start_date: true\nTQ_show_tags: true\nTQ_show_task_count: true\nTQ_show_toolbar: true\nTQ_show_tree: true\nTQ_show_urgency: true\n---\n\n# query_file_defaults_all_options_true\n\n- [ ] #task Task in 'query_file_defaults_all_options_true'\n",
   "filePath": "Test Data/query_file_defaults_all_options_true.md",
   "getAllTags": [
     "#task"

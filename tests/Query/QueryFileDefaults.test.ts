@@ -1,12 +1,10 @@
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
-import query_file_defaults_all_options_false from '../Obsidian/__test_data__/query_file_defaults_all_options_false.json';
-import query_file_defaults_all_options_null from '../Obsidian/__test_data__/query_file_defaults_all_options_null.json';
-import query_file_defaults_all_options_true from '../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
 import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
+import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 
-function generateQueryFileDefaultsSource(data: any) {
-    const tasksFile = getTasksFileFromMockData(data);
+function generateQueryFileDefaultsSource(testDataName: MockDataName) {
+    const tasksFile = getTasksFileFromMockData(testDataName);
     return new QueryFileDefaults().source(tasksFile);
 }
 
@@ -16,13 +14,14 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should give empty query if no relevant properties present', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_null)).toEqual('');
+        expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_null')).toEqual('');
     });
 
     it('should give the property names in original order', () => {
         const names = new QueryFileDefaults().allPropertyNames();
         expect(names).toMatchInlineSnapshot(`
             [
+              "TQ_show_toolbar",
               "TQ_explain",
               "TQ_short_mode",
               "TQ_show_tree",
@@ -71,6 +70,7 @@ describe('QueryFileDefaults', () => {
               "TQ_show_start_date",
               "TQ_show_tags",
               "TQ_show_task_count",
+              "TQ_show_toolbar",
               "TQ_show_tree",
               "TQ_show_urgency",
             ]
@@ -86,8 +86,9 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values false', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_false)).toMatchInlineSnapshot(`
-            "full mode
+        expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_false')).toMatchInlineSnapshot(`
+            "hide toolbar
+            full mode
             hide tree
             hide tags
             hide id
@@ -112,8 +113,9 @@ describe('QueryFileDefaults', () => {
     });
 
     it('should generate instructions - all values true', () => {
-        expect(generateQueryFileDefaultsSource(query_file_defaults_all_options_true)).toMatchInlineSnapshot(`
-            "explain
+        expect(generateQueryFileDefaultsSource('query_file_defaults_all_options_true')).toMatchInlineSnapshot(`
+            "show toolbar
+            explain
             short mode
             show tree
             show tags
