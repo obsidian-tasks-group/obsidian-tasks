@@ -77,6 +77,8 @@ export class Commands {
                 editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
             };
             setStatusCommands.push(command);
+        }
+        for (const command of setStatusCommands) {
             plugin.addCommand(command);
         }
     }
