@@ -1,6 +1,7 @@
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Priority } from '../Task/Priority';
+import { Duration } from '../Task/Duration';
 import type { Task } from '../Task/Task';
 import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from './DefaultTaskSerializer';
 
@@ -72,6 +73,7 @@ export const DATAVIEW_SYMBOLS = {
     startDateSymbol: 'start::',
     createdDateSymbol: 'created::',
     scheduledDateSymbol: 'scheduled::',
+    durationSymbol: 'duration::',
     dueDateSymbol: 'due::',
     doneDateSymbol: 'completion::',
     cancelledDateSymbol: 'cancelled::',
@@ -84,6 +86,7 @@ export const DATAVIEW_SYMBOLS = {
         startDateRegex: toInlineFieldRegex(/start:: *(\d{4}-\d{2}-\d{2})/),
         createdDateRegex: toInlineFieldRegex(/created:: *(\d{4}-\d{2}-\d{2})/),
         scheduledDateRegex: toInlineFieldRegex(/scheduled:: *(\d{4}-\d{2}-\d{2})/),
+        durationRegex: toInlineFieldRegex(new RegExp('duration:: *(' + Duration.valueRegEx + ')')),
         dueDateRegex: toInlineFieldRegex(/due:: *(\d{4}-\d{2}-\d{2})/),
         doneDateRegex: toInlineFieldRegex(/completion:: *(\d{4}-\d{2}-\d{2})/),
         cancelledDateRegex: toInlineFieldRegex(/cancelled:: *(\d{4}-\d{2}-\d{2})/),

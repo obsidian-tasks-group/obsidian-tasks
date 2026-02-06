@@ -5,6 +5,7 @@ import moment from 'moment';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { Duration } from '../../src/Task/Duration';
 import { Priority } from '../../src/Task/Priority';
 
 window.moment = moment;
@@ -80,7 +81,7 @@ describe('CreateOrEditTaskParser - task recognition', () => {
     it('should recognize task details without global filter', () => {
         GlobalFilter.getInstance().set('#task');
         const taskLine =
-            '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-10 ✅ 2023-06-22';
+            '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 ⏱ 1h30m 📅 2024-12-10 ✅ 2023-06-22';
         const path = 'a/b/c.md';
 
         const task = taskFromLine({ line: taskLine, path });
@@ -94,6 +95,7 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         expect(task.createdDate).toEqualMoment(moment('2022-03-10'));
         expect(task.startDate).toEqualMoment(moment('2022-01-31'));
         expect(task.scheduledDate).toEqualMoment(moment('2023-06-13'));
+        expect(task.duration).toStrictEqual(new Duration({ hours: 1, minutes: 30 }));
         expect(task.dueDate).toEqualMoment(moment('2024-12-10'));
         expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
     });

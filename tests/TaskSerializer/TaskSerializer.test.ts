@@ -8,6 +8,7 @@ import type { TaskDetails, TaskSerializer } from '../../src/TaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
+import { Duration } from '../../src/Task/Duration';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 
 jest.mock('obsidian');
@@ -70,6 +71,7 @@ describe('TaskSerializer Example', () => {
                 startDate: null,
                 createdDate: null,
                 scheduledDate: null,
+                duration: Duration.None,
                 doneDate: null,
                 cancelledDate: null,
                 recurrence: null,

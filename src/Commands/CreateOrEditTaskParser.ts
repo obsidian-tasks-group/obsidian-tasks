@@ -8,6 +8,7 @@ import { TaskLocation } from '../Task/TaskLocation';
 import { getSettings } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { Priority } from '../Task/Priority';
+import { Duration } from '../Task/Duration';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 
 function getDefaultCreatedDate() {
@@ -89,6 +90,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             createdDate,
             startDate: null,
             scheduledDate: null,
+            duration: Duration.None,
             dueDate: null,
             doneDate: null,
             cancelledDate: null,
@@ -130,6 +132,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         createdDate,
         startDate: null,
         scheduledDate: null,
+        duration: Duration.None,
         dueDate: null,
         doneDate: null,
         cancelledDate: null,
