@@ -53,7 +53,9 @@ export class MockDataLoader {
      * @returns Absolute path to the corresponding JSON file in `__test_data__` directory
      */
     public static path(testDataName: MockDataName) {
-        return path.resolve(__dirname, `../Obsidian/__test_data__/${testDataName}.json`);
+        const absolute = path.resolve(__dirname, `../Obsidian/__test_data__/${testDataName}.json`);
+        // Normalize to forward slashes for cross-platform test expectations
+        return absolute.replace(/\\/g, '/');
     }
 
     /**

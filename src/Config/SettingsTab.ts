@@ -331,6 +331,39 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
+        // Date format and wiki-link wrapping
+        new Setting(containerEl)
+            .setName(i18n.t('settings.dates.format.name'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    i18n.t('settings.dates.format.description.line1') +
+                        '</br>' +
+                        `<p><a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Configurable+date+format+and+wiki-link+wrapping">${i18n.t(
+                            'settings.dates.format.description.line2',
+                        )}</a></p>`,
+                ),
+            )
+            .addText((text) => {
+                const settings = getSettings();
+                text.setPlaceholder('YYYY-MM-DD')
+                    .setValue(settings.taskDateFormat)
+                    .onChange(async (value) => {
+                        updateSettings({ taskDateFormat: value || 'YYYY-MM-DD' });
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.dates.wrapInWikiLink.name'))
+            .setDesc(i18n.t('settings.dates.wrapInWikiLink.description'))
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle.setValue(settings.wrapDateInWikiLink).onChange(async (value) => {
+                    updateSettings({ wrapDateInWikiLink: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.datesFromFileNames.heading')).setHeading();
         // ---------------------------------------------------------------------------
