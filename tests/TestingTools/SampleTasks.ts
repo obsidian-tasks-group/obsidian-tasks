@@ -174,6 +174,7 @@ export class SampleTasks {
             Status.DONE,
             Status.EMPTY,
             Status.IN_PROGRESS,
+            Status.ON_HOLD,
             Status.TODO,
             Status.NON_TASK,
         ];

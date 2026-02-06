@@ -1,8 +1,6 @@
 {
   "checkbox@@check-color": true,
   "checkbox@@check-bg": true,
-  "checkbox@@chst-reg": true,
-  "checkbox@@chst-chk": true,
   "anuppuccin-theme-settings@@anp-custom-checkboxes": true,
   "anuppuccin-theme-settings@@anp-speech-bubble": true
 }

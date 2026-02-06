@@ -1,4 +1,14 @@
 import type { App } from 'obsidian';
+import { State } from '../../src/Obsidian/Cache';
+import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
+import { Query } from '../../src/Query/Query';
+import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
+import type { QueryRendererParameters } from '../../src/Renderer/QueryResultsRenderer';
+import { TasksFile } from '../../src/Scripting/TasksFile';
+import type { Task } from '../../src/Task/Task';
+import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { prettifyHTML } from '../TestingTools/HTMLHelpers';
+import { toMarkdown } from '../TestingTools/TestHelpers';
 
 export const mockHTMLRenderer = async (_obsidianApp: App, text: string, element: HTMLSpanElement, _path: string) => {
     // Contrary to the default mockTextRenderer(),
@@ -11,3 +21,55 @@ export const mockHTMLRenderer = async (_obsidianApp: App, text: string, element:
 export const mockTextRenderer = async (_obsidianApp: App, text: string, element: HTMLSpanElement, _path: string) => {
     element.innerText = text;
 };
+
+export function makeQueryRendererParameters(allTasks: Task[]): QueryRendererParameters {
+    return {
+        allTasks: () => allTasks,
+        allMarkdownFiles: () => [],
+        backlinksClickHandler: () => Promise.resolve(),
+        backlinksMousedownHandler: () => Promise.resolve(),
+        editTaskPencilClickHandler: () => {},
+    };
+}
+
+export function createMarkdownRenderer(source: string) {
+    const tasksFile = new TasksFile('query.md');
+    const query = new Query(source, tasksFile);
+    const renderer = new MarkdownQueryResultsRenderer({
+        query: () => query,
+        tasksFile: () => tasksFile,
+        source: () => source,
+    });
+    return { renderer, query };
+}
+
+export async function renderMarkdown(source: string, tasks: Task[]) {
+    const { renderer, query } = createMarkdownRenderer(source);
+    const queryResult = query.applyQueryToTasks(tasks);
+    await renderer.renderQuery(State.Warm, queryResult);
+    return {
+        markdown: '\n' + renderer.markdown,
+        queryResult,
+        rerenderWithFilter: async (filter: FilterOrErrorMessage) => {
+            expect(filter).toBeValid();
+
+            const filteredResult = queryResult.applyFilter(filter.filter!);
+            await renderer.renderQuery(State.Warm, filteredResult);
+            return { filteredMarkdown: '\n' + renderer.markdown };
+        },
+    };
+}
+
+export function tasksMarkdownAndPrettifiedHtml(container: HTMLDivElement, allTasks: Task[]) {
+    const tasksAsMarkdown = `<!--
+${toMarkdown(allTasks)}
+-->\n\n`;
+
+    const prettyHTML = prettifyHTML(container.outerHTML);
+    return { tasksAsMarkdown, prettyHTML };
+}
+
+export function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): void {
+    const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, allTasks);
+    verifyWithFileExtension(tasksAsMarkdown + prettyHTML, 'html');
+}

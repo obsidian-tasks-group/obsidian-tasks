@@ -60,6 +60,16 @@ export class Status {
     );
 
     /**
+     * The default On Hold status. Goes to Todo when toggled.
+     *
+     * @static
+     * @type {Status}
+     */
+    public static readonly ON_HOLD: Status = new Status(
+        new StatusConfiguration('h', 'On Hold', ' ', true, StatusType.ON_HOLD),
+    );
+
+    /**
      * A sample Non-Task status. Goes to NON_TASK when toggled.
      *
      * @static
@@ -148,17 +158,20 @@ export class Status {
             case StatusType.TODO:
                 prefix = '2';
                 break;
-            case StatusType.DONE:
+            case StatusType.ON_HOLD:
                 prefix = '3';
                 break;
-            case StatusType.CANCELLED:
+            case StatusType.DONE:
                 prefix = '4';
                 break;
-            case StatusType.NON_TASK:
+            case StatusType.CANCELLED:
                 prefix = '5';
                 break;
-            case StatusType.EMPTY:
+            case StatusType.NON_TASK:
                 prefix = '6';
+                break;
+            case StatusType.EMPTY:
+                prefix = '7';
                 break;
         }
         // Text inside the %%..%% comments is used to control the sorting in both sorting of tasks and naming of groups.

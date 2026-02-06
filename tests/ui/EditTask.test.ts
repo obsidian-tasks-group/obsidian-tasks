@@ -4,8 +4,9 @@
 import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
 import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
+import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { DateFallback } from '../../src/DateTime/DateFallback';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import type { Task } from '../../src/Task/Task';
@@ -15,9 +16,11 @@ import { verifyAllCombinations3Async } from '../TestingTools/CombinationApproval
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import {
+    editInputElement,
     getAndCheckApplyButton,
     getAndCheckRenderedDescriptionElement,
     getAndCheckRenderedElement,
+    optionsWithoutARandomField,
 } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -52,10 +55,6 @@ function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => voi
     const { container } = result;
     expect(() => container).toBeTruthy();
     return { result, container };
-}
-
-async function editInputElement(inputElement: HTMLInputElement, newValue: string) {
-    await fireEvent.input(inputElement, { target: { value: newValue } });
 }
 
 async function editInputElementAndSubmit(
@@ -173,6 +172,10 @@ function getElementValue(container: HTMLElement, elementId: string) {
     const element = getAndCheckRenderedElement<HTMLInputElement>(container, elementId);
     return element.value;
 }
+
+afterEach(() => {
+    resetSettings();
+});
 
 describe('Task rendering', () => {
     afterEach(() => {
@@ -675,22 +678,22 @@ describe('Exhaustive editing', () => {
     });
 });
 
+function verifyModalHTML() {
+    // Populate task a valid and an invalid date. Note that the valid date value
+    // is not visible in the HTML output.
+    const task = taskFromLine({ line: '- [ ] absolutely to do 🛫 2024-01-01 ⏳ 2024-02-33', path: '' });
+    const onSubmit = () => {};
+    const allTasks = [task];
+    const { container } = renderAndCheckModal(task, onSubmit, allTasks);
+
+    const prettyHTML = prettifyHTML(container.innerHTML);
+    verifyWithFileExtension(prettyHTML, 'html');
+}
+
 describe('Edit Modal HTML snapshot tests', () => {
     afterEach(() => {
         resetSettings();
     });
-
-    function verifyModalHTML() {
-        // Populate task a valid and an invalid date. Note that the valid date value
-        // is not visible in the HTML output.
-        const task = taskFromLine({ line: '- [ ] absolutely to do 🛫 2024-01-01 ⏳ 2024-02-33', path: '' });
-        const onSubmit = () => {};
-        const allTasks = [task];
-        const { container } = renderAndCheckModal(task, onSubmit, allTasks);
-
-        const prettyHTML = prettifyHTML(container.innerHTML);
-        verifyWithFileExtension(prettyHTML, 'html');
-    }
 
     it('should match snapshot', () => {
         updateSettings({ provideAccessKeys: true });
@@ -700,5 +703,74 @@ describe('Edit Modal HTML snapshot tests', () => {
     it('should match snapshot - without access keys', () => {
         updateSettings({ provideAccessKeys: false });
         verifyModalHTML();
+    });
+});
+
+describe('Hiding modal fields', () => {
+    function testElementRendered(elementId: string) {
+        const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+        const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
+
+        const onSubmit = (_: Task[]): void => {};
+        const { container } = renderAndCheckModal(task, onSubmit);
+
+        getAndCheckRenderedElement(container, elementId);
+    }
+
+    function testElementNotRendered(elementId: string) {
+        const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+        const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
+
+        const onSubmit = (_: Task[]): void => {};
+        const { container } = renderAndCheckModal(task, onSubmit);
+
+        const element = container.ownerDocument.getElementById(elementId) as unknown;
+        expect(element).toBeNull();
+    }
+
+    const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
+
+    it.each(fields)('should show %s field by default', (field) => {
+        testElementRendered(field);
+    });
+
+    it.each(fields)('should show %s field even if it is absent in the settings', (field) => {
+        updateSettings({ isShownInEditModal: optionsWithoutARandomField() });
+
+        testElementRendered(field);
+    });
+
+    function hideFields(...fields: (keyof EditModalShowSettings)[]) {
+        const withHiddenField = { ...getSettings().isShownInEditModal };
+        for (const field of fields) {
+            withHiddenField[field] = false;
+        }
+        return withHiddenField;
+    }
+
+    it.each(fields)('should hide %s field', (field) => {
+        updateSettings({ isShownInEditModal: hideFields(field) });
+
+        testElementNotRendered(field);
+    });
+
+    it('should hide line after priority', () => {
+        updateSettings({ isShownInEditModal: hideFields('priority') });
+
+        testElementNotRendered('line-after-priority');
+    });
+
+    it('should hide "Only future dates checkbox" and line after happens dates', () => {
+        // NEW_TASK_FIELD_EDIT_REQUIRED - add new happens date below
+        updateSettings({ isShownInEditModal: hideFields('due', 'scheduled', 'start') });
+
+        testElementNotRendered('only-future-dates');
+        testElementNotRendered('line-after-happens-dates');
+    });
+
+    it('should hide line after dependencies', () => {
+        updateSettings({ isShownInEditModal: hideFields('before_this', 'after_this') });
+
+        testElementNotRendered('line-after-dependencies');
     });
 });

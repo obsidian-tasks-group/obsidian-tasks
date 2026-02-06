@@ -13,8 +13,6 @@ import { makeQueryContextWithTasks } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
-import docs_sample_for_task_properties_reference from '../Obsidian/__test_data__/docs_sample_for_task_properties_reference.json';
-import links_everywhere from '../Obsidian/__test_data__/links_everywhere.json';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest } from '../__mocks__/obsidian';
 import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
@@ -160,7 +158,7 @@ describe('task', () => {
         // This is getting annoying, having to do this repeatedly.
         LinkResolver.getInstance().setGetFirstLinkpathDestFn(getFirstLinkpathDest);
 
-        const tasks = readTasksFromSimulatedFile(links_everywhere);
+        const tasks = readTasksFromSimulatedFile('links_everywhere');
         verifyFieldDataFromTasksForReferenceDocs(tasks, [
             'task.outlinks',
             'task.file.outlinksInProperties',
@@ -170,7 +168,7 @@ describe('task', () => {
     });
 
     it('frontmatter properties', () => {
-        const tasks = readTasksFromSimulatedFile(docs_sample_for_task_properties_reference as any);
+        const tasks = readTasksFromSimulatedFile('docs_sample_for_task_properties_reference');
         // Show just the first task:
         verifyFieldDataFromTasksForReferenceDocs(tasks.slice(0, 1), [
             "task.file.hasProperty('creation date')",

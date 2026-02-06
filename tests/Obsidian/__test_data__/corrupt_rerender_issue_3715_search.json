@@ -1,0 +1,182 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "TQ_extra_instructions": "filename includes corrupt_rerender_issue_3715_tasks\nshow tree\nhide backlink\nhide edit button"
+    },
+    "frontmatterLinks": [],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 6,
+        "offset": 134
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "Search - no group heading",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 7,
+            "offset": 163
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 135
+          }
+        }
+      },
+      {
+        "heading": "Search - one group heading",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 29,
+            "line": 12,
+            "offset": 208
+          },
+          "start": {
+            "col": 0,
+            "line": 12,
+            "offset": 179
+          }
+        }
+      },
+      {
+        "heading": "Search - two group headings",
+        "level": 2,
+        "position": {
+          "end": {
+            "col": 30,
+            "line": 18,
+            "offset": 271
+          },
+          "start": {
+            "col": 0,
+            "line": 18,
+            "offset": 241
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 6,
+            "offset": 134
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 7,
+            "offset": 163
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 135
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 10,
+            "offset": 177
+          },
+          "start": {
+            "col": 0,
+            "line": 9,
+            "offset": 165
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 29,
+            "line": 12,
+            "offset": 208
+          },
+          "start": {
+            "col": 0,
+            "line": 12,
+            "offset": 179
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 16,
+            "offset": 239
+          },
+          "start": {
+            "col": 0,
+            "line": 14,
+            "offset": 210
+          }
+        },
+        "type": "code"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 30,
+            "line": 18,
+            "offset": 271
+          },
+          "start": {
+            "col": 0,
+            "line": 18,
+            "offset": 241
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 23,
+            "offset": 337
+          },
+          "start": {
+            "col": 0,
+            "line": 20,
+            "offset": 273
+          }
+        },
+        "type": "code"
+      }
+    ]
+  },
+  "fileContents": "---\nTQ_extra_instructions: |-\n  filename includes corrupt_rerender_issue_3715_tasks\n  show tree\n  hide backlink\n  hide edit button\n---\n## Search - no group heading\n\n```tasks\n```\n\n## Search - one group heading\n\n```tasks\ngroup by heading\n```\n\n## Search - two group headings\n\n```tasks\ngroup by heading\ngroup by function task.description\n```\n",
+  "filePath": "Test Data/corrupt_rerender_issue_3715_search.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

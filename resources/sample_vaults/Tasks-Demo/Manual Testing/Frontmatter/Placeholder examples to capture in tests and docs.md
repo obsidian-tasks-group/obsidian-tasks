@@ -6,7 +6,7 @@ TQ_extra_instructions: |-
   # sort by done date
   # ignore global query
 TQ_short_mode: false
-TQ_show_backlink: true
+TQ_show_backlink: false
 TQ_show_cancelled_date: true
 TQ_show_created_date: true
 TQ_show_depends_on: true
@@ -21,9 +21,10 @@ TQ_show_recurrence_rule: true
 TQ_show_scheduled_date: true
 TQ_show_start_date: true
 TQ_show_tags: true
-TQ_show_task_count: true
+TQ_show_task_count: false
+TQ_show_toolbar: true
 TQ_show_tree: true
-TQ_show_urgency: true
+TQ_show_urgency: false
 TQ_sort_by:
   - description
 TQ_group_by:
@@ -39,6 +40,8 @@ TQ_group_by:
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-include.approved.md -->
 
+
+toolbar: `INPUT[toggle:TQ_show_toolbar]`
 short mode: `INPUT[toggle:TQ_short_mode]`
 tree: `INPUT[toggle:TQ_show_tree]`
 tags: `INPUT[toggle:TQ_show_tags]`
@@ -53,6 +56,7 @@ edit button: `INPUT[toggle:TQ_show_edit_button]` postpone button: `INPUT[toggle:
 task count: `INPUT[toggle:TQ_show_task_count]`
 extra instructions: `INPUT[textArea:TQ_extra_instructions]`
 explain: `INPUT[toggle:TQ_explain]`
+
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

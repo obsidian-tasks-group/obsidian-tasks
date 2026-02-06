@@ -61,3 +61,22 @@ Create headings for all tags that do not contain "#tag".
 #project/project1
 ====================================================================================
 
+
+group by function \
+    if (task.tags.length > 0) return task.tags; \
+    return task.findClosestParentTask()?.tags ?? [];
+Group tag-less child tasks by any tags on their parent task:
+  If the task has any tags on its own line, then group by those tags.
+  Otherwise, look for the first parent task, and group by its tags.
+  If there is no parent task, treat the tags as empty.
+=>
+#context/home
+#context/work
+#multiple-tags1
+#multiple-tags2
+#project/project1
+#tag
+#tag/subtag
+#tag/subtag/sub-sub-tag
+====================================================================================
+

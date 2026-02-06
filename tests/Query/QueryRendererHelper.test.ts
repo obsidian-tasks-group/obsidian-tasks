@@ -8,9 +8,6 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
-import query_file_defaults_short_mode from '../Obsidian/__test_data__/query_file_defaults_short_mode.json';
-import query_file_defaults_all_options_true from '../Obsidian/__test_data__/query_file_defaults_all_options_true.json';
-import query_file_defaults_ignore_global_query from '../Obsidian/__test_data__/query_file_defaults_ignore_global_query.json';
 
 window.moment = moment;
 
@@ -64,7 +61,7 @@ describe('explain', () => {
 
         const source = '';
         const query = new Query(source);
-        const tasksFile = getTasksFileFromMockData(query_file_defaults_all_options_true);
+        const tasksFile = getTasksFileFromMockData('query_file_defaults_all_options_true');
         expect(explainResults(query.source, new GlobalFilter(), globalQuery, tasksFile)).toMatchInlineSnapshot(`
             "Explanation of the global query:
 
@@ -73,6 +70,8 @@ describe('explain', () => {
             Explanation of the Query File Defaults (from properties/frontmatter in the query's file):
 
               not done
+
+              show toolbar
 
               short mode
 
@@ -159,7 +158,7 @@ describe('explain', () => {
         const globalQuery = new GlobalQuery('description includes hello');
 
         const source = 'description includes I came from the code block';
-        const queryFile = getTasksFileFromMockData(query_file_defaults_ignore_global_query);
+        const queryFile = getTasksFileFromMockData('query_file_defaults_ignore_global_query');
         expect(queryFile.property('TQ_extra_instructions')).toContain('ignore global query');
         const query = new Query(source, queryFile);
         expect(explainResults(query.source, new GlobalFilter(), globalQuery, queryFile)).toMatchInlineSnapshot(`
@@ -239,7 +238,7 @@ describe('query used for QueryRenderer', () => {
     it('should add QueryFileDefaults', () => {
         // Arrange
         const globalQuery = new GlobalQuery('path includes from_global_query');
-        const tasksFile = getTasksFileFromMockData(query_file_defaults_short_mode);
+        const tasksFile = getTasksFileFromMockData('query_file_defaults_short_mode');
 
         // Act
         const query = getQueryForQueryRenderer('description includes from_block_query', globalQuery, tasksFile);

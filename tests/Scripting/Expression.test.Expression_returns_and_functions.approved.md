@@ -7,6 +7,12 @@ return 42
 const x = 1 + 1; return x * x
 => 4
 
+'any text that contains the word return'
+=> undefined
+
+return 'any text that contains the word return'
+=> 'any text that contains the word return'
+
 if (1 === 1) { return "yes"; } else { return "no" }
 => 'yes'
 

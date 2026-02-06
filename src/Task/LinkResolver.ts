@@ -24,6 +24,7 @@ export class LinkResolver {
     public resetGetFirstLinkpathDestFn() {
         this.getFirstLinkpathDestFn = defaultGetFirstLinkpathDestFn;
     }
+
     public getDestinationPath(rawLink: Reference, pathContainingLink: string) {
         return this.getFirstLinkpathDestFn(rawLink, pathContainingLink) ?? undefined;
     }

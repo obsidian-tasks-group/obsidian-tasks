@@ -1,6 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 
+toolbar: `INPUT[toggle:TQ_show_toolbar]`
 short mode: `INPUT[toggle:TQ_short_mode]`
 tree: `INPUT[toggle:TQ_show_tree]`
 tags: `INPUT[toggle:TQ_show_tags]`

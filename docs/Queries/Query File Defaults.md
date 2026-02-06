@@ -193,6 +193,7 @@ TQ_show_scheduled_date:
 TQ_show_start_date:
 TQ_show_tags:
 TQ_show_task_count:
+TQ_show_toolbar:
 TQ_show_tree:
 TQ_show_urgency:
 ---
@@ -237,6 +238,7 @@ The `type` values are explained in the [Property types](https://help.obsidian.md
     "TQ_show_start_date": "checkbox",
     "TQ_show_tags": "checkbox",
     "TQ_show_task_count": "checkbox",
+    "TQ_show_toolbar": "checkbox",
     "TQ_show_tree": "checkbox",
     "TQ_show_urgency": "checkbox"
   }

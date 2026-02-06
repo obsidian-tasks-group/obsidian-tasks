@@ -8,8 +8,7 @@ import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditing
  *
  * @example
  *     checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
- *         const menu = new StatusMenu(StatusRegistry.getInstance(), task);
- *         menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+ *         showMenu(ev, new StatusMenu(StatusRegistry.getInstance(), task));
  *     });
  *     checkbox.setAttribute('title', 'Right-click for options');
  */

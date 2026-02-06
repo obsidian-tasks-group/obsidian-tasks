@@ -46,26 +46,37 @@ export class Occurrence {
     /**
      *  Pick the reference date for occurrence based on importance.
      *  Assuming due date has the highest priority, then scheduled date,
-     *  then start date.
+     *  then start date, by default.
+     *  The order differs if removeScheduledDateOnRecurrence is enabled.
+     *  See [Priority of Dates](https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks#Priority%20of%20Dates).
      *
      *  The Moment objects are cloned.
      *
      * @private
      */
     private getReferenceDate(): Moment | null {
-        if (this.dueDate) {
-            return window.moment(this.dueDate);
-        }
+        const datesInPriorityOrder = this.getDatePriorityOrder();
 
-        if (this.scheduledDate) {
-            return window.moment(this.scheduledDate);
-        }
-
-        if (this.startDate) {
-            return window.moment(this.startDate);
+        for (const date of datesInPriorityOrder) {
+            if (date) {
+                return window.moment(date);
+            }
         }
 
         return null;
+    }
+
+    private getDatePriorityOrder(): (Moment | null)[] {
+        const { removeScheduledDateOnRecurrence } = getSettings();
+        if (removeScheduledDateOnRecurrence) {
+            // If the `removeScheduledDateOnRecurrence` setting is enabled, it does
+            // not make sense to pick the scheduled date over the start date because
+            // the scheduled date will be deleted in the newly created task. So if
+            // this setting is enabled, we favour start date over scheduled date:
+            return [this.dueDate, this.startDate, this.scheduledDate];
+        } else {
+            return [this.dueDate, this.scheduledDate, this.startDate];
+        }
     }
 
     public isIdenticalTo(other: Occurrence): boolean {

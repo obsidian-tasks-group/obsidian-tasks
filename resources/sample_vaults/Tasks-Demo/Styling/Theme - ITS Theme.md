@@ -11,6 +11,7 @@ This offers the same checkboxes as [[Snippet - SlRvb's Alternate Checkboxes]].
 - [X] #task `X` Checked
 - [-] #task `-` Dropped
 - [>] #task `>` Forward
+- [<] #task `<` Migrated
 - [D] #task `D` Date
 - [?] #task `?` Question
 - [/] #task `/` Half Done
@@ -43,6 +44,7 @@ This offers the same checkboxes as [[Snippet - SlRvb's Alternate Checkboxes]].
 - [H] #task `H` Favorite / Health
 - [&] #task `&` Symbolism
 - [s] #task `s` Secret
+
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

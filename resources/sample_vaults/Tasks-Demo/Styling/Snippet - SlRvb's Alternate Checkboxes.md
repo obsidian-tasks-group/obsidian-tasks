@@ -1,6 +1,6 @@
 # Snippet - SlRvb's Alternate Checkboxes
 
-<https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md>
+<https://publish.obsidian.md/slrvb-docs/ITS+Theme/Alternate+Checkboxes>
 
 This offers the same checkboxes as [[Theme - ITS Theme]].
 
@@ -17,6 +17,7 @@ File name of downloaded snippet: S - Checkboxes.css
 - [X] #task `X` Checked
 - [-] #task `-` Dropped
 - [>] #task `>` Forward
+- [<] #task `<` Migrated
 - [D] #task `D` Date
 - [?] #task `?` Question
 - [/] #task `/` Half Done
@@ -49,6 +50,7 @@ File name of downloaded snippet: S - Checkboxes.css
 - [H] #task `H` Favorite / Health
 - [&] #task `&` Symbolism
 - [s] #task `s` Secret
+
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

@@ -1,13 +1,16 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { defaultEditModalShowSettings } from '../Config/EditModalShowSettings';
 
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
+    import { settingsStore } from './SettingsStore';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import PriorityEditor from './PriorityEditor.svelte';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
 
@@ -19,7 +22,6 @@
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
-        prioritySymbols,
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
@@ -48,57 +50,6 @@
 
     let mountComplete = false;
 
-    const priorityOptions: {
-        value: typeof editableTask.priority;
-        label: string;
-        symbol: string;
-        accessKey: string;
-        accessKeyIndex: number;
-    }[] = [
-        {
-            value: 'lowest',
-            label: 'Lowest',
-            symbol: prioritySymbols.Lowest,
-            accessKey: 'o',
-            accessKeyIndex: 1,
-        },
-        {
-            value: 'low',
-            label: 'Low',
-            symbol: prioritySymbols.Low,
-            accessKey: 'l',
-            accessKeyIndex: 0,
-        },
-        {
-            value: 'none',
-            label: 'Normal',
-            symbol: prioritySymbols.None,
-            accessKey: 'n',
-            accessKeyIndex: 0,
-        },
-        {
-            value: 'medium',
-            label: 'Medium',
-            symbol: prioritySymbols.Medium,
-            accessKey: 'm',
-            accessKeyIndex: 0,
-        },
-        {
-            value: 'high',
-            label: 'High',
-            symbol: prioritySymbols.High,
-            accessKey: 'h',
-            accessKeyIndex: 0,
-        },
-        {
-            value: 'highest',
-            label: 'Highest',
-            symbol: prioritySymbols.Highest,
-            accessKey: 'i',
-            accessKeyIndex: 1,
-        },
-    ];
-
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
         isDueDateValid &&
@@ -111,7 +62,11 @@
         isDoneDateValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
+    $: isShownInEditModal = { ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal };
+
     onMount(() => {
+        settingsStore.set(getSettings());
+
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
 
@@ -204,178 +159,181 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
-    <section class="tasks-modal-priority-section">
-        <label for="priority-{editableTask.priority}">Priority</label>
-        {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
-            <div class="task-modal-priority-option-container">
-                <!-- svelte-ignore a11y-accesskey -->
-                <input
-                    type="radio"
-                    id="priority-{value}"
-                    {value}
-                    bind:group={editableTask.priority}
-                    accesskey={accesskey(accessKey)}
-                />
-                <label for="priority-{value}">
-                    <!-- These is no need to extract this behaviour to something like labelContentWithAccessKey(),
-                    since this whole section will just go in a separate Svelte component and
-                    will not be reused elsewhere like labelContentWithAccessKey(). -->
-                    {#if withAccessKeys}
-                        <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
-                            >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span
-                        ><span>{label.substring(accessKeyIndex + 1)}</span>
-                    {:else}
-                        <span>{label}</span>
-                    {/if}
-                    {#if symbol && symbol.charCodeAt(0) >= 0x100}
-                        <span>{symbol}</span>
-                    {/if}
-                </label>
-            </div>
-        {/each}
-    </section>
+    {#if isShownInEditModal.priority}
+        <section class="tasks-modal-priority-section">
+            <PriorityEditor bind:priority={editableTask.priority} {withAccessKeys} />
+        </section>
+        <hr id="line-after-priority" />
+    {/if}
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dates  -->
     <!-- --------------------------------------------------------------------------- -->
-    <hr />
     <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
+        {#if isShownInEditModal.recurrence}
+            <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
+        {/if}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="due"
-            dateSymbol={dueDateSymbol}
-            bind:date={editableTask.dueDate}
-            bind:isDateValid={isDueDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('d')}
-        />
+        {#if isShownInEditModal.due}
+            <DateEditor
+                id="due"
+                dateSymbol={dueDateSymbol}
+                bind:date={editableTask.dueDate}
+                bind:isDateValid={isDueDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('d')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="scheduled"
-            dateSymbol={scheduledDateSymbol}
-            bind:date={editableTask.scheduledDate}
-            bind:isDateValid={isScheduledDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('s')}
-        />
+        {#if isShownInEditModal.scheduled}
+            <DateEditor
+                id="scheduled"
+                dateSymbol={scheduledDateSymbol}
+                bind:date={editableTask.scheduledDate}
+                bind:isDateValid={isScheduledDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('s')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Start Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="start"
-            dateSymbol={startDateSymbol}
-            bind:date={editableTask.startDate}
-            bind:isDateValid={isStartDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('a')}
-        />
+        {#if isShownInEditModal.start}
+            <DateEditor
+                id="start"
+                dateSymbol={startDateSymbol}
+                bind:date={editableTask.startDate}
+                bind:isDateValid={isStartDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('a')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
-        <div class="future-dates-only">
-            <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
-            <!-- svelte-ignore a11y-accesskey -->
-            <input
-                bind:checked={editableTask.forwardOnly}
-                id="forwardOnly"
-                type="checkbox"
-                class="task-list-item-checkbox tasks-modal-checkbox"
-                accesskey={accesskey('f')}
-            />
-        </div>
+        {#if isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start}
+            <div class="future-dates-only" id="only-future-dates">
+                <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
+                <!-- svelte-ignore a11y-accesskey -->
+                <input
+                    bind:checked={editableTask.forwardOnly}
+                    id="forwardOnly"
+                    type="checkbox"
+                    class="task-list-item-checkbox tasks-modal-checkbox"
+                    accesskey={accesskey('f')}
+                />
+            </div>
+        {/if}
     </section>
+    {#if isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start}
+        <hr id="line-after-happens-dates" />
+    {/if}
 
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dependencies  -->
     <!-- --------------------------------------------------------------------------- -->
-    <hr />
     <section class="tasks-modal-dependencies-section">
         {#if allTasks.length > 0 && mountComplete}
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocked By Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <Dependency
-                type="blockedBy"
-                labelText="Before this"
-                {task}
-                {editableTask}
-                {allTasks}
-                {_onDescriptionKeyDown}
-                accesskey={accesskey('b')}
-                placeholder="Search for tasks that the task being edited depends on..."
-            />
+            {#if isShownInEditModal.before_this}
+                <Dependency
+                    id="before_this"
+                    type="blockedBy"
+                    labelText="Before this"
+                    {task}
+                    {editableTask}
+                    {allTasks}
+                    {_onDescriptionKeyDown}
+                    accesskey={accesskey('b')}
+                    placeholder="Search for tasks that the task being edited depends on..."
+                />
+            {/if}
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocking Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            <Dependency
-                type="blocking"
-                labelText="After this"
-                {task}
-                {editableTask}
-                {allTasks}
-                {_onDescriptionKeyDown}
-                accesskey={accesskey('e')}
-                placeholder="Search for tasks that depend on this task being done..."
-            />
+            {#if isShownInEditModal.after_this}
+                <Dependency
+                    id="after_this"
+                    type="blocking"
+                    labelText="After this"
+                    {task}
+                    {editableTask}
+                    {allTasks}
+                    {_onDescriptionKeyDown}
+                    accesskey={accesskey('e')}
+                    placeholder="Search for tasks that depend on this task being done..."
+                />
+            {/if}
         {:else}
             <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
         {/if}
     </section>
+    {#if isShownInEditModal.before_this || isShownInEditModal.after_this}
+        <hr id="line-after-dependencies" />
+    {/if}
 
-    <hr />
     <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        <StatusEditor {task} bind:editableTask {statusOptions} accesskey={accesskey('u')} />
+        {#if isShownInEditModal.status}
+            <StatusEditor {task} bind:editableTask {statusOptions} accesskey={accesskey('u')} />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="created"
-            dateSymbol={createdDateSymbol}
-            bind:date={editableTask.createdDate}
-            bind:isDateValid={isCreatedDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('c')}
-        />
+        {#if isShownInEditModal.created}
+            <DateEditor
+                id="created"
+                dateSymbol={createdDateSymbol}
+                bind:date={editableTask.createdDate}
+                bind:isDateValid={isCreatedDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('c')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Done Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="done"
-            dateSymbol={doneDateSymbol}
-            bind:date={editableTask.doneDate}
-            bind:isDateValid={isDoneDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('x')}
-        />
+        {#if isShownInEditModal.done}
+            <DateEditor
+                id="done"
+                dateSymbol={doneDateSymbol}
+                bind:date={editableTask.doneDate}
+                bind:isDateValid={isDoneDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('x')}
+            />
+        {/if}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Cancelled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        <DateEditor
-            id="cancelled"
-            dateSymbol={cancelledDateSymbol}
-            bind:date={editableTask.cancelledDate}
-            bind:isDateValid={isCancelledDateValid}
-            forwardOnly={editableTask.forwardOnly}
-            accesskey={accesskey('-')}
-        />
+        {#if isShownInEditModal.cancelled}
+            <DateEditor
+                id="cancelled"
+                dateSymbol={cancelledDateSymbol}
+                bind:date={editableTask.cancelledDate}
+                bind:isDateValid={isCancelledDateValid}
+                forwardOnly={editableTask.forwardOnly}
+                accesskey={accesskey('-')}
+            />
+        {/if}
     </section>
 
     <section class="tasks-modal-button-section">

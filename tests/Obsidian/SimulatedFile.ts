@@ -1,7 +1,9 @@
 import type { CachedMetadata } from 'obsidian';
+import type { Task } from 'Task/Task';
 import { logging } from '../../src/lib/logging';
 import { FileParser } from '../../src/Obsidian/FileParser';
-import { setCurrentCacheFile } from '../__mocks__/obsidian';
+import { MockDataLoader } from '../TestingTools/MockDataLoader';
+import { AllMockDataNames, type MockDataName } from './AllCacheSampleData';
 
 /**
  * @file This file provides functions for creating {@link Task} objects from data in `tests/Obsidian/__test_data__`.
@@ -14,6 +16,7 @@ import { setCurrentCacheFile } from '../__mocks__/obsidian';
  * Represent Obsidian-specific data read from a JSON file in `tests/Obsidian/__test_data__/`
  *
  * See the related functions that uses some or all of this data:
+ * - {@link MockDataLoader}
  * - {@link readTasksFromSimulatedFile}
  * - {@link getTasksFileFromMockData}
  * - {@link listPathAndData}
@@ -39,22 +42,20 @@ export interface SimulatedFile {
 /**
  * Read tasks from Obsidian-specific data read from a JSON file in `tests/Obsidian/__test_data__`.
  *
- * @param {SimulatedFile} testData - Read from a JSON file in `tests/Obsidian/__test_data__`
- * @return {ParsedTasks} The parsed tasks extracted from the file content.
+ * @param {MockDataName} filename - Read from a JSON file in `tests/Obsidian/__test_data__`
+ * @return {Task[]} The parsed tasks extracted from the file content.
  *
  * Example use:
  * ```typescript
- * import numbered_list_items_with_paren from './__test_data__/numbered_list_items_with_paren.json';
- * ...
- *         const data = numbered_list_items_with_paren;
- *         const tasks = readTasksFromSimulatedFile(data);
+ *         const tasks = readTasksFromSimulatedFile('numbered_list_items_with_paren');
  * ```
  *
  * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
+ * @see readAllTasksFromAllSimulatedFiles
  */
-export function readTasksFromSimulatedFile(testData: SimulatedFile) {
+export function readTasksFromSimulatedFile(filename: MockDataName): Task[] {
+    const testData = MockDataLoader.get(filename);
     const logger = logging.getLogger('testCache');
-    setCurrentCacheFile(testData);
     const fileParser = new FileParser(
         testData.filePath,
         testData.fileContents,
@@ -66,6 +67,28 @@ export function readTasksFromSimulatedFile(testData: SimulatedFile) {
     return fileParser.parseFileContent();
 }
 
+/**
+ * Read all tasks from Obsidian-specific data read from all JSON files in `tests/Obsidian/__test_data__`.
+ *
+ * For more info, see https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests.
+ * @see readTasksFromSimulatedFile
+ */
+export function readAllTasksFromAllSimulatedFiles() {
+    return AllMockDataNames.flatMap((testDataName) => {
+        return readTasksFromSimulatedFile(testDataName);
+    });
+}
+
 function errorReporter() {
     return;
+}
+
+/**
+ * Convenience wrapper around {@link readTasksFromSimulatedFile}, also returning the {@link SimulatedFile}.
+ * @param name
+ */
+export function getMockDataAndReadTasks(name: MockDataName) {
+    const data = MockDataLoader.get(name);
+    const tasks = readTasksFromSimulatedFile(name);
+    return { data, tasks };
 }

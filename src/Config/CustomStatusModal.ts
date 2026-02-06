@@ -105,6 +105,7 @@ export class CustomStatusModal extends Modal {
                 const types = [
                     StatusType.TODO,
                     StatusType.IN_PROGRESS,
+                    StatusType.ON_HOLD,
                     StatusType.DONE,
                     StatusType.CANCELLED,
                     StatusType.NON_TASK,

@@ -7,8 +7,7 @@ import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditing
  *
  * @example
  *     editTaskPencil.addEventListener('contextmenu', (ev: MouseEvent) => {
- *         const menu = new PriorityMenu(task);
- *         menu.showAtPosition({ x: ev.clientX, y: ev.clientY });
+ *         showMenu(ev, new PriorityMenu(task));
  *     });
  *     editTaskPencil.setAttribute('title', 'Right-click for options');
  */

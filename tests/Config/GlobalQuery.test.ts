@@ -25,6 +25,15 @@ describe('GlobalQuery tests', () => {
         expect(globalQuery.query().source).toEqual('description includes this should be the source of the query');
     });
 
+    it('should reset the query', () => {
+        const globalQuery = new GlobalQuery('description includes I should be reset');
+
+        globalQuery.reset();
+
+        expect(globalQuery.hasInstructions()).toEqual(false);
+        expect(globalQuery.query().source).toEqual('');
+    });
+
     it('should update the query', () => {
         const globalQuery = new GlobalQuery('# this should be overridden');
         globalQuery.set('# this should be the new global query');

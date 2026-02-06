@@ -1,8 +1,8 @@
-# SlrVb's Alternative Checkboxes
+# SlrVb's Alternate Checkboxes
 
 ## Background
 
-This page demonstrates SlRvb's [Alternate-Checkboxes](https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md) from the [ITS-Theme.](https://github.com/SlRvb/Obsidian--ITS-Theme), with the Tasks plugin installed.
+This page demonstrates SlRvb's [Alternate-Checkboxes](https://publish.obsidian.md/slrvb-docs/ITS+Theme/Alternate+Checkboxes) from the [ITS-Theme.](https://github.com/SlRvb/Obsidian--ITS-Theme), with the Tasks plugin installed.
 
 It was created to test the fix for [Tasks Issue #520: In combination with SlrVb's S-Checkbox CSS, Task Plugin breaks that style](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/520).
 
@@ -15,14 +15,14 @@ It was created to test the fix for [Tasks Issue #520: In combination with SlrVb'
 
 ### Use
 
-The tasks below should look like one of the images in the [Alternate Checkboxes documentation](https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md), depending on your display settings.
+The tasks below should look like one of the images in the [Alternate Checkboxes documentation](https://publish.obsidian.md/slrvb-docs/ITS+Theme/Alternate+Checkboxes), depending on your display settings.
 
 ## One of each task status
 
 - These are grouped by whether Tasks sees them as Done or Todo.
 - Their appearance can be modified by going to the options for the Style Settings plugin.
 
-Available task states, as of version `7cb837d73d3f39e056d0be8c98539577529c0f90` of SlRvb's Checkboxes snippet:
+Available task states, as of version `990fd3c0b9d9f1cbb17f956e3a2433c59868b82d` of SlRvb's Checkboxes snippet:
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md -->
 
@@ -31,6 +31,7 @@ Available task states, as of version `7cb837d73d3f39e056d0be8c98539577529c0f90` 
 - [X] #task `X` Checked
 - [-] #task `-` Dropped
 - [>] #task `>` Forward
+- [<] #task `<` Migrated
 - [D] #task `D` Date
 - [?] #task `?` Question
 - [/] #task `/` Half Done
@@ -63,6 +64,7 @@ Available task states, as of version `7cb837d73d3f39e056d0be8c98539577529c0f90` 
 - [H] #task `H` Favorite / Health
 - [&] #task `&` Symbolism
 - [s] #task `s` Secret
+
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
