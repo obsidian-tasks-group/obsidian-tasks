@@ -3,8 +3,9 @@
  */
 
 import moment from 'moment';
-import { setStatusOnLine } from '../../src/Commands/CreateSetStatusLineTransformer';
+import { createSetStatusCommands, setStatusOnLine } from '../../src/Commands/CreateSetStatusLineTransformer';
 import { Status } from '../../src/Statuses/Status';
+import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 
 window.moment = moment;
 
@@ -38,5 +39,18 @@ describe('setStatusOnLine', () => {
         const lines = result!.text.split('\n');
         expect(lines.length).toBeGreaterThan(1);
         expect(result!.moveTo).toEqual({ line: lines.length - 1 });
+    });
+});
+
+describe('Set Status Commands', () => {
+    it('should not create commands for Empty statuses', () => {
+        // Users can create a new status, and then not populate it.
+        // These are 'empty' statuses; the status symbol is an empty string.
+        const registry = new StatusRegistry();
+        registry.clearStatuses();
+        registry.add(Status.EMPTY);
+
+        const commands = createSetStatusCommands(registry);
+        expect(commands.length).toBe(0);
     });
 });
