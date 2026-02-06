@@ -47,6 +47,10 @@ export const createSetStatusLineTransformer = (newStatus: Status): LineTransform
     };
 };
 
+/**
+ * Create set-status commands for each registered status
+ * @param statusRegistry
+ */
 export function createSetStatusCommands(statusRegistry: StatusRegistry): Command[] {
     const statusInstructions = allStatusInstructions(statusRegistry);
     const setStatusCommands: Command[] = [];
