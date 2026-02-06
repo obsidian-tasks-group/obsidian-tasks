@@ -1,4 +1,4 @@
-import type { App, Editor, MarkdownFileInfo, MarkdownView, TFile, View } from 'obsidian';
+import type { App, Command, Editor, MarkdownFileInfo, MarkdownView, TFile, View } from 'obsidian';
 import type TasksPlugin from '../main';
 import { allStatusInstructions } from '../ui/EditInstructions/StatusInstructions';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
@@ -66,6 +66,7 @@ export class Commands {
         // Register set-status commands for each registered status
         const statusRegistry = StatusRegistry.getInstance();
         const statusInstructions = allStatusInstructions(statusRegistry);
+        const setStatusCommands: Command[] = [];
         for (const instruction of statusInstructions) {
             const status = instruction.newStatus;
             const nameSlug = status.name.toLowerCase().replace(/\s+/g, '-');
@@ -75,6 +76,7 @@ export class Commands {
                 name: instruction.instructionDisplayName(),
                 editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
             };
+            setStatusCommands.push(command);
             plugin.addCommand(command);
         }
     }
