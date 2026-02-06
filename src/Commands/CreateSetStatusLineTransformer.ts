@@ -1,9 +1,11 @@
-import { Notice } from 'obsidian';
+import { type Command, Notice } from 'obsidian';
 import { TasksFile } from '../Scripting/TasksFile';
 import type { Status } from '../Statuses/Status';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
-import type { EditorInsertion, LineTransformer } from './CreateEditorCallback';
+import type { StatusRegistry } from '../Statuses/StatusRegistry';
+import { allStatusInstructions } from '../ui/EditInstructions/StatusInstructions';
+import { type EditorInsertion, type LineTransformer, createEditorCallback } from './CreateEditorCallback';
 
 /**
  * Sets a task's status on a single line, returning the new text and cursor position.
@@ -44,3 +46,20 @@ export const createSetStatusLineTransformer = (newStatus: Status): LineTransform
         return result;
     };
 };
+
+export function createSetStatusCommands(statusRegistry: StatusRegistry): Command[] {
+    const statusInstructions = allStatusInstructions(statusRegistry);
+    const setStatusCommands: Command[] = [];
+    for (const instruction of statusInstructions) {
+        const status = instruction.newStatus;
+        const nameSlug = status.name.toLowerCase().replace(/\s+/g, '-');
+
+        const command = {
+            id: `set-status-${nameSlug}`,
+            name: instruction.instructionDisplayName(),
+            editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
+        };
+        setStatusCommands.push(command);
+    }
+    return setStatusCommands;
+}
