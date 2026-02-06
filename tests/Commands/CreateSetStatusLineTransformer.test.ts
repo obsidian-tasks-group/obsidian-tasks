@@ -44,9 +44,13 @@ describe('setStatusOnLine', () => {
 });
 
 describe('Set Status Commands', () => {
-    it('should only create commands for the first of any statuses with duplicate symbols', () => {
-        const registry = new StatusRegistry();
+    let registry: StatusRegistry;
+    beforeEach(() => {
+        registry = new StatusRegistry();
         registry.clearStatuses();
+    });
+
+    it('should only create commands for the first of any statuses with duplicate symbols', () => {
         registry.add(new StatusConfiguration('A', 'Status 1', ' ', true, StatusType.TODO));
         registry.add(new StatusConfiguration('A', 'Status 2 - I should be ignored', ' ', true, StatusType.TODO));
 
@@ -58,8 +62,6 @@ describe('Set Status Commands', () => {
     it('should not create commands for Empty statuses', () => {
         // Users can create a new status, and then not populate it.
         // These are 'empty' statuses; the status symbol is an empty string.
-        const registry = new StatusRegistry();
-        registry.clearStatuses();
         registry.add(Status.EMPTY);
 
         const commands = createSetStatusCommands(registry);
