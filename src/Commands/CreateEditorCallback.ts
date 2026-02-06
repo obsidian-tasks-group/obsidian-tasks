@@ -69,7 +69,7 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
                 return false;
             }
 
-            // TODO - Decide if we want to only show these commands on task lines
+            // TODO - Decide if we want to only show these commands on lines which are tasks
             return true;
         }
 
