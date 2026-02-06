@@ -9,6 +9,23 @@ import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProp
 import { createEditorCallback } from './CreateEditorCallback';
 import { createSetStatusLineTransformer } from './CreateSetStatusLineTransformer';
 
+function createSetStatusCommands(statusRegistry: StatusRegistry): Command[] {
+    const statusInstructions = allStatusInstructions(statusRegistry);
+    const setStatusCommands: Command[] = [];
+    for (const instruction of statusInstructions) {
+        const status = instruction.newStatus;
+        const nameSlug = status.name.toLowerCase().replace(/\s+/g, '-');
+
+        const command = {
+            id: `set-status-${nameSlug}`,
+            name: instruction.instructionDisplayName(),
+            editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
+        };
+        setStatusCommands.push(command);
+    }
+    return setStatusCommands;
+}
+
 export class Commands {
     private readonly plugin: TasksPlugin;
 
@@ -65,19 +82,7 @@ export class Commands {
 
         // Register set-status commands for each registered status
         const statusRegistry = StatusRegistry.getInstance();
-        const statusInstructions = allStatusInstructions(statusRegistry);
-        const setStatusCommands: Command[] = [];
-        for (const instruction of statusInstructions) {
-            const status = instruction.newStatus;
-            const nameSlug = status.name.toLowerCase().replace(/\s+/g, '-');
-
-            const command = {
-                id: `set-status-${nameSlug}`,
-                name: instruction.instructionDisplayName(),
-                editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
-            };
-            setStatusCommands.push(command);
-        }
+        const setStatusCommands = createSetStatusCommands(statusRegistry);
         for (const command of setStatusCommands) {
             plugin.addCommand(command);
         }
