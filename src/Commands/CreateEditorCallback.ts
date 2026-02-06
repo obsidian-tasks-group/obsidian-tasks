@@ -69,10 +69,7 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
                 return false;
             }
 
-            // The command should always trigger in a markdown view:
-            // - Convert lines to list items.
-            // - Convert list items to tasks.
-            // - Toggle tasks' status.
+            // TODO - Decide if we want to only show these commands on task lines
             return true;
         }
 
