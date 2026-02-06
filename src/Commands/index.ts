@@ -64,7 +64,8 @@ export class Commands {
         });
 
         // Register set-status commands for each registered status
-        const statusInstructions = allStatusInstructions(StatusRegistry.getInstance());
+        const statusRegistry = StatusRegistry.getInstance();
+        const statusInstructions = allStatusInstructions(statusRegistry);
         for (const instruction of statusInstructions) {
             const status = instruction.newStatus;
             const nameSlug = status.name.toLowerCase().replace(/\s+/g, '-');
