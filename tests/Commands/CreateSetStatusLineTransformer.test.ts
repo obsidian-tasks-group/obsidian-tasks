@@ -50,6 +50,21 @@ describe('Set Status Commands', () => {
         registry.clearStatuses();
     });
 
+    it('should generate expected id and name', () => {
+        registry.add(Status.TODO);
+        registry.add(Status.IN_PROGRESS);
+
+        const commands = createSetStatusCommands(registry);
+
+        expect(commands.length).toBe(2);
+
+        expect(commands[0].id).toBe('set-status-todo');
+        expect(commands[0].name).toBe('Change status to: [ ] Todo');
+
+        expect(commands[1].id).toBe('set-status-in-progress');
+        expect(commands[1].name).toBe('Change status to: [/] In Progress');
+    });
+
     it('should only create commands for the first of any statuses with duplicate symbols', () => {
         registry.add(new StatusConfiguration('A', 'Status 1', ' ', true, StatusType.TODO));
         registry.add(new StatusConfiguration('A', 'Status 2 - I should be ignored', ' ', true, StatusType.TODO));
