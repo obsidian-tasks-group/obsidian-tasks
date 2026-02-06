@@ -70,11 +70,12 @@ export class Commands {
             const status = instruction.newStatus;
             const nameSlug = status.name.toLowerCase().replace(/\s+/g, '-');
 
-            plugin.addCommand({
+            const command = {
                 id: `set-status-${nameSlug}`,
                 name: instruction.instructionDisplayName(),
                 editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
-            });
+            };
+            plugin.addCommand(command);
         }
     }
 
