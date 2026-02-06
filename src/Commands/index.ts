@@ -62,8 +62,7 @@ export class Commands {
         });
 
         // Register set-status commands for each registered status
-        const statusRegistry = StatusRegistry.getInstance();
-        const setStatusCommands = createSetStatusCommands(statusRegistry);
+        const setStatusCommands = createSetStatusCommands(StatusRegistry.getInstance());
         for (const command of setStatusCommands) {
             plugin.addCommand(command);
         }
