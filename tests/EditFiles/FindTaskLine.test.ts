@@ -75,7 +75,7 @@ describe('findTaskLineWithFallbacks', () => {
             const task = new TaskBuilder().description('my description').lineNumber(1).build();
 
             // No cursor provided, should use lineNumber
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             expect(result).toBe(1);
             expect(visualiseFoundLine(lines, result)).toMatchInlineSnapshot(`
@@ -97,7 +97,7 @@ describe('findTaskLineWithFallbacks', () => {
             // Task thinks it's on line 1, but content moved to line 2
             const task = new TaskBuilder().description('my description').lineNumber(1).build();
 
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             // Should find via content search at line 2
             expect(result).toBe(2);
@@ -129,7 +129,7 @@ describe('findTaskLineWithFallbacks', () => {
             // lineNumber(2) points to a line with matching content - found via strategy 2
             const task = new TaskBuilder().description('duplicate task').lineNumber(2).build();
 
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             expect(result).toBe(2);
             expect(visualiseFoundLine(lines, result)).toMatchInlineSnapshot(`
@@ -163,7 +163,7 @@ describe('findTaskLineWithFallbacks', () => {
             // Task's lineNumber is wrong (says 1), but content search should find it at 3
             const task = new TaskBuilder().description('my description').lineNumber(1).build();
 
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             expect(result).toBe(3);
             expect(visualiseFoundLine(lines, result)).toMatchInlineSnapshot(`
@@ -228,7 +228,7 @@ describe('findTaskLineWithFallbacks', () => {
             // lineNumber(5) is intentionally out of bounds to force fallback to flexible search.
             const task = new TaskBuilder().description('my description').lineNumber(5).build();
 
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             // Should find via flexible search (contains '- [' and description)
             expect(result).toBe(1);
@@ -251,7 +251,7 @@ describe('findTaskLineWithFallbacks', () => {
             // lineNumber(5) is intentionally out of bounds to force fallback to flexible search.
             const task = new TaskBuilder().description('my description').lineNumber(5).build();
 
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             // Flexible search finds line containing the description
             expect(result).toBe(1);
@@ -354,7 +354,7 @@ describe('findTaskLineWithFallbacks', () => {
             // Content search would also find line 2
             const task = new TaskBuilder().description('my description').lineNumber(0).build();
 
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             // Should return 0 (line number match) - content search isn't needed
             expect(result).toBe(0);
@@ -377,7 +377,7 @@ describe('findTaskLineWithFallbacks', () => {
             // lineNumber(5) is out of bounds, no cursor, description doesn't match
             const task = new TaskBuilder().description('nonexistent task').lineNumber(5).build();
 
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             expect(result).toBe(-1);
             expect(visualiseFoundLine(lines, result)).toMatchInlineSnapshot(`
@@ -397,7 +397,7 @@ describe('findTaskLineWithFallbacks', () => {
 
             const task = new TaskBuilder().description('any task').lineNumber(0).build();
 
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             expect(result).toBe(-1);
             expect(visualiseFoundLine(lines, result)).toMatchInlineSnapshot(`
@@ -447,7 +447,7 @@ describe('findTaskLineWithFallbacks', () => {
             const task = new TaskBuilder().description('indented child').indentation('    ').lineNumber(1).build();
 
             // Without cursor, should find via line number match (line 1 content matches)
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             expect(result).toBe(1);
             expect(visualiseFoundLine(lines, result)).toMatchInlineSnapshot(`
@@ -474,7 +474,7 @@ describe('findTaskLineWithFallbacks', () => {
             // lineNumber(1) won't match because indentation differs
             // Content search won't find exact match
             // Flexible search WILL find it because it just looks for description
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             expect(result).toBe(1); // Found via flexible search
             expect(visualiseFoundLine(lines, result)).toMatchInlineSnapshot(`
@@ -496,7 +496,7 @@ describe('findTaskLineWithFallbacks', () => {
             const task = new TaskBuilder().description('task one').lineNumber(-1).build();
 
             // Should fall back to content search
-            const result = findTaskLineWithFallbacks(lines, task, undefined);
+            const result = findTaskLineWithFallbacks(lines, task);
 
             expect(result).toBe(0);
             expect(visualiseFoundLine(lines, result)).toMatchInlineSnapshot(`
