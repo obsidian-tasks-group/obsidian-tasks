@@ -1,0 +1,77 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "Section 1",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 1,
+            "offset": 22
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 12
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 1,
+            "offset": 22
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 12
+          }
+        },
+        "type": "list"
+      }
+    ]
+  },
+  "fileContents": "# Section 1\n- [ ] Task\n",
+  "filePath": "Test Data/editing_tasks_one_heading_one_task.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}
