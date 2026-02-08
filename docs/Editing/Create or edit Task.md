@@ -113,13 +113,14 @@ The screenshot below is from a Mac.
 ![The date-picker allows easy mouse and keyboard adding and editing of dates](../images/modal-date-picker.png)
 <span class="caption">The date-picker allows easy mouse and keyboard adding and editing of dates</span>
 
-##### Calendar first day of week
+##### Calendar appearance
 
-The date picker calendar respects the "First day of week" setting from Settings → Tasks.
+Since the modal uses a **native date picker** provided by your operating system, the calendar's appearance and behavior (including which day of the week appears first) is controlled by your **system settings**, not by the Tasks plugin.
 
-If the calendar doesn't start on your preferred day, change the setting at Settings → Tasks → First day of week.
+If you want to change which day the calendar starts on, you'll need to adjust your operating system's locale or regional settings.
 
-See [[Settings#First day of week|First day of week setting]] for available options.
+> [!Note]
+> The Tasks plugin's "First day of week" setting (Settings → Tasks → First day of week) does **not** affect this native date picker. That setting only applies to the flatpickr calendar used when clicking dates in Reading mode and query results. See [[Settings#First day of week|First day of week setting]] and [[Editing Dates#Date-picker on task dates|Date picker on task dates]] for more information.
 
 #### Date abbreviations
 

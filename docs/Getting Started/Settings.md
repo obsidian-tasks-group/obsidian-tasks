@@ -65,4 +65,4 @@ The "Locale default" option automatically detects your system's preference, but 
 ### See Also
 
 - [[Editing Dates#Date picker on task dates|Date picker on task dates]]
-- [[Create or edit Task#Date picker|Date picker in Edit Task modal]]
+- [[Create or edit Task#Date picker|Date picker in Edit Task modal]] (uses native date picker, not affected by this setting)
