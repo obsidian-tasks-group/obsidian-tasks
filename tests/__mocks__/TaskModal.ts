@@ -9,7 +9,6 @@ export class TaskModal {
     public readonly app: App;
     public readonly task: Task;
     public readonly onSubmit: (updateTasks: Task[]) => void;
-    public readonly onCancel?: () => void;
     public readonly allTasks: Task[];
 
     public readonly open: () => void;
@@ -29,8 +28,13 @@ export class TaskModal {
     }) {
         this.app = app;
         this.task = task;
-        this.onSubmit = onSubmit;
-        this.onCancel = onCancel;
+        this.onSubmit = (updatedTasks: Task[]) => {
+            if (updatedTasks.length > 0) {
+                onSubmit(updatedTasks);
+            } else if (onCancel) {
+                onCancel();
+            }
+        };
         this.open = jest.fn();
         this.allTasks = allTasks || [];
 
@@ -38,10 +42,6 @@ export class TaskModal {
     }
 
     public cancel(): void {
-        if (this.onCancel) {
-            this.onCancel();
-        } else {
-            this.onSubmit([]);
-        }
+        this.onSubmit([]);
     }
 }

@@ -14,8 +14,8 @@ const createNewTask = (line = ''): Task => {
 
 jest.mock('../../src/Obsidian/TaskModal', () => {
     return {
-        TaskModal: jest.fn(({ app, task, onSubmit, allTasks }: TaskModalParams) => {
-            return new TaskModal({ app, task, onSubmit, allTasks });
+        TaskModal: jest.fn(({ app, task, onSubmit, onCancel, allTasks }: TaskModalParams) => {
+            return new TaskModal({ app, task, onSubmit, onCancel, allTasks });
         }),
     };
 });
