@@ -132,9 +132,12 @@ describe('QueryResultsRenderer - rendering queries', () => {
 
     it('should render search-time error', async () => {
         const source = 'sort by function task.linenumer';
-        const noTasks: Task[] = [new TaskBuilder().description('123').build(), TaskBuilder.createFullyPopulatedTask()];
-        // This result is wrong, it says `0 tasks` instead of reporting an error, see #3736
-        await verifyRenderedHtml(noTasks, source);
+        const twoTasks: Task[] = [
+            new TaskBuilder().description('first').build(),
+            new TaskBuilder().description('second').build(),
+        ];
+
+        await verifyRenderedHtml(twoTasks, source);
     });
 });
 
