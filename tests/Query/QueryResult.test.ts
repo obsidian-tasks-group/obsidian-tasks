@@ -48,8 +48,8 @@ describe('QueryResult', () => {
         expect(query.error).toBeUndefined();
 
         const queryResult = query.applyQueryToTasks([
-            new TaskBuilder().description('a task').build(),
-            TaskBuilder.createFullyPopulatedTask(),
+            new TaskBuilder().description('first').build(),
+            new TaskBuilder().description('second').build(),
         ]);
         expect(queryResult.searchErrorMessage).toContain(
             'Error: "undefined" is not a valid sort key: while evaluating instruction \'sort by function task.linenumer\'',
