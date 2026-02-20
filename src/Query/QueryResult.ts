@@ -105,6 +105,10 @@ export class QueryResult {
      * @param filter
      */
     public applyFilter(filter: Filter): QueryResult {
+        if (this._searchErrorMessage) {
+            return QueryResult.fromError(this._searchErrorMessage);
+        }
+
         const queryResultTasks = this.taskGroups.groups.flatMap((group) => group.tasks);
         const searchInfo = new SearchInfo(new TasksFile('fix_me.md'), queryResultTasks);
         const filterFunction = (task: Task) => filter.filterFunction(task, searchInfo);

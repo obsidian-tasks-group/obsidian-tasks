@@ -43,7 +43,7 @@ describe('QueryResult', () => {
         expect(queryResult.searchErrorMessage).toBeUndefined();
     });
 
-    it.failing('should preserve run-time errors', () => {
+    it('should preserve run-time errors', () => {
         const query = new Query('sort by function task.linenumer');
         expect(query.error).toBeUndefined();
 
