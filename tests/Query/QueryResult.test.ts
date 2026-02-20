@@ -43,6 +43,27 @@ describe('QueryResult', () => {
         expect(queryResult.searchErrorMessage).toBeUndefined();
     });
 
+    it.failing('should preserve run-time errors', () => {
+        const query = new Query('sort by function task.linenumer');
+        expect(query.error).toBeUndefined();
+
+        const queryResult = query.applyQueryToTasks([
+            new TaskBuilder().description('a task').build(),
+            TaskBuilder.createFullyPopulatedTask(),
+        ]);
+        expect(queryResult.searchErrorMessage).toContain(
+            'Error: "undefined" is not a valid sort key: while evaluating instruction \'sort by function task.linenumer\'',
+        );
+
+        const { filter } = new DescriptionField().createFilterOrErrorMessage('description includes anything');
+        expect(filter).toBeDefined();
+
+        const filteredResult = queryResult.applyFilter(filter!);
+        expect(filteredResult.searchErrorMessage).toContain(
+            'Error: "undefined" is not a valid sort key: while evaluating instruction \'sort by function task.linenumer\'',
+        );
+    });
+
     it('should be able to store an error message if the search fails', () => {
         // Arrange, Act:
         const message = 'I did not work';
