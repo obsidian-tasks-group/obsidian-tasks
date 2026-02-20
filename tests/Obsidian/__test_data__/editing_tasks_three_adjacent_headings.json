@@ -1,0 +1,106 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "heading 1",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      },
+      {
+        "heading": "heading 2",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 1,
+            "offset": 23
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 12
+          }
+        }
+      },
+      {
+        "heading": "heading 3",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 35
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 24
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 1,
+            "offset": 23
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 12
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 35
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 24
+          }
+        },
+        "type": "heading"
+      }
+    ]
+  },
+  "fileContents": "# heading 1\n# heading 2\n# heading 3\n",
+  "filePath": "Test Data/editing_tasks_three_adjacent_headings.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}
