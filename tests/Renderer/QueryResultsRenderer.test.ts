@@ -129,6 +129,13 @@ describe('QueryResultsRenderer - rendering queries', () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         await verifyRenderedHtml(allTasks, 'show urgency\nshort mode');
     });
+
+    it('should render parse-time error', async () => {
+        const source = 'sort by function task.linenumer';
+        const noTasks: Task[] = [new TaskBuilder().description('123').build(), TaskBuilder.createFullyPopulatedTask()];
+        // This result is wrong, it says `0 tasks` instead of reporting an error, see #3736
+        await verifyRenderedHtml(noTasks, source);
+    });
 });
 
 describe('QueryResultsRenderer - responding to file edits', () => {
