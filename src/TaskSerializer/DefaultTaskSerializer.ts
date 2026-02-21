@@ -312,7 +312,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
             const regex = TaskFormatRegularExpressions.doneDateRegex;
             const doneDateMatch = state.line.match(regex);
             if (doneDateMatch !== null) {
-                doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
+                const date = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
+                doneDate = date;
                 state.line = state.line.replace(regex, '').trim();
                 state.matched = true;
             }
