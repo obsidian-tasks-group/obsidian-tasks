@@ -144,8 +144,6 @@ export class Task extends ListItem {
         this.createdDate = createdDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
-        // When spreading a Task, the dueDate getter won't be copied, but the private field (_dueDate) will be included in args.
-        // If dueDate parameter is explicitly passed, use it. Otherwise, recover from the spread object's _dueDate.
         this._dueDate = this.resolveDate(dueDate, args._dueDate);
         this.doneDate = doneDate;
         this.cancelledDate = cancelledDate;
@@ -161,6 +159,21 @@ export class Task extends ListItem {
         this.scheduledDateIsInferred = scheduledDateIsInferred;
     }
 
+    /**
+     * Resolve a date field when spreading a Task object.
+     *
+     * When a Task is spread (`new Task({ ...task, ... })`), date field getters are not copied
+     * (getters aren't own properties), but the private field values are included in the spread object.
+     *
+     * This helper prioritizes explicitly passed parameters over recovered private field values:
+     * - If the parameter is explicitly provided (even null), use it
+     * - Otherwise, use the recovered private field value
+     * - If both are undefined, default to null
+     *
+     * @param paramValue - The date parameter explicitly passed to the constructor
+     * @param recoveredValue - The private field value recovered from the spread object
+     * @returns The resolved date value, or null if neither value exists
+     */
     private resolveDate(paramValue: moment.Moment | null | undefined, recoveredValue: any): any {
         return paramValue !== undefined ? paramValue : recoveredValue ?? null;
     }
