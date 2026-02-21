@@ -278,6 +278,19 @@ export class DefaultTaskSerializer implements TaskSerializer {
         }
     }
 
+    /**
+     * Attempt to match and extract a generic field from the parsing state.
+     * Updates state.line and state.matched if a match is found.
+     */
+    private extractField(state: ParsingState, regex: RegExp, setter: (match: RegExpMatchArray) => void): void {
+        const match: RegExpMatchArray | null = state.line.match(regex);
+        if (match !== null) {
+            setter(match);
+            state.line = state.line.replace(regex, '').trim();
+            state.matched = true;
+        }
+    }
+
     /* Parse TaskDetails from the textual description of a {@link Task}
      *
      * @param line The string to parse
@@ -336,12 +349,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 // and it might appear in the next (earlier in the line) tokens to parse
                 recurrenceRule = match[1].trim();
             };
-            const match: RegExpMatchArray | null = state.line.match(regex);
-            if (match !== null) {
-                setter(match);
-                state.line = state.line.replace(regex, '').trim();
-                state.matched = true;
-            }
+            this.extractField(state, regex, setter);
 
             const onCompletionMatch = state.line.match(TaskFormatRegularExpressions.onCompletionRegex);
             if (onCompletionMatch != null) {
