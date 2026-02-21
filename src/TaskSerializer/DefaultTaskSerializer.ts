@@ -270,7 +270,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
      * Updates state.line and state.matched if a match is found.
      */
     private extractDateField(state: ParsingState, regex: RegExp, setter: (date: Moment) => void): void {
-        this.extractField(state, regex, (match) => setter(window.moment(match[1], TaskRegularExpressions.dateFormat)));
+        this.extractField(state, regex, (match) => {
+            setter(window.moment(match[1], TaskRegularExpressions.dateFormat));
+        });
     }
 
     /**
