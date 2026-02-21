@@ -146,8 +146,7 @@ export class Task extends ListItem {
         this.scheduledDate = scheduledDate;
         // When spreading a Task, the dueDate getter won't be copied, but the private field (_dueDate) will be included in args.
         // If dueDate parameter is explicitly passed, use it. Otherwise, recover from the spread object's _dueDate.
-        const recoveredValue = args._dueDate;
-        this._dueDate = this.resolveDate(dueDate, recoveredValue);
+        this._dueDate = this.resolveDate(dueDate, args._dueDate);
         this.doneDate = doneDate;
         this.cancelledDate = cancelledDate;
 
