@@ -31,14 +31,15 @@ afterEach(() => {
 });
 
 describe('immutability', () => {
+    const inputDate = '2024-02-28 12:34';
+    const parsedDate = '2024-02-28T12:34:00.000Z';
+
     it.failing('should not be possible to edit a date Moment after Task creation', () => {
         // TODO Make Task's use of Moment immutable - always return a clone of the stored Moment.
         //      https://momentjscom.readthedocs.io/en/latest/moment/01-parsing/12-moment-clone/
 
-        const inputDate = '2024-02-28 12:34';
         const task = new Task({ ...new TaskBuilder().build(), dueDate: moment(inputDate) });
 
-        const parsedDate = '2024-02-28T12:34:00.000Z';
         expect(task.dueDate).toEqualMoment(moment(parsedDate));
 
         task.dueDate?.startOf('day');
@@ -48,7 +49,6 @@ describe('immutability', () => {
     });
 
     it.failing('should not be possible to edit dates from happensDates after Task creation', () => {
-        const inputDate = '2024-02-28 12:34';
         const task = new Task({
             ...new TaskBuilder().build(),
             startDate: moment(inputDate),
@@ -56,7 +56,6 @@ describe('immutability', () => {
             dueDate: moment(inputDate),
         });
 
-        const parsedDate = '2024-02-28T12:34:00.000Z';
         expect(task.startDate).toEqualMoment(moment(parsedDate));
         expect(task.scheduledDate).toEqualMoment(moment(parsedDate));
         expect(task.dueDate).toEqualMoment(moment(parsedDate));
@@ -77,11 +76,9 @@ describe('immutability', () => {
         // TODO Make TasksDate objects immutable - always return a clone of the stored Moment.
         //      https://momentjscom.readthedocs.io/en/latest/moment/01-parsing/12-moment-clone/
 
-        const inputDate = '2024-02-28 12:34';
         const task = new Task({ ...new TaskBuilder().build(), dueDate: moment(inputDate) });
 
         const due: TasksDate = task.due;
-        const parsedDate = '2024-02-28T12:34:00.000Z';
         expect(due.moment).toEqualMoment(moment(parsedDate));
 
         due.moment?.startOf('day');
