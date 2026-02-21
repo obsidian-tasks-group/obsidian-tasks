@@ -330,7 +330,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             this.extractDateField(state, TaskFormatRegularExpressions.createdDateRegex, (d) => (createdDate = d));
 
             const regex = TaskFormatRegularExpressions.recurrenceRegex;
-            const match = state.line.match(regex);
+            const match: RegExpMatchArray | null = state.line.match(regex);
             if (match !== null) {
                 // Save the recurrence rule, but *do not parse it yet*.
                 // Creating the Recurrence object requires a reference date (e.g. a due date),
