@@ -49,7 +49,7 @@ export class Task extends ListItem {
     public readonly createdDate: Moment | null;
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
-    public readonly dueDate: Moment | null;
+    private readonly _dueDate: Moment | null;
     public readonly doneDate: Moment | null;
     public readonly cancelledDate: Moment | null;
 
@@ -67,30 +67,17 @@ export class Task extends ListItem {
 
     private _urgency: number | null = null;
 
-    constructor({
-        // NEW_TASK_FIELD_EDIT_REQUIRED
-        status,
-        description,
-        taskLocation,
-        indentation,
-        listMarker,
-        priority,
-        createdDate,
-        startDate,
-        scheduledDate,
-        dueDate,
-        doneDate,
-        cancelledDate,
-        recurrence,
-        onCompletion,
-        dependsOn,
-        id,
-        blockLink,
-        tags,
-        originalMarkdown,
-        scheduledDateIsInferred,
-        parent = null,
-    }: {
+    /**
+     * Constructs a Task from the provided fields.
+     *
+     * Note: The `args` parameter keeps a reference to the original object passed to the constructor.
+     * This is necessary to recover the private dueDate field when spreading a Task object.
+     *
+     * When spreading a Task (`new Task({ ...task, id: newId })`), the dueDate getter is not copied,
+     * but the private field (_dueDate) is included in the object. We use the `args` reference to access
+     * it if the dueDate parameter is undefined.
+     */
+    constructor(args: {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         status: Status;
         description: string;
@@ -101,7 +88,7 @@ export class Task extends ListItem {
         createdDate: moment.Moment | null;
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
-        dueDate: moment.Moment | null;
+        dueDate?: moment.Moment | null;
         doneDate: moment.Moment | null;
         cancelledDate: moment.Moment | null;
         recurrence: Recurrence | null;
@@ -113,7 +100,31 @@ export class Task extends ListItem {
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
         parent?: ListItem | null;
+        [key: string]: any; // Allows access to spread private fields like _dueDate
     }) {
+        const {
+            status,
+            description,
+            taskLocation,
+            indentation,
+            listMarker,
+            priority,
+            createdDate,
+            startDate,
+            scheduledDate,
+            dueDate,
+            doneDate,
+            cancelledDate,
+            recurrence,
+            onCompletion,
+            dependsOn,
+            id,
+            blockLink,
+            tags,
+            originalMarkdown,
+            scheduledDateIsInferred,
+            parent,
+        } = args;
         super({
             originalMarkdown,
             indentation,
@@ -121,7 +132,7 @@ export class Task extends ListItem {
             statusCharacter: status.symbol,
             description,
             taskLocation,
-            parent,
+            parent: parent ?? null,
         });
         // NEW_TASK_FIELD_EDIT_REQUIRED
         this.status = status;
@@ -133,7 +144,9 @@ export class Task extends ListItem {
         this.createdDate = createdDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
-        this.dueDate = dueDate;
+        // When spreading a Task, the dueDate getter won't be copied, but the private field (_dueDate) will be included in args.
+        // If dueDate parameter is explicitly passed, use it. Otherwise, recover from the spread object's _dueDate.
+        this._dueDate = dueDate !== undefined ? dueDate : args._dueDate ?? null;
         this.doneDate = doneDate;
         this.cancelledDate = cancelledDate;
 
@@ -639,6 +652,10 @@ export class Task extends ListItem {
         return new TasksDate(this.doneDate);
     }
 
+    public get dueDate(): Moment | null {
+        return this._dueDate?.clone() ?? null;
+    }
+
     /**
      * Return {@link dueDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
@@ -808,10 +825,12 @@ export class Task extends ListItem {
         }
 
         // Compare Date fields
+        // For dueDate, access the private field (_dueDate) to avoid comparing fresh clones.
+        // For other dates, use the public fields directly since they are not cloned.
         args = Task.allDateFields();
         for (const el of args) {
-            const date1 = this[el] as Moment | null;
-            const date2 = other[el] as Moment | null;
+            const date1 = el === 'dueDate' ? (this as any)._dueDate : (this as any)[el];
+            const date2 = el === 'dueDate' ? (other as any)._dueDate : (other as any)[el];
             if (compareByDate(date1, date2) !== 0) {
                 return false;
             }

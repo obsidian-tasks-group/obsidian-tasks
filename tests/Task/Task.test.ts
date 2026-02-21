@@ -34,17 +34,12 @@ describe('immutability', () => {
     const inputDate = '2024-02-28 12:34';
     const parsedDate = '2024-02-28T12:34:00.000Z';
 
-    it.failing('should not be possible to edit a date Moment after Task creation', () => {
-        // TODO Make Task's use of Moment immutable - always return a clone of the stored Moment.
-        //      https://momentjscom.readthedocs.io/en/latest/moment/01-parsing/12-moment-clone/
-
+    it('should not be possible to edit a date Moment after Task creation', () => {
         const task = new Task({ ...new TaskBuilder().build(), dueDate: moment(inputDate) });
 
         expect(task.dueDate).toEqualMoment(moment(parsedDate));
 
         task.dueDate?.startOf('day');
-        // TODO This fails, giving '2024-02-28T00:00:00.000Z', as the startOf call edits the stored date.
-        //      See https://www.geeksforgeeks.org/moment-js-moment-startof-method/.
         expect(task.dueDate).toEqualMoment(moment(parsedDate));
     });
 
