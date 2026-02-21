@@ -47,6 +47,32 @@ describe('immutability', () => {
         expect(task.dueDate).toEqualMoment(moment(parsedDate));
     });
 
+    it.failing('should not be possible to edit dates from happensDates after Task creation', () => {
+        const inputDate = '2024-02-28 12:34';
+        const task = new Task({
+            ...new TaskBuilder().build(),
+            startDate: moment(inputDate),
+            scheduledDate: moment(inputDate),
+            dueDate: moment(inputDate),
+        });
+
+        const parsedDate = '2024-02-28T12:34:00.000Z';
+        expect(task.startDate).toEqualMoment(moment(parsedDate));
+        expect(task.scheduledDate).toEqualMoment(moment(parsedDate));
+        expect(task.dueDate).toEqualMoment(moment(parsedDate));
+
+        // Get happensDates and mutate all dates
+        const dates = task.happensDates;
+        for (const date of dates) {
+            date?.startOf('day');
+        }
+
+        // None of the task's dates should be affected
+        expect(task.startDate).toEqualMoment(moment(parsedDate));
+        expect(task.scheduledDate).toEqualMoment(moment(parsedDate));
+        expect(task.dueDate).toEqualMoment(moment(parsedDate));
+    });
+
     it.failing('should not be possible to edit a date TasksDate after Task creation', () => {
         // TODO Make TasksDate objects immutable - always return a clone of the stored Moment.
         //      https://momentjscom.readthedocs.io/en/latest/moment/01-parsing/12-moment-clone/
