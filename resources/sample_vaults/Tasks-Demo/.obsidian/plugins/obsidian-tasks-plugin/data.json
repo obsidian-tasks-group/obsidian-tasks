@@ -66,6 +66,19 @@
       }
     ]
   },
+  "isShownInEditModal": {
+    "priority": true,
+    "recurrence": true,
+    "due": true,
+    "scheduled": true,
+    "start": true,
+    "before_this": true,
+    "after_this": true,
+    "status": true,
+    "created": true,
+    "done": true,
+    "cancelled": true
+  },
   "features": {
     "INTERNAL_TESTING_ENABLED_BY_DEFAULT": true
   },
