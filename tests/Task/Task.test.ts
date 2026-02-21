@@ -36,7 +36,7 @@ describe('immutability', () => {
     const inputDate = '2024-02-28 12:34';
     const parsedDate = '2024-02-28T12:34:00.000Z';
 
-    it.each(['createdDate', 'startDate', 'dueDate'])(
+    it.each(['createdDate', 'startDate', 'scheduledDate', 'dueDate'])(
         'should not be possible to edit %s Moment after Task creation',
         (dateField) => {
             const task = new Task({ ...new TaskBuilder().build(), [dateField]: moment(inputDate) });
@@ -48,7 +48,7 @@ describe('immutability', () => {
         },
     );
 
-    it.failing('should not be possible to edit dates from happensDates after Task creation', () => {
+    it('should not be possible to edit dates from happensDates after Task creation', () => {
         const task = new Task({
             ...new TaskBuilder().build(),
             startDate: moment(inputDate),

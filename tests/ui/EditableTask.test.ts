@@ -161,6 +161,7 @@ describe('EditableTask tests', () => {
             Task {
               "_createdDate": null,
               "_dueDate": null,
+              "_scheduledDate": null,
               "_startDate": null,
               "_urgency": null,
               "blockLink": " ^dcf64c",
@@ -177,7 +178,6 @@ describe('EditableTask tests', () => {
               "parent": null,
               "priority": "3",
               "recurrence": null,
-              "scheduledDate": null,
               "scheduledDateIsInferred": false,
               "status": Status {
                 "configuration": StatusConfiguration {
