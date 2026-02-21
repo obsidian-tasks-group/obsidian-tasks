@@ -342,26 +342,26 @@ export class DefaultTaskSerializer implements TaskSerializer {
             this.extractDateField(state, TaskFormatRegularExpressions.startDateRegex, (d) => (startDate = d));
             this.extractDateField(state, TaskFormatRegularExpressions.createdDateRegex, (d) => (createdDate = d));
 
-            this.extractField(state, TaskFormatRegularExpressions.recurrenceRegex, (match: RegExpMatchArray) => {
+            this.extractField(state, TaskFormatRegularExpressions.recurrenceRegex, (match) => {
                 // Save the recurrence rule, but *do not parse it yet*.
                 // Creating the Recurrence object requires a reference date (e.g. a due date),
                 // and it might appear in the next (earlier in the line) tokens to parse
                 recurrenceRule = match[1].trim();
             });
 
-            this.extractField(state, TaskFormatRegularExpressions.onCompletionRegex, (match: RegExpMatchArray) => {
+            this.extractField(state, TaskFormatRegularExpressions.onCompletionRegex, (match) => {
                 onCompletion = parseOnCompletionValue(match[1]);
             });
 
             // Match tags from the end to allow users to mix the various task components with
             // tags. These tags will be added back to the description below
-            this.extractField(state, TaskRegularExpressions.hashTagsFromEnd, (match: RegExpMatchArray) => {
+            this.extractField(state, TaskRegularExpressions.hashTagsFromEnd, (match) => {
                 const tagName = match[0].trim();
                 // Adding to the left because the matching is done right-to-left
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             });
 
-            this.extractField(state, TaskFormatRegularExpressions.idRegex, (match: RegExpMatchArray) => {
+            this.extractField(state, TaskFormatRegularExpressions.idRegex, (match) => {
                 id = match[1].trim();
             });
 
