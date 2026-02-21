@@ -46,7 +46,7 @@ export class Task extends ListItem {
 
     public readonly priority: Priority;
 
-    public readonly createdDate: Moment | null;
+    public readonly _createdDate: Moment | null;
     public readonly _startDate?: Moment | null;
     public readonly scheduledDate: Moment | null;
     private readonly _dueDate: Moment | null;
@@ -85,7 +85,7 @@ export class Task extends ListItem {
         indentation: string;
         listMarker: string;
         priority: Priority;
-        createdDate: moment.Moment | null;
+        createdDate?: moment.Moment | null;
         startDate?: moment.Moment | null;
         scheduledDate: moment.Moment | null;
         dueDate?: moment.Moment | null;
@@ -141,7 +141,7 @@ export class Task extends ListItem {
 
         this.priority = priority;
 
-        this.createdDate = createdDate;
+        this._createdDate = this.resolveDate(createdDate, args._createdDate);
         this._startDate = this.resolveDate(startDate, args._startDate);
         this.scheduledDate = scheduledDate;
         this._dueDate = this.resolveDate(dueDate, args._dueDate);
@@ -653,6 +653,10 @@ export class Task extends ListItem {
      */
     public get cancelled(): TasksDate {
         return new TasksDate(this.cancelledDate);
+    }
+
+    public get createdDate(): Moment | null {
+        return this._createdDate?.clone() ?? null;
     }
 
     /**
