@@ -842,12 +842,10 @@ export class Task extends ListItem {
         }
 
         // Compare Date fields
-        // For dueDate, access the private field (_dueDate) to avoid comparing fresh clones.
-        // For other dates, use the public fields directly since they are not cloned.
         args = Task.allDateFields();
         for (const el of args) {
-            const date1 = el === 'dueDate' ? (this as any)._dueDate : (this as any)[el];
-            const date2 = el === 'dueDate' ? (other as any)._dueDate : (other as any)[el];
+            const date1 = this[el] as Moment | null;
+            const date2 = other[el] as Moment | null;
             if (compareByDate(date1, date2) !== 0) {
                 return false;
             }
