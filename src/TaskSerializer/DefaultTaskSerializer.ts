@@ -265,6 +265,20 @@ export class DefaultTaskSerializer implements TaskSerializer {
         }
     }
 
+    /**
+     * Attempt to match and extract a date field from the parsing state.
+     * Updates state.line and state.matched if a match is found.
+     */
+    private extractDateField(state: ParsingState, regex: RegExp, setter: (date: Moment) => void): void {
+        const doneDateMatch = state.line.match(regex);
+        if (doneDateMatch !== null) {
+            const date = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
+            setter(date);
+            state.line = state.line.replace(regex, '').trim();
+            state.matched = true;
+        }
+    }
+
     /* Parse TaskDetails from the textual description of a {@link Task}
      *
      * @param line The string to parse
@@ -311,13 +325,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
 
             const regex = TaskFormatRegularExpressions.doneDateRegex;
             const setter: (date: Moment) => void = (date) => (doneDate = date);
-            const doneDateMatch = state.line.match(regex);
-            if (doneDateMatch !== null) {
-                const date = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
-                setter(date);
-                state.line = state.line.replace(regex, '').trim();
-                state.matched = true;
-            }
+            this.extractDateField(state, regex, setter);
 
             const cancelledDateMatch = state.line.match(TaskFormatRegularExpressions.cancelledDateRegex);
             if (cancelledDateMatch !== null) {
