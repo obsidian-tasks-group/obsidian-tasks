@@ -48,6 +48,14 @@ export interface DefaultTaskSerializerSymbols {
     };
 }
 
+/**
+ * Represents the mutable state during task line parsing.
+ */
+interface ParsingState {
+    line: string;
+    matched: boolean;
+}
+
 // The allowed characters in a single task id:
 export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 
@@ -263,14 +271,14 @@ export class DefaultTaskSerializer implements TaskSerializer {
      *
      * @return {TaskDetails}
      */
-    public deserialize(state_dot_line: string): TaskDetails {
+    public deserialize(line: string): TaskDetails {
         const { TaskFormatRegularExpressions } = this.symbols;
 
         // Keep matching and removing special strings from the end of the
         // description in any order. The loop should only run once if the
         // strings are in the expected order after the description.
         // NEW_TASK_FIELD_EDIT_REQUIRED
-        let state_dot_matched: boolean;
+        const state: ParsingState = { line, matched: false };
         let priority: Priority = Priority.None;
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
@@ -293,106 +301,106 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let runs = 0;
         do {
             // NEW_TASK_FIELD_EDIT_REQUIRED
-            state_dot_matched = false;
-            const priorityMatch = state_dot_line.match(TaskFormatRegularExpressions.priorityRegex);
+            state.matched = false;
+            const priorityMatch = state.line.match(TaskFormatRegularExpressions.priorityRegex);
             if (priorityMatch !== null) {
                 priority = this.parsePriority(priorityMatch[1]);
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.priorityRegex, '').trim();
-                state_dot_matched = true;
+                state.line = state.line.replace(TaskFormatRegularExpressions.priorityRegex, '').trim();
+                state.matched = true;
             }
 
-            const doneDateMatch = state_dot_line.match(TaskFormatRegularExpressions.doneDateRegex);
+            const doneDateMatch = state.line.match(TaskFormatRegularExpressions.doneDateRegex);
             if (doneDateMatch !== null) {
                 doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.doneDateRegex, '').trim();
-                state_dot_matched = true;
+                state.line = state.line.replace(TaskFormatRegularExpressions.doneDateRegex, '').trim();
+                state.matched = true;
             }
 
-            const cancelledDateMatch = state_dot_line.match(TaskFormatRegularExpressions.cancelledDateRegex);
+            const cancelledDateMatch = state.line.match(TaskFormatRegularExpressions.cancelledDateRegex);
             if (cancelledDateMatch !== null) {
                 cancelledDate = window.moment(cancelledDateMatch[1], TaskRegularExpressions.dateFormat);
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.cancelledDateRegex, '').trim();
-                state_dot_matched = true;
+                state.line = state.line.replace(TaskFormatRegularExpressions.cancelledDateRegex, '').trim();
+                state.matched = true;
             }
 
-            const dueDateMatch = state_dot_line.match(TaskFormatRegularExpressions.dueDateRegex);
+            const dueDateMatch = state.line.match(TaskFormatRegularExpressions.dueDateRegex);
             if (dueDateMatch !== null) {
                 dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.dueDateRegex, '').trim();
-                state_dot_matched = true;
+                state.line = state.line.replace(TaskFormatRegularExpressions.dueDateRegex, '').trim();
+                state.matched = true;
             }
 
-            const scheduledDateMatch = state_dot_line.match(TaskFormatRegularExpressions.scheduledDateRegex);
+            const scheduledDateMatch = state.line.match(TaskFormatRegularExpressions.scheduledDateRegex);
             if (scheduledDateMatch !== null) {
                 scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.scheduledDateRegex, '').trim();
-                state_dot_matched = true;
+                state.line = state.line.replace(TaskFormatRegularExpressions.scheduledDateRegex, '').trim();
+                state.matched = true;
             }
 
-            const startDateMatch = state_dot_line.match(TaskFormatRegularExpressions.startDateRegex);
+            const startDateMatch = state.line.match(TaskFormatRegularExpressions.startDateRegex);
             if (startDateMatch !== null) {
                 startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.startDateRegex, '').trim();
-                state_dot_matched = true;
+                state.line = state.line.replace(TaskFormatRegularExpressions.startDateRegex, '').trim();
+                state.matched = true;
             }
 
-            const createdDateMatch = state_dot_line.match(TaskFormatRegularExpressions.createdDateRegex);
+            const createdDateMatch = state.line.match(TaskFormatRegularExpressions.createdDateRegex);
             if (createdDateMatch !== null) {
                 createdDate = window.moment(createdDateMatch[1], TaskRegularExpressions.dateFormat);
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.createdDateRegex, '').trim();
-                state_dot_matched = true;
+                state.line = state.line.replace(TaskFormatRegularExpressions.createdDateRegex, '').trim();
+                state.matched = true;
             }
 
-            const recurrenceMatch = state_dot_line.match(TaskFormatRegularExpressions.recurrenceRegex);
+            const recurrenceMatch = state.line.match(TaskFormatRegularExpressions.recurrenceRegex);
             if (recurrenceMatch !== null) {
                 // Save the recurrence rule, but *do not parse it yet*.
                 // Creating the Recurrence object requires a reference date (e.g. a due date),
                 // and it might appear in the next (earlier in the line) tokens to parse
                 recurrenceRule = recurrenceMatch[1].trim();
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.recurrenceRegex, '').trim();
-                state_dot_matched = true;
+                state.line = state.line.replace(TaskFormatRegularExpressions.recurrenceRegex, '').trim();
+                state.matched = true;
             }
 
-            const onCompletionMatch = state_dot_line.match(TaskFormatRegularExpressions.onCompletionRegex);
+            const onCompletionMatch = state.line.match(TaskFormatRegularExpressions.onCompletionRegex);
             if (onCompletionMatch != null) {
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.onCompletionRegex, '').trim();
+                state.line = state.line.replace(TaskFormatRegularExpressions.onCompletionRegex, '').trim();
                 const inputOnCompletionValue = onCompletionMatch[1];
                 onCompletion = parseOnCompletionValue(inputOnCompletionValue);
-                state_dot_matched = true;
+                state.matched = true;
             }
 
             // Match tags from the end to allow users to mix the various task components with
             // tags. These tags will be added back to the description below
-            const tagsMatch = state_dot_line.match(TaskRegularExpressions.hashTagsFromEnd);
+            const tagsMatch = state.line.match(TaskRegularExpressions.hashTagsFromEnd);
             if (tagsMatch != null) {
-                state_dot_line = state_dot_line.replace(TaskRegularExpressions.hashTagsFromEnd, '').trim();
-                state_dot_matched = true;
+                state.line = state.line.replace(TaskRegularExpressions.hashTagsFromEnd, '').trim();
+                state.matched = true;
                 const tagName = tagsMatch[0].trim();
                 // Adding to the left because the matching is done right-to-left
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             }
 
-            const idMatch = state_dot_line.match(TaskFormatRegularExpressions.idRegex);
+            const idMatch = state.line.match(TaskFormatRegularExpressions.idRegex);
 
             if (idMatch != null) {
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.idRegex, '').trim();
+                state.line = state.line.replace(TaskFormatRegularExpressions.idRegex, '').trim();
                 id = idMatch[1].trim();
-                state_dot_matched = true;
+                state.matched = true;
             }
 
-            const dependsOnMatch = state_dot_line.match(TaskFormatRegularExpressions.dependsOnRegex);
+            const dependsOnMatch = state.line.match(TaskFormatRegularExpressions.dependsOnRegex);
 
             if (dependsOnMatch != null) {
-                state_dot_line = state_dot_line.replace(TaskFormatRegularExpressions.dependsOnRegex, '').trim();
+                state.line = state.line.replace(TaskFormatRegularExpressions.dependsOnRegex, '').trim();
                 dependsOn = dependsOnMatch[1]
                     .replace(/ /g, '')
                     .split(',')
                     .filter((item) => item !== '');
-                state_dot_matched = true;
+                state.matched = true;
             }
 
             runs++;
-        } while (state_dot_matched && runs <= maxRuns);
+        } while (state.matched && runs <= maxRuns);
 
         // Now that we have all the task details, parse the recurrence rule if we found any
         if (recurrenceRule.length > 0) {
@@ -405,11 +413,11 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // components but now we want them back.
         // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
         // to actually have the description 'Do something #tag1 #tag2'
-        if (trailingTags.length > 0) state_dot_line += ' ' + trailingTags;
+        if (trailingTags.length > 0) state.line += ' ' + trailingTags;
 
         // NEW_TASK_FIELD_EDIT_REQUIRED
         return {
-            description: state_dot_line,
+            description: state.line,
             priority,
             startDate,
             createdDate,
@@ -421,7 +429,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             onCompletion,
             id,
             dependsOn,
-            tags: Task.extractHashtags(state_dot_line),
+            tags: Task.extractHashtags(state.line),
         };
     }
 }
