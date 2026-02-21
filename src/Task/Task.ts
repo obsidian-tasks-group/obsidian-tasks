@@ -46,8 +46,8 @@ export class Task extends ListItem {
 
     public readonly priority: Priority;
 
-    public readonly _createdDate: Moment | null;
-    public readonly _startDate?: Moment | null;
+    private readonly _createdDate: Moment | null;
+    private readonly _startDate?: Moment | null;
     public readonly scheduledDate: Moment | null;
     private readonly _dueDate: Moment | null;
     public readonly doneDate: Moment | null;
