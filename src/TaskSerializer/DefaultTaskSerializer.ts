@@ -365,16 +365,12 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 id = match[1].trim();
             });
 
-            const dependsOnMatch = state.line.match(TaskFormatRegularExpressions.dependsOnRegex);
-
-            if (dependsOnMatch != null) {
-                state.line = state.line.replace(TaskFormatRegularExpressions.dependsOnRegex, '').trim();
-                dependsOn = dependsOnMatch[1]
+            this.extractField(state, TaskFormatRegularExpressions.dependsOnRegex, (match) => {
+                dependsOn = match[1]
                     .replace(/ /g, '')
                     .split(',')
                     .filter((item) => item !== '');
-                state.matched = true;
-            }
+            });
 
             runs++;
         } while (state.matched && runs <= maxRuns);
