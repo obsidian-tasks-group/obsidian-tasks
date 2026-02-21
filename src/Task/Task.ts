@@ -71,11 +71,11 @@ export class Task extends ListItem {
      * Constructs a Task from the provided fields.
      *
      * Note: The `args` parameter keeps a reference to the original object passed to the constructor.
-     * This is necessary to recover the private dueDate field when spreading a Task object.
+     * This is necessary to recover private date fields when spreading a Task object.
      *
-     * When spreading a Task (`new Task({ ...task, id: newId })`), the dueDate getter is not copied,
-     * but the private field (_dueDate) is included in the object. We use the `args` reference to access
-     * it if the dueDate parameter is undefined.
+     * When spreading a Task (`new Task({ ...task, id: newId })`), the public getters (createdDate, etc.)
+     * are not copied, but the private fields (_createdDate, etc.) are included in the object.
+     * We use the `args` reference to access those private fields if the public date parameters are undefined.
      */
     constructor(args: {
         // NEW_TASK_FIELD_EDIT_REQUIRED
