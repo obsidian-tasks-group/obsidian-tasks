@@ -160,6 +160,7 @@ describe('EditableTask tests', () => {
         expect(appliedEdits[0]).toMatchInlineSnapshot(`
             Task {
               "_createdDate": null,
+              "_doneDate": null,
               "_dueDate": null,
               "_scheduledDate": null,
               "_startDate": null,
@@ -169,7 +170,6 @@ describe('EditableTask tests', () => {
               "children": [],
               "dependsOn": [],
               "description": "",
-              "doneDate": null,
               "id": "abcdef",
               "indentation": "  ",
               "listMarker": "-",

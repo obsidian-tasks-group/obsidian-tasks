@@ -50,7 +50,7 @@ export class Task extends ListItem {
     private readonly _startDate?: Moment | null;
     private readonly _scheduledDate: Moment | null;
     private readonly _dueDate: Moment | null;
-    public readonly doneDate: Moment | null;
+    private readonly _doneDate: Moment | null;
     public readonly cancelledDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
@@ -89,7 +89,7 @@ export class Task extends ListItem {
         startDate?: moment.Moment | null;
         scheduledDate?: moment.Moment | null;
         dueDate?: moment.Moment | null;
-        doneDate: moment.Moment | null;
+        doneDate?: moment.Moment | null;
         cancelledDate: moment.Moment | null;
         recurrence: Recurrence | null;
         onCompletion: OnCompletion;
@@ -145,7 +145,7 @@ export class Task extends ListItem {
         this._startDate = this.resolveDate(startDate, args._startDate);
         this._scheduledDate = this.resolveDate(scheduledDate, args._scheduledDate);
         this._dueDate = this.resolveDate(dueDate, args._dueDate);
-        this.doneDate = doneDate;
+        this._doneDate = this.resolveDate(doneDate, args._doneDate);
         this.cancelledDate = cancelledDate;
 
         this.recurrence = recurrence;
@@ -664,6 +664,10 @@ export class Task extends ListItem {
      */
     public get created(): TasksDate {
         return new TasksDate(this.createdDate);
+    }
+
+    public get doneDate(): Moment | null {
+        return this._doneDate?.clone() ?? null;
     }
 
     /**
