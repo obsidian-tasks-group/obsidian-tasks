@@ -322,7 +322,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 state.matched = true;
             }
 
-            this.extractDateField(state, TaskFormatRegularExpressions.doneDateRegex, (date) => (doneDate = date));
+            this.extractDateField(state, TaskFormatRegularExpressions.doneDateRegex, (d) => (doneDate = d));
 
             this.extractDateField(state, TaskFormatRegularExpressions.cancelledDateRegex, (d) => (cancelledDate = d));
 
