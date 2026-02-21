@@ -355,14 +355,11 @@ export class DefaultTaskSerializer implements TaskSerializer {
 
             // Match tags from the end to allow users to mix the various task components with
             // tags. These tags will be added back to the description below
-            const tagsMatch = state.line.match(TaskRegularExpressions.hashTagsFromEnd);
-            if (tagsMatch != null) {
-                state.line = state.line.replace(TaskRegularExpressions.hashTagsFromEnd, '').trim();
-                state.matched = true;
-                const tagName = tagsMatch[0].trim();
+            this.extractField(state, TaskRegularExpressions.hashTagsFromEnd, (match: RegExpMatchArray) => {
+                const tagName = match[0].trim();
                 // Adding to the left because the matching is done right-to-left
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
-            }
+            });
 
             const idMatch = state.line.match(TaskFormatRegularExpressions.idRegex);
 
