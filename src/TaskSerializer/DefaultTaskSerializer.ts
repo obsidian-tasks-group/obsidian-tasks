@@ -349,13 +349,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 recurrenceRule = match[1].trim();
             });
 
-            const onCompletionMatch = state.line.match(TaskFormatRegularExpressions.onCompletionRegex);
-            if (onCompletionMatch != null) {
-                state.line = state.line.replace(TaskFormatRegularExpressions.onCompletionRegex, '').trim();
-                const inputOnCompletionValue = onCompletionMatch[1];
+            this.extractField(state, TaskFormatRegularExpressions.onCompletionRegex, (match: RegExpMatchArray) => {
+                const inputOnCompletionValue = match[1];
                 onCompletion = parseOnCompletionValue(inputOnCompletionValue);
-                state.matched = true;
-            }
+            });
 
             // Match tags from the end to allow users to mix the various task components with
             // tags. These tags will be added back to the description below
