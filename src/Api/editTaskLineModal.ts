@@ -32,12 +32,17 @@ export function editTaskLineModal(
         resolvePromise(line);
     };
 
+    const onCancel = (): void => {
+        resolvePromise('');
+    };
+
     const task = taskFromLine({ line: taskLine ?? '', path: '' });
     const taskModal = new TaskModal({
         app,
         task,
         onSaveSettings,
         onSubmit,
+        onCancel,
         allTasks,
     });
 
