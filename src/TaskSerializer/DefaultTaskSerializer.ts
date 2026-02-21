@@ -350,8 +350,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             });
 
             this.extractField(state, TaskFormatRegularExpressions.onCompletionRegex, (match: RegExpMatchArray) => {
-                const inputOnCompletionValue = match[1];
-                onCompletion = parseOnCompletionValue(inputOnCompletionValue);
+                onCompletion = parseOnCompletionValue(match[1]);
             });
 
             // Match tags from the end to allow users to mix the various task components with
