@@ -322,9 +322,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 state.matched = true;
             }
 
-            const regex = TaskFormatRegularExpressions.doneDateRegex;
-            const setter: (date: Moment) => void = (date) => (doneDate = date);
-            this.extractDateField(state, regex, setter);
+            this.extractDateField(state, TaskFormatRegularExpressions.doneDateRegex, (date) => (doneDate = date));
 
             const cancelledDateMatch = state.line.match(TaskFormatRegularExpressions.cancelledDateRegex);
             if (cancelledDateMatch !== null) {
