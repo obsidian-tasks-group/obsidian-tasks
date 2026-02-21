@@ -328,12 +328,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
 
             this.extractDateField(state, TaskFormatRegularExpressions.dueDateRegex, (d) => (dueDate = d));
 
-            const scheduledDateMatch = state.line.match(TaskFormatRegularExpressions.scheduledDateRegex);
-            if (scheduledDateMatch !== null) {
-                scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
-                state.line = state.line.replace(TaskFormatRegularExpressions.scheduledDateRegex, '').trim();
-                state.matched = true;
-            }
+            this.extractDateField(state, TaskFormatRegularExpressions.scheduledDateRegex, (d) => (scheduledDate = d));
 
             const startDateMatch = state.line.match(TaskFormatRegularExpressions.startDateRegex);
             if (startDateMatch !== null) {
