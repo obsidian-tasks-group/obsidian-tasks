@@ -159,6 +159,7 @@ describe('EditableTask tests', () => {
         expect(appliedEdits.length).toEqual(1);
         expect(appliedEdits[0]).toMatchInlineSnapshot(`
             Task {
+              "_cancelledDate": null,
               "_createdDate": null,
               "_doneDate": null,
               "_dueDate": null,
@@ -166,7 +167,6 @@ describe('EditableTask tests', () => {
               "_startDate": null,
               "_urgency": null,
               "blockLink": " ^dcf64c",
-              "cancelledDate": null,
               "children": [],
               "dependsOn": [],
               "description": "",
