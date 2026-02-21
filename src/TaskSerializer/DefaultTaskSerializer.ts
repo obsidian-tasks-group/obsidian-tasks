@@ -361,13 +361,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             });
 
-            const idMatch = state.line.match(TaskFormatRegularExpressions.idRegex);
-
-            if (idMatch != null) {
-                state.line = state.line.replace(TaskFormatRegularExpressions.idRegex, '').trim();
-                id = idMatch[1].trim();
-                state.matched = true;
-            }
+            this.extractField(state, TaskFormatRegularExpressions.idRegex, (match: RegExpMatchArray) => {
+                id = match[1].trim();
+            });
 
             const dependsOnMatch = state.line.match(TaskFormatRegularExpressions.dependsOnRegex);
 
