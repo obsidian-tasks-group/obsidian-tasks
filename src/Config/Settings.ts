@@ -18,6 +18,7 @@ import { type EditModalShowSettings, defaultEditModalShowSettings } from './Edit
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
+import type { FirstDayOfWeekOption } from './FirstDayOfWeek';
 
 interface SettingsMap {
     [key: string]: string | boolean;
@@ -80,6 +81,7 @@ export interface Settings {
     filenameAsDateFolders: string[];
     recurrenceOnNextLine: boolean;
     removeScheduledDateOnRecurrence: boolean;
+    firstDayOfWeek: FirstDayOfWeekOption;
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -119,6 +121,7 @@ const defaultSettings: Readonly<Settings> = {
     filenameAsDateFolders: [],
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
+    firstDayOfWeek: 'locale-default',
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
     features: Feature.settingsFlags,
