@@ -328,12 +328,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
         do {
             // NEW_TASK_FIELD_EDIT_REQUIRED
             state.matched = false;
-            const priorityMatch = state.line.match(TaskFormatRegularExpressions.priorityRegex);
-            if (priorityMatch !== null) {
-                priority = this.parsePriority(priorityMatch[1]);
-                state.line = state.line.replace(TaskFormatRegularExpressions.priorityRegex, '').trim();
-                state.matched = true;
-            }
+
+            this.extractField(state, TaskFormatRegularExpressions.priorityRegex, (match) => {
+                priority = this.parsePriority(match[1]);
+            });
 
             this.extractDateField(state, TaskFormatRegularExpressions.doneDateRegex, (d) => (doneDate = d));
             this.extractDateField(state, TaskFormatRegularExpressions.cancelledDateRegex, (d) => (cancelledDate = d));
