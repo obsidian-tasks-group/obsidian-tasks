@@ -4,7 +4,7 @@ import path from 'path';
 import type { CachedMetadata, FrontMatterCache } from 'obsidian';
 
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
-import type { MockDataName } from '../Obsidian/AllCacheSampleData';
+import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
 
 /**
  * Utility class for loading and caching test data saved from Obsidian's cache.
@@ -105,19 +105,21 @@ export class MockDataLoader {
     /**
      * Find the {@link SimulatedFile} that matches the specified Markdown file path.
      *
-     * Searches through all cached {@link SimulatedFile} entries to find the one whose
+     * Searches through all {@link SimulatedFile} entries to find the one whose
      * filePath property exactly matches the provided Markdown path. This enables
      * lookup of test data by the original file path from the test vault.
      *
      * @param markdownPath - The Markdown file path to search for (such as "Test Data/example.md")
      * @returns The SimulatedFile with the matching file path
-     * @throws Error if no matching SimulatedFile is found in the cache
+     * @throws Error if no matching SimulatedFile is found on disk
      */
     public static findDataFromMarkdownPath(markdownPath: string) {
-        return this.findByPredicate(
-            (simulatedFile) => simulatedFile.filePath === markdownPath,
-            'Markdown path not found in any loaded SimulatedFile',
-        );
+        for (const allMockDataName of AllMockDataNames) {
+            if (MockDataLoader.markdownPath(allMockDataName) === markdownPath) {
+                return MockDataLoader.get(allMockDataName);
+            }
+        }
+        throw new Error(`Markdown path not found in any SimulatedFile: '${markdownPath}' `);
     }
 
     /**
