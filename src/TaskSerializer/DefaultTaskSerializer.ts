@@ -309,10 +309,11 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 state.matched = true;
             }
 
-            const doneDateMatch = state.line.match(TaskFormatRegularExpressions.doneDateRegex);
+            const regex = TaskFormatRegularExpressions.doneDateRegex;
+            const doneDateMatch = state.line.match(regex);
             if (doneDateMatch !== null) {
                 doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
-                state.line = state.line.replace(TaskFormatRegularExpressions.doneDateRegex, '').trim();
+                state.line = state.line.replace(regex, '').trim();
                 state.matched = true;
             }
 
