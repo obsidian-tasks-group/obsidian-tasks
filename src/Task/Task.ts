@@ -176,7 +176,11 @@ export class Task extends ListItem {
      */
     private resolveDate(paramValue: moment.Moment | null | undefined, recoveredValue: any): any {
         const parameterSupplied = paramValue !== undefined;
-        return parameterSupplied ? paramValue : recoveredValue ?? null;
+        if (parameterSupplied) {
+            return paramValue;
+        } else {
+            return recoveredValue ?? null;
+        }
     }
 
     /**
