@@ -46,12 +46,12 @@ export class Task extends ListItem {
 
     public readonly priority: Priority;
 
-    public readonly createdDate: Moment | null;
-    public readonly startDate: Moment | null;
-    public readonly scheduledDate: Moment | null;
-    public readonly dueDate: Moment | null;
-    public readonly doneDate: Moment | null;
-    public readonly cancelledDate: Moment | null;
+    private readonly _createdDate: Moment | null;
+    private readonly _startDate: Moment | null;
+    private readonly _scheduledDate: Moment | null;
+    private readonly _dueDate: Moment | null;
+    private readonly _doneDate: Moment | null;
+    private readonly _cancelledDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
     public readonly onCompletion: OnCompletion;
@@ -67,30 +67,17 @@ export class Task extends ListItem {
 
     private _urgency: number | null = null;
 
-    constructor({
-        // NEW_TASK_FIELD_EDIT_REQUIRED
-        status,
-        description,
-        taskLocation,
-        indentation,
-        listMarker,
-        priority,
-        createdDate,
-        startDate,
-        scheduledDate,
-        dueDate,
-        doneDate,
-        cancelledDate,
-        recurrence,
-        onCompletion,
-        dependsOn,
-        id,
-        blockLink,
-        tags,
-        originalMarkdown,
-        scheduledDateIsInferred,
-        parent = null,
-    }: {
+    /**
+     * Constructs a Task from the provided fields.
+     *
+     * Note: The `args` parameter keeps a reference to the original object passed to the constructor.
+     * This is necessary to recover private date fields when spreading a Task object.
+     *
+     * When spreading a Task (`new Task({ ...task, id: newId })`), the public getters (createdDate, etc.)
+     * are not copied, but the private fields (_createdDate, etc.) are included in the object.
+     * We use the `args` reference to access those private fields if the public date parameters are undefined.
+     */
+    constructor(args: {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         status: Status;
         description: string;
@@ -98,12 +85,12 @@ export class Task extends ListItem {
         indentation: string;
         listMarker: string;
         priority: Priority;
-        createdDate: moment.Moment | null;
-        startDate: moment.Moment | null;
-        scheduledDate: moment.Moment | null;
-        dueDate: moment.Moment | null;
-        doneDate: moment.Moment | null;
-        cancelledDate: moment.Moment | null;
+        createdDate?: moment.Moment | null;
+        startDate?: moment.Moment | null;
+        scheduledDate?: moment.Moment | null;
+        dueDate?: moment.Moment | null;
+        doneDate?: moment.Moment | null;
+        cancelledDate?: moment.Moment | null;
         recurrence: Recurrence | null;
         onCompletion: OnCompletion;
         dependsOn: string[] | [];
@@ -113,7 +100,31 @@ export class Task extends ListItem {
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
         parent?: ListItem | null;
+        [key: string]: any; // Allows access to spread private fields like _dueDate
     }) {
+        const {
+            status,
+            description,
+            taskLocation,
+            indentation,
+            listMarker,
+            priority,
+            createdDate,
+            startDate,
+            scheduledDate,
+            dueDate,
+            doneDate,
+            cancelledDate,
+            recurrence,
+            onCompletion,
+            dependsOn,
+            id,
+            blockLink,
+            tags,
+            originalMarkdown,
+            scheduledDateIsInferred,
+            parent,
+        } = args;
         super({
             originalMarkdown,
             indentation,
@@ -121,7 +132,7 @@ export class Task extends ListItem {
             statusCharacter: status.symbol,
             description,
             taskLocation,
-            parent,
+            parent: parent ?? null,
         });
         // NEW_TASK_FIELD_EDIT_REQUIRED
         this.status = status;
@@ -130,12 +141,12 @@ export class Task extends ListItem {
 
         this.priority = priority;
 
-        this.createdDate = createdDate;
-        this.startDate = startDate;
-        this.scheduledDate = scheduledDate;
-        this.dueDate = dueDate;
-        this.doneDate = doneDate;
-        this.cancelledDate = cancelledDate;
+        this._createdDate = this.resolveDate(createdDate, args._createdDate);
+        this._startDate = this.resolveDate(startDate, args._startDate);
+        this._scheduledDate = this.resolveDate(scheduledDate, args._scheduledDate);
+        this._dueDate = this.resolveDate(dueDate, args._dueDate);
+        this._doneDate = this.resolveDate(doneDate, args._doneDate);
+        this._cancelledDate = this.resolveDate(cancelledDate, args._cancelledDate);
 
         this.recurrence = recurrence;
         this.onCompletion = onCompletion;
@@ -146,6 +157,30 @@ export class Task extends ListItem {
         this.blockLink = blockLink;
 
         this.scheduledDateIsInferred = scheduledDateIsInferred;
+    }
+
+    /**
+     * Resolve a date field when spreading a Task object.
+     *
+     * When a Task is spread (`new Task({ ...task, ... })`), date field getters are not copied
+     * (getters aren't own properties), but the private field values are included in the spread object.
+     *
+     * This helper prioritizes explicitly passed parameters over recovered private field values:
+     * - If the parameter is explicitly provided (even null), use it
+     * - Otherwise, use the recovered private field value
+     * - If both are undefined, default to null
+     *
+     * @param paramValue - The date parameter explicitly passed to the constructor
+     * @param recoveredValue - The private field value recovered from the spread object
+     * @returns The resolved date value, or null if neither value exists
+     */
+    private resolveDate(paramValue: moment.Moment | null | undefined, recoveredValue: any): any {
+        const parameterSupplied = paramValue !== undefined;
+        if (parameterSupplied) {
+            return paramValue;
+        } else {
+            return recoveredValue ?? null;
+        }
     }
 
     /**
@@ -618,11 +653,19 @@ export class Task extends ListItem {
         return this._urgency;
     }
 
+    public get cancelledDate(): Moment | null {
+        return this._cancelledDate?.clone() ?? null;
+    }
+
     /**
      * Return {@link cancelledDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
     public get cancelled(): TasksDate {
         return new TasksDate(this.cancelledDate);
+    }
+
+    public get createdDate(): Moment | null {
+        return this._createdDate?.clone() ?? null;
     }
 
     /**
@@ -632,11 +675,19 @@ export class Task extends ListItem {
         return new TasksDate(this.createdDate);
     }
 
+    public get doneDate(): Moment | null {
+        return this._doneDate?.clone() ?? null;
+    }
+
     /**
      * Return {@link doneDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
     public get done(): TasksDate {
         return new TasksDate(this.doneDate);
+    }
+
+    public get dueDate(): Moment | null {
+        return this._dueDate?.clone() ?? null;
     }
 
     /**
@@ -646,11 +697,19 @@ export class Task extends ListItem {
         return new TasksDate(this.dueDate);
     }
 
+    public get scheduledDate(): Moment | null {
+        return this._scheduledDate?.clone() ?? null;
+    }
+
     /**
      * Return {@link scheduledDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
     public get scheduled(): TasksDate {
         return new TasksDate(this.scheduledDate);
+    }
+
+    public get startDate(): Moment | null {
+        return this._startDate?.clone() ?? null;
     }
 
     /**
