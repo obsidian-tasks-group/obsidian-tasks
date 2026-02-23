@@ -62,15 +62,15 @@ hide created date
 
 The following query elements exist:
 
-| Element           | Default | Description                     |
-| ----------------- | ------- | ------------------------------- |
-| `toolbar`         | Shown   | Copy and filter results         |
-| `tree`            | Hidden  | Task parent/child relationships |
-| `edit button`     | Shown   | Edit task button                |
-| `postpone button` | Shown   | Postpone button on dates        |
-| `backlink`        | Shown   | Task backlink for tasks         |
-| `urgency`         | Hidden  | Task [[urgency]] score          |
-| `task count`      | Shown   | Total number of tasks           |
+| Element           | Default | Description                     | Details                       |
+| ----------------- | ------- | ------------------------------- | ----------------------------- |
+| toolbar           | Shown   | Copy and filter results         | [[#Toolbar]]                  |
+| `tree`            | Hidden  | Task parent/child relationships | [[#Hide and Show Tree\|Tree]] |
+| `edit button`     | Shown   | Edit task button                | [[Create or edit Task]]       |
+| `postpone button` | Shown   | Postpone button on dates        | [[Postponing]]                |
+| `backlink`        | Shown   | Task backlink for tasks         | [[Backlinks]]                 |
+| `urgency`         | Hidden  | Task urgency score              | [[Urgency]]                   |
+| `task count`      | Shown   | Total number of tasks           |                               |
 
 > [!released]
 >
