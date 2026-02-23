@@ -18,6 +18,7 @@ import type { TaskLocation } from './TaskLocation';
 import type { Priority } from './Priority';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
 import { OnCompletion, handleOnCompletion } from './OnCompletion';
+import { Duration } from './Duration';
 
 /**
  * Storage for the task line, broken down in to sections.
@@ -49,6 +50,7 @@ export class Task extends ListItem {
     public readonly createdDate: Moment | null;
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
+    public readonly duration: Duration;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
     public readonly cancelledDate: Moment | null;
@@ -78,6 +80,7 @@ export class Task extends ListItem {
         createdDate,
         startDate,
         scheduledDate,
+        duration,
         dueDate,
         doneDate,
         cancelledDate,
@@ -101,6 +104,7 @@ export class Task extends ListItem {
         createdDate: moment.Moment | null;
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
+        duration?: Duration;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
         cancelledDate: moment.Moment | null;
@@ -133,6 +137,7 @@ export class Task extends ListItem {
         this.createdDate = createdDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
+        this.duration = duration ?? Duration.None;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
         this.cancelledDate = cancelledDate;
@@ -647,6 +652,20 @@ export class Task extends ListItem {
     }
 
     /**
+     * Return the hours component of the task's duration, or null if no duration is set.
+     */
+    public get durationHours(): number | null {
+        return this.duration === Duration.None ? null : this.duration.hours;
+    }
+
+    /**
+     * Return the minutes component of the task's duration, or null if no duration is set.
+     */
+    public get durationMinutes(): number | null {
+        return this.duration === Duration.None ? null : this.duration.minutes;
+    }
+
+    /**
      * Return {@link scheduledDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
     public get scheduled(): TasksDate {
@@ -817,6 +836,10 @@ export class Task extends ListItem {
             }
         }
         if (!this.recurrenceIdenticalTo(other)) {
+            return false;
+        }
+
+        if (this.duration.totalMinutes !== other.duration.totalMinutes) {
             return false;
         }
 

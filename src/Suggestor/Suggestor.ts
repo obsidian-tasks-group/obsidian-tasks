@@ -5,6 +5,7 @@ import { DateParser } from '../DateTime/DateParser';
 import { doAutocomplete } from '../DateTime/DateAbbreviations';
 import { Occurrence } from '../Task/Occurrence';
 import { Recurrence } from '../Task/Recurrence';
+import { Duration } from '../Task/Duration';
 import {
     type DefaultTaskSerializerSymbols,
     allTaskPluginEmojis,
@@ -80,6 +81,9 @@ export function makeDefaultSuggestionBuilder(
         // add date suggestions if relevant
         suggestions = suggestions.concat(addDatesSuggestions(datePrefixRegex, maxGenericSuggestions, parameters));
 
+        // add duration suggestions if relevant
+        suggestions = suggestions.concat(addDurationValueSuggestions(symbols.durationSymbol, parameters));
+
         // add recurrence suggestions if relevant
         suggestions = suggestions.concat(addRecurrenceValueSuggestions(symbols.recurrenceSymbol, parameters));
 
@@ -152,6 +156,7 @@ function addTaskPropertySuggestions(
     addField(genericSuggestions, line, symbols.dueDateSymbol, 'due date');
     addField(genericSuggestions, line, symbols.startDateSymbol, 'start date');
     addField(genericSuggestions, line, symbols.scheduledDateSymbol, 'scheduled date');
+    addField(genericSuggestions, line, symbols.durationSymbol, 'duration');
 
     addPrioritySuggestions(genericSuggestions, symbols, parameters);
     addField(genericSuggestions, line, symbols.recurrenceSymbol, 'recurring (repeat)');
@@ -415,6 +420,49 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, parameters: Sug
         constructSuggestions(parameters, recurrenceMatch, genericMatches, extractor, results);
     }
 
+    return results;
+}
+
+/*
+ * If the cursor is located in a section that should be followed by a duration value, suggest common
+ * duration options and validate what the user has typed.
+ */
+function addDurationValueSuggestions(durationSymbol: string, parameters: SuggestorParameters): SuggestInfo[] {
+    const genericSuggestions = ['15m', '30m', '45m', '1h', '1h30m', '2h', '3h', '4h'];
+
+    const results: SuggestInfo[] = [];
+    const durationRegex = new RegExp(`(${durationSymbol})\\s*([0-9a-zA-Z]*)`, 'ug');
+    const durationMatch = matchIfCursorInRegex(durationRegex, parameters);
+    if (durationMatch && durationMatch.length >= 2) {
+        const durationString = durationMatch[2];
+        if (durationString.length < parameters.settings.autoSuggestMinMatch) return [];
+
+        if (durationString.length > 0) {
+            const parsedDuration = Duration.fromText(durationString);
+            if (parsedDuration) {
+                const canonicalText = parsedDuration.toText();
+                results.push({
+                    suggestionType: 'match',
+                    displayText: `✅ ${canonicalText}`,
+                    appendText: `${durationSymbol} ${canonicalText}` + parameters.postfix,
+                    insertAt: durationMatch.index,
+                    insertSkip: calculateSkipValueForMatch(durationMatch[0], parameters),
+                });
+            }
+        }
+
+        const genericMatches = filterGenericSuggestions(
+            genericSuggestions,
+            durationString,
+            genericSuggestions.length,
+            durationString.length === 0,
+        );
+        const extractor = (symbol: string, match: string) => ({
+            displayText: match,
+            appendText: `${symbol} ${match}`,
+        });
+        constructSuggestions(parameters, durationMatch, genericMatches, extractor, results);
+    }
     return results;
 }
 

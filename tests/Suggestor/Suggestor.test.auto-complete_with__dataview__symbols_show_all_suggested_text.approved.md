@@ -3,6 +3,7 @@
 | due:: due date | due::  |
 | start:: start date | start::  |
 | scheduled:: scheduled date | scheduled::  |
+| duration:: duration | duration::  |
 | priority:: high priority | priority:: high]  |
 | priority:: medium priority | priority:: medium]  |
 | priority:: low priority | priority:: low]  |

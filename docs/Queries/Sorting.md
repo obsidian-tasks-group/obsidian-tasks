@@ -408,6 +408,13 @@ sort by function task.priorityNumber
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+### Duration
+
+- `sort by duration`
+- `sort by duration reverse`
+
+Tasks with no duration sort after tasks with a duration. Sorting is by total minutes, so `90m` and `1h30m` are treated as equal.
+
 ### Urgency
 
 - `sort by urgency` ([[Urgency|urgency]])

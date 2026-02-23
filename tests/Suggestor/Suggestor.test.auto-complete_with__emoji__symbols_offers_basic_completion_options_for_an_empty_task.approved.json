@@ -17,6 +17,10 @@
     "appendText": "⏳ "
   },
   {
+    "displayText": "⏱ duration",
+    "appendText": "⏱ "
+  },
+  {
     "displayText": "⏫ high priority",
     "appendText": "⏫ "
   },
