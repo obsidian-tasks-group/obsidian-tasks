@@ -18,6 +18,20 @@ Use the command 'Tasks: Create or edit task' to launch the modal.
 - If the cursor was on an existing task, the modal will modify that task's properties.
 - If the cursor was on a blank line, the modal will create a brand new task on that line.
 
+## Customising the Modal
+
+You can choose which task fields are displayed in the modal. This saves space, if there are fields that you never use.
+
+To choose the displayed fields, click on the Gear, and turn off the unwanted fields.
+
+By default, all fields are displayed.
+
+![Hide unused fields in the modal](../images/modal-hide-unused-fields.png)
+<span class="caption">Hide unused fields in the modal</span>
+
+> [!released]
+> Hiding unused fields was introduced in Tasks X.Y.Z.
+
 ## Keyboard shortcuts
 
 > [!released]
