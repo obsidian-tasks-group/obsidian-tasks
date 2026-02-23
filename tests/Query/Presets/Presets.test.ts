@@ -548,7 +548,8 @@ describe('include settings tests', () => {
             hide recurrence rule
             hide on completion
             hide priority",
-              "hide_query_elements": "# Hide postpone, edit and backlinks
+              "hide_query_elements": "# Hide toolbar, postpone, edit and backlinks
+            hide toolbar
             hide postpone button
             hide edit button
             hide backlinks",

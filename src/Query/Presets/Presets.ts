@@ -8,7 +8,8 @@ export const defaultPresets = {
         '# Hide any values for all date fields\nhide due date\nhide scheduled date\nhide start date\nhide created date\nhide done date\nhide cancelled date',
     hide_non_date_fields:
         '# Hide all the non-date fields, but not tags\nhide id\nhide depends on\nhide recurrence rule\nhide on completion\nhide priority',
-    hide_query_elements: '# Hide postpone, edit and backlinks\nhide postpone button\nhide edit button\nhide backlinks',
+    hide_query_elements:
+        '# Hide toolbar, postpone, edit and backlinks\nhide toolbar\nhide postpone button\nhide edit button\nhide backlinks',
     hide_everything:
         '# Hide everything except description and any tags\npreset hide_date_fields\npreset hide_non_date_fields\npreset hide_query_elements',
 };
