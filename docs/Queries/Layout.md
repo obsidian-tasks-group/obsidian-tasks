@@ -64,6 +64,7 @@ The following query elements exist:
 
 | Element           | Default | Description                     |
 | ----------------- | ------- | ------------------------------- |
+| `toolbar`         | Shown   | Copy and filter results         |
 | `tree`            | Hidden  | Task parent/child relationships |
 | `edit button`     | Shown   | Edit task button                |
 | `postpone button` | Shown   | Postpone button on dates        |
@@ -75,6 +76,7 @@ The following query elements exist:
 >
 > - `urgency` was introduced in Tasks 1.14.0.
 > - `tree` was introduced in Tasks 7.12.0.
+> - `toolbar` was introduced in Tasks X.Y.Z.
 
 All of these query elements except `urgency` and `tree` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score or tree view.
@@ -84,6 +86,32 @@ For example:
 ```text
 hide task count
 ```
+
+### Toolbar  
+
+The toolbar appears at the top of Tasks search results.
+
+![Image of the Toolbar at the top of Tasks search results](../images/search-results-toolbar.png)
+<span class="caption">Image of the Toolbar at the top of Tasks search results</span>
+
+It allows you to:
+
+- temporarily **filter results** by task description, without modifying the query
+  - the search is case-insensitive
+    - `hello world` will match `HELLO WORLD`
+  - word order matters
+    - `hello world` will not match `hello blue world`
+- **copy search results** in Markdown format, for export
+  - Copied elements:
+    - Any [[Explaining Queries|explanation]]
+    - Group headings
+    - The found tasks, honouring `show tree`
+  - Elements not copied:
+    - Any error messages
+    - The task count
+
+> [!released]  
+> `show toolbar` and `hide toolbar` were introduced in Tasks X.Y.Z.
 
 ### Hide and Show Tree
 
