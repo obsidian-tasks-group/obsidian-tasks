@@ -1,0 +1,3 @@
+- [ ] #task hours and minutes  [duration:: 1h30m]
+- [ ] #task only hours  [duration:: 2h]
+- [ ] #task only minutes  [duration:: 45m]

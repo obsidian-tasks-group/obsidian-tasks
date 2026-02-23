@@ -309,4 +309,12 @@ export class SampleTasks {
                 .recurrence(everyDay),
         ].map((builder) => builder.build());
     }
+
+    public static withRepresentativeDurationValues() {
+        return [
+            new TaskBuilder().description('#task hours and minutes').duration('1h30m'),
+            new TaskBuilder().description('#task only hours').duration('2h'),
+            new TaskBuilder().description('#task only minutes').duration('45m'),
+        ].map((builder) => builder.build());
+    }
 }
