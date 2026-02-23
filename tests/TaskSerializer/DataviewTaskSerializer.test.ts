@@ -354,7 +354,7 @@ describe('DataviewTaskSerializer', () => {
             const task = TaskBuilder.createFullyPopulatedTask();
             const serialized = serialize(task);
             expect(serialized).toMatchInlineSnapshot(
-                '"Do exercises #todo #health  [id:: abcdef]  [dependsOn:: 123456,abc123]  [priority:: medium]  [repeat:: every day when done]  [onCompletion:: delete]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [due:: 2023-07-04]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
+                '"Do exercises #todo #health  [id:: abcdef]  [dependsOn:: 123456,abc123]  [priority:: medium]  [repeat:: every day when done]  [onCompletion:: delete]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [duration:: 1h30m]  [due:: 2023-07-04]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
             );
         });
     });

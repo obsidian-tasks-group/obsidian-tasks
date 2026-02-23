@@ -54,6 +54,7 @@ describe('EditableTask tests', () => {
               "description": "Do exercises #todo #health",
               "doneDate": "2023-07-05",
               "dueDate": "2023-07-04",
+              "duration": "1h30m",
               "forwardOnly": true,
               "onCompletion": "delete",
               "originalBlocking": [],
@@ -170,11 +171,15 @@ describe('EditableTask tests', () => {
               "children": [],
               "dependsOn": [],
               "description": "",
+              "duration": Duration {
+                "hours": 1,
+                "minutes": 30,
+              },
               "id": "abcdef",
               "indentation": "  ",
               "listMarker": "-",
               "onCompletion": "",
-              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
+              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 ⏱ 1h30m 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
               "parent": null,
               "priority": "3",
               "recurrence": null,
@@ -250,6 +255,31 @@ describe('EditableTask tests', () => {
         const tasksClosestDay = await editableTask.applyEdits(task, allTasks);
         expect(tasksClosestDay[0].dueDate).toEqualMoment(tuesdayAfter);
     });
+});
+
+describe('parseAndValidateDuration() tests', () => {
+    const emptyTask = new TaskBuilder().description('').build();
+
+    it.each([
+        // duration string, expected parsed duration, expected validity
+        ['', '<i>no duration</i>', true],
+        ['1h30m', '1h30m', true],
+        ['90m', '1h30m', true], // normalises excess minutes to hours
+        ['2h', '2h', true],
+        ['45m', '45m', true],
+        ['blah', '<i>invalid duration. Try formats like 1h30m, 2h, 45m.</i>', false],
+        ['1h2h', '<i>invalid duration. Try formats like 1h30m, 2h, 45m.</i>', false],
+    ])(
+        "editable task with duration '%s' should have parsed '%s' and validity %s",
+        (duration: string, expectedParsed: string, expectedValid: boolean) => {
+            const editableTask = EditableTask.fromTask(emptyTask, [emptyTask]);
+            editableTask.duration = duration;
+
+            const { parsedDuration, isDurationValid } = editableTask.parseAndValidateDuration();
+            expect(parsedDuration).toEqual(expectedParsed);
+            expect(isDurationValid).toEqual(expectedValid);
+        },
+    );
 });
 
 describe('parseAndValidateRecurrence() tests', () => {

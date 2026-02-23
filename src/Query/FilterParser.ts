@@ -32,6 +32,7 @@ import { BlockingField } from './Filter/BlockingField';
 import { IdField } from './Filter/IdField';
 import { DependsOnField } from './Filter/DependsOnField';
 import { RandomField } from './Filter/RandomField';
+import { DurationField } from './Filter/DurationField';
 
 // When parsing a query the fields are tested one by one according to this order.
 // Since BooleanField is a meta-field, which needs to aggregate a few fields together, it is intended to
@@ -50,6 +51,7 @@ export const fieldCreators: EndsWith<BooleanField> = [
     () => new CreatedDateField(),
     () => new StartDateField(),
     () => new ScheduledDateField(),
+    () => new DurationField(),
     () => new DueDateField(),
     () => new DoneDateField(),
     () => new PathField(),

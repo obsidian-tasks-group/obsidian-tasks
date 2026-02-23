@@ -10,6 +10,7 @@
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import DurationEditor from './DurationEditor.svelte';
     import PriorityEditor from './PriorityEditor.svelte';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
@@ -43,6 +44,7 @@
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
 
+    let isDurationValid: boolean = true;
     let isRecurrenceValid: boolean = true;
 
     let withAccessKeys: boolean = true;
@@ -53,6 +55,7 @@
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
         isDueDateValid &&
+        isDurationValid &&
         isRecurrenceValid &&
         isScheduledDateValid &&
         isStartDateValid &&
@@ -291,6 +294,13 @@ Availability of access keys:
         <!-- --------------------------------------------------------------------------- -->
         {#if isShownInEditModal.status}
             <StatusEditor {task} bind:editableTask {statusOptions} accesskey={accesskey('u')} />
+        {/if}
+
+        <!-- --------------------------------------------------------------------------- -->
+        <!--  Duration  -->
+        <!-- --------------------------------------------------------------------------- -->
+        {#if isShownInEditModal.duration}
+            <DurationEditor {editableTask} bind:isDurationValid />
         {/if}
 
         <!-- --------------------------------------------------------------------------- -->

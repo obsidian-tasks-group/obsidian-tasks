@@ -13,6 +13,7 @@ export interface EditModalShowSettings {
     due: boolean;
     scheduled: boolean;
     start: boolean;
+    duration: boolean;
 
     before_this: boolean;
     after_this: boolean;
@@ -30,6 +31,7 @@ export const defaultEditModalShowSettings: Readonly<EditModalShowSettings> = {
     due: true,
     scheduled: true,
     start: true,
+    duration: true,
 
     before_this: true,
     after_this: true,

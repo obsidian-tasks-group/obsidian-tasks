@@ -189,6 +189,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
+                ' ⏱ 1h30m',
                 ' 📅 2023-07-04',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
@@ -210,6 +211,7 @@ describe('task line rendering - layout options', () => {
                 ' ➕ 2023-07-01',
                 ' 🛫 2023-07-02',
                 ' ⏳ 2023-07-03',
+                ' ⏱ 1h30m',
                 ' 📅 2023-07-04',
                 ' ❌ 2023-07-06',
                 ' ✅ 2023-07-05',
@@ -220,6 +222,10 @@ describe('task line rendering - layout options', () => {
     });
 
     // NEW_TASK_FIELD_EDIT_REQUIRED
+
+    it('renders with duration', async () => {
+        await testLayoutOptions(['Do exercises #todo #health', ' ⏱ 1h30m'], [TaskLayoutComponent.Duration]);
+    });
 
     it('renders with priority', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' 🔼'], [TaskLayoutComponent.Priority]);

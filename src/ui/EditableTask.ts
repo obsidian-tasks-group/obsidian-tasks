@@ -8,6 +8,7 @@ import { Occurrence } from '../Task/Occurrence';
 import { Priority } from '../Task/Priority';
 import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
+import { Duration } from '../Task/Duration';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 import { StatusType } from '../Statuses/StatusConfiguration';
 
@@ -29,6 +30,7 @@ export class EditableTask {
     createdDate: string;
     startDate: string;
     scheduledDate: string;
+    duration: string;
     dueDate: string;
     doneDate: string;
     cancelledDate: string;
@@ -49,6 +51,7 @@ export class EditableTask {
         createdDate: string;
         startDate: string;
         scheduledDate: string;
+        duration: string;
         dueDate: string;
         doneDate: string;
         cancelledDate: string;
@@ -67,6 +70,7 @@ export class EditableTask {
         this.createdDate = editableTask.createdDate;
         this.startDate = editableTask.startDate;
         this.scheduledDate = editableTask.scheduledDate;
+        this.duration = editableTask.duration;
         this.dueDate = editableTask.dueDate;
         this.doneDate = editableTask.doneDate;
         this.cancelledDate = editableTask.cancelledDate;
@@ -127,6 +131,7 @@ export class EditableTask {
             createdDate: task.created.formatAsDate(),
             startDate: task.start.formatAsDate(),
             scheduledDate: task.scheduled.formatAsDate(),
+            duration: task.duration.toText(),
             dueDate: task.due.formatAsDate(),
             doneDate: task.done.formatAsDate(),
             cancelledDate: task.cancelled.formatAsDate(),
@@ -190,6 +195,8 @@ export class EditableTask {
             addedBlocking = this.blocking.filter((task) => !this.originalBlocking.includes(task));
         }
 
+        const duration = Duration.fromText(this.duration) ?? Duration.None;
+
         // First create an updated task, with all edits except Status:
         const updatedTask = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -201,6 +208,7 @@ export class EditableTask {
             recurrence,
             startDate,
             scheduledDate,
+            duration,
             dueDate,
             doneDate,
             createdDate,
@@ -253,6 +261,23 @@ export class EditableTask {
 
         // Otherwise, use the current date.
         return window.moment();
+    }
+
+    public parseAndValidateDuration() {
+        if (!this.duration) {
+            return { parsedDuration: '<i>no duration</i>', isDurationValid: true };
+        }
+
+        const durationFromText = Duration.fromText(this.duration)?.toText();
+
+        if (!durationFromText) {
+            return {
+                parsedDuration: '<i>invalid duration. Try formats like 1h30m, 2h, 45m.</i>',
+                isDurationValid: false,
+            };
+        }
+
+        return { parsedDuration: durationFromText, isDurationValid: true };
     }
 
     public parseAndValidateRecurrence() {
