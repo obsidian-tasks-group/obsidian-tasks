@@ -236,14 +236,6 @@ This might be useful if you realise that you had forgotten to mark a recurring t
 
 (Today's date is still used for an Created day on a new recurrence, though.)
 
-## Display values
-
-These values cannot currently be edited in this modal.
-
-### Completed
-
-A read-only checkbox, showing whether the task is completed.
-
 ## Finishing off
 
 To close the modal and save your edits, do one of:
