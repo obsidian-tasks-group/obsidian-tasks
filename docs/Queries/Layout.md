@@ -62,12 +62,14 @@ hide created date
 
 The following query elements exist:
 
-- `tree`
-- `edit button`
-- `postpone button`
-- `backlink`
-- `urgency`
-- `task count`
+| Element           | Default | Description                     |
+| ----------------- | ------- | ------------------------------- |
+| `tree`            | Hidden  | Task parent/child relationships |
+| `edit button`     | Shown   | Edit task button                |
+| `postpone button` | Shown   | Postpone button on dates        |
+| `backlink`        | Shown   | Task backlink for tasks         |
+| `urgency`         | Hidden  | Task [[urgency]] score          |
+| `task count`      | Shown   | Total number of tasks           |
 
 > [!released]
 >
