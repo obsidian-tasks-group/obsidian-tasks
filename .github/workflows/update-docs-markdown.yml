@@ -19,7 +19,7 @@ jobs:
 
       - name: Run MarkdownSnippets
         run: |
-          dotnet tool install --global MarkdownSnippets.Tool
+          dotnet tool install --global MarkdownSnippets.Tool --version 27.0.2
           mdsnippets ${GITHUB_WORKSPACE} && yarn run lint:markdown && git add --renormalize .
           git commit -m "docs/contrib: Update snippets and examples in markdown" -a  || echo "nothing to commit"
         shell: bash

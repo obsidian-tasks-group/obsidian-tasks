@@ -18,7 +18,7 @@ export class TasksDate {
      * Return the raw underlying moment (or null, if there is no date)
      */
     get moment(): Moment | null {
-        return this._date;
+        return this._date ? this._date.clone() : null;
     }
 
     /**

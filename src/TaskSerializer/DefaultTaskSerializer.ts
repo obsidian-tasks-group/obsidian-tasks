@@ -51,6 +51,14 @@ export interface DefaultTaskSerializerSymbols {
     };
 }
 
+/**
+ * Represents the mutable state during task line parsing.
+ */
+interface ParsingState {
+    line: string;
+    matched: boolean;
+}
+
 // The allowed characters in a single task id:
 export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 
@@ -266,6 +274,29 @@ export class DefaultTaskSerializer implements TaskSerializer {
         }
     }
 
+    /**
+     * Attempt to match and extract a date field from the parsing state.
+     * Updates state.line and state.matched if a match is found.
+     */
+    private extractDateField(state: ParsingState, regex: RegExp, setter: (date: Moment) => void): void {
+        this.extractField(state, regex, (match) => {
+            setter(window.moment(match[1], TaskRegularExpressions.dateFormat));
+        });
+    }
+
+    /**
+     * Attempt to match and extract a generic field from the parsing state.
+     * Updates state.line and state.matched if a match is found.
+     */
+    private extractField(state: ParsingState, regex: RegExp, setter: (match: RegExpMatchArray) => void): void {
+        const match: RegExpMatchArray | null = state.line.match(regex);
+        if (match !== null) {
+            setter(match);
+            state.line = state.line.replace(regex, '').trim();
+            state.matched = true;
+        }
+    }
+
     /* Parse TaskDetails from the textual description of a {@link Task}
      *
      * @param line The string to parse
@@ -279,7 +310,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // description in any order. The loop should only run once if the
         // strings are in the expected order after the description.
         // NEW_TASK_FIELD_EDIT_REQUIRED
-        let matched: boolean;
+        const state: ParsingState = { line, matched: false };
         let priority: Priority = Priority.None;
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
@@ -303,113 +334,55 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let runs = 0;
         do {
             // NEW_TASK_FIELD_EDIT_REQUIRED
-            matched = false;
-            const priorityMatch = line.match(TaskFormatRegularExpressions.priorityRegex);
-            if (priorityMatch !== null) {
-                priority = this.parsePriority(priorityMatch[1]);
-                line = line.replace(TaskFormatRegularExpressions.priorityRegex, '').trim();
-                matched = true;
-            }
+            state.matched = false;
 
-            const doneDateMatch = line.match(TaskFormatRegularExpressions.doneDateRegex);
-            if (doneDateMatch !== null) {
-                doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
-                line = line.replace(TaskFormatRegularExpressions.doneDateRegex, '').trim();
-                matched = true;
-            }
+            this.extractField(state, TaskFormatRegularExpressions.priorityRegex, (match) => {
+                priority = this.parsePriority(match[1]);
+            });
 
-            const cancelledDateMatch = line.match(TaskFormatRegularExpressions.cancelledDateRegex);
-            if (cancelledDateMatch !== null) {
-                cancelledDate = window.moment(cancelledDateMatch[1], TaskRegularExpressions.dateFormat);
-                line = line.replace(TaskFormatRegularExpressions.cancelledDateRegex, '').trim();
-                matched = true;
-            }
+            this.extractDateField(state, TaskFormatRegularExpressions.doneDateRegex, (d) => (doneDate = d));
+            this.extractDateField(state, TaskFormatRegularExpressions.cancelledDateRegex, (d) => (cancelledDate = d));
+            this.extractDateField(state, TaskFormatRegularExpressions.dueDateRegex, (d) => (dueDate = d));
+            this.extractDateField(state, TaskFormatRegularExpressions.scheduledDateRegex, (d) => (scheduledDate = d));
+            this.extractDateField(state, TaskFormatRegularExpressions.startDateRegex, (d) => (startDate = d));
+            this.extractDateField(state, TaskFormatRegularExpressions.createdDateRegex, (d) => (createdDate = d));
 
-            const dueDateMatch = line.match(TaskFormatRegularExpressions.dueDateRegex);
-            if (dueDateMatch !== null) {
-                dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
-                line = line.replace(TaskFormatRegularExpressions.dueDateRegex, '').trim();
-                matched = true;
-            }
+            this.extractField(state, TaskFormatRegularExpressions.durationRegex, (match) => {
+                duration = Duration.fromText(match[1].trim()) ?? Duration.None;
+            });
 
-            const scheduledDateMatch = line.match(TaskFormatRegularExpressions.scheduledDateRegex);
-            if (scheduledDateMatch !== null) {
-                scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
-                line = line.replace(TaskFormatRegularExpressions.scheduledDateRegex, '').trim();
-                matched = true;
-            }
-
-            const durationMatch = line.match(TaskFormatRegularExpressions.durationRegex);
-            if (durationMatch !== null) {
-                line = line.replace(TaskFormatRegularExpressions.durationRegex, '').trim();
-                duration = Duration.fromText(durationMatch[1].trim()) ?? Duration.None;
-                matched = true;
-            }
-
-            const startDateMatch = line.match(TaskFormatRegularExpressions.startDateRegex);
-            if (startDateMatch !== null) {
-                startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
-                line = line.replace(TaskFormatRegularExpressions.startDateRegex, '').trim();
-                matched = true;
-            }
-
-            const createdDateMatch = line.match(TaskFormatRegularExpressions.createdDateRegex);
-            if (createdDateMatch !== null) {
-                createdDate = window.moment(createdDateMatch[1], TaskRegularExpressions.dateFormat);
-                line = line.replace(TaskFormatRegularExpressions.createdDateRegex, '').trim();
-                matched = true;
-            }
-
-            const recurrenceMatch = line.match(TaskFormatRegularExpressions.recurrenceRegex);
-            if (recurrenceMatch !== null) {
+            this.extractField(state, TaskFormatRegularExpressions.recurrenceRegex, (match) => {
                 // Save the recurrence rule, but *do not parse it yet*.
                 // Creating the Recurrence object requires a reference date (e.g. a due date),
                 // and it might appear in the next (earlier in the line) tokens to parse
-                recurrenceRule = recurrenceMatch[1].trim();
-                line = line.replace(TaskFormatRegularExpressions.recurrenceRegex, '').trim();
-                matched = true;
-            }
+                recurrenceRule = match[1].trim();
+            });
 
-            const onCompletionMatch = line.match(TaskFormatRegularExpressions.onCompletionRegex);
-            if (onCompletionMatch != null) {
-                line = line.replace(TaskFormatRegularExpressions.onCompletionRegex, '').trim();
-                const inputOnCompletionValue = onCompletionMatch[1];
-                onCompletion = parseOnCompletionValue(inputOnCompletionValue);
-                matched = true;
-            }
+            this.extractField(state, TaskFormatRegularExpressions.onCompletionRegex, (match) => {
+                onCompletion = parseOnCompletionValue(match[1]);
+            });
 
             // Match tags from the end to allow users to mix the various task components with
             // tags. These tags will be added back to the description below
-            const tagsMatch = line.match(TaskRegularExpressions.hashTagsFromEnd);
-            if (tagsMatch != null) {
-                line = line.replace(TaskRegularExpressions.hashTagsFromEnd, '').trim();
-                matched = true;
-                const tagName = tagsMatch[0].trim();
+            this.extractField(state, TaskRegularExpressions.hashTagsFromEnd, (match) => {
+                const tagName = match[0].trim();
                 // Adding to the left because the matching is done right-to-left
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
-            }
+            });
 
-            const idMatch = line.match(TaskFormatRegularExpressions.idRegex);
+            this.extractField(state, TaskFormatRegularExpressions.idRegex, (match) => {
+                id = match[1].trim();
+            });
 
-            if (idMatch != null) {
-                line = line.replace(TaskFormatRegularExpressions.idRegex, '').trim();
-                id = idMatch[1].trim();
-                matched = true;
-            }
-
-            const dependsOnMatch = line.match(TaskFormatRegularExpressions.dependsOnRegex);
-
-            if (dependsOnMatch != null) {
-                line = line.replace(TaskFormatRegularExpressions.dependsOnRegex, '').trim();
-                dependsOn = dependsOnMatch[1]
+            this.extractField(state, TaskFormatRegularExpressions.dependsOnRegex, (match) => {
+                dependsOn = match[1]
                     .replace(/ /g, '')
                     .split(',')
                     .filter((item) => item !== '');
-                matched = true;
-            }
+            });
 
             runs++;
-        } while (matched && runs <= maxRuns);
+        } while (state.matched && runs <= maxRuns);
 
         // Now that we have all the task details, parse the recurrence rule if we found any
         if (recurrenceRule.length > 0) {
@@ -422,11 +395,11 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // components but now we want them back.
         // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
         // to actually have the description 'Do something #tag1 #tag2'
-        if (trailingTags.length > 0) line += ' ' + trailingTags;
+        if (trailingTags.length > 0) state.line += ' ' + trailingTags;
 
         // NEW_TASK_FIELD_EDIT_REQUIRED
         return {
-            description: line,
+            description: state.line,
             priority,
             startDate,
             createdDate,
@@ -439,7 +412,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             onCompletion,
             id,
             dependsOn,
-            tags: Task.extractHashtags(line),
+            tags: Task.extractHashtags(state.line),
         };
     }
 }

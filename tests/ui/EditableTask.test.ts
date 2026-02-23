@@ -160,15 +160,17 @@ describe('EditableTask tests', () => {
         expect(appliedEdits.length).toEqual(1);
         expect(appliedEdits[0]).toMatchInlineSnapshot(`
             Task {
+              "_cancelledDate": null,
+              "_createdDate": null,
+              "_doneDate": null,
+              "_dueDate": null,
+              "_scheduledDate": null,
+              "_startDate": null,
               "_urgency": null,
               "blockLink": " ^dcf64c",
-              "cancelledDate": null,
               "children": [],
-              "createdDate": null,
               "dependsOn": [],
               "description": "",
-              "doneDate": null,
-              "dueDate": null,
               "duration": Duration {
                 "hours": 1,
                 "minutes": 30,
@@ -181,9 +183,7 @@ describe('EditableTask tests', () => {
               "parent": null,
               "priority": "3",
               "recurrence": null,
-              "scheduledDate": null,
               "scheduledDateIsInferred": false,
-              "startDate": null,
               "status": Status {
                 "configuration": StatusConfiguration {
                   "availableAsCommand": true,
