@@ -1,0 +1,3 @@
+- [ ] #task hours and minutes ⏱ 1h30m
+- [ ] #task only hours ⏱ 2h
+- [ ] #task only minutes ⏱ 45m
