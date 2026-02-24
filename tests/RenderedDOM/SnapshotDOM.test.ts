@@ -23,7 +23,11 @@ describe.skip('DOM snapshots', () => {
         // Load the file
         const command = `obsidian open path="${path}"`;
         expect(command).toEqual('obsidian open path="Test Data/all_link_types.md"');
-        execSync(command);
+        try {
+            execSync(command, { timeout: 5000 });
+        } catch (e) {
+            throw new Error(`Timed out running '${command}'. Is Obsidian open with the Demo Vault active?`);
+        }
 
         // TODO Ensure we are in reading mode
 
