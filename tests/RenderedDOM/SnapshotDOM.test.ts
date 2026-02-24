@@ -14,10 +14,16 @@ function executeCommand(command: string): void {
 }
 
 // Always commit with this test skipped, as it depends on:
-// - the Obsidian CLI being available (Obsidian 1.12 onwards)
+//  - the Obsidian CLI being available (Obsidian 1.12 onwards, Installer 1.11.7 onwards)
 //  - the Obsidian CLI enabled
 //  - the user having open in Obsidian the demo vault in 'resources/sample_vaults/Tasks-Demo/'
 describe.skip('DOM snapshots', () => {
+    /*
+     This test uses the Obsidian CLI to open and render a file, then save the DOM.
+     This will allow us to detect regressions and test improvements over time.
+     See https://help.obsidian.md/cli
+    */
+
     // TODO Ensure the correct vault is open and active in Obsidian
     // TODO Iterate over all values in AllMockDataNames
     it('all_link_types', () => {
