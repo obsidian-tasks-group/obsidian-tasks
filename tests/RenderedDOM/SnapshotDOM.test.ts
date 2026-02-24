@@ -5,6 +5,14 @@ import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 
 const DOM_SELECTOR = '.markdown-reading-view :not(.metadata-container)';
 
+function executeCommand(command: string): void {
+    try {
+        execSync(command, { timeout: 5000 });
+    } catch (e) {
+        throw new Error(`Timed out running '${command}'. Is Obsidian open with the Demo Vault active?`);
+    }
+}
+
 // Always commit with this test skipped, as it depends on:
 // - the Obsidian CLI being available (Obsidian 1.12 onwards)
 //  - the Obsidian CLI enabled
@@ -23,11 +31,7 @@ describe.skip('DOM snapshots', () => {
         // Load the file
         const command = `obsidian open path="${path}"`;
         expect(command).toEqual('obsidian open path="Test Data/all_link_types.md"');
-        try {
-            execSync(command, { timeout: 5000 });
-        } catch (e) {
-            throw new Error(`Timed out running '${command}'. Is Obsidian open with the Demo Vault active?`);
-        }
+        executeCommand(command);
 
         // TODO Ensure we are in reading mode
 
