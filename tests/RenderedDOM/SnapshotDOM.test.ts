@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
-import { AllMockDataNames } from '../Obsidian/AllCacheSampleData';
+import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
 
 const DOM_SELECTOR = '.markdown-reading-view :not(.metadata-container)';
 
@@ -28,11 +28,10 @@ describe.skip('DOM snapshots', () => {
 
     // TODO Ensure the correct vault is open and active in Obsidian
     // TODO Iterate over all values in AllMockDataNames
-    it('all_link_types', () => {
+    it.each(AllMockDataNames.slice(0, 1))('%s', (filename: string) => {
         // Requirements:
         // 1. The Demo Vault must be the active Obsidian vault
-        const filename = AllMockDataNames[0];
-        const data = MockDataLoader.get(filename);
+        const data = MockDataLoader.get(<MockDataName>filename);
         const path = data.filePath;
         expect(path).toEqual('Test Data/all_link_types.md');
 
