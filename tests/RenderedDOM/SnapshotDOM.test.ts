@@ -6,9 +6,9 @@ import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleD
 
 const DOM_SELECTOR = '.markdown-reading-view :not(.metadata-container)';
 
-function executeCommand(command: string): void {
+function executeCommand(command: string): string {
     try {
-        execSync(command, { timeout: 5000 });
+        return execSync(command, { timeout: 5000 }).toString();
     } catch (e) {
         throw new Error(`Timed out running '${command}'. Is Obsidian open with the Demo Vault active?`);
     }
@@ -40,7 +40,7 @@ describe.skip('DOM snapshots', () => {
         // TODO Ensure we are in reading mode
 
         // Save the HTML
-        const html = execSync(`obsidian dev:dom selector='${DOM_SELECTOR}'`).toString();
+        const html = executeCommand(`obsidian dev:dom selector='${DOM_SELECTOR}'`).toString();
         const prettyHTML = prettifyHTML(html);
 
         verifyWithFileExtension(prettyHTML, 'html');
