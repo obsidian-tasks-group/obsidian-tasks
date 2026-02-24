@@ -14,6 +14,8 @@ function executeCommand(command: string): string {
     }
 }
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 describe.skip('DOM snapshots', () => {
     /*
      This test uses the Obsidian CLI to open and render a file, then save the DOM.
@@ -27,7 +29,7 @@ describe.skip('DOM snapshots', () => {
     */
 
     // TODO Ensure the correct vault is open and active in Obsidian
-    it.each(AllMockDataNames)('%s', (filename: string) => {
+    it.each(AllMockDataNames)('%s', async (filename: string) => {
         // Requirements:
         // 1. The Demo Vault must be the active Obsidian vault
         const data = MockDataLoader.get(<MockDataName>filename);
@@ -36,6 +38,9 @@ describe.skip('DOM snapshots', () => {
         // Load the file
         const command = `obsidian open path="${path}"`;
         executeCommand(command);
+
+        // Wait a bit, to allow time for rendering
+        await sleep(500);
 
         // TODO Ensure we are in reading mode
 
