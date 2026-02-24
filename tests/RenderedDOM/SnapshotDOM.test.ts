@@ -27,17 +27,14 @@ describe.skip('DOM snapshots', () => {
     */
 
     // TODO Ensure the correct vault is open and active in Obsidian
-    // TODO Iterate over all values in AllMockDataNames
-    it.each(AllMockDataNames.slice(0, 1))('%s', (filename: string) => {
+    it.each(AllMockDataNames)('%s', (filename: string) => {
         // Requirements:
         // 1. The Demo Vault must be the active Obsidian vault
         const data = MockDataLoader.get(<MockDataName>filename);
         const path = data.filePath;
-        expect(path).toEqual('Test Data/all_link_types.md');
 
         // Load the file
         const command = `obsidian open path="${path}"`;
-        expect(command).toEqual('obsidian open path="Test Data/all_link_types.md"');
         executeCommand(command);
 
         // TODO Ensure we are in reading mode
