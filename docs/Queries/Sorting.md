@@ -111,7 +111,14 @@ sort by function task.status.name
 
 ### Status Type
 
-- `sort by status.type` (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`)
+- `sort by status.type`
+  - This sorts tasks by the [[Status Types|types]] you have given to your custom statuses.
+  - Tasks are sorted in this order:
+    - `IN_PROGRESS`
+    - `TODO`
+    - `DONE`
+    - `CANCELLED`
+    - `NON_TASK`
 
 > [!released]
 `sort by status.type` was introduced in Tasks 1.23.0.
