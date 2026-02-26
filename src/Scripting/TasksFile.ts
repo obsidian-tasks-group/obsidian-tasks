@@ -254,6 +254,16 @@ export class TasksFile {
     }
 
     /**
+     * Returns true if the file has the `TQ_ignore_this_file` property set to true.
+     *
+     * When true, Tasks will completely ignore this file: no task indexing,
+     * no autocomplete, and no Live Preview task behavior.
+     */
+    public isIgnored(): boolean {
+        return this.hasProperty('TQ_ignore_this_file') && this.property('TQ_ignore_this_file') === true;
+    }
+
+    /**
      * Compare all the fields in another TasksFile, to detect any differences from this one.
      *
      * If any field is different in any way, it will return false.
