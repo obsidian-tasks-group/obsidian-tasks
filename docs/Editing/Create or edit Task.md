@@ -30,7 +30,7 @@ By default, all fields are displayed.
 <span class="caption">Hide unused fields in the modal</span>
 
 > [!released]
-> Hiding unused fields was introduced in Tasks X.Y.Z.
+> Hiding unused fields was introduced in Tasks 7.23.0.
 
 ## Keyboard shortcuts
 
