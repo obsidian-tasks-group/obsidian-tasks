@@ -1,4 +1,6 @@
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
+import { FileParser } from '../../src/Obsidian/FileParser';
+import { logging } from '../../src/lib/logging';
 import { readTasksFromSimulatedFile } from './SimulatedFile';
 
 describe('FileParser', () => {
@@ -59,5 +61,61 @@ describe('FileParser', () => {
         const tasks = readTasksFromSimulatedFile(testDataName);
         expect(tasks.length).toEqual(1);
         expect(tasks[0].description).toEqual("#task Task line 1 in 'zero_width' - indented by tab character");
+    });
+
+    it.failing('should return no tasks when TQ_ignore_this_file is true', () => {
+        // Override obsidian mock functions for synthetic CachedMetadata
+        const obsidianModule = require('obsidian');
+        const originalParseFrontMatterTags = obsidianModule.parseFrontMatterTags;
+        const originalGetAllTags = obsidianModule.getAllTags;
+        obsidianModule.parseFrontMatterTags = () => null;
+        obsidianModule.getAllTags = () => [];
+
+        const fileContent = '---\nTQ_ignore_this_file: true\n---\n\n- [ ] This task should be ignored\n';
+        const cachedMetadata = {
+            frontmatter: { TQ_ignore_this_file: true } as any,
+            listItems: [
+                {
+                    parent: -1,
+                    position: {
+                        start: { line: 4, col: 0, offset: 40 },
+                        end: { line: 4, col: 35, offset: 75 },
+                    },
+                    task: ' ',
+                },
+            ],
+            sections: [
+                {
+                    position: {
+                        start: { line: 0, col: 0, offset: 0 },
+                        end: { line: 2, col: 3, offset: 30 },
+                    },
+                    type: 'yaml' as const,
+                },
+                {
+                    position: {
+                        start: { line: 4, col: 0, offset: 40 },
+                        end: { line: 4, col: 35, offset: 75 },
+                    },
+                    type: 'list' as const,
+                },
+            ],
+        };
+
+        const logger = logging.getLogger('testFileParser');
+        const fileParser = new FileParser(
+            'Test Data/ignored_file.md',
+            fileContent,
+            cachedMetadata.listItems!,
+            logger,
+            cachedMetadata as any,
+            () => {},
+        );
+
+        const tasks = fileParser.parseFileContent();
+        expect(tasks.length).toEqual(0);
+
+        obsidianModule.parseFrontMatterTags = originalParseFrontMatterTags;
+        obsidianModule.getAllTags = originalGetAllTags;
     });
 });
