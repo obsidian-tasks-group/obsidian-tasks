@@ -121,7 +121,7 @@ These defaults can, of course, be edited, renamed and deleted.
 
 > [!released]
 >
-> - `hide toolbar` was added to `hide_query_elements` in Tasks X.Y.Z.
+> - `hide toolbar` was added to `hide_query_elements` in Tasks 7.23.0.
 >   - For pre-existing Tasks installations, you can manually add that new instruction to your Preet settings.
 
 ## Example: Daily Note Presets
