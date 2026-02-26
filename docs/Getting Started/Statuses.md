@@ -178,7 +178,7 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
 ### Related searches
 
 - `done` - matches tasks with status types `DONE`, `CANCELLED` and `NON_TASK`
-- `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
+- `not done` - matches tasks with status types `TODO`, `IN_PROGRESS` and `ON_HOLD`
 - **Status Name**
   - `status.name` text search
   - `sort by status.name`
