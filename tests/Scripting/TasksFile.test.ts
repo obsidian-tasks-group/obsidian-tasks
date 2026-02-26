@@ -439,6 +439,46 @@ describe('TasksFile - properties', () => {
     });
 });
 
+describe('TasksFile - isIgnored', () => {
+    it.failing('should return false when no frontmatter exists', () => {
+        const tasksFile = new TasksFile('some/path.md');
+        // @ts-expect-error - method does not exist yet (TDD red phase)
+        expect(tasksFile.isIgnored()).toEqual(false);
+    });
+
+    it.failing('should return false when TQ_ignore_this_file is not present', () => {
+        const tasksFile = new TasksFile('some/path.md', {
+            frontmatter: { some_other_property: true } as any,
+        });
+        // @ts-expect-error - method does not exist yet (TDD red phase)
+        expect(tasksFile.isIgnored()).toEqual(false);
+    });
+
+    it.failing('should return true when TQ_ignore_this_file is true', () => {
+        const tasksFile = new TasksFile('some/path.md', {
+            frontmatter: { TQ_ignore_this_file: true } as any,
+        });
+        // @ts-expect-error - method does not exist yet (TDD red phase)
+        expect(tasksFile.isIgnored()).toEqual(true);
+    });
+
+    it.failing('should return false when TQ_ignore_this_file is false', () => {
+        const tasksFile = new TasksFile('some/path.md', {
+            frontmatter: { TQ_ignore_this_file: false } as any,
+        });
+        // @ts-expect-error - method does not exist yet (TDD red phase)
+        expect(tasksFile.isIgnored()).toEqual(false);
+    });
+
+    it.failing('should be case-insensitive for the property name', () => {
+        const tasksFile = new TasksFile('some/path.md', {
+            frontmatter: { tq_ignore_this_file: true } as any,
+        });
+        // @ts-expect-error - method does not exist yet (TDD red phase)
+        expect(tasksFile.isIgnored()).toEqual(true);
+    });
+});
+
 describe('TasksFile - identicalTo', () => {
     const path = 'a/b/c/d.md';
     const cachedMetadata = {};
