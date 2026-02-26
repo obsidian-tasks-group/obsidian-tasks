@@ -486,8 +486,8 @@ describe('statuses', () => {
                     'This can be more convenient than doing Boolean `OR` searches',
                 ],
                 [
-                    "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)",
-                    'Find tasks that are not type `NON_TASK` and not type `CANCELLED`.',
+                    "filter by function ! 'ON_HOLD,NON_TASK,CANCELLED'.includes(task.status.type)",
+                    'Find tasks that are not type `ON_HOLD`, not type `NON_TASK` and not type `CANCELLED`.',
                 ],
             ],
             tasks,

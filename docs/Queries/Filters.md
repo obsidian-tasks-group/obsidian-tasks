@@ -281,8 +281,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 ### Status
 
-- `done` - matches tasks with status types `DONE`, `CANCELLED` and `NON_TASK`
-- `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
+- `done` - matches tasks with [[status types]] `DONE`, `CANCELLED` and `NON_TASK`
+- `not done` - matches tasks with status types `TODO`, `IN_PROGRESS` and `ON_HOLD`
 
 > [!info]
 > Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
@@ -342,7 +342,7 @@ filter by function task.status.name === 'Unknown'
 
 ### Status Type
 
-- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
+- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|ON_HOLD|CANCELLED|NON_TASK)`
   - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
 - This searches the types you have given to your custom statuses.
 - This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several others all treated as `IN_PROGRESS`.
@@ -374,10 +374,10 @@ filter by function 'TODO,IN_PROGRESS'.includes(task.status.type)
 - This can be more convenient than doing Boolean `OR` searches.
 
 ```javascript
-filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)
+filter by function ! 'ON_HOLD,NON_TASK,CANCELLED'.includes(task.status.type)
 ```
 
-- Find tasks that are not type `NON_TASK` and not type `CANCELLED`.
+- Find tasks that are not type `ON_HOLD`, not type `NON_TASK` and not type `CANCELLED`.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -470,7 +470,7 @@ A task is treated as `blocking` if:
 
 - it has an `id` value,
 - at least one other task in the vault has that `id` value in its `dependsOn` list,
-- both tasks have status type `TODO` or `IN_PROGRESS`.
+- both tasks have status type `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 
 For example:
 
@@ -502,7 +502,7 @@ A task is treated as `blocked` if:
 
 - it has one or more `dependsOn` values,
 - its `dependsOn` list includes the id any tasks in the vault,
-- both tasks have status type `TODO` or `IN_PROGRESS`.
+- both tasks have status type `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 
 For example:
 
