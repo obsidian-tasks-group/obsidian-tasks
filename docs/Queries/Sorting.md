@@ -116,6 +116,7 @@ sort by function task.status.name
   - Tasks are sorted in this order:
     - `IN_PROGRESS`
     - `TODO`
+    - `ON_HOLD`
     - `DONE`
     - `CANCELLED`
     - `NON_TASK`
