@@ -282,7 +282,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 ### Status
 
 - `done` - matches tasks with status types `DONE`, `CANCELLED` and `NON_TASK`
-- `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
+- `not done` - matches tasks with status types `TODO`, `IN_PROGRESS` and `ON_HOLD`
 
 > [!info]
 > Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
@@ -342,7 +342,7 @@ filter by function task.status.name === 'Unknown'
 
 ### Status Type
 
-- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
+- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|ON_HOLD|CANCELLED|NON_TASK)`
   - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
 - This searches the types you have given to your custom statuses.
 - This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several others all treated as `IN_PROGRESS`.
