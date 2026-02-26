@@ -281,7 +281,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 ### Status
 
-- `done` - matches tasks with status types `DONE`, `CANCELLED` and `NON_TASK`
+- `done` - matches tasks with [[status types]] `DONE`, `CANCELLED` and `NON_TASK`
 - `not done` - matches tasks with status types `TODO`, `IN_PROGRESS` and `ON_HOLD`
 
 > [!info]
