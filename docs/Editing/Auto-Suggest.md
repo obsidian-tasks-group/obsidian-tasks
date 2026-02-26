@@ -347,6 +347,7 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | 📅 due date | 📅  |
 | 🛫 start date | 🛫  |
 | ⏳ scheduled date | ⏳  |
+| ⏱ duration | ⏱  |
 | ⏫ high priority | ⏫  |
 | 🔼 medium priority | 🔼  |
 | 🔽 low priority | 🔽  |

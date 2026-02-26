@@ -6,6 +6,7 @@ import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Occurrence } from '../../src/Task/Occurrence';
 import { Task } from '../../src/Task/Task';
 import { Recurrence } from '../../src/Task/Recurrence';
+import { Duration } from '../../src/Task/Duration';
 import { DateParser } from '../../src/DateTime/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskLocation } from '../../src/Task/TaskLocation';
@@ -48,6 +49,7 @@ export class TaskBuilder {
     private _createdDate: Moment | null = null;
     private _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
+    private _duration: Duration = Duration.None;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
     private _cancelledDate: Moment | null = null;
@@ -97,6 +99,7 @@ export class TaskBuilder {
             createdDate: this._createdDate,
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
+            duration: this._duration,
             dueDate: this._dueDate,
             doneDate: this._doneDate,
             cancelledDate: this._cancelledDate,
@@ -129,6 +132,7 @@ export class TaskBuilder {
             .createdDate('2023-07-01')
             .startDate('2023-07-02')
             .scheduledDate('2023-07-03')
+            .duration('1h30m')
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
             .cancelledDate('2023-07-06')
@@ -268,6 +272,16 @@ export class TaskBuilder {
 
     public scheduledDate(scheduledDate: string | null): this {
         this._scheduledDate = TaskBuilder.parseDate(scheduledDate);
+        return this;
+    }
+
+    /**
+     * Set the estimated duration of this task.
+     *
+     * @param durationText - a text value like '1h30m', '2h', '45m', or null/empty to clear.
+     */
+    public duration(durationText: string | null): this {
+        this._duration = (durationText && Duration.fromText(durationText)) || Duration.None;
         return this;
     }
 

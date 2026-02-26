@@ -111,7 +111,7 @@ The Tasks plugin defines several useful built-in presets, for demonstration purp
 | `this_folder_only` | `filter by function task.file.folder === query.file.folder` |
 | `this_root` | `root includes {{query.file.root}}` |
 | `hide_date_fields` | `# Hide any values for all date fields`<br>`hide due date`<br>`hide scheduled date`<br>`hide start date`<br>`hide created date`<br>`hide done date`<br>`hide cancelled date` |
-| `hide_non_date_fields` | `# Hide all the non-date fields, but not tags`<br>`hide id`<br>`hide depends on`<br>`hide recurrence rule`<br>`hide on completion`<br>`hide priority` |
+| `hide_non_date_fields` | `# Hide all the non-date fields, but not tags`<br>`hide id`<br>`hide depends on`<br>`hide recurrence rule`<br>`hide on completion`<br>`hide priority`<br>`hide duration` |
 | `hide_query_elements` | `# Hide toolbar, postpone, edit and backlinks`<br>`hide toolbar`<br>`hide postpone button`<br>`hide edit button`<br>`hide backlinks` |
 | `hide_everything` | `# Hide everything except description and any tags`<br>`preset hide_date_fields`<br>`preset hide_non_date_fields`<br>`preset hide_query_elements` |
 
@@ -121,8 +121,9 @@ These defaults can, of course, be edited, renamed and deleted.
 
 > [!released]
 >
+> - `hide duration` was added to `hide_non_date_fields` in Tasks X.Y.Z.
 > - `hide toolbar` was added to `hide_query_elements` in Tasks X.Y.Z.
->   - For pre-existing Tasks installations, you can manually add that new instruction to your Preet settings.
+>   - For pre-existing Tasks installations, you can manually add that new instruction to your Preset settings.
 
 ## Example: Daily Note Presets
 

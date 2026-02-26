@@ -1050,6 +1050,26 @@ filter by function task.priorityNumber % 2 === 0
     priority is not none
     ```
 
+### Duration
+
+- `has duration`
+- `no duration`
+- `duration is <duration>`
+- `duration above <duration>`
+- `duration below <duration>`
+
+Duration values use a compact format combining hours and minutes, such as `1h30m`, `2h`, or `45m`.
+
+Comparisons are done by total minutes, so `90m` and `1h30m` are treated as equal.
+
+Examples:
+
+- `has duration` - matches any task with a duration set
+- `no duration` - matches tasks without a duration
+- `duration is 1h30m` - matches tasks with exactly 90 minutes of duration
+- `duration above 1h` - matches tasks with more than 60 minutes of duration
+- `duration below 30m` - matches tasks with less than 30 minutes of duration
+
 ### Urgency
 
 There is no built-in instruction to filter by urgency.
