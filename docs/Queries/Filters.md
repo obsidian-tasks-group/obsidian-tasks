@@ -470,7 +470,7 @@ A task is treated as `blocking` if:
 
 - it has an `id` value,
 - at least one other task in the vault has that `id` value in its `dependsOn` list,
-- both tasks have status type `TODO` or `IN_PROGRESS`.
+- both tasks have status type `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 
 For example:
 
@@ -502,7 +502,7 @@ A task is treated as `blocked` if:
 
 - it has one or more `dependsOn` values,
 - its `dependsOn` list includes the id any tasks in the vault,
-- both tasks have status type `TODO` or `IN_PROGRESS`.
+- both tasks have status type `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 
 For example:
 
