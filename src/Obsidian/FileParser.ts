@@ -52,6 +52,11 @@ export class FileParser {
         }
 
         const tasksFile = new TasksFile(this.filePath, this.fileCache);
+
+        if (tasksFile.isIgnored()) {
+            return this.tasks;
+        }
+
         const linesInFile = this.fileLines.length;
 
         // this.logger.debug(`FileParser.parseFileContent() reading ${this.filePath}`);

@@ -63,7 +63,7 @@ describe('FileParser', () => {
         expect(tasks[0].description).toEqual("#task Task line 1 in 'zero_width' - indented by tab character");
     });
 
-    it.failing('should return no tasks when TQ_ignore_this_file is true', () => {
+    it('should return no tasks when TQ_ignore_this_file is true', () => {
         // Override obsidian mock functions for synthetic CachedMetadata
         const obsidianModule = require('obsidian');
         const originalParseFrontMatterTags = obsidianModule.parseFrontMatterTags;
