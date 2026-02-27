@@ -42,7 +42,7 @@
     "@typescript-eslint/parser": "^5.59.8",
     "approvals": "^6.2.4",
     "async-mutex": "^0.5.0",
-    "builtin-modules": "^3.3.0",
+    "builtin-modules": "^5.0.0",
     "esbuild": "0.15.6",
     "esbuild-sass-plugin": "^3.2.0",
     "esbuild-svelte": "^0.8.2",
