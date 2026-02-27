@@ -14,6 +14,8 @@ import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { renderMarkdown } from '../Renderer/RenderingTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine, fromLines } from '../TestingTools/TestHelpers';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { FunctionField } from '../../src/Query/Filter/FunctionField';
 
 window.moment = moment;
 
@@ -62,6 +64,33 @@ describe('QueryResult', () => {
         expect(filteredResult.searchErrorMessage).toContain(
             'Error: "undefined" is not a valid sort key: while evaluating instruction \'sort by function task.linenumer\'',
         );
+    });
+
+    it.failing('should preserve query file properties when filtering results', () => {
+        const queryFile = getTasksFileFromMockData('docs_sample_for_task_properties_reference');
+        expect(queryFile.property('sample_date_and_time_property')).toEqual('2024-07-21T12:37:00');
+
+        // Based on the query in issue #3774
+        const query = new Query(
+            'group by function query.file.property("sample_date_and_time_property") ?? "no date"',
+            queryFile,
+        );
+
+        const getFirstGroupName = (result: QueryResult): string => result.taskGroups.groups[0].groups[0];
+
+        // Do an initial search:
+        const queryResult = query.applyQueryToTasks([new TaskBuilder().build()]);
+        expect(getFirstGroupName(queryResult)).toEqual('2024-07-21T12:37:00');
+
+        // Simulate a user entering a search string in the Toolbar filter box:
+        const { filter } = new FunctionField().createFilterOrErrorMessage('filter by function true');
+        expect(filter).toBeDefined();
+
+        // Confirm that the properties in the query file are retained in the filtered results:
+        const filteredResult = queryResult.applyFilter(filter!);
+        // This line fails: the actual result is "no date"
+        // expect(filteredResult.taskGroups.groups[0].groups[0]).toEqual('2024-07-21T12:37:00');
+        expect(getFirstGroupName(filteredResult)).toEqual('2024-07-21T12:37:00');
     });
 
     it('should be able to store an error message if the search fails', () => {
