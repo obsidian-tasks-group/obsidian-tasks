@@ -1,4 +1,4 @@
-import { TasksFile } from '../Scripting/TasksFile';
+import { type OptionalTasksFile, TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import type { Filter } from './Filter/Filter';
 import { TaskGroups } from './Group/TaskGroups';
@@ -14,6 +14,8 @@ export class QueryResult {
     public readonly totalTasksCountBeforeLimit: number = 0;
 
     private _searchErrorMessage: string | undefined = undefined;
+    // @ts-expect-error: _tasksFile is unused
+    private _tasksFile: OptionalTasksFile = undefined;
 
     constructor(groups: TaskGroups, totalTasksCountBeforeLimit: number) {
         this.taskGroups = groups;
