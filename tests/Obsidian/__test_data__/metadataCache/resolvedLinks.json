@@ -164,6 +164,18 @@
     "Test Data/yaml_all_property_types_populated.md": 2,
     "Test Data/yaml_all_property_types_empty.md": 1
   },
+  "Test Data/editing_tasks_heading_with_multiple_task_lists.md": {},
+  "Test Data/editing_tasks_list_item_with_nested_task_and_list_item.md": {},
+  "Test Data/editing_tasks_mix_of_list_items_and_tasks_with_heading.md": {},
+  "Test Data/editing_tasks_no_headings_two_tasks.md": {},
+  "Test Data/editing_tasks_no_tasks_before_first_heading.md": {},
+  "Test Data/editing_tasks_one_heading_no_tasks.md": {},
+  "Test Data/editing_tasks_one_heading_one_task.md": {},
+  "Test Data/editing_tasks_section_has_no_tasks.md": {},
+  "Test Data/editing_tasks_task_with_nested_list_item.md": {},
+  "Test Data/editing_tasks_three_adjacent_headings.md": {},
+  "Test Data/editing_tasks_two_sections.md": {},
+  "Test Data/editing_tests_tasks_before_first_heading.md": {},
   "Test Data/embed_link_in_task.md": {
     "Test Data/empty_yaml.md": 1
   },
