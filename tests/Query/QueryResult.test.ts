@@ -27,7 +27,7 @@ describe('QueryResult', () => {
     function createUngroupedQueryResultWithLimit(tasks: Task[], totalTasksCountBeforeLimit: number) {
         const groupers: Grouper[] = [];
         const groups = new TaskGroups(groupers, tasks, SearchInfo.fromAllTasks(tasks));
-        return new QueryResult(groups, totalTasksCountBeforeLimit);
+        return new QueryResult(groups, totalTasksCountBeforeLimit, undefined);
     }
 
     it('should create a QueryResult from TaskGroups', () => {
@@ -37,7 +37,7 @@ describe('QueryResult', () => {
         const groups = new TaskGroups(groupers, tasks, SearchInfo.fromAllTasks(tasks));
 
         // Act
-        const queryResult = new QueryResult(groups, 0);
+        const queryResult = new QueryResult(groups, 0, undefined);
 
         // Assert
         expect(queryResult.totalTasksCount).toEqual(0);

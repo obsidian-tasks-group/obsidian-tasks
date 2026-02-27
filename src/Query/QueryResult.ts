@@ -17,9 +17,10 @@ export class QueryResult {
     // @ts-expect-error: _tasksFile is unused
     private _tasksFile: OptionalTasksFile = undefined;
 
-    constructor(groups: TaskGroups, totalTasksCountBeforeLimit: number) {
+    constructor(groups: TaskGroups, totalTasksCountBeforeLimit: number, tasksFile: OptionalTasksFile) {
         this.taskGroups = groups;
         this.totalTasksCountBeforeLimit = totalTasksCountBeforeLimit;
+        this._tasksFile = tasksFile;
     }
 
     public get searchErrorMessage(): string | undefined {
@@ -49,7 +50,7 @@ export class QueryResult {
     }
 
     static fromError(message: string): QueryResult {
-        const result = new QueryResult(new TaskGroups([], [], SearchInfo.fromAllTasks([])), 0);
+        const result = new QueryResult(new TaskGroups([], [], SearchInfo.fromAllTasks([])), 0, undefined);
         result._searchErrorMessage = message;
         return result;
     }
@@ -119,6 +120,7 @@ export class QueryResult {
         return new QueryResult(
             new TaskGroups(this.taskGroups.groupers, filteredTasks, searchInfo),
             this.totalTasksCountBeforeLimit,
+            undefined,
         );
     }
 }
