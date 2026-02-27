@@ -27,12 +27,17 @@ export const createTaskLineModal = (
         resolvePromise(line);
     };
 
+    const onCancel = (): void => {
+        resolvePromise('');
+    };
+
     const task = taskFromLine({ line: '', path: '' });
     const taskModal = new TaskModal({
         app,
         task,
         onSaveSettings,
         onSubmit,
+        onCancel,
         allTasks,
     });
 

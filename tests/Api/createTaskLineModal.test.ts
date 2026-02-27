@@ -18,14 +18,16 @@ jest.mock('../../src/Obsidian/TaskModal', () => {
                 app,
                 task,
                 onSubmit,
+                onCancel,
                 allTasks,
             }: {
                 app: App;
                 task: Task;
                 onSubmit: (updatedTasks: Task[]) => void;
+                onCancel?: () => void;
                 allTasks: Task[];
             }) => {
-                return new TaskModal({ app, task, onSubmit, allTasks });
+                return new TaskModal({ app, task, onSubmit, onCancel, allTasks });
             },
         ),
     };
