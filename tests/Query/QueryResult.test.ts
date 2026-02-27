@@ -66,7 +66,7 @@ describe('QueryResult', () => {
         );
     });
 
-    it.failing('should preserve query file properties when filtering results', () => {
+    it('should preserve query file properties when filtering results', () => {
         const queryFile = getTasksFileFromMockData('docs_sample_for_task_properties_reference');
         expect(queryFile.property('sample_date_and_time_property')).toEqual('2024-07-21T12:37:00');
 
@@ -88,8 +88,6 @@ describe('QueryResult', () => {
 
         // Confirm that the properties in the query file are retained in the filtered results:
         const filteredResult = queryResult.applyFilter(filter!);
-        // This line fails: the actual result is "no date"
-        // expect(filteredResult.taskGroups.groups[0].groups[0]).toEqual('2024-07-21T12:37:00');
         expect(getFirstGroupName(filteredResult)).toEqual('2024-07-21T12:37:00');
     });
 
