@@ -71,7 +71,7 @@
     "typedoc": "^0.27.3",
     "typedoc-plugin-mdn-links": "^4.0.4",
     "typedoc-umlclass": "^0.10.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.12",
