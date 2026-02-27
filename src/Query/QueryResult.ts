@@ -1,4 +1,4 @@
-import { type OptionalTasksFile, TasksFile } from '../Scripting/TasksFile';
+import type { OptionalTasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import type { Filter } from './Filter/Filter';
 import { TaskGroups } from './Group/TaskGroups';
@@ -14,8 +14,7 @@ export class QueryResult {
     public readonly totalTasksCountBeforeLimit: number = 0;
 
     private _searchErrorMessage: string | undefined = undefined;
-    // @ts-expect-error: _tasksFile is unused
-    private _tasksFile: OptionalTasksFile;
+    private readonly _tasksFile: OptionalTasksFile;
 
     constructor(groups: TaskGroups, totalTasksCountBeforeLimit: number, tasksFile: OptionalTasksFile) {
         this.taskGroups = groups;
@@ -113,14 +112,14 @@ export class QueryResult {
         }
 
         const queryResultTasks = this.taskGroups.groups.flatMap((group) => group.tasks);
-        const searchInfo = new SearchInfo(new TasksFile('fix_me.md'), queryResultTasks);
+        const searchInfo = new SearchInfo(this._tasksFile, queryResultTasks);
         const filterFunction = (task: Task) => filter.filterFunction(task, searchInfo);
         const filteredTasks = [...new Set(queryResultTasks.filter(filterFunction))];
 
         return new QueryResult(
             new TaskGroups(this.taskGroups.groupers, filteredTasks, searchInfo),
             this.totalTasksCountBeforeLimit,
-            undefined,
+            this._tasksFile,
         );
     }
 }

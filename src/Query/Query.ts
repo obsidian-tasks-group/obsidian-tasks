@@ -372,7 +372,7 @@ ${statement.explainStatement('    ')}
                 taskGroups.applyTaskLimit(this._taskGroupLimit);
             }
 
-            return new QueryResult(taskGroups, tasksSorted.length, undefined);
+            return new QueryResult(taskGroups, tasksSorted.length, this.tasksFile);
         } catch (e) {
             const description = 'Search failed';
             let message = errorMessageForException(description, e);
