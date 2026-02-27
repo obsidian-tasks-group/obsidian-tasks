@@ -20,6 +20,7 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
+import { globalGetFileCache } from '../Obsidian/CacheReader';
 import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
@@ -57,17 +58,12 @@ export class QueryRenderer {
         //    not yet available, so empty.
         //  - Multi-line properties are supported, but they cannot contain
         //    continuation lines.
-        const app = this.app;
         const filePath = context.sourcePath;
-        const tFile = app.vault.getAbstractFileByPath(filePath);
-        let fileCache: CachedMetadata | null = null;
-        if (tFile && tFile instanceof TFile) {
-            fileCache = app.metadataCache.getFileCache(tFile);
-        }
+        const fileCache = this.getFileCache(filePath);
         const tasksFile = new TasksFile(filePath, fileCache ?? {});
 
         const queryRenderChild = new QueryRenderChild({
-            app: app,
+            app: this.app,
             plugin: this.plugin,
             events: this.events,
             container: element,
@@ -76,6 +72,10 @@ export class QueryRenderer {
         });
         context.addChild(queryRenderChild);
         queryRenderChild.load();
+    }
+
+    private getFileCache(filePath: string) {
+        return globalGetFileCache(this.app, filePath);
     }
 }
 

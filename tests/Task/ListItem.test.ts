@@ -3,7 +3,6 @@
  */
 import moment from 'moment/moment';
 
-import type { Reference } from 'obsidian';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { ListItem } from '../../src/Task/ListItem';
 import { Task } from '../../src/Task/Task';
@@ -11,16 +10,11 @@ import { TaskLocation } from '../../src/Task/TaskLocation';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
-import { LinkResolver } from '../../src/Task/LinkResolver';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
 
 const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile('anything.md'));
-
-afterEach(() => {
-    LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
-});
 
 describe('list item tests', () => {
     it('should create list item with empty children and absent parent', () => {
@@ -217,24 +211,13 @@ describe('outlinks', () => {
 
         expect(tasks[0].outlinks.length).toEqual(1);
         expect(tasks[0].outlinks[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
-        expect(tasks[0].outlinks[0].destinationPath).toBeNull();
+        // If the next test fails, LinkResolver.getInstance().setGetFirstLinkpathDestFn() is not set up
+        expect(tasks[0].outlinks[0].destinationPath).toEqual('Test Data/link_in_task_wikilink.md');
     });
 
     it('should return [] when no links in the task line', () => {
         const tasks = readTasksFromSimulatedFile('multi_line_task_and_list_item');
         expect(tasks[0].outlinks).toEqual([]);
-    });
-
-    it('should save destinationPath when LinksResolver is supplied', () => {
-        LinkResolver.getInstance().setGetFirstLinkpathDestFn(
-            (_rawLink: Reference, _sourcePath: string) => 'Hello World.md',
-        );
-
-        const tasks = readTasksFromSimulatedFile('links_everywhere');
-
-        expect(tasks[0].outlinks.length).toEqual(1);
-        expect(tasks[0].outlinks[0].originalMarkdown).toEqual('[[link_in_task_wikilink]]');
-        expect(tasks[0].outlinks[0].destinationPath).toEqual('Hello World.md');
     });
 });
 

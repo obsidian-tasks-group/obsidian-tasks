@@ -245,6 +245,55 @@ export class TasksFile {
         return propertyValue;
     }
 
+    public propertyAsLink(key: string): Link | null {
+        const value = this.property(key);
+        if (typeof value === 'string' && this.isWikilink(value)) {
+            return this.parseWikilink(value);
+        }
+        return null;
+    }
+
+    public propertyAsLinks(key: string): Link[] {
+        const value = this.property(key);
+        if (Array.isArray(value)) {
+            return value
+                .filter((item) => typeof item === 'string' && this.isWikilink(item))
+                .map((item) => this.parseWikilink(item));
+        }
+        const singleLink = this.propertyAsLink(key);
+        return singleLink ? [singleLink] : [];
+    }
+
+    private isWikilink(value: string): boolean {
+        if (typeof value !== 'string') return false;
+        const trimmed = value.trim();
+        return /^\[\[.*\]\]$/.test(trimmed) || /^!\[\[.*\]\]$/.test(trimmed);
+    }
+
+    private parseWikilink(wikilink: string): Link {
+        const trimmed = wikilink.trim();
+
+        // Handle both regular links [[...]] and embed links ![[...]]
+        const isEmbed = trimmed.startsWith('![[');
+        const linkContent = isEmbed
+            ? trimmed.slice(3, -2) // Remove ![[  and ]]
+            : trimmed.slice(2, -2); // Remove [[ and ]]
+
+        // Parse destination|display format
+        const pipeIndex = linkContent.indexOf('|');
+        const destination = pipeIndex >= 0 ? linkContent.slice(0, pipeIndex) : linkContent;
+        const displayText = pipeIndex >= 0 ? linkContent.slice(pipeIndex + 1) : destination;
+
+        // Create Reference object
+        const reference: Reference = {
+            link: destination,
+            original: wikilink,
+            displayText: displayText,
+        };
+
+        return new Link(reference, this.path);
+    }
+
     private findKeyInFrontmatter(key: string) {
         const lowerCaseKey = key.toLowerCase();
         return Object.keys(this.frontmatter).find((searchKey: string) => {

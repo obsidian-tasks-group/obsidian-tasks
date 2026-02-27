@@ -149,6 +149,18 @@
   "Test Data/callout_labelled.md": {},
   "Test Data/callouts_nested_issue_2890_labelled.md": {},
   "Test Data/callouts_nested_issue_2890_unlabelled.md": {},
+  "Test Data/chain_link1.md": {
+    "Test Data/chain_link2.md": 1
+  },
+  "Test Data/chain_link2.md": {
+    "Test Data/chain_link3.md": 1
+  },
+  "Test Data/chain_link3.md": {
+    "Test Data/chain_link4.md": 1
+  },
+  "Test Data/chain_link4.md": {
+    "Test Data/chain_link1.md": 1
+  },
   "Test Data/code_block_in_task.md": {},
   "Test Data/comments_html_style.md": {},
   "Test Data/comments_markdown_style.md": {
@@ -284,5 +296,20 @@
   "_meta/templates/tasks with range of all dates - Templater plugin.md": {},
   "_meta/templates/tasks with range of due dates - Templater plugin.md": {},
   "_meta/templates/tasks with range of scheduled dates - Templater plugin.md": {},
-  "_meta/templates/tasks with range of start dates - Templater plugin.md": {}
+  "_meta/templates/tasks with range of start dates - Templater plugin.md": {},
+  "discussion-3627-example/Active  Project.md": {
+    "discussion-3627-example/Active Project note.md": 1
+  },
+  "discussion-3627-example/Active Project note.md": {
+    "discussion-3627-example/Active  Project.md": 1
+  },
+  "discussion-3627-example/Homepage.md": {},
+  "discussion-3627-example/Inactive Project note.md": {
+    "discussion-3627-example/Inactive project.md": 1
+  },
+  "discussion-3627-example/Inactive project.md": {
+    "discussion-3627-example/Inactive project.md": 1,
+    "discussion-3627-example/Inactive Project note.md": 1
+  },
+  "discussion-3627-example/No project.md": {}
 }

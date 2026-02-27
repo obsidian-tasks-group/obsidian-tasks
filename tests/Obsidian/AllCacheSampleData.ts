@@ -11,6 +11,10 @@ export type MockDataName =
     | 'callout_labelled'
     | 'callouts_nested_issue_2890_labelled'
     | 'callouts_nested_issue_2890_unlabelled'
+    | 'chain_link1'
+    | 'chain_link2'
+    | 'chain_link3'
+    | 'chain_link4'
     | 'code_block_in_task'
     | 'comments_html_style'
     | 'comments_markdown_style'
@@ -126,6 +130,10 @@ export const AllMockDataNames: MockDataName[] = [
     'callout_labelled',
     'callouts_nested_issue_2890_labelled',
     'callouts_nested_issue_2890_unlabelled',
+    'chain_link1',
+    'chain_link2',
+    'chain_link3',
+    'chain_link4',
     'code_block_in_task',
     'comments_html_style',
     'comments_markdown_style',

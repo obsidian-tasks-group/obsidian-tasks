@@ -1,0 +1,136 @@
+{
+  "cachedMetadata": {
+    "frontmatter": {
+      "link_to_file": "[[chain_link3]]"
+    },
+    "frontmatterLinks": [
+      {
+        "displayText": "chain_link3",
+        "key": "link_to_file",
+        "link": "chain_link3",
+        "original": "[[chain_link3]]"
+      }
+    ],
+    "frontmatterPosition": {
+      "end": {
+        "col": 3,
+        "line": 2,
+        "offset": 39
+      },
+      "start": {
+        "col": 0,
+        "line": 0,
+        "offset": 0
+      }
+    },
+    "headings": [
+      {
+        "heading": "chain_link2",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 4,
+            "offset": 54
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 41
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -6,
+        "position": {
+          "end": {
+            "col": 33,
+            "line": 6,
+            "offset": 89
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 56
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 3,
+            "line": 2,
+            "offset": 39
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "yaml"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 4,
+            "offset": 54
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 41
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 33,
+            "line": 6,
+            "offset": 89
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 56
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 6,
+            "offset": 67
+          },
+          "start": {
+            "col": 6,
+            "line": 6,
+            "offset": 62
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "---\nlink_to_file: \"[[chain_link3]]\"\n---\n\n# chain_link2\n\n- [ ] #task Task in 'chain_link2'\n",
+  "filePath": "Test Data/chain_link2.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {
+    "chain_link3": "Test Data/chain_link3.md"
+  }
+}

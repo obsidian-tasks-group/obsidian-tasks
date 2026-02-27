@@ -69,7 +69,7 @@ describe('MockDataLoader', () => {
         expect(t).toThrowError('FrontMatterCache not found in any loaded SimulatedFile');
     });
 
-    it('should locate loaded SimulatedFile from its path', () => {
+    it('should locate loaded SimulatedFile from its path, for paths already loaded', () => {
         const data1 = MockDataLoader.get('callout');
         const data2 = MockDataLoader.get('no_yaml');
 
@@ -77,11 +77,18 @@ describe('MockDataLoader', () => {
         expect(MockDataLoader.findDataFromMarkdownPath('Test Data/no_yaml.md')).toBe(data2);
     });
 
+    it('should locate not-yet-loaded SimulatedFile from its path, for paths not yet loaded', () => {
+        // This test is only guaranteed to really test the behaviour when it is run on its own,
+        // as earlier tests may already have loaded 'callout'.
+        const data = MockDataLoader.findDataFromMarkdownPath('Test Data/callout.md');
+        expect(data.filePath).toEqual('Test Data/callout.md');
+    });
+
     it('should detect call of findDataFromMarkdownPath() with unknown path', () => {
         const t = () => {
             MockDataLoader.findDataFromMarkdownPath('Test Data/non-existent path.md');
         };
         expect(t).toThrow(Error);
-        expect(t).toThrowError('Markdown path not found in any loaded SimulatedFile');
+        expect(t).toThrowError('Markdown path not found in any SimulatedFile');
     });
 });
