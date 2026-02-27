@@ -15,7 +15,7 @@ export class QueryResult {
 
     private _searchErrorMessage: string | undefined = undefined;
     // @ts-expect-error: _tasksFile is unused
-    private _tasksFile: OptionalTasksFile = undefined;
+    private _tasksFile: OptionalTasksFile;
 
     constructor(groups: TaskGroups, totalTasksCountBeforeLimit: number, tasksFile: OptionalTasksFile) {
         this.taskGroups = groups;
