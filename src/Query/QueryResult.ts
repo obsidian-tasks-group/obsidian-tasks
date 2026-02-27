@@ -1,4 +1,4 @@
-import { TasksFile } from '../Scripting/TasksFile';
+import type { OptionalTasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
 import type { Filter } from './Filter/Filter';
 import { TaskGroups } from './Group/TaskGroups';
@@ -14,10 +14,12 @@ export class QueryResult {
     public readonly totalTasksCountBeforeLimit: number = 0;
 
     private _searchErrorMessage: string | undefined = undefined;
+    private readonly _tasksFile: OptionalTasksFile;
 
-    constructor(groups: TaskGroups, totalTasksCountBeforeLimit: number) {
+    constructor(groups: TaskGroups, totalTasksCountBeforeLimit: number, tasksFile: OptionalTasksFile) {
         this.taskGroups = groups;
         this.totalTasksCountBeforeLimit = totalTasksCountBeforeLimit;
+        this._tasksFile = tasksFile;
     }
 
     public get searchErrorMessage(): string | undefined {
@@ -47,7 +49,7 @@ export class QueryResult {
     }
 
     static fromError(message: string): QueryResult {
-        const result = new QueryResult(new TaskGroups([], [], SearchInfo.fromAllTasks([])), 0);
+        const result = new QueryResult(new TaskGroups([], [], SearchInfo.fromAllTasks([])), 0, undefined);
         result._searchErrorMessage = message;
         return result;
     }
@@ -110,13 +112,14 @@ export class QueryResult {
         }
 
         const queryResultTasks = this.taskGroups.groups.flatMap((group) => group.tasks);
-        const searchInfo = new SearchInfo(new TasksFile('fix_me.md'), queryResultTasks);
+        const searchInfo = new SearchInfo(this._tasksFile, queryResultTasks);
         const filterFunction = (task: Task) => filter.filterFunction(task, searchInfo);
         const filteredTasks = [...new Set(queryResultTasks.filter(filterFunction))];
 
         return new QueryResult(
             new TaskGroups(this.taskGroups.groupers, filteredTasks, searchInfo),
             this.totalTasksCountBeforeLimit,
+            this._tasksFile,
         );
     }
 }
