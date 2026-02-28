@@ -1,4 +1,5 @@
 import type { App, Component, TFile } from 'obsidian';
+import { getSettings } from '../Config/Settings';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
@@ -77,12 +78,16 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.taskLineRenderer = this.createTaskLineRenderer();
     }
 
-    protected renderSearchResultsHeader(_queryResult: QueryResult): void {
-        return;
+    protected renderSearchResultsHeader(queryResult: QueryResult): void {
+        if (getSettings().taskCountLocation === 'top') {
+            this.addTaskCount(queryResult);
+        }
     }
 
     protected renderSearchResultsFooter(queryResult: QueryResult): void {
-        this.addTaskCount(queryResult);
+        if (getSettings().taskCountLocation !== 'top') {
+            this.addTaskCount(queryResult);
+        }
     }
 
     protected renderErrorMessage(errorMessage: string): void {

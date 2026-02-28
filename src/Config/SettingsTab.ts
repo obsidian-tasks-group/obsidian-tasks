@@ -540,6 +540,27 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+
+        // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('settings.display.heading')).setHeading();
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.display.taskCountLocation.name'))
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    i18n.t('settings.display.taskCountLocation.description') +
+                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                ),
+            )
+            .addDropdown((dropdown) => {
+                dropdown.addOption('bottom', i18n.t('settings.display.taskCountLocation.options.bottom'));
+                dropdown.addOption('top', i18n.t('settings.display.taskCountLocation.options.top'));
+                dropdown.setValue(getSettings().taskCountLocation).onChange(async (value) => {
+                    updateSettings({ taskCountLocation: value as 'top' | 'bottom' });
+                    await this.plugin.saveSettings();
+                });
+            });
     }
 
     private seeTheDocumentation(url: string) {
