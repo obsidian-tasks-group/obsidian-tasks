@@ -154,6 +154,17 @@
       },
       "heading": "Dialogs"
     },
+    "display": {
+      "heading": "Display",
+      "taskCountLocation": {
+        "description": "Choose whether the task count is shown at the top or bottom of query results.",
+        "name": "Task count location",
+        "options": {
+          "bottom": "Bottom",
+          "top": "Top"
+        }
+      }
+    },
     "format": {
       "description": {
         "line1": "The format that Tasks uses to read and write tasks.",
