@@ -1,6 +1,7 @@
 import moment from 'moment/moment';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
 import type { Query } from '../../src/Query/Query';
 import { getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
@@ -65,6 +66,7 @@ afterEach(() => {
     jest.useRealTimers();
     GlobalFilter.getInstance().reset();
     GlobalQuery.getInstance().reset();
+    resetSettings();
 });
 
 describe('HtmlQueryResultsRenderer tests', () => {
@@ -223,6 +225,107 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
 
         const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
         verifyRenderedTasks(rerenderedContainer, allTasks);
+    });
+});
+
+describe('HtmlQueryResultsRenderer - task count location setting', () => {
+    const tasksFile = new TasksFile('query.md');
+    const source = 'hide toolbar\nhide backlinks\nhide edit button';
+
+    async function renderAndGetContainer(allTasks: Task[]) {
+        const query = getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
+        const renderer = new HtmlQueryResultsRenderer(
+            () => Promise.resolve(),
+            null,
+            mockApp,
+            mockHTMLRenderer,
+            makeQueryRendererParameters(allTasks),
+            {
+                source: () => source,
+                tasksFile: () => tasksFile,
+                query: () => query,
+            },
+        );
+        const container = document.createElement('div');
+        renderer.content = container;
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
+        return container;
+    }
+
+    it('should render task count at bottom by default', async () => {
+        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
+        const container = await renderAndGetContainer(allTasks);
+
+        const taskCount = container.querySelector('.task-count');
+        expect(taskCount).not.toBeNull();
+        expect(taskCount!.textContent).toBe('2 tasks');
+
+        // Task count should be after the task list (at the bottom)
+        const taskList = container.querySelector('.plugin-tasks-query-result');
+        const children = Array.from(container.children);
+        const taskListIndex = children.indexOf(taskList as Element);
+        const taskCountIndex = children.indexOf(taskCount as Element);
+        expect(taskCountIndex).toBeGreaterThan(taskListIndex);
+    });
+
+    it('should render task count at top when setting is top', async () => {
+        updateSettings({ taskCountLocation: 'top' });
+
+        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
+        const container = await renderAndGetContainer(allTasks);
+
+        const taskCount = container.querySelector('.task-count');
+        expect(taskCount).not.toBeNull();
+        expect(taskCount!.textContent).toBe('2 tasks');
+
+        // Task count should be before the task list (at the top)
+        const taskList = container.querySelector('.plugin-tasks-query-result');
+        const children = Array.from(container.children);
+        const taskListIndex = children.indexOf(taskList as Element);
+        const taskCountIndex = children.indexOf(taskCount as Element);
+        expect(taskCountIndex).toBeLessThan(taskListIndex);
+    });
+
+    it('should render task count at bottom when setting is bottom', async () => {
+        updateSettings({ taskCountLocation: 'bottom' });
+
+        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
+        const container = await renderAndGetContainer(allTasks);
+
+        const taskCount = container.querySelector('.task-count');
+        expect(taskCount).not.toBeNull();
+
+        const taskList = container.querySelector('.plugin-tasks-query-result');
+        const children = Array.from(container.children);
+        const taskListIndex = children.indexOf(taskList as Element);
+        const taskCountIndex = children.indexOf(taskCount as Element);
+        expect(taskCountIndex).toBeGreaterThan(taskListIndex);
+    });
+
+    it('should hide task count when hide instruction is used regardless of location setting', async () => {
+        updateSettings({ taskCountLocation: 'top' });
+
+        const hideSource = 'hide toolbar\nhide backlinks\nhide edit button\nhide task count';
+        const query = getQueryForQueryRenderer(hideSource, GlobalQuery.getInstance(), tasksFile);
+        const renderer = new HtmlQueryResultsRenderer(
+            () => Promise.resolve(),
+            null,
+            mockApp,
+            mockHTMLRenderer,
+            makeQueryRendererParameters(readTasksFromSimulatedFile('inheritance_1parent1child')),
+            {
+                source: () => hideSource,
+                tasksFile: () => tasksFile,
+                query: () => query,
+            },
+        );
+        const container = document.createElement('div');
+        renderer.content = container;
+        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
+
+        const taskCount = container.querySelector('.task-count');
+        expect(taskCount).toBeNull();
     });
 });
 
