@@ -16,6 +16,10 @@ function executeCommand(command: string): string {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+function verifyHtml(normalizedHTML: string): void {
+    verifyWithFileExtension(normalizedHTML, 'html');
+}
+
 describe.skip('DOM snapshots', () => {
     /*
      This test uses the Obsidian CLI to open and render a file, then save the DOM.
@@ -54,7 +58,6 @@ describe.skip('DOM snapshots', () => {
             /(<div class="markdown-preview-sizer markdown-preview-section" style="padding-bottom: )\d+px(; min-height: )\d+px(")/g,
             '$1444px$2555px$3',
         );
-
-        verifyWithFileExtension(normalizedHTML, 'html');
+        verifyHtml(normalizedHTML);
     });
 });
