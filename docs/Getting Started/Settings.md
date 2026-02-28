@@ -25,3 +25,4 @@ For convenience, here is a list of all those documentation pages (in the order t
 - [[Recurring Tasks#Recurrence Settings|Recurring Tasks]]
 - [[Auto-Suggest#Settings|Auto-Suggest]]
 - [[Create or edit Task#Turning off keyboard shortcuts|Create or edit Task modal]]
+- [[Layout#Task count location|Display]]
