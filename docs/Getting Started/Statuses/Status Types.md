@@ -37,9 +37,17 @@ Use of this is totally optional. You may find it useful to be able to prioritise
 ### ON_HOLD
 
 > [!released]
-> The `ON_HOLD` Status Type was introduced in Tasks X.Y.Z.
+> The `ON_HOLD` Status Type was introduced in Tasks 7.23.0.
 
 Use this for tasks you've decided are currently unworkable—for example, when awaiting external input or any circumstances you cannot control, such as feedback, decisions, or third-party actions. Unlike [[Priority|priorities]], which help you choose what to work on, or [[Task Dependencies|dependencies]], which enforce sequencing, `ON_HOLD` signals that a task is simply not actionable right now.
+
+For the original `done` and `not done` filters, Tasks treats `ON_HOLD` as the same as `TODO` and `IN_PROGRESS`: the task still needs work on it at some point.
+
+So if you decide to adopt an `ON_HOLD` custom status, then for day-to-day planning you may wish to add this to your searches:
+
+```text
+status.type is not ON_HOLD
+```
 
 ### DONE
 

@@ -15,10 +15,10 @@ filter by function 'TODO,IN_PROGRESS'.includes(task.status.type)
 - This can be more convenient than doing Boolean `OR` searches.
 
 ```javascript
-filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)
+filter by function ! 'ON_HOLD,NON_TASK,CANCELLED'.includes(task.status.type)
 ```
 
-- Find tasks that are not type `NON_TASK` and not type `CANCELLED`.
+- Find tasks that are not type `ON_HOLD`, not type `NON_TASK` and not type `CANCELLED`.
 
 
 <!-- placeholder to force blank line after included text -->

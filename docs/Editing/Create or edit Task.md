@@ -18,6 +18,20 @@ Use the command 'Tasks: Create or edit task' to launch the modal.
 - If the cursor was on an existing task, the modal will modify that task's properties.
 - If the cursor was on a blank line, the modal will create a brand new task on that line.
 
+## Customising the Modal
+
+You can choose which task fields are displayed in the modal. This saves space, if there are fields that you never use.
+
+To choose the displayed fields, click on the Gear, and turn off the unwanted fields.
+
+By default, all fields are displayed.
+
+![Hide unused fields in the modal](../images/modal-hide-unused-fields.png)
+<span class="caption">Hide unused fields in the modal</span>
+
+> [!released]
+> Hiding unused fields was introduced in Tasks 7.23.0.
+
 ## Keyboard shortcuts
 
 > [!released]
@@ -235,14 +249,6 @@ The Done date value defaults to the current date, but can then be edited before 
 This might be useful if you realise that you had forgotten to mark a recurring task as Done on the actual day that you completed it, and so you would like the new instance to be created based on the day you really completed the task, rather than today when you are marking it as done.
 
 (Today's date is still used for an Created day on a new recurrence, though.)
-
-## Display values
-
-These values cannot currently be edited in this modal.
-
-### Completed
-
-A read-only checkbox, showing whether the task is completed.
 
 ## Finishing off
 

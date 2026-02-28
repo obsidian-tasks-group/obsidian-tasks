@@ -12,11 +12,12 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
-- X.Y.Z:
+- 7.23.0:
   - Changes to most of the Tasks [[settings]] now take immediate effect. A few remaining settings are now marked with `REQUIRES RESTART`.
   - Add [[Status Types#ON_HOLD|ON_HOLD]] status type.
-  - Add toolbar containing a 'Filter by description' box and 'Copy results' button: these are not yet documented.
-  - All fields in the [[Create or edit Task]] modal are now optional. You can hide fields that you do not use.
+  - Add [[Layout#Toolbar|toolbar]]  on Tasks search results, with 'Filter by description' box and 'Copy results' button.
+    - The [[Presets#Default Presets|default preset]] `hide_query_elements` now hides the toolbar. (Pre-existing Tasks settings are not updated, though.)
+  - Add [[Create or edit Task#Customising the Modal|hide fields]] facility to the 'Create or edit Task' modal, for unused fields.
   - Add Vietnamese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
   - Update the [pull request](https://publish.obsidian.md/tasks-contributing/Contributing/Updating+code) guidelines, because of the growth in AI-generated contributions.
 - 7.22.0:

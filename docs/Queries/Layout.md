@@ -62,17 +62,21 @@ hide created date
 
 The following query elements exist:
 
-- `tree`
-- `edit button`
-- `postpone button`
-- `backlink`
-- `urgency`
-- `task count`
+| Element           | Default | Description                     | Details                       |
+| ----------------- | ------- | ------------------------------- | ----------------------------- |
+| toolbar           | Shown   | Copy and filter results         | [[#Toolbar]]                  |
+| `tree`            | Hidden  | Task parent/child relationships | [[#Hide and Show Tree\|Tree]] |
+| `edit button`     | Shown   | Edit task button                | [[Create or edit Task]]       |
+| `postpone button` | Shown   | Postpone button on dates        | [[Postponing]]                |
+| `backlink`        | Shown   | Task backlink for tasks         | [[Backlinks]]                 |
+| `urgency`         | Hidden  | Task urgency score              | [[Urgency]]                   |
+| `task count`      | Shown   | Total number of tasks           |                               |
 
 > [!released]
 >
 > - `urgency` was introduced in Tasks 1.14.0.
 > - `tree` was introduced in Tasks 7.12.0.
+> - `toolbar` was introduced in Tasks 7.23.0.
 
 All of these query elements except `urgency` and `tree` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score or tree view.
@@ -91,6 +95,32 @@ By default, the task count is shown at the **bottom** of query results. You can 
 2. Set **Task count location** to **Top** or **Bottom**.
 
 This is a global setting that applies to all task queries. Individual queries can still use `hide task count` to hide the count entirely.
+
+### Toolbar  
+
+The toolbar appears at the top of Tasks search results.
+
+![Image of the Toolbar at the top of Tasks search results](../images/search-results-toolbar.png)
+<span class="caption">Image of the Toolbar at the top of Tasks search results</span>
+
+It allows you to:
+
+- temporarily **filter results** by task description, without modifying the query
+  - the search is case-insensitive
+    - `hello world` will match `HELLO WORLD`
+  - word order matters
+    - `hello world` will not match `hello blue world`
+- **copy search results** in Markdown format, for export
+  - Copied elements:
+    - Any [[Explaining Queries|explanation]]
+    - Group headings
+    - The found tasks, honouring `show tree`
+  - Elements not copied:
+    - Any error messages
+    - The task count
+
+> [!released]  
+> `show toolbar` and `hide toolbar` were introduced in Tasks 7.23.0.
 
 ### Hide and Show Tree
 
