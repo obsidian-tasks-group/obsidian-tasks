@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
-import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
+import { verifyHtml } from '../TestingTools/ApprovalTestHelpers';
 import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
 
 const DOM_SELECTOR = '.markdown-reading-view :not(.metadata-container)';
@@ -15,10 +15,6 @@ function executeCommand(command: string): string {
 }
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-function verifyHtml(normalizedHTML: string): void {
-    verifyWithFileExtension(normalizedHTML, 'html');
-}
 
 describe.skip('DOM snapshots', () => {
     /*
