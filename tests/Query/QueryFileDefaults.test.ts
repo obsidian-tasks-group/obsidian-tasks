@@ -43,6 +43,7 @@ describe('QueryFileDefaults', () => {
               "TQ_show_postpone_button",
               "TQ_show_task_count",
               "TQ_extra_instructions",
+              "TQ_ignore_this_file",
             ]
         `);
     });
@@ -53,6 +54,7 @@ describe('QueryFileDefaults', () => {
             [
               "TQ_explain",
               "TQ_extra_instructions",
+              "TQ_ignore_this_file",
               "TQ_short_mode",
               "TQ_show_backlink",
               "TQ_show_cancelled_date",

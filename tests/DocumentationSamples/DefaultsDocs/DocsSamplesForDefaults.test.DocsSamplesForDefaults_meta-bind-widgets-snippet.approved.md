@@ -14,3 +14,4 @@ edit button: `INPUT[toggle:TQ_show_edit_button]` postpone button: `INPUT[toggle:
 task count: `INPUT[toggle:TQ_show_task_count]`
 extra instructions: `INPUT[textArea:TQ_extra_instructions]`
 explain: `INPUT[toggle:TQ_explain]`
+ignore this file: `INPUT[toggle:TQ_ignore_this_file]`
