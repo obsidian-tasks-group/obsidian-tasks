@@ -6,6 +6,7 @@ enum Handler {
     Instruction = 'instruction',
     ShowAndHide = 'showAndHide',
     AddValue = 'addValue',
+    None = 'none',
 }
 
 // Steps for adding a new property to Query File Defaults:
@@ -168,6 +169,11 @@ const queryProperties = [
         type: 'text',
         handler: Handler.AddValue,
     },
+    {
+        name: 'TQ_ignore_this_file',
+        type: 'checkbox',
+        handler: Handler.None,
+    },
 ];
 
 /**
@@ -193,6 +199,8 @@ export class QueryFileDefaults {
                 return (hasProperty && (value ? 'show ' + prop.display : 'hide ' + prop.display)) || '';
             case Handler.AddValue:
                 return hasProperty ? value || '' : '';
+            case Handler.None:
+                return '';
             default:
                 throw new Error('Unknown handler type: ' + prop.handler + '.');
         }
