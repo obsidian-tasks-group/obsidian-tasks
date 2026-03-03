@@ -96,6 +96,10 @@ One command is created for each status in your [[Status Settings]], including bo
 
 Obsidian allows you to assign a [hotkey](https://help.obsidian.md/Customization/Custom+hotkeys) to commands, for ease of use. This makes it easy to, for example, assign a hotkey to quickly mark a task as 'In Progress' or 'Cancelled'.
 
+> [!note]
+> Currently the 'Change status to' commands only act on lines which are recognised by Tasks.
+> When run on other lines, the message '**Cannot set status: line is not a task or does not match global filter**' is shown.
+
 | Where                         | Viewing Mode | Works? |
 | ----------------------------- | ------------ | ------ |
 | Task lines in markdown files  | Source mode  | ✅     |
