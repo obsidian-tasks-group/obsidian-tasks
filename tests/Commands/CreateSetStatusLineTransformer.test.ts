@@ -12,12 +12,23 @@ import {
 import { Status } from '../../src/Statuses/Status';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 
 jest.mock('obsidian', () => ({
     Notice: jest.fn(),
 }));
 
 window.moment = moment;
+
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2026-02-27'));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+    resetSettings();
+});
 
 describe('setStatusOnLine', () => {
     it('should return undefined for a non-task line', () => {
@@ -49,6 +60,19 @@ describe('setStatusOnLine', () => {
         const lines = result!.text.split('\n');
         expect(lines.length).toBeGreaterThan(1);
         expect(result!.moveTo).toEqual({ line: lines.length - 1 });
+    });
+
+    it('should honour user settings for recurrence', () => {
+        updateSettings({ recurrenceOnNextLine: true });
+
+        const result = setStatusOnLine('- [ ] A recurring task 🔁 every day 📅 2022-09-04', 'file.md', Status.DONE);
+        expect(result).toBeDefined();
+        expect(result?.text).toEqual(
+            [
+                '- [x] A recurring task 🔁 every day 📅 2022-09-04 ✅ 2026-02-27',
+                '- [ ] A recurring task 🔁 every day 📅 2022-09-05',
+            ].join('\n'),
+        );
     });
 });
 
