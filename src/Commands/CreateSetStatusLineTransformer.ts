@@ -56,7 +56,10 @@ export function createSetStatusCommands(statusRegistry: StatusRegistry): Command
     const setStatusCommands: Command[] = [];
     for (const instruction of statusInstructions) {
         const status = instruction.newStatus;
-        const nameSlug = status.name.toLowerCase().replace(/\s+/g, '-');
+        // We want the command id to not change if a user renames the status.
+        // And we also don't want to have to figure out how to handle duplicate status names.
+        // So we use the single-character status symbol in the command id, avoiding using a space character.
+        const nameSlug = status.symbol === ' ' ? 'space' : status.symbol;
 
         const command = {
             id: `set-status-${nameSlug}`,
