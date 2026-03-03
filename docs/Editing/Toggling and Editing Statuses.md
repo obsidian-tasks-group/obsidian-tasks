@@ -12,7 +12,7 @@ This page describes ways to mark a task line as `TODO` or `DONE`, or any other [
 
 You can [[#Toggling Tasks with mouse|left-click]] or [[#'Change task status' context menu|right-click]] on task checkboxes.
 
-Other options are commands ([[#'Tasks Toggle task done' command|toggle]] or [[#'Tasks Change status to' commands|set to a specific status]]) and a [[#Edit task modal|modal]].
+Other options are commands ([[#'Tasks Toggle task done' command|toggle]] or [[#'Tasks Change status to...' commands|set to a specific status]]) and a [[#Edit task modal|modal]].
 
 > [!tip] What is "toggling"?
 > The simplest meaning of 'toggling' is converting a task between these two states:
