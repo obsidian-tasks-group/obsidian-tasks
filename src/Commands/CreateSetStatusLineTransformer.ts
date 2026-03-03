@@ -62,7 +62,7 @@ export function createSetStatusCommands(statusRegistry: StatusRegistry): Command
         const symbolSlug = status.symbol === ' ' ? 'space' : status.symbol;
 
         const command = {
-            id: `set-status-${symbolSlug}`,
+            id: `set-status-symbol-to-${symbolSlug}`,
             name: instruction.instructionDisplayName(),
             editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
         };
