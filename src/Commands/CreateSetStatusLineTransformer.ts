@@ -59,10 +59,10 @@ export function createSetStatusCommands(statusRegistry: StatusRegistry): Command
         // We want the command id to not change if a user renames the status.
         // And we also don't want to have to figure out how to handle duplicate status names.
         // So we use the single-character status symbol in the command id, avoiding using a space character.
-        const nameSlug = status.symbol === ' ' ? 'space' : status.symbol;
+        const symbolSlug = status.symbol === ' ' ? 'space' : status.symbol;
 
         const command = {
-            id: `set-status-${nameSlug}`,
+            id: `set-status-${symbolSlug}`,
             name: instruction.instructionDisplayName(),
             editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
         };
