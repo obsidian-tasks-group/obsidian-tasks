@@ -26,6 +26,9 @@ To choose the displayed fields, click on the Gear, and turn off the unwanted fie
 
 By default, all fields are displayed.
 
+> [!tip]
+> There is no warning when the task being edited has is a value for a field that you have hidden.
+
 ![Hide unused fields in the modal](../images/modal-hide-unused-fields.png)
 <span class="caption">Hide unused fields in the modal</span>
 
