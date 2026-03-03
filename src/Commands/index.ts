@@ -5,7 +5,7 @@ import { createOrEdit } from './CreateOrEdit';
 
 import { toggleDone } from './ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
-import { createSetStatusCommands } from './CreateSetStatusLineTransformer';
+import { createSetStatusCommands } from './ChangeStatusCommands';
 
 export class Commands {
     private readonly plugin: TasksPlugin;

@@ -8,7 +8,7 @@ import {
     createSetStatusCommands,
     createSetStatusLineTransformer,
     setStatusOnLine,
-} from '../../src/Commands/CreateSetStatusLineTransformer';
+} from '../../src/Commands/ChangeStatusCommands';
 import { Status } from '../../src/Statuses/Status';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
