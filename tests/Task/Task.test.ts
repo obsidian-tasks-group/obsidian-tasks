@@ -2,6 +2,8 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import type { Moment } from 'moment';
+
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
@@ -31,36 +33,52 @@ afterEach(() => {
 });
 
 describe('immutability', () => {
-    it.failing('should not be possible to edit a date Moment after Task creation', () => {
-        // TODO Make Task's use of Moment immutable - always return a clone of the stored Moment.
-        //      https://momentjscom.readthedocs.io/en/latest/moment/01-parsing/12-moment-clone/
+    const inputDate = '2024-02-28 12:34';
+    const parsedDate = '2024-02-28T12:34:00.000Z';
 
-        const inputDate = '2024-02-28 12:34';
-        const task = new Task({ ...new TaskBuilder().build(), dueDate: moment(inputDate) });
+    it.each(['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate', 'cancelledDate'])(
+        'should not be possible to edit %s Moment after Task creation',
+        (dateField) => {
+            const task = new Task({ ...new TaskBuilder().build(), [dateField]: moment(inputDate) });
 
-        const parsedDate = '2024-02-28T12:34:00.000Z';
+            expect(task[dateField as keyof Task]).toEqualMoment(moment(parsedDate));
+
+            (task[dateField as keyof Task] as Moment)?.startOf('day');
+            expect(task[dateField as keyof Task]).toEqualMoment(moment(parsedDate));
+        },
+    );
+
+    it('should not be possible to edit dates from happensDates after Task creation', () => {
+        const task = new Task({
+            ...new TaskBuilder().build(),
+            startDate: moment(inputDate),
+            scheduledDate: moment(inputDate),
+            dueDate: moment(inputDate),
+        });
+
+        expect(task.startDate).toEqualMoment(moment(parsedDate));
+        expect(task.scheduledDate).toEqualMoment(moment(parsedDate));
         expect(task.dueDate).toEqualMoment(moment(parsedDate));
 
-        task.dueDate?.startOf('day');
-        // TODO This fails, giving '2024-02-28T00:00:00.000Z', as the startOf call edits the stored date.
-        //      See https://www.geeksforgeeks.org/moment-js-moment-startof-method/.
+        // Get happensDates and mutate all dates
+        const dates = task.happensDates;
+        for (const date of dates) {
+            date?.startOf('day');
+        }
+
+        // None of the task's dates should be affected
+        expect(task.startDate).toEqualMoment(moment(parsedDate));
+        expect(task.scheduledDate).toEqualMoment(moment(parsedDate));
         expect(task.dueDate).toEqualMoment(moment(parsedDate));
     });
 
-    it.failing('should not be possible to edit a date TasksDate after Task creation', () => {
-        // TODO Make TasksDate objects immutable - always return a clone of the stored Moment.
-        //      https://momentjscom.readthedocs.io/en/latest/moment/01-parsing/12-moment-clone/
-
-        const inputDate = '2024-02-28 12:34';
+    it('should not be possible to edit a date TasksDate after Task creation', () => {
         const task = new Task({ ...new TaskBuilder().build(), dueDate: moment(inputDate) });
 
         const due: TasksDate = task.due;
-        const parsedDate = '2024-02-28T12:34:00.000Z';
         expect(due.moment).toEqualMoment(moment(parsedDate));
 
         due.moment?.startOf('day');
-        // TODO This fails, giving '2024-02-28T00:00:00.000Z', as the startOf call edits the stored date.
-        //      See https://www.geeksforgeeks.org/moment-js-moment-startof-method/.
         expect(due.moment).toEqualMoment(moment(parsedDate));
     });
 });

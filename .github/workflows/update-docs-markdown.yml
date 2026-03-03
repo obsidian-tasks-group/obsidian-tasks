@@ -12,14 +12,14 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install modules
         run: yarn
 
       - name: Run MarkdownSnippets
         run: |
-          dotnet tool install --global MarkdownSnippets.Tool
+          dotnet tool install --global MarkdownSnippets.Tool --version 27.0.2
           mdsnippets ${GITHUB_WORKSPACE} && yarn run lint:markdown && git add --renormalize .
           git commit -m "docs/contrib: Update snippets and examples in markdown" -a  || echo "nothing to commit"
         shell: bash
@@ -30,7 +30,7 @@ jobs:
       # Reference: https://github.com/marketplace/actions/create-pull-request
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           title: "docs/contrib: Update snippets and examples in markdown"
           branch: create-pull-request/${{ github.workflow }}

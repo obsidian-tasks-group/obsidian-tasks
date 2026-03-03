@@ -129,6 +129,16 @@ describe('QueryResultsRenderer - rendering queries', () => {
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
         await verifyRenderedHtml(allTasks, 'show urgency\nshort mode');
     });
+
+    it('should render search-time error', async () => {
+        const source = 'sort by function task.linenumer';
+        const twoTasks: Task[] = [
+            new TaskBuilder().description('first').build(),
+            new TaskBuilder().description('second').build(),
+        ];
+
+        await verifyRenderedHtml(twoTasks, source);
+    });
 });
 
 describe('QueryResultsRenderer - responding to file edits', () => {

@@ -176,7 +176,7 @@ See [[Toggling and Editing Statuses#'Tasks Change status to' commands|'Tasks: Ch
 ### Related searches
 
 - `done` - matches tasks with status types `DONE`, `CANCELLED` and `NON_TASK`
-- `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
+- `not done` - matches tasks with status types `TODO`, `IN_PROGRESS` and `ON_HOLD`
 - **Status Name**
   - `status.name` text search
   - `sort by status.name`

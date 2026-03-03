@@ -37,6 +37,7 @@ The Tasks plugin renders a task in the following structure (this refers to query
 
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
+  - Toolbar (div class="plugin-tasks-toolbar")
   - Results list (ul class="plugin-tasks-query-result") OR Reading View list (ul class="contains-task-list")
     - Task (li class="task-list-item" + attributes like data-task-priority="medium" data-task-due="past-1d" + data-task="[custom_status]" + data-line="[line]")
       - Task checkbox (li class="task-list-item-checkbox")

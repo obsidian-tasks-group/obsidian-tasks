@@ -104,6 +104,7 @@ group by function task.status.name.toUpperCase()
   - The groups will appear in this order, and with these group names:
     - `IN_PROGRESS`
     - `TODO`
+    - `ON_HOLD`
     - `DONE`
     - `CANCELLED`
     - `NON_TASK`
