@@ -87,7 +87,7 @@ There is a set of commands to directly set a task's status to any specific regis
 
 For example:
 
-- 'Tasks: Change status to: [ ] TODO'
+- 'Tasks: Change status to: [ ] Todo'
 - 'Tasks: Change status to: [/] In Progress'
 - 'Tasks: Change status to: [x] Done'
 - 'Tasks: Change status to: [-] Cancelled'
