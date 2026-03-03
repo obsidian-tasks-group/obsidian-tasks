@@ -171,7 +171,7 @@ The [[Create or edit Task#Status|‘Create or edit Task’ Modal]] allows you to
 
 ### Related commands
 
-See [[Toggling and Editing Statuses#'Tasks Change status to' commands|'Tasks: Change status to...' commands]] for setting task statuses via commands.
+See [[Toggling and Editing Statuses#'Tasks Change status to...' commands|'Tasks: Change status to...' commands]] for setting task statuses via commands.
 
 ### Related searches
 
