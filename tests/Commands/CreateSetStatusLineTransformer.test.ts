@@ -118,7 +118,7 @@ describe('createSetStatusLineTransformer', () => {
     });
 });
 
-describe('Set Status Commands', () => {
+describe('Change status commands', () => {
     let registry: StatusRegistry;
     beforeEach(() => {
         registry = new StatusRegistry();
