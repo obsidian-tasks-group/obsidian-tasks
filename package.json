@@ -15,6 +15,7 @@
     "test": "jest --ci",
     "test:dev": "jest --watch",
     "deploy:local": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1",
+    "deploy:local:bash": "bash ./scripts/Test-TasksInLocalObsidian.sh",
     "extract-i18n": "npx i18next-parser",
     "circular-deps-text": "madge --circular --extensions ts ./src > circular-deps.txt",
     "circular-deps-image": "madge --circular --extensions ts ./src --image circular-deps.png",
