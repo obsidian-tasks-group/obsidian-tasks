@@ -1,6 +1,6 @@
 import { EditorView, ViewPlugin } from '@codemirror/view';
 import type { PluginValue } from '@codemirror/view';
-import { Notice } from 'obsidian';
+import { Notice, editorInfoField } from 'obsidian';
 import { TasksFile } from '../Scripting/TasksFile';
 
 import { Task } from '../Task/Task';
@@ -41,6 +41,22 @@ class LivePreviewExtension implements PluginValue {
         // Only handle checkbox clicks.
         if (!target || !(target instanceof HTMLInputElement) || target.type !== 'checkbox') {
             return false;
+        }
+
+        // If the file is ignored via TQ_ignore_this_file, let Obsidian handle the click natively.
+        try {
+            const info = this.view.state.field(editorInfoField);
+            if (info?.file) {
+                const fileCache = info.app.metadataCache.getFileCache(info.file);
+                if (fileCache) {
+                    const tasksFile = new TasksFile(info.file.path, fileCache);
+                    if (tasksFile.isIgnored()) {
+                        return false;
+                    }
+                }
+            }
+        } catch {
+            // If editorInfoField is not available, continue with normal handling.
         }
 
         /* Right now Obsidian API does not give us a way to handle checkbox clicks inside rendered-widgets-in-LP such as

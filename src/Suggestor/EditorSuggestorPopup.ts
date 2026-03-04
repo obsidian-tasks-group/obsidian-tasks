@@ -4,6 +4,7 @@ import type TasksPlugin from 'main';
 import { ensureTaskHasId } from '../Task/TaskDependency';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
+import { TasksFile } from '../Scripting/TasksFile';
 import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';
 
@@ -51,6 +52,13 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             // This allows other plugins, such as Natural Language Dates, to have the opportunity
             // to make suggestions.
             return null;
+        }
+
+        // Check if the file is ignored via TQ_ignore_this_file property
+        const fileCache = this.app.metadataCache.getFileCache(_file);
+        if (fileCache) {
+            const tasksFile = new TasksFile(_file.path, fileCache);
+            if (tasksFile.isIgnored()) return null;
         }
 
         const line = editor.getLine(cursor.line);

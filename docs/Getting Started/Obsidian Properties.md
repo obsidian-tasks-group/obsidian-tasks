@@ -38,6 +38,33 @@ But you might want to put a piece of information in to a file's Obsidian Propert
 
 For example, if you associate a tag with a project, you might want to put that tag in one place at the top of the file, instead of having to remember to add it on every single task line in the file.
 
+## Ignoring a File
+
+> [!released]
+> `TQ_ignore_this_file` was introduced in Tasks X.X.X.
+
+You can make Tasks completely ignore a file by adding the `TQ_ignore_this_file` property to its frontmatter:
+
+```yaml
+---
+TQ_ignore_this_file: true
+---
+```
+
+When this property is set to `true`:
+
+- Tasks will not index any checkboxes in the file — they will not appear in any `tasks` code block results.
+- The Tasks autocomplete suggestion popup will not activate in the file.
+- Checkbox clicks in Live Preview will be handled by Obsidian natively, without any Tasks processing.
+
+This is useful for files where you use checkboxes for purposes other than task tracking, such as checklists, packing lists, templates, or reference material.
+
+> [!tip]
+> This is similar in effect to excluding tasks via a query filter like `filter by function ! task.file.property('tags').includes('#notasks')`, but `TQ_ignore_this_file` goes further: it prevents Tasks from processing the file entirely, not just from showing tasks in query results.
+
+> [!info]
+> Unlike the other `TQ_` properties documented in [[Query File Defaults]], `TQ_ignore_this_file` does not modify query behaviour. It controls whether Tasks recognises the file at all.
+
 ## How does Tasks treat Obsidian Properties?
 
 You might want to start with the [[#Obsidian Properties Query Examples|examples below]] for an idea of *what* Tasks can do with Obsidian Properties.
