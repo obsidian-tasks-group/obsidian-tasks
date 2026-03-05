@@ -17,16 +17,24 @@ export class TaskModal {
         app,
         task,
         onSubmit,
+        onCancel,
         allTasks,
     }: {
         app: App;
         task: Task;
         onSubmit: (updatedTasks: Task[]) => void;
+        onCancel?: () => void;
         allTasks?: Task[];
     }) {
         this.app = app;
         this.task = task;
-        this.onSubmit = onSubmit;
+        this.onSubmit = (updatedTasks: Task[]) => {
+            if (updatedTasks.length > 0) {
+                onSubmit(updatedTasks);
+            } else if (onCancel) {
+                onCancel();
+            }
+        };
         this.open = jest.fn();
         this.allTasks = allTasks || [];
 
