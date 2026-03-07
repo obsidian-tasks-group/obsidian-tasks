@@ -570,12 +570,8 @@ export class SettingsTab extends PluginSettingTab {
         // detailsContainer.createEl(heading.level as keyof HTMLElementTagNameMap, { text: heading.text });
 
         if (heading.notice !== null) {
-            const notice = detailsContainer.createEl('div', {
-                cls: heading.notice.class,
-                text: heading.notice.text,
-            });
             if (heading.notice.html !== null) {
-                notice.insertAdjacentHTML('beforeend', heading.notice.html);
+                new Setting(detailsContainer).setDesc(SettingsTab.createFragmentWithHTML(heading.notice.html));
             }
         }
 
