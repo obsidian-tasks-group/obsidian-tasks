@@ -81,11 +81,11 @@ export function makeDefaultSuggestionBuilder(
         // add date suggestions if relevant
         suggestions = suggestions.concat(addDatesSuggestions(datePrefixRegex, maxGenericSuggestions, parameters));
 
-        // add duration suggestions if relevant
-        suggestions = suggestions.concat(addDurationValueSuggestions(symbols.durationSymbol, parameters));
-
         // add recurrence suggestions if relevant
         suggestions = suggestions.concat(addRecurrenceValueSuggestions(symbols.recurrenceSymbol, parameters));
+
+        // add duration suggestions if relevant
+        suggestions = suggestions.concat(addDurationValueSuggestions(symbols.durationSymbol, parameters));
 
         // add Auto ID suggestions
         if (includeDependencySuggestions(canSaveEdits)) {
@@ -156,10 +156,10 @@ function addTaskPropertySuggestions(
     addField(genericSuggestions, line, symbols.dueDateSymbol, 'due date');
     addField(genericSuggestions, line, symbols.startDateSymbol, 'start date');
     addField(genericSuggestions, line, symbols.scheduledDateSymbol, 'scheduled date');
-    addField(genericSuggestions, line, symbols.durationSymbol, 'duration');
 
     addPrioritySuggestions(genericSuggestions, symbols, parameters);
     addField(genericSuggestions, line, symbols.recurrenceSymbol, 'recurring (repeat)');
+    addField(genericSuggestions, line, symbols.durationSymbol, 'duration');
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, parameters);
 
     if (includeDependencySuggestions(canSaveEdits)) {

@@ -17,10 +17,6 @@
     "appendText": "⏳ "
   },
   {
-    "displayText": "⏱ duration",
-    "appendText": "⏱ "
-  },
-  {
     "displayText": "⏫ high priority",
     "appendText": "⏫ "
   },
@@ -43,6 +39,10 @@
   {
     "displayText": "🔁 recurring (repeat)",
     "appendText": "🔁 "
+  },
+  {
+    "displayText": "⏱ duration",
+    "appendText": "⏱ "
   },
   {
     "textToMatch": "➕ created",

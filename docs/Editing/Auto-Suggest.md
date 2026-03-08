@@ -347,13 +347,13 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | 📅 due date | 📅  |
 | 🛫 start date | 🛫  |
 | ⏳ scheduled date | ⏳  |
-| ⏱ duration | ⏱  |
 | ⏫ high priority | ⏫  |
 | 🔼 medium priority | 🔼  |
 | 🔽 low priority | 🔽  |
 | 🔺 highest priority | 🔺  |
 | ⏬ lowest priority | ⏬  |
 | 🔁 recurring (repeat) | 🔁  |
+| ⏱ duration | ⏱  |
 | ➕ created today (2022-07-11) | ➕ 2022-07-11  |
 | 🆔 id | 🆔  |
 | ⛔ depends on id | ⛔  |
