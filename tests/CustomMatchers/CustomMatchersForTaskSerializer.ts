@@ -79,10 +79,10 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
     return {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         ...t,
+        duration: t.duration?.toText() ?? null,
         startDate: t.startDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         createdDate: t.createdDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         scheduledDate: t.scheduledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
-        duration: t.duration?.toText() ?? null,
         dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         cancelledDate: t.cancelledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
@@ -105,10 +105,10 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
         priority: Priority.None,
+        duration: Duration.None,
         startDate: null,
         createdDate: null,
         scheduledDate: null,
-        duration: Duration.None,
         dueDate: null,
         doneDate: null,
         cancelledDate: null,
