@@ -114,12 +114,6 @@ export class Task extends ListItem {
             listMarker,
             priority,
             duration,
-            createdDate,
-            startDate,
-            scheduledDate,
-            dueDate,
-            doneDate,
-            cancelledDate,
             recurrence,
             onCompletion,
             dependsOn,
@@ -660,6 +654,20 @@ export class Task extends ListItem {
         return this._urgency;
     }
 
+    /**
+     * Return the hours component of the task's duration, or null if no duration is set.
+     */
+    public get durationHours(): number | null {
+        return this.duration === Duration.None ? null : this.duration.hours;
+    }
+
+    /**
+     * Return the minutes component of the task's duration, or null if no duration is set.
+     */
+    public get durationMinutes(): number | null {
+        return this.duration === Duration.None ? null : this.duration.minutes;
+    }
+
     public get cancelledDate(): Moment | null {
         return this._cancelledDate?.clone() ?? null;
     }
@@ -706,20 +714,6 @@ export class Task extends ListItem {
 
     public get scheduledDate(): Moment | null {
         return this._scheduledDate?.clone() ?? null;
-    }
-
-    /**
-     * Return the hours component of the task's duration, or null if no duration is set.
-     */
-    public get durationHours(): number | null {
-        return this.duration === Duration.None ? null : this.duration.hours;
-    }
-
-    /**
-     * Return the minutes component of the task's duration, or null if no duration is set.
-     */
-    public get durationMinutes(): number | null {
-        return this.duration === Duration.None ? null : this.duration.minutes;
     }
 
     /**
@@ -874,6 +868,10 @@ export class Task extends ListItem {
             return false;
         }
 
+        if (this.duration.totalMinutes !== other.duration.totalMinutes) {
+            return false;
+        }
+
         // Compare tags
         if (this.tags.length !== other.tags.length) {
             return false;
@@ -897,10 +895,6 @@ export class Task extends ListItem {
             }
         }
         if (!this.recurrenceIdenticalTo(other)) {
-            return false;
-        }
-
-        if (this.duration.totalMinutes !== other.duration.totalMinutes) {
             return false;
         }
 
