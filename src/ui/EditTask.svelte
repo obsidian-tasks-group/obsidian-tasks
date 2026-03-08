@@ -54,12 +54,12 @@
 
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
-        isDueDateValid &&
+        isDescriptionValid &&
         isDurationValid &&
         isRecurrenceValid &&
-        isScheduledDateValid &&
         isStartDateValid &&
-        isDescriptionValid &&
+        isScheduledDateValid &&
+        isDueDateValid &&
         isCancelledDateValid &&
         isCreatedDateValid &&
         isDoneDateValid;
