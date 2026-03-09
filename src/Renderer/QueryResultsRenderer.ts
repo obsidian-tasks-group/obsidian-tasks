@@ -36,6 +36,7 @@ export class QueryResultsRenderer {
     public readonly source: string;
 
     private readonly htmlRenderer: HtmlQueryResultsRenderer;
+    // @ts-expect-error temp
     private readonly markdownRenderer: MarkdownQueryResultsRenderer;
 
     // The path of the file that contains the instruction block, and cached data from that file.
@@ -236,7 +237,15 @@ export class QueryResultsRenderer {
     }
 
     public async resultsAsMarkdown() {
-        await this.markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
-        return this.markdownRenderer.markdown;
+        const getters = {
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        };
+
+        const markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+
+        await markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
+        return markdownRenderer.markdown;
     }
 }
