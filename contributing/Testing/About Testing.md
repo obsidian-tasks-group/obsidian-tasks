@@ -33,6 +33,7 @@ More advanced features:
 
 - [[Snapshot Tests]] - easy testing of complex string values
 - [[Approval Tests]] - easy testing of complex string values and objects, collections of values, and generation of documentation snippets for [[Embedding code and data in documentation|embedding machine-generated information]] in the user docs.
+- [[Integration Tests]] - capturing the Obsidian DOM, for inspecting Tasks behaviour in Reading mode.
 
 ## Manual Testing
 
