@@ -33,10 +33,11 @@ describe('DOM snapshots', () => {
         // Ensure the correct vault is open and active in Obsidian
         const expected = 'Tasks-Demo\n';
         const instruction = 'obsidian vault info=name';
+        const message = 'The wrong vault is open';
         // TODO extract the following out in to a helper function
         const actual = executeCommand(instruction);
         if (actual !== expected) {
-            throw new Error('The wrong vault is open - expected:\n' + expected + '  but got:\n' + actual);
+            throw new Error(message + ' - expected:\n' + expected + '  but got:\n' + actual);
         }
 
         const data = MockDataLoader.get(<MockDataName>filename);
