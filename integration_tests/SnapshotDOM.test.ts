@@ -32,7 +32,9 @@ describe('DOM snapshots', () => {
     it.each(mockDataNames)('%s', async (filename: string) => {
         // Ensure the correct vault is open and active in Obsidian
         const expected = 'Tasks-Demo\n';
-        const actual = executeCommand('obsidian vault info=name');
+        const instruction = 'obsidian vault info=name';
+        // TODO extract the following out in to a helper function
+        const actual = executeCommand(instruction);
         if (actual !== expected) {
             throw new Error(`The wrong vault is open - expected:
 ${expected}  but got:
