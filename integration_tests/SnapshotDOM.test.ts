@@ -53,7 +53,8 @@ describe('DOM snapshots', () => {
         // Ensure we are in Reading mode
         // (Source or Live Preview would be '=> source\n')
         const readingMode = '=> preview\n';
-        const mode = executeCommand('obsidian eval code="app.workspace.activeLeaf.view.getState().mode"');
+        const command1 = 'obsidian eval code="app.workspace.activeLeaf.view.getState().mode"';
+        const mode = executeCommand(command1);
         if (mode !== readingMode) {
             throw new Error(
                 `The active note should be in Reading Mode - expected:
