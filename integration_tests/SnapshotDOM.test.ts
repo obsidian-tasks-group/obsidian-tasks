@@ -53,6 +53,13 @@ ${vaultName}`);
         // (Source or Live Preview would be '=> source\n')
         const isInReadingMode = '=> preview\n';
         const mode = executeCommand('obsidian eval code="app.workspace.activeLeaf.view.getState().mode"');
+        if (mode !== isInReadingMode) {
+            throw new Error(
+                `The active note should be in Reading Mode - expected:
+${isInReadingMode}  but got:
+${mode}`,
+            );
+        }
         expect(mode).toEqual(isInReadingMode);
 
         // Save the HTML
