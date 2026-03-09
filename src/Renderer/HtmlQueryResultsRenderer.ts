@@ -43,7 +43,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
 
-    private taskLineRenderer: TaskLineRenderer;
+    private readonly taskLineRenderer: TaskLineRenderer;
 
     // document.createElement() creates dummy elements that must be overwritten later
     // with the values of elements that will be rendered
@@ -88,9 +88,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         });
     }
 
-    protected beginRender(): void {
-        this.taskLineRenderer = this.createTaskLineRenderer();
-    }
+    protected beginRender(): void {}
 
     protected renderSearchResultsHeader(_queryResult: QueryResult): void {
         return;
