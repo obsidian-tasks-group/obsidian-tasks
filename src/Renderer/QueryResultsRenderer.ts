@@ -1,4 +1,4 @@
-import { type App, type Component, Notice, type TFile, debounce, setIcon, setTooltip } from 'obsidian';
+import { type App, type Component, Notice, debounce, setIcon, setTooltip } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
@@ -9,27 +9,12 @@ import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
-import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
+import { type HTMLQueryRendererParameters, HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
 import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import { type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
-
-/**
- * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.
- *
- * This interface contains all the necessary properties and handlers to manage
- * and display query results such as tasks, markdown files, and certain event handlers
- * for user interactions, like handling backlinks and editing tasks.
- */
-export interface QueryRendererParameters {
-    allTasks: () => Task[];
-    allMarkdownFiles: () => TFile[];
-    backlinksClickHandler: BacklinksEventHandler;
-    backlinksMousedownHandler: BacklinksEventHandler;
-    editTaskPencilClickHandler: EditButtonClickHandler;
-}
 
 /**
  * The `QueryResultsRenderer` class is responsible for rendering the results
@@ -50,9 +35,6 @@ export class QueryResultsRenderer {
      */
     public readonly source: string;
 
-    private readonly htmlRenderer: HtmlQueryResultsRenderer;
-    private readonly markdownRenderer: MarkdownQueryResultsRenderer;
-
     // The path of the file that contains the instruction block, and cached data from that file.
     // This can be updated when the query file's frontmatter is modified.
     // It is up to the caller to determine when to do this though.
@@ -63,6 +45,18 @@ export class QueryResultsRenderer {
     public queryResult: QueryResult;
     public filteredQueryResult: QueryResult;
     private _filterString: string = '';
+
+    private readonly renderMarkdown: (
+        app: App,
+        markdown: string,
+        el: HTMLElement,
+        sourcePath: string,
+        component: Component,
+    ) => Promise<void>;
+    private readonly obsidianComponent: Component | null;
+    private readonly obsidianApp: App;
+    private readonly textRenderer: TextRenderer;
+    private readonly htmlQueryRendererParameters: HTMLQueryRendererParameters;
 
     constructor(
         className: string,
@@ -78,7 +72,7 @@ export class QueryResultsRenderer {
         obsidianComponent: Component | null,
         obsidianApp: App,
         textRenderer: TextRenderer,
-        queryRendererParameters: QueryRendererParameters,
+        htmlQueryRendererParameters: HTMLQueryRendererParameters,
     ) {
         this.source = source;
         this._tasksFile = tasksFile;
@@ -102,22 +96,11 @@ export class QueryResultsRenderer {
                 break;
         }
 
-        const getters = {
-            source: () => this.source,
-            tasksFile: () => this._tasksFile,
-            query: () => this.query,
-        };
-
-        this.htmlRenderer = new HtmlQueryResultsRenderer(
-            renderMarkdown,
-            obsidianComponent,
-            obsidianApp,
-            textRenderer,
-            queryRendererParameters,
-            getters,
-        );
-
-        this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+        this.renderMarkdown = renderMarkdown;
+        this.obsidianComponent = obsidianComponent;
+        this.obsidianApp = obsidianApp;
+        this.textRenderer = textRenderer;
+        this.htmlQueryRendererParameters = htmlQueryRendererParameters;
     }
 
     public get filterString(): string {
@@ -176,8 +159,24 @@ export class QueryResultsRenderer {
     private async renderQueryResult(state: State, queryResult: QueryResult, content: HTMLDivElement) {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
-        this.htmlRenderer.content = content;
-        await this.htmlRenderer.renderQuery(state, queryResult);
+
+        const getters = {
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        };
+
+        const htmlRenderer = new HtmlQueryResultsRenderer(
+            this.renderMarkdown,
+            this.obsidianComponent,
+            this.obsidianApp,
+            this.textRenderer,
+            this.htmlQueryRendererParameters,
+            getters,
+        );
+
+        htmlRenderer.content = content;
+        await htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();
     }
 
@@ -251,7 +250,15 @@ export class QueryResultsRenderer {
     }
 
     public async resultsAsMarkdown() {
-        await this.markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
-        return this.markdownRenderer.markdown;
+        const getters = {
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        };
+
+        const markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+
+        await markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
+        return markdownRenderer.markdown;
     }
 }

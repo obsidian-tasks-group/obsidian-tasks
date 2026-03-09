@@ -10,7 +10,7 @@ import type { Task } from '../../src/Task/Task';
 import { mockApp } from '../__mocks__/obsidian';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { makeQueryRendererParameters, mockHTMLRenderer, verifyRenderedTasks } from './RenderingTestHelpers';
+import { makeHtmlQueryRendererParameters, mockHTMLRenderer, verifyRenderedTasks } from './RenderingTestHelpers';
 
 window.moment = moment;
 
@@ -22,7 +22,7 @@ function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]
         null,
         mockApp,
         mockHTMLRenderer,
-        makeQueryRendererParameters(allTasks),
+        makeHtmlQueryRendererParameters(allTasks),
         {
             source: () => source,
             tasksFile: () => tasksFile,
