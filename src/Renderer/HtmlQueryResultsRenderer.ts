@@ -80,7 +80,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         });
     }
 
-    protected beginRender(): void {}
+    protected beginRender(): void {
+        return;
+    }
 
     protected renderSearchResultsHeader(_queryResult: QueryResult): void {
         return;
