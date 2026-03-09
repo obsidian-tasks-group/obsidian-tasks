@@ -39,13 +39,13 @@
         "position": {
           "end": {
             "col": 62,
-            "line": 21,
-            "offset": 795
+            "line": 14,
+            "offset": 548
           },
           "start": {
             "col": 0,
-            "line": 21,
-            "offset": 733
+            "line": 14,
+            "offset": 486
           }
         }
       }
@@ -55,9 +55,9 @@
         "parent": -4,
         "position": {
           "end": {
-            "col": 50,
-            "line": 4,
-            "offset": 128
+            "col": 5,
+            "line": 7,
+            "offset": 151
           },
           "start": {
             "col": 0,
@@ -68,175 +68,47 @@
         "task": " "
       },
       {
-        "parent": 4,
-        "position": {
-          "end": {
-            "col": 9,
-            "line": 8,
-            "offset": 218
-          },
-          "start": {
-            "col": 2,
-            "line": 5,
-            "offset": 131
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": 4,
-        "position": {
-          "end": {
-            "col": 54,
-            "line": 9,
-            "offset": 273
-          },
-          "start": {
-            "col": 2,
-            "line": 9,
-            "offset": 221
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -4,
-        "position": {
-          "end": {
-            "col": 5,
-            "line": 13,
-            "offset": 347
-          },
-          "start": {
-            "col": 0,
-            "line": 10,
-            "offset": 274
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -4,
-        "position": {
-          "end": {
-            "col": 50,
-            "line": 14,
-            "offset": 398
-          },
-          "start": {
-            "col": 0,
-            "line": 14,
-            "offset": 348
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -18,
+        "parent": -11,
         "position": {
           "end": {
             "col": 128,
-            "line": 18,
-            "offset": 545
+            "line": 11,
+            "offset": 298
           },
           "start": {
             "col": 0,
-            "line": 18,
-            "offset": 417
+            "line": 11,
+            "offset": 170
           }
         }
       },
       {
-        "parent": -18,
+        "parent": -11,
         "position": {
           "end": {
             "col": 185,
-            "line": 19,
-            "offset": 731
+            "line": 12,
+            "offset": 484
           },
           "start": {
             "col": 0,
-            "line": 19,
-            "offset": 546
+            "line": 12,
+            "offset": 299
           }
         }
       },
       {
-        "parent": -23,
-        "position": {
-          "end": {
-            "col": 48,
-            "line": 23,
-            "offset": 845
-          },
-          "start": {
-            "col": 0,
-            "line": 23,
-            "offset": 797
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": 23,
-        "position": {
-          "end": {
-            "col": 9,
-            "line": 27,
-            "offset": 933
-          },
-          "start": {
-            "col": 2,
-            "line": 24,
-            "offset": 848
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": 23,
-        "position": {
-          "end": {
-            "col": 52,
-            "line": 28,
-            "offset": 986
-          },
-          "start": {
-            "col": 2,
-            "line": 28,
-            "offset": 936
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -23,
+        "parent": -16,
         "position": {
           "end": {
             "col": 5,
-            "line": 32,
-            "offset": 1058
+            "line": 19,
+            "offset": 621
           },
           "start": {
             "col": 0,
-            "line": 29,
-            "offset": 987
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -23,
-        "position": {
-          "end": {
-            "col": 48,
-            "line": 33,
-            "offset": 1107
-          },
-          "start": {
-            "col": 0,
-            "line": 33,
-            "offset": 1059
+            "line": 16,
+            "offset": 550
           }
         },
         "task": " "
@@ -276,9 +148,9 @@
       {
         "position": {
           "end": {
-            "col": 50,
-            "line": 14,
-            "offset": 398
+            "col": 5,
+            "line": 7,
+            "offset": 151
           },
           "start": {
             "col": 0,
@@ -292,13 +164,13 @@
         "position": {
           "end": {
             "col": 15,
-            "line": 16,
-            "offset": 415
+            "line": 9,
+            "offset": 168
           },
           "start": {
             "col": 0,
-            "line": 16,
-            "offset": 400
+            "line": 9,
+            "offset": 153
           }
         },
         "type": "paragraph"
@@ -307,13 +179,13 @@
         "position": {
           "end": {
             "col": 185,
-            "line": 19,
-            "offset": 731
+            "line": 12,
+            "offset": 484
           },
           "start": {
             "col": 0,
-            "line": 18,
-            "offset": 417
+            "line": 11,
+            "offset": 170
           }
         },
         "type": "list"
@@ -322,13 +194,13 @@
         "position": {
           "end": {
             "col": 62,
-            "line": 21,
-            "offset": 795
+            "line": 14,
+            "offset": 548
           },
           "start": {
             "col": 0,
-            "line": 21,
-            "offset": 733
+            "line": 14,
+            "offset": 486
           }
         },
         "type": "heading"
@@ -336,14 +208,14 @@
       {
         "position": {
           "end": {
-            "col": 48,
-            "line": 33,
-            "offset": 1107
+            "col": 5,
+            "line": 19,
+            "offset": 621
           },
           "start": {
             "col": 0,
-            "line": 23,
-            "offset": 797
+            "line": 16,
+            "offset": 550
           }
         },
         "type": "list"
@@ -364,76 +236,12 @@
           }
         },
         "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 15,
-            "line": 5,
-            "offset": 144
-          },
-          "start": {
-            "col": 10,
-            "line": 5,
-            "offset": 139
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 15,
-            "line": 9,
-            "offset": 234
-          },
-          "start": {
-            "col": 10,
-            "line": 9,
-            "offset": 229
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 10,
-            "offset": 285
-          },
-          "start": {
-            "col": 6,
-            "line": 10,
-            "offset": 280
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 14,
-            "offset": 359
-          },
-          "start": {
-            "col": 6,
-            "line": 14,
-            "offset": 354
-          }
-        },
-        "tag": "#task"
       }
     ]
   },
-  "fileContents": "# code_block_in_task\n\n## Tasks with code blocks - code-blocks wrongly hidden\n\n- [ ] #task Task in 'code_block_in_task' level-1-a\n    - [ ] #task Task in 'code_block_in_task' level-2-a\n      ```sh\n      ls -la\n      ```\n    - [ ] #task Task in 'code_block_in_task' level-2-b\n- [ ] #task Task in 'code_block_in_task' level-1-b\n  ```sh\n  ls -la\n  ```\n- [ ] #task Task in 'code_block_in_task' level-1-c\n\nRelated issues:\n\n- #3344: [Code block in list doesn't render in Reading mode](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3344)\n- #2061: [Multi-line tasks (indented lines below a task items) are not shown in Reading mode and Tasks query results](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2061)\n\n## Non-tasks with code blocks - code blocks rendered correctly\n\n- [ ] Non-task in 'code_block_in_task' level-1-a\n    - [ ] Non-task in 'code_block_in_task' level-2-a\n      ```sh\n      ls -la\n      ```\n    - [ ] Non-task in 'code_block_in_task' level-2-b\n- [ ] Non-task in 'code_block_in_task' level-1-b\n  ```sh\n  ls -la\n  ```\n- [ ] Non-task in 'code_block_in_task' level-1-c\n",
+  "fileContents": "# code_block_in_task\n\n## Tasks with code blocks - code-blocks wrongly hidden\n\n- [ ] #task Task in 'code_block_in_task' level-1-b\n  ```sh\n  ls -la\n  ```\n\nRelated issues:\n\n- #3344: [Code block in list doesn't render in Reading mode](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3344)\n- #2061: [Multi-line tasks (indented lines below a task items) are not shown in Reading mode and Tasks query results](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2061)\n\n## Non-tasks with code blocks - code blocks rendered correctly\n\n- [ ] Non-task in 'code_block_in_task' level-1-b\n  ```sh\n  ls -la\n  ```\n",
   "filePath": "Test Data/code_block_in_task.md",
   "getAllTags": [
-    "#task",
-    "#task",
-    "#task",
-    "#task",
     "#task"
   ],
   "parseFrontMatterTags": null,
