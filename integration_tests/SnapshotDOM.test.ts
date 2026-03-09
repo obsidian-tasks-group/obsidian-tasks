@@ -51,16 +51,16 @@ ${vaultName}`);
 
         // Ensure we are in Reading mode
         // (Source or Live Preview would be '=> source\n')
-        const isInReadingMode = '=> preview\n';
+        const readingMode = '=> preview\n';
         const mode = executeCommand('obsidian eval code="app.workspace.activeLeaf.view.getState().mode"');
-        if (mode !== isInReadingMode) {
+        if (mode !== readingMode) {
             throw new Error(
                 `The active note should be in Reading Mode - expected:
-${isInReadingMode}  but got:
+${readingMode}  but got:
 ${mode}`,
             );
         }
-        expect(mode).toEqual(isInReadingMode);
+        expect(mode).toEqual(readingMode);
 
         // Save the HTML
         const html = executeCommand(`obsidian dev:dom selector='${DOM_SELECTOR}'`).toString();
