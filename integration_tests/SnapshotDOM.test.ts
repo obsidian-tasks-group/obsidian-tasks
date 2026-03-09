@@ -43,7 +43,8 @@ describe('DOM snapshots', () => {
         // Wait a bit, to allow time for rendering
         await sleep(500);
 
-        // Ensure we are in reading mode
+        // Ensure we are in Reading mode
+        // (Source or Live Preview would be '=> source\n')
         const isInReadingMode = '=> preview\n';
         const mode = executeCommand('obsidian eval code="app.workspace.activeLeaf.view.getState().mode"');
         expect(mode).toEqual(isInReadingMode);
