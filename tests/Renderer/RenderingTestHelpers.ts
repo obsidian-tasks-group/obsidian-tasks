@@ -2,7 +2,7 @@ import type { App } from 'obsidian';
 import { State } from '../../src/Obsidian/Cache';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import { Query } from '../../src/Query/Query';
-import type { QueryRendererParameters } from '../../src/Renderer/HtmlQueryResultsRenderer';
+import type { HTMLQueryRendererParameters } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
@@ -22,7 +22,7 @@ export const mockTextRenderer = async (_obsidianApp: App, text: string, element:
     element.innerText = text;
 };
 
-export function makeQueryRendererParameters(allTasks: Task[]): QueryRendererParameters {
+export function makeHtmlQueryRendererParameters(allTasks: Task[]): HTMLQueryRendererParameters {
     return {
         allTasks: () => allTasks,
         allMarkdownFiles: () => [],

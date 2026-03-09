@@ -9,7 +9,7 @@ import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
-import { HtmlQueryResultsRenderer, type QueryRendererParameters } from './HtmlQueryResultsRenderer';
+import { type HTMLQueryRendererParameters, HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
 import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import { type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
@@ -63,7 +63,7 @@ export class QueryResultsRenderer {
         obsidianComponent: Component | null,
         obsidianApp: App,
         textRenderer: TextRenderer,
-        queryRendererParameters: QueryRendererParameters,
+        htmlQueryRendererParameters: HTMLQueryRendererParameters,
     ) {
         this.source = source;
         this._tasksFile = tasksFile;
@@ -98,7 +98,7 @@ export class QueryResultsRenderer {
             obsidianComponent,
             obsidianApp,
             textRenderer,
-            queryRendererParameters,
+            htmlQueryRendererParameters,
             getters,
         );
 
