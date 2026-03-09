@@ -48,17 +48,17 @@ export class QueryResultsRenderer {
     public filteredQueryResult: QueryResult;
     private _filterString: string = '';
 
-    private renderMarkdown: (
+    private readonly renderMarkdown: (
         app: App,
         markdown: string,
         el: HTMLElement,
         sourcePath: string,
         component: Component,
     ) => Promise<void>;
-    private obsidianComponent: Component | null;
-    private obsidianApp: App;
-    private textRenderer: TextRenderer;
-    private htmlQueryRendererParameters: HTMLQueryRendererParameters;
+    private readonly obsidianComponent: Component | null;
+    private readonly obsidianApp: App;
+    private readonly textRenderer: TextRenderer;
+    private readonly htmlQueryRendererParameters: HTMLQueryRendererParameters;
 
     constructor(
         className: string,
