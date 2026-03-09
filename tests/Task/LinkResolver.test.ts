@@ -11,18 +11,11 @@ describe('LinkResolver', () => {
         rawLink = link_in_file_body.cachedMetadata.links![0];
     });
 
-    it('should resolve a link via local instance', () => {
+    it('should resolve a link', () => {
         const link = new Link(rawLink, link_in_file_body.filePath);
 
         expect(link.originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
-        expect(link.destinationPath).toBeNull();
-    });
-
-    it('should resolve a link via global instance', () => {
-        const link = new Link(rawLink, link_in_file_body.filePath);
-
-        expect(link.originalMarkdown).toEqual('[[yaml_tags_is_empty]]');
-        expect(link.destinationPath).toBeNull();
+        expect(link.destinationPath).toEqual('Test Data/yaml_tags_is_empty.md');
     });
 
     it('should allow a function to be supplied, to find the destination of a link', () => {
@@ -31,30 +24,5 @@ describe('LinkResolver', () => {
 
         const link = new Link(rawLink, link_in_file_body.filePath);
         expect(link.destinationPath).toEqual('Hello World.md');
-    });
-
-    it('should allow the global instance to be reset', () => {
-        const globalInstance = LinkResolver.getInstance();
-        globalInstance.setGetFirstLinkpathDestFn(() => 'From Global Instance.md');
-
-        const link1 = new Link(rawLink, link_in_file_body.filePath);
-        expect(link1.destinationPath).toEqual('From Global Instance.md');
-
-        globalInstance.resetGetFirstLinkpathDestFn();
-
-        const link2 = new Link(rawLink, link_in_file_body.filePath);
-        expect(link2.destinationPath).toBeNull();
-    });
-
-    it('resetting global instance affects pre-existing links', () => {
-        const globalInstance = LinkResolver.getInstance();
-        globalInstance.setGetFirstLinkpathDestFn(() => 'From Global Instance.md');
-
-        const link1 = new Link(rawLink, link_in_file_body.filePath);
-        expect(link1.destinationPath).toEqual('From Global Instance.md');
-
-        globalInstance.resetGetFirstLinkpathDestFn();
-
-        expect(link1.destinationPath).toBeNull();
     });
 });
