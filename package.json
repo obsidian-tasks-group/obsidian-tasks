@@ -14,6 +14,7 @@
     "lint:markdown": "markdownlint-cli2 --fix \"**/*.md\" ",
     "test": "jest --ci",
     "test:dev": "jest --watch",
+    "test:integration": "jest --config jest.integration.config.js",
     "deploy:local": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1",
     "extract-i18n": "npx i18next-parser",
     "circular-deps-text": "madge --circular --extensions ts ./src > circular-deps.txt",
