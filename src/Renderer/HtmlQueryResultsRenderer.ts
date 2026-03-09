@@ -76,11 +76,11 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.htmlQueryRendererParameters = htmlQueryRendererParameters;
 
         this.taskLineRenderer = new TaskLineRenderer({
-            textRenderer: this.textRenderer,
-            obsidianApp: this.obsidianApp,
-            obsidianComponent: this.obsidianComponent,
-            taskLayoutOptions: this.getters.query().taskLayoutOptions,
-            queryLayoutOptions: this.getters.query().queryLayoutOptions,
+            textRenderer: textRenderer,
+            obsidianApp: obsidianApp,
+            obsidianComponent: obsidianComponent,
+            taskLayoutOptions: getters.query().taskLayoutOptions,
+            queryLayoutOptions: getters.query().queryLayoutOptions,
         });
     }
 
