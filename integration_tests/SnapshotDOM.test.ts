@@ -52,10 +52,11 @@ describe('DOM snapshots', () => {
 
         // Ensure we are in Reading mode
         // (Source or Live Preview would be '=> source\n')
-        const readingMode = '=> preview\n';
-        const command1 = 'obsidian eval code="app.workspace.activeLeaf.view.getState().mode"';
-        const message = 'The active note should be in Reading Mode';
-        executeAndCheckCLICommand(message, command1, readingMode);
+        executeAndCheckCLICommand(
+            'The active note should be in Reading Mode',
+            'obsidian eval code="app.workspace.activeLeaf.view.getState().mode"',
+            '=> preview\n',
+        );
 
         // Save the HTML
         const html = executeCommand(`obsidian dev:dom selector='${DOM_SELECTOR}'`).toString();
