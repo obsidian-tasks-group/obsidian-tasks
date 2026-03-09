@@ -35,9 +35,6 @@ export class QueryResultsRenderer {
      */
     public readonly source: string;
 
-    // @ts-expect-error temp
-    private readonly htmlRenderer: HtmlQueryResultsRenderer;
-
     // The path of the file that contains the instruction block, and cached data from that file.
     // This can be updated when the query file's frontmatter is modified.
     // It is up to the caller to determine when to do this though.
@@ -104,21 +101,6 @@ export class QueryResultsRenderer {
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
         this.htmlQueryRendererParameters = htmlQueryRendererParameters;
-
-        const getters = {
-            source: () => this.source,
-            tasksFile: () => this._tasksFile,
-            query: () => this.query,
-        };
-
-        this.htmlRenderer = new HtmlQueryResultsRenderer(
-            this.renderMarkdown,
-            this.obsidianComponent,
-            this.obsidianApp,
-            this.textRenderer,
-            this.htmlQueryRendererParameters,
-            getters,
-        );
     }
 
     public get filterString(): string {
