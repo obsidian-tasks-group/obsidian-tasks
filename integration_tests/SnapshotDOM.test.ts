@@ -36,9 +36,7 @@ describe('DOM snapshots', () => {
         // TODO extract the following out in to a helper function
         const actual = executeCommand(instruction);
         if (actual !== expected) {
-            throw new Error(`The wrong vault is open - expected:
-${expected}  but got:
-${actual}`);
+            throw new Error('The wrong vault is open - expected:\n' + expected + '  but got:\n' + actual);
         }
 
         const data = MockDataLoader.get(<MockDataName>filename);
