@@ -16,6 +16,13 @@ function executeCommand(command: string): string {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+function executeAndCheckCLICommand(message: string, instruction: string, expected: string): void {
+    const actual = executeCommand(instruction);
+    if (actual !== expected) {
+        throw new Error(message + ' - expected:\n' + expected + '  but got:\n' + actual);
+    }
+}
+
 describe('DOM snapshots', () => {
     /*
      This test uses the Obsidian CLI to open and render a file, then save the DOM.
@@ -34,11 +41,7 @@ describe('DOM snapshots', () => {
         const expected = 'Tasks-Demo\n';
         const instruction = 'obsidian vault info=name';
         const message = 'The wrong vault is open';
-        // TODO extract the following out in to a helper function
-        const actual = executeCommand(instruction);
-        if (actual !== expected) {
-            throw new Error(message + ' - expected:\n' + expected + '  but got:\n' + actual);
-        }
+        executeAndCheckCLICommand(message, instruction, expected);
 
         const data = MockDataLoader.get(<MockDataName>filename);
         const path = data.filePath;
