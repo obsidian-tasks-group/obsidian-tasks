@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { verifyHtml } from '../TestingTools/ApprovalTestHelpers';
-import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
+import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 
 const DOM_SELECTOR = '.markdown-reading-view :not(.metadata-container)';
 
@@ -28,8 +28,9 @@ describe.skip('DOM snapshots', () => {
       - the user having open in Obsidian the demo vault in 'resources/sample_vaults/Tasks-Demo/'
     */
 
+    const mockDataNames: MockDataName[] = ['code_block_in_task'];
     // TODO Ensure the correct vault is open and active in Obsidian
-    it.each(AllMockDataNames)('%s', async (filename: string) => {
+    it.each(mockDataNames)('%s', async (filename: string) => {
         // Requirements:
         // 1. The Demo Vault must be the active Obsidian vault
         const data = MockDataLoader.get(<MockDataName>filename);
