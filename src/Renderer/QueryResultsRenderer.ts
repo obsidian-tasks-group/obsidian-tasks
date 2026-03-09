@@ -48,6 +48,18 @@ export class QueryResultsRenderer {
     public filteredQueryResult: QueryResult;
     private _filterString: string = '';
 
+    private renderMarkdown: (
+        app: App,
+        markdown: string,
+        el: HTMLElement,
+        sourcePath: string,
+        component: Component,
+    ) => Promise<void>;
+    private obsidianComponent: Component | null;
+    private obsidianApp: App;
+    private textRenderer: TextRenderer;
+    private htmlQueryRendererParameters: HTMLQueryRendererParameters;
+
     constructor(
         className: string,
         source: string,
@@ -86,6 +98,12 @@ export class QueryResultsRenderer {
                 break;
         }
 
+        this.renderMarkdown = renderMarkdown;
+        this.obsidianComponent = obsidianComponent;
+        this.obsidianApp = obsidianApp;
+        this.textRenderer = textRenderer;
+        this.htmlQueryRendererParameters = htmlQueryRendererParameters;
+
         const getters = {
             source: () => this.source,
             tasksFile: () => this._tasksFile,
@@ -93,11 +111,11 @@ export class QueryResultsRenderer {
         };
 
         this.htmlRenderer = new HtmlQueryResultsRenderer(
-            renderMarkdown,
-            obsidianComponent,
-            obsidianApp,
-            textRenderer,
-            htmlQueryRendererParameters,
+            this.renderMarkdown,
+            this.obsidianComponent,
+            this.obsidianApp,
+            this.textRenderer,
+            this.htmlQueryRendererParameters,
             getters,
         );
     }
