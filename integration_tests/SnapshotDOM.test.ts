@@ -1,8 +1,8 @@
 import { execSync } from 'child_process';
-import { MockDataLoader } from '../TestingTools/MockDataLoader';
-import { prettifyHTML } from '../TestingTools/HTMLHelpers';
-import { verifyHtml } from '../TestingTools/ApprovalTestHelpers';
-import type { MockDataName } from '../Obsidian/AllCacheSampleData';
+import { MockDataLoader } from '../tests/TestingTools/MockDataLoader';
+import { prettifyHTML } from '../tests/TestingTools/HTMLHelpers';
+import { verifyHtml } from '../tests/TestingTools/ApprovalTestHelpers';
+import type { MockDataName } from '../tests/Obsidian/AllCacheSampleData';
 
 const DOM_SELECTOR = '.markdown-reading-view :not(.metadata-container)';
 
