@@ -16,7 +16,7 @@ function executeCommand(command: string): string {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-describe.skip('DOM snapshots', () => {
+describe('DOM snapshots', () => {
     /*
      This test uses the Obsidian CLI to open and render a file, then save the DOM.
      This will allow us to detect regressions and test improvements over time.
