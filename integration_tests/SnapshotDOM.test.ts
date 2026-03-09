@@ -43,7 +43,9 @@ describe('DOM snapshots', () => {
         // Wait a bit, to allow time for rendering
         await sleep(500);
 
-        // TODO Ensure we are in reading mode
+        // Ensure we are in reading mode
+        const mode = executeCommand('obsidian eval code="app.workspace.activeLeaf.view.getState().mode"');
+        expect(mode).toEqual('=> preview\n');
 
         // Save the HTML
         const html = executeCommand(`obsidian dev:dom selector='${DOM_SELECTOR}'`).toString();
