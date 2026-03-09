@@ -35,9 +35,6 @@ export class QueryResultsRenderer {
      */
     public readonly source: string;
 
-    private readonly htmlRenderer: HtmlQueryResultsRenderer;
-    private readonly markdownRenderer: MarkdownQueryResultsRenderer;
-
     // The path of the file that contains the instruction block, and cached data from that file.
     // This can be updated when the query file's frontmatter is modified.
     // It is up to the caller to determine when to do this though.
@@ -48,6 +45,18 @@ export class QueryResultsRenderer {
     public queryResult: QueryResult;
     public filteredQueryResult: QueryResult;
     private _filterString: string = '';
+
+    private readonly renderMarkdown: (
+        app: App,
+        markdown: string,
+        el: HTMLElement,
+        sourcePath: string,
+        component: Component,
+    ) => Promise<void>;
+    private readonly obsidianComponent: Component | null;
+    private readonly obsidianApp: App;
+    private readonly textRenderer: TextRenderer;
+    private readonly htmlQueryRendererParameters: HTMLQueryRendererParameters;
 
     constructor(
         className: string,
@@ -87,22 +96,11 @@ export class QueryResultsRenderer {
                 break;
         }
 
-        const getters = {
-            source: () => this.source,
-            tasksFile: () => this._tasksFile,
-            query: () => this.query,
-        };
-
-        this.htmlRenderer = new HtmlQueryResultsRenderer(
-            renderMarkdown,
-            obsidianComponent,
-            obsidianApp,
-            textRenderer,
-            htmlQueryRendererParameters,
-            getters,
-        );
-
-        this.markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+        this.renderMarkdown = renderMarkdown;
+        this.obsidianComponent = obsidianComponent;
+        this.obsidianApp = obsidianApp;
+        this.textRenderer = textRenderer;
+        this.htmlQueryRendererParameters = htmlQueryRendererParameters;
     }
 
     public get filterString(): string {
@@ -161,8 +159,24 @@ export class QueryResultsRenderer {
     private async renderQueryResult(state: State, queryResult: QueryResult, content: HTMLDivElement) {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
-        this.htmlRenderer.content = content;
-        await this.htmlRenderer.renderQuery(state, queryResult);
+
+        const getters = {
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        };
+
+        const htmlRenderer = new HtmlQueryResultsRenderer(
+            this.renderMarkdown,
+            this.obsidianComponent,
+            this.obsidianApp,
+            this.textRenderer,
+            this.htmlQueryRendererParameters,
+            getters,
+        );
+
+        htmlRenderer.content = content;
+        await htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();
     }
 
@@ -236,7 +250,15 @@ export class QueryResultsRenderer {
     }
 
     public async resultsAsMarkdown() {
-        await this.markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
-        return this.markdownRenderer.markdown;
+        const getters = {
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        };
+
+        const markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+
+        await markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
+        return markdownRenderer.markdown;
     }
 }

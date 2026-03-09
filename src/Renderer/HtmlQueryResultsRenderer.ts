@@ -35,15 +35,12 @@ export interface HTMLQueryRendererParameters {
  *   await this.htmlRenderer.renderQuery(state, tasks);
  */
 export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
-    // Renders the description in TaskLineRenderer:
-    protected readonly textRenderer;
-
     // Renders the group heading in this class:
     protected readonly renderMarkdown;
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
 
-    private taskLineRenderer: TaskLineRenderer;
+    private readonly taskLineRenderer: TaskLineRenderer;
 
     // document.createElement() creates dummy elements that must be overwritten later
     // with the values of elements that will be rendered
@@ -64,7 +61,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         obsidianComponent: Component | null,
         obsidianApp: App,
         textRenderer: TextRenderer,
-        queryRendererParameters: HTMLQueryRendererParameters,
+        htmlQueryRendererParameters: HTMLQueryRendererParameters,
         getters: QueryResultsRendererGetters,
     ) {
         super(getters);
@@ -72,24 +69,19 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
-        this.textRenderer = textRenderer;
-        this.htmlQueryRendererParameters = queryRendererParameters;
+        this.htmlQueryRendererParameters = htmlQueryRendererParameters;
 
-        this.taskLineRenderer = this.createTaskLineRenderer();
-    }
-
-    private createTaskLineRenderer() {
-        return new TaskLineRenderer({
-            textRenderer: this.textRenderer,
-            obsidianApp: this.obsidianApp,
-            obsidianComponent: this.obsidianComponent,
-            taskLayoutOptions: this.getters.query().taskLayoutOptions,
-            queryLayoutOptions: this.getters.query().queryLayoutOptions,
+        this.taskLineRenderer = new TaskLineRenderer({
+            textRenderer: textRenderer,
+            obsidianApp: obsidianApp,
+            obsidianComponent: obsidianComponent,
+            taskLayoutOptions: getters.query().taskLayoutOptions,
+            queryLayoutOptions: getters.query().queryLayoutOptions,
         });
     }
 
     protected beginRender(): void {
-        this.taskLineRenderer = this.createTaskLineRenderer();
+        return;
     }
 
     protected renderSearchResultsHeader(_queryResult: QueryResult): void {
