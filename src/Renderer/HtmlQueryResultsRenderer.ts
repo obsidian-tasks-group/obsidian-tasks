@@ -8,9 +8,24 @@ import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import type { QueryRendererParameters } from './QueryResultsRenderer';
+import type { BacklinksEventHandler, EditButtonClickHandler } from './QueryResultsRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+
+/**
+ * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.
+ *
+ * This interface contains all the necessary properties and handlers to manage
+ * and display query results such as tasks, markdown files, and certain event handlers
+ * for user interactions, like handling backlinks and editing tasks.
+ */
+export interface QueryRendererParameters {
+    allTasks: () => Task[];
+    allMarkdownFiles: () => TFile[];
+    backlinksClickHandler: BacklinksEventHandler;
+    backlinksMousedownHandler: BacklinksEventHandler;
+    editTaskPencilClickHandler: EditButtonClickHandler;
+}
 
 /**
  * HTML-specific implementation of {@link QueryResultsRendererBase} abstract class.
