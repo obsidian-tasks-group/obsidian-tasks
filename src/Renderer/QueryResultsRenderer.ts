@@ -35,6 +35,7 @@ export class QueryResultsRenderer {
      */
     public readonly source: string;
 
+    // @ts-expect-error temp
     private readonly htmlRenderer: HtmlQueryResultsRenderer;
 
     // The path of the file that contains the instruction block, and cached data from that file.
@@ -176,8 +177,24 @@ export class QueryResultsRenderer {
     private async renderQueryResult(state: State, queryResult: QueryResult, content: HTMLDivElement) {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
-        this.htmlRenderer.content = content;
-        await this.htmlRenderer.renderQuery(state, queryResult);
+
+        const getters = {
+            source: () => this.source,
+            tasksFile: () => this._tasksFile,
+            query: () => this.query,
+        };
+
+        const htmlRenderer = new HtmlQueryResultsRenderer(
+            this.renderMarkdown,
+            this.obsidianComponent,
+            this.obsidianApp,
+            this.textRenderer,
+            this.htmlQueryRendererParameters,
+            getters,
+        );
+
+        htmlRenderer.content = content;
+        await htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();
     }
 
