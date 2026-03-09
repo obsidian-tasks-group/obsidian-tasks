@@ -76,7 +76,7 @@ The following query elements exist:
 >
 > - `urgency` was introduced in Tasks 1.14.0.
 > - `tree` was introduced in Tasks 7.12.0.
-> - `toolbar` was introduced in Tasks X.Y.Z.
+> - `toolbar` was introduced in Tasks 7.23.0.
 
 All of these query elements except `urgency` and `tree` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score or tree view.
@@ -111,7 +111,7 @@ It allows you to:
     - The task count
 
 > [!released]  
-> `show toolbar` and `hide toolbar` were introduced in Tasks X.Y.Z.
+> `show toolbar` and `hide toolbar` were introduced in Tasks 7.23.0.
 
 ### Hide and Show Tree
 

@@ -13,6 +13,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 ## 7.x releases
 
 - X.Y.Z:
+  - Add [[Toggling and Editing Statuses#'Tasks Change status to...' commands|'Change status to...' commands]].
+- 7.23.0:
   - Changes to most of the Tasks [[settings]] now take immediate effect. A few remaining settings are now marked with `REQUIRES RESTART`.
   - Add [[Status Types#ON_HOLD|ON_HOLD]] status type.
   - Add [[Layout#Toolbar|toolbar]]  on Tasks search results, with 'Filter by description' box and 'Copy results' button.
