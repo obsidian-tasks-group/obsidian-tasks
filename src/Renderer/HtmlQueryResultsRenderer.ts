@@ -8,9 +8,24 @@ import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import type { QueryRendererParameters } from './QueryResultsRenderer';
+import type { BacklinksEventHandler, EditButtonClickHandler } from './QueryResultsRenderer';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+
+/**
+ * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.
+ *
+ * This interface contains all the necessary properties and handlers to manage
+ * and display query results such as tasks, markdown files, and certain event handlers
+ * for user interactions, like handling backlinks and editing tasks.
+ */
+export interface HTMLQueryRendererParameters {
+    allTasks: () => Task[];
+    allMarkdownFiles: () => TFile[];
+    backlinksClickHandler: BacklinksEventHandler;
+    backlinksMousedownHandler: BacklinksEventHandler;
+    editTaskPencilClickHandler: EditButtonClickHandler;
+}
 
 /**
  * HTML-specific implementation of {@link QueryResultsRendererBase} abstract class.
@@ -36,7 +51,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly ulElementStack: HTMLUListElement[] = [];
     private lastLIElement: HTMLLIElement = document.createElement('li');
 
-    private readonly queryRendererParameters: QueryRendererParameters;
+    private readonly htmlQueryRendererParameters: HTMLQueryRendererParameters;
 
     constructor(
         renderMarkdown: (
@@ -49,7 +64,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         obsidianComponent: Component | null,
         obsidianApp: App,
         textRenderer: TextRenderer,
-        queryRendererParameters: QueryRendererParameters,
+        queryRendererParameters: HTMLQueryRendererParameters,
         getters: QueryResultsRendererGetters,
     ) {
         super(getters);
@@ -58,7 +73,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
-        this.queryRendererParameters = queryRendererParameters;
+        this.htmlQueryRendererParameters = queryRendererParameters;
 
         this.taskLineRenderer = this.createTaskLineRenderer();
     }
@@ -134,7 +149,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addTask(task: Task, taskIndex: number): Promise<void> {
-        const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
+        const isFilenameUnique = this.isFilenameUnique({ task }, this.htmlQueryRendererParameters.allMarkdownFiles());
         const listItem = this.lastLIElement;
 
         await this.taskLineRenderer.renderTaskLine({
@@ -180,10 +195,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         editTaskPencil.href = '#';
 
         editTaskPencil.addEventListener('click', (event: MouseEvent) =>
-            this.queryRendererParameters.editTaskPencilClickHandler(
+            this.htmlQueryRendererParameters.editTaskPencilClickHandler(
                 event,
                 task,
-                this.queryRendererParameters.allTasks(),
+                this.htmlQueryRendererParameters.allTasks(),
             ),
         );
     }
@@ -248,11 +263,11 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         // Go to the line the task is defined at
         link.addEventListener('click', async (ev: MouseEvent) => {
-            await this.queryRendererParameters.backlinksClickHandler(ev, task);
+            await this.htmlQueryRendererParameters.backlinksClickHandler(ev, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
-            await this.queryRendererParameters.backlinksMousedownHandler(ev, task);
+            await this.htmlQueryRendererParameters.backlinksMousedownHandler(ev, task);
         });
 
         if (!shortMode) {
