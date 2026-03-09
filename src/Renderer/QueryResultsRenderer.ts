@@ -1,4 +1,4 @@
-import { type App, type Component, Notice, type TFile, debounce, setIcon, setTooltip } from 'obsidian';
+import { type App, type Component, Notice, debounce, setIcon, setTooltip } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import type { IQuery } from '../IQuery';
 import { PerformanceTracker } from '../lib/PerformanceTracker';
@@ -9,27 +9,12 @@ import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
-import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
+import { HtmlQueryResultsRenderer, type QueryRendererParameters } from './HtmlQueryResultsRenderer';
 import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import { type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
-
-/**
- * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.
- *
- * This interface contains all the necessary properties and handlers to manage
- * and display query results such as tasks, markdown files, and certain event handlers
- * for user interactions, like handling backlinks and editing tasks.
- */
-export interface QueryRendererParameters {
-    allTasks: () => Task[];
-    allMarkdownFiles: () => TFile[];
-    backlinksClickHandler: BacklinksEventHandler;
-    backlinksMousedownHandler: BacklinksEventHandler;
-    editTaskPencilClickHandler: EditButtonClickHandler;
-}
 
 /**
  * The `QueryResultsRenderer` class is responsible for rendering the results
