@@ -35,9 +35,6 @@ export interface HTMLQueryRendererParameters {
  *   await this.htmlRenderer.renderQuery(state, tasks);
  */
 export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
-    // Renders the description in TaskLineRenderer:
-    protected readonly textRenderer;
-
     // Renders the group heading in this class:
     protected readonly renderMarkdown;
     protected readonly obsidianComponent: Component | null;
@@ -72,7 +69,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
-        this.textRenderer = textRenderer;
         this.htmlQueryRendererParameters = htmlQueryRendererParameters;
 
         this.taskLineRenderer = new TaskLineRenderer({
