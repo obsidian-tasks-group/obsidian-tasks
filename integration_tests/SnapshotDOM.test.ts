@@ -55,15 +55,7 @@ describe('DOM snapshots', () => {
         const readingMode = '=> preview\n';
         const command1 = 'obsidian eval code="app.workspace.activeLeaf.view.getState().mode"';
         const message = 'The active note should be in Reading Mode';
-        const mode = executeCommand(command1);
-        if (mode !== readingMode) {
-            throw new Error(
-                `${message} - expected:
-${readingMode}  but got:
-${mode}`,
-            );
-        }
-        expect(mode).toEqual(readingMode);
+        executeAndCheckCLICommand(message, command1, readingMode);
 
         // Save the HTML
         const html = executeCommand(`obsidian dev:dom selector='${DOM_SELECTOR}'`).toString();
