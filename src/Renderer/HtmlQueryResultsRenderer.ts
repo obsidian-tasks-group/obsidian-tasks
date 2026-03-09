@@ -64,7 +64,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         obsidianComponent: Component | null,
         obsidianApp: App,
         textRenderer: TextRenderer,
-        queryRendererParameters: HTMLQueryRendererParameters,
+        htmlQueryRendererParameters: HTMLQueryRendererParameters,
         getters: QueryResultsRendererGetters,
     ) {
         super(getters);
@@ -73,7 +73,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
         this.textRenderer = textRenderer;
-        this.htmlQueryRendererParameters = queryRendererParameters;
+        this.htmlQueryRendererParameters = htmlQueryRendererParameters;
 
         this.taskLineRenderer = this.createTaskLineRenderer();
     }
