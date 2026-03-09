@@ -12,6 +12,7 @@ module.exports = {
         '^.+\\.ts$': 'ts-jest',
     },
     moduleFileExtensions: ['js', 'ts', 'svelte'],
+    roots: ['<rootDir>/tests'],
     testEnvironment: 'jsdom',
 
     // A list of paths to modules that run some code to configure or
