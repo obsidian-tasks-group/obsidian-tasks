@@ -29,10 +29,16 @@ describe('DOM snapshots', () => {
     */
 
     const mockDataNames: MockDataName[] = ['code_block_in_task'];
-    // TODO Ensure the correct vault is open and active in Obsidian
     it.each(mockDataNames)('%s', async (filename: string) => {
-        // Requirements:
-        // 1. The Demo Vault must be the active Obsidian vault
+        // Ensure the correct vault is open and active in Obsidian
+        const tasksDemo = 'Tasks-Demo\n';
+        const vaultName = executeCommand('obsidian vault info=name');
+        if (vaultName !== tasksDemo) {
+            throw new Error(`The wrong vault is open - expected:
+${tasksDemo}  but got:
+${vaultName}`);
+        }
+
         const data = MockDataLoader.get(<MockDataName>filename);
         const path = data.filePath;
 
