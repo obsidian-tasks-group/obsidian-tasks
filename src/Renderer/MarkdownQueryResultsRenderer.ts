@@ -47,7 +47,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderErrorMessage(_errorMessage: string): void {
-        return;
+        this.markdownLines.push(_errorMessage);
     }
 
     protected beginTaskList(): void {

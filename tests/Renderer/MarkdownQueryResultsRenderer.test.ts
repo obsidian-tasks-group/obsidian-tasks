@@ -251,7 +251,8 @@ group by id
 
         expect(markdown).toMatchInlineSnapshot(`
             "
-            "
+            do not understand query
+            Problem line: "abracadabra""
         `);
     });
 });
