@@ -24,8 +24,9 @@ The CLI doesn't work 'headless' - it requires a GUI environment and so doesn't r
      Installer version: 1.12.4
     ```
 
-3. The  `Tasks-Demo` vault, in `resources/sample_vaults/Tasks-Demo/` has an up-to-date build of the Tasks plugin: see [[Local development#Running the build|Running the build]].
-4. The  `Tasks-Demo` vault is open in Obsidian and is the active vault.
+3. The Obsidian CLI is [enabled](https://help.obsidian.md/cli#Install+Obsidian+CLI).
+4. The  `Tasks-Demo` vault, in `resources/sample_vaults/Tasks-Demo/` has an up-to-date build of the Tasks plugin: see [[Local development#Running the build|Running the build]].
+5. The  `Tasks-Demo` vault is open in Obsidian and is the active vault.
 
 ## How to run
 
