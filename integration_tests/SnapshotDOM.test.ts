@@ -27,12 +27,9 @@ describe('DOM snapshots', () => {
     /*
      This test uses the Obsidian CLI to open and render a file, then save the DOM.
      This will allow us to detect regressions and test improvements over time.
-     See https://help.obsidian.md/cli
-
-     Always commit with this test skipped, as it depends on:
-      - the Obsidian CLI being available (Obsidian 1.12 onwards, Installer 1.11.7 onwards)
-      - the Obsidian CLI enabled
-      - the user having open in Obsidian the demo vault in 'resources/sample_vaults/Tasks-Demo/'
+     See:
+        - https://help.obsidian.md/cli
+        - https://publish.obsidian.md/tasks-contributing/Testing/Integration+Tests
     */
 
     const mockDataNames: MockDataName[] = ['code_block_in_task'];
