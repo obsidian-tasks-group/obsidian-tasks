@@ -103,11 +103,11 @@ It allows you to:
     - `hello world` will not match `hello blue world`
 - **copy search results** in Markdown format, for export
   - Copied elements:
+    - Errors
     - Any [[Explaining Queries|explanation]]
     - Group headings
     - The found tasks, honouring `show tree`
   - Elements not copied:
-    - Any error messages
     - The task count
 
 > [!released]  
