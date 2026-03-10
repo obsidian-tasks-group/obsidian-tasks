@@ -245,4 +245,13 @@ group by id
             "
         `);
     });
+
+    it('should render an error', async () => {
+        const { markdown } = await renderMarkdown('abracadabra', []);
+
+        expect(markdown).toMatchInlineSnapshot(`
+            "
+            "
+        `);
+    });
 });
