@@ -556,8 +556,8 @@ export class SettingsTab extends PluginSettingTab {
             .addDropdown((dropdown) => {
                 dropdown.addOption('bottom', i18n.t('settings.display.taskCountLocation.options.bottom'));
                 dropdown.addOption('top', i18n.t('settings.display.taskCountLocation.options.top'));
-                dropdown.setValue(getSettings().taskCountLocation).onChange(async (value) => {
-                    updateSettings({ taskCountLocation: value as 'top' | 'bottom' });
+                dropdown.setValue(getSettings().searchResults.taskCountLocation).onChange(async (value) => {
+                    updateSettings({ searchResults: { taskCountLocation: value as 'top' | 'bottom' } });
                     await this.plugin.saveSettings();
                 });
             });

@@ -67,7 +67,7 @@ describe('resetSettings behaviour', () => {
 
     it('should have taskCountLocation default to bottom', () => {
         const currentSettings = getSettings();
-        expect(currentSettings.taskCountLocation).toBe('bottom');
+        expect(currentSettings.searchResults.taskCountLocation).toBe('bottom');
     });
 
     it('should completely remove properties not in defaultSettings', () => {

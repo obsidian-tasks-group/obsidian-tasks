@@ -79,13 +79,13 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
-        if (getSettings().taskCountLocation === 'top') {
+        if (getSettings().searchResults.taskCountLocation === 'top') {
             this.addTaskCount(queryResult);
         }
     }
 
     protected renderSearchResultsFooter(queryResult: QueryResult): void {
-        if (getSettings().taskCountLocation !== 'top') {
+        if (getSettings().searchResults.taskCountLocation !== 'top') {
             this.addTaskCount(queryResult);
         }
     }

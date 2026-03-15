@@ -269,7 +269,7 @@ describe('HtmlQueryResultsRenderer - task count location setting', () => {
     });
 
     it('should render task count at top when setting is top', async () => {
-        updateSettings({ taskCountLocation: 'top' });
+        updateSettings({ searchResults: { taskCountLocation: 'top' } });
 
         const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
         const container = await renderAndGetContainer(allTasks);
@@ -287,7 +287,7 @@ describe('HtmlQueryResultsRenderer - task count location setting', () => {
     });
 
     it('should render task count at bottom when setting is bottom', async () => {
-        updateSettings({ taskCountLocation: 'bottom' });
+        updateSettings({ searchResults: { taskCountLocation: 'bottom' } });
 
         const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
         const container = await renderAndGetContainer(allTasks);
@@ -303,7 +303,7 @@ describe('HtmlQueryResultsRenderer - task count location setting', () => {
     });
 
     it('should hide task count when hide instruction is used regardless of location setting', async () => {
-        updateSettings({ taskCountLocation: 'top' });
+        updateSettings({ searchResults: { taskCountLocation: 'top' } });
 
         const hideSource = 'hide toolbar\nhide backlinks\nhide edit button\nhide task count';
         const query = getQueryForQueryRenderer(hideSource, GlobalQuery.getInstance(), tasksFile);
