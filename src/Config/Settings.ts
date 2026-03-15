@@ -80,7 +80,9 @@ export interface Settings {
     filenameAsDateFolders: string[];
     recurrenceOnNextLine: boolean;
     removeScheduledDateOnRecurrence: boolean;
-    taskCountLocation: 'top' | 'bottom';
+    searchResults: {
+        taskCountLocation: 'top' | 'bottom';
+    };
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -120,7 +122,9 @@ const defaultSettings: Readonly<Settings> = {
     filenameAsDateFolders: [],
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
-    taskCountLocation: 'bottom',
+    searchResults: {
+        taskCountLocation: 'bottom',
+    },
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
     features: Feature.settingsFlags,
