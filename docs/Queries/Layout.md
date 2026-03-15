@@ -91,7 +91,7 @@ hide task count
 
 By default, the task count is shown at the **bottom** of query results. You can change this to display at the **top** instead, via the Tasks plugin settings:
 
-1. Open **Settings → Tasks → Display**.
+1. Open **Settings → Tasks → Search results**.
 2. Set **Task count location** to **Top** or **Bottom**.
 
 This is a global setting that applies to all task queries. Individual queries can still use `hide task count` to hide the count entirely.

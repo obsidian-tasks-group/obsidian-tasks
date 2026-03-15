@@ -542,20 +542,20 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName(i18n.t('settings.display.heading')).setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.searchResults.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName(i18n.t('settings.display.taskCountLocation.name'))
+            .setName(i18n.t('settings.searchResults.taskCountLocation.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.display.taskCountLocation.description') +
+                    i18n.t('settings.searchResults.taskCountLocation.description') +
                         `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
                 ),
             )
             .addDropdown((dropdown) => {
-                dropdown.addOption('bottom', i18n.t('settings.display.taskCountLocation.options.bottom'));
-                dropdown.addOption('top', i18n.t('settings.display.taskCountLocation.options.top'));
+                dropdown.addOption('bottom', i18n.t('settings.searchResults.taskCountLocation.options.bottom'));
+                dropdown.addOption('top', i18n.t('settings.searchResults.taskCountLocation.options.top'));
                 dropdown.setValue(getSettings().searchResults.taskCountLocation).onChange(async (value) => {
                     updateSettings({ searchResults: { taskCountLocation: value as 'top' | 'bottom' } });
                     await this.plugin.saveSettings();
