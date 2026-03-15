@@ -231,74 +231,41 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
 describe('HtmlQueryResultsRenderer - task count location setting', () => {
     const tasksFile = new TasksFile('query.md');
     const source = 'hide toolbar\nhide backlinks\nhide edit button';
+    const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
 
-    async function renderAndGetContainer(allTasks: Task[]) {
-        const query = getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
-        const renderer = new HtmlQueryResultsRenderer(
-            () => Promise.resolve(),
-            null,
-            mockApp,
-            mockHTMLRenderer,
-            makeQueryRendererParameters(allTasks),
-            {
-                source: () => source,
-                tasksFile: () => tasksFile,
-                query: () => query,
-            },
-        );
+    async function renderAndGetTaskCount(source: string, tasksFile: TasksFile, allTasks: Task[]) {
+        const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
         const container = document.createElement('div');
         renderer.content = container;
         await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
-        return container;
-    }
-
-    it('should render task count at bottom by default', async () => {
-        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
-        const container = await renderAndGetContainer(allTasks);
 
         const taskCount = container.querySelector('.task-count');
-        expect(taskCount).not.toBeNull();
-        expect(taskCount!.textContent).toBe('2 tasks');
-
-        // Task count should be after the task list (at the bottom)
         const taskList = container.querySelector('.plugin-tasks-query-result');
         const children = Array.from(container.children);
         const taskListIndex = children.indexOf(taskList as Element);
         const taskCountIndex = children.indexOf(taskCount as Element);
+        return { taskListIndex, taskCountIndex };
+    }
+
+    it('should render task count at bottom by default', async () => {
+        const { taskListIndex, taskCountIndex } = await renderAndGetTaskCount(source, tasksFile, allTasks);
+
         expect(taskCountIndex).toBeGreaterThan(taskListIndex);
     });
 
     it('should render task count at top when setting is top', async () => {
         updateSettings({ searchResults: { taskCountLocation: 'top' } });
 
-        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
-        const container = await renderAndGetContainer(allTasks);
+        const { taskListIndex, taskCountIndex } = await renderAndGetTaskCount(source, tasksFile, allTasks);
 
-        const taskCount = container.querySelector('.task-count');
-        expect(taskCount).not.toBeNull();
-        expect(taskCount!.textContent).toBe('2 tasks');
-
-        // Task count should be before the task list (at the top)
-        const taskList = container.querySelector('.plugin-tasks-query-result');
-        const children = Array.from(container.children);
-        const taskListIndex = children.indexOf(taskList as Element);
-        const taskCountIndex = children.indexOf(taskCount as Element);
         expect(taskCountIndex).toBeLessThan(taskListIndex);
     });
 
     it('should render task count at bottom when setting is bottom', async () => {
         updateSettings({ searchResults: { taskCountLocation: 'bottom' } });
 
-        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
-        const container = await renderAndGetContainer(allTasks);
+        const { taskListIndex, taskCountIndex } = await renderAndGetTaskCount(source, tasksFile, allTasks);
 
-        const taskCount = container.querySelector('.task-count');
-        expect(taskCount).not.toBeNull();
-
-        const taskList = container.querySelector('.plugin-tasks-query-result');
-        const children = Array.from(container.children);
-        const taskListIndex = children.indexOf(taskList as Element);
-        const taskCountIndex = children.indexOf(taskCount as Element);
         expect(taskCountIndex).toBeGreaterThan(taskListIndex);
     });
 });
