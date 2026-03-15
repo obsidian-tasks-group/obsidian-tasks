@@ -21,11 +21,16 @@ Then:
 - **Either** manually copy the `main.js` file to local test vault's `.obsidian/plugins/obsidian-tasks` folder,
   - There is also a script `scripts/Test-TasksInLocalObsidian.sh` which copies in all 3 of the plugin's files.
   - With both of these approaches, you must remember to repeat the copy step after every build.
-- **Or** use the Powershell script that is run via the `yarn deploy:local` command to create a symbolic link to the plugins folder for this plugin (`obsidian-tasks-plugin`).
-  - With the symbolic link, whenever a build occurs using `yarn run dev` or `yarn run build:dev` the plugin will be updated in the obsidian vault you are targeting using the `OBSIDIAN_PLUGIN_ROOT` environment variable.
+- **Or** use `yarn deploy:local` to create symbolic links to the plugin files in your Obsidian vault.
+  - This runs a cross-platform Node.js script that works on Windows, macOS and Linux.
+  - It reads the `OBSIDIAN_PLUGIN_ROOT` environment variable to locate your vault's plugins folder.
+  - It builds the plugin, symlinks `main.js`, `styles.css` and `manifest.json` into the plugin directory, creates a `.hotreload` sentinel file, and starts watch mode (`yarn run dev`).
+  - With the symbolic links, whenever a build occurs the plugin will be updated in the Obsidian vault automatically.
   - However, the symbolic link option does not work if syncing your test vault to other devices.
+  - On Windows, creating symlinks requires Developer Mode to be enabled, or an elevated (Administrator) terminal.
+  - PowerShell users can alternatively use `yarn deploy:local:pwsh` which runs the original PowerShell script.
 
 It is recommended you use the [Hot-Reload](https://github.com/pjeby/hot-reload) plugin in that vault also;
 it will automatically reload the plugin when files change.
 
-The script run by `deploy:local` will create a `.hotreload` file in the root of the repository to assist.
+The script run by `deploy:local` will create a `.hotreload` file in the plugin directory to assist.
