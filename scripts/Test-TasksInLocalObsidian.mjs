@@ -29,7 +29,6 @@ import process from 'node:process';
 // ---------------------------------------------------------------------------
 
 const PLUGIN_FOLDER_NAME = getPluginFolderName();
-const OBSIDIAN_PLUGIN_ROOT = process.env.OBSIDIAN_PLUGIN_ROOT;
 const FILES_TO_LINK = ['main.js', 'styles.css', 'manifest.json'];
 
 // ---------------------------------------------------------------------------
@@ -150,28 +149,30 @@ function ensureHotReloadFile(pluginDir) {
 
 async function main() {
     // 1. Validate environment
-    if (!OBSIDIAN_PLUGIN_ROOT) {
-        console.error('Error: OBSIDIAN_PLUGIN_ROOT environment variable is not set.');
-        console.error('Set it to the plugins folder under your .obsidian directory, e.g.:');
-        console.error('  export OBSIDIAN_PLUGIN_ROOT="/path/to/vault/.obsidian/plugins"');
-        process.exit(1);
-    }
+    const repoRoot = getRepoRoot();
+    console.log(`Repository root: ${repoRoot}`);
 
-    const pluginRoot = path.resolve(OBSIDIAN_PLUGIN_ROOT);
+    const defaultPluginRoot = path.join(
+        repoRoot, 'resources', 'sample_vaults', 'Tasks-Demo', '.obsidian', 'plugins',
+    );
+    const obsidianPluginRoot = process.env.OBSIDIAN_PLUGIN_ROOT || defaultPluginRoot;
+
+    const pluginRoot = path.resolve(obsidianPluginRoot);
     if (!fs.existsSync(pluginRoot)) {
         console.error(`Error: Obsidian plugin root not found: ${pluginRoot}`);
         process.exit(1);
     }
-    console.log(`Obsidian plugin root: ${pluginRoot}`);
+    if (process.env.OBSIDIAN_PLUGIN_ROOT) {
+        console.log(`Obsidian plugin root (from env): ${pluginRoot}`);
+    } else {
+        console.log(`Obsidian plugin root (default): ${pluginRoot}`);
+    }
 
     const pluginDir = path.join(pluginRoot, PLUGIN_FOLDER_NAME);
     if (!fs.existsSync(pluginDir)) {
         console.log(`Plugin folder does not exist – creating: ${pluginDir}`);
         fs.mkdirSync(pluginDir, { recursive: true });
     }
-
-    const repoRoot = getRepoRoot();
-    console.log(`Repository root: ${repoRoot}`);
 
     // 2. Build
     console.log('\n--- Running build:dev ---\n');
