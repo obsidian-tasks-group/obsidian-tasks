@@ -152,9 +152,7 @@ async function main() {
     const repoRoot = getRepoRoot();
     console.log(`Repository root: ${repoRoot}`);
 
-    const defaultPluginRoot = path.join(
-        repoRoot, 'resources', 'sample_vaults', 'Tasks-Demo', '.obsidian', 'plugins',
-    );
+    const defaultPluginRoot = path.join(repoRoot, 'resources', 'sample_vaults', 'Tasks-Demo', '.obsidian', 'plugins');
     const obsidianPluginRoot = process.env.OBSIDIAN_PLUGIN_ROOT || defaultPluginRoot;
 
     const pluginRoot = path.resolve(obsidianPluginRoot);
