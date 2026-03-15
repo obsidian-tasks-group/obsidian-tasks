@@ -154,8 +154,8 @@
       },
       "heading": "Dialogs"
     },
-    "display": {
-      "heading": "Display",
+    "searchResults": {
+      "heading": "Search results",
       "taskCountLocation": {
         "description": "Choose whether the task count is shown at the top or bottom of query results.",
         "name": "Task count location",
