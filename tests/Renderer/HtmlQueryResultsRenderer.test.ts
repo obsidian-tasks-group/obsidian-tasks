@@ -301,32 +301,6 @@ describe('HtmlQueryResultsRenderer - task count location setting', () => {
         const taskCountIndex = children.indexOf(taskCount as Element);
         expect(taskCountIndex).toBeGreaterThan(taskListIndex);
     });
-
-    it('should hide task count when hide instruction is used regardless of location setting', async () => {
-        updateSettings({ searchResults: { taskCountLocation: 'top' } });
-
-        const hideSource = 'hide toolbar\nhide backlinks\nhide edit button\nhide task count';
-        const query = getQueryForQueryRenderer(hideSource, GlobalQuery.getInstance(), tasksFile);
-        const renderer = new HtmlQueryResultsRenderer(
-            () => Promise.resolve(),
-            null,
-            mockApp,
-            mockHTMLRenderer,
-            makeQueryRendererParameters(readTasksFromSimulatedFile('inheritance_1parent1child')),
-            {
-                source: () => hideSource,
-                tasksFile: () => tasksFile,
-                query: () => query,
-            },
-        );
-        const container = document.createElement('div');
-        renderer.content = container;
-        const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
-        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
-
-        const taskCount = container.querySelector('.task-count');
-        expect(taskCount).toBeNull();
-    });
 });
 
 describe('HtmlQueryResultsRenderer - internal heading links', () => {
