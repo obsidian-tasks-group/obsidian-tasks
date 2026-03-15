@@ -463,30 +463,30 @@ describe('TasksFile - isIgnored', () => {
         expect(tasksFile.isIgnored()).toEqual(false);
     });
 
-    it('should return false when TQ_ignore_this_file is not present', () => {
+    it('should return false when TP_ignore_this_file is not present', () => {
         const tasksFile = new TasksFile('some/path.md', {
             frontmatter: { some_other_property: true } as any,
         });
         expect(tasksFile.isIgnored()).toEqual(false);
     });
 
-    it('should return true when TQ_ignore_this_file is true', () => {
+    it('should return true when TP_ignore_this_file is true', () => {
         const tasksFile = new TasksFile('some/path.md', {
-            frontmatter: { TQ_ignore_this_file: true } as any,
+            frontmatter: { TP_ignore_this_file: true } as any,
         });
         expect(tasksFile.isIgnored()).toEqual(true);
     });
 
-    it('should return false when TQ_ignore_this_file is false', () => {
+    it('should return false when TP_ignore_this_file is false', () => {
         const tasksFile = new TasksFile('some/path.md', {
-            frontmatter: { TQ_ignore_this_file: false } as any,
+            frontmatter: { TP_ignore_this_file: false } as any,
         });
         expect(tasksFile.isIgnored()).toEqual(false);
     });
 
     it('should be case-insensitive for the property name', () => {
         const tasksFile = new TasksFile('some/path.md', {
-            frontmatter: { tq_ignore_this_file: true } as any,
+            frontmatter: { tp_ignore_this_file: true } as any,
         });
         expect(tasksFile.isIgnored()).toEqual(true);
     });

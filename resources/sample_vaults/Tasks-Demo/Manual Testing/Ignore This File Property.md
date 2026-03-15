@@ -1,15 +1,15 @@
 ---
-TQ_ignore_this_file: true
+TP_ignore_this_file: true
 ---
 
-# Manual Testing: TQ_ignore_this_file
+# Manual Testing: TP_ignore_this_file
 
 > [!Warning] Global Filter
-> Before testing, make sure **no Global Filter** is set in Tasks settings (Settings → Tasks → Global Filter should be empty). A global filter can mask the behavior of `TQ_ignore_this_file` — making it look like it works when it doesn't, or vice versa.
+> Before testing, make sure **no Global Filter** is set in Tasks settings (Settings → Tasks → Global Filter should be empty). A global filter can mask the behavior of `TP_ignore_this_file` — making it look like it works when it doesn't, or vice versa.
 
 ## What this tests
 
-The `TQ_ignore_this_file` frontmatter property tells Tasks to completely ignore this file:
+The `TP_ignore_this_file` frontmatter property tells Tasks to completely ignore this file:
 
 1. Checkboxes are NOT treated as tasks (no autocomplete, no done dates, no recurrence)
 2. Tasks in this file do NOT appear in `tasks` query results
@@ -46,4 +46,4 @@ path includes Manual Testing/Ignore This File Property
 
 ## Test: Compare with a normal file
 
-Open [[Ignore This File Property - Normal File]] side by side. That file does NOT have `TQ_ignore_this_file: true`, so tasks there SHOULD have full Tasks behavior.
+Open [[Ignore This File Property - Normal File]] side by side. That file does NOT have `TP_ignore_this_file: true`, so tasks there SHOULD have full Tasks behavior.

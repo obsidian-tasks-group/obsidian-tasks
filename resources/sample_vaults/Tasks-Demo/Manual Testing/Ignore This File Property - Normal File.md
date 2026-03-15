@@ -1,14 +1,14 @@
 ---
 ---
 
-# Manual Testing: TQ_ignore_this_file - Normal File (Control)
+# Manual Testing: TP_ignore_this_file - Normal File (Control)
 
 > [!Warning] Global Filter
-> Before testing, make sure **no Global Filter** is set in Tasks settings (Settings → Tasks → Global Filter should be empty). A global filter can mask the behavior of `TQ_ignore_this_file` — making it look like it works when it doesn't, or vice versa.
+> Before testing, make sure **no Global Filter** is set in Tasks settings (Settings → Tasks → Global Filter should be empty). A global filter can mask the behavior of `TP_ignore_this_file` — making it look like it works when it doesn't, or vice versa.
 
 ## Purpose
 
-This is the **control file** — it does NOT have `TQ_ignore_this_file: true`. Tasks here SHOULD behave normally with full Tasks plugin behavior.
+This is the **control file** — it does NOT have `TP_ignore_this_file: true`. Tasks here SHOULD behave normally with full Tasks plugin behavior.
 
 Compare this side-by-side with [[Ignore This File Property]] which IS ignored.
 

@@ -54,7 +54,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return null;
         }
 
-        // Check if the file is ignored via TQ_ignore_this_file property
+        // Check if the file is ignored via TP_ignore_this_file property
         const fileCache = this.app.metadataCache.getFileCache(_file);
         if (fileCache) {
             const tasksFile = new TasksFile(_file.path, fileCache);

@@ -170,7 +170,7 @@ const queryProperties = [
         handler: Handler.AddValue,
     },
     {
-        name: 'TQ_ignore_this_file',
+        name: 'TP_ignore_this_file',
         type: 'checkbox',
         handler: Handler.None,
     },
@@ -252,7 +252,7 @@ edit button: \`INPUT[toggle:TQ_show_edit_button]\` postpone button: \`INPUT[togg
 task count: \`INPUT[toggle:TQ_show_task_count]\`
 extra instructions: \`INPUT[textArea:TQ_extra_instructions]\`
 explain: \`INPUT[toggle:TQ_explain]\`
-ignore this file: \`INPUT[toggle:TQ_ignore_this_file]\`
+ignore this file: \`INPUT[toggle:TP_ignore_this_file]\`
 `;
     }
 }

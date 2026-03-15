@@ -43,7 +43,7 @@ class LivePreviewExtension implements PluginValue {
             return false;
         }
 
-        // If the file is ignored via TQ_ignore_this_file, let Obsidian handle the click natively.
+        // If the file is ignored via TP_ignore_this_file, let Obsidian handle the click natively.
         try {
             const info = this.view.state.field(editorInfoField);
             if (info?.file) {

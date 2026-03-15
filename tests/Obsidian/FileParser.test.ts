@@ -63,7 +63,7 @@ describe('FileParser', () => {
         expect(tasks[0].description).toEqual("#task Task line 1 in 'zero_width' - indented by tab character");
     });
 
-    it('should return no tasks when TQ_ignore_this_file is true', () => {
+    it('should return no tasks when TP_ignore_this_file is true', () => {
         // Override obsidian mock functions for synthetic CachedMetadata
         const obsidianModule = require('obsidian');
         const originalParseFrontMatterTags = obsidianModule.parseFrontMatterTags;
@@ -71,9 +71,9 @@ describe('FileParser', () => {
         obsidianModule.parseFrontMatterTags = () => null;
         obsidianModule.getAllTags = () => [];
 
-        const fileContent = '---\nTQ_ignore_this_file: true\n---\n\n- [ ] This task should be ignored\n';
+        const fileContent = '---\nTP_ignore_this_file: true\n---\n\n- [ ] This task should be ignored\n';
         const cachedMetadata = {
-            frontmatter: { TQ_ignore_this_file: true } as any,
+            frontmatter: { TP_ignore_this_file: true } as any,
             listItems: [
                 {
                     parent: -1,

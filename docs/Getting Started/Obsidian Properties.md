@@ -41,13 +41,13 @@ For example, if you associate a tag with a project, you might want to put that t
 ## Ignoring a File
 
 > [!released]
-> `TQ_ignore_this_file` was introduced in Tasks X.X.X.
+> `TP_ignore_this_file` was introduced in Tasks X.X.X.
 
-You can make Tasks completely ignore a file by adding the `TQ_ignore_this_file` property to its frontmatter:
+You can make Tasks completely ignore a file by adding the `TP_ignore_this_file` property to its frontmatter:
 
 ```yaml
 ---
-TQ_ignore_this_file: true
+TP_ignore_this_file: true
 ---
 ```
 
@@ -60,10 +60,10 @@ When this property is set to `true`:
 This is useful for files where you use checkboxes for purposes other than task tracking, such as checklists, packing lists, templates, or reference material.
 
 > [!tip]
-> This is similar in effect to excluding tasks via a query filter like `filter by function ! task.file.property('tags').includes('#notasks')`, but `TQ_ignore_this_file` goes further: it prevents Tasks from processing the file entirely, not just from showing tasks in query results.
+> This is similar in effect to excluding tasks via a query filter like `filter by function ! task.file.property('tags').includes('#notasks')`, but `TP_ignore_this_file` goes further: it prevents Tasks from processing the file entirely, not just from showing tasks in query results.
 
 > [!info]
-> Unlike the other `TQ_` properties documented in [[Query File Defaults]], `TQ_ignore_this_file` does not modify query behaviour. It controls whether Tasks recognises the file at all.
+> Unlike the other `TQ_` properties documented in [[Query File Defaults]], `TP_ignore_this_file` does not modify query behaviour. It controls whether Tasks recognises the file at all.
 
 ## How does Tasks treat Obsidian Properties?
 

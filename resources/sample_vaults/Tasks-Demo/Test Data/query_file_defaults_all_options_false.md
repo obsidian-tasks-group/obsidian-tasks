@@ -3,7 +3,7 @@ TQ_explain: false
 TQ_extra_instructions: |-
   # press shift-return to add new lines
   not done
-TQ_ignore_this_file: false
+TP_ignore_this_file: false
 TQ_short_mode: false
 TQ_show_backlink: false
 TQ_show_cancelled_date: false

@@ -1,8 +1,8 @@
 {
   "types": {
+    "TP_ignore_this_file": "checkbox",
     "TQ_explain": "checkbox",
     "TQ_extra_instructions": "text",
-    "TQ_ignore_this_file": "checkbox",
     "TQ_short_mode": "checkbox",
     "TQ_show_backlink": "checkbox",
     "TQ_show_cancelled_date": "checkbox",

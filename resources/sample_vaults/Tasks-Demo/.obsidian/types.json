@@ -40,6 +40,6 @@
     "TQ_show_tree": "checkbox",
     "TQ_show_urgency": "checkbox",
     "TQ_show_toolbar": "checkbox",
-    "TQ_ignore_this_file": "checkbox"
+    "TP_ignore_this_file": "checkbox"
   }
 }
