@@ -18,17 +18,18 @@ window.moment = moment;
 function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]) {
     const query = getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
 
+    const getters = {
+        source: () => source,
+        tasksFile: () => tasksFile,
+        query: () => query,
+    };
     const renderer = new HtmlQueryResultsRenderer(
         () => Promise.resolve(),
         null,
         mockApp,
         mockHTMLRenderer,
         makeHtmlQueryRendererParameters(allTasks),
-        {
-            source: () => source,
-            tasksFile: () => tasksFile,
-            query: () => query,
-        },
+        getters,
     );
     return { query, renderer };
 }
