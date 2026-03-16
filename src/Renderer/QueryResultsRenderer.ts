@@ -253,7 +253,6 @@ export class QueryResultsRenderer {
         };
 
         const markdownRenderer = new MarkdownQueryResultsRenderer(
-            getters,
             getters.source(),
             getters.tasksFile(),
             getters.query(),
