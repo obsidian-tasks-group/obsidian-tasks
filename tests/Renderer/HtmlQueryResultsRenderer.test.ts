@@ -29,7 +29,6 @@ function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]
         mockApp,
         mockHTMLRenderer,
         makeHtmlQueryRendererParameters(allTasks),
-        getters,
         getters.source(),
         getters.tasksFile(),
         getters.query(),
