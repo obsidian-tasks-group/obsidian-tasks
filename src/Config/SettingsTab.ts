@@ -175,7 +175,7 @@ export class SettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName(i18n.t('settings.searchResults.taskCountLocation.name'))
-            .setDesc(SettingsTab.createFragmentWithHTML(i18n.t('settings.searchResults.taskCountLocation.description')))
+            .setDesc(i18n.t('settings.searchResults.taskCountLocation.description'))
             .addDropdown((dropdown) => {
                 dropdown.addOption('top', i18n.t('settings.searchResults.taskCountLocation.options.top'));
                 dropdown.addOption('bottom', i18n.t('settings.searchResults.taskCountLocation.options.bottom'));
