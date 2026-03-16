@@ -26,9 +26,9 @@ export abstract class QueryResultsRendererBase {
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
-    protected constructor(getters: QueryResultsRendererGetters) {
+    protected constructor(getters: QueryResultsRendererGetters, source: string) {
         this.getters = getters;
-        this.source = getters.source();
+        this.source = source;
     }
 
     protected get filePath(): string | undefined {

@@ -65,7 +65,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         htmlQueryRendererParameters: HTMLQueryRendererParameters,
         getters: QueryResultsRendererGetters,
     ) {
-        super(getters);
+        super(getters, getters.source());
 
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
