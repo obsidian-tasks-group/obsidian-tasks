@@ -1,10 +1,12 @@
 import type { App, Component, TFile } from 'obsidian';
 import { getSettings } from '../Config/Settings';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
+import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
+import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
@@ -63,9 +65,12 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         obsidianApp: App,
         textRenderer: TextRenderer,
         htmlQueryRendererParameters: HTMLQueryRendererParameters,
-        getters: QueryResultsRendererGetters,
+        _getters: QueryResultsRendererGetters,
+        source: string,
+        tasksFile: TasksFile,
+        query: IQuery,
     ) {
-        super(getters.source(), getters.tasksFile(), getters.query());
+        super(source, tasksFile, query);
 
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
@@ -76,8 +81,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             textRenderer: textRenderer,
             obsidianApp: obsidianApp,
             obsidianComponent: obsidianComponent,
-            taskLayoutOptions: getters.query().taskLayoutOptions,
-            queryLayoutOptions: getters.query().queryLayoutOptions,
+            taskLayoutOptions: query.taskLayoutOptions,
+            queryLayoutOptions: query.queryLayoutOptions,
         });
     }
 

@@ -30,6 +30,9 @@ function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]
         mockHTMLRenderer,
         makeHtmlQueryRendererParameters(allTasks),
         getters,
+        getters.source(),
+        getters.tasksFile(),
+        getters.query(),
     );
     return { query, renderer };
 }

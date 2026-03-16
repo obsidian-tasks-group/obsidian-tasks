@@ -173,6 +173,9 @@ export class QueryResultsRenderer {
             this.textRenderer,
             this.htmlQueryRendererParameters,
             getters,
+            getters.source(),
+            getters.tasksFile(),
+            getters.query(),
         );
 
         htmlRenderer.content = content;
