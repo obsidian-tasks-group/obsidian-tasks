@@ -10,16 +10,6 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 
-/**
- * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
- * we pass in getter functions instead of storing duplicate copies of the values.
- */
-export interface QueryResultsRendererGetters {
-    source: () => string;
-    tasksFile: () => TasksFile;
-    query: () => IQuery;
-}
-
 export abstract class QueryResultsRendererBase {
     private readonly source: string;
     protected readonly tasksFile: TasksFile;
