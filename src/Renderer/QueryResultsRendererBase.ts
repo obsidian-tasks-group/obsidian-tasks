@@ -28,11 +28,11 @@ export abstract class QueryResultsRendererBase {
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
-    protected constructor(getters: QueryResultsRendererGetters, source: string) {
+    protected constructor(getters: QueryResultsRendererGetters, source: string, tasksFile: TasksFile, query: IQuery) {
         this.getters = getters;
         this.source = source;
-        this.tasksFile = getters.tasksFile();
-        this.query = getters.query();
+        this.tasksFile = tasksFile;
+        this.query = query;
     }
 
     protected get filePath(): string | undefined {
