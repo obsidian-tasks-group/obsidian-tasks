@@ -24,6 +24,7 @@ export abstract class QueryResultsRendererBase {
     protected getters: QueryResultsRendererGetters;
     private readonly source: string;
     private readonly tasksFile: TasksFile;
+    private readonly query: IQuery;
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
@@ -31,6 +32,7 @@ export abstract class QueryResultsRendererBase {
         this.getters = getters;
         this.source = source;
         this.tasksFile = getters.tasksFile();
+        this.query = getters.query();
     }
 
     protected get filePath(): string | undefined {
@@ -43,7 +45,7 @@ export abstract class QueryResultsRendererBase {
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
-        const query = this.getters.query();
+        const query = this.query;
         const error = query.error;
         if (state === State.Warm && error === undefined) {
             await this.renderQuerySearchResults(queryResult);
@@ -74,7 +76,7 @@ export abstract class QueryResultsRendererBase {
     }
 
     private explainQuery() {
-        if (this.getters.query().queryLayoutOptions.explainQuery) {
+        if (this.query.queryLayoutOptions.explainQuery) {
             const explanation = explainResults(
                 this.source,
                 GlobalFilter.getInstance(),
@@ -92,7 +94,7 @@ export abstract class QueryResultsRendererBase {
         await this.addAllTaskGroups(queryResult.taskGroups);
 
         const totalTasksCount = queryResult.totalTasksCount;
-        this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
+        this.query.debug(`[render] ${totalTasksCount} tasks displayed`);
 
         this.renderSearchResultsFooter(queryResult);
     }
@@ -122,7 +124,7 @@ export abstract class QueryResultsRendererBase {
         this.beginTaskList();
 
         try {
-            if (this.getters.query().queryLayoutOptions.hideTree) {
+            if (this.query.queryLayoutOptions.hideTree) {
                 await this.addFlatTaskList(listItems);
             } else {
                 await this.addTreeTaskList(listItems);
