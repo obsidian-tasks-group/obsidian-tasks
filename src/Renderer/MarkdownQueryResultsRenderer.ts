@@ -4,7 +4,7 @@ import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
-import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
+import { QueryResultsRendererBase } from './QueryResultsRendererBase';
 
 /**
  * @example
@@ -17,7 +17,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly markdownLines: string[] = [];
     private taskIndentationLevel = 0;
 
-    constructor(_getters: QueryResultsRendererGetters, source: string, tasksFile: TasksFile, query: IQuery) {
+    constructor(source: string, tasksFile: TasksFile, query: IQuery) {
         super(source, tasksFile, query);
     }
 
