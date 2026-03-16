@@ -120,8 +120,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         taskList.classList.add(
             'contains-task-list',
             'plugin-tasks-query-result',
-            ...new TaskLayout(this.getters.query().taskLayoutOptions).generateHiddenClasses(),
-            ...new QueryLayout(this.getters.query().queryLayoutOptions).getHiddenClasses(),
+            ...new TaskLayout(this.query.taskLayoutOptions).generateHiddenClasses(),
+            ...new QueryLayout(this.query.queryLayoutOptions).getHiddenClasses(),
         );
 
         const groupingAttribute = this.getGroupingAttribute();
@@ -164,21 +164,21 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const extrasSpan = createAndAppendElement('span', listItem);
         extrasSpan.classList.add('task-extras');
 
-        if (!this.getters.query().queryLayoutOptions.hideUrgency) {
+        if (!this.query.queryLayoutOptions.hideUrgency) {
             this.addUrgency(extrasSpan, task);
         }
 
-        const shortMode = this.getters.query().queryLayoutOptions.shortMode;
+        const shortMode = this.query.queryLayoutOptions.shortMode;
 
-        if (!this.getters.query().queryLayoutOptions.hideBacklinks) {
+        if (!this.query.queryLayoutOptions.hideBacklinks) {
             this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
         }
 
-        if (!this.getters.query().queryLayoutOptions.hideEditButton) {
+        if (!this.query.queryLayoutOptions.hideEditButton) {
             this.addEditButton(extrasSpan, task);
         }
 
-        if (!this.getters.query().queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+        if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
             this.addPostponeButton(extrasSpan, task, shortMode);
         }
 
@@ -227,7 +227,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             this.obsidianApp,
             group.displayName,
             headerEl,
-            this.getters.tasksFile().path,
+            this.tasksFile.path,
             this.obsidianComponent,
         );
     }
@@ -298,7 +298,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private addTaskCount(queryResult: QueryResult) {
-        if (!this.getters.query().queryLayoutOptions.hideTaskCount) {
+        if (!this.query.queryLayoutOptions.hideTaskCount) {
             const taskCount = createAndAppendElement('div', this.content);
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
@@ -325,7 +325,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private getGroupingAttribute() {
         const groupingRules: string[] = [];
-        for (const group of this.getters.query().grouping) {
+        for (const group of this.query.grouping) {
             groupingRules.push(group.property);
         }
         return groupingRules.join(',');

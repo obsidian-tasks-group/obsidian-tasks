@@ -23,8 +23,8 @@ export interface QueryResultsRendererGetters {
 export abstract class QueryResultsRendererBase {
     protected getters: QueryResultsRendererGetters;
     private readonly source: string;
-    private readonly tasksFile: TasksFile;
-    private readonly query: IQuery;
+    protected readonly tasksFile: TasksFile;
+    protected readonly query: IQuery;
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
