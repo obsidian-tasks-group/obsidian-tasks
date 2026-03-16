@@ -16,7 +16,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     private taskIndentationLevel = 0;
 
     constructor(getters: QueryResultsRendererGetters) {
-        super(getters);
+        super(getters, getters.source());
     }
 
     get markdown(): string {
