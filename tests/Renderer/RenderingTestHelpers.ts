@@ -40,7 +40,7 @@ export function createMarkdownRenderer(source: string) {
         tasksFile: () => tasksFile,
         source: () => source,
     };
-    const renderer = new MarkdownQueryResultsRenderer(getters);
+    const renderer = new MarkdownQueryResultsRenderer(getters, getters.source(), getters.tasksFile(), getters.query());
     return { renderer, query };
 }
 

@@ -1,5 +1,7 @@
+import type { IQuery } from '../IQuery';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
+import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
@@ -15,8 +17,8 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly markdownLines: string[] = [];
     private taskIndentationLevel = 0;
 
-    constructor(getters: QueryResultsRendererGetters) {
-        super(getters.source(), getters.tasksFile(), getters.query());
+    constructor(_getters: QueryResultsRendererGetters, source: string, tasksFile: TasksFile, query: IQuery) {
+        super(source, tasksFile, query);
     }
 
     get markdown(): string {
