@@ -35,11 +35,8 @@ export function makeHtmlQueryRendererParameters(allTasks: Task[]): HTMLQueryRend
 export function createMarkdownRenderer(source: string) {
     const tasksFile = new TasksFile('query.md');
     const query = new Query(source, tasksFile);
-    const renderer = new MarkdownQueryResultsRenderer({
-        query: () => query,
-        tasksFile: () => tasksFile,
-        source: () => source,
-    });
+
+    const renderer = new MarkdownQueryResultsRenderer(source, tasksFile, query);
     return { renderer, query };
 }
 
