@@ -1,6 +1,7 @@
 import moment from 'moment/moment';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
 import type { Query } from '../../src/Query/Query';
 import { getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
@@ -65,6 +66,7 @@ afterEach(() => {
     jest.useRealTimers();
     GlobalFilter.getInstance().reset();
     GlobalQuery.getInstance().reset();
+    resetSettings();
 });
 
 describe('HtmlQueryResultsRenderer tests', () => {
@@ -223,6 +225,46 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
 
         const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
         verifyRenderedTasks(rerenderedContainer, allTasks);
+    });
+});
+
+describe('HtmlQueryResultsRenderer - task count location setting', () => {
+    const tasksFile = new TasksFile('query.md');
+    const source = 'hide toolbar\nhide backlinks\nhide edit button';
+    const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
+
+    async function renderAndGetTaskCount(source: string, tasksFile: TasksFile, allTasks: Task[]) {
+        const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
+        const container = await renderTasks(State.Warm, renderer, allTasks, query);
+
+        const taskCount = container.querySelector('.task-count');
+        const taskList = container.querySelector('.plugin-tasks-query-result');
+        const children = Array.from(container.children);
+        const taskListIndex = children.indexOf(taskList as Element);
+        const taskCountIndex = children.indexOf(taskCount as Element);
+        return { taskListIndex, taskCountIndex };
+    }
+
+    it('should render task count at bottom by default', async () => {
+        const { taskListIndex, taskCountIndex } = await renderAndGetTaskCount(source, tasksFile, allTasks);
+
+        expect(taskCountIndex).toBeGreaterThan(taskListIndex);
+    });
+
+    it('should render task count at top when setting is top', async () => {
+        updateSettings({ searchResults: { taskCountLocation: 'top' } });
+
+        const { taskListIndex, taskCountIndex } = await renderAndGetTaskCount(source, tasksFile, allTasks);
+
+        expect(taskCountIndex).toBeLessThan(taskListIndex);
+    });
+
+    it('should render task count at bottom when setting is bottom', async () => {
+        updateSettings({ searchResults: { taskCountLocation: 'bottom' } });
+
+        const { taskListIndex, taskCountIndex } = await renderAndGetTaskCount(source, tasksFile, allTasks);
+
+        expect(taskCountIndex).toBeGreaterThan(taskListIndex);
     });
 });
 
