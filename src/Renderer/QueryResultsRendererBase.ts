@@ -23,16 +23,18 @@ export interface QueryResultsRendererGetters {
 export abstract class QueryResultsRendererBase {
     protected getters: QueryResultsRendererGetters;
     private readonly source: string;
+    private readonly tasksFile: TasksFile;
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
     protected constructor(getters: QueryResultsRendererGetters, source: string) {
         this.getters = getters;
         this.source = source;
+        this.tasksFile = getters.tasksFile();
     }
 
     protected get filePath(): string | undefined {
-        return this.getters.tasksFile().path;
+        return this.tasksFile.path;
     }
 
     public async renderQuery(state: State, queryResult: QueryResult) {
@@ -77,8 +79,9 @@ export abstract class QueryResultsRendererBase {
                 this.source,
                 GlobalFilter.getInstance(),
                 GlobalQuery.getInstance(),
-                this.getters.tasksFile(),
+                this.tasksFile,
             );
+
             this.renderExplanation(explanation);
         }
     }
