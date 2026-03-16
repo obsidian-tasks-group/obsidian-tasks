@@ -21,15 +21,13 @@ export interface QueryResultsRendererGetters {
 }
 
 export abstract class QueryResultsRendererBase {
-    protected getters: QueryResultsRendererGetters;
     private readonly source: string;
     protected readonly tasksFile: TasksFile;
     protected readonly query: IQuery;
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
-    protected constructor(getters: QueryResultsRendererGetters, source: string, tasksFile: TasksFile, query: IQuery) {
-        this.getters = getters;
+    protected constructor(_getters: QueryResultsRendererGetters, source: string, tasksFile: TasksFile, query: IQuery) {
         this.source = source;
         this.tasksFile = tasksFile;
         this.query = query;
