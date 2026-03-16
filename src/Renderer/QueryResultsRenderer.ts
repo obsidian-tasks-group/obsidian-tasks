@@ -160,19 +160,15 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
-        const getters = {
-            source: () => this.source,
-            tasksFile: () => this._tasksFile,
-            query: () => this.query,
-        };
-
         const htmlRenderer = new HtmlQueryResultsRenderer(
             this.renderMarkdown,
             this.obsidianComponent,
             this.obsidianApp,
             this.textRenderer,
             this.htmlQueryRendererParameters,
-            getters,
+            this.source,
+            this.tasksFile,
+            this.query,
         );
 
         htmlRenderer.content = content;
@@ -250,13 +246,7 @@ export class QueryResultsRenderer {
     }
 
     public async resultsAsMarkdown() {
-        const getters = {
-            source: () => this.source,
-            tasksFile: () => this._tasksFile,
-            query: () => this.query,
-        };
-
-        const markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+        const markdownRenderer = new MarkdownQueryResultsRenderer(this.source, this.tasksFile, this.query);
 
         await markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
         return markdownRenderer.markdown;

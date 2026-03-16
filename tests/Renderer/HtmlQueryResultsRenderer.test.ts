@@ -24,11 +24,9 @@ function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]
         mockApp,
         mockHTMLRenderer,
         makeHtmlQueryRendererParameters(allTasks),
-        {
-            source: () => source,
-            tasksFile: () => tasksFile,
-            query: () => query,
-        },
+        source,
+        tasksFile,
+        query,
     );
     return { query, renderer };
 }
