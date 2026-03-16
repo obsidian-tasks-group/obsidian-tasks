@@ -12,7 +12,7 @@ import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
 import type { BacklinksEventHandler, EditButtonClickHandler } from './QueryResultsRenderer';
-import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
+import { QueryResultsRendererBase } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
 /**
@@ -65,7 +65,6 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         obsidianApp: App,
         textRenderer: TextRenderer,
         htmlQueryRendererParameters: HTMLQueryRendererParameters,
-        _getters: QueryResultsRendererGetters,
         source: string,
         tasksFile: TasksFile,
         query: IQuery,
