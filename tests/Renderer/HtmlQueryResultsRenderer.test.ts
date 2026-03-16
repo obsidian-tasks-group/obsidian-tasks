@@ -235,9 +235,7 @@ describe('HtmlQueryResultsRenderer - task count location setting', () => {
 
     async function renderAndGetTaskCount(source: string, tasksFile: TasksFile, allTasks: Task[]) {
         const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
-        const container = document.createElement('div');
-        renderer.content = container;
-        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
+        const container = await renderTasks(State.Warm, renderer, allTasks, query);
 
         const taskCount = container.querySelector('.task-count');
         const taskList = container.querySelector('.plugin-tasks-query-result');
