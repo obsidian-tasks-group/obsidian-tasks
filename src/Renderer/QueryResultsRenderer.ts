@@ -246,17 +246,7 @@ export class QueryResultsRenderer {
     }
 
     public async resultsAsMarkdown() {
-        const getters = {
-            source: () => this.source,
-            tasksFile: () => this._tasksFile,
-            query: () => this.query,
-        };
-
-        const markdownRenderer = new MarkdownQueryResultsRenderer(
-            getters.source(),
-            getters.tasksFile(),
-            getters.query(),
-        );
+        const markdownRenderer = new MarkdownQueryResultsRenderer(this.source, this.tasksFile, this.query);
 
         await markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
         return markdownRenderer.markdown;
