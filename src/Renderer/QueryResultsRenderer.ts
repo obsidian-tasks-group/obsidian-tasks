@@ -252,7 +252,12 @@ export class QueryResultsRenderer {
             query: () => this.query,
         };
 
-        const markdownRenderer = new MarkdownQueryResultsRenderer(getters);
+        const markdownRenderer = new MarkdownQueryResultsRenderer(
+            getters,
+            getters.source(),
+            getters.tasksFile(),
+            getters.query(),
+        );
 
         await markdownRenderer.renderQuery(State.Warm, this.filteredQueryResult);
         return markdownRenderer.markdown;
