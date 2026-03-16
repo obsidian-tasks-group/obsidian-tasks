@@ -160,21 +160,15 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
-        const getters = {
-            source: () => this.source,
-            tasksFile: () => this._tasksFile,
-            query: () => this.query,
-        };
-
         const htmlRenderer = new HtmlQueryResultsRenderer(
             this.renderMarkdown,
             this.obsidianComponent,
             this.obsidianApp,
             this.textRenderer,
             this.htmlQueryRendererParameters,
-            getters.source(),
-            getters.tasksFile(),
-            getters.query(),
+            this.source,
+            this.tasksFile,
+            this.query,
         );
 
         htmlRenderer.content = content;
