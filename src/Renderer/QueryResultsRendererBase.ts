@@ -22,11 +22,13 @@ export interface QueryResultsRendererGetters {
 
 export abstract class QueryResultsRendererBase {
     protected getters: QueryResultsRendererGetters;
+    private readonly source: string;
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
     protected constructor(getters: QueryResultsRendererGetters) {
         this.getters = getters;
+        this.source = getters.source();
     }
 
     protected get filePath(): string | undefined {
@@ -72,7 +74,7 @@ export abstract class QueryResultsRendererBase {
     private explainQuery() {
         if (this.getters.query().queryLayoutOptions.explainQuery) {
             const explanation = explainResults(
-                this.getters.source(),
+                this.source,
                 GlobalFilter.getInstance(),
                 GlobalQuery.getInstance(),
                 this.getters.tasksFile(),
