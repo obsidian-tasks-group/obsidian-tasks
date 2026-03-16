@@ -27,7 +27,7 @@ export abstract class QueryResultsRendererBase {
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
-    protected constructor(_getters: QueryResultsRendererGetters, source: string, tasksFile: TasksFile, query: IQuery) {
+    protected constructor(source: string, tasksFile: TasksFile, query: IQuery) {
         this.source = source;
         this.tasksFile = tasksFile;
         this.query = query;
