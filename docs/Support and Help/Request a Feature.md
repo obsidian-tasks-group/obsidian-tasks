@@ -14,10 +14,10 @@ See also [[Report a Bug]].
 - Is it already possible?
   - Check the relevant section of the Tasks documentation.
 - Is it already requested?
-  - Search for existing requests for your proposed feature:
-    - [here](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+enhancement%22)
-    - [here](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aissue+label%3A%22type%3A+enhancement%22+is%3Aclosed)
-    - [here](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop)
+  - Search for existing feature requests (FRs) for your proposed change:
+    - [Issues: open FRs](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+enhancement%22)
+    - [Issues: closed FRs](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aissue+label%3A%22type%3A+enhancement%22+is%3Aclosed)
+    - [Discussions: older requests](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) pre-dating FRs going in Issues
   - If it is, up-vote it with a 👍 (in Issues) or the up-arrow (in Discussions).
 - Can it be achieved using another plugin?
 - Is it specific only to your personal workflow?
