@@ -439,6 +439,59 @@ describe('TasksFile - properties', () => {
     });
 });
 
+describe('TasksFile - isIgnored', () => {
+    // Override obsidian mock functions since we use synthetic CachedMetadata
+    let obsidianModule: any;
+    let originalParseFrontMatterTags: any;
+    let originalGetAllTags: any;
+
+    beforeEach(() => {
+        obsidianModule = require('obsidian');
+        originalParseFrontMatterTags = obsidianModule.parseFrontMatterTags;
+        originalGetAllTags = obsidianModule.getAllTags;
+        obsidianModule.parseFrontMatterTags = () => null;
+        obsidianModule.getAllTags = () => [];
+    });
+
+    afterEach(() => {
+        obsidianModule.parseFrontMatterTags = originalParseFrontMatterTags;
+        obsidianModule.getAllTags = originalGetAllTags;
+    });
+
+    it('should return false when no frontmatter exists', () => {
+        const tasksFile = new TasksFile('some/path.md');
+        expect(tasksFile.isIgnored()).toEqual(false);
+    });
+
+    it('should return false when TP_ignore_this_file is not present', () => {
+        const tasksFile = new TasksFile('some/path.md', {
+            frontmatter: { some_other_property: true } as any,
+        });
+        expect(tasksFile.isIgnored()).toEqual(false);
+    });
+
+    it('should return true when TP_ignore_this_file is true', () => {
+        const tasksFile = new TasksFile('some/path.md', {
+            frontmatter: { TP_ignore_this_file: true } as any,
+        });
+        expect(tasksFile.isIgnored()).toEqual(true);
+    });
+
+    it('should return false when TP_ignore_this_file is false', () => {
+        const tasksFile = new TasksFile('some/path.md', {
+            frontmatter: { TP_ignore_this_file: false } as any,
+        });
+        expect(tasksFile.isIgnored()).toEqual(false);
+    });
+
+    it('should be case-insensitive for the property name', () => {
+        const tasksFile = new TasksFile('some/path.md', {
+            frontmatter: { tp_ignore_this_file: true } as any,
+        });
+        expect(tasksFile.isIgnored()).toEqual(true);
+    });
+});
+
 describe('TasksFile - identicalTo', () => {
     const path = 'a/b/c/d.md';
     const cachedMetadata = {};
