@@ -111,6 +111,19 @@ export class SampleTasks {
         return taskBuilders.map((builder) => builder.build());
     }
 
+    public static withRepresentativeListMarkers(): Task[] {
+        const taskBuilders = [
+            new TaskBuilder().listMarker('-').description('hyphen'),
+            new TaskBuilder().listMarker('*').description('asterisk'),
+            new TaskBuilder().listMarker('+').description('plus'),
+            new TaskBuilder().listMarker('1.').description('numbered task with full-stop'),
+            new TaskBuilder().listMarker('2.').description('another numbered task with full-stop'),
+            new TaskBuilder().listMarker('1)').description('numbered task with parenthesis'),
+            new TaskBuilder().listMarker('2)').description('another numbered task with parenthesis'),
+        ];
+        return taskBuilders.map((builder) => builder.build());
+    }
+
     public static withAllRepresentativeCreatedDates(): Task[] {
         return representativeDates.map((date) => {
             return new TaskBuilder().createdDate(date).build();
