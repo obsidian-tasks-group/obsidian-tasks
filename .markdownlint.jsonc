@@ -7,5 +7,6 @@
   "MD025": false, // Allow the title in the front matter and markdown heading one to match.
   "MD028": false, // Allow 'Blank line inside blockquote', in order to allow adjacent callouts
   "MD033": false, // Allow Inline HTML.
-  "MD046": false // Allow fenced code blocks, for syntax hughlighting.
+  "MD046": false, // Allow fenced code blocks, for syntax hughlighting.
+  "MD060": false // Do not enforce consistent table column separator pipe characters, as some tables are machined-generated
 }
