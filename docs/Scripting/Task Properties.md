@@ -181,6 +181,10 @@ For more information, including adding your own customised statuses, see [[Statu
     - `keep`
     - `` (empty string), which is the default, when the task has no [[On Completion]] action specified.
 1. Note that if there is a [[Global Filter]] enabled in settings, and the filter is a tag, it will be removed from `task.tags`.
+1. `task.lineNumber` values begin at `0`, for the first line in the file.
+    - This differs from the [Obsidian CLI](https://obsidian.md/help/cli#Tasks) whose line number values begin at 1.
+1. `task.listMarker` possible values are shown in [[Filters#List Marker]].
+    - Note that this value does not include any indentation or callout characters.
 
 ## Values for File Properties
 
