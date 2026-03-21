@@ -1292,6 +1292,70 @@ Since Tasks 7.16.0, **[[Custom Filters|custom filtering]] by the task's line num
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+### List Marker
+
+The Obsidian help site defines the supported characters in lists and tasks: [Lists](https://obsidian.md/help/syntax#Lists).
+
+Tasks calls these characters "List Markers", and here are examples tasks showing all the different supported ones:
+
+```markdown
+- [ ] hyphen
+* [ ] asterisk
++ [ ] plus
+
+---
+
+1. [ ] numbered task with full-stop
+2. [ ] another numbered with full-stop
+
+---
+
+1) [ ] numbered task with parenthesis
+2) [ ] another numbered task with parenthesis
+```
+
+As an example, you could put an instruction in your Tasks [[Global Query]] saying that Tasks searches should ignore all tasks that start with `+`.
+
+There is no built-in instruction to filter by the task's list marker.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by the task's list marker** is now possible, using `task.listMarker`.
+
+Here are some examples. (By changing `===` to `!==`, you could _exclude_ tasks with the given list marker.)
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.listMarker_docs.approved.md -->
+
+```javascript
+filter by function task.listMarker === '-' 
+```
+
+- Find tasks in unordered lists whose checkboxes begin `- [`
+
+```javascript
+filter by function task.listMarker === '+' 
+```
+
+- Find tasks in unordered lists whose checkboxes begin `+ [`
+
+```javascript
+filter by function task.listMarker === '*' 
+```
+
+- Find tasks in unordered lists whose checkboxes begin `* [`
+
+```javascript
+filter by function task.listMarker.endsWith('.')
+```
+
+- Find tasks in ordered whose checkboxes begin with a number and "." symbol, such as `2. [`
+
+```javascript
+filter by function task.listMarker.endsWith(')')
+```
+
+- Find tasks in ordered whose checkboxes begin with a number and ")" symbol, such as `2) [`
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## Filters for File Properties
 
 These filters allow searching for tasks in particular files and sections of files.
