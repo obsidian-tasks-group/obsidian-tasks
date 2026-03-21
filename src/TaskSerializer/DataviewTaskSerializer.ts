@@ -2,6 +2,7 @@ import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Priority } from '../Task/Priority';
 import type { Task } from '../Task/Task';
+import { Duration } from '../Task/Duration';
 import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from './DefaultTaskSerializer';
 
 /**
@@ -69,6 +70,7 @@ export const DATAVIEW_SYMBOLS = {
         Lowest: 'priority:: lowest',
         None: '',
     },
+    durationSymbol: 'duration::',
     startDateSymbol: 'start::',
     createdDateSymbol: 'created::',
     scheduledDateSymbol: 'scheduled::',
@@ -81,6 +83,7 @@ export const DATAVIEW_SYMBOLS = {
     dependsOnSymbol: 'dependsOn::',
     TaskFormatRegularExpressions: {
         priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
+        durationRegex: toInlineFieldRegex(new RegExp('duration:: *(' + Duration.valueRegEx + ')')),
         startDateRegex: toInlineFieldRegex(/start:: *(\d{4}-\d{2}-\d{2})/),
         createdDateRegex: toInlineFieldRegex(/created:: *(\d{4}-\d{2}-\d{2})/),
         scheduledDateRegex: toInlineFieldRegex(/scheduled:: *(\d{4}-\d{2}-\d{2})/),

@@ -41,6 +41,10 @@
     "appendText": "🔁 "
   },
   {
+    "displayText": "⏱ duration",
+    "appendText": "⏱ "
+  },
+  {
     "textToMatch": "➕ created",
     "displayText": "➕ created today (2022-07-11)",
     "appendText": "➕ 2022-07-11 "
