@@ -41,7 +41,7 @@ For example, if you associate a tag with a project, you might want to put that t
 ## Ignoring a File
 
 > [!released]
-> `TP_ignore_this_file` was introduced in Tasks X.X.X.
+> `TP_ignore_this_file` was introduced in Tasks X.Y.Z
 
 You can make Tasks completely ignore a file by adding the `TP_ignore_this_file` property to its frontmatter:
 
