@@ -172,49 +172,54 @@ Copyright (c) 2022 Elias Mangoro
 const prod = process.argv[2] === 'production';
 const dev = process.argv[2] === 'development';
 
-esbuild
-    .build({
-        banner: {
-            js: banner,
-        },
-        bundle: true,
-        entryPoints: ['main.ts', 'styles.scss'],
-        external: [
-            'obsidian',
-            'electron',
-            'codemirror',
-            '@codemirror/autocomplete',
-            '@codemirror/closebrackets',
-            '@codemirror/commands',
-            '@codemirror/fold',
-            '@codemirror/gutter',
-            '@codemirror/history',
-            '@codemirror/language',
-            '@codemirror/rangeset',
-            '@codemirror/rectangular-selection',
-            '@codemirror/search',
-            '@codemirror/state',
-            '@codemirror/stream-parser',
-            '@codemirror/text',
-            '@codemirror/view',
-            ...builtins,
-        ],
-        format: 'cjs',
-        logLevel: 'info',
-        minify: prod ? true : false,
-        outdir: '.',
-        plugins: [
-            esbuildSvelte({
-                preprocess: sveltePreprocess(),
-            }),
-            sassPlugin({
-                syntax: 'scss',
-                style: 'expanded',
-            }),
-        ],
-        sourcemap: prod ? false : 'inline',
-        target: 'es2016',
-        treeShaking: true,
-        watch: !prod && !dev,
-    })
-    .catch(() => process.exit(1));
+const buildOptions = {
+    banner: {
+        js: banner,
+    },
+    bundle: true,
+    entryPoints: ['main.ts', 'styles.scss'],
+    external: [
+        'obsidian',
+        'electron',
+        'codemirror',
+        '@codemirror/autocomplete',
+        '@codemirror/closebrackets',
+        '@codemirror/commands',
+        '@codemirror/fold',
+        '@codemirror/gutter',
+        '@codemirror/history',
+        '@codemirror/language',
+        '@codemirror/rangeset',
+        '@codemirror/rectangular-selection',
+        '@codemirror/search',
+        '@codemirror/state',
+        '@codemirror/stream-parser',
+        '@codemirror/text',
+        '@codemirror/view',
+        ...builtins,
+    ],
+    format: 'cjs',
+    logLevel: 'info',
+    minify: prod ? true : false,
+    outdir: '.',
+    plugins: [
+        esbuildSvelte({
+            preprocess: sveltePreprocess(),
+        }),
+        sassPlugin({
+            syntax: 'scss',
+            style: 'expanded',
+        }),
+    ],
+    sourcemap: prod ? false : 'inline',
+    target: 'es2016',
+    treeShaking: true,
+};
+
+if (!prod && !dev) {
+    // Watch mode: use the context API (esbuild >= 0.17)
+    const ctx = await esbuild.context(buildOptions);
+    await ctx.watch();
+} else {
+    await esbuild.build(buildOptions);
+}
