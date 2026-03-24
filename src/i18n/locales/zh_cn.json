@@ -119,6 +119,20 @@
         "description": "启用此功能将在任务被设置为完成时，在其末尾添加时间戳 ✅ YYYY-MM-DD。",
         "name": "设置每个已完成任务的完成日期"
       },
+      "firstDayOfWeek": {
+        "name": "每周的第一天",
+        "description": "选择在日期选择器中应将哪一天显示为每周的第一天。",
+        "options": {
+          "localeDefault": "系统",
+          "sunday": "星期日",
+          "monday": "星期一",
+          "tuesday": "星期二",
+          "wednesday": "星期三",
+          "thursday": "星期四",
+          "friday": "星期五",
+          "saturday": "星期六"
+        }
+      },
       "heading": "日期"
     },
     "datesFromFileNames": {
