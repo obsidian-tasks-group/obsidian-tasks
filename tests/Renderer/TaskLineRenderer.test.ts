@@ -184,6 +184,7 @@ describe('task line rendering - layout options', () => {
                 ' 🆔 abcdef',
                 ' ⛔ 123456,abc123',
                 ' 🔼',
+                ' ⏱ 1h30m',
                 ' 🔁 every day when done',
                 ' 🏁 delete',
                 ' ➕ 2023-07-01',
@@ -205,6 +206,7 @@ describe('task line rendering - layout options', () => {
                 ' 🆔 abcdef',
                 ' ⛔ 123456,abc123',
                 ' 🔼',
+                ' ⏱ 1h30m',
                 ' 🔁 every day when done',
                 ' 🏁 delete',
                 ' ➕ 2023-07-01',
@@ -223,6 +225,10 @@ describe('task line rendering - layout options', () => {
 
     it('renders with priority', async () => {
         await testLayoutOptions(['Do exercises #todo #health', ' 🔼'], [TaskLayoutComponent.Priority]);
+    });
+
+    it('renders with duration', async () => {
+        await testLayoutOptions(['Do exercises #todo #health', ' ⏱ 1h30m'], [TaskLayoutComponent.Duration]);
     });
 
     it('renders with recurrence rule', async () => {

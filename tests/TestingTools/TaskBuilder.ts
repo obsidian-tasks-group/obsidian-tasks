@@ -6,6 +6,7 @@ import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Occurrence } from '../../src/Task/Occurrence';
 import { Task } from '../../src/Task/Task';
 import { Recurrence } from '../../src/Task/Recurrence';
+import { Duration } from '../../src/Task/Duration';
 import { DateParser } from '../../src/DateTime/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { TaskLocation } from '../../src/Task/TaskLocation';
@@ -44,6 +45,7 @@ export class TaskBuilder {
     private _precedingHeader: string | null = null;
     private _tags: string[] = [];
     private _priority: Priority = Priority.None;
+    private _duration: Duration = Duration.None;
 
     private _createdDate: Moment | null = null;
     private _startDate: Moment | null = null;
@@ -94,6 +96,7 @@ export class TaskBuilder {
             indentation: this._indentation,
             listMarker: this._listMarker,
             priority: this._priority,
+            duration: this._duration,
             createdDate: this._createdDate,
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
@@ -126,6 +129,7 @@ export class TaskBuilder {
             .description('Do exercises')
             .tags(['#todo', '#health'])
             .priority(Priority.Medium)
+            .duration('1h30m')
             .createdDate('2023-07-01')
             .startDate('2023-07-02')
             .scheduledDate('2023-07-03')
@@ -253,6 +257,16 @@ export class TaskBuilder {
 
     public priority(priority: Priority): this {
         this._priority = priority;
+        return this;
+    }
+
+    /**
+     * Set the estimated duration of this task.
+     *
+     * @param durationText - a text value like '1h30m', '2h', '45m', or null/empty to clear.
+     */
+    public duration(durationText: string | null): this {
+        this._duration = (durationText && Duration.fromText(durationText)) || Duration.None;
         return this;
     }
 

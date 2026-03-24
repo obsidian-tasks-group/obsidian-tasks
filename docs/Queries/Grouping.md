@@ -643,6 +643,13 @@ group by function task.priorityNumber
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+### Duration
+
+- `group by duration`
+  - Tasks are grouped by their duration value (e.g. `1h30m`, `45m`).
+  - Tasks with no duration are grouped as `No duration`.
+  - You can reverse this with `group by duration reverse`.
+
 ### Urgency
 
 - `group by urgency` ([[Urgency|urgency]])
