@@ -1,0 +1,278 @@
+{
+  "main": {
+    "loadingPlugin": "Carregando plugin: {{name}} v{{version}}",
+    "unloadingPlugin": "Descarregando plugin: {{name}} v{{version}}"
+  },
+  "modals": {
+    "customStatusModal": {
+      "editAvailableAsCommand": {
+        "description": "Se ativado, este status estará disponível como um comando para que você possa atribuir uma tecla de atalho e alternar o status usando-a.",
+        "name": "Disponível como comando"
+      },
+      "editNextStatusSymbol": {
+        "description": "Quando clicado, este é o símbolo que deve ser usado a seguir.",
+        "name": "Próximo Símbolo de Status da Tarefa"
+      },
+      "editStatusName": {
+        "description": "Este é o nome amigável do status da tarefa.",
+        "name": "Nome do Status da Tarefa"
+      },
+      "editStatusSymbol": {
+        "description": "Este é o caractere entre os colchetes. (Só pode ser editado para status Personalizados, e não para status Principais).",
+        "name": "Símbolo do Status da Tarefa"
+      },
+      "editStatusType": {
+        "description": "Controla como o status se comporta em relação a pesquisas e alternância.",
+        "name": "Tipo de Status da Tarefa"
+      },
+      "fixErrorsBeforeSaving": "Corrija os erros antes de salvar."
+    }
+  },
+  "reports": {
+    "statusRegistry": {
+      "about": {
+        "createdBy": "Este arquivo foi criado pelo plugin Obsidian Tasks (versão {{version}}) para ajudar a visualizar os status das tarefas neste cofre (vault).",
+        "deleteFileAnyTime": "Você pode excluir este arquivo a qualquer momento.",
+        "title": "Sobre este arquivo",
+        "updateReport": {
+          "line1": "Se você alterar as configurações de status do Tasks, poderá obter um relatório atualizado:",
+          "line2": "Indo em `Configurações` -> `Tasks`.",
+          "line3": "Clicando em `Revisar e verificar seus Status`."
+        }
+      },
+      "columnHeadings": {
+        "nextStatusSymbol": "Próximo Símbolo de Status",
+        "problems": "Problemas (se houver)",
+        "statusName": "Nome do Status",
+        "statusSymbol": "Símbolo do Status",
+        "statusType": "Tipo de Status"
+      },
+      "loadedSettings": {
+        "settingsActuallyUsed": "Estas são as configurações que estão sendo realmente usadas pelo Tasks.",
+        "switchToLivePreview": "Mude para a Visualização Dinâmica (Live Preview) ou Modo de Leitura para ver o diagrama.",
+        "title": "Configurações Carregadas"
+      },
+      "messages": {
+        "cannotFindNextStatus": "Falha inesperada ao encontrar o próximo status.",
+        "duplicateSymbol": "Símbolo duplicado '{{symbol}}': este status será ignorado.",
+        "emptySymbol": "Símbolo vazio: este status será ignorado.",
+        "nextSymbolUnknown": "O próximo símbolo {{symbol}} é desconhecido: crie um status com o símbolo {{symbol}}.",
+        "notConventionalType": "Para informação, o tipo convencional para o símbolo de status {{symbol}} é {{type}}: você pode querer revisar este tipo.",
+        "wrongTypeAfterDone": {
+          "line1": "Este status `DONE` é seguido por {{nextType}}, não `TODO` ou `IN_PROGRESS`.",
+          "line2": "Se for usado para concluir uma tarefa recorrente, ele será seguido por `TODO` ou `IN_PROGRESS`, para garantir que a próxima tarefa corresponda ao filtro `not done`.",
+          "line3": "Consulte [Tarefas Recorrentes e Status Personalizados]({{helpURL}})."
+        }
+      },
+      "sampleTasks": {
+        "line1": "Aqui está um exemplo de linha de tarefa para cada um dos status realmente usados pelo Tasks, para você testar.",
+        "line2": "Os símbolos e nomes de status nas descrições das tarefas estavam corretos quando este arquivo foi criado.",
+        "line3": "Se você modificou as tarefas de exemplo desde que foram criadas, pode ver os tipos e nomes de status atuais nos cabeçalhos de grupo na pesquisa do Tasks abaixo.",
+        "tip": {
+          "line1": "Dica: Se todas as suas caixas de seleção parecerem iguais...",
+          "line2": "Se todas as caixas de seleção (checkboxes) parecerem iguais no Modo de Leitura ou Visualização Dinâmica, consulte [Estilizar status personalizados]({{url}}) para saber como selecionar um tema ou snippet CSS para estilizar seus status."
+        },
+        "title": "Tarefas de Exemplo"
+      },
+      "searchSampleTasks": {
+        "line1": "Esta pesquisa do Tasks mostra todas as tarefas neste arquivo, agrupadas por tipo de status e nome do status.",
+        "title": "Pesquisar Tarefas de Exemplo"
+      },
+      "statusSettings": {
+        "comment": {
+          "line1": "Mude para a Visualização Dinâmica (Live Preview) ou Modo de Leitura para ver a tabela.",
+          "line2": "Se houver algum caractere de formatação Markdown nos nomes de status, como '*' ou '_',",
+          "line3": "O Obsidian poderá renderizar a tabela corretamente apenas no Modo de Leitura."
+        },
+        "theseAreStatusValues": "Estes são os valores de status nas seções de status Principais e Personalizados.",
+        "title": "Configurações de Status"
+      }
+    }
+  },
+  "settings": {
+    "autoSuggest": {
+      "heading": "Autocompletar",
+      "maxSuggestions": {
+        "description": "Quantas sugestões devem ser mostradas quando o menu de autocompletar aparecer (incluindo a opção \"⏎\").",
+        "name": "Número máximo de sugestões automáticas para exibir"
+      },
+      "minLength": {
+        "description": "Se for maior que 0, o autocompletar será acionado apenas quando o início de qualquer palavra-chave suportada for reconhecido.",
+        "name": "Tamanho mínimo de correspondência para o autocompletar"
+      },
+      "toggle": {
+        "description": "A ativação desta opção abrirá um menu de sugestão inteligente ao digitar dentro de uma linha de tarefa reconhecida.",
+        "name": "Autocompletar o conteúdo da tarefa"
+      }
+    },
+    "changeRequiresRestart": "REQUER REINICIALIZAÇÃO.",
+    "dates": {
+      "cancelledDate": {
+        "description": "A ativação desta opção adicionará um carimbo de data/hora ❌ YYYY-MM-DD no final quando uma tarefa for alternada para cancelada.",
+        "name": "Definir data de cancelamento em todas as tarefas canceladas"
+      },
+      "createdDate": {
+        "description": "A ativação desta opção adicionará um carimbo de data/hora ➕ YYYY-MM-DD antes de outros valores de data, quando uma tarefa for criada com 'Criar ou editar tarefa', ou ao concluir uma tarefa recorrente.",
+        "name": "Definir data de criação em cada tarefa adicionada"
+      },
+      "doneDate": {
+        "description": "A ativação desta opção adicionará um carimbo de data/hora ✅ YYYY-MM-DD no final quando uma tarefa for alternada para concluída.",
+        "name": "Definir data de conclusão em todas as tarefas concluídas"
+      },
+      "heading": "Datas"
+    },
+    "datesFromFileNames": {
+      "heading": "Datas baseadas nos nomes dos arquivos",
+      "scheduledDate": {
+        "extraFormat": {
+          "description": {
+            "line1": "Um formato de data adicional que o plugin Tasks reconhecerá ao usar o nome do arquivo como a data Agendada para tarefas sem data.",
+            "line2": "Referência de Sintaxe"
+          },
+          "name": "Formato adicional de data do nome do arquivo como data Agendada para tarefas sem data",
+          "placeholder": "exemplo: MMM DD YYYY"
+        },
+        "folders": {
+          "description": "Deixe em branco se quiser usar as datas Agendadas padrão em todos os lugares, ou insira uma lista de pastas separada por vírgulas.",
+          "name": "Pastas com datas Agendadas padrão"
+        },
+        "toggle": {
+          "description": {
+            "line1": "Economize tempo inserindo datas Agendadas (⏳).",
+            "line2": "Se esta opção for ativada, as tarefas sem data receberão uma data Agendada padrão extraída do nome do seu arquivo.",
+            "line3": "Por padrão, o plugin Tasks reconhecerá os formatos de data <code>YYYY-MM-DD</code> e <code>YYYYMMDD</code>.",
+            "line4": "Tarefas sem data não possuem datas de Vencimento (📅), Agendamento (⏳) e Início (🛫)."
+          },
+          "name": "Usar nome do arquivo como data Agendada para tarefas sem data"
+        }
+      }
+    },
+    "dialogs": {
+      "accessKeys": {
+        "description": "Se as teclas de acesso (atalhos de teclado) de vários controles nas caixas de diálogo entrarem em conflito com os atalhos de teclado do sistema ou com recursos de tecnologia assistiva importantes para você, é possível desativá-los aqui.",
+        "name": "Fornecer teclas de acesso nas caixas de diálogo"
+      },
+      "heading": "Diálogos"
+    },
+    "searchResults": {
+      "heading": "Resultados da pesquisa",
+      "taskCountLocation": {
+        "description": "Escolha se a contagem de tarefas deve ser mostrada na parte superior ou inferior dos resultados da consulta.",
+        "name": "Localização da contagem de tarefas",
+        "options": {
+          "bottom": "Inferior",
+          "top": "Superior"
+        }
+      }
+    },
+    "format": {
+      "description": {
+        "line1": "O formato que o Tasks usa para ler e escrever tarefas.",
+        "line2": "<b>Importante:</b> Atualmente o Tasks suporta apenas um formato por vez. Selecionar o Dataview fará com que o Tasks <b>pare de ler seus próprios indicadores de emoji</b>."
+      },
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Formato de Emoji do Tasks"
+      },
+      "name": "Formato da Tarefa"
+    },
+    "globalFilter": {
+      "filter": {
+        "description": {
+          "line1": "Recomendado: Deixe vazio se você quiser que todos os itens de checklist no seu cofre (vault) sejam tarefas gerenciadas por este plugin.",
+          "line2": "Use um filtro global se quiser que o Tasks atue apenas sobre um subconjunto de seus itens de checklist \"<code>- [ ]</code>\", de forma que um item de checklist precise incluir a string especificada na sua descrição para ser considerado uma tarefa.",
+          "line3": "Por exemplo, se você definir o filtro global como <code>#task</code>, o plugin Tasks só manipulará os itens de checklist com a tag <code>#task</code>.",
+          "line4": "Outros itens continuarão sendo itens normais de checklist e não aparecerão nas consultas nem receberão data de conclusão."
+        },
+        "name": "Filtro global",
+        "placeholder": "ex. #task ou TODO"
+      },
+      "heading": "Filtro global de tarefas",
+      "removeFilter": {
+        "description": "A ativação desta opção removerá a string que você definiu como filtro global da descrição da tarefa ao exibi-la.",
+        "name": "Remover filtro global da descrição"
+      }
+    },
+    "globalQuery": {
+      "heading": "Consulta Global",
+      "query": {
+        "description": "Uma consulta que é incluída automaticamente no início de cada bloco do Tasks no cofre. Útil para adicionar filtros padrão ou opções de layout.",
+        "placeholder": "Por exemplo...\npath does not include _templates/\nlimit 300\nshow urgency"
+      }
+    },
+    "presets": {
+      "buttons": {
+        "addNewPreset": "Adicionar nova predefinição"
+      },
+      "line1": "Você pode definir instruções nomeadas aqui, que podem ser reutilizadas em várias consultas. Uma predefinição chamada '{{name}}' pode ser usada em consultas do Tasks com '{{instruction1}}' ou '{{instruction2}}'.",
+      "line2": "Quaisquer consultas do Tasks abertas são recarregadas automaticamente quando as predefinições são editadas.",
+      "name": "Predefinições (Presets)"
+    },
+    "recurringTasks": {
+      "heading": "Tarefas recorrentes",
+      "nextLine": {
+        "description": "A ativação desta opção fará com que a próxima recorrência de uma tarefa apareça na linha logo abaixo da tarefa concluída. Caso contrário, a próxima recorrência aparecerá antes da concluída.",
+        "name": "A próxima recorrência aparece na linha de baixo"
+      },
+      "removeScheduledDate": {
+        "description": {
+          "line1": "A ativação desta opção fará com que a próxima recorrência de uma tarefa não tenha data Agendada (⏳), quando pelo menos uma das datas de Início (🛫) ou Vencimento (📅) estiver presente.",
+          "line2": "Isto é útil para quando você deseja que as datas de Início e Vencimento sejam mantidas na próxima recorrência, mas pretende definir a data Agendada no futuro, quando for planejar trabalhar nela."
+        },
+        "name": "Remover data agendada na recorrência"
+      }
+    },
+    "seeTheDocumentation": "Veja a documentação",
+    "statuses": {
+      "collections": {
+        "anuppuccinTheme": "Tema AnuPpuccin",
+        "auraTheme": "Tema Aura",
+        "borderTheme": "Tema Border",
+        "buttons": {
+          "addCollection": {
+            "name": "{{themeName}}: Adicionar {{numberOfStatuses}} Status suportados"
+          }
+        },
+        "ebullientworksTheme": "Tema Ebullientworks",
+        "itsThemeAndSlrvbCheckboxes": "Tema ITS e Checkboxes SlRvb",
+        "lytModeTheme": "Tema LYT Mode (Somente modo escuro)",
+        "minimalTheme": "Tema Minimal",
+        "thingsTheme": "Tema Things"
+      },
+      "coreStatuses": {
+        "buttons": {
+          "checkStatuses": {
+            "name": "Revisar e verificar seus Status",
+            "tooltip": "Criar um novo arquivo na raiz do cofre, contendo um diagrama Mermaid das configurações atuais de status."
+          }
+        },
+        "description": {
+          "line1": "Estes são os status principais que o Tasks suporta nativamente, sem a necessidade de estilos CSS personalizados ou temas.",
+          "line2": "Você pode adicionar e editar seus próprios status personalizados na seção abaixo."
+        },
+        "heading": "Status Principais"
+      },
+      "customStatuses": {
+        "buttons": {
+          "addAllUnknown": {
+            "name": "Adicionar Todos os Tipos de Status Desconhecidos"
+          },
+          "addNewStatus": {
+            "name": "Adicionar Novo Status de Tarefa"
+          },
+          "resetCustomStatuses": {
+            "name": "Redefinir Tipos de Status Personalizados para os Padrões"
+          }
+        },
+        "description": {
+          "line1": "Primeiro, você deve <b>selecionar e instalar um Snippet CSS ou Tema</b> para estilizar as caixas de seleção personalizadas.",
+          "line2": "Em seguida, use os botões abaixo para configurar seus status personalizados, para que correspondam às caixas de seleção CSS escolhidas.",
+          "line3": "<b>Nota:</b> Qualquer status com o mesmo símbolo de um status anterior será ignorado. Você pode confirmar os status que foram realmente carregados executando o comando 'Criar ou editar tarefa' e olhando a lista suspensa de Status.",
+          "line4": "Veja a documentação para começar!"
+        },
+        "heading": "Status Personalizados"
+      },
+      "heading": "Status das Tarefas"
+    }
+  }
+}
