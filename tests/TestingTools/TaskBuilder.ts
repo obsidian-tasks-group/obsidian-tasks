@@ -45,11 +45,11 @@ export class TaskBuilder {
     private _precedingHeader: string | null = null;
     private _tags: string[] = [];
     private _priority: Priority = Priority.None;
+    private _duration: Duration = Duration.None;
 
     private _createdDate: Moment | null = null;
     private _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
-    private _duration: Duration = Duration.None;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
     private _cancelledDate: Moment | null = null;
@@ -96,10 +96,10 @@ export class TaskBuilder {
             indentation: this._indentation,
             listMarker: this._listMarker,
             priority: this._priority,
+            duration: this._duration,
             createdDate: this._createdDate,
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
-            duration: this._duration,
             dueDate: this._dueDate,
             doneDate: this._doneDate,
             cancelledDate: this._cancelledDate,
@@ -129,10 +129,10 @@ export class TaskBuilder {
             .description('Do exercises')
             .tags(['#todo', '#health'])
             .priority(Priority.Medium)
+            .duration('1h30m')
             .createdDate('2023-07-01')
             .startDate('2023-07-02')
             .scheduledDate('2023-07-03')
-            .duration('1h30m')
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
             .cancelledDate('2023-07-06')
@@ -260,6 +260,16 @@ export class TaskBuilder {
         return this;
     }
 
+    /**
+     * Set the estimated duration of this task.
+     *
+     * @param durationText - a text value like '1h30m', '2h', '45m', or null/empty to clear.
+     */
+    public duration(durationText: string | null): this {
+        this._duration = (durationText && Duration.fromText(durationText)) || Duration.None;
+        return this;
+    }
+
     public createdDate(createdDate: string | null): this {
         this._createdDate = TaskBuilder.parseDate(createdDate);
         return this;
@@ -272,16 +282,6 @@ export class TaskBuilder {
 
     public scheduledDate(scheduledDate: string | null): this {
         this._scheduledDate = TaskBuilder.parseDate(scheduledDate);
-        return this;
-    }
-
-    /**
-     * Set the estimated duration of this task.
-     *
-     * @param durationText - a text value like '1h30m', '2h', '45m', or null/empty to clear.
-     */
-    public duration(durationText: string | null): this {
-        this._duration = (durationText && Duration.fromText(durationText)) || Duration.None;
         return this;
     }
 
