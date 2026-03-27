@@ -14,10 +14,10 @@ export type TaskDetails = Writeable<
         // NEW_TASK_FIELD_EDIT_REQUIRED
         | 'description'
         | 'priority'
+        | 'duration'
         | 'startDate'
         | 'createdDate'
         | 'scheduledDate'
-        | 'duration'
         | 'dueDate'
         | 'doneDate'
         | 'cancelledDate'

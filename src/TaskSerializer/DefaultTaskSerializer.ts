@@ -24,10 +24,10 @@ export interface DefaultTaskSerializerSymbols {
         Lowest: string;
         None: string;
     };
+    readonly durationSymbol: string;
     readonly startDateSymbol: string;
     readonly createdDateSymbol: string;
     readonly scheduledDateSymbol: string;
-    readonly durationSymbol: string;
     readonly dueDateSymbol: string;
     readonly doneDateSymbol: string;
     readonly cancelledDateSymbol: string;
@@ -37,10 +37,10 @@ export interface DefaultTaskSerializerSymbols {
     readonly dependsOnSymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
+        durationRegex: RegExp;
         startDateRegex: RegExp;
         createdDateRegex: RegExp;
         scheduledDateRegex: RegExp;
-        durationRegex: RegExp;
         dueDateRegex: RegExp;
         doneDateRegex: RegExp;
         cancelledDateRegex: RegExp;
@@ -95,10 +95,10 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         Lowest: '⏬',
         None: '',
     },
+    durationSymbol: '⏱',
     startDateSymbol: '🛫',
     createdDateSymbol: '➕',
     scheduledDateSymbol: '⏳',
-    durationSymbol: '⏱',
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
@@ -108,10 +108,10 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     idSymbol: '🆔',
     TaskFormatRegularExpressions: {
         priorityRegex: fieldRegex('(🔺|⏫|🔼|🔽|⏬)', ''),
+        durationRegex: fieldRegex('⏱', '(' + Duration.valueRegEx + ')'),
         startDateRegex: dateFieldRegex('🛫'),
         createdDateRegex: dateFieldRegex('➕'),
         scheduledDateRegex: dateFieldRegex('(?:⏳|⌛)'),
-        durationRegex: fieldRegex('⏱', '(' + Duration.valueRegEx + ')'),
         dueDateRegex: dateFieldRegex('(?:📅|📆|🗓)'),
         doneDateRegex: dateFieldRegex('✅'),
         cancelledDateRegex: dateFieldRegex('❌'),
@@ -180,10 +180,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
         const {
             // NEW_TASK_FIELD_EDIT_REQUIRED
             prioritySymbols,
+            durationSymbol,
             startDateSymbol,
             createdDateSymbol,
             scheduledDateSymbol,
-            durationSymbol,
             doneDateSymbol,
             cancelledDateSymbol,
             recurrenceSymbol,
@@ -213,6 +213,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 }
                 return priority;
             }
+            case TaskLayoutComponent.Duration:
+                if (task.duration === Duration.None) return '';
+                return symbolAndStringValue(shortMode, durationSymbol, task.duration.toText());
             case TaskLayoutComponent.StartDate:
                 return symbolAndDateValue(shortMode, startDateSymbol, task.startDate);
             case TaskLayoutComponent.CreatedDate:
@@ -220,9 +223,6 @@ export class DefaultTaskSerializer implements TaskSerializer {
             case TaskLayoutComponent.ScheduledDate:
                 if (task.scheduledDateIsInferred) return '';
                 return symbolAndDateValue(shortMode, scheduledDateSymbol, task.scheduledDate);
-            case TaskLayoutComponent.Duration:
-                if (task.duration === Duration.None) return '';
-                return symbolAndStringValue(shortMode, durationSymbol, task.duration.toText());
             case TaskLayoutComponent.DoneDate:
                 return symbolAndDateValue(shortMode, doneDateSymbol, task.doneDate);
             case TaskLayoutComponent.CancelledDate:
@@ -312,9 +312,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         const state: ParsingState = { line, matched: false };
         let priority: Priority = Priority.None;
+        let duration: Duration = Duration.None;
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
-        let duration: Duration = Duration.None;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let cancelledDate: Moment | null = null;
@@ -340,16 +340,16 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 priority = this.parsePriority(match[1]);
             });
 
+            this.extractField(state, TaskFormatRegularExpressions.durationRegex, (match) => {
+                duration = Duration.fromText(match[1].trim()) ?? Duration.None;
+            });
+
             this.extractDateField(state, TaskFormatRegularExpressions.doneDateRegex, (d) => (doneDate = d));
             this.extractDateField(state, TaskFormatRegularExpressions.cancelledDateRegex, (d) => (cancelledDate = d));
             this.extractDateField(state, TaskFormatRegularExpressions.dueDateRegex, (d) => (dueDate = d));
             this.extractDateField(state, TaskFormatRegularExpressions.scheduledDateRegex, (d) => (scheduledDate = d));
             this.extractDateField(state, TaskFormatRegularExpressions.startDateRegex, (d) => (startDate = d));
             this.extractDateField(state, TaskFormatRegularExpressions.createdDateRegex, (d) => (createdDate = d));
-
-            this.extractField(state, TaskFormatRegularExpressions.durationRegex, (match) => {
-                duration = Duration.fromText(match[1].trim()) ?? Duration.None;
-            });
 
             this.extractField(state, TaskFormatRegularExpressions.recurrenceRegex, (match) => {
                 // Save the recurrence rule, but *do not parse it yet*.
@@ -401,10 +401,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
         return {
             description: state.line,
             priority,
+            duration,
             startDate,
             createdDate,
             scheduledDate,
-            duration,
             dueDate,
             doneDate,
             cancelledDate,
