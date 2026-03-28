@@ -1,0 +1,18 @@
+{
+  "reviews": {
+    "auto": true,
+    "exclude": [],
+    "include": [],
+    "autoApprove": false,
+    "codeSuggestions": true,
+    "codeSuggestionsSkipFiles": []
+  },
+  "dependencyBundler": {
+    "enabled": false
+  },
+  "summary": {
+    "auto": true,
+    "level": "basic"
+  },
+  "enableCIFixer": false
+}
