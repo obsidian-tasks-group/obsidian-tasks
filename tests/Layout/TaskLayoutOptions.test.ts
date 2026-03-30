@@ -10,12 +10,12 @@ describe('TaskLayoutOptions', () => {
             id
             dependsOn
             priority
+            duration
             recurrenceRule
             onCompletion
             createdDate
             startDate
             scheduledDate
-            duration
             dueDate
             cancelledDate
             doneDate
@@ -67,12 +67,12 @@ describe('TaskLayoutOptions', () => {
             id
             dependsOn
             priority
+            duration
             recurrenceRule
             onCompletion
             createdDate
             startDate
             scheduledDate
-            duration
             dueDate
             cancelledDate
             doneDate
@@ -87,12 +87,12 @@ describe('TaskLayoutOptions', () => {
             id
             dependsOn
             priority
+            duration
             recurrenceRule
             onCompletion
             createdDate
             startDate
             scheduledDate
-            duration
             cancelledDate
             doneDate"
         `);
@@ -143,12 +143,12 @@ describe('TaskLayoutOptions', () => {
             "id
             dependsOn
             priority
+            duration
             recurrenceRule
             onCompletion
             createdDate
             startDate
             scheduledDate
-            duration
             dueDate
             cancelledDate
             doneDate"
