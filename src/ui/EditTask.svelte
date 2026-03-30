@@ -54,12 +54,12 @@
 
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
     $: formIsValid =
-        isDueDateValid &&
+        isDescriptionValid &&
         isDurationValid &&
         isRecurrenceValid &&
-        isScheduledDateValid &&
         isStartDateValid &&
-        isDescriptionValid &&
+        isScheduledDateValid &&
+        isDueDateValid &&
         isCancelledDateValid &&
         isCreatedDateValid &&
         isDoneDateValid;
@@ -170,16 +170,16 @@ Availability of access keys:
     {/if}
 
     <!-- --------------------------------------------------------------------------- -->
+    <!--  Duration  -->
+    <!-- --------------------------------------------------------------------------- -->
+    {#if isShownInEditModal.duration}
+        <DurationEditor {editableTask} bind:isDurationValid />
+    {/if}
+
+    <!-- --------------------------------------------------------------------------- -->
     <!--  Dates and times -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-dates-section">
-        <!-- --------------------------------------------------------------------------- -->
-        <!--  Duration  -->
-        <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.duration}
-            <DurationEditor {editableTask} bind:isDurationValid />
-        {/if}
-
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->

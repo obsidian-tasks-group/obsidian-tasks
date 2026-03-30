@@ -25,12 +25,12 @@ export class EditableTask {
     description: string;
     status: Status;
     priority: string;
+    duration: string;
     recurrenceRule: string;
     onCompletion: OnCompletion;
     createdDate: string;
     startDate: string;
     scheduledDate: string;
-    duration: string;
     dueDate: string;
     doneDate: string;
     cancelledDate: string;
@@ -46,12 +46,12 @@ export class EditableTask {
         description: string;
         status: Status;
         priority: string;
+        duration: string;
         onCompletion: OnCompletion;
         recurrenceRule: string;
         createdDate: string;
         startDate: string;
         scheduledDate: string;
-        duration: string;
         dueDate: string;
         doneDate: string;
         cancelledDate: string;
@@ -65,12 +65,12 @@ export class EditableTask {
         this.description = editableTask.description;
         this.status = editableTask.status;
         this.priority = editableTask.priority;
+        this.duration = editableTask.duration;
         this.onCompletion = editableTask.onCompletion;
         this.recurrenceRule = editableTask.recurrenceRule;
         this.createdDate = editableTask.createdDate;
         this.startDate = editableTask.startDate;
         this.scheduledDate = editableTask.scheduledDate;
-        this.duration = editableTask.duration;
         this.dueDate = editableTask.dueDate;
         this.doneDate = editableTask.doneDate;
         this.cancelledDate = editableTask.cancelledDate;
@@ -126,12 +126,12 @@ export class EditableTask {
             description,
             status: task.status,
             priority,
+            duration: task.duration.toText(),
             recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
             onCompletion: task.onCompletion,
             createdDate: task.created.formatAsDate(),
             startDate: task.start.formatAsDate(),
             scheduledDate: task.scheduled.formatAsDate(),
-            duration: task.duration.toText(),
             dueDate: task.due.formatAsDate(),
             doneDate: task.done.formatAsDate(),
             cancelledDate: task.cancelled.formatAsDate(),
@@ -204,11 +204,11 @@ export class EditableTask {
             description,
             status: task.status,
             priority: PriorityTools.priorityValue(this.priority),
+            duration,
             onCompletion: parsedOnCompletion,
             recurrence,
             startDate,
             scheduledDate,
-            duration,
             dueDate,
             doneDate,
             createdDate,
