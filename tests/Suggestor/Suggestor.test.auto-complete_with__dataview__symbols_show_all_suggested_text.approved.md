@@ -3,13 +3,13 @@
 | due:: due date | due::  |
 | start:: start date | start::  |
 | scheduled:: scheduled date | scheduled::  |
-| duration:: duration | duration::  |
 | priority:: high priority | priority:: high]  |
 | priority:: medium priority | priority:: medium]  |
 | priority:: low priority | priority:: low]  |
 | priority:: highest priority | priority:: highest]  |
 | priority:: lowest priority | priority:: lowest]  |
 | repeat:: recurring (repeat) | repeat::  |
+| duration:: duration | duration::  |
 | created:: created today (2022-07-11) | created:: 2022-07-11]  |
 | id:: id | id::  |
 | dependsOn:: depends on id | dependsOn::  |

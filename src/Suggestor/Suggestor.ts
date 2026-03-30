@@ -156,10 +156,10 @@ function addTaskPropertySuggestions(
     addField(genericSuggestions, line, symbols.dueDateSymbol, 'due date');
     addField(genericSuggestions, line, symbols.startDateSymbol, 'start date');
     addField(genericSuggestions, line, symbols.scheduledDateSymbol, 'scheduled date');
-    addField(genericSuggestions, line, symbols.durationSymbol, 'duration');
 
     addPrioritySuggestions(genericSuggestions, symbols, parameters);
     addField(genericSuggestions, line, symbols.recurrenceSymbol, 'recurring (repeat)');
+    addField(genericSuggestions, line, symbols.durationSymbol, 'duration');
     addTaskLifecycleDateSuggestions(genericSuggestions, symbols, parameters);
 
     if (includeDependencySuggestions(canSaveEdits)) {

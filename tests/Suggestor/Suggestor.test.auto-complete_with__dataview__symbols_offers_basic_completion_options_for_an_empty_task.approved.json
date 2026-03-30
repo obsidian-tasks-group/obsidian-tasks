@@ -12,10 +12,6 @@
     "appendText": "scheduled:: "
   },
   {
-    "displayText": "duration:: duration",
-    "appendText": "duration:: "
-  },
-  {
     "displayText": "priority:: high priority",
     "appendText": "priority:: high] ",
     "insertSkip": 0
@@ -43,6 +39,10 @@
   {
     "displayText": "repeat:: recurring (repeat)",
     "appendText": "repeat:: "
+  },
+  {
+    "displayText": "duration:: duration",
+    "appendText": "duration:: "
   },
   {
     "textToMatch": "created:: created",
