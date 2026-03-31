@@ -13,12 +13,16 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 ## 7.x releases
 
 - X.Y.Z:
+  - Add [[Toggling and Editing Statuses#'Tasks Change status to...' commands|'Change status to...' commands]].
+  - Add [[Layout#Task count location|Task count location]] setting, to move task count to the top of the results.
+  - Add `task.listMarker`. See [[Filters#List Marker|List Marker filters]].
+  - Add [Integration Tests](https://publish.obsidian.md/tasks-contributing/Testing/Integration+Tests) section to the [Contributing Guide](https://publish.obsidian.md/tasks-contributing/Welcome).
+- 7.23.0:
   - Changes to most of the Tasks [[settings]] now take immediate effect. A few remaining settings are now marked with `REQUIRES RESTART`.
   - Add [[Status Types#ON_HOLD|ON_HOLD]] status type.
-  - Add toolbar on Tasks search results:
-    - Add toolbar containing a 'Filter by description' box and 'Copy results' button: these are not yet documented.
+  - Add [[Layout#Toolbar|toolbar]]  on Tasks search results, with 'Filter by description' box and 'Copy results' button.
     - The [[Presets#Default Presets|default preset]] `hide_query_elements` now hides the toolbar. (Pre-existing Tasks settings are not updated, though.)
-  - All fields in the [[Create or edit Task]] modal are now optional. You can hide fields that you do not use.
+  - Add [[Create or edit Task#Customising the Modal|hide fields]] facility to the 'Create or edit Task' modal, for unused fields.
   - Add Vietnamese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
   - Update the [pull request](https://publish.obsidian.md/tasks-contributing/Contributing/Updating+code) guidelines, because of the growth in AI-generated contributions.
 - 7.22.0:

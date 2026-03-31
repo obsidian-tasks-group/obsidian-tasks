@@ -181,3 +181,9 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
   - It is not yet possible for [[auto-suggest]] to add [[Task Dependencies|dependencies]] when Auto-Suggest is used in [[Kanban plugin]] cards - or any other plugins that use the [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]]. We are tracking this in [issue #3274](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3274).
 - Searching tasks:
   - It is not yet possible to run Tasks searches via the API. We are tracking this in [issue #2459](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2459).
+- Ambiguity when `editTaskLineModal()` returns empty string:
+  - `editTaskLineModal()` returns an empty string in both these situations:
+        1. the user clicked Cancel
+        2. the user completed a task like this, which uses  [[On Completion]]'s `delete` facility:
+            - `- [ ] Delete me when done 🏁 delete`
+  - Fixing this would require introducing `TasksApiV1` .

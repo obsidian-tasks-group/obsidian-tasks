@@ -486,8 +486,8 @@ describe('statuses', () => {
                     'This can be more convenient than doing Boolean `OR` searches',
                 ],
                 [
-                    "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)",
-                    'Find tasks that are not type `NON_TASK` and not type `CANCELLED`.',
+                    "filter by function ! 'ON_HOLD,NON_TASK,CANCELLED'.includes(task.status.type)",
+                    'Find tasks that are not type `ON_HOLD`, not type `NON_TASK` and not type `CANCELLED`.',
                 ],
             ],
             tasks,
@@ -612,11 +612,33 @@ describe('other properties', () => {
             SampleTasks.withAllStatuses(),
         ],
 
-        // [
-        //     'task.listMarker',
-        //     [['group by function task.listMarker', '...']],
-        //     SampleTasks.withAllPriorities(), // TODO Choose specific tasks for task.listMarker'
-        // ],
+        [
+            'task.listMarker',
+            [
+                //
+                [
+                    "filter by function task.listMarker === '-' ",
+                    'Find tasks in unordered lists whose checkboxes begin `- [`',
+                ],
+                [
+                    "filter by function task.listMarker === '+' ",
+                    'Find tasks in unordered lists whose checkboxes begin `+ [`',
+                ],
+                [
+                    "filter by function task.listMarker === '*' ",
+                    'Find tasks in unordered lists whose checkboxes begin `* [`',
+                ],
+                [
+                    "filter by function task.listMarker.endsWith('.')",
+                    'Find tasks in ordered whose checkboxes begin with a number and "." symbol, such as `2. [`',
+                ],
+                [
+                    "filter by function task.listMarker.endsWith(')')",
+                    'Find tasks in ordered whose checkboxes begin with a number and ")" symbol, such as `2) [`',
+                ],
+            ],
+            SampleTasks.withRepresentativeListMarkers(),
+        ],
 
         [
             'task.priorityName',

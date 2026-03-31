@@ -124,3 +124,7 @@ export function verifyTaskListInReverseOrder(tasks: Task[]) {
     const reverse = [...tasks].reverse();
     verifyTaskList(reverse);
 }
+
+export function verifyHtml(normalizedHTML: string): void {
+    verifyWithFileExtension(normalizedHTML, 'html');
+}

@@ -59,3 +59,32 @@ Before submitting:
 Once submitted, maintainers will review when they have capacity.
 
 If we don't receive a response to our feedback within a week, we'll close the PR.
+
+## Dos and Don'ts whilst your PR is open
+
+### Motivation
+
+- **User support**:
+  - We make heavy use of [git bisect](https://nathanchance.dev/posts/working-with-git-bisect/) to save time when tracking down unexpected changes in the code's behaviour.
+  - This requires **every commit in the history to build and pass tests**.
+- **Pull requests**:
+  - During code reviews and testing on PRs, we often review the changes one commit at a time, and make Draft review comments.
+  - We also keep notes in Obsidian of things to consider mentioning.
+  - These review comments and notes refer to the specific `commit id` we were looking at.
+
+### Never ever rebase your PR branch on to `main`
+
+- See Julia Evans' excellent article [git rebase: what can go wrong?](https://jvns.ca/blog/2023/11/06/rebasing-what-can-go-wrong-/)
+- A lot of pages, like Atlassian's [Merging vs. rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing) will tell you:
+  - "the golden rule of `git rebase` is to never use it on *public* branches."
+- But this misses the more important point: rebase can create broken intermediate commits regardless of whether the branch is public or not.
+
+### Never force-push to the PR branch
+
+- Force-pushing on to an existing branch changes commit ids for commits that may have already been reviewed.
+- This makes the code review process harder, and wastes time.
+
+### Only merge `main` in to your PR branch if we ask you to, during code review
+
+- We prefer any merge-conflicts to be managed by team members who are more familiar changes made outside your branch, and so can more safely handle merge conflicts.
+- If GitHub warns about merge conflicts, leave them for us to handle.

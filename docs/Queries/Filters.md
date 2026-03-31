@@ -281,8 +281,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 ### Status
 
-- `done` - matches tasks with status types `DONE`, `CANCELLED` and `NON_TASK`
-- `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
+- `done` - matches tasks with [[status types]] `DONE`, `CANCELLED` and `NON_TASK`
+- `not done` - matches tasks with status types `TODO`, `IN_PROGRESS` and `ON_HOLD`
 
 > [!info]
 > Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
@@ -342,7 +342,7 @@ filter by function task.status.name === 'Unknown'
 
 ### Status Type
 
-- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
+- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|ON_HOLD|CANCELLED|NON_TASK)`
   - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
 - This searches the types you have given to your custom statuses.
 - This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several others all treated as `IN_PROGRESS`.
@@ -374,10 +374,10 @@ filter by function 'TODO,IN_PROGRESS'.includes(task.status.type)
 - This can be more convenient than doing Boolean `OR` searches.
 
 ```javascript
-filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)
+filter by function ! 'ON_HOLD,NON_TASK,CANCELLED'.includes(task.status.type)
 ```
 
-- Find tasks that are not type `NON_TASK` and not type `CANCELLED`.
+- Find tasks that are not type `ON_HOLD`, not type `NON_TASK` and not type `CANCELLED`.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -470,7 +470,7 @@ A task is treated as `blocking` if:
 
 - it has an `id` value,
 - at least one other task in the vault has that `id` value in its `dependsOn` list,
-- both tasks have status type `TODO` or `IN_PROGRESS`.
+- both tasks have status type `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 
 For example:
 
@@ -502,7 +502,7 @@ A task is treated as `blocked` if:
 
 - it has one or more `dependsOn` values,
 - its `dependsOn` list includes the id any tasks in the vault,
-- both tasks have status type `TODO` or `IN_PROGRESS`.
+- both tasks have status type `TODO`, `IN_PROGRESS` or `ON_HOLD`.
 
 For example:
 
@@ -1309,6 +1309,70 @@ Since Tasks 7.16.0, **[[Custom Filters|custom filtering]] by the task's line num
 > With `task.lineNumber`, the first line in the file is on line number `0` (zero), not `1` (one).
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.lineNumber_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### List Marker
+
+The Obsidian help site defines the supported characters in lists and tasks: [Lists](https://obsidian.md/help/syntax#Lists).
+
+Tasks calls these characters "List Markers", and here are examples tasks showing all the different supported ones:
+
+```markdown
+- [ ] hyphen
+* [ ] asterisk
++ [ ] plus
+
+---
+
+1. [ ] numbered task with full-stop
+2. [ ] another numbered with full-stop
+
+---
+
+1) [ ] numbered task with parenthesis
+2) [ ] another numbered task with parenthesis
+```
+
+As an example, you could put an instruction in your Tasks [[Global Query]] saying that Tasks searches should ignore all tasks that start with `+`.
+
+There is no built-in instruction to filter by the task's list marker.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by the task's list marker** is now possible, using `task.listMarker`.
+
+Here are some examples. (By changing `===` to `!==`, you could _exclude_ tasks with the given list marker.)
+
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.listMarker_docs.approved.md -->
+
+```javascript
+filter by function task.listMarker === '-' 
+```
+
+- Find tasks in unordered lists whose checkboxes begin `- [`
+
+```javascript
+filter by function task.listMarker === '+' 
+```
+
+- Find tasks in unordered lists whose checkboxes begin `+ [`
+
+```javascript
+filter by function task.listMarker === '*' 
+```
+
+- Find tasks in unordered lists whose checkboxes begin `* [`
+
+```javascript
+filter by function task.listMarker.endsWith('.')
+```
+
+- Find tasks in ordered whose checkboxes begin with a number and "." symbol, such as `2. [`
+
+```javascript
+filter by function task.listMarker.endsWith(')')
+```
+
+- Find tasks in ordered whose checkboxes begin with a number and ")" symbol, such as `2) [`
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

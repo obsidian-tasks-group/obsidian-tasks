@@ -12,7 +12,7 @@ import { mockApp } from '../__mocks__/obsidian';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import {
-    makeQueryRendererParameters,
+    makeHtmlQueryRendererParameters,
     mockHTMLRenderer,
     tasksMarkdownAndPrettifiedHtml,
     verifyRenderedTasks,
@@ -32,7 +32,7 @@ afterEach(() => {
 });
 
 function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]) {
-    const queryRendererParameters = makeQueryRendererParameters(allTasks);
+    const htmlQueryRendererParameters = makeHtmlQueryRendererParameters(allTasks);
 
     const queryResultsRenderer = new QueryResultsRenderer(
         'block-language-tasks',
@@ -42,7 +42,7 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
         null,
         mockApp,
         mockHTMLRenderer,
-        queryRendererParameters,
+        htmlQueryRendererParameters,
     );
 
     expect(queryResultsRenderer.query.error).toBeUndefined();

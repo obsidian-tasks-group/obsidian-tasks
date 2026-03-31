@@ -10,27 +10,21 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
 
-/**
- * Because properties in QueryResultsRenderer may be modified during the lifetime of this class,
- * we pass in getter functions instead of storing duplicate copies of the values.
- */
-export interface QueryResultsRendererGetters {
-    source: () => string;
-    tasksFile: () => TasksFile;
-    query: () => IQuery;
-}
-
 export abstract class QueryResultsRendererBase {
-    protected getters: QueryResultsRendererGetters;
+    private readonly source: string;
+    protected readonly tasksFile: TasksFile;
+    protected readonly query: IQuery;
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
-    protected constructor(getters: QueryResultsRendererGetters) {
-        this.getters = getters;
+    protected constructor(source: string, tasksFile: TasksFile, query: IQuery) {
+        this.source = source;
+        this.tasksFile = tasksFile;
+        this.query = query;
     }
 
     protected get filePath(): string | undefined {
-        return this.getters.tasksFile().path;
+        return this.tasksFile.path;
     }
 
     public async renderQuery(state: State, queryResult: QueryResult) {
@@ -39,7 +33,7 @@ export abstract class QueryResultsRendererBase {
         // Don't log anything here, for any state, as it generates huge amounts of
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
-        const query = this.getters.query();
+        const query = this.query;
         const error = query.error;
         if (state === State.Warm && error === undefined) {
             await this.renderQuerySearchResults(queryResult);
@@ -70,13 +64,14 @@ export abstract class QueryResultsRendererBase {
     }
 
     private explainQuery() {
-        if (this.getters.query().queryLayoutOptions.explainQuery) {
+        if (this.query.queryLayoutOptions.explainQuery) {
             const explanation = explainResults(
-                this.getters.source(),
+                this.source,
                 GlobalFilter.getInstance(),
                 GlobalQuery.getInstance(),
-                this.getters.tasksFile(),
+                this.tasksFile,
             );
+
             this.renderExplanation(explanation);
         }
     }
@@ -87,7 +82,7 @@ export abstract class QueryResultsRendererBase {
         await this.addAllTaskGroups(queryResult.taskGroups);
 
         const totalTasksCount = queryResult.totalTasksCount;
-        this.getters.query().debug(`[render] ${totalTasksCount} tasks displayed`);
+        this.query.debug(`[render] ${totalTasksCount} tasks displayed`);
 
         this.renderSearchResultsFooter(queryResult);
     }
@@ -117,7 +112,7 @@ export abstract class QueryResultsRendererBase {
         this.beginTaskList();
 
         try {
-            if (this.getters.query().queryLayoutOptions.hideTree) {
+            if (this.query.queryLayoutOptions.hideTree) {
                 await this.addFlatTaskList(listItems);
             } else {
                 await this.addTreeTaskList(listItems);

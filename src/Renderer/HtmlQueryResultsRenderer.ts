@@ -1,16 +1,34 @@
 import type { App, Component, TFile } from 'obsidian';
+import { getSettings } from '../Config/Settings';
 import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
+import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
 import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
 import type { QueryResult } from '../Query/QueryResult';
+import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import type { QueryRendererParameters } from './QueryResultsRenderer';
-import { QueryResultsRendererBase, type QueryResultsRendererGetters } from './QueryResultsRendererBase';
+import type { BacklinksEventHandler, EditButtonClickHandler } from './QueryResultsRenderer';
+import { QueryResultsRendererBase } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+
+/**
+ * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.
+ *
+ * This interface contains all the necessary properties and handlers to manage
+ * and display query results such as tasks, markdown files, and certain event handlers
+ * for user interactions, like handling backlinks and editing tasks.
+ */
+export interface HTMLQueryRendererParameters {
+    allTasks: () => Task[];
+    allMarkdownFiles: () => TFile[];
+    backlinksClickHandler: BacklinksEventHandler;
+    backlinksMousedownHandler: BacklinksEventHandler;
+    editTaskPencilClickHandler: EditButtonClickHandler;
+}
 
 /**
  * HTML-specific implementation of {@link QueryResultsRendererBase} abstract class.
@@ -20,15 +38,12 @@ import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './T
  *   await this.htmlRenderer.renderQuery(state, tasks);
  */
 export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
-    // Renders the description in TaskLineRenderer:
-    protected readonly textRenderer;
-
     // Renders the group heading in this class:
     protected readonly renderMarkdown;
     protected readonly obsidianComponent: Component | null;
     protected readonly obsidianApp: App;
 
-    private taskLineRenderer: TaskLineRenderer;
+    private readonly taskLineRenderer: TaskLineRenderer;
 
     // document.createElement() creates dummy elements that must be overwritten later
     // with the values of elements that will be rendered
@@ -36,7 +51,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     private readonly ulElementStack: HTMLUListElement[] = [];
     private lastLIElement: HTMLLIElement = document.createElement('li');
 
-    private readonly queryRendererParameters: QueryRendererParameters;
+    private readonly htmlQueryRendererParameters: HTMLQueryRendererParameters;
 
     constructor(
         renderMarkdown: (
@@ -49,40 +64,41 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         obsidianComponent: Component | null,
         obsidianApp: App,
         textRenderer: TextRenderer,
-        queryRendererParameters: QueryRendererParameters,
-        getters: QueryResultsRendererGetters,
+        htmlQueryRendererParameters: HTMLQueryRendererParameters,
+        source: string,
+        tasksFile: TasksFile,
+        query: IQuery,
     ) {
-        super(getters);
+        super(source, tasksFile, query);
 
         this.renderMarkdown = renderMarkdown;
         this.obsidianComponent = obsidianComponent;
         this.obsidianApp = obsidianApp;
-        this.textRenderer = textRenderer;
-        this.queryRendererParameters = queryRendererParameters;
+        this.htmlQueryRendererParameters = htmlQueryRendererParameters;
 
-        this.taskLineRenderer = this.createTaskLineRenderer();
-    }
-
-    private createTaskLineRenderer() {
-        return new TaskLineRenderer({
-            textRenderer: this.textRenderer,
-            obsidianApp: this.obsidianApp,
-            obsidianComponent: this.obsidianComponent,
-            taskLayoutOptions: this.getters.query().taskLayoutOptions,
-            queryLayoutOptions: this.getters.query().queryLayoutOptions,
+        this.taskLineRenderer = new TaskLineRenderer({
+            textRenderer: textRenderer,
+            obsidianApp: obsidianApp,
+            obsidianComponent: obsidianComponent,
+            taskLayoutOptions: query.taskLayoutOptions,
+            queryLayoutOptions: query.queryLayoutOptions,
         });
     }
 
     protected beginRender(): void {
-        this.taskLineRenderer = this.createTaskLineRenderer();
-    }
-
-    protected renderSearchResultsHeader(_queryResult: QueryResult): void {
         return;
     }
 
+    protected renderSearchResultsHeader(queryResult: QueryResult): void {
+        if (getSettings().searchResults.taskCountLocation === 'top') {
+            this.addTaskCount(queryResult);
+        }
+    }
+
     protected renderSearchResultsFooter(queryResult: QueryResult): void {
-        this.addTaskCount(queryResult);
+        if (getSettings().searchResults.taskCountLocation !== 'top') {
+            this.addTaskCount(queryResult);
+        }
     }
 
     protected renderErrorMessage(errorMessage: string): void {
@@ -108,8 +124,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         taskList.classList.add(
             'contains-task-list',
             'plugin-tasks-query-result',
-            ...new TaskLayout(this.getters.query().taskLayoutOptions).generateHiddenClasses(),
-            ...new QueryLayout(this.getters.query().queryLayoutOptions).getHiddenClasses(),
+            ...new TaskLayout(this.query.taskLayoutOptions).generateHiddenClasses(),
+            ...new QueryLayout(this.query.queryLayoutOptions).getHiddenClasses(),
         );
 
         const groupingAttribute = this.getGroupingAttribute();
@@ -134,7 +150,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addTask(task: Task, taskIndex: number): Promise<void> {
-        const isFilenameUnique = this.isFilenameUnique({ task }, this.queryRendererParameters.allMarkdownFiles());
+        const isFilenameUnique = this.isFilenameUnique({ task }, this.htmlQueryRendererParameters.allMarkdownFiles());
         const listItem = this.lastLIElement;
 
         await this.taskLineRenderer.renderTaskLine({
@@ -152,21 +168,21 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const extrasSpan = createAndAppendElement('span', listItem);
         extrasSpan.classList.add('task-extras');
 
-        if (!this.getters.query().queryLayoutOptions.hideUrgency) {
+        if (!this.query.queryLayoutOptions.hideUrgency) {
             this.addUrgency(extrasSpan, task);
         }
 
-        const shortMode = this.getters.query().queryLayoutOptions.shortMode;
+        const shortMode = this.query.queryLayoutOptions.shortMode;
 
-        if (!this.getters.query().queryLayoutOptions.hideBacklinks) {
+        if (!this.query.queryLayoutOptions.hideBacklinks) {
             this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
         }
 
-        if (!this.getters.query().queryLayoutOptions.hideEditButton) {
+        if (!this.query.queryLayoutOptions.hideEditButton) {
             this.addEditButton(extrasSpan, task);
         }
 
-        if (!this.getters.query().queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+        if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
             this.addPostponeButton(extrasSpan, task, shortMode);
         }
 
@@ -180,10 +196,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         editTaskPencil.href = '#';
 
         editTaskPencil.addEventListener('click', (event: MouseEvent) =>
-            this.queryRendererParameters.editTaskPencilClickHandler(
+            this.htmlQueryRendererParameters.editTaskPencilClickHandler(
                 event,
                 task,
-                this.queryRendererParameters.allTasks(),
+                this.htmlQueryRendererParameters.allTasks(),
             ),
         );
     }
@@ -215,7 +231,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             this.obsidianApp,
             group.displayName,
             headerEl,
-            this.getters.tasksFile().path,
+            this.tasksFile.path,
             this.obsidianComponent,
         );
     }
@@ -248,11 +264,11 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         // Go to the line the task is defined at
         link.addEventListener('click', async (ev: MouseEvent) => {
-            await this.queryRendererParameters.backlinksClickHandler(ev, task);
+            await this.htmlQueryRendererParameters.backlinksClickHandler(ev, task);
         });
 
         link.addEventListener('mousedown', async (ev: MouseEvent) => {
-            await this.queryRendererParameters.backlinksMousedownHandler(ev, task);
+            await this.htmlQueryRendererParameters.backlinksMousedownHandler(ev, task);
         });
 
         if (!shortMode) {
@@ -286,7 +302,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private addTaskCount(queryResult: QueryResult) {
-        if (!this.getters.query().queryLayoutOptions.hideTaskCount) {
+        if (!this.query.queryLayoutOptions.hideTaskCount) {
             const taskCount = createAndAppendElement('div', this.content);
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
@@ -313,7 +329,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private getGroupingAttribute() {
         const groupingRules: string[] = [];
-        for (const group of this.getters.query().grouping) {
+        for (const group of this.query.grouping) {
             groupingRules.push(group.property);
         }
         return groupingRules.join(',');

@@ -121,9 +121,9 @@ These defaults can, of course, be edited, renamed and deleted.
 
 > [!released]
 >
+> - `hide toolbar` was added to `hide_query_elements` in Tasks 7.23.0.
 > - `hide duration` was added to `hide_non_date_fields` in Tasks X.Y.Z.
-> - `hide toolbar` was added to `hide_query_elements` in Tasks X.Y.Z.
->   - For pre-existing Tasks installations, you can manually add that new instruction to your Preset settings.
+> - For pre-existing Tasks installations, you can manually add any new instructions to your Preset settings.
 
 ## Example: Daily Note Presets
 

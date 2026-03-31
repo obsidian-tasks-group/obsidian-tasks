@@ -2,8 +2,8 @@ import type { App } from 'obsidian';
 import { State } from '../../src/Obsidian/Cache';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import { Query } from '../../src/Query/Query';
+import type { HTMLQueryRendererParameters } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
-import type { QueryRendererParameters } from '../../src/Renderer/QueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
@@ -22,7 +22,7 @@ export const mockTextRenderer = async (_obsidianApp: App, text: string, element:
     element.innerText = text;
 };
 
-export function makeQueryRendererParameters(allTasks: Task[]): QueryRendererParameters {
+export function makeHtmlQueryRendererParameters(allTasks: Task[]): HTMLQueryRendererParameters {
     return {
         allTasks: () => allTasks,
         allMarkdownFiles: () => [],
@@ -35,11 +35,8 @@ export function makeQueryRendererParameters(allTasks: Task[]): QueryRendererPara
 export function createMarkdownRenderer(source: string) {
     const tasksFile = new TasksFile('query.md');
     const query = new Query(source, tasksFile);
-    const renderer = new MarkdownQueryResultsRenderer({
-        query: () => query,
-        tasksFile: () => tasksFile,
-        source: () => source,
-    });
+
+    const renderer = new MarkdownQueryResultsRenderer(source, tasksFile, query);
     return { renderer, query };
 }
 

@@ -1,0 +1,40 @@
+Results of custom filters
+
+
+
+filter by function task.listMarker === '-' 
+Find tasks in unordered lists whose checkboxes begin `- [`
+=>
+- [ ] hyphen
+====================================================================================
+
+
+filter by function task.listMarker === '+' 
+Find tasks in unordered lists whose checkboxes begin `+ [`
+=>
++ [ ] plus
+====================================================================================
+
+
+filter by function task.listMarker === '*' 
+Find tasks in unordered lists whose checkboxes begin `* [`
+=>
+* [ ] asterisk
+====================================================================================
+
+
+filter by function task.listMarker.endsWith('.')
+Find tasks in ordered whose checkboxes begin with a number and "." symbol, such as `2. [`
+=>
+1. [ ] numbered task with full-stop
+2. [ ] another numbered task with full-stop
+====================================================================================
+
+
+filter by function task.listMarker.endsWith(')')
+Find tasks in ordered whose checkboxes begin with a number and ")" symbol, such as `2) [`
+=>
+1) [ ] numbered task with parenthesis
+2) [ ] another numbered task with parenthesis
+====================================================================================
+
