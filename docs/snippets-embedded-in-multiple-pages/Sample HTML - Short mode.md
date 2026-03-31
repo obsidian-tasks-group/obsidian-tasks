@@ -1,7 +1,7 @@
 <!-- snippet: QueryResultsRenderer.test.QueryResultsRenderer_-_rendering_queries_fully_populated_task_-_short_mode.approved.html -->
 ```html
 <!--
-  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 ⏱ 1h30m 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
+  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 ⏱ 1h30m 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
 -->
 
 <div>
@@ -15,10 +15,10 @@
     <li
       class="task-list-item plugin-tasks-list-item"
       data-task-priority="medium"
+      data-task-duration="1h30m"
       data-task-created="past-4d"
       data-task-start="past-3d"
       data-task-scheduled="past-2d"
-      data-task-duration="1h30m"
       data-task-due="past-1d"
       data-task-cancelled="future-1d"
       data-task-done="today"
@@ -32,6 +32,7 @@
         <span class="task-id"><span>🆔</span></span>
         <span class="task-dependsOn"><span>⛔</span></span>
         <span class="task-priority" data-task-priority="medium"><span>🔼</span></span>
+        <span class="task-duration" data-task-duration="1h30m"><span>⏱</span></span>
         <span class="task-recurring"><span>🔁</span></span>
         <span class="task-onCompletion"><span>🏁</span></span>
         <span
@@ -52,7 +53,6 @@
           title="Click to edit scheduled date, Right-click for more options">
           <span>⏳</span>
         </span>
-        <span class="task-duration" data-task-duration="1h30m"><span>⏱</span></span>
         <span class="task-due" data-task-due="past-1d" title="Click to edit due date, Right-click for more options">
           <span>📅</span>
         </span>
