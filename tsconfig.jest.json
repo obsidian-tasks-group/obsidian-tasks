@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "importsNotUsedAsValues": "remove",
+    "preserveValueImports": false
+  }
+}

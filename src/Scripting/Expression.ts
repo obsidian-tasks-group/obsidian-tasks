@@ -8,6 +8,14 @@ export class FunctionOrError extends QueryComponentOrError<Function> {}
  */
 export type ExpressionParameter = [name: string, value: any];
 
+const SHADOW_PARAMETER_NAMES = ['require', 'window', 'globalThis', 'global', 'self', 'Function', 'process'];
+
+function createSafeAmbientGlobals() {
+    const safeGlobals = Object.create(null);
+    safeGlobals.moment = (globalThis as any).moment;
+    return safeGlobals;
+}
+
 /**
  * Parse a JavaScript expression, and return either a Function or an error message in a string.
  * @param paramsArgs
@@ -20,7 +28,13 @@ export function parseExpression(paramsArgs: ExpressionParameter[], arg: string):
     try {
         const parameterNames = paramsArgs.map(([name]) => name);
         const input = arg.includes('return') ? arg : `return ${arg}`;
-        const expression: '' | null | Function = arg && new Function(...parameterNames, input);
+        const expression: '' | null | Function =
+            arg &&
+            new Function(
+                ...parameterNames,
+                ...SHADOW_PARAMETER_NAMES,
+                `const eval = undefined; return (function() { "use strict"; ${input} }).call(undefined);`,
+            );
         if (expression instanceof Function) {
             return FunctionOrError.fromObject(arg, expression);
         }
@@ -41,7 +55,17 @@ export function parseExpression(paramsArgs: ExpressionParameter[], arg: string):
  */
 export function evaluateExpression(expression: Function, paramsArgs: ExpressionParameter[]) {
     const parameterValues = paramsArgs.map(([_, value]) => value);
-    return expression(...parameterValues);
+    const safeAmbientGlobals = createSafeAmbientGlobals();
+    const shadowValues = [
+        undefined,
+        safeAmbientGlobals,
+        safeAmbientGlobals,
+        safeAmbientGlobals,
+        safeAmbientGlobals,
+        undefined,
+        undefined,
+    ];
+    return expression(...parameterValues, ...shadowValues);
 }
 
 /**

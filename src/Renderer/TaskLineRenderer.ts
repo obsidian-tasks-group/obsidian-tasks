@@ -55,6 +55,15 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     return el;
 }
 
+function escapeHtml(value: string) {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 /**
  * `TaskLineRenderer` is responsible for rendering task details as HTML list items with
  * various customization options.
@@ -286,7 +295,7 @@ export class TaskLineRenderer {
         if (component === TaskLayoutComponent.Description) {
             return await this.renderDescription(task, span, isTaskInQueryFile);
         }
-        span.innerHTML = componentString;
+        span.textContent = componentString;
     }
 
     private async renderDescription(task: Task, span: HTMLSpanElement, isTaskInQueryFile: boolean) {
@@ -296,7 +305,11 @@ export class TaskLineRenderer {
         const { debugSettings } = getSettings();
         if (debugSettings.showTaskHiddenData) {
             // Add some debug output to enable hidden information in the task to be inspected.
-            description += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
+            description += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${
+                task.sectionIndex
+            } . '<code>${escapeHtml(task.originalMarkdown)}</code>'<br>'<code>${escapeHtml(
+                task.path,
+            )}</code>' > '<code>${escapeHtml(task.precedingHeader ?? '')}</code>'<br>`;
         }
         await this.textRenderer(this.obsidianApp, description, span, task.path, this.obsidianComponent);
 

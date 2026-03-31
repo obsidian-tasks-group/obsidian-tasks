@@ -9,7 +9,12 @@ module.exports = {
                 preprocess: true,
             },
         ],
-        '^.+\\.ts$': 'ts-jest',
+        '^.+\\.ts$': [
+            'ts-jest',
+            {
+                tsconfig: 'tsconfig.jest.json',
+            },
+        ],
     },
     moduleFileExtensions: ['js', 'ts', 'svelte'],
     roots: ['<rootDir>/tests'],
