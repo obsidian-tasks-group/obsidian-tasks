@@ -3,7 +3,6 @@ import type { Moment } from 'moment';
 import type { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Task } from '../Task/Task';
-import { Duration } from '../Task/Duration';
 
 /**
  * A renderer for individual {@link Task} fields in an HTML context.
@@ -95,10 +94,10 @@ export class TaskFieldHTMLData {
 
         const date = task[component];
 
-        // TS2345: Argument of type 'string[] | Moment | Duration' is not assignable to parameter of type 'Moment'.
-        // The array and Duration checks narrow the type, but TypeScript cannot fully infer this, so we cast.
-        if (!Array.isArray(date) && !(date instanceof Duration) && date instanceof window.moment) {
-            const attributeValue = dateToAttribute(date as Moment);
+        // TS2345: Argument of type 'string[] | Moment' is not assignable to parameter of type 'Moment'.
+        // Type 'string[]' is missing the following properties from type 'Moment': format, startOf, endOf, add, and 78 more.
+        if (!Array.isArray(date) && date instanceof window.moment) {
+            const attributeValue = dateToAttribute(<Moment>date);
             if (attributeValue) {
                 return attributeValue;
             }
