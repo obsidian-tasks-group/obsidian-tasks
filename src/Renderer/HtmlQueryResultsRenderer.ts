@@ -103,7 +103,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected renderErrorMessage(errorMessage: string): void {
         const container = createAndAppendElement('div', this.content);
-        container.innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
+        const pre = createAndAppendElement('pre', container);
+        pre.textContent = `Tasks query: ${errorMessage}`;
     }
 
     protected renderLoadingMessage(): void {

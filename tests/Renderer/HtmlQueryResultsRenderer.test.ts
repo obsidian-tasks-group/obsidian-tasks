@@ -78,6 +78,20 @@ describe('HtmlQueryResultsRenderer tests', () => {
         await verifyRenderedHtml(allTasks, 'apple sauce');
     });
 
+    it('renders errors in a pre element using text content', () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        const { renderer } = makeHtmlRenderer('apple sauce', new TasksFile('query.md'), allTasks);
+        const container = document.createElement('div');
+        renderer.content = container;
+
+        (renderer as any).renderErrorMessage('line 1\nline 2');
+
+        const pre = container.querySelector('pre');
+        expect(pre).not.toBeNull();
+        expect(pre?.textContent).toEqual('Tasks query: line 1\nline 2');
+        expect(pre?.querySelector('br')).toBeNull();
+    });
+
     it('explain', async () => {
         GlobalQuery.getInstance().set('hide toolbar');
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
