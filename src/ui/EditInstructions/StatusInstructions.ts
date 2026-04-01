@@ -29,7 +29,7 @@ export class SetStatus implements TaskEditingInstruction {
     }
 
     public isCheckedForTask(task: Task): boolean {
-        return this.newStatus instanceof Status && this.newStatus.symbol === task.status.symbol;
+        return this.newStatus.symbol === task.status.symbol;
     }
 }
 
