@@ -2,15 +2,10 @@ import {
     DEFAULT_MAX_GENERIC_SUGGESTIONS,
     makeDefaultSuggestionBuilder,
     onlySuggestIfBracketOpen,
-} from '../Suggestor/Suggestor';
-import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
-import { DATAVIEW_SYMBOLS } from '../TaskSerializer/DataviewTaskSerializer';
+} from '../Suggestor/DefaultSuggestionBuilder';
 import { StatusConfiguration } from '../Statuses/StatusConfiguration';
 import { Status } from '../Statuses/Status';
-import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
-import type { SuggestionBuilder } from '../Suggestor';
 import type { LogOptions } from '../lib/logging';
-import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
 import { i18n } from '../i18n/i18n';
 import { type PresetsMap, defaultPresets } from '../Query/Presets/Presets';
 import { DebugSettings } from './DebugSettings';
@@ -22,6 +17,28 @@ import type { FeatureFlag } from './Feature';
 interface SettingsMap {
     [key: string]: string | boolean;
 }
+
+type SuggestionBuilder = (...args: any[]) => any[];
+type TaskDetails = {
+    description: string;
+    priority: any;
+    startDate: any;
+    createdDate: any;
+    scheduledDate: any;
+    dueDate: any;
+    doneDate: any;
+    cancelledDate: any;
+    recurrence: any;
+    onCompletion: any;
+    dependsOn: string[];
+    id: string;
+    tags: string[];
+};
+type TaskSerializer = {
+    deserialize: (line: string) => TaskDetails;
+    serialize: (task: any) => string;
+    [key: string]: any;
+};
 
 export type HeadingState = {
     [id: string]: boolean;
@@ -40,24 +57,65 @@ interface TaskFormat {
     buildSuggestions?: SuggestionBuilder;
 }
 
+function createTaskFormat({
+    getDisplayName,
+    createTaskSerializer,
+    createSuggestionBuilder,
+}: {
+    getDisplayName: () => string;
+    createTaskSerializer: () => TaskSerializer;
+    createSuggestionBuilder?: () => SuggestionBuilder;
+}): TaskFormat {
+    let taskSerializer: TaskSerializer | undefined;
+    let buildSuggestions: SuggestionBuilder | undefined;
+
+    return {
+        getDisplayName,
+        get taskSerializer() {
+            taskSerializer ??= createTaskSerializer();
+            return taskSerializer;
+        },
+        get buildSuggestions() {
+            if (!createSuggestionBuilder) {
+                return undefined;
+            }
+
+            buildSuggestions ??= createSuggestionBuilder();
+            return buildSuggestions;
+        },
+    };
+}
+
 /** Map of all defined {@link TaskFormat}s */
 export const TASK_FORMATS = {
-    tasksPluginEmoji: {
+    tasksPluginEmoji: createTaskFormat({
         getDisplayName: () => i18n.t('settings.format.displayName.tasksEmojiFormat'),
-        taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
-        buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, false),
-    },
-    dataview: {
+        createTaskSerializer: () => {
+            const { DefaultTaskSerializer, DEFAULT_SYMBOLS } = require('../TaskSerializer/DefaultTaskSerializer');
+            return new DefaultTaskSerializer(DEFAULT_SYMBOLS);
+        },
+        createSuggestionBuilder: () => {
+            const { DEFAULT_SYMBOLS } = require('../TaskSerializer/DefaultTaskSerializer');
+            return makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, false);
+        },
+    }),
+    dataview: createTaskFormat({
         getDisplayName: () => i18n.t('settings.format.displayName.dataview'),
-        taskSerializer: new DataviewTaskSerializer(),
-        buildSuggestions: onlySuggestIfBracketOpen(
-            makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, true),
-            [
-                ['(', ')'],
-                ['[', ']'],
-            ],
-        ),
-    },
+        createTaskSerializer: () => {
+            const { DataviewTaskSerializer } = require('../TaskSerializer/DataviewTaskSerializer');
+            return new DataviewTaskSerializer();
+        },
+        createSuggestionBuilder: () => {
+            const { DATAVIEW_SYMBOLS } = require('../TaskSerializer/DataviewTaskSerializer');
+            return onlySuggestIfBracketOpen(
+                makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, true),
+                [
+                    ['(', ')'],
+                    ['[', ']'],
+                ],
+            );
+        },
+    }),
 } as const;
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
