@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Status } from '../../Statuses/Status';
 import type { Task } from '../../Task/Task';
 import type { StatusRegistry } from '../../Statuses/StatusRegistry';
@@ -30,7 +29,7 @@ export class SetStatus implements TaskEditingInstruction {
     }
 
     public isCheckedForTask(task: Task): boolean {
-        return this.newStatus.symbol === task.status.symbol;
+        return this.newStatus instanceof Status && this.newStatus.symbol === task.status.symbol;
     }
 }
 
