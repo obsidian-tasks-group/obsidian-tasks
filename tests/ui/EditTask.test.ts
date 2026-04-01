@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
+import { fireEvent, render } from '@testing-library/svelte';
 import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
@@ -46,7 +46,7 @@ function constructSerialisingOnSubmit(task: Task) {
 }
 
 function renderAndCheckModal(task: Task, onSubmit: (updatedTasks: Task[]) => void, allTasks = [task]) {
-    const result: RenderResult<EditTask> = render(EditTask, {
+    const result = render(EditTask, {
         task,
         statusOptions: StatusRegistry.getInstance().registeredStatuses,
         onSubmit,

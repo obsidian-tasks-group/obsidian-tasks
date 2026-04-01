@@ -1,15 +1,44 @@
 // begin-snippet: declare-Moment-type-in-src
 import type { Moment } from 'moment';
 // end-snippet
-import { RRule } from 'rrule';
+import * as RRuleModule from 'rrule';
 import type { Occurrence } from './Occurrence';
 
+type RRuleExports = typeof import('rrule');
+type RRuleConstructor = RRuleExports['RRule'];
+type ResolvedRRuleConstructor = NonNullable<RRuleConstructor>;
+
+const rruleNamespace = RRuleModule as unknown as {
+    RRule?: RRuleConstructor;
+    default?: { RRule?: RRuleConstructor };
+};
+
+function resolveRRuleConstructor(): ResolvedRRuleConstructor {
+    const resolvedRRule = rruleNamespace.RRule ?? rruleNamespace.default?.RRule;
+    if (resolvedRRule === undefined) {
+        throw new Error('RRule export was not found');
+    }
+    return resolvedRRule as ResolvedRRuleConstructor;
+}
+
+const RRule: ResolvedRRuleConstructor = resolveRRuleConstructor();
+
+type RRuleType = InstanceType<ResolvedRRuleConstructor>;
+
 export class Recurrence {
-    private readonly rrule: RRule;
+    private readonly rrule: RRuleType;
     private readonly baseOnToday: boolean;
     readonly occurrence: Occurrence;
 
-    constructor({ rrule, baseOnToday, occurrence }: { rrule: RRule; baseOnToday: boolean; occurrence: Occurrence }) {
+    constructor({
+        rrule,
+        baseOnToday,
+        occurrence,
+    }: {
+        rrule: RRuleType;
+        baseOnToday: boolean;
+        occurrence: Occurrence;
+    }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
         this.occurrence = occurrence;
@@ -146,7 +175,7 @@ export class Recurrence {
      * eventually calculate the next occurrence based on `2022-01-28`, ending up
      * in February as the user would expect.
      */
-    private nextAfter(after: Moment, rrule: RRule): Moment {
+    private nextAfter(after: Moment, rrule: RRuleType): Moment {
         // We need to remove the timezone, as rrule does not regard timezones and always
         // calculates in UTC.
         // The timezone is added again before returning the next date.
@@ -181,7 +210,7 @@ export class Recurrence {
     private static nextAfterMonths(
         after: Moment,
         next: Moment,
-        rrule: RRule,
+        rrule: RRuleType,
         skippingMonths: string | undefined,
     ): Moment {
         // Parse `skippingMonths`, if it exists.
@@ -221,7 +250,7 @@ export class Recurrence {
     private static nextAfterYears(
         after: Moment,
         next: Moment,
-        rrule: RRule,
+        rrule: RRuleType,
         skippingYears: string | undefined,
     ): Moment {
         // Parse `skippingYears`, if it exists.
@@ -254,7 +283,7 @@ export class Recurrence {
      *
      * WARNING: This method manipulates the given instance of `after`.
      */
-    private static fromOneDayEarlier(after: Moment, rrule: RRule): Moment {
+    private static fromOneDayEarlier(after: Moment, rrule: RRuleType): Moment {
         after.subtract(1, 'days').endOf('day');
 
         const options = rrule.origOptions;

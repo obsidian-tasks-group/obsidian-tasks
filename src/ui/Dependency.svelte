@@ -1,29 +1,42 @@
 <script lang="ts">
     import { computePosition, flip, offset, shift, size } from '@floating-ui/dom';
     import type { Task } from '../Task/Task';
-    import type { EditableTask } from './EditableTask';
+    import type { EditableTaskData } from './EditableTask';
     import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
-    export let task: Task;
-    export let editableTask: EditableTask;
-    export let allTasks: Task[];
-    export let _onDescriptionKeyDown: (e: KeyboardEvent) => void;
-    export let id: string;
-    export let type: 'blocking' | 'blockedBy';
-    export let labelText: string;
-    export let accesskey: string | null;
-    export let placeholder: string = 'Type to search...';
+    interface Props {
+        task: Task;
+        editableTask: EditableTaskData;
+        allTasks: Task[];
+        _onDescriptionKeyDown: (e: KeyboardEvent) => void;
+        id: string;
+        type: 'blocking' | 'blockedBy';
+        labelText: string;
+        accesskey: string | null;
+        placeholder?: string;
+    }
 
-    let search: string = '';
-    let searchResults: Task[] | null = null;
-    let searchIndex: number | null = 0;
-    let inputWidth: number;
-    let inputFocused = false;
-    let showDropdown = false;
+    let {
+        task,
+        editableTask = $bindable(),
+        allTasks,
+        _onDescriptionKeyDown,
+        id,
+        type,
+        labelText,
+        accesskey,
+        placeholder = 'Type to search...',
+    }: Props = $props();
 
-    let input: HTMLElement;
-    let dropdown: HTMLElement;
+    let search = $state('');
+    let searchIndex = $state<number | null>(0);
+    let inputWidth = $state(0);
+    let inputFocused = $state(false);
+    let showDropdown = $state(false);
+
+    let input = $state<HTMLElement | undefined>(undefined);
+    let dropdown = $state<HTMLElement | undefined>(undefined);
 
     function addTask(task: Task) {
         editableTask[type] = [...editableTask[type], task];
@@ -74,8 +87,8 @@
         searchIndex && dropdown?.getElementsByTagName('li')[searchIndex]?.scrollIntoView({ block: 'nearest' });
     }
 
-    function generateSearchResults(search: string) {
-        if (!search && !showDropdown) return [];
+    function generateSearchResults(search: string, shouldShowDropdown: boolean) {
+        if (!search && !shouldShowDropdown) return [];
 
         showDropdown = false;
         return searchForCandidateTasksForDependency(
@@ -92,7 +105,7 @@
         showDropdown = true;
     }
 
-    function positionDropdown(input: HTMLElement, dropdown: HTMLElement) {
+    function positionDropdown(input: HTMLElement, dropdown: HTMLElement, width: number) {
         if (!input || !dropdown) return;
 
         computePosition(input, dropdown, {
@@ -102,7 +115,7 @@
                 flip(),
                 size({
                     apply() {
-                        dropdown && Object.assign(dropdown.style, { width: `${inputWidth}px` });
+                        Object.assign(dropdown.style, { width: `${width}px` });
                     },
                 }),
             ],
@@ -136,31 +149,34 @@
         element.addEventListener('mouseleave', () => tooltip.remove());
     }
 
-    $: {
-        positionDropdown(input, dropdown);
-    }
+    let searchResults = $derived(inputFocused ? generateSearchResults(search, showDropdown) : null);
 
-    $: {
-        searchResults = inputFocused ? generateSearchResults(search) : null;
-    }
+    $effect(() => {
+        if (input) {
+            inputWidth = input.getBoundingClientRect().width;
+        }
+
+        const width = inputWidth;
+        if (input && dropdown) {
+            positionDropdown(input, dropdown, width);
+        }
+    });
 </script>
 
-<label for={type}>{@html labelContentWithAccessKey(labelText, accesskey)}</label>
+<label for={id}>{@html labelContentWithAccessKey(labelText, accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
-<span bind:clientWidth={inputWidth}>
-    <input
-        bind:this={input}
-        bind:value={search}
-        on:keydown={(e) => taskKeydown(e)}
-        on:focus={onFocused}
-        on:blur={() => (inputFocused = false)}
-        {accesskey}
-        {id}
-        class="tasks-modal-dependency-input"
-        type="text"
-        {placeholder}
-    />
-</span>
+<input
+    bind:this={input}
+    bind:value={search}
+    on:keydown={(e) => taskKeydown(e)}
+    on:focus={onFocused}
+    on:blur={() => (inputFocused = false)}
+    {accesskey}
+    {id}
+    class="tasks-modal-dependency-input"
+    type="text"
+    {placeholder}
+/>
 {#if searchResults && searchResults.length !== 0}
     <ul class="task-dependency-dropdown" bind:this={dropdown} on:mouseleave={() => (searchIndex = null)}>
         {#each searchResults as searchTask, index}

@@ -1,6 +1,9 @@
 import { DateParser } from '../DateTime/DateParser';
 import { doAutocomplete } from '../DateTime/DateAbbreviations';
+import { Occurrence } from '../Task/Occurrence';
+import { Recurrence } from '../Task/Recurrence';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { searchForCandidateTasksForDependency } from '../ui/DependencyHelpers';
 import { escapeRegExp } from '../lib/RegExpTools';
 
 type SuggestInfo = {
@@ -407,8 +410,6 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, parameters: Sug
         if (recurrenceString.length > 0) {
             // If the text matches a valid recurence description, present it as a 1st suggestion.
             // We also add a nice checkmark in this case to denote it's a complete valid recurrence description
-            const { Recurrence } = require('../Task/Recurrence');
-            const { Occurrence } = require('../Task/Occurrence');
             const parsedRecurrence = Recurrence.fromText({
                 recurrenceRuleText: recurrenceString,
                 occurrence: new Occurrence({
@@ -574,7 +575,6 @@ function addDependsOnSuggestions(
         }
 
         if (newTaskToAppend.length >= parameters.settings.autoSuggestMinMatch) {
-            const { searchForCandidateTasksForDependency } = require('../ui/DependencyHelpers');
             const genericMatches = searchForCandidateTasksForDependency(
                 newTaskToAppend.trim(),
                 allTasks,

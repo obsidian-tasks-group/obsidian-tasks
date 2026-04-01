@@ -1,5 +1,6 @@
 import { type App, setIcon } from 'obsidian';
 import { Modal } from 'obsidian';
+import { flushSync, mount, unmount } from 'svelte';
 
 import EditTask from '../ui/EditTask.svelte';
 import type { Task } from '../Task/Task';
@@ -21,6 +22,7 @@ export class TaskModal extends Modal {
     public readonly onSaveSettings: () => Promise<void>;
     public readonly onSubmit: (updatedTasks: Task[]) => void;
     public readonly allTasks: Task[];
+    private component?: Record<string, any>;
 
     constructor({ app, task, onSaveSettings, onSubmit, onCancel, allTasks }: TaskModalParams) {
         super(app);
@@ -64,7 +66,7 @@ export class TaskModal extends Modal {
 
         const statusOptions = this.getKnownStatusesAndCurrentTaskStatusIfNotKnown();
 
-        new EditTask({
+        this.component = mount(EditTask, {
             target: contentEl,
             props: {
                 task: this.task,
@@ -73,6 +75,7 @@ export class TaskModal extends Modal {
                 allTasks: this.allTasks,
             },
         });
+        flushSync();
     }
 
     /**
@@ -91,6 +94,13 @@ export class TaskModal extends Modal {
 
     public onClose(): void {
         const { contentEl } = this;
+        if (this.component) {
+            const component = this.component;
+            this.component = undefined;
+            void unmount(component).then(() => contentEl.empty());
+            return;
+        }
+
         contentEl.empty();
     }
 }

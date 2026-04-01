@@ -1,6 +1,9 @@
 import Mustache from 'mustache';
-import proxyData from 'mustache-validator';
+import proxyDataModule from 'mustache-validator';
 import { type ExpressionParameter, evaluateExpression, parseExpression } from './Expression';
+
+const proxyData = ((proxyDataModule as unknown as { default?: typeof proxyDataModule }).default ??
+    proxyDataModule) as typeof import('mustache-validator').default;
 
 // https://github.com/janl/mustache.js
 

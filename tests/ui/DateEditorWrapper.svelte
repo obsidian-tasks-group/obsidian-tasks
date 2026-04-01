@@ -2,11 +2,15 @@
     import { TASK_FORMATS } from '../../src/Config/Settings';
     import DateEditor from '../../src/ui/DateEditor.svelte';
 
-    export let forwardOnly: boolean;
+    interface Props {
+        forwardOnly: boolean;
+    }
 
-    let dateFromDateEditor: string = '';
-    let parsedDateFromDateEditor: string = '';
-    let isDueDateValid = true;
+    let { forwardOnly }: Props = $props();
+
+    let dateFromDateEditor = $state('');
+    let parsedDateFromDateEditor = $state('');
+    let isDueDateValid = $state(true);
 </script>
 
 <DateEditor
@@ -16,8 +20,6 @@
     bind:isDateValid={isDueDateValid}
     {forwardOnly}
     accesskey={null}
-    on:open={() => {}}
-    on:close={() => {}}
     bind:parsedDate={parsedDateFromDateEditor}
 />
 <input bind:value={dateFromDateEditor} id="dueDateFromDateEditor" />

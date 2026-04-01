@@ -8,6 +8,8 @@ import { Status } from '../Statuses/Status';
 import type { LogOptions } from '../lib/logging';
 import { i18n } from '../i18n/i18n';
 import { type PresetsMap, defaultPresets } from '../Query/Presets/Presets';
+import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
+import { DEFAULT_SYMBOLS, DefaultTaskSerializer } from '../TaskSerializer/DefaultTaskSerializer';
 import { DebugSettings } from './DebugSettings';
 import { type EditModalShowSettings, defaultEditModalShowSettings } from './EditModalShowSettings';
 import { StatusSettings } from './StatusSettings';
@@ -90,23 +92,14 @@ function createTaskFormat({
 export const TASK_FORMATS = {
     tasksPluginEmoji: createTaskFormat({
         getDisplayName: () => i18n.t('settings.format.displayName.tasksEmojiFormat'),
-        createTaskSerializer: () => {
-            const { DefaultTaskSerializer, DEFAULT_SYMBOLS } = require('../TaskSerializer/DefaultTaskSerializer');
-            return new DefaultTaskSerializer(DEFAULT_SYMBOLS);
-        },
-        createSuggestionBuilder: () => {
-            const { DEFAULT_SYMBOLS } = require('../TaskSerializer/DefaultTaskSerializer');
-            return makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, false);
-        },
+        createTaskSerializer: () => new DefaultTaskSerializer(DEFAULT_SYMBOLS),
+        createSuggestionBuilder: () =>
+            makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, false),
     }),
     dataview: createTaskFormat({
         getDisplayName: () => i18n.t('settings.format.displayName.dataview'),
-        createTaskSerializer: () => {
-            const { DataviewTaskSerializer } = require('../TaskSerializer/DataviewTaskSerializer');
-            return new DataviewTaskSerializer();
-        },
+        createTaskSerializer: () => new DataviewTaskSerializer(),
         createSuggestionBuilder: () => {
-            const { DATAVIEW_SYMBOLS } = require('../TaskSerializer/DataviewTaskSerializer');
             return onlySuggestIfBracketOpen(
                 makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS, true),
                 [

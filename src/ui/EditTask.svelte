@@ -8,17 +8,20 @@
     import { settingsStore } from './SettingsStore';
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
-    import { EditableTask } from './EditableTask';
+    import { applyEditableTaskEdits, editableTaskDataFromTask } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
     import PriorityEditor from './PriorityEditor.svelte';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
 
-    // These exported variables are passed in as props by TaskModal.onOpen():
-    export let task: Task;
-    export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
-    export let statusOptions: Status[];
-    export let allTasks: Task[];
+    interface Props {
+        task: Task;
+        onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
+        statusOptions: Status[];
+        allTasks: Task[];
+    }
+
+    let { task, onSubmit, statusOptions, allTasks }: Props = $props();
 
     const {
         // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -30,50 +33,47 @@
         doneDateSymbol,
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
-    let descriptionInput: HTMLTextAreaElement;
+    let descriptionInput: HTMLTextAreaElement | undefined;
 
-    let editableTask = EditableTask.fromTask(task, allTasks);
+    let editableTask = $state(editableTaskDataFromTask(task, allTasks));
 
-    let isDescriptionValid: boolean = true;
+    let isCancelledDateValid = $state(true);
+    let isCreatedDateValid = $state(true);
+    let isDoneDateValid = $state(true);
+    let isDueDateValid = $state(true);
+    let isScheduledDateValid = $state(true);
+    let isStartDateValid = $state(true);
 
-    let isCancelledDateValid: boolean = true;
-    let isCreatedDateValid: boolean = true;
-    let isDoneDateValid: boolean = true;
-    let isDueDateValid: boolean = true;
-    let isScheduledDateValid: boolean = true;
-    let isStartDateValid: boolean = true;
+    let isRecurrenceValid = $state(true);
 
-    let isRecurrenceValid: boolean = true;
+    let withAccessKeys = $state(true);
 
-    let withAccessKeys: boolean = true;
-    let formIsValid: boolean = true;
+    let mountComplete = $state(false);
 
-    let mountComplete = false;
+    const accesskey = (key: string) => (withAccessKeys ? key : null);
 
-    $: accesskey = (key: string) => (withAccessKeys ? key : null);
-    $: formIsValid =
+    let formIsValid = $derived(
         isDueDateValid &&
-        isRecurrenceValid &&
-        isScheduledDateValid &&
-        isStartDateValid &&
-        isDescriptionValid &&
-        isCancelledDateValid &&
-        isCreatedDateValid &&
-        isDoneDateValid;
-    $: isDescriptionValid = editableTask.description.trim() !== '';
+            isRecurrenceValid &&
+            isScheduledDateValid &&
+            isStartDateValid &&
+            editableTask.description.trim() !== '' &&
+            isCancelledDateValid &&
+            isCreatedDateValid &&
+            isDoneDateValid,
+    );
 
-    $: isShownInEditModal = { ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal };
+    let isShownInEditModal = $derived({ ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal });
 
     onMount(() => {
-        settingsStore.set(getSettings());
-
-        const { provideAccessKeys } = getSettings();
-        withAccessKeys = provideAccessKeys;
+        const settings = getSettings();
+        settingsStore.set(settings);
+        withAccessKeys = settings.provideAccessKeys;
 
         mountComplete = true;
 
         setTimeout(() => {
-            descriptionInput.focus();
+            descriptionInput?.focus();
         }, 10);
     });
 
@@ -98,7 +98,7 @@
     };
 
     const _onSubmit = async () => {
-        const newTasks = await editableTask.applyEdits(task, allTasks);
+        const newTasks = await applyEditableTaskEdits(editableTask, task, allTasks);
         onSubmit(newTasks);
     };
 </script>
@@ -174,7 +174,7 @@ Availability of access keys:
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
         {#if isShownInEditModal.recurrence}
-            <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
+            <RecurrenceEditor bind:editableTask bind:isRecurrenceValid accesskey={accesskey('r')} />
         {/if}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
@@ -253,7 +253,7 @@ Availability of access keys:
                     type="blockedBy"
                     labelText="Before this"
                     {task}
-                    {editableTask}
+                    bind:editableTask
                     {allTasks}
                     {_onDescriptionKeyDown}
                     accesskey={accesskey('b')}
@@ -270,7 +270,7 @@ Availability of access keys:
                     type="blocking"
                     labelText="After this"
                     {task}
-                    {editableTask}
+                    bind:editableTask
                     {allTasks}
                     {_onDescriptionKeyDown}
                     accesskey={accesskey('e')}

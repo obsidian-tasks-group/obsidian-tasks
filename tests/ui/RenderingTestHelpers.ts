@@ -1,7 +1,6 @@
-import { type RenderResult, fireEvent } from '@testing-library/svelte';
+import { fireEvent } from '@testing-library/svelte';
 import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
 import { getSettings } from '../../src/Config/Settings';
-import type EditTask from '../../src/ui/EditTask.svelte';
 
 /**
  * Find the element with the given id.
@@ -19,7 +18,7 @@ export function getAndCheckRenderedDescriptionElement(container: HTMLElement): H
     return getAndCheckRenderedElement<HTMLInputElement>(container, 'description');
 }
 
-export function getAndCheckApplyButton(result: RenderResult<EditTask>): HTMLButtonElement {
+export function getAndCheckApplyButton(result: { getByText: (text: string) => HTMLElement }): HTMLButtonElement {
     const submit = result.getByText('Apply') as HTMLButtonElement;
     expect(submit).toBeTruthy();
     return submit;

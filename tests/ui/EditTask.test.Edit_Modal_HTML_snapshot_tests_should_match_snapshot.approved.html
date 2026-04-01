@@ -1,264 +1,266 @@
-<div>
-  <form class="tasks-modal">
-    <section class="tasks-modal-description-section">
-      <label for="description">
-        Descrip
-        <span class="accesskey">t</span>
-        ion
+<form class="tasks-modal">
+  <section class="tasks-modal-description-section">
+    <label for="description">
+      Descrip
+      <span class="accesskey">t</span>
+      ion
+    </label>
+    <textarea
+      id="description"
+      class="tasks-modal-description"
+      placeholder="Take out the trash"
+      accesskey="t"></textarea>
+  </section>
+  <section class="tasks-modal-priority-section">
+    <label id="priority" for="priority-none">Priority</label>
+    <div class="task-modal-priority-option-container">
+      <input type="radio" id="priority-lowest" accesskey="o" value="lowest" />
+      <label for="priority-lowest">
+        <span>L</span>
+        <span class="accesskey">o</span>
+        <span>west</span>
+        <!---->
+        <span>⏬</span>
+        <!---->
       </label>
-      <textarea
-        id="description"
-        class="tasks-modal-description"
-        placeholder="Take out the trash"
-        accesskey="t"></textarea>
-    </section>
-    <section class="tasks-modal-priority-section">
-      <label for="priority-none" id="priority">Priority</label>
-      <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-lowest" value="lowest" accesskey="o" />
-        <label for="priority-lowest">
-          <span>L</span>
-          <span class="accesskey">o</span>
-          <span>west</span>
-          <span>⏬</span>
-        </label>
-      </div>
-      <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-low" value="low" accesskey="l" />
-        <label for="priority-low">
-          <span></span>
-          <span class="accesskey">L</span>
-          <span>ow</span>
-          <span>🔽</span>
-        </label>
-      </div>
-      <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-none" value="none" accesskey="n" />
-        <label for="priority-none">
-          <span></span>
-          <span class="accesskey">N</span>
-          <span>ormal</span>
-        </label>
-      </div>
-      <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-medium" value="medium" accesskey="m" />
-        <label for="priority-medium">
-          <span></span>
-          <span class="accesskey">M</span>
-          <span>edium</span>
-          <span>🔼</span>
-        </label>
-      </div>
-      <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-high" value="high" accesskey="h" />
-        <label for="priority-high">
-          <span></span>
-          <span class="accesskey">H</span>
-          <span>igh</span>
-          <span>⏫</span>
-        </label>
-      </div>
-      <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-highest" value="highest" accesskey="i" />
-        <label for="priority-highest">
-          <span>H</span>
-          <span class="accesskey">i</span>
-          <span>ghest</span>
-          <span>🔺</span>
-        </label>
-      </div>
-    </section>
-    <hr id="line-after-priority" />
-    <section class="tasks-modal-dates-section">
-      <label for="recurrence">
-        <span class="accesskey">R</span>
-        ecurs
+    </div>
+    <div class="task-modal-priority-option-container">
+      <input type="radio" id="priority-low" accesskey="l" value="low" />
+      <label for="priority-low">
+        <span></span>
+        <span class="accesskey">L</span>
+        <span>ow</span>
+        <!---->
+        <span>🔽</span>
+        <!---->
       </label>
-      <input
-        id="recurrence"
-        type="text"
-        class="tasks-modal-date-input"
-        placeholder="Try 'every day when done'"
-        accesskey="r" />
-      <code class="tasks-modal-parsed-date">
-        🔁
-        <i>not recurring</i>
-      </code>
-      <label for="due">
-        <span class="accesskey">D</span>
-        ue
+    </div>
+    <div class="task-modal-priority-option-container">
+      <input type="radio" id="priority-none" accesskey="n" value="none" />
+      <label for="priority-none">
+        <span></span>
+        <span class="accesskey">N</span>
+        <span>ormal</span>
+        <!---->
+        <!---->
       </label>
-      <input
-        id="due"
-        type="text"
-        class="tasks-modal-date-input"
-        placeholder="Try 'Mon' or 'tm' then space"
-        accesskey="d" />
-      <div class="tasks-modal-parsed-date">
-        📅
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
-      </div>
-      <label for="scheduled">
-        <span class="accesskey">S</span>
-        cheduled
+    </div>
+    <div class="task-modal-priority-option-container">
+      <input type="radio" id="priority-medium" accesskey="m" value="medium" />
+      <label for="priority-medium">
+        <span></span>
+        <span class="accesskey">M</span>
+        <span>edium</span>
+        <!---->
+        <span>🔼</span>
+        <!---->
       </label>
-      <input
-        id="scheduled"
-        type="text"
-        class="tasks-modal-date-input tasks-modal-error"
-        placeholder="Try 'Mon' or 'tm' then space"
-        accesskey="s" />
-      <code class="tasks-modal-parsed-date">
-        ⏳
-        <i>invalid scheduled date</i>
-      </code>
-      <label for="start">
-        St
-        <span class="accesskey">a</span>
-        rt
+    </div>
+    <div class="task-modal-priority-option-container">
+      <input type="radio" id="priority-high" accesskey="h" value="high" />
+      <label for="priority-high">
+        <span></span>
+        <span class="accesskey">H</span>
+        <span>igh</span>
+        <!---->
+        <span>⏫</span>
+        <!---->
       </label>
-      <input
-        id="start"
-        type="text"
-        class="tasks-modal-date-input"
-        placeholder="Try 'Mon' or 'tm' then space"
-        accesskey="a" />
-      <div class="tasks-modal-parsed-date">
-        🛫
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
-      </div>
-      <div class="future-dates-only" id="only-future-dates">
-        <label for="forwardOnly">
-          Only
-          <span class="accesskey">f</span>
-          uture dates:
-        </label>
-        <input id="forwardOnly" type="checkbox" class="task-list-item-checkbox tasks-modal-checkbox" accesskey="f" />
-      </div>
-    </section>
-    <hr id="line-after-happens-dates" />
-    <section class="tasks-modal-dependencies-section">
-      <label for="blockedBy">
-        <span class="accesskey">B</span>
-        efore this
+    </div>
+    <div class="task-modal-priority-option-container">
+      <input type="radio" id="priority-highest" accesskey="i" value="highest" />
+      <label for="priority-highest">
+        <span>H</span>
+        <span class="accesskey">i</span>
+        <span>ghest</span>
+        <!---->
+        <span>🔺</span>
+        <!---->
       </label>
-      <span>
-        <input
-          accesskey="b"
-          id="before_this"
-          class="tasks-modal-dependency-input"
-          type="text"
-          placeholder="Search for tasks that the task being edited depends on..." />
-        <iframe
-          style="
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            border: 0;
-            opacity: 0;
-            pointer-events: none;
-            z-index: -1;
-          "
-          aria-hidden="true"
-          tabindex="-1"
-          src="about:blank"></iframe>
-      </span>
-      <label for="blocking">
-        Aft
-        <span class="accesskey">e</span>
-        r this
+    </div>
+    <!---->
+    <!---->
+  </section>
+  <hr id="line-after-priority" />
+  <!---->
+  <section class="tasks-modal-dates-section">
+    <label for="recurrence">
+      <span class="accesskey">R</span>
+      ecurs
+    </label>
+    <input
+      id="recurrence"
+      type="text"
+      placeholder="Try 'every day when done'"
+      class="tasks-modal-date-input"
+      accesskey="r" />
+    <code class="tasks-modal-parsed-date">
+      🔁
+      <i>not recurring</i>
+      <!---->
+    </code>
+    <!---->
+    <label for="due">
+      <span class="accesskey">D</span>
+      ue
+    </label>
+    <input
+      type="text"
+      placeholder="Try 'Mon' or 'tm' then space"
+      id="due"
+      class="tasks-modal-date-input"
+      accesskey="d" />
+    <div class="tasks-modal-parsed-date">
+      📅
+      <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+    </div>
+    <!---->
+    <!---->
+    <label for="scheduled">
+      <span class="accesskey">S</span>
+      cheduled
+    </label>
+    <input
+      type="text"
+      placeholder="Try 'Mon' or 'tm' then space"
+      id="scheduled"
+      class="tasks-modal-date-input tasks-modal-error"
+      accesskey="s" />
+    <code class="tasks-modal-parsed-date">
+      ⏳
+      <i>invalid scheduled date</i>
+      <!---->
+    </code>
+    <!---->
+    <!---->
+    <label for="start">
+      St
+      <span class="accesskey">a</span>
+      rt
+    </label>
+    <input
+      type="text"
+      placeholder="Try 'Mon' or 'tm' then space"
+      id="start"
+      class="tasks-modal-date-input"
+      accesskey="a" />
+    <div class="tasks-modal-parsed-date">
+      🛫
+      <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+    </div>
+    <!---->
+    <!---->
+    <div class="future-dates-only" id="only-future-dates">
+      <label for="forwardOnly">
+        Only
+        <span class="accesskey">f</span>
+        uture dates:
       </label>
-      <span>
-        <input
-          accesskey="e"
-          id="after_this"
-          class="tasks-modal-dependency-input"
-          type="text"
-          placeholder="Search for tasks that depend on this task being done..." />
-        <iframe
-          style="
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            border: 0;
-            opacity: 0;
-            pointer-events: none;
-            z-index: -1;
-          "
-          aria-hidden="true"
-          tabindex="-1"
-          src="about:blank"></iframe>
-      </span>
-    </section>
-    <hr id="line-after-dependencies" />
-    <section class="tasks-modal-dates-section">
-      <label for="status" id="status">
-        Stat
-        <span class="accesskey">u</span>
-        s
-      </label>
-      <select id="status-type" class="status-editor-status-selector" accesskey="u">
-        <option value=" ">Todo [ ]</option>
-        <option value="/">In Progress [/]</option>
-        <option value="x">Done [x]</option>
-        <option value="-">Cancelled [-]</option>
-      </select>
-      <label for="created">
-        <span class="accesskey">C</span>
-        reated
-      </label>
-      <input
-        id="created"
-        type="text"
-        class="tasks-modal-date-input"
-        placeholder="Try 'Mon' or 'tm' then space"
-        accesskey="c" />
-      <div class="tasks-modal-parsed-date">
-        ➕
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
-      </div>
-      <label for="done">
-        Done (
-        <span class="accesskey">x</span>
-        )
-      </label>
-      <input
-        id="done"
-        type="text"
-        class="tasks-modal-date-input"
-        placeholder="Try 'Mon' or 'tm' then space"
-        accesskey="x" />
-      <div class="tasks-modal-parsed-date">
-        ✅
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
-      </div>
-      <label for="cancelled">
-        Cancelled (
-        <span class="accesskey">-</span>
-        )
-      </label>
-      <input
-        id="cancelled"
-        type="text"
-        class="tasks-modal-date-input"
-        placeholder="Try 'Mon' or 'tm' then space"
-        accesskey="-" />
-      <div class="tasks-modal-parsed-date">
-        ❌
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
-      </div>
-    </section>
-    <section class="tasks-modal-button-section">
-      <button type="submit" class="mod-cta" disabled="">Apply</button>
-      <button type="button">Cancel</button>
-    </section>
-  </form>
-</div>
+      <input id="forwardOnly" type="checkbox" class="task-list-item-checkbox tasks-modal-checkbox" accesskey="f" />
+    </div>
+    <!---->
+  </section>
+  <hr id="line-after-happens-dates" />
+  <!---->
+  <section class="tasks-modal-dependencies-section">
+    <!---->
+    <label for="before_this">
+      <span class="accesskey">B</span>
+      efore this
+    </label>
+    <input
+      class="tasks-modal-dependency-input"
+      type="text"
+      accesskey="b"
+      id="before_this"
+      placeholder="Search for tasks that the task being edited depends on..." />
+    <!---->
+    <!---->
+    <!---->
+    <label for="after_this">
+      Aft
+      <span class="accesskey">e</span>
+      r this
+    </label>
+    <input
+      class="tasks-modal-dependency-input"
+      type="text"
+      accesskey="e"
+      id="after_this"
+      placeholder="Search for tasks that depend on this task being done..." />
+    <!---->
+    <!---->
+    <!---->
+    <!---->
+  </section>
+  <hr id="line-after-dependencies" />
+  <!---->
+  <section class="tasks-modal-dates-section">
+    <label for="status-type" id="status">
+      Stat
+      <span class="accesskey">u</span>
+      s
+    </label>
+    <select id="status-type" class="status-editor-status-selector" accesskey="u">
+      <option value=" ">Todo [ ]</option>
+      <option value="/">In Progress [/]</option>
+      <option value="x">Done [x]</option>
+      <option value="-">Cancelled [-]</option>
+    </select>
+    <!---->
+    <label for="created">
+      <span class="accesskey">C</span>
+      reated
+    </label>
+    <input
+      type="text"
+      placeholder="Try 'Mon' or 'tm' then space"
+      id="created"
+      class="tasks-modal-date-input"
+      accesskey="c" />
+    <div class="tasks-modal-parsed-date">
+      ➕
+      <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+    </div>
+    <!---->
+    <!---->
+    <label for="done">
+      Done (
+      <span class="accesskey">x</span>
+      )
+    </label>
+    <input
+      type="text"
+      placeholder="Try 'Mon' or 'tm' then space"
+      id="done"
+      class="tasks-modal-date-input"
+      accesskey="x" />
+    <div class="tasks-modal-parsed-date">
+      ✅
+      <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+    </div>
+    <!---->
+    <!---->
+    <label for="cancelled">
+      Cancelled (
+      <span class="accesskey">-</span>
+      )
+    </label>
+    <input
+      type="text"
+      placeholder="Try 'Mon' or 'tm' then space"
+      id="cancelled"
+      class="tasks-modal-date-input"
+      accesskey="-" />
+    <div class="tasks-modal-parsed-date">
+      ❌
+      <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+    </div>
+    <!---->
+    <!---->
+  </section>
+  <section class="tasks-modal-button-section">
+    <button type="submit" class="mod-cta" disabled="">Apply</button>
+    <button type="button">Cancel</button>
+  </section>
+</form>

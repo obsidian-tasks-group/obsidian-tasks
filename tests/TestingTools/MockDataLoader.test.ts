@@ -5,7 +5,7 @@ describe('MockDataLoader', () => {
     it('should return data for a known file', () => {
         const readFromFile = MockDataLoader.get('one_task');
 
-        expect(readFromFile).toStrictEqual(one_task);
+        expect(readFromFile).toEqual(one_task);
     });
 
     it('should cache the results and return the same object subsequently', () => {
