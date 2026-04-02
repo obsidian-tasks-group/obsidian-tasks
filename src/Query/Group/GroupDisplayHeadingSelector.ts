@@ -87,10 +87,9 @@ export class GroupDisplayHeadingSelector {
     private lastHeadingAtLevel = new Array<string>();
     private groupers: Grouper[];
 
-    constructor(taskGroupingTreeStorage: TaskGroupingTreeStorage, groupers: Grouper[]) {
+    constructor(_taskGroupingTreeStorage: TaskGroupingTreeStorage, groupers: Grouper[]) {
         this.groupers = groupers;
-        const firstGroup = taskGroupingTreeStorage.keys().next().value;
-        const groupCount = firstGroup.length;
+        const groupCount = groupers.length;
         for (let i = 0; i < groupCount; i++) {
             this.lastHeadingAtLevel.push('');
         }
