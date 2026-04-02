@@ -8,7 +8,7 @@ import { Platform, Plugin } from 'obsidian';
  * This has been added as EventEmitter in Node.JS is not available in the browser.
  * https://www.npmjs.com/package/eventemitter2
  */
-import { EventEmitter2 } from 'eventemitter2';
+import EventEmitter2 from 'eventemitter2';
 
 /**
  * All possible log levels

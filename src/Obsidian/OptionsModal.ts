@@ -1,5 +1,6 @@
 import type { App } from 'obsidian';
 import { Modal } from 'obsidian';
+import { flushSync, mount, unmount } from 'svelte';
 import ModalOptionsEditor from '../ui/ModalOptionsEditor.svelte';
 
 /**
@@ -17,6 +18,7 @@ export interface OptionsModalParams {
  */
 export class OptionsModal extends Modal {
     private readonly onSave: () => void;
+    private component?: Record<string, any>;
 
     constructor({ app, onSave }: OptionsModalParams) {
         super(app);
@@ -31,7 +33,7 @@ export class OptionsModal extends Modal {
         const { contentEl } = this;
         this.contentEl.style.paddingBottom = '0';
 
-        new ModalOptionsEditor({
+        this.component = mount(ModalOptionsEditor, {
             target: contentEl,
             props: {
                 onSave: () => {
@@ -44,10 +46,18 @@ export class OptionsModal extends Modal {
                 },
             },
         });
+        flushSync();
     }
 
     public onClose(): void {
         const { contentEl } = this;
+        if (this.component) {
+            const component = this.component;
+            this.component = undefined;
+            void unmount(component).then(() => contentEl.empty());
+            return;
+        }
+
         contentEl.empty();
     }
 }

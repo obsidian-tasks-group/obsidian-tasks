@@ -9,7 +9,7 @@ module.exports = {
                 preprocess: true,
             },
         ],
-        '^.+\\.ts$': [
+        '^.+\\.(ts|js)$': [
             'ts-jest',
             {
                 tsconfig: 'tsconfig.jest.json',
@@ -24,7 +24,9 @@ module.exports = {
     },
     roots: ['<rootDir>/tests'],
     testEnvironment: 'jsdom',
-    transformIgnorePatterns: ['/node_modules/(?!(@testing-library/svelte|@testing-library/svelte-core)/)'],
+    transformIgnorePatterns: [
+        '/node_modules/(?!(svelte|esm-env|@testing-library/svelte|@testing-library/svelte-core)/)',
+    ],
 
     // A list of paths to modules that run some code to configure or
     // set up the testing framework before each test.

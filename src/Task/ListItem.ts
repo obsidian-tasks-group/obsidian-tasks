@@ -121,9 +121,7 @@ export class ListItem {
         let closestParentTask = this.parent;
 
         while (closestParentTask !== null) {
-            // Lazy load the Task class to avoid circular dependencies
-            const { Task } = require('./Task');
-            if (closestParentTask instanceof Task) {
+            if (closestParentTask.isTask) {
                 return closestParentTask as Task;
             }
             closestParentTask = closestParentTask.parent;

@@ -2,15 +2,19 @@
     import type { TasksDate } from '../DateTime/TasksDate';
     import type { Status } from '../Statuses/Status';
     import type { Task } from '../Task/Task';
-    import type { EditableTask } from './EditableTask';
+    import type { EditableTaskData } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
-    export let task: Task;
-    export let editableTask: EditableTask;
-    export let statusOptions: Status[];
-    export let accesskey: string | null;
+    interface Props {
+        task: Task;
+        editableTask: EditableTaskData;
+        statusOptions: Status[];
+        accesskey: string | null;
+    }
 
-    let statusSymbol = task.status.symbol;
+    let { task, editableTask = $bindable(), statusOptions, accesskey }: Props = $props();
+
+    let statusSymbol = $state(task.status.symbol);
 
     function setStatusRelatedDate(currentValue: string, isInStatus: boolean, editedValue: TasksDate) {
         const dateFieldIsEmpty = currentValue === '';
@@ -58,7 +62,7 @@
     };
 </script>
 
-<label for="status" id="status">{@html labelContentWithAccessKey('Status', accesskey)}</label>
+<label for="status-type" id="status">{@html labelContentWithAccessKey('Status', accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <select
     bind:value={statusSymbol}

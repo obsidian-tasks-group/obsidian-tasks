@@ -1,10 +1,14 @@
 <script lang="ts">
     import { TASK_FORMATS } from '../Config/Settings';
 
-    export let priority: string;
-    export let withAccessKeys: boolean;
+    interface Props {
+        priority: string;
+        withAccessKeys: boolean;
+    }
 
-    $: accesskey = (key: string) => (withAccessKeys ? key : null);
+    let { priority = $bindable('none'), withAccessKeys }: Props = $props();
+
+    const accesskey = (key: string) => (withAccessKeys ? key : null);
 
     const { prioritySymbols } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
@@ -60,12 +64,12 @@
     ];
 </script>
 
-<label for="priority-{priority}" id="priority">Priority</label>
+<label for={`priority-${priority}`} id="priority">Priority</label>
 {#each priorityOptions as { value, label, symbol, accessKey, accessKeyIndex }}
     <div class="task-modal-priority-option-container">
         <!-- svelte-ignore a11y-accesskey -->
-        <input type="radio" id="priority-{value}" {value} bind:group={priority} accesskey={accesskey(accessKey)} />
-        <label for="priority-{value}">
+        <input type="radio" id={`priority-${value}`} {value} bind:group={priority} accesskey={accesskey(accessKey)} />
+        <label for={`priority-${value}`}>
             {#if withAccessKeys}
                 <span>{label.substring(0, accessKeyIndex)}</span><span class="accesskey"
                     >{label.substring(accessKeyIndex, accessKeyIndex + 1)}</span

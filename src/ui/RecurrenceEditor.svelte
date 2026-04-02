@@ -1,15 +1,23 @@
 <script lang="ts">
     import { TASK_FORMATS } from '../Config/Settings';
-    import type { EditableTask } from './EditableTask';
+    import { parseAndValidateEditableTaskRecurrence } from './EditableTask';
+    import type { EditableTaskData } from './EditableTask';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
-    export let editableTask: EditableTask;
-    export let isRecurrenceValid: boolean;
-    export let accesskey: string | null;
+    interface Props {
+        editableTask: EditableTaskData;
+        isRecurrenceValid: boolean;
+        accesskey: string | null;
+    }
 
-    let parsedRecurrence: string;
+    let { editableTask = $bindable(), isRecurrenceValid = $bindable(true), accesskey }: Props = $props();
 
-    $: ({ parsedRecurrence, isRecurrenceValid } = editableTask.parseAndValidateRecurrence());
+    let recurrenceValidation = $derived(parseAndValidateEditableTaskRecurrence(editableTask));
+    let parsedRecurrence = $derived(recurrenceValidation.parsedRecurrence);
+
+    $effect(() => {
+        isRecurrenceValid = recurrenceValidation.isRecurrenceValid;
+    });
 
     const { recurrenceSymbol } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 </script>

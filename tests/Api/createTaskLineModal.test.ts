@@ -2,7 +2,7 @@ import type { App } from 'obsidian';
 import type { Task } from '../../src/Task/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { createTaskLineModal } from '../../src/Api/createTaskLineModal';
-import { TaskModal } from '../__mocks__/TaskModal';
+import { TaskModal } from '../../src/Obsidian/TaskModal';
 
 const app = {} as App;
 const noOpOnSaveSettings = async () => {};
@@ -11,31 +11,20 @@ const createNewTask = (line = ''): Task => {
     return taskFromLine({ line, path: '' });
 };
 
-jest.mock('../../src/Obsidian/TaskModal', () => {
-    return {
-        TaskModal: jest.fn(
-            ({
-                app,
-                task,
-                onSubmit,
-                onCancel,
-                allTasks,
-            }: {
-                app: App;
-                task: Task;
-                onSubmit: (updatedTasks: Task[]) => void;
-                onCancel?: () => void;
-                allTasks: Task[];
-            }) => {
-                return new TaskModal({ app, task, onSubmit, onCancel, allTasks });
-            },
-        ),
-    };
-});
-
 describe('APIv1 - createTaskLineModal', () => {
+    let openSpy: jest.SpiedFunction<TaskModal['open']>;
+    let lastOpenedModal: TaskModal | undefined;
+
     beforeEach(() => {
         jest.clearAllMocks();
+        lastOpenedModal = undefined;
+        openSpy = jest.spyOn(TaskModal.prototype, 'open').mockImplementation(function (this: TaskModal) {
+            lastOpenedModal = this;
+        });
+    });
+
+    afterEach(() => {
+        openSpy.mockRestore();
     });
 
     /**
@@ -44,7 +33,8 @@ describe('APIv1 - createTaskLineModal', () => {
     it('TaskModal.open() should be called', () => {
         createTaskLineModal(app, [], noOpOnSaveSettings);
 
-        expect(TaskModal.instance.open).toHaveBeenCalledTimes(1);
+        expect(openSpy).toHaveBeenCalledTimes(1);
+        expect(lastOpenedModal).toBeDefined();
     });
 
     /**
@@ -54,7 +44,7 @@ describe('APIv1 - createTaskLineModal', () => {
         const taskLinePromise = createTaskLineModal(app, [], noOpOnSaveSettings);
         const expected = '- [ ] test';
 
-        TaskModal.instance.onSubmit([createNewTask(expected)]);
+        lastOpenedModal!.onSubmit([createNewTask(expected)]);
         const result = await taskLinePromise;
 
         expect(result).toEqual(expected);
@@ -67,7 +57,7 @@ describe('APIv1 - createTaskLineModal', () => {
         const taskLinePromise = createTaskLineModal(app, [], noOpOnSaveSettings);
         const expected = '';
 
-        TaskModal.instance.cancel();
+        lastOpenedModal!.onSubmit([]);
 
         const result = await taskLinePromise;
         expect(result).toEqual(expected);
@@ -77,6 +67,6 @@ describe('APIv1 - createTaskLineModal', () => {
         const allTasks = [createNewTask('- [ ] test')];
         void createTaskLineModal(app, allTasks, noOpOnSaveSettings);
 
-        expect(TaskModal.instance.allTasks).toEqual(allTasks);
+        expect(lastOpenedModal!.allTasks).toEqual(allTasks);
     });
 });

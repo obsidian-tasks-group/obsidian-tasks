@@ -14,10 +14,6 @@ import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 
-jest.mock('obsidian', () => ({
-    Notice: jest.fn(),
-}));
-
 window.moment = moment;
 
 beforeEach(() => {

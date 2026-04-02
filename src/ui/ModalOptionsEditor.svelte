@@ -1,21 +1,25 @@
 <script lang="ts">
     import { defaultEditModalShowSettings } from '../Config/EditModalShowSettings';
+    import type { EditModalShowSettings } from '../Config/EditModalShowSettings';
     import { settingsStore } from './SettingsStore';
 
-    export let onSave: () => void;
-    export let onClose: () => void;
+    interface Props {
+        onSave: () => void;
+        onClose: () => void;
+    }
 
-    // Create a reactive object for the options
-    // Forced to use any here instead of EditModalShowSettings. Otherwise there is a compiler error at
-    // <input type="checkbox" checked={options[fieldName]} /> below. This is solved in Svelte 5.
-    let options: any = { ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal };
+    let { onSave, onClose }: Props = $props();
 
-    const onChange = (fieldName: string) => (event: Event) => {
+    type ModalOptions = EditModalShowSettings;
+    let options = $state<ModalOptions>({ ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal });
+    let fieldNames = $derived(Object.keys(options) as (keyof ModalOptions)[]);
+
+    const onChange = (fieldName: keyof ModalOptions) => (event: Event) => {
         options[fieldName] = (event.target as HTMLInputElement).checked;
     };
 
     const _onSave = () => {
-        settingsStore.set({ ...$settingsStore, isShownInEditModal: options });
+        settingsStore.set({ ...$settingsStore, isShownInEditModal: { ...options } });
         onSave();
     };
 
@@ -29,7 +33,7 @@
 
 <div class="tasks-options-modal">
     <div class="tasks-options-modal-checkboxes">
-        {#each Object.keys(options) as fieldName}
+        {#each fieldNames as fieldName}
             <label>
                 <input type="checkbox" checked={options[fieldName]} id={fieldName} on:change={onChange(fieldName)} />
                 <span>{formatFieldName(fieldName)}</span>

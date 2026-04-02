@@ -1,15 +1,361 @@
-import type { App, CachedMetadata, Debouncer, Reference } from 'obsidian';
+import { jest } from '@jest/globals';
+import type { CachedMetadata, Debouncer, App as ObsidianApp, Reference } from 'obsidian';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
 export {};
+
+type ObsidianElement = HTMLElement & {
+    addClass: (className: string) => ObsidianElement;
+    addClasses: (classNames: string[]) => ObsidianElement;
+    empty: () => ObsidianElement;
+    setText: (text: string | DocumentFragment) => ObsidianElement;
+};
+
+const elementPrototype = HTMLElement.prototype as ObsidianElement;
+
+if (typeof elementPrototype.addClass !== 'function') {
+    elementPrototype.addClass = function (className: string): ObsidianElement {
+        this.classList.add(className);
+        return this;
+    };
+}
+
+if (typeof elementPrototype.addClasses !== 'function') {
+    elementPrototype.addClasses = function (classNames: string[]): ObsidianElement {
+        this.classList.add(...classNames);
+        return this;
+    };
+}
+
+if (typeof elementPrototype.empty !== 'function') {
+    elementPrototype.empty = function (): ObsidianElement {
+        this.replaceChildren();
+        this.textContent = '';
+        return this;
+    };
+}
+
+if (typeof elementPrototype.setText !== 'function') {
+    elementPrototype.setText = function (text: string | DocumentFragment): ObsidianElement {
+        this.empty();
+        if (typeof text === 'string') {
+            this.textContent = text;
+        } else {
+            this.append(text);
+        }
+        return this;
+    };
+}
 
 /**
  * Since we don't use the app object's method or properties directly,
  * and just treat it as an "opaque object" for markdown rendering, there is
  * not a lot to mock in particular.
  */
-export const mockApp = {} as unknown as App;
+export const mockApp = {} as unknown as ObsidianApp;
+
+export const Platform = {
+    isMobile: false,
+};
+
+export class Component {
+    public containerEl: HTMLElement;
+
+    constructor() {
+        this.containerEl = document.createElement('div');
+    }
+
+    addChild(_child: Component): void {}
+    removeChild(_child: Component): void {}
+    registerDomEvent(_el: HTMLElement | Document | Window, _type: string, _callback: (...args: any[]) => any): void {}
+    registerEvent(_eventRef: unknown): void {}
+    registerInterval(_id: number): void {}
+    onload(): void {}
+    onunload(): void {}
+}
+
+export class Plugin extends Component {
+    public app = mockApp;
+    addCommand(_command: unknown): void {}
+    registerEditorExtension(_extension: unknown): void {}
+    registerMarkdownCodeBlockProcessor(_language: string, _handler: unknown): void {}
+    registerMarkdownPostProcessor(_handler: unknown): void {}
+    addSettingTab(_tab: unknown): void {}
+}
+
+export class Modal extends Component {
+    public app = mockApp;
+    public contentEl = document.createElement('div');
+    public modalEl = document.createElement('div');
+    public titleEl = document.createElement('div');
+
+    constructor(app: ObsidianApp = mockApp) {
+        super();
+        this.app = app;
+    }
+
+    public open(): void {
+        this.onOpen();
+    }
+
+    public close(): void {
+        this.onClose();
+    }
+
+    public onOpen(): void {}
+    public onClose(): void {}
+}
+
+type MockNoticeInstance = {
+    message?: string | DocumentFragment;
+    timeout?: number;
+    setMessage: (message: string | DocumentFragment) => MockNoticeInstance;
+    hide: () => void;
+};
+
+const noticeImplementation = function (this: MockNoticeInstance, message: string | DocumentFragment, timeout?: number) {
+    this.message = message;
+    this.timeout = timeout;
+    this.setMessage = (nextMessage: string | DocumentFragment) => {
+        this.message = nextMessage;
+        return this;
+    };
+    this.hide = () => {};
+};
+
+export const Notice = jest.fn(noticeImplementation as (...args: any[]) => void);
+
+export class TAbstractFile {
+    public path = '';
+    public name = '';
+    public parent: TAbstractFile | null = null;
+}
+
+export class TFile extends TAbstractFile {
+    public basename = '';
+    public extension = 'md';
+}
+
+export class Vault {
+    public adapter = {
+        exists: async () => false,
+    };
+
+    getMarkdownFiles(): TFile[] {
+        return [];
+    }
+
+    getFiles(): TFile[] {
+        return [];
+    }
+
+    async cachedRead(_file: TFile): Promise<string> {
+        return '';
+    }
+
+    async read(_file: TFile): Promise<string> {
+        return '';
+    }
+
+    async modify(_file: TFile, _contents: string): Promise<void> {}
+}
+
+export class MetadataCache {
+    getFileCache(_file: TFile): CachedMetadata | null {
+        return null;
+    }
+
+    fileToLinktext(file: TFile, _sourcePath: string, _omitMdExtension?: boolean): string {
+        return file.path;
+    }
+
+    getFirstLinkpathDest(_linkpath: string, _sourcePath: string): TFile | null {
+        return null;
+    }
+}
+
+export class Workspace {
+    getActiveViewOfType<T>(_type: new (...args: any[]) => T): T | null {
+        return null;
+    }
+}
+
+export class App {
+    public metadataCache = new MetadataCache();
+    public vault = new Vault();
+    public workspace = new Workspace();
+}
+
+export class View extends Component {}
+
+export class MarkdownView extends View {
+    public editor = new Editor();
+    public file: TFile | null = null;
+}
+
+export class Editor {
+    getCursor() {
+        return { line: 0, ch: 0 };
+    }
+
+    getLine(_line: number): string {
+        return '';
+    }
+
+    replaceRange(_replacement: string, _from?: unknown, _to?: unknown): void {}
+    setCursor(_position: unknown): void {}
+}
+
+export class MarkdownRenderChild extends Component {
+    constructor(public el: HTMLElement) {
+        super();
+    }
+}
+
+export const MarkdownRenderer = {
+    render: async (_app: unknown, _markdown: string, _el: HTMLElement, _path: string, _component?: Component) => {},
+    renderMarkdown: async (_markdown: string, _el: HTMLElement, _path: string, _component?: Component) => {},
+};
+
+export class EditorSuggest<T> extends Component {
+    public context: T | null = null;
+}
+
+export const editorInfoField = Symbol('editorInfoField');
+
+export class Keymap {
+    static isModEvent(_event: KeyboardEvent | MouseEvent): boolean {
+        return false;
+    }
+}
+
+export class Setting {
+    constructor(public settingEl: HTMLElement = document.createElement('div')) {}
+
+    setName(_name: string | DocumentFragment): this {
+        return this;
+    }
+
+    setDesc(_description: string | DocumentFragment): this {
+        return this;
+    }
+
+    addText(callback: (component: TextComponent) => unknown): this {
+        callback(new TextComponent());
+        return this;
+    }
+
+    addTextArea(callback: (component: TextAreaComponent) => unknown): this {
+        callback(new TextAreaComponent());
+        return this;
+    }
+
+    addToggle(callback: (component: ToggleComponent) => unknown): this {
+        callback(new ToggleComponent());
+        return this;
+    }
+
+    addDropdown(callback: (component: DropdownComponent) => unknown): this {
+        callback(new DropdownComponent());
+        return this;
+    }
+
+    addButton(callback: (component: ButtonComponent) => unknown): this {
+        callback(new ButtonComponent());
+        return this;
+    }
+
+    addExtraButton(callback: (component: ExtraButtonComponent) => unknown): this {
+        callback(new ExtraButtonComponent());
+        return this;
+    }
+}
+
+export class PluginSettingTab {
+    public containerEl = document.createElement('div');
+
+    constructor(public app: App, public plugin: Plugin) {}
+
+    display(): void {}
+    hide(): void {}
+}
+
+class BaseComponent<TElement extends HTMLElement> {
+    public inputEl: TElement;
+
+    constructor(factory: () => TElement) {
+        this.inputEl = factory();
+    }
+
+    setValue(_value: string | boolean): this {
+        return this;
+    }
+
+    setPlaceholder(_placeholder: string): this {
+        return this;
+    }
+
+    onChange(_callback: (value: any) => unknown): this {
+        return this;
+    }
+}
+
+export class TextComponent extends BaseComponent<HTMLInputElement> {
+    constructor() {
+        super(() => document.createElement('input'));
+    }
+}
+
+export class TextAreaComponent extends BaseComponent<HTMLTextAreaElement> {
+    constructor() {
+        super(() => document.createElement('textarea'));
+    }
+}
+
+export class ToggleComponent extends BaseComponent<HTMLInputElement> {
+    constructor() {
+        super(() => document.createElement('input'));
+    }
+}
+
+export class DropdownComponent extends BaseComponent<HTMLSelectElement> {
+    constructor() {
+        super(() => document.createElement('select'));
+    }
+
+    addOption(_value: string, _label: string): this {
+        return this;
+    }
+}
+
+export class ButtonComponent extends BaseComponent<HTMLButtonElement> {
+    constructor() {
+        super(() => document.createElement('button'));
+    }
+
+    setButtonText(_text: string): this {
+        return this;
+    }
+
+    setCta(): this {
+        return this;
+    }
+
+    onClick(_callback: () => unknown): this {
+        return this;
+    }
+}
+
+export class ExtraButtonComponent extends ButtonComponent {
+    setIcon(_icon: string): this {
+        return this;
+    }
+
+    setTooltip(_tooltip: string): this {
+        return this;
+    }
+}
 
 export class MenuItem {
     public title: string | DocumentFragment = '';
@@ -58,26 +404,6 @@ export class Menu {
         };
         return this.addItem(getMenuItemCallback);
     }
-}
-
-export class Notice {
-    /**
-     * @public
-     */
-    constructor(_message: string | DocumentFragment, _timeout?: number) {}
-
-    /**
-     * Change the message of this notice.
-     * @public
-     */
-    setMessage(_message: string | DocumentFragment): this {
-        return this;
-    }
-
-    /**
-     * @public
-     */
-    hide(): void {}
 }
 
 interface SearchResult {
@@ -230,6 +556,10 @@ export function setTooltip(element: HTMLElement, text: string): void {
     element.setAttribute('test-tooltip', text);
 }
 
+export function getLinkpath(rawLink: string): string {
+    return rawLink;
+}
+
 export function debounce<T extends unknown[], V>(
     cb: (...args: [...T]) => V,
     _timeout?: number,
@@ -241,19 +571,4 @@ export function debounce<T extends unknown[], V>(
         return cb(...([] as any));
     };
     return debouncer;
-}
-
-/**
- * A mock implementation of the Obsidian Modal class.
- * Without this testing the TaskModal throws an error attempting to extend Modal
- */
-export class Modal {
-    public open(): void {
-        // Mocked interface, no-op
-    }
-    public close(): void {
-        // Mocked interface, no-op
-    }
-    public onOpen(): void {}
-    public onClose(): void {}
 }

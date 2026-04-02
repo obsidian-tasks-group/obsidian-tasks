@@ -3,31 +3,43 @@
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
-    export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
-    export let dateSymbol: string;
-    export let date: string;
-    export let isDateValid: boolean;
-    export let forwardOnly: boolean;
-    export let accesskey: string | null;
-
-    // Use this for testing purposes only
-    export let parsedDate: string = '';
-
-    let pickedDate = '';
-
-    $: {
-        date = doAutocomplete(date);
-        parsedDate = parseTypedDateForDisplayUsingFutureDate(id, date, forwardOnly);
-        isDateValid = !parsedDate.includes('invalid');
-        if (isDateValid) {
-            pickedDate = parsedDate;
-        }
+    interface Props {
+        id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
+        dateSymbol: string;
+        date: string;
+        isDateValid: boolean;
+        forwardOnly: boolean;
+        accesskey: string | null;
+        parsedDate?: string;
     }
 
-    function onDatePicked(e: Event) {
-        if (e.target === null) {
-            return;
+    let {
+        id,
+        dateSymbol,
+        date = $bindable(''),
+        isDateValid = $bindable(false),
+        forwardOnly,
+        accesskey,
+        parsedDate = $bindable(''),
+    }: Props = $props();
+
+    let pickedDate = $state('');
+
+    $effect(() => {
+        const nextDate = doAutocomplete(date);
+        const nextParsedDate = parseTypedDateForDisplayUsingFutureDate(id, nextDate, forwardOnly);
+        const nextIsDateValid = !nextParsedDate.includes('invalid');
+
+        date = nextDate;
+        parsedDate = nextParsedDate;
+        isDateValid = nextIsDateValid;
+
+        if (nextIsDateValid) {
+            pickedDate = nextParsedDate;
         }
+    });
+
+    function onDatePicked() {
         date = pickedDate;
     }
 

@@ -3,7 +3,6 @@
  */
 import { verifyAll, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
-import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
 import { getSettings, resetSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
@@ -28,14 +27,15 @@ window.moment = moment;
 // Set predictable date for all tests in this file
 const mockDate = new Date(moment('2022-07-11 15:00').valueOf());
 
-const chronoSpy = jest
-    .spyOn(chrono, 'parseDate')
-    .mockImplementation((text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!);
-
 const CAN_SAVE_EDITS = true;
 
+beforeAll(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(mockDate);
+});
+
 afterAll(() => {
-    chronoSpy.mockRestore();
+    jest.useRealTimers();
 });
 
 /**

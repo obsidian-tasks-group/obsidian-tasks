@@ -1,19 +1,24 @@
 import type { App } from 'obsidian';
 import type TasksPlugin from '../../src/main';
 import type { Task } from '../../src/Task/Task';
-import { createTaskLineModal } from '../../src/Api/createTaskLineModal';
-import { editTaskLineModal } from '../../src/Api/editTaskLineModal';
 import { tasksApiV1 } from '../../src/Api/index';
-
-jest.mock('../../src/Api/createTaskLineModal', () => ({
-    createTaskLineModal: jest.fn(),
-}));
-
-jest.mock('../../src/Api/editTaskLineModal', () => ({
-    editTaskLineModal: jest.fn(),
-}));
+import { TaskModal } from '../../src/Obsidian/TaskModal';
 
 describe('definition of public Api', () => {
+    let openSpy: jest.SpiedFunction<TaskModal['open']>;
+    let lastOpenedModal: TaskModal | undefined;
+
+    beforeEach(() => {
+        lastOpenedModal = undefined;
+        openSpy = jest.spyOn(TaskModal.prototype, 'open').mockImplementation(function (this: TaskModal) {
+            lastOpenedModal = this;
+        });
+    });
+
+    afterEach(() => {
+        openSpy.mockRestore();
+    });
+
     it('should call createTaskLineModal with the app and allTasks', async () => {
         const task = jest.fn();
         const app = {} as App; // Mock the app object
@@ -25,8 +30,12 @@ describe('definition of public Api', () => {
 
         const publicApi = tasksApiV1(mockPlugin);
 
-        await publicApi.createTaskLineModal();
-        expect(createTaskLineModal).toHaveBeenCalledWith(app, tasks, expect.any(Function));
+        const promise = publicApi.createTaskLineModal();
+        lastOpenedModal!.onSubmit([]);
+        await promise;
+
+        expect(lastOpenedModal!.app).toBe(app);
+        expect(lastOpenedModal!.allTasks).toEqual(tasks);
     });
 
     it('should call editTaskLineModal with the app, taskLine and allTasks', async () => {
@@ -41,7 +50,12 @@ describe('definition of public Api', () => {
 
         const publicApi = tasksApiV1(mockPlugin);
 
-        await publicApi.editTaskLineModal(taskLine);
-        expect(editTaskLineModal).toHaveBeenCalledWith(app, taskLine, tasks, expect.any(Function));
+        const promise = publicApi.editTaskLineModal(taskLine);
+        lastOpenedModal!.onSubmit([]);
+        await promise;
+
+        expect(lastOpenedModal!.app).toBe(app);
+        expect(lastOpenedModal!.allTasks).toEqual(tasks);
+        expect(lastOpenedModal!.task.toFileLineString()).toEqual(taskLine);
     });
 });

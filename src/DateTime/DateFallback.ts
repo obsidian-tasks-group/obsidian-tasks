@@ -1,5 +1,6 @@
 import type { Moment } from 'moment';
 import { getSettings } from '../Config/Settings';
+import { Task } from '../Task/Task';
 import type { TaskLocation } from '../Task/TaskLocation';
 
 type TaskWithDateFallbackFields = {
@@ -15,8 +16,6 @@ type TaskWithDateFallbackFields = {
  */
 export class DateFallback {
     private static createTask<TTask>(args: any): TTask {
-        // Lazy-load Task to avoid the runtime Task <-> DateFallback circular dependency.
-        const { Task } = require('../Task/Task');
         return new Task(args) as TTask;
     }
 
