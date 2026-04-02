@@ -70,7 +70,7 @@
     "ts-jest": "^29.2.5",
     "tslib": "^2.8.1",
     "typedoc": "^0.27.3",
-    "typedoc-plugin-mdn-links": "^4.0.4",
+    "typedoc-plugin-mdn-links": "^5.1.1",
     "typedoc-umlclass": "^0.10.1",
     "typescript": "^5.0.4"
   },
