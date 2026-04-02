@@ -1,4 +1,4 @@
-import * as chrono from 'chrono-node';
+import { DateParser } from './DateParser';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
@@ -56,11 +56,9 @@ function parseTypedDateForDisplay(
     if (!typedDate) {
         return `<i>no ${fieldName} date</i>`;
     }
-    const parsed = chrono.parseDate(typedDate, forwardDate, {
-        forwardDate: forwardDate != undefined,
-    });
-    if (parsed !== null) {
-        return window.moment(parsed).format('YYYY-MM-DD');
+    const parsed = DateParser.parseDateTime(typedDate, forwardDate != undefined, forwardDate);
+    if (parsed.isValid()) {
+        return parsed.format('YYYY-MM-DD');
     }
     return `<i>invalid ${fieldName} date</i>`;
 }
@@ -86,10 +84,6 @@ export function parseTypedDateForDisplayUsingFutureDate(
  * @param forwardDate
  */
 export function parseTypedDateForSaving(typedDate: string, forwardDate: boolean): moment.Moment | null {
-    let date: moment.Moment | null = null;
-    const parsedDate = chrono.parseDate(typedDate, new Date(), { forwardDate });
-    if (parsedDate !== null) {
-        date = window.moment(parsedDate);
-    }
-    return date;
+    const parsedDate = DateParser.parseDateTime(typedDate, forwardDate, new Date());
+    return parsedDate.isValid() ? parsedDate : null;
 }

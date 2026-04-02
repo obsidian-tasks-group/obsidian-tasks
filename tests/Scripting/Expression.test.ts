@@ -95,6 +95,14 @@ describe('Expression', () => {
         it('should report unknown for invalid task property', () => {
             expect(parseAndEvaluateExpression(task, 'task.iAmNotAKnownTaskProperty', queryContext)).toEqual(undefined);
         });
+
+        it('should run in strict mode with ambient globals shadowed', () => {
+            expect(parseAndEvaluateExpression(task, 'this === undefined', queryContext)).toEqual(true);
+            expect(parseAndEvaluateExpression(task, 'typeof require', queryContext)).toEqual('undefined');
+            expect(parseAndEvaluateExpression(task, 'window?.require', queryContext)).toEqual(undefined);
+            expect(parseAndEvaluateExpression(task, 'globalThis?.require', queryContext)).toEqual(undefined);
+            expect(parseAndEvaluateExpression(task, 'process?.mainModule?.require', queryContext)).toEqual(undefined);
+        });
     });
 
     const extraBlankLineBetweenExpressions = true;

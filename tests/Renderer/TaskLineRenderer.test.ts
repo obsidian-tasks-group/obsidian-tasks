@@ -309,6 +309,39 @@ describe('task line rendering - debug info rendering', () => {
             "Task with debug info<br>🐛 <b>0</b> . 0 . 0 . '<code>- [ ] Task with debug info</code>'<br>'<code>a/b/c.d</code>' > '<code>Previous Heading</code>'<br>",
         );
     });
+
+    it('escapes hostile hidden data before handing it to the markdown renderer', async () => {
+        updateSettings({ debugSettings: new DebugSettings(false, true) });
+
+        const task = TaskBuilder.createFullyPopulatedTask();
+        (task as any).originalMarkdown = '<img src=x onerror=window.__taskDebugXss=1>';
+        (task.taskLocation as any)._tasksFile._path = 'a/b/<script>alert(1)</script>.md';
+        (task.taskLocation as any)._precedingHeader = '"><svg onload=window.__taskDebugXss=1>';
+
+        const listItem = await renderListItem(task);
+        const descriptionSpan = getTextSpan(listItem).children[0].children[0] as HTMLElement;
+        const renderedDescription = getDescriptionText(listItem);
+
+        expect(descriptionSpan.querySelector('img')).toBeNull();
+        expect(descriptionSpan.querySelector('script')).toBeNull();
+        expect(renderedDescription).toContain('&lt;img src=x onerror=window.__taskDebugXss=1&gt;');
+        expect(renderedDescription).toContain('a/b/&lt;script&gt;alert(1)&lt;/script&gt;.md');
+        expect(renderedDescription).toContain('&quot;&gt;&lt;svg onload=window.__taskDebugXss=1&gt;');
+    });
+});
+
+describe('task line rendering - component text safety', () => {
+    it('renders task component text without interpreting HTML', async () => {
+        const task = TaskBuilder.createFullyPopulatedTask();
+        (task as any).id = '<img src=x onerror=window.__taskComponentXss=1>';
+
+        const listItem = await renderListItem(task);
+        const idSpan = listItem.querySelector('.task-id') as HTMLElement;
+
+        expect(idSpan).not.toBeNull();
+        expect(idSpan.querySelector('img')).toBeNull();
+        expect(idSpan.textContent).toContain('<img src=x onerror=window.__taskComponentXss=1>');
+    });
 });
 
 describe('task line rendering - classes and data attributes', () => {
