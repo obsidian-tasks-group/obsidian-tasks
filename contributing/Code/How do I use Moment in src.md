@@ -20,11 +20,9 @@ See also the equivalent [[How do I use Moment in tests]].
 To declare the type `Moment`, for use as the type of a variable, field or function return type in files that will be **released** in the Tasks plugin:
 
 <!-- snippet: declare-Moment-type-in-src -->
-
 ```ts
 import type { Moment } from 'moment';
 ```
-
 <!-- endSnippet -->
 
 > [!Warning]
@@ -42,11 +40,9 @@ import type { Moment } from 'moment';
 Obsidian provides access to the `moment()` function as `window.moment()`, and this is what to use in any files in `src/`:
 
 <!-- snippet: use-moment-in-src -->
-
 ```ts
 const today = window.moment();
 ```
-
 <!-- endSnippet -->
 
 No declaration is needed for `window.moment()`: it is automatically available to all code in `src/`.

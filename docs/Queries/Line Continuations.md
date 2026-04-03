@@ -18,19 +18,16 @@ This is useful for dividing up long queries across multiple lines, for better re
 For example this query:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_line_continuation_-_single_slash.approved.query.text -->
-
 ```text
 (priority is highest) OR       \
     (priority is lowest)
 explain
 ```
-
 <!-- endSnippet -->
 
 ... runs this search:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_line_continuation_-_single_slash.approved.explanation.text -->
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -42,7 +39,6 @@ Explanation of this Tasks code block query:
       priority is highest
       priority is lowest
 ```
-
 <!-- endSnippet -->
 
 This facility will be helpful for long [[Combining Filters]], [[Custom Sorting]], and [[Custom Grouping]] lines, and other queries that may be difficult to read on one line.
@@ -66,26 +62,22 @@ This enables searching in the rare case that a trailing backslash is needed for 
 For example this query:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_line_continuation_-_double_slash.approved.query.text -->
-
 ```text
 # Search for a single backslash:
 description includes \\
 explain
 ```
-
 <!-- endSnippet -->
 
 ... runs this search:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_line_continuation_-_double_slash.approved.explanation.text -->
-
 ```text
 Explanation of this Tasks code block query:
 
   description includes \\ =>
   description includes \
 ```
-
 <!-- endSnippet -->
 
 Points to note:

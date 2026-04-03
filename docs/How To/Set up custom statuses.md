@@ -47,11 +47,11 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
-| Status Symbol | Next Status Symbol | Status Name       | Status Type   | Needs Custom Styling |
-| ------------- | ------------------ | ----------------- | ------------- | -------------------- |
-| `!`           | `D`                | Important         | `TODO`        | Yes                  |
-| `D`           | `X`                | Doing - Important | `IN_PROGRESS` | Yes                  |
-| `X`           | `!`                | Done - Important  | `DONE`        | Yes                  |
+| Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
+| ----- | ----- | ----- | ----- | ----- |
+| `!` | `D` | Important | `TODO` | Yes |
+| `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
+| `X` | `!` | Done - Important | `DONE` | Yes |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

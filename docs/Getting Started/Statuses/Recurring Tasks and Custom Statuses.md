@@ -31,7 +31,6 @@ When you click on the checkbox of a task, the Tasks plugin applies the following
 Suppose that we have adjusted the default Tasks settings slightly, to give us the **following Tasks status settings**:
 
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.detailed.mermaid.md -->
-
 ```mermaid
 flowchart LR
 
@@ -51,7 +50,6 @@ classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 linkStyle default stroke:gray
 ```
-
 <!-- endInclude -->
 
 And we have selected the Tasks setting to put [[Recurring Tasks#Order of the new task|the new recurrence below the initial one]].
@@ -120,7 +118,6 @@ Let's look at the **second of those two lines**:
 In the following example, `DONE` is followed by `CANCELLED`.
 
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_done-toggles-to-cancelled.approved.detailed.mermaid.md -->
-
 ```mermaid
 flowchart LR
 
@@ -143,7 +140,6 @@ classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 linkStyle default stroke:gray
 ```
-
 <!-- endInclude -->
 
 > [!important] Status type for next recurrence: always `TODO` or `IN_PROGRESS`
@@ -181,7 +177,6 @@ This means that even though the new recurrence of any completed recurring tasks 
 [[Status Types#NON_TASK|NON_TASK]] is a special status type to use for checklists that do not represent tasks.
 
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_pro-con-cycle.approved.detailed.mermaid.md -->
-
 ```mermaid
 flowchart LR
 
@@ -199,7 +194,6 @@ classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 linkStyle default stroke:gray
 ```
-
 <!-- endInclude -->
 
 With the above custom statuses in Tasks settings, clicking on task lines with checkboxes `[P]` and `[C]` will:

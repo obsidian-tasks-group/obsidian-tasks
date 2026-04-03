@@ -90,16 +90,14 @@ These samples demonstrate all the fields supported by the Tasks plugin's parsing
 These names agree with the same fields in [dataview's documentation](https://blacksmithgu.github.io/obsidian-dataview/annotation/metadata-tasks/#field-shorthands).
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dates_dataview-snippet.approved.md -->
-
 ```md
-- [ ] #task Has a created date [created:: 2023-04-13]
-- [ ] #task Has a scheduled date [scheduled:: 2023-04-14]
-- [ ] #task Has a start date [start:: 2023-04-15]
-- [ ] #task Has a due date [due:: 2023-04-16]
-- [x] #task Has a done date [completion:: 2023-04-17]
-- [-] #task Has a cancelled date [cancelled:: 2023-04-18]
+- [ ] #task Has a created date  [created:: 2023-04-13]
+- [ ] #task Has a scheduled date  [scheduled:: 2023-04-14]
+- [ ] #task Has a start date  [start:: 2023-04-15]
+- [ ] #task Has a due date  [due:: 2023-04-16]
+- [x] #task Has a done date  [completion:: 2023-04-17]
+- [-] #task Has a cancelled date  [cancelled:: 2023-04-18]
 ```
-
 <!-- endSnippet -->
 
 For more information, see [[Dates]].
@@ -110,16 +108,14 @@ For more information, see [[Dates]].
 > These names were chosen for use in Tasks, and are not known to dataview. They can of course be searched in dataview.
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Priorities_dataview-snippet.approved.md -->
-
 ```md
-- [ ] #task Lowest priority [priority:: lowest]
-- [ ] #task Low priority [priority:: low]
+- [ ] #task Lowest priority  [priority:: lowest]
+- [ ] #task Low priority  [priority:: low]
 - [ ] #task Normal priority
-- [ ] #task Medium priority [priority:: medium]
-- [ ] #task High priority [priority:: high]
-- [ ] #task Highest priority [priority:: highest]
+- [ ] #task Medium priority  [priority:: medium]
+- [ ] #task High priority  [priority:: high]
+- [ ] #task Highest priority  [priority:: highest]
 ```
-
 <!-- endSnippet -->
 
 For more information, see [[Priority]].
@@ -138,14 +134,12 @@ For more information, see [[Recurring Tasks]].
 ### Dataview Format for OnCompletion
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_dataview-snippet.approved.md -->
-
 ```md
 - [ ] #task Keep this task when done
-- [ ] #task Keep this task when done too [onCompletion:: keep]
-- [ ] #task Remove this task when done [onCompletion:: delete]
-- [ ] #task Remove completed instance of this recurring task when done [repeat:: every day] [onCompletion:: delete]
+- [ ] #task Keep this task when done too  [onCompletion:: keep]
+- [ ] #task Remove this task when done  [onCompletion:: delete]
+- [ ] #task Remove completed instance of this recurring task when done  [repeat:: every day]  [onCompletion:: delete]
 ```
-
 <!-- endSnippet -->
 
 For more information, see [[On Completion]].
@@ -153,12 +147,10 @@ For more information, see [[On Completion]].
 ### Dataview Format for Dependencies
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_dataview-snippet.approved.md -->
-
 ```md
-- [ ] #task do this first [id:: dcf64c]
-- [ ] #task do this after first and some other task [dependsOn:: dcf64c,0h17ye]
+- [ ] #task do this first  [id:: dcf64c]
+- [ ] #task do this after first and some other task  [dependsOn:: dcf64c,0h17ye]
 ```
-
 <!-- endSnippet -->
 
 For more information, see [[Task Dependencies]].

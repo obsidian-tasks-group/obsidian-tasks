@@ -70,23 +70,19 @@ When editing `TQ_extra_instructions` in Obsidian's File properties editor, you c
 Suppose the file containing our query begins with the following:
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_yaml.approved.yaml -->
-
 ```yaml
 ---
 TQ_short_mode: true
 ---
 ```
-
 <!-- endSnippet -->
 
 Any Tasks code blocks in that file will then have this content inserted at the start:
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_instructions.approved.txt -->
-
 ```txt
 short mode
 ```
-
 <!-- endSnippet -->
 
 All possible behaviours of `TQ_short_mode`:
@@ -152,14 +148,12 @@ By default, the property names are very narrow in Obsidian.
 You can make them wider with the following CSS Snippet.
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/widen-property-labels.css -->
-
 ```css
 /* Make property labels wider, to fit the names of Tasks-specific properties */
 .metadata-content {
     --metadata-label-width: 14em;
 }
 ```
-
 <!-- endSnippet -->
 
 The Obsidian user guide shows how to [use CSS snippets in Obsidian](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets).
@@ -178,7 +172,6 @@ See [[Make a query user interface]] for how to use Query File Defaults with the 
 These are all the properties currently supported by Tasks, as Query File Defaults.
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_supported-properties-empty.approved.yaml -->
-
 ```yaml
 ---
 TQ_explain:
@@ -205,7 +198,6 @@ TQ_show_tree:
 TQ_show_urgency:
 ---
 ```
-
 <!-- endSnippet -->
 
 ### Command: Add all Query File Defaults properties
@@ -224,36 +216,34 @@ The `type` values are explained in the [Property types](https://help.obsidian.md
 > The Tasks plugin automatically adds these properties to the Obsidian vault.
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_fake-types.json.approved.json -->
-
 ```json
 {
-    "types": {
-        "TQ_explain": "checkbox",
-        "TQ_extra_instructions": "text",
-        "TQ_short_mode": "checkbox",
-        "TQ_show_backlink": "checkbox",
-        "TQ_show_cancelled_date": "checkbox",
-        "TQ_show_created_date": "checkbox",
-        "TQ_show_depends_on": "checkbox",
-        "TQ_show_done_date": "checkbox",
-        "TQ_show_due_date": "checkbox",
-        "TQ_show_edit_button": "checkbox",
-        "TQ_show_id": "checkbox",
-        "TQ_show_on_completion": "checkbox",
-        "TQ_show_postpone_button": "checkbox",
-        "TQ_show_priority": "checkbox",
-        "TQ_show_recurrence_rule": "checkbox",
-        "TQ_show_scheduled_date": "checkbox",
-        "TQ_show_start_date": "checkbox",
-        "TQ_show_tags": "checkbox",
-        "TQ_show_task_count": "checkbox",
-        "TQ_show_toolbar": "checkbox",
-        "TQ_show_tree": "checkbox",
-        "TQ_show_urgency": "checkbox"
-    }
+  "types": {
+    "TQ_explain": "checkbox",
+    "TQ_extra_instructions": "text",
+    "TQ_short_mode": "checkbox",
+    "TQ_show_backlink": "checkbox",
+    "TQ_show_cancelled_date": "checkbox",
+    "TQ_show_created_date": "checkbox",
+    "TQ_show_depends_on": "checkbox",
+    "TQ_show_done_date": "checkbox",
+    "TQ_show_due_date": "checkbox",
+    "TQ_show_edit_button": "checkbox",
+    "TQ_show_id": "checkbox",
+    "TQ_show_on_completion": "checkbox",
+    "TQ_show_postpone_button": "checkbox",
+    "TQ_show_priority": "checkbox",
+    "TQ_show_recurrence_rule": "checkbox",
+    "TQ_show_scheduled_date": "checkbox",
+    "TQ_show_start_date": "checkbox",
+    "TQ_show_tags": "checkbox",
+    "TQ_show_task_count": "checkbox",
+    "TQ_show_toolbar": "checkbox",
+    "TQ_show_tree": "checkbox",
+    "TQ_show_urgency": "checkbox"
+  }
 }
 ```
-
 <!-- endSnippet -->
 
 ## Limitations of Query File Defaults

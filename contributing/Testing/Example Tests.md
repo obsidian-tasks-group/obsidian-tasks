@@ -11,7 +11,6 @@ Tasks tests are written with the Jest test framework.
 Here is an example test:
 
 <!-- snippet: example_basic_test -->
-
 ```ts
 it('allows signifier emojis as part of the description', () => {
     // Arrange
@@ -33,7 +32,6 @@ it('allows signifier emojis as part of the description', () => {
     expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
 });
 ```
-
 <!-- endSnippet -->
 
 It has:
@@ -53,7 +51,6 @@ See [CustomMatchersForFilters.ts](https://github.com/obsidian-tasks-group/obsidi
 The following tests of the `description regex` instruction work so conveniently because of the Tasks `toMatchTaskFromLine()` custom matcher.
 
 <!-- snippet: example_test_of_filters -->
-
 ```ts
 describe('search description for time stamps', () => {
     it('should find a time stamp in the description - simple version', () => {
@@ -81,7 +78,6 @@ describe('search description for time stamps', () => {
     });
 });
 ```
-
 <!-- endSnippet -->
 
 Our Jest custom matchers are all in [tests/CustomMatchers/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/CustomMatchers).

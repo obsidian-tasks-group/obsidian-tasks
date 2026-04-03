@@ -26,14 +26,12 @@ We assume that you know how to [use CSS snippets in Obsidian](https://help.obsid
 As you see, the default buttons are colorful which some people may find distracting. If you prefer monochrome buttons, you can simply convert the buttons to grayscale via [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-gray.css):
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-gray.css -->
-
 ```css
 .tasks-edit,
 .tasks-postpone {
     filter: grayscale(100%);
 }
 ```
-
 <!-- endSnippet -->
 
 This gives us this result:
@@ -43,7 +41,6 @@ This gives us this result:
 Or you can use alternative characters instead, which are monochromatic by default, like in [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-alt.css):
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-alt.css -->
-
 ```css
 .tasks-edit::after {
     content: '\1f589';
@@ -53,7 +50,6 @@ Or you can use alternative characters instead, which are monochromatic by defaul
     content: '\2bee';
 }
 ```
-
 <!-- endSnippet -->
 
 This would look like so:
@@ -69,7 +65,6 @@ you should choose characters from Unicode 6 that are more widely available.
 If you want to make the buttons look more like real buttons and give them some color, this is also possible, like in [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-stylish.css):
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-stylish.css -->
-
 ```css
 .tasks-edit::after {
     content: '\1f58b';
@@ -87,7 +82,6 @@ If you want to make the buttons look more like real buttons and give them some c
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 ```
-
 <!-- endSnippet -->
 
 This example snippet result in the follow style:
@@ -101,7 +95,6 @@ This section shows how to recreate the pre-Tasks 6.0.0 appearance of the Edit bu
 You can also use your own graphics instead of existing unicode characters, like in [this example CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-svg.css):
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-svg.css -->
-
 ```css
 .tasks-edit,
 .tasks-postpone {
@@ -124,7 +117,6 @@ You can also use your own graphics instead of existing unicode characters, like 
     content: none;
 }
 ```
-
 <!-- endSnippet -->
 
 The CSS snippet above shows the buttons with a similar look as in earlier versions of Tasks:
@@ -138,7 +130,6 @@ When using graphics, it is also guaranteed that the icons look the same on all p
 And finally, if you prefer simple text-based buttons which would look more like links, then [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-text.css) shows how to do it:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-buttons-text.css -->
-
 ```css
 .tasks-edit,
 .tasks-postpone {
@@ -156,7 +147,6 @@ And finally, if you prefer simple text-based buttons which would look more like 
     content: '[move]';
 }
 ```
-
 <!-- endSnippet -->
 
 The CSS snippet above results in the following style:

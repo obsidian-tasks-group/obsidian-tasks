@@ -19,7 +19,6 @@ You can tweak Tasks' `Todo` status so that it toggles to 'In Progress', which th
 This might be useful if you have a few slightly more time-consuming tasks to keep an eye on. Perhaps you would like to prioritise finishing things that are in progress before starting something new?
 
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.mermaid.md -->
-
 ```mermaid
 flowchart LR
 
@@ -39,16 +38,15 @@ classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 linkStyle default stroke:gray
 ```
-
 <!-- endInclude -->
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.md -->
 
-| Status Symbol | Next Status Symbol | Status Name | Status Type   | Needs Custom Styling |
-| ------------- | ------------------ | ----------- | ------------- | -------------------- |
-| `space`       | `/`                | Todo        | `TODO`        | No                   |
-| `/`           | `x`                | In Progress | `IN_PROGRESS` | Yes                  |
-| `x`           | `space`            | Done        | `DONE`        | No                   |
+| Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
+| ----- | ----- | ----- | ----- | ----- |
+| `space` | `/` | Todo | `TODO` | No |
+| `/` | `x` | In Progress | `IN_PROGRESS` | Yes |
+| `x` | `space` | Done | `DONE` | No |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -59,7 +57,6 @@ Sometimes I have a few really important tasks that I wish to stand out from the 
 By using non-standard symbols for the `IN_PROGRESS` and `DONE` statuses, if I decide to later re-open one of these completed tasks, it automatically goes on to `!` again.
 
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.mermaid.md -->
-
 ```mermaid
 flowchart LR
 
@@ -79,16 +76,15 @@ classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 linkStyle default stroke:gray
 ```
-
 <!-- endInclude -->
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
-| Status Symbol | Next Status Symbol | Status Name       | Status Type   | Needs Custom Styling |
-| ------------- | ------------------ | ----------------- | ------------- | -------------------- |
-| `!`           | `D`                | Important         | `TODO`        | Yes                  |
-| `D`           | `X`                | Doing - Important | `IN_PROGRESS` | Yes                  |
-| `X`           | `!`                | Done - Important  | `DONE`        | Yes                  |
+| Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
+| ----- | ----- | ----- | ----- | ----- |
+| `!` | `D` | Important | `TODO` | Yes |
+| `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
+| `X` | `!` | Done - Important | `DONE` | Yes |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -101,7 +97,6 @@ Happily, some themes use `P` and `C` for these. Others use `p` and `c`.
 Either way, I can make them toggle to each other, and by giving them the type `NON_TASK`, I can exclude them from my Tasks searches, as I don't see them as actionable.
 
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_pro-con-cycle.approved.mermaid.md -->
-
 ```mermaid
 flowchart LR
 
@@ -119,15 +114,14 @@ classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 linkStyle default stroke:gray
 ```
-
 <!-- endInclude -->
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_pro-con-cycle.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
-| ------------- | ------------------ | ----------- | ----------- | -------------------- |
-| `P`           | `C`                | Pro         | `NON_TASK`  | Yes                  |
-| `C`           | `P`                | Con         | `NON_TASK`  | Yes                  |
+| ----- | ----- | ----- | ----- | ----- |
+| `P` | `C` | Pro | `NON_TASK` | Yes |
+| `C` | `P` | Con | `NON_TASK` | Yes |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -140,7 +134,6 @@ There is a nice property that statuses with the same Status Symbol and Next Stat
 Here are some statuses from the ITS Theme where this behaviour might be useful.
 
 <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_toggle-does-nothing.approved.mermaid.md -->
-
 ```mermaid
 flowchart LR
 
@@ -164,17 +157,16 @@ classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 
 linkStyle default stroke:gray
 ```
-
 <!-- endInclude -->
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_toggle-does-nothing.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
-| ------------- | ------------------ | ----------- | ----------- | -------------------- |
-| `b`           | `b`                | Bookmark    | `NON_TASK`  | Yes                  |
-| `E`           | `E`                | Example     | `NON_TASK`  | Yes                  |
-| `I`           | `I`                | Information | `NON_TASK`  | Yes                  |
-| `P`           | `P`                | Paraphrase  | `NON_TASK`  | Yes                  |
-| `Q`           | `Q`                | Quote       | `NON_TASK`  | Yes                  |
+| ----- | ----- | ----- | ----- | ----- |
+| `b` | `b` | Bookmark | `NON_TASK` | Yes |
+| `E` | `E` | Example | `NON_TASK` | Yes |
+| `I` | `I` | Information | `NON_TASK` | Yes |
+| `P` | `P` | Paraphrase | `NON_TASK` | Yes |
+| `Q` | `Q` | Quote | `NON_TASK` | Yes |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->

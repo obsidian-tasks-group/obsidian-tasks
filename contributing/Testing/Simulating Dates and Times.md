@@ -13,7 +13,6 @@ Most of our date-related tests set a particular simulated 'current date'.
 This section shows what to do if you want to set a particular simulated 'current date **and time**'.
 
 <!-- snippet: test-at-different-times -->
-
 ```ts
 describe('urgency - test time-of-day impact on due-date score', () => {
     // Test to reproduce https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2068
@@ -44,5 +43,4 @@ describe('urgency - test time-of-day impact on due-date score', () => {
     });
 });
 ```
-
 <!-- endSnippet -->

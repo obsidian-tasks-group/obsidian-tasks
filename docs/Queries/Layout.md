@@ -240,23 +240,19 @@ All the layout instructions in this page can be generated for you automatically,
 For example, suppose the file containing our query begins with the following:
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_yaml.approved.yaml -->
-
 ```yaml
 ---
 TQ_short_mode: true
 ---
 ```
-
 <!-- endSnippet -->
 
 All Tasks code blocks in that file will then have this content automatically inserted at their start:
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_instructions.approved.txt -->
-
 ```txt
 short mode
 ```
-
 <!-- endSnippet -->
 
 And of course, if `TQ_short_mode` were `false`, the following would be inserted:

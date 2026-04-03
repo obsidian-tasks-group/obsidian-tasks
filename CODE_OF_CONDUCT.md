@@ -1,7 +1,6 @@
 # Contributor Covenant Code of Conduct
 
 <!-- toc -->
-
 ## Contents
 
 - [Our Pledge](#our-pledge)

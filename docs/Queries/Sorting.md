@@ -29,7 +29,6 @@ This page is long. Here are some links to the main sections:
 The following instructions are the default sort order, and they are **automatically appended to the end of _every_ Tasks search**:
 
 <!-- snippet: Sort.test.Sort_save_default_sort_order.approved.text -->
-
 ```text
 sort by status.type
 sort by urgency
@@ -37,7 +36,6 @@ sort by due
 sort by priority
 sort by path
 ```
-
 <!-- endSnippet -->
 
 It first sorts tasks in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK` to ensure that actionable tasks appear first, which is important in searches without a filter like `not done`.
