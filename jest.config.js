@@ -18,7 +18,7 @@ module.exports = {
         ],
     },
     extensionsToTreatAsEsm: ['.ts', '.svelte'],
-    moduleFileExtensions: ['js', 'ts', 'svelte'],
+    moduleFileExtensions: ['js', 'mjs', 'cjs', 'ts', 'svelte'],
     moduleNameMapper: {
         '^obsidian$': '<rootDir>/tests/__mocks__/obsidian.ts',
     },
@@ -31,8 +31,7 @@ module.exports = {
     // A list of paths to modules that run some code to configure or
     // set up the testing framework before each test.
     setupFilesAfterEnv: [
-        '<rootDir>/tests/CustomMatchers/jest-globals-setup.cjs',
-        '<rootDir>/tests/CustomMatchers/jest.custom_matchers.setup.ts',
+        '<rootDir>/tests/CustomMatchers/jest.custom_matchers.setup.mjs',
     ],
     globalSetup: './tests/global-setup.js',
 };
