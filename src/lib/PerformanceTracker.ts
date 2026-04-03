@@ -53,6 +53,7 @@ export class PerformanceTracker {
 
         // Log the duration to the console
         if (lastEntry) {
+            // nosemgrep: javascript.lang.security.audit.unsafe-formatstring.unsafe-formatstring — perf label in log, not user-controlled format string
             console.log(this.label + ':', lastEntry.duration.toFixed(2), 'milliseconds');
         } else {
             console.log(`Measurement for ${this.label} not found`);
