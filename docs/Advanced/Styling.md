@@ -231,7 +231,6 @@ Feel free to add your own too!
 Making tags, internal links and the recurrence rules of tasks to appear in gray:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-tags-links-recurrence-gray.css -->
-
 ```css
 .tasks-list-text a.tag {
     color: var(--list-marker-color);
@@ -245,7 +244,6 @@ Making tags, internal links and the recurrence rules of tasks to appear in gray:
     color: var(--list-marker-color);
 }
 ```
-
 <!-- endSnippet -->
 
 For example:
@@ -257,7 +255,6 @@ For example:
 The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in purple, red, orange, blue, cyan and green according to the tasks' priority:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-priority-as-checkbox-color.css -->
-
 ```css
 .task-list-item[data-task-priority='highest'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-purple);
@@ -294,7 +291,6 @@ span.task-priority {
     display: none;
 }
 ```
-
 <!-- endSnippet -->
 
 For example:
@@ -308,13 +304,11 @@ For example:
 To create a green halo around the checkbox of tasks with a `/` status symbol, add the following CSS snippet:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-status-symbols.css -->
-
 ```css
 li.task-list-item[data-task='/'] .task-list-item-checkbox {
     box-shadow: 0 0 10px green !important;
 }
 ```
-
 <!-- endSnippet -->
 
 For example, in Reading mode:
@@ -329,14 +323,12 @@ Alternatively, you can use the status type to write rules that are independent o
 Here, we put a green halo around all actionable tasks:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-status-types.css -->
-
 ```css
 li.task-list-item[data-task-status-type='TODO'] .task-list-item-checkbox,
 li.task-list-item[data-task-status-type='IN_PROGRESS'] .task-list-item-checkbox {
     box-shadow: 0 0 10px green !important;
 }
 ```
-
 <!-- endSnippet -->
 
 We take the view that the status type [[Status Types#ON_HOLD|ON_HOLD]] is not (yet) actionable, and so have not included that value in the snippet.
@@ -352,7 +344,6 @@ Again, the screenshot was taken with the Prism theme and the `!important` [flag]
 The following rules mark 'today' due dates as cyan and past due dates as red:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-color-due-today-and-overdue.css -->
-
 ```css
 /* A special color for the 'due' component if it's for today */
 .task-list-item[data-task-status-type='TODO'] .task-due[data-task-due='today'] span,
@@ -370,7 +361,6 @@ The following rules mark 'today' due dates as cyan and past due dates as red:
     padding: 2px 8px;
 }
 ```
-
 <!-- endSnippet -->
 
 For example:
@@ -384,13 +374,11 @@ Note that we only include the status type in the selector, to avoid highlighting
 The following rule adds a green glow around `#task/atHome` tags inside the description:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-green-glow.css -->
-
 ```css
 a.tag[data-tag-name='#task/atHome'] {
     box-shadow: 0 0 5px green;
 }
 ```
-
 <!-- endSnippet -->
 
 For example:
@@ -400,7 +388,6 @@ For example:
 The following rule adds a rounded red background to the description of a task if it contains the tag `#task/strategic`:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-round-red-description.css -->
-
 ```css
 .task-description span:has(.tag[data-tag-name='#task/strategic']) {
     background: #ffbfcc;
@@ -408,7 +395,6 @@ The following rule adds a rounded red background to the description of a task if
     padding: 2px 8px;
 }
 ```
-
 <!-- endSnippet -->
 
 For example:
@@ -420,7 +406,6 @@ For example:
 The following renders checkboxes as circles instead of squares:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-circular-checkboxes.css -->
-
 ```css
 ul > li.plugin-tasks-list-item .task-list-item-checkbox {
     margin-inline-start: 0;
@@ -428,7 +413,6 @@ ul > li.plugin-tasks-list-item .task-list-item-checkbox {
     border-radius: 50%;
 }
 ```
-
 <!-- endSnippet -->
 
 For example:
@@ -444,7 +428,6 @@ The following organizes the task structure into a 3-line grid, on which:
 - the urgency, backlink, edit and postpone buttons are, if displayed, on the third.
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-grid-layout.css -->
-
 ```css
 ul > li.plugin-tasks-list-item {
     grid-template-columns: 25px auto;
@@ -500,7 +483,6 @@ li.task-list-item ul.has-list-bullet {
     grid-column: 1/10;
 }
 ```
-
 <!-- endSnippet -->
 
 For example, in Reading view:
@@ -516,7 +498,6 @@ And in a Tasks query block:
 The following can be used as a base for a full CSS snippet:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-complete-example.css -->
-
 ```css
 /* I like tags to appear in gray so they won't grab too much attention */
 .tasks-list-text a.tag {
@@ -658,7 +639,6 @@ li.task-list-item ul.has-list-bullet {
     grid-column: 1/10;
 }
 ```
-
 <!-- endSnippet -->
 
 For example:

@@ -343,76 +343,74 @@ As you type, the options are filtered. For example, if you haven't yet added any
 Similarly, you can type some fraction of the word `start` (of whatever length is needed by the 'Minimum match length' setting) and you will get a suggestion to turn it into the emoji. Pressing `<enter>` then immediately adds the start emoji: 🛫.
 
 <!-- include: Suggestor.test.auto-complete_with__emoji__symbols_show_all_suggested_text.approved.md -->
-
-| Searchable Text               | Text that is added         |
-| ----------------------------- | -------------------------- |
-| ⏎                             | &lt;new line>              |
-| 📅 due date                   | 📅                         |
-| 🛫 start date                 | 🛫                         |
-| ⏳ scheduled date             | ⏳                         |
-| ⏫ high priority              | ⏫                         |
-| 🔼 medium priority            | 🔼                         |
-| 🔽 low priority               | 🔽                         |
-| 🔺 highest priority           | 🔺                         |
-| ⏬ lowest priority            | ⏬                         |
-| 🔁 recurring (repeat)         | 🔁                         |
-| ➕ created today (2022-07-11) | ➕ 2022-07-11              |
-| 🆔 id                         | 🆔                         |
-| ⛔ depends on id              | ⛔                         |
-| 🏁 on completion              | 🏁                         |
-| every                         | 🔁 every                   |
-| every day                     | 🔁 every day               |
-| every week                    | 🔁 every week              |
-| every month                   | 🔁 every month             |
-| every month on the            | 🔁 every month on the      |
-| every year                    | 🔁 every year              |
-| every week on Sunday          | 🔁 every week on Sunday    |
-| every week on Monday          | 🔁 every week on Monday    |
-| every week on Tuesday         | 🔁 every week on Tuesday   |
-| every week on Wednesday       | 🔁 every week on Wednesday |
-| every week on Thursday        | 🔁 every week on Thursday  |
-| every week on Friday          | 🔁 every week on Friday    |
-| every week on Saturday        | 🔁 every week on Saturday  |
-| today (2022-07-11)            | 📅 2022-07-11              |
-| tomorrow (2022-07-12)         | 📅 2022-07-12              |
-| Sunday (2022-07-17)           | 📅 2022-07-17              |
-| Monday (2022-07-18)           | 📅 2022-07-18              |
-| Tuesday (2022-07-12)          | 📅 2022-07-12              |
-| Wednesday (2022-07-13)        | 📅 2022-07-13              |
-| Thursday (2022-07-14)         | 📅 2022-07-14              |
-| Friday (2022-07-15)           | 📅 2022-07-15              |
-| Saturday (2022-07-16)         | 📅 2022-07-16              |
-| next week (2022-07-18)        | 📅 2022-07-18              |
-| next month (2022-08-11)       | 📅 2022-08-11              |
-| next year (2023-07-11)        | 📅 2023-07-11              |
-| today (2022-07-11)            | ⏳ 2022-07-11              |
-| tomorrow (2022-07-12)         | ⏳ 2022-07-12              |
-| Sunday (2022-07-17)           | ⏳ 2022-07-17              |
-| Monday (2022-07-18)           | ⏳ 2022-07-18              |
-| Tuesday (2022-07-12)          | ⏳ 2022-07-12              |
-| Wednesday (2022-07-13)        | ⏳ 2022-07-13              |
-| Thursday (2022-07-14)         | ⏳ 2022-07-14              |
-| Friday (2022-07-15)           | ⏳ 2022-07-15              |
-| Saturday (2022-07-16)         | ⏳ 2022-07-16              |
-| next week (2022-07-18)        | ⏳ 2022-07-18              |
-| next month (2022-08-11)       | ⏳ 2022-08-11              |
-| next year (2023-07-11)        | ⏳ 2023-07-11              |
-| today (2022-07-11)            | 🛫 2022-07-11              |
-| tomorrow (2022-07-12)         | 🛫 2022-07-12              |
-| Sunday (2022-07-17)           | 🛫 2022-07-17              |
-| Monday (2022-07-18)           | 🛫 2022-07-18              |
-| Tuesday (2022-07-12)          | 🛫 2022-07-12              |
-| Wednesday (2022-07-13)        | 🛫 2022-07-13              |
-| Thursday (2022-07-14)         | 🛫 2022-07-14              |
-| Friday (2022-07-15)           | 🛫 2022-07-15              |
-| Saturday (2022-07-16)         | 🛫 2022-07-16              |
-| next week (2022-07-18)        | 🛫 2022-07-18              |
-| next month (2022-08-11)       | 🛫 2022-08-11              |
-| next year (2023-07-11)        | 🛫 2023-07-11              |
-| delete                        | 🏁 delete                  |
-| keep                          | 🏁 keep                    |
-| generate unique id            | 🆔 **\*\***                |
-
+| Searchable Text | Text that is added |
+| ----- | ----- |
+| ⏎ | &lt;new line> |
+| 📅 due date | 📅  |
+| 🛫 start date | 🛫  |
+| ⏳ scheduled date | ⏳  |
+| ⏫ high priority | ⏫  |
+| 🔼 medium priority | 🔼  |
+| 🔽 low priority | 🔽  |
+| 🔺 highest priority | 🔺  |
+| ⏬ lowest priority | ⏬  |
+| 🔁 recurring (repeat) | 🔁  |
+| ➕ created today (2022-07-11) | ➕ 2022-07-11  |
+| 🆔 id | 🆔  |
+| ⛔ depends on id | ⛔  |
+| 🏁 on completion | 🏁  |
+| every | 🔁 every  |
+| every day | 🔁 every day  |
+| every week | 🔁 every week  |
+| every month | 🔁 every month  |
+| every month on the | 🔁 every month on the  |
+| every year | 🔁 every year  |
+| every week on Sunday | 🔁 every week on Sunday  |
+| every week on Monday | 🔁 every week on Monday  |
+| every week on Tuesday | 🔁 every week on Tuesday  |
+| every week on Wednesday | 🔁 every week on Wednesday  |
+| every week on Thursday | 🔁 every week on Thursday  |
+| every week on Friday | 🔁 every week on Friday  |
+| every week on Saturday | 🔁 every week on Saturday  |
+| today (2022-07-11) | 📅 2022-07-11  |
+| tomorrow (2022-07-12) | 📅 2022-07-12  |
+| Sunday (2022-07-17) | 📅 2022-07-17  |
+| Monday (2022-07-18) | 📅 2022-07-18  |
+| Tuesday (2022-07-12) | 📅 2022-07-12  |
+| Wednesday (2022-07-13) | 📅 2022-07-13  |
+| Thursday (2022-07-14) | 📅 2022-07-14  |
+| Friday (2022-07-15) | 📅 2022-07-15  |
+| Saturday (2022-07-16) | 📅 2022-07-16  |
+| next week (2022-07-18) | 📅 2022-07-18  |
+| next month (2022-08-11) | 📅 2022-08-11  |
+| next year (2023-07-11) | 📅 2023-07-11  |
+| today (2022-07-11) | ⏳ 2022-07-11  |
+| tomorrow (2022-07-12) | ⏳ 2022-07-12  |
+| Sunday (2022-07-17) | ⏳ 2022-07-17  |
+| Monday (2022-07-18) | ⏳ 2022-07-18  |
+| Tuesday (2022-07-12) | ⏳ 2022-07-12  |
+| Wednesday (2022-07-13) | ⏳ 2022-07-13  |
+| Thursday (2022-07-14) | ⏳ 2022-07-14  |
+| Friday (2022-07-15) | ⏳ 2022-07-15  |
+| Saturday (2022-07-16) | ⏳ 2022-07-16  |
+| next week (2022-07-18) | ⏳ 2022-07-18  |
+| next month (2022-08-11) | ⏳ 2022-08-11  |
+| next year (2023-07-11) | ⏳ 2023-07-11  |
+| today (2022-07-11) | 🛫 2022-07-11  |
+| tomorrow (2022-07-12) | 🛫 2022-07-12  |
+| Sunday (2022-07-17) | 🛫 2022-07-17  |
+| Monday (2022-07-18) | 🛫 2022-07-18  |
+| Tuesday (2022-07-12) | 🛫 2022-07-12  |
+| Wednesday (2022-07-13) | 🛫 2022-07-13  |
+| Thursday (2022-07-14) | 🛫 2022-07-14  |
+| Friday (2022-07-15) | 🛫 2022-07-15  |
+| Saturday (2022-07-16) | 🛫 2022-07-16  |
+| next week (2022-07-18) | 🛫 2022-07-18  |
+| next month (2022-08-11) | 🛫 2022-08-11  |
+| next year (2023-07-11) | 🛫 2023-07-11  |
+| delete | 🏁 delete  |
+| keep | 🏁 keep  |
+| generate unique id | 🆔 ******  |
 <!-- endInclude -->
 
 ### How can I use auto-suggest features from other plugins together with the Tasks auto-suggest?

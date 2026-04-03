@@ -29,41 +29,33 @@ So we need a way to access Obsidian-generated data in our tests. This page tries
 Example of the lowest-level usage, returning a [SimulatedFile](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/SimulatedFile.ts) object:
 
 <!-- snippet: MockDataLoader.get -->
-
 ```ts
 const data1 = MockDataLoader.get('one_task');
 ```
-
 <!-- endSnippet -->
 
 Create a `TasksFile` object for one of the Markdown files, for writing tests:
 
 <!-- snippet: getTasksFileFromMockData -->
-
 ```ts
 const tasksFile = getTasksFileFromMockData('no_yaml');
 ```
-
 <!-- endSnippet -->
 
 Obtain all the `Task` objects from one of the Markdown files:
 
 <!-- snippet: readTasksFromSimulatedFile -->
-
 ```ts
 const tasks = readTasksFromSimulatedFile('multiple_headings');
 ```
-
 <!-- endSnippet -->
 
 Obtain both a `TasksFile` object for one of the Markdown files, and the corresponding `Task` objects:
 
 <!-- snippet: getMockDataAndReadTasks -->
-
 ```ts
 const { data, tasks } = getMockDataAndReadTasks('callout_labelled');
 ```
-
 <!-- endSnippet -->
 
 ### Using Obsidian's data about some or all the test Markdown files
@@ -71,17 +63,14 @@ const { data, tasks } = getMockDataAndReadTasks('callout_labelled');
 Obtain all the `Task` objects from all the Markdown files:
 
 <!-- snippet: readAllTasksFromAllSimulatedFiles -->
-
 ```ts
 const allTasks = readAllTasksFromAllSimulatedFiles();
 ```
-
 <!-- endSnippet -->
 
 Iterate over all the Markdown files:
 
 <!-- snippet: AllMockDataNames -->
-
 ```ts
 let output = '';
 AllMockDataNames.forEach((file) => {
@@ -90,13 +79,11 @@ AllMockDataNames.forEach((file) => {
 });
 verifyMarkdown(output);
 ```
-
 <!-- endSnippet -->
 
 Selectively iterate over data from several of the Markdown files - using `listPathAndData()` to include each test file's `path` in the test name:
 
 <!-- snippet: iterate-over-multiple-SimulatedFiles -->
-
 ```ts
 it.each(
     listPathAndData([
@@ -111,7 +98,6 @@ it.each(
     expect(tasksFile.frontmatter.tags).toEqual([]);
 });
 ```
-
 <!-- endSnippet -->
 
 ## Test data creation sequence

@@ -6,12 +6,12 @@ The fields shown below can be surrounded by either `[]` or `()`.
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForTaskFormats.test.Serializer_Dates_dataview-include.approved.md -->
 
-- [ ] #task Has a created date [created:: 2023-04-13]
-- [ ] #task Has a scheduled date [scheduled:: 2023-04-14]
-- [ ] #task Has a start date [start:: 2023-04-15]
-- [ ] #task Has a due date [due:: 2023-04-16]
-- [x] #task Has a done date [completion:: 2023-04-17]
-- [-] #task Has a cancelled date [cancelled:: 2023-04-18]
+- [ ] #task Has a created date  [created:: 2023-04-13]
+- [ ] #task Has a scheduled date  [scheduled:: 2023-04-14]
+- [ ] #task Has a start date  [start:: 2023-04-15]
+- [ ] #task Has a due date  [due:: 2023-04-16]
+- [x] #task Has a done date  [completion:: 2023-04-17]
+- [-] #task Has a cancelled date  [cancelled:: 2023-04-18]
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -19,12 +19,12 @@ The fields shown below can be surrounded by either `[]` or `()`.
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForTaskFormats.test.Serializer_Priorities_dataview-include.approved.md -->
 
-- [ ] #task Lowest priority [priority:: lowest]
-- [ ] #task Low priority [priority:: low]
+- [ ] #task Lowest priority  [priority:: lowest]
+- [ ] #task Low priority  [priority:: low]
 - [ ] #task Normal priority
-- [ ] #task Medium priority [priority:: medium]
-- [ ] #task High priority [priority:: high]
-- [ ] #task Highest priority [priority:: highest]
+- [ ] #task Medium priority  [priority:: medium]
+- [ ] #task High priority  [priority:: high]
+- [ ] #task Highest priority  [priority:: highest]
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -37,9 +37,9 @@ The fields shown below can be surrounded by either `[]` or `()`.
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_dataview-include.approved.md -->
 
 - [ ] #task Keep this task when done
-- [ ] #task Keep this task when done too [onCompletion:: keep]
-- [ ] #task Remove this task when done [onCompletion:: delete]
-- [ ] #task Remove completed instance of this recurring task when done [repeat:: every day] [onCompletion:: delete]
+- [ ] #task Keep this task when done too  [onCompletion:: keep]
+- [ ] #task Remove this task when done  [onCompletion:: delete]
+- [ ] #task Remove completed instance of this recurring task when done  [repeat:: every day]  [onCompletion:: delete]
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -47,8 +47,8 @@ The fields shown below can be surrounded by either `[]` or `()`.
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForTaskFormats.test.Serializer_Dependencies_dataview-include.approved.md -->
 
-- [ ] #task do this first [id:: dcf64c]
-- [ ] #task do this after first and some other task [dependsOn:: dcf64c,0h17ye]
+- [ ] #task do this first  [id:: dcf64c]
+- [ ] #task do this after first and some other task  [dependsOn:: dcf64c,0h17ye]
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

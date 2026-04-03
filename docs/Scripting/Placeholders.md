@@ -26,7 +26,6 @@ The [[Explaining Queries|explain]] instruction shows how any placeholders in the
 For example, when the following query with [[Query Properties]] in [[Placeholders|placeholders]] is placed in a tasks query block in the file `some/sample/file path.md`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.query.text -->
-
 ```text
 explain
 path includes {{query.file.path}}
@@ -38,13 +37,11 @@ filename includes {{query.file.filenameWithoutExtension}}
 
 description includes Some Cryptic String {{! Inline comments are removed before search }}
 ```
-
 <!-- endSnippet -->
 
 the results begin with the following, which demonstrates how each value inside `{{...}}` was expanded:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.explanation.text -->
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -69,7 +66,6 @@ Explanation of this Tasks code block query:
   description includes Some Cryptic String {{! Inline comments are removed before search }} =>
   description includes Some Cryptic String
 ```
-
 <!-- endSnippet -->
 
 ## Using Query Properties in Placeholders
@@ -96,13 +92,11 @@ If there are any unknown properties in the placeholders, a clear message is writ
 For example, the following shows that the names of query properties are case-sensitive:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_placeholders_error.approved.query.text -->
-
 ```text
 # query.file.fileName is invalid, because of the capital N.
 # query.file.filename is the correct property name.
 filename includes {{query.file.fileName}}
 ```
-
 <!-- endSnippet -->
 
 ... generates this output:
@@ -121,7 +115,6 @@ The problem is in:
 IF THIS TEXT CHANGES, IT MEANS THE HARD-CODED OUTPUT ABOVE NEEDS TO BE UPDATED:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_placeholders_error.approved.explanation.text -->
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -134,7 +127,6 @@ The error message was:
 The problem is in:
     filename includes {{query.file.fileName}}
 ```
-
 <!-- endSnippet -->
 
 --------------------------------------------------------------------------- %%

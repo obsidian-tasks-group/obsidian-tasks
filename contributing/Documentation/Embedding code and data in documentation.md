@@ -62,14 +62,12 @@ Run `mdsnippets` - see [[#Running mdsnippets]]
 Your `snippet: ...` line will be converted to this:
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
-
 ```json
 {
-    "name": "fred",
-    "age": 30
+  "name": "fred",
+  "age": 30
 }
 ```
-
 <!-- endSnippet -->
 
 Notice how the above has syntax highlighting, as the `.json` file extension on the included file was used as the language in the generated code block.
@@ -89,8 +87,8 @@ Run `mdsnippets` - see [[#Running mdsnippets]]
 Your `include: ...` line will be converted to this:
 
 {<!-- include: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
-"name": "fred",
-"age": 30
+  "name": "fred",
+  "age": 30
 }<!-- endInclude -->
 
 ### Embedding files in .obsidian folders by path
@@ -106,7 +104,6 @@ So this:
 Generates this:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-backlinks-small-grey.css -->
-
 ```css
 /* By David Phillips (autonia) https://github.com/autonia
    From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/622#discussioncomment-2649299
@@ -117,7 +114,6 @@ Generates this:
     filter: grayscale(60%);
 }
 ```
-
 <!-- endSnippet -->
 
 > [!Warning] Browser issue?
@@ -152,7 +148,13 @@ In a Markdown documentation file, add a line `snippet: unique-name-of-snippet-ac
 - For example:
 
 ```text
-snippet: approval-test-as-text
+<!-- snippet: approval-test-as-text -->
+```ts
+test('SimpleVerify', () => {
+    verify('Hello From Approvals');
+});
+```
+<!-- endSnippet -->
 ```
 
 3 **Run mdsnippets to expand the 'snippet:' line**
@@ -163,13 +165,11 @@ Your `snippet: ...` line will be converted to this:
 
 ````markdown
 <!-- snippet: approval-test-as-text -->
-
 ```ts
 test('SimpleVerify', () => {
     verify('Hello From Approvals');
 });
 ```
-
 <!-- endSnippet -->
 ````
 

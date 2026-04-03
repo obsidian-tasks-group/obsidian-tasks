@@ -918,7 +918,6 @@ Such tasks look like they have a date, but that date will never be found. When v
 Any such mistakes can be found systematically with this search:
 
 <!-- include: ValidateTasks.test.validate-tasks_find_problem_dates.approved.text -->
-
 ````text
 ```tasks
 # These instructions need to be all on one line:
@@ -930,7 +929,6 @@ Any such mistakes can be found systematically with this search:
 group by path
 ```
 ````
-
 <!-- endInclude -->
 
 > [!warning]
@@ -1329,19 +1327,19 @@ Here are some examples. (By changing `===` to `!==`, you could _exclude_ tasks w
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.listMarker_docs.approved.md -->
 
 ```javascript
-filter by function task.listMarker === '-'
+filter by function task.listMarker === '-' 
 ```
 
 - Find tasks in unordered lists whose checkboxes begin `- [`
 
 ```javascript
-filter by function task.listMarker === '+'
+filter by function task.listMarker === '+' 
 ```
 
 - Find tasks in unordered lists whose checkboxes begin `+ [`
 
 ```javascript
-filter by function task.listMarker === '*'
+filter by function task.listMarker === '*' 
 ```
 
 - Find tasks in unordered lists whose checkboxes begin `* [`

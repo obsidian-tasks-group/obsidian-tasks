@@ -42,7 +42,6 @@ We could also use `short mode`, which would replace the backlink text with an ic
 We can de-emphasize the text in the backlinks, with [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-backlinks-small-grey.css):
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-backlinks-small-grey.css -->
-
 ```css
 /* By David Phillips (autonia) https://github.com/autonia
    From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/622#discussioncomment-2649299
@@ -53,7 +52,6 @@ We can de-emphasize the text in the backlinks, with [this CSS snippet](https://g
     filter: grayscale(60%);
 }
 ```
-
 <!-- endSnippet -->
 
 Which gives us this result:
@@ -65,7 +63,6 @@ Which gives us this result:
 Or we can replace the backlink text with an icon, with [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-backlinks-icon.css):
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-backlinks-icon.css -->
-
 ```css
 /* By Anna Kornfeld Simpson (@AnnaKornfeldSimpson) https://github.com/AnnaKornfeldSimpson
    From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/834#discussioncomment-3028600
@@ -89,7 +86,6 @@ li.plugin-tasks-list-item span.tasks-backlink > a {
     height: 0.9em;
 }
 ```
-
 <!-- endSnippet -->
 
 Which gives us this result:

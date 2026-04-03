@@ -31,20 +31,17 @@ This has a number of benefits:
 For example, when the following text is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_expands_dates.approved.query.text -->
-
 ```text
 starts after 2 years ago
 scheduled after 1 week ago
 due before tomorrow
 explain
 ```
-
 <!-- endSnippet -->
 
 the results begin with the following, on `2022-10-21`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_expands_dates.approved.explanation.text -->
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -57,7 +54,6 @@ Explanation of this Tasks code block query:
   due before tomorrow =>
     due date is before 2022-10-22 (Saturday 22nd October 2022)
 ```
-
 <!-- endSnippet -->
 
 Note how it shows the dates being searched for very clearly, including the day of the week.
@@ -72,25 +68,21 @@ It also shows that `starts` searches also match tasks with not start date.
 For example, when the following [[Regular Expressions|regular expression]] is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_regular_expression.approved.query.text -->
-
 ```text
 explain
 path regex matches /^Root/Sub-Folder/Sample File\.md/i
 ```
-
 <!-- endSnippet -->
 
 the results begin with the following:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_regular_expression.approved.explanation.text -->
-
 ```text
 Explanation of this Tasks code block query:
 
   path regex matches /^Root/Sub-Folder/Sample File\.md/i =>
     using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
 ```
-
 <!-- endSnippet -->
 
 ### Boolean combinations are displayed
@@ -98,19 +90,16 @@ Explanation of this Tasks code block query:
 For example, when the following text is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_boolean_combinations.approved.query.text -->
-
 ```text
 explain
 not done
 (due before tomorrow) AND (is recurring)
 ```
-
 <!-- endSnippet -->
 
 the results begin with the following, on `2022-10-21`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_boolean_combinations.approved.explanation.text -->
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -122,7 +111,6 @@ Explanation of this Tasks code block query:
         due date is before 2022-10-22 (Saturday 22nd October 2022)
       is recurring
 ```
-
 <!-- endSnippet -->
 
 ### More complex combinations are displayed
@@ -134,7 +122,6 @@ With `explain`, the interpreted logic is easily visible.
 For example, when the following text is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_nested_boolean_combinations.approved.query.text -->
-
 ```text
 explain
 (                                                                                       \
@@ -144,13 +131,11 @@ explain
 )                                                                                       \
 AND NOT (description includes 7)
 ```
-
 <!-- endSnippet -->
 
 the results begin with the following, on `2022-10-21`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_nested_boolean_combinations.approved.explanation.text -->
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -175,7 +160,6 @@ Explanation of this Tasks code block query:
         NOT:
           description includes 7
 ```
-
 <!-- endSnippet -->
 
 ## Advanced Examples
@@ -188,30 +172,25 @@ Explanation of this Tasks code block query:
 For example, with this [[Global Query|global query]]:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_example_global_query.approved.query.text -->
-
 ```text
 limit 50
 heading includes tasks
 ```
-
 <!-- endSnippet -->
 
 and when the following text is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_explains_task_block_with_global_query_active.approved.query.text -->
-
 ```text
 not done
 due next week
 explain
 ```
-
 <!-- endSnippet -->
 
 the results begin with the following, on `2022-10-21`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_explains_task_block_with_global_query_active.approved.explanation.text -->
-
 ```text
 Explanation of the global query:
 
@@ -228,7 +207,6 @@ Explanation of this Tasks code block query:
       2022-10-24 (Monday 24th October 2022) and
       2022-10-30 (Sunday 30th October 2022) inclusive
 ```
-
 <!-- endSnippet -->
 
 ### Query File Defaults are displayed
@@ -268,7 +246,6 @@ explain
 The Tasks results begin would the following:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_query_file_defaults_explanation.approved.explanation.text -->
-
 ```text
 Explanation of the Query File Defaults (from properties/frontmatter in the query's file):
 
@@ -285,7 +262,6 @@ Explanation of this Tasks code block query:
 
   No filters supplied. All tasks will match the query.
 ```
-
 <!-- endSnippet -->
 
 ### Placeholder values are expanded
@@ -296,7 +272,6 @@ Explanation of this Tasks code block query:
 For example, when the following query with [[Query Properties]] in [[Placeholders|placeholders]] is placed in a tasks query block in the file `some/sample/file path.md`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.query.text -->
-
 ```text
 explain
 path includes {{query.file.path}}
@@ -308,13 +283,11 @@ filename includes {{query.file.filenameWithoutExtension}}
 
 description includes Some Cryptic String {{! Inline comments are removed before search }}
 ```
-
 <!-- endSnippet -->
 
 the results begin with the following:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_placeholders.approved.explanation.text -->
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -339,7 +312,6 @@ Explanation of this Tasks code block query:
   description includes Some Cryptic String {{! Inline comments are removed before search }} =>
   description includes Some Cryptic String
 ```
-
 <!-- endSnippet -->
 
 ## Styling explain results
@@ -355,12 +327,10 @@ Using a [CSS snippet in Obsidian](https://help.obsidian.md/How+to/Add+custom+sty
 For example, [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-explain-text-blue.css) `tasks-plugin-explain-text-blue.css` makes the explanation block text blue:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-explain-text-blue.css -->
-
 ```css
 /* Make the Tasks plugin's 'explain' output stand out in blue */
 .plugin-tasks-query-explanation {
     color: var(--color-blue);
 }
 ```
-
 <!-- endSnippet -->

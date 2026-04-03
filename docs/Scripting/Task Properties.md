@@ -27,14 +27,14 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_status.approved.md -->
 
-| Field                       | Type 1    | Example 1                  | Type 2    | Example 2                         |
-| --------------------------- | --------- | -------------------------- | --------- | --------------------------------- |
-| `task.isDone`               | `boolean` | `false`                    | `boolean` | `false`                           |
-| `task.status.name`          | `string`  | `'Todo'`                   | `string`  | `'In Progress'`                   |
-| `task.status.type`          | `string`  | `'TODO'`                   | `string`  | `'IN_PROGRESS'`                   |
-| `task.status.typeGroupText` | `string`  | `'%%2%%TODO'` [^commented] | `string`  | `'%%1%%IN_PROGRESS'` [^commented] |
-| `task.status.symbol`        | `string`  | `' '`                      | `string`  | `'/'`                             |
-| `task.status.nextSymbol`    | `string`  | `'x'`                      | `string`  | `'x'`                             |
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.isDone` | `boolean` | `false` | `boolean` | `false` |
+| `task.status.name` | `string` | `'Todo'` | `string` | `'In Progress'` |
+| `task.status.type` | `string` | `'TODO'` | `string` | `'IN_PROGRESS'` |
+| `task.status.typeGroupText` | `string` | `'%%2%%TODO'` [^commented] | `string` | `'%%1%%IN_PROGRESS'` [^commented] |
+| `task.status.symbol` | `string` | `' '` | `string` | `'/'` |
+| `task.status.nextSymbol` | `string` | `'x'` | `string` | `'x'` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -44,15 +44,15 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_dates.approved.md -->
 
-| Field            | Type 1      | Example 1          | Type 2      | Example 2 |
-| ---------------- | ----------- | ------------------ | ----------- | --------- |
-| `task.created`   | `TasksDate` | `2023-07-01 00:00` | `TasksDate` | ``        |
-| `task.start`     | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | ``        |
-| `task.scheduled` | `TasksDate` | `2023-07-03 00:00` | `TasksDate` | ``        |
-| `task.due`       | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | ``        |
-| `task.cancelled` | `TasksDate` | `2023-07-06 00:00` | `TasksDate` | ``        |
-| `task.done`      | `TasksDate` | `2023-07-05 00:00` | `TasksDate` | ``        |
-| `task.happens`   | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | ``        |
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.created` | `TasksDate` | `2023-07-01 00:00` | `TasksDate` | `` |
+| `task.start` | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | `` |
+| `task.scheduled` | `TasksDate` | `2023-07-03 00:00` | `TasksDate` | `` |
+| `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
+| `task.cancelled` | `TasksDate` | `2023-07-06 00:00` | `TasksDate` | `` |
+| `task.done` | `TasksDate` | `2023-07-05 00:00` | `TasksDate` | `` |
+| `task.happens` | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | `` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -66,24 +66,24 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_date_fields.approved.md -->
 
-| Field                                     | Type 1      | Example 1                                 | Type 2      | Example 2                      |
-| ----------------------------------------- | ----------- | ----------------------------------------- | ----------- | ------------------------------ |
-| `task.due`                                | `TasksDate` | `2023-07-04 00:00`                        | `TasksDate` | ``                             |
-| `task.due.moment`                         | `Moment`    | `moment('2023-07-04 00:00')`              | `null`      | `null`                         |
-| `task.due.formatAsDate()`                 | `string`    | `'2023-07-04'`                            | `string`    | `''`                           |
-| `task.due.formatAsDate('no date')`        | `string`    | `'2023-07-04'`                            | `string`    | `'no date'`                    |
-| `task.due.formatAsDateAndTime()`          | `string`    | `'2023-07-04 00:00'`                      | `string`    | `''`                           |
-| `task.due.formatAsDateAndTime('no date')` | `string`    | `'2023-07-04 00:00'`                      | `string`    | `'no date'`                    |
-| `task.due.format('dddd')`                 | `string`    | `'Tuesday'`                               | `string`    | `''`                           |
-| `task.due.format('dddd', 'no date')`      | `string`    | `'Tuesday'`                               | `string`    | `'no date'`                    |
-| `task.due.toISOString()`                  | `string`    | `'2023-07-04T00:00:00.000Z'`              | `string`    | `''`                           |
-| `task.due.toISOString(true)`              | `string`    | `'2023-07-04T00:00:00.000+00:00'`         | `string`    | `''`                           |
-| `task.due.category.name`                  | `string`    | `'Future'`                                | `string`    | `'Undated'`                    |
-| `task.due.category.sortOrder`             | `number`    | `3`                                       | `number`    | `4`                            |
-| `task.due.category.groupText`             | `string`    | `'%%3%% Future'` [^commented]             | `string`    | `'%%4%% Undated'` [^commented] |
-| `task.due.fromNow.name`                   | `string`    | `'in 22 days'`                            | `string`    | `''`                           |
-| `task.due.fromNow.sortOrder`              | `number`    | `320230704`                               | `number`    | `0`                            |
-| `task.due.fromNow.groupText`              | `string`    | `'%%320230704%% in 22 days'` [^commented] | `string`    | `''`                           |
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
+| `task.due.moment` | `Moment` | `moment('2023-07-04 00:00')` | `null` | `null` |
+| `task.due.formatAsDate()` | `string` | `'2023-07-04'` | `string` | `''` |
+| `task.due.formatAsDate('no date')` | `string` | `'2023-07-04'` | `string` | `'no date'` |
+| `task.due.formatAsDateAndTime()` | `string` | `'2023-07-04 00:00'` | `string` | `''` |
+| `task.due.formatAsDateAndTime('no date')` | `string` | `'2023-07-04 00:00'` | `string` | `'no date'` |
+| `task.due.format('dddd')` | `string` | `'Tuesday'` | `string` | `''` |
+| `task.due.format('dddd', 'no date')` | `string` | `'Tuesday'` | `string` | `'no date'` |
+| `task.due.toISOString()` | `string` | `'2023-07-04T00:00:00.000Z'` | `string` | `''` |
+| `task.due.toISOString(true)` | `string` | `'2023-07-04T00:00:00.000+00:00'` | `string` | `''` |
+| `task.due.category.name` | `string` | `'Future'` | `string` | `'Undated'` |
+| `task.due.category.sortOrder` | `number` | `3` | `number` | `4` |
+| `task.due.category.groupText` | `string` | `'%%3%% Future'` [^commented] | `string` | `'%%4%% Undated'` [^commented] |
+| `task.due.fromNow.name` | `string` | `'in 22 days'` | `string` | `''` |
+| `task.due.fromNow.sortOrder` | `number` | `320230704` | `number` | `0` |
+| `task.due.fromNow.groupText` | `string` | `'%%320230704%% in 22 days'` [^commented] | `string` | `''` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -117,12 +117,12 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_dependency_fields.approved.md -->
 
-| Field                             | Type 1     | Example 1              | Type 2    | Example 2 |
-| --------------------------------- | ---------- | ---------------------- | --------- | --------- |
-| `task.id`                         | `string`   | `'abcdef'`             | `string`  | `''`      |
-| `task.dependsOn`                  | `string[]` | `['123456', 'abc123']` | `any[]`   | `[]`      |
-| `task.isBlocked(query.allTasks)`  | `boolean`  | `false`                | `boolean` | `false`   |
-| `task.isBlocking(query.allTasks)` | `boolean`  | `false`                | `boolean` | `false`   |
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.id` | `string` | `'abcdef'` | `string` | `''` |
+| `task.dependsOn` | `string[]` | `['123456', 'abc123']` | `any[]` | `[]` |
+| `task.isBlocked(query.allTasks)` | `boolean` | `false` | `boolean` | `false` |
+| `task.isBlocking(query.allTasks)` | `boolean` | `false` | `boolean` | `false` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -135,21 +135,21 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_other_fields.approved.md -->
 
-| Field                         | Type 1     | Example 1                                                                                                                                                                                         | Type 2    | Example 2                             |
-| ----------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------------------------- |
-| `task.description`            | `string`   | `'Do exercises #todo #health'`                                                                                                                                                                    | `string`  | `'minimal task'`                      |
-| `task.descriptionWithoutTags` | `string`   | `'Do exercises'`                                                                                                                                                                                  | `string`  | `'minimal task'`                      |
-| `task.priorityNumber`         | `number`   | `2`                                                                                                                                                                                               | `number`  | `3`                                   |
-| `task.priorityName`           | `string`   | `'Medium'`                                                                                                                                                                                        | `string`  | `'Normal'`                            |
-| `task.priorityNameGroupText`  | `string`   | `'%%2%%Medium priority'` [^commented]                                                                                                                                                             | `string`  | `'%%3%%Normal priority'` [^commented] |
-| `task.urgency`                | `number`   | `3.3000000000000007`                                                                                                                                                                              | `number`  | `1.9500000000000002`                  |
-| `task.isRecurring`            | `boolean`  | `true`                                                                                                                                                                                            | `boolean` | `false`                               |
-| `task.recurrenceRule`         | `string`   | `'every day when done'`                                                                                                                                                                           | `string`  | `''`                                  |
-| `task.onCompletion`           | `string`   | `'delete'`                                                                                                                                                                                        | `string`  | `''`                                  |
-| `task.tags`                   | `string[]` | `['#todo', '#health']`                                                                                                                                                                            | `any[]`   | `[]`                                  |
-| `task.originalMarkdown`       | `string`   | `'  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c'` | `string`  | `'- [/] minimal task'`                |
-| `task.lineNumber`             | `number`   | `17`                                                                                                                                                                                              | `number`  | `0`                                   |
-| `task.listMarker`             | `string`   | `'-'`                                                                                                                                                                                             | `string`  | `'-'`                                 |
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.description` | `string` | `'Do exercises #todo #health'` | `string` | `'minimal task'` |
+| `task.descriptionWithoutTags` | `string` | `'Do exercises'` | `string` | `'minimal task'` |
+| `task.priorityNumber` | `number` | `2` | `number` | `3` |
+| `task.priorityName` | `string` | `'Medium'` | `string` | `'Normal'` |
+| `task.priorityNameGroupText` | `string` | `'%%2%%Medium priority'` [^commented] | `string` | `'%%3%%Normal priority'` [^commented] |
+| `task.urgency` | `number` | `3.3000000000000007` | `number` | `1.9500000000000002` |
+| `task.isRecurring` | `boolean` | `true` | `boolean` | `false` |
+| `task.recurrenceRule` | `string` | `'every day when done'` | `string` | `''` |
+| `task.onCompletion` | `string` | `'delete'` | `string` | `''` |
+| `task.tags` | `string[]` | `['#todo', '#health']` | `any[]` | `[]` |
+| `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [/] minimal task'` |
+| `task.lineNumber` | `number` | `17` | `number` | `0` |
+| `task.listMarker` | `string` | `'-'` | `string` | `'-'` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -190,16 +190,16 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_file_properties.approved.md -->
 
-| Field                                | Type 1    | Example 1                   | Type 2    | Example 2 |
-| ------------------------------------ | --------- | --------------------------- | --------- | --------- |
-| `task.file.path`                     | `string`  | `'some/folder/fileName.md'` | `string`  | `''`      |
-| `task.file.pathWithoutExtension`     | `string`  | `'some/folder/fileName'`    | `string`  | `''`      |
-| `task.file.root`                     | `string`  | `'some/'`                   | `string`  | `'/'`     |
-| `task.file.folder`                   | `string`  | `'some/folder/'`            | `string`  | `'/'`     |
-| `task.file.filename`                 | `string`  | `'fileName.md'`             | `string`  | `''`      |
-| `task.file.filenameWithoutExtension` | `string`  | `'fileName'`                | `string`  | `''`      |
-| `task.hasHeading`                    | `boolean` | `true`                      | `boolean` | `false`   |
-| `task.heading`                       | `string`  | `'My Header'`               | `null`    | `null`    |
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.file.path` | `string` | `'some/folder/fileName.md'` | `string` | `''` |
+| `task.file.pathWithoutExtension` | `string` | `'some/folder/fileName'` | `string` | `''` |
+| `task.file.root` | `string` | `'some/'` | `string` | `'/'` |
+| `task.file.folder` | `string` | `'some/folder/'` | `string` | `'/'` |
+| `task.file.filename` | `string` | `'fileName.md'` | `string` | `''` |
+| `task.file.filenameWithoutExtension` | `string` | `'fileName'` | `string` | `''` |
+| `task.hasHeading` | `boolean` | `true` | `boolean` | `false` |
+| `task.heading` | `string` | `'My Header'` | `null` | `null` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -220,25 +220,25 @@ These are described in full in [[Obsidian Properties]].
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
 
-| Field                                                  | Type 1     | Example 1                                                                        |
-| ------------------------------------------------------ | ---------- | -------------------------------------------------------------------------------- |
-| `task.file.hasProperty('creation date')`               | `boolean`  | `true`                                                                           |
-| `task.file.property('creation date')`                  | `string`   | `'2024-05-25T15:17:00'`                                                          |
-| `task.file.property('sample_checkbox_property')`       | `boolean`  | `true`                                                                           |
-| `task.file.property('sample_date_property')`           | `string`   | `'2024-07-21'`                                                                   |
-| `task.file.property('sample_date_and_time_property')`  | `string`   | `'2024-07-21T12:37:00'`                                                          |
-| `task.file.property('sample_list_property')`           | `string[]` | `['Sample', 'List', 'Value']`                                                    |
-| `task.file.property('sample_number_property')`         | `number`   | `246`                                                                            |
-| `task.file.property('sample_text_property')`           | `string`   | `'Sample Text Value'`                                                            |
-| `task.file.property('sample_text_multiline_property')` | `string`   | `'Sample\nText\nValue\n'`                                                        |
-| `task.file.property('sample_link_property')`           | `string`   | `'[[yaml_all_property_types_populated]]'`                                        |
-| `task.file.property('sample_link_list_property')`      | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
-| `task.file.property('tags')`                           | `string[]` | `['#tag-from-file-properties']`                                                  |
-| `task.file.property('nested_data').surname`            | `string`   | `'Doe'`                                                                          |
-| `task.file.property('nested_data').firstname`          | `string`   | `'Jane'`                                                                         |
-| `task.file.property('nested_data')['middle name']`     | `string`   | `'Frances'`                                                                      |
-| `task.file.property('object_serialization').nested1`   | `string`   | `'value1'`                                                                       |
-| `task.file.property('object_serialization').nested2`   | `string`   | `'value2'`                                                                       |
+| Field | Type 1 | Example 1 |
+| ----- | ----- | ----- |
+| `task.file.hasProperty('creation date')` | `boolean` | `true` |
+| `task.file.property('creation date')` | `string` | `'2024-05-25T15:17:00'` |
+| `task.file.property('sample_checkbox_property')` | `boolean` | `true` |
+| `task.file.property('sample_date_property')` | `string` | `'2024-07-21'` |
+| `task.file.property('sample_date_and_time_property')` | `string` | `'2024-07-21T12:37:00'` |
+| `task.file.property('sample_list_property')` | `string[]` | `['Sample', 'List', 'Value']` |
+| `task.file.property('sample_number_property')` | `number` | `246` |
+| `task.file.property('sample_text_property')` | `string` | `'Sample Text Value'` |
+| `task.file.property('sample_text_multiline_property')` | `string` | `'Sample\nText\nValue\n'` |
+| `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` |
+| `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
+| `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
+| `task.file.property('nested_data').surname` | `string` | `'Doe'` |
+| `task.file.property('nested_data').firstname` | `string` | `'Jane'` |
+| `task.file.property('nested_data')['middle name']` | `string` | `'Frances'` |
+| `task.file.property('object_serialization').nested1` | `string` | `'value1'` |
+| `task.file.property('object_serialization').nested2` | `string` | `'value2'` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -255,12 +255,12 @@ These are described in full in [[Links]].
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_links.approved.md -->
 
-| Field                            | Type 1   | Example 1                                                                                                                                                                |
-| -------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `task.outlinks`                  | `Link[]` | `['Test Data/link_in_task_wikilink.md']`                                                                                                                                 |
-| `task.file.outlinksInProperties` | `Link[]` | `['Test Data/link_in_yaml.md', 'Test Data/links_everywhere.md']`                                                                                                         |
-| `task.file.outlinksInBody`       | `Link[]` | `['Test Data/link_in_file_body.md', 'Test Data/link_in_heading.md', 'Test Data/link_in_task_wikilink.md']`                                                               |
-| `task.file.outlinks`             | `Link[]` | `['Test Data/link_in_yaml.md', 'Test Data/links_everywhere.md', 'Test Data/link_in_file_body.md', 'Test Data/link_in_heading.md', 'Test Data/link_in_task_wikilink.md']` |
+| Field | Type 1 | Example 1 |
+| ----- | ----- | ----- |
+| `task.outlinks` | `Link[]` | `['Test Data/link_in_task_wikilink.md']` |
+| `task.file.outlinksInProperties` | `Link[]` | `['Test Data/link_in_yaml.md', 'Test Data/links_everywhere.md']` |
+| `task.file.outlinksInBody` | `Link[]` | `['Test Data/link_in_file_body.md', 'Test Data/link_in_heading.md', 'Test Data/link_in_task_wikilink.md']` |
+| `task.file.outlinks` | `Link[]` | `['Test Data/link_in_yaml.md', 'Test Data/links_everywhere.md', 'Test Data/link_in_file_body.md', 'Test Data/link_in_heading.md', 'Test Data/link_in_task_wikilink.md']` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

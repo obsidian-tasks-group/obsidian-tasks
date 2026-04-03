@@ -44,7 +44,6 @@ Follow these steps, which assume you have already [turned off Obsidian's Restric
 5. After experimenting, delete any labels and widgets that you do not need.
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-snippet.approved.md -->
-
 ```md
 toolbar: `INPUT[toggle:TQ_show_toolbar]`
 short mode: `INPUT[toggle:TQ_short_mode]`
@@ -62,7 +61,6 @@ task count: `INPUT[toggle:TQ_show_task_count]`
 extra instructions: `INPUT[textArea:TQ_extra_instructions]`
 explain: `INPUT[toggle:TQ_explain]`
 ```
-
 <!-- endSnippet -->
 
 ## Why provide this?
