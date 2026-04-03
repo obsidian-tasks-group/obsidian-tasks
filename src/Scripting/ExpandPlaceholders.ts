@@ -24,18 +24,18 @@ const proxyData = ((proxyDataModule as unknown as { default?: typeof proxyDataMo
  *      The first unknown placeholder is included in Error.message.
  */
 export function expandPlaceholders(template: string, view: any): string {
-    // Turn off HTML escaping of things like '/' in file paths:
+    // Disable HTML escaping of things like '/' in file paths by passing a
+    // no-op escape via Mustache.render's config parameter rather than
+    // overwriting Mustache.escape (which semgrep flags as escape-function-overwrite).
     // https://github.com/janl/mustache.js#variables
-    Mustache.escape = function (text) {
-        return text;
-    };
+    const noEscapeConfig = { escape: (text: string) => text };
 
     try {
         // Preprocess the template to evaluate any placeholders that involve function calls
         const evaluatedTemplate = evaluateAnyFunctionCalls(template, view);
 
-        // Render the preprocessed template
-        return Mustache.render(evaluatedTemplate, proxyData(view));
+        // Render the preprocessed template with escaping disabled via config
+        return Mustache.render(evaluatedTemplate, proxyData(view), undefined, noEscapeConfig);
     } catch (error) {
         let message = '';
         if (error instanceof Error) {
