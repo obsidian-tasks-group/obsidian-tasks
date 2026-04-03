@@ -58,7 +58,6 @@ const taskIdRegex = /[a-zA-Z0-9-_]+/;
 export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
 
 declare global {
-    // eslint-disable-next-line no-var
     var SHOW_DEPENDENCY_SUGGESTIONS: boolean;
 }
 

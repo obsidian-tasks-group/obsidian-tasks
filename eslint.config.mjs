@@ -83,6 +83,8 @@ export default [
             'svelte/no-at-html-tags': 'off',
             'no-inner-declarations': 'off',
             'svelte/no-unused-svelte-ignore': 'off',
+            // Keep the ESLint 9 migration behavior aligned with the legacy config.
+            'svelte/valid-compile': 'off',
         },
     },
 ];
