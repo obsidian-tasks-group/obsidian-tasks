@@ -84,40 +84,40 @@ class MockResizeObserver {
 globalThis.ResizeObserver = MockResizeObserver;
 
 // Custom matchers — ESM imports, transformed by ts-jest
-import { toEqualMoment } from './CustomMatchersForDates.ts';
+import { toEqualMoment } from './CustomMatchersForDates';
 expect.extend({ toEqualMoment });
 
-import { toEvaluateAs } from './CustomMatchersForExpressions.ts';
+import { toEvaluateAs } from './CustomMatchersForExpressions';
 expect.extend({ toEvaluateAs });
 
 import {
     toBeValid, toHaveExplanation, toMatchTask, toMatchTaskFromLine,
     toMatchTaskInTaskList, toMatchTaskWithDescription, toMatchTaskWithHeading,
     toMatchTaskWithPath, toMatchTaskWithSearchInfo, toMatchTaskWithStatus,
-} from './CustomMatchersForFilters.ts';
+} from './CustomMatchersForFilters';
 expect.extend({
     toBeValid, toHaveExplanation, toMatchTaskInTaskList, toMatchTask,
     toMatchTaskFromLine, toMatchTaskWithDescription, toMatchTaskWithHeading,
     toMatchTaskWithPath, toMatchTaskWithSearchInfo, toMatchTaskWithStatus,
 });
 
-import { groupHeadingsToBe, toSupportGroupingWithProperty } from './CustomMatchersForGrouping.ts';
+import { groupHeadingsToBe, toSupportGroupingWithProperty } from './CustomMatchersForGrouping';
 expect.extend({ groupHeadingsToBe, toSupportGroupingWithProperty });
 
 import {
     toHaveAChildSpanWithClass, toHaveAChildSpanWithClassAndDataAttributes,
     toHaveAmongDataAttributes, toHaveDataAttributes,
-} from './CustomMatchersForRendering.ts';
+} from './CustomMatchersForRendering';
 expect.extend({
     toHaveAChildSpanWithClass, toHaveAChildSpanWithClassAndDataAttributes,
     toHaveAmongDataAttributes, toHaveDataAttributes,
 });
 
-import { toBeIdenticalTo } from './CustomMatchersForTaskBuilder.ts';
+import { toBeIdenticalTo } from './CustomMatchersForTaskBuilder';
 expect.extend({ toBeIdenticalTo });
 
-import { toMatchMarkdownLines, toToggleTo, toToggleWithRecurrenceInUsersOrderTo } from './CustomMatchersForTasks.ts';
+import { toMatchMarkdownLines, toToggleTo, toToggleWithRecurrenceInUsersOrderTo } from './CustomMatchersForTasks';
 expect.extend({ toMatchMarkdownLines, toToggleTo, toToggleWithRecurrenceInUsersOrderTo });
 
-import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer.ts';
+import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer';
 expect.extend({ toMatchTaskDetails });
