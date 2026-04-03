@@ -16,16 +16,9 @@ jobs:
               uses: actions/setup-node@v6
               with:
                   node-version: '22'
-                  cache: ''
 
             - name: Install modules
               run: yarn --frozen-lockfile
-
-            - name: Verify dependencies
-              run: |
-                  node -e "console.log('jest-environment-jsdom:', require('jest-environment-jsdom/package.json').version)"
-                  node -e "console.log('jest:', require('jest/package.json').version)"
-                  node -e "console.log('ts-jest:', require('ts-jest/package.json').version)"
 
             - name: Run build
               run: yarn run build
