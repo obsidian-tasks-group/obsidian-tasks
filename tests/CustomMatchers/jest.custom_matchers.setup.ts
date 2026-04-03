@@ -1,7 +1,3 @@
-import { jest } from '@jest/globals';
-
-(globalThis as typeof globalThis & { jest: typeof jest }).jest = jest;
-
 declare global {
     interface HTMLElement {
         addClass(className: string): this;
