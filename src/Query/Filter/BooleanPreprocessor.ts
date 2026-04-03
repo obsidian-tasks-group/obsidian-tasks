@@ -28,6 +28,7 @@ export class BooleanPreprocessor {
         //   ') AND ('
         //   ')AND  NOT('
         //   ')  AND  NOT  ('
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const binaryOperatorsRegex = new RegExp(
             '(' + delimiters.closeFilter + '\\s*(?:AND|OR|AND +NOT|OR +NOT|XOR)\\s*' + delimiters.openFilter + ')',
         );
@@ -41,6 +42,7 @@ export class BooleanPreprocessor {
         //   'NOT('
         //   'NOT ('
         //   'NOT  ('
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const unaryOperatorsRegex = new RegExp('(NOT\\s*' + delimiters.openFilter + ')');
 
         // Divide up the divided components, this time splitting at unary operator boundaries.
@@ -53,10 +55,12 @@ export class BooleanPreprocessor {
         // All that remains now is to separate:
         // - any spaces and opening delimiters at the start of filters
         // - any spaces and close   delimiters at the end of filters
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const openingDelimitersAndSpacesAtStartRegex = new RegExp(
             '(^' + anyOfTheseChars(delimiters.openFilterChars + ' ') + '*)',
         );
 
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const closingDelimitersAndSpacesAtEndRegex = new RegExp(
             '(' + anyOfTheseChars(delimiters.closeFilterChars + ' ') + '*$)',
         );
@@ -90,19 +94,23 @@ export class BooleanPreprocessor {
 
         // boon-js requires at least one space around each operator.
         // Be nice to the user and add any missing spaces around operators:
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const operatorMissingPrecedingSpace = new RegExp(`(${delimiters.closeFilter})([A-Z])`, 'g');
         simplifiedLine = simplifiedLine.replace(operatorMissingPrecedingSpace, '$1 $2');
 
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const operatorMissingFollowingSpace = new RegExp(`([A-Z])(${delimiters.openFilter})`, 'g');
         simplifiedLine = simplifiedLine.replace(operatorMissingFollowingSpace, '$1 $2');
 
         // convert any non-standard delimiters to standard ones:
         const openChars = delimiters.openFilterChars;
         if (openChars != '"' && openChars != '(') {
+            // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
             const openDelimiter = new RegExp(anyOfTheseChars(openChars), 'g');
             simplifiedLine = simplifiedLine.replace(openDelimiter, '(');
 
             const closeChars = delimiters.closeFilterChars;
+            // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
             const closeDelimiter = new RegExp(anyOfTheseChars(closeChars), 'g');
             simplifiedLine = simplifiedLine.replace(closeDelimiter, ')');
         }
@@ -113,16 +121,20 @@ export class BooleanPreprocessor {
         // This set of regular expressions was built up empirically through a lot of iteration,
         // over a very thorough set of sample Boolean filters, in order to detect all the outputs
         // from splitLine() that were not actually Tasks filters.
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const onlySpacesAndParentheses = new RegExp(
             '^' + anyOfTheseChars(' ' + delimiters.openAndCloseFilterChars) + '+$',
         );
 
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const binaryOperatorAndParentheses = new RegExp(
             '^ *' + delimiters.closeFilter + ' *(AND|OR|XOR) *' + delimiters.openFilter + ' *$',
         );
 
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const unaryOperatorAndParentheses = new RegExp('^(AND|OR|XOR|NOT) *' + delimiters.openFilter + '$');
 
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         const remnantsOfNot = new RegExp('^' + delimiters.closeFilter + ' *(AND|OR|XOR)$');
 
         const justOperators = /^(AND|OR|XOR|NOT)$/;
@@ -133,6 +145,7 @@ export class BooleanPreprocessor {
             unaryOperatorAndParentheses,
             remnantsOfNot,
             justOperators,
+        // nosemgrep: detect-non-literal-regexp — constructed from hardcoded delimiter constants
         ].some((regex) => RegExp(regex).exec(part));
     }
 }

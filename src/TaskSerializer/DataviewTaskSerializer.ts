@@ -52,6 +52,7 @@ function toInlineFieldRegex(innerFieldRegex: RegExp): RegExp {
     )
         .map((val) => (val instanceof RegExp ? val.source : val))
         .join('');
+    // nosemgrep: detect-non-literal-regexp — constructed from internal regex sources
     return new RegExp(fieldRegex, innerFieldRegex.flags);
 }
 

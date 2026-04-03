@@ -348,6 +348,7 @@ function addDatesSuggestions(
     ];
 
     const results: SuggestInfo[] = [];
+    // nosemgrep: detect-non-literal-regexp — constructed from internal symbol constants
     const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const dateMatch = matchIfCursorInRegex(dateRegex, parameters);
     if (dateMatch && dateMatch.length >= 2) {
@@ -400,6 +401,7 @@ function addRecurrenceValueSuggestions(recurrenceSymbol: string, parameters: Sug
     ];
 
     const results: SuggestInfo[] = [];
+    // nosemgrep: detect-non-literal-regexp — constructed from internal symbol constants
     const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const recurrenceMatch = matchIfCursorInRegex(recurrenceRegex, parameters);
     if (recurrenceMatch && recurrenceMatch.length >= 2) {
@@ -477,6 +479,7 @@ function addOnCompletionOptionSuggestions(
     const genericSuggestions = ['delete', 'keep'];
 
     const results: SuggestInfo[] = [];
+    // nosemgrep: detect-non-literal-regexp — constructed from internal symbol constants
     const regex = new RegExp(`(${symbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const match = matchIfCursorInRegex(regex, parameters);
     if (match && match.length >= 2) {
@@ -508,6 +511,7 @@ function generateUniqueId(existingIds: string[]) {
 
 function addIDSuggestion(idSymbol: string, allTasks: any[], parameters: SuggestorParameters) {
     const results: SuggestInfo[] = [];
+    // nosemgrep: detect-non-literal-regexp — constructed from internal symbol constants
     const idRegex = new RegExp(`(${idSymbol})\\s*(${taskIdRegex.source})?`, 'ug');
     const idMatch = matchIfCursorInRegex(idRegex, parameters);
 
@@ -553,6 +557,7 @@ function addDependsOnSuggestions(
     const charactersExcludedFromDescriptionSearch = parameters.dataviewMode
         ? escapeRegExp('()[]')
         : allTaskPluginEmojis(symbols);
+    // nosemgrep: detect-non-literal-regexp — constructed from internal symbol constants
     const dependsOnRegex = new RegExp(
         `(${dependsOnSymbol})([0-9a-zA-Z-_ ^,]*,)*([^,${charactersExcludedFromDescriptionSearch}]*)`,
         'ug',

@@ -1,6 +1,7 @@
 import { escapeRegExp } from '../../lib/RegExpTools';
 
 export function anyOfTheseChars(allowedChars: string): string {
+    // nosemgrep: detect-non-literal-regexp — delimiter chars are hardcoded constants
     return new RegExp('[' + escapeRegExp(allowedChars) + ']').source;
 }
 

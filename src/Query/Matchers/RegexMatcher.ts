@@ -36,6 +36,7 @@ export class RegexMatcher extends IStringMatcher {
         const query = regexInput.match(regexPattern);
 
         if (query !== null) {
+            // nosemgrep: detect-non-literal-regexp — user-authored query regex in vault markdown, not attacker-controlled
             const regExp = new RegExp(query[1], query[2]);
             return new RegexMatcher(regExp);
         } else {

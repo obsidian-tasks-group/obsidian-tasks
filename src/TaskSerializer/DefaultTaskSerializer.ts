@@ -75,6 +75,7 @@ function fieldRegex(symbols: string, valueRegexString: string) {
     // The regexes end with `$` because they will be matched and
     // removed from the end until none are left.
     source += '$';
+    // nosemgrep: detect-non-literal-regexp — constructed from internal regex source
     return new RegExp(source); // Remove the 'u' flag, to fix parsing on iPadOS/iOS 18.6 and 26 Public Beta 2
 }
 

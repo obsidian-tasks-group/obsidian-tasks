@@ -45,6 +45,7 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     private static createFragmentWithHTML = (html: string) =>
+        // nosemgrep: insecure-document-method — hardcoded HTML in settings UI
         createFragment((documentFragment) => (documentFragment.createDiv().innerHTML = html));
 
     public async saveSettings(update?: boolean): Promise<void> {
