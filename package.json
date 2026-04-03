@@ -35,6 +35,8 @@
         "@eslint/eslintrc": "^3.3.5",
         "@eslint/js": "^9.39.0",
         "@evilmartians/lefthook": "^1.11.0",
+        "@swc/core": "^1.15.21",
+        "@swc/jest": "^0.2.39",
         "@testing-library/jest-dom": "^6.6.0",
         "@testing-library/svelte": "^5.0.0",
         "@tsconfig/svelte": "^5.0.8",

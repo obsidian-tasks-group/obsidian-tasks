@@ -1,7 +1,6 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
+/** @type {import('jest').Config} */
 module.exports = {
     verbose: true,
-    preset: 'ts-jest/presets/default-esm',
     transform: {
         '^.+\\.svelte(\\.(js|ts))?$': [
             'svelte-jester',
@@ -10,10 +9,18 @@ module.exports = {
             },
         ],
         '^.+\\.(ts|js)$': [
-            'ts-jest',
+            '@swc/jest',
             {
-                tsconfig: 'tsconfig.jest.json',
-                useESM: true,
+                jsc: {
+                    parser: {
+                        syntax: 'typescript',
+                        decorators: true,
+                    },
+                    target: 'es2022',
+                },
+                module: {
+                    type: 'es6',
+                },
             },
         ],
     },
@@ -30,8 +37,6 @@ module.exports = {
 
     // A list of paths to modules that run some code to configure or
     // set up the testing framework before each test.
-    setupFilesAfterEnv: [
-        '<rootDir>/tests/CustomMatchers/jest.custom_matchers.setup.mjs',
-    ],
+    setupFilesAfterEnv: ['<rootDir>/tests/CustomMatchers/jest.custom_matchers.setup.ts'],
     globalSetup: './tests/global-setup.js',
 };
