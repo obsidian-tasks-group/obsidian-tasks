@@ -670,7 +670,7 @@ export class SettingsTab extends PluginSettingTab {
                     text: setting.notice.text,
                 });
                 if (setting.notice.html !== null) {
-                    notice.insertAdjacentHTML('beforeend', setting.notice.html);
+                    notice.insertAdjacentHTML('beforeend', setting.notice.html); // nosemgrep: react-unsanitized-method — static HTML from plugin settings definitions, not user input
                 }
             }
         });
