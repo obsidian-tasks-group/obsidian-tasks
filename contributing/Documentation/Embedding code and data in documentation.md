@@ -147,7 +147,7 @@ In a Markdown documentation file, add a line `snippet: unique-name-of-snippet-ac
 
 - For example:
 
-```text
+````text
 <!-- snippet: approval-test-as-text -->
 ```ts
 test('SimpleVerify', () => {
@@ -155,7 +155,7 @@ test('SimpleVerify', () => {
 });
 ```
 <!-- endSnippet -->
-```
+````
 
 3 **Run mdsnippets to expand the 'snippet:' line**
 
