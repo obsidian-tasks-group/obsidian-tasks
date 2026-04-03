@@ -7,7 +7,7 @@ These are the standard markdown statuses:
 - [ ] #task I am Todo `space`
 - [x] #task I am Done `x`
 
-## Core Tasks  statuses
+## Core Tasks statuses
 
 These are the core statuses in Tasks.
 
@@ -18,10 +18,10 @@ These are the core statuses in Tasks.
 
 ## Selection of custom Tasks statuses
 
-- [X] #task  I am Checked `X`
-- [!] #task  I am Important `!`
-- [P] #task  I am Pro `P`
-- [C] #task  I am Con `C`
+- [x] #task I am Checked `X`
+- [!] #task I am Important `!`
+- [P] #task I am Pro `P`
+- [C] #task I am Con `C`
 
 ---
 

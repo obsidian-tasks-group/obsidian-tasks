@@ -49,41 +49,49 @@ These trivial examples exist just to walk through the behaviour of Approval Test
 Example test in [tests/TestingTools/ApprovalTestsDemo.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts), that saves its input in a text file:
 
 <!-- snippet: approval-test-as-text -->
+
 ```ts
 test('SimpleVerify', () => {
     verify('Hello From Approvals');
 });
 ```
+
 <!-- endSnippet -->
 
 The corresponding `approved` file, named [tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt):
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt -->
+
 ```txt
 Hello From Approvals
 ```
+
 <!-- endSnippet -->
 
 #### Verify an object as a JSON string
 
 <!-- snippet: approval-test-as-json -->
+
 ```ts
 test('JsonVerify', () => {
     const data = { name: 'fred', age: 30 };
     verifyAsJson(data);
 });
 ```
+
 <!-- endSnippet -->
 
 The corresponding `approved` file, named [tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json):
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
+
 ```json
 {
-  "name": "fred",
-  "age": 30
+    "name": "fred",
+    "age": 30
 }
 ```
+
 <!-- endSnippet -->
 
 #### Verify the results of multiple input values
@@ -107,6 +115,7 @@ Below is a contrived example of its use.
 > Note that we do not have an `it` section here. `verifyAllCombinations3Async()` creates the 'it' block.
 
 <!-- snippet: async-combination-approvals -->
+
 ```ts
 describe('demonstrate async combination approvals', () => {
     // Note that we do not have an 'it' section here.
@@ -123,11 +132,13 @@ describe('demonstrate async combination approvals', () => {
     );
 });
 ```
+
 <!-- endSnippet -->
 
 The corresponding `approved` file, named [tests/TestingTools/CombinationApprovalsAsync.test.demonstrate_async_combination_approvals_documentation_example.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/CombinationApprovalsAsync.test.demonstrate_async_combination_approvals_documentation_example.approved.txt):
 
 <!-- snippet: CombinationApprovalsAsync.test.demonstrate_async_combination_approvals_documentation_example.approved.txt -->
+
 ```txt
 sample outputs
 (0, hello, true) => 0 'hello' true
@@ -139,6 +150,7 @@ sample outputs
 (1, world, true) => 1 'world' true
 (1, world, false) => 1 'world' false
 ```
+
 <!-- endSnippet -->
 
 > [!NOTE]
@@ -162,7 +174,7 @@ We have these convenience helpers to make it easier to write Approvals-based tes
 - [tests/TestingTools/CombinationApprovalsAsync.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/CombinationApprovalsAsync.ts)
   - For using Combination Approvals that needs to call async code
   - See example above: [[#Verify the results of multiple input values]]
-  - If you are testing non-async code, you can use the combinations facilities provided by  Approvals.NodeJS: [Combinations Approvals](https://github.com/approvals/Approvals.NodeJS/blob/master/docs/reference/CombinationApprovals.md)
+  - If you are testing non-async code, you can use the combinations facilities provided by Approvals.NodeJS: [Combinations Approvals](https://github.com/approvals/Approvals.NodeJS/blob/master/docs/reference/CombinationApprovals.md)
 
 ## Running Approval Tests
 

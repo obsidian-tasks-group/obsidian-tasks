@@ -1,4 +1,3 @@
-
 # Recurrence handling invalid dates
 
 This file captures some exploratory tests of [issue 1087: Recurrence with 6 months recurs every year](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1087).
@@ -43,7 +42,7 @@ There are two copies of each test here.
 - The first will remain unchanged, and is the initial starting point for a recurring task.
 - The second shows the most-recently tested behaviour, with a comment describing any issues with that behaviour.
 
-The intention is to make it easy to re-start testing  if testing on a newer version of the plugin,
+The intention is to make it easy to re-start testing if testing on a newer version of the plugin,
 
 ### #1197: every month on the 25th - starting point
 

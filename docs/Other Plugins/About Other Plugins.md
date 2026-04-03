@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - Other Plugins/Other Plugins
+    - Other Plugins/Other Plugins
 ---
 
 # About Other Plugins

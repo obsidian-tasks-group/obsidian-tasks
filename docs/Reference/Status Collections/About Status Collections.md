@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - Reference/Status Collections/Status Collections
+    - Reference/Status Collections/Status Collections
 ---
 
 # About Status Collections
@@ -11,7 +11,7 @@ aliases:
 ## Background
 
 > [!released]
-Custom statuses were introduced in Tasks 1.23.0.
+> Custom statuses were introduced in Tasks 1.23.0.
 
 You can control the behaviour of your tasks (such as what happens when you click on a checkbox), using Tasks' [[Statuses]] feature.
 

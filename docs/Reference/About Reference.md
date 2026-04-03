@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - Reference/Reference
+    - Reference/Reference
 ---
 
 # About Reference

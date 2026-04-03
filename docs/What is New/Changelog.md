@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - What is New?/Changelog
+    - What is New?/Changelog
 ---
 
 # Changelog
@@ -20,7 +20,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 - 7.23.0:
   - Changes to most of the Tasks [[settings]] now take immediate effect. A few remaining settings are now marked with `REQUIRES RESTART`.
   - Add [[Status Types#ON_HOLD|ON_HOLD]] status type.
-  - Add [[Layout#Toolbar|toolbar]]  on Tasks search results, with 'Filter by description' box and 'Copy results' button.
+  - Add [[Layout#Toolbar|toolbar]] on Tasks search results, with 'Filter by description' box and 'Copy results' button.
     - The [[Presets#Default Presets|default preset]] `hide_query_elements` now hides the toolbar. (Pre-existing Tasks settings are not updated, though.)
   - Add [[Create or edit Task#Customising the Modal|hide fields]] facility to the 'Create or edit Task' modal, for unused fields.
   - Add Vietnamese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
@@ -97,13 +97,13 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
   - Add access keys for Created, Done and Cancelled dates in [[Create or edit Task]].
 - 7.0.0:
   - Major improvements to [[Combining Filters]] with Boolean combinations. See [[Combining Filters#Appendix Changes to Boolean filters in Tasks 7.0.0|the appendix]] for details.
-  - Add documentation page (now in [[Useful Links]]), with links to write-ups,  talks and sample vaults from users.
+  - Add documentation page (now in [[Useful Links]]), with links to write-ups, talks and sample vaults from users.
 
 ## 6.x releases
 
 - 6.1.0:
   - Add support for [[task dependencies]]:
-    - First, [[Create or edit Task#Dependencies|use 'Create or edit Task']] to define the order in which you want to work on a set of tasks, using two new task emojis: 🆔  and ⛔.
+    - First, [[Create or edit Task#Dependencies|use 'Create or edit Task']] to define the order in which you want to work on a set of tasks, using two new task emojis: 🆔 and ⛔.
     - Then adjust your searches, perhaps to see tasks that are [[Filters#Blocking Tasks|blocking others]], or hide ones that are [[Filters#Blocked Tasks|blocked]] and cannot yet be done.
   - `query.allTasks` is now available in custom searches: see [[Query Properties#Values for Query Search Properties|query search properties]].
   - The [[Create or edit Task]] modal now fully supports editing of statuses, updating done and cancelled dates, and creating new recurrences. See the [[Create or edit Task#Status|section on editing statuses]] for details and tips.

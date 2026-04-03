@@ -1,6 +1,6 @@
 {
-  "checkbox@@check-color": true,
-  "checkbox@@check-bg": true,
-  "anuppuccin-theme-settings@@anp-custom-checkboxes": true,
-  "anuppuccin-theme-settings@@anp-speech-bubble": true
+    "checkbox@@check-color": true,
+    "checkbox@@check-bg": true,
+    "anuppuccin-theme-settings@@anp-custom-checkboxes": true,
+    "anuppuccin-theme-settings@@anp-speech-bubble": true
 }

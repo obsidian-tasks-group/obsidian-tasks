@@ -8,11 +8,11 @@ publish: true
 
 ## Using the console timing facility
 
-When you  **edit your Tasks plugin settings to set 'debugSettings > recordTimings' to true**, Tasks will:
+When you **edit your Tasks plugin settings to set 'debugSettings > recordTimings' to true**, Tasks will:
 
- 1. measure the elapsed time taken in sections of performance critical code,
- 1. write the elapsed time to the console, similar to `console.time()` and `console.timeEnd()`,
- 1. add markings to the Timing section of performance flame charts: see 'Performance and profiling' in [[Debugging and Performance tools]].
+1. measure the elapsed time taken in sections of performance critical code,
+1. write the elapsed time to the console, similar to `console.time()` and `console.timeEnd()`,
+1. add markings to the Timing section of performance flame charts: see 'Performance and profiling' in [[Debugging and Performance tools]].
 
 ## Timing new sections of code
 

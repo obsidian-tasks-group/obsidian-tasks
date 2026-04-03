@@ -1,63 +1,61 @@
 {
-  "cachedMetadata": {
-    "listItems": [
-      {
-        "parent": -1,
-        "position": {
-          "end": {
-            "col": 32,
-            "line": 0,
-            "offset": 32
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        },
-        "task": " "
-      }
-    ],
-    "sections": [
-      {
-        "position": {
-          "end": {
-            "col": 32,
-            "line": 0,
-            "offset": 32
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        },
-        "type": "list"
-      }
-    ],
-    "tags": [
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 0,
-            "offset": 11
-          },
-          "start": {
-            "col": 6,
-            "line": 0,
-            "offset": 6
-          }
-        },
-        "tag": "#task"
-      }
-    ]
-  },
-  "fileContents": "- [ ] #task Task in 'no_heading'\n",
-  "filePath": "Test Data/no_heading.md",
-  "getAllTags": [
-    "#task"
-  ],
-  "parseFrontMatterTags": null,
-  "resolveLinkToPath": {}
+    "cachedMetadata": {
+        "listItems": [
+            {
+                "parent": -1,
+                "position": {
+                    "end": {
+                        "col": 32,
+                        "line": 0,
+                        "offset": 32
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                },
+                "task": " "
+            }
+        ],
+        "sections": [
+            {
+                "position": {
+                    "end": {
+                        "col": 32,
+                        "line": 0,
+                        "offset": 32
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                },
+                "type": "list"
+            }
+        ],
+        "tags": [
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 0,
+                        "offset": 11
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 0,
+                        "offset": 6
+                    }
+                },
+                "tag": "#task"
+            }
+        ]
+    },
+    "fileContents": "- [ ] #task Task in 'no_heading'\n",
+    "filePath": "Test Data/no_heading.md",
+    "getAllTags": ["#task"],
+    "parseFrontMatterTags": null,
+    "resolveLinkToPath": {}
 }

@@ -678,7 +678,7 @@ describe('Exhaustive editing', () => {
     });
 });
 
-function verifyModalHTML() {
+async function verifyModalHTML() {
     // Populate task a valid and an invalid date. Note that the valid date value
     // is not visible in the HTML output.
     const task = taskFromLine({ line: '- [ ] absolutely to do 🛫 2024-01-01 ⏳ 2024-02-33', path: '' });
@@ -686,7 +686,7 @@ function verifyModalHTML() {
     const allTasks = [task];
     const { container } = renderAndCheckModal(task, onSubmit, allTasks);
 
-    const prettyHTML = prettifyHTML(container.innerHTML);
+    const prettyHTML = await prettifyHTML(container.innerHTML);
     verifyWithFileExtension(prettyHTML, 'html');
 }
 
@@ -695,14 +695,14 @@ describe('Edit Modal HTML snapshot tests', () => {
         resetSettings();
     });
 
-    it('should match snapshot', () => {
+    it('should match snapshot', async () => {
         updateSettings({ provideAccessKeys: true });
-        verifyModalHTML();
+        await verifyModalHTML();
     });
 
-    it('should match snapshot - without access keys', () => {
+    it('should match snapshot - without access keys', async () => {
         updateSettings({ provideAccessKeys: false });
-        verifyModalHTML();
+        await verifyModalHTML();
     });
 });
 

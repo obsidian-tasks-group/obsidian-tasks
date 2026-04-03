@@ -43,7 +43,7 @@ This is what these options do:
       - `task.path`
       - `task.precedingHeader`
   - Here is an example of the extra output:<br>
-  🐛 **11** . 4 . 6 . '`- [ ] #task Feed the baby 🔽 📅 2021-11-21`'<br>'`a/b/c.d`' > '`Previous Heading`'<br>
+      🐛 **11** . 4 . 6 . '`- [ ] #task Feed the baby 🔽 📅 2021-11-21`'<br>'`a/b/c.d`' > '`Previous Heading`'<br>
 
 ## recordTimings
 

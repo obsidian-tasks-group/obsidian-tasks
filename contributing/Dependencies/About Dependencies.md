@@ -2,7 +2,7 @@
 
 Dependencies for the plugin are set using the two files:
 
-- [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json)  (human-editable)
+- [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) (human-editable)
 - [yarn.lock](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/yarn.lock) (machine-generated)
 
 After any change to dependencies in `package.json`, run `yarn` to update the `yarn.lock` file and commit the changes in both files.

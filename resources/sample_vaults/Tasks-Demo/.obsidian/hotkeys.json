@@ -1,55 +1,39 @@
 {
-  "obsidian-tasks-plugin:edit-task": [
-    {
-      "modifiers": [
-        "Ctrl",
-        "Mod"
-      ],
-      "key": "M"
-    }
-  ],
-  "markdown:toggle-preview": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "/"
-    }
-  ],
-  "editor:toggle-comments": [],
-  "obsidian-tasks-plugin:toggle-done": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "M"
-    },
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "Enter"
-    }
-  ],
-  "editor:toggle-checklist-status": [],
-  "templater-obsidian:_meta/templates/convert_test_data_markdown_to_js.md": [
-    {
-      "modifiers": [
-        "Alt",
-        "Ctrl",
-        "Mod"
-      ],
-      "key": "T"
-    }
-  ],
-  "editor:toggle-source": [
-    {
-      "modifiers": [
-        "Ctrl",
-        "Mod"
-      ],
-      "key": "/"
-    }
-  ],
-  "editor:open-link-in-new-leaf": []
+    "obsidian-tasks-plugin:edit-task": [
+        {
+            "modifiers": ["Ctrl", "Mod"],
+            "key": "M"
+        }
+    ],
+    "markdown:toggle-preview": [
+        {
+            "modifiers": ["Mod"],
+            "key": "/"
+        }
+    ],
+    "editor:toggle-comments": [],
+    "obsidian-tasks-plugin:toggle-done": [
+        {
+            "modifiers": ["Mod"],
+            "key": "M"
+        },
+        {
+            "modifiers": ["Mod"],
+            "key": "Enter"
+        }
+    ],
+    "editor:toggle-checklist-status": [],
+    "templater-obsidian:_meta/templates/convert_test_data_markdown_to_js.md": [
+        {
+            "modifiers": ["Alt", "Ctrl", "Mod"],
+            "key": "T"
+        }
+    ],
+    "editor:toggle-source": [
+        {
+            "modifiers": ["Ctrl", "Mod"],
+            "key": "/"
+        }
+    ],
+    "editor:open-link-in-new-leaf": []
 }

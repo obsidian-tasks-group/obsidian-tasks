@@ -7,9 +7,9 @@ publish: true
 ## Introduction
 
 > [!released]
-Introduced in Tasks 1.12.0.
+> Introduced in Tasks 1.12.0.
 
-[Regular expression](https://en.wikipedia.org/wiki/Regular_expression)  ("regex") searches are a powerful alternative to the simple `includes` and  `does not include` searches.
+[Regular expression](https://en.wikipedia.org/wiki/Regular_expression) ("regex") searches are a powerful alternative to the simple `includes` and `does not include` searches.
 
 ### Take Care
 
@@ -18,7 +18,7 @@ Introduced in Tasks 1.12.0.
 
 It is easy to write a regular expression that looks like it is correct, but which uses a special character that completely changes the meaning of the search string.
 
-For example, `\d` does **not** match the **two** characters  `\d`, it matches any **one** of the following characters: `0123456789`.
+For example, `\d` does **not** match the **two** characters `\d`, it matches any **one** of the following characters: `0123456789`.
 
 This documentation gives only a brief overview of the facility, with a few motivating examples, and then links to other resources, for thorough treatment.
 
@@ -29,11 +29,11 @@ Having said that, regex searches are a valuable tool, used in many other tools, 
 The components of a regex search filter are:
 
 1. The field name, for example `description` or `path`
-2. Either  `regex matches` or `regex does not match`
+2. Either `regex matches` or `regex does not match`
 3. The search pattern, inside a pair of forwards slashes, for example `/pc_abigail|pc_edwina|at_work/`
-   - That pattern searches for `pc_abigail`, `pc_edwina` or `at_work`, without the need to create a boolean combination of three separate filters
+    - That pattern searches for `pc_abigail`, `pc_edwina` or `at_work`, without the need to create a boolean combination of three separate filters
 4. Optionally, an extra [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags) at the end, such as `i`, that can change the meaning of the expression
-   - Note that many of the allowed flags are not relevant in the Tasks context, because there are no multi-line searches or global searches, for example.
+    - Note that many of the allowed flags are not relevant in the Tasks context, because there are no multi-line searches or global searches, for example.
 
 Case-sensitive example, showing the components:
 
@@ -51,7 +51,7 @@ description regex matches /pc_abigail|pc_edwina|at_work/i
 
 ## Notes
 
-- Regex searches are **case-sensitive**, unlike the simpler  `includes` and  `does not include`
+- Regex searches are **case-sensitive**, unlike the simpler `includes` and `does not include`
 - A regex search can be made **insensitive** by appending a `i` flag after the closing `/`, for example: `/I aM cAsE INsensitive because of the LiTle i after the closing slash/i`
 - Tasks does not support multi-line regex searches, as each task is a single line.
 
@@ -83,21 +83,25 @@ To see how Tasks interpreted your regular expression, you can add an `explain` l
 For example, the results of this query:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_regular_expression.approved.query.text -->
+
 ```text
 explain
 path regex matches /^Root/Sub-Folder/Sample File\.md/i
 ```
+
 <!-- endSnippet -->
 
- will have this extra text in an [[Explaining Queries|explanation]] at the start:
+will have this extra text in an [[Explaining Queries|explanation]] at the start:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_regular_expression.approved.explanation.text -->
+
 ```text
 Explanation of this Tasks code block query:
 
   path regex matches /^Root/Sub-Folder/Sample File\.md/i =>
     using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
 ```
+
 <!-- endSnippet -->
 
 The use of apostrophes (`'`) rather than forward slashes (`/`) in the explanation is intended to emphasise that the delimiting slashes in the query are not included in the search strings.

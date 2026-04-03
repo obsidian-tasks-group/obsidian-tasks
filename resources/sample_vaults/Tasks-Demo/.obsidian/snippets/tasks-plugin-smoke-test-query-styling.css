@@ -1,6 +1,6 @@
 /* This file is only for use in smoke-testing the Tasks plugin, and not intended for use by users. */
 
-.block-language-tasks:has(ul.plugin-tasks-query-result[data-task-group-by="priority"]) .tasks-group-heading {
+.block-language-tasks:has(ul.plugin-tasks-query-result[data-task-group-by='priority']) .tasks-group-heading {
     color: red;
 }
 
@@ -12,7 +12,7 @@ ul.contains-task-list.tasks-layout-hide-priority.tasks-layout-hide-backlinks.tas
     color: red;
 }
 
-.task-description span:has(.tag[data-tag-name="#todo/strategic"]) {
+.task-description span:has(.tag[data-tag-name='#todo/strategic']) {
     background: #ffbfcc;
     border-radius: 10px;
     padding: 2px 8px;

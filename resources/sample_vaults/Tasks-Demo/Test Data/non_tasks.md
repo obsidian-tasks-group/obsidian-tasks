@@ -17,5 +17,6 @@ Below is an HTML comment in `<!-- .... ->`, so the "task" inside is not seen by 
 Below is an Obsidian comment in `%% ... %%`, so the "task" inside is not seen by Obsidian or any of its task-based plugins.
 
 %%
+
 - [ ] I look like a task but am in an Obsidian (percent) comment
-%%
+      %%

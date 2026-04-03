@@ -83,23 +83,23 @@ Operators are evaluated in this order:
 
 So these two filters are exactly equivalent - note the extra brackets in the second one:
 
-````text
+```text
 (tag includes #XX) OR (tag includes #YY) AND (tag includes #ZZ)
-````
+```
 
-````text
+```text
 (tag includes #XX) OR ( (tag includes #YY) AND (tag includes #ZZ) )
-````
+```
 
 And these two are also exactly equivalent:
 
-````text
+```text
 (tag includes #XX) AND (tag includes #YY) OR (tag includes #ZZ)
-````
+```
 
-````text
+```text
 ( (tag includes #XX) AND (tag includes #YY) ) OR (tag includes #ZZ)
-````
+```
 
 When building a complex combination of filters, it is safest to use `(` and `)` liberally, so you can be confident you get your intended behaviour.
 
@@ -115,16 +115,16 @@ When you combine filters together with `AND`, only tasks that match _every_ filt
 
 For example, this will show tasks containing the word `some` that have a start date:
 
-````text
+```text
 (has start date) AND (description includes some)
-````
+```
 
 Tasks requires every filter line to be matched, so the above example is equivalent to this:
 
-````text
+```text
 has start date
 description includes some
-````
+```
 
 `AND` becomes particularly valuable when used in conjunction with `OR` and `NOT`.
 
@@ -155,13 +155,13 @@ not done
 
 For a trivial example, these two are equivalent:
 
-````text
+```text
 path does not include inbox
-````
+```
 
-````text
+```text
 NOT (path includes inbox)
-````
+```
 
 ---
 
@@ -169,9 +169,9 @@ NOT (path includes inbox)
 
 For a more realistic example, the opposite of this:
 
-````text
+```text
 (path includes x) OR (description includes #x)
-````
+```
 
 ... can be expressed without any checking of new logic like this:
 
@@ -181,9 +181,9 @@ NOT ( (path includes x) OR (description includes #x) )
 
 The other way of expressing it requires more care and thought:
 
-````text
+```text
 (path does not include x) AND (description does not include #x)
-````
+```
 
 ### AND NOT
 
@@ -191,9 +191,9 @@ The other way of expressing it requires more care and thought:
 
 For example:
 
-````text
+```text
 (has start date) AND NOT (description includes some)
-````
+```
 
 ### OR NOT
 
@@ -201,9 +201,9 @@ For example:
 
 For example:
 
-````text
+```text
 (has start date) OR NOT (description includes special)
-````
+```
 
 ### XOR
 
@@ -228,7 +228,7 @@ It will not show tasks with both `inbox` in the path and the tag `#inbox` in the
 
 > [!warning]
 > Do not combine more than two filters together with `XOR`, intending to request only one of them to be true.
-It will not give the result you expect.
+> It will not give the result you expect.
 
 `(filter a) XOR (filter b) XOR (filter c)` matches tasks that match only one
 of the filters, **and also tasks that match all three of the filters**.
@@ -481,12 +481,12 @@ And suppose that several of these locations are close by each other, so when you
 
 You could select any of the nearby locations with:
 
-````text
+```text
 # Show all tasks I CAN do in this area:
 (tags include #context/loc1) OR \
   (tags include #context/loc2) OR \
   (tags include #context/loc3)
-````
+```
 
 #### In None of Several Locations
 
@@ -494,14 +494,14 @@ Now suppose you would like to review all the other tasks, that you cannot do in 
 
 An easy way to review all the _other_ tasks not possible in this area would be to use `NOT( )` around the original query:
 
-````text
+```text
 # Show all tasks I CANNOT do in this area - EASY WAY:
 NOT ( \
   (tags include #context/loc1) OR \
   (tags include #context/loc2) OR \
   (tags include #context/loc3) \
 )
-````
+```
 
 The nice thing about the above `NOT` use is that if a new context gets added to the group in the future, it can be added to both task blocks via a simple find-and-replace.
 
@@ -510,12 +510,12 @@ The above is much easier to maintain than the other option of:
 - Changing all the `includes` to `does not include`
 - Changing all the `OR` to `AND`
 
-````text
+```text
 # Show all tasks I CANNOT do in this area - HARDER WAY
 (tags do not include #context/loc1) AND \
   (tags do not include #context/loc2) AND \
   (tags do not include #context/loc3)
-````
+```
 
 ## Appendix: Changes to Boolean filters in Tasks 7.0.0
 

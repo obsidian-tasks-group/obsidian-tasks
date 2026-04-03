@@ -13,7 +13,6 @@
 - [?] #task `?` Question
 - [r] #task `r` Review
 
-
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type

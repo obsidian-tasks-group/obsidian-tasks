@@ -36,9 +36,9 @@ In this section, we use artificially simple fixed expressions, to demonstrate th
 
 Each line below is of the form:
 
-~~~text
+```text
 expression => result
-~~~
+```
 
 ### Simple expressions
 
@@ -46,7 +46,7 @@ Some example expressions:
 
 <!-- placeholder to force blank line before included text --><!-- include: Expression.test.Expression_result.approved.md -->
 
-~~~text
+```text
 'hello' => 'hello'
 "hello" => 'hello'
 "" => ''
@@ -66,7 +66,7 @@ null || "No value" => 'No value'
 undefined => undefined
 undefined || "No value" => 'No value'
 "I _am_ not _italic_".replaceAll("_", "\\_") => 'I \_am\_ not \_italic\_'
-~~~
+```
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -92,7 +92,7 @@ As of Tasks 5.0.0, it is also possible to make longer expressions more readable 
 
 <!-- placeholder to force blank line before included text --><!-- include: Expression.test.Expression_returns_and_functions.approved.md -->
 
-~~~text
+```text
 return 42
 => 42
 
@@ -117,6 +117,6 @@ function f(value) {                 \
 }                                   \
 return f(1);
 => 'yes'
-~~~
+```
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->

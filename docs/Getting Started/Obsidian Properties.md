@@ -13,7 +13,7 @@ Obsidian offers a facility called [Properties](https://help.obsidian.md/Editing+
 
 Properties allow you to organize information about a note. Properties contain structured data such as text, links, dates, checkboxes, and numbers.
 
-This is an example property section, and it *must* appear on the very first line of the markdown file:
+This is an example property section, and it _must_ appear on the very first line of the markdown file:
 
 ```yaml
 ---
@@ -40,11 +40,11 @@ For example, if you associate a tag with a project, you might want to put that t
 
 ## How does Tasks treat Obsidian Properties?
 
-You might want to start with the [[#Obsidian Properties Query Examples|examples below]] for an idea of *what* Tasks can do with Obsidian Properties.
+You might want to start with the [[#Obsidian Properties Query Examples|examples below]] for an idea of _what_ Tasks can do with Obsidian Properties.
 
-This section describes the *how*...
+This section describes the _how_...
 
-- Frontmatter property values can be used in  the following instructions:
+- Frontmatter property values can be used in the following instructions:
   - `filter by function`
   - `sort by function`
   - `group by function`
@@ -62,7 +62,7 @@ This section describes the *how*...
   - `TAG` and `TAGS` are standardised to `tags`.
   - The `#` prefix is added to all tag values returned by this function.
 - Aliases in Frontmatter are not yet standardised.
-  - If your vault contains a mixture of `alias`, `ALIAS` and `ALIASES`,  your queries will need to be coded to handle both spellings, for now.
+  - If your vault contains a mixture of `alias`, `ALIAS` and `ALIASES`, your queries will need to be coded to handle both spellings, for now.
 - Tasks reads both YAML and [JSON](https://help.obsidian.md/Editing+and+formatting/Properties#JSON+Properties) formats.
 
 ## Obsidian Properties Query Examples
@@ -126,7 +126,7 @@ Some people prefer to use properties tags to identify projects. One advantage of
 ```yaml
 ---
 tags:
-  - project/project-1
+    - project/project-1
 ---
 ```
 
@@ -188,63 +188,65 @@ group by function \
 Consider a file with the following example properties (or "Frontmatter"):
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_interpret_properties.approved.yaml -->
+
 ```yaml
 ---
 sample_checkbox_property: true
 sample_date_property: 2024-07-21
 sample_date_and_time_property: 2024-07-21T12:37:00
 sample_list_property:
-  - Sample
-  - List
-  - Value
+    - Sample
+    - List
+    - Value
 sample_number_property: 246
 sample_text_property: Sample Text Value
 sample_text_multiline_property: |
-  Sample
-  Text
-  Value
-sample_link_property: "[[yaml_all_property_types_populated]]"
+    Sample
+    Text
+    Value
+sample_link_property: '[[yaml_all_property_types_populated]]'
 sample_link_list_property:
-  - "[[yaml_all_property_types_populated]]"
-  - "[[yaml_all_property_types_empty]]"
+    - '[[yaml_all_property_types_populated]]'
+    - '[[yaml_all_property_types_empty]]'
 aliases:
-  - YAML All Property Types Populated
+    - YAML All Property Types Populated
 tags:
-  - tag-from-file-properties
+    - tag-from-file-properties
 creation date: 2024-05-25T15:17:00
 project: Secret Project
 nested_data:
-  surname: "Doe"
-  firstname: "Jane"
-  middle name: "Frances"
-object_serialization: {"nested1": "value1", "nested2": "value2"}
+    surname: 'Doe'
+    firstname: 'Jane'
+    middle name: 'Frances'
+object_serialization: { 'nested1': 'value1', 'nested2': 'value2' }
 ---
 ```
+
 <!-- endSnippet -->
 
 The following table shows how most of those properties are interpreted in Tasks queries:
 
 <!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_frontmatter_properties.approved.md -->
 
-| Field | Type 1 | Example 1 |
-| ----- | ----- | ----- |
-| `task.file.hasProperty('creation date')` | `boolean` | `true` |
-| `task.file.property('creation date')` | `string` | `'2024-05-25T15:17:00'` |
-| `task.file.property('sample_checkbox_property')` | `boolean` | `true` |
-| `task.file.property('sample_date_property')` | `string` | `'2024-07-21'` |
-| `task.file.property('sample_date_and_time_property')` | `string` | `'2024-07-21T12:37:00'` |
-| `task.file.property('sample_list_property')` | `string[]` | `['Sample', 'List', 'Value']` |
-| `task.file.property('sample_number_property')` | `number` | `246` |
-| `task.file.property('sample_text_property')` | `string` | `'Sample Text Value'` |
-| `task.file.property('sample_text_multiline_property')` | `string` | `'Sample\nText\nValue\n'` |
-| `task.file.property('sample_link_property')` | `string` | `'[[yaml_all_property_types_populated]]'` |
-| `task.file.property('sample_link_list_property')` | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
-| `task.file.property('tags')` | `string[]` | `['#tag-from-file-properties']` |
-| `task.file.property('nested_data').surname` | `string` | `'Doe'` |
-| `task.file.property('nested_data').firstname` | `string` | `'Jane'` |
-| `task.file.property('nested_data')['middle name']` | `string` | `'Frances'` |
-| `task.file.property('object_serialization').nested1` | `string` | `'value1'` |
-| `task.file.property('object_serialization').nested2` | `string` | `'value2'` |
+| Field                                                  | Type 1     | Example 1                                                                        |
+| ------------------------------------------------------ | ---------- | -------------------------------------------------------------------------------- |
+| `task.file.hasProperty('creation date')`               | `boolean`  | `true`                                                                           |
+| `task.file.property('creation date')`                  | `string`   | `'2024-05-25T15:17:00'`                                                          |
+| `task.file.property('sample_checkbox_property')`       | `boolean`  | `true`                                                                           |
+| `task.file.property('sample_date_property')`           | `string`   | `'2024-07-21'`                                                                   |
+| `task.file.property('sample_date_and_time_property')`  | `string`   | `'2024-07-21T12:37:00'`                                                          |
+| `task.file.property('sample_list_property')`           | `string[]` | `['Sample', 'List', 'Value']`                                                    |
+| `task.file.property('sample_number_property')`         | `number`   | `246`                                                                            |
+| `task.file.property('sample_text_property')`           | `string`   | `'Sample Text Value'`                                                            |
+| `task.file.property('sample_text_multiline_property')` | `string`   | `'Sample\nText\nValue\n'`                                                        |
+| `task.file.property('sample_link_property')`           | `string`   | `'[[yaml_all_property_types_populated]]'`                                        |
+| `task.file.property('sample_link_list_property')`      | `string[]` | `['[[yaml_all_property_types_populated]]', '[[yaml_all_property_types_empty]]']` |
+| `task.file.property('tags')`                           | `string[]` | `['#tag-from-file-properties']`                                                  |
+| `task.file.property('nested_data').surname`            | `string`   | `'Doe'`                                                                          |
+| `task.file.property('nested_data').firstname`          | `string`   | `'Jane'`                                                                         |
+| `task.file.property('nested_data')['middle name']`     | `string`   | `'Frances'`                                                                      |
+| `task.file.property('object_serialization').nested1`   | `string`   | `'value1'`                                                                       |
+| `task.file.property('object_serialization').nested2`   | `string`   | `'value2'`                                                                       |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -285,7 +287,11 @@ It can be used in queries in several ways:
 2. An entire instruction controlled by front-matter value, embedded with a [[Placeholders|placeholder]]:
 
     ```javascript
-    {{query.file.property('groupby') ?? ''}}
+    {
+        {
+            query.file.property('groupby') ?? '';
+        }
+    }
     ```
 
     The `?? ''` text ensures that if the property is not set, the instruction is ignored, instead of `null` being inserted.
@@ -294,7 +300,7 @@ It can be used in queries in several ways:
 > See also [[Query File Defaults]] for built-in properties automatically supported by Tasks searches.
 
 > [!warning] Using properties with no value
-> Currently when a property in a placeholder is *not* set:
+> Currently when a property in a placeholder is _not_ set:
 >
 > - in text instructions, the string used is currently `null`, which is not likely to be the intent
 > - in numeric instructions, the value used is `null` which gives an error

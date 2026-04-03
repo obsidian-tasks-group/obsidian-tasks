@@ -8,47 +8,47 @@ If your plugin does not need CSS, delete this file.
 */
 
 .js-engine-button {
-	/* Add a gap between text and icons. */
-	gap: var(--size-4-1);
+    /* Add a gap between text and icons. */
+    gap: var(--size-4-1);
 }
 
 .js-engine-button.mod-plain {
-	background: none;
-	box-shadow: none;
-	border: none;
+    background: none;
+    box-shadow: none;
+    border: none;
 
-	color: var(--text-muted);
+    color: var(--text-muted);
 }
 
 .js-engine-button.mod-plain:hover {
-	color: var(--text-normal);
+    color: var(--text-normal);
 }
 
 .js-engine-button.disabled {
-	opacity: 0.6;
+    opacity: 0.6;
 }
 
 .js-engine-message-counter {
-	margin-left: var(--size-4-1);
+    margin-left: var(--size-4-1);
 }
 
 .js-engine-message-indicator-mod-info {
 }
 
 .js-engine-message-indicator-mod-tip {
-	color: var(--color-cyan);
+    color: var(--color-cyan);
 }
 
 .js-engine-message-indicator-mod-success {
-	color: var(--color-green);
+    color: var(--color-green);
 }
 
 .js-engine-message-indicator-mod-warning {
-	color: var(--color-yellow);
+    color: var(--color-yellow);
 }
 
 .js-engine-message-indicator-mod-error {
-	color: var(--color-red);
+    color: var(--color-red);
 }
 
 .js-engine-message {
@@ -58,120 +58,120 @@ If your plugin does not need CSS, delete this file.
 }
 
 .js-engine-message-title {
-	flex: 1;
+    flex: 1;
 }
 
 .js-engine-message-icon {
-	flex: 0 0 auto;
-	display: flex;
-	align-items: center;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
 }
 
 .js-engine-message-delete-icon svg.svg-icon {
-	color: var(--text-muted);
+    color: var(--text-muted);
 }
 
 .js-engine-message-delete-icon:hover svg.svg-icon {
-	color: var(--text-normal);
+    color: var(--text-normal);
 }
 
 .js-engine-message-detail {
-	margin-top: var(--size-4-8);
+    margin-top: var(--size-4-8);
 }
 
 .js-engine-message-detail-row {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: var(--size-4-2);
-	color: var(--text-muted);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--size-4-2);
+    color: var(--text-muted);
 }
 
 .js-engine-message-detail-row:hover {
-	color: var(--text-normal);
+    color: var(--text-normal);
 }
 
 .js-engine-message-detail-content {
-	color: var(--text-muted);
+    color: var(--text-muted);
 }
 
 .js-engine-message-content pre,
 .js-engine-execution-stats-modal pre {
-	padding: var(--size-4-2) var(--size-4-4);
-	border-radius: var(--radius-s);
-	white-space: pre;
-	overflow-x: auto;
+    padding: var(--size-4-2) var(--size-4-4);
+    border-radius: var(--radius-s);
+    white-space: pre;
+    overflow-x: auto;
 }
 
 .js-engine-execution-render-child {
-	position: relative;
+    position: relative;
 }
 
 .js-engine-execution-stats-button {
-	display: none;
-	position: absolute;
-	top: 0;
-	right: 0;
-	color: var(--text-muted);
-	margin: var(--size-4-2);
-	padding: var(--size-4-2);
-	border-radius: var(--radius-s);
-	width: calc(18px + var(--size-4-2) * 2);
-	height: calc(18px + var(--size-4-2) * 2);
-	z-index: 100;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: var(--text-muted);
+    margin: var(--size-4-2);
+    padding: var(--size-4-2);
+    border-radius: var(--radius-s);
+    width: calc(18px + var(--size-4-2) * 2);
+    height: calc(18px + var(--size-4-2) * 2);
+    z-index: 100;
 }
 
 .js-engine-execution-stats-button:hover {
-	background: var(--background-modifier-hover);
+    background: var(--background-modifier-hover);
 }
 
 .js-engine-execution-render-child:hover .js-engine-execution-stats-button {
-	display: revert;
+    display: revert;
 }
 
 .js-engine-execution-stats-modal {
 }
 
 .modal:has(> .js-engine-execution-stats-modal) {
-	width: unset;
-	min-width: 80%;
-	max-width: 100%;
+    width: unset;
+    min-width: 80%;
+    max-width: 100%;
 }
 
 .js-engine-list {
-	margin-bottom: var(--size-4-4);
-	display: flex;
-	flex-direction: column;
-	gap: var(--size-4-1);
+    margin-bottom: var(--size-4-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-4-1);
 }
 
 .js-engine-list-item {
-	display: flex;
-	padding: var(--size-4-1) var(--size-4-2);
-	border-radius: var(--mb-border-radius);
-	user-select: text;
+    display: flex;
+    padding: var(--size-4-1) var(--size-4-2);
+    border-radius: var(--mb-border-radius);
+    user-select: text;
 
-	& > span {
-		flex-grow: 1;
-		align-content: center;
-	}
+    & > span {
+        flex-grow: 1;
+        align-content: center;
+    }
 
-	&:hover {
-		background: var(--background-modifier-hover);
-	}
+    &:hover {
+        background: var(--background-modifier-hover);
+    }
 }
 
 .js-engine-icon-wrapper {
-	display: block;
-	position: relative;
-	width: 18px;
-	height: 18px;
+    display: block;
+    position: relative;
+    width: 18px;
+    height: 18px;
 }
 
 .js-engine-icon-wrapper > svg {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

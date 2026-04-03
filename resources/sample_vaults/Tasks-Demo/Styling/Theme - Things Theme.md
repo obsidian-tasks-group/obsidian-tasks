@@ -29,7 +29,6 @@ Available checkbox icons:
 - [u] #task `u` up
 - [d] #task `d` down
 
-
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type

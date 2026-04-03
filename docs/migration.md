@@ -1,7 +1,7 @@
 ---
 publish: false
 aliases:
-  - Migration to Publish
+    - Migration to Publish
 ---
 
 # Migration to Publish
@@ -44,8 +44,8 @@ Notes and reminders of things to do.
 >   - They do show up on Chrome on iPhone
 >   - When I "reload without content blockers" in Safari, the comments do show up
 > - In [[Set up custom statuses#Adding more statuses]], **the link** [[Status Settings#Bulk-adding Statuses|Bulk-adding Statuses]] **does not jump to the correct heading**, either in Obsidian or in Publish
->   - The Bulk adding link *does work here*
->   - But the "adding more statuses" one *doesn't* work here :-(
+>   - The Bulk adding link _does work here_
+>   - But the "adding more statuses" one _doesn't_ work here :-(
 >   - Later: now they both work everywhere
 >   - Most of the time
 >
@@ -72,12 +72,12 @@ Notes and reminders of things to do.
 
 ## Useful Links
 
-| What                                                               | Location of source                                                                                                                                                                                                                                                                          |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Old Docs](https://obsidian-tasks-group.github.io/obsidian-tasks/) | [docs](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/docs) folder on the main branch                                                                                                                                                                                     |
+| What                                                               | Location of source                                                                                                                                                                                                                                                                      |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Old Docs](https://obsidian-tasks-group.github.io/obsidian-tasks/) | [docs](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/docs) folder on the main branch                                                                                                                                                                                 |
 | [New Docs](https://publish.obsidian.md/tasks/index) live           | [docs/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/port-user-guide-to-obs-publish-v3/docs) folder on the<br>[port-user-guide-to-obs-publish-v3 branch](https://github.com/obsidian-tasks-group/obsidian-tasks/compare/main...port-user-guide-to-obs-publish-v3) branch |
-| Conversion script and tests                                        | [github.com/claremacrae/jekyll_to_obsidian_publish](https://github.com/claremacrae/jekyll_to_obsidian_publish)                                                                                                                                                                              |
-| Issue tracking the work                                            | [#1706: # Migrate User Docs to Obsidian Publish, with current folder structure](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706)                                                                                                                                         |
+| Conversion script and tests                                        | [github.com/claremacrae/jekyll_to_obsidian_publish](https://github.com/claremacrae/jekyll_to_obsidian_publish)                                                                                                                                                                          |
+| Issue tracking the work                                            | [#1706: # Migrate User Docs to Obsidian Publish, with current folder structure](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706)                                                                                                                                     |
 
 - [Obsidian Publish docs](https://help.obsidian.md/Obsidian+Publish/Introduction+to+Obsidian+Publish)
 - [Callouts docs](https://help.obsidian.md/Editing+and+formatting/Callouts#Supported+types)

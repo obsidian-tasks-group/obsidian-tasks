@@ -1,8 +1,8 @@
 {
-  "$schema": "https://raw.githubusercontent.com/SimonCropp/MarkdownSnippets/master/schema.json",
-  "ExcludeDirectories": [ "node_modules", "contributing/_meta", "docs/_meta", "coverage", "venv" ],
-  "Convention": "InPlaceOverwrite",
-  "TocLevel": 5,
-  "OmitSnippetLinks": true,
-  "UrlPrefix": "https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main"
+    "$schema": "https://raw.githubusercontent.com/SimonCropp/MarkdownSnippets/master/schema.json",
+    "ExcludeDirectories": ["node_modules", "contributing/_meta", "docs/_meta", "coverage", "venv"],
+    "Convention": "InPlaceOverwrite",
+    "TocLevel": 5,
+    "OmitSnippetLinks": true,
+    "UrlPrefix": "https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main"
 }

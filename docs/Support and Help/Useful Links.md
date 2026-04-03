@@ -1,8 +1,8 @@
 ---
 publish: true
 aliases:
-  - Useful Links
-  - Support and Help/Resources
+    - Useful Links
+    - Support and Help/Resources
 ---
 
 # Useful Links

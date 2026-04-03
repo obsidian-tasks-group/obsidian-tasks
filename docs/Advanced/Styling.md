@@ -9,7 +9,7 @@ publish: true
 ## Introduction
 
 > [!released]
-Almost all the features below were introduced in Tasks 3.0.0.
+> Almost all the features below were introduced in Tasks 3.0.0.
 
 In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes and data attributes that represent many of each task's content, to allow for very extensive styling options via CSS.
 Not only each component in a rendered task line is tagged with classes to differentiate it, many components also add classes and data attributes that represent the actual content of the task, so CSS rules can refer to data such as the relative due date of a task or its specific priority.
@@ -23,13 +23,13 @@ Thank you in advance!
 ### Backwards compatibility and CSS snippets
 
 > [!warning]
-If you find any existing Tasks CSS snippets stopped working with Tasks 3.0.0, follow the advice in
-[[Styling#Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0|Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]] below.
+> If you find any existing Tasks CSS snippets stopped working with Tasks 3.0.0, follow the advice in
+> [[Styling#Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0|Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]] below.
 
 ## Basic Task Structure
 
 > [!released]
-The following description relates to a restructuring of the rendered tasks that was introduced in Tasks 3.0.0.
+> The following description relates to a restructuring of the rendered tasks that was introduced in Tasks 3.0.0.
 
 The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same except the top-most containers):
 
@@ -37,29 +37,29 @@ The Tasks plugin renders a task in the following structure (this refers to query
 
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
-  - Toolbar (div class="plugin-tasks-toolbar")
-  - Results list (ul class="plugin-tasks-query-result") OR Reading View list (ul class="contains-task-list")
-    - Task (li class="task-list-item" + attributes like data-task-priority="medium" data-task-due="past-1d" + data-task="[custom_status]" + data-line="[line]")
-      - Task checkbox (li class="task-list-item-checkbox")
-      - Task content (span class="tasks-list-text")
-        - Task description and tags (span class="task-description")
-          - Internal span
-            - Each tag in the description is wrapped in <a href class="tag" data-tag-name="[tag-name]">
-        - Task ID (span class="task-id")
-          - Internal span
-        - Task 'depends on' (span class="task-dependsOn")
-          - Internal span
-        - Task priority (span class="task-priority" + data-task-priority attribute)
-          - Internal span
-        - Task recurrence rule (span class="task-recurring")
-          - Internal span
-        - Task 'on completion' (span class="onCompletion")
-          - Internal span
-        - Task created date (span class="task-created" + data-task-created attribute)
-          - Internal span
-        - ... start date, scheduled date, due date, cancelled date and done date in this order
-      - Task extras (link, edit button, postpone button) (span class="task-extras")
-  - Tasks count (div class="tasks-count")
+    - Toolbar (div class="plugin-tasks-toolbar")
+    - Results list (ul class="plugin-tasks-query-result") OR Reading View list (ul class="contains-task-list")
+        - Task (li class="task-list-item" + attributes like data-task-priority="medium" data-task-due="past-1d" + data-task="[custom_status]" + data-line="[line]")
+            - Task checkbox (li class="task-list-item-checkbox")
+            - Task content (span class="tasks-list-text")
+                - Task description and tags (span class="task-description")
+                    - Internal span
+                        - Each tag in the description is wrapped in <a href class="tag" data-tag-name="[tag-name]">
+                - Task ID (span class="task-id")
+                    - Internal span
+                - Task 'depends on' (span class="task-dependsOn")
+                    - Internal span
+                - Task priority (span class="task-priority" + data-task-priority attribute)
+                    - Internal span
+                - Task recurrence rule (span class="task-recurring")
+                    - Internal span
+                - Task 'on completion' (span class="onCompletion")
+                    - Internal span
+                - Task created date (span class="task-created" + data-task-created attribute)
+                    - Internal span
+                - ... start date, scheduled date, due date, cancelled date and done date in this order
+            - Task extras (link, edit button, postpone button) (span class="task-extras")
+    - Tasks count (div class="tasks-count")
 ```
 
 As can be seen above, the basic task `li` contains a checkbox and a content span.
@@ -101,7 +101,7 @@ Below is the same Tasks search in [[Layout#Short Mode|short mode]].
 ## Generic Classes and Data Attributes
 
 > [!released]
-Data attributes were introduced in Tasks 3.0.0.
+> Data attributes were introduced in Tasks 3.0.0.
 
 Each rendered task component (description, priority, recurrence rule etc) includes a **generic class** that denotes this type of component.
 The generic classes are:
@@ -128,6 +128,7 @@ A **priority data attributes** named `data-task-priority` represents the specifi
 The `normal` value is special: it is added as a default to a task's upper `task-list-item` even if there is no priority field set for that task.
 
 <!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
+
 A **date attribute** represents a due, created, start, scheduled or done date in a format relative to the current date.
 The date attributes are `data-task-due`, `data-task-created`, `data-task-start`, `data-task-scheduled`, `data-task-cancelled` and `data-task-done` and are populated with a relative expression that denotes the number of days this field represents compared to today:
 
@@ -138,14 +139,14 @@ The date attributes are `data-task-due`, `data-task-created`, `data-task-start`,
 - Dates that are further than 7 days in the future or past are given a `far` postfix, e.g. `data-task-scheduled="future-far"` or `data-task-due="past-far"`.
 
 A **tag data attribute** repeats each tag's content as a data attribute, for the purpose of applying formatting according to specific tags.
-The tag `<a>` elements are added a `data-tag-name` attribute with a *sanitized* version of the tag name, which basically means that characters that are illegal to use in HTML attributes (e.g. `&`, `"`) are replaced with dashes.
+The tag `<a>` elements are added a `data-tag-name` attribute with a _sanitized_ version of the tag name, which basically means that characters that are illegal to use in HTML attributes (e.g. `&`, `"`) are replaced with dashes.
 
 Data attributes are added to both their corresponding components (e.g. to the due date component) and also to the complete task `li`, to make it easy for a CSS rule to style a complete task according to some property (e.g. color differently the complete task if it's due today, color a task according to a tag) or just one relevant component.
 
 An exception is the tag data attribute which is added only to the tag's `<a>` element within the rendered description -- however you can still use a CSS `:has` selector to format an entire task's description according to a tag, as demonstrated in the examples below.
 
 > [!warning]
-The CSS `:has` selector is available with Obsidian installer version 1.1.9 and newer. You can run the Obsidian command `Show debug info` to see your current installer version.
+> The CSS `:has` selector is available with Obsidian installer version 1.1.9 and newer. You can run the Obsidian command `Show debug info` to see your current installer version.
 
 **Tip:** [CSS wildcard selectors](https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/) are a good way to select all past dates or future dates at once -- just use `.task-due[data-task-due^="past-"]` to address all overdue tasks, for example. Examples that utilize this can be found below.
 
@@ -168,9 +169,9 @@ See [[How to style buttons]] for a variety of ways to style the Edit and Postpon
 
 Task statuses are represented by a few data attributes, all set on the `task-list-item` `LI` element:
 
-- `data-task` contains the *status symbol*, e.g. "" for a regular TODO, "x" for a regular DONE, or any other symbols that you use.
-- `data-task-status-type` contains the *status type*, e.g. "TODO", "DONE", "IN_PROGRESS".
-- `data-task-status-name` contains the *status name*, e.g. "Todo", "Done", "In Progress".
+- `data-task` contains the _status symbol_, e.g. "" for a regular TODO, "x" for a regular DONE, or any other symbols that you use.
+- `data-task-status-type` contains the _status type_, e.g. "TODO", "DONE", "IN_PROGRESS".
+- `data-task-status-name` contains the _status name_, e.g. "Todo", "Done", "In Progress".
 
 These attributes can be used to style tasks according to their status, with the status type being the preferred selector in most cases.
 
@@ -181,7 +182,7 @@ These attributes can be used to style tasks according to their status, with the 
     - Reading mode,
     - Tasks query blocks in Reading and Live Preview modes.
   - We are tracking this in issues [#3676](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3676) and [#3677](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3677).
-- Styles **cannot access any automatic scheduled date** that is created if the [[Use Filename as Default Date]]  option is enabled.
+- Styles **cannot access any automatic scheduled date** that is created if the [[Use Filename as Default Date]] option is enabled.
   - We are tracking this in [issue #1947](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1947).
 
 ## More Classes
@@ -230,6 +231,7 @@ Feel free to add your own too!
 Making tags, internal links and the recurrence rules of tasks to appear in gray:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-tags-links-recurrence-gray.css -->
+
 ```css
 .tasks-list-text a.tag {
     color: var(--list-marker-color);
@@ -243,6 +245,7 @@ Making tags, internal links and the recurrence rules of tasks to appear in gray:
     color: var(--list-marker-color);
 }
 ```
+
 <!-- endSnippet -->
 
 For example:
@@ -254,33 +257,34 @@ For example:
 The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in purple, red, orange, blue, cyan and green according to the tasks' priority:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-priority-as-checkbox-color.css -->
+
 ```css
-.task-list-item[data-task-priority="highest"] input[type=checkbox] {
+.task-list-item[data-task-priority='highest'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-purple);
     border-color: var(--color-purple);
 }
 
-.task-list-item[data-task-priority="high"] input[type=checkbox] {
+.task-list-item[data-task-priority='high'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-red);
     border-color: var(--color-red);
 }
 
-.task-list-item[data-task-priority="medium"] input[type=checkbox] {
+.task-list-item[data-task-priority='medium'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-orange);
     border-color: var(--color-orange);
 }
 
-.task-list-item[data-task-priority="normal"] input[type=checkbox] {
+.task-list-item[data-task-priority='normal'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-blue);
     border-color: var(--color-blue);
 }
 
-.task-list-item[data-task-priority="low"] input[type=checkbox] {
+.task-list-item[data-task-priority='low'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-cyan);
     border-color: var(--color-cyan);
 }
 
-.task-list-item[data-task-priority="lowest"] input[type=checkbox] {
+.task-list-item[data-task-priority='lowest'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-green);
     border-color: var(--color-green);
 }
@@ -290,6 +294,7 @@ span.task-priority {
     display: none;
 }
 ```
+
 <!-- endSnippet -->
 
 For example:
@@ -303,11 +308,13 @@ For example:
 To create a green halo around the checkbox of tasks with a `/` status symbol, add the following CSS snippet:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-status-symbols.css -->
+
 ```css
-li.task-list-item[data-task="/"] .task-list-item-checkbox {
+li.task-list-item[data-task='/'] .task-list-item-checkbox {
     box-shadow: 0 0 10px green !important;
 }
 ```
+
 <!-- endSnippet -->
 
 For example, in Reading mode:
@@ -322,12 +329,14 @@ Alternatively, you can use the status type to write rules that are independent o
 Here, we put a green halo around all actionable tasks:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-status-types.css -->
+
 ```css
-li.task-list-item[data-task-status-type="TODO"] .task-list-item-checkbox,
-li.task-list-item[data-task-status-type="IN_PROGRESS"] .task-list-item-checkbox {
+li.task-list-item[data-task-status-type='TODO'] .task-list-item-checkbox,
+li.task-list-item[data-task-status-type='IN_PROGRESS'] .task-list-item-checkbox {
     box-shadow: 0 0 10px green !important;
 }
 ```
+
 <!-- endSnippet -->
 
 We take the view that the status type [[Status Types#ON_HOLD|ON_HOLD]] is not (yet) actionable, and so have not included that value in the snippet.
@@ -343,23 +352,25 @@ Again, the screenshot was taken with the Prism theme and the `!important` [flag]
 The following rules mark 'today' due dates as cyan and past due dates as red:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-color-due-today-and-overdue.css -->
+
 ```css
 /* A special color for the 'due' component if it's for today */
-.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due="today"] span,
-.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due="today"] span {
+.task-list-item[data-task-status-type='TODO'] .task-due[data-task-due='today'] span,
+.task-list-item[data-task-status-type='IN_PROGRESS'] .task-due[data-task-due='today'] span {
     background: var(--color-cyan);
     border-radius: 10px;
     padding: 2px 8px;
 }
 
 /* A special color for overdue due dates */
-.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due^="past-"] span,
-.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due^="past-"] span {
+.task-list-item[data-task-status-type='TODO'] .task-due[data-task-due^='past-'] span,
+.task-list-item[data-task-status-type='IN_PROGRESS'] .task-due[data-task-due^='past-'] span {
     background: var(--color-pink);
     border-radius: 10px;
     padding: 2px 8px;
 }
 ```
+
 <!-- endSnippet -->
 
 For example:
@@ -373,11 +384,13 @@ Note that we only include the status type in the selector, to avoid highlighting
 The following rule adds a green glow around `#task/atHome` tags inside the description:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-green-glow.css -->
+
 ```css
-a.tag[data-tag-name="#task/atHome"] {
+a.tag[data-tag-name='#task/atHome'] {
     box-shadow: 0 0 5px green;
 }
 ```
+
 <!-- endSnippet -->
 
 For example:
@@ -387,13 +400,15 @@ For example:
 The following rule adds a rounded red background to the description of a task if it contains the tag `#task/strategic`:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-round-red-description.css -->
+
 ```css
-.task-description span:has(.tag[data-tag-name="#task/strategic"]) {
+.task-description span:has(.tag[data-tag-name='#task/strategic']) {
     background: #ffbfcc;
     border-radius: 10px;
     padding: 2px 8px;
 }
 ```
+
 <!-- endSnippet -->
 
 For example:
@@ -405,6 +420,7 @@ For example:
 The following renders checkboxes as circles instead of squares:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-circular-checkboxes.css -->
+
 ```css
 ul > li.plugin-tasks-list-item .task-list-item-checkbox {
     margin-inline-start: 0;
@@ -412,6 +428,7 @@ ul > li.plugin-tasks-list-item .task-list-item-checkbox {
     border-radius: 50%;
 }
 ```
+
 <!-- endSnippet -->
 
 For example:
@@ -427,6 +444,7 @@ The following organizes the task structure into a 3-line grid, on which:
 - the urgency, backlink, edit and postpone buttons are, if displayed, on the third.
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-grid-layout.css -->
+
 ```css
 ul > li.plugin-tasks-list-item {
     grid-template-columns: 25px auto;
@@ -478,10 +496,11 @@ span.task-extras {
 
 /* Make sure nested bullets in Reading mode get the whole width of the grid */
 li.task-list-item ul.has-list-bullet {
- grid-row: 3;
- grid-column: 1/10;
+    grid-row: 3;
+    grid-column: 1/10;
 }
 ```
+
 <!-- endSnippet -->
 
 For example, in Reading view:
@@ -497,6 +516,7 @@ And in a Tasks query block:
 The following can be used as a base for a full CSS snippet:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-complete-example.css -->
+
 ```css
 /* I like tags to appear in gray so they won't grab too much attention */
 .tasks-list-text a.tag {
@@ -524,32 +544,32 @@ span.tasks-list-text {
 }
 
 /* Represent tasks' priority with colorful round checkboxes instead of the priority emoticons */
-.task-list-item[data-task-priority="highest"] input[type=checkbox] {
+.task-list-item[data-task-priority='highest'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-purple);
     border-color: var(--color-purple);
 }
 
-.task-list-item[data-task-priority="high"] input[type=checkbox] {
+.task-list-item[data-task-priority='high'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-red);
     border-color: var(--color-red);
 }
 
-.task-list-item[data-task-priority="medium"] input[type=checkbox] {
+.task-list-item[data-task-priority='medium'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-orange);
     border-color: var(--color-orange);
 }
 
-.task-list-item[data-task-priority="normal"] input[type=checkbox] {
+.task-list-item[data-task-priority='normal'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-blue);
     border-color: var(--color-blue);
 }
 
-.task-list-item[data-task-priority="low"] input[type=checkbox] {
+.task-list-item[data-task-priority='low'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-cyan);
     border-color: var(--color-cyan);
 }
 
-.task-list-item[data-task-priority="lowest"] input[type=checkbox] {
+.task-list-item[data-task-priority='lowest'] input[type='checkbox'] {
     box-shadow: 0px 0px 2px 2px var(--color-green);
     border-color: var(--color-green);
 }
@@ -560,16 +580,16 @@ span.task-priority {
 }
 
 /* A special color for the 'due' component if it's for today, and still needs work on */
-.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due="today"] span,
-.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due="today"] span {
+.task-list-item[data-task-status-type='TODO'] .task-due[data-task-due='today'] span,
+.task-list-item[data-task-status-type='IN_PROGRESS'] .task-due[data-task-due='today'] span {
     background: var(--color-cyan);
     border-radius: 10px;
     padding: 2px 8px;
 }
 
 /* A special color for overdue due dates, for tasks that still need work on */
-.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due^="past-"] span,
-.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due^="past-"] span {
+.task-list-item[data-task-status-type='TODO'] .task-due[data-task-due^='past-'] span,
+.task-list-item[data-task-status-type='IN_PROGRESS'] .task-due[data-task-due^='past-'] span {
     background: var(--color-pink);
     border-radius: 10px;
     padding: 2px 8px;
@@ -634,10 +654,11 @@ span.task-extras {
 
 /* Make sure nested bullets in Reading mode get the whole width of the grid */
 li.task-list-item ul.has-list-bullet {
- grid-row: 3;
- grid-column: 1/10;
+    grid-row: 3;
+    grid-column: 1/10;
 }
 ```
+
 <!-- endSnippet -->
 
 For example:

@@ -11,7 +11,8 @@
     width: 100%;
 }
 
-.table-view-table > thead > tr, .table-view-table > tbody > tr {
+.table-view-table > thead > tr,
+.table-view-table > tbody > tr {
     margin-top: 1em;
     margin-bottom: 1em;
     text-align: left;
@@ -39,7 +40,8 @@
     max-width: 100%;
 }
 
-.table-view-table ul, .table-view-table ol {
+.table-view-table ul,
+.table-view-table ol {
     margin-block-start: 0.2em !important;
     margin-block-end: 0.2em !important;
 }
@@ -92,13 +94,15 @@
 /** Task View **/
 /***************/
 
-.dataview.task-list-item, .dataview.task-list-basic-item {
+.dataview.task-list-item,
+.dataview.task-list-basic-item {
     margin-top: 3px;
     margin-bottom: 3px;
     transition: 0.4s;
 }
 
-.dataview.task-list-item:hover, .dataview.task-list-basic-item:hover {
+.dataview.task-list-item:hover,
+.dataview.task-list-basic-item:hover {
     background-color: var(--text-selection);
     box-shadow: -40px 0 0 var(--text-selection);
     cursor: pointer;
@@ -133,9 +137,9 @@ div.dataview-error-box {
 }
 
 .dataview.small-text::before {
-	content: "(";
+    content: '(';
 }
 
 .dataview.small-text::after {
-	content: ")";
+    content: ')';
 }

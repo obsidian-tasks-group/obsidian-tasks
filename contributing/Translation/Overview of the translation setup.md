@@ -31,20 +31,20 @@ Here, they are nested, for example:
 
 ```json
 {
-  "modals": {
-    "customStatusModal": {
-      "editAvailableAsCommand": {
-        "name": "Available as command"
-      },
-    },
-  },
+    "modals": {
+        "customStatusModal": {
+            "editAvailableAsCommand": {
+                "name": "Available as command"
+            }
+        }
+    }
 }
 ```
 
 The value of that string is obtained in code with:
 
 ```ts
-i18n.t('modals.customStatusModal.editAvailableAsCommand.name')
+i18n.t('modals.customStatusModal.editAvailableAsCommand.name');
 ```
 
 In WebStorm with the Easy I18n plugin configured, hovering over that `i18n.t()` will show you the expanded text.

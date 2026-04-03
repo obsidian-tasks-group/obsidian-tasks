@@ -1,249 +1,247 @@
 {
-  "cachedMetadata": {
-    "headings": [
-      {
-        "heading": "code_block_in_task",
-        "level": 1,
-        "position": {
-          "end": {
-            "col": 20,
-            "line": 0,
-            "offset": 20
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        }
-      },
-      {
-        "heading": "Tasks with code blocks - code-blocks wrongly hidden",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 54,
-            "line": 2,
-            "offset": 76
-          },
-          "start": {
-            "col": 0,
-            "line": 2,
-            "offset": 22
-          }
-        }
-      },
-      {
-        "heading": "Non-tasks with code blocks - code blocks rendered correctly",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 62,
-            "line": 14,
-            "offset": 548
-          },
-          "start": {
-            "col": 0,
-            "line": 14,
-            "offset": 486
-          }
-        }
-      }
-    ],
-    "listItems": [
-      {
-        "parent": -4,
-        "position": {
-          "end": {
-            "col": 5,
-            "line": 7,
-            "offset": 151
-          },
-          "start": {
-            "col": 0,
-            "line": 4,
-            "offset": 78
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -11,
-        "position": {
-          "end": {
-            "col": 128,
-            "line": 11,
-            "offset": 298
-          },
-          "start": {
-            "col": 0,
-            "line": 11,
-            "offset": 170
-          }
-        }
-      },
-      {
-        "parent": -11,
-        "position": {
-          "end": {
-            "col": 185,
-            "line": 12,
-            "offset": 484
-          },
-          "start": {
-            "col": 0,
-            "line": 12,
-            "offset": 299
-          }
-        }
-      },
-      {
-        "parent": -16,
-        "position": {
-          "end": {
-            "col": 5,
-            "line": 19,
-            "offset": 621
-          },
-          "start": {
-            "col": 0,
-            "line": 16,
-            "offset": 550
-          }
-        },
-        "task": " "
-      }
-    ],
-    "sections": [
-      {
-        "position": {
-          "end": {
-            "col": 20,
-            "line": 0,
-            "offset": 20
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 54,
-            "line": 2,
-            "offset": 76
-          },
-          "start": {
-            "col": 0,
-            "line": 2,
-            "offset": 22
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 5,
-            "line": 7,
-            "offset": 151
-          },
-          "start": {
-            "col": 0,
-            "line": 4,
-            "offset": 78
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 15,
-            "line": 9,
-            "offset": 168
-          },
-          "start": {
-            "col": 0,
-            "line": 9,
-            "offset": 153
-          }
-        },
-        "type": "paragraph"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 185,
-            "line": 12,
-            "offset": 484
-          },
-          "start": {
-            "col": 0,
-            "line": 11,
-            "offset": 170
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 62,
-            "line": 14,
-            "offset": 548
-          },
-          "start": {
-            "col": 0,
-            "line": 14,
-            "offset": 486
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 5,
-            "line": 19,
-            "offset": 621
-          },
-          "start": {
-            "col": 0,
-            "line": 16,
-            "offset": 550
-          }
-        },
-        "type": "list"
-      }
-    ],
-    "tags": [
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 4,
-            "offset": 89
-          },
-          "start": {
-            "col": 6,
-            "line": 4,
-            "offset": 84
-          }
-        },
-        "tag": "#task"
-      }
-    ]
-  },
-  "fileContents": "# code_block_in_task\n\n## Tasks with code blocks - code-blocks wrongly hidden\n\n- [ ] #task Task in 'code_block_in_task' level-1-b\n  ```sh\n  ls -la\n  ```\n\nRelated issues:\n\n- #3344: [Code block in list doesn't render in Reading mode](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3344)\n- #2061: [Multi-line tasks (indented lines below a task items) are not shown in Reading mode and Tasks query results](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2061)\n\n## Non-tasks with code blocks - code blocks rendered correctly\n\n- [ ] Non-task in 'code_block_in_task' level-1-b\n  ```sh\n  ls -la\n  ```\n",
-  "filePath": "Test Data/code_block_in_task.md",
-  "getAllTags": [
-    "#task"
-  ],
-  "parseFrontMatterTags": null,
-  "resolveLinkToPath": {}
+    "cachedMetadata": {
+        "headings": [
+            {
+                "heading": "code_block_in_task",
+                "level": 1,
+                "position": {
+                    "end": {
+                        "col": 20,
+                        "line": 0,
+                        "offset": 20
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                }
+            },
+            {
+                "heading": "Tasks with code blocks - code-blocks wrongly hidden",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 54,
+                        "line": 2,
+                        "offset": 76
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 2,
+                        "offset": 22
+                    }
+                }
+            },
+            {
+                "heading": "Non-tasks with code blocks - code blocks rendered correctly",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 62,
+                        "line": 14,
+                        "offset": 548
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 14,
+                        "offset": 486
+                    }
+                }
+            }
+        ],
+        "listItems": [
+            {
+                "parent": -4,
+                "position": {
+                    "end": {
+                        "col": 5,
+                        "line": 7,
+                        "offset": 151
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 4,
+                        "offset": 78
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -11,
+                "position": {
+                    "end": {
+                        "col": 128,
+                        "line": 11,
+                        "offset": 298
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 11,
+                        "offset": 170
+                    }
+                }
+            },
+            {
+                "parent": -11,
+                "position": {
+                    "end": {
+                        "col": 185,
+                        "line": 12,
+                        "offset": 484
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 12,
+                        "offset": 299
+                    }
+                }
+            },
+            {
+                "parent": -16,
+                "position": {
+                    "end": {
+                        "col": 5,
+                        "line": 19,
+                        "offset": 621
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 16,
+                        "offset": 550
+                    }
+                },
+                "task": " "
+            }
+        ],
+        "sections": [
+            {
+                "position": {
+                    "end": {
+                        "col": 20,
+                        "line": 0,
+                        "offset": 20
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 54,
+                        "line": 2,
+                        "offset": 76
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 2,
+                        "offset": 22
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 5,
+                        "line": 7,
+                        "offset": 151
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 4,
+                        "offset": 78
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 15,
+                        "line": 9,
+                        "offset": 168
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 9,
+                        "offset": 153
+                    }
+                },
+                "type": "paragraph"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 185,
+                        "line": 12,
+                        "offset": 484
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 11,
+                        "offset": 170
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 62,
+                        "line": 14,
+                        "offset": 548
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 14,
+                        "offset": 486
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 5,
+                        "line": 19,
+                        "offset": 621
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 16,
+                        "offset": 550
+                    }
+                },
+                "type": "list"
+            }
+        ],
+        "tags": [
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 4,
+                        "offset": 89
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 4,
+                        "offset": 84
+                    }
+                },
+                "tag": "#task"
+            }
+        ]
+    },
+    "fileContents": "# code_block_in_task\n\n## Tasks with code blocks - code-blocks wrongly hidden\n\n- [ ] #task Task in 'code_block_in_task' level-1-b\n  ```sh\n  ls -la\n  ```\n\nRelated issues:\n\n- #3344: [Code block in list doesn't render in Reading mode](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3344)\n- #2061: [Multi-line tasks (indented lines below a task items) are not shown in Reading mode and Tasks query results](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2061)\n\n## Non-tasks with code blocks - code blocks rendered correctly\n\n- [ ] Non-task in 'code_block_in_task' level-1-b\n  ```sh\n  ls -la\n  ```\n",
+    "filePath": "Test Data/code_block_in_task.md",
+    "getAllTags": ["#task"],
+    "parseFrontMatterTags": null,
+    "resolveLinkToPath": {}
 }

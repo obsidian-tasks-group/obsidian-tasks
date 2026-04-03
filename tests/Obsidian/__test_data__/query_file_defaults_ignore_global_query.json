@@ -1,127 +1,125 @@
 {
-  "cachedMetadata": {
-    "frontmatter": {
-      "TQ_extra_instructions": "description includes I came from the TQ_extra_instructions property\nignore global query"
+    "cachedMetadata": {
+        "frontmatter": {
+            "TQ_extra_instructions": "description includes I came from the TQ_extra_instructions property\nignore global query"
+        },
+        "frontmatterLinks": [],
+        "frontmatterPosition": {
+            "end": {
+                "col": 3,
+                "line": 4,
+                "offset": 125
+            },
+            "start": {
+                "col": 0,
+                "line": 0,
+                "offset": 0
+            }
+        },
+        "headings": [
+            {
+                "heading": "query_file_defaults_ignore_global_query",
+                "level": 1,
+                "position": {
+                    "end": {
+                        "col": 41,
+                        "line": 6,
+                        "offset": 168
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 6,
+                        "offset": 127
+                    }
+                }
+            }
+        ],
+        "listItems": [
+            {
+                "parent": -8,
+                "position": {
+                    "end": {
+                        "col": 61,
+                        "line": 8,
+                        "offset": 231
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 8,
+                        "offset": 170
+                    }
+                },
+                "task": " "
+            }
+        ],
+        "sections": [
+            {
+                "position": {
+                    "end": {
+                        "col": 3,
+                        "line": 4,
+                        "offset": 125
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                },
+                "type": "yaml"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 41,
+                        "line": 6,
+                        "offset": 168
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 6,
+                        "offset": 127
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 61,
+                        "line": 8,
+                        "offset": 231
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 8,
+                        "offset": 170
+                    }
+                },
+                "type": "list"
+            }
+        ],
+        "tags": [
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 8,
+                        "offset": 181
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 8,
+                        "offset": 176
+                    }
+                },
+                "tag": "#task"
+            }
+        ]
     },
-    "frontmatterLinks": [],
-    "frontmatterPosition": {
-      "end": {
-        "col": 3,
-        "line": 4,
-        "offset": 125
-      },
-      "start": {
-        "col": 0,
-        "line": 0,
-        "offset": 0
-      }
-    },
-    "headings": [
-      {
-        "heading": "query_file_defaults_ignore_global_query",
-        "level": 1,
-        "position": {
-          "end": {
-            "col": 41,
-            "line": 6,
-            "offset": 168
-          },
-          "start": {
-            "col": 0,
-            "line": 6,
-            "offset": 127
-          }
-        }
-      }
-    ],
-    "listItems": [
-      {
-        "parent": -8,
-        "position": {
-          "end": {
-            "col": 61,
-            "line": 8,
-            "offset": 231
-          },
-          "start": {
-            "col": 0,
-            "line": 8,
-            "offset": 170
-          }
-        },
-        "task": " "
-      }
-    ],
-    "sections": [
-      {
-        "position": {
-          "end": {
-            "col": 3,
-            "line": 4,
-            "offset": 125
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        },
-        "type": "yaml"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 41,
-            "line": 6,
-            "offset": 168
-          },
-          "start": {
-            "col": 0,
-            "line": 6,
-            "offset": 127
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 61,
-            "line": 8,
-            "offset": 231
-          },
-          "start": {
-            "col": 0,
-            "line": 8,
-            "offset": 170
-          }
-        },
-        "type": "list"
-      }
-    ],
-    "tags": [
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 8,
-            "offset": 181
-          },
-          "start": {
-            "col": 6,
-            "line": 8,
-            "offset": 176
-          }
-        },
-        "tag": "#task"
-      }
-    ]
-  },
-  "fileContents": "---\nTQ_extra_instructions: |-\n  description includes I came from the TQ_extra_instructions property\n  ignore global query\n---\n\n# query_file_defaults_ignore_global_query\n\n- [ ] #task Task in 'query_file_defaults_ignore_global_query'\n",
-  "filePath": "Test Data/query_file_defaults_ignore_global_query.md",
-  "getAllTags": [
-    "#task"
-  ],
-  "parseFrontMatterTags": null,
-  "resolveLinkToPath": {}
+    "fileContents": "---\nTQ_extra_instructions: |-\n  description includes I came from the TQ_extra_instructions property\n  ignore global query\n---\n\n# query_file_defaults_ignore_global_query\n\n- [ ] #task Task in 'query_file_defaults_ignore_global_query'\n",
+    "filePath": "Test Data/query_file_defaults_ignore_global_query.md",
+    "getAllTags": ["#task"],
+    "parseFrontMatterTags": null,
+    "resolveLinkToPath": {}
 }

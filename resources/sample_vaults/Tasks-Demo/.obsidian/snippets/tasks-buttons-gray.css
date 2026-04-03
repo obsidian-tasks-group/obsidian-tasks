@@ -1,3 +1,4 @@
-.tasks-edit, .tasks-postpone {
+.tasks-edit,
+.tasks-postpone {
     filter: grayscale(100%);
 }

@@ -72,4 +72,4 @@ In **Editing mode** (both Source mode and Live Preview) the options are:
 In **Reading mode** and **Tasks query search results** the options are:
 
 - Click or right-click ⏩ to use the [[Postponing|Postpone]] button.
-- Click the Pencil icon  (📝) to use the [[Create or edit Task]] modal/dialog.
+- Click the Pencil icon (📝) to use the [[Create or edit Task]] modal/dialog.

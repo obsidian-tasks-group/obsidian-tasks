@@ -19,7 +19,7 @@ This can be done most conveniently by:
 
 /* Style "<span class="related-pages">#plugin/quickadd</span>" sections */
 span.related-pages::before {
-    content: "See also: ";
+    content: 'See also: ';
 }
 span.related-pages a.tag {
     background-color: var(--text-highlight-bg);
@@ -42,7 +42,7 @@ span.caption {
     /* centering is disabled as images are not currently centered: */
     /*text-align: center;*/
     margin-bottom: 1.5rem;
-    display:block; /* force some whitespace after the caption */
+    display: block; /* force some whitespace after the caption */
 }
 
 /* Simulate a horizontal rule before each level-2 heading.
@@ -57,7 +57,8 @@ h2::before {
 }
 
 /* Top-align all table cells, for readability */
-table td, th {
+table td,
+th {
     vertical-align: top;
 }
 
@@ -74,7 +75,9 @@ table tr:nth-child(even) {
 img {
     /*margin-bottom: 1.5rem;*/
     border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 3px 10px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.12),
+        0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
 /* Put a soft border around callouts */
@@ -85,21 +88,21 @@ div.callout {
 /* Put a pale border around inline code samples, to make them stand out */
 :not(pre, figure) > code {
     border: 1px solid var(--color-base-30);
-    border-radius:4px
+    border-radius: 4px;
 }
 
 /* Put a pale border around PRE code samples, to make them stand out */
 pre {
     border: 1px solid var(--color-base-30);
-    border-radius:4px
+    border-radius: 4px;
 }
 
 /* Make Warning callouts red rather than a rather ugly orange */
-.callout[data-callout="warning"] {
+.callout[data-callout='warning'] {
     --callout-color: 255, 23, 68;
 }
 
-.callout[data-callout="released"] {
+.callout[data-callout='released'] {
     --callout-color: 0, 200, 83;
     --callout-icon: lucide-rocket;
 }

@@ -29,6 +29,7 @@ Tasks sees as an un-dated task with the text description:
 The following tasks block lists any tasks that have emoji in the description, which usually means data that has not been interpreted by Tasks. This is typically because there is some text other than emoji signifiers and tags at the end of the line.
 
 <!-- include: ValidateTasks.test.validate-tasks_find-unread-emojis.approved.text -->
+
 ````text
 ```tasks
 # These instructions need to be all on one line:
@@ -40,6 +41,7 @@ The following tasks block lists any tasks that have emoji in the description, wh
 group by path
 ```
 ````
+
 <!-- endInclude -->
 
 The errors can be fixed by editing the Task and moving any text that appears after the unparsed values to earlier in the line.
@@ -59,6 +61,7 @@ This task has an illegal due date:
 The following tasks block lists any tasks with invalid dates, meaning data that has potentially not been interpreted by Tasks.
 
 <!-- include: ValidateTasks.test.validate-tasks_find_problem_dates.approved.text -->
+
 ````text
 ```tasks
 # These instructions need to be all on one line:
@@ -70,6 +73,7 @@ The following tasks block lists any tasks with invalid dates, meaning data that 
 group by path
 ```
 ````
+
 <!-- endInclude -->
 
 Errors with invalid dates are not easily fixed using the [[Create or edit Task|‘Create or edit Task’ Modal]], as it shows any invalid dates with placeholder text, instead of showing the original values.

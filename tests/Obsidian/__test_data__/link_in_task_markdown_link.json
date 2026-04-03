@@ -1,1249 +1,1249 @@
 {
-  "cachedMetadata": {
-    "headings": [
-      {
-        "heading": "link_in_task_markdown_link",
-        "level": 1,
-        "position": {
-          "end": {
-            "col": 28,
-            "line": 0,
-            "offset": 28
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        }
-      },
-      {
-        "heading": "Multiple Links",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 17,
-            "line": 2,
-            "offset": 47
-          },
-          "start": {
-            "col": 0,
-            "line": 2,
-            "offset": 30
-          }
-        }
-      },
-      {
-        "heading": "Link with Simple Link",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 24,
-            "line": 6,
-            "offset": 183
-          },
-          "start": {
-            "col": 0,
-            "line": 6,
-            "offset": 159
-          }
-        }
-      },
-      {
-        "heading": "Link with Path",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 17,
-            "line": 10,
-            "offset": 304
-          },
-          "start": {
-            "col": 0,
-            "line": 10,
-            "offset": 287
-          }
-        }
-      },
-      {
-        "heading": "Link with Path Heading Link",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 30,
-            "line": 14,
-            "offset": 436
-          },
-          "start": {
-            "col": 0,
-            "line": 14,
-            "offset": 406
-          }
-        }
-      },
-      {
-        "heading": "Link with Alias",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 18,
-            "line": 18,
-            "offset": 568
-          },
-          "start": {
-            "col": 0,
-            "line": 18,
-            "offset": 550
-          }
-        }
-      },
-      {
-        "heading": "Link with Nested Path and Alias",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 34,
-            "line": 22,
-            "offset": 672
-          },
-          "start": {
-            "col": 0,
-            "line": 22,
-            "offset": 638
-          }
-        }
-      },
-      {
-        "heading": "Link with Hash in Path",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 25,
-            "line": 26,
-            "offset": 795
-          },
-          "start": {
-            "col": 0,
-            "line": 26,
-            "offset": 770
-          }
-        }
-      },
-      {
-        "heading": "Link with Internal Link",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 26,
-            "line": 30,
-            "offset": 953
-          },
-          "start": {
-            "col": 0,
-            "line": 30,
-            "offset": 927
-          }
-        }
-      },
-      {
-        "heading": "Link with Markdown Link No Suffix",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 36,
-            "line": 34,
-            "offset": 1048
-          },
-          "start": {
-            "col": 0,
-            "line": 34,
-            "offset": 1012
-          }
-        }
-      },
-      {
-        "heading": "Link with PDF File",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 21,
-            "line": 38,
-            "offset": 1175
-          },
-          "start": {
-            "col": 0,
-            "line": 38,
-            "offset": 1154
-          }
-        }
-      },
-      {
-        "heading": "Link with Spaces",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 19,
-            "line": 42,
-            "offset": 1257
-          },
-          "start": {
-            "col": 0,
-            "line": 42,
-            "offset": 1238
-          }
-        }
-      },
-      {
-        "heading": "Empty Links That Aren't Processed",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 36,
-            "line": 45,
-            "offset": 1430
-          },
-          "start": {
-            "col": 0,
-            "line": 45,
-            "offset": 1394
-          }
-        }
-      },
-      {
-        "heading": "heading",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 10,
-            "line": 50,
-            "offset": 1524
-          },
-          "start": {
-            "col": 0,
-            "line": 50,
-            "offset": 1514
-          }
-        }
-      }
+    "cachedMetadata": {
+        "headings": [
+            {
+                "heading": "link_in_task_markdown_link",
+                "level": 1,
+                "position": {
+                    "end": {
+                        "col": 28,
+                        "line": 0,
+                        "offset": 28
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                }
+            },
+            {
+                "heading": "Multiple Links",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 17,
+                        "line": 2,
+                        "offset": 47
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 2,
+                        "offset": 30
+                    }
+                }
+            },
+            {
+                "heading": "Link with Simple Link",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 24,
+                        "line": 6,
+                        "offset": 183
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 6,
+                        "offset": 159
+                    }
+                }
+            },
+            {
+                "heading": "Link with Path",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 17,
+                        "line": 10,
+                        "offset": 304
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 10,
+                        "offset": 287
+                    }
+                }
+            },
+            {
+                "heading": "Link with Path Heading Link",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 30,
+                        "line": 14,
+                        "offset": 436
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 14,
+                        "offset": 406
+                    }
+                }
+            },
+            {
+                "heading": "Link with Alias",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 18,
+                        "line": 18,
+                        "offset": 568
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 18,
+                        "offset": 550
+                    }
+                }
+            },
+            {
+                "heading": "Link with Nested Path and Alias",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 34,
+                        "line": 22,
+                        "offset": 672
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 22,
+                        "offset": 638
+                    }
+                }
+            },
+            {
+                "heading": "Link with Hash in Path",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 25,
+                        "line": 26,
+                        "offset": 795
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 26,
+                        "offset": 770
+                    }
+                }
+            },
+            {
+                "heading": "Link with Internal Link",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 26,
+                        "line": 30,
+                        "offset": 953
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 30,
+                        "offset": 927
+                    }
+                }
+            },
+            {
+                "heading": "Link with Markdown Link No Suffix",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 36,
+                        "line": 34,
+                        "offset": 1048
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 34,
+                        "offset": 1012
+                    }
+                }
+            },
+            {
+                "heading": "Link with PDF File",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 21,
+                        "line": 38,
+                        "offset": 1175
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 38,
+                        "offset": 1154
+                    }
+                }
+            },
+            {
+                "heading": "Link with Spaces",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 19,
+                        "line": 42,
+                        "offset": 1257
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 42,
+                        "offset": 1238
+                    }
+                }
+            },
+            {
+                "heading": "Empty Links That Aren't Processed",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 36,
+                        "line": 45,
+                        "offset": 1430
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 45,
+                        "offset": 1394
+                    }
+                }
+            },
+            {
+                "heading": "heading",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 10,
+                        "line": 50,
+                        "offset": 1524
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 50,
+                        "offset": 1514
+                    }
+                }
+            }
+        ],
+        "links": [
+            {
+                "displayText": "jason_properties",
+                "link": "jason_properties.md",
+                "original": "[jason_properties](jason_properties.md)",
+                "position": {
+                    "end": {
+                        "col": 66,
+                        "line": 4,
+                        "offset": 115
+                    },
+                    "start": {
+                        "col": 27,
+                        "line": 4,
+                        "offset": 76
+                    }
+                }
+            },
+            {
+                "displayText": "multiple_headings",
+                "link": "multiple_headings.md",
+                "original": "[multiple_headings](multiple_headings.md)",
+                "position": {
+                    "end": {
+                        "col": 108,
+                        "line": 4,
+                        "offset": 157
+                    },
+                    "start": {
+                        "col": 67,
+                        "line": 4,
+                        "offset": 116
+                    }
+                }
+            },
+            {
+                "displayText": "link_in_task_markdown_link",
+                "link": "link_in_task_markdown_link.md",
+                "original": "[link_in_task_markdown_link](link_in_task_markdown_link.md)",
+                "position": {
+                    "end": {
+                        "col": 100,
+                        "line": 8,
+                        "offset": 285
+                    },
+                    "start": {
+                        "col": 41,
+                        "line": 8,
+                        "offset": 226
+                    }
+                }
+            },
+            {
+                "displayText": "link_in_task_markdown_link",
+                "link": "Test Data/link_in_task_markdown_link.md",
+                "original": "[link_in_task_markdown_link](Test%20Data/link_in_task_markdown_link.md)",
+                "position": {
+                    "end": {
+                        "col": 98,
+                        "line": 12,
+                        "offset": 404
+                    },
+                    "start": {
+                        "col": 27,
+                        "line": 12,
+                        "offset": 333
+                    }
+                }
+            },
+            {
+                "displayText": "heading_link",
+                "link": "Test Data/link_in_task_markdown_link.md#heading",
+                "original": "[heading_link](Test%20Data/link_in_task_markdown_link.md#heading)",
+                "position": {
+                    "end": {
+                        "col": 110,
+                        "line": 16,
+                        "offset": 548
+                    },
+                    "start": {
+                        "col": 45,
+                        "line": 16,
+                        "offset": 483
+                    }
+                }
+            },
+            {
+                "displayText": "alias",
+                "link": "link_in_task_markdown_link.md",
+                "original": "[alias](link_in_task_markdown_link.md)",
+                "position": {
+                    "end": {
+                        "col": 66,
+                        "line": 20,
+                        "offset": 636
+                    },
+                    "start": {
+                        "col": 28,
+                        "line": 20,
+                        "offset": 598
+                    }
+                }
+            },
+            {
+                "displayText": "alias",
+                "link": "Test Data/link_in_task_markdown_link.md",
+                "original": "[alias](Test%20Data/link_in_task_markdown_link.md)",
+                "position": {
+                    "end": {
+                        "col": 94,
+                        "line": 24,
+                        "offset": 768
+                    },
+                    "start": {
+                        "col": 44,
+                        "line": 24,
+                        "offset": 718
+                    }
+                }
+            },
+            {
+                "displayText": "link_in_task_markdown_link",
+                "link": "pa#th/path/link_in_task_markdown_link.md",
+                "original": "[link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)",
+                "position": {
+                    "end": {
+                        "col": 128,
+                        "line": 28,
+                        "offset": 925
+                    },
+                    "start": {
+                        "col": 58,
+                        "line": 28,
+                        "offset": 855
+                    }
+                }
+            },
+            {
+                "displayText": "heading",
+                "link": "#heading",
+                "original": "[heading](#heading)",
+                "position": {
+                    "end": {
+                        "col": 55,
+                        "line": 32,
+                        "offset": 1010
+                    },
+                    "start": {
+                        "col": 36,
+                        "line": 32,
+                        "offset": 991
+                    }
+                }
+            },
+            {
+                "displayText": "link_in_task_markdown_link",
+                "link": "link_in_task_markdown_link",
+                "original": "[link_in_task_markdown_link](link_in_task_markdown_link)",
+                "position": {
+                    "end": {
+                        "col": 102,
+                        "line": 36,
+                        "offset": 1152
+                    },
+                    "start": {
+                        "col": 46,
+                        "line": 36,
+                        "offset": 1096
+                    }
+                }
+            },
+            {
+                "displayText": "a_pdf_file",
+                "link": "a_pdf_file.pdf",
+                "original": "[a_pdf_file](a_pdf_file.pdf)",
+                "position": {
+                    "end": {
+                        "col": 59,
+                        "line": 40,
+                        "offset": 1236
+                    },
+                    "start": {
+                        "col": 31,
+                        "line": 40,
+                        "offset": 1208
+                    }
+                }
+            },
+            {
+                "displayText": "spaces everywhere",
+                "link": "Manual Testing/Smoke Testing the Tasks Plugin#How the tests work",
+                "original": "[spaces everywhere](Manual%20Testing/Smoke%20Testing%20the%20Tasks%20Plugin#How%20the%20tests%20work)",
+                "position": {
+                    "end": {
+                        "col": 134,
+                        "line": 44,
+                        "offset": 1393
+                    },
+                    "start": {
+                        "col": 33,
+                        "line": 44,
+                        "offset": 1292
+                    }
+                }
+            }
+        ],
+        "listItems": [
+            {
+                "parent": -4,
+                "position": {
+                    "end": {
+                        "col": 108,
+                        "line": 4,
+                        "offset": 157
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 4,
+                        "offset": 49
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -8,
+                "position": {
+                    "end": {
+                        "col": 100,
+                        "line": 8,
+                        "offset": 285
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 8,
+                        "offset": 185
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -12,
+                "position": {
+                    "end": {
+                        "col": 98,
+                        "line": 12,
+                        "offset": 404
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 12,
+                        "offset": 306
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -16,
+                "position": {
+                    "end": {
+                        "col": 110,
+                        "line": 16,
+                        "offset": 548
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 16,
+                        "offset": 438
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -20,
+                "position": {
+                    "end": {
+                        "col": 66,
+                        "line": 20,
+                        "offset": 636
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 20,
+                        "offset": 570
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -24,
+                "position": {
+                    "end": {
+                        "col": 94,
+                        "line": 24,
+                        "offset": 768
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 24,
+                        "offset": 674
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -28,
+                "position": {
+                    "end": {
+                        "col": 128,
+                        "line": 28,
+                        "offset": 925
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 28,
+                        "offset": 797
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -32,
+                "position": {
+                    "end": {
+                        "col": 55,
+                        "line": 32,
+                        "offset": 1010
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 32,
+                        "offset": 955
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -36,
+                "position": {
+                    "end": {
+                        "col": 102,
+                        "line": 36,
+                        "offset": 1152
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 36,
+                        "offset": 1050
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -40,
+                "position": {
+                    "end": {
+                        "col": 59,
+                        "line": 40,
+                        "offset": 1236
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 40,
+                        "offset": 1177
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -44,
+                "position": {
+                    "end": {
+                        "col": 134,
+                        "line": 44,
+                        "offset": 1393
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 44,
+                        "offset": 1259
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -47,
+                "position": {
+                    "end": {
+                        "col": 37,
+                        "line": 47,
+                        "offset": 1469
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 47,
+                        "offset": 1432
+                    }
+                },
+                "task": " "
+            },
+            {
+                "parent": -47,
+                "position": {
+                    "end": {
+                        "col": 42,
+                        "line": 48,
+                        "offset": 1512
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 48,
+                        "offset": 1470
+                    }
+                },
+                "task": " "
+            }
+        ],
+        "sections": [
+            {
+                "position": {
+                    "end": {
+                        "col": 28,
+                        "line": 0,
+                        "offset": 28
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 17,
+                        "line": 2,
+                        "offset": 47
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 2,
+                        "offset": 30
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 108,
+                        "line": 4,
+                        "offset": 157
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 4,
+                        "offset": 49
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 24,
+                        "line": 6,
+                        "offset": 183
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 6,
+                        "offset": 159
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 100,
+                        "line": 8,
+                        "offset": 285
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 8,
+                        "offset": 185
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 17,
+                        "line": 10,
+                        "offset": 304
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 10,
+                        "offset": 287
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 98,
+                        "line": 12,
+                        "offset": 404
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 12,
+                        "offset": 306
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 30,
+                        "line": 14,
+                        "offset": 436
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 14,
+                        "offset": 406
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 110,
+                        "line": 16,
+                        "offset": 548
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 16,
+                        "offset": 438
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 18,
+                        "line": 18,
+                        "offset": 568
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 18,
+                        "offset": 550
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 66,
+                        "line": 20,
+                        "offset": 636
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 20,
+                        "offset": 570
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 34,
+                        "line": 22,
+                        "offset": 672
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 22,
+                        "offset": 638
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 94,
+                        "line": 24,
+                        "offset": 768
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 24,
+                        "offset": 674
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 25,
+                        "line": 26,
+                        "offset": 795
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 26,
+                        "offset": 770
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 128,
+                        "line": 28,
+                        "offset": 925
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 28,
+                        "offset": 797
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 26,
+                        "line": 30,
+                        "offset": 953
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 30,
+                        "offset": 927
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 55,
+                        "line": 32,
+                        "offset": 1010
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 32,
+                        "offset": 955
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 36,
+                        "line": 34,
+                        "offset": 1048
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 34,
+                        "offset": 1012
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 102,
+                        "line": 36,
+                        "offset": 1152
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 36,
+                        "offset": 1050
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 21,
+                        "line": 38,
+                        "offset": 1175
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 38,
+                        "offset": 1154
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 59,
+                        "line": 40,
+                        "offset": 1236
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 40,
+                        "offset": 1177
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 19,
+                        "line": 42,
+                        "offset": 1257
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 42,
+                        "offset": 1238
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 134,
+                        "line": 44,
+                        "offset": 1393
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 44,
+                        "offset": 1259
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 36,
+                        "line": 45,
+                        "offset": 1430
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 45,
+                        "offset": 1394
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 42,
+                        "line": 48,
+                        "offset": 1512
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 47,
+                        "offset": 1432
+                    }
+                },
+                "type": "list"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 10,
+                        "line": 50,
+                        "offset": 1524
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 50,
+                        "offset": 1514
+                    }
+                },
+                "type": "heading"
+            }
+        ],
+        "tags": [
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 4,
+                        "offset": 60
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 4,
+                        "offset": 55
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 8,
+                        "offset": 196
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 8,
+                        "offset": 191
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 12,
+                        "offset": 317
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 12,
+                        "offset": 312
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 16,
+                        "offset": 449
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 16,
+                        "offset": 444
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 20,
+                        "offset": 581
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 20,
+                        "offset": 576
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 24,
+                        "offset": 685
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 24,
+                        "offset": 680
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 28,
+                        "offset": 808
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 28,
+                        "offset": 803
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 32,
+                        "offset": 966
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 32,
+                        "offset": 961
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 36,
+                        "offset": 1061
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 36,
+                        "offset": 1056
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 40,
+                        "offset": 1188
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 40,
+                        "offset": 1183
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 47,
+                        "offset": 1443
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 47,
+                        "offset": 1438
+                    }
+                },
+                "tag": "#task"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 48,
+                        "offset": 1481
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 48,
+                        "offset": 1476
+                    }
+                },
+                "tag": "#task"
+            }
+        ]
+    },
+    "fileContents": "# link_in_task_markdown_link\n\n## Multiple Links\n\n- [ ] #task Multiple Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)\n\n## Link with Simple Link\n\n- [ ] #task Link with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)\n\n## Link with Path\n\n- [ ] #task Link with Path [link_in_task_markdown_link](Test%20Data/link_in_task_markdown_link.md)\n\n## Link with Path Heading Link\n\n- [ ] #task Link with Heading Reference Link [heading_link](Test%20Data/link_in_task_markdown_link.md#heading)\n\n## Link with Alias\n\n- [ ] #task Link with Alias [alias](link_in_task_markdown_link.md)\n\n## Link with Nested Path and Alias\n\n- [ ] #task Link with Nested Path and Alias [alias](Test%20Data/link_in_task_markdown_link.md)\n\n## Link with Hash in Path\n\n- [ ] #task Heading Link with text that looks like a path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)\n\n## Link with Internal Link\n\n- [ ] #task Link with Internal Link [heading](#heading)\n\n## Link with Markdown Link No Suffix\n\n- [ ] #task Link with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)\n\n## Link with PDF File\n\n- [ ] #task Link with PDF File [a_pdf_file](a_pdf_file.pdf)\n\n## Link with Spaces\n\n- [ ] Link with spaces everywhere[spaces everywhere](Manual%20Testing/Smoke%20Testing%20the%20Tasks%20Plugin#How%20the%20tests%20work)\n## Empty Links That Aren't Processed\n\n- [ ] #task Link with empty link []()\n- [ ] #task Link with empty link [alias]()\n\n## heading\n",
+    "filePath": "Test Data/link_in_task_markdown_link.md",
+    "getAllTags": [
+        "#task",
+        "#task",
+        "#task",
+        "#task",
+        "#task",
+        "#task",
+        "#task",
+        "#task",
+        "#task",
+        "#task",
+        "#task",
+        "#task"
     ],
-    "links": [
-      {
-        "displayText": "jason_properties",
-        "link": "jason_properties.md",
-        "original": "[jason_properties](jason_properties.md)",
-        "position": {
-          "end": {
-            "col": 66,
-            "line": 4,
-            "offset": 115
-          },
-          "start": {
-            "col": 27,
-            "line": 4,
-            "offset": 76
-          }
-        }
-      },
-      {
-        "displayText": "multiple_headings",
-        "link": "multiple_headings.md",
-        "original": "[multiple_headings](multiple_headings.md)",
-        "position": {
-          "end": {
-            "col": 108,
-            "line": 4,
-            "offset": 157
-          },
-          "start": {
-            "col": 67,
-            "line": 4,
-            "offset": 116
-          }
-        }
-      },
-      {
-        "displayText": "link_in_task_markdown_link",
-        "link": "link_in_task_markdown_link.md",
-        "original": "[link_in_task_markdown_link](link_in_task_markdown_link.md)",
-        "position": {
-          "end": {
-            "col": 100,
-            "line": 8,
-            "offset": 285
-          },
-          "start": {
-            "col": 41,
-            "line": 8,
-            "offset": 226
-          }
-        }
-      },
-      {
-        "displayText": "link_in_task_markdown_link",
-        "link": "Test Data/link_in_task_markdown_link.md",
-        "original": "[link_in_task_markdown_link](Test%20Data/link_in_task_markdown_link.md)",
-        "position": {
-          "end": {
-            "col": 98,
-            "line": 12,
-            "offset": 404
-          },
-          "start": {
-            "col": 27,
-            "line": 12,
-            "offset": 333
-          }
-        }
-      },
-      {
-        "displayText": "heading_link",
-        "link": "Test Data/link_in_task_markdown_link.md#heading",
-        "original": "[heading_link](Test%20Data/link_in_task_markdown_link.md#heading)",
-        "position": {
-          "end": {
-            "col": 110,
-            "line": 16,
-            "offset": 548
-          },
-          "start": {
-            "col": 45,
-            "line": 16,
-            "offset": 483
-          }
-        }
-      },
-      {
-        "displayText": "alias",
-        "link": "link_in_task_markdown_link.md",
-        "original": "[alias](link_in_task_markdown_link.md)",
-        "position": {
-          "end": {
-            "col": 66,
-            "line": 20,
-            "offset": 636
-          },
-          "start": {
-            "col": 28,
-            "line": 20,
-            "offset": 598
-          }
-        }
-      },
-      {
-        "displayText": "alias",
-        "link": "Test Data/link_in_task_markdown_link.md",
-        "original": "[alias](Test%20Data/link_in_task_markdown_link.md)",
-        "position": {
-          "end": {
-            "col": 94,
-            "line": 24,
-            "offset": 768
-          },
-          "start": {
-            "col": 44,
-            "line": 24,
-            "offset": 718
-          }
-        }
-      },
-      {
-        "displayText": "link_in_task_markdown_link",
-        "link": "pa#th/path/link_in_task_markdown_link.md",
-        "original": "[link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)",
-        "position": {
-          "end": {
-            "col": 128,
-            "line": 28,
-            "offset": 925
-          },
-          "start": {
-            "col": 58,
-            "line": 28,
-            "offset": 855
-          }
-        }
-      },
-      {
-        "displayText": "heading",
-        "link": "#heading",
-        "original": "[heading](#heading)",
-        "position": {
-          "end": {
-            "col": 55,
-            "line": 32,
-            "offset": 1010
-          },
-          "start": {
-            "col": 36,
-            "line": 32,
-            "offset": 991
-          }
-        }
-      },
-      {
-        "displayText": "link_in_task_markdown_link",
-        "link": "link_in_task_markdown_link",
-        "original": "[link_in_task_markdown_link](link_in_task_markdown_link)",
-        "position": {
-          "end": {
-            "col": 102,
-            "line": 36,
-            "offset": 1152
-          },
-          "start": {
-            "col": 46,
-            "line": 36,
-            "offset": 1096
-          }
-        }
-      },
-      {
-        "displayText": "a_pdf_file",
-        "link": "a_pdf_file.pdf",
-        "original": "[a_pdf_file](a_pdf_file.pdf)",
-        "position": {
-          "end": {
-            "col": 59,
-            "line": 40,
-            "offset": 1236
-          },
-          "start": {
-            "col": 31,
-            "line": 40,
-            "offset": 1208
-          }
-        }
-      },
-      {
-        "displayText": "spaces everywhere",
-        "link": "Manual Testing/Smoke Testing the Tasks Plugin#How the tests work",
-        "original": "[spaces everywhere](Manual%20Testing/Smoke%20Testing%20the%20Tasks%20Plugin#How%20the%20tests%20work)",
-        "position": {
-          "end": {
-            "col": 134,
-            "line": 44,
-            "offset": 1393
-          },
-          "start": {
-            "col": 33,
-            "line": 44,
-            "offset": 1292
-          }
-        }
-      }
-    ],
-    "listItems": [
-      {
-        "parent": -4,
-        "position": {
-          "end": {
-            "col": 108,
-            "line": 4,
-            "offset": 157
-          },
-          "start": {
-            "col": 0,
-            "line": 4,
-            "offset": 49
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -8,
-        "position": {
-          "end": {
-            "col": 100,
-            "line": 8,
-            "offset": 285
-          },
-          "start": {
-            "col": 0,
-            "line": 8,
-            "offset": 185
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -12,
-        "position": {
-          "end": {
-            "col": 98,
-            "line": 12,
-            "offset": 404
-          },
-          "start": {
-            "col": 0,
-            "line": 12,
-            "offset": 306
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -16,
-        "position": {
-          "end": {
-            "col": 110,
-            "line": 16,
-            "offset": 548
-          },
-          "start": {
-            "col": 0,
-            "line": 16,
-            "offset": 438
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -20,
-        "position": {
-          "end": {
-            "col": 66,
-            "line": 20,
-            "offset": 636
-          },
-          "start": {
-            "col": 0,
-            "line": 20,
-            "offset": 570
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -24,
-        "position": {
-          "end": {
-            "col": 94,
-            "line": 24,
-            "offset": 768
-          },
-          "start": {
-            "col": 0,
-            "line": 24,
-            "offset": 674
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -28,
-        "position": {
-          "end": {
-            "col": 128,
-            "line": 28,
-            "offset": 925
-          },
-          "start": {
-            "col": 0,
-            "line": 28,
-            "offset": 797
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -32,
-        "position": {
-          "end": {
-            "col": 55,
-            "line": 32,
-            "offset": 1010
-          },
-          "start": {
-            "col": 0,
-            "line": 32,
-            "offset": 955
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -36,
-        "position": {
-          "end": {
-            "col": 102,
-            "line": 36,
-            "offset": 1152
-          },
-          "start": {
-            "col": 0,
-            "line": 36,
-            "offset": 1050
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -40,
-        "position": {
-          "end": {
-            "col": 59,
-            "line": 40,
-            "offset": 1236
-          },
-          "start": {
-            "col": 0,
-            "line": 40,
-            "offset": 1177
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -44,
-        "position": {
-          "end": {
-            "col": 134,
-            "line": 44,
-            "offset": 1393
-          },
-          "start": {
-            "col": 0,
-            "line": 44,
-            "offset": 1259
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -47,
-        "position": {
-          "end": {
-            "col": 37,
-            "line": 47,
-            "offset": 1469
-          },
-          "start": {
-            "col": 0,
-            "line": 47,
-            "offset": 1432
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -47,
-        "position": {
-          "end": {
-            "col": 42,
-            "line": 48,
-            "offset": 1512
-          },
-          "start": {
-            "col": 0,
-            "line": 48,
-            "offset": 1470
-          }
-        },
-        "task": " "
-      }
-    ],
-    "sections": [
-      {
-        "position": {
-          "end": {
-            "col": 28,
-            "line": 0,
-            "offset": 28
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 17,
-            "line": 2,
-            "offset": 47
-          },
-          "start": {
-            "col": 0,
-            "line": 2,
-            "offset": 30
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 108,
-            "line": 4,
-            "offset": 157
-          },
-          "start": {
-            "col": 0,
-            "line": 4,
-            "offset": 49
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 24,
-            "line": 6,
-            "offset": 183
-          },
-          "start": {
-            "col": 0,
-            "line": 6,
-            "offset": 159
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 100,
-            "line": 8,
-            "offset": 285
-          },
-          "start": {
-            "col": 0,
-            "line": 8,
-            "offset": 185
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 17,
-            "line": 10,
-            "offset": 304
-          },
-          "start": {
-            "col": 0,
-            "line": 10,
-            "offset": 287
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 98,
-            "line": 12,
-            "offset": 404
-          },
-          "start": {
-            "col": 0,
-            "line": 12,
-            "offset": 306
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 30,
-            "line": 14,
-            "offset": 436
-          },
-          "start": {
-            "col": 0,
-            "line": 14,
-            "offset": 406
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 110,
-            "line": 16,
-            "offset": 548
-          },
-          "start": {
-            "col": 0,
-            "line": 16,
-            "offset": 438
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 18,
-            "line": 18,
-            "offset": 568
-          },
-          "start": {
-            "col": 0,
-            "line": 18,
-            "offset": 550
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 66,
-            "line": 20,
-            "offset": 636
-          },
-          "start": {
-            "col": 0,
-            "line": 20,
-            "offset": 570
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 34,
-            "line": 22,
-            "offset": 672
-          },
-          "start": {
-            "col": 0,
-            "line": 22,
-            "offset": 638
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 94,
-            "line": 24,
-            "offset": 768
-          },
-          "start": {
-            "col": 0,
-            "line": 24,
-            "offset": 674
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 25,
-            "line": 26,
-            "offset": 795
-          },
-          "start": {
-            "col": 0,
-            "line": 26,
-            "offset": 770
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 128,
-            "line": 28,
-            "offset": 925
-          },
-          "start": {
-            "col": 0,
-            "line": 28,
-            "offset": 797
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 26,
-            "line": 30,
-            "offset": 953
-          },
-          "start": {
-            "col": 0,
-            "line": 30,
-            "offset": 927
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 55,
-            "line": 32,
-            "offset": 1010
-          },
-          "start": {
-            "col": 0,
-            "line": 32,
-            "offset": 955
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 36,
-            "line": 34,
-            "offset": 1048
-          },
-          "start": {
-            "col": 0,
-            "line": 34,
-            "offset": 1012
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 102,
-            "line": 36,
-            "offset": 1152
-          },
-          "start": {
-            "col": 0,
-            "line": 36,
-            "offset": 1050
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 21,
-            "line": 38,
-            "offset": 1175
-          },
-          "start": {
-            "col": 0,
-            "line": 38,
-            "offset": 1154
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 59,
-            "line": 40,
-            "offset": 1236
-          },
-          "start": {
-            "col": 0,
-            "line": 40,
-            "offset": 1177
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 19,
-            "line": 42,
-            "offset": 1257
-          },
-          "start": {
-            "col": 0,
-            "line": 42,
-            "offset": 1238
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 134,
-            "line": 44,
-            "offset": 1393
-          },
-          "start": {
-            "col": 0,
-            "line": 44,
-            "offset": 1259
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 36,
-            "line": 45,
-            "offset": 1430
-          },
-          "start": {
-            "col": 0,
-            "line": 45,
-            "offset": 1394
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 42,
-            "line": 48,
-            "offset": 1512
-          },
-          "start": {
-            "col": 0,
-            "line": 47,
-            "offset": 1432
-          }
-        },
-        "type": "list"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 10,
-            "line": 50,
-            "offset": 1524
-          },
-          "start": {
-            "col": 0,
-            "line": 50,
-            "offset": 1514
-          }
-        },
-        "type": "heading"
-      }
-    ],
-    "tags": [
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 4,
-            "offset": 60
-          },
-          "start": {
-            "col": 6,
-            "line": 4,
-            "offset": 55
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 8,
-            "offset": 196
-          },
-          "start": {
-            "col": 6,
-            "line": 8,
-            "offset": 191
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 12,
-            "offset": 317
-          },
-          "start": {
-            "col": 6,
-            "line": 12,
-            "offset": 312
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 16,
-            "offset": 449
-          },
-          "start": {
-            "col": 6,
-            "line": 16,
-            "offset": 444
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 20,
-            "offset": 581
-          },
-          "start": {
-            "col": 6,
-            "line": 20,
-            "offset": 576
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 24,
-            "offset": 685
-          },
-          "start": {
-            "col": 6,
-            "line": 24,
-            "offset": 680
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 28,
-            "offset": 808
-          },
-          "start": {
-            "col": 6,
-            "line": 28,
-            "offset": 803
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 32,
-            "offset": 966
-          },
-          "start": {
-            "col": 6,
-            "line": 32,
-            "offset": 961
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 36,
-            "offset": 1061
-          },
-          "start": {
-            "col": 6,
-            "line": 36,
-            "offset": 1056
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 40,
-            "offset": 1188
-          },
-          "start": {
-            "col": 6,
-            "line": 40,
-            "offset": 1183
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 47,
-            "offset": 1443
-          },
-          "start": {
-            "col": 6,
-            "line": 47,
-            "offset": 1438
-          }
-        },
-        "tag": "#task"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 48,
-            "offset": 1481
-          },
-          "start": {
-            "col": 6,
-            "line": 48,
-            "offset": 1476
-          }
-        },
-        "tag": "#task"
-      }
-    ]
-  },
-  "fileContents": "# link_in_task_markdown_link\n\n## Multiple Links\n\n- [ ] #task Multiple Links [jason_properties](jason_properties.md) [multiple_headings](multiple_headings.md)\n\n## Link with Simple Link\n\n- [ ] #task Link with Markdown Extension [link_in_task_markdown_link](link_in_task_markdown_link.md)\n\n## Link with Path\n\n- [ ] #task Link with Path [link_in_task_markdown_link](Test%20Data/link_in_task_markdown_link.md)\n\n## Link with Path Heading Link\n\n- [ ] #task Link with Heading Reference Link [heading_link](Test%20Data/link_in_task_markdown_link.md#heading)\n\n## Link with Alias\n\n- [ ] #task Link with Alias [alias](link_in_task_markdown_link.md)\n\n## Link with Nested Path and Alias\n\n- [ ] #task Link with Nested Path and Alias [alias](Test%20Data/link_in_task_markdown_link.md)\n\n## Link with Hash in Path\n\n- [ ] #task Heading Link with text that looks like a path [link_in_task_markdown_link](pa#th/path/link_in_task_markdown_link.md)\n\n## Link with Internal Link\n\n- [ ] #task Link with Internal Link [heading](#heading)\n\n## Link with Markdown Link No Suffix\n\n- [ ] #task Link with Markdown Link No Suffix [link_in_task_markdown_link](link_in_task_markdown_link)\n\n## Link with PDF File\n\n- [ ] #task Link with PDF File [a_pdf_file](a_pdf_file.pdf)\n\n## Link with Spaces\n\n- [ ] Link with spaces everywhere[spaces everywhere](Manual%20Testing/Smoke%20Testing%20the%20Tasks%20Plugin#How%20the%20tests%20work)\n## Empty Links That Aren't Processed\n\n- [ ] #task Link with empty link []()\n- [ ] #task Link with empty link [alias]()\n\n## heading\n",
-  "filePath": "Test Data/link_in_task_markdown_link.md",
-  "getAllTags": [
-    "#task",
-    "#task",
-    "#task",
-    "#task",
-    "#task",
-    "#task",
-    "#task",
-    "#task",
-    "#task",
-    "#task",
-    "#task",
-    "#task"
-  ],
-  "parseFrontMatterTags": null,
-  "resolveLinkToPath": {
-    "#heading": "Test Data/link_in_task_markdown_link.md",
-    "Manual Testing/Smoke Testing the Tasks Plugin#How the tests work": "Manual Testing/Smoke Testing the Tasks Plugin.md",
-    "Test Data/link_in_task_markdown_link.md": "Test Data/link_in_task_markdown_link.md",
-    "Test Data/link_in_task_markdown_link.md#heading": "Test Data/link_in_task_markdown_link.md",
-    "a_pdf_file.pdf": "Test Attachments/a_pdf_file.pdf",
-    "jason_properties.md": "Test Data/jason_properties.md",
-    "link_in_task_markdown_link": "Test Data/link_in_task_markdown_link.md",
-    "link_in_task_markdown_link.md": "Test Data/link_in_task_markdown_link.md",
-    "multiple_headings.md": "Test Data/multiple_headings.md",
-    "pa#th/path/link_in_task_markdown_link.md": null
-  }
+    "parseFrontMatterTags": null,
+    "resolveLinkToPath": {
+        "#heading": "Test Data/link_in_task_markdown_link.md",
+        "Manual Testing/Smoke Testing the Tasks Plugin#How the tests work": "Manual Testing/Smoke Testing the Tasks Plugin.md",
+        "Test Data/link_in_task_markdown_link.md": "Test Data/link_in_task_markdown_link.md",
+        "Test Data/link_in_task_markdown_link.md#heading": "Test Data/link_in_task_markdown_link.md",
+        "a_pdf_file.pdf": "Test Attachments/a_pdf_file.pdf",
+        "jason_properties.md": "Test Data/jason_properties.md",
+        "link_in_task_markdown_link": "Test Data/link_in_task_markdown_link.md",
+        "link_in_task_markdown_link.md": "Test Data/link_in_task_markdown_link.md",
+        "multiple_headings.md": "Test Data/multiple_headings.md",
+        "pa#th/path/link_in_task_markdown_link.md": null
+    }
 }

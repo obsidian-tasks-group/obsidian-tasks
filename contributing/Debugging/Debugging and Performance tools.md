@@ -23,7 +23,7 @@ From user Fevol in [Discord](https://discord.com/channels/686053708261228577/840
 > - [how to create flame charts](https://gist.github.com/Fevol/b672865d61e54ac6f61e7c88aa05ba42#flame-charts-firechart_with_upwards_trend)
 > - [how to interpret flame charts to evaluate performance](https://gist.github.com/Fevol/b672865d61e54ac6f61e7c88aa05ba42#interpreting-your-flame-chart)
 >
-> (Suggestions, PR's, etc. are very welcome) [https://gist.github.com/Fevol/b672865d61e54ac6f61e7c88aa05ba42](https://gist.github.com/Fevol/b672865d61e54ac6f61e7c88aa05ba42 "https://gist.github.com/Fevol/b672865d61e54ac6f61e7c88aa05ba42")
+> (Suggestions, PR's, etc. are very welcome) [https://gist.github.com/Fevol/b672865d61e54ac6f61e7c88aa05ba42](https://gist.github.com/Fevol/b672865d61e54ac6f61e7c88aa05ba42 'https://gist.github.com/Fevol/b672865d61e54ac6f61e7c88aa05ba42')
 
 ## Label sections in performance flame charts
 

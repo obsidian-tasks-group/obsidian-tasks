@@ -1,7 +1,5 @@
 {
-  "accentColor": "",
-  "theme": "system",
-  "enabledCssSnippets": [
-    "publish-simulation"
-  ]
+    "accentColor": "",
+    "theme": "system",
+    "enabledCssSnippets": ["publish-simulation"]
 }

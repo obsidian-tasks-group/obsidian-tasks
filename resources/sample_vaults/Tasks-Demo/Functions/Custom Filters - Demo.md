@@ -4,21 +4,21 @@
 
 ### Treat my undated tasks as due on 2023-07-09
 
-- [ ] #task  I do not have a due date
-- [ ] #task  I do have a different due date than the heading value 📅 2023-07-10
+- [ ] #task I do not have a due date
+- [ ] #task I do have a different due date than the heading value 📅 2023-07-10
 
 ### Treat my undated tasks as due on 2023-07-10
 
-- [ ] #task  I do not have a due date either
-- [ ] #task  I too have a different due date than the heading value 📅 2023-07-09
+- [ ] #task I do not have a due date either
+- [ ] #task I too have a different due date than the heading value 📅 2023-07-09
 
 ### Treat all my tasks as with tag #context/home
 
-- [ ] #task  I do not have a tag for context, but am in a heading that does have one
+- [ ] #task I do not have a tag for context, but am in a heading that does have one
 
 ### Nothing interesting in this heading
 
-- [ ] #task  I have a tag for context, but my heading does not  #context/home
+- [ ] #task I have a tag for context, but my heading does not #context/home
 
 ## Sample Searches
 

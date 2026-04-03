@@ -1,19 +1,19 @@
 ---
 root_dirs_to_search:
-  - Formats/
-  - Filters/
+    - Formats/
+    - Filters/
 task_instruction: group by filename
 task_instructions: |
-  group by root
-  group by folder
-    group by filename
-  # a comment
-    # an indented comment
+    group by root
+    group by folder
+      group by filename
+    # a comment
+      # an indented comment
 task_instructions_with_continuation_line: |
-  path \
-    includes query_using_properties
-task_instruction_with_spaces: "  path includes query_using_properties  "
-link-in-frontmatter: "[[link_in_yaml]]"
+    path \
+      includes query_using_properties
+task_instruction_with_spaces: '  path includes query_using_properties  '
+link-in-frontmatter: '[[link_in_yaml]]'
 ---
 
 # query_using_properties

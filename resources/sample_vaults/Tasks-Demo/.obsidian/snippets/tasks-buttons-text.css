@@ -1,4 +1,5 @@
-.tasks-edit, .tasks-postpone {
+.tasks-edit,
+.tasks-postpone {
     font-size: var(--font-ui-smaller);
     font-variant: small-caps;
     font-weight: bold;

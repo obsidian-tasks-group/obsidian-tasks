@@ -23,11 +23,11 @@ Do the following, using the tasks code block in [[#Query - Full Mode]].
     1. Open the Obsidian Developer Tools.
     1. Select the "Elements" tab.
     1. Click the little arrow to select an element.
-        ![[HTML from Query - select an element.png|400]]
+       ![[HTML from Query - select an element.png|400]]
     1. Hover over the Tasks search until you see this:
-        ![[HTML from Query - hover over block-language-tasks.png|400]]
+       ![[HTML from Query - hover over block-language-tasks.png|400]]
     1. Then click the mouse button. It will select the `block-language-tasks` div.
-        ![[HTML from Query - block-language-tasks selected.png|400]]
+       ![[HTML from Query - block-language-tasks selected.png|400]]
 1. Save the HTML in `HTML from Query.html`:
     1. Right-click on the selected line and say `Copy` -> `Copy Element`.
     1. In a text editor, open up `HTML from Query.html`.

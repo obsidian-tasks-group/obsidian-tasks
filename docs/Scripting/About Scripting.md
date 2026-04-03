@@ -17,7 +17,7 @@ We are using the word 'scripting' in a very loose sense here:
 
 ## Placeholder capabilities
 
-- [[Placeholders]] - use placeholder text in native Tasks queries, such as  `{{query.file.path}}` to refer to some properties of the file containing the query.
+- [[Placeholders]] - use placeholder text in native Tasks queries, such as `{{query.file.path}}` to refer to some properties of the file containing the query.
 
 ## Scripting capabilities
 
@@ -30,9 +30,9 @@ We are using the word 'scripting' in a very loose sense here:
 
 ## Scripting reference
 
-- [[Task Properties]] - all the available task properties, such as `task.description`,  `task.file.path`.
+- [[Task Properties]] - all the available task properties, such as `task.description`, `task.file.path`.
   - Note: The properties are also listed in [[Quick Reference]].
-- [[Query Properties]] - all the available task properties, such as  `query.file.path`,  `query.file.path` - available for use via [[Placeholders]].
+- [[Query Properties]] - all the available task properties, such as `query.file.path`, `query.file.path` - available for use via [[Placeholders]].
 - [[Expressions]] - some background about how JavaScript expressions work, for use in Tasks code blocks.
 
 ## Related facilities

@@ -1,106 +1,106 @@
 {
-  "presets": {
-    "this_file": "path includes {{query.file.path}}",
-    "this_folder": "folder includes {{query.file.folder}}",
-    "this_folder_only": "filter by function task.file.folder === query.file.folder",
-    "this_root": "root includes {{query.file.root}}",
-    "hide_date_fields": "# Hide any values for all date fields\nhide due date\nhide scheduled date\nhide start date\nhide created date\nhide done date\nhide cancelled date",
-    "hide_non_date_fields": "# Hide all the non-date fields, but not tags\nhide id\nhide depends on\nhide recurrence rule\nhide on completion\nhide priority",
-    "hide_query_elements": "# Hide postpone, edit and backinks\nhide postpone button\nhide edit button\nhide backlinks",
-    "hide_everything": "# Hide everything except description and any tags\npreset hide_date_fields\npreset hide_non_date_fields\npreset hide_query_elements",
-    "just_the_description": "# Show only description, not even the tags\npreset hide_everything\nhide tags",
-    "daily_note_overdue": "# Tasks that should have been done before this day - requires YYYY-MM-DD file name\nnot done\nhappens before {{query.file.filenameWithoutExtension}}\ngroup by function task.happens.format('YYYY-MM')",
-    "daily_note_do_this_day": "# Tasks that should be done this day - requires YYYY-MM-DD file name\nnot done\nhappens {{query.file.filenameWithoutExtension}}",
-    "daily_note_done_this_day": "# Tasks that have been done this day - requires YYYY-MM-DD file name\ndone\ndone {{query.file.filenameWithoutExtension}}",
-    "filter_by_context": "filter by function let fn = (ctx) => task.tags.includes(`#context/${ctx}`); return fn",
-    "extract_contexts_1": "ctx => task.tags.includes(`#context/${ctx}`)",
-    "extract_contexts_2": "(ctx => task.tags.includes(`#context/${ctx}`))"
-  },
-  "globalQuery": "# Exclude templates files:\nroot does not include _meta\n\n# Ignore the sample tasks that demonstrate Theme and Snippet support:\npath does not include Manual Testing/SlrVb's Alternative Checkboxes\npath does not include Styling/Snippet -\npath does not include Styling/Theme -\n",
-  "globalFilter": "#task",
-  "removeGlobalFilter": true,
-  "taskFormat": "tasksPluginEmoji",
-  "setCreatedDate": false,
-  "setDoneDate": true,
-  "setCancelledDate": true,
-  "autoSuggestInEditor": true,
-  "autoSuggestMinMatch": 1,
-  "autoSuggestMaxItems": 6,
-  "provideAccessKeys": true,
-  "useFilenameAsScheduledDate": true,
-  "filenameAsScheduledDateFormat": "MMM DD, YYYY",
-  "filenameAsDateFolders": [],
-  "recurrenceOnNextLine": false,
-  "removeScheduledDateOnRecurrence": false,
-  "statusSettings": {
-    "coreStatuses": [
-      {
-        "symbol": " ",
-        "name": "Todo",
-        "nextStatusSymbol": "x",
-        "availableAsCommand": true,
-        "type": "TODO"
-      },
-      {
-        "symbol": "x",
-        "name": "Done",
-        "nextStatusSymbol": " ",
-        "availableAsCommand": true,
-        "type": "DONE"
-      }
-    ],
-    "customStatuses": [
-      {
-        "symbol": "/",
-        "name": "In Progress",
-        "nextStatusSymbol": "x",
-        "availableAsCommand": true,
-        "type": "IN_PROGRESS"
-      },
-      {
-        "symbol": "-",
-        "name": "Cancelled",
-        "nextStatusSymbol": " ",
-        "availableAsCommand": true,
-        "type": "CANCELLED"
-      }
-    ]
-  },
-  "isShownInEditModal": {
-    "priority": true,
-    "recurrence": true,
-    "due": true,
-    "scheduled": true,
-    "start": true,
-    "before_this": true,
-    "after_this": true,
-    "status": true,
-    "created": true,
-    "done": true,
-    "cancelled": true
-  },
-  "features": {
-    "INTERNAL_TESTING_ENABLED_BY_DEFAULT": true
-  },
-  "generalSettings": {},
-  "headingOpened": {
-    "Core Statuses": true,
-    "Custom Statuses": true
-  },
-  "debugSettings": {
-    "ignoreSortInstructions": false,
-    "showTaskHiddenData": false,
-    "recordTimings": false
-  },
-  "loggingOptions": {
-    "minLevels": {
-      "": "info",
-      "tasks": "info",
-      "tasks.Query": "info",
-      "tasks.Cache": "info",
-      "tasks.Events": "info",
-      "tasks.File": "info",
-      "tasks.Task": "info"
+    "presets": {
+        "this_file": "path includes {{query.file.path}}",
+        "this_folder": "folder includes {{query.file.folder}}",
+        "this_folder_only": "filter by function task.file.folder === query.file.folder",
+        "this_root": "root includes {{query.file.root}}",
+        "hide_date_fields": "# Hide any values for all date fields\nhide due date\nhide scheduled date\nhide start date\nhide created date\nhide done date\nhide cancelled date",
+        "hide_non_date_fields": "# Hide all the non-date fields, but not tags\nhide id\nhide depends on\nhide recurrence rule\nhide on completion\nhide priority",
+        "hide_query_elements": "# Hide postpone, edit and backinks\nhide postpone button\nhide edit button\nhide backlinks",
+        "hide_everything": "# Hide everything except description and any tags\npreset hide_date_fields\npreset hide_non_date_fields\npreset hide_query_elements",
+        "just_the_description": "# Show only description, not even the tags\npreset hide_everything\nhide tags",
+        "daily_note_overdue": "# Tasks that should have been done before this day - requires YYYY-MM-DD file name\nnot done\nhappens before {{query.file.filenameWithoutExtension}}\ngroup by function task.happens.format('YYYY-MM')",
+        "daily_note_do_this_day": "# Tasks that should be done this day - requires YYYY-MM-DD file name\nnot done\nhappens {{query.file.filenameWithoutExtension}}",
+        "daily_note_done_this_day": "# Tasks that have been done this day - requires YYYY-MM-DD file name\ndone\ndone {{query.file.filenameWithoutExtension}}",
+        "filter_by_context": "filter by function let fn = (ctx) => task.tags.includes(`#context/${ctx}`); return fn",
+        "extract_contexts_1": "ctx => task.tags.includes(`#context/${ctx}`)",
+        "extract_contexts_2": "(ctx => task.tags.includes(`#context/${ctx}`))"
+    },
+    "globalQuery": "# Exclude templates files:\nroot does not include _meta\n\n# Ignore the sample tasks that demonstrate Theme and Snippet support:\npath does not include Manual Testing/SlrVb's Alternative Checkboxes\npath does not include Styling/Snippet -\npath does not include Styling/Theme -\n",
+    "globalFilter": "#task",
+    "removeGlobalFilter": true,
+    "taskFormat": "tasksPluginEmoji",
+    "setCreatedDate": false,
+    "setDoneDate": true,
+    "setCancelledDate": true,
+    "autoSuggestInEditor": true,
+    "autoSuggestMinMatch": 1,
+    "autoSuggestMaxItems": 6,
+    "provideAccessKeys": true,
+    "useFilenameAsScheduledDate": true,
+    "filenameAsScheduledDateFormat": "MMM DD, YYYY",
+    "filenameAsDateFolders": [],
+    "recurrenceOnNextLine": false,
+    "removeScheduledDateOnRecurrence": false,
+    "statusSettings": {
+        "coreStatuses": [
+            {
+                "symbol": " ",
+                "name": "Todo",
+                "nextStatusSymbol": "x",
+                "availableAsCommand": true,
+                "type": "TODO"
+            },
+            {
+                "symbol": "x",
+                "name": "Done",
+                "nextStatusSymbol": " ",
+                "availableAsCommand": true,
+                "type": "DONE"
+            }
+        ],
+        "customStatuses": [
+            {
+                "symbol": "/",
+                "name": "In Progress",
+                "nextStatusSymbol": "x",
+                "availableAsCommand": true,
+                "type": "IN_PROGRESS"
+            },
+            {
+                "symbol": "-",
+                "name": "Cancelled",
+                "nextStatusSymbol": " ",
+                "availableAsCommand": true,
+                "type": "CANCELLED"
+            }
+        ]
+    },
+    "isShownInEditModal": {
+        "priority": true,
+        "recurrence": true,
+        "due": true,
+        "scheduled": true,
+        "start": true,
+        "before_this": true,
+        "after_this": true,
+        "status": true,
+        "created": true,
+        "done": true,
+        "cancelled": true
+    },
+    "features": {
+        "INTERNAL_TESTING_ENABLED_BY_DEFAULT": true
+    },
+    "generalSettings": {},
+    "headingOpened": {
+        "Core Statuses": true,
+        "Custom Statuses": true
+    },
+    "debugSettings": {
+        "ignoreSortInstructions": false,
+        "showTaskHiddenData": false,
+        "recordTimings": false
+    },
+    "loggingOptions": {
+        "minLevels": {
+            "": "info",
+            "tasks": "info",
+            "tasks.Query": "info",
+            "tasks.Cache": "info",
+            "tasks.Events": "info",
+            "tasks.File": "info",
+            "tasks.Task": "info"
+        }
     }
-  }
 }

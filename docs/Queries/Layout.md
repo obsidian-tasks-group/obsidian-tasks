@@ -10,7 +10,7 @@ You can hide and show individual elements of the rendered list with the "hide" a
 together with the name of the element.
 
 > [!released]
-The `show` commands were introduced in Tasks 1.14.0.
+> The `show` commands were introduced in Tasks 1.14.0.
 
 <!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
 
@@ -52,7 +52,7 @@ hide created date
 > [!Info] About `hide tags`
 >
 > 1. Only tags recognised by Obsidian are hidden with `hide tags`.
->     - Tasks is a bit more relaxed in recognising tags than Obsidian. For example,  `#123` is treated as a tag by Tasks, and so is included in Tasks' searches, sorting and grouping code.
+>     - Tasks is a bit more relaxed in recognising tags than Obsidian. For example, `#123` is treated as a tag by Tasks, and so is included in Tasks' searches, sorting and grouping code.
 >     - However, `#123` is [not recognised as a valid Obsidian tag](https://help.obsidian.md/Editing+and+formatting/Tags#Tag+format) and so not hidden.
 >     - See [[Tags#Recognising Tags]] for more information.
 > 1. It is not possible to hide or show individual tags. We are tracking this in [discussion #848](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/848).
@@ -96,7 +96,7 @@ By default, the task count is shown at the **bottom** of query results. You can 
 
 This is a global setting that applies to all task queries. Individual queries can still use `hide task count` to hide the count entirely.
 
-### Toolbar  
+### Toolbar
 
 The toolbar appears at the top of Tasks search results.
 
@@ -240,19 +240,23 @@ All the layout instructions in this page can be generated for you automatically,
 For example, suppose the file containing our query begins with the following:
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_yaml.approved.yaml -->
+
 ```yaml
 ---
 TQ_short_mode: true
 ---
 ```
+
 <!-- endSnippet -->
 
 All Tasks code blocks in that file will then have this content automatically inserted at their start:
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_instructions.approved.txt -->
+
 ```txt
 short mode
 ```
+
 <!-- endSnippet -->
 
 And of course, if `TQ_short_mode` were `false`, the following would be inserted:

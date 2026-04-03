@@ -14,9 +14,9 @@ publish: true
 
 ## How does Tasks treat Links?
 
-You might want to start with the [[#Links Query Examples|examples below]] for an idea of *what* Tasks can do with Links.
+You might want to start with the [[#Links Query Examples|examples below]] for an idea of _what_ Tasks can do with Links.
 
-This section describes the *how*...
+This section describes the _how_...
 
 - Links can be used in Tasks searches with the following instructions:
   - `filter by function`
@@ -57,7 +57,7 @@ The return values are all arrays of `Link` objects.
 
 - Currently, searching of links is only possible via [[About Scripting|custom searches]].
 - Tasks does not yet treat [Embeds](https://help.obsidian.md/embeds) as links. This will be fixed soon.
-- Tasks does not yet provide an `inlinks` concept, that is, links *to* a particular file.
+- Tasks does not yet provide an `inlinks` concept, that is, links _to_ a particular file.
 - `Link.destinationPath` is calculated when the file containing the task is read.
   - This will either have been during Obsidian startup, or when the file was last modified during the current session.
   - For performance reasons, if files are moved to different folders during an Obsidian session, any tasks that link to the moved files are not updated.

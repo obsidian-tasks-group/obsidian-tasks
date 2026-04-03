@@ -65,7 +65,7 @@
             resize: horizontal;
             overflow-x: auto;
             overflow-y: hidden;
-            white-space: pre;        // Preserve formatting
+            white-space: pre; // Preserve formatting
         }
 
         .tasks-presets-drag-handle {
@@ -86,7 +86,7 @@
             justify-content: start;
             display: grid;
             grid-template-columns: 200px 1fr auto auto;
-            grid-template-areas: "key value drag delete";
+            grid-template-areas: 'key value drag delete';
             gap: 4px;
 
             align-items: unset;
@@ -102,8 +102,8 @@
             @container (max-width: 600px) {
                 grid-template-columns: 5fr 1fr 1fr;
                 grid-template-areas:
-                  "key drag delete"
-                  "value value value";
+                    'key drag delete'
+                    'value value value';
 
                 .tasks-presets-key {
                     // Make the Name input field full-width.

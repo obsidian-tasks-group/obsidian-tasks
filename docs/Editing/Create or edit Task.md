@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - Getting Started/Create or edit Task
+    - Getting Started/Create or edit Task
 ---
 
 # 'Create or edit Task' Modal
@@ -38,7 +38,7 @@ By default, all fields are displayed.
 ## Keyboard shortcuts
 
 > [!released]
-Introduced in Tasks 1.17.0.
+> Introduced in Tasks 1.17.0.
 
 All the fields of the form have "access keys", that is, keyboard shortcuts. The access keys are displayed as the underlined letters in the labels.
 
@@ -50,7 +50,7 @@ See [[#Hotkey and keyboard shortcut conflict]] below for important information r
 ### Turning off keyboard shortcuts
 
 > [!released]
-Introduced in Tasks 1.17.0.
+> Introduced in Tasks 1.17.0.
 
 If the access keys (keyboard shortcuts) for any field conflicts with system keyboard shortcuts or interferes with assistive technology functionality that is important for you, you may want to turn them off in the Tasks plugin's settings:
 
@@ -69,7 +69,7 @@ If you have a [[Global Filter|global filter]] enabled, the dialog takes care of 
 The description box can be enlarged by dragging its corner. Multi-line text can be pasted in, or dragged-and-dropped in, and Tasks will remove the end-of-line characters automatically.
 
 > [!released]
-Description field became resizable in Tasks 2.0.0.
+> Description field became resizable in Tasks 2.0.0.
 
 ### Priority
 
@@ -133,7 +133,7 @@ The screenshot below is from a Mac.
 #### Date abbreviations
 
 > [!released]
-Introduced in Tasks 1.8.0.
+> Introduced in Tasks 1.8.0.
 
 The modal also has a few abbreviations of its own, to speed up entering of common values in the date fields.
 
@@ -214,7 +214,7 @@ This is currently the only operation in Tasks that can edit multiple files in th
 ### Status
 
 > [!released]
-Introduced in Tasks 1.23.0.
+> Introduced in Tasks 1.23.0.
 
 Use the Status dropdown to change the Status Symbol for the task.
 
@@ -245,7 +245,7 @@ For example, perhaps you actually completed a task yesterday and forget to mark 
 #### Rewriting history: completing recurring tasks in the modal
 
 > [!Tip]
-> When marking `when done` recurring tasks as Done in the Edit Task modal, the date of the *next* occurrence is now calculated from the value in the Done date field.
+> When marking `when done` recurring tasks as Done in the Edit Task modal, the date of the _next_ occurrence is now calculated from the value in the Done date field.
 
 The Done date value defaults to the current date, but can then be edited before clicking Apply.
 
@@ -288,7 +288,7 @@ We are tracking the iPhone scrollbar issue in [issue #1238](https://github.com/o
 
 ### Hotkey and keyboard shortcut conflict
 
-If the [custom hotkey](https://help.obsidian.md/Customization/Custom+hotkeys) for the 'Create or edit Task' Modal is the same as one of the keyboard shortcuts  [[#Keyboard shortcuts]] used in this modal, then when the modal opens, **the keyboard shortcut is unexpectedly also triggered**.
+If the [custom hotkey](https://help.obsidian.md/Customization/Custom+hotkeys) for the 'Create or edit Task' Modal is the same as one of the keyboard shortcuts [[#Keyboard shortcuts]] used in this modal, then when the modal opens, **the keyboard shortcut is unexpectedly also triggered**.
 
 For example, making `Alt + O` (Linux and Windows) or `Ctrl + Opt + O` (Mac) will mean that when the modal opens, the `Lowest` priority is selected, instead of `Normal`.
 

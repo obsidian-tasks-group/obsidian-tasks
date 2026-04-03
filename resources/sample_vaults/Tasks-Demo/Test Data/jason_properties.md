@@ -1,8 +1,5 @@
 ---
-{
-  "tags": "journal",
-  "publish": false
-}
+{ 'tags': 'journal', 'publish': false }
 ---
 
 # jason_properties

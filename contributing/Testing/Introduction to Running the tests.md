@@ -46,7 +46,7 @@ In the example below, we see:
 - It points us the the line of the failing test (132 below):
 - Which tells us that the task's status was supposed to be `TODO`
 - Looking up:
-  - the lines beginning with  a hyphen (`-`) show what the status *should* have been,
+  - the lines beginning with a hyphen (`-`) show what the status _should_ have been,
   - the lines beginning with a plus sign (`+`) who what the status actually was, in this test run.
 
 ```text

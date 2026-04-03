@@ -57,7 +57,7 @@ For this example, we will choose to style our tasks with [[Custom Statuses|SlRvb
 
 [Download the snippet](https://publish.obsidian.md/slrvb-docs/ITS+Theme/Alternate+Checkboxes), add it to your vault's snippet folder, and enable the snippet.
 
-The above 3  task lines now look like this:
+The above 3 task lines now look like this:
 
 ![3 sample tasks styled with SlrVb's Alternate-Checkboxes](../images/styling-sample-tasks-slrvb-custom-checkboxes.png)
 

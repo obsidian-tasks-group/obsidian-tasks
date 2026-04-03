@@ -28,7 +28,7 @@ Available task states, as of version `990fd3c0b9d9f1cbb17f956e3a2433c59868b82d` 
 
 - [ ] #task `space` Unchecked
 - [x] #task `x` Regular
-- [X] #task `X` Checked
+- [x] #task `X` Checked
 - [-] #task `-` Dropped
 - [>] #task `>` Forward
 - [<] #task `<` Migrated
@@ -64,7 +64,6 @@ Available task states, as of version `990fd3c0b9d9f1cbb17f956e3a2433c59868b82d` 
 - [H] #task `H` Favorite / Health
 - [&] #task `&` Symbolism
 - [s] #task `s` Secret
-
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

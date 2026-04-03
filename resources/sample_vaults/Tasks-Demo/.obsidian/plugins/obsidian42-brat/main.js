@@ -1,43 +1,3154 @@
-"use strict";var Qt=Object.create;var de=Object.defineProperty;var Jt=Object.getOwnPropertyDescriptor;var Zt=Object.getOwnPropertyNames;var es=Object.getPrototypeOf,ts=Object.prototype.hasOwnProperty;var $=(o,e)=>()=>(e||o((e={exports:{}}).exports,e),e.exports),ss=(o,e)=>{for(var t in e)de(o,t,{get:e[t],enumerable:!0})},We=(o,e,t,s)=>{if(e&&typeof e=="object"||typeof e=="function")for(let i of Zt(e))!ts.call(o,i)&&i!==t&&de(o,i,{get:()=>e[i],enumerable:!(s=Jt(e,i))||s.enumerable});return o};var is=(o,e,t)=>(t=o!=null?Qt(es(o)):{},We(e||!o||!o.__esModule?de(t,"default",{value:o,enumerable:!0}):t,o)),ns=o=>We(de({},"__esModule",{value:!0}),o);var ke=$((ri,Qe)=>{"use strict";var os=typeof process=="object"&&process.env&&process.env.NODE_DEBUG&&/\bsemver\b/i.test(process.env.NODE_DEBUG)?(...o)=>console.error("SEMVER",...o):()=>{};Qe.exports=os});var De=$((ai,Je)=>{"use strict";var rs="2.0.0",as=Number.MAX_SAFE_INTEGER||9007199254740991,ls=16,us=250,cs=["major","premajor","minor","preminor","patch","prepatch","prerelease"];Je.exports={MAX_LENGTH:256,MAX_SAFE_COMPONENT_LENGTH:ls,MAX_SAFE_BUILD_LENGTH:us,MAX_SAFE_INTEGER:as,RELEASE_TYPES:cs,SEMVER_SPEC_VERSION:rs,FLAG_INCLUDE_PRERELEASE:1,FLAG_LOOSE:2}});var Se=$((O,Ze)=>{"use strict";var{MAX_SAFE_COMPONENT_LENGTH:xe,MAX_SAFE_BUILD_LENGTH:gs,MAX_LENGTH:ds}=De(),ps=ke();O=Ze.exports={};var ms=O.re=[],hs=O.safeRe=[],g=O.src=[],fs=O.safeSrc=[],d=O.t={},bs=0,$e="[a-zA-Z0-9-]",ws=[["\\s",1],["\\d",ds],[$e,gs]],Ts=o=>{for(let[e,t]of ws)o=o.split(`${e}*`).join(`${e}{0,${t}}`).split(`${e}+`).join(`${e}{1,${t}}`);return o},b=(o,e,t)=>{let s=Ts(e),i=bs++;ps(o,i,e),d[o]=i,g[i]=e,fs[i]=s,ms[i]=new RegExp(e,t?"g":void 0),hs[i]=new RegExp(s,t?"g":void 0)};b("NUMERICIDENTIFIER","0|[1-9]\\d*");b("NUMERICIDENTIFIERLOOSE","\\d+");b("NONNUMERICIDENTIFIER",`\\d*[a-zA-Z-]${$e}*`);b("MAINVERSION",`(${g[d.NUMERICIDENTIFIER]})\\.(${g[d.NUMERICIDENTIFIER]})\\.(${g[d.NUMERICIDENTIFIER]})`);b("MAINVERSIONLOOSE",`(${g[d.NUMERICIDENTIFIERLOOSE]})\\.(${g[d.NUMERICIDENTIFIERLOOSE]})\\.(${g[d.NUMERICIDENTIFIERLOOSE]})`);b("PRERELEASEIDENTIFIER",`(?:${g[d.NONNUMERICIDENTIFIER]}|${g[d.NUMERICIDENTIFIER]})`);b("PRERELEASEIDENTIFIERLOOSE",`(?:${g[d.NONNUMERICIDENTIFIER]}|${g[d.NUMERICIDENTIFIERLOOSE]})`);b("PRERELEASE",`(?:-(${g[d.PRERELEASEIDENTIFIER]}(?:\\.${g[d.PRERELEASEIDENTIFIER]})*))`);b("PRERELEASELOOSE",`(?:-?(${g[d.PRERELEASEIDENTIFIERLOOSE]}(?:\\.${g[d.PRERELEASEIDENTIFIERLOOSE]})*))`);b("BUILDIDENTIFIER",`${$e}+`);b("BUILD",`(?:\\+(${g[d.BUILDIDENTIFIER]}(?:\\.${g[d.BUILDIDENTIFIER]})*))`);b("FULLPLAIN",`v?${g[d.MAINVERSION]}${g[d.PRERELEASE]}?${g[d.BUILD]}?`);b("FULL",`^${g[d.FULLPLAIN]}$`);b("LOOSEPLAIN",`[v=\\s]*${g[d.MAINVERSIONLOOSE]}${g[d.PRERELEASELOOSE]}?${g[d.BUILD]}?`);b("LOOSE",`^${g[d.LOOSEPLAIN]}$`);b("GTLT","((?:<|>)?=?)");b("XRANGEIDENTIFIERLOOSE",`${g[d.NUMERICIDENTIFIERLOOSE]}|x|X|\\*`);b("XRANGEIDENTIFIER",`${g[d.NUMERICIDENTIFIER]}|x|X|\\*`);b("XRANGEPLAIN",`[v=\\s]*(${g[d.XRANGEIDENTIFIER]})(?:\\.(${g[d.XRANGEIDENTIFIER]})(?:\\.(${g[d.XRANGEIDENTIFIER]})(?:${g[d.PRERELEASE]})?${g[d.BUILD]}?)?)?`);b("XRANGEPLAINLOOSE",`[v=\\s]*(${g[d.XRANGEIDENTIFIERLOOSE]})(?:\\.(${g[d.XRANGEIDENTIFIERLOOSE]})(?:\\.(${g[d.XRANGEIDENTIFIERLOOSE]})(?:${g[d.PRERELEASELOOSE]})?${g[d.BUILD]}?)?)?`);b("XRANGE",`^${g[d.GTLT]}\\s*${g[d.XRANGEPLAIN]}$`);b("XRANGELOOSE",`^${g[d.GTLT]}\\s*${g[d.XRANGEPLAINLOOSE]}$`);b("COERCEPLAIN",`(^|[^\\d])(\\d{1,${xe}})(?:\\.(\\d{1,${xe}}))?(?:\\.(\\d{1,${xe}}))?`);b("COERCE",`${g[d.COERCEPLAIN]}(?:$|[^\\d])`);b("COERCEFULL",g[d.COERCEPLAIN]+`(?:${g[d.PRERELEASE]})?(?:${g[d.BUILD]})?(?:$|[^\\d])`);b("COERCERTL",g[d.COERCE],!0);b("COERCERTLFULL",g[d.COERCEFULL],!0);b("LONETILDE","(?:~>?)");b("TILDETRIM",`(\\s*)${g[d.LONETILDE]}\\s+`,!0);O.tildeTrimReplace="$1~";b("TILDE",`^${g[d.LONETILDE]}${g[d.XRANGEPLAIN]}$`);b("TILDELOOSE",`^${g[d.LONETILDE]}${g[d.XRANGEPLAINLOOSE]}$`);b("LONECARET","(?:\\^)");b("CARETTRIM",`(\\s*)${g[d.LONECARET]}\\s+`,!0);O.caretTrimReplace="$1^";b("CARET",`^${g[d.LONECARET]}${g[d.XRANGEPLAIN]}$`);b("CARETLOOSE",`^${g[d.LONECARET]}${g[d.XRANGEPLAINLOOSE]}$`);b("COMPARATORLOOSE",`^${g[d.GTLT]}\\s*(${g[d.LOOSEPLAIN]})$|^$`);b("COMPARATOR",`^${g[d.GTLT]}\\s*(${g[d.FULLPLAIN]})$|^$`);b("COMPARATORTRIM",`(\\s*)${g[d.GTLT]}\\s*(${g[d.LOOSEPLAIN]}|${g[d.XRANGEPLAIN]})`,!0);O.comparatorTrimReplace="$1$2$3";b("HYPHENRANGE",`^\\s*(${g[d.XRANGEPLAIN]})\\s+-\\s+(${g[d.XRANGEPLAIN]})\\s*$`);b("HYPHENRANGELOOSE",`^\\s*(${g[d.XRANGEPLAINLOOSE]})\\s+-\\s+(${g[d.XRANGEPLAINLOOSE]})\\s*$`);b("STAR","(<|>)?=?\\s*\\*");b("GTE0","^\\s*>=\\s*0\\.0\\.0\\s*$");b("GTE0PRE","^\\s*>=\\s*0\\.0\\.0-0\\s*$")});var tt=$((li,et)=>{"use strict";var Es=Object.freeze({loose:!0}),ys=Object.freeze({}),vs=o=>o?typeof o!="object"?Es:o:ys;et.exports=vs});var ot=$((ui,nt)=>{"use strict";var st=/^[0-9]+$/,it=(o,e)=>{let t=st.test(o),s=st.test(e);return t&&s&&(o=+o,e=+e),o===e?0:t&&!s?-1:s&&!t?1:o<e?-1:1},Ps=(o,e)=>it(e,o);nt.exports={compareIdentifiers:it,rcompareIdentifiers:Ps}});var be=$((ci,at)=>{"use strict";var pe=ke(),{MAX_LENGTH:rt,MAX_SAFE_INTEGER:me}=De(),{safeRe:he,t:fe}=Se(),Is=tt(),{compareIdentifiers:H}=ot(),Oe=class o{constructor(e,t){if(t=Is(t),e instanceof o){if(e.loose===!!t.loose&&e.includePrerelease===!!t.includePrerelease)return e;e=e.version}else if(typeof e!="string")throw new TypeError(`Invalid version. Must be a string. Got type "${typeof e}".`);if(e.length>rt)throw new TypeError(`version is longer than ${rt} characters`);pe("SemVer",e,t),this.options=t,this.loose=!!t.loose,this.includePrerelease=!!t.includePrerelease;let s=e.trim().match(t.loose?he[fe.LOOSE]:he[fe.FULL]);if(!s)throw new TypeError(`Invalid Version: ${e}`);if(this.raw=e,this.major=+s[1],this.minor=+s[2],this.patch=+s[3],this.major>me||this.major<0)throw new TypeError("Invalid major version");if(this.minor>me||this.minor<0)throw new TypeError("Invalid minor version");if(this.patch>me||this.patch<0)throw new TypeError("Invalid patch version");s[4]?this.prerelease=s[4].split(".").map(i=>{if(/^[0-9]+$/.test(i)){let n=+i;if(n>=0&&n<me)return n}return i}):this.prerelease=[],this.build=s[5]?s[5].split("."):[],this.format()}format(){return this.version=`${this.major}.${this.minor}.${this.patch}`,this.prerelease.length&&(this.version+=`-${this.prerelease.join(".")}`),this.version}toString(){return this.version}compare(e){if(pe("SemVer.compare",this.version,this.options,e),!(e instanceof o)){if(typeof e=="string"&&e===this.version)return 0;e=new o(e,this.options)}return e.version===this.version?0:this.compareMain(e)||this.comparePre(e)}compareMain(e){return e instanceof o||(e=new o(e,this.options)),H(this.major,e.major)||H(this.minor,e.minor)||H(this.patch,e.patch)}comparePre(e){if(e instanceof o||(e=new o(e,this.options)),this.prerelease.length&&!e.prerelease.length)return-1;if(!this.prerelease.length&&e.prerelease.length)return 1;if(!this.prerelease.length&&!e.prerelease.length)return 0;let t=0;do{let s=this.prerelease[t],i=e.prerelease[t];if(pe("prerelease compare",t,s,i),s===void 0&&i===void 0)return 0;if(i===void 0)return 1;if(s===void 0)return-1;if(s===i)continue;return H(s,i)}while(++t)}compareBuild(e){e instanceof o||(e=new o(e,this.options));let t=0;do{let s=this.build[t],i=e.build[t];if(pe("build compare",t,s,i),s===void 0&&i===void 0)return 0;if(i===void 0)return 1;if(s===void 0)return-1;if(s===i)continue;return H(s,i)}while(++t)}inc(e,t,s){if(e.startsWith("pre")){if(!t&&s===!1)throw new Error("invalid increment argument: identifier is empty");if(t){let i=`-${t}`.match(this.options.loose?he[fe.PRERELEASELOOSE]:he[fe.PRERELEASE]);if(!i||i[1]!==t)throw new Error(`invalid identifier: ${t}`)}}switch(e){case"premajor":this.prerelease.length=0,this.patch=0,this.minor=0,this.major++,this.inc("pre",t,s);break;case"preminor":this.prerelease.length=0,this.patch=0,this.minor++,this.inc("pre",t,s);break;case"prepatch":this.prerelease.length=0,this.inc("patch",t,s),this.inc("pre",t,s);break;case"prerelease":this.prerelease.length===0&&this.inc("patch",t,s),this.inc("pre",t,s);break;case"release":if(this.prerelease.length===0)throw new Error(`version ${this.raw} is not a prerelease`);this.prerelease.length=0;break;case"major":(this.minor!==0||this.patch!==0||this.prerelease.length===0)&&this.major++,this.minor=0,this.patch=0,this.prerelease=[];break;case"minor":(this.patch!==0||this.prerelease.length===0)&&this.minor++,this.patch=0,this.prerelease=[];break;case"patch":this.prerelease.length===0&&this.patch++,this.prerelease=[];break;case"pre":{let i=Number(s)?1:0;if(this.prerelease.length===0)this.prerelease=[i];else{let n=this.prerelease.length;for(;--n>=0;)typeof this.prerelease[n]=="number"&&(this.prerelease[n]++,n=-2);if(n===-1){if(t===this.prerelease.join(".")&&s===!1)throw new Error("invalid increment argument: identifier already exists");this.prerelease.push(i)}}if(t){let n=[t,i];s===!1&&(n=[t]),H(this.prerelease[0],t)===0?isNaN(this.prerelease[1])&&(this.prerelease=n):this.prerelease=n}break}default:throw new Error(`invalid increment argument: ${e}`)}return this.raw=this.format(),this.build.length&&(this.raw+=`+${this.build.join(".")}`),this}};at.exports=Oe});var Fe=$((gi,ut)=>{"use strict";var lt=be(),Rs=(o,e,t)=>new lt(o,t).compare(new lt(e,t));ut.exports=Rs});var dt=$((di,gt)=>{"use strict";var ct=be(),As=(o,e,t=!1)=>{if(o instanceof ct)return o;try{return new ct(o,e)}catch(s){if(!t)return null;throw s}};gt.exports=As});var Be=$((pi,pt)=>{"use strict";var Cs=be(),Ns=dt(),{safeRe:we,t:Te}=Se(),Ls=(o,e)=>{if(o instanceof Cs)return o;if(typeof o=="number"&&(o=String(o)),typeof o!="string")return null;e=e||{};let t=null;if(!e.rtl)t=o.match(e.includePrerelease?we[Te.COERCEFULL]:we[Te.COERCE]);else{let u=e.includePrerelease?we[Te.COERCERTLFULL]:we[Te.COERCERTL],l;for(;(l=u.exec(o))&&(!t||t.index+t[0].length!==o.length);)(!t||l.index+l[0].length!==t.index+t[0].length)&&(t=l),u.lastIndex=l.index+l[1].length+l[2].length;u.lastIndex=-1}if(t===null)return null;let s=t[2],i=t[3]||"0",n=t[4]||"0",r=e.includePrerelease&&t[5]?`-${t[5]}`:"",a=e.includePrerelease&&t[6]?`+${t[6]}`:"";return Ns(`${s}.${i}.${n}${r}${a}`,e)};pt.exports=Ls});var Xt=$(y=>{"use strict";Object.defineProperty(y,"__esModule",{value:!0});var I=require("obsidian"),Ge="YYYY-MM-DD",je="gggg-[W]ww",St="YYYY-MM",Ot="YYYY-[Q]Q",Ft="YYYY";function ie(o){var t,s;let e=window.app.plugins.getPlugin("periodic-notes");return e&&((s=(t=e.settings)==null?void 0:t[o])==null?void 0:s.enabled)}function ne(){var o,e,t,s;try{let{internalPlugins:i,plugins:n}=window.app;if(ie("daily")){let{format:l,folder:c,template:p}=((e=(o=n.getPlugin("periodic-notes"))==null?void 0:o.settings)==null?void 0:e.daily)||{};return{format:l||Ge,folder:(c==null?void 0:c.trim())||"",template:(p==null?void 0:p.trim())||""}}let{folder:r,format:a,template:u}=((s=(t=i.getPluginById("daily-notes"))==null?void 0:t.instance)==null?void 0:s.options)||{};return{format:a||Ge,folder:(r==null?void 0:r.trim())||"",template:(u==null?void 0:u.trim())||""}}catch(i){console.info("No custom daily note settings found!",i)}}function oe(){var o,e,t,s,i,n,r;try{let a=window.app.plugins,u=(o=a.getPlugin("calendar"))==null?void 0:o.options,l=(t=(e=a.getPlugin("periodic-notes"))==null?void 0:e.settings)==null?void 0:t.weekly;if(ie("weekly"))return{format:l.format||je,folder:((s=l.folder)==null?void 0:s.trim())||"",template:((i=l.template)==null?void 0:i.trim())||""};let c=u||{};return{format:c.weeklyNoteFormat||je,folder:((n=c.weeklyNoteFolder)==null?void 0:n.trim())||"",template:((r=c.weeklyNoteTemplate)==null?void 0:r.trim())||""}}catch(a){console.info("No custom weekly note settings found!",a)}}function re(){var e,t,s,i;let o=window.app.plugins;try{let n=ie("monthly")&&((t=(e=o.getPlugin("periodic-notes"))==null?void 0:e.settings)==null?void 0:t.monthly)||{};return{format:n.format||St,folder:((s=n.folder)==null?void 0:s.trim())||"",template:((i=n.template)==null?void 0:i.trim())||""}}catch(n){console.info("No custom monthly note settings found!",n)}}function ae(){var e,t,s,i;let o=window.app.plugins;try{let n=ie("quarterly")&&((t=(e=o.getPlugin("periodic-notes"))==null?void 0:e.settings)==null?void 0:t.quarterly)||{};return{format:n.format||Ot,folder:((s=n.folder)==null?void 0:s.trim())||"",template:((i=n.template)==null?void 0:i.trim())||""}}catch(n){console.info("No custom quarterly note settings found!",n)}}function le(){var e,t,s,i;let o=window.app.plugins;try{let n=ie("yearly")&&((t=(e=o.getPlugin("periodic-notes"))==null?void 0:e.settings)==null?void 0:t.yearly)||{};return{format:n.format||Ft,folder:((s=n.folder)==null?void 0:s.trim())||"",template:((i=n.template)==null?void 0:i.trim())||""}}catch(n){console.info("No custom yearly note settings found!",n)}}function Bt(...o){let e=[];for(let s=0,i=o.length;s<i;s++)e=e.concat(o[s].split("/"));let t=[];for(let s=0,i=e.length;s<i;s++){let n=e[s];!n||n==="."||t.push(n)}return e[0]===""&&t.unshift(""),t.join("/")}function Os(o){let e=o.substring(o.lastIndexOf("/")+1);return e.lastIndexOf(".")!=-1&&(e=e.substring(0,e.lastIndexOf("."))),e}async function Fs(o){let e=o.replace(/\\/g,"/").split("/");if(e.pop(),e.length){let t=Bt(...e);window.app.vault.getAbstractFileByPath(t)||await window.app.vault.createFolder(t)}}async function ue(o,e){e.endsWith(".md")||(e+=".md");let t=I.normalizePath(Bt(o,e));return await Fs(t),t}async function z(o){let{metadataCache:e,vault:t}=window.app,s=I.normalizePath(o);if(s==="/")return Promise.resolve(["",null]);try{let i=e.getFirstLinkpathDest(s,""),n=await t.cachedRead(i),r=window.app.foldManager.load(i);return[n,r]}catch(i){return console.error(`Failed to read the daily note template '${s}'`,i),new I.Notice("Failed to read the daily note template"),["",null]}}function x(o,e="day"){let t=o.clone().startOf(e).format();return`${e}-${t}`}function Mt(o){return o.replace(/\[[^\]]*\]/g,"")}function Bs(o,e){if(e==="week"){let t=Mt(o);return/w{1,2}/i.test(t)&&(/M{1,4}/.test(t)||/D{1,4}/.test(t))}return!1}function X(o,e){return Vt(o.basename,e)}function Ms(o,e){return Vt(Os(o),e)}function Vt(o,e){let s={day:ne,week:oe,month:re,quarter:ae,year:le}[e]().format.split("/").pop(),i=window.moment(o,s,!0);if(!i.isValid())return null;if(Bs(s,e)&&e==="week"){let n=Mt(s);if(/w{1,2}/i.test(n))return window.moment(o,s.replace(/M{1,4}/g,"").replace(/D{1,4}/g,""),!1)}return i}var qe=class extends Error{};async function Ut(o){let e=window.app,{vault:t}=e,s=window.moment,{template:i,format:n,folder:r}=ne(),[a,u]=await z(i),l=o.format(n),c=await ue(r,l);try{let p=await t.create(c,a.replace(/{{\s*date\s*}}/gi,l).replace(/{{\s*time\s*}}/gi,s().format("HH:mm")).replace(/{{\s*title\s*}}/gi,l).replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi,(m,E,T,h,f,v)=>{let C=s(),P=o.clone().set({hour:C.get("hour"),minute:C.get("minute"),second:C.get("second")});return T&&P.add(parseInt(h,10),f),v?P.format(v.substring(1).trim()):P.format(n)}).replace(/{{\s*yesterday\s*}}/gi,o.clone().subtract(1,"day").format(n)).replace(/{{\s*tomorrow\s*}}/gi,o.clone().add(1,"d").format(n)));return e.foldManager.save(p,u),p}catch(p){console.error(`Failed to create file: '${c}'`,p),new I.Notice("Unable to create new file.")}}function Vs(o,e){var t;return(t=e[x(o,"day")])!=null?t:null}function Us(){let{vault:o}=window.app,{folder:e}=ne(),t=o.getAbstractFileByPath(I.normalizePath(e));if(!t)throw new qe("Failed to find daily notes folder");let s={};return I.Vault.recurseChildren(t,i=>{if(i instanceof I.TFile){let n=X(i,"day");if(n){let r=x(n,"day");s[r]=i}}}),s}var ze=class extends Error{};function Hs(){let{moment:o}=window,e=o.localeData()._week.dow,t=["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];for(;e;)t.push(t.shift()),e--;return t}function _s(o){return Hs().indexOf(o.toLowerCase())}async function Ht(o){let{vault:e}=window.app,{template:t,format:s,folder:i}=oe(),[n,r]=await z(t),a=o.format(s),u=await ue(i,a);try{let l=await e.create(u,n.replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi,(c,p,m,E,T,h)=>{let f=window.moment(),v=o.clone().set({hour:f.get("hour"),minute:f.get("minute"),second:f.get("second")});return m&&v.add(parseInt(E,10),T),h?v.format(h.substring(1).trim()):v.format(s)}).replace(/{{\s*title\s*}}/gi,a).replace(/{{\s*time\s*}}/gi,window.moment().format("HH:mm")).replace(/{{\s*(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\s*:(.*?)}}/gi,(c,p,m)=>{let E=_s(p);return o.weekday(E).format(m.trim())}));return window.app.foldManager.save(l,r),l}catch(l){console.error(`Failed to create file: '${u}'`,l),new I.Notice("Unable to create new file.")}}function Gs(o,e){var t;return(t=e[x(o,"week")])!=null?t:null}function js(){let o={};if(!Gt())return o;let{vault:e}=window.app,{folder:t}=oe(),s=e.getAbstractFileByPath(I.normalizePath(t));if(!s)throw new ze("Failed to find weekly notes folder");return I.Vault.recurseChildren(s,i=>{if(i instanceof I.TFile){let n=X(i,"week");if(n){let r=x(n,"week");o[r]=i}}}),o}var Xe=class extends Error{};async function _t(o){let{vault:e}=window.app,{template:t,format:s,folder:i}=re(),[n,r]=await z(t),a=o.format(s),u=await ue(i,a);try{let l=await e.create(u,n.replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi,(c,p,m,E,T,h)=>{let f=window.moment(),v=o.clone().set({hour:f.get("hour"),minute:f.get("minute"),second:f.get("second")});return m&&v.add(parseInt(E,10),T),h?v.format(h.substring(1).trim()):v.format(s)}).replace(/{{\s*date\s*}}/gi,a).replace(/{{\s*time\s*}}/gi,window.moment().format("HH:mm")).replace(/{{\s*title\s*}}/gi,a));return window.app.foldManager.save(l,r),l}catch(l){console.error(`Failed to create file: '${u}'`,l),new I.Notice("Unable to create new file.")}}function qs(o,e){var t;return(t=e[x(o,"month")])!=null?t:null}function zs(){let o={};if(!jt())return o;let{vault:e}=window.app,{folder:t}=re(),s=e.getAbstractFileByPath(I.normalizePath(t));if(!s)throw new Xe("Failed to find monthly notes folder");return I.Vault.recurseChildren(s,i=>{if(i instanceof I.TFile){let n=X(i,"month");if(n){let r=x(n,"month");o[r]=i}}}),o}var Ye=class extends Error{};async function Xs(o){let{vault:e}=window.app,{template:t,format:s,folder:i}=ae(),[n,r]=await z(t),a=o.format(s),u=await ue(i,a);try{let l=await e.create(u,n.replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi,(c,p,m,E,T,h)=>{let f=window.moment(),v=o.clone().set({hour:f.get("hour"),minute:f.get("minute"),second:f.get("second")});return m&&v.add(parseInt(E,10),T),h?v.format(h.substring(1).trim()):v.format(s)}).replace(/{{\s*date\s*}}/gi,a).replace(/{{\s*time\s*}}/gi,window.moment().format("HH:mm")).replace(/{{\s*title\s*}}/gi,a));return window.app.foldManager.save(l,r),l}catch(l){console.error(`Failed to create file: '${u}'`,l),new I.Notice("Unable to create new file.")}}function Ys(o,e){var t;return(t=e[x(o,"quarter")])!=null?t:null}function Ks(){let o={};if(!qt())return o;let{vault:e}=window.app,{folder:t}=ae(),s=e.getAbstractFileByPath(I.normalizePath(t));if(!s)throw new Ye("Failed to find quarterly notes folder");return I.Vault.recurseChildren(s,i=>{if(i instanceof I.TFile){let n=X(i,"quarter");if(n){let r=x(n,"quarter");o[r]=i}}}),o}var Ke=class extends Error{};async function Ws(o){let{vault:e}=window.app,{template:t,format:s,folder:i}=le(),[n,r]=await z(t),a=o.format(s),u=await ue(i,a);try{let l=await e.create(u,n.replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi,(c,p,m,E,T,h)=>{let f=window.moment(),v=o.clone().set({hour:f.get("hour"),minute:f.get("minute"),second:f.get("second")});return m&&v.add(parseInt(E,10),T),h?v.format(h.substring(1).trim()):v.format(s)}).replace(/{{\s*date\s*}}/gi,a).replace(/{{\s*time\s*}}/gi,window.moment().format("HH:mm")).replace(/{{\s*title\s*}}/gi,a));return window.app.foldManager.save(l,r),l}catch(l){console.error(`Failed to create file: '${u}'`,l),new I.Notice("Unable to create new file.")}}function Qs(o,e){var t;return(t=e[x(o,"year")])!=null?t:null}function Js(){let o={};if(!zt())return o;let{vault:e}=window.app,{folder:t}=le(),s=e.getAbstractFileByPath(I.normalizePath(t));if(!s)throw new Ke("Failed to find yearly notes folder");return I.Vault.recurseChildren(s,i=>{if(i instanceof I.TFile){let n=X(i,"year");if(n){let r=x(n,"year");o[r]=i}}}),o}function Zs(){var s,i;let{app:o}=window,e=o.internalPlugins.plugins["daily-notes"];if(e&&e.enabled)return!0;let t=o.plugins.getPlugin("periodic-notes");return t&&((i=(s=t.settings)==null?void 0:s.daily)==null?void 0:i.enabled)}function Gt(){var t,s;let{app:o}=window;if(o.plugins.getPlugin("calendar"))return!0;let e=o.plugins.getPlugin("periodic-notes");return e&&((s=(t=e.settings)==null?void 0:t.weekly)==null?void 0:s.enabled)}function jt(){var t,s;let{app:o}=window,e=o.plugins.getPlugin("periodic-notes");return e&&((s=(t=e.settings)==null?void 0:t.monthly)==null?void 0:s.enabled)}function qt(){var t,s;let{app:o}=window,e=o.plugins.getPlugin("periodic-notes");return e&&((s=(t=e.settings)==null?void 0:t.quarterly)==null?void 0:s.enabled)}function zt(){var t,s;let{app:o}=window,e=o.plugins.getPlugin("periodic-notes");return e&&((s=(t=e.settings)==null?void 0:t.yearly)==null?void 0:s.enabled)}function ei(o){let e={day:ne,week:oe,month:re,quarter:ae,year:le}[o];return e()}function ti(o,e){return{day:Ut,month:_t,week:Ht}[o](e)}y.DEFAULT_DAILY_NOTE_FORMAT=Ge;y.DEFAULT_MONTHLY_NOTE_FORMAT=St;y.DEFAULT_QUARTERLY_NOTE_FORMAT=Ot;y.DEFAULT_WEEKLY_NOTE_FORMAT=je;y.DEFAULT_YEARLY_NOTE_FORMAT=Ft;y.appHasDailyNotesPluginLoaded=Zs;y.appHasMonthlyNotesPluginLoaded=jt;y.appHasQuarterlyNotesPluginLoaded=qt;y.appHasWeeklyNotesPluginLoaded=Gt;y.appHasYearlyNotesPluginLoaded=zt;y.createDailyNote=Ut;y.createMonthlyNote=_t;y.createPeriodicNote=ti;y.createQuarterlyNote=Xs;y.createWeeklyNote=Ht;y.createYearlyNote=Ws;y.getAllDailyNotes=Us;y.getAllMonthlyNotes=zs;y.getAllQuarterlyNotes=Ks;y.getAllWeeklyNotes=js;y.getAllYearlyNotes=Js;y.getDailyNote=Vs;y.getDailyNoteSettings=ne;y.getDateFromFile=X;y.getDateFromPath=Ms;y.getDateUID=x;y.getMonthlyNote=qs;y.getMonthlyNoteSettings=re;y.getPeriodicNoteSettings=ei;y.getQuarterlyNote=Ys;y.getQuarterlyNoteSettings=ae;y.getTemplateInfo=z;y.getWeeklyNote=Gs;y.getWeeklyNoteSettings=oe;y.getYearlyNote=Qs;y.getYearlyNoteSettings=le});var si={};ss(si,{default:()=>Ne});module.exports=ns(si);var Wt=require("obsidian");var L=require("obsidian");var D=class extends Error{constructor(t,s,i,n){let r=Math.ceil((i-Math.floor(Date.now()/1e3))/60);super(`GitHub API rate limit exceeded. Reset in ${r} minutes.`);this.limit=t;this.remaining=s;this.reset=i;this.requestUrl=n}getMinutesToReset(){return Math.ceil((this.reset-Math.floor(Date.now()/1e3))/60)}},S=class extends Error{constructor(e){var s,i;super(`GitHub API error ${e}: ${e.message}`),this.message=e.message;let t=e;this.status=(s=t.status)!=null?s:400,this.headers=(i=t.headers)!=null?i:{},this.name="GitHubResponseError"}};var B=require("obsidian");var ks=Fe(),mt=Be();var Ee=o=>{let e=o.replace(/https?:\/\/github\.com\//i,"");return e.endsWith("/")&&(e=e.slice(0,-1)),e.toLowerCase().endsWith(".git")&&(e=e.slice(0,-4)),e},ht=["ghp_","github_pat_"],Ds=/^(gh[ps]_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9]{22}_[a-zA-Z0-9]{59})$/,ft=async(o,e)=>{var n,r,a,u,l,c,p,m,E,T,h;let t=["repo","public_repo","metadata=read"],s=ht.some(f=>o.toLowerCase().startsWith(f.toLowerCase())),i=Ds.test(o);if(!s||!i)return{validToken:!1,currentScopes:[],acceptedScopes:[],acceptedPermissions:[],expirationDate:null,rateLimit:{limit:0,remaining:0,reset:0,resource:"",used:0},error:{type:s?"invalid_format":"invalid_prefix",message:"Invalid token format",details:{validPrefixes:ht}}};try{let f=Date.now()%1e3,v=e||`user${f}/repo${f%100}`;if(await ye({url:`https://api.github.com/repos/${v}`,headers:{Authorization:`Token ${o}`,Accept:"application/vnd.github.v3+json"}}),e)return{validToken:!0,currentScopes:[],acceptedScopes:[],acceptedPermissions:[],expirationDate:null,rateLimit:{limit:0,remaining:0,reset:0,resource:"",used:0},error:{type:"none",message:"No error",details:{}}};throw new Error("Expected request to fail")}catch(f){if(!(f instanceof S))throw f;let v=f.headers;if(!v)throw new Error("No headers in GitHub response");let C=v["github-authentication-token-expiration"],P=C?new Date(C):null,ge=P&&!Number.isNaN(P.getTime())?P.toISOString():null,A={validToken:!1,currentScopes:(r=(n=v["x-oauth-scopes"])==null?void 0:n.split(", "))!=null?r:[],acceptedScopes:(u=(a=v["x-accepted-oauth-scopes"])==null?void 0:a.split(", "))!=null?u:[],acceptedPermissions:(c=(l=v["x-accepted-github-permissions"])==null?void 0:l.split(", "))!=null?c:[],expirationDate:ge,rateLimit:{limit:Number.parseInt((p=v["x-ratelimit-limit"])!=null?p:"0",10),remaining:Number.parseInt((m=v["x-ratelimit-remaining"])!=null?m:"0",10),reset:Number.parseInt((E=v["x-ratelimit-reset"])!=null?E:"0",10),resource:(T=v["x-ratelimit-resource"])!=null?T:"",used:Number.parseInt((h=v["x-ratelimit-used"])!=null?h:"0",10)},error:{type:"none",message:"No error",details:{}}};return A.expirationDate&&new Date(A.expirationDate)<new Date?(A.error={type:"expired",message:"Token has expired",details:{expirationDate:A.expirationDate}},A):A.currentScopes.some(Le=>t.includes(Le))||A.acceptedPermissions.some(Le=>t.includes(Le))?(A.validToken=f.status===404,A):(A.error={type:"insufficient_scope",message:"Token lacks required scopes. Check documentation for requirements.",details:{currentScopes:[...A.acceptedScopes,...A.acceptedPermissions]}},A)}},Me=async(o,e=!0,t="")=>{let s=`https://api.github.com/repos/${o}`;try{return(await ye({url:s,headers:t?{Authorization:`Token ${t}`}:{}})).json.private}catch(i){if(i instanceof D)throw i;return e&&console.log("error in isPrivateRepo",s,i),!1}},bt=async(o,e=!0,t="")=>{let s=`https://api.github.com/repos/${o}/releases`;try{return(await ye({url:`${s}?per_page=100`,headers:t?{Authorization:`Token ${t}`}:{}})).json.map(r=>({version:r.tag_name,prerelease:r.prerelease}))}catch(i){if(i instanceof D||i instanceof S)throw i;return e&&console.log("Error in fetchReleaseVersions",s,i),null}},Y=async(o,e,t=!0,s=!1,i="")=>{try{let n=o.assets.find(l=>l.name===e);if(!n)return null;let r={Accept:"application/octet-stream"};s&&i&&(r.Authorization=`Token ${i}`);let a=s?n.url:n.browser_download_url,u=await(0,B.requestUrl)({url:a,headers:r});return u.status!==200?null:u.text}catch(n){if(n instanceof D)throw n;return t&&console.log("error in grabReleaseFileFromRepository",URL,n),null}},wt=async(o=!0)=>{let e="https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-plugins.json";try{let t=await(0,B.requestUrl)({url:e});return t.status===404?null:t.json}catch(t){return o&&console.log("error in grabCommmunityPluginList",t),null}},Tt=async(o=!0)=>{let e="https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-css-themes.json";try{let t=await(0,B.requestUrl)({url:e});return t.status===404?null:t.json}catch(t){return o&&console.log("error in grabCommmunityThemesList",t),null}},_=async(o,e=!1,t=!1)=>{let s=`https://raw.githubusercontent.com/${o}/HEAD/theme${e?"-beta":""}.css`;try{let i=await(0,B.requestUrl)({url:s});return i.status===404?null:i.text}catch(i){return t&&console.log("error in grabCommmunityThemeCssFile",i),null}},Et=async(o,e=!0)=>{let t=`https://raw.githubusercontent.com/${o}/HEAD/manifest.json`;try{let s=await(0,B.requestUrl)({url:t});return s.status===404?null:s.text}catch(s){return e&&console.log("error in grabCommmunityThemeManifestFile",s),null}},xs=o=>{let e=0;for(let t=0;t<o.length;t++)e+=o.charCodeAt(t);return e},K=o=>xs(o).toString(),W=async(o,e,t)=>{let s=await _(o,e,t);return s?K(s):"0"},$s=async(o,e,t=!0)=>{let s=`https://api.github.com/repos/${o}/commits?path=${e}&page=1&per_page=1`;try{let i=await(0,B.requestUrl)({url:s});return i.status===404?null:i.json}catch(i){return t&&console.log("error in grabLastCommitInfoForAFile",i),null}},yt=async(o,e)=>{var s;let t=await $s(o,e);return t&&t.length>0&&((s=t[0].commit.committer)!=null&&s.date)?t[0].commit.committer.date:""},Ve=async(o,e,t=!1,s=!1,i=!1,n)=>{var r;try{let a=e&&e!=="latest"?`https://api.github.com/repos/${o}/releases/tags/${e}`:`https://api.github.com/repos/${o}/releases`,u={Accept:"application/vnd.github.v3+json"};(i&&n||n)&&(u.Authorization=`Token ${n}`);let l=await ye({url:a,headers:u});if(l.status===404)return null;let c=e&&e!=="latest"?[l.json]:l.json;return s&&console.log(`grabReleaseFromRepository for ${o}:`,c),(r=c.sort((p,m)=>{let E=mt(p.tag_name,{includePrerelease:!0,loose:!0}),T=mt(m.tag_name,{includePrerelease:!0,loose:!0});return ks(T,E)}).filter(p=>t||!p.prerelease)[0])!=null?r:null}catch(a){throw s&&console.log(`Error in grabReleaseFromRepository for ${o}:`,a),a}},ye=async(o,e)=>{let t=0,s=0,i=0;o.headers={...o.headers,"User-Agent":"Obsidian/BRAT-Plugin"};try{return await(0,B.requestUrl)(o)}catch(n){let r=new S(n),a=r.headers;if(a&&(t=Number.parseInt(a["x-ratelimit-limit"],10),s=Number.parseInt(a["x-ratelimit-remaining"],10),i=Number.parseInt(a["x-ratelimit-reset"],10)),r.status===403&&s===0){let u=new D(t,s,i,o.url);throw e&&console.error(`BRAT
-GitHub API rate limit exceeded:`,`
-Request: ${u.requestUrl}`,`
-Rate limits - Remaining: ${u.remaining}`,`
-Reset in: ${u.getMinutesToReset()} minutes`),u}throw e&&console.log("GitHub request failed:",n),r}};var Ue={pluginList:[],pluginSubListFrozenVersion:[],themesList:[],updateAtStartup:!0,updateThemesAtStartup:!0,enableAfterInstall:!0,loggingEnabled:!1,loggingPath:"BRAT-log",loggingVerboseEnabled:!1,debuggingMode:!1,notificationsEnabled:!0,personalAccessToken:"",selectLatestPluginVersionByDefault:!1,allowIncompatiblePlugins:!1};function vt(o,e,t="latest",s="",i=!1){let n=!1;o.settings.pluginList.contains(e)||(o.settings.pluginList.unshift(e),n=!0);let r=o.settings.pluginSubListFrozenVersion.find(a=>a.repo===e);r?(Object.assign(r,{repo:e,version:t,token:s.trim()!==""?s:void 0,isIncompatible:i||void 0}),n=!0):(o.settings.pluginSubListFrozenVersion.unshift({repo:e,version:t,token:s||void 0,isIncompatible:i||void 0}),n=!0),n&&o.saveSettings()}function Pt(o,e){return o.settings.pluginList.contains(e)}function It(o,e,t){let s={repo:e,lastUpdate:K(t)};o.settings.themesList.unshift(s),o.saveSettings()}function Rt(o,e){return!!o.settings.themesList.find(s=>s.repo===e)}function At(o,e,t){for(let s of o.settings.themesList)s.repo===e&&(s.lastUpdate=t,o.saveSettings())}var N=require("obsidian");var G=class{constructor(e,t){this.tokenEl=e,this.statusEl=t}async validateToken(e,t){var s,i,n,r,a,u,l,c,p,m,E,T,h;if((s=this.tokenEl)==null||s.inputEl.removeClass("valid-input","invalid-input"),!e)return(i=this.statusEl)==null||i.setText("No token provided"),(n=this.statusEl)==null||n.addClass("invalid"),(r=this.statusEl)==null||r.removeClass("valid"),!1;try{let f=await ft(e,t);return(a=this.statusEl)==null||a.removeClass("invalid","valid"),(u=this.statusEl)==null||u.empty(),f.validToken?((l=this.tokenEl)==null||l.inputEl.addClass("valid-input"),(c=this.statusEl)==null||c.addClass("valid"),this.showValidTokenInfo(f),!0):((p=this.tokenEl)==null||p.inputEl.addClass("invalid-input"),(m=this.statusEl)==null||m.addClass("invalid"),this.showErrorMessage(f.error),!1)}catch(f){return console.error("Token validation error:",f),(E=this.tokenEl)==null||E.inputEl.addClass("invalid-input"),(T=this.statusEl)==null||T.setText("Failed to validate token"),(h=this.statusEl)==null||h.addClass("invalid"),!1}}showValidTokenInfo(e){var s,i;let t=(s=this.statusEl)==null?void 0:s.createDiv({cls:"brat-token-details"});if(t&&(t.createDiv({text:"\u2713 Valid token",cls:"brat-token-status valid"}),(i=e.currentScopes)!=null&&i.length&&t.createDiv({text:`Scopes: ${e.currentScopes.join(", ")}`,cls:"brat-token-scopes"}),e.rateLimit&&t.createDiv({text:`Rate Limit: ${e.rateLimit.remaining}/${e.rateLimit.limit}`,cls:"brat-token-rate"}),e.expirationDate)){let n=new Date(e.expirationDate),r=Math.ceil((n.getTime()-Date.now())/(1e3*60*60*24));r<7&&t.createDiv({text:`\u26A0\uFE0F Token expires in ${r} days`,cls:"brat-token-warning"})}}showErrorMessage(e){var s,i,n;let t=(s=this.statusEl)==null?void 0:s.createDiv({cls:"brat-token-error"});if(t&&(t.createDiv({text:e.message}),e.details))switch(e.type){case"invalid_prefix":t.createDiv({text:`Valid prefixes: ${(i=e.details.validPrefixes)==null?void 0:i.join(", ")}`});break;case"insufficient_scope":t.createDiv({text:`Required scopes: ${(n=e.details.requiredScopes)==null?void 0:n.join(", ")}`});break}}};function Q(o,e){let t=new DocumentFragment,s=document.createElement("a");if(s.textContent=o,s.href=`https://github.com/${o}`,s.target="_blank",t.appendChild(s),e){let i=document.createTextNode(e);t.appendChild(i)}return t}function Ct({prependText:o,url:e,text:t,appendText:s}){let i=new DocumentFragment,n=document.createElement("a");if(n.textContent=t,n.href=e,o){let r=document.createTextNode(o);i.appendChild(r)}if(i.appendChild(n),s){let r=document.createTextNode(s);i.appendChild(r)}return i}var ve=require("obsidian");function w(o,e,t=10,s){if(!o.settings.notificationsEnabled)return;let i=s?ve.Platform.isDesktop?"(click=dismiss, right-click=Info)":"(click=dismiss)":"",n=new ve.Notice(`BRAT
+'use strict';
+var Qt = Object.create;
+var de = Object.defineProperty;
+var Jt = Object.getOwnPropertyDescriptor;
+var Zt = Object.getOwnPropertyNames;
+var es = Object.getPrototypeOf,
+    ts = Object.prototype.hasOwnProperty;
+var $ = (o, e) => () => (e || o((e = { exports: {} }).exports, e), e.exports),
+    ss = (o, e) => {
+        for (var t in e) de(o, t, { get: e[t], enumerable: !0 });
+    },
+    We = (o, e, t, s) => {
+        if ((e && typeof e == 'object') || typeof e == 'function')
+            for (let i of Zt(e))
+                !ts.call(o, i) && i !== t && de(o, i, { get: () => e[i], enumerable: !(s = Jt(e, i)) || s.enumerable });
+        return o;
+    };
+var is = (o, e, t) => (
+        (t = o != null ? Qt(es(o)) : {}),
+        We(e || !o || !o.__esModule ? de(t, 'default', { value: o, enumerable: !0 }) : t, o)
+    ),
+    ns = (o) => We(de({}, '__esModule', { value: !0 }), o);
+var ke = $((ri, Qe) => {
+    'use strict';
+    var os =
+        typeof process == 'object' &&
+        process.env &&
+        process.env.NODE_DEBUG &&
+        /\bsemver\b/i.test(process.env.NODE_DEBUG)
+            ? (...o) => console.error('SEMVER', ...o)
+            : () => {};
+    Qe.exports = os;
+});
+var De = $((ai, Je) => {
+    'use strict';
+    var rs = '2.0.0',
+        as = Number.MAX_SAFE_INTEGER || 9007199254740991,
+        ls = 16,
+        us = 250,
+        cs = ['major', 'premajor', 'minor', 'preminor', 'patch', 'prepatch', 'prerelease'];
+    Je.exports = {
+        MAX_LENGTH: 256,
+        MAX_SAFE_COMPONENT_LENGTH: ls,
+        MAX_SAFE_BUILD_LENGTH: us,
+        MAX_SAFE_INTEGER: as,
+        RELEASE_TYPES: cs,
+        SEMVER_SPEC_VERSION: rs,
+        FLAG_INCLUDE_PRERELEASE: 1,
+        FLAG_LOOSE: 2,
+    };
+});
+var Se = $((O, Ze) => {
+    'use strict';
+    var { MAX_SAFE_COMPONENT_LENGTH: xe, MAX_SAFE_BUILD_LENGTH: gs, MAX_LENGTH: ds } = De(),
+        ps = ke();
+    O = Ze.exports = {};
+    var ms = (O.re = []),
+        hs = (O.safeRe = []),
+        g = (O.src = []),
+        fs = (O.safeSrc = []),
+        d = (O.t = {}),
+        bs = 0,
+        $e = '[a-zA-Z0-9-]',
+        ws = [
+            ['\\s', 1],
+            ['\\d', ds],
+            [$e, gs],
+        ],
+        Ts = (o) => {
+            for (let [e, t] of ws) o = o.split(`${e}*`).join(`${e}{0,${t}}`).split(`${e}+`).join(`${e}{1,${t}}`);
+            return o;
+        },
+        b = (o, e, t) => {
+            let s = Ts(e),
+                i = bs++;
+            (ps(o, i, e),
+                (d[o] = i),
+                (g[i] = e),
+                (fs[i] = s),
+                (ms[i] = new RegExp(e, t ? 'g' : void 0)),
+                (hs[i] = new RegExp(s, t ? 'g' : void 0)));
+        };
+    b('NUMERICIDENTIFIER', '0|[1-9]\\d*');
+    b('NUMERICIDENTIFIERLOOSE', '\\d+');
+    b('NONNUMERICIDENTIFIER', `\\d*[a-zA-Z-]${$e}*`);
+    b('MAINVERSION', `(${g[d.NUMERICIDENTIFIER]})\\.(${g[d.NUMERICIDENTIFIER]})\\.(${g[d.NUMERICIDENTIFIER]})`);
+    b(
+        'MAINVERSIONLOOSE',
+        `(${g[d.NUMERICIDENTIFIERLOOSE]})\\.(${g[d.NUMERICIDENTIFIERLOOSE]})\\.(${g[d.NUMERICIDENTIFIERLOOSE]})`,
+    );
+    b('PRERELEASEIDENTIFIER', `(?:${g[d.NONNUMERICIDENTIFIER]}|${g[d.NUMERICIDENTIFIER]})`);
+    b('PRERELEASEIDENTIFIERLOOSE', `(?:${g[d.NONNUMERICIDENTIFIER]}|${g[d.NUMERICIDENTIFIERLOOSE]})`);
+    b('PRERELEASE', `(?:-(${g[d.PRERELEASEIDENTIFIER]}(?:\\.${g[d.PRERELEASEIDENTIFIER]})*))`);
+    b('PRERELEASELOOSE', `(?:-?(${g[d.PRERELEASEIDENTIFIERLOOSE]}(?:\\.${g[d.PRERELEASEIDENTIFIERLOOSE]})*))`);
+    b('BUILDIDENTIFIER', `${$e}+`);
+    b('BUILD', `(?:\\+(${g[d.BUILDIDENTIFIER]}(?:\\.${g[d.BUILDIDENTIFIER]})*))`);
+    b('FULLPLAIN', `v?${g[d.MAINVERSION]}${g[d.PRERELEASE]}?${g[d.BUILD]}?`);
+    b('FULL', `^${g[d.FULLPLAIN]}$`);
+    b('LOOSEPLAIN', `[v=\\s]*${g[d.MAINVERSIONLOOSE]}${g[d.PRERELEASELOOSE]}?${g[d.BUILD]}?`);
+    b('LOOSE', `^${g[d.LOOSEPLAIN]}$`);
+    b('GTLT', '((?:<|>)?=?)');
+    b('XRANGEIDENTIFIERLOOSE', `${g[d.NUMERICIDENTIFIERLOOSE]}|x|X|\\*`);
+    b('XRANGEIDENTIFIER', `${g[d.NUMERICIDENTIFIER]}|x|X|\\*`);
+    b(
+        'XRANGEPLAIN',
+        `[v=\\s]*(${g[d.XRANGEIDENTIFIER]})(?:\\.(${g[d.XRANGEIDENTIFIER]})(?:\\.(${g[d.XRANGEIDENTIFIER]})(?:${g[d.PRERELEASE]})?${g[d.BUILD]}?)?)?`,
+    );
+    b(
+        'XRANGEPLAINLOOSE',
+        `[v=\\s]*(${g[d.XRANGEIDENTIFIERLOOSE]})(?:\\.(${g[d.XRANGEIDENTIFIERLOOSE]})(?:\\.(${g[d.XRANGEIDENTIFIERLOOSE]})(?:${g[d.PRERELEASELOOSE]})?${g[d.BUILD]}?)?)?`,
+    );
+    b('XRANGE', `^${g[d.GTLT]}\\s*${g[d.XRANGEPLAIN]}$`);
+    b('XRANGELOOSE', `^${g[d.GTLT]}\\s*${g[d.XRANGEPLAINLOOSE]}$`);
+    b('COERCEPLAIN', `(^|[^\\d])(\\d{1,${xe}})(?:\\.(\\d{1,${xe}}))?(?:\\.(\\d{1,${xe}}))?`);
+    b('COERCE', `${g[d.COERCEPLAIN]}(?:$|[^\\d])`);
+    b('COERCEFULL', g[d.COERCEPLAIN] + `(?:${g[d.PRERELEASE]})?(?:${g[d.BUILD]})?(?:$|[^\\d])`);
+    b('COERCERTL', g[d.COERCE], !0);
+    b('COERCERTLFULL', g[d.COERCEFULL], !0);
+    b('LONETILDE', '(?:~>?)');
+    b('TILDETRIM', `(\\s*)${g[d.LONETILDE]}\\s+`, !0);
+    O.tildeTrimReplace = '$1~';
+    b('TILDE', `^${g[d.LONETILDE]}${g[d.XRANGEPLAIN]}$`);
+    b('TILDELOOSE', `^${g[d.LONETILDE]}${g[d.XRANGEPLAINLOOSE]}$`);
+    b('LONECARET', '(?:\\^)');
+    b('CARETTRIM', `(\\s*)${g[d.LONECARET]}\\s+`, !0);
+    O.caretTrimReplace = '$1^';
+    b('CARET', `^${g[d.LONECARET]}${g[d.XRANGEPLAIN]}$`);
+    b('CARETLOOSE', `^${g[d.LONECARET]}${g[d.XRANGEPLAINLOOSE]}$`);
+    b('COMPARATORLOOSE', `^${g[d.GTLT]}\\s*(${g[d.LOOSEPLAIN]})$|^$`);
+    b('COMPARATOR', `^${g[d.GTLT]}\\s*(${g[d.FULLPLAIN]})$|^$`);
+    b('COMPARATORTRIM', `(\\s*)${g[d.GTLT]}\\s*(${g[d.LOOSEPLAIN]}|${g[d.XRANGEPLAIN]})`, !0);
+    O.comparatorTrimReplace = '$1$2$3';
+    b('HYPHENRANGE', `^\\s*(${g[d.XRANGEPLAIN]})\\s+-\\s+(${g[d.XRANGEPLAIN]})\\s*$`);
+    b('HYPHENRANGELOOSE', `^\\s*(${g[d.XRANGEPLAINLOOSE]})\\s+-\\s+(${g[d.XRANGEPLAINLOOSE]})\\s*$`);
+    b('STAR', '(<|>)?=?\\s*\\*');
+    b('GTE0', '^\\s*>=\\s*0\\.0\\.0\\s*$');
+    b('GTE0PRE', '^\\s*>=\\s*0\\.0\\.0-0\\s*$');
+});
+var tt = $((li, et) => {
+    'use strict';
+    var Es = Object.freeze({ loose: !0 }),
+        ys = Object.freeze({}),
+        vs = (o) => (o ? (typeof o != 'object' ? Es : o) : ys);
+    et.exports = vs;
+});
+var ot = $((ui, nt) => {
+    'use strict';
+    var st = /^[0-9]+$/,
+        it = (o, e) => {
+            let t = st.test(o),
+                s = st.test(e);
+            return (t && s && ((o = +o), (e = +e)), o === e ? 0 : t && !s ? -1 : s && !t ? 1 : o < e ? -1 : 1);
+        },
+        Ps = (o, e) => it(e, o);
+    nt.exports = { compareIdentifiers: it, rcompareIdentifiers: Ps };
+});
+var be = $((ci, at) => {
+    'use strict';
+    var pe = ke(),
+        { MAX_LENGTH: rt, MAX_SAFE_INTEGER: me } = De(),
+        { safeRe: he, t: fe } = Se(),
+        Is = tt(),
+        { compareIdentifiers: H } = ot(),
+        Oe = class o {
+            constructor(e, t) {
+                if (((t = Is(t)), e instanceof o)) {
+                    if (e.loose === !!t.loose && e.includePrerelease === !!t.includePrerelease) return e;
+                    e = e.version;
+                } else if (typeof e != 'string')
+                    throw new TypeError(`Invalid version. Must be a string. Got type "${typeof e}".`);
+                if (e.length > rt) throw new TypeError(`version is longer than ${rt} characters`);
+                (pe('SemVer', e, t),
+                    (this.options = t),
+                    (this.loose = !!t.loose),
+                    (this.includePrerelease = !!t.includePrerelease));
+                let s = e.trim().match(t.loose ? he[fe.LOOSE] : he[fe.FULL]);
+                if (!s) throw new TypeError(`Invalid Version: ${e}`);
+                if (
+                    ((this.raw = e),
+                    (this.major = +s[1]),
+                    (this.minor = +s[2]),
+                    (this.patch = +s[3]),
+                    this.major > me || this.major < 0)
+                )
+                    throw new TypeError('Invalid major version');
+                if (this.minor > me || this.minor < 0) throw new TypeError('Invalid minor version');
+                if (this.patch > me || this.patch < 0) throw new TypeError('Invalid patch version');
+                (s[4]
+                    ? (this.prerelease = s[4].split('.').map((i) => {
+                          if (/^[0-9]+$/.test(i)) {
+                              let n = +i;
+                              if (n >= 0 && n < me) return n;
+                          }
+                          return i;
+                      }))
+                    : (this.prerelease = []),
+                    (this.build = s[5] ? s[5].split('.') : []),
+                    this.format());
+            }
+            format() {
+                return (
+                    (this.version = `${this.major}.${this.minor}.${this.patch}`),
+                    this.prerelease.length && (this.version += `-${this.prerelease.join('.')}`),
+                    this.version
+                );
+            }
+            toString() {
+                return this.version;
+            }
+            compare(e) {
+                if ((pe('SemVer.compare', this.version, this.options, e), !(e instanceof o))) {
+                    if (typeof e == 'string' && e === this.version) return 0;
+                    e = new o(e, this.options);
+                }
+                return e.version === this.version ? 0 : this.compareMain(e) || this.comparePre(e);
+            }
+            compareMain(e) {
+                return (
+                    e instanceof o || (e = new o(e, this.options)),
+                    H(this.major, e.major) || H(this.minor, e.minor) || H(this.patch, e.patch)
+                );
+            }
+            comparePre(e) {
+                if ((e instanceof o || (e = new o(e, this.options)), this.prerelease.length && !e.prerelease.length))
+                    return -1;
+                if (!this.prerelease.length && e.prerelease.length) return 1;
+                if (!this.prerelease.length && !e.prerelease.length) return 0;
+                let t = 0;
+                do {
+                    let s = this.prerelease[t],
+                        i = e.prerelease[t];
+                    if ((pe('prerelease compare', t, s, i), s === void 0 && i === void 0)) return 0;
+                    if (i === void 0) return 1;
+                    if (s === void 0) return -1;
+                    if (s === i) continue;
+                    return H(s, i);
+                } while (++t);
+            }
+            compareBuild(e) {
+                e instanceof o || (e = new o(e, this.options));
+                let t = 0;
+                do {
+                    let s = this.build[t],
+                        i = e.build[t];
+                    if ((pe('build compare', t, s, i), s === void 0 && i === void 0)) return 0;
+                    if (i === void 0) return 1;
+                    if (s === void 0) return -1;
+                    if (s === i) continue;
+                    return H(s, i);
+                } while (++t);
+            }
+            inc(e, t, s) {
+                if (e.startsWith('pre')) {
+                    if (!t && s === !1) throw new Error('invalid increment argument: identifier is empty');
+                    if (t) {
+                        let i = `-${t}`.match(this.options.loose ? he[fe.PRERELEASELOOSE] : he[fe.PRERELEASE]);
+                        if (!i || i[1] !== t) throw new Error(`invalid identifier: ${t}`);
+                    }
+                }
+                switch (e) {
+                    case 'premajor':
+                        ((this.prerelease.length = 0),
+                            (this.patch = 0),
+                            (this.minor = 0),
+                            this.major++,
+                            this.inc('pre', t, s));
+                        break;
+                    case 'preminor':
+                        ((this.prerelease.length = 0), (this.patch = 0), this.minor++, this.inc('pre', t, s));
+                        break;
+                    case 'prepatch':
+                        ((this.prerelease.length = 0), this.inc('patch', t, s), this.inc('pre', t, s));
+                        break;
+                    case 'prerelease':
+                        (this.prerelease.length === 0 && this.inc('patch', t, s), this.inc('pre', t, s));
+                        break;
+                    case 'release':
+                        if (this.prerelease.length === 0) throw new Error(`version ${this.raw} is not a prerelease`);
+                        this.prerelease.length = 0;
+                        break;
+                    case 'major':
+                        ((this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) && this.major++,
+                            (this.minor = 0),
+                            (this.patch = 0),
+                            (this.prerelease = []));
+                        break;
+                    case 'minor':
+                        ((this.patch !== 0 || this.prerelease.length === 0) && this.minor++,
+                            (this.patch = 0),
+                            (this.prerelease = []));
+                        break;
+                    case 'patch':
+                        (this.prerelease.length === 0 && this.patch++, (this.prerelease = []));
+                        break;
+                    case 'pre': {
+                        let i = Number(s) ? 1 : 0;
+                        if (this.prerelease.length === 0) this.prerelease = [i];
+                        else {
+                            let n = this.prerelease.length;
+                            for (; --n >= 0; )
+                                typeof this.prerelease[n] == 'number' && (this.prerelease[n]++, (n = -2));
+                            if (n === -1) {
+                                if (t === this.prerelease.join('.') && s === !1)
+                                    throw new Error('invalid increment argument: identifier already exists');
+                                this.prerelease.push(i);
+                            }
+                        }
+                        if (t) {
+                            let n = [t, i];
+                            (s === !1 && (n = [t]),
+                                H(this.prerelease[0], t) === 0
+                                    ? isNaN(this.prerelease[1]) && (this.prerelease = n)
+                                    : (this.prerelease = n));
+                        }
+                        break;
+                    }
+                    default:
+                        throw new Error(`invalid increment argument: ${e}`);
+                }
+                return (
+                    (this.raw = this.format()),
+                    this.build.length && (this.raw += `+${this.build.join('.')}`),
+                    this
+                );
+            }
+        };
+    at.exports = Oe;
+});
+var Fe = $((gi, ut) => {
+    'use strict';
+    var lt = be(),
+        Rs = (o, e, t) => new lt(o, t).compare(new lt(e, t));
+    ut.exports = Rs;
+});
+var dt = $((di, gt) => {
+    'use strict';
+    var ct = be(),
+        As = (o, e, t = !1) => {
+            if (o instanceof ct) return o;
+            try {
+                return new ct(o, e);
+            } catch (s) {
+                if (!t) return null;
+                throw s;
+            }
+        };
+    gt.exports = As;
+});
+var Be = $((pi, pt) => {
+    'use strict';
+    var Cs = be(),
+        Ns = dt(),
+        { safeRe: we, t: Te } = Se(),
+        Ls = (o, e) => {
+            if (o instanceof Cs) return o;
+            if ((typeof o == 'number' && (o = String(o)), typeof o != 'string')) return null;
+            e = e || {};
+            let t = null;
+            if (!e.rtl) t = o.match(e.includePrerelease ? we[Te.COERCEFULL] : we[Te.COERCE]);
+            else {
+                let u = e.includePrerelease ? we[Te.COERCERTLFULL] : we[Te.COERCERTL],
+                    l;
+                for (; (l = u.exec(o)) && (!t || t.index + t[0].length !== o.length); )
+                    ((!t || l.index + l[0].length !== t.index + t[0].length) && (t = l),
+                        (u.lastIndex = l.index + l[1].length + l[2].length));
+                u.lastIndex = -1;
+            }
+            if (t === null) return null;
+            let s = t[2],
+                i = t[3] || '0',
+                n = t[4] || '0',
+                r = e.includePrerelease && t[5] ? `-${t[5]}` : '',
+                a = e.includePrerelease && t[6] ? `+${t[6]}` : '';
+            return Ns(`${s}.${i}.${n}${r}${a}`, e);
+        };
+    pt.exports = Ls;
+});
+var Xt = $((y) => {
+    'use strict';
+    Object.defineProperty(y, '__esModule', { value: !0 });
+    var I = require('obsidian'),
+        Ge = 'YYYY-MM-DD',
+        je = 'gggg-[W]ww',
+        St = 'YYYY-MM',
+        Ot = 'YYYY-[Q]Q',
+        Ft = 'YYYY';
+    function ie(o) {
+        var t, s;
+        let e = window.app.plugins.getPlugin('periodic-notes');
+        return e && ((s = (t = e.settings) == null ? void 0 : t[o]) == null ? void 0 : s.enabled);
+    }
+    function ne() {
+        var o, e, t, s;
+        try {
+            let { internalPlugins: i, plugins: n } = window.app;
+            if (ie('daily')) {
+                let {
+                    format: l,
+                    folder: c,
+                    template: p,
+                } = ((e = (o = n.getPlugin('periodic-notes')) == null ? void 0 : o.settings) == null
+                    ? void 0
+                    : e.daily) || {};
+                return {
+                    format: l || Ge,
+                    folder: (c == null ? void 0 : c.trim()) || '',
+                    template: (p == null ? void 0 : p.trim()) || '',
+                };
+            }
+            let {
+                folder: r,
+                format: a,
+                template: u,
+            } = ((s = (t = i.getPluginById('daily-notes')) == null ? void 0 : t.instance) == null
+                ? void 0
+                : s.options) || {};
+            return {
+                format: a || Ge,
+                folder: (r == null ? void 0 : r.trim()) || '',
+                template: (u == null ? void 0 : u.trim()) || '',
+            };
+        } catch (i) {
+            console.info('No custom daily note settings found!', i);
+        }
+    }
+    function oe() {
+        var o, e, t, s, i, n, r;
+        try {
+            let a = window.app.plugins,
+                u = (o = a.getPlugin('calendar')) == null ? void 0 : o.options,
+                l = (t = (e = a.getPlugin('periodic-notes')) == null ? void 0 : e.settings) == null ? void 0 : t.weekly;
+            if (ie('weekly'))
+                return {
+                    format: l.format || je,
+                    folder: ((s = l.folder) == null ? void 0 : s.trim()) || '',
+                    template: ((i = l.template) == null ? void 0 : i.trim()) || '',
+                };
+            let c = u || {};
+            return {
+                format: c.weeklyNoteFormat || je,
+                folder: ((n = c.weeklyNoteFolder) == null ? void 0 : n.trim()) || '',
+                template: ((r = c.weeklyNoteTemplate) == null ? void 0 : r.trim()) || '',
+            };
+        } catch (a) {
+            console.info('No custom weekly note settings found!', a);
+        }
+    }
+    function re() {
+        var e, t, s, i;
+        let o = window.app.plugins;
+        try {
+            let n =
+                (ie('monthly') &&
+                    ((t = (e = o.getPlugin('periodic-notes')) == null ? void 0 : e.settings) == null
+                        ? void 0
+                        : t.monthly)) ||
+                {};
+            return {
+                format: n.format || St,
+                folder: ((s = n.folder) == null ? void 0 : s.trim()) || '',
+                template: ((i = n.template) == null ? void 0 : i.trim()) || '',
+            };
+        } catch (n) {
+            console.info('No custom monthly note settings found!', n);
+        }
+    }
+    function ae() {
+        var e, t, s, i;
+        let o = window.app.plugins;
+        try {
+            let n =
+                (ie('quarterly') &&
+                    ((t = (e = o.getPlugin('periodic-notes')) == null ? void 0 : e.settings) == null
+                        ? void 0
+                        : t.quarterly)) ||
+                {};
+            return {
+                format: n.format || Ot,
+                folder: ((s = n.folder) == null ? void 0 : s.trim()) || '',
+                template: ((i = n.template) == null ? void 0 : i.trim()) || '',
+            };
+        } catch (n) {
+            console.info('No custom quarterly note settings found!', n);
+        }
+    }
+    function le() {
+        var e, t, s, i;
+        let o = window.app.plugins;
+        try {
+            let n =
+                (ie('yearly') &&
+                    ((t = (e = o.getPlugin('periodic-notes')) == null ? void 0 : e.settings) == null
+                        ? void 0
+                        : t.yearly)) ||
+                {};
+            return {
+                format: n.format || Ft,
+                folder: ((s = n.folder) == null ? void 0 : s.trim()) || '',
+                template: ((i = n.template) == null ? void 0 : i.trim()) || '',
+            };
+        } catch (n) {
+            console.info('No custom yearly note settings found!', n);
+        }
+    }
+    function Bt(...o) {
+        let e = [];
+        for (let s = 0, i = o.length; s < i; s++) e = e.concat(o[s].split('/'));
+        let t = [];
+        for (let s = 0, i = e.length; s < i; s++) {
+            let n = e[s];
+            !n || n === '.' || t.push(n);
+        }
+        return (e[0] === '' && t.unshift(''), t.join('/'));
+    }
+    function Os(o) {
+        let e = o.substring(o.lastIndexOf('/') + 1);
+        return (e.lastIndexOf('.') != -1 && (e = e.substring(0, e.lastIndexOf('.'))), e);
+    }
+    async function Fs(o) {
+        let e = o.replace(/\\/g, '/').split('/');
+        if ((e.pop(), e.length)) {
+            let t = Bt(...e);
+            window.app.vault.getAbstractFileByPath(t) || (await window.app.vault.createFolder(t));
+        }
+    }
+    async function ue(o, e) {
+        e.endsWith('.md') || (e += '.md');
+        let t = I.normalizePath(Bt(o, e));
+        return (await Fs(t), t);
+    }
+    async function z(o) {
+        let { metadataCache: e, vault: t } = window.app,
+            s = I.normalizePath(o);
+        if (s === '/') return Promise.resolve(['', null]);
+        try {
+            let i = e.getFirstLinkpathDest(s, ''),
+                n = await t.cachedRead(i),
+                r = window.app.foldManager.load(i);
+            return [n, r];
+        } catch (i) {
+            return (
+                console.error(`Failed to read the daily note template '${s}'`, i),
+                new I.Notice('Failed to read the daily note template'),
+                ['', null]
+            );
+        }
+    }
+    function x(o, e = 'day') {
+        let t = o.clone().startOf(e).format();
+        return `${e}-${t}`;
+    }
+    function Mt(o) {
+        return o.replace(/\[[^\]]*\]/g, '');
+    }
+    function Bs(o, e) {
+        if (e === 'week') {
+            let t = Mt(o);
+            return /w{1,2}/i.test(t) && (/M{1,4}/.test(t) || /D{1,4}/.test(t));
+        }
+        return !1;
+    }
+    function X(o, e) {
+        return Vt(o.basename, e);
+    }
+    function Ms(o, e) {
+        return Vt(Os(o), e);
+    }
+    function Vt(o, e) {
+        let s = { day: ne, week: oe, month: re, quarter: ae, year: le }[e]().format.split('/').pop(),
+            i = window.moment(o, s, !0);
+        if (!i.isValid()) return null;
+        if (Bs(s, e) && e === 'week') {
+            let n = Mt(s);
+            if (/w{1,2}/i.test(n)) return window.moment(o, s.replace(/M{1,4}/g, '').replace(/D{1,4}/g, ''), !1);
+        }
+        return i;
+    }
+    var qe = class extends Error {};
+    async function Ut(o) {
+        let e = window.app,
+            { vault: t } = e,
+            s = window.moment,
+            { template: i, format: n, folder: r } = ne(),
+            [a, u] = await z(i),
+            l = o.format(n),
+            c = await ue(r, l);
+        try {
+            let p = await t.create(
+                c,
+                a
+                    .replace(/{{\s*date\s*}}/gi, l)
+                    .replace(/{{\s*time\s*}}/gi, s().format('HH:mm'))
+                    .replace(/{{\s*title\s*}}/gi, l)
+                    .replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi, (m, E, T, h, f, v) => {
+                        let C = s(),
+                            P = o
+                                .clone()
+                                .set({ hour: C.get('hour'), minute: C.get('minute'), second: C.get('second') });
+                        return (T && P.add(parseInt(h, 10), f), v ? P.format(v.substring(1).trim()) : P.format(n));
+                    })
+                    .replace(/{{\s*yesterday\s*}}/gi, o.clone().subtract(1, 'day').format(n))
+                    .replace(/{{\s*tomorrow\s*}}/gi, o.clone().add(1, 'd').format(n)),
+            );
+            return (e.foldManager.save(p, u), p);
+        } catch (p) {
+            (console.error(`Failed to create file: '${c}'`, p), new I.Notice('Unable to create new file.'));
+        }
+    }
+    function Vs(o, e) {
+        var t;
+        return (t = e[x(o, 'day')]) != null ? t : null;
+    }
+    function Us() {
+        let { vault: o } = window.app,
+            { folder: e } = ne(),
+            t = o.getAbstractFileByPath(I.normalizePath(e));
+        if (!t) throw new qe('Failed to find daily notes folder');
+        let s = {};
+        return (
+            I.Vault.recurseChildren(t, (i) => {
+                if (i instanceof I.TFile) {
+                    let n = X(i, 'day');
+                    if (n) {
+                        let r = x(n, 'day');
+                        s[r] = i;
+                    }
+                }
+            }),
+            s
+        );
+    }
+    var ze = class extends Error {};
+    function Hs() {
+        let { moment: o } = window,
+            e = o.localeData()._week.dow,
+            t = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        for (; e; ) (t.push(t.shift()), e--);
+        return t;
+    }
+    function _s(o) {
+        return Hs().indexOf(o.toLowerCase());
+    }
+    async function Ht(o) {
+        let { vault: e } = window.app,
+            { template: t, format: s, folder: i } = oe(),
+            [n, r] = await z(t),
+            a = o.format(s),
+            u = await ue(i, a);
+        try {
+            let l = await e.create(
+                u,
+                n
+                    .replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi, (c, p, m, E, T, h) => {
+                        let f = window.moment(),
+                            v = o
+                                .clone()
+                                .set({ hour: f.get('hour'), minute: f.get('minute'), second: f.get('second') });
+                        return (m && v.add(parseInt(E, 10), T), h ? v.format(h.substring(1).trim()) : v.format(s));
+                    })
+                    .replace(/{{\s*title\s*}}/gi, a)
+                    .replace(/{{\s*time\s*}}/gi, window.moment().format('HH:mm'))
+                    .replace(
+                        /{{\s*(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\s*:(.*?)}}/gi,
+                        (c, p, m) => {
+                            let E = _s(p);
+                            return o.weekday(E).format(m.trim());
+                        },
+                    ),
+            );
+            return (window.app.foldManager.save(l, r), l);
+        } catch (l) {
+            (console.error(`Failed to create file: '${u}'`, l), new I.Notice('Unable to create new file.'));
+        }
+    }
+    function Gs(o, e) {
+        var t;
+        return (t = e[x(o, 'week')]) != null ? t : null;
+    }
+    function js() {
+        let o = {};
+        if (!Gt()) return o;
+        let { vault: e } = window.app,
+            { folder: t } = oe(),
+            s = e.getAbstractFileByPath(I.normalizePath(t));
+        if (!s) throw new ze('Failed to find weekly notes folder');
+        return (
+            I.Vault.recurseChildren(s, (i) => {
+                if (i instanceof I.TFile) {
+                    let n = X(i, 'week');
+                    if (n) {
+                        let r = x(n, 'week');
+                        o[r] = i;
+                    }
+                }
+            }),
+            o
+        );
+    }
+    var Xe = class extends Error {};
+    async function _t(o) {
+        let { vault: e } = window.app,
+            { template: t, format: s, folder: i } = re(),
+            [n, r] = await z(t),
+            a = o.format(s),
+            u = await ue(i, a);
+        try {
+            let l = await e.create(
+                u,
+                n
+                    .replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi, (c, p, m, E, T, h) => {
+                        let f = window.moment(),
+                            v = o
+                                .clone()
+                                .set({ hour: f.get('hour'), minute: f.get('minute'), second: f.get('second') });
+                        return (m && v.add(parseInt(E, 10), T), h ? v.format(h.substring(1).trim()) : v.format(s));
+                    })
+                    .replace(/{{\s*date\s*}}/gi, a)
+                    .replace(/{{\s*time\s*}}/gi, window.moment().format('HH:mm'))
+                    .replace(/{{\s*title\s*}}/gi, a),
+            );
+            return (window.app.foldManager.save(l, r), l);
+        } catch (l) {
+            (console.error(`Failed to create file: '${u}'`, l), new I.Notice('Unable to create new file.'));
+        }
+    }
+    function qs(o, e) {
+        var t;
+        return (t = e[x(o, 'month')]) != null ? t : null;
+    }
+    function zs() {
+        let o = {};
+        if (!jt()) return o;
+        let { vault: e } = window.app,
+            { folder: t } = re(),
+            s = e.getAbstractFileByPath(I.normalizePath(t));
+        if (!s) throw new Xe('Failed to find monthly notes folder');
+        return (
+            I.Vault.recurseChildren(s, (i) => {
+                if (i instanceof I.TFile) {
+                    let n = X(i, 'month');
+                    if (n) {
+                        let r = x(n, 'month');
+                        o[r] = i;
+                    }
+                }
+            }),
+            o
+        );
+    }
+    var Ye = class extends Error {};
+    async function Xs(o) {
+        let { vault: e } = window.app,
+            { template: t, format: s, folder: i } = ae(),
+            [n, r] = await z(t),
+            a = o.format(s),
+            u = await ue(i, a);
+        try {
+            let l = await e.create(
+                u,
+                n
+                    .replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi, (c, p, m, E, T, h) => {
+                        let f = window.moment(),
+                            v = o
+                                .clone()
+                                .set({ hour: f.get('hour'), minute: f.get('minute'), second: f.get('second') });
+                        return (m && v.add(parseInt(E, 10), T), h ? v.format(h.substring(1).trim()) : v.format(s));
+                    })
+                    .replace(/{{\s*date\s*}}/gi, a)
+                    .replace(/{{\s*time\s*}}/gi, window.moment().format('HH:mm'))
+                    .replace(/{{\s*title\s*}}/gi, a),
+            );
+            return (window.app.foldManager.save(l, r), l);
+        } catch (l) {
+            (console.error(`Failed to create file: '${u}'`, l), new I.Notice('Unable to create new file.'));
+        }
+    }
+    function Ys(o, e) {
+        var t;
+        return (t = e[x(o, 'quarter')]) != null ? t : null;
+    }
+    function Ks() {
+        let o = {};
+        if (!qt()) return o;
+        let { vault: e } = window.app,
+            { folder: t } = ae(),
+            s = e.getAbstractFileByPath(I.normalizePath(t));
+        if (!s) throw new Ye('Failed to find quarterly notes folder');
+        return (
+            I.Vault.recurseChildren(s, (i) => {
+                if (i instanceof I.TFile) {
+                    let n = X(i, 'quarter');
+                    if (n) {
+                        let r = x(n, 'quarter');
+                        o[r] = i;
+                    }
+                }
+            }),
+            o
+        );
+    }
+    var Ke = class extends Error {};
+    async function Ws(o) {
+        let { vault: e } = window.app,
+            { template: t, format: s, folder: i } = le(),
+            [n, r] = await z(t),
+            a = o.format(s),
+            u = await ue(i, a);
+        try {
+            let l = await e.create(
+                u,
+                n
+                    .replace(/{{\s*(date|time)\s*(([+-]\d+)([yqmwdhs]))?\s*(:.+?)?}}/gi, (c, p, m, E, T, h) => {
+                        let f = window.moment(),
+                            v = o
+                                .clone()
+                                .set({ hour: f.get('hour'), minute: f.get('minute'), second: f.get('second') });
+                        return (m && v.add(parseInt(E, 10), T), h ? v.format(h.substring(1).trim()) : v.format(s));
+                    })
+                    .replace(/{{\s*date\s*}}/gi, a)
+                    .replace(/{{\s*time\s*}}/gi, window.moment().format('HH:mm'))
+                    .replace(/{{\s*title\s*}}/gi, a),
+            );
+            return (window.app.foldManager.save(l, r), l);
+        } catch (l) {
+            (console.error(`Failed to create file: '${u}'`, l), new I.Notice('Unable to create new file.'));
+        }
+    }
+    function Qs(o, e) {
+        var t;
+        return (t = e[x(o, 'year')]) != null ? t : null;
+    }
+    function Js() {
+        let o = {};
+        if (!zt()) return o;
+        let { vault: e } = window.app,
+            { folder: t } = le(),
+            s = e.getAbstractFileByPath(I.normalizePath(t));
+        if (!s) throw new Ke('Failed to find yearly notes folder');
+        return (
+            I.Vault.recurseChildren(s, (i) => {
+                if (i instanceof I.TFile) {
+                    let n = X(i, 'year');
+                    if (n) {
+                        let r = x(n, 'year');
+                        o[r] = i;
+                    }
+                }
+            }),
+            o
+        );
+    }
+    function Zs() {
+        var s, i;
+        let { app: o } = window,
+            e = o.internalPlugins.plugins['daily-notes'];
+        if (e && e.enabled) return !0;
+        let t = o.plugins.getPlugin('periodic-notes');
+        return t && ((i = (s = t.settings) == null ? void 0 : s.daily) == null ? void 0 : i.enabled);
+    }
+    function Gt() {
+        var t, s;
+        let { app: o } = window;
+        if (o.plugins.getPlugin('calendar')) return !0;
+        let e = o.plugins.getPlugin('periodic-notes');
+        return e && ((s = (t = e.settings) == null ? void 0 : t.weekly) == null ? void 0 : s.enabled);
+    }
+    function jt() {
+        var t, s;
+        let { app: o } = window,
+            e = o.plugins.getPlugin('periodic-notes');
+        return e && ((s = (t = e.settings) == null ? void 0 : t.monthly) == null ? void 0 : s.enabled);
+    }
+    function qt() {
+        var t, s;
+        let { app: o } = window,
+            e = o.plugins.getPlugin('periodic-notes');
+        return e && ((s = (t = e.settings) == null ? void 0 : t.quarterly) == null ? void 0 : s.enabled);
+    }
+    function zt() {
+        var t, s;
+        let { app: o } = window,
+            e = o.plugins.getPlugin('periodic-notes');
+        return e && ((s = (t = e.settings) == null ? void 0 : t.yearly) == null ? void 0 : s.enabled);
+    }
+    function ei(o) {
+        let e = { day: ne, week: oe, month: re, quarter: ae, year: le }[o];
+        return e();
+    }
+    function ti(o, e) {
+        return { day: Ut, month: _t, week: Ht }[o](e);
+    }
+    y.DEFAULT_DAILY_NOTE_FORMAT = Ge;
+    y.DEFAULT_MONTHLY_NOTE_FORMAT = St;
+    y.DEFAULT_QUARTERLY_NOTE_FORMAT = Ot;
+    y.DEFAULT_WEEKLY_NOTE_FORMAT = je;
+    y.DEFAULT_YEARLY_NOTE_FORMAT = Ft;
+    y.appHasDailyNotesPluginLoaded = Zs;
+    y.appHasMonthlyNotesPluginLoaded = jt;
+    y.appHasQuarterlyNotesPluginLoaded = qt;
+    y.appHasWeeklyNotesPluginLoaded = Gt;
+    y.appHasYearlyNotesPluginLoaded = zt;
+    y.createDailyNote = Ut;
+    y.createMonthlyNote = _t;
+    y.createPeriodicNote = ti;
+    y.createQuarterlyNote = Xs;
+    y.createWeeklyNote = Ht;
+    y.createYearlyNote = Ws;
+    y.getAllDailyNotes = Us;
+    y.getAllMonthlyNotes = zs;
+    y.getAllQuarterlyNotes = Ks;
+    y.getAllWeeklyNotes = js;
+    y.getAllYearlyNotes = Js;
+    y.getDailyNote = Vs;
+    y.getDailyNoteSettings = ne;
+    y.getDateFromFile = X;
+    y.getDateFromPath = Ms;
+    y.getDateUID = x;
+    y.getMonthlyNote = qs;
+    y.getMonthlyNoteSettings = re;
+    y.getPeriodicNoteSettings = ei;
+    y.getQuarterlyNote = Ys;
+    y.getQuarterlyNoteSettings = ae;
+    y.getTemplateInfo = z;
+    y.getWeeklyNote = Gs;
+    y.getWeeklyNoteSettings = oe;
+    y.getYearlyNote = Qs;
+    y.getYearlyNoteSettings = le;
+});
+var si = {};
+ss(si, { default: () => Ne });
+module.exports = ns(si);
+var Wt = require('obsidian');
+var L = require('obsidian');
+var D = class extends Error {
+        constructor(t, s, i, n) {
+            let r = Math.ceil((i - Math.floor(Date.now() / 1e3)) / 60);
+            super(`GitHub API rate limit exceeded. Reset in ${r} minutes.`);
+            this.limit = t;
+            this.remaining = s;
+            this.reset = i;
+            this.requestUrl = n;
+        }
+        getMinutesToReset() {
+            return Math.ceil((this.reset - Math.floor(Date.now() / 1e3)) / 60);
+        }
+    },
+    S = class extends Error {
+        constructor(e) {
+            var s, i;
+            (super(`GitHub API error ${e}: ${e.message}`), (this.message = e.message));
+            let t = e;
+            ((this.status = (s = t.status) != null ? s : 400),
+                (this.headers = (i = t.headers) != null ? i : {}),
+                (this.name = 'GitHubResponseError'));
+        }
+    };
+var B = require('obsidian');
+var ks = Fe(),
+    mt = Be();
+var Ee = (o) => {
+        let e = o.replace(/https?:\/\/github\.com\//i, '');
+        return (e.endsWith('/') && (e = e.slice(0, -1)), e.toLowerCase().endsWith('.git') && (e = e.slice(0, -4)), e);
+    },
+    ht = ['ghp_', 'github_pat_'],
+    Ds = /^(gh[ps]_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9]{22}_[a-zA-Z0-9]{59})$/,
+    ft = async (o, e) => {
+        var n, r, a, u, l, c, p, m, E, T, h;
+        let t = ['repo', 'public_repo', 'metadata=read'],
+            s = ht.some((f) => o.toLowerCase().startsWith(f.toLowerCase())),
+            i = Ds.test(o);
+        if (!s || !i)
+            return {
+                validToken: !1,
+                currentScopes: [],
+                acceptedScopes: [],
+                acceptedPermissions: [],
+                expirationDate: null,
+                rateLimit: { limit: 0, remaining: 0, reset: 0, resource: '', used: 0 },
+                error: {
+                    type: s ? 'invalid_format' : 'invalid_prefix',
+                    message: 'Invalid token format',
+                    details: { validPrefixes: ht },
+                },
+            };
+        try {
+            let f = Date.now() % 1e3,
+                v = e || `user${f}/repo${f % 100}`;
+            if (
+                (await ye({
+                    url: `https://api.github.com/repos/${v}`,
+                    headers: { Authorization: `Token ${o}`, Accept: 'application/vnd.github.v3+json' },
+                }),
+                e)
+            )
+                return {
+                    validToken: !0,
+                    currentScopes: [],
+                    acceptedScopes: [],
+                    acceptedPermissions: [],
+                    expirationDate: null,
+                    rateLimit: { limit: 0, remaining: 0, reset: 0, resource: '', used: 0 },
+                    error: { type: 'none', message: 'No error', details: {} },
+                };
+            throw new Error('Expected request to fail');
+        } catch (f) {
+            if (!(f instanceof S)) throw f;
+            let v = f.headers;
+            if (!v) throw new Error('No headers in GitHub response');
+            let C = v['github-authentication-token-expiration'],
+                P = C ? new Date(C) : null,
+                ge = P && !Number.isNaN(P.getTime()) ? P.toISOString() : null,
+                A = {
+                    validToken: !1,
+                    currentScopes: (r = (n = v['x-oauth-scopes']) == null ? void 0 : n.split(', ')) != null ? r : [],
+                    acceptedScopes:
+                        (u = (a = v['x-accepted-oauth-scopes']) == null ? void 0 : a.split(', ')) != null ? u : [],
+                    acceptedPermissions:
+                        (c = (l = v['x-accepted-github-permissions']) == null ? void 0 : l.split(', ')) != null
+                            ? c
+                            : [],
+                    expirationDate: ge,
+                    rateLimit: {
+                        limit: Number.parseInt((p = v['x-ratelimit-limit']) != null ? p : '0', 10),
+                        remaining: Number.parseInt((m = v['x-ratelimit-remaining']) != null ? m : '0', 10),
+                        reset: Number.parseInt((E = v['x-ratelimit-reset']) != null ? E : '0', 10),
+                        resource: (T = v['x-ratelimit-resource']) != null ? T : '',
+                        used: Number.parseInt((h = v['x-ratelimit-used']) != null ? h : '0', 10),
+                    },
+                    error: { type: 'none', message: 'No error', details: {} },
+                };
+            return A.expirationDate && new Date(A.expirationDate) < new Date()
+                ? ((A.error = {
+                      type: 'expired',
+                      message: 'Token has expired',
+                      details: { expirationDate: A.expirationDate },
+                  }),
+                  A)
+                : A.currentScopes.some((Le) => t.includes(Le)) || A.acceptedPermissions.some((Le) => t.includes(Le))
+                  ? ((A.validToken = f.status === 404), A)
+                  : ((A.error = {
+                        type: 'insufficient_scope',
+                        message: 'Token lacks required scopes. Check documentation for requirements.',
+                        details: { currentScopes: [...A.acceptedScopes, ...A.acceptedPermissions] },
+                    }),
+                    A);
+        }
+    },
+    Me = async (o, e = !0, t = '') => {
+        let s = `https://api.github.com/repos/${o}`;
+        try {
+            return (await ye({ url: s, headers: t ? { Authorization: `Token ${t}` } : {} })).json.private;
+        } catch (i) {
+            if (i instanceof D) throw i;
+            return (e && console.log('error in isPrivateRepo', s, i), !1);
+        }
+    },
+    bt = async (o, e = !0, t = '') => {
+        let s = `https://api.github.com/repos/${o}/releases`;
+        try {
+            return (await ye({ url: `${s}?per_page=100`, headers: t ? { Authorization: `Token ${t}` } : {} })).json.map(
+                (r) => ({ version: r.tag_name, prerelease: r.prerelease }),
+            );
+        } catch (i) {
+            if (i instanceof D || i instanceof S) throw i;
+            return (e && console.log('Error in fetchReleaseVersions', s, i), null);
+        }
+    },
+    Y = async (o, e, t = !0, s = !1, i = '') => {
+        try {
+            let n = o.assets.find((l) => l.name === e);
+            if (!n) return null;
+            let r = { Accept: 'application/octet-stream' };
+            s && i && (r.Authorization = `Token ${i}`);
+            let a = s ? n.url : n.browser_download_url,
+                u = await (0, B.requestUrl)({ url: a, headers: r });
+            return u.status !== 200 ? null : u.text;
+        } catch (n) {
+            if (n instanceof D) throw n;
+            return (t && console.log('error in grabReleaseFileFromRepository', URL, n), null);
+        }
+    },
+    wt = async (o = !0) => {
+        let e = 'https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-plugins.json';
+        try {
+            let t = await (0, B.requestUrl)({ url: e });
+            return t.status === 404 ? null : t.json;
+        } catch (t) {
+            return (o && console.log('error in grabCommmunityPluginList', t), null);
+        }
+    },
+    Tt = async (o = !0) => {
+        let e = 'https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-css-themes.json';
+        try {
+            let t = await (0, B.requestUrl)({ url: e });
+            return t.status === 404 ? null : t.json;
+        } catch (t) {
+            return (o && console.log('error in grabCommmunityThemesList', t), null);
+        }
+    },
+    _ = async (o, e = !1, t = !1) => {
+        let s = `https://raw.githubusercontent.com/${o}/HEAD/theme${e ? '-beta' : ''}.css`;
+        try {
+            let i = await (0, B.requestUrl)({ url: s });
+            return i.status === 404 ? null : i.text;
+        } catch (i) {
+            return (t && console.log('error in grabCommmunityThemeCssFile', i), null);
+        }
+    },
+    Et = async (o, e = !0) => {
+        let t = `https://raw.githubusercontent.com/${o}/HEAD/manifest.json`;
+        try {
+            let s = await (0, B.requestUrl)({ url: t });
+            return s.status === 404 ? null : s.text;
+        } catch (s) {
+            return (e && console.log('error in grabCommmunityThemeManifestFile', s), null);
+        }
+    },
+    xs = (o) => {
+        let e = 0;
+        for (let t = 0; t < o.length; t++) e += o.charCodeAt(t);
+        return e;
+    },
+    K = (o) => xs(o).toString(),
+    W = async (o, e, t) => {
+        let s = await _(o, e, t);
+        return s ? K(s) : '0';
+    },
+    $s = async (o, e, t = !0) => {
+        let s = `https://api.github.com/repos/${o}/commits?path=${e}&page=1&per_page=1`;
+        try {
+            let i = await (0, B.requestUrl)({ url: s });
+            return i.status === 404 ? null : i.json;
+        } catch (i) {
+            return (t && console.log('error in grabLastCommitInfoForAFile', i), null);
+        }
+    },
+    yt = async (o, e) => {
+        var s;
+        let t = await $s(o, e);
+        return t && t.length > 0 && (s = t[0].commit.committer) != null && s.date ? t[0].commit.committer.date : '';
+    },
+    Ve = async (o, e, t = !1, s = !1, i = !1, n) => {
+        var r;
+        try {
+            let a =
+                    e && e !== 'latest'
+                        ? `https://api.github.com/repos/${o}/releases/tags/${e}`
+                        : `https://api.github.com/repos/${o}/releases`,
+                u = { Accept: 'application/vnd.github.v3+json' };
+            ((i && n) || n) && (u.Authorization = `Token ${n}`);
+            let l = await ye({ url: a, headers: u });
+            if (l.status === 404) return null;
+            let c = e && e !== 'latest' ? [l.json] : l.json;
+            return (
+                s && console.log(`grabReleaseFromRepository for ${o}:`, c),
+                (r = c
+                    .sort((p, m) => {
+                        let E = mt(p.tag_name, { includePrerelease: !0, loose: !0 }),
+                            T = mt(m.tag_name, { includePrerelease: !0, loose: !0 });
+                        return ks(T, E);
+                    })
+                    .filter((p) => t || !p.prerelease)[0]) != null
+                    ? r
+                    : null
+            );
+        } catch (a) {
+            throw (s && console.log(`Error in grabReleaseFromRepository for ${o}:`, a), a);
+        }
+    },
+    ye = async (o, e) => {
+        let t = 0,
+            s = 0,
+            i = 0;
+        o.headers = { ...o.headers, 'User-Agent': 'Obsidian/BRAT-Plugin' };
+        try {
+            return await (0, B.requestUrl)(o);
+        } catch (n) {
+            let r = new S(n),
+                a = r.headers;
+            if (
+                (a &&
+                    ((t = Number.parseInt(a['x-ratelimit-limit'], 10)),
+                    (s = Number.parseInt(a['x-ratelimit-remaining'], 10)),
+                    (i = Number.parseInt(a['x-ratelimit-reset'], 10))),
+                r.status === 403 && s === 0)
+            ) {
+                let u = new D(t, s, i, o.url);
+                throw (
+                    e &&
+                        console.error(
+                            `BRAT
+GitHub API rate limit exceeded:`,
+                            `
+Request: ${u.requestUrl}`,
+                            `
+Rate limits - Remaining: ${u.remaining}`,
+                            `
+Reset in: ${u.getMinutesToReset()} minutes`,
+                        ),
+                    u
+                );
+            }
+            throw (e && console.log('GitHub request failed:', n), r);
+        }
+    };
+var Ue = {
+    pluginList: [],
+    pluginSubListFrozenVersion: [],
+    themesList: [],
+    updateAtStartup: !0,
+    updateThemesAtStartup: !0,
+    enableAfterInstall: !0,
+    loggingEnabled: !1,
+    loggingPath: 'BRAT-log',
+    loggingVerboseEnabled: !1,
+    debuggingMode: !1,
+    notificationsEnabled: !0,
+    personalAccessToken: '',
+    selectLatestPluginVersionByDefault: !1,
+    allowIncompatiblePlugins: !1,
+};
+function vt(o, e, t = 'latest', s = '', i = !1) {
+    let n = !1;
+    o.settings.pluginList.contains(e) || (o.settings.pluginList.unshift(e), (n = !0));
+    let r = o.settings.pluginSubListFrozenVersion.find((a) => a.repo === e);
+    (r
+        ? (Object.assign(r, { repo: e, version: t, token: s.trim() !== '' ? s : void 0, isIncompatible: i || void 0 }),
+          (n = !0))
+        : (o.settings.pluginSubListFrozenVersion.unshift({
+              repo: e,
+              version: t,
+              token: s || void 0,
+              isIncompatible: i || void 0,
+          }),
+          (n = !0)),
+        n && o.saveSettings());
+}
+function Pt(o, e) {
+    return o.settings.pluginList.contains(e);
+}
+function It(o, e, t) {
+    let s = { repo: e, lastUpdate: K(t) };
+    (o.settings.themesList.unshift(s), o.saveSettings());
+}
+function Rt(o, e) {
+    return !!o.settings.themesList.find((s) => s.repo === e);
+}
+function At(o, e, t) {
+    for (let s of o.settings.themesList) s.repo === e && ((s.lastUpdate = t), o.saveSettings());
+}
+var N = require('obsidian');
+var G = class {
+    constructor(e, t) {
+        ((this.tokenEl = e), (this.statusEl = t));
+    }
+    async validateToken(e, t) {
+        var s, i, n, r, a, u, l, c, p, m, E, T, h;
+        if (((s = this.tokenEl) == null || s.inputEl.removeClass('valid-input', 'invalid-input'), !e))
+            return (
+                (i = this.statusEl) == null || i.setText('No token provided'),
+                (n = this.statusEl) == null || n.addClass('invalid'),
+                (r = this.statusEl) == null || r.removeClass('valid'),
+                !1
+            );
+        try {
+            let f = await ft(e, t);
+            return (
+                (a = this.statusEl) == null || a.removeClass('invalid', 'valid'),
+                (u = this.statusEl) == null || u.empty(),
+                f.validToken
+                    ? ((l = this.tokenEl) == null || l.inputEl.addClass('valid-input'),
+                      (c = this.statusEl) == null || c.addClass('valid'),
+                      this.showValidTokenInfo(f),
+                      !0)
+                    : ((p = this.tokenEl) == null || p.inputEl.addClass('invalid-input'),
+                      (m = this.statusEl) == null || m.addClass('invalid'),
+                      this.showErrorMessage(f.error),
+                      !1)
+            );
+        } catch (f) {
+            return (
+                console.error('Token validation error:', f),
+                (E = this.tokenEl) == null || E.inputEl.addClass('invalid-input'),
+                (T = this.statusEl) == null || T.setText('Failed to validate token'),
+                (h = this.statusEl) == null || h.addClass('invalid'),
+                !1
+            );
+        }
+    }
+    showValidTokenInfo(e) {
+        var s, i;
+        let t = (s = this.statusEl) == null ? void 0 : s.createDiv({ cls: 'brat-token-details' });
+        if (
+            t &&
+            (t.createDiv({ text: '\u2713 Valid token', cls: 'brat-token-status valid' }),
+            (i = e.currentScopes) != null &&
+                i.length &&
+                t.createDiv({ text: `Scopes: ${e.currentScopes.join(', ')}`, cls: 'brat-token-scopes' }),
+            e.rateLimit &&
+                t.createDiv({
+                    text: `Rate Limit: ${e.rateLimit.remaining}/${e.rateLimit.limit}`,
+                    cls: 'brat-token-rate',
+                }),
+            e.expirationDate)
+        ) {
+            let n = new Date(e.expirationDate),
+                r = Math.ceil((n.getTime() - Date.now()) / (1e3 * 60 * 60 * 24));
+            r < 7 && t.createDiv({ text: `\u26A0\uFE0F Token expires in ${r} days`, cls: 'brat-token-warning' });
+        }
+    }
+    showErrorMessage(e) {
+        var s, i, n;
+        let t = (s = this.statusEl) == null ? void 0 : s.createDiv({ cls: 'brat-token-error' });
+        if (t && (t.createDiv({ text: e.message }), e.details))
+            switch (e.type) {
+                case 'invalid_prefix':
+                    t.createDiv({
+                        text: `Valid prefixes: ${(i = e.details.validPrefixes) == null ? void 0 : i.join(', ')}`,
+                    });
+                    break;
+                case 'insufficient_scope':
+                    t.createDiv({
+                        text: `Required scopes: ${(n = e.details.requiredScopes) == null ? void 0 : n.join(', ')}`,
+                    });
+                    break;
+            }
+    }
+};
+function Q(o, e) {
+    let t = new DocumentFragment(),
+        s = document.createElement('a');
+    if (((s.textContent = o), (s.href = `https://github.com/${o}`), (s.target = '_blank'), t.appendChild(s), e)) {
+        let i = document.createTextNode(e);
+        t.appendChild(i);
+    }
+    return t;
+}
+function Ct({ prependText: o, url: e, text: t, appendText: s }) {
+    let i = new DocumentFragment(),
+        n = document.createElement('a');
+    if (((n.textContent = t), (n.href = e), o)) {
+        let r = document.createTextNode(o);
+        i.appendChild(r);
+    }
+    if ((i.appendChild(n), s)) {
+        let r = document.createTextNode(s);
+        i.appendChild(r);
+    }
+    return i;
+}
+var ve = require('obsidian');
+function w(o, e, t = 10, s) {
+    if (!o.settings.notificationsEnabled) return;
+    let i = s ? (ve.Platform.isDesktop ? '(click=dismiss, right-click=Info)' : '(click=dismiss)') : '',
+        n = new ve.Notice(
+            `BRAT
 ${e}
-${i}`,t*1e3);s&&(n.noticeEl.oncontextmenu=()=>{s()})}var j=(o,e=!0)=>{let t=o.createEl("div");t.style.float="right",e?(t.style.padding="15px",t.style.paddingLeft="15px",t.style.paddingRight="15px",t.style.marginLeft="15px"):(t.style.padding="10px",t.style.paddingLeft="15px",t.style.paddingRight="15px");let s=t.createDiv("coffee");s.addClass("ex-twitter-span"),s.style.paddingLeft="10px";let i=s.createDiv();i.innerText="Learn more about my work at:",s.appendChild(i);let n=s.createEl("a",{href:"https://tfthacker.com"});return n.innerText="https://tfthacker.com",t};var Nt=require("obsidian"),Pe=class extends Nt.SuggestModal{constructor(e,t,s,i,n){super(e),this.versions=s,this.selected=i,this.onChoose=n,this.setTitle("Select a version"),this.setPlaceholder(`Type to search for a version for ${t}`),this.setInstructions([{command:"\u2191\u2193",purpose:"Navigate versions"},{command:"\u21B5",purpose:"Select version"},{command:"esc",purpose:"Dismiss modal"}])}getSuggestions(e){let t=e.toLowerCase();return this.versions.filter(s=>s.version.toLowerCase().contains(t))}renderSuggestion(e,t){t.createEl("div",{text:`${e.version} ${e.prerelease?"(Prerelease)":""}`})}onChooseSuggestion(e){this.onChoose(e.version)}onNoSuggestion(){this.onChoose(this.selected?this.selected:""),this.close()}};var M=class extends N.Modal{constructor(t,s,i=!1,n=!1,r="",a="",u=""){super(t.app);this.versionSetting=null;this.repositoryAddressEl=null;this.tokenInputEl=null;this.validateButton=null;this.validator=null;this.addPluginButton=null;this.cancelButton=null;this.plugin=t,this.betaPlugins=s,this.address=r,this.version=a,this.privateApiKey=u,this.usePrivateApiKey=!(u===""||u===void 0),this.openSettingsTabAfterwards=i,this.updateVersion=n,this.enableAfterInstall=t.settings.enableAfterInstall}async submitForm(){var n,r,a,u,l,c,p,m;if(this.address==="")return;let t=Ee(this.address);if(this.plugin.settings.pluginSubListFrozenVersion.find(E=>E.repo===t)){await this.betaPlugins.addPlugin(t,!1,!1,!1,this.version,!0,this.enableAfterInstall,this.usePrivateApiKey?this.privateApiKey:void 0)&&this.close(),(n=this.cancelButton)==null||n.setDisabled(!1),(r=this.addPluginButton)==null||r.setDisabled(!1),(a=this.addPluginButton)==null||a.setButtonText("Add Plugin"),(u=this.versionSetting)==null||u.setDisabled(!1);return}if(!this.version&&Pt(this.plugin,t)){w(this.plugin,"This plugin is already in the list for beta testing",10);return}await this.betaPlugins.addPlugin(t,!1,!1,!1,this.version,!1,this.enableAfterInstall,this.usePrivateApiKey?this.privateApiKey:void 0)&&this.close(),(l=this.cancelButton)==null||l.setDisabled(!1),(c=this.addPluginButton)==null||c.setDisabled(!1),(p=this.addPluginButton)==null||p.setButtonText("Add Plugin"),(m=this.versionSetting)==null||m.setDisabled(!1)}updateVersionDropdown(t,s,i=""){let n;t.clear(),s.length>0&&!i&&this.plugin.settings.selectLatestPluginVersionByDefault?(n="latest",this.version="latest"):n=i,s.length<20||N.Platform.isMobile?t.addDropdown(a=>{a.addOption("","Select a version"),a.addOption("latest","Latest version");for(let u of s)a.addOption(u.version,`${u.version} ${u.prerelease?"(Prerelease)":""}`);a.onChange(u=>{var l;this.version=u,(l=this.addPluginButton)==null||l.setDisabled(this.version==="")}),a.setValue(n),a.selectEl.addClass("brat-version-selector"),a.selectEl.style.width="100%"}):t.addButton(a=>{a.setButtonText(n==="latest"?"Latest version":n||"Select a version...").setClass("brat-version-selector").setClass("button").onClick(u=>{u.preventDefault();let c=[{version:"latest",prerelease:!1},...s];new Pe(this.app,this.address,c,n,m=>{var E;this.version=m,a.setButtonText(m==="latest"?"Latest version":m||"Select a version..."),(E=this.addPluginButton)==null||E.setDisabled(this.version==="")}).open()})})}onOpen(){let t=this.contentEl.createEl("h4");this.address?(t.appendText("Change plugin version: "),t.appendChild(Q(this.address))):t.setText("Github repository for beta plugin:"),this.contentEl.createEl("form",{},s=>{s.addClass("brat-modal"),(!this.address||!this.updateVersion)&&new N.Setting(s).setClass("repository-setting").then(u=>{u.addText(l=>{this.repositoryAddressEl=l,l.setPlaceholder("Repository (example: https://github.com/GitHubUserName/repository-name)"),l.setValue(this.address),l.onChange(c=>{var p,m;this.address=Ee(c.trim()),this.version!==""&&(!this.address||!this.isGitHubRepositoryMatch(this.address))&&this.versionSetting&&(this.updateVersionDropdown(this.versionSetting,[]),this.versionSetting.settingEl.classList.add("disabled-setting"),this.versionSetting.setDisabled(!0),l.inputEl.classList.remove("valid-repository"),l.inputEl.classList.remove("invalid-repository")),this.version||(this.isGitHubRepositoryMatch(this.address)?(p=this.addPluginButton)==null||p.setDisabled(!1):(m=this.addPluginButton)==null||m.setDisabled(!0))}),l.inputEl.addEventListener("keydown",async c=>{var p,m,E;c.key==="Enter"&&(this.address&&(this.updateVersion&&this.version!==""||!this.updateVersion)&&(c.preventDefault(),(p=this.addPluginButton)==null||p.setDisabled(!0),(m=this.cancelButton)==null||m.setDisabled(!0),(E=this.versionSetting)==null||E.setDisabled(!0),this.submitForm()),await this.updateRepositoryVersionInfo(this.version,i))}),l.inputEl.addEventListener("blur",async()=>{await this.updateRepositoryVersionInfo(this.version,i)}),u.setDesc("Repository"),l.inputEl.style.width="100%"})});let i=s.createDiv("validation-status");this.address||i.setText("Enter a GitHub repository address to validate it."),this.versionSetting=new N.Setting(s).setClass("version-setting").setClass("disabled-setting"),this.updateVersionDropdown(this.versionSetting,[],this.version),this.versionSetting.setDisabled(!0),s.createDiv("modal-button-container",a=>{a.createEl("label",{cls:"mod-checkbox"},l=>{let c=l.createEl("input",{attr:{tabindex:-1},type:"checkbox"});c.checked=this.usePrivateApiKey,c.addEventListener("click",()=>{var p,m;this.usePrivateApiKey=c.checked,(p=this.validateButton)==null||p.setDisabled(!this.usePrivateApiKey||!this.validToken),(m=this.tokenInputEl)==null||m.setDisabled(!this.usePrivateApiKey),(!this.usePrivateApiKey||this.validToken&&this.usePrivateApiKey)&&this.updateRepositoryVersionInfo(this.version,i)}),l.appendText("Use token for this repository")}),this.tokenInputEl=new N.TextComponent(a).setPlaceholder("GitHub API key for private repository").setValue(this.privateApiKey).setDisabled(!this.usePrivateApiKey).onChange(async l=>{var c,p,m;this.privateApiKey=l.trim(),this.privateApiKey?((c=this.validateButton)==null||c.setButtonText("Validate"),(p=this.validateButton)==null||p.setDisabled(!1)):(m=this.validateButton)==null||m.setDisabled(!0)}),this.tokenInputEl.inputEl.type="password",s.createDiv("brat-token-validation-status")&&this.tokenInputEl.inputEl.parentElement&&(this.validateButton=new N.ButtonComponent(this.tokenInputEl.inputEl.parentElement).setButtonText("Validate").setDisabled(this.privateApiKey==="").onClick(async l=>{var c,p,m,E,T;l.preventDefault(),this.validToken=await((c=this.validator)==null?void 0:c.validateToken(this.privateApiKey,this.address)),this.validToken?((E=this.validateButton)==null||E.setButtonText("Valid"),(T=this.validateButton)==null||T.setDisabled(!0),this.address&&await this.updateRepositoryVersionInfo(this.version,i)):((p=this.validateButton)==null||p.setButtonText("Invalid"),(m=this.validateButton)==null||m.setDisabled(!1))}).then(async()=>{var l,c,p;this.validator=new G(this.tokenInputEl),this.validToken=await((l=this.validator)==null?void 0:l.validateToken(this.privateApiKey,this.address)),this.validToken&&this.usePrivateApiKey&&((c=this.validateButton)==null||c.setButtonText("Valid"),(p=this.validateButton)==null||p.setDisabled(!0))}))}),s.createDiv("modal-button-container",a=>{var u;a.createEl("label",{cls:"mod-checkbox"},l=>{let c=l.createEl("input",{attr:{tabindex:-1},type:"checkbox"});c.checked=this.enableAfterInstall,c.addEventListener("click",()=>{this.enableAfterInstall=c.checked}),l.appendText("Enable after installing the plugin")}),this.cancelButton=new N.ButtonComponent(a).setButtonText("Never mind").setClass("mod-cancel").onClick(()=>{this.close()}),this.addPluginButton=new N.ButtonComponent(a).setButtonText(this.updateVersion&&this.address?"Change version":"Add plugin").setCta().onClick(l=>{var c,p,m,E;l.preventDefault(),this.address!==""&&(this.updateVersion&&this.version!==""||!this.updateVersion)&&((c=this.addPluginButton)==null||c.setDisabled(!0),(p=this.addPluginButton)==null||p.setButtonText("Installing \u2026"),(m=this.cancelButton)==null||m.setDisabled(!0),(E=this.versionSetting)==null||E.setDisabled(!0),this.submitForm())}),(this.updateVersion||this.address==="")&&((u=this.addPluginButton)==null||u.setDisabled(!0))});let n=s.createDiv();n.style.borderTop="1px solid #ccc",n.style.marginTop="30px";let r=n.createSpan();r.innerHTML="BRAT by <a href='https://bit.ly/o42-twitter'>TFTHacker</a>",r.style.fontStyle="italic",n.appendChild(r),j(n,!1),window.setTimeout(()=>{let a=s.querySelectorAll(".brat-modal .setting-item-info");for(let u of Array.from(a))u.remove()},50),s.addEventListener("submit",a=>{var u;a.preventDefault(),this.address!==""&&(this.updateVersion&&this.version!==""||!this.updateVersion)&&((u=this.addPluginButton)==null||u.setDisabled(!0),this.submitForm())})}),this.address&&window.setTimeout(async()=>{await this.updateRepositoryVersionInfo(this.version)},100)}async updateRepositoryVersionInfo(t="",s){var r,a,u,l,c,p;let i=this.repositoryAddressEl;if(this.plugin.settings.debuggingMode&&console.log(`[BRAT] Updating version dropdown for ${this.address} with selected version ${t}`),!this.address){s==null||s.setText("Repository address is required."),s==null||s.addClass("validation-status-error");return}s==null||s.setText("Validating repository address..."),s==null||s.removeClass("validation-status-error"),this.versionSetting&&this.updateVersion&&this.updateVersionDropdown(this.versionSetting,[]);let n=Ee(this.address);try{let m=await bt(n,this.plugin.settings.debuggingMode,this.usePrivateApiKey?this.privateApiKey:this.plugin.settings.personalAccessToken);m&&m.length>0?(i==null||i.inputEl.classList.remove("invalid-repository"),i==null||i.inputEl.classList.add("valid-repository"),s==null||s.setText(""),this.versionSetting&&(this.versionSetting.settingEl.classList.remove("disabled-setting"),this.versionSetting.setDisabled(!1),this.updateVersionDropdown(this.versionSetting,m,t))):(i==null||i.inputEl.classList.remove("valid-repository"),i==null||i.inputEl.classList.add("invalid-repository"),s==null||s.setText("Error: No releases found in this repository."),s==null||s.addClass("validation-status-error"),(r=this.versionSetting)==null||r.settingEl.classList.add("disabled-setting"),(a=this.versionSetting)==null||a.setDisabled(!0),(u=this.addPluginButton)==null||u.setDisabled(!0))}catch(m){if(m instanceof D&&(i==null||i.inputEl.classList.remove("valid-repository"),i==null||i.inputEl.classList.add("validation-error"),s==null||s.setText(`GitHub API rate limit exceeded. Try again in ${m.getMinutesToReset()} minutes.`),this.versionSetting&&(this.versionSetting.settingEl.classList.add("disabled-setting"),this.versionSetting.setDisabled(!0),(l=this.addPluginButton)==null||l.setDisabled(!0)),w(this.plugin,`${m.message} Consider adding a personal access token in BRAT settings for higher limits. See documentation for details.`,20,()=>{window.open("https://github.com/TfTHacker/obsidian42-brat/blob/main/BRAT-DEVELOPER-GUIDE.md#github-api-rate-limits")})),m instanceof S){let E=m;switch(E.status){case 404:s==null||s.setText("Repository not found. Check the address or provide a valid token for access to a private repository.");break;case 403:s==null||s.setText("Access denied. Check your personal access token.");break;default:s==null||s.setText(`Error: ${E.message}`);break}s==null||s.addClass("validation-status-error"),(c=this.versionSetting)==null||c.setDisabled(!0),(p=this.addPluginButton)==null||p.setDisabled(!0),w(this.plugin,`${E.message} `,20)}}}onClose(){this.openSettingsTabAfterwards&&(this.plugin.app.setting.open(),this.plugin.app.setting.openTabById(this.plugin.APP_ID))}isGitHubRepositoryMatch(t){let s=t.trim().replace(/\.git$/,"").toLowerCase();return/^(?:https?:\/\/github\.com\/)?([a-zA-Z0-9._-]+)\/([a-zA-Z0-9._-]+)$/i.test(s)}};var Lt=require("obsidian");async function Ie(){try{let o=await(0,Lt.requestUrl)(`https://obsidian.md/?${Math.random()}`);return o.status>=200&&o.status<300}catch(o){return!1}}var J=require("obsidian"),He=class extends J.Modal{constructor(t,s){super(t.app);this.resolve=s;this.isConfirmed=!1;let i={app:t.app,cancelButtonText:"Cancel",cssClass:"",message:t.message,okButtonText:"OK",title:""};this.options={...i,...t},this.containerEl.addClass("confirm-modal")}onClose(){super.onClose(),this.resolve(this.isConfirmed)}onOpen(){super.onOpen(),this.titleEl.setText(this.options.title),this.contentEl.createEl("p",{text:this.options.message});let t=new J.ButtonComponent(this.contentEl);t.setClass("ok-button"),t.setButtonText(this.options.okButtonText),t.setCta(),t.onClick(()=>{this.isConfirmed=!0,this.close()});let s=new J.ButtonComponent(this.contentEl);s.setButtonText(this.options.cancelButtonText),s.onClick(this.close.bind(this))}};async function _e(o){return await new Promise(e=>{new He(o,e).open()})}var kt=Fe(),Re=Be(),Z=class{constructor(e){this.plugin=e}displayAddNewPluginModal(e=!1,t=!1,s="",i="",n=""){new M(this.plugin,this,e,t,s,i,n).open()}async validateRepository(e,t=!1,s=!1,i="",n=""){try{let a=await Me(e,this.plugin.settings.debuggingMode,n||this.plugin.settings.personalAccessToken),u=await Ve(e,i,t,this.plugin.settings.debuggingMode,a,n||this.plugin.settings.personalAccessToken);if(!u)return s&&(w(this.plugin,`${e}
-This does not seem to be an obsidian plugin with valid releases, as there are no releases available.`,15),console.error("BRAT: validateRepository",e,t,s)),null;let l=await Y(u,"manifest.json",this.plugin.settings.debuggingMode,a,n||this.plugin.settings.personalAccessToken);if(!l)return s&&(w(this.plugin,`${e}
-This does not seem to be an obsidian plugin, as there is no manifest.json file.`,15),console.error("BRAT: validateRepository",e,t,s)),null;let c=JSON.parse(l);if(!("id"in c))return s&&w(this.plugin,`${e}
-The plugin id attribute for the release is missing from the manifest file`,15),null;if(!("version"in c))return s&&w(this.plugin,`${e}
-The version attribute for the release is missing from the manifest file`,15),null;let p=Re(u.tag_name,{includePrerelease:!0,loose:!0}),m=Re(c.version,{includePrerelease:!0,loose:!0});return kt(p,m)!==0&&(s&&w(this.plugin,`${e}
+${i}`,
+            t * 1e3,
+        );
+    s &&
+        (n.noticeEl.oncontextmenu = () => {
+            s();
+        });
+}
+var j = (o, e = !0) => {
+    let t = o.createEl('div');
+    ((t.style.float = 'right'),
+        e
+            ? ((t.style.padding = '15px'),
+              (t.style.paddingLeft = '15px'),
+              (t.style.paddingRight = '15px'),
+              (t.style.marginLeft = '15px'))
+            : ((t.style.padding = '10px'), (t.style.paddingLeft = '15px'), (t.style.paddingRight = '15px')));
+    let s = t.createDiv('coffee');
+    (s.addClass('ex-twitter-span'), (s.style.paddingLeft = '10px'));
+    let i = s.createDiv();
+    ((i.innerText = 'Learn more about my work at:'), s.appendChild(i));
+    let n = s.createEl('a', { href: 'https://tfthacker.com' });
+    return ((n.innerText = 'https://tfthacker.com'), t);
+};
+var Nt = require('obsidian'),
+    Pe = class extends Nt.SuggestModal {
+        constructor(e, t, s, i, n) {
+            (super(e),
+                (this.versions = s),
+                (this.selected = i),
+                (this.onChoose = n),
+                this.setTitle('Select a version'),
+                this.setPlaceholder(`Type to search for a version for ${t}`),
+                this.setInstructions([
+                    { command: '\u2191\u2193', purpose: 'Navigate versions' },
+                    { command: '\u21B5', purpose: 'Select version' },
+                    { command: 'esc', purpose: 'Dismiss modal' },
+                ]));
+        }
+        getSuggestions(e) {
+            let t = e.toLowerCase();
+            return this.versions.filter((s) => s.version.toLowerCase().contains(t));
+        }
+        renderSuggestion(e, t) {
+            t.createEl('div', { text: `${e.version} ${e.prerelease ? '(Prerelease)' : ''}` });
+        }
+        onChooseSuggestion(e) {
+            this.onChoose(e.version);
+        }
+        onNoSuggestion() {
+            (this.onChoose(this.selected ? this.selected : ''), this.close());
+        }
+    };
+var M = class extends N.Modal {
+    constructor(t, s, i = !1, n = !1, r = '', a = '', u = '') {
+        super(t.app);
+        this.versionSetting = null;
+        this.repositoryAddressEl = null;
+        this.tokenInputEl = null;
+        this.validateButton = null;
+        this.validator = null;
+        this.addPluginButton = null;
+        this.cancelButton = null;
+        ((this.plugin = t),
+            (this.betaPlugins = s),
+            (this.address = r),
+            (this.version = a),
+            (this.privateApiKey = u),
+            (this.usePrivateApiKey = !(u === '' || u === void 0)),
+            (this.openSettingsTabAfterwards = i),
+            (this.updateVersion = n),
+            (this.enableAfterInstall = t.settings.enableAfterInstall));
+    }
+    async submitForm() {
+        var n, r, a, u, l, c, p, m;
+        if (this.address === '') return;
+        let t = Ee(this.address);
+        if (this.plugin.settings.pluginSubListFrozenVersion.find((E) => E.repo === t)) {
+            ((await this.betaPlugins.addPlugin(
+                t,
+                !1,
+                !1,
+                !1,
+                this.version,
+                !0,
+                this.enableAfterInstall,
+                this.usePrivateApiKey ? this.privateApiKey : void 0,
+            )) && this.close(),
+                (n = this.cancelButton) == null || n.setDisabled(!1),
+                (r = this.addPluginButton) == null || r.setDisabled(!1),
+                (a = this.addPluginButton) == null || a.setButtonText('Add Plugin'),
+                (u = this.versionSetting) == null || u.setDisabled(!1));
+            return;
+        }
+        if (!this.version && Pt(this.plugin, t)) {
+            w(this.plugin, 'This plugin is already in the list for beta testing', 10);
+            return;
+        }
+        ((await this.betaPlugins.addPlugin(
+            t,
+            !1,
+            !1,
+            !1,
+            this.version,
+            !1,
+            this.enableAfterInstall,
+            this.usePrivateApiKey ? this.privateApiKey : void 0,
+        )) && this.close(),
+            (l = this.cancelButton) == null || l.setDisabled(!1),
+            (c = this.addPluginButton) == null || c.setDisabled(!1),
+            (p = this.addPluginButton) == null || p.setButtonText('Add Plugin'),
+            (m = this.versionSetting) == null || m.setDisabled(!1));
+    }
+    updateVersionDropdown(t, s, i = '') {
+        let n;
+        (t.clear(),
+            s.length > 0 && !i && this.plugin.settings.selectLatestPluginVersionByDefault
+                ? ((n = 'latest'), (this.version = 'latest'))
+                : (n = i),
+            s.length < 20 || N.Platform.isMobile
+                ? t.addDropdown((a) => {
+                      (a.addOption('', 'Select a version'), a.addOption('latest', 'Latest version'));
+                      for (let u of s) a.addOption(u.version, `${u.version} ${u.prerelease ? '(Prerelease)' : ''}`);
+                      (a.onChange((u) => {
+                          var l;
+                          ((this.version = u),
+                              (l = this.addPluginButton) == null || l.setDisabled(this.version === ''));
+                      }),
+                          a.setValue(n),
+                          a.selectEl.addClass('brat-version-selector'),
+                          (a.selectEl.style.width = '100%'));
+                  })
+                : t.addButton((a) => {
+                      a.setButtonText(n === 'latest' ? 'Latest version' : n || 'Select a version...')
+                          .setClass('brat-version-selector')
+                          .setClass('button')
+                          .onClick((u) => {
+                              u.preventDefault();
+                              let c = [{ version: 'latest', prerelease: !1 }, ...s];
+                              new Pe(this.app, this.address, c, n, (m) => {
+                                  var E;
+                                  ((this.version = m),
+                                      a.setButtonText(m === 'latest' ? 'Latest version' : m || 'Select a version...'),
+                                      (E = this.addPluginButton) == null || E.setDisabled(this.version === ''));
+                              }).open();
+                          });
+                  }));
+    }
+    onOpen() {
+        let t = this.contentEl.createEl('h4');
+        (this.address
+            ? (t.appendText('Change plugin version: '), t.appendChild(Q(this.address)))
+            : t.setText('Github repository for beta plugin:'),
+            this.contentEl.createEl('form', {}, (s) => {
+                (s.addClass('brat-modal'),
+                    (!this.address || !this.updateVersion) &&
+                        new N.Setting(s).setClass('repository-setting').then((u) => {
+                            u.addText((l) => {
+                                ((this.repositoryAddressEl = l),
+                                    l.setPlaceholder(
+                                        'Repository (example: https://github.com/GitHubUserName/repository-name)',
+                                    ),
+                                    l.setValue(this.address),
+                                    l.onChange((c) => {
+                                        var p, m;
+                                        ((this.address = Ee(c.trim())),
+                                            this.version !== '' &&
+                                                (!this.address || !this.isGitHubRepositoryMatch(this.address)) &&
+                                                this.versionSetting &&
+                                                (this.updateVersionDropdown(this.versionSetting, []),
+                                                this.versionSetting.settingEl.classList.add('disabled-setting'),
+                                                this.versionSetting.setDisabled(!0),
+                                                l.inputEl.classList.remove('valid-repository'),
+                                                l.inputEl.classList.remove('invalid-repository')),
+                                            this.version ||
+                                                (this.isGitHubRepositoryMatch(this.address)
+                                                    ? (p = this.addPluginButton) == null || p.setDisabled(!1)
+                                                    : (m = this.addPluginButton) == null || m.setDisabled(!0)));
+                                    }),
+                                    l.inputEl.addEventListener('keydown', async (c) => {
+                                        var p, m, E;
+                                        c.key === 'Enter' &&
+                                            (this.address &&
+                                                ((this.updateVersion && this.version !== '') || !this.updateVersion) &&
+                                                (c.preventDefault(),
+                                                (p = this.addPluginButton) == null || p.setDisabled(!0),
+                                                (m = this.cancelButton) == null || m.setDisabled(!0),
+                                                (E = this.versionSetting) == null || E.setDisabled(!0),
+                                                this.submitForm()),
+                                            await this.updateRepositoryVersionInfo(this.version, i));
+                                    }),
+                                    l.inputEl.addEventListener('blur', async () => {
+                                        await this.updateRepositoryVersionInfo(this.version, i);
+                                    }),
+                                    u.setDesc('Repository'),
+                                    (l.inputEl.style.width = '100%'));
+                            });
+                        }));
+                let i = s.createDiv('validation-status');
+                (this.address || i.setText('Enter a GitHub repository address to validate it.'),
+                    (this.versionSetting = new N.Setting(s).setClass('version-setting').setClass('disabled-setting')),
+                    this.updateVersionDropdown(this.versionSetting, [], this.version),
+                    this.versionSetting.setDisabled(!0),
+                    s.createDiv('modal-button-container', (a) => {
+                        (a.createEl('label', { cls: 'mod-checkbox' }, (l) => {
+                            let c = l.createEl('input', { attr: { tabindex: -1 }, type: 'checkbox' });
+                            ((c.checked = this.usePrivateApiKey),
+                                c.addEventListener('click', () => {
+                                    var p, m;
+                                    ((this.usePrivateApiKey = c.checked),
+                                        (p = this.validateButton) == null ||
+                                            p.setDisabled(!this.usePrivateApiKey || !this.validToken),
+                                        (m = this.tokenInputEl) == null || m.setDisabled(!this.usePrivateApiKey),
+                                        (!this.usePrivateApiKey || (this.validToken && this.usePrivateApiKey)) &&
+                                            this.updateRepositoryVersionInfo(this.version, i));
+                                }),
+                                l.appendText('Use token for this repository'));
+                        }),
+                            (this.tokenInputEl = new N.TextComponent(a)
+                                .setPlaceholder('GitHub API key for private repository')
+                                .setValue(this.privateApiKey)
+                                .setDisabled(!this.usePrivateApiKey)
+                                .onChange(async (l) => {
+                                    var c, p, m;
+                                    ((this.privateApiKey = l.trim()),
+                                        this.privateApiKey
+                                            ? ((c = this.validateButton) == null || c.setButtonText('Validate'),
+                                              (p = this.validateButton) == null || p.setDisabled(!1))
+                                            : (m = this.validateButton) == null || m.setDisabled(!0));
+                                })),
+                            (this.tokenInputEl.inputEl.type = 'password'),
+                            s.createDiv('brat-token-validation-status') &&
+                                this.tokenInputEl.inputEl.parentElement &&
+                                (this.validateButton = new N.ButtonComponent(this.tokenInputEl.inputEl.parentElement)
+                                    .setButtonText('Validate')
+                                    .setDisabled(this.privateApiKey === '')
+                                    .onClick(async (l) => {
+                                        var c, p, m, E, T;
+                                        (l.preventDefault(),
+                                            (this.validToken = await ((c = this.validator) == null
+                                                ? void 0
+                                                : c.validateToken(this.privateApiKey, this.address))),
+                                            this.validToken
+                                                ? ((E = this.validateButton) == null || E.setButtonText('Valid'),
+                                                  (T = this.validateButton) == null || T.setDisabled(!0),
+                                                  this.address &&
+                                                      (await this.updateRepositoryVersionInfo(this.version, i)))
+                                                : ((p = this.validateButton) == null || p.setButtonText('Invalid'),
+                                                  (m = this.validateButton) == null || m.setDisabled(!1)));
+                                    })
+                                    .then(async () => {
+                                        var l, c, p;
+                                        ((this.validator = new G(this.tokenInputEl)),
+                                            (this.validToken = await ((l = this.validator) == null
+                                                ? void 0
+                                                : l.validateToken(this.privateApiKey, this.address))),
+                                            this.validToken &&
+                                                this.usePrivateApiKey &&
+                                                ((c = this.validateButton) == null || c.setButtonText('Valid'),
+                                                (p = this.validateButton) == null || p.setDisabled(!0)));
+                                    })));
+                    }),
+                    s.createDiv('modal-button-container', (a) => {
+                        var u;
+                        (a.createEl('label', { cls: 'mod-checkbox' }, (l) => {
+                            let c = l.createEl('input', { attr: { tabindex: -1 }, type: 'checkbox' });
+                            ((c.checked = this.enableAfterInstall),
+                                c.addEventListener('click', () => {
+                                    this.enableAfterInstall = c.checked;
+                                }),
+                                l.appendText('Enable after installing the plugin'));
+                        }),
+                            (this.cancelButton = new N.ButtonComponent(a)
+                                .setButtonText('Never mind')
+                                .setClass('mod-cancel')
+                                .onClick(() => {
+                                    this.close();
+                                })),
+                            (this.addPluginButton = new N.ButtonComponent(a)
+                                .setButtonText(this.updateVersion && this.address ? 'Change version' : 'Add plugin')
+                                .setCta()
+                                .onClick((l) => {
+                                    var c, p, m, E;
+                                    (l.preventDefault(),
+                                        this.address !== '' &&
+                                            ((this.updateVersion && this.version !== '') || !this.updateVersion) &&
+                                            ((c = this.addPluginButton) == null || c.setDisabled(!0),
+                                            (p = this.addPluginButton) == null || p.setButtonText('Installing \u2026'),
+                                            (m = this.cancelButton) == null || m.setDisabled(!0),
+                                            (E = this.versionSetting) == null || E.setDisabled(!0),
+                                            this.submitForm()));
+                                })),
+                            (this.updateVersion || this.address === '') &&
+                                ((u = this.addPluginButton) == null || u.setDisabled(!0)));
+                    }));
+                let n = s.createDiv();
+                ((n.style.borderTop = '1px solid #ccc'), (n.style.marginTop = '30px'));
+                let r = n.createSpan();
+                ((r.innerHTML = "BRAT by <a href='https://bit.ly/o42-twitter'>TFTHacker</a>"),
+                    (r.style.fontStyle = 'italic'),
+                    n.appendChild(r),
+                    j(n, !1),
+                    window.setTimeout(() => {
+                        let a = s.querySelectorAll('.brat-modal .setting-item-info');
+                        for (let u of Array.from(a)) u.remove();
+                    }, 50),
+                    s.addEventListener('submit', (a) => {
+                        var u;
+                        (a.preventDefault(),
+                            this.address !== '' &&
+                                ((this.updateVersion && this.version !== '') || !this.updateVersion) &&
+                                ((u = this.addPluginButton) == null || u.setDisabled(!0), this.submitForm()));
+                    }));
+            }),
+            this.address &&
+                window.setTimeout(async () => {
+                    await this.updateRepositoryVersionInfo(this.version);
+                }, 100));
+    }
+    async updateRepositoryVersionInfo(t = '', s) {
+        var r, a, u, l, c, p;
+        let i = this.repositoryAddressEl;
+        if (
+            (this.plugin.settings.debuggingMode &&
+                console.log(`[BRAT] Updating version dropdown for ${this.address} with selected version ${t}`),
+            !this.address)
+        ) {
+            (s == null || s.setText('Repository address is required.'),
+                s == null || s.addClass('validation-status-error'));
+            return;
+        }
+        (s == null || s.setText('Validating repository address...'),
+            s == null || s.removeClass('validation-status-error'),
+            this.versionSetting && this.updateVersion && this.updateVersionDropdown(this.versionSetting, []));
+        let n = Ee(this.address);
+        try {
+            let m = await bt(
+                n,
+                this.plugin.settings.debuggingMode,
+                this.usePrivateApiKey ? this.privateApiKey : this.plugin.settings.personalAccessToken,
+            );
+            m && m.length > 0
+                ? (i == null || i.inputEl.classList.remove('invalid-repository'),
+                  i == null || i.inputEl.classList.add('valid-repository'),
+                  s == null || s.setText(''),
+                  this.versionSetting &&
+                      (this.versionSetting.settingEl.classList.remove('disabled-setting'),
+                      this.versionSetting.setDisabled(!1),
+                      this.updateVersionDropdown(this.versionSetting, m, t)))
+                : (i == null || i.inputEl.classList.remove('valid-repository'),
+                  i == null || i.inputEl.classList.add('invalid-repository'),
+                  s == null || s.setText('Error: No releases found in this repository.'),
+                  s == null || s.addClass('validation-status-error'),
+                  (r = this.versionSetting) == null || r.settingEl.classList.add('disabled-setting'),
+                  (a = this.versionSetting) == null || a.setDisabled(!0),
+                  (u = this.addPluginButton) == null || u.setDisabled(!0));
+        } catch (m) {
+            if (
+                (m instanceof D &&
+                    (i == null || i.inputEl.classList.remove('valid-repository'),
+                    i == null || i.inputEl.classList.add('validation-error'),
+                    s == null ||
+                        s.setText(`GitHub API rate limit exceeded. Try again in ${m.getMinutesToReset()} minutes.`),
+                    this.versionSetting &&
+                        (this.versionSetting.settingEl.classList.add('disabled-setting'),
+                        this.versionSetting.setDisabled(!0),
+                        (l = this.addPluginButton) == null || l.setDisabled(!0)),
+                    w(
+                        this.plugin,
+                        `${m.message} Consider adding a personal access token in BRAT settings for higher limits. See documentation for details.`,
+                        20,
+                        () => {
+                            window.open(
+                                'https://github.com/TfTHacker/obsidian42-brat/blob/main/BRAT-DEVELOPER-GUIDE.md#github-api-rate-limits',
+                            );
+                        },
+                    )),
+                m instanceof S)
+            ) {
+                let E = m;
+                switch (E.status) {
+                    case 404:
+                        s == null ||
+                            s.setText(
+                                'Repository not found. Check the address or provide a valid token for access to a private repository.',
+                            );
+                        break;
+                    case 403:
+                        s == null || s.setText('Access denied. Check your personal access token.');
+                        break;
+                    default:
+                        s == null || s.setText(`Error: ${E.message}`);
+                        break;
+                }
+                (s == null || s.addClass('validation-status-error'),
+                    (c = this.versionSetting) == null || c.setDisabled(!0),
+                    (p = this.addPluginButton) == null || p.setDisabled(!0),
+                    w(this.plugin, `${E.message} `, 20));
+            }
+        }
+    }
+    onClose() {
+        this.openSettingsTabAfterwards &&
+            (this.plugin.app.setting.open(), this.plugin.app.setting.openTabById(this.plugin.APP_ID));
+    }
+    isGitHubRepositoryMatch(t) {
+        let s = t
+            .trim()
+            .replace(/\.git$/, '')
+            .toLowerCase();
+        return /^(?:https?:\/\/github\.com\/)?([a-zA-Z0-9._-]+)\/([a-zA-Z0-9._-]+)$/i.test(s);
+    }
+};
+var Lt = require('obsidian');
+async function Ie() {
+    try {
+        let o = await (0, Lt.requestUrl)(`https://obsidian.md/?${Math.random()}`);
+        return o.status >= 200 && o.status < 300;
+    } catch (o) {
+        return !1;
+    }
+}
+var J = require('obsidian'),
+    He = class extends J.Modal {
+        constructor(t, s) {
+            super(t.app);
+            this.resolve = s;
+            this.isConfirmed = !1;
+            let i = {
+                app: t.app,
+                cancelButtonText: 'Cancel',
+                cssClass: '',
+                message: t.message,
+                okButtonText: 'OK',
+                title: '',
+            };
+            ((this.options = { ...i, ...t }), this.containerEl.addClass('confirm-modal'));
+        }
+        onClose() {
+            (super.onClose(), this.resolve(this.isConfirmed));
+        }
+        onOpen() {
+            (super.onOpen(),
+                this.titleEl.setText(this.options.title),
+                this.contentEl.createEl('p', { text: this.options.message }));
+            let t = new J.ButtonComponent(this.contentEl);
+            (t.setClass('ok-button'),
+                t.setButtonText(this.options.okButtonText),
+                t.setCta(),
+                t.onClick(() => {
+                    ((this.isConfirmed = !0), this.close());
+                }));
+            let s = new J.ButtonComponent(this.contentEl);
+            (s.setButtonText(this.options.cancelButtonText), s.onClick(this.close.bind(this)));
+        }
+    };
+async function _e(o) {
+    return await new Promise((e) => {
+        new He(o, e).open();
+    });
+}
+var kt = Fe(),
+    Re = Be(),
+    Z = class {
+        constructor(e) {
+            this.plugin = e;
+        }
+        displayAddNewPluginModal(e = !1, t = !1, s = '', i = '', n = '') {
+            new M(this.plugin, this, e, t, s, i, n).open();
+        }
+        async validateRepository(e, t = !1, s = !1, i = '', n = '') {
+            try {
+                let a = await Me(e, this.plugin.settings.debuggingMode, n || this.plugin.settings.personalAccessToken),
+                    u = await Ve(
+                        e,
+                        i,
+                        t,
+                        this.plugin.settings.debuggingMode,
+                        a,
+                        n || this.plugin.settings.personalAccessToken,
+                    );
+                if (!u)
+                    return (
+                        s &&
+                            (w(
+                                this.plugin,
+                                `${e}
+This does not seem to be an obsidian plugin with valid releases, as there are no releases available.`,
+                                15,
+                            ),
+                            console.error('BRAT: validateRepository', e, t, s)),
+                        null
+                    );
+                let l = await Y(
+                    u,
+                    'manifest.json',
+                    this.plugin.settings.debuggingMode,
+                    a,
+                    n || this.plugin.settings.personalAccessToken,
+                );
+                if (!l)
+                    return (
+                        s &&
+                            (w(
+                                this.plugin,
+                                `${e}
+This does not seem to be an obsidian plugin, as there is no manifest.json file.`,
+                                15,
+                            ),
+                            console.error('BRAT: validateRepository', e, t, s)),
+                        null
+                    );
+                let c = JSON.parse(l);
+                if (!('id' in c))
+                    return (
+                        s &&
+                            w(
+                                this.plugin,
+                                `${e}
+The plugin id attribute for the release is missing from the manifest file`,
+                                15,
+                            ),
+                        null
+                    );
+                if (!('version' in c))
+                    return (
+                        s &&
+                            w(
+                                this.plugin,
+                                `${e}
+The version attribute for the release is missing from the manifest file`,
+                                15,
+                            ),
+                        null
+                    );
+                let p = Re(u.tag_name, { includePrerelease: !0, loose: !0 }),
+                    m = Re(c.version, { includePrerelease: !0, loose: !0 });
+                return (
+                    kt(p, m) !== 0 &&
+                        (s &&
+                            w(
+                                this.plugin,
+                                `${e}
 Version mismatch detected:
 Release tag version: ${u.tag_name}
 Manifest version: ${c.version}
 
-The release tag version will be used to ensure consistency.`,15),c.version=p.version),c}catch(a){if(a instanceof D){let u=`GitHub API rate limit exceeded. Reset in ${a.getMinutesToReset()} minutes.`;throw s&&w(this.plugin,u,15),console.error(`BRAT: validateRepository ${a}`),w(this.plugin,`${a.message} Consider adding a personal access token in BRAT settings for higher limits. See documentation for details.`,20,()=>{window.open("https://github.com/TfTHacker/obsidian42-brat/blob/main/BRAT-DEVELOPER-GUIDE.md#github-api-rate-limits")}),a}if(a instanceof S)throw s&&(a.status===401?w(this.plugin,`${e}
-GitHub API Authentication error. Please verify that your personal access token is valid and set correctly.`,15):w(this.plugin,`${e}
-GitHub API error ${a.status}: ${a.message}`,15)),console.error(`BRAT: validateRepository ${a}`),a;return s&&w(this.plugin,`${e}
-Unspecified error encountered: ${a}, verify debug for more information.`,15),null}}async getAllReleaseFiles(e,t,s,i="",n=""){let r=await Me(e,this.plugin.settings.debuggingMode,n),a=await Ve(e,i,s,this.plugin.settings.debuggingMode,r,n||this.plugin.settings.personalAccessToken);if(!a)return Promise.reject("No release found");let u=s||i!=="";return console.log({reallyGetManifestOrNot:u,version:a.tag_name}),{mainJs:await Y(a,"main.js",this.plugin.settings.debuggingMode,r,n||this.plugin.settings.personalAccessToken),manifest:u?await Y(a,"manifest.json",this.plugin.settings.debuggingMode,r,n||this.plugin.settings.personalAccessToken):"",styles:await Y(a,"styles.css",this.plugin.settings.debuggingMode,r,n||this.plugin.settings.personalAccessToken)}}async writeReleaseFilesToPluginFolder(e,t){var n,r;let s=`${(0,L.normalizePath)(`${this.plugin.app.vault.configDir}/plugins/${e}`)}/`,{adapter:i}=this.plugin.app.vault;await i.exists(s)||await i.mkdir(s),await i.write(`${s}main.js`,(n=t.mainJs)!=null?n:""),await i.write(`${s}manifest.json`,(r=t.manifest)!=null?r:""),t.styles&&await i.write(`${s}styles.css`,t.styles)}async addPlugin(e,t=!1,s=!1,i=!1,n="",r=!1,a=this.plugin.settings.enableAfterInstall,u=""){try{this.plugin.settings.debuggingMode&&console.log("BRAT: addPlugin",e,t,s,i,n,r,a,u?"private":"public");let l=10,c=await this.validateRepository(e,!0,!0,n,u),p=!!c;if(p||(c=await this.validateRepository(e,!1,!0,n,u)),c===null){let T=`${e}
-A manifest.json file does not exist in the latest release of the repository. This plugin cannot be installed.`;return await this.plugin.log(T,!0),w(this.plugin,T,l),!1}if(!Object.hasOwn(c,"version")){let T=`${e}
-The manifest.json file in the latest release or pre-release of the repository does not have a version number in the file. This plugin cannot be installed.`;return await this.plugin.log(T,!0),w(this.plugin,T,l),!1}let m=!1;if(Object.hasOwn(c,"minAppVersion")&&!(0,L.requireApiVersion)(c.minAppVersion)){if(n===""||n==="latest"||!this.plugin.settings.allowIncompatiblePlugins){let h=`Plugin: ${e}
+The release tag version will be used to ensure consistency.`,
+                                15,
+                            ),
+                        (c.version = p.version)),
+                    c
+                );
+            } catch (a) {
+                if (a instanceof D) {
+                    let u = `GitHub API rate limit exceeded. Reset in ${a.getMinutesToReset()} minutes.`;
+                    throw (
+                        s && w(this.plugin, u, 15),
+                        console.error(`BRAT: validateRepository ${a}`),
+                        w(
+                            this.plugin,
+                            `${a.message} Consider adding a personal access token in BRAT settings for higher limits. See documentation for details.`,
+                            20,
+                            () => {
+                                window.open(
+                                    'https://github.com/TfTHacker/obsidian42-brat/blob/main/BRAT-DEVELOPER-GUIDE.md#github-api-rate-limits',
+                                );
+                            },
+                        ),
+                        a
+                    );
+                }
+                if (a instanceof S)
+                    throw (
+                        s &&
+                            (a.status === 401
+                                ? w(
+                                      this.plugin,
+                                      `${e}
+GitHub API Authentication error. Please verify that your personal access token is valid and set correctly.`,
+                                      15,
+                                  )
+                                : w(
+                                      this.plugin,
+                                      `${e}
+GitHub API error ${a.status}: ${a.message}`,
+                                      15,
+                                  )),
+                        console.error(`BRAT: validateRepository ${a}`),
+                        a
+                    );
+                return (
+                    s &&
+                        w(
+                            this.plugin,
+                            `${e}
+Unspecified error encountered: ${a}, verify debug for more information.`,
+                            15,
+                        ),
+                    null
+                );
+            }
+        }
+        async getAllReleaseFiles(e, t, s, i = '', n = '') {
+            let r = await Me(e, this.plugin.settings.debuggingMode, n),
+                a = await Ve(
+                    e,
+                    i,
+                    s,
+                    this.plugin.settings.debuggingMode,
+                    r,
+                    n || this.plugin.settings.personalAccessToken,
+                );
+            if (!a) return Promise.reject('No release found');
+            let u = s || i !== '';
+            return (
+                console.log({ reallyGetManifestOrNot: u, version: a.tag_name }),
+                {
+                    mainJs: await Y(
+                        a,
+                        'main.js',
+                        this.plugin.settings.debuggingMode,
+                        r,
+                        n || this.plugin.settings.personalAccessToken,
+                    ),
+                    manifest: u
+                        ? await Y(
+                              a,
+                              'manifest.json',
+                              this.plugin.settings.debuggingMode,
+                              r,
+                              n || this.plugin.settings.personalAccessToken,
+                          )
+                        : '',
+                    styles: await Y(
+                        a,
+                        'styles.css',
+                        this.plugin.settings.debuggingMode,
+                        r,
+                        n || this.plugin.settings.personalAccessToken,
+                    ),
+                }
+            );
+        }
+        async writeReleaseFilesToPluginFolder(e, t) {
+            var n, r;
+            let s = `${(0, L.normalizePath)(`${this.plugin.app.vault.configDir}/plugins/${e}`)}/`,
+                { adapter: i } = this.plugin.app.vault;
+            ((await i.exists(s)) || (await i.mkdir(s)),
+                await i.write(`${s}main.js`, (n = t.mainJs) != null ? n : ''),
+                await i.write(`${s}manifest.json`, (r = t.manifest) != null ? r : ''),
+                t.styles && (await i.write(`${s}styles.css`, t.styles)));
+        }
+        async addPlugin(
+            e,
+            t = !1,
+            s = !1,
+            i = !1,
+            n = '',
+            r = !1,
+            a = this.plugin.settings.enableAfterInstall,
+            u = '',
+        ) {
+            try {
+                this.plugin.settings.debuggingMode &&
+                    console.log('BRAT: addPlugin', e, t, s, i, n, r, a, u ? 'private' : 'public');
+                let l = 10,
+                    c = await this.validateRepository(e, !0, !0, n, u),
+                    p = !!c;
+                if ((p || (c = await this.validateRepository(e, !1, !0, n, u)), c === null)) {
+                    let T = `${e}
+A manifest.json file does not exist in the latest release of the repository. This plugin cannot be installed.`;
+                    return (await this.plugin.log(T, !0), w(this.plugin, T, l), !1);
+                }
+                if (!Object.hasOwn(c, 'version')) {
+                    let T = `${e}
+The manifest.json file in the latest release or pre-release of the repository does not have a version number in the file. This plugin cannot be installed.`;
+                    return (await this.plugin.log(T, !0), w(this.plugin, T, l), !1);
+                }
+                let m = !1;
+                if (Object.hasOwn(c, 'minAppVersion') && !(0, L.requireApiVersion)(c.minAppVersion)) {
+                    if (n === '' || n === 'latest' || !this.plugin.settings.allowIncompatiblePlugins) {
+                        let h = `Plugin: ${e}
 
 The manifest.json for this plugin indicates that the Obsidian version of the app needs to be ${c.minAppVersion}, but this installation of Obsidian is ${L.apiVersion}. 
 
-You will need to update your Obsidian to use this plugin or contact the plugin developer for more information.`;return await this.plugin.log(h,!0),w(this.plugin,h,30),!1}if(!await _e({app:this.plugin.app,message:createFragment(h=>{h.appendText("Plugin: "),h.createEl("code",{text:e}),h.createEl("br"),h.appendText("The "),h.createEl("code",{text:"manifest.json"}),h.appendText(" for this plugin indicates that the Obsidian version of the app needs to be "),h.createEl("code",{text:c.minAppVersion}),h.appendText(", but this installation of Obsidian is "),h.createEl("code",{text:L.apiVersion}),h.appendText("."),h.createEl("br"),h.appendText("Using this plugin is not recommended and may not work as expected. Use at your own risk."),h.createEl("br"),h.appendText("Do you want to install it anyways?")})}))return!1;m=!0}let E=async()=>{var f,v;let T=await this.getAllReleaseFiles(e,c,p,n,u);console.log("rFiles",T),(p||T.manifest==="")&&(T.manifest=JSON.stringify(c));let h=JSON.parse((f=T.manifest)!=null?f:"");if(m&&(h.brat={isIncompatible:!0,minAppVersionOriginal:h.minAppVersion},h.minAppVersion=L.apiVersion),L.Platform.isMobile&&h.isDesktopOnly)if(this.plugin.settings.allowIncompatiblePlugins){if(!await _e({app:this.plugin.app,message:createFragment(P=>{P.appendText("Plugin: "),P.createEl("code",{text:e}),P.createEl("br"),P.appendText("The "),P.createEl("code",{text:"manifest.json"}),P.appendText(" for this plugin indicates that the plugin has "),P.createEl("code",{text:"isDesktopOnly: true"}),P.appendText(", but you are using a mobile device."),P.createEl("br"),P.appendText("Using this plugin is not recommended and may not work as expected. Use at your own risk."),P.createEl("br"),P.appendText("Do you want to forcefully run it on mobile anyways?")})}))return null;h.isDesktopOnly=!1,(v=h.brat)!=null||(h.brat={}),h.brat.isDesktopOnlyOriginal=!0,h.brat.isIncompatible=!0,m=!0}else{let C=`Plugin: ${e}
+You will need to update your Obsidian to use this plugin or contact the plugin developer for more information.`;
+                        return (await this.plugin.log(h, !0), w(this.plugin, h, 30), !1);
+                    }
+                    if (
+                        !(await _e({
+                            app: this.plugin.app,
+                            message: createFragment((h) => {
+                                (h.appendText('Plugin: '),
+                                    h.createEl('code', { text: e }),
+                                    h.createEl('br'),
+                                    h.appendText('The '),
+                                    h.createEl('code', { text: 'manifest.json' }),
+                                    h.appendText(
+                                        ' for this plugin indicates that the Obsidian version of the app needs to be ',
+                                    ),
+                                    h.createEl('code', { text: c.minAppVersion }),
+                                    h.appendText(', but this installation of Obsidian is '),
+                                    h.createEl('code', { text: L.apiVersion }),
+                                    h.appendText('.'),
+                                    h.createEl('br'),
+                                    h.appendText(
+                                        'Using this plugin is not recommended and may not work as expected. Use at your own risk.',
+                                    ),
+                                    h.createEl('br'),
+                                    h.appendText('Do you want to install it anyways?'));
+                            }),
+                        }))
+                    )
+                        return !1;
+                    m = !0;
+                }
+                let E = async () => {
+                    var f, v;
+                    let T = await this.getAllReleaseFiles(e, c, p, n, u);
+                    (console.log('rFiles', T), (p || T.manifest === '') && (T.manifest = JSON.stringify(c)));
+                    let h = JSON.parse((f = T.manifest) != null ? f : '');
+                    if (
+                        (m &&
+                            ((h.brat = { isIncompatible: !0, minAppVersionOriginal: h.minAppVersion }),
+                            (h.minAppVersion = L.apiVersion)),
+                        L.Platform.isMobile && h.isDesktopOnly)
+                    )
+                        if (this.plugin.settings.allowIncompatiblePlugins) {
+                            if (
+                                !(await _e({
+                                    app: this.plugin.app,
+                                    message: createFragment((P) => {
+                                        (P.appendText('Plugin: '),
+                                            P.createEl('code', { text: e }),
+                                            P.createEl('br'),
+                                            P.appendText('The '),
+                                            P.createEl('code', { text: 'manifest.json' }),
+                                            P.appendText(' for this plugin indicates that the plugin has '),
+                                            P.createEl('code', { text: 'isDesktopOnly: true' }),
+                                            P.appendText(', but you are using a mobile device.'),
+                                            P.createEl('br'),
+                                            P.appendText(
+                                                'Using this plugin is not recommended and may not work as expected. Use at your own risk.',
+                                            ),
+                                            P.createEl('br'),
+                                            P.appendText('Do you want to forcefully run it on mobile anyways?'));
+                                    }),
+                                }))
+                            )
+                                return null;
+                            ((h.isDesktopOnly = !1),
+                                (v = h.brat) != null || (h.brat = {}),
+                                (h.brat.isDesktopOnlyOriginal = !0),
+                                (h.brat.isIncompatible = !0),
+                                (m = !0));
+                        } else {
+                            let C = `Plugin: ${e}
 
 The manifest.json for this plugin indicates that the plugin has isDesktopOnly: true, but you are using a mobile device.
 
-The plugin will not be installed.`;return await this.plugin.log(C,!0),w(this.plugin,C,30),null}if(m&&(T.manifest=JSON.stringify(h)),this.plugin.settings.debuggingMode&&console.log("BRAT: rFiles.manifest",p,T),T.mainJs===null){let C=`${e}
-The release is not complete and cannot be downloaded. main.js is missing from the Release`;return await this.plugin.log(C,!0),w(this.plugin,C,l),null}return T};if(!t||r){let T=await E();if(T===null)return!1;if(await this.writeReleaseFilesToPluginFolder(c.id,T),vt(this.plugin,e,n,u,m),a){let{plugins:h}=this.plugin.app,f=(0,L.normalizePath)(`${h.getPluginFolder()}/${c.id}`);await h.loadManifest(f),await h.enablePluginAndSave(c.id)}if(await this.plugin.app.plugins.loadManifests(),r)await this.reloadPlugin(c.id),await this.plugin.log(`${e} reinstalled`,!0),w(this.plugin,`${e}
-Plugin has been reinstalled and reloaded with version ${c.version}`,l);else{let h=n===""?"":` (version: ${n})`,f=`${e}${h}
-The plugin has been registered with BRAT.`;a||(f+=" You may still need to enable it the Community Plugin List."),await this.plugin.log(f,!0),w(this.plugin,f,l)}}else{let T=`${this.plugin.app.vault.configDir}/plugins/${c.id}/`,h="";try{h=await this.plugin.app.vault.adapter.read(`${T}manifest.json`)}catch(P){if(P.errno===-4058||P.errno===-2)return await this.addPlugin(e,!1,p,!1,n,!1,a,u),!0;console.log("BRAT - Local Manifest Load",c.id,JSON.stringify(P,null,2))}if(n!==""&&n!=="latest")return w(this.plugin,`The version of ${e} is frozen, not updating.`,3),!1;let f=await JSON.parse(h),v=Re(f.version,{includePrerelease:!0,loose:!0}),C=Re(c.version,{includePrerelease:!0,loose:!0});if(kt(v,C)===-1){let P=await E();if(P===null)return!1;if(s){let A=`There is an update available for ${c.id} from version ${f.version} to ${c.version}. `;return await this.plugin.log(`${A}[Release Info](https://github.com/${e}/releases/tag/${c.version})`,!0),w(this.plugin,A,30,()=>{c&&window.open(`https://github.com/${e}/releases/tag/${c.version}`)}),!1}await this.writeReleaseFilesToPluginFolder(c.id,P),await this.plugin.app.plugins.loadManifests(),await this.reloadPlugin(c.id);let ge=`${c.id}
-Plugin has been updated from version ${f.version} to ${c.version}. `;return await this.plugin.log(`${ge}[Release Info](https://github.com/${e}/releases/tag/${c.version})`,!0),w(this.plugin,ge,30,()=>{c&&window.open(`https://github.com/${e}/releases/tag/${c.version}`)}),!0}return i&&w(this.plugin,`No update available for ${e}`,3),!0}}catch(l){console.error(`BRAT: Error adding plugin ${e}:`,{error:l,updatePluginFiles:t,seeIfUpdatedOnly:s,specifyVersion:n,forceReinstall:r});let c=l instanceof Error?l.message:"Unknown error occurred";return await this.plugin.log(`Error ${t?"updating":"adding"} plugin ${e}: ${c}`,!0),!1}return!0}async reloadPlugin(e){let{plugins:t}=this.plugin.app;try{await t.disablePlugin(e),await t.enablePlugin(e)}catch(s){this.plugin.settings.debuggingMode&&console.log("reload plugin",s)}}async updatePlugin(e,t=!1,s=!1,i=!1,n=""){let r=await this.addPlugin(e,!0,t,s,"",i,!1,n);return!r&&!t&&w(this.plugin,`${e}
-Update of plugin failed.`),r}async checkForPluginUpdatesAndInstallUpdates(e=!1,t=!1){var a,u;if(!await Ie()){console.log("BRAT: No internet detected.");return}let s,i="Checking for plugin updates STARTED";await this.plugin.log(i,!0),e&&this.plugin.settings.notificationsEnabled&&(s=new L.Notice(`BRAT
-${i}`,3e4));let n=new Map(this.plugin.settings.pluginSubListFrozenVersion.map(l=>[l.repo,{version:l.version,token:l.token}]));for(let l of this.plugin.settings.pluginList)n.has(l)&&((a=n.get(l))==null?void 0:a.version)!=="latest"||await this.updatePlugin(l,t,!1,!1,(u=n.get(l))==null?void 0:u.token);let r="Checking for plugin updates COMPLETED";await this.plugin.log(r,!0),e&&(s&&s.hide(),w(this.plugin,r,10))}deletePlugin(e){let t=`Removed ${e} from BRAT plugin list`;this.plugin.log(t,!0),this.plugin.settings.pluginList=this.plugin.settings.pluginList.filter(s=>s!==e),this.plugin.settings.pluginSubListFrozenVersion=this.plugin.settings.pluginSubListFrozenVersion.filter(s=>s.repo!==e),this.plugin.saveSettings()}getEnabledDisabledPlugins(e){let t=this.plugin.app.plugins,s=Object.values(t.manifests),i=Object.values(t.plugins).map(n=>n.manifest);return e?s.filter(n=>i.find(r=>n.id===r.id)):s.filter(n=>!i.find(r=>n.id===r.id))}checkIncompatiblePlugins(){let e=this.plugin.settings.pluginSubListFrozenVersion.filter(t=>t.isIncompatible).map(t=>t.repo);e.length>0&&w(this.plugin,`The following incompatible plugins were forcefully installed by BRAT and may not work as expected:
+The plugin will not be installed.`;
+                            return (await this.plugin.log(C, !0), w(this.plugin, C, 30), null);
+                        }
+                    if (
+                        (m && (T.manifest = JSON.stringify(h)),
+                        this.plugin.settings.debuggingMode && console.log('BRAT: rFiles.manifest', p, T),
+                        T.mainJs === null)
+                    ) {
+                        let C = `${e}
+The release is not complete and cannot be downloaded. main.js is missing from the Release`;
+                        return (await this.plugin.log(C, !0), w(this.plugin, C, l), null);
+                    }
+                    return T;
+                };
+                if (!t || r) {
+                    let T = await E();
+                    if (T === null) return !1;
+                    if ((await this.writeReleaseFilesToPluginFolder(c.id, T), vt(this.plugin, e, n, u, m), a)) {
+                        let { plugins: h } = this.plugin.app,
+                            f = (0, L.normalizePath)(`${h.getPluginFolder()}/${c.id}`);
+                        (await h.loadManifest(f), await h.enablePluginAndSave(c.id));
+                    }
+                    if ((await this.plugin.app.plugins.loadManifests(), r))
+                        (await this.reloadPlugin(c.id),
+                            await this.plugin.log(`${e} reinstalled`, !0),
+                            w(
+                                this.plugin,
+                                `${e}
+Plugin has been reinstalled and reloaded with version ${c.version}`,
+                                l,
+                            ));
+                    else {
+                        let h = n === '' ? '' : ` (version: ${n})`,
+                            f = `${e}${h}
+The plugin has been registered with BRAT.`;
+                        (a || (f += ' You may still need to enable it the Community Plugin List.'),
+                            await this.plugin.log(f, !0),
+                            w(this.plugin, f, l));
+                    }
+                } else {
+                    let T = `${this.plugin.app.vault.configDir}/plugins/${c.id}/`,
+                        h = '';
+                    try {
+                        h = await this.plugin.app.vault.adapter.read(`${T}manifest.json`);
+                    } catch (P) {
+                        if (P.errno === -4058 || P.errno === -2)
+                            return (await this.addPlugin(e, !1, p, !1, n, !1, a, u), !0);
+                        console.log('BRAT - Local Manifest Load', c.id, JSON.stringify(P, null, 2));
+                    }
+                    if (n !== '' && n !== 'latest')
+                        return (w(this.plugin, `The version of ${e} is frozen, not updating.`, 3), !1);
+                    let f = await JSON.parse(h),
+                        v = Re(f.version, { includePrerelease: !0, loose: !0 }),
+                        C = Re(c.version, { includePrerelease: !0, loose: !0 });
+                    if (kt(v, C) === -1) {
+                        let P = await E();
+                        if (P === null) return !1;
+                        if (s) {
+                            let A = `There is an update available for ${c.id} from version ${f.version} to ${c.version}. `;
+                            return (
+                                await this.plugin.log(
+                                    `${A}[Release Info](https://github.com/${e}/releases/tag/${c.version})`,
+                                    !0,
+                                ),
+                                w(this.plugin, A, 30, () => {
+                                    c && window.open(`https://github.com/${e}/releases/tag/${c.version}`);
+                                }),
+                                !1
+                            );
+                        }
+                        (await this.writeReleaseFilesToPluginFolder(c.id, P),
+                            await this.plugin.app.plugins.loadManifests(),
+                            await this.reloadPlugin(c.id));
+                        let ge = `${c.id}
+Plugin has been updated from version ${f.version} to ${c.version}. `;
+                        return (
+                            await this.plugin.log(
+                                `${ge}[Release Info](https://github.com/${e}/releases/tag/${c.version})`,
+                                !0,
+                            ),
+                            w(this.plugin, ge, 30, () => {
+                                c && window.open(`https://github.com/${e}/releases/tag/${c.version}`);
+                            }),
+                            !0
+                        );
+                    }
+                    return (i && w(this.plugin, `No update available for ${e}`, 3), !0);
+                }
+            } catch (l) {
+                console.error(`BRAT: Error adding plugin ${e}:`, {
+                    error: l,
+                    updatePluginFiles: t,
+                    seeIfUpdatedOnly: s,
+                    specifyVersion: n,
+                    forceReinstall: r,
+                });
+                let c = l instanceof Error ? l.message : 'Unknown error occurred';
+                return (await this.plugin.log(`Error ${t ? 'updating' : 'adding'} plugin ${e}: ${c}`, !0), !1);
+            }
+            return !0;
+        }
+        async reloadPlugin(e) {
+            let { plugins: t } = this.plugin.app;
+            try {
+                (await t.disablePlugin(e), await t.enablePlugin(e));
+            } catch (s) {
+                this.plugin.settings.debuggingMode && console.log('reload plugin', s);
+            }
+        }
+        async updatePlugin(e, t = !1, s = !1, i = !1, n = '') {
+            let r = await this.addPlugin(e, !0, t, s, '', i, !1, n);
+            return (
+                !r &&
+                    !t &&
+                    w(
+                        this.plugin,
+                        `${e}
+Update of plugin failed.`,
+                    ),
+                r
+            );
+        }
+        async checkForPluginUpdatesAndInstallUpdates(e = !1, t = !1) {
+            var a, u;
+            if (!(await Ie())) {
+                console.log('BRAT: No internet detected.');
+                return;
+            }
+            let s,
+                i = 'Checking for plugin updates STARTED';
+            (await this.plugin.log(i, !0),
+                e &&
+                    this.plugin.settings.notificationsEnabled &&
+                    (s = new L.Notice(
+                        `BRAT
+${i}`,
+                        3e4,
+                    )));
+            let n = new Map(
+                this.plugin.settings.pluginSubListFrozenVersion.map((l) => [
+                    l.repo,
+                    { version: l.version, token: l.token },
+                ]),
+            );
+            for (let l of this.plugin.settings.pluginList)
+                (n.has(l) && ((a = n.get(l)) == null ? void 0 : a.version) !== 'latest') ||
+                    (await this.updatePlugin(l, t, !1, !1, (u = n.get(l)) == null ? void 0 : u.token));
+            let r = 'Checking for plugin updates COMPLETED';
+            (await this.plugin.log(r, !0), e && (s && s.hide(), w(this.plugin, r, 10)));
+        }
+        deletePlugin(e) {
+            let t = `Removed ${e} from BRAT plugin list`;
+            (this.plugin.log(t, !0),
+                (this.plugin.settings.pluginList = this.plugin.settings.pluginList.filter((s) => s !== e)),
+                (this.plugin.settings.pluginSubListFrozenVersion =
+                    this.plugin.settings.pluginSubListFrozenVersion.filter((s) => s.repo !== e)),
+                this.plugin.saveSettings());
+        }
+        getEnabledDisabledPlugins(e) {
+            let t = this.plugin.app.plugins,
+                s = Object.values(t.manifests),
+                i = Object.values(t.plugins).map((n) => n.manifest);
+            return e ? s.filter((n) => i.find((r) => n.id === r.id)) : s.filter((n) => !i.find((r) => n.id === r.id));
+        }
+        checkIncompatiblePlugins() {
+            let e = this.plugin.settings.pluginSubListFrozenVersion.filter((t) => t.isIncompatible).map((t) => t.repo);
+            e.length > 0 &&
+                w(
+                    this.plugin,
+                    `The following incompatible plugins were forcefully installed by BRAT and may not work as expected:
 ${e.join(`
-`)}`,30)}};var V=require("obsidian");var ee=async(o,e,t)=>{let s=await _(e,!0,o.settings.debuggingMode);if(s||(s=await _(e,!1,o.settings.debuggingMode)),!s)return w(o,"There is no theme.css or theme-beta.css file in the root path of this repository, so there is no theme to install."),!1;let i=await Et(e,o.settings.debuggingMode);if(!i)return w(o,"There is no manifest.json file in the root path of this repository, so theme cannot be installed."),!1;let n=await JSON.parse(i),r=(0,V.normalizePath)(Ss(o)+n.name),{adapter:a}=o.app.vault;await a.exists(r)||await a.mkdir(r),await a.write((0,V.normalizePath)(`${r}/theme.css`),s),await a.write((0,V.normalizePath)(`${r}/manifest.json`),i),At(o,e,K(s));let u="";return t?(It(o,e,s),u=`${n.name} theme installed from ${e}. `,setTimeout(()=>{o.app.customCss.setTheme(n.name)},500)):u=`${n.name} theme updated from ${e}.`,o.log(`${u}[Theme Info](https://github.com/${e})`,!1),w(o,u,20,()=>{window.open(`https://github.com/${e}`)}),!0},q=async(o,e)=>{if(!await Ie()){console.log("BRAT: No internet detected.");return}let t,s="Checking for beta theme updates STARTED";await o.log(s,!0),e&&o.settings.notificationsEnabled&&(t=new V.Notice(`BRAT
-${s}`,3e4));for(let n of o.settings.themesList){let r=await W(n.repo,!0,o.settings.debuggingMode);r==="0"&&(r=await W(n.repo,!1,o.settings.debuggingMode)),console.log("BRAT: lastUpdateOnline",r),r!==n.lastUpdate&&await ee(o,n.repo,!1)}let i="Checking for beta theme updates COMPLETED";(async()=>await o.log(i,!0))(),e&&(o.settings.notificationsEnabled&&t&&t.hide(),w(o,i))},Ae=(o,e)=>{o.settings.themesList=o.settings.themesList.filter(s=>s.repo!==e),o.saveSettings();let t=`Removed ${e} from BRAT themes list and will no longer be updated. However, the theme files still exist in the vault. To remove them, go into Settings > Appearance and remove the theme.`;o.log(t,!0),w(o,t)},Ss=o=>`${(0,V.normalizePath)(`${o.app.vault.configDir}/themes`)}/`;var U=require("obsidian");var F=class extends U.Modal{constructor(e,t=!1){super(e.app),this.plugin=e,this.address="",this.openSettingsTabAfterwards=t}async submitForm(){if(this.address==="")return;let e=this.address.replace("https://github.com/","");if(Rt(this.plugin,e)){w(this.plugin,"This theme is already in the list for beta testing",10);return}await ee(this.plugin,e,!0)&&this.close()}onOpen(){this.contentEl.createEl("h4",{text:"Github repository for beta theme:"}),this.contentEl.createEl("form",{},e=>{e.addClass("brat-modal"),new U.Setting(e).addText(i=>{i.setPlaceholder("Repository (example: https://github.com/GitHubUserName/repository-name"),i.setValue(this.address),i.onChange(n=>{this.address=n.trim()}),i.inputEl.addEventListener("keydown",n=>{n.key==="Enter"&&this.address!==" "&&(n.preventDefault(),this.submitForm())}),i.inputEl.style.width="100%",window.setTimeout(()=>{let n=document.querySelector(".setting-item-info");n&&n.remove(),i.inputEl.focus()},10)}),e.createDiv("modal-button-container",i=>{new U.ButtonComponent(i).setButtonText("Never mind").onClick(()=>{this.close()}),new U.ButtonComponent(i).setButtonText("Add theme").setCta().onClick(n=>{n.preventDefault(),console.log("Add theme button clicked"),this.address!==""&&this.submitForm()})});let t=e.createDiv();t.style.borderTop="1px solid #ccc",t.style.marginTop="30px";let s=t.createSpan();s.innerHTML="BRAT by <a href='https://bit.ly/o42-twitter'>TFTHacker</a>",s.style.fontStyle="italic",t.appendChild(s),j(t,!1),window.setTimeout(()=>{let i=e.querySelectorAll(".brat-modal .setting-item-info");for(let n of Array.from(i))n.remove()},50)})}onClose(){this.openSettingsTabAfterwards&&(this.plugin.app.setting.openTab(),this.plugin.app.setting.openTabById(this.plugin.APP_ID))}};var Dt=require("obsidian"),k=class extends Dt.FuzzySuggestModal{constructor(t){super(t.app);this.data=[];this.scope.register(["Shift"],"Enter",s=>{this.enterTrigger(s)}),this.scope.register(["Ctrl"],"Enter",s=>{this.enterTrigger(s)})}setSuggesterData(t){this.data=t}display(t){this.callbackFunction=t,this.open()}getItems(){return this.data}getItemText(t){return t.display}onChooseItem(){}renderSuggestion(t,s){s.createEl("div",{text:t.item.display})}enterTrigger(t){var n;let s=(n=document.querySelector(".suggestion-item.is-selected div"))==null?void 0:n.textContent,i=this.data.find(r=>r.display===s);i&&(this.invokeCallback(i,t),this.close())}onChooseSuggestion(t,s){this.invokeCallback(t.item,s)}invokeCallback(t,s){typeof this.callbackFunction=="function"&&this.callbackFunction(t,s)}};var te=class{constructor(e){this.bratCommands=[{id:"AddBetaPlugin",icon:"BratIcon",name:"Plugins: Add a beta plugin for testing (with or without version)",showInRibbon:!0,callback:()=>{this.plugin.betaPlugins.displayAddNewPluginModal(!1,!0)}},{id:"checkForUpdatesAndUpdate",icon:"BratIcon",name:"Plugins: Check for updates to all beta plugins and UPDATE",showInRibbon:!0,callback:async()=>{await this.plugin.betaPlugins.checkForPluginUpdatesAndInstallUpdates(!0,!1)}},{id:"checkForUpdatesAndDontUpdate",icon:"BratIcon",name:"Plugins: Only check for updates to beta plugins, but don't Update",showInRibbon:!0,callback:async()=>{await this.plugin.betaPlugins.checkForPluginUpdatesAndInstallUpdates(!0,!0)}},{id:"updateOnePlugin",icon:"BratIcon",name:"Plugins: Choose a single plugin version to update",showInRibbon:!0,callback:()=>{let e=new Map(this.plugin.settings.pluginSubListFrozenVersion.map(i=>[i.repo,{version:i.version,token:i.token}])),t=Object.values(this.plugin.settings.pluginList).filter(i=>{let n=e.get(i);return!(n!=null&&n.version)||n.version==="latest"}).map(i=>({display:i,info:i})),s=new k(this.plugin);s.setSuggesterData(t),s.display(i=>{let n=`Checking for updates for ${i.info}`,r=e.get(i.info);this.plugin.log(n,!0),w(this.plugin,`
-${n}`,3),this.plugin.betaPlugins.updatePlugin(i.info,!1,!0,!1,r==null?void 0:r.token)})}},{id:"reinstallOnePlugin",icon:"BratIcon",name:"Plugins: Choose a single plugin to reinstall",showInRibbon:!0,callback:()=>{let e=new Set(this.plugin.settings.pluginSubListFrozenVersion.map(i=>i.repo)),t=Object.values(this.plugin.settings.pluginList).filter(i=>!e.has(i)).map(i=>({display:i,info:i})),s=new k(this.plugin);s.setSuggesterData(t),s.display(i=>{let n=`Reinstalling ${i.info}`;w(this.plugin,`
-${n}`,3),this.plugin.log(n,!0),this.plugin.betaPlugins.updatePlugin(i.info,!1,!1,!0)})}},{id:"restartPlugin",icon:"BratIcon",name:"Plugins: Restart a plugin that is already installed",showInRibbon:!0,callback:()=>{let e=Object.values(this.plugin.app.plugins.manifests).map(s=>({display:s.id,info:s.id})),t=new k(this.plugin);t.setSuggesterData(e),t.display(s=>{w(this.plugin,`${s.info}
-Plugin reloading .....`,5),this.plugin.betaPlugins.reloadPlugin(s.info)})}},{id:"disablePlugin",icon:"BratIcon",name:"Plugins: Disable a plugin - toggle it off",showInRibbon:!0,callback:()=>{let e=this.plugin.betaPlugins.getEnabledDisabledPlugins(!0).map(s=>({display:`${s.name} (${s.id})`,info:s.id})),t=new k(this.plugin);t.setSuggesterData(e),t.display(s=>{this.plugin.log(`${s.display} plugin disabled`,!1),this.plugin.settings.debuggingMode&&console.log(s.info),this.plugin.app.plugins.disablePluginAndSave(s.info)})}},{id:"enablePlugin",icon:"BratIcon",name:"Plugins: Enable a plugin - toggle it on",showInRibbon:!0,callback:()=>{let e=this.plugin.betaPlugins.getEnabledDisabledPlugins(!1).map(s=>({display:`${s.name} (${s.id})`,info:s.id})),t=new k(this.plugin);t.setSuggesterData(e),t.display(s=>{this.plugin.log(`${s.display} plugin enabled`,!1),this.plugin.app.plugins.enablePluginAndSave(s.info)})}},{id:"openGitHubZRepository",icon:"BratIcon",name:"Plugins: Open the GitHub repository for a plugin",showInRibbon:!0,callback:async()=>{let e=await wt(this.plugin.settings.debuggingMode);if(e){let t=Object.values(e).map(n=>({display:`Plugin: ${n.name}  (${n.repo})`,info:n.repo})),s=Object.values(this.plugin.settings.pluginList).map(n=>({display:`BRAT: ${n}`,info:n}));for(let n of t)s.push(n);let i=new k(this.plugin);i.setSuggesterData(s),i.display(n=>{n.info&&window.open(`https://github.com/${n.info}`)})}}},{id:"openGitHubRepoTheme",icon:"BratIcon",name:"Themes: Open the GitHub repository for a theme (appearance)",showInRibbon:!0,callback:async()=>{let e=await Tt(this.plugin.settings.debuggingMode);if(e){let t=Object.values(e).map(i=>({display:`Theme: ${i.name}  (${i.repo})`,info:i.repo})),s=new k(this.plugin);s.setSuggesterData(t),s.display(i=>{i.info&&window.open(`https://github.com/${i.info}`)})}}},{id:"opentPluginSettings",icon:"BratIcon",name:"Plugins: Open Plugin Settings Tab",showInRibbon:!0,callback:()=>{let e=this.plugin.app.setting,t=Object.values(e.pluginTabs).map(n=>({display:`Plugin: ${n.name}`,info:n.id})),s=new k(this.plugin),i=Object.values(e.settingTabs).map(n=>({display:`Core: ${n.name}`,info:n.id}));for(let n of t)i.push(n);s.setSuggesterData(i),s.display(n=>{e.open(),e.openTabById(n.info)})}},{id:"GrabBetaTheme",icon:"BratIcon",name:"Themes: Grab a beta theme for testing from a Github repository",showInRibbon:!0,callback:()=>{new F(this.plugin).open()}},{id:"updateBetaThemes",icon:"BratIcon",name:"Themes: Update beta themes",showInRibbon:!0,callback:async()=>{await q(this.plugin,!0)}},{id:"allCommands",icon:"BratIcon",name:"All Commands list",showInRibbon:!1,callback:()=>{this.ribbonDisplayCommands()}}];this.plugin=e;for(let t of this.bratCommands)this.plugin.addCommand({id:t.id,name:t.name,icon:t.icon,callback:()=>{t.callback()}})}ribbonDisplayCommands(){let e=[];for(let r of this.bratCommands)r.showInRibbon&&e.push({display:r.name,info:r.callback});let t=new k(this.plugin),s=this.plugin.app.setting,i=Object.values(s.settingTabs).map(r=>({display:`Core: ${r.name}`,info:()=>{s.open(),s.openTabById(r.id)}})),n=Object.values(s.pluginTabs).map(r=>({display:`Plugin: ${r.name}`,info:()=>{s.open(),s.openTabById(r.id)}}));e.push({display:"---- Core Plugin Settings ----",info:()=>{this.ribbonDisplayCommands()}});for(let r of i)e.push(r);e.push({display:"---- Plugin Settings ----",info:()=>{this.ribbonDisplayCommands()}});for(let r of n)e.push(r);t.setSuggesterData(e),t.display(r=>{typeof r.info=="function"&&r.info()})}};var R=require("obsidian");var Ce=class extends R.PluginSettingTab{constructor(t,s){super(t,s);this.accessTokenSetting=null;this.accessTokenButton=null;this.tokenInfo=null;this.validator=null;this.plugin=s}display(){let{containerEl:t}=this;t.empty(),t.addClass("brat-settings"),new R.Setting(t).setName("Auto-enable plugins after installation").setDesc('If enabled beta plugins will be automatically enabled after installtion by default. Note: you can toggle this on and off for each plugin in the "Add Plugin" form.').addToggle(i=>{i.setValue(this.plugin.settings.enableAfterInstall).onChange(async n=>{this.plugin.settings.enableAfterInstall=n,await this.plugin.saveSettings()})}),new R.Setting(t).setName("Auto-update plugins at startup").setDesc("If enabled all beta plugins will be checked for updates each time Obsidian starts. Note: this does not update frozen version plugins.").addToggle(i=>{i.setValue(this.plugin.settings.updateAtStartup).onChange(async n=>{this.plugin.settings.updateAtStartup=n,await this.plugin.saveSettings()})}),new R.Setting(t).setName("Auto-update themes at startup").setDesc("If enabled all beta themes will be checked for updates each time Obsidian starts.").addToggle(i=>{i.setValue(this.plugin.settings.updateThemesAtStartup).onChange(async n=>{this.plugin.settings.updateThemesAtStartup=n,await this.plugin.saveSettings()})}),new R.Setting(t).setName("Select latest plugin version by default").setDesc("If enabled the latest version will be selected by default when adding a new plugin.").addToggle(i=>{i.setValue(this.plugin.settings.selectLatestPluginVersionByDefault).onChange(async n=>{this.plugin.settings.selectLatestPluginVersionByDefault=n,await this.plugin.saveSettings()})}),new R.Setting(t).setName("Allow incompatible plugins").setDesc("If enabled, plugins with higher app versions will be allowed to be installed. Also it allows desktop-only plugins to be installed on mobile devices.").addToggle(i=>{i.setValue(this.plugin.settings.allowIncompatiblePlugins).onChange(async n=>{this.plugin.settings.allowIncompatiblePlugins=n,await this.plugin.saveSettings()})}),j(t,!0),t.createEl("hr"),new R.Setting(t).setName("Beta plugin list").setHeading(),t.createEl("div",{text:'The following is a list of beta plugins added via the command "Add a beta plugin for testing". You can chose to add the latest version or a frozen version. A frozen version is a specific release of a plugin based on its release tag.'}),t.createEl("p"),t.createEl("div",{text:"Click the 'Edit' button next to a plugin to change the installed version and the x button next to a plugin to remove it from the list."}),t.createEl("p"),t.createEl("span").createEl("b",{text:"Note: "}),t.createSpan({text:"Removing from the list does not delete the plugin, this should be done from the Community Plugins tab in Settings."}),new R.Setting(t).addButton(i=>{i.setButtonText("Add beta plugin").setCta().onClick(()=>{this.plugin.betaPlugins.displayAddNewPluginModal(!0)})});let s=new Map(this.plugin.settings.pluginSubListFrozenVersion.map(i=>[i.repo,i]));for(let i of this.plugin.settings.pluginList){let n=s.get(i),r=new R.Setting(t).setName(Q(i)).setDesc((n!=null&&n.version?` Tracked version: ${n.version} ${n.version==="latest"?"":"(frozen)"}`:"")+(n!=null&&n.isIncompatible?" (incompatible)":""));(!(n!=null&&n.version)||n.version==="latest")&&r.addButton(a=>{a.setIcon("sync").setTooltip("Check and update plugin").onClick(async()=>{await this.plugin.betaPlugins.updatePlugin(i,!1,!0,!1,n==null?void 0:n.token)})}),r.addButton(a=>{a.setIcon("edit").setTooltip("Change version").onClick(()=>{this.plugin.betaPlugins.displayAddNewPluginModal(!0,!0,i,n==null?void 0:n.version,n==null?void 0:n.token),this.plugin.app.setting.updatePluginSection()})}).addButton(a=>{a.setIcon("cross").setTooltip("Remove this beta plugin").setWarning().onClick(()=>{if(a.buttonEl.textContent==="")a.setButtonText("Click once more to confirm removal");else{let{buttonEl:u}=a,{parentElement:l}=u;l!=null&&l.parentElement&&(l.parentElement.remove(),this.plugin.betaPlugins.deletePlugin(i))}})})}new R.Setting(t).setName("Beta themes list").setHeading(),new R.Setting(t).addButton(i=>{i.setButtonText("Add beta theme").setCta().onClick(()=>{this.plugin.app.setting.close(),new F(this.plugin).open()})});for(let i of this.plugin.settings.themesList)new R.Setting(t).setName(Q(i.repo)).addButton(n=>{n.setIcon("cross").setTooltip("Delete this beta theme").onClick(()=>{if(n.buttonEl.textContent==="")n.setButtonText("Click once more to confirm removal");else{let{buttonEl:r}=n,{parentElement:a}=r;a!=null&&a.parentElement&&(a.parentElement.remove(),Ae(this.plugin,i.repo))}})});new R.Setting(t).setName("Monitoring").setHeading(),new R.Setting(t).setName("Enable notifications").setDesc("BRAT will provide popup notifications for its various activities. Turn this off means  no notifications from BRAT.").addToggle(i=>{i.setValue(this.plugin.settings.notificationsEnabled),i.onChange(async n=>{this.plugin.settings.notificationsEnabled=n,await this.plugin.saveSettings()})}),new R.Setting(t).setName("Enable logging").setDesc("Plugin updates will be logged to a file in the log file.").addToggle(i=>{i.setValue(this.plugin.settings.loggingEnabled).onChange(async n=>{this.plugin.settings.loggingEnabled=n,await this.plugin.saveSettings()})}),new R.Setting(this.containerEl).setName("BRAT log file location").setDesc("Logs will be saved to this file. Don't add .md to the file name.").addSearch(i=>{i.setPlaceholder("Example: BRAT-log").setValue(this.plugin.settings.loggingPath).onChange(async n=>{this.plugin.settings.loggingPath=n,await this.plugin.saveSettings()})}),new R.Setting(t).setName("Enable verbose logging").setDesc("Get a lot  more information in  the log.").addToggle(i=>{i.setValue(this.plugin.settings.loggingVerboseEnabled).onChange(async n=>{this.plugin.settings.loggingVerboseEnabled=n,await this.plugin.saveSettings()})}),new R.Setting(t).setName("Debugging mode").setDesc("Atomic Bomb level console logging. Can be used for troubleshooting and development.").addToggle(i=>{i.setValue(this.plugin.settings.debuggingMode).onChange(async n=>{this.plugin.settings.debuggingMode=n,await this.plugin.saveSettings()})}),new R.Setting(t).setName("Personal access token").setDesc(Ct({prependText:"Set a personal access token to increase rate limits for public repositories on GitHub. You can create one in ",url:"https://github.com/settings/tokens/new?scopes=public_repo",text:"your GitHub account settings",appendText:" and then add it here. Please consult the documetation for more details."})).addText(i=>{var n;this.accessTokenSetting=i,i.setPlaceholder("Enter your personal access token").setValue((n=this.plugin.settings.personalAccessToken)!=null?n:"").onChange(async r=>{var a,u,l;r===""?(this.plugin.settings.personalAccessToken="",this.plugin.saveSettings(),(a=this.accessTokenButton)==null||a.setDisabled(!0),(u=this.validator)==null||u.validateToken("")):(l=this.accessTokenButton)==null||l.setDisabled(!1)}),i.inputEl.addClass("brat-token-input")}).addExtraButton(i=>{i.setIcon("cross").setTooltip("Clear personal access token").onClick(async()=>{var n,r;this.plugin.settings.personalAccessToken="",(n=this.accessTokenSetting)==null||n.setValue(""),await((r=this.validator)==null?void 0:r.validateToken("")),this.plugin.saveSettings()})}).addButton(i=>{this.accessTokenButton=i,i.setButtonText("Validate").setCta().onClick(async()=>{var r,a,u;let n=(r=this.accessTokenSetting)==null?void 0:r.inputEl.value;n&&await((a=this.validator)==null?void 0:a.validateToken(n))&&(this.plugin.settings.personalAccessToken=n,this.plugin.saveSettings(),(u=this.accessTokenButton)==null||u.setDisabled(!0))})}).then(()=>{var i,n;this.tokenInfo=this.createTokenInfoElement(t),this.validator=new G(this.accessTokenSetting,this.tokenInfo),(n=this.validator)==null||n.validateToken((i=this.plugin.settings.personalAccessToken)!=null?i:"").then(r=>{var a;(a=this.accessTokenButton)==null||a.setDisabled(r||this.plugin.settings.personalAccessToken==="")})})}createTokenInfoElement(t){let s=t.createDiv({cls:"brat-token-info"});return s.createDiv({cls:"brat-token-status"}),s.createDiv({cls:"brat-token-details"}),s}};var xt=require("obsidian");function $t(){(0,xt.addIcon)("BratIcon",'<path fill="currentColor" stroke="currentColor"  d="M 41.667969 41.667969 C 41.667969 39.367188 39.800781 37.5 37.5 37.5 C 35.199219 37.5 33.332031 39.367188 33.332031 41.667969 C 33.332031 43.96875 35.199219 45.832031 37.5 45.832031 C 39.800781 45.832031 41.667969 43.96875 41.667969 41.667969 Z M 60.417969 58.582031 C 59.460938 58.023438 58.320312 57.867188 57.25 58.148438 C 56.179688 58.429688 55.265625 59.125 54.707031 60.082031 C 53.746094 61.777344 51.949219 62.820312 50 62.820312 C 48.050781 62.820312 46.253906 61.777344 45.292969 60.082031 C 44.734375 59.125 43.820312 58.429688 42.75 58.148438 C 41.679688 57.867188 40.539062 58.023438 39.582031 58.582031 C 37.597656 59.726562 36.910156 62.257812 38.042969 64.25 C 40.5 68.53125 45.0625 71.171875 50 71.171875 C 54.9375 71.171875 59.5 68.53125 61.957031 64.25 C 63.089844 62.257812 62.402344 59.726562 60.417969 58.582031 Z M 62.5 37.5 C 60.199219 37.5 58.332031 39.367188 58.332031 41.667969 C 58.332031 43.96875 60.199219 45.832031 62.5 45.832031 C 64.800781 45.832031 66.667969 43.96875 66.667969 41.667969 C 66.667969 39.367188 64.800781 37.5 62.5 37.5 Z M 50 8.332031 C 26.988281 8.332031 8.332031 26.988281 8.332031 50 C 8.332031 73.011719 26.988281 91.667969 50 91.667969 C 73.011719 91.667969 91.667969 73.011719 91.667969 50 C 91.667969 26.988281 73.011719 8.332031 50 8.332031 Z M 50 83.332031 C 33.988281 83.402344 20.191406 72.078125 17.136719 56.363281 C 14.078125 40.644531 22.628906 24.976562 37.5 19.042969 C 37.457031 19.636719 37.457031 20.238281 37.5 20.832031 C 37.5 27.738281 43.097656 33.332031 50 33.332031 C 52.300781 33.332031 54.167969 31.46875 54.167969 29.167969 C 54.167969 26.867188 52.300781 25 50 25 C 47.699219 25 45.832031 23.132812 45.832031 20.832031 C 45.832031 18.53125 47.699219 16.667969 50 16.667969 C 68.410156 16.667969 83.332031 31.589844 83.332031 50 C 83.332031 68.410156 68.410156 83.332031 50 83.332031 Z M 50 83.332031 " />')}var se=class{constructor(e){this.console=(e,...t)=>{console.log(`BRAT: ${e}`,...t)};this.themes={themeseCheckAndUpates:async e=>{await q(this.plugin,e)},themeInstallTheme:async e=>{let t=e.replace("https://github.com/","");await ee(this.plugin,t,!0)},themesDelete:e=>{let t=e.replace("https://github.com/","");Ae(this.plugin,t)},grabCommmunityThemeCssFile:async(e,t=!1)=>await _(e,t,this.plugin.settings.debuggingMode),grabChecksumOfThemeCssFile:async(e,t=!1)=>await W(e,t,this.plugin.settings.debuggingMode),grabLastCommitDateForFile:async(e,t)=>await yt(e,t)};this.plugin=e}};var ce=require("obsidian"),Yt=is(Xt());async function Kt(o,e,t=!1){if(o.settings.debuggingMode&&console.log(`BRAT: ${e}`),o.settings.loggingEnabled){if(!o.settings.loggingVerboseEnabled&&t)return;let s=`${o.settings.loggingPath}.md`,i=`[[${(0,ce.moment)().format((0,Yt.getDailyNoteSettings)().format).toString()}]] ${(0,ce.moment)().format("HH:mm")}`,n=window.require("os"),r=ce.Platform.isDesktop?n.hostname():"MOBILE",a=`${i} ${r} ${e.replace(`
-`," ")}
-`,u=o.app.vault.getAbstractFileByPath(s);u?await o.app.vault.append(u,a):u=await o.app.vault.create(s,a)}}var Ne=class extends Wt.Plugin{constructor(){super(...arguments);this.APP_NAME="BRAT";this.APP_ID="obsidian42-brat";this.settings=Ue;this.betaPlugins=new Z(this);this.commands=new te(this);this.bratApi=new se(this);this.obsidianProtocolHandler=t=>{if(!t.plugin&&!t.theme){w(this,"Could not locate the repository from the URL.",10);return}for(let s of["plugin","theme"])if(t[s]){let i;switch(s){case"plugin":i=new M(this,this.betaPlugins,!0,!1,t[s],t.version?t.version:void 0),i.open();break;case"theme":i=new F(this),i.address=t[s],i.open();break}return}}}onload(){console.log(`loading ${this.APP_NAME}`),$t(),this.addRibbonIcon("BratIcon","BRAT",()=>{this.commands.ribbonDisplayCommands()}),this.loadSettings().then(()=>{this.app.workspace.onLayoutReady(()=>{this.addSettingTab(new Ce(this.app,this)),this.registerObsidianProtocolHandler("brat",this.obsidianProtocolHandler),this.betaPlugins.checkIncompatiblePlugins(),this.settings.updateAtStartup&&setTimeout(()=>{this.betaPlugins.checkForPluginUpdatesAndInstallUpdates(!1)},6e4),this.settings.updateThemesAtStartup&&setTimeout(()=>{q(this,!1)},12e4),setTimeout(()=>{window.bratAPI=this.bratApi},500)})}).catch(t=>{console.error("Failed to load settings:",t)})}async log(t,s=!1){await Kt(this,t,s)}onunload(){console.log(`unloading ${this.APP_NAME}`)}async loadSettings(){this.settings=Object.assign({},Ue,await this.loadData())}async saveSettings(){await this.saveData(this.settings)}};
+`)}`,
+                    30,
+                );
+        }
+    };
+var V = require('obsidian');
+var ee = async (o, e, t) => {
+        let s = await _(e, !0, o.settings.debuggingMode);
+        if ((s || (s = await _(e, !1, o.settings.debuggingMode)), !s))
+            return (
+                w(
+                    o,
+                    'There is no theme.css or theme-beta.css file in the root path of this repository, so there is no theme to install.',
+                ),
+                !1
+            );
+        let i = await Et(e, o.settings.debuggingMode);
+        if (!i)
+            return (
+                w(
+                    o,
+                    'There is no manifest.json file in the root path of this repository, so theme cannot be installed.',
+                ),
+                !1
+            );
+        let n = await JSON.parse(i),
+            r = (0, V.normalizePath)(Ss(o) + n.name),
+            { adapter: a } = o.app.vault;
+        ((await a.exists(r)) || (await a.mkdir(r)),
+            await a.write((0, V.normalizePath)(`${r}/theme.css`), s),
+            await a.write((0, V.normalizePath)(`${r}/manifest.json`), i),
+            At(o, e, K(s)));
+        let u = '';
+        return (
+            t
+                ? (It(o, e, s),
+                  (u = `${n.name} theme installed from ${e}. `),
+                  setTimeout(() => {
+                      o.app.customCss.setTheme(n.name);
+                  }, 500))
+                : (u = `${n.name} theme updated from ${e}.`),
+            o.log(`${u}[Theme Info](https://github.com/${e})`, !1),
+            w(o, u, 20, () => {
+                window.open(`https://github.com/${e}`);
+            }),
+            !0
+        );
+    },
+    q = async (o, e) => {
+        if (!(await Ie())) {
+            console.log('BRAT: No internet detected.');
+            return;
+        }
+        let t,
+            s = 'Checking for beta theme updates STARTED';
+        (await o.log(s, !0),
+            e &&
+                o.settings.notificationsEnabled &&
+                (t = new V.Notice(
+                    `BRAT
+${s}`,
+                    3e4,
+                )));
+        for (let n of o.settings.themesList) {
+            let r = await W(n.repo, !0, o.settings.debuggingMode);
+            (r === '0' && (r = await W(n.repo, !1, o.settings.debuggingMode)),
+                console.log('BRAT: lastUpdateOnline', r),
+                r !== n.lastUpdate && (await ee(o, n.repo, !1)));
+        }
+        let i = 'Checking for beta theme updates COMPLETED';
+        ((async () => await o.log(i, !0))(), e && (o.settings.notificationsEnabled && t && t.hide(), w(o, i)));
+    },
+    Ae = (o, e) => {
+        ((o.settings.themesList = o.settings.themesList.filter((s) => s.repo !== e)), o.saveSettings());
+        let t = `Removed ${e} from BRAT themes list and will no longer be updated. However, the theme files still exist in the vault. To remove them, go into Settings > Appearance and remove the theme.`;
+        (o.log(t, !0), w(o, t));
+    },
+    Ss = (o) => `${(0, V.normalizePath)(`${o.app.vault.configDir}/themes`)}/`;
+var U = require('obsidian');
+var F = class extends U.Modal {
+    constructor(e, t = !1) {
+        (super(e.app), (this.plugin = e), (this.address = ''), (this.openSettingsTabAfterwards = t));
+    }
+    async submitForm() {
+        if (this.address === '') return;
+        let e = this.address.replace('https://github.com/', '');
+        if (Rt(this.plugin, e)) {
+            w(this.plugin, 'This theme is already in the list for beta testing', 10);
+            return;
+        }
+        (await ee(this.plugin, e, !0)) && this.close();
+    }
+    onOpen() {
+        (this.contentEl.createEl('h4', { text: 'Github repository for beta theme:' }),
+            this.contentEl.createEl('form', {}, (e) => {
+                (e.addClass('brat-modal'),
+                    new U.Setting(e).addText((i) => {
+                        (i.setPlaceholder('Repository (example: https://github.com/GitHubUserName/repository-name'),
+                            i.setValue(this.address),
+                            i.onChange((n) => {
+                                this.address = n.trim();
+                            }),
+                            i.inputEl.addEventListener('keydown', (n) => {
+                                n.key === 'Enter' && this.address !== ' ' && (n.preventDefault(), this.submitForm());
+                            }),
+                            (i.inputEl.style.width = '100%'),
+                            window.setTimeout(() => {
+                                let n = document.querySelector('.setting-item-info');
+                                (n && n.remove(), i.inputEl.focus());
+                            }, 10));
+                    }),
+                    e.createDiv('modal-button-container', (i) => {
+                        (new U.ButtonComponent(i).setButtonText('Never mind').onClick(() => {
+                            this.close();
+                        }),
+                            new U.ButtonComponent(i)
+                                .setButtonText('Add theme')
+                                .setCta()
+                                .onClick((n) => {
+                                    (n.preventDefault(),
+                                        console.log('Add theme button clicked'),
+                                        this.address !== '' && this.submitForm());
+                                }));
+                    }));
+                let t = e.createDiv();
+                ((t.style.borderTop = '1px solid #ccc'), (t.style.marginTop = '30px'));
+                let s = t.createSpan();
+                ((s.innerHTML = "BRAT by <a href='https://bit.ly/o42-twitter'>TFTHacker</a>"),
+                    (s.style.fontStyle = 'italic'),
+                    t.appendChild(s),
+                    j(t, !1),
+                    window.setTimeout(() => {
+                        let i = e.querySelectorAll('.brat-modal .setting-item-info');
+                        for (let n of Array.from(i)) n.remove();
+                    }, 50));
+            }));
+    }
+    onClose() {
+        this.openSettingsTabAfterwards &&
+            (this.plugin.app.setting.openTab(), this.plugin.app.setting.openTabById(this.plugin.APP_ID));
+    }
+};
+var Dt = require('obsidian'),
+    k = class extends Dt.FuzzySuggestModal {
+        constructor(t) {
+            super(t.app);
+            this.data = [];
+            (this.scope.register(['Shift'], 'Enter', (s) => {
+                this.enterTrigger(s);
+            }),
+                this.scope.register(['Ctrl'], 'Enter', (s) => {
+                    this.enterTrigger(s);
+                }));
+        }
+        setSuggesterData(t) {
+            this.data = t;
+        }
+        display(t) {
+            ((this.callbackFunction = t), this.open());
+        }
+        getItems() {
+            return this.data;
+        }
+        getItemText(t) {
+            return t.display;
+        }
+        onChooseItem() {}
+        renderSuggestion(t, s) {
+            s.createEl('div', { text: t.item.display });
+        }
+        enterTrigger(t) {
+            var n;
+            let s = (n = document.querySelector('.suggestion-item.is-selected div')) == null ? void 0 : n.textContent,
+                i = this.data.find((r) => r.display === s);
+            i && (this.invokeCallback(i, t), this.close());
+        }
+        onChooseSuggestion(t, s) {
+            this.invokeCallback(t.item, s);
+        }
+        invokeCallback(t, s) {
+            typeof this.callbackFunction == 'function' && this.callbackFunction(t, s);
+        }
+    };
+var te = class {
+    constructor(e) {
+        this.bratCommands = [
+            {
+                id: 'AddBetaPlugin',
+                icon: 'BratIcon',
+                name: 'Plugins: Add a beta plugin for testing (with or without version)',
+                showInRibbon: !0,
+                callback: () => {
+                    this.plugin.betaPlugins.displayAddNewPluginModal(!1, !0);
+                },
+            },
+            {
+                id: 'checkForUpdatesAndUpdate',
+                icon: 'BratIcon',
+                name: 'Plugins: Check for updates to all beta plugins and UPDATE',
+                showInRibbon: !0,
+                callback: async () => {
+                    await this.plugin.betaPlugins.checkForPluginUpdatesAndInstallUpdates(!0, !1);
+                },
+            },
+            {
+                id: 'checkForUpdatesAndDontUpdate',
+                icon: 'BratIcon',
+                name: "Plugins: Only check for updates to beta plugins, but don't Update",
+                showInRibbon: !0,
+                callback: async () => {
+                    await this.plugin.betaPlugins.checkForPluginUpdatesAndInstallUpdates(!0, !0);
+                },
+            },
+            {
+                id: 'updateOnePlugin',
+                icon: 'BratIcon',
+                name: 'Plugins: Choose a single plugin version to update',
+                showInRibbon: !0,
+                callback: () => {
+                    let e = new Map(
+                            this.plugin.settings.pluginSubListFrozenVersion.map((i) => [
+                                i.repo,
+                                { version: i.version, token: i.token },
+                            ]),
+                        ),
+                        t = Object.values(this.plugin.settings.pluginList)
+                            .filter((i) => {
+                                let n = e.get(i);
+                                return !(n != null && n.version) || n.version === 'latest';
+                            })
+                            .map((i) => ({ display: i, info: i })),
+                        s = new k(this.plugin);
+                    (s.setSuggesterData(t),
+                        s.display((i) => {
+                            let n = `Checking for updates for ${i.info}`,
+                                r = e.get(i.info);
+                            (this.plugin.log(n, !0),
+                                w(
+                                    this.plugin,
+                                    `
+${n}`,
+                                    3,
+                                ),
+                                this.plugin.betaPlugins.updatePlugin(i.info, !1, !0, !1, r == null ? void 0 : r.token));
+                        }));
+                },
+            },
+            {
+                id: 'reinstallOnePlugin',
+                icon: 'BratIcon',
+                name: 'Plugins: Choose a single plugin to reinstall',
+                showInRibbon: !0,
+                callback: () => {
+                    let e = new Set(this.plugin.settings.pluginSubListFrozenVersion.map((i) => i.repo)),
+                        t = Object.values(this.plugin.settings.pluginList)
+                            .filter((i) => !e.has(i))
+                            .map((i) => ({ display: i, info: i })),
+                        s = new k(this.plugin);
+                    (s.setSuggesterData(t),
+                        s.display((i) => {
+                            let n = `Reinstalling ${i.info}`;
+                            (w(
+                                this.plugin,
+                                `
+${n}`,
+                                3,
+                            ),
+                                this.plugin.log(n, !0),
+                                this.plugin.betaPlugins.updatePlugin(i.info, !1, !1, !0));
+                        }));
+                },
+            },
+            {
+                id: 'restartPlugin',
+                icon: 'BratIcon',
+                name: 'Plugins: Restart a plugin that is already installed',
+                showInRibbon: !0,
+                callback: () => {
+                    let e = Object.values(this.plugin.app.plugins.manifests).map((s) => ({
+                            display: s.id,
+                            info: s.id,
+                        })),
+                        t = new k(this.plugin);
+                    (t.setSuggesterData(e),
+                        t.display((s) => {
+                            (w(
+                                this.plugin,
+                                `${s.info}
+Plugin reloading .....`,
+                                5,
+                            ),
+                                this.plugin.betaPlugins.reloadPlugin(s.info));
+                        }));
+                },
+            },
+            {
+                id: 'disablePlugin',
+                icon: 'BratIcon',
+                name: 'Plugins: Disable a plugin - toggle it off',
+                showInRibbon: !0,
+                callback: () => {
+                    let e = this.plugin.betaPlugins
+                            .getEnabledDisabledPlugins(!0)
+                            .map((s) => ({ display: `${s.name} (${s.id})`, info: s.id })),
+                        t = new k(this.plugin);
+                    (t.setSuggesterData(e),
+                        t.display((s) => {
+                            (this.plugin.log(`${s.display} plugin disabled`, !1),
+                                this.plugin.settings.debuggingMode && console.log(s.info),
+                                this.plugin.app.plugins.disablePluginAndSave(s.info));
+                        }));
+                },
+            },
+            {
+                id: 'enablePlugin',
+                icon: 'BratIcon',
+                name: 'Plugins: Enable a plugin - toggle it on',
+                showInRibbon: !0,
+                callback: () => {
+                    let e = this.plugin.betaPlugins
+                            .getEnabledDisabledPlugins(!1)
+                            .map((s) => ({ display: `${s.name} (${s.id})`, info: s.id })),
+                        t = new k(this.plugin);
+                    (t.setSuggesterData(e),
+                        t.display((s) => {
+                            (this.plugin.log(`${s.display} plugin enabled`, !1),
+                                this.plugin.app.plugins.enablePluginAndSave(s.info));
+                        }));
+                },
+            },
+            {
+                id: 'openGitHubZRepository',
+                icon: 'BratIcon',
+                name: 'Plugins: Open the GitHub repository for a plugin',
+                showInRibbon: !0,
+                callback: async () => {
+                    let e = await wt(this.plugin.settings.debuggingMode);
+                    if (e) {
+                        let t = Object.values(e).map((n) => ({
+                                display: `Plugin: ${n.name}  (${n.repo})`,
+                                info: n.repo,
+                            })),
+                            s = Object.values(this.plugin.settings.pluginList).map((n) => ({
+                                display: `BRAT: ${n}`,
+                                info: n,
+                            }));
+                        for (let n of t) s.push(n);
+                        let i = new k(this.plugin);
+                        (i.setSuggesterData(s),
+                            i.display((n) => {
+                                n.info && window.open(`https://github.com/${n.info}`);
+                            }));
+                    }
+                },
+            },
+            {
+                id: 'openGitHubRepoTheme',
+                icon: 'BratIcon',
+                name: 'Themes: Open the GitHub repository for a theme (appearance)',
+                showInRibbon: !0,
+                callback: async () => {
+                    let e = await Tt(this.plugin.settings.debuggingMode);
+                    if (e) {
+                        let t = Object.values(e).map((i) => ({
+                                display: `Theme: ${i.name}  (${i.repo})`,
+                                info: i.repo,
+                            })),
+                            s = new k(this.plugin);
+                        (s.setSuggesterData(t),
+                            s.display((i) => {
+                                i.info && window.open(`https://github.com/${i.info}`);
+                            }));
+                    }
+                },
+            },
+            {
+                id: 'opentPluginSettings',
+                icon: 'BratIcon',
+                name: 'Plugins: Open Plugin Settings Tab',
+                showInRibbon: !0,
+                callback: () => {
+                    let e = this.plugin.app.setting,
+                        t = Object.values(e.pluginTabs).map((n) => ({ display: `Plugin: ${n.name}`, info: n.id })),
+                        s = new k(this.plugin),
+                        i = Object.values(e.settingTabs).map((n) => ({ display: `Core: ${n.name}`, info: n.id }));
+                    for (let n of t) i.push(n);
+                    (s.setSuggesterData(i),
+                        s.display((n) => {
+                            (e.open(), e.openTabById(n.info));
+                        }));
+                },
+            },
+            {
+                id: 'GrabBetaTheme',
+                icon: 'BratIcon',
+                name: 'Themes: Grab a beta theme for testing from a Github repository',
+                showInRibbon: !0,
+                callback: () => {
+                    new F(this.plugin).open();
+                },
+            },
+            {
+                id: 'updateBetaThemes',
+                icon: 'BratIcon',
+                name: 'Themes: Update beta themes',
+                showInRibbon: !0,
+                callback: async () => {
+                    await q(this.plugin, !0);
+                },
+            },
+            {
+                id: 'allCommands',
+                icon: 'BratIcon',
+                name: 'All Commands list',
+                showInRibbon: !1,
+                callback: () => {
+                    this.ribbonDisplayCommands();
+                },
+            },
+        ];
+        this.plugin = e;
+        for (let t of this.bratCommands)
+            this.plugin.addCommand({
+                id: t.id,
+                name: t.name,
+                icon: t.icon,
+                callback: () => {
+                    t.callback();
+                },
+            });
+    }
+    ribbonDisplayCommands() {
+        let e = [];
+        for (let r of this.bratCommands) r.showInRibbon && e.push({ display: r.name, info: r.callback });
+        let t = new k(this.plugin),
+            s = this.plugin.app.setting,
+            i = Object.values(s.settingTabs).map((r) => ({
+                display: `Core: ${r.name}`,
+                info: () => {
+                    (s.open(), s.openTabById(r.id));
+                },
+            })),
+            n = Object.values(s.pluginTabs).map((r) => ({
+                display: `Plugin: ${r.name}`,
+                info: () => {
+                    (s.open(), s.openTabById(r.id));
+                },
+            }));
+        e.push({
+            display: '---- Core Plugin Settings ----',
+            info: () => {
+                this.ribbonDisplayCommands();
+            },
+        });
+        for (let r of i) e.push(r);
+        e.push({
+            display: '---- Plugin Settings ----',
+            info: () => {
+                this.ribbonDisplayCommands();
+            },
+        });
+        for (let r of n) e.push(r);
+        (t.setSuggesterData(e),
+            t.display((r) => {
+                typeof r.info == 'function' && r.info();
+            }));
+    }
+};
+var R = require('obsidian');
+var Ce = class extends R.PluginSettingTab {
+    constructor(t, s) {
+        super(t, s);
+        this.accessTokenSetting = null;
+        this.accessTokenButton = null;
+        this.tokenInfo = null;
+        this.validator = null;
+        this.plugin = s;
+    }
+    display() {
+        let { containerEl: t } = this;
+        (t.empty(),
+            t.addClass('brat-settings'),
+            new R.Setting(t)
+                .setName('Auto-enable plugins after installation')
+                .setDesc(
+                    'If enabled beta plugins will be automatically enabled after installtion by default. Note: you can toggle this on and off for each plugin in the "Add Plugin" form.',
+                )
+                .addToggle((i) => {
+                    i.setValue(this.plugin.settings.enableAfterInstall).onChange(async (n) => {
+                        ((this.plugin.settings.enableAfterInstall = n), await this.plugin.saveSettings());
+                    });
+                }),
+            new R.Setting(t)
+                .setName('Auto-update plugins at startup')
+                .setDesc(
+                    'If enabled all beta plugins will be checked for updates each time Obsidian starts. Note: this does not update frozen version plugins.',
+                )
+                .addToggle((i) => {
+                    i.setValue(this.plugin.settings.updateAtStartup).onChange(async (n) => {
+                        ((this.plugin.settings.updateAtStartup = n), await this.plugin.saveSettings());
+                    });
+                }),
+            new R.Setting(t)
+                .setName('Auto-update themes at startup')
+                .setDesc('If enabled all beta themes will be checked for updates each time Obsidian starts.')
+                .addToggle((i) => {
+                    i.setValue(this.plugin.settings.updateThemesAtStartup).onChange(async (n) => {
+                        ((this.plugin.settings.updateThemesAtStartup = n), await this.plugin.saveSettings());
+                    });
+                }),
+            new R.Setting(t)
+                .setName('Select latest plugin version by default')
+                .setDesc('If enabled the latest version will be selected by default when adding a new plugin.')
+                .addToggle((i) => {
+                    i.setValue(this.plugin.settings.selectLatestPluginVersionByDefault).onChange(async (n) => {
+                        ((this.plugin.settings.selectLatestPluginVersionByDefault = n),
+                            await this.plugin.saveSettings());
+                    });
+                }),
+            new R.Setting(t)
+                .setName('Allow incompatible plugins')
+                .setDesc(
+                    'If enabled, plugins with higher app versions will be allowed to be installed. Also it allows desktop-only plugins to be installed on mobile devices.',
+                )
+                .addToggle((i) => {
+                    i.setValue(this.plugin.settings.allowIncompatiblePlugins).onChange(async (n) => {
+                        ((this.plugin.settings.allowIncompatiblePlugins = n), await this.plugin.saveSettings());
+                    });
+                }),
+            j(t, !0),
+            t.createEl('hr'),
+            new R.Setting(t).setName('Beta plugin list').setHeading(),
+            t.createEl('div', {
+                text: 'The following is a list of beta plugins added via the command "Add a beta plugin for testing". You can chose to add the latest version or a frozen version. A frozen version is a specific release of a plugin based on its release tag.',
+            }),
+            t.createEl('p'),
+            t.createEl('div', {
+                text: "Click the 'Edit' button next to a plugin to change the installed version and the x button next to a plugin to remove it from the list.",
+            }),
+            t.createEl('p'),
+            t.createEl('span').createEl('b', { text: 'Note: ' }),
+            t.createSpan({
+                text: 'Removing from the list does not delete the plugin, this should be done from the Community Plugins tab in Settings.',
+            }),
+            new R.Setting(t).addButton((i) => {
+                i.setButtonText('Add beta plugin')
+                    .setCta()
+                    .onClick(() => {
+                        this.plugin.betaPlugins.displayAddNewPluginModal(!0);
+                    });
+            }));
+        let s = new Map(this.plugin.settings.pluginSubListFrozenVersion.map((i) => [i.repo, i]));
+        for (let i of this.plugin.settings.pluginList) {
+            let n = s.get(i),
+                r = new R.Setting(t)
+                    .setName(Q(i))
+                    .setDesc(
+                        (n != null && n.version
+                            ? ` Tracked version: ${n.version} ${n.version === 'latest' ? '' : '(frozen)'}`
+                            : '') + (n != null && n.isIncompatible ? ' (incompatible)' : ''),
+                    );
+            ((!(n != null && n.version) || n.version === 'latest') &&
+                r.addButton((a) => {
+                    a.setIcon('sync')
+                        .setTooltip('Check and update plugin')
+                        .onClick(async () => {
+                            await this.plugin.betaPlugins.updatePlugin(i, !1, !0, !1, n == null ? void 0 : n.token);
+                        });
+                }),
+                r
+                    .addButton((a) => {
+                        a.setIcon('edit')
+                            .setTooltip('Change version')
+                            .onClick(() => {
+                                (this.plugin.betaPlugins.displayAddNewPluginModal(
+                                    !0,
+                                    !0,
+                                    i,
+                                    n == null ? void 0 : n.version,
+                                    n == null ? void 0 : n.token,
+                                ),
+                                    this.plugin.app.setting.updatePluginSection());
+                            });
+                    })
+                    .addButton((a) => {
+                        a.setIcon('cross')
+                            .setTooltip('Remove this beta plugin')
+                            .setWarning()
+                            .onClick(() => {
+                                if (a.buttonEl.textContent === '')
+                                    a.setButtonText('Click once more to confirm removal');
+                                else {
+                                    let { buttonEl: u } = a,
+                                        { parentElement: l } = u;
+                                    l != null &&
+                                        l.parentElement &&
+                                        (l.parentElement.remove(), this.plugin.betaPlugins.deletePlugin(i));
+                                }
+                            });
+                    }));
+        }
+        (new R.Setting(t).setName('Beta themes list').setHeading(),
+            new R.Setting(t).addButton((i) => {
+                i.setButtonText('Add beta theme')
+                    .setCta()
+                    .onClick(() => {
+                        (this.plugin.app.setting.close(), new F(this.plugin).open());
+                    });
+            }));
+        for (let i of this.plugin.settings.themesList)
+            new R.Setting(t).setName(Q(i.repo)).addButton((n) => {
+                n.setIcon('cross')
+                    .setTooltip('Delete this beta theme')
+                    .onClick(() => {
+                        if (n.buttonEl.textContent === '') n.setButtonText('Click once more to confirm removal');
+                        else {
+                            let { buttonEl: r } = n,
+                                { parentElement: a } = r;
+                            a != null && a.parentElement && (a.parentElement.remove(), Ae(this.plugin, i.repo));
+                        }
+                    });
+            });
+        (new R.Setting(t).setName('Monitoring').setHeading(),
+            new R.Setting(t)
+                .setName('Enable notifications')
+                .setDesc(
+                    'BRAT will provide popup notifications for its various activities. Turn this off means  no notifications from BRAT.',
+                )
+                .addToggle((i) => {
+                    (i.setValue(this.plugin.settings.notificationsEnabled),
+                        i.onChange(async (n) => {
+                            ((this.plugin.settings.notificationsEnabled = n), await this.plugin.saveSettings());
+                        }));
+                }),
+            new R.Setting(t)
+                .setName('Enable logging')
+                .setDesc('Plugin updates will be logged to a file in the log file.')
+                .addToggle((i) => {
+                    i.setValue(this.plugin.settings.loggingEnabled).onChange(async (n) => {
+                        ((this.plugin.settings.loggingEnabled = n), await this.plugin.saveSettings());
+                    });
+                }),
+            new R.Setting(this.containerEl)
+                .setName('BRAT log file location')
+                .setDesc("Logs will be saved to this file. Don't add .md to the file name.")
+                .addSearch((i) => {
+                    i.setPlaceholder('Example: BRAT-log')
+                        .setValue(this.plugin.settings.loggingPath)
+                        .onChange(async (n) => {
+                            ((this.plugin.settings.loggingPath = n), await this.plugin.saveSettings());
+                        });
+                }),
+            new R.Setting(t)
+                .setName('Enable verbose logging')
+                .setDesc('Get a lot  more information in  the log.')
+                .addToggle((i) => {
+                    i.setValue(this.plugin.settings.loggingVerboseEnabled).onChange(async (n) => {
+                        ((this.plugin.settings.loggingVerboseEnabled = n), await this.plugin.saveSettings());
+                    });
+                }),
+            new R.Setting(t)
+                .setName('Debugging mode')
+                .setDesc('Atomic Bomb level console logging. Can be used for troubleshooting and development.')
+                .addToggle((i) => {
+                    i.setValue(this.plugin.settings.debuggingMode).onChange(async (n) => {
+                        ((this.plugin.settings.debuggingMode = n), await this.plugin.saveSettings());
+                    });
+                }),
+            new R.Setting(t)
+                .setName('Personal access token')
+                .setDesc(
+                    Ct({
+                        prependText:
+                            'Set a personal access token to increase rate limits for public repositories on GitHub. You can create one in ',
+                        url: 'https://github.com/settings/tokens/new?scopes=public_repo',
+                        text: 'your GitHub account settings',
+                        appendText: ' and then add it here. Please consult the documetation for more details.',
+                    }),
+                )
+                .addText((i) => {
+                    var n;
+                    ((this.accessTokenSetting = i),
+                        i
+                            .setPlaceholder('Enter your personal access token')
+                            .setValue((n = this.plugin.settings.personalAccessToken) != null ? n : '')
+                            .onChange(async (r) => {
+                                var a, u, l;
+                                r === ''
+                                    ? ((this.plugin.settings.personalAccessToken = ''),
+                                      this.plugin.saveSettings(),
+                                      (a = this.accessTokenButton) == null || a.setDisabled(!0),
+                                      (u = this.validator) == null || u.validateToken(''))
+                                    : (l = this.accessTokenButton) == null || l.setDisabled(!1);
+                            }),
+                        i.inputEl.addClass('brat-token-input'));
+                })
+                .addExtraButton((i) => {
+                    i.setIcon('cross')
+                        .setTooltip('Clear personal access token')
+                        .onClick(async () => {
+                            var n, r;
+                            ((this.plugin.settings.personalAccessToken = ''),
+                                (n = this.accessTokenSetting) == null || n.setValue(''),
+                                await ((r = this.validator) == null ? void 0 : r.validateToken('')),
+                                this.plugin.saveSettings());
+                        });
+                })
+                .addButton((i) => {
+                    ((this.accessTokenButton = i),
+                        i
+                            .setButtonText('Validate')
+                            .setCta()
+                            .onClick(async () => {
+                                var r, a, u;
+                                let n = (r = this.accessTokenSetting) == null ? void 0 : r.inputEl.value;
+                                n &&
+                                    (await ((a = this.validator) == null ? void 0 : a.validateToken(n))) &&
+                                    ((this.plugin.settings.personalAccessToken = n),
+                                    this.plugin.saveSettings(),
+                                    (u = this.accessTokenButton) == null || u.setDisabled(!0));
+                            }));
+                })
+                .then(() => {
+                    var i, n;
+                    ((this.tokenInfo = this.createTokenInfoElement(t)),
+                        (this.validator = new G(this.accessTokenSetting, this.tokenInfo)),
+                        (n = this.validator) == null ||
+                            n
+                                .validateToken((i = this.plugin.settings.personalAccessToken) != null ? i : '')
+                                .then((r) => {
+                                    var a;
+                                    (a = this.accessTokenButton) == null ||
+                                        a.setDisabled(r || this.plugin.settings.personalAccessToken === '');
+                                }));
+                }));
+    }
+    createTokenInfoElement(t) {
+        let s = t.createDiv({ cls: 'brat-token-info' });
+        return (s.createDiv({ cls: 'brat-token-status' }), s.createDiv({ cls: 'brat-token-details' }), s);
+    }
+};
+var xt = require('obsidian');
+function $t() {
+    (0, xt.addIcon)(
+        'BratIcon',
+        '<path fill="currentColor" stroke="currentColor"  d="M 41.667969 41.667969 C 41.667969 39.367188 39.800781 37.5 37.5 37.5 C 35.199219 37.5 33.332031 39.367188 33.332031 41.667969 C 33.332031 43.96875 35.199219 45.832031 37.5 45.832031 C 39.800781 45.832031 41.667969 43.96875 41.667969 41.667969 Z M 60.417969 58.582031 C 59.460938 58.023438 58.320312 57.867188 57.25 58.148438 C 56.179688 58.429688 55.265625 59.125 54.707031 60.082031 C 53.746094 61.777344 51.949219 62.820312 50 62.820312 C 48.050781 62.820312 46.253906 61.777344 45.292969 60.082031 C 44.734375 59.125 43.820312 58.429688 42.75 58.148438 C 41.679688 57.867188 40.539062 58.023438 39.582031 58.582031 C 37.597656 59.726562 36.910156 62.257812 38.042969 64.25 C 40.5 68.53125 45.0625 71.171875 50 71.171875 C 54.9375 71.171875 59.5 68.53125 61.957031 64.25 C 63.089844 62.257812 62.402344 59.726562 60.417969 58.582031 Z M 62.5 37.5 C 60.199219 37.5 58.332031 39.367188 58.332031 41.667969 C 58.332031 43.96875 60.199219 45.832031 62.5 45.832031 C 64.800781 45.832031 66.667969 43.96875 66.667969 41.667969 C 66.667969 39.367188 64.800781 37.5 62.5 37.5 Z M 50 8.332031 C 26.988281 8.332031 8.332031 26.988281 8.332031 50 C 8.332031 73.011719 26.988281 91.667969 50 91.667969 C 73.011719 91.667969 91.667969 73.011719 91.667969 50 C 91.667969 26.988281 73.011719 8.332031 50 8.332031 Z M 50 83.332031 C 33.988281 83.402344 20.191406 72.078125 17.136719 56.363281 C 14.078125 40.644531 22.628906 24.976562 37.5 19.042969 C 37.457031 19.636719 37.457031 20.238281 37.5 20.832031 C 37.5 27.738281 43.097656 33.332031 50 33.332031 C 52.300781 33.332031 54.167969 31.46875 54.167969 29.167969 C 54.167969 26.867188 52.300781 25 50 25 C 47.699219 25 45.832031 23.132812 45.832031 20.832031 C 45.832031 18.53125 47.699219 16.667969 50 16.667969 C 68.410156 16.667969 83.332031 31.589844 83.332031 50 C 83.332031 68.410156 68.410156 83.332031 50 83.332031 Z M 50 83.332031 " />',
+    );
+}
+var se = class {
+    constructor(e) {
+        this.console = (e, ...t) => {
+            console.log(`BRAT: ${e}`, ...t);
+        };
+        this.themes = {
+            themeseCheckAndUpates: async (e) => {
+                await q(this.plugin, e);
+            },
+            themeInstallTheme: async (e) => {
+                let t = e.replace('https://github.com/', '');
+                await ee(this.plugin, t, !0);
+            },
+            themesDelete: (e) => {
+                let t = e.replace('https://github.com/', '');
+                Ae(this.plugin, t);
+            },
+            grabCommmunityThemeCssFile: async (e, t = !1) => await _(e, t, this.plugin.settings.debuggingMode),
+            grabChecksumOfThemeCssFile: async (e, t = !1) => await W(e, t, this.plugin.settings.debuggingMode),
+            grabLastCommitDateForFile: async (e, t) => await yt(e, t),
+        };
+        this.plugin = e;
+    }
+};
+var ce = require('obsidian'),
+    Yt = is(Xt());
+async function Kt(o, e, t = !1) {
+    if ((o.settings.debuggingMode && console.log(`BRAT: ${e}`), o.settings.loggingEnabled)) {
+        if (!o.settings.loggingVerboseEnabled && t) return;
+        let s = `${o.settings.loggingPath}.md`,
+            i = `[[${(0, ce.moment)()
+                .format((0, Yt.getDailyNoteSettings)().format)
+                .toString()}]] ${(0, ce.moment)().format('HH:mm')}`,
+            n = window.require('os'),
+            r = ce.Platform.isDesktop ? n.hostname() : 'MOBILE',
+            a = `${i} ${r} ${e.replace(
+                `
+`,
+                ' ',
+            )}
+`,
+            u = o.app.vault.getAbstractFileByPath(s);
+        u ? await o.app.vault.append(u, a) : (u = await o.app.vault.create(s, a));
+    }
+}
+var Ne = class extends Wt.Plugin {
+    constructor() {
+        super(...arguments);
+        this.APP_NAME = 'BRAT';
+        this.APP_ID = 'obsidian42-brat';
+        this.settings = Ue;
+        this.betaPlugins = new Z(this);
+        this.commands = new te(this);
+        this.bratApi = new se(this);
+        this.obsidianProtocolHandler = (t) => {
+            if (!t.plugin && !t.theme) {
+                w(this, 'Could not locate the repository from the URL.', 10);
+                return;
+            }
+            for (let s of ['plugin', 'theme'])
+                if (t[s]) {
+                    let i;
+                    switch (s) {
+                        case 'plugin':
+                            ((i = new M(this, this.betaPlugins, !0, !1, t[s], t.version ? t.version : void 0)),
+                                i.open());
+                            break;
+                        case 'theme':
+                            ((i = new F(this)), (i.address = t[s]), i.open());
+                            break;
+                    }
+                    return;
+                }
+        };
+    }
+    onload() {
+        (console.log(`loading ${this.APP_NAME}`),
+            $t(),
+            this.addRibbonIcon('BratIcon', 'BRAT', () => {
+                this.commands.ribbonDisplayCommands();
+            }),
+            this.loadSettings()
+                .then(() => {
+                    this.app.workspace.onLayoutReady(() => {
+                        (this.addSettingTab(new Ce(this.app, this)),
+                            this.registerObsidianProtocolHandler('brat', this.obsidianProtocolHandler),
+                            this.betaPlugins.checkIncompatiblePlugins(),
+                            this.settings.updateAtStartup &&
+                                setTimeout(() => {
+                                    this.betaPlugins.checkForPluginUpdatesAndInstallUpdates(!1);
+                                }, 6e4),
+                            this.settings.updateThemesAtStartup &&
+                                setTimeout(() => {
+                                    q(this, !1);
+                                }, 12e4),
+                            setTimeout(() => {
+                                window.bratAPI = this.bratApi;
+                            }, 500));
+                    });
+                })
+                .catch((t) => {
+                    console.error('Failed to load settings:', t);
+                }));
+    }
+    async log(t, s = !1) {
+        await Kt(this, t, s);
+    }
+    onunload() {
+        console.log(`unloading ${this.APP_NAME}`);
+    }
+    async loadSettings() {
+        this.settings = Object.assign({}, Ue, await this.loadData());
+    }
+    async saveSettings() {
+        await this.saveData(this.settings);
+    }
+};

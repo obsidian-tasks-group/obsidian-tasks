@@ -2,7 +2,7 @@
 
 ## Templater templates
 
-The `docs/` vault has the [Templater](https://github.com/SilentVoid13/Templater) plugin installed, and is configured to read templates in the [docs/_meta/templates](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/docs/_meta/templates) directory.
+The `docs/` vault has the [Templater](https://github.com/SilentVoid13/Templater) plugin installed, and is configured to read templates in the [docs/\_meta/templates](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/docs/_meta/templates) directory.
 
 Benefits include:
 

@@ -3,7 +3,7 @@
 ## Context
 
 - Remove line when a `onCompletion:: delete` task is completed:
-  - <https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3342>
+    - <https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3342>
 
 ## Source Mode
 

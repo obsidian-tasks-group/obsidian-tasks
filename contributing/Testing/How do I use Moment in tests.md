@@ -24,6 +24,7 @@ This is how to declare `moment` and `Moment` in files that **test** code in the 
 Any test files that call any code in `src/` that uses `moment` or `Moment` need to start with this boilerplate code:
 
 <!-- snippet: declare-moment-in-tests -->
+
 ```ts
 /**
  * @jest-environment jsdom
@@ -31,6 +32,7 @@ Any test files that call any code in `src/` that uses `moment` or `Moment` need 
 
 import moment from 'moment';
 ```
+
 <!-- endSnippet -->
 
 ### Declare window.moment
@@ -38,9 +40,11 @@ import moment from 'moment';
 Any tests that call code in `src/` that uses `window.moment()` also needs this near the top:
 
 <!-- snippet: fix-window.moment-calls-in-tests -->
+
 ```ts
 window.moment = moment;
 ```
+
 <!-- endSnippet -->
 
 This will fix errors such as:
@@ -55,19 +59,23 @@ TypeError: window.moment is not a function
 Calling the `moment` function:
 
 <!-- snippet: use-moment-in-tests -->
+
 ```ts
 const date = moment('2003-10-12');
 const now = moment();
 ```
+
 <!-- endSnippet -->
 
 Testing `Moment` values:
 
 <!-- snippet: test-moment-equality -->
+
 ```ts
 expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
 expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
 ```
+
 <!-- endSnippet -->
 
 ## Fixing common errors

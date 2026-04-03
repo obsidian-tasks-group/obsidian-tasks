@@ -76,6 +76,7 @@ If found, they will refuse to run the search, as experience has found that the r
 The error message will then contain this text:
 
 <!-- snippet: TemplatingPluginTools.test.TemplatingPluginTools_date_templating_error_sample_for_docs.approved.text -->
+
 ```text
 Instruction contains unexpanded template text: "<%" - and cannot be interpreted.
 
@@ -89,6 +90,7 @@ Possible causes:
 
 See: https://publish.obsidian.md/tasks/Advanced/Daily+Agenda#Instruction+contains+unexpanded+template+text
 ```
+
 <!-- endSnippet -->
 
 > [!released]

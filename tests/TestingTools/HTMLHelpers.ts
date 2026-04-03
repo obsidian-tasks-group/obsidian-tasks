@@ -1,7 +1,9 @@
 import * as prettier from 'prettier';
+import * as htmlParser from 'prettier/plugins/html';
 
-export function prettifyHTML(modalHTML: string) {
-    return prettier.format(modalHTML, {
+export async function prettifyHTML(modalHTML: string) {
+    return await prettier.format(modalHTML, {
+        plugins: [htmlParser],
         parser: 'html',
         bracketSameLine: true,
         htmlWhitespaceSensitivity: 'ignore',

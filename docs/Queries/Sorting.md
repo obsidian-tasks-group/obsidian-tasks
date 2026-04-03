@@ -26,9 +26,10 @@ This page is long. Here are some links to the main sections:
 
 ## Default sort order
 
-The following instructions are the default sort order, and they are **automatically appended to the end of *every* Tasks search**:
+The following instructions are the default sort order, and they are **automatically appended to the end of _every_ Tasks search**:
 
 <!-- snippet: Sort.test.Sort_save_default_sort_order.approved.text -->
+
 ```text
 sort by status.type
 sort by urgency
@@ -36,13 +37,14 @@ sort by due
 sort by priority
 sort by path
 ```
+
 <!-- endSnippet -->
 
 It first sorts tasks in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK` to ensure that actionable tasks appear first, which is important in searches without a filter like `not done`.
 
 Then it sorts by [[Urgency]], which is a calculated score derived from several Task properties.
 
-The above lines are *always* appended to the end of any `sort by` instructions supplied by the user. There is no way to disable this.
+The above lines are _always_ appended to the end of any `sort by` instructions supplied by the user. There is no way to disable this.
 
 However, any `sort by` instructions in queries take precedence over these default ones.
 
@@ -95,7 +97,7 @@ sort by function !task.isDone
 - `sort by status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
 
 > [!released]
-`sort by status.name` was introduced in Tasks 1.23.0.
+> `sort by status.name` was introduced in Tasks 1.23.0.
 
 Since Tasks 6.0.0, **[[Custom Sorting|custom sorting]] by status names** is now possible.
 
@@ -122,7 +124,7 @@ sort by function task.status.name
     - `NON_TASK`
 
 > [!released]
-`sort by status.type` was introduced in Tasks 1.23.0.
+> `sort by status.type` was introduced in Tasks 1.23.0.
 
 Since Tasks 6.0.0, **[[Custom Sorting|custom sorting]] by status types** is now possible.
 
@@ -197,7 +199,7 @@ For more information, see [[Task Dependencies]].
 >
 > - Task Depends On was introduced in Tasks 6.1.0.
 
-Since Tasks 6.1.0, **[[Custom Sorting|custom sorting]]  by Depends On** is now possible, using `task.dependsOn`.
+Since Tasks 6.1.0, **[[Custom Sorting|custom sorting]] by Depends On** is now possible, using `task.dependsOn`.
 
 ## Sort by Dates in Tasks
 
@@ -285,7 +287,7 @@ sort by function task.start.format("dddd")
 - `sort by created` (the date when the task was created)
 
 > [!released]
-`sort by created` was introduced in Tasks 2.0.0.
+> `sort by created` was introduced in Tasks 2.0.0.
 
 Since Tasks 6.0.0, **[[Custom Sorting|custom sorting]] by created date** is now possible.
 
@@ -304,7 +306,7 @@ sort by function task.created.format("dddd")
 - `sort by cancelled` (the date when the task was cancelled)
 
 > [!released]
-`sort by cancelled` was introduced in Tasks 5.5.0.
+> `sort by cancelled` was introduced in Tasks 5.5.0.
 
 Since Tasks 6.0.0, **[[Custom Sorting|custom sorting]] by cancelled date** is now possible, using `task.cancelled`.
 
@@ -323,7 +325,7 @@ sort by function task.cancelled.format("dddd")
 - `sort by happens` (the earliest of start date, scheduled date, and due date)
 
 > [!released]
-`sort by happens` was introduced in Tasks 1.21.0.
+> `sort by happens` was introduced in Tasks 1.21.0.
 
 Since Tasks 6.0.0, **[[Custom Sorting|custom sorting]] by happens date** is now possible.
 
@@ -464,7 +466,7 @@ For example this query will sort by the second tag found in the description.
     ```
 
 > [!released]
-Tag sorting was introduced in Tasks 1.6.0.
+> Tag sorting was introduced in Tasks 1.6.0.
 
 Since Tasks 6.0.0, **[[Custom Sorting|custom sorting]] by tags** is now possible.
 
@@ -632,7 +634,7 @@ sort by function task.file.path === query.file.path
   - Note that tasks from different notes with the same file name will be sorter.
 
 > [!released]
-`sort by filename` was introduced in Tasks 1.21.0.
+> `sort by filename` was introduced in Tasks 1.21.0.
 
 Since Tasks 6.0.0, **[[Custom Sorting|custom sorting]] by file name** is now possible.
 
@@ -657,7 +659,7 @@ sort by function task.file.filenameWithoutExtension
 - `sort by sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
 
 > [!released]
-`sort by heading` was introduced in Tasks 1.21.0.
+> `sort by heading` was introduced in Tasks 1.21.0.
 
 Since Tasks 6.0.0, **[[Custom Sorting|custom sorting]] by heading** is now possible.
 
@@ -682,7 +684,7 @@ Each subsequent `sort` will sort within the existing sorting.
 
 > [!info]
 > If you want tasks to be sorted the way they were sorted before urgency was introduced,
-add the following `sort` expressions to your queries:
+> add the following `sort` expressions to your queries:
 
     ```tasks
     sort by status
@@ -694,8 +696,8 @@ add the following `sort` expressions to your queries:
 
 > [!info]
 > Sorting by description should take into account `[[Links]]` and `[Links with an|Alias]` (note pipe).
-It should also take into account `*italics*` and `==highlights==`.
-It sorts by the text that's visible in preview mode.
+> It should also take into account `*italics*` and `==highlights==`.
+> It sorts by the text that's visible in preview mode.
 
 ## Reverse sorting
 

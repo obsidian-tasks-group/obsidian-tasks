@@ -1,6 +1,6 @@
 ---
 tags:
- - examples
+    - examples
 ---
 
 # Regular Expression Searches
@@ -243,10 +243,10 @@ Gives:
 Intentionally without `#task` as not intended to be picked up by example searches above.
 
 - [ ] Work out how to prevent `path regex matches /a/b/c/d/` from confusingly only searching `path regex matches /a/`.
-  - Logged in [#1037](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037)
+    - Logged in [#1037](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037)
 - [x] Add regex support to `tag`/`tags` filter.
-  - Logged in [#1040](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/1040)
+    - Logged in [#1040](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/1040)
 - [ ] Specific error message if there are no `/` at beginning and end of query - I'm finding it really easy to forget to include these.
-  - Logged in [#1038](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1038)
+    - Logged in [#1038](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1038)
 - [ ] Include the problem line in the error message.
-  - Logged in [#1039](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1039)
+    - Logged in [#1039](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1039)

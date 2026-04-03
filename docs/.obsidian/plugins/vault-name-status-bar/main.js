@@ -8,95 +8,102 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
+    for (var name in all) __defProp(target, name, { get: all[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
+    if ((from && typeof from === 'object') || typeof from === 'function') {
+        for (let key of __getOwnPropNames(from))
+            if (!__hasOwnProp.call(to, key) && key !== except)
+                __defProp(to, key, {
+                    get: () => from[key],
+                    enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable,
+                });
+    }
+    return to;
 };
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __toCommonJS = (mod) => __copyProps(__defProp({}, '__esModule', { value: true }), mod);
 
 // src/main.ts
 var main_exports = {};
 __export(main_exports, {
-  default: () => StatusBarVaultName
+    default: () => StatusBarVaultName,
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian = require("obsidian");
+var import_obsidian = require('obsidian');
 var DEFAULT_SETTINGS = {
-  reducedAtStart: false,
-  color: "#424cd8",
-  fontSize: 1.5
+    reducedAtStart: false,
+    color: '#424cd8',
+    fontSize: 1.5,
 };
 var StatusBarVaultName = class extends import_obsidian.Plugin {
-  async onload() {
-    await this.loadSettings();
-    this.addSettingTab(new Settings(this.app, this));
-    const vaultName = this.app.vault.getName();
-    const statusBar = document.querySelector(".status-bar");
-    this.title = document.createElement("div");
-    this.settings.reducedAtStart ? this.title.innerText = "::" : this.title.innerText = vaultName;
-    this.title.classList.add("status-bar-vault-name");
-    statusBar == null ? void 0 : statusBar.prepend(this.title);
-    this.title.style.color = this.settings.color;
-    this.title.style.fontSize = `${this.settings.fontSize}em`;
-    this.title.addEventListener("click", () => {
-      if (this.title.innerText === vaultName) {
-        this.title.innerText = "::";
-      } else {
-        this.title.innerText = vaultName;
-      }
-    });
-  }
-  onunload() {
-    this.title.detach();
-  }
-  async loadSettings() {
-    this.settings = Object.assign(
-      {},
-      DEFAULT_SETTINGS,
-      await this.loadData()
-    );
-  }
-  async saveSettings() {
-    await this.saveData(this.settings);
-  }
+    async onload() {
+        await this.loadSettings();
+        this.addSettingTab(new Settings(this.app, this));
+        const vaultName = this.app.vault.getName();
+        const statusBar = document.querySelector('.status-bar');
+        this.title = document.createElement('div');
+        this.settings.reducedAtStart ? (this.title.innerText = '::') : (this.title.innerText = vaultName);
+        this.title.classList.add('status-bar-vault-name');
+        statusBar == null ? void 0 : statusBar.prepend(this.title);
+        this.title.style.color = this.settings.color;
+        this.title.style.fontSize = `${this.settings.fontSize}em`;
+        this.title.addEventListener('click', () => {
+            if (this.title.innerText === vaultName) {
+                this.title.innerText = '::';
+            } else {
+                this.title.innerText = vaultName;
+            }
+        });
+    }
+    onunload() {
+        this.title.detach();
+    }
+    async loadSettings() {
+        this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    }
+    async saveSettings() {
+        await this.saveData(this.settings);
+    }
 };
 var Settings = class extends import_obsidian.PluginSettingTab {
-  constructor(app, plugin) {
-    super(app, plugin);
-    this.plugin = plugin;
-  }
-  display() {
-    const { containerEl } = this;
-    containerEl.empty();
-    containerEl.createEl("h2", { text: "Vaut Name in Status Bar" });
-    containerEl.createEl("p", { text: "Click on the vault name or on :: to reduce or enlarge" });
-    new import_obsidian.Setting(containerEl).setName("Reduced at Start").setDesc("Will be reduced by default").addToggle((toggle) => {
-      toggle.setValue(this.plugin.settings.reducedAtStart).onChange(async (value) => {
-        this.plugin.settings.reducedAtStart = value;
-        await this.plugin.saveSettings();
-        this.plugin.settings.reducedAtStart ? this.plugin.title.innerText = "::" : this.plugin.title.innerText = this.app.vault.getName();
-      });
-    });
-    const setting = new import_obsidian.Setting(containerEl).setName("Set color & size").addColorPicker(
-      (color) => color.setValue(this.plugin.settings.color).onChange(async (value) => {
-        this.plugin.settings.color = value;
-        this.plugin.title.style.color = value;
-        await this.plugin.saveSettings();
-      })
-    );
-    setting.addSlider((slider) => {
-      slider.setLimits(1, 3, 0.1).setValue(this.plugin.settings.fontSize).setDynamicTooltip().onChange(async (value) => {
-        this.plugin.settings.fontSize = value;
-        this.plugin.title.style.fontSize = `${value}em`;
-        await this.plugin.saveSettings();
-      });
-    });
-  }
+    constructor(app, plugin) {
+        super(app, plugin);
+        this.plugin = plugin;
+    }
+    display() {
+        const { containerEl } = this;
+        containerEl.empty();
+        containerEl.createEl('h2', { text: 'Vaut Name in Status Bar' });
+        containerEl.createEl('p', { text: 'Click on the vault name or on :: to reduce or enlarge' });
+        new import_obsidian.Setting(containerEl)
+            .setName('Reduced at Start')
+            .setDesc('Will be reduced by default')
+            .addToggle((toggle) => {
+                toggle.setValue(this.plugin.settings.reducedAtStart).onChange(async (value) => {
+                    this.plugin.settings.reducedAtStart = value;
+                    await this.plugin.saveSettings();
+                    this.plugin.settings.reducedAtStart
+                        ? (this.plugin.title.innerText = '::')
+                        : (this.plugin.title.innerText = this.app.vault.getName());
+                });
+            });
+        const setting = new import_obsidian.Setting(containerEl).setName('Set color & size').addColorPicker((color) =>
+            color.setValue(this.plugin.settings.color).onChange(async (value) => {
+                this.plugin.settings.color = value;
+                this.plugin.title.style.color = value;
+                await this.plugin.saveSettings();
+            }),
+        );
+        setting.addSlider((slider) => {
+            slider
+                .setLimits(1, 3, 0.1)
+                .setValue(this.plugin.settings.fontSize)
+                .setDynamicTooltip()
+                .onChange(async (value) => {
+                    this.plugin.settings.fontSize = value;
+                    this.plugin.title.style.fontSize = `${value}em`;
+                    await this.plugin.saveSettings();
+                });
+        });
+    }
 };

@@ -62,12 +62,14 @@ Run `mdsnippets` - see [[#Running mdsnippets]]
 Your `snippet: ...` line will be converted to this:
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
+
 ```json
 {
-  "name": "fred",
-  "age": 30
+    "name": "fred",
+    "age": 30
 }
 ```
+
 <!-- endSnippet -->
 
 Notice how the above has syntax highlighting, as the `.json` file extension on the included file was used as the language in the generated code block.
@@ -87,8 +89,8 @@ Run `mdsnippets` - see [[#Running mdsnippets]]
 Your `include: ...` line will be converted to this:
 
 {<!-- include: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
-  "name": "fred",
-  "age": 30
+"name": "fred",
+"age": 30
 }<!-- endInclude -->
 
 ### Embedding files in .obsidian folders by path
@@ -104,6 +106,7 @@ So this:
 Generates this:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-backlinks-small-grey.css -->
+
 ```css
 /* By David Phillips (autonia) https://github.com/autonia
    From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/622#discussioncomment-2649299
@@ -114,6 +117,7 @@ Generates this:
     filter: grayscale(60%);
 }
 ```
+
 <!-- endSnippet -->
 
 > [!Warning] Browser issue?
@@ -131,15 +135,15 @@ Think of a descriptive name for your snippet (file segment), and then surround i
 - `begin-snippet: unique-name-of-snippet-across-your-repo`
 - `end-snippet`
 
-  For example:
+    For example:
 
- ```ts
-     // begin-snippet: approval-test-as-text
-     test('SimpleVerify', () => {
-         verify('Hello From Approvals');
-     });
-     // end-snippet
- ```
+```ts
+// begin-snippet: approval-test-as-text
+test('SimpleVerify', () => {
+    verify('Hello From Approvals');
+});
+// end-snippet
+```
 
 2 **Put a 'snippet:' line in the documentation**
 
@@ -147,9 +151,9 @@ In a Markdown documentation file, add a line `snippet: unique-name-of-snippet-ac
 
 - For example:
 
- ```text
- snippet: approval-test-as-text
- ```
+```text
+snippet: approval-test-as-text
+```
 
 3 **Run mdsnippets to expand the 'snippet:' line**
 
@@ -158,15 +162,15 @@ Run `mdsnippets` - see [[#Running mdsnippets]]
 Your `snippet: ...` line will be converted to this:
 
 ````markdown
-
 <!-- snippet: approval-test-as-text -->
+
 ```ts
 test('SimpleVerify', () => {
     verify('Hello From Approvals');
 });
 ```
-<!-- endSnippet -->
 
+<!-- endSnippet -->
 ````
 
 The HTML comments contain enough information for mdsnippets to be able to find the snippet file on each run, and update the Markdown if the included file changes.

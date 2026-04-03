@@ -32,9 +32,9 @@ export function renderAndCheckModal(onSave: () => void = () => {}) {
     return { result, container };
 }
 
-export function verifyModalHTML() {
+export async function verifyModalHTML() {
     const { container } = renderAndCheckModal();
 
-    const prettyHTML = prettifyHTML(container.innerHTML);
+    const prettyHTML = await prettifyHTML(container.innerHTML);
     verifyWithFileExtension(prettyHTML, 'html');
 }

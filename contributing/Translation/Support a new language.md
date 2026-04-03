@@ -21,11 +21,11 @@ These are the steps required to add support for a new language.
 
     For example, if adding `de`, this file would be created: `src/i18n/locales/de.json`
 
-4. Add the language to `import` and `resources` in  [src/i18n/i18n.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/i18n.ts)
+4. Add the language to `import` and `resources` in [src/i18n/i18n.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/i18n.ts)
 
 ## Add translations for the new language
 
-1. Optionally, paste `en.json` in to  <https://translate.i18next.com>, to get an initial translation.
+1. Optionally, paste `en.json` in to <https://translate.i18next.com>, to get an initial translation.
 2. Get a human to open `en.json` and the new file, for example `de.json` , side by side, and add the translations to the new file.
     - See [[Contribute translations]].
 

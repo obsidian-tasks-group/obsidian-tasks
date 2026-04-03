@@ -29,5 +29,4 @@ These tags should be placed immediately after the first H1 Heading (`# ....`) in
 
 ```html
 <span class="related-pages">#plugin/calendar #plugin/periodic-notes</span>
-
 ```

@@ -28,7 +28,7 @@ This page is long. Here are some links to the main sections:
 ## Basics
 
 > [!released]
-Introduced in Tasks 1.6.0.
+> Introduced in Tasks 1.6.0.
 
 By default, Tasks displays tasks in a single list.
 
@@ -77,7 +77,7 @@ group by function task.isDone ? "Action Required" : "Nothing To Do"
   - This groups by the names you give to your custom statuses, in alphabetical order.
 
 > [!released]
-`group by status.name` was introduced in Tasks 1.23.0.
+> `group by status.name` was introduced in Tasks 1.23.0.
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status names** is now possible.
 
@@ -110,7 +110,7 @@ group by function task.status.name.toUpperCase()
     - `NON_TASK`
 
 > [!released]
-`group by status.type` was introduced in Tasks 1.23.0.
+> `group by status.type` was introduced in Tasks 1.23.0.
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status types** is now possible.
 
@@ -231,7 +231,7 @@ group by function task.dependsOn
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by due date** is now possible.
 
-These examples all use  `task.due` property, which is a `TasksDate` object. See [[Task Properties#Values in TasksDate Properties|Values in TasksDate Properties]] to explore its capabilities.
+These examples all use `task.due` property, which is a `TasksDate` object. See [[Task Properties#Values in TasksDate Properties|Values in TasksDate Properties]] to explore its capabilities.
 
 Some of these examples use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
 
@@ -474,7 +474,7 @@ For more examples, see [[#Due Date]].
   - The created date of the task, including the week-day, or `Invalid created date` or `No created date`.
 
 > [!released]
-`created` grouping option was introduced in Tasks 2.0.0.
+> `created` grouping option was introduced in Tasks 2.0.0.
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by created date** is now possible.
 
@@ -496,7 +496,7 @@ For more examples, see [[#Due Date]].
   - The cancelled date of the task, including the week-day, or `Invalid cancelled date` or `No cancelled date`.
 
 > [!released]
-`cancelled` grouping option was introduced in Tasks 5.5.0.
+> `cancelled` grouping option was introduced in Tasks 5.5.0.
 
 Since Tasks 5.5.0, **[[Custom Grouping|custom grouping]] by cancelled date** is now possible, using `task.cancelled`.
 
@@ -518,7 +518,7 @@ For more examples, see [[#Due Date]].
   - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
 
 > [!released]
-`happens` grouping option was introduced in Tasks 1.11.0.
+> `happens` grouping option was introduced in Tasks 1.11.0.
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by happens date** is now possible.
 
@@ -899,7 +899,7 @@ Since Tasks 5.1.0, the query's file path can be used conveniently in custom grou
 - `group by root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
 
 > [!released]
-`root` grouping option was introduced in Tasks 1.11.0.
+> `root` grouping option was introduced in Tasks 1.11.0.
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by root folder** is now possible.
 
@@ -1040,7 +1040,7 @@ For example:
 > [!tip]
 > The `reverse` keyword controls the order that group headings are displayed.
 >
-> The [[Sorting|sort by]] facility, by contrast, controls the order in which displays are displayed *inside* each group.
+> The [[Sorting|sort by]] facility, by contrast, controls the order in which displays are displayed _inside_ each group.
 
 ### Limiting group size
 

@@ -1,6 +1,7 @@
 # comments_html_style
 
 Whole task line is ignored by Obsidian's `cachedMetadata`:
+
 <!--
 - [ ] #task Whole task in 'comments_html_style'
 -->

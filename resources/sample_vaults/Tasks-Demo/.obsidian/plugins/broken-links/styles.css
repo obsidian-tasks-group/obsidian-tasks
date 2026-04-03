@@ -55,7 +55,7 @@ div.broken-links .filter-input-container::before {
     top: calc((var(--input-height) - var(--search-icon-size)) / 2);
     left: 8px;
     position: absolute;
-    content: "";
+    content: '';
     height: var(--search-icon-size);
     width: var(--search-icon-size);
     display: block;
@@ -90,7 +90,7 @@ div.broken-links .filter-input-clear-button {
     transition: color 0.15s ease-in-out;
 }
 div.broken-links .filter-input-clear-button::after {
-    content: "";
+    content: '';
     height: var(--search-clear-button-size);
     width: var(--search-clear-button-size);
     display: block;

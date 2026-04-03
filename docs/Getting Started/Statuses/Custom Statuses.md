@@ -9,7 +9,7 @@ publish: true
 ## Introduction
 
 > [!released]
-Custom Statuses were introduced in Tasks 1.23.0.
+> Custom Statuses were introduced in Tasks 1.23.0.
 
 Custom statuses represent any non-standard markdown tasks.
 
@@ -45,9 +45,9 @@ And this is how you can use them:
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_custom-statuses.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
-| ----- | ----- | ----- | ----- | ----- |
-| `/` | `x` | In Progress | `IN_PROGRESS` | Yes |
-| `-` | `space` | Cancelled | `CANCELLED` | Yes |
+| ------------- | ------------------ | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------- |
+| `/`           | `x`                | In Progress                                                                                 | `IN_PROGRESS`                                                                         | Yes                  |
+| `-`           | `space`            | Cancelled                                                                                   | `CANCELLED`                                                                           | Yes                  |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -94,4 +94,4 @@ Now you can follow [[Set up custom statuses|How to set up your custom statuses]]
 Or you can read about [[Status Settings]], and see how to [[Editing a Status|edit a Status]].
 
 > [!warning]
-Remember to set up your chosen CSS Snippet or Theme before setting up the custom statuses.
+> Remember to set up your chosen CSS Snippet or Theme before setting up the custom statuses.

@@ -9,6 +9,7 @@ publish: true
 These are the main pages and sections, that connect to all the pages here:
 
 > [!Info] Navigation
+>
 > ### Basics
 >
 > - [[About Getting Started|Getting Started ...]]

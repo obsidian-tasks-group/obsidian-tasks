@@ -31,7 +31,7 @@ The `src/` directory contains the code that **implements** the Tasks plugin.
 - [Obsidian/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Obsidian)
   - Code which is heavily dependent on Obsidian types such as `App`, `Modal`, `Plugin`, `MarkdownPostProcessorContext`.
   - Has virtually no test coverage, unfortunately, as much of the Obsidian API code requires a graphical environment and is not available outside a vault.
-  - However, we are very gradually increasing coverage by mocking little bits of Obsidian in [tests/\__mocks\__/obsidian.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/__mocks__/obsidian.ts).
+  - However, we are very gradually increasing coverage by mocking little bits of Obsidian in [tests/\_\_mocks\_\_/obsidian.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/__mocks__/obsidian.ts).
 - [Query/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query)
   - Code for parsing queries.
   - The main class is [Query](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Query.ts).

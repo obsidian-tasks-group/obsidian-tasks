@@ -10,7 +10,7 @@
 
 ### The Bug
 
-The bug is that ==clicking on the `[file name] > [section name]`  text below does not jump to the section containing the task.==
+The bug is that ==clicking on the `[file name] > [section name]` text below does not jump to the section containing the task.==
 
 ```tasks
 path includes 654

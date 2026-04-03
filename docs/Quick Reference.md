@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - Quick Reference/Quick Reference
+    - Quick Reference/Quick Reference
 ---
 
 # Quick Reference

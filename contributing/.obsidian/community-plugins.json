@@ -1,13 +1,13 @@
 [
-  "note-refactor-obsidian",
-  "reveal-active-file-button",
-  "table-editor-obsidian",
-  "copy-publish-url",
-  "cmdr",
-  "vault-name-status-bar",
-  "templater-obsidian",
-  "tag-wrangler",
-  "broken-links",
-  "obsidian-plugin-update-tracker",
-  "vault-nickname"
+    "note-refactor-obsidian",
+    "reveal-active-file-button",
+    "table-editor-obsidian",
+    "copy-publish-url",
+    "cmdr",
+    "vault-name-status-bar",
+    "templater-obsidian",
+    "tag-wrangler",
+    "broken-links",
+    "obsidian-plugin-update-tracker",
+    "vault-nickname"
 ]

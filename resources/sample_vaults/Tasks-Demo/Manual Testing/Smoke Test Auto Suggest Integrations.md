@@ -1,4 +1,5 @@
 # Smoke Test Auto Suggest
+
 ## Check Simultaneous Integration With Various Complements and Natural Language Dates
 
 - [ ] #task typing `@` on task line shows natural language date suggestions (today, yesterday, tomorrow)

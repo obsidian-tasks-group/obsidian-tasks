@@ -3,7 +3,7 @@
 <span class="related-pages">#pull-requests</span>
 
 > [!NOTE]
-> **February 2026**: Because of the growth of AI-generated PRs that are taking a *lot* of effort to handle, we have had to refine these instructions.
+> **February 2026**: Because of the growth of AI-generated PRs that are taking a _lot_ of effort to handle, we have had to refine these instructions.
 
 ## Before you start coding
 
@@ -17,7 +17,7 @@ This prevents wasted effort on changes we don't want or approaches that won't wo
 ## Branch is required
 
 1. [ ] Create your PR from a feature/fix branch, not from `main`.
-   - See [Don’t Start Pull Requests from Your Main Branch](https://hynek.me/articles/pull-requests-branch/)
+    - See [Don’t Start Pull Requests from Your Main Branch](https://hynek.me/articles/pull-requests-branch/)
 
 ## PR scope: one thing per PR
 
@@ -34,7 +34,7 @@ Do not combine bug fixes with refactoring. Do not add multiple unrelated feature
 ### For bug fixes
 
 1. [ ] Add a test using `it.failing()` that demonstrates the current incorrect behaviour (if one doesn't already exist).
-   - `it.failing()` is a Jest feature: the test documents what's broken, and will error if the bug is already fixed.
+    - `it.failing()` is a Jest feature: the test documents what's broken, and will error if the bug is already fixed.
 2. [ ] Fix the bug.
 3. [ ] Change `it.failing()` to `it()` so the test now passes with your fix.
 4. [ ] Update [[About Documentation|documentation]]: remove any references to this bug from "known limitations" or similar sections.
@@ -76,7 +76,7 @@ If we don't receive a response to our feedback within a week, we'll close the PR
 
 - See Julia Evans' excellent article [git rebase: what can go wrong?](https://jvns.ca/blog/2023/11/06/rebasing-what-can-go-wrong-/)
 - A lot of pages, like Atlassian's [Merging vs. rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing) will tell you:
-  - "the golden rule of `git rebase` is to never use it on *public* branches."
+  - "the golden rule of `git rebase` is to never use it on _public_ branches."
 - But this misses the more important point: rebase can create broken intermediate commits regardless of whether the branch is public or not.
 
 ### Never force-push to the PR branch

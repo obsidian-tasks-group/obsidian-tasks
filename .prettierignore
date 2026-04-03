@@ -1,0 +1,5 @@
+# Third-party sample vault theme assets are vendored fixtures, including some with invalid CSS.
+resources/sample_vaults/Tasks-Demo/.obsidian/themes/**/theme.css
+# Generated approval baselines; their formatting is driven by test output, not source code style.
+tests/**/*.approved.*
+integration_tests/**/*.approved.*

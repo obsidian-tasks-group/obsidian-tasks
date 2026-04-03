@@ -40,8 +40,8 @@ For the scheduled date to be automatically set from the file name, the following
 - the setting 'Use filename as Scheduled date for undated tasks' must be enabled, and Obsidian restarted,
 - the task must have no existing scheduled date, due date or start date,
 - one of these must be true:
-  1. either the file name must **contain** a date in the format `YYYY-MM-DD` or `YYYYMMDD`,
-  2. or the file name must **exactly equal** an additional date format which has been added using the [[Use Filename as Default Date#Additional date format|additional date format setting]]),
+    1. either the file name must **contain** a date in the format `YYYY-MM-DD` or `YYYYMMDD`,
+    2. or the file name must **exactly equal** an additional date format which has been added using the [[Use Filename as Default Date#Additional date format|additional date format setting]]),
 - the file must be in one of the configured folders or its sub-folders if [[#Folders setting|that setting is enabled]].
 
 Examples of file names that contain the built-in date formats:
@@ -60,6 +60,7 @@ The following image shows the settings relating to this feature:
 <span class="caption">Use filename as Scheduled date for undated tasks settings</span>
 
 ### Additional date format
+
 > [!released]
 > Introduced in tasks 7.6.0.
 

@@ -39,7 +39,7 @@ async function verifyRenderedHtml(allTasks: Task[], source: string, state: State
     renderer.content = container;
     await renderer.renderQuery(state, query.applyQueryToTasks(allTasks));
 
-    verifyRenderedTasks(container, allTasks);
+    await verifyRenderedTasks(container, allTasks);
 }
 
 async function renderTasks(
@@ -219,10 +219,10 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
         const { renderer, query } = makeHtmlRenderer(source, tasksFile, allTasks);
 
         const container = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(container, allTasks);
+        await verifyRenderedTasks(container, allTasks);
 
         const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(rerenderedContainer, allTasks);
+        await verifyRenderedTasks(rerenderedContainer, allTasks);
     });
 
     it('should render the same thing twice - flat', async () => {
@@ -233,10 +233,10 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
         const { renderer, query } = makeHtmlRenderer(source, tasksFile, allTasks);
 
         const container = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(container, allTasks);
+        await verifyRenderedTasks(container, allTasks);
 
         const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(rerenderedContainer, allTasks);
+        await verifyRenderedTasks(rerenderedContainer, allTasks);
     });
 });
 
@@ -286,13 +286,14 @@ describe('HtmlQueryResultsRenderer - internal heading links', () => {
     beforeAll(() => {
         const allTasks = readTasksFromSimulatedFile('internal_heading_links');
 
-        tasksByHeading = allTasks.reduce((acc, task) => {
-            const heading = task.taskLocation.precedingHeader ?? '';
+        tasksByHeading = allTasks.reduce(
+            (acc, task) => {
+                const heading = task.taskLocation.precedingHeader ?? '';
 
-            // For now, the test design only supports one task per heading, so make it an error
-            // if there are multiple tasks in this heading:
-            if (acc[heading]) {
-                throw new Error(`Multiple tasks found under the heading: "${heading}".
+                // For now, the test design only supports one task per heading, so make it an error
+                // if there are multiple tasks in this heading:
+                if (acc[heading]) {
+                    throw new Error(`Multiple tasks found under the heading: "${heading}".
 The test design only supports one task per heading currently, so this is an error.
 
 Edit "${task.path}" to move one of these lines to a separate heading:
@@ -303,11 +304,13 @@ And then rerun the command "Templater: Insert _meta/templates/convert_test_data_
 
 For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests
 `);
-            }
+                }
 
-            acc[heading] = task;
-            return acc;
-        }, {} as Record<string, Task>);
+                acc[heading] = task;
+                return acc;
+            },
+            {} as Record<string, Task>,
+        );
     });
 
     async function renderTask(task: Task, queryFilePath: string = 'query.md') {

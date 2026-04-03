@@ -1,15 +1,15 @@
 {
-  "legacyEditor": false,
-  "livePreview": false,
-  "useTab": false,
-  "readableLineLength": false,
-  "newFileLocation": "current",
-  "attachmentFolderPath": "./",
-  "spellcheck": true,
-  "showInlineTitle": false,
-  "showLineNumber": true,
-  "alwaysUpdateLinks": true,
-  "showUnsupportedFiles": true,
-  "promptDelete": false,
-  "defaultViewMode": "preview"
+    "legacyEditor": false,
+    "livePreview": false,
+    "useTab": false,
+    "readableLineLength": false,
+    "newFileLocation": "current",
+    "attachmentFolderPath": "./",
+    "spellcheck": true,
+    "showInlineTitle": false,
+    "showLineNumber": true,
+    "alwaysUpdateLinks": true,
+    "showUnsupportedFiles": true,
+    "promptDelete": false,
+    "defaultViewMode": "preview"
 }

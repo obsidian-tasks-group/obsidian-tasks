@@ -16,8 +16,8 @@ Don't over-engineer your task management.
 
 > [!info]
 > Instead of adding an emoji and a date manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
-When you use the command, you can also set dates like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
-You can find out more in [[Create or edit Task|‘Create or edit Task’ Modal]].
+> When you use the command, you can also set dates like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
+> You can find out more in [[Create or edit Task|‘Create or edit Task’ Modal]].
 
 > [!info]
 > If you prefer to type, it is now very easy to add emojis and other information for your tasks using [[Auto-Suggest|Intelligent Auto-Suggest]].
@@ -119,7 +119,7 @@ Image of the default settings for tracking task histories.
 ### Created date
 
 > [!released]
-Created date was introduced in Tasks 2.0.0.
+> Created date was introduced in Tasks 2.0.0.
 
 If you enable 'Set created date on every added task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were created.
 
@@ -201,7 +201,7 @@ However, it is possible to search for any tasks with invalid dates in your vault
 [[Filters#Finding Tasks with Invalid Dates|Finding Tasks with Invalid Dates]].
 
 > [!warning]
-The date values on task lines must be calendar or absolute dates, referring to a specific year, month and day. Text such as `📅 today` is not understood by the Tasks plugin, and will not be found in searches.
+> The date values on task lines must be calendar or absolute dates, referring to a specific year, month and day. Text such as `📅 today` is not understood by the Tasks plugin, and will not be found in searches.
 
 ## Limitations of task date support
 
@@ -215,7 +215,7 @@ The date values on task lines must be calendar or absolute dates, referring to a
 
 ### Dates cannot include times
 
-- It is not yet possible to include times on task lines to indicate when they *should* be acted on.
+- It is not yet possible to include times on task lines to indicate when they _should_ be acted on.
 - Nor is it possible to record the time when tasks were created, completed or cancelled.
 - We are tracking this in discussions [#607](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/607) and [#668](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/668).
 

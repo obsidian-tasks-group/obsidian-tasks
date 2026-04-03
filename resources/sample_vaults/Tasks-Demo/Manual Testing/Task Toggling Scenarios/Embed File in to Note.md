@@ -5,8 +5,8 @@
 - **Given** a note with a whole embedded file in, and that file has a completed task, and I am in Reading view
 - **When** I toggle to **un-complete a completed task in the embedded file**
 - **Then** The task is correctly un-checked and its done date removed
-  - but it is not redrawn in the Reading view
-  - and I have to make another edit to the embedded file, for the embedded content to be refreshed in the outer note
+    - but it is not redrawn in the Reading view
+    - and I have to make another edit to the embedded file, for the embedded content to be refreshed in the outer note
 
 ### The embedded file
 

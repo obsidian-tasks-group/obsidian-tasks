@@ -17,10 +17,7 @@
     width: 100%;
 }
 
-.templater_div
-    > .setting-item
-    > .setting-item-control
-    > .setting-editor-extra-setting-button {
+.templater_div > .setting-item > .setting-item-control > .setting-editor-extra-setting-button {
     align-self: center;
 }
 

@@ -169,7 +169,7 @@ Suppose we start with this task:
 
 Here, the user has specifically requested that the task happens on the 31st of the month.
 
-In this case, if the new due date falls on a month with fewer than 31 days,  [rrule](https://github.com/jakubroztocil/rrule) skips forward to the next month until a valid date is found.
+In this case, if the new due date falls on a month with fewer than 31 days, [rrule](https://github.com/jakubroztocil/rrule) skips forward to the next month until a valid date is found.
 
 So, when completing the above task several times, we would see this, which skips over February, April and June:
 
@@ -184,10 +184,10 @@ So, when completing the above task several times, we would see this, which skips
 This is intentional. As well as matching what the user requested, it matches the [specification](https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10) of the [iCalendar RFC](https://tools.ietf.org/html/rfc5545) which the [rrule](https://github.com/jakubroztocil/rrule) library implements:
 
 > Recurrence rules may generate recurrence instances with an invalid
- date (e.g., February 30) or nonexistent local time (e.g., 1:30 AM
- on a day when the local time is moved forward by an hour at 1:00
- AM).  Such recurrence instances MUST be ignored and MUST NOT be
- counted as part of the recurrence set.
+> date (e.g., February 30) or nonexistent local time (e.g., 1:30 AM
+> on a day when the local time is moved forward by an hour at 1:00
+> AM). Such recurrence instances MUST be ignored and MUST NOT be
+> counted as part of the recurrence set.
 
 ## Priority of Dates
 
@@ -223,13 +223,13 @@ The scheduled date is set 2 days before the due date.
 The task is set to repeat every two weeks.
 
 ```markdown
--   [ ] Mow the lawn 🔁 every 2 weeks ⏳ 2021-10-28 📅 2021-10-30
+- [ ] Mow the lawn 🔁 every 2 weeks ⏳ 2021-10-28 📅 2021-10-30
 ```
 
 The new task will have the due date advanced by two weeks and a scheduled date that is two days before the due date, like on the original task.
 
 ```markdown
--   [ ] Mow the lawn 🔁 every 2 weeks ⏳ 2021-11-11 📅 2021-11-13
+- [ ] Mow the lawn 🔁 every 2 weeks ⏳ 2021-11-11 📅 2021-11-13
 ```
 
 ## Examples
@@ -319,8 +319,8 @@ One way to explain the removal of `dependsOn` in next recurrence is this scenari
 
 > [!important]
 > There are edge cases for tasks that recur monthly or yearly.
-For example, a task may be due `2022-01-31` and recur `every 3 months`.
-The next recurrence date of `2022-04-31` does not exist.
+> For example, a task may be due `2022-01-31` and recur `every 3 months`.
+> The next recurrence date of `2022-04-31` does not exist.
 
 In that case, Tasks moves the next occurrence **backwards** to the next valid date.
 In this case, that would be `2022-04-30`.
@@ -362,7 +362,7 @@ For example, consider the following task:
 - [ ] Do stuff 🔁 every year 🛫 2024-02-27 ⏳ 2024-02-28 📅 2024-02-30
 ```
 
-Its highest priority date is the Due date - see [[Recurring Tasks#Priority of Dates|Priority of Dates]] -  which is invalid:  `2024-02-30`.
+Its highest priority date is the Due date - see [[Recurring Tasks#Priority of Dates|Priority of Dates]] - which is invalid: `2024-02-30`.
 
 When this task is completed, the result will be:
 

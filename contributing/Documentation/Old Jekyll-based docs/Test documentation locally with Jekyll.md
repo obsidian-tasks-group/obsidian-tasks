@@ -1,6 +1,6 @@
 ---
 aliases:
-- Documentation/Test documentation locally with Jekyll
+    - Documentation/Test documentation locally with Jekyll
 ---
 
 # Test documentation locally with Jekyll

@@ -1,148 +1,146 @@
 {
-  "cachedMetadata": {
-    "frontmatter": {
-      "TQ_explain": null,
-      "TQ_extra_instructions": null,
-      "TQ_short_mode": null,
-      "TQ_show_backlink": null,
-      "TQ_show_cancelled_date": null,
-      "TQ_show_created_date": null,
-      "TQ_show_depends_on": null,
-      "TQ_show_done_date": null,
-      "TQ_show_due_date": null,
-      "TQ_show_edit_button": null,
-      "TQ_show_id": null,
-      "TQ_show_on_completion": null,
-      "TQ_show_postpone_button": null,
-      "TQ_show_priority": null,
-      "TQ_show_recurrence_rule": null,
-      "TQ_show_scheduled_date": null,
-      "TQ_show_start_date": null,
-      "TQ_show_tags": null,
-      "TQ_show_task_count": null,
-      "TQ_show_toolbar": null,
-      "TQ_show_tree": null,
-      "TQ_show_urgency": null
+    "cachedMetadata": {
+        "frontmatter": {
+            "TQ_explain": null,
+            "TQ_extra_instructions": null,
+            "TQ_short_mode": null,
+            "TQ_show_backlink": null,
+            "TQ_show_cancelled_date": null,
+            "TQ_show_created_date": null,
+            "TQ_show_depends_on": null,
+            "TQ_show_done_date": null,
+            "TQ_show_due_date": null,
+            "TQ_show_edit_button": null,
+            "TQ_show_id": null,
+            "TQ_show_on_completion": null,
+            "TQ_show_postpone_button": null,
+            "TQ_show_priority": null,
+            "TQ_show_recurrence_rule": null,
+            "TQ_show_scheduled_date": null,
+            "TQ_show_start_date": null,
+            "TQ_show_tags": null,
+            "TQ_show_task_count": null,
+            "TQ_show_toolbar": null,
+            "TQ_show_tree": null,
+            "TQ_show_urgency": null
+        },
+        "frontmatterLinks": [],
+        "frontmatterPosition": {
+            "end": {
+                "col": 3,
+                "line": 23,
+                "offset": 428
+            },
+            "start": {
+                "col": 0,
+                "line": 0,
+                "offset": 0
+            }
+        },
+        "headings": [
+            {
+                "heading": "query_file_defaults_all_options_null",
+                "level": 1,
+                "position": {
+                    "end": {
+                        "col": 38,
+                        "line": 25,
+                        "offset": 468
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 25,
+                        "offset": 430
+                    }
+                }
+            }
+        ],
+        "listItems": [
+            {
+                "parent": -27,
+                "position": {
+                    "end": {
+                        "col": 58,
+                        "line": 27,
+                        "offset": 528
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 27,
+                        "offset": 470
+                    }
+                },
+                "task": " "
+            }
+        ],
+        "sections": [
+            {
+                "position": {
+                    "end": {
+                        "col": 3,
+                        "line": 23,
+                        "offset": 428
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                },
+                "type": "yaml"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 38,
+                        "line": 25,
+                        "offset": 468
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 25,
+                        "offset": 430
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 58,
+                        "line": 27,
+                        "offset": 528
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 27,
+                        "offset": 470
+                    }
+                },
+                "type": "list"
+            }
+        ],
+        "tags": [
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 27,
+                        "offset": 481
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 27,
+                        "offset": 476
+                    }
+                },
+                "tag": "#task"
+            }
+        ]
     },
-    "frontmatterLinks": [],
-    "frontmatterPosition": {
-      "end": {
-        "col": 3,
-        "line": 23,
-        "offset": 428
-      },
-      "start": {
-        "col": 0,
-        "line": 0,
-        "offset": 0
-      }
-    },
-    "headings": [
-      {
-        "heading": "query_file_defaults_all_options_null",
-        "level": 1,
-        "position": {
-          "end": {
-            "col": 38,
-            "line": 25,
-            "offset": 468
-          },
-          "start": {
-            "col": 0,
-            "line": 25,
-            "offset": 430
-          }
-        }
-      }
-    ],
-    "listItems": [
-      {
-        "parent": -27,
-        "position": {
-          "end": {
-            "col": 58,
-            "line": 27,
-            "offset": 528
-          },
-          "start": {
-            "col": 0,
-            "line": 27,
-            "offset": 470
-          }
-        },
-        "task": " "
-      }
-    ],
-    "sections": [
-      {
-        "position": {
-          "end": {
-            "col": 3,
-            "line": 23,
-            "offset": 428
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        },
-        "type": "yaml"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 38,
-            "line": 25,
-            "offset": 468
-          },
-          "start": {
-            "col": 0,
-            "line": 25,
-            "offset": 430
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 58,
-            "line": 27,
-            "offset": 528
-          },
-          "start": {
-            "col": 0,
-            "line": 27,
-            "offset": 470
-          }
-        },
-        "type": "list"
-      }
-    ],
-    "tags": [
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 27,
-            "offset": 481
-          },
-          "start": {
-            "col": 6,
-            "line": 27,
-            "offset": 476
-          }
-        },
-        "tag": "#task"
-      }
-    ]
-  },
-  "fileContents": "---\nTQ_explain:\nTQ_extra_instructions:\nTQ_short_mode:\nTQ_show_backlink:\nTQ_show_cancelled_date:\nTQ_show_created_date:\nTQ_show_depends_on:\nTQ_show_done_date:\nTQ_show_due_date:\nTQ_show_edit_button:\nTQ_show_id:\nTQ_show_on_completion:\nTQ_show_postpone_button:\nTQ_show_priority:\nTQ_show_recurrence_rule:\nTQ_show_scheduled_date:\nTQ_show_start_date:\nTQ_show_tags:\nTQ_show_task_count:\nTQ_show_toolbar:\nTQ_show_tree:\nTQ_show_urgency:\n---\n\n# query_file_defaults_all_options_null\n\n- [ ] #task Task in 'query_file_defaults_all_options_null'\n",
-  "filePath": "Test Data/query_file_defaults_all_options_null.md",
-  "getAllTags": [
-    "#task"
-  ],
-  "parseFrontMatterTags": null,
-  "resolveLinkToPath": {}
+    "fileContents": "---\nTQ_explain:\nTQ_extra_instructions:\nTQ_short_mode:\nTQ_show_backlink:\nTQ_show_cancelled_date:\nTQ_show_created_date:\nTQ_show_depends_on:\nTQ_show_done_date:\nTQ_show_due_date:\nTQ_show_edit_button:\nTQ_show_id:\nTQ_show_on_completion:\nTQ_show_postpone_button:\nTQ_show_priority:\nTQ_show_recurrence_rule:\nTQ_show_scheduled_date:\nTQ_show_start_date:\nTQ_show_tags:\nTQ_show_task_count:\nTQ_show_toolbar:\nTQ_show_tree:\nTQ_show_urgency:\n---\n\n# query_file_defaults_all_options_null\n\n- [ ] #task Task in 'query_file_defaults_all_options_null'\n",
+    "filePath": "Test Data/query_file_defaults_all_options_null.md",
+    "getAllTags": ["#task"],
+    "parseFrontMatterTags": null,
+    "resolveLinkToPath": {}
 }

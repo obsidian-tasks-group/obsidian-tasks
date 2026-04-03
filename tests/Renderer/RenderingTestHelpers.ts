@@ -57,16 +57,16 @@ export async function renderMarkdown(source: string, tasks: Task[]) {
     };
 }
 
-export function tasksMarkdownAndPrettifiedHtml(container: HTMLDivElement, allTasks: Task[]) {
+export async function tasksMarkdownAndPrettifiedHtml(container: HTMLDivElement, allTasks: Task[]) {
     const tasksAsMarkdown = `<!--
 ${toMarkdown(allTasks)}
 -->\n\n`;
 
-    const prettyHTML = prettifyHTML(container.outerHTML);
+    const prettyHTML = await prettifyHTML(container.outerHTML);
     return { tasksAsMarkdown, prettyHTML };
 }
 
-export function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): void {
-    const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, allTasks);
+export async function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): Promise<void> {
+    const { tasksAsMarkdown, prettyHTML } = await tasksMarkdownAndPrettifiedHtml(container, allTasks);
     verifyWithFileExtension(tasksAsMarkdown + prettyHTML, 'html');
 }

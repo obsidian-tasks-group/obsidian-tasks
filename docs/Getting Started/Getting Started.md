@@ -101,18 +101,18 @@ ignored (but is unaffected in the stored `.md` file).
 This works:
 
 ```markdown
--   [ ] This is a task
-    -   This is a sub-item
-    -   Another sub-item
-    -   [ ] And a sub task
-        -   Even more details
+- [ ] This is a task
+    - This is a sub-item
+    - Another sub-item
+    - [ ] And a sub task
+        - Even more details
 ```
 
 The following _does not work:_
 
 ```markdown
--   [ ] This task starts on this line
-        and then its description continues on the next line
+- [ ] This task starts on this line
+      and then its description continues on the next line
 ```
 
 We are tracking this in [issue #2061](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2061).
@@ -137,9 +137,9 @@ For example:
 or:
 
 ```markdown
-1) [ ] Do first step
-2) [ ] Do next step
-3) [ ] Do following step
+1. [ ] Do first step
+2. [ ] Do next step
+3. [ ] Do following step
 ```
 
 Editing and toggling tasks in numbered lists works fine: the original number is preserved.
@@ -157,17 +157,18 @@ Editing and toggling tasks in numbered lists works fine: the original number is 
 > See [[Missing tasks in callouts with some Obsidian 1.6.x versions]] for how to ==make Obsidian 1.6.5 fix its metadata cache==, in case it was broken by earlier 1.6.x versions.
 
 <!-- force a blank line --><!-- endInclude -->
+
 Tasks can read tasks that are inside [blockquotes](https://www.markdownguide.org/basic-syntax/#blockquotes-1) or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
 
 > [!released]
-Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
+> Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
 
 > [!warning]
 > However, under the following very specific circumstance, Tasks cannot add or remove completion dates or make the next copy of a recurring task:
- >
- > - Obsidian is in **Live Preview** editor mode (pencil icon in lower right corner),
- > - AND the task's markdown is in a **callout**,
- > - AND the user **clicked on the task's checkbox** to complete or re-open the task.
+>
+> - Obsidian is in **Live Preview** editor mode (pencil icon in lower right corner),
+> - AND the task's markdown is in a **callout**,
+> - AND the user **clicked on the task's checkbox** to complete or re-open the task.
 
 If you toggle a task's status in this situation, you will see a warning. Use the command `Tasks: Toggle Done`, or switch to Reading View (book icon in lower right corner) to click the checkbox.
 
@@ -208,8 +209,8 @@ Obsidian supports two styles of **comments**:
 > Tasks can only render **inline footnotes**. Regular footnotes are not supported.
 
 ```markdown
--   [ ] This is a task^[with a working inline footnote]
--   [ ] This footnote _will not work_[^notworking]
+- [ ] This is a task^[with a working inline footnote]
+- [ ] This footnote _will not work_[^notworking]
 ```
 
 See also [[About Queries#Footnotes are not displayed in query results]].
@@ -225,9 +226,9 @@ See also [[About Queries#Footnotes are not displayed in query results]].
 > Tasks won't render **spaces around list items** if you have a list with empty lines (typically known as ['loose' lists](https://spec.commonmark.org/0.30/#loose)).
 
 ```markdown
--   [ ] First task before the empty line
+- [ ] First task before the empty line
 
--   [ ] Another task. The empty line above will _not_ result in the tasks being more spaced out.
+- [ ] Another task. The empty line above will _not_ result in the tasks being more spaced out.
 ```
 
 ### Order of metadata/emojis
@@ -238,10 +239,10 @@ See also [[About Queries#Footnotes are not displayed in query results]].
 This means that you can only put **block links** (`^link-name`) and **tags** after metadata such as dates, priorities, recurrence rules. Anything else will break the parsing of dates, priorities and recurrence rules.
 
 ```markdown
--   [ ] Task with priority placed before tag _priority will be recognized_ 🔼 #tag
--   [ ] Task with date placed before tag _date will be recognized_ 📅 2021-04-09 #tag
--   [ ] Task with date placed before other text _date will be not recognized_ 📅 2021-04-09 other text
--   [ ] Task with block link _works_ 📅 2021-04-09 ^e5bebf
+- [ ] Task with priority placed before tag _priority will be recognized_ 🔼 #tag
+- [ ] Task with date placed before tag _date will be recognized_ 📅 2021-04-09 #tag
+- [ ] Task with date placed before other text _date will be not recognized_ 📅 2021-04-09 other text
+- [ ] Task with block link _works_ 📅 2021-04-09 ^e5bebf
 ```
 
 We are tracking this in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).

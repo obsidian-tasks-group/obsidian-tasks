@@ -17,7 +17,11 @@ export class CustomStatusModal extends Modal {
     saved: boolean = false;
     error: boolean = false;
     private isCoreStatus: boolean;
-    constructor(public plugin: Plugin, statusType: StatusConfiguration, isCoreStatus: boolean) {
+    constructor(
+        public plugin: Plugin,
+        statusType: StatusConfiguration,
+        isCoreStatus: boolean,
+    ) {
         super(plugin.app);
         this.statusSymbol = statusType.symbol;
         this.statusName = statusType.name;

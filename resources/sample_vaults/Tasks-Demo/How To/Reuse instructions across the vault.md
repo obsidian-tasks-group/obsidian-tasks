@@ -1,10 +1,11 @@
 ---
 TQ_explain: false
 TQ_extra_instructions: |-
-  (filename includes Tasks Format) OR (tag includes #context)
-  ignore global query
-  limit 20
+    (filename includes Tasks Format) OR (tag includes #context)
+    ignore global query
+    limit 20
 ---
+
 # Reuse instructions across the vault
 
 These searches are for experimenting with, and understanding, the new "Includes" facility, which was released in Tasks 7.20.0.
@@ -67,6 +68,7 @@ explain: `INPUT[toggle:TQ_explain]`
 ````
 
 ```tasks
+
 ```
 
 ## Hide all the fields

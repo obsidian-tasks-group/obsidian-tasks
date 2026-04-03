@@ -1,15 +1,13 @@
 {
-  "pluginList": [
-    "pjeby/hot-reload"
-  ],
-  "pluginSubListFrozenVersion": [],
-  "themesList": [],
-  "updateAtStartup": false,
-  "updateThemesAtStartup": false,
-  "enableAfterInstall": true,
-  "loggingEnabled": false,
-  "loggingPath": "BRAT-log",
-  "loggingVerboseEnabled": false,
-  "debuggingMode": false,
-  "notificationsEnabled": true
+    "pluginList": ["pjeby/hot-reload"],
+    "pluginSubListFrozenVersion": [],
+    "themesList": [],
+    "updateAtStartup": false,
+    "updateThemesAtStartup": false,
+    "enableAfterInstall": true,
+    "loggingEnabled": false,
+    "loggingPath": "BRAT-log",
+    "loggingVerboseEnabled": false,
+    "debuggingMode": false,
+    "notificationsEnabled": true
 }

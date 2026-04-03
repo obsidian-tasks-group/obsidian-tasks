@@ -13,7 +13,7 @@ This is a somewhat specialised facility that enables you to:
 
 1. **Modify [[layout]] options in a Tasks Query without editing the `tasks` code block source.**
     - This could save you switching repeatedly between Reading and Editing modes.
-    - Perhaps you usually like to see your Tasks search results with certain [[Layout]] options, but sometimes it is nice to see more detail, perhaps turning  `show tree` on and off, depending on your mood.
+    - Perhaps you usually like to see your Tasks search results with certain [[Layout]] options, but sometimes it is nice to see more detail, perhaps turning `show tree` on and off, depending on your mood.
 2. **Automatically insert one or more instructions in to all the `tasks` code blocks in a file.**
     - You have multiple Tasks queries in a Markdown file, and they have a lot of text in common.
     - You would like to avoid repeating those common instructions in each one, because keeping them consistent is tedious and error-prone.
@@ -48,8 +48,8 @@ Any number of Tasks instructions can be inserted at the start of all queries in 
 ```yaml
 ---
 TQ_extra_instructions: |-
-  not done
-  group by filename
+    not done
+    group by filename
 ---
 ```
 
@@ -70,19 +70,23 @@ When editing `TQ_extra_instructions` in Obsidian's File properties editor, you c
 Suppose the file containing our query begins with the following:
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_yaml.approved.yaml -->
+
 ```yaml
 ---
 TQ_short_mode: true
 ---
 ```
+
 <!-- endSnippet -->
 
 Any Tasks code blocks in that file will then have this content inserted at the start:
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_demo-short-mode_instructions.approved.txt -->
+
 ```txt
 short mode
 ```
+
 <!-- endSnippet -->
 
 All possible behaviours of `TQ_short_mode`:
@@ -91,7 +95,7 @@ All possible behaviours of `TQ_short_mode`:
 | --------------------- | --------------------- |
 | `true`                | `short mode`          |
 | `false`               | `full mode`           |
-| *no value*            | *no instruction*      |
+| _no value_            | _no instruction_      |
 
 ### Show or hide tree
 
@@ -115,7 +119,7 @@ All possible behaviours of `TQ_show_tree`:
 | -------------------- | --------------------- |
 | `true`               | `show tree`           |
 | `false`              | `hide tree`           |
-| *no value*           | *no instruction*      |
+| _no value_           | _no instruction_      |
 
 ## Applying instructions to every Tasks search in a file
 
@@ -148,12 +152,14 @@ By default, the property names are very narrow in Obsidian.
 You can make them wider with the following CSS Snippet.
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/widen-property-labels.css -->
+
 ```css
 /* Make property labels wider, to fit the names of Tasks-specific properties */
 .metadata-content {
     --metadata-label-width: 14em;
 }
 ```
+
 <!-- endSnippet -->
 
 The Obsidian user guide shows how to [use CSS snippets in Obsidian](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets).
@@ -172,6 +178,7 @@ See [[Make a query user interface]] for how to use Query File Defaults with the 
 These are all the properties currently supported by Tasks, as Query File Defaults.
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_supported-properties-empty.approved.yaml -->
+
 ```yaml
 ---
 TQ_explain:
@@ -198,6 +205,7 @@ TQ_show_tree:
 TQ_show_urgency:
 ---
 ```
+
 <!-- endSnippet -->
 
 ### Command: Add all Query File Defaults properties
@@ -216,34 +224,36 @@ The `type` values are explained in the [Property types](https://help.obsidian.md
 > The Tasks plugin automatically adds these properties to the Obsidian vault.
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_fake-types.json.approved.json -->
+
 ```json
 {
-  "types": {
-    "TQ_explain": "checkbox",
-    "TQ_extra_instructions": "text",
-    "TQ_short_mode": "checkbox",
-    "TQ_show_backlink": "checkbox",
-    "TQ_show_cancelled_date": "checkbox",
-    "TQ_show_created_date": "checkbox",
-    "TQ_show_depends_on": "checkbox",
-    "TQ_show_done_date": "checkbox",
-    "TQ_show_due_date": "checkbox",
-    "TQ_show_edit_button": "checkbox",
-    "TQ_show_id": "checkbox",
-    "TQ_show_on_completion": "checkbox",
-    "TQ_show_postpone_button": "checkbox",
-    "TQ_show_priority": "checkbox",
-    "TQ_show_recurrence_rule": "checkbox",
-    "TQ_show_scheduled_date": "checkbox",
-    "TQ_show_start_date": "checkbox",
-    "TQ_show_tags": "checkbox",
-    "TQ_show_task_count": "checkbox",
-    "TQ_show_toolbar": "checkbox",
-    "TQ_show_tree": "checkbox",
-    "TQ_show_urgency": "checkbox"
-  }
+    "types": {
+        "TQ_explain": "checkbox",
+        "TQ_extra_instructions": "text",
+        "TQ_short_mode": "checkbox",
+        "TQ_show_backlink": "checkbox",
+        "TQ_show_cancelled_date": "checkbox",
+        "TQ_show_created_date": "checkbox",
+        "TQ_show_depends_on": "checkbox",
+        "TQ_show_done_date": "checkbox",
+        "TQ_show_due_date": "checkbox",
+        "TQ_show_edit_button": "checkbox",
+        "TQ_show_id": "checkbox",
+        "TQ_show_on_completion": "checkbox",
+        "TQ_show_postpone_button": "checkbox",
+        "TQ_show_priority": "checkbox",
+        "TQ_show_recurrence_rule": "checkbox",
+        "TQ_show_scheduled_date": "checkbox",
+        "TQ_show_start_date": "checkbox",
+        "TQ_show_tags": "checkbox",
+        "TQ_show_task_count": "checkbox",
+        "TQ_show_toolbar": "checkbox",
+        "TQ_show_tree": "checkbox",
+        "TQ_show_urgency": "checkbox"
+    }
 }
 ```
+
 <!-- endSnippet -->
 
 ## Limitations of Query File Defaults

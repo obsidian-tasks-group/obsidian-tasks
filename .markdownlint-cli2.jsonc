@@ -6,6 +6,6 @@
         "!docs-snippets",
         "!node_modules",
         "!tests",
-        "!resources/sample_vaults/Tasks-Demo/"
-    ]
+        "!resources/sample_vaults/Tasks-Demo/",
+    ],
 }

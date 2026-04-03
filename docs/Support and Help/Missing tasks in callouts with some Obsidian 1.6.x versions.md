@@ -9,18 +9,18 @@ publish: true
 > [!Info] This page is **very important** to you if:
 >
 > - you use any Obsidian plugins to manage tasks (such as Tasks or dataview)
->   - *...and...*
+>   - _...and..._
 > - you use [[#What is a callout with a title?|callouts with titles]] in your vault,
->   - *...and...*
+>   - _...and..._
 > - you have any task lines inside those callouts,
->   - *...and...*
+>   - _...and..._
 > - you have **ever** used the current vault on the current computer/device in **any** of the following Obsidian versions:
 >   - Obsidian 1.6.0, 1.6.1, 1.6.2, or 1.6.3
 
 > [!bug] Missing tasks
 >
 > - If the above are all true:
->   - **Obsidian 1.6.3** - and likely also 1.6.0, 1.6.1 and 1.6.2 -  had a bug that ==Tasks, dataview and likely other plugins *will* fail to find some of your tasks==.
+>   - **Obsidian 1.6.3** - and likely also 1.6.0, 1.6.1 and 1.6.2 - had a bug that ==Tasks, dataview and likely other plugins _will_ fail to find some of your tasks==.
 >   - **Obsidian 1.6.4** fixed the bug when files are edited, but ==still requires manual edits to existing files, to apply the fix==.
 >   - **Obsidian 1.6.5** provides an efficient way to fix a vault's cache for all files: this needs to be done for:
 >     - ==every affected vault==,
@@ -34,10 +34,10 @@ publish: true
 
 Here is an example callout with a title:
 
-````text
+```text
 > [!tip] Callouts can have custom titles
 > Like this one.
-````
+```
 
 Which displays like this:
 
@@ -51,9 +51,9 @@ The underlying cause, confirmed in Obsidian 1.6.3, is that Obsidian reported inc
 > [!quote] Metadata cache
 > In order to provide a fast experience while using the app, Obsidian maintains a local record of metadata about the files in your vault called the **metadata cache**. This metadata powers many things across the app, from the Graph view to the Outline view.
 >
-> Obsidian keeps this cache in sync with the files in your vault, but it is possible for the data to get out of sync with the underlying files. In the event that this happens to your vault, you can rebuild your metadata cache from the app settings in the *Files and links* section.
+> Obsidian keeps this cache in sync with the files in your vault, but it is possible for the data to get out of sync with the underlying files. In the event that this happens to your vault, you can rebuild your metadata cache from the app settings in the _Files and links_ section.
 >
-> *Source: [Obsidian help](https://help.obsidian.md/Files+and+folders/How+Obsidian+stores+data#Metadata+cache)*
+> _Source: [Obsidian help](https://help.obsidian.md/Files+and+folders/How+Obsidian+stores+data#Metadata+cache)_
 
 ## The solution: Regenerate the Obsidian metadata cache
 
@@ -84,7 +84,7 @@ The underlying cause is that Obsidian 1.6.3 reports incorrect (too large) line n
 
 Each nested callout seems to increase the discrepancy in line numbers. So in the following, only `Correction4` would be found:
 
-````text
+```text
  > [!Calendar]+ MONTH
  >> [!Check]+ GROUP
  >>> [!Attention]+ Correction TITLE
@@ -93,7 +93,7 @@ Each nested callout seems to increase the discrepancy in line numbers. So in the
  >>> - [ ] Correction2
  >>> - [ ] Correction3
  >>> - [ ] Correction4
-````
+```
 
 We wrote up the underlying Obsidian issue in: [Tasks inside callouts have incorrect positions in the cache](https://forum.obsidian.md/t/tasks-inside-callouts-have-incorrect-positions-in-the-cache/84057/1).
 

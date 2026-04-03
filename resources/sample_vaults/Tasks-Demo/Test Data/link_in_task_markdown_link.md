@@ -43,6 +43,7 @@
 ## Link with Spaces
 
 - [ ] Link with spaces everywhere[spaces everywhere](Manual%20Testing/Smoke%20Testing%20the%20Tasks%20Plugin#How%20the%20tests%20work)
+
 ## Empty Links That Aren't Processed
 
 - [ ] #task Link with empty link []()

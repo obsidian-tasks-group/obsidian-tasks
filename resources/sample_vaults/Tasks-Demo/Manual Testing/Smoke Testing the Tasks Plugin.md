@@ -1,17 +1,17 @@
 # Smoke Testing the Tasks Plugin
 
-*[[#Remaining tests|Jump to the tests...]]*
+_[[#Remaining tests|Jump to the tests...]]_
 
 ## Introduction
 
 - **Intended audience of this note**
-  - Developers working on the Tasks plugin, reviewing a Pull Request (especially ones that change dependencies), or making a release, and who wish to do some basic tests of the plugin to make sure there are no glaring show-stopper errors.
+    - Developers working on the Tasks plugin, reviewing a Pull Request (especially ones that change dependencies), or making a release, and who wish to do some basic tests of the plugin to make sure there are no glaring show-stopper errors.
 - **What is a Smoke Test?**
-  - As [Wikipedia](https://en.wikipedia.org/wiki/Smoke_testing_(software)) says: smoke testing ... is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release.
+    - As [Wikipedia](<https://en.wikipedia.org/wiki/Smoke_testing_(software)>) says: smoke testing ... is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release.
 - **Why not test everything?**
-  - The Tasks plugin is run by volunteers in our finite spare time. We take care during development to write automated tests for the algorithms in our code, but there are some kinds of changes, such as in tools the project depends on, that we do not have automated tests for.
+    - The Tasks plugin is run by volunteers in our finite spare time. We take care during development to write automated tests for the algorithms in our code, but there are some kinds of changes, such as in tools the project depends on, that we do not have automated tests for.
 - **Why not test on every platform?**
-  - It's not feasible nor a good use of limited volunteer time on a free tool.
+    - It's not feasible nor a good use of limited volunteer time on a free tool.
 
 ## How the tests work
 
@@ -23,13 +23,13 @@ Or you can install a download of the build's Tasks plugin inside your clone of t
 
 - Make sure you have the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) cloned and up-to-date on your machine.
 - Open the Tasks-Demo vault on a machine of your choice:
-  - Open Obsidian
-  - Click 'Open another vault' button
-  - Click 'Open folder as vault' button
-  - Navigate to `obsidian-tasks/resources/sample_vaults/Tasks-Demo`
-  - Click 'Open'
+    - Open Obsidian
+    - Click 'Open another vault' button
+    - Click 'Open folder as vault' button
+    - Navigate to `obsidian-tasks/resources/sample_vaults/Tasks-Demo`
+    - Click 'Open'
 - Install the candidate build for the pull request or release inside the `Tasks-Demo` vault
-  - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.
+    - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.
 
 ### Follow the tests
 
@@ -72,10 +72,10 @@ Work through all the tasks below, until zero tasks remain in this query:
 
 <!-- markdownlint-disable ul-style -->
 
-* [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05
-* [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05
-* [x] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2022-07-05
-* [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked
+- [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05
+- [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05
+- [x] #task Mark this task not complete by clicking on it in **Live Preview** - ==ensure the checkbox is redrawn correctly== ✅ 2022-07-05
+- [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked
 
 <!-- markdownlint-enable ul-style -->
 
@@ -119,9 +119,9 @@ Steps to do:
 
 <!-- markdownlint-disable ul-style -->
 
-+ [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
-+ [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
-+ [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
+- [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
+- [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
+- [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
 
 <!-- markdownlint-enable ul-style -->
 
@@ -150,15 +150,15 @@ heading includes Rendering of Task Blocks
 
 - View this file in **Reading mode**...
 - On the task line above:
-  - [ ] #task **left**-click on a date value (above), and use the date picker to select and save a different date. Check that the date is updated.
-  - [ ] #task **left**-click on a date value (above), and click outside the date picker, to confirm that the picker closes.
-  - [ ] #task **right**-click on a date value (above), and use the context menu to select and save a different date. Check that the date is updated.
-  - [ ] #task **right**-click on a date value (above), and click outside the context menu, to confirm that the menu closes.
+    - [ ] #task **left**-click on a date value (above), and use the date picker to select and save a different date. Check that the date is updated.
+    - [ ] #task **left**-click on a date value (above), and click outside the date picker, to confirm that the picker closes.
+    - [ ] #task **right**-click on a date value (above), and use the context menu to select and save a different date. Check that the date is updated.
+    - [ ] #task **right**-click on a date value (above), and click outside the context menu, to confirm that the menu closes.
 - In the tasks search block below:
-  - [ ] #task **left**-click on a date value (below), and use the date picker to select and save a different date. Check that the date is updated.
-  - [ ] #task **left**-click on a date value (below), and click outside the date picker, to confirm that the picker closes.
-  - [ ] #task **right**-click on a date value (below), and use the context menu to select and save a different date. Check that the date is updated.
-  - [ ] #task **right**-click on a date value (below), and click outside the context menu, to confirm that the menu closes.
+    - [ ] #task **left**-click on a date value (below), and use the date picker to select and save a different date. Check that the date is updated.
+    - [ ] #task **left**-click on a date value (below), and click outside the date picker, to confirm that the picker closes.
+    - [ ] #task **right**-click on a date value (below), and use the context menu to select and save a different date. Check that the date is updated.
+    - [ ] #task **right**-click on a date value (below), and click outside the context menu, to confirm that the menu closes.
 - [ ] #task **check**: Checked all above steps for **editing dates** worked
 
 ```tasks
@@ -192,9 +192,9 @@ hide postpone button
 
 - Non-task checkbox are tasks without the global filter, treated as `ListItems` by the obsidian-tasks plugin
 - [ ] #task Check or uncheck non-task list items with checkbox in the query below this task
-  - [ ] I will have an `x` status
-  - [x] I will have a `space` status
-  - [/] Me too with a `space` status
+    - [ ] I will have an `x` status
+    - [x] I will have a `space` status
+    - [/] Me too with a `space` status
 
 ```tasks
 filename includes {{query.file.filename}}
@@ -210,15 +210,15 @@ show tree
 ## Check the plugin starts OK with no `data.json` settings file
 
 - Preparation
-  - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**
-  - Quit Obsidian
-  - Open the `obsidian-tasks-plugin` folder
-  - Delete `data.json`
+    - Go to Settings -> Community plugins -> Installed plugins -> click on the folder icon to **Open plugins folder**
+    - Quit Obsidian
+    - Open the `obsidian-tasks-plugin` folder
+    - Delete `data.json`
 - Test
-  - Restart obsidian
-  - Go to Settings
-  - Check that `Tasks` is shown in the list of **Community plugins**
-  - View -> Toggle Developer Tools
-  - Open the console
-  - Confirm that there are no red messages mentioning Tasks
+    - Restart obsidian
+    - Go to Settings
+    - Check that `Tasks` is shown in the list of **Community plugins**
+    - View -> Toggle Developer Tools
+    - Open the console
+    - Confirm that there are no red messages mentioning Tasks
 - [ ] #task **check**: Checked that Tasks works correctly when **there is no `data.json` present**

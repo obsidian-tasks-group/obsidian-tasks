@@ -5,7 +5,7 @@
 - **Given** a bullet list which embeds a task via a block reference, in the same file or another file
 - **When** the embedded task is toggled
 - **Then** there is an error message saying that the task with the block reference could not be found, to be toggled
-  - See [Issue #688](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/688)
+    - See [Issue #688](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/688)
 
 ## Category 1
 

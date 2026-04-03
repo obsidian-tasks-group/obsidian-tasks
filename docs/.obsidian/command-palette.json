@@ -1,5 +1,3 @@
 {
-  "pinned": [
-    "templater-obsidian:insert-templater"
-  ]
+    "pinned": ["templater-obsidian:insert-templater"]
 }

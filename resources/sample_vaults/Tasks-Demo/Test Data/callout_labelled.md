@@ -1,6 +1,7 @@
 # callout_labelled
 
 > [!todo] callout_labelled
+>
 > - [ ] #task Task in 'callout_labelled'
 >     - [ ] #task Task indented in 'callout_labelled'
 

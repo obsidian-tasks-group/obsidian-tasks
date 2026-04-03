@@ -1,10 +1,10 @@
 ---
 TQ_explain: false
 TQ_extra_instructions: |-
-  # press shift-return to add new lines
-  # not done
-  # sort by done date
-  # ignore global query
+    # press shift-return to add new lines
+    # not done
+    # sort by done date
+    # ignore global query
 TQ_short_mode: false
 TQ_show_backlink: false
 TQ_show_cancelled_date: true
@@ -26,20 +26,19 @@ TQ_show_toolbar: true
 TQ_show_tree: true
 TQ_show_urgency: false
 TQ_sort_by:
-  - description
+    - description
 TQ_group_by:
-  - status.type
-  - happens reverse
-  - function task.tags.sort().join(' ')
+    - status.type
+    - happens reverse
+    - function task.tags.sort().join(' ')
 ---
 
 # Placeholder examples to capture in tests and docs
 
 - [ ] #task Parent task #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c
-  - [ ] #task Child task
+    - [ ] #task Child task
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-include.approved.md -->
-
 
 toolbar: `INPUT[toggle:TQ_show_toolbar]`
 short mode: `INPUT[toggle:TQ_short_mode]`
@@ -56,7 +55,6 @@ edit button: `INPUT[toggle:TQ_show_edit_button]` postpone button: `INPUT[toggle:
 task count: `INPUT[toggle:TQ_show_task_count]`
 extra instructions: `INPUT[textArea:TQ_extra_instructions]`
 explain: `INPUT[toggle:TQ_explain]`
-
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 

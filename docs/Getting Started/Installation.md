@@ -1,8 +1,8 @@
 ---
 publish: true
 aliases:
-  - Installation/Installation
-  - Installation
+    - Installation/Installation
+    - Installation
 ---
 
 # Installation

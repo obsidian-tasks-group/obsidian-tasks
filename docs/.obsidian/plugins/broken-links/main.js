@@ -23,11 +23,31 @@ PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 
 function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    function adopt(value) {
+        return value instanceof P
+            ? value
+            : new P(function (resolve) {
+                  resolve(value);
+              });
+    }
     return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator['throw'](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 }
@@ -36,11 +56,11 @@ function __awaiter(thisArg, _arguments, P, generator) {
 function noop() {}
 
 function run(fn) {
-	return fn();
+    return fn();
 }
 
 function blank_object() {
-	return Object.create(null);
+    return Object.create(null);
 }
 
 /**
@@ -48,7 +68,7 @@ function blank_object() {
  * @returns {void}
  */
 function run_all(fns) {
-	fns.forEach(run);
+    fns.forEach(run);
 }
 
 /**
@@ -56,17 +76,17 @@ function run_all(fns) {
  * @returns {thing is Function}
  */
 function is_function(thing) {
-	return typeof thing === 'function';
+    return typeof thing === 'function';
 }
 
 /** @returns {boolean} */
 function safe_not_equal(a, b) {
-	return a != a ? b == b : a !== b || (a && typeof a === 'object') || typeof a === 'function';
+    return a != a ? b == b : a !== b || (a && typeof a === 'object') || typeof a === 'function';
 }
 
 /** @returns {boolean} */
 function is_empty(obj) {
-	return Object.keys(obj).length === 0;
+    return Object.keys(obj).length === 0;
 }
 
 /**
@@ -75,7 +95,7 @@ function is_empty(obj) {
  * @returns {void}
  */
 function append(target, node) {
-	target.appendChild(node);
+    target.appendChild(node);
 }
 
 /**
@@ -85,7 +105,7 @@ function append(target, node) {
  * @returns {void}
  */
 function insert$1(target, node, anchor) {
-	target.insertBefore(node, anchor || null);
+    target.insertBefore(node, anchor || null);
 }
 
 /**
@@ -93,17 +113,17 @@ function insert$1(target, node, anchor) {
  * @returns {void}
  */
 function detach(node) {
-	if (node.parentNode) {
-		node.parentNode.removeChild(node);
-	}
+    if (node.parentNode) {
+        node.parentNode.removeChild(node);
+    }
 }
 
 /**
  * @returns {void} */
 function destroy_each(iterations, detaching) {
-	for (let i = 0; i < iterations.length; i += 1) {
-		if (iterations[i]) iterations[i].d(detaching);
-	}
+    for (let i = 0; i < iterations.length; i += 1) {
+        if (iterations[i]) iterations[i].d(detaching);
+    }
 }
 
 /**
@@ -112,7 +132,7 @@ function destroy_each(iterations, detaching) {
  * @returns {HTMLElementTagNameMap[K]}
  */
 function element(name) {
-	return document.createElement(name);
+    return document.createElement(name);
 }
 
 /**
@@ -120,19 +140,19 @@ function element(name) {
  * @returns {Text}
  */
 function text(data) {
-	return document.createTextNode(data);
+    return document.createTextNode(data);
 }
 
 /**
  * @returns {Text} */
 function space() {
-	return text(' ');
+    return text(' ');
 }
 
 /**
  * @returns {Text} */
 function empty() {
-	return text('');
+    return text('');
 }
 
 /**
@@ -143,8 +163,8 @@ function empty() {
  * @returns {() => void}
  */
 function listen(node, event, handler, options) {
-	node.addEventListener(event, handler, options);
-	return () => node.removeEventListener(event, handler, options);
+    node.addEventListener(event, handler, options);
+    return () => node.removeEventListener(event, handler, options);
 }
 
 /**
@@ -154,8 +174,8 @@ function listen(node, event, handler, options) {
  * @returns {void}
  */
 function attr(node, attribute, value) {
-	if (value == null) node.removeAttribute(attribute);
-	else if (node.getAttribute(attribute) !== value) node.setAttribute(attribute, value);
+    if (value == null) node.removeAttribute(attribute);
+    else if (node.getAttribute(attribute) !== value) node.setAttribute(attribute, value);
 }
 
 /**
@@ -163,7 +183,7 @@ function attr(node, attribute, value) {
  * @returns {ChildNode[]}
  */
 function children(element) {
-	return Array.from(element.childNodes);
+    return Array.from(element.childNodes);
 }
 
 /**
@@ -172,22 +192,22 @@ function children(element) {
  * @returns {void}
  */
 function set_data(text, data) {
-	data = '' + data;
-	if (text.data === data) return;
-	text.data = /** @type {string} */ (data);
+    data = '' + data;
+    if (text.data === data) return;
+    text.data = /** @type {string} */ (data);
 }
 
 /**
  * @returns {void} */
 function set_input_value(input, value) {
-	input.value = value == null ? '' : value;
+    input.value = value == null ? '' : value;
 }
 
 /**
  * @returns {void} */
 function toggle_class(element, name, toggle) {
-	// The `!!` is required because an `undefined` flag means flipping the current state.
-	element.classList.toggle(name, !!toggle);
+    // The `!!` is required because an `undefined` flag means flipping the current state.
+    element.classList.toggle(name, !!toggle);
 }
 
 /**
@@ -216,12 +236,12 @@ let current_component;
 
 /** @returns {void} */
 function set_current_component(component) {
-	current_component = component;
+    current_component = component;
 }
 
 function get_current_component() {
-	if (!current_component) throw new Error('Function called outside component initialization');
-	return current_component;
+    if (!current_component) throw new Error('Function called outside component initialization');
+    return current_component;
 }
 
 /**
@@ -234,7 +254,7 @@ function get_current_component() {
  * @returns {void}
  */
 function beforeUpdate(fn) {
-	get_current_component().$$.before_update.push(fn);
+    get_current_component().$$.before_update.push(fn);
 }
 
 /**
@@ -247,7 +267,7 @@ function beforeUpdate(fn) {
  * @returns {void}
  */
 function afterUpdate(fn) {
-	get_current_component().$$.after_update.push(fn);
+    get_current_component().$$.after_update.push(fn);
 }
 
 const dirty_components = [];
@@ -263,15 +283,15 @@ let update_scheduled = false;
 
 /** @returns {void} */
 function schedule_update() {
-	if (!update_scheduled) {
-		update_scheduled = true;
-		resolved_promise.then(flush);
-	}
+    if (!update_scheduled) {
+        update_scheduled = true;
+        resolved_promise.then(flush);
+    }
 }
 
 /** @returns {void} */
 function add_render_callback(fn) {
-	render_callbacks.push(fn);
+    render_callbacks.push(fn);
 }
 
 // flush() calls callbacks in this order:
@@ -298,64 +318,64 @@ let flushidx = 0; // Do *not* move this inside the flush() function
 
 /** @returns {void} */
 function flush() {
-	// Do not reenter flush while dirty components are updated, as this can
-	// result in an infinite loop. Instead, let the inner flush handle it.
-	// Reentrancy is ok afterwards for bindings etc.
-	if (flushidx !== 0) {
-		return;
-	}
-	const saved_component = current_component;
-	do {
-		// first, call beforeUpdate functions
-		// and update components
-		try {
-			while (flushidx < dirty_components.length) {
-				const component = dirty_components[flushidx];
-				flushidx++;
-				set_current_component(component);
-				update(component.$$);
-			}
-		} catch (e) {
-			// reset dirty state to not end up in a deadlocked state and then rethrow
-			dirty_components.length = 0;
-			flushidx = 0;
-			throw e;
-		}
-		set_current_component(null);
-		dirty_components.length = 0;
-		flushidx = 0;
-		while (binding_callbacks.length) binding_callbacks.pop()();
-		// then, once components are updated, call
-		// afterUpdate functions. This may cause
-		// subsequent updates...
-		for (let i = 0; i < render_callbacks.length; i += 1) {
-			const callback = render_callbacks[i];
-			if (!seen_callbacks.has(callback)) {
-				// ...so guard against infinite loops
-				seen_callbacks.add(callback);
-				callback();
-			}
-		}
-		render_callbacks.length = 0;
-	} while (dirty_components.length);
-	while (flush_callbacks.length) {
-		flush_callbacks.pop()();
-	}
-	update_scheduled = false;
-	seen_callbacks.clear();
-	set_current_component(saved_component);
+    // Do not reenter flush while dirty components are updated, as this can
+    // result in an infinite loop. Instead, let the inner flush handle it.
+    // Reentrancy is ok afterwards for bindings etc.
+    if (flushidx !== 0) {
+        return;
+    }
+    const saved_component = current_component;
+    do {
+        // first, call beforeUpdate functions
+        // and update components
+        try {
+            while (flushidx < dirty_components.length) {
+                const component = dirty_components[flushidx];
+                flushidx++;
+                set_current_component(component);
+                update(component.$$);
+            }
+        } catch (e) {
+            // reset dirty state to not end up in a deadlocked state and then rethrow
+            dirty_components.length = 0;
+            flushidx = 0;
+            throw e;
+        }
+        set_current_component(null);
+        dirty_components.length = 0;
+        flushidx = 0;
+        while (binding_callbacks.length) binding_callbacks.pop()();
+        // then, once components are updated, call
+        // afterUpdate functions. This may cause
+        // subsequent updates...
+        for (let i = 0; i < render_callbacks.length; i += 1) {
+            const callback = render_callbacks[i];
+            if (!seen_callbacks.has(callback)) {
+                // ...so guard against infinite loops
+                seen_callbacks.add(callback);
+                callback();
+            }
+        }
+        render_callbacks.length = 0;
+    } while (dirty_components.length);
+    while (flush_callbacks.length) {
+        flush_callbacks.pop()();
+    }
+    update_scheduled = false;
+    seen_callbacks.clear();
+    set_current_component(saved_component);
 }
 
 /** @returns {void} */
 function update($$) {
-	if ($$.fragment !== null) {
-		$$.update();
-		run_all($$.before_update);
-		const dirty = $$.dirty;
-		$$.dirty = [-1];
-		$$.fragment && $$.fragment.p($$.ctx, dirty);
-		$$.after_update.forEach(add_render_callback);
-	}
+    if ($$.fragment !== null) {
+        $$.update();
+        run_all($$.before_update);
+        const dirty = $$.dirty;
+        $$.dirty = [-1];
+        $$.fragment && $$.fragment.p($$.ctx, dirty);
+        $$.after_update.forEach(add_render_callback);
+    }
 }
 
 /**
@@ -364,11 +384,11 @@ function update($$) {
  * @returns {void}
  */
 function flush_render_callbacks(fns) {
-	const filtered = [];
-	const targets = [];
-	render_callbacks.forEach((c) => (fns.indexOf(c) === -1 ? filtered.push(c) : targets.push(c)));
-	targets.forEach((c) => c());
-	render_callbacks = filtered;
+    const filtered = [];
+    const targets = [];
+    render_callbacks.forEach((c) => (fns.indexOf(c) === -1 ? filtered.push(c) : targets.push(c)));
+    targets.forEach((c) => c());
+    render_callbacks = filtered;
 }
 
 const outroing = new Set();
@@ -381,20 +401,20 @@ let outros;
 /**
  * @returns {void} */
 function group_outros() {
-	outros = {
-		r: 0,
-		c: [],
-		p: outros // parent group
-	};
+    outros = {
+        r: 0,
+        c: [],
+        p: outros, // parent group
+    };
 }
 
 /**
  * @returns {void} */
 function check_outros() {
-	if (!outros.r) {
-		run_all(outros.c);
-	}
-	outros = outros.p;
+    if (!outros.r) {
+        run_all(outros.c);
+    }
+    outros = outros.p;
 }
 
 /**
@@ -403,10 +423,10 @@ function check_outros() {
  * @returns {void}
  */
 function transition_in(block, local) {
-	if (block && block.i) {
-		outroing.delete(block);
-		block.i(local);
-	}
+    if (block && block.i) {
+        outroing.delete(block);
+        block.i(local);
+    }
 }
 
 /**
@@ -417,20 +437,20 @@ function transition_in(block, local) {
  * @returns {void}
  */
 function transition_out(block, local, detach, callback) {
-	if (block && block.o) {
-		if (outroing.has(block)) return;
-		outroing.add(block);
-		outros.c.push(() => {
-			outroing.delete(block);
-			if (callback) {
-				if (detach) block.d(1);
-				callback();
-			}
-		});
-		block.o(local);
-	} else if (callback) {
-		callback();
-	}
+    if (block && block.o) {
+        if (outroing.has(block)) return;
+        outroing.add(block);
+        outros.c.push(() => {
+            outroing.delete(block);
+            if (callback) {
+                if (detach) block.d(1);
+                callback();
+            }
+        });
+        block.o(local);
+    } else if (callback) {
+        callback();
+    }
 }
 
 /** @typedef {1} INTRO */
@@ -466,60 +486,58 @@ function transition_out(block, local, detach, callback) {
 // general each functions:
 
 function ensure_array_like(array_like_or_iterator) {
-	return array_like_or_iterator?.length !== undefined
-		? array_like_or_iterator
-		: Array.from(array_like_or_iterator);
+    return array_like_or_iterator?.length !== undefined ? array_like_or_iterator : Array.from(array_like_or_iterator);
 }
 
 /** @returns {void} */
 function create_component(block) {
-	block && block.c();
+    block && block.c();
 }
 
 /** @returns {void} */
 function mount_component(component, target, anchor) {
-	const { fragment, after_update } = component.$$;
-	fragment && fragment.m(target, anchor);
-	// onMount happens before the initial afterUpdate
-	add_render_callback(() => {
-		const new_on_destroy = component.$$.on_mount.map(run).filter(is_function);
-		// if the component was destroyed immediately
-		// it will update the `$$.on_destroy` reference to `null`.
-		// the destructured on_destroy may still reference to the old array
-		if (component.$$.on_destroy) {
-			component.$$.on_destroy.push(...new_on_destroy);
-		} else {
-			// Edge case - component was destroyed immediately,
-			// most likely as a result of a binding initialising
-			run_all(new_on_destroy);
-		}
-		component.$$.on_mount = [];
-	});
-	after_update.forEach(add_render_callback);
+    const { fragment, after_update } = component.$$;
+    fragment && fragment.m(target, anchor);
+    // onMount happens before the initial afterUpdate
+    add_render_callback(() => {
+        const new_on_destroy = component.$$.on_mount.map(run).filter(is_function);
+        // if the component was destroyed immediately
+        // it will update the `$$.on_destroy` reference to `null`.
+        // the destructured on_destroy may still reference to the old array
+        if (component.$$.on_destroy) {
+            component.$$.on_destroy.push(...new_on_destroy);
+        } else {
+            // Edge case - component was destroyed immediately,
+            // most likely as a result of a binding initialising
+            run_all(new_on_destroy);
+        }
+        component.$$.on_mount = [];
+    });
+    after_update.forEach(add_render_callback);
 }
 
 /** @returns {void} */
 function destroy_component(component, detaching) {
-	const $$ = component.$$;
-	if ($$.fragment !== null) {
-		flush_render_callbacks($$.after_update);
-		run_all($$.on_destroy);
-		$$.fragment && $$.fragment.d(detaching);
-		// TODO null out other refs, including component.$$ (but need to
-		// preserve final state?)
-		$$.on_destroy = $$.fragment = null;
-		$$.ctx = [];
-	}
+    const $$ = component.$$;
+    if ($$.fragment !== null) {
+        flush_render_callbacks($$.after_update);
+        run_all($$.on_destroy);
+        $$.fragment && $$.fragment.d(detaching);
+        // TODO null out other refs, including component.$$ (but need to
+        // preserve final state?)
+        $$.on_destroy = $$.fragment = null;
+        $$.ctx = [];
+    }
 }
 
 /** @returns {void} */
 function make_dirty(component, i) {
-	if (component.$$.dirty[0] === -1) {
-		dirty_components.push(component);
-		schedule_update();
-		component.$$.dirty.fill(0);
-	}
-	component.$$.dirty[(i / 31) | 0] |= 1 << i % 31;
+    if (component.$$.dirty[0] === -1) {
+        dirty_components.push(component);
+        schedule_update();
+        component.$$.dirty.fill(0);
+    }
+    component.$$.dirty[(i / 31) | 0] |= 1 << (i % 31);
 }
 
 // TODO: Document the other params
@@ -533,73 +551,64 @@ function make_dirty(component, i) {
  *
  * @returns {void}
  */
-function init(
-	component,
-	options,
-	instance,
-	create_fragment,
-	not_equal,
-	props,
-	append_styles = null,
-	dirty = [-1]
-) {
-	const parent_component = current_component;
-	set_current_component(component);
-	/** @type {import('./private.js').T$$} */
-	const $$ = (component.$$ = {
-		fragment: null,
-		ctx: [],
-		// state
-		props,
-		update: noop,
-		not_equal,
-		bound: blank_object(),
-		// lifecycle
-		on_mount: [],
-		on_destroy: [],
-		on_disconnect: [],
-		before_update: [],
-		after_update: [],
-		context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
-		// everything else
-		callbacks: blank_object(),
-		dirty,
-		skip_bound: false,
-		root: options.target || parent_component.$$.root
-	});
-	append_styles && append_styles($$.root);
-	let ready = false;
-	$$.ctx = instance
-		? instance(component, options.props || {}, (i, ret, ...rest) => {
-				const value = rest.length ? rest[0] : ret;
-				if ($$.ctx && not_equal($$.ctx[i], ($$.ctx[i] = value))) {
-					if (!$$.skip_bound && $$.bound[i]) $$.bound[i](value);
-					if (ready) make_dirty(component, i);
-				}
-				return ret;
-		  })
-		: [];
-	$$.update();
-	ready = true;
-	run_all($$.before_update);
-	// `false` as a special case of no DOM component
-	$$.fragment = create_fragment ? create_fragment($$.ctx) : false;
-	if (options.target) {
-		if (options.hydrate) {
-			// TODO: what is the correct type here?
-			// @ts-expect-error
-			const nodes = children(options.target);
-			$$.fragment && $$.fragment.l(nodes);
-			nodes.forEach(detach);
-		} else {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			$$.fragment && $$.fragment.c();
-		}
-		if (options.intro) transition_in(component.$$.fragment);
-		mount_component(component, options.target, options.anchor);
-		flush();
-	}
-	set_current_component(parent_component);
+function init(component, options, instance, create_fragment, not_equal, props, append_styles = null, dirty = [-1]) {
+    const parent_component = current_component;
+    set_current_component(component);
+    /** @type {import('./private.js').T$$} */
+    const $$ = (component.$$ = {
+        fragment: null,
+        ctx: [],
+        // state
+        props,
+        update: noop,
+        not_equal,
+        bound: blank_object(),
+        // lifecycle
+        on_mount: [],
+        on_destroy: [],
+        on_disconnect: [],
+        before_update: [],
+        after_update: [],
+        context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
+        // everything else
+        callbacks: blank_object(),
+        dirty,
+        skip_bound: false,
+        root: options.target || parent_component.$$.root,
+    });
+    append_styles && append_styles($$.root);
+    let ready = false;
+    $$.ctx = instance
+        ? instance(component, options.props || {}, (i, ret, ...rest) => {
+              const value = rest.length ? rest[0] : ret;
+              if ($$.ctx && not_equal($$.ctx[i], ($$.ctx[i] = value))) {
+                  if (!$$.skip_bound && $$.bound[i]) $$.bound[i](value);
+                  if (ready) make_dirty(component, i);
+              }
+              return ret;
+          })
+        : [];
+    $$.update();
+    ready = true;
+    run_all($$.before_update);
+    // `false` as a special case of no DOM component
+    $$.fragment = create_fragment ? create_fragment($$.ctx) : false;
+    if (options.target) {
+        if (options.hydrate) {
+            // TODO: what is the correct type here?
+            // @ts-expect-error
+            const nodes = children(options.target);
+            $$.fragment && $$.fragment.l(nodes);
+            nodes.forEach(detach);
+        } else {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            $$.fragment && $$.fragment.c();
+        }
+        if (options.intro) transition_in(component.$$.fragment);
+        mount_component(component, options.target, options.anchor);
+        flush();
+    }
+    set_current_component(parent_component);
 }
 
 /**
@@ -609,58 +618,58 @@ function init(
  * @template {Record<string, any>} [Events=any]
  */
 class SvelteComponent {
-	/**
-	 * ### PRIVATE API
-	 *
-	 * Do not use, may change at any time
-	 *
-	 * @type {any}
-	 */
-	$$ = undefined;
-	/**
-	 * ### PRIVATE API
-	 *
-	 * Do not use, may change at any time
-	 *
-	 * @type {any}
-	 */
-	$$set = undefined;
+    /**
+     * ### PRIVATE API
+     *
+     * Do not use, may change at any time
+     *
+     * @type {any}
+     */
+    $$ = undefined;
+    /**
+     * ### PRIVATE API
+     *
+     * Do not use, may change at any time
+     *
+     * @type {any}
+     */
+    $$set = undefined;
 
-	/** @returns {void} */
-	$destroy() {
-		destroy_component(this, 1);
-		this.$destroy = noop;
-	}
+    /** @returns {void} */
+    $destroy() {
+        destroy_component(this, 1);
+        this.$destroy = noop;
+    }
 
-	/**
-	 * @template {Extract<keyof Events, string>} K
-	 * @param {K} type
-	 * @param {((e: Events[K]) => void) | null | undefined} callback
-	 * @returns {() => void}
-	 */
-	$on(type, callback) {
-		if (!is_function(callback)) {
-			return noop;
-		}
-		const callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
-		callbacks.push(callback);
-		return () => {
-			const index = callbacks.indexOf(callback);
-			if (index !== -1) callbacks.splice(index, 1);
-		};
-	}
+    /**
+     * @template {Extract<keyof Events, string>} K
+     * @param {K} type
+     * @param {((e: Events[K]) => void) | null | undefined} callback
+     * @returns {() => void}
+     */
+    $on(type, callback) {
+        if (!is_function(callback)) {
+            return noop;
+        }
+        const callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
+        callbacks.push(callback);
+        return () => {
+            const index = callbacks.indexOf(callback);
+            if (index !== -1) callbacks.splice(index, 1);
+        };
+    }
 
-	/**
-	 * @param {Partial<Props>} props
-	 * @returns {void}
-	 */
-	$set(props) {
-		if (this.$$set && !is_empty(props)) {
-			this.$$.skip_bound = true;
-			this.$$set(props);
-			this.$$.skip_bound = false;
-		}
-	}
+    /**
+     * @param {Partial<Props>} props
+     * @returns {void}
+     */
+    $set(props) {
+        if (this.$$set && !is_empty(props)) {
+            this.$$.skip_bound = true;
+            this.$$set(props);
+            this.$$.skip_bound = false;
+        }
+    }
 }
 
 /**
@@ -674,2025 +683,2047 @@ class SvelteComponent {
 const PUBLIC_VERSION = '4';
 
 if (typeof window !== 'undefined')
-	// @ts-ignore
-	(window.__svelte || (window.__svelte = { v: new Set() })).v.add(PUBLIC_VERSION);
+    // @ts-ignore
+    (window.__svelte || (window.__svelte = { v: new Set() })).v.add(PUBLIC_VERSION);
 
 var LinkGrouping;
 (function (LinkGrouping) {
-    LinkGrouping[LinkGrouping["ByFolder"] = 0] = "ByFolder";
-    LinkGrouping[LinkGrouping["ByFile"] = 1] = "ByFile";
-    LinkGrouping[LinkGrouping["ByLink"] = 2] = "ByLink";
+    LinkGrouping[(LinkGrouping['ByFolder'] = 0)] = 'ByFolder';
+    LinkGrouping[(LinkGrouping['ByFile'] = 1)] = 'ByFile';
+    LinkGrouping[(LinkGrouping['ByLink'] = 2)] = 'ByLink';
 })(LinkGrouping || (LinkGrouping = {}));
 var FolderSort;
 (function (FolderSort) {
-    FolderSort[FolderSort["NameAsc"] = 0] = "NameAsc";
-    FolderSort[FolderSort["NameDesc"] = 1] = "NameDesc";
+    FolderSort[(FolderSort['NameAsc'] = 0)] = 'NameAsc';
+    FolderSort[(FolderSort['NameDesc'] = 1)] = 'NameDesc';
 })(FolderSort || (FolderSort = {}));
 var FileSort;
 (function (FileSort) {
-    FileSort[FileSort["NameAsc"] = 0] = "NameAsc";
-    FileSort[FileSort["NameDesc"] = 1] = "NameDesc";
-    FileSort[FileSort["CountAsc"] = 2] = "CountAsc";
-    FileSort[FileSort["CountDesc"] = 3] = "CountDesc";
+    FileSort[(FileSort['NameAsc'] = 0)] = 'NameAsc';
+    FileSort[(FileSort['NameDesc'] = 1)] = 'NameDesc';
+    FileSort[(FileSort['CountAsc'] = 2)] = 'CountAsc';
+    FileSort[(FileSort['CountDesc'] = 3)] = 'CountDesc';
 })(FileSort || (FileSort = {}));
 var LinkSort;
 (function (LinkSort) {
-    LinkSort[LinkSort["NameAsc"] = 0] = "NameAsc";
-    LinkSort[LinkSort["NameDesc"] = 1] = "NameDesc";
-    LinkSort[LinkSort["CountAsc"] = 2] = "CountAsc";
-    LinkSort[LinkSort["CountDesc"] = 3] = "CountDesc";
+    LinkSort[(LinkSort['NameAsc'] = 0)] = 'NameAsc';
+    LinkSort[(LinkSort['NameDesc'] = 1)] = 'NameDesc';
+    LinkSort[(LinkSort['CountAsc'] = 2)] = 'CountAsc';
+    LinkSort[(LinkSort['CountDesc'] = 3)] = 'CountDesc';
 })(LinkSort || (LinkSort = {}));
 
 /* src/views/tree-item-file.svelte generated by Svelte v4.2.9 */
 
 function get_each_context$4(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[10] = list[i];
-	return child_ctx;
+    const child_ctx = ctx.slice();
+    child_ctx[10] = list[i];
+    return child_ctx;
 }
 
 // (29:8) {#each file.links as link}
 function create_each_block$4(ctx) {
-	let div2;
-	let div1;
-	let div0;
-	let t0_value = /*link*/ ctx[10].id + "";
-	let t0;
-	let t1;
-	let mounted;
-	let dispose;
+    let div2;
+    let div1;
+    let div0;
+    let t0_value = /*link*/ ctx[10].id + '';
+    let t0;
+    let t1;
+    let mounted;
+    let dispose;
 
-	function click_handler_1(...args) {
-		return /*click_handler_1*/ ctx[7](/*link*/ ctx[10], ...args);
-	}
+    function click_handler_1(...args) {
+        return /*click_handler_1*/ ctx[7](/*link*/ ctx[10], ...args);
+    }
 
-	function auxclick_handler(...args) {
-		return /*auxclick_handler*/ ctx[8](/*link*/ ctx[10], ...args);
-	}
+    function auxclick_handler(...args) {
+        return /*auxclick_handler*/ ctx[8](/*link*/ ctx[10], ...args);
+    }
 
-	return {
-		c() {
-			div2 = element("div");
-			div1 = element("div");
-			div0 = element("div");
-			t0 = text(t0_value);
-			t1 = space();
-			attr(div0, "class", "tree-item-inner nav-link-title-content");
-			attr(div1, "class", "tree-item-self is-clickable nav-link-title");
-			attr(div2, "class", "tree-item nav-link");
-		},
-		m(target, anchor) {
-			insert$1(target, div2, anchor);
-			append(div2, div1);
-			append(div1, div0);
-			append(div0, t0);
-			append(div2, t1);
+    return {
+        c() {
+            div2 = element('div');
+            div1 = element('div');
+            div0 = element('div');
+            t0 = text(t0_value);
+            t1 = space();
+            attr(div0, 'class', 'tree-item-inner nav-link-title-content');
+            attr(div1, 'class', 'tree-item-self is-clickable nav-link-title');
+            attr(div2, 'class', 'tree-item nav-link');
+        },
+        m(target, anchor) {
+            insert$1(target, div2, anchor);
+            append(div2, div1);
+            append(div1, div0);
+            append(div0, t0);
+            append(div2, t1);
 
-			if (!mounted) {
-				dispose = [
-					listen(div1, "click", click_handler_1),
-					listen(div1, "auxclick", auxclick_handler)
-				];
+            if (!mounted) {
+                dispose = [listen(div1, 'click', click_handler_1), listen(div1, 'auxclick', auxclick_handler)];
 
-				mounted = true;
-			}
-		},
-		p(new_ctx, dirty) {
-			ctx = new_ctx;
-			if (dirty & /*file*/ 1 && t0_value !== (t0_value = /*link*/ ctx[10].id + "")) set_data(t0, t0_value);
-		},
-		d(detaching) {
-			if (detaching) {
-				detach(div2);
-			}
+                mounted = true;
+            }
+        },
+        p(new_ctx, dirty) {
+            ctx = new_ctx;
+            if (dirty & /*file*/ 1 && t0_value !== (t0_value = /*link*/ ctx[10].id + '')) set_data(t0, t0_value);
+        },
+        d(detaching) {
+            if (detaching) {
+                detach(div2);
+            }
 
-			mounted = false;
-			run_all(dispose);
-		}
-	};
+            mounted = false;
+            run_all(dispose);
+        },
+    };
 }
 
 function create_fragment$4(ctx) {
-	let div6;
-	let div4;
-	let div0;
-	let t0;
-	let div1;
-	let t1;
-	let div2;
-	let t2_value = /*file*/ ctx[0].name + "";
-	let t2;
-	let t3;
-	let div3;
-	let span;
-	let t4_value = /*file*/ ctx[0].links.length + "";
-	let t4;
-	let t5;
-	let div5;
-	let div6_id_value;
-	let mounted;
-	let dispose;
-	let each_value = ensure_array_like(/*file*/ ctx[0].links);
-	let each_blocks = [];
+    let div6;
+    let div4;
+    let div0;
+    let t0;
+    let div1;
+    let t1;
+    let div2;
+    let t2_value = /*file*/ ctx[0].name + '';
+    let t2;
+    let t3;
+    let div3;
+    let span;
+    let t4_value = /*file*/ ctx[0].links.length + '';
+    let t4;
+    let t5;
+    let div5;
+    let div6_id_value;
+    let mounted;
+    let dispose;
+    let each_value = ensure_array_like(/*file*/ ctx[0].links);
+    let each_blocks = [];
 
-	for (let i = 0; i < each_value.length; i += 1) {
-		each_blocks[i] = create_each_block$4(get_each_context$4(ctx, each_value, i));
-	}
+    for (let i = 0; i < each_value.length; i += 1) {
+        each_blocks[i] = create_each_block$4(get_each_context$4(ctx, each_value, i));
+    }
 
-	return {
-		c() {
-			div6 = element("div");
-			div4 = element("div");
-			div0 = element("div");
-			t0 = space();
-			div1 = element("div");
-			t1 = space();
-			div2 = element("div");
-			t2 = text(t2_value);
-			t3 = space();
-			div3 = element("div");
-			span = element("span");
-			t4 = text(t4_value);
-			t5 = space();
-			div5 = element("div");
+    return {
+        c() {
+            div6 = element('div');
+            div4 = element('div');
+            div0 = element('div');
+            t0 = space();
+            div1 = element('div');
+            t1 = space();
+            div2 = element('div');
+            t2 = text(t2_value);
+            t3 = space();
+            div3 = element('div');
+            span = element('span');
+            t4 = text(t4_value);
+            t5 = space();
+            div5 = element('div');
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                each_blocks[i].c();
+            }
 
-			attr(div0, "class", "tree-item-icon collapse-icon nav-folder-collapse-indicator");
-			attr(div0, "data-icon", "right-triangle");
-			toggle_class(div0, "is-collapsed", /*isCollapsed*/ ctx[4]);
-			attr(div1, "class", "tree-item-icon");
-			attr(div1, "data-icon", "file");
-			attr(div2, "class", "tree-item-inner nav-file-title-content");
-			attr(span, "class", "tree-item-flair");
-			attr(div3, "class", "tree-item-flair-outer nav-file-link-count");
-			attr(div4, "class", "tree-item-self is-clickable nav-file-title");
-			attr(div5, "class", "tree-item-children nav-file-children");
-			toggle_class(div5, "hidden", /*isCollapsed*/ ctx[4]);
-			attr(div6, "id", div6_id_value = /*file*/ ctx[0].path);
-			attr(div6, "class", "tree-item nav-file");
-			toggle_class(div6, "is-collapsed", /*isCollapsed*/ ctx[4]);
-		},
-		m(target, anchor) {
-			insert$1(target, div6, anchor);
-			append(div6, div4);
-			append(div4, div0);
-			append(div4, t0);
-			append(div4, div1);
-			append(div4, t1);
-			append(div4, div2);
-			append(div2, t2);
-			append(div4, t3);
-			append(div4, div3);
-			append(div3, span);
-			append(span, t4);
-			append(div6, t5);
-			append(div6, div5);
+            attr(div0, 'class', 'tree-item-icon collapse-icon nav-folder-collapse-indicator');
+            attr(div0, 'data-icon', 'right-triangle');
+            toggle_class(div0, 'is-collapsed', /*isCollapsed*/ ctx[4]);
+            attr(div1, 'class', 'tree-item-icon');
+            attr(div1, 'data-icon', 'file');
+            attr(div2, 'class', 'tree-item-inner nav-file-title-content');
+            attr(span, 'class', 'tree-item-flair');
+            attr(div3, 'class', 'tree-item-flair-outer nav-file-link-count');
+            attr(div4, 'class', 'tree-item-self is-clickable nav-file-title');
+            attr(div5, 'class', 'tree-item-children nav-file-children');
+            toggle_class(div5, 'hidden', /*isCollapsed*/ ctx[4]);
+            attr(div6, 'id', (div6_id_value = /*file*/ ctx[0].path));
+            attr(div6, 'class', 'tree-item nav-file');
+            toggle_class(div6, 'is-collapsed', /*isCollapsed*/ ctx[4]);
+        },
+        m(target, anchor) {
+            insert$1(target, div6, anchor);
+            append(div6, div4);
+            append(div4, div0);
+            append(div4, t0);
+            append(div4, div1);
+            append(div4, t1);
+            append(div4, div2);
+            append(div2, t2);
+            append(div4, t3);
+            append(div4, div3);
+            append(div3, span);
+            append(span, t4);
+            append(div6, t5);
+            append(div6, div5);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				if (each_blocks[i]) {
-					each_blocks[i].m(div5, null);
-				}
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                if (each_blocks[i]) {
+                    each_blocks[i].m(div5, null);
+                }
+            }
 
-			/*div6_binding*/ ctx[9](div6);
+            /*div6_binding*/ ctx[9](div6);
 
-			if (!mounted) {
-				dispose = listen(div4, "click", /*click_handler*/ ctx[6]);
-				mounted = true;
-			}
-		},
-		p(ctx, [dirty]) {
-			if (dirty & /*isCollapsed*/ 16) {
-				toggle_class(div0, "is-collapsed", /*isCollapsed*/ ctx[4]);
-			}
+            if (!mounted) {
+                dispose = listen(div4, 'click', /*click_handler*/ ctx[6]);
+                mounted = true;
+            }
+        },
+        p(ctx, [dirty]) {
+            if (dirty & /*isCollapsed*/ 16) {
+                toggle_class(div0, 'is-collapsed', /*isCollapsed*/ ctx[4]);
+            }
 
-			if (dirty & /*file*/ 1 && t2_value !== (t2_value = /*file*/ ctx[0].name + "")) set_data(t2, t2_value);
-			if (dirty & /*file*/ 1 && t4_value !== (t4_value = /*file*/ ctx[0].links.length + "")) set_data(t4, t4_value);
+            if (dirty & /*file*/ 1 && t2_value !== (t2_value = /*file*/ ctx[0].name + '')) set_data(t2, t2_value);
+            if (dirty & /*file*/ 1 && t4_value !== (t4_value = /*file*/ ctx[0].links.length + ''))
+                set_data(t4, t4_value);
 
-			if (dirty & /*linkClicked, file*/ 5) {
-				each_value = ensure_array_like(/*file*/ ctx[0].links);
-				let i;
+            if (dirty & /*linkClicked, file*/ 5) {
+                each_value = ensure_array_like(/*file*/ ctx[0].links);
+                let i;
 
-				for (i = 0; i < each_value.length; i += 1) {
-					const child_ctx = get_each_context$4(ctx, each_value, i);
+                for (i = 0; i < each_value.length; i += 1) {
+                    const child_ctx = get_each_context$4(ctx, each_value, i);
 
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-					} else {
-						each_blocks[i] = create_each_block$4(child_ctx);
-						each_blocks[i].c();
-						each_blocks[i].m(div5, null);
-					}
-				}
+                    if (each_blocks[i]) {
+                        each_blocks[i].p(child_ctx, dirty);
+                    } else {
+                        each_blocks[i] = create_each_block$4(child_ctx);
+                        each_blocks[i].c();
+                        each_blocks[i].m(div5, null);
+                    }
+                }
 
-				for (; i < each_blocks.length; i += 1) {
-					each_blocks[i].d(1);
-				}
+                for (; i < each_blocks.length; i += 1) {
+                    each_blocks[i].d(1);
+                }
 
-				each_blocks.length = each_value.length;
-			}
+                each_blocks.length = each_value.length;
+            }
 
-			if (dirty & /*isCollapsed*/ 16) {
-				toggle_class(div5, "hidden", /*isCollapsed*/ ctx[4]);
-			}
+            if (dirty & /*isCollapsed*/ 16) {
+                toggle_class(div5, 'hidden', /*isCollapsed*/ ctx[4]);
+            }
 
-			if (dirty & /*file*/ 1 && div6_id_value !== (div6_id_value = /*file*/ ctx[0].path)) {
-				attr(div6, "id", div6_id_value);
-			}
+            if (dirty & /*file*/ 1 && div6_id_value !== (div6_id_value = /*file*/ ctx[0].path)) {
+                attr(div6, 'id', div6_id_value);
+            }
 
-			if (dirty & /*isCollapsed*/ 16) {
-				toggle_class(div6, "is-collapsed", /*isCollapsed*/ ctx[4]);
-			}
-		},
-		i: noop,
-		o: noop,
-		d(detaching) {
-			if (detaching) {
-				detach(div6);
-			}
+            if (dirty & /*isCollapsed*/ 16) {
+                toggle_class(div6, 'is-collapsed', /*isCollapsed*/ ctx[4]);
+            }
+        },
+        i: noop,
+        o: noop,
+        d(detaching) {
+            if (detaching) {
+                detach(div6);
+            }
 
-			destroy_each(each_blocks, detaching);
-			/*div6_binding*/ ctx[9](null);
-			mounted = false;
-			dispose();
-		}
-	};
+            destroy_each(each_blocks, detaching);
+            /*div6_binding*/ ctx[9](null);
+            mounted = false;
+            dispose();
+        },
+    };
 }
 
 function instance$4($$self, $$props, $$invalidate) {
-	let { plugin } = $$props;
-	let { file } = $$props;
-	let { expandableItemClicked } = $$props;
-	let { linkClicked } = $$props;
-	let el;
+    let { plugin } = $$props;
+    let { file } = $$props;
+    let { expandableItemClicked } = $$props;
+    let { linkClicked } = $$props;
+    let el;
 
-	let isCollapsed = plugin.settings.groupBy == LinkGrouping.ByFolder
-	? !plugin.settings.expandedFolderItems.contains(file.path)
-	: !plugin.settings.expandedFileItems.contains(file.path);
+    let isCollapsed =
+        plugin.settings.groupBy == LinkGrouping.ByFolder
+            ? !plugin.settings.expandedFolderItems.contains(file.path)
+            : !plugin.settings.expandedFileItems.contains(file.path);
 
-	afterUpdate(() => {
-		$$invalidate(4, isCollapsed = plugin.settings.groupBy == LinkGrouping.ByFolder
-		? !plugin.settings.expandedFolderItems.contains(file.path)
-		: !plugin.settings.expandedFileItems.contains(file.path));
-	});
+    afterUpdate(() => {
+        $$invalidate(
+            4,
+            (isCollapsed =
+                plugin.settings.groupBy == LinkGrouping.ByFolder
+                    ? !plugin.settings.expandedFolderItems.contains(file.path)
+                    : !plugin.settings.expandedFileItems.contains(file.path)),
+        );
+    });
 
-	const click_handler = e => expandableItemClicked(e, el);
+    const click_handler = (e) => expandableItemClicked(e, el);
 
-	const click_handler_1 = (link, e) => {
-		linkClicked(e, link);
-	};
+    const click_handler_1 = (link, e) => {
+        linkClicked(e, link);
+    };
 
-	const auxclick_handler = (link, e) => {
-		linkClicked(e, link);
-	};
+    const auxclick_handler = (link, e) => {
+        linkClicked(e, link);
+    };
 
-	function div6_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			el = $$value;
-			$$invalidate(3, el);
-		});
-	}
+    function div6_binding($$value) {
+        binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+            el = $$value;
+            $$invalidate(3, el);
+        });
+    }
 
-	$$self.$$set = $$props => {
-		if ('plugin' in $$props) $$invalidate(5, plugin = $$props.plugin);
-		if ('file' in $$props) $$invalidate(0, file = $$props.file);
-		if ('expandableItemClicked' in $$props) $$invalidate(1, expandableItemClicked = $$props.expandableItemClicked);
-		if ('linkClicked' in $$props) $$invalidate(2, linkClicked = $$props.linkClicked);
-	};
+    $$self.$$set = ($$props) => {
+        if ('plugin' in $$props) $$invalidate(5, (plugin = $$props.plugin));
+        if ('file' in $$props) $$invalidate(0, (file = $$props.file));
+        if ('expandableItemClicked' in $$props)
+            $$invalidate(1, (expandableItemClicked = $$props.expandableItemClicked));
+        if ('linkClicked' in $$props) $$invalidate(2, (linkClicked = $$props.linkClicked));
+    };
 
-	return [
-		file,
-		expandableItemClicked,
-		linkClicked,
-		el,
-		isCollapsed,
-		plugin,
-		click_handler,
-		click_handler_1,
-		auxclick_handler,
-		div6_binding
-	];
+    return [
+        file,
+        expandableItemClicked,
+        linkClicked,
+        el,
+        isCollapsed,
+        plugin,
+        click_handler,
+        click_handler_1,
+        auxclick_handler,
+        div6_binding,
+    ];
 }
 
 class Tree_item_file extends SvelteComponent {
-	constructor(options) {
-		super();
+    constructor(options) {
+        super();
 
-		init(this, options, instance$4, create_fragment$4, safe_not_equal, {
-			plugin: 5,
-			file: 0,
-			expandableItemClicked: 1,
-			linkClicked: 2
-		});
-	}
+        init(this, options, instance$4, create_fragment$4, safe_not_equal, {
+            plugin: 5,
+            file: 0,
+            expandableItemClicked: 1,
+            linkClicked: 2,
+        });
+    }
 }
 
 /* src/views/tree-item-folder.svelte generated by Svelte v4.2.9 */
 
 function get_each_context$3(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[10] = list[i];
-	return child_ctx;
+    const child_ctx = ctx.slice();
+    child_ctx[10] = list[i];
+    return child_ctx;
 }
 
 function get_each_context_1$1(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[13] = list[i];
-	return child_ctx;
+    const child_ctx = ctx.slice();
+    child_ctx[13] = list[i];
+    return child_ctx;
 }
 
 // (30:8) {#each folder.folders as subfolder}
 function create_each_block_1$1(ctx) {
-	let folder_1;
-	let current;
+    let folder_1;
+    let current;
 
-	folder_1 = new Tree_item_folder({
-			props: {
-				plugin: /*plugin*/ ctx[0],
-				folder: /*subfolder*/ ctx[13],
-				linkClicked: /*linkClicked*/ ctx[4],
-				expandableItemClicked: /*expandableItemClicked*/ ctx[2],
-				folderContextClicked: /*folderContextClicked*/ ctx[3]
-			}
-		});
+    folder_1 = new Tree_item_folder({
+        props: {
+            plugin: /*plugin*/ ctx[0],
+            folder: /*subfolder*/ ctx[13],
+            linkClicked: /*linkClicked*/ ctx[4],
+            expandableItemClicked: /*expandableItemClicked*/ ctx[2],
+            folderContextClicked: /*folderContextClicked*/ ctx[3],
+        },
+    });
 
-	return {
-		c() {
-			create_component(folder_1.$$.fragment);
-		},
-		m(target, anchor) {
-			mount_component(folder_1, target, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			const folder_1_changes = {};
-			if (dirty & /*plugin*/ 1) folder_1_changes.plugin = /*plugin*/ ctx[0];
-			if (dirty & /*folder*/ 2) folder_1_changes.folder = /*subfolder*/ ctx[13];
-			if (dirty & /*linkClicked*/ 16) folder_1_changes.linkClicked = /*linkClicked*/ ctx[4];
-			if (dirty & /*expandableItemClicked*/ 4) folder_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[2];
-			if (dirty & /*folderContextClicked*/ 8) folder_1_changes.folderContextClicked = /*folderContextClicked*/ ctx[3];
-			folder_1.$set(folder_1_changes);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(folder_1.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(folder_1.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			destroy_component(folder_1, detaching);
-		}
-	};
+    return {
+        c() {
+            create_component(folder_1.$$.fragment);
+        },
+        m(target, anchor) {
+            mount_component(folder_1, target, anchor);
+            current = true;
+        },
+        p(ctx, dirty) {
+            const folder_1_changes = {};
+            if (dirty & /*plugin*/ 1) folder_1_changes.plugin = /*plugin*/ ctx[0];
+            if (dirty & /*folder*/ 2) folder_1_changes.folder = /*subfolder*/ ctx[13];
+            if (dirty & /*linkClicked*/ 16) folder_1_changes.linkClicked = /*linkClicked*/ ctx[4];
+            if (dirty & /*expandableItemClicked*/ 4)
+                folder_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[2];
+            if (dirty & /*folderContextClicked*/ 8)
+                folder_1_changes.folderContextClicked = /*folderContextClicked*/ ctx[3];
+            folder_1.$set(folder_1_changes);
+        },
+        i(local) {
+            if (current) return;
+            transition_in(folder_1.$$.fragment, local);
+            current = true;
+        },
+        o(local) {
+            transition_out(folder_1.$$.fragment, local);
+            current = false;
+        },
+        d(detaching) {
+            destroy_component(folder_1, detaching);
+        },
+    };
 }
 
 // (33:8) {#each folder.files as file}
 function create_each_block$3(ctx) {
-	let file_1;
-	let current;
+    let file_1;
+    let current;
 
-	file_1 = new Tree_item_file({
-			props: {
-				plugin: /*plugin*/ ctx[0],
-				file: /*file*/ ctx[10],
-				expandableItemClicked: /*expandableItemClicked*/ ctx[2],
-				linkClicked: /*linkClicked*/ ctx[4]
-			}
-		});
+    file_1 = new Tree_item_file({
+        props: {
+            plugin: /*plugin*/ ctx[0],
+            file: /*file*/ ctx[10],
+            expandableItemClicked: /*expandableItemClicked*/ ctx[2],
+            linkClicked: /*linkClicked*/ ctx[4],
+        },
+    });
 
-	return {
-		c() {
-			create_component(file_1.$$.fragment);
-		},
-		m(target, anchor) {
-			mount_component(file_1, target, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			const file_1_changes = {};
-			if (dirty & /*plugin*/ 1) file_1_changes.plugin = /*plugin*/ ctx[0];
-			if (dirty & /*folder*/ 2) file_1_changes.file = /*file*/ ctx[10];
-			if (dirty & /*expandableItemClicked*/ 4) file_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[2];
-			if (dirty & /*linkClicked*/ 16) file_1_changes.linkClicked = /*linkClicked*/ ctx[4];
-			file_1.$set(file_1_changes);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(file_1.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(file_1.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			destroy_component(file_1, detaching);
-		}
-	};
+    return {
+        c() {
+            create_component(file_1.$$.fragment);
+        },
+        m(target, anchor) {
+            mount_component(file_1, target, anchor);
+            current = true;
+        },
+        p(ctx, dirty) {
+            const file_1_changes = {};
+            if (dirty & /*plugin*/ 1) file_1_changes.plugin = /*plugin*/ ctx[0];
+            if (dirty & /*folder*/ 2) file_1_changes.file = /*file*/ ctx[10];
+            if (dirty & /*expandableItemClicked*/ 4)
+                file_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[2];
+            if (dirty & /*linkClicked*/ 16) file_1_changes.linkClicked = /*linkClicked*/ ctx[4];
+            file_1.$set(file_1_changes);
+        },
+        i(local) {
+            if (current) return;
+            transition_in(file_1.$$.fragment, local);
+            current = true;
+        },
+        o(local) {
+            transition_out(file_1.$$.fragment, local);
+            current = false;
+        },
+        d(detaching) {
+            destroy_component(file_1, detaching);
+        },
+    };
 }
 
 function create_fragment$3(ctx) {
-	let div6;
-	let div4;
-	let div0;
-	let t0;
-	let div1;
-	let t1;
-	let div2;
-	let t2_value = /*folder*/ ctx[1].name + "";
-	let t2;
-	let t3;
-	let div3;
-	let span;
-	let t4_value = /*folder*/ ctx[1].linkCount + "";
-	let t4;
-	let t5;
-	let div5;
-	let t6;
-	let div6_id_value;
-	let current;
-	let mounted;
-	let dispose;
-	let each_value_1 = ensure_array_like(/*folder*/ ctx[1].folders);
-	let each_blocks_1 = [];
+    let div6;
+    let div4;
+    let div0;
+    let t0;
+    let div1;
+    let t1;
+    let div2;
+    let t2_value = /*folder*/ ctx[1].name + '';
+    let t2;
+    let t3;
+    let div3;
+    let span;
+    let t4_value = /*folder*/ ctx[1].linkCount + '';
+    let t4;
+    let t5;
+    let div5;
+    let t6;
+    let div6_id_value;
+    let current;
+    let mounted;
+    let dispose;
+    let each_value_1 = ensure_array_like(/*folder*/ ctx[1].folders);
+    let each_blocks_1 = [];
 
-	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$1(get_each_context_1$1(ctx, each_value_1, i));
-	}
+    for (let i = 0; i < each_value_1.length; i += 1) {
+        each_blocks_1[i] = create_each_block_1$1(get_each_context_1$1(ctx, each_value_1, i));
+    }
 
-	const out = i => transition_out(each_blocks_1[i], 1, 1, () => {
-		each_blocks_1[i] = null;
-	});
+    const out = (i) =>
+        transition_out(each_blocks_1[i], 1, 1, () => {
+            each_blocks_1[i] = null;
+        });
 
-	let each_value = ensure_array_like(/*folder*/ ctx[1].files);
-	let each_blocks = [];
+    let each_value = ensure_array_like(/*folder*/ ctx[1].files);
+    let each_blocks = [];
 
-	for (let i = 0; i < each_value.length; i += 1) {
-		each_blocks[i] = create_each_block$3(get_each_context$3(ctx, each_value, i));
-	}
+    for (let i = 0; i < each_value.length; i += 1) {
+        each_blocks[i] = create_each_block$3(get_each_context$3(ctx, each_value, i));
+    }
 
-	const out_1 = i => transition_out(each_blocks[i], 1, 1, () => {
-		each_blocks[i] = null;
-	});
+    const out_1 = (i) =>
+        transition_out(each_blocks[i], 1, 1, () => {
+            each_blocks[i] = null;
+        });
 
-	return {
-		c() {
-			div6 = element("div");
-			div4 = element("div");
-			div0 = element("div");
-			t0 = space();
-			div1 = element("div");
-			t1 = space();
-			div2 = element("div");
-			t2 = text(t2_value);
-			t3 = space();
-			div3 = element("div");
-			span = element("span");
-			t4 = text(t4_value);
-			t5 = space();
-			div5 = element("div");
+    return {
+        c() {
+            div6 = element('div');
+            div4 = element('div');
+            div0 = element('div');
+            t0 = space();
+            div1 = element('div');
+            t1 = space();
+            div2 = element('div');
+            t2 = text(t2_value);
+            t3 = space();
+            div3 = element('div');
+            span = element('span');
+            t4 = text(t4_value);
+            t5 = space();
+            div5 = element('div');
 
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].c();
-			}
+            for (let i = 0; i < each_blocks_1.length; i += 1) {
+                each_blocks_1[i].c();
+            }
 
-			t6 = space();
+            t6 = space();
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                each_blocks[i].c();
+            }
 
-			attr(div0, "class", "tree-item-icon collapse-icon nav-folder-collapse-indicator");
-			attr(div0, "data-icon", "right-triangle");
-			toggle_class(div0, "is-collapsed", /*isCollapsed*/ ctx[6]);
-			attr(div1, "class", "tree-item-icon");
-			attr(div1, "data-icon", "lucide-folder");
-			attr(div2, "class", "tree-item-inner nav-folder-title-content");
-			attr(span, "class", "tree-item-flair");
-			attr(div3, "class", "tree-item-flair-outer nav-folder-link-count");
-			attr(div4, "class", "tree-item-self is-clickable nav-folder-title");
-			attr(div5, "class", "tree-item-children nav-folder-children");
-			toggle_class(div5, "hidden", /*isCollapsed*/ ctx[6]);
-			attr(div6, "id", div6_id_value = /*folder*/ ctx[1].path);
-			attr(div6, "class", "tree-item nav-folder");
-			toggle_class(div6, "is-collapsed", /*isCollapsed*/ ctx[6]);
-		},
-		m(target, anchor) {
-			insert$1(target, div6, anchor);
-			append(div6, div4);
-			append(div4, div0);
-			append(div4, t0);
-			append(div4, div1);
-			append(div4, t1);
-			append(div4, div2);
-			append(div2, t2);
-			append(div4, t3);
-			append(div4, div3);
-			append(div3, span);
-			append(span, t4);
-			append(div6, t5);
-			append(div6, div5);
+            attr(div0, 'class', 'tree-item-icon collapse-icon nav-folder-collapse-indicator');
+            attr(div0, 'data-icon', 'right-triangle');
+            toggle_class(div0, 'is-collapsed', /*isCollapsed*/ ctx[6]);
+            attr(div1, 'class', 'tree-item-icon');
+            attr(div1, 'data-icon', 'lucide-folder');
+            attr(div2, 'class', 'tree-item-inner nav-folder-title-content');
+            attr(span, 'class', 'tree-item-flair');
+            attr(div3, 'class', 'tree-item-flair-outer nav-folder-link-count');
+            attr(div4, 'class', 'tree-item-self is-clickable nav-folder-title');
+            attr(div5, 'class', 'tree-item-children nav-folder-children');
+            toggle_class(div5, 'hidden', /*isCollapsed*/ ctx[6]);
+            attr(div6, 'id', (div6_id_value = /*folder*/ ctx[1].path));
+            attr(div6, 'class', 'tree-item nav-folder');
+            toggle_class(div6, 'is-collapsed', /*isCollapsed*/ ctx[6]);
+        },
+        m(target, anchor) {
+            insert$1(target, div6, anchor);
+            append(div6, div4);
+            append(div4, div0);
+            append(div4, t0);
+            append(div4, div1);
+            append(div4, t1);
+            append(div4, div2);
+            append(div2, t2);
+            append(div4, t3);
+            append(div4, div3);
+            append(div3, span);
+            append(span, t4);
+            append(div6, t5);
+            append(div6, div5);
 
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				if (each_blocks_1[i]) {
-					each_blocks_1[i].m(div5, null);
-				}
-			}
+            for (let i = 0; i < each_blocks_1.length; i += 1) {
+                if (each_blocks_1[i]) {
+                    each_blocks_1[i].m(div5, null);
+                }
+            }
 
-			append(div5, t6);
+            append(div5, t6);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				if (each_blocks[i]) {
-					each_blocks[i].m(div5, null);
-				}
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                if (each_blocks[i]) {
+                    each_blocks[i].m(div5, null);
+                }
+            }
 
-			/*div6_binding*/ ctx[9](div6);
-			current = true;
+            /*div6_binding*/ ctx[9](div6);
+            current = true;
 
-			if (!mounted) {
-				dispose = [
-					listen(div4, "click", /*click_handler*/ ctx[7]),
-					listen(div4, "contextmenu", /*contextmenu_handler*/ ctx[8])
-				];
+            if (!mounted) {
+                dispose = [
+                    listen(div4, 'click', /*click_handler*/ ctx[7]),
+                    listen(div4, 'contextmenu', /*contextmenu_handler*/ ctx[8]),
+                ];
 
-				mounted = true;
-			}
-		},
-		p(ctx, [dirty]) {
-			if (!current || dirty & /*isCollapsed*/ 64) {
-				toggle_class(div0, "is-collapsed", /*isCollapsed*/ ctx[6]);
-			}
+                mounted = true;
+            }
+        },
+        p(ctx, [dirty]) {
+            if (!current || dirty & /*isCollapsed*/ 64) {
+                toggle_class(div0, 'is-collapsed', /*isCollapsed*/ ctx[6]);
+            }
 
-			if ((!current || dirty & /*folder*/ 2) && t2_value !== (t2_value = /*folder*/ ctx[1].name + "")) set_data(t2, t2_value);
-			if ((!current || dirty & /*folder*/ 2) && t4_value !== (t4_value = /*folder*/ ctx[1].linkCount + "")) set_data(t4, t4_value);
+            if ((!current || dirty & /*folder*/ 2) && t2_value !== (t2_value = /*folder*/ ctx[1].name + ''))
+                set_data(t2, t2_value);
+            if ((!current || dirty & /*folder*/ 2) && t4_value !== (t4_value = /*folder*/ ctx[1].linkCount + ''))
+                set_data(t4, t4_value);
 
-			if (dirty & /*plugin, folder, linkClicked, expandableItemClicked, folderContextClicked*/ 31) {
-				each_value_1 = ensure_array_like(/*folder*/ ctx[1].folders);
-				let i;
+            if (dirty & /*plugin, folder, linkClicked, expandableItemClicked, folderContextClicked*/ 31) {
+                each_value_1 = ensure_array_like(/*folder*/ ctx[1].folders);
+                let i;
 
-				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$1(ctx, each_value_1, i);
+                for (i = 0; i < each_value_1.length; i += 1) {
+                    const child_ctx = get_each_context_1$1(ctx, each_value_1, i);
 
-					if (each_blocks_1[i]) {
-						each_blocks_1[i].p(child_ctx, dirty);
-						transition_in(each_blocks_1[i], 1);
-					} else {
-						each_blocks_1[i] = create_each_block_1$1(child_ctx);
-						each_blocks_1[i].c();
-						transition_in(each_blocks_1[i], 1);
-						each_blocks_1[i].m(div5, t6);
-					}
-				}
+                    if (each_blocks_1[i]) {
+                        each_blocks_1[i].p(child_ctx, dirty);
+                        transition_in(each_blocks_1[i], 1);
+                    } else {
+                        each_blocks_1[i] = create_each_block_1$1(child_ctx);
+                        each_blocks_1[i].c();
+                        transition_in(each_blocks_1[i], 1);
+                        each_blocks_1[i].m(div5, t6);
+                    }
+                }
 
-				group_outros();
+                group_outros();
 
-				for (i = each_value_1.length; i < each_blocks_1.length; i += 1) {
-					out(i);
-				}
+                for (i = each_value_1.length; i < each_blocks_1.length; i += 1) {
+                    out(i);
+                }
 
-				check_outros();
-			}
+                check_outros();
+            }
 
-			if (dirty & /*plugin, folder, expandableItemClicked, linkClicked*/ 23) {
-				each_value = ensure_array_like(/*folder*/ ctx[1].files);
-				let i;
+            if (dirty & /*plugin, folder, expandableItemClicked, linkClicked*/ 23) {
+                each_value = ensure_array_like(/*folder*/ ctx[1].files);
+                let i;
 
-				for (i = 0; i < each_value.length; i += 1) {
-					const child_ctx = get_each_context$3(ctx, each_value, i);
+                for (i = 0; i < each_value.length; i += 1) {
+                    const child_ctx = get_each_context$3(ctx, each_value, i);
 
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-						transition_in(each_blocks[i], 1);
-					} else {
-						each_blocks[i] = create_each_block$3(child_ctx);
-						each_blocks[i].c();
-						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(div5, null);
-					}
-				}
+                    if (each_blocks[i]) {
+                        each_blocks[i].p(child_ctx, dirty);
+                        transition_in(each_blocks[i], 1);
+                    } else {
+                        each_blocks[i] = create_each_block$3(child_ctx);
+                        each_blocks[i].c();
+                        transition_in(each_blocks[i], 1);
+                        each_blocks[i].m(div5, null);
+                    }
+                }
 
-				group_outros();
+                group_outros();
 
-				for (i = each_value.length; i < each_blocks.length; i += 1) {
-					out_1(i);
-				}
+                for (i = each_value.length; i < each_blocks.length; i += 1) {
+                    out_1(i);
+                }
 
-				check_outros();
-			}
+                check_outros();
+            }
 
-			if (!current || dirty & /*isCollapsed*/ 64) {
-				toggle_class(div5, "hidden", /*isCollapsed*/ ctx[6]);
-			}
+            if (!current || dirty & /*isCollapsed*/ 64) {
+                toggle_class(div5, 'hidden', /*isCollapsed*/ ctx[6]);
+            }
 
-			if (!current || dirty & /*folder*/ 2 && div6_id_value !== (div6_id_value = /*folder*/ ctx[1].path)) {
-				attr(div6, "id", div6_id_value);
-			}
+            if (!current || (dirty & /*folder*/ 2 && div6_id_value !== (div6_id_value = /*folder*/ ctx[1].path))) {
+                attr(div6, 'id', div6_id_value);
+            }
 
-			if (!current || dirty & /*isCollapsed*/ 64) {
-				toggle_class(div6, "is-collapsed", /*isCollapsed*/ ctx[6]);
-			}
-		},
-		i(local) {
-			if (current) return;
+            if (!current || dirty & /*isCollapsed*/ 64) {
+                toggle_class(div6, 'is-collapsed', /*isCollapsed*/ ctx[6]);
+            }
+        },
+        i(local) {
+            if (current) return;
 
-			for (let i = 0; i < each_value_1.length; i += 1) {
-				transition_in(each_blocks_1[i]);
-			}
+            for (let i = 0; i < each_value_1.length; i += 1) {
+                transition_in(each_blocks_1[i]);
+            }
 
-			for (let i = 0; i < each_value.length; i += 1) {
-				transition_in(each_blocks[i]);
-			}
+            for (let i = 0; i < each_value.length; i += 1) {
+                transition_in(each_blocks[i]);
+            }
 
-			current = true;
-		},
-		o(local) {
-			each_blocks_1 = each_blocks_1.filter(Boolean);
+            current = true;
+        },
+        o(local) {
+            each_blocks_1 = each_blocks_1.filter(Boolean);
 
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				transition_out(each_blocks_1[i]);
-			}
+            for (let i = 0; i < each_blocks_1.length; i += 1) {
+                transition_out(each_blocks_1[i]);
+            }
 
-			each_blocks = each_blocks.filter(Boolean);
+            each_blocks = each_blocks.filter(Boolean);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				transition_out(each_blocks[i]);
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                transition_out(each_blocks[i]);
+            }
 
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) {
-				detach(div6);
-			}
+            current = false;
+        },
+        d(detaching) {
+            if (detaching) {
+                detach(div6);
+            }
 
-			destroy_each(each_blocks_1, detaching);
-			destroy_each(each_blocks, detaching);
-			/*div6_binding*/ ctx[9](null);
-			mounted = false;
-			run_all(dispose);
-		}
-	};
+            destroy_each(each_blocks_1, detaching);
+            destroy_each(each_blocks, detaching);
+            /*div6_binding*/ ctx[9](null);
+            mounted = false;
+            run_all(dispose);
+        },
+    };
 }
 
 function instance$3($$self, $$props, $$invalidate) {
-	let { plugin } = $$props;
-	let { folder } = $$props;
-	let { expandableItemClicked } = $$props;
-	let { folderContextClicked } = $$props;
-	let { linkClicked } = $$props;
-	let el;
-	let isCollapsed = !plugin.settings.expandedFolderItems.contains(folder.path);
+    let { plugin } = $$props;
+    let { folder } = $$props;
+    let { expandableItemClicked } = $$props;
+    let { folderContextClicked } = $$props;
+    let { linkClicked } = $$props;
+    let el;
+    let isCollapsed = !plugin.settings.expandedFolderItems.contains(folder.path);
 
-	afterUpdate(() => {
-		$$invalidate(6, isCollapsed = !plugin.settings.expandedFolderItems.contains(folder.path));
-	});
+    afterUpdate(() => {
+        $$invalidate(6, (isCollapsed = !plugin.settings.expandedFolderItems.contains(folder.path)));
+    });
 
-	const click_handler = e => expandableItemClicked(e, el);
-	const contextmenu_handler = e => folderContextClicked(e, el);
+    const click_handler = (e) => expandableItemClicked(e, el);
+    const contextmenu_handler = (e) => folderContextClicked(e, el);
 
-	function div6_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			el = $$value;
-			$$invalidate(5, el);
-		});
-	}
+    function div6_binding($$value) {
+        binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+            el = $$value;
+            $$invalidate(5, el);
+        });
+    }
 
-	$$self.$$set = $$props => {
-		if ('plugin' in $$props) $$invalidate(0, plugin = $$props.plugin);
-		if ('folder' in $$props) $$invalidate(1, folder = $$props.folder);
-		if ('expandableItemClicked' in $$props) $$invalidate(2, expandableItemClicked = $$props.expandableItemClicked);
-		if ('folderContextClicked' in $$props) $$invalidate(3, folderContextClicked = $$props.folderContextClicked);
-		if ('linkClicked' in $$props) $$invalidate(4, linkClicked = $$props.linkClicked);
-	};
+    $$self.$$set = ($$props) => {
+        if ('plugin' in $$props) $$invalidate(0, (plugin = $$props.plugin));
+        if ('folder' in $$props) $$invalidate(1, (folder = $$props.folder));
+        if ('expandableItemClicked' in $$props)
+            $$invalidate(2, (expandableItemClicked = $$props.expandableItemClicked));
+        if ('folderContextClicked' in $$props) $$invalidate(3, (folderContextClicked = $$props.folderContextClicked));
+        if ('linkClicked' in $$props) $$invalidate(4, (linkClicked = $$props.linkClicked));
+    };
 
-	return [
-		plugin,
-		folder,
-		expandableItemClicked,
-		folderContextClicked,
-		linkClicked,
-		el,
-		isCollapsed,
-		click_handler,
-		contextmenu_handler,
-		div6_binding
-	];
+    return [
+        plugin,
+        folder,
+        expandableItemClicked,
+        folderContextClicked,
+        linkClicked,
+        el,
+        isCollapsed,
+        click_handler,
+        contextmenu_handler,
+        div6_binding,
+    ];
 }
 
 class Tree_item_folder extends SvelteComponent {
-	constructor(options) {
-		super();
+    constructor(options) {
+        super();
 
-		init(this, options, instance$3, create_fragment$3, safe_not_equal, {
-			plugin: 0,
-			folder: 1,
-			expandableItemClicked: 2,
-			folderContextClicked: 3,
-			linkClicked: 4
-		});
-	}
+        init(this, options, instance$3, create_fragment$3, safe_not_equal, {
+            plugin: 0,
+            folder: 1,
+            expandableItemClicked: 2,
+            folderContextClicked: 3,
+            linkClicked: 4,
+        });
+    }
 }
 
 /* src/views/tree-item-link-group.svelte generated by Svelte v4.2.9 */
 
 function get_each_context$2(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[10] = list[i];
-	return child_ctx;
+    const child_ctx = ctx.slice();
+    child_ctx[10] = list[i];
+    return child_ctx;
 }
 
 // (27:8) {#each linkGroup.links as link}
 function create_each_block$2(ctx) {
-	let div2;
-	let div1;
-	let div0;
-	let t0_value = /*link*/ ctx[10].parent.name + "";
-	let t0;
-	let t1;
-	let t2_value = /*link*/ ctx[10].position.start.line + 1 + "";
-	let t2;
-	let t3;
-	let t4;
-	let mounted;
-	let dispose;
+    let div2;
+    let div1;
+    let div0;
+    let t0_value = /*link*/ ctx[10].parent.name + '';
+    let t0;
+    let t1;
+    let t2_value = /*link*/ ctx[10].position.start.line + 1 + '';
+    let t2;
+    let t3;
+    let t4;
+    let mounted;
+    let dispose;
 
-	function click_handler_1(...args) {
-		return /*click_handler_1*/ ctx[7](/*link*/ ctx[10], ...args);
-	}
+    function click_handler_1(...args) {
+        return /*click_handler_1*/ ctx[7](/*link*/ ctx[10], ...args);
+    }
 
-	function auxclick_handler(...args) {
-		return /*auxclick_handler*/ ctx[8](/*link*/ ctx[10], ...args);
-	}
+    function auxclick_handler(...args) {
+        return /*auxclick_handler*/ ctx[8](/*link*/ ctx[10], ...args);
+    }
 
-	return {
-		c() {
-			div2 = element("div");
-			div1 = element("div");
-			div0 = element("div");
-			t0 = text(t0_value);
-			t1 = text(" (line: ");
-			t2 = text(t2_value);
-			t3 = text(")");
-			t4 = space();
-			attr(div0, "class", "tree-item-inner nav-link-title-content");
-			attr(div1, "class", "tree-item-self is-clickable nav-link-title");
-			attr(div2, "class", "tree-item nav-link");
-		},
-		m(target, anchor) {
-			insert$1(target, div2, anchor);
-			append(div2, div1);
-			append(div1, div0);
-			append(div0, t0);
-			append(div0, t1);
-			append(div0, t2);
-			append(div0, t3);
-			append(div2, t4);
+    return {
+        c() {
+            div2 = element('div');
+            div1 = element('div');
+            div0 = element('div');
+            t0 = text(t0_value);
+            t1 = text(' (line: ');
+            t2 = text(t2_value);
+            t3 = text(')');
+            t4 = space();
+            attr(div0, 'class', 'tree-item-inner nav-link-title-content');
+            attr(div1, 'class', 'tree-item-self is-clickable nav-link-title');
+            attr(div2, 'class', 'tree-item nav-link');
+        },
+        m(target, anchor) {
+            insert$1(target, div2, anchor);
+            append(div2, div1);
+            append(div1, div0);
+            append(div0, t0);
+            append(div0, t1);
+            append(div0, t2);
+            append(div0, t3);
+            append(div2, t4);
 
-			if (!mounted) {
-				dispose = [
-					listen(div1, "click", click_handler_1),
-					listen(div1, "auxclick", auxclick_handler)
-				];
+            if (!mounted) {
+                dispose = [listen(div1, 'click', click_handler_1), listen(div1, 'auxclick', auxclick_handler)];
 
-				mounted = true;
-			}
-		},
-		p(new_ctx, dirty) {
-			ctx = new_ctx;
-			if (dirty & /*linkGroup*/ 1 && t0_value !== (t0_value = /*link*/ ctx[10].parent.name + "")) set_data(t0, t0_value);
-			if (dirty & /*linkGroup*/ 1 && t2_value !== (t2_value = /*link*/ ctx[10].position.start.line + 1 + "")) set_data(t2, t2_value);
-		},
-		d(detaching) {
-			if (detaching) {
-				detach(div2);
-			}
+                mounted = true;
+            }
+        },
+        p(new_ctx, dirty) {
+            ctx = new_ctx;
+            if (dirty & /*linkGroup*/ 1 && t0_value !== (t0_value = /*link*/ ctx[10].parent.name + ''))
+                set_data(t0, t0_value);
+            if (dirty & /*linkGroup*/ 1 && t2_value !== (t2_value = /*link*/ ctx[10].position.start.line + 1 + ''))
+                set_data(t2, t2_value);
+        },
+        d(detaching) {
+            if (detaching) {
+                detach(div2);
+            }
 
-			mounted = false;
-			run_all(dispose);
-		}
-	};
+            mounted = false;
+            run_all(dispose);
+        },
+    };
 }
 
 function create_fragment$2(ctx) {
-	let div6;
-	let div4;
-	let div0;
-	let t0;
-	let div1;
-	let t1;
-	let div2;
-	let t2_value = /*linkGroup*/ ctx[0].id + "";
-	let t2;
-	let t3;
-	let div3;
-	let span;
-	let t4_value = /*linkGroup*/ ctx[0].links.length + "";
-	let t4;
-	let t5;
-	let div5;
-	let div6_id_value;
-	let mounted;
-	let dispose;
-	let each_value = ensure_array_like(/*linkGroup*/ ctx[0].links);
-	let each_blocks = [];
+    let div6;
+    let div4;
+    let div0;
+    let t0;
+    let div1;
+    let t1;
+    let div2;
+    let t2_value = /*linkGroup*/ ctx[0].id + '';
+    let t2;
+    let t3;
+    let div3;
+    let span;
+    let t4_value = /*linkGroup*/ ctx[0].links.length + '';
+    let t4;
+    let t5;
+    let div5;
+    let div6_id_value;
+    let mounted;
+    let dispose;
+    let each_value = ensure_array_like(/*linkGroup*/ ctx[0].links);
+    let each_blocks = [];
 
-	for (let i = 0; i < each_value.length; i += 1) {
-		each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
-	}
+    for (let i = 0; i < each_value.length; i += 1) {
+        each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
+    }
 
-	return {
-		c() {
-			div6 = element("div");
-			div4 = element("div");
-			div0 = element("div");
-			t0 = space();
-			div1 = element("div");
-			t1 = space();
-			div2 = element("div");
-			t2 = text(t2_value);
-			t3 = space();
-			div3 = element("div");
-			span = element("span");
-			t4 = text(t4_value);
-			t5 = space();
-			div5 = element("div");
+    return {
+        c() {
+            div6 = element('div');
+            div4 = element('div');
+            div0 = element('div');
+            t0 = space();
+            div1 = element('div');
+            t1 = space();
+            div2 = element('div');
+            t2 = text(t2_value);
+            t3 = space();
+            div3 = element('div');
+            span = element('span');
+            t4 = text(t4_value);
+            t5 = space();
+            div5 = element('div');
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                each_blocks[i].c();
+            }
 
-			attr(div0, "class", "tree-item-icon collapse-icon nav-folder-collapse-indicator");
-			attr(div0, "data-icon", "right-triangle");
-			toggle_class(div0, "is-collapsed", /*isCollapsed*/ ctx[4]);
-			attr(div1, "class", "tree-item-icon");
-			attr(div1, "data-icon", "lucide-link");
-			attr(div2, "class", "tree-item-inner nav-file-title-content");
-			attr(span, "class", "tree-item-flair");
-			attr(div3, "class", "tree-item-flair-outer nav-file-link-count");
-			attr(div4, "class", "tree-item-self is-clickable nav-file-title");
-			attr(div5, "class", "tree-item-children nav-link-children");
-			toggle_class(div5, "hidden", /*isCollapsed*/ ctx[4]);
-			attr(div6, "id", div6_id_value = /*linkGroup*/ ctx[0].id);
-			attr(div6, "class", "tree-item nav-link-group");
-			toggle_class(div6, "hidden", !/*linkGroup*/ ctx[0].show);
-		},
-		m(target, anchor) {
-			insert$1(target, div6, anchor);
-			append(div6, div4);
-			append(div4, div0);
-			append(div4, t0);
-			append(div4, div1);
-			append(div4, t1);
-			append(div4, div2);
-			append(div2, t2);
-			append(div4, t3);
-			append(div4, div3);
-			append(div3, span);
-			append(span, t4);
-			append(div6, t5);
-			append(div6, div5);
+            attr(div0, 'class', 'tree-item-icon collapse-icon nav-folder-collapse-indicator');
+            attr(div0, 'data-icon', 'right-triangle');
+            toggle_class(div0, 'is-collapsed', /*isCollapsed*/ ctx[4]);
+            attr(div1, 'class', 'tree-item-icon');
+            attr(div1, 'data-icon', 'lucide-link');
+            attr(div2, 'class', 'tree-item-inner nav-file-title-content');
+            attr(span, 'class', 'tree-item-flair');
+            attr(div3, 'class', 'tree-item-flair-outer nav-file-link-count');
+            attr(div4, 'class', 'tree-item-self is-clickable nav-file-title');
+            attr(div5, 'class', 'tree-item-children nav-link-children');
+            toggle_class(div5, 'hidden', /*isCollapsed*/ ctx[4]);
+            attr(div6, 'id', (div6_id_value = /*linkGroup*/ ctx[0].id));
+            attr(div6, 'class', 'tree-item nav-link-group');
+            toggle_class(div6, 'hidden', !(/*linkGroup*/ ctx[0].show));
+        },
+        m(target, anchor) {
+            insert$1(target, div6, anchor);
+            append(div6, div4);
+            append(div4, div0);
+            append(div4, t0);
+            append(div4, div1);
+            append(div4, t1);
+            append(div4, div2);
+            append(div2, t2);
+            append(div4, t3);
+            append(div4, div3);
+            append(div3, span);
+            append(span, t4);
+            append(div6, t5);
+            append(div6, div5);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				if (each_blocks[i]) {
-					each_blocks[i].m(div5, null);
-				}
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                if (each_blocks[i]) {
+                    each_blocks[i].m(div5, null);
+                }
+            }
 
-			/*div6_binding*/ ctx[9](div6);
+            /*div6_binding*/ ctx[9](div6);
 
-			if (!mounted) {
-				dispose = listen(div4, "click", /*click_handler*/ ctx[6]);
-				mounted = true;
-			}
-		},
-		p(ctx, [dirty]) {
-			if (dirty & /*isCollapsed*/ 16) {
-				toggle_class(div0, "is-collapsed", /*isCollapsed*/ ctx[4]);
-			}
+            if (!mounted) {
+                dispose = listen(div4, 'click', /*click_handler*/ ctx[6]);
+                mounted = true;
+            }
+        },
+        p(ctx, [dirty]) {
+            if (dirty & /*isCollapsed*/ 16) {
+                toggle_class(div0, 'is-collapsed', /*isCollapsed*/ ctx[4]);
+            }
 
-			if (dirty & /*linkGroup*/ 1 && t2_value !== (t2_value = /*linkGroup*/ ctx[0].id + "")) set_data(t2, t2_value);
-			if (dirty & /*linkGroup*/ 1 && t4_value !== (t4_value = /*linkGroup*/ ctx[0].links.length + "")) set_data(t4, t4_value);
+            if (dirty & /*linkGroup*/ 1 && t2_value !== (t2_value = /*linkGroup*/ ctx[0].id + ''))
+                set_data(t2, t2_value);
+            if (dirty & /*linkGroup*/ 1 && t4_value !== (t4_value = /*linkGroup*/ ctx[0].links.length + ''))
+                set_data(t4, t4_value);
 
-			if (dirty & /*linkClicked, linkGroup*/ 5) {
-				each_value = ensure_array_like(/*linkGroup*/ ctx[0].links);
-				let i;
+            if (dirty & /*linkClicked, linkGroup*/ 5) {
+                each_value = ensure_array_like(/*linkGroup*/ ctx[0].links);
+                let i;
 
-				for (i = 0; i < each_value.length; i += 1) {
-					const child_ctx = get_each_context$2(ctx, each_value, i);
+                for (i = 0; i < each_value.length; i += 1) {
+                    const child_ctx = get_each_context$2(ctx, each_value, i);
 
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-					} else {
-						each_blocks[i] = create_each_block$2(child_ctx);
-						each_blocks[i].c();
-						each_blocks[i].m(div5, null);
-					}
-				}
+                    if (each_blocks[i]) {
+                        each_blocks[i].p(child_ctx, dirty);
+                    } else {
+                        each_blocks[i] = create_each_block$2(child_ctx);
+                        each_blocks[i].c();
+                        each_blocks[i].m(div5, null);
+                    }
+                }
 
-				for (; i < each_blocks.length; i += 1) {
-					each_blocks[i].d(1);
-				}
+                for (; i < each_blocks.length; i += 1) {
+                    each_blocks[i].d(1);
+                }
 
-				each_blocks.length = each_value.length;
-			}
+                each_blocks.length = each_value.length;
+            }
 
-			if (dirty & /*isCollapsed*/ 16) {
-				toggle_class(div5, "hidden", /*isCollapsed*/ ctx[4]);
-			}
+            if (dirty & /*isCollapsed*/ 16) {
+                toggle_class(div5, 'hidden', /*isCollapsed*/ ctx[4]);
+            }
 
-			if (dirty & /*linkGroup*/ 1 && div6_id_value !== (div6_id_value = /*linkGroup*/ ctx[0].id)) {
-				attr(div6, "id", div6_id_value);
-			}
+            if (dirty & /*linkGroup*/ 1 && div6_id_value !== (div6_id_value = /*linkGroup*/ ctx[0].id)) {
+                attr(div6, 'id', div6_id_value);
+            }
 
-			if (dirty & /*linkGroup*/ 1) {
-				toggle_class(div6, "hidden", !/*linkGroup*/ ctx[0].show);
-			}
-		},
-		i: noop,
-		o: noop,
-		d(detaching) {
-			if (detaching) {
-				detach(div6);
-			}
+            if (dirty & /*linkGroup*/ 1) {
+                toggle_class(div6, 'hidden', !(/*linkGroup*/ ctx[0].show));
+            }
+        },
+        i: noop,
+        o: noop,
+        d(detaching) {
+            if (detaching) {
+                detach(div6);
+            }
 
-			destroy_each(each_blocks, detaching);
-			/*div6_binding*/ ctx[9](null);
-			mounted = false;
-			dispose();
-		}
-	};
+            destroy_each(each_blocks, detaching);
+            /*div6_binding*/ ctx[9](null);
+            mounted = false;
+            dispose();
+        },
+    };
 }
 
 function instance$2($$self, $$props, $$invalidate) {
-	let { plugin } = $$props;
-	let { linkGroup } = $$props;
-	let { expandableItemClicked } = $$props;
-	let { linkClicked } = $$props;
-	let el;
-	let isCollapsed = !plugin.settings.expandedLinkItems.contains(linkGroup.id);
+    let { plugin } = $$props;
+    let { linkGroup } = $$props;
+    let { expandableItemClicked } = $$props;
+    let { linkClicked } = $$props;
+    let el;
+    let isCollapsed = !plugin.settings.expandedLinkItems.contains(linkGroup.id);
 
-	afterUpdate(() => {
-		$$invalidate(4, isCollapsed = !plugin.settings.expandedLinkItems.contains(linkGroup.id));
-	});
+    afterUpdate(() => {
+        $$invalidate(4, (isCollapsed = !plugin.settings.expandedLinkItems.contains(linkGroup.id)));
+    });
 
-	const click_handler = e => expandableItemClicked(e, el);
+    const click_handler = (e) => expandableItemClicked(e, el);
 
-	const click_handler_1 = (link, e) => {
-		linkClicked(e, link);
-	};
+    const click_handler_1 = (link, e) => {
+        linkClicked(e, link);
+    };
 
-	const auxclick_handler = (link, e) => {
-		linkClicked(e, link);
-	};
+    const auxclick_handler = (link, e) => {
+        linkClicked(e, link);
+    };
 
-	function div6_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			el = $$value;
-			$$invalidate(3, el);
-		});
-	}
+    function div6_binding($$value) {
+        binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+            el = $$value;
+            $$invalidate(3, el);
+        });
+    }
 
-	$$self.$$set = $$props => {
-		if ('plugin' in $$props) $$invalidate(5, plugin = $$props.plugin);
-		if ('linkGroup' in $$props) $$invalidate(0, linkGroup = $$props.linkGroup);
-		if ('expandableItemClicked' in $$props) $$invalidate(1, expandableItemClicked = $$props.expandableItemClicked);
-		if ('linkClicked' in $$props) $$invalidate(2, linkClicked = $$props.linkClicked);
-	};
+    $$self.$$set = ($$props) => {
+        if ('plugin' in $$props) $$invalidate(5, (plugin = $$props.plugin));
+        if ('linkGroup' in $$props) $$invalidate(0, (linkGroup = $$props.linkGroup));
+        if ('expandableItemClicked' in $$props)
+            $$invalidate(1, (expandableItemClicked = $$props.expandableItemClicked));
+        if ('linkClicked' in $$props) $$invalidate(2, (linkClicked = $$props.linkClicked));
+    };
 
-	return [
-		linkGroup,
-		expandableItemClicked,
-		linkClicked,
-		el,
-		isCollapsed,
-		plugin,
-		click_handler,
-		click_handler_1,
-		auxclick_handler,
-		div6_binding
-	];
+    return [
+        linkGroup,
+        expandableItemClicked,
+        linkClicked,
+        el,
+        isCollapsed,
+        plugin,
+        click_handler,
+        click_handler_1,
+        auxclick_handler,
+        div6_binding,
+    ];
 }
 
 class Tree_item_link_group extends SvelteComponent {
-	constructor(options) {
-		super();
+    constructor(options) {
+        super();
 
-		init(this, options, instance$2, create_fragment$2, safe_not_equal, {
-			plugin: 5,
-			linkGroup: 0,
-			expandableItemClicked: 1,
-			linkClicked: 2
-		});
-	}
+        init(this, options, instance$2, create_fragment$2, safe_not_equal, {
+            plugin: 5,
+            linkGroup: 0,
+            expandableItemClicked: 1,
+            linkClicked: 2,
+        });
+    }
 }
 
 /* src/views/broken-links-tree.svelte generated by Svelte v4.2.9 */
 
 function get_each_context$1(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[25] = list[i];
-	return child_ctx;
+    const child_ctx = ctx.slice();
+    child_ctx[25] = list[i];
+    return child_ctx;
 }
 
 function get_each_context_1(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[28] = list[i];
-	return child_ctx;
+    const child_ctx = ctx.slice();
+    child_ctx[28] = list[i];
+    return child_ctx;
 }
 
 function get_each_context_2(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[28] = list[i];
-	return child_ctx;
+    const child_ctx = ctx.slice();
+    child_ctx[28] = list[i];
+    return child_ctx;
 }
 
 function get_each_context_3(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[33] = list[i];
-	return child_ctx;
+    const child_ctx = ctx.slice();
+    child_ctx[33] = list[i];
+    return child_ctx;
 }
 
 // (64:4) {#if groupBy == LinkGrouping.ByLink}
 function create_if_block_3(ctx) {
-	let div3;
-	let div2;
-	let input;
-	let t0;
-	let div0;
-	let t1;
-	let div1;
-	let mounted;
-	let dispose;
+    let div3;
+    let div2;
+    let input;
+    let t0;
+    let div0;
+    let t1;
+    let div1;
+    let mounted;
+    let dispose;
 
-	return {
-		c() {
-			div3 = element("div");
-			div2 = element("div");
-			input = element("input");
-			t0 = space();
-			div0 = element("div");
-			t1 = space();
-			div1 = element("div");
-			attr(input, "type", "search");
-			attr(input, "spellcheck", "false");
-			attr(input, "placeholder", "Filter...");
-			attr(div0, "class", "filter-input-clear-button");
-			attr(div0, "aria-label", "Clear filter");
-			attr(div1, "class", "input-right-decorator clickable-icon");
-			attr(div1, "aria-label", "Match case");
-			attr(div1, "data-icon", "uppercase-lowercase-a");
-			toggle_class(div1, "is-active", /*linkFilter*/ ctx[0].matchCase);
-			attr(div2, "class", "filter-input-container");
-			attr(div3, "class", "filter-row");
-		},
-		m(target, anchor) {
-			insert$1(target, div3, anchor);
-			append(div3, div2);
-			append(div2, input);
-			set_input_value(input, /*linkFilter*/ ctx[0].filterString);
-			append(div2, t0);
-			append(div2, div0);
-			append(div2, t1);
-			append(div2, div1);
+    return {
+        c() {
+            div3 = element('div');
+            div2 = element('div');
+            input = element('input');
+            t0 = space();
+            div0 = element('div');
+            t1 = space();
+            div1 = element('div');
+            attr(input, 'type', 'search');
+            attr(input, 'spellcheck', 'false');
+            attr(input, 'placeholder', 'Filter...');
+            attr(div0, 'class', 'filter-input-clear-button');
+            attr(div0, 'aria-label', 'Clear filter');
+            attr(div1, 'class', 'input-right-decorator clickable-icon');
+            attr(div1, 'aria-label', 'Match case');
+            attr(div1, 'data-icon', 'uppercase-lowercase-a');
+            toggle_class(div1, 'is-active', /*linkFilter*/ ctx[0].matchCase);
+            attr(div2, 'class', 'filter-input-container');
+            attr(div3, 'class', 'filter-row');
+        },
+        m(target, anchor) {
+            insert$1(target, div3, anchor);
+            append(div3, div2);
+            append(div2, input);
+            set_input_value(input, /*linkFilter*/ ctx[0].filterString);
+            append(div2, t0);
+            append(div2, div0);
+            append(div2, t1);
+            append(div2, div1);
 
-			if (!mounted) {
-				dispose = [
-					listen(input, "input", /*input_input_handler*/ ctx[17]),
-					listen(input, "input", /*input_handler*/ ctx[18]),
-					listen(div0, "click", /*click_handler_1*/ ctx[19]),
-					listen(div1, "click", /*click_handler_2*/ ctx[20])
-				];
+            if (!mounted) {
+                dispose = [
+                    listen(input, 'input', /*input_input_handler*/ ctx[17]),
+                    listen(input, 'input', /*input_handler*/ ctx[18]),
+                    listen(div0, 'click', /*click_handler_1*/ ctx[19]),
+                    listen(div1, 'click', /*click_handler_2*/ ctx[20]),
+                ];
 
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty[0] & /*linkFilter*/ 1 && input.value !== /*linkFilter*/ ctx[0].filterString) {
-				set_input_value(input, /*linkFilter*/ ctx[0].filterString);
-			}
+                mounted = true;
+            }
+        },
+        p(ctx, dirty) {
+            if (dirty[0] & /*linkFilter*/ 1 && input.value !== /*linkFilter*/ ctx[0].filterString) {
+                set_input_value(input, /*linkFilter*/ ctx[0].filterString);
+            }
 
-			if (dirty[0] & /*linkFilter*/ 1) {
-				toggle_class(div1, "is-active", /*linkFilter*/ ctx[0].matchCase);
-			}
-		},
-		d(detaching) {
-			if (detaching) {
-				detach(div3);
-			}
+            if (dirty[0] & /*linkFilter*/ 1) {
+                toggle_class(div1, 'is-active', /*linkFilter*/ ctx[0].matchCase);
+            }
+        },
+        d(detaching) {
+            if (detaching) {
+                detach(div3);
+            }
 
-			mounted = false;
-			run_all(dispose);
-		}
-	};
+            mounted = false;
+            run_all(dispose);
+        },
+    };
 }
 
 // (103:12) {#if groupBy == LinkGrouping.ByFolder}
 function create_if_block_2(ctx) {
-	let t;
-	let each1_anchor;
-	let current;
-	let each_value_3 = ensure_array_like(/*brokenLinks*/ ctx[2].byFolder.folders);
-	let each_blocks_1 = [];
+    let t;
+    let each1_anchor;
+    let current;
+    let each_value_3 = ensure_array_like(/*brokenLinks*/ ctx[2].byFolder.folders);
+    let each_blocks_1 = [];
 
-	for (let i = 0; i < each_value_3.length; i += 1) {
-		each_blocks_1[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
-	}
+    for (let i = 0; i < each_value_3.length; i += 1) {
+        each_blocks_1[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
+    }
 
-	const out = i => transition_out(each_blocks_1[i], 1, 1, () => {
-		each_blocks_1[i] = null;
-	});
+    const out = (i) =>
+        transition_out(each_blocks_1[i], 1, 1, () => {
+            each_blocks_1[i] = null;
+        });
 
-	let each_value_2 = ensure_array_like(/*brokenLinks*/ ctx[2].byFolder.files);
-	let each_blocks = [];
+    let each_value_2 = ensure_array_like(/*brokenLinks*/ ctx[2].byFolder.files);
+    let each_blocks = [];
 
-	for (let i = 0; i < each_value_2.length; i += 1) {
-		each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
-	}
+    for (let i = 0; i < each_value_2.length; i += 1) {
+        each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+    }
 
-	const out_1 = i => transition_out(each_blocks[i], 1, 1, () => {
-		each_blocks[i] = null;
-	});
+    const out_1 = (i) =>
+        transition_out(each_blocks[i], 1, 1, () => {
+            each_blocks[i] = null;
+        });
 
-	return {
-		c() {
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].c();
-			}
+    return {
+        c() {
+            for (let i = 0; i < each_blocks_1.length; i += 1) {
+                each_blocks_1[i].c();
+            }
 
-			t = space();
+            t = space();
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                each_blocks[i].c();
+            }
 
-			each1_anchor = empty();
-		},
-		m(target, anchor) {
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				if (each_blocks_1[i]) {
-					each_blocks_1[i].m(target, anchor);
-				}
-			}
+            each1_anchor = empty();
+        },
+        m(target, anchor) {
+            for (let i = 0; i < each_blocks_1.length; i += 1) {
+                if (each_blocks_1[i]) {
+                    each_blocks_1[i].m(target, anchor);
+                }
+            }
 
-			insert$1(target, t, anchor);
+            insert$1(target, t, anchor);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				if (each_blocks[i]) {
-					each_blocks[i].m(target, anchor);
-				}
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                if (each_blocks[i]) {
+                    each_blocks[i].m(target, anchor);
+                }
+            }
 
-			insert$1(target, each1_anchor, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			if (dirty[0] & /*plugin, brokenLinks, linkClicked, expandableItemClicked, folderContextClicked*/ 1414) {
-				each_value_3 = ensure_array_like(/*brokenLinks*/ ctx[2].byFolder.folders);
-				let i;
+            insert$1(target, each1_anchor, anchor);
+            current = true;
+        },
+        p(ctx, dirty) {
+            if (dirty[0] & /*plugin, brokenLinks, linkClicked, expandableItemClicked, folderContextClicked*/ 1414) {
+                each_value_3 = ensure_array_like(/*brokenLinks*/ ctx[2].byFolder.folders);
+                let i;
 
-				for (i = 0; i < each_value_3.length; i += 1) {
-					const child_ctx = get_each_context_3(ctx, each_value_3, i);
+                for (i = 0; i < each_value_3.length; i += 1) {
+                    const child_ctx = get_each_context_3(ctx, each_value_3, i);
 
-					if (each_blocks_1[i]) {
-						each_blocks_1[i].p(child_ctx, dirty);
-						transition_in(each_blocks_1[i], 1);
-					} else {
-						each_blocks_1[i] = create_each_block_3(child_ctx);
-						each_blocks_1[i].c();
-						transition_in(each_blocks_1[i], 1);
-						each_blocks_1[i].m(t.parentNode, t);
-					}
-				}
+                    if (each_blocks_1[i]) {
+                        each_blocks_1[i].p(child_ctx, dirty);
+                        transition_in(each_blocks_1[i], 1);
+                    } else {
+                        each_blocks_1[i] = create_each_block_3(child_ctx);
+                        each_blocks_1[i].c();
+                        transition_in(each_blocks_1[i], 1);
+                        each_blocks_1[i].m(t.parentNode, t);
+                    }
+                }
 
-				group_outros();
+                group_outros();
 
-				for (i = each_value_3.length; i < each_blocks_1.length; i += 1) {
-					out(i);
-				}
+                for (i = each_value_3.length; i < each_blocks_1.length; i += 1) {
+                    out(i);
+                }
 
-				check_outros();
-			}
+                check_outros();
+            }
 
-			if (dirty[0] & /*plugin, brokenLinks, expandableItemClicked, linkClicked*/ 1158) {
-				each_value_2 = ensure_array_like(/*brokenLinks*/ ctx[2].byFolder.files);
-				let i;
+            if (dirty[0] & /*plugin, brokenLinks, expandableItemClicked, linkClicked*/ 1158) {
+                each_value_2 = ensure_array_like(/*brokenLinks*/ ctx[2].byFolder.files);
+                let i;
 
-				for (i = 0; i < each_value_2.length; i += 1) {
-					const child_ctx = get_each_context_2(ctx, each_value_2, i);
+                for (i = 0; i < each_value_2.length; i += 1) {
+                    const child_ctx = get_each_context_2(ctx, each_value_2, i);
 
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-						transition_in(each_blocks[i], 1);
-					} else {
-						each_blocks[i] = create_each_block_2(child_ctx);
-						each_blocks[i].c();
-						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(each1_anchor.parentNode, each1_anchor);
-					}
-				}
+                    if (each_blocks[i]) {
+                        each_blocks[i].p(child_ctx, dirty);
+                        transition_in(each_blocks[i], 1);
+                    } else {
+                        each_blocks[i] = create_each_block_2(child_ctx);
+                        each_blocks[i].c();
+                        transition_in(each_blocks[i], 1);
+                        each_blocks[i].m(each1_anchor.parentNode, each1_anchor);
+                    }
+                }
 
-				group_outros();
+                group_outros();
 
-				for (i = each_value_2.length; i < each_blocks.length; i += 1) {
-					out_1(i);
-				}
+                for (i = each_value_2.length; i < each_blocks.length; i += 1) {
+                    out_1(i);
+                }
 
-				check_outros();
-			}
-		},
-		i(local) {
-			if (current) return;
+                check_outros();
+            }
+        },
+        i(local) {
+            if (current) return;
 
-			for (let i = 0; i < each_value_3.length; i += 1) {
-				transition_in(each_blocks_1[i]);
-			}
+            for (let i = 0; i < each_value_3.length; i += 1) {
+                transition_in(each_blocks_1[i]);
+            }
 
-			for (let i = 0; i < each_value_2.length; i += 1) {
-				transition_in(each_blocks[i]);
-			}
+            for (let i = 0; i < each_value_2.length; i += 1) {
+                transition_in(each_blocks[i]);
+            }
 
-			current = true;
-		},
-		o(local) {
-			each_blocks_1 = each_blocks_1.filter(Boolean);
+            current = true;
+        },
+        o(local) {
+            each_blocks_1 = each_blocks_1.filter(Boolean);
 
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				transition_out(each_blocks_1[i]);
-			}
+            for (let i = 0; i < each_blocks_1.length; i += 1) {
+                transition_out(each_blocks_1[i]);
+            }
 
-			each_blocks = each_blocks.filter(Boolean);
+            each_blocks = each_blocks.filter(Boolean);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				transition_out(each_blocks[i]);
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                transition_out(each_blocks[i]);
+            }
 
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) {
-				detach(t);
-				detach(each1_anchor);
-			}
+            current = false;
+        },
+        d(detaching) {
+            if (detaching) {
+                detach(t);
+                detach(each1_anchor);
+            }
 
-			destroy_each(each_blocks_1, detaching);
-			destroy_each(each_blocks, detaching);
-		}
-	};
+            destroy_each(each_blocks_1, detaching);
+            destroy_each(each_blocks, detaching);
+        },
+    };
 }
 
 // (104:16) {#each brokenLinks.byFolder.folders as folder}
 function create_each_block_3(ctx) {
-	let folder_1;
-	let current;
+    let folder_1;
+    let current;
 
-	folder_1 = new Tree_item_folder({
-			props: {
-				plugin: /*plugin*/ ctx[1],
-				folder: /*folder*/ ctx[33],
-				linkClicked: /*linkClicked*/ ctx[10],
-				expandableItemClicked: /*expandableItemClicked*/ ctx[7],
-				folderContextClicked: /*folderContextClicked*/ ctx[8]
-			}
-		});
+    folder_1 = new Tree_item_folder({
+        props: {
+            plugin: /*plugin*/ ctx[1],
+            folder: /*folder*/ ctx[33],
+            linkClicked: /*linkClicked*/ ctx[10],
+            expandableItemClicked: /*expandableItemClicked*/ ctx[7],
+            folderContextClicked: /*folderContextClicked*/ ctx[8],
+        },
+    });
 
-	return {
-		c() {
-			create_component(folder_1.$$.fragment);
-		},
-		m(target, anchor) {
-			mount_component(folder_1, target, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			const folder_1_changes = {};
-			if (dirty[0] & /*plugin*/ 2) folder_1_changes.plugin = /*plugin*/ ctx[1];
-			if (dirty[0] & /*brokenLinks*/ 4) folder_1_changes.folder = /*folder*/ ctx[33];
-			if (dirty[0] & /*linkClicked*/ 1024) folder_1_changes.linkClicked = /*linkClicked*/ ctx[10];
-			if (dirty[0] & /*expandableItemClicked*/ 128) folder_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[7];
-			if (dirty[0] & /*folderContextClicked*/ 256) folder_1_changes.folderContextClicked = /*folderContextClicked*/ ctx[8];
-			folder_1.$set(folder_1_changes);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(folder_1.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(folder_1.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			destroy_component(folder_1, detaching);
-		}
-	};
+    return {
+        c() {
+            create_component(folder_1.$$.fragment);
+        },
+        m(target, anchor) {
+            mount_component(folder_1, target, anchor);
+            current = true;
+        },
+        p(ctx, dirty) {
+            const folder_1_changes = {};
+            if (dirty[0] & /*plugin*/ 2) folder_1_changes.plugin = /*plugin*/ ctx[1];
+            if (dirty[0] & /*brokenLinks*/ 4) folder_1_changes.folder = /*folder*/ ctx[33];
+            if (dirty[0] & /*linkClicked*/ 1024) folder_1_changes.linkClicked = /*linkClicked*/ ctx[10];
+            if (dirty[0] & /*expandableItemClicked*/ 128)
+                folder_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[7];
+            if (dirty[0] & /*folderContextClicked*/ 256)
+                folder_1_changes.folderContextClicked = /*folderContextClicked*/ ctx[8];
+            folder_1.$set(folder_1_changes);
+        },
+        i(local) {
+            if (current) return;
+            transition_in(folder_1.$$.fragment, local);
+            current = true;
+        },
+        o(local) {
+            transition_out(folder_1.$$.fragment, local);
+            current = false;
+        },
+        d(detaching) {
+            destroy_component(folder_1, detaching);
+        },
+    };
 }
 
 // (107:16) {#each brokenLinks.byFolder.files as file}
 function create_each_block_2(ctx) {
-	let file_1;
-	let current;
+    let file_1;
+    let current;
 
-	file_1 = new Tree_item_file({
-			props: {
-				plugin: /*plugin*/ ctx[1],
-				file: /*file*/ ctx[28],
-				expandableItemClicked: /*expandableItemClicked*/ ctx[7],
-				linkClicked: /*linkClicked*/ ctx[10]
-			}
-		});
+    file_1 = new Tree_item_file({
+        props: {
+            plugin: /*plugin*/ ctx[1],
+            file: /*file*/ ctx[28],
+            expandableItemClicked: /*expandableItemClicked*/ ctx[7],
+            linkClicked: /*linkClicked*/ ctx[10],
+        },
+    });
 
-	return {
-		c() {
-			create_component(file_1.$$.fragment);
-		},
-		m(target, anchor) {
-			mount_component(file_1, target, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			const file_1_changes = {};
-			if (dirty[0] & /*plugin*/ 2) file_1_changes.plugin = /*plugin*/ ctx[1];
-			if (dirty[0] & /*brokenLinks*/ 4) file_1_changes.file = /*file*/ ctx[28];
-			if (dirty[0] & /*expandableItemClicked*/ 128) file_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[7];
-			if (dirty[0] & /*linkClicked*/ 1024) file_1_changes.linkClicked = /*linkClicked*/ ctx[10];
-			file_1.$set(file_1_changes);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(file_1.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(file_1.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			destroy_component(file_1, detaching);
-		}
-	};
+    return {
+        c() {
+            create_component(file_1.$$.fragment);
+        },
+        m(target, anchor) {
+            mount_component(file_1, target, anchor);
+            current = true;
+        },
+        p(ctx, dirty) {
+            const file_1_changes = {};
+            if (dirty[0] & /*plugin*/ 2) file_1_changes.plugin = /*plugin*/ ctx[1];
+            if (dirty[0] & /*brokenLinks*/ 4) file_1_changes.file = /*file*/ ctx[28];
+            if (dirty[0] & /*expandableItemClicked*/ 128)
+                file_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[7];
+            if (dirty[0] & /*linkClicked*/ 1024) file_1_changes.linkClicked = /*linkClicked*/ ctx[10];
+            file_1.$set(file_1_changes);
+        },
+        i(local) {
+            if (current) return;
+            transition_in(file_1.$$.fragment, local);
+            current = true;
+        },
+        o(local) {
+            transition_out(file_1.$$.fragment, local);
+            current = false;
+        },
+        d(detaching) {
+            destroy_component(file_1, detaching);
+        },
+    };
 }
 
 // (111:12) {#if groupBy == LinkGrouping.ByFile}
 function create_if_block_1(ctx) {
-	let each_1_anchor;
-	let current;
-	let each_value_1 = ensure_array_like(/*brokenLinks*/ ctx[2].byFile);
-	let each_blocks = [];
+    let each_1_anchor;
+    let current;
+    let each_value_1 = ensure_array_like(/*brokenLinks*/ ctx[2].byFile);
+    let each_blocks = [];
 
-	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-	}
+    for (let i = 0; i < each_value_1.length; i += 1) {
+        each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    }
 
-	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-		each_blocks[i] = null;
-	});
+    const out = (i) =>
+        transition_out(each_blocks[i], 1, 1, () => {
+            each_blocks[i] = null;
+        });
 
-	return {
-		c() {
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
+    return {
+        c() {
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                each_blocks[i].c();
+            }
 
-			each_1_anchor = empty();
-		},
-		m(target, anchor) {
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				if (each_blocks[i]) {
-					each_blocks[i].m(target, anchor);
-				}
-			}
+            each_1_anchor = empty();
+        },
+        m(target, anchor) {
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                if (each_blocks[i]) {
+                    each_blocks[i].m(target, anchor);
+                }
+            }
 
-			insert$1(target, each_1_anchor, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			if (dirty[0] & /*plugin, brokenLinks, expandableItemClicked, linkClicked*/ 1158) {
-				each_value_1 = ensure_array_like(/*brokenLinks*/ ctx[2].byFile);
-				let i;
+            insert$1(target, each_1_anchor, anchor);
+            current = true;
+        },
+        p(ctx, dirty) {
+            if (dirty[0] & /*plugin, brokenLinks, expandableItemClicked, linkClicked*/ 1158) {
+                each_value_1 = ensure_array_like(/*brokenLinks*/ ctx[2].byFile);
+                let i;
 
-				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+                for (i = 0; i < each_value_1.length; i += 1) {
+                    const child_ctx = get_each_context_1(ctx, each_value_1, i);
 
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-						transition_in(each_blocks[i], 1);
-					} else {
-						each_blocks[i] = create_each_block_1(child_ctx);
-						each_blocks[i].c();
-						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-					}
-				}
+                    if (each_blocks[i]) {
+                        each_blocks[i].p(child_ctx, dirty);
+                        transition_in(each_blocks[i], 1);
+                    } else {
+                        each_blocks[i] = create_each_block_1(child_ctx);
+                        each_blocks[i].c();
+                        transition_in(each_blocks[i], 1);
+                        each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+                    }
+                }
 
-				group_outros();
+                group_outros();
 
-				for (i = each_value_1.length; i < each_blocks.length; i += 1) {
-					out(i);
-				}
+                for (i = each_value_1.length; i < each_blocks.length; i += 1) {
+                    out(i);
+                }
 
-				check_outros();
-			}
-		},
-		i(local) {
-			if (current) return;
+                check_outros();
+            }
+        },
+        i(local) {
+            if (current) return;
 
-			for (let i = 0; i < each_value_1.length; i += 1) {
-				transition_in(each_blocks[i]);
-			}
+            for (let i = 0; i < each_value_1.length; i += 1) {
+                transition_in(each_blocks[i]);
+            }
 
-			current = true;
-		},
-		o(local) {
-			each_blocks = each_blocks.filter(Boolean);
+            current = true;
+        },
+        o(local) {
+            each_blocks = each_blocks.filter(Boolean);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				transition_out(each_blocks[i]);
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                transition_out(each_blocks[i]);
+            }
 
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) {
-				detach(each_1_anchor);
-			}
+            current = false;
+        },
+        d(detaching) {
+            if (detaching) {
+                detach(each_1_anchor);
+            }
 
-			destroy_each(each_blocks, detaching);
-		}
-	};
+            destroy_each(each_blocks, detaching);
+        },
+    };
 }
 
 // (112:16) {#each brokenLinks.byFile as file}
 function create_each_block_1(ctx) {
-	let file_1;
-	let current;
+    let file_1;
+    let current;
 
-	file_1 = new Tree_item_file({
-			props: {
-				plugin: /*plugin*/ ctx[1],
-				file: /*file*/ ctx[28],
-				expandableItemClicked: /*expandableItemClicked*/ ctx[7],
-				linkClicked: /*linkClicked*/ ctx[10]
-			}
-		});
+    file_1 = new Tree_item_file({
+        props: {
+            plugin: /*plugin*/ ctx[1],
+            file: /*file*/ ctx[28],
+            expandableItemClicked: /*expandableItemClicked*/ ctx[7],
+            linkClicked: /*linkClicked*/ ctx[10],
+        },
+    });
 
-	return {
-		c() {
-			create_component(file_1.$$.fragment);
-		},
-		m(target, anchor) {
-			mount_component(file_1, target, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			const file_1_changes = {};
-			if (dirty[0] & /*plugin*/ 2) file_1_changes.plugin = /*plugin*/ ctx[1];
-			if (dirty[0] & /*brokenLinks*/ 4) file_1_changes.file = /*file*/ ctx[28];
-			if (dirty[0] & /*expandableItemClicked*/ 128) file_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[7];
-			if (dirty[0] & /*linkClicked*/ 1024) file_1_changes.linkClicked = /*linkClicked*/ ctx[10];
-			file_1.$set(file_1_changes);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(file_1.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(file_1.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			destroy_component(file_1, detaching);
-		}
-	};
+    return {
+        c() {
+            create_component(file_1.$$.fragment);
+        },
+        m(target, anchor) {
+            mount_component(file_1, target, anchor);
+            current = true;
+        },
+        p(ctx, dirty) {
+            const file_1_changes = {};
+            if (dirty[0] & /*plugin*/ 2) file_1_changes.plugin = /*plugin*/ ctx[1];
+            if (dirty[0] & /*brokenLinks*/ 4) file_1_changes.file = /*file*/ ctx[28];
+            if (dirty[0] & /*expandableItemClicked*/ 128)
+                file_1_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[7];
+            if (dirty[0] & /*linkClicked*/ 1024) file_1_changes.linkClicked = /*linkClicked*/ ctx[10];
+            file_1.$set(file_1_changes);
+        },
+        i(local) {
+            if (current) return;
+            transition_in(file_1.$$.fragment, local);
+            current = true;
+        },
+        o(local) {
+            transition_out(file_1.$$.fragment, local);
+            current = false;
+        },
+        d(detaching) {
+            destroy_component(file_1, detaching);
+        },
+    };
 }
 
 // (116:12) {#if groupBy == LinkGrouping.ByLink}
 function create_if_block(ctx) {
-	let each_1_anchor;
-	let current;
-	let each_value = ensure_array_like(/*brokenLinks*/ ctx[2].byLink);
-	let each_blocks = [];
+    let each_1_anchor;
+    let current;
+    let each_value = ensure_array_like(/*brokenLinks*/ ctx[2].byLink);
+    let each_blocks = [];
 
-	for (let i = 0; i < each_value.length; i += 1) {
-		each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
-	}
+    for (let i = 0; i < each_value.length; i += 1) {
+        each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+    }
 
-	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-		each_blocks[i] = null;
-	});
+    const out = (i) =>
+        transition_out(each_blocks[i], 1, 1, () => {
+            each_blocks[i] = null;
+        });
 
-	return {
-		c() {
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
+    return {
+        c() {
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                each_blocks[i].c();
+            }
 
-			each_1_anchor = empty();
-		},
-		m(target, anchor) {
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				if (each_blocks[i]) {
-					each_blocks[i].m(target, anchor);
-				}
-			}
+            each_1_anchor = empty();
+        },
+        m(target, anchor) {
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                if (each_blocks[i]) {
+                    each_blocks[i].m(target, anchor);
+                }
+            }
 
-			insert$1(target, each_1_anchor, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			if (dirty[0] & /*plugin, brokenLinks, expandableItemClicked, linkClicked*/ 1158) {
-				each_value = ensure_array_like(/*brokenLinks*/ ctx[2].byLink);
-				let i;
+            insert$1(target, each_1_anchor, anchor);
+            current = true;
+        },
+        p(ctx, dirty) {
+            if (dirty[0] & /*plugin, brokenLinks, expandableItemClicked, linkClicked*/ 1158) {
+                each_value = ensure_array_like(/*brokenLinks*/ ctx[2].byLink);
+                let i;
 
-				for (i = 0; i < each_value.length; i += 1) {
-					const child_ctx = get_each_context$1(ctx, each_value, i);
+                for (i = 0; i < each_value.length; i += 1) {
+                    const child_ctx = get_each_context$1(ctx, each_value, i);
 
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-						transition_in(each_blocks[i], 1);
-					} else {
-						each_blocks[i] = create_each_block$1(child_ctx);
-						each_blocks[i].c();
-						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-					}
-				}
+                    if (each_blocks[i]) {
+                        each_blocks[i].p(child_ctx, dirty);
+                        transition_in(each_blocks[i], 1);
+                    } else {
+                        each_blocks[i] = create_each_block$1(child_ctx);
+                        each_blocks[i].c();
+                        transition_in(each_blocks[i], 1);
+                        each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+                    }
+                }
 
-				group_outros();
+                group_outros();
 
-				for (i = each_value.length; i < each_blocks.length; i += 1) {
-					out(i);
-				}
+                for (i = each_value.length; i < each_blocks.length; i += 1) {
+                    out(i);
+                }
 
-				check_outros();
-			}
-		},
-		i(local) {
-			if (current) return;
+                check_outros();
+            }
+        },
+        i(local) {
+            if (current) return;
 
-			for (let i = 0; i < each_value.length; i += 1) {
-				transition_in(each_blocks[i]);
-			}
+            for (let i = 0; i < each_value.length; i += 1) {
+                transition_in(each_blocks[i]);
+            }
 
-			current = true;
-		},
-		o(local) {
-			each_blocks = each_blocks.filter(Boolean);
+            current = true;
+        },
+        o(local) {
+            each_blocks = each_blocks.filter(Boolean);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				transition_out(each_blocks[i]);
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                transition_out(each_blocks[i]);
+            }
 
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) {
-				detach(each_1_anchor);
-			}
+            current = false;
+        },
+        d(detaching) {
+            if (detaching) {
+                detach(each_1_anchor);
+            }
 
-			destroy_each(each_blocks, detaching);
-		}
-	};
+            destroy_each(each_blocks, detaching);
+        },
+    };
 }
 
 // (117:16) {#each brokenLinks.byLink as linkGroup}
 function create_each_block$1(ctx) {
-	let linkgroup;
-	let current;
+    let linkgroup;
+    let current;
 
-	linkgroup = new Tree_item_link_group({
-			props: {
-				plugin: /*plugin*/ ctx[1],
-				linkGroup: /*linkGroup*/ ctx[25],
-				expandableItemClicked: /*expandableItemClicked*/ ctx[7],
-				linkClicked: /*linkClicked*/ ctx[10]
-			}
-		});
+    linkgroup = new Tree_item_link_group({
+        props: {
+            plugin: /*plugin*/ ctx[1],
+            linkGroup: /*linkGroup*/ ctx[25],
+            expandableItemClicked: /*expandableItemClicked*/ ctx[7],
+            linkClicked: /*linkClicked*/ ctx[10],
+        },
+    });
 
-	return {
-		c() {
-			create_component(linkgroup.$$.fragment);
-		},
-		m(target, anchor) {
-			mount_component(linkgroup, target, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			const linkgroup_changes = {};
-			if (dirty[0] & /*plugin*/ 2) linkgroup_changes.plugin = /*plugin*/ ctx[1];
-			if (dirty[0] & /*brokenLinks*/ 4) linkgroup_changes.linkGroup = /*linkGroup*/ ctx[25];
-			if (dirty[0] & /*expandableItemClicked*/ 128) linkgroup_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[7];
-			if (dirty[0] & /*linkClicked*/ 1024) linkgroup_changes.linkClicked = /*linkClicked*/ ctx[10];
-			linkgroup.$set(linkgroup_changes);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(linkgroup.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(linkgroup.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			destroy_component(linkgroup, detaching);
-		}
-	};
+    return {
+        c() {
+            create_component(linkgroup.$$.fragment);
+        },
+        m(target, anchor) {
+            mount_component(linkgroup, target, anchor);
+            current = true;
+        },
+        p(ctx, dirty) {
+            const linkgroup_changes = {};
+            if (dirty[0] & /*plugin*/ 2) linkgroup_changes.plugin = /*plugin*/ ctx[1];
+            if (dirty[0] & /*brokenLinks*/ 4) linkgroup_changes.linkGroup = /*linkGroup*/ ctx[25];
+            if (dirty[0] & /*expandableItemClicked*/ 128)
+                linkgroup_changes.expandableItemClicked = /*expandableItemClicked*/ ctx[7];
+            if (dirty[0] & /*linkClicked*/ 1024) linkgroup_changes.linkClicked = /*linkClicked*/ ctx[10];
+            linkgroup.$set(linkgroup_changes);
+        },
+        i(local) {
+            if (current) return;
+            transition_in(linkgroup.$$.fragment, local);
+            current = true;
+        },
+        o(local) {
+            transition_out(linkgroup.$$.fragment, local);
+            current = false;
+        },
+        d(detaching) {
+            destroy_component(linkgroup, detaching);
+        },
+    };
 }
 
 function create_fragment$1(ctx) {
-	let div4;
-	let div3;
-	let div0;
-	let t0;
-	let div1;
-	let t1;
-	let div2;
-	let t2;
-	let t3;
-	let div7;
-	let div6;
-	let div5;
-	let t4;
-	let t5;
-	let current;
-	let mounted;
-	let dispose;
-	let if_block0 = /*groupBy*/ ctx[3] == LinkGrouping.ByLink && create_if_block_3(ctx);
-	let if_block1 = /*groupBy*/ ctx[3] == LinkGrouping.ByFolder && create_if_block_2(ctx);
-	let if_block2 = /*groupBy*/ ctx[3] == LinkGrouping.ByFile && create_if_block_1(ctx);
-	let if_block3 = /*groupBy*/ ctx[3] == LinkGrouping.ByLink && create_if_block(ctx);
+    let div4;
+    let div3;
+    let div0;
+    let t0;
+    let div1;
+    let t1;
+    let div2;
+    let t2;
+    let t3;
+    let div7;
+    let div6;
+    let div5;
+    let t4;
+    let t5;
+    let current;
+    let mounted;
+    let dispose;
+    let if_block0 = /*groupBy*/ ctx[3] == LinkGrouping.ByLink && create_if_block_3(ctx);
+    let if_block1 = /*groupBy*/ ctx[3] == LinkGrouping.ByFolder && create_if_block_2(ctx);
+    let if_block2 = /*groupBy*/ ctx[3] == LinkGrouping.ByFile && create_if_block_1(ctx);
+    let if_block3 = /*groupBy*/ ctx[3] == LinkGrouping.ByLink && create_if_block(ctx);
 
-	return {
-		c() {
-			div4 = element("div");
-			div3 = element("div");
-			div0 = element("div");
-			t0 = space();
-			div1 = element("div");
-			t1 = space();
-			div2 = element("div");
-			t2 = space();
-			if (if_block0) if_block0.c();
-			t3 = space();
-			div7 = element("div");
-			div6 = element("div");
-			div5 = element("div");
-			if (if_block1) if_block1.c();
-			t4 = space();
-			if (if_block2) if_block2.c();
-			t5 = space();
-			if (if_block3) if_block3.c();
-			attr(div0, "class", "clickable-icon nav-action-button");
-			attr(div0, "aria-label", "Group by");
-			attr(div0, "data-icon", "list");
-			attr(div1, "class", "clickable-icon nav-action-button");
-			attr(div1, "aria-label", "Change sort order");
-			attr(div1, "data-icon", "lucide-sort-asc");
-			attr(div2, "class", "clickable-icon nav-action-button");
-			attr(div2, "aria-label", /*expandLabel*/ ctx[14]);
-			attr(div2, "data-icon", /*expandIcon*/ ctx[15]);
-			attr(div3, "class", "nav-buttons-container");
-			attr(div4, "class", "nav-header");
-			attr(div5, "class", "tree-item-children nav-folder-children");
-			attr(div6, "class", "tree-item nav-folder mod-root");
-			attr(div7, "class", "nav-files-container");
-		},
-		m(target, anchor) {
-			insert$1(target, div4, anchor);
-			append(div4, div3);
-			append(div3, div0);
-			append(div3, t0);
-			append(div3, div1);
-			append(div3, t1);
-			append(div3, div2);
-			append(div4, t2);
-			if (if_block0) if_block0.m(div4, null);
-			/*div4_binding*/ ctx[21](div4);
-			insert$1(target, t3, anchor);
-			insert$1(target, div7, anchor);
-			append(div7, div6);
-			append(div6, div5);
-			if (if_block1) if_block1.m(div5, null);
-			append(div5, t4);
-			if (if_block2) if_block2.m(div5, null);
-			append(div5, t5);
-			if (if_block3) if_block3.m(div5, null);
-			/*div5_binding*/ ctx[22](div5);
-			/*div7_binding*/ ctx[23](div7);
-			current = true;
+    return {
+        c() {
+            div4 = element('div');
+            div3 = element('div');
+            div0 = element('div');
+            t0 = space();
+            div1 = element('div');
+            t1 = space();
+            div2 = element('div');
+            t2 = space();
+            if (if_block0) if_block0.c();
+            t3 = space();
+            div7 = element('div');
+            div6 = element('div');
+            div5 = element('div');
+            if (if_block1) if_block1.c();
+            t4 = space();
+            if (if_block2) if_block2.c();
+            t5 = space();
+            if (if_block3) if_block3.c();
+            attr(div0, 'class', 'clickable-icon nav-action-button');
+            attr(div0, 'aria-label', 'Group by');
+            attr(div0, 'data-icon', 'list');
+            attr(div1, 'class', 'clickable-icon nav-action-button');
+            attr(div1, 'aria-label', 'Change sort order');
+            attr(div1, 'data-icon', 'lucide-sort-asc');
+            attr(div2, 'class', 'clickable-icon nav-action-button');
+            attr(div2, 'aria-label', /*expandLabel*/ ctx[14]);
+            attr(div2, 'data-icon', /*expandIcon*/ ctx[15]);
+            attr(div3, 'class', 'nav-buttons-container');
+            attr(div4, 'class', 'nav-header');
+            attr(div5, 'class', 'tree-item-children nav-folder-children');
+            attr(div6, 'class', 'tree-item nav-folder mod-root');
+            attr(div7, 'class', 'nav-files-container');
+        },
+        m(target, anchor) {
+            insert$1(target, div4, anchor);
+            append(div4, div3);
+            append(div3, div0);
+            append(div3, t0);
+            append(div3, div1);
+            append(div3, t1);
+            append(div3, div2);
+            append(div4, t2);
+            if (if_block0) if_block0.m(div4, null);
+            /*div4_binding*/ ctx[21](div4);
+            insert$1(target, t3, anchor);
+            insert$1(target, div7, anchor);
+            append(div7, div6);
+            append(div6, div5);
+            if (if_block1) if_block1.m(div5, null);
+            append(div5, t4);
+            if (if_block2) if_block2.m(div5, null);
+            append(div5, t5);
+            if (if_block3) if_block3.m(div5, null);
+            /*div5_binding*/ ctx[22](div5);
+            /*div7_binding*/ ctx[23](div7);
+            current = true;
 
-			if (!mounted) {
-				dispose = [
-					listen(div0, "click", function () {
-						if (is_function(/*groupByButtonClicked*/ ctx[4])) /*groupByButtonClicked*/ ctx[4].apply(this, arguments);
-					}),
-					listen(div1, "click", function () {
-						if (is_function(/*sortButtonClicked*/ ctx[5])) /*sortButtonClicked*/ ctx[5].apply(this, arguments);
-					}),
-					listen(div2, "click", /*click_handler*/ ctx[16])
-				];
+            if (!mounted) {
+                dispose = [
+                    listen(div0, 'click', function () {
+                        if (is_function(/*groupByButtonClicked*/ ctx[4]))
+                            /*groupByButtonClicked*/ ctx[4].apply(this, arguments);
+                    }),
+                    listen(div1, 'click', function () {
+                        if (is_function(/*sortButtonClicked*/ ctx[5]))
+                            /*sortButtonClicked*/ ctx[5].apply(this, arguments);
+                    }),
+                    listen(div2, 'click', /*click_handler*/ ctx[16]),
+                ];
 
-				mounted = true;
-			}
-		},
-		p(new_ctx, dirty) {
-			ctx = new_ctx;
+                mounted = true;
+            }
+        },
+        p(new_ctx, dirty) {
+            ctx = new_ctx;
 
-			if (!current || dirty[0] & /*expandLabel*/ 16384) {
-				attr(div2, "aria-label", /*expandLabel*/ ctx[14]);
-			}
+            if (!current || dirty[0] & /*expandLabel*/ 16384) {
+                attr(div2, 'aria-label', /*expandLabel*/ ctx[14]);
+            }
 
-			if (!current || dirty[0] & /*expandIcon*/ 32768) {
-				attr(div2, "data-icon", /*expandIcon*/ ctx[15]);
-			}
+            if (!current || dirty[0] & /*expandIcon*/ 32768) {
+                attr(div2, 'data-icon', /*expandIcon*/ ctx[15]);
+            }
 
-			if (/*groupBy*/ ctx[3] == LinkGrouping.ByLink) {
-				if (if_block0) {
-					if_block0.p(ctx, dirty);
-				} else {
-					if_block0 = create_if_block_3(ctx);
-					if_block0.c();
-					if_block0.m(div4, null);
-				}
-			} else if (if_block0) {
-				if_block0.d(1);
-				if_block0 = null;
-			}
+            if (/*groupBy*/ ctx[3] == LinkGrouping.ByLink) {
+                if (if_block0) {
+                    if_block0.p(ctx, dirty);
+                } else {
+                    if_block0 = create_if_block_3(ctx);
+                    if_block0.c();
+                    if_block0.m(div4, null);
+                }
+            } else if (if_block0) {
+                if_block0.d(1);
+                if_block0 = null;
+            }
 
-			if (/*groupBy*/ ctx[3] == LinkGrouping.ByFolder) {
-				if (if_block1) {
-					if_block1.p(ctx, dirty);
+            if (/*groupBy*/ ctx[3] == LinkGrouping.ByFolder) {
+                if (if_block1) {
+                    if_block1.p(ctx, dirty);
 
-					if (dirty[0] & /*groupBy*/ 8) {
-						transition_in(if_block1, 1);
-					}
-				} else {
-					if_block1 = create_if_block_2(ctx);
-					if_block1.c();
-					transition_in(if_block1, 1);
-					if_block1.m(div5, t4);
-				}
-			} else if (if_block1) {
-				group_outros();
+                    if (dirty[0] & /*groupBy*/ 8) {
+                        transition_in(if_block1, 1);
+                    }
+                } else {
+                    if_block1 = create_if_block_2(ctx);
+                    if_block1.c();
+                    transition_in(if_block1, 1);
+                    if_block1.m(div5, t4);
+                }
+            } else if (if_block1) {
+                group_outros();
 
-				transition_out(if_block1, 1, 1, () => {
-					if_block1 = null;
-				});
+                transition_out(if_block1, 1, 1, () => {
+                    if_block1 = null;
+                });
 
-				check_outros();
-			}
+                check_outros();
+            }
 
-			if (/*groupBy*/ ctx[3] == LinkGrouping.ByFile) {
-				if (if_block2) {
-					if_block2.p(ctx, dirty);
+            if (/*groupBy*/ ctx[3] == LinkGrouping.ByFile) {
+                if (if_block2) {
+                    if_block2.p(ctx, dirty);
 
-					if (dirty[0] & /*groupBy*/ 8) {
-						transition_in(if_block2, 1);
-					}
-				} else {
-					if_block2 = create_if_block_1(ctx);
-					if_block2.c();
-					transition_in(if_block2, 1);
-					if_block2.m(div5, t5);
-				}
-			} else if (if_block2) {
-				group_outros();
+                    if (dirty[0] & /*groupBy*/ 8) {
+                        transition_in(if_block2, 1);
+                    }
+                } else {
+                    if_block2 = create_if_block_1(ctx);
+                    if_block2.c();
+                    transition_in(if_block2, 1);
+                    if_block2.m(div5, t5);
+                }
+            } else if (if_block2) {
+                group_outros();
 
-				transition_out(if_block2, 1, 1, () => {
-					if_block2 = null;
-				});
+                transition_out(if_block2, 1, 1, () => {
+                    if_block2 = null;
+                });
 
-				check_outros();
-			}
+                check_outros();
+            }
 
-			if (/*groupBy*/ ctx[3] == LinkGrouping.ByLink) {
-				if (if_block3) {
-					if_block3.p(ctx, dirty);
+            if (/*groupBy*/ ctx[3] == LinkGrouping.ByLink) {
+                if (if_block3) {
+                    if_block3.p(ctx, dirty);
 
-					if (dirty[0] & /*groupBy*/ 8) {
-						transition_in(if_block3, 1);
-					}
-				} else {
-					if_block3 = create_if_block(ctx);
-					if_block3.c();
-					transition_in(if_block3, 1);
-					if_block3.m(div5, null);
-				}
-			} else if (if_block3) {
-				group_outros();
+                    if (dirty[0] & /*groupBy*/ 8) {
+                        transition_in(if_block3, 1);
+                    }
+                } else {
+                    if_block3 = create_if_block(ctx);
+                    if_block3.c();
+                    transition_in(if_block3, 1);
+                    if_block3.m(div5, null);
+                }
+            } else if (if_block3) {
+                group_outros();
 
-				transition_out(if_block3, 1, 1, () => {
-					if_block3 = null;
-				});
+                transition_out(if_block3, 1, 1, () => {
+                    if_block3 = null;
+                });
 
-				check_outros();
-			}
-		},
-		i(local) {
-			if (current) return;
-			transition_in(if_block1);
-			transition_in(if_block2);
-			transition_in(if_block3);
-			current = true;
-		},
-		o(local) {
-			transition_out(if_block1);
-			transition_out(if_block2);
-			transition_out(if_block3);
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) {
-				detach(div4);
-				detach(t3);
-				detach(div7);
-			}
+                check_outros();
+            }
+        },
+        i(local) {
+            if (current) return;
+            transition_in(if_block1);
+            transition_in(if_block2);
+            transition_in(if_block3);
+            current = true;
+        },
+        o(local) {
+            transition_out(if_block1);
+            transition_out(if_block2);
+            transition_out(if_block3);
+            current = false;
+        },
+        d(detaching) {
+            if (detaching) {
+                detach(div4);
+                detach(t3);
+                detach(div7);
+            }
 
-			if (if_block0) if_block0.d();
-			/*div4_binding*/ ctx[21](null);
-			if (if_block1) if_block1.d();
-			if (if_block2) if_block2.d();
-			if (if_block3) if_block3.d();
-			/*div5_binding*/ ctx[22](null);
-			/*div7_binding*/ ctx[23](null);
-			mounted = false;
-			run_all(dispose);
-		}
-	};
+            if (if_block0) if_block0.d();
+            /*div4_binding*/ ctx[21](null);
+            if (if_block1) if_block1.d();
+            if (if_block2) if_block2.d();
+            if (if_block3) if_block3.d();
+            /*div5_binding*/ ctx[22](null);
+            /*div7_binding*/ ctx[23](null);
+            mounted = false;
+            run_all(dispose);
+        },
+    };
 }
 
 function instance$1($$self, $$props, $$invalidate) {
-	let { plugin } = $$props;
-	let { brokenLinks } = $$props;
-	let { groupBy } = $$props;
-	let { linkFilter = { filterString: "", matchCase: false } } = $$props;
-	let { groupByButtonClicked } = $$props;
-	let { sortButtonClicked } = $$props;
-	let { expandButtonClicked } = $$props;
-	let { expandableItemClicked } = $$props;
-	let { folderContextClicked } = $$props;
-	let { updateLinkFilter } = $$props;
-	let { linkClicked } = $$props;
-	let header;
-	let container;
-	let children;
-	let expandLabel = "Expand all";
-	let expandIcon = "chevrons-up-down";
+    let { plugin } = $$props;
+    let { brokenLinks } = $$props;
+    let { groupBy } = $$props;
+    let { linkFilter = { filterString: '', matchCase: false } } = $$props;
+    let { groupByButtonClicked } = $$props;
+    let { sortButtonClicked } = $$props;
+    let { expandButtonClicked } = $$props;
+    let { expandableItemClicked } = $$props;
+    let { folderContextClicked } = $$props;
+    let { updateLinkFilter } = $$props;
+    let { linkClicked } = $$props;
+    let header;
+    let container;
+    let children;
+    let expandLabel = 'Expand all';
+    let expandIcon = 'chevrons-up-down';
 
-	beforeUpdate(() => {
-		let showExpand = true;
+    beforeUpdate(() => {
+        let showExpand = true;
 
-		if (plugin.settings.groupBy == LinkGrouping.ByFolder) {
-			showExpand = plugin.settings.expandedFolderItems.length == 0;
-		} else if (plugin.settings.groupBy == LinkGrouping.ByFile) {
-			showExpand = plugin.settings.expandedFileItems.length == 0;
-		} else if (plugin.settings.groupBy == LinkGrouping.ByLink) {
-			showExpand = plugin.settings.expandedLinkItems.length == 0;
-		}
+        if (plugin.settings.groupBy == LinkGrouping.ByFolder) {
+            showExpand = plugin.settings.expandedFolderItems.length == 0;
+        } else if (plugin.settings.groupBy == LinkGrouping.ByFile) {
+            showExpand = plugin.settings.expandedFileItems.length == 0;
+        } else if (plugin.settings.groupBy == LinkGrouping.ByLink) {
+            showExpand = plugin.settings.expandedLinkItems.length == 0;
+        }
 
-		$$invalidate(14, expandLabel = showExpand ? "Expand all" : "Collapse all");
-		$$invalidate(15, expandIcon = showExpand ? "chevrons-up-down" : "chevrons-down-up");
-	});
+        $$invalidate(14, (expandLabel = showExpand ? 'Expand all' : 'Collapse all'));
+        $$invalidate(15, (expandIcon = showExpand ? 'chevrons-up-down' : 'chevrons-down-up'));
+    });
 
-	afterUpdate(() => {
-		// Set icons after DOM has been updated
-		setIcons();
-	});
+    afterUpdate(() => {
+        // Set icons after DOM has been updated
+        setIcons();
+    });
 
-	function setIcons() {
-		header.querySelectorAll(".clickable-icon").forEach(el => {
-			var _a;
+    function setIcons() {
+        header.querySelectorAll('.clickable-icon').forEach((el) => {
+            var _a;
 
-			return obsidian.setIcon(el, (_a = el.getAttr("data-icon")) !== null && _a !== void 0
-			? _a
-			: "");
-		});
+            return obsidian.setIcon(el, (_a = el.getAttr('data-icon')) !== null && _a !== void 0 ? _a : '');
+        });
 
-		container.querySelectorAll(".tree-item-icon").forEach(el => {
-			var _a;
+        container.querySelectorAll('.tree-item-icon').forEach((el) => {
+            var _a;
 
-			return obsidian.setIcon(el, (_a = el.getAttr("data-icon")) !== null && _a !== void 0
-			? _a
-			: "");
-		});
-	}
+            return obsidian.setIcon(el, (_a = el.getAttr('data-icon')) !== null && _a !== void 0 ? _a : '');
+        });
+    }
 
-	const click_handler = e => expandButtonClicked(e, children);
+    const click_handler = (e) => expandButtonClicked(e, children);
 
-	function input_input_handler() {
-		linkFilter.filterString = this.value;
-		$$invalidate(0, linkFilter);
-	}
+    function input_input_handler() {
+        linkFilter.filterString = this.value;
+        $$invalidate(0, linkFilter);
+    }
 
-	const input_handler = () => updateLinkFilter(linkFilter.filterString, linkFilter.matchCase);
+    const input_handler = () => updateLinkFilter(linkFilter.filterString, linkFilter.matchCase);
 
-	const click_handler_1 = () => {
-		$$invalidate(0, linkFilter.filterString = "", linkFilter);
-		updateLinkFilter(linkFilter.filterString, linkFilter.matchCase);
-	};
+    const click_handler_1 = () => {
+        $$invalidate(0, (linkFilter.filterString = ''), linkFilter);
+        updateLinkFilter(linkFilter.filterString, linkFilter.matchCase);
+    };
 
-	const click_handler_2 = () => {
-		$$invalidate(0, linkFilter.matchCase = !linkFilter.matchCase, linkFilter);
-		updateLinkFilter(linkFilter.filterString, linkFilter.matchCase);
-	};
+    const click_handler_2 = () => {
+        $$invalidate(0, (linkFilter.matchCase = !linkFilter.matchCase), linkFilter);
+        updateLinkFilter(linkFilter.filterString, linkFilter.matchCase);
+    };
 
-	function div4_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			header = $$value;
-			$$invalidate(11, header);
-		});
-	}
+    function div4_binding($$value) {
+        binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+            header = $$value;
+            $$invalidate(11, header);
+        });
+    }
 
-	function div5_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			children = $$value;
-			$$invalidate(13, children);
-		});
-	}
+    function div5_binding($$value) {
+        binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+            children = $$value;
+            $$invalidate(13, children);
+        });
+    }
 
-	function div7_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			container = $$value;
-			$$invalidate(12, container);
-		});
-	}
+    function div7_binding($$value) {
+        binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+            container = $$value;
+            $$invalidate(12, container);
+        });
+    }
 
-	$$self.$$set = $$props => {
-		if ('plugin' in $$props) $$invalidate(1, plugin = $$props.plugin);
-		if ('brokenLinks' in $$props) $$invalidate(2, brokenLinks = $$props.brokenLinks);
-		if ('groupBy' in $$props) $$invalidate(3, groupBy = $$props.groupBy);
-		if ('linkFilter' in $$props) $$invalidate(0, linkFilter = $$props.linkFilter);
-		if ('groupByButtonClicked' in $$props) $$invalidate(4, groupByButtonClicked = $$props.groupByButtonClicked);
-		if ('sortButtonClicked' in $$props) $$invalidate(5, sortButtonClicked = $$props.sortButtonClicked);
-		if ('expandButtonClicked' in $$props) $$invalidate(6, expandButtonClicked = $$props.expandButtonClicked);
-		if ('expandableItemClicked' in $$props) $$invalidate(7, expandableItemClicked = $$props.expandableItemClicked);
-		if ('folderContextClicked' in $$props) $$invalidate(8, folderContextClicked = $$props.folderContextClicked);
-		if ('updateLinkFilter' in $$props) $$invalidate(9, updateLinkFilter = $$props.updateLinkFilter);
-		if ('linkClicked' in $$props) $$invalidate(10, linkClicked = $$props.linkClicked);
-	};
+    $$self.$$set = ($$props) => {
+        if ('plugin' in $$props) $$invalidate(1, (plugin = $$props.plugin));
+        if ('brokenLinks' in $$props) $$invalidate(2, (brokenLinks = $$props.brokenLinks));
+        if ('groupBy' in $$props) $$invalidate(3, (groupBy = $$props.groupBy));
+        if ('linkFilter' in $$props) $$invalidate(0, (linkFilter = $$props.linkFilter));
+        if ('groupByButtonClicked' in $$props) $$invalidate(4, (groupByButtonClicked = $$props.groupByButtonClicked));
+        if ('sortButtonClicked' in $$props) $$invalidate(5, (sortButtonClicked = $$props.sortButtonClicked));
+        if ('expandButtonClicked' in $$props) $$invalidate(6, (expandButtonClicked = $$props.expandButtonClicked));
+        if ('expandableItemClicked' in $$props)
+            $$invalidate(7, (expandableItemClicked = $$props.expandableItemClicked));
+        if ('folderContextClicked' in $$props) $$invalidate(8, (folderContextClicked = $$props.folderContextClicked));
+        if ('updateLinkFilter' in $$props) $$invalidate(9, (updateLinkFilter = $$props.updateLinkFilter));
+        if ('linkClicked' in $$props) $$invalidate(10, (linkClicked = $$props.linkClicked));
+    };
 
-	return [
-		linkFilter,
-		plugin,
-		brokenLinks,
-		groupBy,
-		groupByButtonClicked,
-		sortButtonClicked,
-		expandButtonClicked,
-		expandableItemClicked,
-		folderContextClicked,
-		updateLinkFilter,
-		linkClicked,
-		header,
-		container,
-		children,
-		expandLabel,
-		expandIcon,
-		click_handler,
-		input_input_handler,
-		input_handler,
-		click_handler_1,
-		click_handler_2,
-		div4_binding,
-		div5_binding,
-		div7_binding
-	];
+    return [
+        linkFilter,
+        plugin,
+        brokenLinks,
+        groupBy,
+        groupByButtonClicked,
+        sortButtonClicked,
+        expandButtonClicked,
+        expandableItemClicked,
+        folderContextClicked,
+        updateLinkFilter,
+        linkClicked,
+        header,
+        container,
+        children,
+        expandLabel,
+        expandIcon,
+        click_handler,
+        input_input_handler,
+        input_handler,
+        click_handler_1,
+        click_handler_2,
+        div4_binding,
+        div5_binding,
+        div7_binding,
+    ];
 }
 
 class Broken_links_tree extends SvelteComponent {
-	constructor(options) {
-		super();
+    constructor(options) {
+        super();
 
-		init(
-			this,
-			options,
-			instance$1,
-			create_fragment$1,
-			safe_not_equal,
-			{
-				plugin: 1,
-				brokenLinks: 2,
-				groupBy: 3,
-				linkFilter: 0,
-				groupByButtonClicked: 4,
-				sortButtonClicked: 5,
-				expandButtonClicked: 6,
-				expandableItemClicked: 7,
-				folderContextClicked: 8,
-				updateLinkFilter: 9,
-				linkClicked: 10
-			},
-			null,
-			[-1, -1]
-		);
-	}
+        init(
+            this,
+            options,
+            instance$1,
+            create_fragment$1,
+            safe_not_equal,
+            {
+                plugin: 1,
+                brokenLinks: 2,
+                groupBy: 3,
+                linkFilter: 0,
+                groupByButtonClicked: 4,
+                sortButtonClicked: 5,
+                expandButtonClicked: 6,
+                expandableItemClicked: 7,
+                folderContextClicked: 8,
+                updateLinkFilter: 9,
+                linkClicked: 10,
+            },
+            null,
+            [-1, -1],
+        );
+    }
 }
 
 function getBrokenLinks(plugin) {
@@ -2700,8 +2731,8 @@ function getBrokenLinks(plugin) {
     return __awaiter(this, void 0, void 0, function* () {
         const links = {
             byFolder: {
-                name: "root",
-                path: "/",
+                name: 'root',
+                path: '/',
                 folders: [],
                 files: [],
                 linkCount: 0,
@@ -2712,9 +2743,13 @@ function getBrokenLinks(plugin) {
         // Iterate all the files in the vault
         for (const file of plugin.app.vault.getMarkdownFiles()) {
             // Check ignored folder list
-            if (plugin.settings.ignoredFolders.find((folder) => {
-                return (file.parent && file.parent.path == "/" && folder == "/") || file.path.startsWith(folder + "/");
-            })) {
+            if (
+                plugin.settings.ignoredFolders.find((folder) => {
+                    return (
+                        (file.parent && file.parent.path == '/' && folder == '/') || file.path.startsWith(folder + '/')
+                    );
+                })
+            ) {
                 continue;
             }
             // Use the cache to get determine if there are links in the file
@@ -2744,11 +2779,11 @@ function getBrokenLinks(plugin) {
             if (fileModel.links.length > 0) {
                 links.byFile.push(fileModel);
                 // Parse the path and build into the folder model
-                const pathParts = file.path.split("/");
+                const pathParts = file.path.split('/');
                 if (pathParts.length > 0) {
                     // Nest in folders collection
                     let parentFolder = null;
-                    let folderPath = "";
+                    let folderPath = '';
                     for (let i = 0; i < pathParts.length - 1; i++) {
                         const folderName = pathParts[i];
                         folderPath = folderPath.length == 0 ? folderName : `${folderPath}/${folderName}`;
@@ -2759,14 +2794,14 @@ function getBrokenLinks(plugin) {
                             // a new one and set it as the parent
                             parentFolder =
                                 (_a = links.byFolder.folders.find((f) => {
-                                    if (f.path == folderPath)
-                                        return f;
-                                })) !== null && _a !== void 0 ? _a : null;
+                                    if (f.path == folderPath) return f;
+                                })) !== null && _a !== void 0
+                                    ? _a
+                                    : null;
                             if (parentFolder != null) {
                                 // Increment link count
                                 parentFolder.linkCount++;
-                            }
-                            else {
+                            } else {
                                 // Add to root
                                 parentFolder = {
                                     name: folderName,
@@ -2777,19 +2812,19 @@ function getBrokenLinks(plugin) {
                                 };
                                 links.byFolder.folders.push(parentFolder);
                             }
-                        }
-                        else {
+                        } else {
                             // Look for existing child folder or create
                             // a new one and add it to the parent
-                            let childFolder = (_b = parentFolder.folders.find((f) => {
-                                if (f.path == folderPath)
-                                    return f;
-                            })) !== null && _b !== void 0 ? _b : null;
+                            let childFolder =
+                                (_b = parentFolder.folders.find((f) => {
+                                    if (f.path == folderPath) return f;
+                                })) !== null && _b !== void 0
+                                    ? _b
+                                    : null;
                             if (childFolder != null) {
                                 // Increment link count
                                 childFolder.linkCount++;
-                            }
-                            else {
+                            } else {
                                 childFolder = {
                                     name: folderName,
                                     path: folderPath,
@@ -2806,8 +2841,7 @@ function getBrokenLinks(plugin) {
                     // If there is a parent folder, put the file in there
                     if (parentFolder != null) {
                         parentFolder.files.push(fileModel);
-                    }
-                    else {
+                    } else {
                         // Otherwise, file is in the root
                         links.byFolder.files.push(fileModel);
                     }
@@ -2833,17 +2867,22 @@ function processLinks(links, plugin, fileModel, linkModels) {
         // Default behavior is to mark link as broken if no destination is found
         let destIsMissing = dest == null;
         // If there is a destination file, check for missing blocks/headings
-        if (dest != null && link.link.contains("#")) {
+        if (dest != null && link.link.contains('#')) {
             const targetCache = plugin.app.metadataCache.getFileCache(dest);
-            if (link.link.contains("^") && (targetCache === null || targetCache === void 0 ? void 0 : targetCache.blocks)) {
-                const block = link.link.slice(link.link.indexOf("^") + 1).toLocaleLowerCase();
+            if (
+                link.link.contains('^') &&
+                (targetCache === null || targetCache === void 0 ? void 0 : targetCache.blocks)
+            ) {
+                const block = link.link.slice(link.link.indexOf('^') + 1).toLocaleLowerCase();
                 destIsMissing = targetCache.blocks[block] == undefined;
-            }
-            else if (targetCache === null || targetCache === void 0 ? void 0 : targetCache.headings) {
-                const heading = link.link.slice(link.link.indexOf("#") + 1);
+            } else if (targetCache === null || targetCache === void 0 ? void 0 : targetCache.headings) {
+                const heading = link.link.slice(link.link.indexOf('#') + 1);
                 destIsMissing =
                     targetCache.headings.find((value) => {
-                        if (obsidian.stripHeading(heading).toLocaleLowerCase() == obsidian.stripHeading(value.heading).toLocaleLowerCase()) {
+                        if (
+                            obsidian.stripHeading(heading).toLocaleLowerCase() ==
+                            obsidian.stripHeading(value.heading).toLocaleLowerCase()
+                        ) {
                             return value;
                         }
                         return undefined;
@@ -2854,7 +2893,7 @@ function processLinks(links, plugin, fileModel, linkModels) {
             // Create model
             const linkModel = {
                 id: link.link,
-                sortId: link.link.replace(/^#?\^?/, ""),
+                sortId: link.link.replace(/^#?\^?/, ''),
                 parent: fileModel,
                 fullText: link.original,
                 // Link may not have a position (in the case of a Frontmatter Link).
@@ -2864,10 +2903,9 @@ function processLinks(links, plugin, fileModel, linkModels) {
                     end: { line: 0, col: 0, offset: 0 },
                 },
             };
-            if ("position" in link) {
+            if ('position' in link) {
                 linkModel.position = link.position;
-            }
-            else if ("key" in link) {
+            } else if ('key' in link) {
                 linkModel.key = link.key;
             }
             if (!plugin.settings.consolidateLinks && link.displayText && link.displayText != link.link) {
@@ -2892,33 +2930,24 @@ function processLinks(links, plugin, fileModel, linkModels) {
 function sortFolderTree(folder, sort) {
     // Sort folders A to Z
     folder.folders = folder.folders.sort((a, b) => {
-        if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase())
-            return -1;
-        else if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase())
-            return 1;
-        else
-            return 0;
+        if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) return -1;
+        else if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) return 1;
+        else return 0;
     });
     // Sort files according to settings
     folder.files = folder.files.sort((a, b) => {
         let place = 0;
-        if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase())
-            place = -1;
-        else if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase())
-            place = 1;
-        if (sort == FolderSort.NameDesc)
-            place *= -1;
+        if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) place = -1;
+        else if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) place = 1;
+        if (sort == FolderSort.NameDesc) place *= -1;
         return place;
     });
     // Sort links by position
     folder.files.forEach((file) => {
         file.links = file.links.sort((a, b) => {
-            if (a.position.start.offset < b.position.start.offset)
-                return -1;
-            else if (a.position.start.offset > b.position.start.offset)
-                return 1;
-            else
-                return 0;
+            if (a.position.start.offset < b.position.start.offset) return -1;
+            else if (a.position.start.offset > b.position.start.offset) return 1;
+            else return 0;
         });
     });
     // Recurse through subfolders
@@ -2931,26 +2960,17 @@ function sortFileTree(files, sort) {
     const sorted = files.sort((a, b) => {
         let place = 0;
         if (sort == FileSort.NameAsc || sort == FileSort.NameDesc) {
-            if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase())
-                place = -1;
-            else if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase())
-                place = 1;
-            if (sort == FileSort.NameDesc)
-                place *= -1;
-        }
-        else if (sort == FileSort.CountAsc || sort == FileSort.CountDesc) {
-            if (a.links.length < b.links.length)
-                place = -1;
-            else if (a.links.length > b.links.length)
-                place = 1;
-            if (sort == FileSort.CountDesc)
-                place *= -1;
+            if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) place = -1;
+            else if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) place = 1;
+            if (sort == FileSort.NameDesc) place *= -1;
+        } else if (sort == FileSort.CountAsc || sort == FileSort.CountDesc) {
+            if (a.links.length < b.links.length) place = -1;
+            else if (a.links.length > b.links.length) place = 1;
+            if (sort == FileSort.CountDesc) place *= -1;
             // For same link count, default to A to Z
             if (a.links.length == b.links.length) {
-                if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase())
-                    place = -1;
-                else if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase())
-                    place = 1;
+                if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) place = -1;
+                else if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) place = 1;
             }
         }
         return place;
@@ -2958,12 +2978,9 @@ function sortFileTree(files, sort) {
     // Sort links by position
     sorted.forEach((file) => {
         file.links = file.links.sort((a, b) => {
-            if (a.position.start.offset < b.position.start.offset)
-                return -1;
-            else if (a.position.start.offset > b.position.start.offset)
-                return 1;
-            else
-                return 0;
+            if (a.position.start.offset < b.position.start.offset) return -1;
+            else if (a.position.start.offset > b.position.start.offset) return 1;
+            else return 0;
         });
     });
     // Assign back to files
@@ -2974,26 +2991,17 @@ function sortLinkTree(linkGroups, sort) {
     const sorted = linkGroups.sort((a, b) => {
         let place = 0;
         if (sort == LinkSort.NameAsc || sort == LinkSort.NameDesc) {
-            if (a.id.toLocaleLowerCase() < b.id.toLocaleLowerCase())
-                place = -1;
-            else if (a.id.toLocaleLowerCase() > b.id.toLocaleLowerCase())
-                place = 1;
-            if (sort == LinkSort.NameDesc)
-                place *= -1;
-        }
-        else if (sort == LinkSort.CountAsc || sort == LinkSort.CountDesc) {
-            if (a.links.length < b.links.length)
-                place = -1;
-            else if (a.links.length > b.links.length)
-                place = 1;
-            if (sort == LinkSort.CountDesc)
-                place *= -1;
+            if (a.id.toLocaleLowerCase() < b.id.toLocaleLowerCase()) place = -1;
+            else if (a.id.toLocaleLowerCase() > b.id.toLocaleLowerCase()) place = 1;
+            if (sort == LinkSort.NameDesc) place *= -1;
+        } else if (sort == LinkSort.CountAsc || sort == LinkSort.CountDesc) {
+            if (a.links.length < b.links.length) place = -1;
+            else if (a.links.length > b.links.length) place = 1;
+            if (sort == LinkSort.CountDesc) place *= -1;
             // For same link count, default to A to Z
             if (a.links.length == b.links.length) {
-                if (a.id.toLocaleLowerCase() < b.id.toLocaleLowerCase())
-                    place = -1;
-                else if (a.id.toLocaleLowerCase() > b.id.toLocaleLowerCase())
-                    place = 1;
+                if (a.id.toLocaleLowerCase() < b.id.toLocaleLowerCase()) place = -1;
+                else if (a.id.toLocaleLowerCase() > b.id.toLocaleLowerCase()) place = 1;
             }
         }
         return place;
@@ -3001,12 +3009,9 @@ function sortLinkTree(linkGroups, sort) {
     // Sort files A to Z
     for (let i = 0; i < sorted.length; i++) {
         sorted[i].links = sorted[i].links.sort((a, b) => {
-            if (a.parent.name.toLocaleLowerCase() < b.parent.name.toLocaleLowerCase())
-                return -1;
-            if (a.parent.name.toLocaleLowerCase() > b.parent.name.toLocaleLowerCase())
-                return 1;
-            else
-                return 0;
+            if (a.parent.name.toLocaleLowerCase() < b.parent.name.toLocaleLowerCase()) return -1;
+            if (a.parent.name.toLocaleLowerCase() > b.parent.name.toLocaleLowerCase()) return 1;
+            else return 0;
         });
     }
     // Assign back to linkGroups
@@ -3016,14 +3021,13 @@ function filterLinkTree(linkGroups, filter) {
     for (const group of linkGroups) {
         group.show = true;
         // get the filter string as an array of each "word"
-        const words = filter.filterString.split(" ").filter((s) => s);
+        const words = filter.filterString.split(' ').filter((s) => s);
         for (const word of words) {
             if (filter.matchCase) {
                 if (!group.id.contains(word)) {
                     group.show = false;
                 }
-            }
-            else {
+            } else {
                 if (!group.id.toLocaleLowerCase().contains(word.toLocaleLowerCase())) {
                     group.show = false;
                 }
@@ -3032,7 +3036,7 @@ function filterLinkTree(linkGroups, filter) {
     }
 }
 
-const BROKEN_LINKS_VIEW_TYPE = "broken-links-view";
+const BROKEN_LINKS_VIEW_TYPE = 'broken-links-view';
 class BrokenLinksView extends obsidian.ItemView {
     constructor(leaf, plugin) {
         super(leaf);
@@ -3042,16 +3046,16 @@ class BrokenLinksView extends obsidian.ItemView {
         return BROKEN_LINKS_VIEW_TYPE;
     }
     getDisplayText() {
-        return "Broken links";
+        return 'Broken links';
     }
     getIcon() {
-        return "unlink";
+        return 'unlink';
     }
     onOpen() {
         return __awaiter(this, void 0, void 0, function* () {
             this.brokenLinks = yield getBrokenLinks(this.plugin);
             this.containerEl.empty();
-            this.containerEl.addClass("broken-links");
+            this.containerEl.addClass('broken-links');
             this.brokenLinksTree = new Broken_links_tree({
                 target: this.containerEl,
                 props: {
@@ -3069,7 +3073,7 @@ class BrokenLinksView extends obsidian.ItemView {
                 },
             });
             // Add callback to update the view when files get changed
-            this.registerEvent(this.app.metadataCache.on("resolved", this.updateView.bind(this)));
+            this.registerEvent(this.app.metadataCache.on('resolved', this.updateView.bind(this)));
         });
     }
     onClose() {
@@ -3079,8 +3083,7 @@ class BrokenLinksView extends obsidian.ItemView {
     }
     updateView(reloadLinks = true) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (reloadLinks)
-                this.brokenLinks = yield getBrokenLinks(this.plugin);
+            if (reloadLinks) this.brokenLinks = yield getBrokenLinks(this.plugin);
             this.brokenLinksTree.$set({
                 brokenLinks: this.brokenLinks,
             });
@@ -3088,178 +3091,228 @@ class BrokenLinksView extends obsidian.ItemView {
     }
     groupByButtonClickedHandler(e) {
         const menu = new obsidian.Menu();
-        menu.addItem((item) => item
-            .setTitle("Group by folder")
-            .setIcon("lucide-folder")
-            .setChecked(this.plugin.settings.groupBy == LinkGrouping.ByFolder)
-            .onClick(() => __awaiter(this, void 0, void 0, function* () {
-            if (this.plugin.settings.groupBy != LinkGrouping.ByFolder) {
-                this.plugin.settings.groupBy = LinkGrouping.ByFolder;
-                this.brokenLinksTree.$set({
-                    groupBy: LinkGrouping.ByFolder,
-                });
-                yield this.plugin.saveSettings();
-            }
-        })));
-        menu.addItem((item) => item
-            .setTitle("Group by file")
-            .setIcon("lucide-file")
-            .setChecked(this.plugin.settings.groupBy == LinkGrouping.ByFile)
-            .onClick(() => __awaiter(this, void 0, void 0, function* () {
-            if (this.plugin.settings.groupBy != LinkGrouping.ByFile) {
-                this.plugin.settings.groupBy = LinkGrouping.ByFile;
-                this.brokenLinksTree.$set({
-                    groupBy: LinkGrouping.ByFile,
-                });
-                yield this.plugin.saveSettings();
-            }
-        })));
-        menu.addItem((item) => item
-            .setTitle("Group by link")
-            .setIcon("lucide-link")
-            .setChecked(this.plugin.settings.groupBy == LinkGrouping.ByLink)
-            .onClick(() => __awaiter(this, void 0, void 0, function* () {
-            if (this.plugin.settings.groupBy != LinkGrouping.ByLink) {
-                this.plugin.settings.groupBy = LinkGrouping.ByLink;
-                this.brokenLinksTree.$set({
-                    groupBy: LinkGrouping.ByLink,
-                });
-                yield this.plugin.saveSettings();
-            }
-        })));
+        menu.addItem((item) =>
+            item
+                .setTitle('Group by folder')
+                .setIcon('lucide-folder')
+                .setChecked(this.plugin.settings.groupBy == LinkGrouping.ByFolder)
+                .onClick(() =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        if (this.plugin.settings.groupBy != LinkGrouping.ByFolder) {
+                            this.plugin.settings.groupBy = LinkGrouping.ByFolder;
+                            this.brokenLinksTree.$set({
+                                groupBy: LinkGrouping.ByFolder,
+                            });
+                            yield this.plugin.saveSettings();
+                        }
+                    }),
+                ),
+        );
+        menu.addItem((item) =>
+            item
+                .setTitle('Group by file')
+                .setIcon('lucide-file')
+                .setChecked(this.plugin.settings.groupBy == LinkGrouping.ByFile)
+                .onClick(() =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        if (this.plugin.settings.groupBy != LinkGrouping.ByFile) {
+                            this.plugin.settings.groupBy = LinkGrouping.ByFile;
+                            this.brokenLinksTree.$set({
+                                groupBy: LinkGrouping.ByFile,
+                            });
+                            yield this.plugin.saveSettings();
+                        }
+                    }),
+                ),
+        );
+        menu.addItem((item) =>
+            item
+                .setTitle('Group by link')
+                .setIcon('lucide-link')
+                .setChecked(this.plugin.settings.groupBy == LinkGrouping.ByLink)
+                .onClick(() =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        if (this.plugin.settings.groupBy != LinkGrouping.ByLink) {
+                            this.plugin.settings.groupBy = LinkGrouping.ByLink;
+                            this.brokenLinksTree.$set({
+                                groupBy: LinkGrouping.ByLink,
+                            });
+                            yield this.plugin.saveSettings();
+                        }
+                    }),
+                ),
+        );
         menu.showAtMouseEvent(e);
     }
     sortButtonClickedHandler(e) {
         const menu = new obsidian.Menu();
         if (this.plugin.settings.groupBy == LinkGrouping.ByFolder) {
-            menu.addItem((item) => item
-                .setTitle("File name (A to Z)")
-                .setChecked(this.plugin.settings.folderSort == FolderSort.NameAsc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.folderSort != FolderSort.NameAsc) {
-                    // Update settings
-                    this.plugin.settings.folderSort = FolderSort.NameAsc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
-            menu.addItem((item) => item
-                .setTitle("File name (Z to A)")
-                .setChecked(this.plugin.settings.folderSort == FolderSort.NameDesc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.folderSort != FolderSort.NameDesc) {
-                    // Update settings
-                    this.plugin.settings.folderSort = FolderSort.NameDesc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
+            menu.addItem((item) =>
+                item
+                    .setTitle('File name (A to Z)')
+                    .setChecked(this.plugin.settings.folderSort == FolderSort.NameAsc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.folderSort != FolderSort.NameAsc) {
+                                // Update settings
+                                this.plugin.settings.folderSort = FolderSort.NameAsc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
+            menu.addItem((item) =>
+                item
+                    .setTitle('File name (Z to A)')
+                    .setChecked(this.plugin.settings.folderSort == FolderSort.NameDesc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.folderSort != FolderSort.NameDesc) {
+                                // Update settings
+                                this.plugin.settings.folderSort = FolderSort.NameDesc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
             menu.showAtMouseEvent(e);
-        }
-        else if (this.plugin.settings.groupBy == LinkGrouping.ByFile) {
-            menu.addItem((item) => item
-                .setTitle("File name (A to Z)")
-                .setChecked(this.plugin.settings.fileSort == FileSort.NameAsc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.fileSort != FileSort.NameAsc) {
-                    // Update settings
-                    this.plugin.settings.fileSort = FileSort.NameAsc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
-            menu.addItem((item) => item
-                .setTitle("File name (Z to A)")
-                .setChecked(this.plugin.settings.fileSort == FileSort.NameDesc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.fileSort != FileSort.NameDesc) {
-                    // Update settings
-                    this.plugin.settings.fileSort = FileSort.NameDesc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
+        } else if (this.plugin.settings.groupBy == LinkGrouping.ByFile) {
+            menu.addItem((item) =>
+                item
+                    .setTitle('File name (A to Z)')
+                    .setChecked(this.plugin.settings.fileSort == FileSort.NameAsc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.fileSort != FileSort.NameAsc) {
+                                // Update settings
+                                this.plugin.settings.fileSort = FileSort.NameAsc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
+            menu.addItem((item) =>
+                item
+                    .setTitle('File name (Z to A)')
+                    .setChecked(this.plugin.settings.fileSort == FileSort.NameDesc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.fileSort != FileSort.NameDesc) {
+                                // Update settings
+                                this.plugin.settings.fileSort = FileSort.NameDesc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
             menu.addSeparator();
-            menu.addItem((item) => item
-                .setTitle("Link count (fewest to most)")
-                .setChecked(this.plugin.settings.fileSort == FileSort.CountAsc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.fileSort != FileSort.CountAsc) {
-                    // Update settings
-                    this.plugin.settings.fileSort = FileSort.CountAsc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
-            menu.addItem((item) => item
-                .setTitle("Link count (most to fewest)")
-                .setChecked(this.plugin.settings.fileSort == FileSort.CountDesc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.fileSort != FileSort.CountDesc) {
-                    // Update settings
-                    this.plugin.settings.fileSort = FileSort.CountDesc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
+            menu.addItem((item) =>
+                item
+                    .setTitle('Link count (fewest to most)')
+                    .setChecked(this.plugin.settings.fileSort == FileSort.CountAsc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.fileSort != FileSort.CountAsc) {
+                                // Update settings
+                                this.plugin.settings.fileSort = FileSort.CountAsc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
+            menu.addItem((item) =>
+                item
+                    .setTitle('Link count (most to fewest)')
+                    .setChecked(this.plugin.settings.fileSort == FileSort.CountDesc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.fileSort != FileSort.CountDesc) {
+                                // Update settings
+                                this.plugin.settings.fileSort = FileSort.CountDesc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
             menu.showAtMouseEvent(e);
-        }
-        else if (this.plugin.settings.groupBy == LinkGrouping.ByLink) {
-            menu.addItem((item) => item
-                .setTitle("File name (A to Z)")
-                .setChecked(this.plugin.settings.linkSort == LinkSort.NameAsc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.linkSort != LinkSort.NameAsc) {
-                    // Update settings
-                    this.plugin.settings.linkSort = LinkSort.NameAsc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
-            menu.addItem((item) => item
-                .setTitle("File name (Z to A)")
-                .setChecked(this.plugin.settings.linkSort == LinkSort.NameDesc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.linkSort != LinkSort.NameDesc) {
-                    // Update settings
-                    this.plugin.settings.linkSort = LinkSort.NameDesc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
+        } else if (this.plugin.settings.groupBy == LinkGrouping.ByLink) {
+            menu.addItem((item) =>
+                item
+                    .setTitle('File name (A to Z)')
+                    .setChecked(this.plugin.settings.linkSort == LinkSort.NameAsc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.linkSort != LinkSort.NameAsc) {
+                                // Update settings
+                                this.plugin.settings.linkSort = LinkSort.NameAsc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
+            menu.addItem((item) =>
+                item
+                    .setTitle('File name (Z to A)')
+                    .setChecked(this.plugin.settings.linkSort == LinkSort.NameDesc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.linkSort != LinkSort.NameDesc) {
+                                // Update settings
+                                this.plugin.settings.linkSort = LinkSort.NameDesc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
             menu.addSeparator();
-            menu.addItem((item) => item
-                .setTitle("Link count (fewest to most)")
-                .setChecked(this.plugin.settings.linkSort == LinkSort.CountAsc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.linkSort != LinkSort.CountAsc) {
-                    // Update settings
-                    this.plugin.settings.linkSort = LinkSort.CountAsc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
-            menu.addItem((item) => item
-                .setTitle("Link count (most to fewest)")
-                .setChecked(this.plugin.settings.linkSort == LinkSort.CountDesc)
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (this.plugin.settings.linkSort != LinkSort.CountDesc) {
-                    // Update settings
-                    this.plugin.settings.linkSort = LinkSort.CountDesc;
-                    yield this.plugin.saveSettings();
-                    // Refresh links list
-                    yield this.updateView();
-                }
-            })));
+            menu.addItem((item) =>
+                item
+                    .setTitle('Link count (fewest to most)')
+                    .setChecked(this.plugin.settings.linkSort == LinkSort.CountAsc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.linkSort != LinkSort.CountAsc) {
+                                // Update settings
+                                this.plugin.settings.linkSort = LinkSort.CountAsc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
+            menu.addItem((item) =>
+                item
+                    .setTitle('Link count (most to fewest)')
+                    .setChecked(this.plugin.settings.linkSort == LinkSort.CountDesc)
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (this.plugin.settings.linkSort != LinkSort.CountDesc) {
+                                // Update settings
+                                this.plugin.settings.linkSort = LinkSort.CountDesc;
+                                yield this.plugin.saveSettings();
+                                // Refresh links list
+                                yield this.updateView();
+                            }
+                        }),
+                    ),
+            );
             menu.showAtMouseEvent(e);
         }
     }
@@ -3267,31 +3320,26 @@ class BrokenLinksView extends obsidian.ItemView {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.plugin.settings.groupBy == LinkGrouping.ByFolder) {
                 if (this.plugin.settings.expandedFolderItems.length == 0) {
-                    el.querySelectorAll(".nav-folder, .nav-file").forEach((child) => {
+                    el.querySelectorAll('.nav-folder, .nav-file').forEach((child) => {
                         this.plugin.settings.expandedFolderItems.push(child.id);
                     });
-                }
-                else {
+                } else {
                     this.plugin.settings.expandedFolderItems = [];
                 }
-            }
-            else if (this.plugin.settings.groupBy == LinkGrouping.ByFile) {
+            } else if (this.plugin.settings.groupBy == LinkGrouping.ByFile) {
                 if (this.plugin.settings.expandedFileItems.length == 0) {
-                    el.querySelectorAll(".nav-file").forEach((child) => {
+                    el.querySelectorAll('.nav-file').forEach((child) => {
                         this.plugin.settings.expandedFileItems.push(child.id);
                     });
-                }
-                else {
+                } else {
                     this.plugin.settings.expandedFileItems = [];
                 }
-            }
-            else if (this.plugin.settings.groupBy == LinkGrouping.ByLink) {
+            } else if (this.plugin.settings.groupBy == LinkGrouping.ByLink) {
                 if (this.plugin.settings.expandedLinkItems.length == 0) {
-                    el.querySelectorAll(".nav-link-group").forEach((child) => {
+                    el.querySelectorAll('.nav-link-group').forEach((child) => {
                         this.plugin.settings.expandedLinkItems.push(child.id);
                     });
-                }
-                else {
+                } else {
                     this.plugin.settings.expandedLinkItems = [];
                 }
             }
@@ -3306,24 +3354,19 @@ class BrokenLinksView extends obsidian.ItemView {
             if (this.plugin.settings.groupBy == LinkGrouping.ByFolder) {
                 if (this.plugin.settings.expandedFolderItems.contains(el.id)) {
                     this.plugin.settings.expandedFolderItems.remove(el.id);
-                }
-                else {
+                } else {
                     this.plugin.settings.expandedFolderItems.push(el.id);
                 }
-            }
-            else if (this.plugin.settings.groupBy == LinkGrouping.ByFile) {
+            } else if (this.plugin.settings.groupBy == LinkGrouping.ByFile) {
                 if (this.plugin.settings.expandedFileItems.contains(el.id)) {
                     this.plugin.settings.expandedFileItems.remove(el.id);
-                }
-                else {
+                } else {
                     this.plugin.settings.expandedFileItems.push(el.id);
                 }
-            }
-            else if (this.plugin.settings.groupBy == LinkGrouping.ByLink) {
+            } else if (this.plugin.settings.groupBy == LinkGrouping.ByLink) {
                 if (this.plugin.settings.expandedLinkItems.contains(el.id)) {
                     this.plugin.settings.expandedLinkItems.remove(el.id);
-                }
-                else {
+                } else {
                     this.plugin.settings.expandedLinkItems.push(el.id);
                 }
             }
@@ -3337,36 +3380,40 @@ class BrokenLinksView extends obsidian.ItemView {
         return __awaiter(this, void 0, void 0, function* () {
             const menu = new obsidian.Menu();
             menu.addItem((item) => {
-                item.setTitle("Expand all children")
-                    .setIcon("chevrons-up-down")
-                    .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                    // Expand selected item
-                    this.plugin.settings.expandedFolderItems.push(el.id);
-                    // Expand children
-                    el.querySelectorAll(".nav-folder, .nav-file").forEach((child) => {
-                        this.plugin.settings.expandedFolderItems.push(child.id);
-                    });
-                    // Save settings
-                    yield this.plugin.saveSettings();
-                    // Update broken links tree
-                    yield this.updateView(false);
-                }));
+                item.setTitle('Expand all children')
+                    .setIcon('chevrons-up-down')
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            // Expand selected item
+                            this.plugin.settings.expandedFolderItems.push(el.id);
+                            // Expand children
+                            el.querySelectorAll('.nav-folder, .nav-file').forEach((child) => {
+                                this.plugin.settings.expandedFolderItems.push(child.id);
+                            });
+                            // Save settings
+                            yield this.plugin.saveSettings();
+                            // Update broken links tree
+                            yield this.updateView(false);
+                        }),
+                    );
             });
             menu.addItem((item) => {
-                item.setTitle("Collapse all children")
-                    .setIcon("chevrons-down-up")
-                    .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                    // Collapse selected item
-                    this.plugin.settings.expandedFolderItems.remove(el.id);
-                    // Collapse children
-                    el.querySelectorAll(".nav-folder, .nav-file").forEach((child) => {
-                        this.plugin.settings.expandedFolderItems.remove(child.id);
-                    });
-                    // Save settings
-                    yield this.plugin.saveSettings();
-                    // Update broken links tree
-                    yield this.updateView(false);
-                }));
+                item.setTitle('Collapse all children')
+                    .setIcon('chevrons-down-up')
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            // Collapse selected item
+                            this.plugin.settings.expandedFolderItems.remove(el.id);
+                            // Collapse children
+                            el.querySelectorAll('.nav-folder, .nav-file').forEach((child) => {
+                                this.plugin.settings.expandedFolderItems.remove(child.id);
+                            });
+                            // Save settings
+                            yield this.plugin.saveSettings();
+                            // Update broken links tree
+                            yield this.updateView(false);
+                        }),
+                    );
             });
             menu.showAtMouseEvent(e);
         });
@@ -3398,24 +3445,29 @@ class BrokenLinksView extends obsidian.ItemView {
                                     highlight: true,
                                 });
                             });
-                        }
-                        else {
+                        } else {
                             // Exclude frontmatter links for now
                             if (!link.key) {
                                 // Update start/end col to highlight only the link text
                                 const colStart = link.position.start.col + link.fullText.indexOf(link.id);
                                 const colEnd = colStart + link.id.length;
-                                leaf.view.editor.setSelection({
-                                    line: link.position.start.line,
-                                    ch: colStart,
-                                }, {
-                                    line: link.position.end.line,
-                                    ch: colEnd,
-                                });
-                                leaf.view.editor.scrollIntoView({
-                                    from: { line: link.position.start.line, ch: link.position.start.col },
-                                    to: { line: link.position.end.line, ch: link.position.end.col },
-                                }, true);
+                                leaf.view.editor.setSelection(
+                                    {
+                                        line: link.position.start.line,
+                                        ch: colStart,
+                                    },
+                                    {
+                                        line: link.position.end.line,
+                                        ch: colEnd,
+                                    },
+                                );
+                                leaf.view.editor.scrollIntoView(
+                                    {
+                                        from: { line: link.position.start.line, ch: link.position.start.col },
+                                        to: { line: link.position.end.line, ch: link.position.end.col },
+                                    },
+                                    true,
+                                );
                             }
                         }
                     }
@@ -3437,11 +3489,11 @@ var clippingParents = 'clippingParents';
 var viewport = 'viewport';
 var popper = 'popper';
 var reference = 'reference';
-var variationPlacements = /*#__PURE__*/basePlacements.reduce(function (acc, placement) {
-  return acc.concat([placement + "-" + start, placement + "-" + end]);
+var variationPlacements = /*#__PURE__*/ basePlacements.reduce(function (acc, placement) {
+    return acc.concat([placement + '-' + start, placement + '-' + end]);
 }, []);
-var placements = /*#__PURE__*/[].concat(basePlacements, [auto]).reduce(function (acc, placement) {
-  return acc.concat([placement, placement + "-" + start, placement + "-" + end]);
+var placements = /*#__PURE__*/ [].concat(basePlacements, [auto]).reduce(function (acc, placement) {
+    return acc.concat([placement, placement + '-' + start, placement + '-' + end]);
 }, []); // modifiers that need to read the DOM
 
 var beforeRead = 'beforeRead';
@@ -3458,127 +3510,127 @@ var afterWrite = 'afterWrite';
 var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
 
 function getNodeName(element) {
-  return element ? (element.nodeName || '').toLowerCase() : null;
+    return element ? (element.nodeName || '').toLowerCase() : null;
 }
 
 function getWindow(node) {
-  if (node == null) {
-    return window;
-  }
+    if (node == null) {
+        return window;
+    }
 
-  if (node.toString() !== '[object Window]') {
-    var ownerDocument = node.ownerDocument;
-    return ownerDocument ? ownerDocument.defaultView || window : window;
-  }
+    if (node.toString() !== '[object Window]') {
+        var ownerDocument = node.ownerDocument;
+        return ownerDocument ? ownerDocument.defaultView || window : window;
+    }
 
-  return node;
+    return node;
 }
 
 function isElement(node) {
-  var OwnElement = getWindow(node).Element;
-  return node instanceof OwnElement || node instanceof Element;
+    var OwnElement = getWindow(node).Element;
+    return node instanceof OwnElement || node instanceof Element;
 }
 
 function isHTMLElement(node) {
-  var OwnElement = getWindow(node).HTMLElement;
-  return node instanceof OwnElement || node instanceof HTMLElement;
+    var OwnElement = getWindow(node).HTMLElement;
+    return node instanceof OwnElement || node instanceof HTMLElement;
 }
 
 function isShadowRoot(node) {
-  // IE 11 has no ShadowRoot
-  if (typeof ShadowRoot === 'undefined') {
-    return false;
-  }
+    // IE 11 has no ShadowRoot
+    if (typeof ShadowRoot === 'undefined') {
+        return false;
+    }
 
-  var OwnElement = getWindow(node).ShadowRoot;
-  return node instanceof OwnElement || node instanceof ShadowRoot;
+    var OwnElement = getWindow(node).ShadowRoot;
+    return node instanceof OwnElement || node instanceof ShadowRoot;
 }
 
 // and applies them to the HTMLElements such as popper and arrow
 
 function applyStyles(_ref) {
-  var state = _ref.state;
-  Object.keys(state.elements).forEach(function (name) {
-    var style = state.styles[name] || {};
-    var attributes = state.attributes[name] || {};
-    var element = state.elements[name]; // arrow is optional + virtual elements
+    var state = _ref.state;
+    Object.keys(state.elements).forEach(function (name) {
+        var style = state.styles[name] || {};
+        var attributes = state.attributes[name] || {};
+        var element = state.elements[name]; // arrow is optional + virtual elements
 
-    if (!isHTMLElement(element) || !getNodeName(element)) {
-      return;
-    } // Flow doesn't support to extend this property, but it's the most
-    // effective way to apply styles to an HTMLElement
-    // $FlowFixMe[cannot-write]
+        if (!isHTMLElement(element) || !getNodeName(element)) {
+            return;
+        } // Flow doesn't support to extend this property, but it's the most
+        // effective way to apply styles to an HTMLElement
+        // $FlowFixMe[cannot-write]
 
+        Object.assign(element.style, style);
+        Object.keys(attributes).forEach(function (name) {
+            var value = attributes[name];
 
-    Object.assign(element.style, style);
-    Object.keys(attributes).forEach(function (name) {
-      var value = attributes[name];
-
-      if (value === false) {
-        element.removeAttribute(name);
-      } else {
-        element.setAttribute(name, value === true ? '' : value);
-      }
+            if (value === false) {
+                element.removeAttribute(name);
+            } else {
+                element.setAttribute(name, value === true ? '' : value);
+            }
+        });
     });
-  });
 }
 
 function effect$2(_ref2) {
-  var state = _ref2.state;
-  var initialStyles = {
-    popper: {
-      position: state.options.strategy,
-      left: '0',
-      top: '0',
-      margin: '0'
-    },
-    arrow: {
-      position: 'absolute'
-    },
-    reference: {}
-  };
-  Object.assign(state.elements.popper.style, initialStyles.popper);
-  state.styles = initialStyles;
+    var state = _ref2.state;
+    var initialStyles = {
+        popper: {
+            position: state.options.strategy,
+            left: '0',
+            top: '0',
+            margin: '0',
+        },
+        arrow: {
+            position: 'absolute',
+        },
+        reference: {},
+    };
+    Object.assign(state.elements.popper.style, initialStyles.popper);
+    state.styles = initialStyles;
 
-  if (state.elements.arrow) {
-    Object.assign(state.elements.arrow.style, initialStyles.arrow);
-  }
+    if (state.elements.arrow) {
+        Object.assign(state.elements.arrow.style, initialStyles.arrow);
+    }
 
-  return function () {
-    Object.keys(state.elements).forEach(function (name) {
-      var element = state.elements[name];
-      var attributes = state.attributes[name] || {};
-      var styleProperties = Object.keys(state.styles.hasOwnProperty(name) ? state.styles[name] : initialStyles[name]); // Set all values to an empty string to unset them
+    return function () {
+        Object.keys(state.elements).forEach(function (name) {
+            var element = state.elements[name];
+            var attributes = state.attributes[name] || {};
+            var styleProperties = Object.keys(
+                state.styles.hasOwnProperty(name) ? state.styles[name] : initialStyles[name],
+            ); // Set all values to an empty string to unset them
 
-      var style = styleProperties.reduce(function (style, property) {
-        style[property] = '';
-        return style;
-      }, {}); // arrow is optional + virtual elements
+            var style = styleProperties.reduce(function (style, property) {
+                style[property] = '';
+                return style;
+            }, {}); // arrow is optional + virtual elements
 
-      if (!isHTMLElement(element) || !getNodeName(element)) {
-        return;
-      }
+            if (!isHTMLElement(element) || !getNodeName(element)) {
+                return;
+            }
 
-      Object.assign(element.style, style);
-      Object.keys(attributes).forEach(function (attribute) {
-        element.removeAttribute(attribute);
-      });
-    });
-  };
+            Object.assign(element.style, style);
+            Object.keys(attributes).forEach(function (attribute) {
+                element.removeAttribute(attribute);
+            });
+        });
+    };
 } // eslint-disable-next-line import/no-unused-modules
 
-
 var applyStyles$1 = {
-  name: 'applyStyles',
-  enabled: true,
-  phase: 'write',
-  fn: applyStyles,
-  effect: effect$2,
-  requires: ['computeStyles']
+    name: 'applyStyles',
+    enabled: true,
+    phase: 'write',
+    fn: applyStyles,
+    effect: effect$2,
+    requires: ['computeStyles'],
 };
 
 function getBasePlacement(placement) {
-  return placement.split('-')[0];
+    return placement.split('-')[0];
 }
 
 var max = Math.max;
@@ -3586,643 +3638,713 @@ var min = Math.min;
 var round = Math.round;
 
 function getUAString() {
-  var uaData = navigator.userAgentData;
+    var uaData = navigator.userAgentData;
 
-  if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
-    return uaData.brands.map(function (item) {
-      return item.brand + "/" + item.version;
-    }).join(' ');
-  }
+    if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
+        return uaData.brands
+            .map(function (item) {
+                return item.brand + '/' + item.version;
+            })
+            .join(' ');
+    }
 
-  return navigator.userAgent;
+    return navigator.userAgent;
 }
 
 function isLayoutViewport() {
-  return !/^((?!chrome|android).)*safari/i.test(getUAString());
+    return !/^((?!chrome|android).)*safari/i.test(getUAString());
 }
 
 function getBoundingClientRect(element, includeScale, isFixedStrategy) {
-  if (includeScale === void 0) {
-    includeScale = false;
-  }
+    if (includeScale === void 0) {
+        includeScale = false;
+    }
 
-  if (isFixedStrategy === void 0) {
-    isFixedStrategy = false;
-  }
+    if (isFixedStrategy === void 0) {
+        isFixedStrategy = false;
+    }
 
-  var clientRect = element.getBoundingClientRect();
-  var scaleX = 1;
-  var scaleY = 1;
+    var clientRect = element.getBoundingClientRect();
+    var scaleX = 1;
+    var scaleY = 1;
 
-  if (includeScale && isHTMLElement(element)) {
-    scaleX = element.offsetWidth > 0 ? round(clientRect.width) / element.offsetWidth || 1 : 1;
-    scaleY = element.offsetHeight > 0 ? round(clientRect.height) / element.offsetHeight || 1 : 1;
-  }
+    if (includeScale && isHTMLElement(element)) {
+        scaleX = element.offsetWidth > 0 ? round(clientRect.width) / element.offsetWidth || 1 : 1;
+        scaleY = element.offsetHeight > 0 ? round(clientRect.height) / element.offsetHeight || 1 : 1;
+    }
 
-  var _ref = isElement(element) ? getWindow(element) : window,
-      visualViewport = _ref.visualViewport;
+    var _ref = isElement(element) ? getWindow(element) : window,
+        visualViewport = _ref.visualViewport;
 
-  var addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
-  var x = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX;
-  var y = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
-  var width = clientRect.width / scaleX;
-  var height = clientRect.height / scaleY;
-  return {
-    width: width,
-    height: height,
-    top: y,
-    right: x + width,
-    bottom: y + height,
-    left: x,
-    x: x,
-    y: y
-  };
+    var addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
+    var x = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX;
+    var y = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
+    var width = clientRect.width / scaleX;
+    var height = clientRect.height / scaleY;
+    return {
+        width: width,
+        height: height,
+        top: y,
+        right: x + width,
+        bottom: y + height,
+        left: x,
+        x: x,
+        y: y,
+    };
 }
 
 // means it doesn't take into account transforms.
 
 function getLayoutRect(element) {
-  var clientRect = getBoundingClientRect(element); // Use the clientRect sizes if it's not been transformed.
-  // Fixes https://github.com/popperjs/popper-core/issues/1223
+    var clientRect = getBoundingClientRect(element); // Use the clientRect sizes if it's not been transformed.
+    // Fixes https://github.com/popperjs/popper-core/issues/1223
 
-  var width = element.offsetWidth;
-  var height = element.offsetHeight;
+    var width = element.offsetWidth;
+    var height = element.offsetHeight;
 
-  if (Math.abs(clientRect.width - width) <= 1) {
-    width = clientRect.width;
-  }
+    if (Math.abs(clientRect.width - width) <= 1) {
+        width = clientRect.width;
+    }
 
-  if (Math.abs(clientRect.height - height) <= 1) {
-    height = clientRect.height;
-  }
+    if (Math.abs(clientRect.height - height) <= 1) {
+        height = clientRect.height;
+    }
 
-  return {
-    x: element.offsetLeft,
-    y: element.offsetTop,
-    width: width,
-    height: height
-  };
+    return {
+        x: element.offsetLeft,
+        y: element.offsetTop,
+        width: width,
+        height: height,
+    };
 }
 
 function contains(parent, child) {
-  var rootNode = child.getRootNode && child.getRootNode(); // First, attempt with faster native method
+    var rootNode = child.getRootNode && child.getRootNode(); // First, attempt with faster native method
 
-  if (parent.contains(child)) {
-    return true;
-  } // then fallback to custom implementation with Shadow DOM support
-  else if (rootNode && isShadowRoot(rootNode)) {
-      var next = child;
+    if (parent.contains(child)) {
+        return true;
+    } // then fallback to custom implementation with Shadow DOM support
+    else if (rootNode && isShadowRoot(rootNode)) {
+        var next = child;
 
-      do {
-        if (next && parent.isSameNode(next)) {
-          return true;
-        } // $FlowFixMe[prop-missing]: need a better way to handle this...
+        do {
+            if (next && parent.isSameNode(next)) {
+                return true;
+            } // $FlowFixMe[prop-missing]: need a better way to handle this...
 
-
-        next = next.parentNode || next.host;
-      } while (next);
+            next = next.parentNode || next.host;
+        } while (next);
     } // Give up, the result is false
 
-
-  return false;
+    return false;
 }
 
 function getComputedStyle(element) {
-  return getWindow(element).getComputedStyle(element);
+    return getWindow(element).getComputedStyle(element);
 }
 
 function isTableElement(element) {
-  return ['table', 'td', 'th'].indexOf(getNodeName(element)) >= 0;
+    return ['table', 'td', 'th'].indexOf(getNodeName(element)) >= 0;
 }
 
 function getDocumentElement(element) {
-  // $FlowFixMe[incompatible-return]: assume body is always available
-  return ((isElement(element) ? element.ownerDocument : // $FlowFixMe[prop-missing]
-  element.document) || window.document).documentElement;
+    // $FlowFixMe[incompatible-return]: assume body is always available
+    return (
+        (isElement(element)
+            ? element.ownerDocument // $FlowFixMe[prop-missing]
+            : element.document) || window.document
+    ).documentElement;
 }
 
 function getParentNode(element) {
-  if (getNodeName(element) === 'html') {
-    return element;
-  }
+    if (getNodeName(element) === 'html') {
+        return element;
+    }
 
-  return (// this is a quicker (but less type safe) way to save quite some bytes from the bundle
-    // $FlowFixMe[incompatible-return]
-    // $FlowFixMe[prop-missing]
-    element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
-    element.parentNode || ( // DOM Element detected
-    isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
-    // $FlowFixMe[incompatible-call]: HTMLElement is a Node
-    getDocumentElement(element) // fallback
-
-  );
+    return (
+        // this is a quicker (but less type safe) way to save quite some bytes from the bundle
+        // $FlowFixMe[incompatible-return]
+        // $FlowFixMe[prop-missing]
+        element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+        element.parentNode || // DOM Element detected
+        (isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
+        // $FlowFixMe[incompatible-call]: HTMLElement is a Node
+        getDocumentElement(element) // fallback
+    );
 }
 
 function getTrueOffsetParent(element) {
-  if (!isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
-  getComputedStyle(element).position === 'fixed') {
-    return null;
-  }
+    if (
+        !isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
+        getComputedStyle(element).position === 'fixed'
+    ) {
+        return null;
+    }
 
-  return element.offsetParent;
+    return element.offsetParent;
 } // `.offsetParent` reports `null` for fixed elements, while absolute elements
 // return the containing block
 
-
 function getContainingBlock(element) {
-  var isFirefox = /firefox/i.test(getUAString());
-  var isIE = /Trident/i.test(getUAString());
+    var isFirefox = /firefox/i.test(getUAString());
+    var isIE = /Trident/i.test(getUAString());
 
-  if (isIE && isHTMLElement(element)) {
-    // In IE 9, 10 and 11 fixed elements containing block is always established by the viewport
-    var elementCss = getComputedStyle(element);
+    if (isIE && isHTMLElement(element)) {
+        // In IE 9, 10 and 11 fixed elements containing block is always established by the viewport
+        var elementCss = getComputedStyle(element);
 
-    if (elementCss.position === 'fixed') {
-      return null;
+        if (elementCss.position === 'fixed') {
+            return null;
+        }
     }
-  }
 
-  var currentNode = getParentNode(element);
+    var currentNode = getParentNode(element);
 
-  if (isShadowRoot(currentNode)) {
-    currentNode = currentNode.host;
-  }
-
-  while (isHTMLElement(currentNode) && ['html', 'body'].indexOf(getNodeName(currentNode)) < 0) {
-    var css = getComputedStyle(currentNode); // This is non-exhaustive but covers the most common CSS properties that
-    // create a containing block.
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
-
-    if (css.transform !== 'none' || css.perspective !== 'none' || css.contain === 'paint' || ['transform', 'perspective'].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === 'filter' || isFirefox && css.filter && css.filter !== 'none') {
-      return currentNode;
-    } else {
-      currentNode = currentNode.parentNode;
+    if (isShadowRoot(currentNode)) {
+        currentNode = currentNode.host;
     }
-  }
 
-  return null;
+    while (isHTMLElement(currentNode) && ['html', 'body'].indexOf(getNodeName(currentNode)) < 0) {
+        var css = getComputedStyle(currentNode); // This is non-exhaustive but covers the most common CSS properties that
+        // create a containing block.
+        // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
+
+        if (
+            css.transform !== 'none' ||
+            css.perspective !== 'none' ||
+            css.contain === 'paint' ||
+            ['transform', 'perspective'].indexOf(css.willChange) !== -1 ||
+            (isFirefox && css.willChange === 'filter') ||
+            (isFirefox && css.filter && css.filter !== 'none')
+        ) {
+            return currentNode;
+        } else {
+            currentNode = currentNode.parentNode;
+        }
+    }
+
+    return null;
 } // Gets the closest ancestor positioned element. Handles some edge cases,
 // such as table ancestors and cross browser bugs.
 
-
 function getOffsetParent(element) {
-  var window = getWindow(element);
-  var offsetParent = getTrueOffsetParent(element);
+    var window = getWindow(element);
+    var offsetParent = getTrueOffsetParent(element);
 
-  while (offsetParent && isTableElement(offsetParent) && getComputedStyle(offsetParent).position === 'static') {
-    offsetParent = getTrueOffsetParent(offsetParent);
-  }
+    while (offsetParent && isTableElement(offsetParent) && getComputedStyle(offsetParent).position === 'static') {
+        offsetParent = getTrueOffsetParent(offsetParent);
+    }
 
-  if (offsetParent && (getNodeName(offsetParent) === 'html' || getNodeName(offsetParent) === 'body' && getComputedStyle(offsetParent).position === 'static')) {
-    return window;
-  }
+    if (
+        offsetParent &&
+        (getNodeName(offsetParent) === 'html' ||
+            (getNodeName(offsetParent) === 'body' && getComputedStyle(offsetParent).position === 'static'))
+    ) {
+        return window;
+    }
 
-  return offsetParent || getContainingBlock(element) || window;
+    return offsetParent || getContainingBlock(element) || window;
 }
 
 function getMainAxisFromPlacement(placement) {
-  return ['top', 'bottom'].indexOf(placement) >= 0 ? 'x' : 'y';
+    return ['top', 'bottom'].indexOf(placement) >= 0 ? 'x' : 'y';
 }
 
 function within(min$1, value, max$1) {
-  return max(min$1, min(value, max$1));
+    return max(min$1, min(value, max$1));
 }
 function withinMaxClamp(min, value, max) {
-  var v = within(min, value, max);
-  return v > max ? max : v;
+    var v = within(min, value, max);
+    return v > max ? max : v;
 }
 
 function getFreshSideObject() {
-  return {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0
-  };
+    return {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+    };
 }
 
 function mergePaddingObject(paddingObject) {
-  return Object.assign({}, getFreshSideObject(), paddingObject);
+    return Object.assign({}, getFreshSideObject(), paddingObject);
 }
 
 function expandToHashMap(value, keys) {
-  return keys.reduce(function (hashMap, key) {
-    hashMap[key] = value;
-    return hashMap;
-  }, {});
+    return keys.reduce(function (hashMap, key) {
+        hashMap[key] = value;
+        return hashMap;
+    }, {});
 }
 
 var toPaddingObject = function toPaddingObject(padding, state) {
-  padding = typeof padding === 'function' ? padding(Object.assign({}, state.rects, {
-    placement: state.placement
-  })) : padding;
-  return mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
+    padding =
+        typeof padding === 'function'
+            ? padding(
+                  Object.assign({}, state.rects, {
+                      placement: state.placement,
+                  }),
+              )
+            : padding;
+    return mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
 };
 
 function arrow(_ref) {
-  var _state$modifiersData$;
+    var _state$modifiersData$;
 
-  var state = _ref.state,
-      name = _ref.name,
-      options = _ref.options;
-  var arrowElement = state.elements.arrow;
-  var popperOffsets = state.modifiersData.popperOffsets;
-  var basePlacement = getBasePlacement(state.placement);
-  var axis = getMainAxisFromPlacement(basePlacement);
-  var isVertical = [left, right].indexOf(basePlacement) >= 0;
-  var len = isVertical ? 'height' : 'width';
+    var state = _ref.state,
+        name = _ref.name,
+        options = _ref.options;
+    var arrowElement = state.elements.arrow;
+    var popperOffsets = state.modifiersData.popperOffsets;
+    var basePlacement = getBasePlacement(state.placement);
+    var axis = getMainAxisFromPlacement(basePlacement);
+    var isVertical = [left, right].indexOf(basePlacement) >= 0;
+    var len = isVertical ? 'height' : 'width';
 
-  if (!arrowElement || !popperOffsets) {
-    return;
-  }
+    if (!arrowElement || !popperOffsets) {
+        return;
+    }
 
-  var paddingObject = toPaddingObject(options.padding, state);
-  var arrowRect = getLayoutRect(arrowElement);
-  var minProp = axis === 'y' ? top : left;
-  var maxProp = axis === 'y' ? bottom : right;
-  var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
-  var startDiff = popperOffsets[axis] - state.rects.reference[axis];
-  var arrowOffsetParent = getOffsetParent(arrowElement);
-  var clientSize = arrowOffsetParent ? axis === 'y' ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
-  var centerToReference = endDiff / 2 - startDiff / 2; // Make sure the arrow doesn't overflow the popper if the center point is
-  // outside of the popper bounds
+    var paddingObject = toPaddingObject(options.padding, state);
+    var arrowRect = getLayoutRect(arrowElement);
+    var minProp = axis === 'y' ? top : left;
+    var maxProp = axis === 'y' ? bottom : right;
+    var endDiff =
+        state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
+    var startDiff = popperOffsets[axis] - state.rects.reference[axis];
+    var arrowOffsetParent = getOffsetParent(arrowElement);
+    var clientSize = arrowOffsetParent
+        ? axis === 'y'
+            ? arrowOffsetParent.clientHeight || 0
+            : arrowOffsetParent.clientWidth || 0
+        : 0;
+    var centerToReference = endDiff / 2 - startDiff / 2; // Make sure the arrow doesn't overflow the popper if the center point is
+    // outside of the popper bounds
 
-  var min = paddingObject[minProp];
-  var max = clientSize - arrowRect[len] - paddingObject[maxProp];
-  var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
-  var offset = within(min, center, max); // Prevents breaking syntax highlighting...
+    var min = paddingObject[minProp];
+    var max = clientSize - arrowRect[len] - paddingObject[maxProp];
+    var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
+    var offset = within(min, center, max); // Prevents breaking syntax highlighting...
 
-  var axisProp = axis;
-  state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset, _state$modifiersData$.centerOffset = offset - center, _state$modifiersData$);
+    var axisProp = axis;
+    state.modifiersData[name] =
+        ((_state$modifiersData$ = {}),
+        (_state$modifiersData$[axisProp] = offset),
+        (_state$modifiersData$.centerOffset = offset - center),
+        _state$modifiersData$);
 }
 
 function effect$1(_ref2) {
-  var state = _ref2.state,
-      options = _ref2.options;
-  var _options$element = options.element,
-      arrowElement = _options$element === void 0 ? '[data-popper-arrow]' : _options$element;
+    var state = _ref2.state,
+        options = _ref2.options;
+    var _options$element = options.element,
+        arrowElement = _options$element === void 0 ? '[data-popper-arrow]' : _options$element;
 
-  if (arrowElement == null) {
-    return;
-  } // CSS selector
+    if (arrowElement == null) {
+        return;
+    } // CSS selector
 
+    if (typeof arrowElement === 'string') {
+        arrowElement = state.elements.popper.querySelector(arrowElement);
 
-  if (typeof arrowElement === 'string') {
-    arrowElement = state.elements.popper.querySelector(arrowElement);
-
-    if (!arrowElement) {
-      return;
+        if (!arrowElement) {
+            return;
+        }
     }
-  }
 
-  if (!contains(state.elements.popper, arrowElement)) {
-    return;
-  }
+    if (!contains(state.elements.popper, arrowElement)) {
+        return;
+    }
 
-  state.elements.arrow = arrowElement;
+    state.elements.arrow = arrowElement;
 } // eslint-disable-next-line import/no-unused-modules
 
-
 var arrow$1 = {
-  name: 'arrow',
-  enabled: true,
-  phase: 'main',
-  fn: arrow,
-  effect: effect$1,
-  requires: ['popperOffsets'],
-  requiresIfExists: ['preventOverflow']
+    name: 'arrow',
+    enabled: true,
+    phase: 'main',
+    fn: arrow,
+    effect: effect$1,
+    requires: ['popperOffsets'],
+    requiresIfExists: ['preventOverflow'],
 };
 
 function getVariation(placement) {
-  return placement.split('-')[1];
+    return placement.split('-')[1];
 }
 
 var unsetSides = {
-  top: 'auto',
-  right: 'auto',
-  bottom: 'auto',
-  left: 'auto'
+    top: 'auto',
+    right: 'auto',
+    bottom: 'auto',
+    left: 'auto',
 }; // Round the offsets to the nearest suitable subpixel based on the DPR.
 // Zooming can change the DPR, but it seems to report a value that will
 // cleanly divide the values into the appropriate subpixels.
 
 function roundOffsetsByDPR(_ref, win) {
-  var x = _ref.x,
-      y = _ref.y;
-  var dpr = win.devicePixelRatio || 1;
-  return {
-    x: round(x * dpr) / dpr || 0,
-    y: round(y * dpr) / dpr || 0
-  };
+    var x = _ref.x,
+        y = _ref.y;
+    var dpr = win.devicePixelRatio || 1;
+    return {
+        x: round(x * dpr) / dpr || 0,
+        y: round(y * dpr) / dpr || 0,
+    };
 }
 
 function mapToStyles(_ref2) {
-  var _Object$assign2;
+    var _Object$assign2;
 
-  var popper = _ref2.popper,
-      popperRect = _ref2.popperRect,
-      placement = _ref2.placement,
-      variation = _ref2.variation,
-      offsets = _ref2.offsets,
-      position = _ref2.position,
-      gpuAcceleration = _ref2.gpuAcceleration,
-      adaptive = _ref2.adaptive,
-      roundOffsets = _ref2.roundOffsets,
-      isFixed = _ref2.isFixed;
-  var _offsets$x = offsets.x,
-      x = _offsets$x === void 0 ? 0 : _offsets$x,
-      _offsets$y = offsets.y,
-      y = _offsets$y === void 0 ? 0 : _offsets$y;
+    var popper = _ref2.popper,
+        popperRect = _ref2.popperRect,
+        placement = _ref2.placement,
+        variation = _ref2.variation,
+        offsets = _ref2.offsets,
+        position = _ref2.position,
+        gpuAcceleration = _ref2.gpuAcceleration,
+        adaptive = _ref2.adaptive,
+        roundOffsets = _ref2.roundOffsets,
+        isFixed = _ref2.isFixed;
+    var _offsets$x = offsets.x,
+        x = _offsets$x === void 0 ? 0 : _offsets$x,
+        _offsets$y = offsets.y,
+        y = _offsets$y === void 0 ? 0 : _offsets$y;
 
-  var _ref3 = typeof roundOffsets === 'function' ? roundOffsets({
-    x: x,
-    y: y
-  }) : {
-    x: x,
-    y: y
-  };
+    var _ref3 =
+        typeof roundOffsets === 'function'
+            ? roundOffsets({
+                  x: x,
+                  y: y,
+              })
+            : {
+                  x: x,
+                  y: y,
+              };
 
-  x = _ref3.x;
-  y = _ref3.y;
-  var hasX = offsets.hasOwnProperty('x');
-  var hasY = offsets.hasOwnProperty('y');
-  var sideX = left;
-  var sideY = top;
-  var win = window;
+    x = _ref3.x;
+    y = _ref3.y;
+    var hasX = offsets.hasOwnProperty('x');
+    var hasY = offsets.hasOwnProperty('y');
+    var sideX = left;
+    var sideY = top;
+    var win = window;
 
-  if (adaptive) {
-    var offsetParent = getOffsetParent(popper);
-    var heightProp = 'clientHeight';
-    var widthProp = 'clientWidth';
+    if (adaptive) {
+        var offsetParent = getOffsetParent(popper);
+        var heightProp = 'clientHeight';
+        var widthProp = 'clientWidth';
 
-    if (offsetParent === getWindow(popper)) {
-      offsetParent = getDocumentElement(popper);
+        if (offsetParent === getWindow(popper)) {
+            offsetParent = getDocumentElement(popper);
 
-      if (getComputedStyle(offsetParent).position !== 'static' && position === 'absolute') {
-        heightProp = 'scrollHeight';
-        widthProp = 'scrollWidth';
-      }
-    } // $FlowFixMe[incompatible-cast]: force type refinement, we compare offsetParent with window above, but Flow doesn't detect it
+            if (getComputedStyle(offsetParent).position !== 'static' && position === 'absolute') {
+                heightProp = 'scrollHeight';
+                widthProp = 'scrollWidth';
+            }
+        } // $FlowFixMe[incompatible-cast]: force type refinement, we compare offsetParent with window above, but Flow doesn't detect it
 
+        offsetParent = offsetParent;
 
-    offsetParent = offsetParent;
+        if (placement === top || ((placement === left || placement === right) && variation === end)) {
+            sideY = bottom;
+            var offsetY =
+                isFixed && offsetParent === win && win.visualViewport
+                    ? win.visualViewport.height // $FlowFixMe[prop-missing]
+                    : offsetParent[heightProp];
+            y -= offsetY - popperRect.height;
+            y *= gpuAcceleration ? 1 : -1;
+        }
 
-    if (placement === top || (placement === left || placement === right) && variation === end) {
-      sideY = bottom;
-      var offsetY = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.height : // $FlowFixMe[prop-missing]
-      offsetParent[heightProp];
-      y -= offsetY - popperRect.height;
-      y *= gpuAcceleration ? 1 : -1;
+        if (placement === left || ((placement === top || placement === bottom) && variation === end)) {
+            sideX = right;
+            var offsetX =
+                isFixed && offsetParent === win && win.visualViewport
+                    ? win.visualViewport.width // $FlowFixMe[prop-missing]
+                    : offsetParent[widthProp];
+            x -= offsetX - popperRect.width;
+            x *= gpuAcceleration ? 1 : -1;
+        }
     }
 
-    if (placement === left || (placement === top || placement === bottom) && variation === end) {
-      sideX = right;
-      var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width : // $FlowFixMe[prop-missing]
-      offsetParent[widthProp];
-      x -= offsetX - popperRect.width;
-      x *= gpuAcceleration ? 1 : -1;
+    var commonStyles = Object.assign(
+        {
+            position: position,
+        },
+        adaptive && unsetSides,
+    );
+
+    var _ref4 =
+        roundOffsets === true
+            ? roundOffsetsByDPR(
+                  {
+                      x: x,
+                      y: y,
+                  },
+                  getWindow(popper),
+              )
+            : {
+                  x: x,
+                  y: y,
+              };
+
+    x = _ref4.x;
+    y = _ref4.y;
+
+    if (gpuAcceleration) {
+        var _Object$assign;
+
+        return Object.assign(
+            {},
+            commonStyles,
+            ((_Object$assign = {}),
+            (_Object$assign[sideY] = hasY ? '0' : ''),
+            (_Object$assign[sideX] = hasX ? '0' : ''),
+            (_Object$assign.transform =
+                (win.devicePixelRatio || 1) <= 1
+                    ? 'translate(' + x + 'px, ' + y + 'px)'
+                    : 'translate3d(' + x + 'px, ' + y + 'px, 0)'),
+            _Object$assign),
+        );
     }
-  }
 
-  var commonStyles = Object.assign({
-    position: position
-  }, adaptive && unsetSides);
-
-  var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
-    x: x,
-    y: y
-  }, getWindow(popper)) : {
-    x: x,
-    y: y
-  };
-
-  x = _ref4.x;
-  y = _ref4.y;
-
-  if (gpuAcceleration) {
-    var _Object$assign;
-
-    return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? '0' : '', _Object$assign[sideX] = hasX ? '0' : '', _Object$assign.transform = (win.devicePixelRatio || 1) <= 1 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
-  }
-
-  return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : '', _Object$assign2[sideX] = hasX ? x + "px" : '', _Object$assign2.transform = '', _Object$assign2));
+    return Object.assign(
+        {},
+        commonStyles,
+        ((_Object$assign2 = {}),
+        (_Object$assign2[sideY] = hasY ? y + 'px' : ''),
+        (_Object$assign2[sideX] = hasX ? x + 'px' : ''),
+        (_Object$assign2.transform = ''),
+        _Object$assign2),
+    );
 }
 
 function computeStyles(_ref5) {
-  var state = _ref5.state,
-      options = _ref5.options;
-  var _options$gpuAccelerat = options.gpuAcceleration,
-      gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat,
-      _options$adaptive = options.adaptive,
-      adaptive = _options$adaptive === void 0 ? true : _options$adaptive,
-      _options$roundOffsets = options.roundOffsets,
-      roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
-  var commonStyles = {
-    placement: getBasePlacement(state.placement),
-    variation: getVariation(state.placement),
-    popper: state.elements.popper,
-    popperRect: state.rects.popper,
-    gpuAcceleration: gpuAcceleration,
-    isFixed: state.options.strategy === 'fixed'
-  };
+    var state = _ref5.state,
+        options = _ref5.options;
+    var _options$gpuAccelerat = options.gpuAcceleration,
+        gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat,
+        _options$adaptive = options.adaptive,
+        adaptive = _options$adaptive === void 0 ? true : _options$adaptive,
+        _options$roundOffsets = options.roundOffsets,
+        roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
+    var commonStyles = {
+        placement: getBasePlacement(state.placement),
+        variation: getVariation(state.placement),
+        popper: state.elements.popper,
+        popperRect: state.rects.popper,
+        gpuAcceleration: gpuAcceleration,
+        isFixed: state.options.strategy === 'fixed',
+    };
 
-  if (state.modifiersData.popperOffsets != null) {
-    state.styles.popper = Object.assign({}, state.styles.popper, mapToStyles(Object.assign({}, commonStyles, {
-      offsets: state.modifiersData.popperOffsets,
-      position: state.options.strategy,
-      adaptive: adaptive,
-      roundOffsets: roundOffsets
-    })));
-  }
+    if (state.modifiersData.popperOffsets != null) {
+        state.styles.popper = Object.assign(
+            {},
+            state.styles.popper,
+            mapToStyles(
+                Object.assign({}, commonStyles, {
+                    offsets: state.modifiersData.popperOffsets,
+                    position: state.options.strategy,
+                    adaptive: adaptive,
+                    roundOffsets: roundOffsets,
+                }),
+            ),
+        );
+    }
 
-  if (state.modifiersData.arrow != null) {
-    state.styles.arrow = Object.assign({}, state.styles.arrow, mapToStyles(Object.assign({}, commonStyles, {
-      offsets: state.modifiersData.arrow,
-      position: 'absolute',
-      adaptive: false,
-      roundOffsets: roundOffsets
-    })));
-  }
+    if (state.modifiersData.arrow != null) {
+        state.styles.arrow = Object.assign(
+            {},
+            state.styles.arrow,
+            mapToStyles(
+                Object.assign({}, commonStyles, {
+                    offsets: state.modifiersData.arrow,
+                    position: 'absolute',
+                    adaptive: false,
+                    roundOffsets: roundOffsets,
+                }),
+            ),
+        );
+    }
 
-  state.attributes.popper = Object.assign({}, state.attributes.popper, {
-    'data-popper-placement': state.placement
-  });
+    state.attributes.popper = Object.assign({}, state.attributes.popper, {
+        'data-popper-placement': state.placement,
+    });
 } // eslint-disable-next-line import/no-unused-modules
 
-
 var computeStyles$1 = {
-  name: 'computeStyles',
-  enabled: true,
-  phase: 'beforeWrite',
-  fn: computeStyles,
-  data: {}
+    name: 'computeStyles',
+    enabled: true,
+    phase: 'beforeWrite',
+    fn: computeStyles,
+    data: {},
 };
 
 var passive = {
-  passive: true
+    passive: true,
 };
 
 function effect(_ref) {
-  var state = _ref.state,
-      instance = _ref.instance,
-      options = _ref.options;
-  var _options$scroll = options.scroll,
-      scroll = _options$scroll === void 0 ? true : _options$scroll,
-      _options$resize = options.resize,
-      resize = _options$resize === void 0 ? true : _options$resize;
-  var window = getWindow(state.elements.popper);
-  var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
+    var state = _ref.state,
+        instance = _ref.instance,
+        options = _ref.options;
+    var _options$scroll = options.scroll,
+        scroll = _options$scroll === void 0 ? true : _options$scroll,
+        _options$resize = options.resize,
+        resize = _options$resize === void 0 ? true : _options$resize;
+    var window = getWindow(state.elements.popper);
+    var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
 
-  if (scroll) {
-    scrollParents.forEach(function (scrollParent) {
-      scrollParent.addEventListener('scroll', instance.update, passive);
-    });
-  }
-
-  if (resize) {
-    window.addEventListener('resize', instance.update, passive);
-  }
-
-  return function () {
     if (scroll) {
-      scrollParents.forEach(function (scrollParent) {
-        scrollParent.removeEventListener('scroll', instance.update, passive);
-      });
+        scrollParents.forEach(function (scrollParent) {
+            scrollParent.addEventListener('scroll', instance.update, passive);
+        });
     }
 
     if (resize) {
-      window.removeEventListener('resize', instance.update, passive);
+        window.addEventListener('resize', instance.update, passive);
     }
-  };
+
+    return function () {
+        if (scroll) {
+            scrollParents.forEach(function (scrollParent) {
+                scrollParent.removeEventListener('scroll', instance.update, passive);
+            });
+        }
+
+        if (resize) {
+            window.removeEventListener('resize', instance.update, passive);
+        }
+    };
 } // eslint-disable-next-line import/no-unused-modules
 
-
 var eventListeners = {
-  name: 'eventListeners',
-  enabled: true,
-  phase: 'write',
-  fn: function fn() {},
-  effect: effect,
-  data: {}
+    name: 'eventListeners',
+    enabled: true,
+    phase: 'write',
+    fn: function fn() {},
+    effect: effect,
+    data: {},
 };
 
 var hash$1 = {
-  left: 'right',
-  right: 'left',
-  bottom: 'top',
-  top: 'bottom'
+    left: 'right',
+    right: 'left',
+    bottom: 'top',
+    top: 'bottom',
 };
 function getOppositePlacement(placement) {
-  return placement.replace(/left|right|bottom|top/g, function (matched) {
-    return hash$1[matched];
-  });
+    return placement.replace(/left|right|bottom|top/g, function (matched) {
+        return hash$1[matched];
+    });
 }
 
 var hash = {
-  start: 'end',
-  end: 'start'
+    start: 'end',
+    end: 'start',
 };
 function getOppositeVariationPlacement(placement) {
-  return placement.replace(/start|end/g, function (matched) {
-    return hash[matched];
-  });
+    return placement.replace(/start|end/g, function (matched) {
+        return hash[matched];
+    });
 }
 
 function getWindowScroll(node) {
-  var win = getWindow(node);
-  var scrollLeft = win.pageXOffset;
-  var scrollTop = win.pageYOffset;
-  return {
-    scrollLeft: scrollLeft,
-    scrollTop: scrollTop
-  };
+    var win = getWindow(node);
+    var scrollLeft = win.pageXOffset;
+    var scrollTop = win.pageYOffset;
+    return {
+        scrollLeft: scrollLeft,
+        scrollTop: scrollTop,
+    };
 }
 
 function getWindowScrollBarX(element) {
-  // If <html> has a CSS width greater than the viewport, then this will be
-  // incorrect for RTL.
-  // Popper 1 is broken in this case and never had a bug report so let's assume
-  // it's not an issue. I don't think anyone ever specifies width on <html>
-  // anyway.
-  // Browsers where the left scrollbar doesn't cause an issue report `0` for
-  // this (e.g. Edge 2019, IE11, Safari)
-  return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
+    // If <html> has a CSS width greater than the viewport, then this will be
+    // incorrect for RTL.
+    // Popper 1 is broken in this case and never had a bug report so let's assume
+    // it's not an issue. I don't think anyone ever specifies width on <html>
+    // anyway.
+    // Browsers where the left scrollbar doesn't cause an issue report `0` for
+    // this (e.g. Edge 2019, IE11, Safari)
+    return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
 }
 
 function getViewportRect(element, strategy) {
-  var win = getWindow(element);
-  var html = getDocumentElement(element);
-  var visualViewport = win.visualViewport;
-  var width = html.clientWidth;
-  var height = html.clientHeight;
-  var x = 0;
-  var y = 0;
+    var win = getWindow(element);
+    var html = getDocumentElement(element);
+    var visualViewport = win.visualViewport;
+    var width = html.clientWidth;
+    var height = html.clientHeight;
+    var x = 0;
+    var y = 0;
 
-  if (visualViewport) {
-    width = visualViewport.width;
-    height = visualViewport.height;
-    var layoutViewport = isLayoutViewport();
+    if (visualViewport) {
+        width = visualViewport.width;
+        height = visualViewport.height;
+        var layoutViewport = isLayoutViewport();
 
-    if (layoutViewport || !layoutViewport && strategy === 'fixed') {
-      x = visualViewport.offsetLeft;
-      y = visualViewport.offsetTop;
+        if (layoutViewport || (!layoutViewport && strategy === 'fixed')) {
+            x = visualViewport.offsetLeft;
+            y = visualViewport.offsetTop;
+        }
     }
-  }
 
-  return {
-    width: width,
-    height: height,
-    x: x + getWindowScrollBarX(element),
-    y: y
-  };
+    return {
+        width: width,
+        height: height,
+        x: x + getWindowScrollBarX(element),
+        y: y,
+    };
 }
 
 // of the `<html>` and `<body>` rect bounds if horizontally scrollable
 
 function getDocumentRect(element) {
-  var _element$ownerDocumen;
+    var _element$ownerDocumen;
 
-  var html = getDocumentElement(element);
-  var winScroll = getWindowScroll(element);
-  var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
-  var width = max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
-  var height = max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
-  var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
-  var y = -winScroll.scrollTop;
+    var html = getDocumentElement(element);
+    var winScroll = getWindowScroll(element);
+    var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
+    var width = max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
+    var height = max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
+    var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
+    var y = -winScroll.scrollTop;
 
-  if (getComputedStyle(body || html).direction === 'rtl') {
-    x += max(html.clientWidth, body ? body.clientWidth : 0) - width;
-  }
+    if (getComputedStyle(body || html).direction === 'rtl') {
+        x += max(html.clientWidth, body ? body.clientWidth : 0) - width;
+    }
 
-  return {
-    width: width,
-    height: height,
-    x: x,
-    y: y
-  };
+    return {
+        width: width,
+        height: height,
+        x: x,
+        y: y,
+    };
 }
 
 function isScrollParent(element) {
-  // Firefox wants us to check `-x` and `-y` variations as well
-  var _getComputedStyle = getComputedStyle(element),
-      overflow = _getComputedStyle.overflow,
-      overflowX = _getComputedStyle.overflowX,
-      overflowY = _getComputedStyle.overflowY;
+    // Firefox wants us to check `-x` and `-y` variations as well
+    var _getComputedStyle = getComputedStyle(element),
+        overflow = _getComputedStyle.overflow,
+        overflowX = _getComputedStyle.overflowX,
+        overflowY = _getComputedStyle.overflowY;
 
-  return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
+    return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
 }
 
 function getScrollParent(node) {
-  if (['html', 'body', '#document'].indexOf(getNodeName(node)) >= 0) {
-    // $FlowFixMe[incompatible-return]: assume body is always available
-    return node.ownerDocument.body;
-  }
+    if (['html', 'body', '#document'].indexOf(getNodeName(node)) >= 0) {
+        // $FlowFixMe[incompatible-return]: assume body is always available
+        return node.ownerDocument.body;
+    }
 
-  if (isHTMLElement(node) && isScrollParent(node)) {
-    return node;
-  }
+    if (isHTMLElement(node) && isScrollParent(node)) {
+        return node;
+    }
 
-  return getScrollParent(getParentNode(node));
+    return getScrollParent(getParentNode(node));
 }
 
 /*
@@ -4233,987 +4355,1097 @@ reference element's position.
 */
 
 function listScrollParents(element, list) {
-  var _element$ownerDocumen;
+    var _element$ownerDocumen;
 
-  if (list === void 0) {
-    list = [];
-  }
+    if (list === void 0) {
+        list = [];
+    }
 
-  var scrollParent = getScrollParent(element);
-  var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
-  var win = getWindow(scrollParent);
-  var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
-  var updatedList = list.concat(target);
-  return isBody ? updatedList : // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
-  updatedList.concat(listScrollParents(getParentNode(target)));
+    var scrollParent = getScrollParent(element);
+    var isBody =
+        scrollParent ===
+        ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
+    var win = getWindow(scrollParent);
+    var target = isBody
+        ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : [])
+        : scrollParent;
+    var updatedList = list.concat(target);
+    return isBody
+        ? updatedList // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
+        : updatedList.concat(listScrollParents(getParentNode(target)));
 }
 
 function rectToClientRect(rect) {
-  return Object.assign({}, rect, {
-    left: rect.x,
-    top: rect.y,
-    right: rect.x + rect.width,
-    bottom: rect.y + rect.height
-  });
+    return Object.assign({}, rect, {
+        left: rect.x,
+        top: rect.y,
+        right: rect.x + rect.width,
+        bottom: rect.y + rect.height,
+    });
 }
 
 function getInnerBoundingClientRect(element, strategy) {
-  var rect = getBoundingClientRect(element, false, strategy === 'fixed');
-  rect.top = rect.top + element.clientTop;
-  rect.left = rect.left + element.clientLeft;
-  rect.bottom = rect.top + element.clientHeight;
-  rect.right = rect.left + element.clientWidth;
-  rect.width = element.clientWidth;
-  rect.height = element.clientHeight;
-  rect.x = rect.left;
-  rect.y = rect.top;
-  return rect;
+    var rect = getBoundingClientRect(element, false, strategy === 'fixed');
+    rect.top = rect.top + element.clientTop;
+    rect.left = rect.left + element.clientLeft;
+    rect.bottom = rect.top + element.clientHeight;
+    rect.right = rect.left + element.clientWidth;
+    rect.width = element.clientWidth;
+    rect.height = element.clientHeight;
+    rect.x = rect.left;
+    rect.y = rect.top;
+    return rect;
 }
 
 function getClientRectFromMixedType(element, clippingParent, strategy) {
-  return clippingParent === viewport ? rectToClientRect(getViewportRect(element, strategy)) : isElement(clippingParent) ? getInnerBoundingClientRect(clippingParent, strategy) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
+    return clippingParent === viewport
+        ? rectToClientRect(getViewportRect(element, strategy))
+        : isElement(clippingParent)
+          ? getInnerBoundingClientRect(clippingParent, strategy)
+          : rectToClientRect(getDocumentRect(getDocumentElement(element)));
 } // A "clipping parent" is an overflowable container with the characteristic of
 // clipping (or hiding) overflowing elements with a position different from
 // `initial`
 
-
 function getClippingParents(element) {
-  var clippingParents = listScrollParents(getParentNode(element));
-  var canEscapeClipping = ['absolute', 'fixed'].indexOf(getComputedStyle(element).position) >= 0;
-  var clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element;
+    var clippingParents = listScrollParents(getParentNode(element));
+    var canEscapeClipping = ['absolute', 'fixed'].indexOf(getComputedStyle(element).position) >= 0;
+    var clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element;
 
-  if (!isElement(clipperElement)) {
-    return [];
-  } // $FlowFixMe[incompatible-return]: https://github.com/facebook/flow/issues/1414
+    if (!isElement(clipperElement)) {
+        return [];
+    } // $FlowFixMe[incompatible-return]: https://github.com/facebook/flow/issues/1414
 
-
-  return clippingParents.filter(function (clippingParent) {
-    return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body';
-  });
+    return clippingParents.filter(function (clippingParent) {
+        return (
+            isElement(clippingParent) &&
+            contains(clippingParent, clipperElement) &&
+            getNodeName(clippingParent) !== 'body'
+        );
+    });
 } // Gets the maximum area that the element is visible in due to any number of
 // clipping parents
 
-
 function getClippingRect(element, boundary, rootBoundary, strategy) {
-  var mainClippingParents = boundary === 'clippingParents' ? getClippingParents(element) : [].concat(boundary);
-  var clippingParents = [].concat(mainClippingParents, [rootBoundary]);
-  var firstClippingParent = clippingParents[0];
-  var clippingRect = clippingParents.reduce(function (accRect, clippingParent) {
-    var rect = getClientRectFromMixedType(element, clippingParent, strategy);
-    accRect.top = max(rect.top, accRect.top);
-    accRect.right = min(rect.right, accRect.right);
-    accRect.bottom = min(rect.bottom, accRect.bottom);
-    accRect.left = max(rect.left, accRect.left);
-    return accRect;
-  }, getClientRectFromMixedType(element, firstClippingParent, strategy));
-  clippingRect.width = clippingRect.right - clippingRect.left;
-  clippingRect.height = clippingRect.bottom - clippingRect.top;
-  clippingRect.x = clippingRect.left;
-  clippingRect.y = clippingRect.top;
-  return clippingRect;
+    var mainClippingParents = boundary === 'clippingParents' ? getClippingParents(element) : [].concat(boundary);
+    var clippingParents = [].concat(mainClippingParents, [rootBoundary]);
+    var firstClippingParent = clippingParents[0];
+    var clippingRect = clippingParents.reduce(
+        function (accRect, clippingParent) {
+            var rect = getClientRectFromMixedType(element, clippingParent, strategy);
+            accRect.top = max(rect.top, accRect.top);
+            accRect.right = min(rect.right, accRect.right);
+            accRect.bottom = min(rect.bottom, accRect.bottom);
+            accRect.left = max(rect.left, accRect.left);
+            return accRect;
+        },
+        getClientRectFromMixedType(element, firstClippingParent, strategy),
+    );
+    clippingRect.width = clippingRect.right - clippingRect.left;
+    clippingRect.height = clippingRect.bottom - clippingRect.top;
+    clippingRect.x = clippingRect.left;
+    clippingRect.y = clippingRect.top;
+    return clippingRect;
 }
 
 function computeOffsets(_ref) {
-  var reference = _ref.reference,
-      element = _ref.element,
-      placement = _ref.placement;
-  var basePlacement = placement ? getBasePlacement(placement) : null;
-  var variation = placement ? getVariation(placement) : null;
-  var commonX = reference.x + reference.width / 2 - element.width / 2;
-  var commonY = reference.y + reference.height / 2 - element.height / 2;
-  var offsets;
+    var reference = _ref.reference,
+        element = _ref.element,
+        placement = _ref.placement;
+    var basePlacement = placement ? getBasePlacement(placement) : null;
+    var variation = placement ? getVariation(placement) : null;
+    var commonX = reference.x + reference.width / 2 - element.width / 2;
+    var commonY = reference.y + reference.height / 2 - element.height / 2;
+    var offsets;
 
-  switch (basePlacement) {
-    case top:
-      offsets = {
-        x: commonX,
-        y: reference.y - element.height
-      };
-      break;
+    switch (basePlacement) {
+        case top:
+            offsets = {
+                x: commonX,
+                y: reference.y - element.height,
+            };
+            break;
 
-    case bottom:
-      offsets = {
-        x: commonX,
-        y: reference.y + reference.height
-      };
-      break;
+        case bottom:
+            offsets = {
+                x: commonX,
+                y: reference.y + reference.height,
+            };
+            break;
 
-    case right:
-      offsets = {
-        x: reference.x + reference.width,
-        y: commonY
-      };
-      break;
+        case right:
+            offsets = {
+                x: reference.x + reference.width,
+                y: commonY,
+            };
+            break;
 
-    case left:
-      offsets = {
-        x: reference.x - element.width,
-        y: commonY
-      };
-      break;
+        case left:
+            offsets = {
+                x: reference.x - element.width,
+                y: commonY,
+            };
+            break;
 
-    default:
-      offsets = {
-        x: reference.x,
-        y: reference.y
-      };
-  }
-
-  var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null;
-
-  if (mainAxis != null) {
-    var len = mainAxis === 'y' ? 'height' : 'width';
-
-    switch (variation) {
-      case start:
-        offsets[mainAxis] = offsets[mainAxis] - (reference[len] / 2 - element[len] / 2);
-        break;
-
-      case end:
-        offsets[mainAxis] = offsets[mainAxis] + (reference[len] / 2 - element[len] / 2);
-        break;
+        default:
+            offsets = {
+                x: reference.x,
+                y: reference.y,
+            };
     }
-  }
 
-  return offsets;
+    var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null;
+
+    if (mainAxis != null) {
+        var len = mainAxis === 'y' ? 'height' : 'width';
+
+        switch (variation) {
+            case start:
+                offsets[mainAxis] = offsets[mainAxis] - (reference[len] / 2 - element[len] / 2);
+                break;
+
+            case end:
+                offsets[mainAxis] = offsets[mainAxis] + (reference[len] / 2 - element[len] / 2);
+                break;
+        }
+    }
+
+    return offsets;
 }
 
 function detectOverflow(state, options) {
-  if (options === void 0) {
-    options = {};
-  }
+    if (options === void 0) {
+        options = {};
+    }
 
-  var _options = options,
-      _options$placement = _options.placement,
-      placement = _options$placement === void 0 ? state.placement : _options$placement,
-      _options$strategy = _options.strategy,
-      strategy = _options$strategy === void 0 ? state.strategy : _options$strategy,
-      _options$boundary = _options.boundary,
-      boundary = _options$boundary === void 0 ? clippingParents : _options$boundary,
-      _options$rootBoundary = _options.rootBoundary,
-      rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary,
-      _options$elementConte = _options.elementContext,
-      elementContext = _options$elementConte === void 0 ? popper : _options$elementConte,
-      _options$altBoundary = _options.altBoundary,
-      altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary,
-      _options$padding = _options.padding,
-      padding = _options$padding === void 0 ? 0 : _options$padding;
-  var paddingObject = mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
-  var altContext = elementContext === popper ? reference : popper;
-  var popperRect = state.rects.popper;
-  var element = state.elements[altBoundary ? altContext : elementContext];
-  var clippingClientRect = getClippingRect(isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary, strategy);
-  var referenceClientRect = getBoundingClientRect(state.elements.reference);
-  var popperOffsets = computeOffsets({
-    reference: referenceClientRect,
-    element: popperRect,
-    strategy: 'absolute',
-    placement: placement
-  });
-  var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets));
-  var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect; // positive = overflowing the clipping rect
-  // 0 or negative = within the clipping rect
-
-  var overflowOffsets = {
-    top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
-    bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
-    left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
-    right: elementClientRect.right - clippingClientRect.right + paddingObject.right
-  };
-  var offsetData = state.modifiersData.offset; // Offsets can be applied only to the popper element
-
-  if (elementContext === popper && offsetData) {
-    var offset = offsetData[placement];
-    Object.keys(overflowOffsets).forEach(function (key) {
-      var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
-      var axis = [top, bottom].indexOf(key) >= 0 ? 'y' : 'x';
-      overflowOffsets[key] += offset[axis] * multiply;
+    var _options = options,
+        _options$placement = _options.placement,
+        placement = _options$placement === void 0 ? state.placement : _options$placement,
+        _options$strategy = _options.strategy,
+        strategy = _options$strategy === void 0 ? state.strategy : _options$strategy,
+        _options$boundary = _options.boundary,
+        boundary = _options$boundary === void 0 ? clippingParents : _options$boundary,
+        _options$rootBoundary = _options.rootBoundary,
+        rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary,
+        _options$elementConte = _options.elementContext,
+        elementContext = _options$elementConte === void 0 ? popper : _options$elementConte,
+        _options$altBoundary = _options.altBoundary,
+        altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary,
+        _options$padding = _options.padding,
+        padding = _options$padding === void 0 ? 0 : _options$padding;
+    var paddingObject = mergePaddingObject(
+        typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements),
+    );
+    var altContext = elementContext === popper ? reference : popper;
+    var popperRect = state.rects.popper;
+    var element = state.elements[altBoundary ? altContext : elementContext];
+    var clippingClientRect = getClippingRect(
+        isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper),
+        boundary,
+        rootBoundary,
+        strategy,
+    );
+    var referenceClientRect = getBoundingClientRect(state.elements.reference);
+    var popperOffsets = computeOffsets({
+        reference: referenceClientRect,
+        element: popperRect,
+        strategy: 'absolute',
+        placement: placement,
     });
-  }
+    var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets));
+    var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect; // positive = overflowing the clipping rect
+    // 0 or negative = within the clipping rect
 
-  return overflowOffsets;
+    var overflowOffsets = {
+        top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
+        bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
+        left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
+        right: elementClientRect.right - clippingClientRect.right + paddingObject.right,
+    };
+    var offsetData = state.modifiersData.offset; // Offsets can be applied only to the popper element
+
+    if (elementContext === popper && offsetData) {
+        var offset = offsetData[placement];
+        Object.keys(overflowOffsets).forEach(function (key) {
+            var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
+            var axis = [top, bottom].indexOf(key) >= 0 ? 'y' : 'x';
+            overflowOffsets[key] += offset[axis] * multiply;
+        });
+    }
+
+    return overflowOffsets;
 }
 
 function computeAutoPlacement(state, options) {
-  if (options === void 0) {
-    options = {};
-  }
+    if (options === void 0) {
+        options = {};
+    }
 
-  var _options = options,
-      placement = _options.placement,
-      boundary = _options.boundary,
-      rootBoundary = _options.rootBoundary,
-      padding = _options.padding,
-      flipVariations = _options.flipVariations,
-      _options$allowedAutoP = _options.allowedAutoPlacements,
-      allowedAutoPlacements = _options$allowedAutoP === void 0 ? placements : _options$allowedAutoP;
-  var variation = getVariation(placement);
-  var placements$1 = variation ? flipVariations ? variationPlacements : variationPlacements.filter(function (placement) {
-    return getVariation(placement) === variation;
-  }) : basePlacements;
-  var allowedPlacements = placements$1.filter(function (placement) {
-    return allowedAutoPlacements.indexOf(placement) >= 0;
-  });
+    var _options = options,
+        placement = _options.placement,
+        boundary = _options.boundary,
+        rootBoundary = _options.rootBoundary,
+        padding = _options.padding,
+        flipVariations = _options.flipVariations,
+        _options$allowedAutoP = _options.allowedAutoPlacements,
+        allowedAutoPlacements = _options$allowedAutoP === void 0 ? placements : _options$allowedAutoP;
+    var variation = getVariation(placement);
+    var placements$1 = variation
+        ? flipVariations
+            ? variationPlacements
+            : variationPlacements.filter(function (placement) {
+                  return getVariation(placement) === variation;
+              })
+        : basePlacements;
+    var allowedPlacements = placements$1.filter(function (placement) {
+        return allowedAutoPlacements.indexOf(placement) >= 0;
+    });
 
-  if (allowedPlacements.length === 0) {
-    allowedPlacements = placements$1;
-  } // $FlowFixMe[incompatible-type]: Flow seems to have problems with two array unions...
+    if (allowedPlacements.length === 0) {
+        allowedPlacements = placements$1;
+    } // $FlowFixMe[incompatible-type]: Flow seems to have problems with two array unions...
 
-
-  var overflows = allowedPlacements.reduce(function (acc, placement) {
-    acc[placement] = detectOverflow(state, {
-      placement: placement,
-      boundary: boundary,
-      rootBoundary: rootBoundary,
-      padding: padding
-    })[getBasePlacement(placement)];
-    return acc;
-  }, {});
-  return Object.keys(overflows).sort(function (a, b) {
-    return overflows[a] - overflows[b];
-  });
+    var overflows = allowedPlacements.reduce(function (acc, placement) {
+        acc[placement] = detectOverflow(state, {
+            placement: placement,
+            boundary: boundary,
+            rootBoundary: rootBoundary,
+            padding: padding,
+        })[getBasePlacement(placement)];
+        return acc;
+    }, {});
+    return Object.keys(overflows).sort(function (a, b) {
+        return overflows[a] - overflows[b];
+    });
 }
 
 function getExpandedFallbackPlacements(placement) {
-  if (getBasePlacement(placement) === auto) {
-    return [];
-  }
+    if (getBasePlacement(placement) === auto) {
+        return [];
+    }
 
-  var oppositePlacement = getOppositePlacement(placement);
-  return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
+    var oppositePlacement = getOppositePlacement(placement);
+    return [
+        getOppositeVariationPlacement(placement),
+        oppositePlacement,
+        getOppositeVariationPlacement(oppositePlacement),
+    ];
 }
 
 function flip(_ref) {
-  var state = _ref.state,
-      options = _ref.options,
-      name = _ref.name;
+    var state = _ref.state,
+        options = _ref.options,
+        name = _ref.name;
 
-  if (state.modifiersData[name]._skip) {
-    return;
-  }
-
-  var _options$mainAxis = options.mainAxis,
-      checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
-      _options$altAxis = options.altAxis,
-      checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis,
-      specifiedFallbackPlacements = options.fallbackPlacements,
-      padding = options.padding,
-      boundary = options.boundary,
-      rootBoundary = options.rootBoundary,
-      altBoundary = options.altBoundary,
-      _options$flipVariatio = options.flipVariations,
-      flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio,
-      allowedAutoPlacements = options.allowedAutoPlacements;
-  var preferredPlacement = state.options.placement;
-  var basePlacement = getBasePlacement(preferredPlacement);
-  var isBasePlacement = basePlacement === preferredPlacement;
-  var fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipVariations ? [getOppositePlacement(preferredPlacement)] : getExpandedFallbackPlacements(preferredPlacement));
-  var placements = [preferredPlacement].concat(fallbackPlacements).reduce(function (acc, placement) {
-    return acc.concat(getBasePlacement(placement) === auto ? computeAutoPlacement(state, {
-      placement: placement,
-      boundary: boundary,
-      rootBoundary: rootBoundary,
-      padding: padding,
-      flipVariations: flipVariations,
-      allowedAutoPlacements: allowedAutoPlacements
-    }) : placement);
-  }, []);
-  var referenceRect = state.rects.reference;
-  var popperRect = state.rects.popper;
-  var checksMap = new Map();
-  var makeFallbackChecks = true;
-  var firstFittingPlacement = placements[0];
-
-  for (var i = 0; i < placements.length; i++) {
-    var placement = placements[i];
-
-    var _basePlacement = getBasePlacement(placement);
-
-    var isStartVariation = getVariation(placement) === start;
-    var isVertical = [top, bottom].indexOf(_basePlacement) >= 0;
-    var len = isVertical ? 'width' : 'height';
-    var overflow = detectOverflow(state, {
-      placement: placement,
-      boundary: boundary,
-      rootBoundary: rootBoundary,
-      altBoundary: altBoundary,
-      padding: padding
-    });
-    var mainVariationSide = isVertical ? isStartVariation ? right : left : isStartVariation ? bottom : top;
-
-    if (referenceRect[len] > popperRect[len]) {
-      mainVariationSide = getOppositePlacement(mainVariationSide);
+    if (state.modifiersData[name]._skip) {
+        return;
     }
 
-    var altVariationSide = getOppositePlacement(mainVariationSide);
-    var checks = [];
+    var _options$mainAxis = options.mainAxis,
+        checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
+        _options$altAxis = options.altAxis,
+        checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis,
+        specifiedFallbackPlacements = options.fallbackPlacements,
+        padding = options.padding,
+        boundary = options.boundary,
+        rootBoundary = options.rootBoundary,
+        altBoundary = options.altBoundary,
+        _options$flipVariatio = options.flipVariations,
+        flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio,
+        allowedAutoPlacements = options.allowedAutoPlacements;
+    var preferredPlacement = state.options.placement;
+    var basePlacement = getBasePlacement(preferredPlacement);
+    var isBasePlacement = basePlacement === preferredPlacement;
+    var fallbackPlacements =
+        specifiedFallbackPlacements ||
+        (isBasePlacement || !flipVariations
+            ? [getOppositePlacement(preferredPlacement)]
+            : getExpandedFallbackPlacements(preferredPlacement));
+    var placements = [preferredPlacement].concat(fallbackPlacements).reduce(function (acc, placement) {
+        return acc.concat(
+            getBasePlacement(placement) === auto
+                ? computeAutoPlacement(state, {
+                      placement: placement,
+                      boundary: boundary,
+                      rootBoundary: rootBoundary,
+                      padding: padding,
+                      flipVariations: flipVariations,
+                      allowedAutoPlacements: allowedAutoPlacements,
+                  })
+                : placement,
+        );
+    }, []);
+    var referenceRect = state.rects.reference;
+    var popperRect = state.rects.popper;
+    var checksMap = new Map();
+    var makeFallbackChecks = true;
+    var firstFittingPlacement = placements[0];
 
-    if (checkMainAxis) {
-      checks.push(overflow[_basePlacement] <= 0);
-    }
+    for (var i = 0; i < placements.length; i++) {
+        var placement = placements[i];
 
-    if (checkAltAxis) {
-      checks.push(overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0);
-    }
+        var _basePlacement = getBasePlacement(placement);
 
-    if (checks.every(function (check) {
-      return check;
-    })) {
-      firstFittingPlacement = placement;
-      makeFallbackChecks = false;
-      break;
-    }
+        var isStartVariation = getVariation(placement) === start;
+        var isVertical = [top, bottom].indexOf(_basePlacement) >= 0;
+        var len = isVertical ? 'width' : 'height';
+        var overflow = detectOverflow(state, {
+            placement: placement,
+            boundary: boundary,
+            rootBoundary: rootBoundary,
+            altBoundary: altBoundary,
+            padding: padding,
+        });
+        var mainVariationSide = isVertical ? (isStartVariation ? right : left) : isStartVariation ? bottom : top;
 
-    checksMap.set(placement, checks);
-  }
-
-  if (makeFallbackChecks) {
-    // `2` may be desired in some cases – research later
-    var numberOfChecks = flipVariations ? 3 : 1;
-
-    var _loop = function _loop(_i) {
-      var fittingPlacement = placements.find(function (placement) {
-        var checks = checksMap.get(placement);
-
-        if (checks) {
-          return checks.slice(0, _i).every(function (check) {
-            return check;
-          });
+        if (referenceRect[len] > popperRect[len]) {
+            mainVariationSide = getOppositePlacement(mainVariationSide);
         }
-      });
 
-      if (fittingPlacement) {
-        firstFittingPlacement = fittingPlacement;
-        return "break";
-      }
-    };
+        var altVariationSide = getOppositePlacement(mainVariationSide);
+        var checks = [];
 
-    for (var _i = numberOfChecks; _i > 0; _i--) {
-      var _ret = _loop(_i);
+        if (checkMainAxis) {
+            checks.push(overflow[_basePlacement] <= 0);
+        }
 
-      if (_ret === "break") break;
+        if (checkAltAxis) {
+            checks.push(overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0);
+        }
+
+        if (
+            checks.every(function (check) {
+                return check;
+            })
+        ) {
+            firstFittingPlacement = placement;
+            makeFallbackChecks = false;
+            break;
+        }
+
+        checksMap.set(placement, checks);
     }
-  }
 
-  if (state.placement !== firstFittingPlacement) {
-    state.modifiersData[name]._skip = true;
-    state.placement = firstFittingPlacement;
-    state.reset = true;
-  }
+    if (makeFallbackChecks) {
+        // `2` may be desired in some cases – research later
+        var numberOfChecks = flipVariations ? 3 : 1;
+
+        var _loop = function _loop(_i) {
+            var fittingPlacement = placements.find(function (placement) {
+                var checks = checksMap.get(placement);
+
+                if (checks) {
+                    return checks.slice(0, _i).every(function (check) {
+                        return check;
+                    });
+                }
+            });
+
+            if (fittingPlacement) {
+                firstFittingPlacement = fittingPlacement;
+                return 'break';
+            }
+        };
+
+        for (var _i = numberOfChecks; _i > 0; _i--) {
+            var _ret = _loop(_i);
+
+            if (_ret === 'break') break;
+        }
+    }
+
+    if (state.placement !== firstFittingPlacement) {
+        state.modifiersData[name]._skip = true;
+        state.placement = firstFittingPlacement;
+        state.reset = true;
+    }
 } // eslint-disable-next-line import/no-unused-modules
 
-
 var flip$1 = {
-  name: 'flip',
-  enabled: true,
-  phase: 'main',
-  fn: flip,
-  requiresIfExists: ['offset'],
-  data: {
-    _skip: false
-  }
+    name: 'flip',
+    enabled: true,
+    phase: 'main',
+    fn: flip,
+    requiresIfExists: ['offset'],
+    data: {
+        _skip: false,
+    },
 };
 
 function getSideOffsets(overflow, rect, preventedOffsets) {
-  if (preventedOffsets === void 0) {
-    preventedOffsets = {
-      x: 0,
-      y: 0
-    };
-  }
+    if (preventedOffsets === void 0) {
+        preventedOffsets = {
+            x: 0,
+            y: 0,
+        };
+    }
 
-  return {
-    top: overflow.top - rect.height - preventedOffsets.y,
-    right: overflow.right - rect.width + preventedOffsets.x,
-    bottom: overflow.bottom - rect.height + preventedOffsets.y,
-    left: overflow.left - rect.width - preventedOffsets.x
-  };
+    return {
+        top: overflow.top - rect.height - preventedOffsets.y,
+        right: overflow.right - rect.width + preventedOffsets.x,
+        bottom: overflow.bottom - rect.height + preventedOffsets.y,
+        left: overflow.left - rect.width - preventedOffsets.x,
+    };
 }
 
 function isAnySideFullyClipped(overflow) {
-  return [top, right, bottom, left].some(function (side) {
-    return overflow[side] >= 0;
-  });
+    return [top, right, bottom, left].some(function (side) {
+        return overflow[side] >= 0;
+    });
 }
 
 function hide(_ref) {
-  var state = _ref.state,
-      name = _ref.name;
-  var referenceRect = state.rects.reference;
-  var popperRect = state.rects.popper;
-  var preventedOffsets = state.modifiersData.preventOverflow;
-  var referenceOverflow = detectOverflow(state, {
-    elementContext: 'reference'
-  });
-  var popperAltOverflow = detectOverflow(state, {
-    altBoundary: true
-  });
-  var referenceClippingOffsets = getSideOffsets(referenceOverflow, referenceRect);
-  var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, preventedOffsets);
-  var isReferenceHidden = isAnySideFullyClipped(referenceClippingOffsets);
-  var hasPopperEscaped = isAnySideFullyClipped(popperEscapeOffsets);
-  state.modifiersData[name] = {
-    referenceClippingOffsets: referenceClippingOffsets,
-    popperEscapeOffsets: popperEscapeOffsets,
-    isReferenceHidden: isReferenceHidden,
-    hasPopperEscaped: hasPopperEscaped
-  };
-  state.attributes.popper = Object.assign({}, state.attributes.popper, {
-    'data-popper-reference-hidden': isReferenceHidden,
-    'data-popper-escaped': hasPopperEscaped
-  });
+    var state = _ref.state,
+        name = _ref.name;
+    var referenceRect = state.rects.reference;
+    var popperRect = state.rects.popper;
+    var preventedOffsets = state.modifiersData.preventOverflow;
+    var referenceOverflow = detectOverflow(state, {
+        elementContext: 'reference',
+    });
+    var popperAltOverflow = detectOverflow(state, {
+        altBoundary: true,
+    });
+    var referenceClippingOffsets = getSideOffsets(referenceOverflow, referenceRect);
+    var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, preventedOffsets);
+    var isReferenceHidden = isAnySideFullyClipped(referenceClippingOffsets);
+    var hasPopperEscaped = isAnySideFullyClipped(popperEscapeOffsets);
+    state.modifiersData[name] = {
+        referenceClippingOffsets: referenceClippingOffsets,
+        popperEscapeOffsets: popperEscapeOffsets,
+        isReferenceHidden: isReferenceHidden,
+        hasPopperEscaped: hasPopperEscaped,
+    };
+    state.attributes.popper = Object.assign({}, state.attributes.popper, {
+        'data-popper-reference-hidden': isReferenceHidden,
+        'data-popper-escaped': hasPopperEscaped,
+    });
 } // eslint-disable-next-line import/no-unused-modules
 
-
 var hide$1 = {
-  name: 'hide',
-  enabled: true,
-  phase: 'main',
-  requiresIfExists: ['preventOverflow'],
-  fn: hide
+    name: 'hide',
+    enabled: true,
+    phase: 'main',
+    requiresIfExists: ['preventOverflow'],
+    fn: hide,
 };
 
 function distanceAndSkiddingToXY(placement, rects, offset) {
-  var basePlacement = getBasePlacement(placement);
-  var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
+    var basePlacement = getBasePlacement(placement);
+    var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
 
-  var _ref = typeof offset === 'function' ? offset(Object.assign({}, rects, {
-    placement: placement
-  })) : offset,
-      skidding = _ref[0],
-      distance = _ref[1];
+    var _ref =
+            typeof offset === 'function'
+                ? offset(
+                      Object.assign({}, rects, {
+                          placement: placement,
+                      }),
+                  )
+                : offset,
+        skidding = _ref[0],
+        distance = _ref[1];
 
-  skidding = skidding || 0;
-  distance = (distance || 0) * invertDistance;
-  return [left, right].indexOf(basePlacement) >= 0 ? {
-    x: distance,
-    y: skidding
-  } : {
-    x: skidding,
-    y: distance
-  };
+    skidding = skidding || 0;
+    distance = (distance || 0) * invertDistance;
+    return [left, right].indexOf(basePlacement) >= 0
+        ? {
+              x: distance,
+              y: skidding,
+          }
+        : {
+              x: skidding,
+              y: distance,
+          };
 }
 
 function offset(_ref2) {
-  var state = _ref2.state,
-      options = _ref2.options,
-      name = _ref2.name;
-  var _options$offset = options.offset,
-      offset = _options$offset === void 0 ? [0, 0] : _options$offset;
-  var data = placements.reduce(function (acc, placement) {
-    acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset);
-    return acc;
-  }, {});
-  var _data$state$placement = data[state.placement],
-      x = _data$state$placement.x,
-      y = _data$state$placement.y;
+    var state = _ref2.state,
+        options = _ref2.options,
+        name = _ref2.name;
+    var _options$offset = options.offset,
+        offset = _options$offset === void 0 ? [0, 0] : _options$offset;
+    var data = placements.reduce(function (acc, placement) {
+        acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset);
+        return acc;
+    }, {});
+    var _data$state$placement = data[state.placement],
+        x = _data$state$placement.x,
+        y = _data$state$placement.y;
 
-  if (state.modifiersData.popperOffsets != null) {
-    state.modifiersData.popperOffsets.x += x;
-    state.modifiersData.popperOffsets.y += y;
-  }
+    if (state.modifiersData.popperOffsets != null) {
+        state.modifiersData.popperOffsets.x += x;
+        state.modifiersData.popperOffsets.y += y;
+    }
 
-  state.modifiersData[name] = data;
+    state.modifiersData[name] = data;
 } // eslint-disable-next-line import/no-unused-modules
 
-
 var offset$1 = {
-  name: 'offset',
-  enabled: true,
-  phase: 'main',
-  requires: ['popperOffsets'],
-  fn: offset
+    name: 'offset',
+    enabled: true,
+    phase: 'main',
+    requires: ['popperOffsets'],
+    fn: offset,
 };
 
 function popperOffsets(_ref) {
-  var state = _ref.state,
-      name = _ref.name;
-  // Offsets are the actual position the popper needs to have to be
-  // properly positioned near its reference element
-  // This is the most basic placement, and will be adjusted by
-  // the modifiers in the next step
-  state.modifiersData[name] = computeOffsets({
-    reference: state.rects.reference,
-    element: state.rects.popper,
-    strategy: 'absolute',
-    placement: state.placement
-  });
+    var state = _ref.state,
+        name = _ref.name;
+    // Offsets are the actual position the popper needs to have to be
+    // properly positioned near its reference element
+    // This is the most basic placement, and will be adjusted by
+    // the modifiers in the next step
+    state.modifiersData[name] = computeOffsets({
+        reference: state.rects.reference,
+        element: state.rects.popper,
+        strategy: 'absolute',
+        placement: state.placement,
+    });
 } // eslint-disable-next-line import/no-unused-modules
 
-
 var popperOffsets$1 = {
-  name: 'popperOffsets',
-  enabled: true,
-  phase: 'read',
-  fn: popperOffsets,
-  data: {}
+    name: 'popperOffsets',
+    enabled: true,
+    phase: 'read',
+    fn: popperOffsets,
+    data: {},
 };
 
 function getAltAxis(axis) {
-  return axis === 'x' ? 'y' : 'x';
+    return axis === 'x' ? 'y' : 'x';
 }
 
 function preventOverflow(_ref) {
-  var state = _ref.state,
-      options = _ref.options,
-      name = _ref.name;
-  var _options$mainAxis = options.mainAxis,
-      checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
-      _options$altAxis = options.altAxis,
-      checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis,
-      boundary = options.boundary,
-      rootBoundary = options.rootBoundary,
-      altBoundary = options.altBoundary,
-      padding = options.padding,
-      _options$tether = options.tether,
-      tether = _options$tether === void 0 ? true : _options$tether,
-      _options$tetherOffset = options.tetherOffset,
-      tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
-  var overflow = detectOverflow(state, {
-    boundary: boundary,
-    rootBoundary: rootBoundary,
-    padding: padding,
-    altBoundary: altBoundary
-  });
-  var basePlacement = getBasePlacement(state.placement);
-  var variation = getVariation(state.placement);
-  var isBasePlacement = !variation;
-  var mainAxis = getMainAxisFromPlacement(basePlacement);
-  var altAxis = getAltAxis(mainAxis);
-  var popperOffsets = state.modifiersData.popperOffsets;
-  var referenceRect = state.rects.reference;
-  var popperRect = state.rects.popper;
-  var tetherOffsetValue = typeof tetherOffset === 'function' ? tetherOffset(Object.assign({}, state.rects, {
-    placement: state.placement
-  })) : tetherOffset;
-  var normalizedTetherOffsetValue = typeof tetherOffsetValue === 'number' ? {
-    mainAxis: tetherOffsetValue,
-    altAxis: tetherOffsetValue
-  } : Object.assign({
-    mainAxis: 0,
-    altAxis: 0
-  }, tetherOffsetValue);
-  var offsetModifierState = state.modifiersData.offset ? state.modifiersData.offset[state.placement] : null;
-  var data = {
-    x: 0,
-    y: 0
-  };
-
-  if (!popperOffsets) {
-    return;
-  }
-
-  if (checkMainAxis) {
-    var _offsetModifierState$;
-
-    var mainSide = mainAxis === 'y' ? top : left;
-    var altSide = mainAxis === 'y' ? bottom : right;
-    var len = mainAxis === 'y' ? 'height' : 'width';
-    var offset = popperOffsets[mainAxis];
-    var min$1 = offset + overflow[mainSide];
-    var max$1 = offset - overflow[altSide];
-    var additive = tether ? -popperRect[len] / 2 : 0;
-    var minLen = variation === start ? referenceRect[len] : popperRect[len];
-    var maxLen = variation === start ? -popperRect[len] : -referenceRect[len]; // We need to include the arrow in the calculation so the arrow doesn't go
-    // outside the reference bounds
-
-    var arrowElement = state.elements.arrow;
-    var arrowRect = tether && arrowElement ? getLayoutRect(arrowElement) : {
-      width: 0,
-      height: 0
+    var state = _ref.state,
+        options = _ref.options,
+        name = _ref.name;
+    var _options$mainAxis = options.mainAxis,
+        checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
+        _options$altAxis = options.altAxis,
+        checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis,
+        boundary = options.boundary,
+        rootBoundary = options.rootBoundary,
+        altBoundary = options.altBoundary,
+        padding = options.padding,
+        _options$tether = options.tether,
+        tether = _options$tether === void 0 ? true : _options$tether,
+        _options$tetherOffset = options.tetherOffset,
+        tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
+    var overflow = detectOverflow(state, {
+        boundary: boundary,
+        rootBoundary: rootBoundary,
+        padding: padding,
+        altBoundary: altBoundary,
+    });
+    var basePlacement = getBasePlacement(state.placement);
+    var variation = getVariation(state.placement);
+    var isBasePlacement = !variation;
+    var mainAxis = getMainAxisFromPlacement(basePlacement);
+    var altAxis = getAltAxis(mainAxis);
+    var popperOffsets = state.modifiersData.popperOffsets;
+    var referenceRect = state.rects.reference;
+    var popperRect = state.rects.popper;
+    var tetherOffsetValue =
+        typeof tetherOffset === 'function'
+            ? tetherOffset(
+                  Object.assign({}, state.rects, {
+                      placement: state.placement,
+                  }),
+              )
+            : tetherOffset;
+    var normalizedTetherOffsetValue =
+        typeof tetherOffsetValue === 'number'
+            ? {
+                  mainAxis: tetherOffsetValue,
+                  altAxis: tetherOffsetValue,
+              }
+            : Object.assign(
+                  {
+                      mainAxis: 0,
+                      altAxis: 0,
+                  },
+                  tetherOffsetValue,
+              );
+    var offsetModifierState = state.modifiersData.offset ? state.modifiersData.offset[state.placement] : null;
+    var data = {
+        x: 0,
+        y: 0,
     };
-    var arrowPaddingObject = state.modifiersData['arrow#persistent'] ? state.modifiersData['arrow#persistent'].padding : getFreshSideObject();
-    var arrowPaddingMin = arrowPaddingObject[mainSide];
-    var arrowPaddingMax = arrowPaddingObject[altSide]; // If the reference length is smaller than the arrow length, we don't want
-    // to include its full size in the calculation. If the reference is small
-    // and near the edge of a boundary, the popper can overflow even if the
-    // reference is not overflowing as well (e.g. virtual elements with no
-    // width or height)
 
-    var arrowLen = within(0, referenceRect[len], arrowRect[len]);
-    var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis : minLen - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis;
-    var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis : maxLen + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis;
-    var arrowOffsetParent = state.elements.arrow && getOffsetParent(state.elements.arrow);
-    var clientOffset = arrowOffsetParent ? mainAxis === 'y' ? arrowOffsetParent.clientTop || 0 : arrowOffsetParent.clientLeft || 0 : 0;
-    var offsetModifierValue = (_offsetModifierState$ = offsetModifierState == null ? void 0 : offsetModifierState[mainAxis]) != null ? _offsetModifierState$ : 0;
-    var tetherMin = offset + minOffset - offsetModifierValue - clientOffset;
-    var tetherMax = offset + maxOffset - offsetModifierValue;
-    var preventedOffset = within(tether ? min(min$1, tetherMin) : min$1, offset, tether ? max(max$1, tetherMax) : max$1);
-    popperOffsets[mainAxis] = preventedOffset;
-    data[mainAxis] = preventedOffset - offset;
-  }
+    if (!popperOffsets) {
+        return;
+    }
 
-  if (checkAltAxis) {
-    var _offsetModifierState$2;
+    if (checkMainAxis) {
+        var _offsetModifierState$;
 
-    var _mainSide = mainAxis === 'x' ? top : left;
+        var mainSide = mainAxis === 'y' ? top : left;
+        var altSide = mainAxis === 'y' ? bottom : right;
+        var len = mainAxis === 'y' ? 'height' : 'width';
+        var offset = popperOffsets[mainAxis];
+        var min$1 = offset + overflow[mainSide];
+        var max$1 = offset - overflow[altSide];
+        var additive = tether ? -popperRect[len] / 2 : 0;
+        var minLen = variation === start ? referenceRect[len] : popperRect[len];
+        var maxLen = variation === start ? -popperRect[len] : -referenceRect[len]; // We need to include the arrow in the calculation so the arrow doesn't go
+        // outside the reference bounds
 
-    var _altSide = mainAxis === 'x' ? bottom : right;
+        var arrowElement = state.elements.arrow;
+        var arrowRect =
+            tether && arrowElement
+                ? getLayoutRect(arrowElement)
+                : {
+                      width: 0,
+                      height: 0,
+                  };
+        var arrowPaddingObject = state.modifiersData['arrow#persistent']
+            ? state.modifiersData['arrow#persistent'].padding
+            : getFreshSideObject();
+        var arrowPaddingMin = arrowPaddingObject[mainSide];
+        var arrowPaddingMax = arrowPaddingObject[altSide]; // If the reference length is smaller than the arrow length, we don't want
+        // to include its full size in the calculation. If the reference is small
+        // and near the edge of a boundary, the popper can overflow even if the
+        // reference is not overflowing as well (e.g. virtual elements with no
+        // width or height)
 
-    var _offset = popperOffsets[altAxis];
+        var arrowLen = within(0, referenceRect[len], arrowRect[len]);
+        var minOffset = isBasePlacement
+            ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis
+            : minLen - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis;
+        var maxOffset = isBasePlacement
+            ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis
+            : maxLen + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis;
+        var arrowOffsetParent = state.elements.arrow && getOffsetParent(state.elements.arrow);
+        var clientOffset = arrowOffsetParent
+            ? mainAxis === 'y'
+                ? arrowOffsetParent.clientTop || 0
+                : arrowOffsetParent.clientLeft || 0
+            : 0;
+        var offsetModifierValue =
+            (_offsetModifierState$ = offsetModifierState == null ? void 0 : offsetModifierState[mainAxis]) != null
+                ? _offsetModifierState$
+                : 0;
+        var tetherMin = offset + minOffset - offsetModifierValue - clientOffset;
+        var tetherMax = offset + maxOffset - offsetModifierValue;
+        var preventedOffset = within(
+            tether ? min(min$1, tetherMin) : min$1,
+            offset,
+            tether ? max(max$1, tetherMax) : max$1,
+        );
+        popperOffsets[mainAxis] = preventedOffset;
+        data[mainAxis] = preventedOffset - offset;
+    }
 
-    var _len = altAxis === 'y' ? 'height' : 'width';
+    if (checkAltAxis) {
+        var _offsetModifierState$2;
 
-    var _min = _offset + overflow[_mainSide];
+        var _mainSide = mainAxis === 'x' ? top : left;
 
-    var _max = _offset - overflow[_altSide];
+        var _altSide = mainAxis === 'x' ? bottom : right;
 
-    var isOriginSide = [top, left].indexOf(basePlacement) !== -1;
+        var _offset = popperOffsets[altAxis];
 
-    var _offsetModifierValue = (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null ? _offsetModifierState$2 : 0;
+        var _len = altAxis === 'y' ? 'height' : 'width';
 
-    var _tetherMin = isOriginSide ? _min : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
+        var _min = _offset + overflow[_mainSide];
 
-    var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
+        var _max = _offset - overflow[_altSide];
 
-    var _preventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
+        var isOriginSide = [top, left].indexOf(basePlacement) !== -1;
 
-    popperOffsets[altAxis] = _preventedOffset;
-    data[altAxis] = _preventedOffset - _offset;
-  }
+        var _offsetModifierValue =
+            (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null
+                ? _offsetModifierState$2
+                : 0;
 
-  state.modifiersData[name] = data;
+        var _tetherMin = isOriginSide
+            ? _min
+            : _offset -
+              referenceRect[_len] -
+              popperRect[_len] -
+              _offsetModifierValue +
+              normalizedTetherOffsetValue.altAxis;
+
+        var _tetherMax = isOriginSide
+            ? _offset +
+              referenceRect[_len] +
+              popperRect[_len] -
+              _offsetModifierValue -
+              normalizedTetherOffsetValue.altAxis
+            : _max;
+
+        var _preventedOffset =
+            tether && isOriginSide
+                ? withinMaxClamp(_tetherMin, _offset, _tetherMax)
+                : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
+
+        popperOffsets[altAxis] = _preventedOffset;
+        data[altAxis] = _preventedOffset - _offset;
+    }
+
+    state.modifiersData[name] = data;
 } // eslint-disable-next-line import/no-unused-modules
 
-
 var preventOverflow$1 = {
-  name: 'preventOverflow',
-  enabled: true,
-  phase: 'main',
-  fn: preventOverflow,
-  requiresIfExists: ['offset']
+    name: 'preventOverflow',
+    enabled: true,
+    phase: 'main',
+    fn: preventOverflow,
+    requiresIfExists: ['offset'],
 };
 
 function getHTMLElementScroll(element) {
-  return {
-    scrollLeft: element.scrollLeft,
-    scrollTop: element.scrollTop
-  };
+    return {
+        scrollLeft: element.scrollLeft,
+        scrollTop: element.scrollTop,
+    };
 }
 
 function getNodeScroll(node) {
-  if (node === getWindow(node) || !isHTMLElement(node)) {
-    return getWindowScroll(node);
-  } else {
-    return getHTMLElementScroll(node);
-  }
+    if (node === getWindow(node) || !isHTMLElement(node)) {
+        return getWindowScroll(node);
+    } else {
+        return getHTMLElementScroll(node);
+    }
 }
 
 function isElementScaled(element) {
-  var rect = element.getBoundingClientRect();
-  var scaleX = round(rect.width) / element.offsetWidth || 1;
-  var scaleY = round(rect.height) / element.offsetHeight || 1;
-  return scaleX !== 1 || scaleY !== 1;
+    var rect = element.getBoundingClientRect();
+    var scaleX = round(rect.width) / element.offsetWidth || 1;
+    var scaleY = round(rect.height) / element.offsetHeight || 1;
+    return scaleX !== 1 || scaleY !== 1;
 } // Returns the composite rect of an element relative to its offsetParent.
 // Composite means it takes into account transforms as well as layout.
 
-
 function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
-  if (isFixed === void 0) {
-    isFixed = false;
-  }
-
-  var isOffsetParentAnElement = isHTMLElement(offsetParent);
-  var offsetParentIsScaled = isHTMLElement(offsetParent) && isElementScaled(offsetParent);
-  var documentElement = getDocumentElement(offsetParent);
-  var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled, isFixed);
-  var scroll = {
-    scrollLeft: 0,
-    scrollTop: 0
-  };
-  var offsets = {
-    x: 0,
-    y: 0
-  };
-
-  if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
-    if (getNodeName(offsetParent) !== 'body' || // https://github.com/popperjs/popper-core/issues/1078
-    isScrollParent(documentElement)) {
-      scroll = getNodeScroll(offsetParent);
+    if (isFixed === void 0) {
+        isFixed = false;
     }
 
-    if (isHTMLElement(offsetParent)) {
-      offsets = getBoundingClientRect(offsetParent, true);
-      offsets.x += offsetParent.clientLeft;
-      offsets.y += offsetParent.clientTop;
-    } else if (documentElement) {
-      offsets.x = getWindowScrollBarX(documentElement);
-    }
-  }
+    var isOffsetParentAnElement = isHTMLElement(offsetParent);
+    var offsetParentIsScaled = isHTMLElement(offsetParent) && isElementScaled(offsetParent);
+    var documentElement = getDocumentElement(offsetParent);
+    var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled, isFixed);
+    var scroll = {
+        scrollLeft: 0,
+        scrollTop: 0,
+    };
+    var offsets = {
+        x: 0,
+        y: 0,
+    };
 
-  return {
-    x: rect.left + scroll.scrollLeft - offsets.x,
-    y: rect.top + scroll.scrollTop - offsets.y,
-    width: rect.width,
-    height: rect.height
-  };
+    if (isOffsetParentAnElement || (!isOffsetParentAnElement && !isFixed)) {
+        if (
+            getNodeName(offsetParent) !== 'body' || // https://github.com/popperjs/popper-core/issues/1078
+            isScrollParent(documentElement)
+        ) {
+            scroll = getNodeScroll(offsetParent);
+        }
+
+        if (isHTMLElement(offsetParent)) {
+            offsets = getBoundingClientRect(offsetParent, true);
+            offsets.x += offsetParent.clientLeft;
+            offsets.y += offsetParent.clientTop;
+        } else if (documentElement) {
+            offsets.x = getWindowScrollBarX(documentElement);
+        }
+    }
+
+    return {
+        x: rect.left + scroll.scrollLeft - offsets.x,
+        y: rect.top + scroll.scrollTop - offsets.y,
+        width: rect.width,
+        height: rect.height,
+    };
 }
 
 function order(modifiers) {
-  var map = new Map();
-  var visited = new Set();
-  var result = [];
-  modifiers.forEach(function (modifier) {
-    map.set(modifier.name, modifier);
-  }); // On visiting object, check for its dependencies and visit them recursively
+    var map = new Map();
+    var visited = new Set();
+    var result = [];
+    modifiers.forEach(function (modifier) {
+        map.set(modifier.name, modifier);
+    }); // On visiting object, check for its dependencies and visit them recursively
 
-  function sort(modifier) {
-    visited.add(modifier.name);
-    var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
-    requires.forEach(function (dep) {
-      if (!visited.has(dep)) {
-        var depModifier = map.get(dep);
+    function sort(modifier) {
+        visited.add(modifier.name);
+        var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
+        requires.forEach(function (dep) {
+            if (!visited.has(dep)) {
+                var depModifier = map.get(dep);
 
-        if (depModifier) {
-          sort(depModifier);
-        }
-      }
-    });
-    result.push(modifier);
-  }
-
-  modifiers.forEach(function (modifier) {
-    if (!visited.has(modifier.name)) {
-      // check for visited object
-      sort(modifier);
+                if (depModifier) {
+                    sort(depModifier);
+                }
+            }
+        });
+        result.push(modifier);
     }
-  });
-  return result;
+
+    modifiers.forEach(function (modifier) {
+        if (!visited.has(modifier.name)) {
+            // check for visited object
+            sort(modifier);
+        }
+    });
+    return result;
 }
 
 function orderModifiers(modifiers) {
-  // order based on dependencies
-  var orderedModifiers = order(modifiers); // order based on phase
+    // order based on dependencies
+    var orderedModifiers = order(modifiers); // order based on phase
 
-  return modifierPhases.reduce(function (acc, phase) {
-    return acc.concat(orderedModifiers.filter(function (modifier) {
-      return modifier.phase === phase;
-    }));
-  }, []);
+    return modifierPhases.reduce(function (acc, phase) {
+        return acc.concat(
+            orderedModifiers.filter(function (modifier) {
+                return modifier.phase === phase;
+            }),
+        );
+    }, []);
 }
 
 function debounce(fn) {
-  var pending;
-  return function () {
-    if (!pending) {
-      pending = new Promise(function (resolve) {
-        Promise.resolve().then(function () {
-          pending = undefined;
-          resolve(fn());
-        });
-      });
-    }
+    var pending;
+    return function () {
+        if (!pending) {
+            pending = new Promise(function (resolve) {
+                Promise.resolve().then(function () {
+                    pending = undefined;
+                    resolve(fn());
+                });
+            });
+        }
 
-    return pending;
-  };
+        return pending;
+    };
 }
 
 function mergeByName(modifiers) {
-  var merged = modifiers.reduce(function (merged, current) {
-    var existing = merged[current.name];
-    merged[current.name] = existing ? Object.assign({}, existing, current, {
-      options: Object.assign({}, existing.options, current.options),
-      data: Object.assign({}, existing.data, current.data)
-    }) : current;
-    return merged;
-  }, {}); // IE11 does not support Object.values
+    var merged = modifiers.reduce(function (merged, current) {
+        var existing = merged[current.name];
+        merged[current.name] = existing
+            ? Object.assign({}, existing, current, {
+                  options: Object.assign({}, existing.options, current.options),
+                  data: Object.assign({}, existing.data, current.data),
+              })
+            : current;
+        return merged;
+    }, {}); // IE11 does not support Object.values
 
-  return Object.keys(merged).map(function (key) {
-    return merged[key];
-  });
+    return Object.keys(merged).map(function (key) {
+        return merged[key];
+    });
 }
 
 var DEFAULT_OPTIONS = {
-  placement: 'bottom',
-  modifiers: [],
-  strategy: 'absolute'
+    placement: 'bottom',
+    modifiers: [],
+    strategy: 'absolute',
 };
 
 function areValidElements() {
-  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+    }
 
-  return !args.some(function (element) {
-    return !(element && typeof element.getBoundingClientRect === 'function');
-  });
+    return !args.some(function (element) {
+        return !(element && typeof element.getBoundingClientRect === 'function');
+    });
 }
 
 function popperGenerator(generatorOptions) {
-  if (generatorOptions === void 0) {
-    generatorOptions = {};
-  }
-
-  var _generatorOptions = generatorOptions,
-      _generatorOptions$def = _generatorOptions.defaultModifiers,
-      defaultModifiers = _generatorOptions$def === void 0 ? [] : _generatorOptions$def,
-      _generatorOptions$def2 = _generatorOptions.defaultOptions,
-      defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
-  return function createPopper(reference, popper, options) {
-    if (options === void 0) {
-      options = defaultOptions;
+    if (generatorOptions === void 0) {
+        generatorOptions = {};
     }
 
-    var state = {
-      placement: 'bottom',
-      orderedModifiers: [],
-      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
-      modifiersData: {},
-      elements: {
-        reference: reference,
-        popper: popper
-      },
-      attributes: {},
-      styles: {}
-    };
-    var effectCleanupFns = [];
-    var isDestroyed = false;
-    var instance = {
-      state: state,
-      setOptions: function setOptions(setOptionsAction) {
-        var options = typeof setOptionsAction === 'function' ? setOptionsAction(state.options) : setOptionsAction;
-        cleanupModifierEffects();
-        state.options = Object.assign({}, defaultOptions, state.options, options);
-        state.scrollParents = {
-          reference: isElement(reference) ? listScrollParents(reference) : reference.contextElement ? listScrollParents(reference.contextElement) : [],
-          popper: listScrollParents(popper)
-        }; // Orders the modifiers based on their dependencies and `phase`
-        // properties
-
-        var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers, state.options.modifiers))); // Strip out disabled modifiers
-
-        state.orderedModifiers = orderedModifiers.filter(function (m) {
-          return m.enabled;
-        });
-        runModifierEffects();
-        return instance.update();
-      },
-      // Sync update – it will always be executed, even if not necessary. This
-      // is useful for low frequency updates where sync behavior simplifies the
-      // logic.
-      // For high frequency updates (e.g. `resize` and `scroll` events), always
-      // prefer the async Popper#update method
-      forceUpdate: function forceUpdate() {
-        if (isDestroyed) {
-          return;
+    var _generatorOptions = generatorOptions,
+        _generatorOptions$def = _generatorOptions.defaultModifiers,
+        defaultModifiers = _generatorOptions$def === void 0 ? [] : _generatorOptions$def,
+        _generatorOptions$def2 = _generatorOptions.defaultOptions,
+        defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
+    return function createPopper(reference, popper, options) {
+        if (options === void 0) {
+            options = defaultOptions;
         }
 
-        var _state$elements = state.elements,
-            reference = _state$elements.reference,
-            popper = _state$elements.popper; // Don't proceed if `reference` or `popper` are not valid elements
-        // anymore
+        var state = {
+            placement: 'bottom',
+            orderedModifiers: [],
+            options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
+            modifiersData: {},
+            elements: {
+                reference: reference,
+                popper: popper,
+            },
+            attributes: {},
+            styles: {},
+        };
+        var effectCleanupFns = [];
+        var isDestroyed = false;
+        var instance = {
+            state: state,
+            setOptions: function setOptions(setOptionsAction) {
+                var options =
+                    typeof setOptionsAction === 'function' ? setOptionsAction(state.options) : setOptionsAction;
+                cleanupModifierEffects();
+                state.options = Object.assign({}, defaultOptions, state.options, options);
+                state.scrollParents = {
+                    reference: isElement(reference)
+                        ? listScrollParents(reference)
+                        : reference.contextElement
+                          ? listScrollParents(reference.contextElement)
+                          : [],
+                    popper: listScrollParents(popper),
+                }; // Orders the modifiers based on their dependencies and `phase`
+                // properties
+
+                var orderedModifiers = orderModifiers(
+                    mergeByName([].concat(defaultModifiers, state.options.modifiers)),
+                ); // Strip out disabled modifiers
+
+                state.orderedModifiers = orderedModifiers.filter(function (m) {
+                    return m.enabled;
+                });
+                runModifierEffects();
+                return instance.update();
+            },
+            // Sync update – it will always be executed, even if not necessary. This
+            // is useful for low frequency updates where sync behavior simplifies the
+            // logic.
+            // For high frequency updates (e.g. `resize` and `scroll` events), always
+            // prefer the async Popper#update method
+            forceUpdate: function forceUpdate() {
+                if (isDestroyed) {
+                    return;
+                }
+
+                var _state$elements = state.elements,
+                    reference = _state$elements.reference,
+                    popper = _state$elements.popper; // Don't proceed if `reference` or `popper` are not valid elements
+                // anymore
+
+                if (!areValidElements(reference, popper)) {
+                    return;
+                } // Store the reference and popper rects to be read by modifiers
+
+                state.rects = {
+                    reference: getCompositeRect(reference, getOffsetParent(popper), state.options.strategy === 'fixed'),
+                    popper: getLayoutRect(popper),
+                }; // Modifiers have the ability to reset the current update cycle. The
+                // most common use case for this is the `flip` modifier changing the
+                // placement, which then needs to re-run all the modifiers, because the
+                // logic was previously ran for the previous placement and is therefore
+                // stale/incorrect
+
+                state.reset = false;
+                state.placement = state.options.placement; // On each update cycle, the `modifiersData` property for each modifier
+                // is filled with the initial data specified by the modifier. This means
+                // it doesn't persist and is fresh on each update.
+                // To ensure persistent data, use `${name}#persistent`
+
+                state.orderedModifiers.forEach(function (modifier) {
+                    return (state.modifiersData[modifier.name] = Object.assign({}, modifier.data));
+                });
+
+                for (var index = 0; index < state.orderedModifiers.length; index++) {
+                    if (state.reset === true) {
+                        state.reset = false;
+                        index = -1;
+                        continue;
+                    }
+
+                    var _state$orderedModifie = state.orderedModifiers[index],
+                        fn = _state$orderedModifie.fn,
+                        _state$orderedModifie2 = _state$orderedModifie.options,
+                        _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2,
+                        name = _state$orderedModifie.name;
+
+                    if (typeof fn === 'function') {
+                        state =
+                            fn({
+                                state: state,
+                                options: _options,
+                                name: name,
+                                instance: instance,
+                            }) || state;
+                    }
+                }
+            },
+            // Async and optimistically optimized update – it will not be executed if
+            // not necessary (debounced to run at most once-per-tick)
+            update: debounce(function () {
+                return new Promise(function (resolve) {
+                    instance.forceUpdate();
+                    resolve(state);
+                });
+            }),
+            destroy: function destroy() {
+                cleanupModifierEffects();
+                isDestroyed = true;
+            },
+        };
 
         if (!areValidElements(reference, popper)) {
-          return;
-        } // Store the reference and popper rects to be read by modifiers
-
-
-        state.rects = {
-          reference: getCompositeRect(reference, getOffsetParent(popper), state.options.strategy === 'fixed'),
-          popper: getLayoutRect(popper)
-        }; // Modifiers have the ability to reset the current update cycle. The
-        // most common use case for this is the `flip` modifier changing the
-        // placement, which then needs to re-run all the modifiers, because the
-        // logic was previously ran for the previous placement and is therefore
-        // stale/incorrect
-
-        state.reset = false;
-        state.placement = state.options.placement; // On each update cycle, the `modifiersData` property for each modifier
-        // is filled with the initial data specified by the modifier. This means
-        // it doesn't persist and is fresh on each update.
-        // To ensure persistent data, use `${name}#persistent`
-
-        state.orderedModifiers.forEach(function (modifier) {
-          return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
-        });
-
-        for (var index = 0; index < state.orderedModifiers.length; index++) {
-          if (state.reset === true) {
-            state.reset = false;
-            index = -1;
-            continue;
-          }
-
-          var _state$orderedModifie = state.orderedModifiers[index],
-              fn = _state$orderedModifie.fn,
-              _state$orderedModifie2 = _state$orderedModifie.options,
-              _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2,
-              name = _state$orderedModifie.name;
-
-          if (typeof fn === 'function') {
-            state = fn({
-              state: state,
-              options: _options,
-              name: name,
-              instance: instance
-            }) || state;
-          }
+            return instance;
         }
-      },
-      // Async and optimistically optimized update – it will not be executed if
-      // not necessary (debounced to run at most once-per-tick)
-      update: debounce(function () {
-        return new Promise(function (resolve) {
-          instance.forceUpdate();
-          resolve(state);
-        });
-      }),
-      destroy: function destroy() {
-        cleanupModifierEffects();
-        isDestroyed = true;
-      }
+
+        instance.setOptions(options).then(function (state) {
+            if (!isDestroyed && options.onFirstUpdate) {
+                options.onFirstUpdate(state);
+            }
+        }); // Modifiers have the ability to execute arbitrary code before the first
+        // update cycle runs. They will be executed in the same order as the update
+        // cycle. This is useful when a modifier adds some persistent data that
+        // other modifiers need to use, but the modifier is run after the dependent
+        // one.
+
+        function runModifierEffects() {
+            state.orderedModifiers.forEach(function (_ref) {
+                var name = _ref.name,
+                    _ref$options = _ref.options,
+                    options = _ref$options === void 0 ? {} : _ref$options,
+                    effect = _ref.effect;
+
+                if (typeof effect === 'function') {
+                    var cleanupFn = effect({
+                        state: state,
+                        name: name,
+                        instance: instance,
+                        options: options,
+                    });
+
+                    var noopFn = function noopFn() {};
+
+                    effectCleanupFns.push(cleanupFn || noopFn);
+                }
+            });
+        }
+
+        function cleanupModifierEffects() {
+            effectCleanupFns.forEach(function (fn) {
+                return fn();
+            });
+            effectCleanupFns = [];
+        }
+
+        return instance;
     };
-
-    if (!areValidElements(reference, popper)) {
-      return instance;
-    }
-
-    instance.setOptions(options).then(function (state) {
-      if (!isDestroyed && options.onFirstUpdate) {
-        options.onFirstUpdate(state);
-      }
-    }); // Modifiers have the ability to execute arbitrary code before the first
-    // update cycle runs. They will be executed in the same order as the update
-    // cycle. This is useful when a modifier adds some persistent data that
-    // other modifiers need to use, but the modifier is run after the dependent
-    // one.
-
-    function runModifierEffects() {
-      state.orderedModifiers.forEach(function (_ref) {
-        var name = _ref.name,
-            _ref$options = _ref.options,
-            options = _ref$options === void 0 ? {} : _ref$options,
-            effect = _ref.effect;
-
-        if (typeof effect === 'function') {
-          var cleanupFn = effect({
-            state: state,
-            name: name,
-            instance: instance,
-            options: options
-          });
-
-          var noopFn = function noopFn() {};
-
-          effectCleanupFns.push(cleanupFn || noopFn);
-        }
-      });
-    }
-
-    function cleanupModifierEffects() {
-      effectCleanupFns.forEach(function (fn) {
-        return fn();
-      });
-      effectCleanupFns = [];
-    }
-
-    return instance;
-  };
 }
 
-var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
-var createPopper = /*#__PURE__*/popperGenerator({
-  defaultModifiers: defaultModifiers
+var defaultModifiers = [
+    eventListeners,
+    popperOffsets$1,
+    computeStyles$1,
+    applyStyles$1,
+    offset$1,
+    flip$1,
+    preventOverflow$1,
+    arrow$1,
+    hide$1,
+];
+var createPopper = /*#__PURE__*/ popperGenerator({
+    defaultModifiers: defaultModifiers,
 }); // eslint-disable-next-line import/no-unused-modules
 
 /* Credit: liamcain's Periodic Notes Plugin (https://github.com/liamcain/obsidian-periodic-notes) */
@@ -5224,21 +5456,21 @@ class Suggest {
     constructor(owner, containerEl, scope) {
         this.owner = owner;
         this.containerEl = containerEl;
-        containerEl.on("click", ".suggestion-item", this.onSuggestionClick.bind(this));
-        containerEl.on("mousemove", ".suggestion-item", this.onSuggestionMouseover.bind(this));
-        scope.register([], "ArrowUp", (event) => {
+        containerEl.on('click', '.suggestion-item', this.onSuggestionClick.bind(this));
+        containerEl.on('mousemove', '.suggestion-item', this.onSuggestionMouseover.bind(this));
+        scope.register([], 'ArrowUp', (event) => {
             if (!event.isComposing) {
                 this.setSelectedItem(this.selectedItem - 1, true);
                 return false;
             }
         });
-        scope.register([], "ArrowDown", (event) => {
+        scope.register([], 'ArrowDown', (event) => {
             if (!event.isComposing) {
                 this.setSelectedItem(this.selectedItem + 1, true);
                 return false;
             }
         });
-        scope.register([], "Enter", (event) => {
+        scope.register([], 'Enter', (event) => {
             if (!event.isComposing) {
                 this.useSelectedItem(event);
                 return false;
@@ -5259,7 +5491,7 @@ class Suggest {
         this.containerEl.empty();
         const suggestionEls = [];
         values.forEach((value) => {
-            const suggestionEl = this.containerEl.createDiv("suggestion-item");
+            const suggestionEl = this.containerEl.createDiv('suggestion-item');
             this.owner.renderSuggestion(value, suggestionEl);
             suggestionEls.push(suggestionEl);
         });
@@ -5277,8 +5509,12 @@ class Suggest {
         const normalizedIndex = wrapAround(selectedIndex, this.suggestions.length);
         const prevSelectedSuggestion = this.suggestions[this.selectedItem];
         const selectedSuggestion = this.suggestions[normalizedIndex];
-        prevSelectedSuggestion === null || prevSelectedSuggestion === void 0 ? void 0 : prevSelectedSuggestion.removeClass("is-selected");
-        selectedSuggestion === null || selectedSuggestion === void 0 ? void 0 : selectedSuggestion.addClass("is-selected");
+        prevSelectedSuggestion === null || prevSelectedSuggestion === void 0
+            ? void 0
+            : prevSelectedSuggestion.removeClass('is-selected');
+        selectedSuggestion === null || selectedSuggestion === void 0
+            ? void 0
+            : selectedSuggestion.addClass('is-selected');
         this.selectedItem = normalizedIndex;
         if (scrollIntoView) {
             selectedSuggestion.scrollIntoView(false);
@@ -5290,14 +5526,14 @@ class TextInputSuggest {
         this.app = app;
         this.inputEl = inputEl;
         this.scope = new obsidian.Scope();
-        this.suggestEl = createDiv("suggestion-container");
-        const suggestion = this.suggestEl.createDiv("suggestion");
+        this.suggestEl = createDiv('suggestion-container');
+        const suggestion = this.suggestEl.createDiv('suggestion');
         this.suggest = new Suggest(this, suggestion, this.scope);
-        this.scope.register([], "Escape", this.close.bind(this));
-        this.inputEl.addEventListener("input", this.onInputChanged.bind(this));
-        this.inputEl.addEventListener("focus", this.onInputChanged.bind(this));
-        this.inputEl.addEventListener("blur", this.close.bind(this));
-        this.suggestEl.on("mousedown", ".suggestion-container", (event) => {
+        this.scope.register([], 'Escape', this.close.bind(this));
+        this.inputEl.addEventListener('input', this.onInputChanged.bind(this));
+        this.inputEl.addEventListener('focus', this.onInputChanged.bind(this));
+        this.inputEl.addEventListener('blur', this.close.bind(this));
+        this.suggestEl.on('mousedown', '.suggestion-container', (event) => {
             event.preventDefault();
         });
     }
@@ -5315,10 +5551,10 @@ class TextInputSuggest {
         this.app.keymap.pushScope(this.scope);
         container.appendChild(this.suggestEl);
         this.popper = createPopper(inputEl, this.suggestEl, {
-            placement: "bottom-start",
+            placement: 'bottom-start',
             modifiers: [
                 {
-                    name: "sameWidth",
+                    name: 'sameWidth',
                     enabled: true,
                     fn: ({ state, instance }) => {
                         // Note: positioning needs to be calculated twice -
@@ -5332,8 +5568,8 @@ class TextInputSuggest {
                         state.styles.popper.width = targetWidth;
                         instance.update();
                     },
-                    phase: "beforeWrite",
-                    requires: ["computeStyles"],
+                    phase: 'beforeWrite',
+                    requires: ['computeStyles'],
                 },
             ],
         });
@@ -5365,7 +5601,7 @@ class FolderSuggest extends TextInputSuggest {
     }
     selectSuggestion(file) {
         this.inputEl.value = file.path;
-        this.inputEl.trigger("input");
+        this.inputEl.trigger('input');
         this.close();
     }
 }
@@ -5373,189 +5609,186 @@ class FolderSuggest extends TextInputSuggest {
 /* src/views/settings-ignored-folders.svelte generated by Svelte v4.2.9 */
 
 function get_each_context(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[5] = list[i];
-	return child_ctx;
+    const child_ctx = ctx.slice();
+    child_ctx[5] = list[i];
+    return child_ctx;
 }
 
 // (13:4) {#each ignoredFolders as folder}
 function create_each_block(ctx) {
-	let div3;
-	let div0;
-	let t0;
-	let div1;
-	let t1;
-	let div2;
-	let t2_value = /*folder*/ ctx[5] + "";
-	let t2;
-	let t3;
-	let mounted;
-	let dispose;
+    let div3;
+    let div0;
+    let t0;
+    let div1;
+    let t1;
+    let div2;
+    let t2_value = /*folder*/ ctx[5] + '';
+    let t2;
+    let t3;
+    let mounted;
+    let dispose;
 
-	function click_handler() {
-		return /*click_handler*/ ctx[3](/*folder*/ ctx[5]);
-	}
+    function click_handler() {
+        return /*click_handler*/ ctx[3](/*folder*/ ctx[5]);
+    }
 
-	return {
-		c() {
-			div3 = element("div");
-			div0 = element("div");
-			t0 = space();
-			div1 = element("div");
-			t1 = space();
-			div2 = element("div");
-			t2 = text(t2_value);
-			t3 = space();
-			attr(div0, "class", "clickable-icon");
-			attr(div0, "data-icon", "lucide-x");
-			attr(div0, "aria-label", "Remove folder");
-			attr(div1, "class", "broken-links-settings-folder-icon");
-			attr(div1, "data-icon", "lucide-folder");
-			attr(div2, "class", "broken-links-settings-folder-title");
-			attr(div3, "class", "broken-links-settings-folder");
-		},
-		m(target, anchor) {
-			insert$1(target, div3, anchor);
-			append(div3, div0);
-			append(div3, t0);
-			append(div3, div1);
-			append(div3, t1);
-			append(div3, div2);
-			append(div2, t2);
-			append(div3, t3);
+    return {
+        c() {
+            div3 = element('div');
+            div0 = element('div');
+            t0 = space();
+            div1 = element('div');
+            t1 = space();
+            div2 = element('div');
+            t2 = text(t2_value);
+            t3 = space();
+            attr(div0, 'class', 'clickable-icon');
+            attr(div0, 'data-icon', 'lucide-x');
+            attr(div0, 'aria-label', 'Remove folder');
+            attr(div1, 'class', 'broken-links-settings-folder-icon');
+            attr(div1, 'data-icon', 'lucide-folder');
+            attr(div2, 'class', 'broken-links-settings-folder-title');
+            attr(div3, 'class', 'broken-links-settings-folder');
+        },
+        m(target, anchor) {
+            insert$1(target, div3, anchor);
+            append(div3, div0);
+            append(div3, t0);
+            append(div3, div1);
+            append(div3, t1);
+            append(div3, div2);
+            append(div2, t2);
+            append(div3, t3);
 
-			if (!mounted) {
-				dispose = listen(div0, "click", click_handler);
-				mounted = true;
-			}
-		},
-		p(new_ctx, dirty) {
-			ctx = new_ctx;
-			if (dirty & /*ignoredFolders*/ 1 && t2_value !== (t2_value = /*folder*/ ctx[5] + "")) set_data(t2, t2_value);
-		},
-		d(detaching) {
-			if (detaching) {
-				detach(div3);
-			}
+            if (!mounted) {
+                dispose = listen(div0, 'click', click_handler);
+                mounted = true;
+            }
+        },
+        p(new_ctx, dirty) {
+            ctx = new_ctx;
+            if (dirty & /*ignoredFolders*/ 1 && t2_value !== (t2_value = /*folder*/ ctx[5] + ''))
+                set_data(t2, t2_value);
+        },
+        d(detaching) {
+            if (detaching) {
+                detach(div3);
+            }
 
-			mounted = false;
-			dispose();
-		}
-	};
+            mounted = false;
+            dispose();
+        },
+    };
 }
 
 function create_fragment(ctx) {
-	let div;
-	let each_value = ensure_array_like(/*ignoredFolders*/ ctx[0]);
-	let each_blocks = [];
+    let div;
+    let each_value = ensure_array_like(/*ignoredFolders*/ ctx[0]);
+    let each_blocks = [];
 
-	for (let i = 0; i < each_value.length; i += 1) {
-		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
-	}
+    for (let i = 0; i < each_value.length; i += 1) {
+        each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    }
 
-	return {
-		c() {
-			div = element("div");
+    return {
+        c() {
+            div = element('div');
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                each_blocks[i].c();
+            }
 
-			attr(div, "class", "broken-links-settings-folders");
-		},
-		m(target, anchor) {
-			insert$1(target, div, anchor);
+            attr(div, 'class', 'broken-links-settings-folders');
+        },
+        m(target, anchor) {
+            insert$1(target, div, anchor);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				if (each_blocks[i]) {
-					each_blocks[i].m(div, null);
-				}
-			}
+            for (let i = 0; i < each_blocks.length; i += 1) {
+                if (each_blocks[i]) {
+                    each_blocks[i].m(div, null);
+                }
+            }
 
-			/*div_binding*/ ctx[4](div);
-		},
-		p(ctx, [dirty]) {
-			if (dirty & /*ignoredFolders, removeFolder*/ 3) {
-				each_value = ensure_array_like(/*ignoredFolders*/ ctx[0]);
-				let i;
+            /*div_binding*/ ctx[4](div);
+        },
+        p(ctx, [dirty]) {
+            if (dirty & /*ignoredFolders, removeFolder*/ 3) {
+                each_value = ensure_array_like(/*ignoredFolders*/ ctx[0]);
+                let i;
 
-				for (i = 0; i < each_value.length; i += 1) {
-					const child_ctx = get_each_context(ctx, each_value, i);
+                for (i = 0; i < each_value.length; i += 1) {
+                    const child_ctx = get_each_context(ctx, each_value, i);
 
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-					} else {
-						each_blocks[i] = create_each_block(child_ctx);
-						each_blocks[i].c();
-						each_blocks[i].m(div, null);
-					}
-				}
+                    if (each_blocks[i]) {
+                        each_blocks[i].p(child_ctx, dirty);
+                    } else {
+                        each_blocks[i] = create_each_block(child_ctx);
+                        each_blocks[i].c();
+                        each_blocks[i].m(div, null);
+                    }
+                }
 
-				for (; i < each_blocks.length; i += 1) {
-					each_blocks[i].d(1);
-				}
+                for (; i < each_blocks.length; i += 1) {
+                    each_blocks[i].d(1);
+                }
 
-				each_blocks.length = each_value.length;
-			}
-		},
-		i: noop,
-		o: noop,
-		d(detaching) {
-			if (detaching) {
-				detach(div);
-			}
+                each_blocks.length = each_value.length;
+            }
+        },
+        i: noop,
+        o: noop,
+        d(detaching) {
+            if (detaching) {
+                detach(div);
+            }
 
-			destroy_each(each_blocks, detaching);
-			/*div_binding*/ ctx[4](null);
-		}
-	};
+            destroy_each(each_blocks, detaching);
+            /*div_binding*/ ctx[4](null);
+        },
+    };
 }
 
 function instance($$self, $$props, $$invalidate) {
-	let { ignoredFolders = [] } = $$props;
-	let { removeFolder } = $$props;
-	let list;
+    let { ignoredFolders = [] } = $$props;
+    let { removeFolder } = $$props;
+    let list;
 
-	afterUpdate(() => {
-		list.querySelectorAll(".broken-links-settings-folder-icon").forEach(el => {
-			var _a;
+    afterUpdate(() => {
+        list.querySelectorAll('.broken-links-settings-folder-icon').forEach((el) => {
+            var _a;
 
-			return obsidian.setIcon(el, (_a = el.getAttr("data-icon")) !== null && _a !== void 0
-			? _a
-			: "");
-		});
+            return obsidian.setIcon(el, (_a = el.getAttr('data-icon')) !== null && _a !== void 0 ? _a : '');
+        });
 
-		list.querySelectorAll(".clickable-icon").forEach(el => {
-			var _a;
+        list.querySelectorAll('.clickable-icon').forEach((el) => {
+            var _a;
 
-			return obsidian.setIcon(el, (_a = el.getAttr("data-icon")) !== null && _a !== void 0
-			? _a
-			: "");
-		});
-	});
+            return obsidian.setIcon(el, (_a = el.getAttr('data-icon')) !== null && _a !== void 0 ? _a : '');
+        });
+    });
 
-	const click_handler = folder => removeFolder(folder);
+    const click_handler = (folder) => removeFolder(folder);
 
-	function div_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			list = $$value;
-			$$invalidate(2, list);
-		});
-	}
+    function div_binding($$value) {
+        binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+            list = $$value;
+            $$invalidate(2, list);
+        });
+    }
 
-	$$self.$$set = $$props => {
-		if ('ignoredFolders' in $$props) $$invalidate(0, ignoredFolders = $$props.ignoredFolders);
-		if ('removeFolder' in $$props) $$invalidate(1, removeFolder = $$props.removeFolder);
-	};
+    $$self.$$set = ($$props) => {
+        if ('ignoredFolders' in $$props) $$invalidate(0, (ignoredFolders = $$props.ignoredFolders));
+        if ('removeFolder' in $$props) $$invalidate(1, (removeFolder = $$props.removeFolder));
+    };
 
-	return [ignoredFolders, removeFolder, list, click_handler, div_binding];
+    return [ignoredFolders, removeFolder, list, click_handler, div_binding];
 }
 
 class Settings_ignored_folders extends SvelteComponent {
-	constructor(options) {
-		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { ignoredFolders: 0, removeFolder: 1 });
-	}
+    constructor(options) {
+        super();
+        init(this, options, instance, create_fragment, safe_not_equal, { ignoredFolders: 0, removeFolder: 1 });
+    }
 }
 
 class BrokenLinksSettingsTab extends obsidian.PluginSettingTab {
@@ -5566,91 +5799,97 @@ class BrokenLinksSettingsTab extends obsidian.PluginSettingTab {
     display() {
         const { containerEl } = this;
         containerEl.empty();
-        containerEl.addClass("broken-links-settings");
+        containerEl.addClass('broken-links-settings');
         this.addLinkSeparationSetting();
         this.addIgnoreFoldersSetting();
     }
     addLinkSeparationSetting() {
         const { containerEl } = this;
         new obsidian.Setting(containerEl)
-            .setName("Consolidate links")
-            .setDesc("Links to the same file/heading but with different display names will be grouped together in the link view, resulting in a shorter list.")
+            .setName('Consolidate links')
+            .setDesc(
+                'Links to the same file/heading but with different display names will be grouped together in the link view, resulting in a shorter list.',
+            )
             .addToggle((toggle) => {
-            toggle.setValue(this.plugin.settings.consolidateLinks).onChange((value) => __awaiter(this, void 0, void 0, function* () {
-                // Update settings
-                this.plugin.settings.consolidateLinks = value;
-                yield this.plugin.saveSettings();
-                // Force refresh of broken links panel
-                yield this.plugin.updateView();
-                // Refresh settings view
-                this.display();
-            }));
-        });
-    }
-    addIgnoreFoldersSetting() {
-        const { containerEl } = this;
-        let search;
-        new obsidian.Setting(containerEl)
-            .setName("Ignore folders")
-            .setDesc("Folders (and their subfolders) listed here will not be searched for broken links.")
-            .addSearch((comp) => {
-            search = comp;
-            new FolderSuggest(this.plugin.app, comp.inputEl);
-            comp.setPlaceholder("Example: folder 1/folder 2");
-        })
-            .addExtraButton((comp) => {
-            comp.setIcon("plus-circle")
-                .setTooltip("Add folder")
-                .onClick(() => __awaiter(this, void 0, void 0, function* () {
-                if (search) {
-                    const folder = search.getValue();
-                    if (folder.trim().length > 0) {
-                        // If it's already in the list, remove it, then re-add it (effectively moving it to the top)
-                        if (this.plugin.settings.ignoredFolders.contains(folder)) {
-                            this.plugin.settings.ignoredFolders.remove(folder);
-                        }
-                        // Add the folder to the top of the list
-                        this.plugin.settings.ignoredFolders.splice(0, 0, folder);
-                        // Save the settings
+                toggle.setValue(this.plugin.settings.consolidateLinks).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        // Update settings
+                        this.plugin.settings.consolidateLinks = value;
                         yield this.plugin.saveSettings();
                         // Force refresh of broken links panel
                         yield this.plugin.updateView();
                         // Refresh settings view
                         this.display();
-                    }
-                }
-            }));
-        });
+                    }),
+                );
+            });
+    }
+    addIgnoreFoldersSetting() {
+        const { containerEl } = this;
+        let search;
+        new obsidian.Setting(containerEl)
+            .setName('Ignore folders')
+            .setDesc('Folders (and their subfolders) listed here will not be searched for broken links.')
+            .addSearch((comp) => {
+                search = comp;
+                new FolderSuggest(this.plugin.app, comp.inputEl);
+                comp.setPlaceholder('Example: folder 1/folder 2');
+            })
+            .addExtraButton((comp) => {
+                comp.setIcon('plus-circle')
+                    .setTooltip('Add folder')
+                    .onClick(() =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            if (search) {
+                                const folder = search.getValue();
+                                if (folder.trim().length > 0) {
+                                    // If it's already in the list, remove it, then re-add it (effectively moving it to the top)
+                                    if (this.plugin.settings.ignoredFolders.contains(folder)) {
+                                        this.plugin.settings.ignoredFolders.remove(folder);
+                                    }
+                                    // Add the folder to the top of the list
+                                    this.plugin.settings.ignoredFolders.splice(0, 0, folder);
+                                    // Save the settings
+                                    yield this.plugin.saveSettings();
+                                    // Force refresh of broken links panel
+                                    yield this.plugin.updateView();
+                                    // Refresh settings view
+                                    this.display();
+                                }
+                            }
+                        }),
+                    );
+            });
         // List ignored folders
         const folderList = new Settings_ignored_folders({
             target: containerEl,
             props: {
                 ignoredFolders: this.plugin.settings.ignoredFolders,
-                removeFolder: (folder) => __awaiter(this, void 0, void 0, function* () {
-                    this.plugin.settings.ignoredFolders.remove(folder);
-                    // Save the settings
-                    yield this.plugin.saveSettings();
-                    // Force refresh of broken links panel
-                    yield this.plugin.updateView();
-                    // Update list
-                    folderList.$set({
-                        ignoredFolders: this.plugin.settings.ignoredFolders,
-                    });
-                }),
+                removeFolder: (folder) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        this.plugin.settings.ignoredFolders.remove(folder);
+                        // Save the settings
+                        yield this.plugin.saveSettings();
+                        // Force refresh of broken links panel
+                        yield this.plugin.updateView();
+                        // Update list
+                        folderList.$set({
+                            ignoredFolders: this.plugin.settings.ignoredFolders,
+                        });
+                    }),
             },
         });
     }
 }
 
-var re$4 = {exports: {}};
+var re$4 = { exports: {} };
 
 // Note: this is the semver.org version of the spec that it implements
 // Not necessarily the package version of this code.
 const SEMVER_SPEC_VERSION = '2.0.0';
 
 const MAX_LENGTH$1 = 256;
-const MAX_SAFE_INTEGER$1 = Number.MAX_SAFE_INTEGER ||
-/* istanbul ignore next */ 9007199254740991;
+const MAX_SAFE_INTEGER$1 = Number.MAX_SAFE_INTEGER || /* istanbul ignore next */ 9007199254740991;
 
 // Max safe segment length for coercion.
 const MAX_SAFE_COMPONENT_LENGTH = 16;
@@ -5659,295 +5898,274 @@ const MAX_SAFE_COMPONENT_LENGTH = 16;
 // the shortest version with a build 0.0.0+BUILD.
 const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH$1 - 6;
 
-const RELEASE_TYPES = [
-  'major',
-  'premajor',
-  'minor',
-  'preminor',
-  'patch',
-  'prepatch',
-  'prerelease',
-];
+const RELEASE_TYPES = ['major', 'premajor', 'minor', 'preminor', 'patch', 'prepatch', 'prerelease'];
 
 var constants$1 = {
-  MAX_LENGTH: MAX_LENGTH$1,
-  MAX_SAFE_COMPONENT_LENGTH,
-  MAX_SAFE_BUILD_LENGTH,
-  MAX_SAFE_INTEGER: MAX_SAFE_INTEGER$1,
-  RELEASE_TYPES,
-  SEMVER_SPEC_VERSION,
-  FLAG_INCLUDE_PRERELEASE: 0b001,
-  FLAG_LOOSE: 0b010,
+    MAX_LENGTH: MAX_LENGTH$1,
+    MAX_SAFE_COMPONENT_LENGTH,
+    MAX_SAFE_BUILD_LENGTH,
+    MAX_SAFE_INTEGER: MAX_SAFE_INTEGER$1,
+    RELEASE_TYPES,
+    SEMVER_SPEC_VERSION,
+    FLAG_INCLUDE_PRERELEASE: 0b001,
+    FLAG_LOOSE: 0b010,
 };
 
-const debug$3 = (
-  typeof process === 'object' &&
-  process.env &&
-  process.env.NODE_DEBUG &&
-  /\bsemver\b/i.test(process.env.NODE_DEBUG)
-) ? (...args) => console.error('SEMVER', ...args)
-  : () => {};
+const debug$3 =
+    typeof process === 'object' && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG)
+        ? (...args) => console.error('SEMVER', ...args)
+        : () => {};
 
 var debug_1 = debug$3;
 
 (function (module, exports) {
-const {
-  MAX_SAFE_COMPONENT_LENGTH,
-  MAX_SAFE_BUILD_LENGTH,
-  MAX_LENGTH,
-} = constants$1;
-const debug = debug_1;
-exports = module.exports = {};
+    const { MAX_SAFE_COMPONENT_LENGTH, MAX_SAFE_BUILD_LENGTH, MAX_LENGTH } = constants$1;
+    const debug = debug_1;
+    exports = module.exports = {};
 
-// The actual regexps go on exports.re
-const re = exports.re = [];
-const safeRe = exports.safeRe = [];
-const src = exports.src = [];
-const t = exports.t = {};
-let R = 0;
+    // The actual regexps go on exports.re
+    const re = (exports.re = []);
+    const safeRe = (exports.safeRe = []);
+    const src = (exports.src = []);
+    const t = (exports.t = {});
+    let R = 0;
 
-const LETTERDASHNUMBER = '[a-zA-Z0-9-]';
+    const LETTERDASHNUMBER = '[a-zA-Z0-9-]';
 
-// Replace some greedy regex tokens to prevent regex dos issues. These regex are
-// used internally via the safeRe object since all inputs in this library get
-// normalized first to trim and collapse all extra whitespace. The original
-// regexes are exported for userland consumption and lower level usage. A
-// future breaking change could export the safer regex only with a note that
-// all input should have extra whitespace removed.
-const safeRegexReplacements = [
-  ['\\s', 1],
-  ['\\d', MAX_LENGTH],
-  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
-];
+    // Replace some greedy regex tokens to prevent regex dos issues. These regex are
+    // used internally via the safeRe object since all inputs in this library get
+    // normalized first to trim and collapse all extra whitespace. The original
+    // regexes are exported for userland consumption and lower level usage. A
+    // future breaking change could export the safer regex only with a note that
+    // all input should have extra whitespace removed.
+    const safeRegexReplacements = [
+        ['\\s', 1],
+        ['\\d', MAX_LENGTH],
+        [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
+    ];
 
-const makeSafeRegex = (value) => {
-  for (const [token, max] of safeRegexReplacements) {
-    value = value
-      .split(`${token}*`).join(`${token}{0,${max}}`)
-      .split(`${token}+`).join(`${token}{1,${max}}`);
-  }
-  return value
-};
+    const makeSafeRegex = (value) => {
+        for (const [token, max] of safeRegexReplacements) {
+            value = value.split(`${token}*`).join(`${token}{0,${max}}`).split(`${token}+`).join(`${token}{1,${max}}`);
+        }
+        return value;
+    };
 
-const createToken = (name, value, isGlobal) => {
-  const safe = makeSafeRegex(value);
-  const index = R++;
-  debug(name, index, value);
-  t[name] = index;
-  src[index] = value;
-  re[index] = new RegExp(value, isGlobal ? 'g' : undefined);
-  safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined);
-};
+    const createToken = (name, value, isGlobal) => {
+        const safe = makeSafeRegex(value);
+        const index = R++;
+        debug(name, index, value);
+        t[name] = index;
+        src[index] = value;
+        re[index] = new RegExp(value, isGlobal ? 'g' : undefined);
+        safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined);
+    };
 
-// The following Regular Expressions can be used for tokenizing,
-// validating, and parsing SemVer version strings.
+    // The following Regular Expressions can be used for tokenizing,
+    // validating, and parsing SemVer version strings.
 
-// ## Numeric Identifier
-// A single `0`, or a non-zero digit followed by zero or more digits.
+    // ## Numeric Identifier
+    // A single `0`, or a non-zero digit followed by zero or more digits.
 
-createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*');
-createToken('NUMERICIDENTIFIERLOOSE', '\\d+');
+    createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*');
+    createToken('NUMERICIDENTIFIERLOOSE', '\\d+');
 
-// ## Non-numeric Identifier
-// Zero or more digits, followed by a letter or hyphen, and then zero or
-// more letters, digits, or hyphens.
+    // ## Non-numeric Identifier
+    // Zero or more digits, followed by a letter or hyphen, and then zero or
+    // more letters, digits, or hyphens.
 
-createToken('NONNUMERICIDENTIFIER', `\\d*[a-zA-Z-]${LETTERDASHNUMBER}*`);
+    createToken('NONNUMERICIDENTIFIER', `\\d*[a-zA-Z-]${LETTERDASHNUMBER}*`);
 
-// ## Main Version
-// Three dot-separated numeric identifiers.
+    // ## Main Version
+    // Three dot-separated numeric identifiers.
 
-createToken('MAINVERSION', `(${src[t.NUMERICIDENTIFIER]})\\.` +
-                   `(${src[t.NUMERICIDENTIFIER]})\\.` +
-                   `(${src[t.NUMERICIDENTIFIER]})`);
+    createToken(
+        'MAINVERSION',
+        `(${src[t.NUMERICIDENTIFIER]})\\.` + `(${src[t.NUMERICIDENTIFIER]})\\.` + `(${src[t.NUMERICIDENTIFIER]})`,
+    );
 
-createToken('MAINVERSIONLOOSE', `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` +
-                        `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` +
-                        `(${src[t.NUMERICIDENTIFIERLOOSE]})`);
+    createToken(
+        'MAINVERSIONLOOSE',
+        `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` +
+            `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` +
+            `(${src[t.NUMERICIDENTIFIERLOOSE]})`,
+    );
 
-// ## Pre-release Version Identifier
-// A numeric identifier, or a non-numeric identifier.
+    // ## Pre-release Version Identifier
+    // A numeric identifier, or a non-numeric identifier.
 
-createToken('PRERELEASEIDENTIFIER', `(?:${src[t.NUMERICIDENTIFIER]
-}|${src[t.NONNUMERICIDENTIFIER]})`);
+    createToken('PRERELEASEIDENTIFIER', `(?:${src[t.NUMERICIDENTIFIER]}|${src[t.NONNUMERICIDENTIFIER]})`);
 
-createToken('PRERELEASEIDENTIFIERLOOSE', `(?:${src[t.NUMERICIDENTIFIERLOOSE]
-}|${src[t.NONNUMERICIDENTIFIER]})`);
+    createToken('PRERELEASEIDENTIFIERLOOSE', `(?:${src[t.NUMERICIDENTIFIERLOOSE]}|${src[t.NONNUMERICIDENTIFIER]})`);
 
-// ## Pre-release Version
-// Hyphen, followed by one or more dot-separated pre-release version
-// identifiers.
+    // ## Pre-release Version
+    // Hyphen, followed by one or more dot-separated pre-release version
+    // identifiers.
 
-createToken('PRERELEASE', `(?:-(${src[t.PRERELEASEIDENTIFIER]
-}(?:\\.${src[t.PRERELEASEIDENTIFIER]})*))`);
+    createToken('PRERELEASE', `(?:-(${src[t.PRERELEASEIDENTIFIER]}(?:\\.${src[t.PRERELEASEIDENTIFIER]})*))`);
 
-createToken('PRERELEASELOOSE', `(?:-?(${src[t.PRERELEASEIDENTIFIERLOOSE]
-}(?:\\.${src[t.PRERELEASEIDENTIFIERLOOSE]})*))`);
+    createToken(
+        'PRERELEASELOOSE',
+        `(?:-?(${src[t.PRERELEASEIDENTIFIERLOOSE]}(?:\\.${src[t.PRERELEASEIDENTIFIERLOOSE]})*))`,
+    );
 
-// ## Build Metadata Identifier
-// Any combination of digits, letters, or hyphens.
+    // ## Build Metadata Identifier
+    // Any combination of digits, letters, or hyphens.
 
-createToken('BUILDIDENTIFIER', `${LETTERDASHNUMBER}+`);
+    createToken('BUILDIDENTIFIER', `${LETTERDASHNUMBER}+`);
 
-// ## Build Metadata
-// Plus sign, followed by one or more period-separated build metadata
-// identifiers.
+    // ## Build Metadata
+    // Plus sign, followed by one or more period-separated build metadata
+    // identifiers.
 
-createToken('BUILD', `(?:\\+(${src[t.BUILDIDENTIFIER]
-}(?:\\.${src[t.BUILDIDENTIFIER]})*))`);
+    createToken('BUILD', `(?:\\+(${src[t.BUILDIDENTIFIER]}(?:\\.${src[t.BUILDIDENTIFIER]})*))`);
 
-// ## Full Version String
-// A main version, followed optionally by a pre-release version and
-// build metadata.
+    // ## Full Version String
+    // A main version, followed optionally by a pre-release version and
+    // build metadata.
 
-// Note that the only major, minor, patch, and pre-release sections of
-// the version string are capturing groups.  The build metadata is not a
-// capturing group, because it should not ever be used in version
-// comparison.
+    // Note that the only major, minor, patch, and pre-release sections of
+    // the version string are capturing groups.  The build metadata is not a
+    // capturing group, because it should not ever be used in version
+    // comparison.
 
-createToken('FULLPLAIN', `v?${src[t.MAINVERSION]
-}${src[t.PRERELEASE]}?${
-  src[t.BUILD]}?`);
+    createToken('FULLPLAIN', `v?${src[t.MAINVERSION]}${src[t.PRERELEASE]}?${src[t.BUILD]}?`);
 
-createToken('FULL', `^${src[t.FULLPLAIN]}$`);
+    createToken('FULL', `^${src[t.FULLPLAIN]}$`);
 
-// like full, but allows v1.2.3 and =1.2.3, which people do sometimes.
-// also, 1.0.0alpha1 (prerelease without the hyphen) which is pretty
-// common in the npm registry.
-createToken('LOOSEPLAIN', `[v=\\s]*${src[t.MAINVERSIONLOOSE]
-}${src[t.PRERELEASELOOSE]}?${
-  src[t.BUILD]}?`);
+    // like full, but allows v1.2.3 and =1.2.3, which people do sometimes.
+    // also, 1.0.0alpha1 (prerelease without the hyphen) which is pretty
+    // common in the npm registry.
+    createToken('LOOSEPLAIN', `[v=\\s]*${src[t.MAINVERSIONLOOSE]}${src[t.PRERELEASELOOSE]}?${src[t.BUILD]}?`);
 
-createToken('LOOSE', `^${src[t.LOOSEPLAIN]}$`);
+    createToken('LOOSE', `^${src[t.LOOSEPLAIN]}$`);
 
-createToken('GTLT', '((?:<|>)?=?)');
+    createToken('GTLT', '((?:<|>)?=?)');
 
-// Something like "2.*" or "1.2.x".
-// Note that "x.x" is a valid xRange identifer, meaning "any version"
-// Only the first item is strictly required.
-createToken('XRANGEIDENTIFIERLOOSE', `${src[t.NUMERICIDENTIFIERLOOSE]}|x|X|\\*`);
-createToken('XRANGEIDENTIFIER', `${src[t.NUMERICIDENTIFIER]}|x|X|\\*`);
+    // Something like "2.*" or "1.2.x".
+    // Note that "x.x" is a valid xRange identifer, meaning "any version"
+    // Only the first item is strictly required.
+    createToken('XRANGEIDENTIFIERLOOSE', `${src[t.NUMERICIDENTIFIERLOOSE]}|x|X|\\*`);
+    createToken('XRANGEIDENTIFIER', `${src[t.NUMERICIDENTIFIER]}|x|X|\\*`);
 
-createToken('XRANGEPLAIN', `[v=\\s]*(${src[t.XRANGEIDENTIFIER]})` +
-                   `(?:\\.(${src[t.XRANGEIDENTIFIER]})` +
-                   `(?:\\.(${src[t.XRANGEIDENTIFIER]})` +
-                   `(?:${src[t.PRERELEASE]})?${
-                     src[t.BUILD]}?` +
-                   `)?)?`);
+    createToken(
+        'XRANGEPLAIN',
+        `[v=\\s]*(${src[t.XRANGEIDENTIFIER]})` +
+            `(?:\\.(${src[t.XRANGEIDENTIFIER]})` +
+            `(?:\\.(${src[t.XRANGEIDENTIFIER]})` +
+            `(?:${src[t.PRERELEASE]})?${src[t.BUILD]}?` +
+            `)?)?`,
+    );
 
-createToken('XRANGEPLAINLOOSE', `[v=\\s]*(${src[t.XRANGEIDENTIFIERLOOSE]})` +
-                        `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` +
-                        `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` +
-                        `(?:${src[t.PRERELEASELOOSE]})?${
-                          src[t.BUILD]}?` +
-                        `)?)?`);
+    createToken(
+        'XRANGEPLAINLOOSE',
+        `[v=\\s]*(${src[t.XRANGEIDENTIFIERLOOSE]})` +
+            `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` +
+            `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` +
+            `(?:${src[t.PRERELEASELOOSE]})?${src[t.BUILD]}?` +
+            `)?)?`,
+    );
 
-createToken('XRANGE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAIN]}$`);
-createToken('XRANGELOOSE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAINLOOSE]}$`);
+    createToken('XRANGE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAIN]}$`);
+    createToken('XRANGELOOSE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAINLOOSE]}$`);
 
-// Coercion.
-// Extract anything that could conceivably be a part of a valid semver
-createToken('COERCEPLAIN', `${'(^|[^\\d])' +
-              '(\\d{1,'}${MAX_SAFE_COMPONENT_LENGTH}})` +
-              `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?` +
-              `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?`);
-createToken('COERCE', `${src[t.COERCEPLAIN]}(?:$|[^\\d])`);
-createToken('COERCEFULL', src[t.COERCEPLAIN] +
-              `(?:${src[t.PRERELEASE]})?` +
-              `(?:${src[t.BUILD]})?` +
-              `(?:$|[^\\d])`);
-createToken('COERCERTL', src[t.COERCE], true);
-createToken('COERCERTLFULL', src[t.COERCEFULL], true);
+    // Coercion.
+    // Extract anything that could conceivably be a part of a valid semver
+    createToken(
+        'COERCEPLAIN',
+        `${'(^|[^\\d])' + '(\\d{1,'}${MAX_SAFE_COMPONENT_LENGTH}})` +
+            `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?` +
+            `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?`,
+    );
+    createToken('COERCE', `${src[t.COERCEPLAIN]}(?:$|[^\\d])`);
+    createToken(
+        'COERCEFULL',
+        src[t.COERCEPLAIN] + `(?:${src[t.PRERELEASE]})?` + `(?:${src[t.BUILD]})?` + `(?:$|[^\\d])`,
+    );
+    createToken('COERCERTL', src[t.COERCE], true);
+    createToken('COERCERTLFULL', src[t.COERCEFULL], true);
 
-// Tilde ranges.
-// Meaning is "reasonably at or greater than"
-createToken('LONETILDE', '(?:~>?)');
+    // Tilde ranges.
+    // Meaning is "reasonably at or greater than"
+    createToken('LONETILDE', '(?:~>?)');
 
-createToken('TILDETRIM', `(\\s*)${src[t.LONETILDE]}\\s+`, true);
-exports.tildeTrimReplace = '$1~';
+    createToken('TILDETRIM', `(\\s*)${src[t.LONETILDE]}\\s+`, true);
+    exports.tildeTrimReplace = '$1~';
 
-createToken('TILDE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAIN]}$`);
-createToken('TILDELOOSE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAINLOOSE]}$`);
+    createToken('TILDE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAIN]}$`);
+    createToken('TILDELOOSE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAINLOOSE]}$`);
 
-// Caret ranges.
-// Meaning is "at least and backwards compatible with"
-createToken('LONECARET', '(?:\\^)');
+    // Caret ranges.
+    // Meaning is "at least and backwards compatible with"
+    createToken('LONECARET', '(?:\\^)');
 
-createToken('CARETTRIM', `(\\s*)${src[t.LONECARET]}\\s+`, true);
-exports.caretTrimReplace = '$1^';
+    createToken('CARETTRIM', `(\\s*)${src[t.LONECARET]}\\s+`, true);
+    exports.caretTrimReplace = '$1^';
 
-createToken('CARET', `^${src[t.LONECARET]}${src[t.XRANGEPLAIN]}$`);
-createToken('CARETLOOSE', `^${src[t.LONECARET]}${src[t.XRANGEPLAINLOOSE]}$`);
+    createToken('CARET', `^${src[t.LONECARET]}${src[t.XRANGEPLAIN]}$`);
+    createToken('CARETLOOSE', `^${src[t.LONECARET]}${src[t.XRANGEPLAINLOOSE]}$`);
 
-// A simple gt/lt/eq thing, or just "" to indicate "any version"
-createToken('COMPARATORLOOSE', `^${src[t.GTLT]}\\s*(${src[t.LOOSEPLAIN]})$|^$`);
-createToken('COMPARATOR', `^${src[t.GTLT]}\\s*(${src[t.FULLPLAIN]})$|^$`);
+    // A simple gt/lt/eq thing, or just "" to indicate "any version"
+    createToken('COMPARATORLOOSE', `^${src[t.GTLT]}\\s*(${src[t.LOOSEPLAIN]})$|^$`);
+    createToken('COMPARATOR', `^${src[t.GTLT]}\\s*(${src[t.FULLPLAIN]})$|^$`);
 
-// An expression to strip any whitespace between the gtlt and the thing
-// it modifies, so that `> 1.2.3` ==> `>1.2.3`
-createToken('COMPARATORTRIM', `(\\s*)${src[t.GTLT]
-}\\s*(${src[t.LOOSEPLAIN]}|${src[t.XRANGEPLAIN]})`, true);
-exports.comparatorTrimReplace = '$1$2$3';
+    // An expression to strip any whitespace between the gtlt and the thing
+    // it modifies, so that `> 1.2.3` ==> `>1.2.3`
+    createToken('COMPARATORTRIM', `(\\s*)${src[t.GTLT]}\\s*(${src[t.LOOSEPLAIN]}|${src[t.XRANGEPLAIN]})`, true);
+    exports.comparatorTrimReplace = '$1$2$3';
 
-// Something like `1.2.3 - 1.2.4`
-// Note that these all use the loose form, because they'll be
-// checked against either the strict or loose comparator form
-// later.
-createToken('HYPHENRANGE', `^\\s*(${src[t.XRANGEPLAIN]})` +
-                   `\\s+-\\s+` +
-                   `(${src[t.XRANGEPLAIN]})` +
-                   `\\s*$`);
+    // Something like `1.2.3 - 1.2.4`
+    // Note that these all use the loose form, because they'll be
+    // checked against either the strict or loose comparator form
+    // later.
+    createToken('HYPHENRANGE', `^\\s*(${src[t.XRANGEPLAIN]})` + `\\s+-\\s+` + `(${src[t.XRANGEPLAIN]})` + `\\s*$`);
 
-createToken('HYPHENRANGELOOSE', `^\\s*(${src[t.XRANGEPLAINLOOSE]})` +
-                        `\\s+-\\s+` +
-                        `(${src[t.XRANGEPLAINLOOSE]})` +
-                        `\\s*$`);
+    createToken(
+        'HYPHENRANGELOOSE',
+        `^\\s*(${src[t.XRANGEPLAINLOOSE]})` + `\\s+-\\s+` + `(${src[t.XRANGEPLAINLOOSE]})` + `\\s*$`,
+    );
 
-// Star ranges basically just allow anything at all.
-createToken('STAR', '(<|>)?=?\\s*\\*');
-// >=0.0.0 is like a star
-createToken('GTE0', '^\\s*>=\\s*0\\.0\\.0\\s*$');
-createToken('GTE0PRE', '^\\s*>=\\s*0\\.0\\.0-0\\s*$');
-}(re$4, re$4.exports));
+    // Star ranges basically just allow anything at all.
+    createToken('STAR', '(<|>)?=?\\s*\\*');
+    // >=0.0.0 is like a star
+    createToken('GTE0', '^\\s*>=\\s*0\\.0\\.0\\s*$');
+    createToken('GTE0PRE', '^\\s*>=\\s*0\\.0\\.0-0\\s*$');
+})(re$4, re$4.exports);
 
 // parse out just the options we care about
 const looseOption = Object.freeze({ loose: true });
-const emptyOpts = Object.freeze({ });
-const parseOptions$3 = options => {
-  if (!options) {
-    return emptyOpts
-  }
+const emptyOpts = Object.freeze({});
+const parseOptions$3 = (options) => {
+    if (!options) {
+        return emptyOpts;
+    }
 
-  if (typeof options !== 'object') {
-    return looseOption
-  }
+    if (typeof options !== 'object') {
+        return looseOption;
+    }
 
-  return options
+    return options;
 };
 var parseOptions_1 = parseOptions$3;
 
 const numeric = /^[0-9]+$/;
 const compareIdentifiers$1 = (a, b) => {
-  const anum = numeric.test(a);
-  const bnum = numeric.test(b);
+    const anum = numeric.test(a);
+    const bnum = numeric.test(b);
 
-  if (anum && bnum) {
-    a = +a;
-    b = +b;
-  }
+    if (anum && bnum) {
+        a = +a;
+        b = +b;
+    }
 
-  return a === b ? 0
-    : (anum && !bnum) ? -1
-    : (bnum && !anum) ? 1
-    : a < b ? -1
-    : 1
+    return a === b ? 0 : anum && !bnum ? -1 : bnum && !anum ? 1 : a < b ? -1 : 1;
 };
 
 const rcompareIdentifiers = (a, b) => compareIdentifiers$1(b, a);
 
 var identifiers$1 = {
-  compareIdentifiers: compareIdentifiers$1,
-  rcompareIdentifiers,
+    compareIdentifiers: compareIdentifiers$1,
+    rcompareIdentifiers,
 };
 
 const debug$2 = debug_1;
@@ -5957,415 +6175,409 @@ const { safeRe: re$3, t: t$3 } = re$4.exports;
 const parseOptions$2 = parseOptions_1;
 const { compareIdentifiers } = identifiers$1;
 class SemVer$f {
-  constructor (version, options) {
-    options = parseOptions$2(options);
+    constructor(version, options) {
+        options = parseOptions$2(options);
 
-    if (version instanceof SemVer$f) {
-      if (version.loose === !!options.loose &&
-          version.includePrerelease === !!options.includePrerelease) {
-        return version
-      } else {
-        version = version.version;
-      }
-    } else if (typeof version !== 'string') {
-      throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`)
-    }
-
-    if (version.length > MAX_LENGTH) {
-      throw new TypeError(
-        `version is longer than ${MAX_LENGTH} characters`
-      )
-    }
-
-    debug$2('SemVer', version, options);
-    this.options = options;
-    this.loose = !!options.loose;
-    // this isn't actually relevant for versions, but keep it so that we
-    // don't run into trouble passing this.options around.
-    this.includePrerelease = !!options.includePrerelease;
-
-    const m = version.trim().match(options.loose ? re$3[t$3.LOOSE] : re$3[t$3.FULL]);
-
-    if (!m) {
-      throw new TypeError(`Invalid Version: ${version}`)
-    }
-
-    this.raw = version;
-
-    // these are actually numbers
-    this.major = +m[1];
-    this.minor = +m[2];
-    this.patch = +m[3];
-
-    if (this.major > MAX_SAFE_INTEGER || this.major < 0) {
-      throw new TypeError('Invalid major version')
-    }
-
-    if (this.minor > MAX_SAFE_INTEGER || this.minor < 0) {
-      throw new TypeError('Invalid minor version')
-    }
-
-    if (this.patch > MAX_SAFE_INTEGER || this.patch < 0) {
-      throw new TypeError('Invalid patch version')
-    }
-
-    // numberify any prerelease numeric ids
-    if (!m[4]) {
-      this.prerelease = [];
-    } else {
-      this.prerelease = m[4].split('.').map((id) => {
-        if (/^[0-9]+$/.test(id)) {
-          const num = +id;
-          if (num >= 0 && num < MAX_SAFE_INTEGER) {
-            return num
-          }
-        }
-        return id
-      });
-    }
-
-    this.build = m[5] ? m[5].split('.') : [];
-    this.format();
-  }
-
-  format () {
-    this.version = `${this.major}.${this.minor}.${this.patch}`;
-    if (this.prerelease.length) {
-      this.version += `-${this.prerelease.join('.')}`;
-    }
-    return this.version
-  }
-
-  toString () {
-    return this.version
-  }
-
-  compare (other) {
-    debug$2('SemVer.compare', this.version, this.options, other);
-    if (!(other instanceof SemVer$f)) {
-      if (typeof other === 'string' && other === this.version) {
-        return 0
-      }
-      other = new SemVer$f(other, this.options);
-    }
-
-    if (other.version === this.version) {
-      return 0
-    }
-
-    return this.compareMain(other) || this.comparePre(other)
-  }
-
-  compareMain (other) {
-    if (!(other instanceof SemVer$f)) {
-      other = new SemVer$f(other, this.options);
-    }
-
-    return (
-      compareIdentifiers(this.major, other.major) ||
-      compareIdentifiers(this.minor, other.minor) ||
-      compareIdentifiers(this.patch, other.patch)
-    )
-  }
-
-  comparePre (other) {
-    if (!(other instanceof SemVer$f)) {
-      other = new SemVer$f(other, this.options);
-    }
-
-    // NOT having a prerelease is > having one
-    if (this.prerelease.length && !other.prerelease.length) {
-      return -1
-    } else if (!this.prerelease.length && other.prerelease.length) {
-      return 1
-    } else if (!this.prerelease.length && !other.prerelease.length) {
-      return 0
-    }
-
-    let i = 0;
-    do {
-      const a = this.prerelease[i];
-      const b = other.prerelease[i];
-      debug$2('prerelease compare', i, a, b);
-      if (a === undefined && b === undefined) {
-        return 0
-      } else if (b === undefined) {
-        return 1
-      } else if (a === undefined) {
-        return -1
-      } else if (a === b) {
-        continue
-      } else {
-        return compareIdentifiers(a, b)
-      }
-    } while (++i)
-  }
-
-  compareBuild (other) {
-    if (!(other instanceof SemVer$f)) {
-      other = new SemVer$f(other, this.options);
-    }
-
-    let i = 0;
-    do {
-      const a = this.build[i];
-      const b = other.build[i];
-      debug$2('prerelease compare', i, a, b);
-      if (a === undefined && b === undefined) {
-        return 0
-      } else if (b === undefined) {
-        return 1
-      } else if (a === undefined) {
-        return -1
-      } else if (a === b) {
-        continue
-      } else {
-        return compareIdentifiers(a, b)
-      }
-    } while (++i)
-  }
-
-  // preminor will bump the version up to the next minor release, and immediately
-  // down to pre-release. premajor and prepatch work the same way.
-  inc (release, identifier, identifierBase) {
-    switch (release) {
-      case 'premajor':
-        this.prerelease.length = 0;
-        this.patch = 0;
-        this.minor = 0;
-        this.major++;
-        this.inc('pre', identifier, identifierBase);
-        break
-      case 'preminor':
-        this.prerelease.length = 0;
-        this.patch = 0;
-        this.minor++;
-        this.inc('pre', identifier, identifierBase);
-        break
-      case 'prepatch':
-        // If this is already a prerelease, it will bump to the next version
-        // drop any prereleases that might already exist, since they are not
-        // relevant at this point.
-        this.prerelease.length = 0;
-        this.inc('patch', identifier, identifierBase);
-        this.inc('pre', identifier, identifierBase);
-        break
-      // If the input is a non-prerelease version, this acts the same as
-      // prepatch.
-      case 'prerelease':
-        if (this.prerelease.length === 0) {
-          this.inc('patch', identifier, identifierBase);
-        }
-        this.inc('pre', identifier, identifierBase);
-        break
-
-      case 'major':
-        // If this is a pre-major version, bump up to the same major version.
-        // Otherwise increment major.
-        // 1.0.0-5 bumps to 1.0.0
-        // 1.1.0 bumps to 2.0.0
-        if (
-          this.minor !== 0 ||
-          this.patch !== 0 ||
-          this.prerelease.length === 0
-        ) {
-          this.major++;
-        }
-        this.minor = 0;
-        this.patch = 0;
-        this.prerelease = [];
-        break
-      case 'minor':
-        // If this is a pre-minor version, bump up to the same minor version.
-        // Otherwise increment minor.
-        // 1.2.0-5 bumps to 1.2.0
-        // 1.2.1 bumps to 1.3.0
-        if (this.patch !== 0 || this.prerelease.length === 0) {
-          this.minor++;
-        }
-        this.patch = 0;
-        this.prerelease = [];
-        break
-      case 'patch':
-        // If this is not a pre-release version, it will increment the patch.
-        // If it is a pre-release it will bump up to the same patch version.
-        // 1.2.0-5 patches to 1.2.0
-        // 1.2.0 patches to 1.2.1
-        if (this.prerelease.length === 0) {
-          this.patch++;
-        }
-        this.prerelease = [];
-        break
-      // This probably shouldn't be used publicly.
-      // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
-      case 'pre': {
-        const base = Number(identifierBase) ? 1 : 0;
-
-        if (!identifier && identifierBase === false) {
-          throw new Error('invalid increment argument: identifier is empty')
+        if (version instanceof SemVer$f) {
+            if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) {
+                return version;
+            } else {
+                version = version.version;
+            }
+        } else if (typeof version !== 'string') {
+            throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`);
         }
 
-        if (this.prerelease.length === 0) {
-          this.prerelease = [base];
+        if (version.length > MAX_LENGTH) {
+            throw new TypeError(`version is longer than ${MAX_LENGTH} characters`);
+        }
+
+        debug$2('SemVer', version, options);
+        this.options = options;
+        this.loose = !!options.loose;
+        // this isn't actually relevant for versions, but keep it so that we
+        // don't run into trouble passing this.options around.
+        this.includePrerelease = !!options.includePrerelease;
+
+        const m = version.trim().match(options.loose ? re$3[t$3.LOOSE] : re$3[t$3.FULL]);
+
+        if (!m) {
+            throw new TypeError(`Invalid Version: ${version}`);
+        }
+
+        this.raw = version;
+
+        // these are actually numbers
+        this.major = +m[1];
+        this.minor = +m[2];
+        this.patch = +m[3];
+
+        if (this.major > MAX_SAFE_INTEGER || this.major < 0) {
+            throw new TypeError('Invalid major version');
+        }
+
+        if (this.minor > MAX_SAFE_INTEGER || this.minor < 0) {
+            throw new TypeError('Invalid minor version');
+        }
+
+        if (this.patch > MAX_SAFE_INTEGER || this.patch < 0) {
+            throw new TypeError('Invalid patch version');
+        }
+
+        // numberify any prerelease numeric ids
+        if (!m[4]) {
+            this.prerelease = [];
         } else {
-          let i = this.prerelease.length;
-          while (--i >= 0) {
-            if (typeof this.prerelease[i] === 'number') {
-              this.prerelease[i]++;
-              i = -2;
-            }
-          }
-          if (i === -1) {
-            // didn't increment anything
-            if (identifier === this.prerelease.join('.') && identifierBase === false) {
-              throw new Error('invalid increment argument: identifier already exists')
-            }
-            this.prerelease.push(base);
-          }
+            this.prerelease = m[4].split('.').map((id) => {
+                if (/^[0-9]+$/.test(id)) {
+                    const num = +id;
+                    if (num >= 0 && num < MAX_SAFE_INTEGER) {
+                        return num;
+                    }
+                }
+                return id;
+            });
         }
-        if (identifier) {
-          // 1.2.0-beta.1 bumps to 1.2.0-beta.2,
-          // 1.2.0-beta.fooblz or 1.2.0-beta bumps to 1.2.0-beta.0
-          let prerelease = [identifier, base];
-          if (identifierBase === false) {
-            prerelease = [identifier];
-          }
-          if (compareIdentifiers(this.prerelease[0], identifier) === 0) {
-            if (isNaN(this.prerelease[1])) {
-              this.prerelease = prerelease;
-            }
-          } else {
-            this.prerelease = prerelease;
-          }
+
+        this.build = m[5] ? m[5].split('.') : [];
+        this.format();
+    }
+
+    format() {
+        this.version = `${this.major}.${this.minor}.${this.patch}`;
+        if (this.prerelease.length) {
+            this.version += `-${this.prerelease.join('.')}`;
         }
-        break
-      }
-      default:
-        throw new Error(`invalid increment argument: ${release}`)
+        return this.version;
     }
-    this.raw = this.format();
-    if (this.build.length) {
-      this.raw += `+${this.build.join('.')}`;
+
+    toString() {
+        return this.version;
     }
-    return this
-  }
+
+    compare(other) {
+        debug$2('SemVer.compare', this.version, this.options, other);
+        if (!(other instanceof SemVer$f)) {
+            if (typeof other === 'string' && other === this.version) {
+                return 0;
+            }
+            other = new SemVer$f(other, this.options);
+        }
+
+        if (other.version === this.version) {
+            return 0;
+        }
+
+        return this.compareMain(other) || this.comparePre(other);
+    }
+
+    compareMain(other) {
+        if (!(other instanceof SemVer$f)) {
+            other = new SemVer$f(other, this.options);
+        }
+
+        return (
+            compareIdentifiers(this.major, other.major) ||
+            compareIdentifiers(this.minor, other.minor) ||
+            compareIdentifiers(this.patch, other.patch)
+        );
+    }
+
+    comparePre(other) {
+        if (!(other instanceof SemVer$f)) {
+            other = new SemVer$f(other, this.options);
+        }
+
+        // NOT having a prerelease is > having one
+        if (this.prerelease.length && !other.prerelease.length) {
+            return -1;
+        } else if (!this.prerelease.length && other.prerelease.length) {
+            return 1;
+        } else if (!this.prerelease.length && !other.prerelease.length) {
+            return 0;
+        }
+
+        let i = 0;
+        do {
+            const a = this.prerelease[i];
+            const b = other.prerelease[i];
+            debug$2('prerelease compare', i, a, b);
+            if (a === undefined && b === undefined) {
+                return 0;
+            } else if (b === undefined) {
+                return 1;
+            } else if (a === undefined) {
+                return -1;
+            } else if (a === b) {
+                continue;
+            } else {
+                return compareIdentifiers(a, b);
+            }
+        } while (++i);
+    }
+
+    compareBuild(other) {
+        if (!(other instanceof SemVer$f)) {
+            other = new SemVer$f(other, this.options);
+        }
+
+        let i = 0;
+        do {
+            const a = this.build[i];
+            const b = other.build[i];
+            debug$2('prerelease compare', i, a, b);
+            if (a === undefined && b === undefined) {
+                return 0;
+            } else if (b === undefined) {
+                return 1;
+            } else if (a === undefined) {
+                return -1;
+            } else if (a === b) {
+                continue;
+            } else {
+                return compareIdentifiers(a, b);
+            }
+        } while (++i);
+    }
+
+    // preminor will bump the version up to the next minor release, and immediately
+    // down to pre-release. premajor and prepatch work the same way.
+    inc(release, identifier, identifierBase) {
+        switch (release) {
+            case 'premajor':
+                this.prerelease.length = 0;
+                this.patch = 0;
+                this.minor = 0;
+                this.major++;
+                this.inc('pre', identifier, identifierBase);
+                break;
+            case 'preminor':
+                this.prerelease.length = 0;
+                this.patch = 0;
+                this.minor++;
+                this.inc('pre', identifier, identifierBase);
+                break;
+            case 'prepatch':
+                // If this is already a prerelease, it will bump to the next version
+                // drop any prereleases that might already exist, since they are not
+                // relevant at this point.
+                this.prerelease.length = 0;
+                this.inc('patch', identifier, identifierBase);
+                this.inc('pre', identifier, identifierBase);
+                break;
+            // If the input is a non-prerelease version, this acts the same as
+            // prepatch.
+            case 'prerelease':
+                if (this.prerelease.length === 0) {
+                    this.inc('patch', identifier, identifierBase);
+                }
+                this.inc('pre', identifier, identifierBase);
+                break;
+
+            case 'major':
+                // If this is a pre-major version, bump up to the same major version.
+                // Otherwise increment major.
+                // 1.0.0-5 bumps to 1.0.0
+                // 1.1.0 bumps to 2.0.0
+                if (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) {
+                    this.major++;
+                }
+                this.minor = 0;
+                this.patch = 0;
+                this.prerelease = [];
+                break;
+            case 'minor':
+                // If this is a pre-minor version, bump up to the same minor version.
+                // Otherwise increment minor.
+                // 1.2.0-5 bumps to 1.2.0
+                // 1.2.1 bumps to 1.3.0
+                if (this.patch !== 0 || this.prerelease.length === 0) {
+                    this.minor++;
+                }
+                this.patch = 0;
+                this.prerelease = [];
+                break;
+            case 'patch':
+                // If this is not a pre-release version, it will increment the patch.
+                // If it is a pre-release it will bump up to the same patch version.
+                // 1.2.0-5 patches to 1.2.0
+                // 1.2.0 patches to 1.2.1
+                if (this.prerelease.length === 0) {
+                    this.patch++;
+                }
+                this.prerelease = [];
+                break;
+            // This probably shouldn't be used publicly.
+            // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
+            case 'pre': {
+                const base = Number(identifierBase) ? 1 : 0;
+
+                if (!identifier && identifierBase === false) {
+                    throw new Error('invalid increment argument: identifier is empty');
+                }
+
+                if (this.prerelease.length === 0) {
+                    this.prerelease = [base];
+                } else {
+                    let i = this.prerelease.length;
+                    while (--i >= 0) {
+                        if (typeof this.prerelease[i] === 'number') {
+                            this.prerelease[i]++;
+                            i = -2;
+                        }
+                    }
+                    if (i === -1) {
+                        // didn't increment anything
+                        if (identifier === this.prerelease.join('.') && identifierBase === false) {
+                            throw new Error('invalid increment argument: identifier already exists');
+                        }
+                        this.prerelease.push(base);
+                    }
+                }
+                if (identifier) {
+                    // 1.2.0-beta.1 bumps to 1.2.0-beta.2,
+                    // 1.2.0-beta.fooblz or 1.2.0-beta bumps to 1.2.0-beta.0
+                    let prerelease = [identifier, base];
+                    if (identifierBase === false) {
+                        prerelease = [identifier];
+                    }
+                    if (compareIdentifiers(this.prerelease[0], identifier) === 0) {
+                        if (isNaN(this.prerelease[1])) {
+                            this.prerelease = prerelease;
+                        }
+                    } else {
+                        this.prerelease = prerelease;
+                    }
+                }
+                break;
+            }
+            default:
+                throw new Error(`invalid increment argument: ${release}`);
+        }
+        this.raw = this.format();
+        if (this.build.length) {
+            this.raw += `+${this.build.join('.')}`;
+        }
+        return this;
+    }
 }
 
 var semver$1 = SemVer$f;
 
 const SemVer$e = semver$1;
 const parse$6 = (version, options, throwErrors = false) => {
-  if (version instanceof SemVer$e) {
-    return version
-  }
-  try {
-    return new SemVer$e(version, options)
-  } catch (er) {
-    if (!throwErrors) {
-      return null
+    if (version instanceof SemVer$e) {
+        return version;
     }
-    throw er
-  }
+    try {
+        return new SemVer$e(version, options);
+    } catch (er) {
+        if (!throwErrors) {
+            return null;
+        }
+        throw er;
+    }
 };
 
 var parse_1 = parse$6;
 
 const parse$5 = parse_1;
 const valid$2 = (version, options) => {
-  const v = parse$5(version, options);
-  return v ? v.version : null
+    const v = parse$5(version, options);
+    return v ? v.version : null;
 };
 var valid_1 = valid$2;
 
 const parse$4 = parse_1;
 const clean$1 = (version, options) => {
-  const s = parse$4(version.trim().replace(/^[=v]+/, ''), options);
-  return s ? s.version : null
+    const s = parse$4(version.trim().replace(/^[=v]+/, ''), options);
+    return s ? s.version : null;
 };
 var clean_1 = clean$1;
 
 const SemVer$d = semver$1;
 
 const inc$1 = (version, release, options, identifier, identifierBase) => {
-  if (typeof (options) === 'string') {
-    identifierBase = identifier;
-    identifier = options;
-    options = undefined;
-  }
+    if (typeof options === 'string') {
+        identifierBase = identifier;
+        identifier = options;
+        options = undefined;
+    }
 
-  try {
-    return new SemVer$d(
-      version instanceof SemVer$d ? version.version : version,
-      options
-    ).inc(release, identifier, identifierBase).version
-  } catch (er) {
-    return null
-  }
+    try {
+        return new SemVer$d(version instanceof SemVer$d ? version.version : version, options).inc(
+            release,
+            identifier,
+            identifierBase,
+        ).version;
+    } catch (er) {
+        return null;
+    }
 };
 var inc_1 = inc$1;
 
 const parse$3 = parse_1;
 
 const diff$1 = (version1, version2) => {
-  const v1 = parse$3(version1, null, true);
-  const v2 = parse$3(version2, null, true);
-  const comparison = v1.compare(v2);
+    const v1 = parse$3(version1, null, true);
+    const v2 = parse$3(version2, null, true);
+    const comparison = v1.compare(v2);
 
-  if (comparison === 0) {
-    return null
-  }
-
-  const v1Higher = comparison > 0;
-  const highVersion = v1Higher ? v1 : v2;
-  const lowVersion = v1Higher ? v2 : v1;
-  const highHasPre = !!highVersion.prerelease.length;
-  const lowHasPre = !!lowVersion.prerelease.length;
-
-  if (lowHasPre && !highHasPre) {
-    // Going from prerelease -> no prerelease requires some special casing
-
-    // If the low version has only a major, then it will always be a major
-    // Some examples:
-    // 1.0.0-1 -> 1.0.0
-    // 1.0.0-1 -> 1.1.1
-    // 1.0.0-1 -> 2.0.0
-    if (!lowVersion.patch && !lowVersion.minor) {
-      return 'major'
+    if (comparison === 0) {
+        return null;
     }
 
-    // Otherwise it can be determined by checking the high version
+    const v1Higher = comparison > 0;
+    const highVersion = v1Higher ? v1 : v2;
+    const lowVersion = v1Higher ? v2 : v1;
+    const highHasPre = !!highVersion.prerelease.length;
+    const lowHasPre = !!lowVersion.prerelease.length;
 
-    if (highVersion.patch) {
-      // anything higher than a patch bump would result in the wrong version
-      return 'patch'
+    if (lowHasPre && !highHasPre) {
+        // Going from prerelease -> no prerelease requires some special casing
+
+        // If the low version has only a major, then it will always be a major
+        // Some examples:
+        // 1.0.0-1 -> 1.0.0
+        // 1.0.0-1 -> 1.1.1
+        // 1.0.0-1 -> 2.0.0
+        if (!lowVersion.patch && !lowVersion.minor) {
+            return 'major';
+        }
+
+        // Otherwise it can be determined by checking the high version
+
+        if (highVersion.patch) {
+            // anything higher than a patch bump would result in the wrong version
+            return 'patch';
+        }
+
+        if (highVersion.minor) {
+            // anything higher than a minor bump would result in the wrong version
+            return 'minor';
+        }
+
+        // bumping major/minor/patch all have same result
+        return 'major';
     }
 
-    if (highVersion.minor) {
-      // anything higher than a minor bump would result in the wrong version
-      return 'minor'
+    // add the `pre` prefix if we are going to a prerelease version
+    const prefix = highHasPre ? 'pre' : '';
+
+    if (v1.major !== v2.major) {
+        return prefix + 'major';
     }
 
-    // bumping major/minor/patch all have same result
-    return 'major'
-  }
+    if (v1.minor !== v2.minor) {
+        return prefix + 'minor';
+    }
 
-  // add the `pre` prefix if we are going to a prerelease version
-  const prefix = highHasPre ? 'pre' : '';
+    if (v1.patch !== v2.patch) {
+        return prefix + 'patch';
+    }
 
-  if (v1.major !== v2.major) {
-    return prefix + 'major'
-  }
-
-  if (v1.minor !== v2.minor) {
-    return prefix + 'minor'
-  }
-
-  if (v1.patch !== v2.patch) {
-    return prefix + 'patch'
-  }
-
-  // high and low are preleases
-  return 'prerelease'
+    // high and low are preleases
+    return 'prerelease';
 };
 
 var diff_1 = diff$1;
@@ -6384,14 +6596,13 @@ var patch_1 = patch$1;
 
 const parse$2 = parse_1;
 const prerelease$1 = (version, options) => {
-  const parsed = parse$2(version, options);
-  return (parsed && parsed.prerelease.length) ? parsed.prerelease : null
+    const parsed = parse$2(version, options);
+    return parsed && parsed.prerelease.length ? parsed.prerelease : null;
 };
 var prerelease_1 = prerelease$1;
 
 const SemVer$9 = semver$1;
-const compare$b = (a, b, loose) =>
-  new SemVer$9(a, loose).compare(new SemVer$9(b, loose));
+const compare$b = (a, b, loose) => new SemVer$9(a, loose).compare(new SemVer$9(b, loose));
 
 var compare_1 = compare$b;
 
@@ -6405,9 +6616,9 @@ var compareLoose_1 = compareLoose$1;
 
 const SemVer$8 = semver$1;
 const compareBuild$3 = (a, b, loose) => {
-  const versionA = new SemVer$8(a, loose);
-  const versionB = new SemVer$8(b, loose);
-  return versionA.compare(versionB) || versionA.compareBuild(versionB)
+    const versionA = new SemVer$8(a, loose);
+    const versionB = new SemVer$8(b, loose);
+    return versionA.compare(versionB) || versionA.compareBuild(versionB);
 };
 var compareBuild_1 = compareBuild$3;
 
@@ -6451,48 +6662,48 @@ const lt$2 = lt_1;
 const lte$2 = lte_1;
 
 const cmp$2 = (a, op, b, loose) => {
-  switch (op) {
-    case '===':
-      if (typeof a === 'object') {
-        a = a.version;
-      }
-      if (typeof b === 'object') {
-        b = b.version;
-      }
-      return a === b
+    switch (op) {
+        case '===':
+            if (typeof a === 'object') {
+                a = a.version;
+            }
+            if (typeof b === 'object') {
+                b = b.version;
+            }
+            return a === b;
 
-    case '!==':
-      if (typeof a === 'object') {
-        a = a.version;
-      }
-      if (typeof b === 'object') {
-        b = b.version;
-      }
-      return a !== b
+        case '!==':
+            if (typeof a === 'object') {
+                a = a.version;
+            }
+            if (typeof b === 'object') {
+                b = b.version;
+            }
+            return a !== b;
 
-    case '':
-    case '=':
-    case '==':
-      return eq$1(a, b, loose)
+        case '':
+        case '=':
+        case '==':
+            return eq$1(a, b, loose);
 
-    case '!=':
-      return neq$1(a, b, loose)
+        case '!=':
+            return neq$1(a, b, loose);
 
-    case '>':
-      return gt$3(a, b, loose)
+        case '>':
+            return gt$3(a, b, loose);
 
-    case '>=':
-      return gte$2(a, b, loose)
+        case '>=':
+            return gte$2(a, b, loose);
 
-    case '<':
-      return lt$2(a, b, loose)
+        case '<':
+            return lt$2(a, b, loose);
 
-    case '<=':
-      return lte$2(a, b, loose)
+        case '<=':
+            return lte$2(a, b, loose);
 
-    default:
-      throw new TypeError(`Invalid operator: ${op}`)
-  }
+        default:
+            throw new TypeError(`Invalid operator: ${op}`);
+    }
 };
 var cmp_1 = cmp$2;
 
@@ -6501,59 +6712,56 @@ const parse$1 = parse_1;
 const { safeRe: re$2, t: t$2 } = re$4.exports;
 
 const coerce$1 = (version, options) => {
-  if (version instanceof SemVer$7) {
-    return version
-  }
-
-  if (typeof version === 'number') {
-    version = String(version);
-  }
-
-  if (typeof version !== 'string') {
-    return null
-  }
-
-  options = options || {};
-
-  let match = null;
-  if (!options.rtl) {
-    match = version.match(options.includePrerelease ? re$2[t$2.COERCEFULL] : re$2[t$2.COERCE]);
-  } else {
-    // Find the right-most coercible string that does not share
-    // a terminus with a more left-ward coercible string.
-    // Eg, '1.2.3.4' wants to coerce '2.3.4', not '3.4' or '4'
-    // With includePrerelease option set, '1.2.3.4-rc' wants to coerce '2.3.4-rc', not '2.3.4'
-    //
-    // Walk through the string checking with a /g regexp
-    // Manually set the index so as to pick up overlapping matches.
-    // Stop when we get a match that ends at the string end, since no
-    // coercible string can be more right-ward without the same terminus.
-    const coerceRtlRegex = options.includePrerelease ? re$2[t$2.COERCERTLFULL] : re$2[t$2.COERCERTL];
-    let next;
-    while ((next = coerceRtlRegex.exec(version)) &&
-        (!match || match.index + match[0].length !== version.length)
-    ) {
-      if (!match ||
-            next.index + next[0].length !== match.index + match[0].length) {
-        match = next;
-      }
-      coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length;
+    if (version instanceof SemVer$7) {
+        return version;
     }
-    // leave it in a clean state
-    coerceRtlRegex.lastIndex = -1;
-  }
 
-  if (match === null) {
-    return null
-  }
+    if (typeof version === 'number') {
+        version = String(version);
+    }
 
-  const major = match[2];
-  const minor = match[3] || '0';
-  const patch = match[4] || '0';
-  const prerelease = options.includePrerelease && match[5] ? `-${match[5]}` : '';
-  const build = options.includePrerelease && match[6] ? `+${match[6]}` : '';
+    if (typeof version !== 'string') {
+        return null;
+    }
 
-  return parse$1(`${major}.${minor}.${patch}${prerelease}${build}`, options)
+    options = options || {};
+
+    let match = null;
+    if (!options.rtl) {
+        match = version.match(options.includePrerelease ? re$2[t$2.COERCEFULL] : re$2[t$2.COERCE]);
+    } else {
+        // Find the right-most coercible string that does not share
+        // a terminus with a more left-ward coercible string.
+        // Eg, '1.2.3.4' wants to coerce '2.3.4', not '3.4' or '4'
+        // With includePrerelease option set, '1.2.3.4-rc' wants to coerce '2.3.4-rc', not '2.3.4'
+        //
+        // Walk through the string checking with a /g regexp
+        // Manually set the index so as to pick up overlapping matches.
+        // Stop when we get a match that ends at the string end, since no
+        // coercible string can be more right-ward without the same terminus.
+        const coerceRtlRegex = options.includePrerelease ? re$2[t$2.COERCERTLFULL] : re$2[t$2.COERCERTL];
+        let next;
+        while ((next = coerceRtlRegex.exec(version)) && (!match || match.index + match[0].length !== version.length)) {
+            if (!match || next.index + next[0].length !== match.index + match[0].length) {
+                match = next;
+            }
+            coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length;
+        }
+        // leave it in a clean state
+        coerceRtlRegex.lastIndex = -1;
+    }
+
+    if (match === null) {
+        return null;
+    }
+
+    const major = match[2];
+    const minor = match[3] || '0';
+    const patch = match[4] || '0';
+    const prerelease = options.includePrerelease && match[5] ? `-${match[5]}` : '';
+    const build = options.includePrerelease && match[6] ? `+${match[6]}` : '';
+
+    return parse$1(`${major}.${minor}.${patch}${prerelease}${build}`, options);
 };
 var coerce_1 = coerce$1;
 
@@ -6562,425 +6770,423 @@ var yallist = Yallist$1;
 Yallist$1.Node = Node;
 Yallist$1.create = Yallist$1;
 
-function Yallist$1 (list) {
-  var self = this;
-  if (!(self instanceof Yallist$1)) {
-    self = new Yallist$1();
-  }
-
-  self.tail = null;
-  self.head = null;
-  self.length = 0;
-
-  if (list && typeof list.forEach === 'function') {
-    list.forEach(function (item) {
-      self.push(item);
-    });
-  } else if (arguments.length > 0) {
-    for (var i = 0, l = arguments.length; i < l; i++) {
-      self.push(arguments[i]);
+function Yallist$1(list) {
+    var self = this;
+    if (!(self instanceof Yallist$1)) {
+        self = new Yallist$1();
     }
-  }
 
-  return self
+    self.tail = null;
+    self.head = null;
+    self.length = 0;
+
+    if (list && typeof list.forEach === 'function') {
+        list.forEach(function (item) {
+            self.push(item);
+        });
+    } else if (arguments.length > 0) {
+        for (var i = 0, l = arguments.length; i < l; i++) {
+            self.push(arguments[i]);
+        }
+    }
+
+    return self;
 }
 
 Yallist$1.prototype.removeNode = function (node) {
-  if (node.list !== this) {
-    throw new Error('removing node which does not belong to this list')
-  }
+    if (node.list !== this) {
+        throw new Error('removing node which does not belong to this list');
+    }
 
-  var next = node.next;
-  var prev = node.prev;
+    var next = node.next;
+    var prev = node.prev;
 
-  if (next) {
-    next.prev = prev;
-  }
+    if (next) {
+        next.prev = prev;
+    }
 
-  if (prev) {
-    prev.next = next;
-  }
+    if (prev) {
+        prev.next = next;
+    }
 
-  if (node === this.head) {
-    this.head = next;
-  }
-  if (node === this.tail) {
-    this.tail = prev;
-  }
+    if (node === this.head) {
+        this.head = next;
+    }
+    if (node === this.tail) {
+        this.tail = prev;
+    }
 
-  node.list.length--;
-  node.next = null;
-  node.prev = null;
-  node.list = null;
+    node.list.length--;
+    node.next = null;
+    node.prev = null;
+    node.list = null;
 
-  return next
+    return next;
 };
 
 Yallist$1.prototype.unshiftNode = function (node) {
-  if (node === this.head) {
-    return
-  }
+    if (node === this.head) {
+        return;
+    }
 
-  if (node.list) {
-    node.list.removeNode(node);
-  }
+    if (node.list) {
+        node.list.removeNode(node);
+    }
 
-  var head = this.head;
-  node.list = this;
-  node.next = head;
-  if (head) {
-    head.prev = node;
-  }
+    var head = this.head;
+    node.list = this;
+    node.next = head;
+    if (head) {
+        head.prev = node;
+    }
 
-  this.head = node;
-  if (!this.tail) {
-    this.tail = node;
-  }
-  this.length++;
+    this.head = node;
+    if (!this.tail) {
+        this.tail = node;
+    }
+    this.length++;
 };
 
 Yallist$1.prototype.pushNode = function (node) {
-  if (node === this.tail) {
-    return
-  }
+    if (node === this.tail) {
+        return;
+    }
 
-  if (node.list) {
-    node.list.removeNode(node);
-  }
+    if (node.list) {
+        node.list.removeNode(node);
+    }
 
-  var tail = this.tail;
-  node.list = this;
-  node.prev = tail;
-  if (tail) {
-    tail.next = node;
-  }
+    var tail = this.tail;
+    node.list = this;
+    node.prev = tail;
+    if (tail) {
+        tail.next = node;
+    }
 
-  this.tail = node;
-  if (!this.head) {
-    this.head = node;
-  }
-  this.length++;
+    this.tail = node;
+    if (!this.head) {
+        this.head = node;
+    }
+    this.length++;
 };
 
 Yallist$1.prototype.push = function () {
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    push(this, arguments[i]);
-  }
-  return this.length
+    for (var i = 0, l = arguments.length; i < l; i++) {
+        push(this, arguments[i]);
+    }
+    return this.length;
 };
 
 Yallist$1.prototype.unshift = function () {
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    unshift(this, arguments[i]);
-  }
-  return this.length
+    for (var i = 0, l = arguments.length; i < l; i++) {
+        unshift(this, arguments[i]);
+    }
+    return this.length;
 };
 
 Yallist$1.prototype.pop = function () {
-  if (!this.tail) {
-    return undefined
-  }
+    if (!this.tail) {
+        return undefined;
+    }
 
-  var res = this.tail.value;
-  this.tail = this.tail.prev;
-  if (this.tail) {
-    this.tail.next = null;
-  } else {
-    this.head = null;
-  }
-  this.length--;
-  return res
+    var res = this.tail.value;
+    this.tail = this.tail.prev;
+    if (this.tail) {
+        this.tail.next = null;
+    } else {
+        this.head = null;
+    }
+    this.length--;
+    return res;
 };
 
 Yallist$1.prototype.shift = function () {
-  if (!this.head) {
-    return undefined
-  }
+    if (!this.head) {
+        return undefined;
+    }
 
-  var res = this.head.value;
-  this.head = this.head.next;
-  if (this.head) {
-    this.head.prev = null;
-  } else {
-    this.tail = null;
-  }
-  this.length--;
-  return res
+    var res = this.head.value;
+    this.head = this.head.next;
+    if (this.head) {
+        this.head.prev = null;
+    } else {
+        this.tail = null;
+    }
+    this.length--;
+    return res;
 };
 
 Yallist$1.prototype.forEach = function (fn, thisp) {
-  thisp = thisp || this;
-  for (var walker = this.head, i = 0; walker !== null; i++) {
-    fn.call(thisp, walker.value, i, this);
-    walker = walker.next;
-  }
+    thisp = thisp || this;
+    for (var walker = this.head, i = 0; walker !== null; i++) {
+        fn.call(thisp, walker.value, i, this);
+        walker = walker.next;
+    }
 };
 
 Yallist$1.prototype.forEachReverse = function (fn, thisp) {
-  thisp = thisp || this;
-  for (var walker = this.tail, i = this.length - 1; walker !== null; i--) {
-    fn.call(thisp, walker.value, i, this);
-    walker = walker.prev;
-  }
+    thisp = thisp || this;
+    for (var walker = this.tail, i = this.length - 1; walker !== null; i--) {
+        fn.call(thisp, walker.value, i, this);
+        walker = walker.prev;
+    }
 };
 
 Yallist$1.prototype.get = function (n) {
-  for (var i = 0, walker = this.head; walker !== null && i < n; i++) {
-    // abort out of the list early if we hit a cycle
-    walker = walker.next;
-  }
-  if (i === n && walker !== null) {
-    return walker.value
-  }
+    for (var i = 0, walker = this.head; walker !== null && i < n; i++) {
+        // abort out of the list early if we hit a cycle
+        walker = walker.next;
+    }
+    if (i === n && walker !== null) {
+        return walker.value;
+    }
 };
 
 Yallist$1.prototype.getReverse = function (n) {
-  for (var i = 0, walker = this.tail; walker !== null && i < n; i++) {
-    // abort out of the list early if we hit a cycle
-    walker = walker.prev;
-  }
-  if (i === n && walker !== null) {
-    return walker.value
-  }
+    for (var i = 0, walker = this.tail; walker !== null && i < n; i++) {
+        // abort out of the list early if we hit a cycle
+        walker = walker.prev;
+    }
+    if (i === n && walker !== null) {
+        return walker.value;
+    }
 };
 
 Yallist$1.prototype.map = function (fn, thisp) {
-  thisp = thisp || this;
-  var res = new Yallist$1();
-  for (var walker = this.head; walker !== null;) {
-    res.push(fn.call(thisp, walker.value, this));
-    walker = walker.next;
-  }
-  return res
+    thisp = thisp || this;
+    var res = new Yallist$1();
+    for (var walker = this.head; walker !== null; ) {
+        res.push(fn.call(thisp, walker.value, this));
+        walker = walker.next;
+    }
+    return res;
 };
 
 Yallist$1.prototype.mapReverse = function (fn, thisp) {
-  thisp = thisp || this;
-  var res = new Yallist$1();
-  for (var walker = this.tail; walker !== null;) {
-    res.push(fn.call(thisp, walker.value, this));
-    walker = walker.prev;
-  }
-  return res
+    thisp = thisp || this;
+    var res = new Yallist$1();
+    for (var walker = this.tail; walker !== null; ) {
+        res.push(fn.call(thisp, walker.value, this));
+        walker = walker.prev;
+    }
+    return res;
 };
 
 Yallist$1.prototype.reduce = function (fn, initial) {
-  var acc;
-  var walker = this.head;
-  if (arguments.length > 1) {
-    acc = initial;
-  } else if (this.head) {
-    walker = this.head.next;
-    acc = this.head.value;
-  } else {
-    throw new TypeError('Reduce of empty list with no initial value')
-  }
+    var acc;
+    var walker = this.head;
+    if (arguments.length > 1) {
+        acc = initial;
+    } else if (this.head) {
+        walker = this.head.next;
+        acc = this.head.value;
+    } else {
+        throw new TypeError('Reduce of empty list with no initial value');
+    }
 
-  for (var i = 0; walker !== null; i++) {
-    acc = fn(acc, walker.value, i);
-    walker = walker.next;
-  }
+    for (var i = 0; walker !== null; i++) {
+        acc = fn(acc, walker.value, i);
+        walker = walker.next;
+    }
 
-  return acc
+    return acc;
 };
 
 Yallist$1.prototype.reduceReverse = function (fn, initial) {
-  var acc;
-  var walker = this.tail;
-  if (arguments.length > 1) {
-    acc = initial;
-  } else if (this.tail) {
-    walker = this.tail.prev;
-    acc = this.tail.value;
-  } else {
-    throw new TypeError('Reduce of empty list with no initial value')
-  }
+    var acc;
+    var walker = this.tail;
+    if (arguments.length > 1) {
+        acc = initial;
+    } else if (this.tail) {
+        walker = this.tail.prev;
+        acc = this.tail.value;
+    } else {
+        throw new TypeError('Reduce of empty list with no initial value');
+    }
 
-  for (var i = this.length - 1; walker !== null; i--) {
-    acc = fn(acc, walker.value, i);
-    walker = walker.prev;
-  }
+    for (var i = this.length - 1; walker !== null; i--) {
+        acc = fn(acc, walker.value, i);
+        walker = walker.prev;
+    }
 
-  return acc
+    return acc;
 };
 
 Yallist$1.prototype.toArray = function () {
-  var arr = new Array(this.length);
-  for (var i = 0, walker = this.head; walker !== null; i++) {
-    arr[i] = walker.value;
-    walker = walker.next;
-  }
-  return arr
+    var arr = new Array(this.length);
+    for (var i = 0, walker = this.head; walker !== null; i++) {
+        arr[i] = walker.value;
+        walker = walker.next;
+    }
+    return arr;
 };
 
 Yallist$1.prototype.toArrayReverse = function () {
-  var arr = new Array(this.length);
-  for (var i = 0, walker = this.tail; walker !== null; i++) {
-    arr[i] = walker.value;
-    walker = walker.prev;
-  }
-  return arr
+    var arr = new Array(this.length);
+    for (var i = 0, walker = this.tail; walker !== null; i++) {
+        arr[i] = walker.value;
+        walker = walker.prev;
+    }
+    return arr;
 };
 
 Yallist$1.prototype.slice = function (from, to) {
-  to = to || this.length;
-  if (to < 0) {
-    to += this.length;
-  }
-  from = from || 0;
-  if (from < 0) {
-    from += this.length;
-  }
-  var ret = new Yallist$1();
-  if (to < from || to < 0) {
-    return ret
-  }
-  if (from < 0) {
-    from = 0;
-  }
-  if (to > this.length) {
-    to = this.length;
-  }
-  for (var i = 0, walker = this.head; walker !== null && i < from; i++) {
-    walker = walker.next;
-  }
-  for (; walker !== null && i < to; i++, walker = walker.next) {
-    ret.push(walker.value);
-  }
-  return ret
+    to = to || this.length;
+    if (to < 0) {
+        to += this.length;
+    }
+    from = from || 0;
+    if (from < 0) {
+        from += this.length;
+    }
+    var ret = new Yallist$1();
+    if (to < from || to < 0) {
+        return ret;
+    }
+    if (from < 0) {
+        from = 0;
+    }
+    if (to > this.length) {
+        to = this.length;
+    }
+    for (var i = 0, walker = this.head; walker !== null && i < from; i++) {
+        walker = walker.next;
+    }
+    for (; walker !== null && i < to; i++, walker = walker.next) {
+        ret.push(walker.value);
+    }
+    return ret;
 };
 
 Yallist$1.prototype.sliceReverse = function (from, to) {
-  to = to || this.length;
-  if (to < 0) {
-    to += this.length;
-  }
-  from = from || 0;
-  if (from < 0) {
-    from += this.length;
-  }
-  var ret = new Yallist$1();
-  if (to < from || to < 0) {
-    return ret
-  }
-  if (from < 0) {
-    from = 0;
-  }
-  if (to > this.length) {
-    to = this.length;
-  }
-  for (var i = this.length, walker = this.tail; walker !== null && i > to; i--) {
-    walker = walker.prev;
-  }
-  for (; walker !== null && i > from; i--, walker = walker.prev) {
-    ret.push(walker.value);
-  }
-  return ret
+    to = to || this.length;
+    if (to < 0) {
+        to += this.length;
+    }
+    from = from || 0;
+    if (from < 0) {
+        from += this.length;
+    }
+    var ret = new Yallist$1();
+    if (to < from || to < 0) {
+        return ret;
+    }
+    if (from < 0) {
+        from = 0;
+    }
+    if (to > this.length) {
+        to = this.length;
+    }
+    for (var i = this.length, walker = this.tail; walker !== null && i > to; i--) {
+        walker = walker.prev;
+    }
+    for (; walker !== null && i > from; i--, walker = walker.prev) {
+        ret.push(walker.value);
+    }
+    return ret;
 };
 
 Yallist$1.prototype.splice = function (start, deleteCount, ...nodes) {
-  if (start > this.length) {
-    start = this.length - 1;
-  }
-  if (start < 0) {
-    start = this.length + start;
-  }
+    if (start > this.length) {
+        start = this.length - 1;
+    }
+    if (start < 0) {
+        start = this.length + start;
+    }
 
-  for (var i = 0, walker = this.head; walker !== null && i < start; i++) {
-    walker = walker.next;
-  }
+    for (var i = 0, walker = this.head; walker !== null && i < start; i++) {
+        walker = walker.next;
+    }
 
-  var ret = [];
-  for (var i = 0; walker && i < deleteCount; i++) {
-    ret.push(walker.value);
-    walker = this.removeNode(walker);
-  }
-  if (walker === null) {
-    walker = this.tail;
-  }
+    var ret = [];
+    for (var i = 0; walker && i < deleteCount; i++) {
+        ret.push(walker.value);
+        walker = this.removeNode(walker);
+    }
+    if (walker === null) {
+        walker = this.tail;
+    }
 
-  if (walker !== this.head && walker !== this.tail) {
-    walker = walker.prev;
-  }
+    if (walker !== this.head && walker !== this.tail) {
+        walker = walker.prev;
+    }
 
-  for (var i = 0; i < nodes.length; i++) {
-    walker = insert(this, walker, nodes[i]);
-  }
-  return ret;
+    for (var i = 0; i < nodes.length; i++) {
+        walker = insert(this, walker, nodes[i]);
+    }
+    return ret;
 };
 
 Yallist$1.prototype.reverse = function () {
-  var head = this.head;
-  var tail = this.tail;
-  for (var walker = head; walker !== null; walker = walker.prev) {
-    var p = walker.prev;
-    walker.prev = walker.next;
-    walker.next = p;
-  }
-  this.head = tail;
-  this.tail = head;
-  return this
+    var head = this.head;
+    var tail = this.tail;
+    for (var walker = head; walker !== null; walker = walker.prev) {
+        var p = walker.prev;
+        walker.prev = walker.next;
+        walker.next = p;
+    }
+    this.head = tail;
+    this.tail = head;
+    return this;
 };
 
-function insert (self, node, value) {
-  var inserted = node === self.head ?
-    new Node(value, null, node, self) :
-    new Node(value, node, node.next, self);
+function insert(self, node, value) {
+    var inserted = node === self.head ? new Node(value, null, node, self) : new Node(value, node, node.next, self);
 
-  if (inserted.next === null) {
-    self.tail = inserted;
-  }
-  if (inserted.prev === null) {
-    self.head = inserted;
-  }
+    if (inserted.next === null) {
+        self.tail = inserted;
+    }
+    if (inserted.prev === null) {
+        self.head = inserted;
+    }
 
-  self.length++;
+    self.length++;
 
-  return inserted
+    return inserted;
 }
 
-function push (self, item) {
-  self.tail = new Node(item, self.tail, null, self);
-  if (!self.head) {
-    self.head = self.tail;
-  }
-  self.length++;
+function push(self, item) {
+    self.tail = new Node(item, self.tail, null, self);
+    if (!self.head) {
+        self.head = self.tail;
+    }
+    self.length++;
 }
 
-function unshift (self, item) {
-  self.head = new Node(item, null, self.head, self);
-  if (!self.tail) {
-    self.tail = self.head;
-  }
-  self.length++;
+function unshift(self, item) {
+    self.head = new Node(item, null, self.head, self);
+    if (!self.tail) {
+        self.tail = self.head;
+    }
+    self.length++;
 }
 
-function Node (value, prev, next, list) {
-  if (!(this instanceof Node)) {
-    return new Node(value, prev, next, list)
-  }
+function Node(value, prev, next, list) {
+    if (!(this instanceof Node)) {
+        return new Node(value, prev, next, list);
+    }
 
-  this.list = list;
-  this.value = value;
+    this.list = list;
+    this.value = value;
 
-  if (prev) {
-    prev.next = this;
-    this.prev = prev;
-  } else {
-    this.prev = null;
-  }
+    if (prev) {
+        prev.next = this;
+        this.prev = prev;
+    } else {
+        this.prev = null;
+    }
 
-  if (next) {
-    next.prev = this;
-    this.next = next;
-  } else {
-    this.next = null;
-  }
+    if (next) {
+        next.prev = this;
+        this.next = next;
+    } else {
+        this.next = null;
+    }
 }
 
 try {
-  // add if support for Symbol.iterator is present
-  require('./iterator.js')(Yallist$1);
+    // add if support for Symbol.iterator is present
+    require('./iterator.js')(Yallist$1);
 } catch (er) {}
 
 // A linked list to keep track of recently-used-ness
@@ -7008,510 +7214,494 @@ const naiveLength = () => 1;
 // cache is a Map (or PseudoMap) that matches the keys to
 // the Yallist.Node object.
 class LRUCache {
-  constructor (options) {
-    if (typeof options === 'number')
-      options = { max: options };
+    constructor(options) {
+        if (typeof options === 'number') options = { max: options };
 
-    if (!options)
-      options = {};
+        if (!options) options = {};
 
-    if (options.max && (typeof options.max !== 'number' || options.max < 0))
-      throw new TypeError('max must be a non-negative number')
-    // Kind of weird to have a default max of Infinity, but oh well.
-    this[MAX] = options.max || Infinity;
+        if (options.max && (typeof options.max !== 'number' || options.max < 0))
+            throw new TypeError('max must be a non-negative number');
+        // Kind of weird to have a default max of Infinity, but oh well.
+        this[MAX] = options.max || Infinity;
 
-    const lc = options.length || naiveLength;
-    this[LENGTH_CALCULATOR] = (typeof lc !== 'function') ? naiveLength : lc;
-    this[ALLOW_STALE] = options.stale || false;
-    if (options.maxAge && typeof options.maxAge !== 'number')
-      throw new TypeError('maxAge must be a number')
-    this[MAX_AGE] = options.maxAge || 0;
-    this[DISPOSE] = options.dispose;
-    this[NO_DISPOSE_ON_SET] = options.noDisposeOnSet || false;
-    this[UPDATE_AGE_ON_GET] = options.updateAgeOnGet || false;
-    this.reset();
-  }
-
-  // resize the cache when the max changes.
-  set max (mL) {
-    if (typeof mL !== 'number' || mL < 0)
-      throw new TypeError('max must be a non-negative number')
-
-    this[MAX] = mL || Infinity;
-    trim(this);
-  }
-  get max () {
-    return this[MAX]
-  }
-
-  set allowStale (allowStale) {
-    this[ALLOW_STALE] = !!allowStale;
-  }
-  get allowStale () {
-    return this[ALLOW_STALE]
-  }
-
-  set maxAge (mA) {
-    if (typeof mA !== 'number')
-      throw new TypeError('maxAge must be a non-negative number')
-
-    this[MAX_AGE] = mA;
-    trim(this);
-  }
-  get maxAge () {
-    return this[MAX_AGE]
-  }
-
-  // resize the cache when the lengthCalculator changes.
-  set lengthCalculator (lC) {
-    if (typeof lC !== 'function')
-      lC = naiveLength;
-
-    if (lC !== this[LENGTH_CALCULATOR]) {
-      this[LENGTH_CALCULATOR] = lC;
-      this[LENGTH] = 0;
-      this[LRU_LIST].forEach(hit => {
-        hit.length = this[LENGTH_CALCULATOR](hit.value, hit.key);
-        this[LENGTH] += hit.length;
-      });
-    }
-    trim(this);
-  }
-  get lengthCalculator () { return this[LENGTH_CALCULATOR] }
-
-  get length () { return this[LENGTH] }
-  get itemCount () { return this[LRU_LIST].length }
-
-  rforEach (fn, thisp) {
-    thisp = thisp || this;
-    for (let walker = this[LRU_LIST].tail; walker !== null;) {
-      const prev = walker.prev;
-      forEachStep(this, fn, walker, thisp);
-      walker = prev;
-    }
-  }
-
-  forEach (fn, thisp) {
-    thisp = thisp || this;
-    for (let walker = this[LRU_LIST].head; walker !== null;) {
-      const next = walker.next;
-      forEachStep(this, fn, walker, thisp);
-      walker = next;
-    }
-  }
-
-  keys () {
-    return this[LRU_LIST].toArray().map(k => k.key)
-  }
-
-  values () {
-    return this[LRU_LIST].toArray().map(k => k.value)
-  }
-
-  reset () {
-    if (this[DISPOSE] &&
-        this[LRU_LIST] &&
-        this[LRU_LIST].length) {
-      this[LRU_LIST].forEach(hit => this[DISPOSE](hit.key, hit.value));
+        const lc = options.length || naiveLength;
+        this[LENGTH_CALCULATOR] = typeof lc !== 'function' ? naiveLength : lc;
+        this[ALLOW_STALE] = options.stale || false;
+        if (options.maxAge && typeof options.maxAge !== 'number') throw new TypeError('maxAge must be a number');
+        this[MAX_AGE] = options.maxAge || 0;
+        this[DISPOSE] = options.dispose;
+        this[NO_DISPOSE_ON_SET] = options.noDisposeOnSet || false;
+        this[UPDATE_AGE_ON_GET] = options.updateAgeOnGet || false;
+        this.reset();
     }
 
-    this[CACHE] = new Map(); // hash of items by key
-    this[LRU_LIST] = new Yallist(); // list of items in order of use recency
-    this[LENGTH] = 0; // length of items in the list
-  }
+    // resize the cache when the max changes.
+    set max(mL) {
+        if (typeof mL !== 'number' || mL < 0) throw new TypeError('max must be a non-negative number');
 
-  dump () {
-    return this[LRU_LIST].map(hit =>
-      isStale(this, hit) ? false : {
-        k: hit.key,
-        v: hit.value,
-        e: hit.now + (hit.maxAge || 0)
-      }).toArray().filter(h => h)
-  }
-
-  dumpLru () {
-    return this[LRU_LIST]
-  }
-
-  set (key, value, maxAge) {
-    maxAge = maxAge || this[MAX_AGE];
-
-    if (maxAge && typeof maxAge !== 'number')
-      throw new TypeError('maxAge must be a number')
-
-    const now = maxAge ? Date.now() : 0;
-    const len = this[LENGTH_CALCULATOR](value, key);
-
-    if (this[CACHE].has(key)) {
-      if (len > this[MAX]) {
-        del(this, this[CACHE].get(key));
-        return false
-      }
-
-      const node = this[CACHE].get(key);
-      const item = node.value;
-
-      // dispose of the old one before overwriting
-      // split out into 2 ifs for better coverage tracking
-      if (this[DISPOSE]) {
-        if (!this[NO_DISPOSE_ON_SET])
-          this[DISPOSE](key, item.value);
-      }
-
-      item.now = now;
-      item.maxAge = maxAge;
-      item.value = value;
-      this[LENGTH] += len - item.length;
-      item.length = len;
-      this.get(key);
-      trim(this);
-      return true
+        this[MAX] = mL || Infinity;
+        trim(this);
+    }
+    get max() {
+        return this[MAX];
     }
 
-    const hit = new Entry(key, value, len, now, maxAge);
-
-    // oversized objects fall out of cache automatically.
-    if (hit.length > this[MAX]) {
-      if (this[DISPOSE])
-        this[DISPOSE](key, value);
-
-      return false
+    set allowStale(allowStale) {
+        this[ALLOW_STALE] = !!allowStale;
+    }
+    get allowStale() {
+        return this[ALLOW_STALE];
     }
 
-    this[LENGTH] += hit.length;
-    this[LRU_LIST].unshift(hit);
-    this[CACHE].set(key, this[LRU_LIST].head);
-    trim(this);
-    return true
-  }
+    set maxAge(mA) {
+        if (typeof mA !== 'number') throw new TypeError('maxAge must be a non-negative number');
 
-  has (key) {
-    if (!this[CACHE].has(key)) return false
-    const hit = this[CACHE].get(key).value;
-    return !isStale(this, hit)
-  }
+        this[MAX_AGE] = mA;
+        trim(this);
+    }
+    get maxAge() {
+        return this[MAX_AGE];
+    }
 
-  get (key) {
-    return get(this, key, true)
-  }
+    // resize the cache when the lengthCalculator changes.
+    set lengthCalculator(lC) {
+        if (typeof lC !== 'function') lC = naiveLength;
 
-  peek (key) {
-    return get(this, key, false)
-  }
-
-  pop () {
-    const node = this[LRU_LIST].tail;
-    if (!node)
-      return null
-
-    del(this, node);
-    return node.value
-  }
-
-  del (key) {
-    del(this, this[CACHE].get(key));
-  }
-
-  load (arr) {
-    // reset the cache
-    this.reset();
-
-    const now = Date.now();
-    // A previous serialized cache has the most recent items first
-    for (let l = arr.length - 1; l >= 0; l--) {
-      const hit = arr[l];
-      const expiresAt = hit.e || 0;
-      if (expiresAt === 0)
-        // the item was created without expiration in a non aged cache
-        this.set(hit.k, hit.v);
-      else {
-        const maxAge = expiresAt - now;
-        // dont add already expired items
-        if (maxAge > 0) {
-          this.set(hit.k, hit.v, maxAge);
+        if (lC !== this[LENGTH_CALCULATOR]) {
+            this[LENGTH_CALCULATOR] = lC;
+            this[LENGTH] = 0;
+            this[LRU_LIST].forEach((hit) => {
+                hit.length = this[LENGTH_CALCULATOR](hit.value, hit.key);
+                this[LENGTH] += hit.length;
+            });
         }
-      }
+        trim(this);
     }
-  }
+    get lengthCalculator() {
+        return this[LENGTH_CALCULATOR];
+    }
 
-  prune () {
-    this[CACHE].forEach((value, key) => get(this, key, false));
-  }
+    get length() {
+        return this[LENGTH];
+    }
+    get itemCount() {
+        return this[LRU_LIST].length;
+    }
+
+    rforEach(fn, thisp) {
+        thisp = thisp || this;
+        for (let walker = this[LRU_LIST].tail; walker !== null; ) {
+            const prev = walker.prev;
+            forEachStep(this, fn, walker, thisp);
+            walker = prev;
+        }
+    }
+
+    forEach(fn, thisp) {
+        thisp = thisp || this;
+        for (let walker = this[LRU_LIST].head; walker !== null; ) {
+            const next = walker.next;
+            forEachStep(this, fn, walker, thisp);
+            walker = next;
+        }
+    }
+
+    keys() {
+        return this[LRU_LIST].toArray().map((k) => k.key);
+    }
+
+    values() {
+        return this[LRU_LIST].toArray().map((k) => k.value);
+    }
+
+    reset() {
+        if (this[DISPOSE] && this[LRU_LIST] && this[LRU_LIST].length) {
+            this[LRU_LIST].forEach((hit) => this[DISPOSE](hit.key, hit.value));
+        }
+
+        this[CACHE] = new Map(); // hash of items by key
+        this[LRU_LIST] = new Yallist(); // list of items in order of use recency
+        this[LENGTH] = 0; // length of items in the list
+    }
+
+    dump() {
+        return this[LRU_LIST].map((hit) =>
+            isStale(this, hit)
+                ? false
+                : {
+                      k: hit.key,
+                      v: hit.value,
+                      e: hit.now + (hit.maxAge || 0),
+                  },
+        )
+            .toArray()
+            .filter((h) => h);
+    }
+
+    dumpLru() {
+        return this[LRU_LIST];
+    }
+
+    set(key, value, maxAge) {
+        maxAge = maxAge || this[MAX_AGE];
+
+        if (maxAge && typeof maxAge !== 'number') throw new TypeError('maxAge must be a number');
+
+        const now = maxAge ? Date.now() : 0;
+        const len = this[LENGTH_CALCULATOR](value, key);
+
+        if (this[CACHE].has(key)) {
+            if (len > this[MAX]) {
+                del(this, this[CACHE].get(key));
+                return false;
+            }
+
+            const node = this[CACHE].get(key);
+            const item = node.value;
+
+            // dispose of the old one before overwriting
+            // split out into 2 ifs for better coverage tracking
+            if (this[DISPOSE]) {
+                if (!this[NO_DISPOSE_ON_SET]) this[DISPOSE](key, item.value);
+            }
+
+            item.now = now;
+            item.maxAge = maxAge;
+            item.value = value;
+            this[LENGTH] += len - item.length;
+            item.length = len;
+            this.get(key);
+            trim(this);
+            return true;
+        }
+
+        const hit = new Entry(key, value, len, now, maxAge);
+
+        // oversized objects fall out of cache automatically.
+        if (hit.length > this[MAX]) {
+            if (this[DISPOSE]) this[DISPOSE](key, value);
+
+            return false;
+        }
+
+        this[LENGTH] += hit.length;
+        this[LRU_LIST].unshift(hit);
+        this[CACHE].set(key, this[LRU_LIST].head);
+        trim(this);
+        return true;
+    }
+
+    has(key) {
+        if (!this[CACHE].has(key)) return false;
+        const hit = this[CACHE].get(key).value;
+        return !isStale(this, hit);
+    }
+
+    get(key) {
+        return get(this, key, true);
+    }
+
+    peek(key) {
+        return get(this, key, false);
+    }
+
+    pop() {
+        const node = this[LRU_LIST].tail;
+        if (!node) return null;
+
+        del(this, node);
+        return node.value;
+    }
+
+    del(key) {
+        del(this, this[CACHE].get(key));
+    }
+
+    load(arr) {
+        // reset the cache
+        this.reset();
+
+        const now = Date.now();
+        // A previous serialized cache has the most recent items first
+        for (let l = arr.length - 1; l >= 0; l--) {
+            const hit = arr[l];
+            const expiresAt = hit.e || 0;
+            if (expiresAt === 0)
+                // the item was created without expiration in a non aged cache
+                this.set(hit.k, hit.v);
+            else {
+                const maxAge = expiresAt - now;
+                // dont add already expired items
+                if (maxAge > 0) {
+                    this.set(hit.k, hit.v, maxAge);
+                }
+            }
+        }
+    }
+
+    prune() {
+        this[CACHE].forEach((value, key) => get(this, key, false));
+    }
 }
 
 const get = (self, key, doUse) => {
-  const node = self[CACHE].get(key);
-  if (node) {
-    const hit = node.value;
-    if (isStale(self, hit)) {
-      del(self, node);
-      if (!self[ALLOW_STALE])
-        return undefined
-    } else {
-      if (doUse) {
-        if (self[UPDATE_AGE_ON_GET])
-          node.value.now = Date.now();
-        self[LRU_LIST].unshiftNode(node);
-      }
+    const node = self[CACHE].get(key);
+    if (node) {
+        const hit = node.value;
+        if (isStale(self, hit)) {
+            del(self, node);
+            if (!self[ALLOW_STALE]) return undefined;
+        } else {
+            if (doUse) {
+                if (self[UPDATE_AGE_ON_GET]) node.value.now = Date.now();
+                self[LRU_LIST].unshiftNode(node);
+            }
+        }
+        return hit.value;
     }
-    return hit.value
-  }
 };
 
 const isStale = (self, hit) => {
-  if (!hit || (!hit.maxAge && !self[MAX_AGE]))
-    return false
+    if (!hit || (!hit.maxAge && !self[MAX_AGE])) return false;
 
-  const diff = Date.now() - hit.now;
-  return hit.maxAge ? diff > hit.maxAge
-    : self[MAX_AGE] && (diff > self[MAX_AGE])
+    const diff = Date.now() - hit.now;
+    return hit.maxAge ? diff > hit.maxAge : self[MAX_AGE] && diff > self[MAX_AGE];
 };
 
-const trim = self => {
-  if (self[LENGTH] > self[MAX]) {
-    for (let walker = self[LRU_LIST].tail;
-      self[LENGTH] > self[MAX] && walker !== null;) {
-      // We know that we're about to delete this one, and also
-      // what the next least recently used key will be, so just
-      // go ahead and set it now.
-      const prev = walker.prev;
-      del(self, walker);
-      walker = prev;
+const trim = (self) => {
+    if (self[LENGTH] > self[MAX]) {
+        for (let walker = self[LRU_LIST].tail; self[LENGTH] > self[MAX] && walker !== null; ) {
+            // We know that we're about to delete this one, and also
+            // what the next least recently used key will be, so just
+            // go ahead and set it now.
+            const prev = walker.prev;
+            del(self, walker);
+            walker = prev;
+        }
     }
-  }
 };
 
 const del = (self, node) => {
-  if (node) {
-    const hit = node.value;
-    if (self[DISPOSE])
-      self[DISPOSE](hit.key, hit.value);
+    if (node) {
+        const hit = node.value;
+        if (self[DISPOSE]) self[DISPOSE](hit.key, hit.value);
 
-    self[LENGTH] -= hit.length;
-    self[CACHE].delete(hit.key);
-    self[LRU_LIST].removeNode(node);
-  }
+        self[LENGTH] -= hit.length;
+        self[CACHE].delete(hit.key);
+        self[LRU_LIST].removeNode(node);
+    }
 };
 
 class Entry {
-  constructor (key, value, length, now, maxAge) {
-    this.key = key;
-    this.value = value;
-    this.length = length;
-    this.now = now;
-    this.maxAge = maxAge || 0;
-  }
+    constructor(key, value, length, now, maxAge) {
+        this.key = key;
+        this.value = value;
+        this.length = length;
+        this.now = now;
+        this.maxAge = maxAge || 0;
+    }
 }
 
 const forEachStep = (self, fn, node, thisp) => {
-  let hit = node.value;
-  if (isStale(self, hit)) {
-    del(self, node);
-    if (!self[ALLOW_STALE])
-      hit = undefined;
-  }
-  if (hit)
-    fn.call(thisp, hit.value, hit.key, self);
+    let hit = node.value;
+    if (isStale(self, hit)) {
+        del(self, node);
+        if (!self[ALLOW_STALE]) hit = undefined;
+    }
+    if (hit) fn.call(thisp, hit.value, hit.key, self);
 };
 
 var lruCache = LRUCache;
 
 // hoisted class for cyclic dependency
 class Range$b {
-  constructor (range, options) {
-    options = parseOptions$1(options);
+    constructor(range, options) {
+        options = parseOptions$1(options);
 
-    if (range instanceof Range$b) {
-      if (
-        range.loose === !!options.loose &&
-        range.includePrerelease === !!options.includePrerelease
-      ) {
-        return range
-      } else {
-        return new Range$b(range.raw, options)
-      }
-    }
-
-    if (range instanceof Comparator$4) {
-      // just put it in the set and return
-      this.raw = range.value;
-      this.set = [[range]];
-      this.format();
-      return this
-    }
-
-    this.options = options;
-    this.loose = !!options.loose;
-    this.includePrerelease = !!options.includePrerelease;
-
-    // First reduce all whitespace as much as possible so we do not have to rely
-    // on potentially slow regexes like \s*. This is then stored and used for
-    // future error messages as well.
-    this.raw = range
-      .trim()
-      .split(/\s+/)
-      .join(' ');
-
-    // First, split on ||
-    this.set = this.raw
-      .split('||')
-      // map the range to a 2d array of comparators
-      .map(r => this.parseRange(r.trim()))
-      // throw out any comparator lists that are empty
-      // this generally means that it was not a valid range, which is allowed
-      // in loose mode, but will still throw if the WHOLE range is invalid.
-      .filter(c => c.length);
-
-    if (!this.set.length) {
-      throw new TypeError(`Invalid SemVer Range: ${this.raw}`)
-    }
-
-    // if we have any that are not the null set, throw out null sets.
-    if (this.set.length > 1) {
-      // keep the first one, in case they're all null sets
-      const first = this.set[0];
-      this.set = this.set.filter(c => !isNullSet(c[0]));
-      if (this.set.length === 0) {
-        this.set = [first];
-      } else if (this.set.length > 1) {
-        // if we have any that are *, then the range is just *
-        for (const c of this.set) {
-          if (c.length === 1 && isAny(c[0])) {
-            this.set = [c];
-            break
-          }
+        if (range instanceof Range$b) {
+            if (range.loose === !!options.loose && range.includePrerelease === !!options.includePrerelease) {
+                return range;
+            } else {
+                return new Range$b(range.raw, options);
+            }
         }
-      }
+
+        if (range instanceof Comparator$4) {
+            // just put it in the set and return
+            this.raw = range.value;
+            this.set = [[range]];
+            this.format();
+            return this;
+        }
+
+        this.options = options;
+        this.loose = !!options.loose;
+        this.includePrerelease = !!options.includePrerelease;
+
+        // First reduce all whitespace as much as possible so we do not have to rely
+        // on potentially slow regexes like \s*. This is then stored and used for
+        // future error messages as well.
+        this.raw = range.trim().split(/\s+/).join(' ');
+
+        // First, split on ||
+        this.set = this.raw
+            .split('||')
+            // map the range to a 2d array of comparators
+            .map((r) => this.parseRange(r.trim()))
+            // throw out any comparator lists that are empty
+            // this generally means that it was not a valid range, which is allowed
+            // in loose mode, but will still throw if the WHOLE range is invalid.
+            .filter((c) => c.length);
+
+        if (!this.set.length) {
+            throw new TypeError(`Invalid SemVer Range: ${this.raw}`);
+        }
+
+        // if we have any that are not the null set, throw out null sets.
+        if (this.set.length > 1) {
+            // keep the first one, in case they're all null sets
+            const first = this.set[0];
+            this.set = this.set.filter((c) => !isNullSet(c[0]));
+            if (this.set.length === 0) {
+                this.set = [first];
+            } else if (this.set.length > 1) {
+                // if we have any that are *, then the range is just *
+                for (const c of this.set) {
+                    if (c.length === 1 && isAny(c[0])) {
+                        this.set = [c];
+                        break;
+                    }
+                }
+            }
+        }
+
+        this.format();
     }
 
-    this.format();
-  }
-
-  format () {
-    this.range = this.set
-      .map((comps) => comps.join(' ').trim())
-      .join('||')
-      .trim();
-    return this.range
-  }
-
-  toString () {
-    return this.range
-  }
-
-  parseRange (range) {
-    // memoize range parsing for performance.
-    // this is a very hot path, and fully deterministic.
-    const memoOpts =
-      (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) |
-      (this.options.loose && FLAG_LOOSE);
-    const memoKey = memoOpts + ':' + range;
-    const cached = cache.get(memoKey);
-    if (cached) {
-      return cached
+    format() {
+        this.range = this.set
+            .map((comps) => comps.join(' ').trim())
+            .join('||')
+            .trim();
+        return this.range;
     }
 
-    const loose = this.options.loose;
-    // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
-    const hr = loose ? re$1[t$1.HYPHENRANGELOOSE] : re$1[t$1.HYPHENRANGE];
-    range = range.replace(hr, hyphenReplace(this.options.includePrerelease));
-    debug$1('hyphen replace', range);
-
-    // `> 1.2.3 < 1.2.5` => `>1.2.3 <1.2.5`
-    range = range.replace(re$1[t$1.COMPARATORTRIM], comparatorTrimReplace);
-    debug$1('comparator trim', range);
-
-    // `~ 1.2.3` => `~1.2.3`
-    range = range.replace(re$1[t$1.TILDETRIM], tildeTrimReplace);
-    debug$1('tilde trim', range);
-
-    // `^ 1.2.3` => `^1.2.3`
-    range = range.replace(re$1[t$1.CARETTRIM], caretTrimReplace);
-    debug$1('caret trim', range);
-
-    // At this point, the range is completely trimmed and
-    // ready to be split into comparators.
-
-    let rangeList = range
-      .split(' ')
-      .map(comp => parseComparator(comp, this.options))
-      .join(' ')
-      .split(/\s+/)
-      // >=0.0.0 is equivalent to *
-      .map(comp => replaceGTE0(comp, this.options));
-
-    if (loose) {
-      // in loose mode, throw out any that are not valid comparators
-      rangeList = rangeList.filter(comp => {
-        debug$1('loose invalid filter', comp, this.options);
-        return !!comp.match(re$1[t$1.COMPARATORLOOSE])
-      });
-    }
-    debug$1('range list', rangeList);
-
-    // if any comparators are the null set, then replace with JUST null set
-    // if more than one comparator, remove any * comparators
-    // also, don't include the same comparator more than once
-    const rangeMap = new Map();
-    const comparators = rangeList.map(comp => new Comparator$4(comp, this.options));
-    for (const comp of comparators) {
-      if (isNullSet(comp)) {
-        return [comp]
-      }
-      rangeMap.set(comp.value, comp);
-    }
-    if (rangeMap.size > 1 && rangeMap.has('')) {
-      rangeMap.delete('');
+    toString() {
+        return this.range;
     }
 
-    const result = [...rangeMap.values()];
-    cache.set(memoKey, result);
-    return result
-  }
+    parseRange(range) {
+        // memoize range parsing for performance.
+        // this is a very hot path, and fully deterministic.
+        const memoOpts =
+            (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) | (this.options.loose && FLAG_LOOSE);
+        const memoKey = memoOpts + ':' + range;
+        const cached = cache.get(memoKey);
+        if (cached) {
+            return cached;
+        }
 
-  intersects (range, options) {
-    if (!(range instanceof Range$b)) {
-      throw new TypeError('a Range is required')
+        const loose = this.options.loose;
+        // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
+        const hr = loose ? re$1[t$1.HYPHENRANGELOOSE] : re$1[t$1.HYPHENRANGE];
+        range = range.replace(hr, hyphenReplace(this.options.includePrerelease));
+        debug$1('hyphen replace', range);
+
+        // `> 1.2.3 < 1.2.5` => `>1.2.3 <1.2.5`
+        range = range.replace(re$1[t$1.COMPARATORTRIM], comparatorTrimReplace);
+        debug$1('comparator trim', range);
+
+        // `~ 1.2.3` => `~1.2.3`
+        range = range.replace(re$1[t$1.TILDETRIM], tildeTrimReplace);
+        debug$1('tilde trim', range);
+
+        // `^ 1.2.3` => `^1.2.3`
+        range = range.replace(re$1[t$1.CARETTRIM], caretTrimReplace);
+        debug$1('caret trim', range);
+
+        // At this point, the range is completely trimmed and
+        // ready to be split into comparators.
+
+        let rangeList = range
+            .split(' ')
+            .map((comp) => parseComparator(comp, this.options))
+            .join(' ')
+            .split(/\s+/)
+            // >=0.0.0 is equivalent to *
+            .map((comp) => replaceGTE0(comp, this.options));
+
+        if (loose) {
+            // in loose mode, throw out any that are not valid comparators
+            rangeList = rangeList.filter((comp) => {
+                debug$1('loose invalid filter', comp, this.options);
+                return !!comp.match(re$1[t$1.COMPARATORLOOSE]);
+            });
+        }
+        debug$1('range list', rangeList);
+
+        // if any comparators are the null set, then replace with JUST null set
+        // if more than one comparator, remove any * comparators
+        // also, don't include the same comparator more than once
+        const rangeMap = new Map();
+        const comparators = rangeList.map((comp) => new Comparator$4(comp, this.options));
+        for (const comp of comparators) {
+            if (isNullSet(comp)) {
+                return [comp];
+            }
+            rangeMap.set(comp.value, comp);
+        }
+        if (rangeMap.size > 1 && rangeMap.has('')) {
+            rangeMap.delete('');
+        }
+
+        const result = [...rangeMap.values()];
+        cache.set(memoKey, result);
+        return result;
     }
 
-    return this.set.some((thisComparators) => {
-      return (
-        isSatisfiable(thisComparators, options) &&
-        range.set.some((rangeComparators) => {
-          return (
-            isSatisfiable(rangeComparators, options) &&
-            thisComparators.every((thisComparator) => {
-              return rangeComparators.every((rangeComparator) => {
-                return thisComparator.intersects(rangeComparator, options)
-              })
-            })
-          )
-        })
-      )
-    })
-  }
+    intersects(range, options) {
+        if (!(range instanceof Range$b)) {
+            throw new TypeError('a Range is required');
+        }
 
-  // if ANY of the sets match ALL of its comparators, then pass
-  test (version) {
-    if (!version) {
-      return false
+        return this.set.some((thisComparators) => {
+            return (
+                isSatisfiable(thisComparators, options) &&
+                range.set.some((rangeComparators) => {
+                    return (
+                        isSatisfiable(rangeComparators, options) &&
+                        thisComparators.every((thisComparator) => {
+                            return rangeComparators.every((rangeComparator) => {
+                                return thisComparator.intersects(rangeComparator, options);
+                            });
+                        })
+                    );
+                })
+            );
+        });
     }
 
-    if (typeof version === 'string') {
-      try {
-        version = new SemVer$6(version, this.options);
-      } catch (er) {
-        return false
-      }
-    }
+    // if ANY of the sets match ALL of its comparators, then pass
+    test(version) {
+        if (!version) {
+            return false;
+        }
 
-    for (let i = 0; i < this.set.length; i++) {
-      if (testSet(this.set[i], version, this.options)) {
-        return true
-      }
+        if (typeof version === 'string') {
+            try {
+                version = new SemVer$6(version, this.options);
+            } catch (er) {
+                return false;
+            }
+        }
+
+        for (let i = 0; i < this.set.length; i++) {
+            if (testSet(this.set[i], version, this.options)) {
+                return true;
+            }
+        }
+        return false;
     }
-    return false
-  }
 }
 
 var range = Range$b;
@@ -7523,53 +7713,47 @@ const parseOptions$1 = parseOptions_1;
 const Comparator$4 = comparator;
 const debug$1 = debug_1;
 const SemVer$6 = semver$1;
-const {
-  safeRe: re$1,
-  t: t$1,
-  comparatorTrimReplace,
-  tildeTrimReplace,
-  caretTrimReplace,
-} = re$4.exports;
+const { safeRe: re$1, t: t$1, comparatorTrimReplace, tildeTrimReplace, caretTrimReplace } = re$4.exports;
 const { FLAG_INCLUDE_PRERELEASE, FLAG_LOOSE } = constants$1;
 
-const isNullSet = c => c.value === '<0.0.0-0';
-const isAny = c => c.value === '';
+const isNullSet = (c) => c.value === '<0.0.0-0';
+const isAny = (c) => c.value === '';
 
 // take a set of comparators and determine whether there
 // exists a version which can satisfy it
 const isSatisfiable = (comparators, options) => {
-  let result = true;
-  const remainingComparators = comparators.slice();
-  let testComparator = remainingComparators.pop();
+    let result = true;
+    const remainingComparators = comparators.slice();
+    let testComparator = remainingComparators.pop();
 
-  while (result && remainingComparators.length) {
-    result = remainingComparators.every((otherComparator) => {
-      return testComparator.intersects(otherComparator, options)
-    });
+    while (result && remainingComparators.length) {
+        result = remainingComparators.every((otherComparator) => {
+            return testComparator.intersects(otherComparator, options);
+        });
 
-    testComparator = remainingComparators.pop();
-  }
+        testComparator = remainingComparators.pop();
+    }
 
-  return result
+    return result;
 };
 
 // comprised of xranges, tildes, stars, and gtlt's at this point.
 // already replaced the hyphen ranges
 // turn into a set of JUST comparators.
 const parseComparator = (comp, options) => {
-  debug$1('comp', comp, options);
-  comp = replaceCarets(comp, options);
-  debug$1('caret', comp);
-  comp = replaceTildes(comp, options);
-  debug$1('tildes', comp);
-  comp = replaceXRanges(comp, options);
-  debug$1('xrange', comp);
-  comp = replaceStars(comp, options);
-  debug$1('stars', comp);
-  return comp
+    debug$1('comp', comp, options);
+    comp = replaceCarets(comp, options);
+    debug$1('caret', comp);
+    comp = replaceTildes(comp, options);
+    debug$1('tildes', comp);
+    comp = replaceXRanges(comp, options);
+    debug$1('xrange', comp);
+    comp = replaceStars(comp, options);
+    debug$1('stars', comp);
+    return comp;
 };
 
-const isX = id => !id || id.toLowerCase() === 'x' || id === '*';
+const isX = (id) => !id || id.toLowerCase() === 'x' || id === '*';
 
 // ~, ~> --> * (any, kinda silly)
 // ~2, ~2.x, ~2.x.x, ~>2, ~>2.x ~>2.x.x --> >=2.0.0 <3.0.0-0
@@ -7579,39 +7763,37 @@ const isX = id => !id || id.toLowerCase() === 'x' || id === '*';
 // ~1.2.0, ~>1.2.0 --> >=1.2.0 <1.3.0-0
 // ~0.0.1 --> >=0.0.1 <0.1.0-0
 const replaceTildes = (comp, options) => {
-  return comp
-    .trim()
-    .split(/\s+/)
-    .map((c) => replaceTilde(c, options))
-    .join(' ')
+    return comp
+        .trim()
+        .split(/\s+/)
+        .map((c) => replaceTilde(c, options))
+        .join(' ');
 };
 
 const replaceTilde = (comp, options) => {
-  const r = options.loose ? re$1[t$1.TILDELOOSE] : re$1[t$1.TILDE];
-  return comp.replace(r, (_, M, m, p, pr) => {
-    debug$1('tilde', comp, _, M, m, p, pr);
-    let ret;
+    const r = options.loose ? re$1[t$1.TILDELOOSE] : re$1[t$1.TILDE];
+    return comp.replace(r, (_, M, m, p, pr) => {
+        debug$1('tilde', comp, _, M, m, p, pr);
+        let ret;
 
-    if (isX(M)) {
-      ret = '';
-    } else if (isX(m)) {
-      ret = `>=${M}.0.0 <${+M + 1}.0.0-0`;
-    } else if (isX(p)) {
-      // ~1.2 == >=1.2.0 <1.3.0-0
-      ret = `>=${M}.${m}.0 <${M}.${+m + 1}.0-0`;
-    } else if (pr) {
-      debug$1('replaceTilde pr', pr);
-      ret = `>=${M}.${m}.${p}-${pr
-      } <${M}.${+m + 1}.0-0`;
-    } else {
-      // ~1.2.3 == >=1.2.3 <1.3.0-0
-      ret = `>=${M}.${m}.${p
-      } <${M}.${+m + 1}.0-0`;
-    }
+        if (isX(M)) {
+            ret = '';
+        } else if (isX(m)) {
+            ret = `>=${M}.0.0 <${+M + 1}.0.0-0`;
+        } else if (isX(p)) {
+            // ~1.2 == >=1.2.0 <1.3.0-0
+            ret = `>=${M}.${m}.0 <${M}.${+m + 1}.0-0`;
+        } else if (pr) {
+            debug$1('replaceTilde pr', pr);
+            ret = `>=${M}.${m}.${p}-${pr} <${M}.${+m + 1}.0-0`;
+        } else {
+            // ~1.2.3 == >=1.2.3 <1.3.0-0
+            ret = `>=${M}.${m}.${p} <${M}.${+m + 1}.0-0`;
+        }
 
-    debug$1('tilde return', ret);
-    return ret
-  })
+        debug$1('tilde return', ret);
+        return ret;
+    });
 };
 
 // ^ --> * (any, kinda silly)
@@ -7623,164 +7805,153 @@ const replaceTilde = (comp, options) => {
 // ^0.0.1 --> >=0.0.1 <0.0.2-0
 // ^0.1.0 --> >=0.1.0 <0.2.0-0
 const replaceCarets = (comp, options) => {
-  return comp
-    .trim()
-    .split(/\s+/)
-    .map((c) => replaceCaret(c, options))
-    .join(' ')
+    return comp
+        .trim()
+        .split(/\s+/)
+        .map((c) => replaceCaret(c, options))
+        .join(' ');
 };
 
 const replaceCaret = (comp, options) => {
-  debug$1('caret', comp, options);
-  const r = options.loose ? re$1[t$1.CARETLOOSE] : re$1[t$1.CARET];
-  const z = options.includePrerelease ? '-0' : '';
-  return comp.replace(r, (_, M, m, p, pr) => {
-    debug$1('caret', comp, _, M, m, p, pr);
-    let ret;
+    debug$1('caret', comp, options);
+    const r = options.loose ? re$1[t$1.CARETLOOSE] : re$1[t$1.CARET];
+    const z = options.includePrerelease ? '-0' : '';
+    return comp.replace(r, (_, M, m, p, pr) => {
+        debug$1('caret', comp, _, M, m, p, pr);
+        let ret;
 
-    if (isX(M)) {
-      ret = '';
-    } else if (isX(m)) {
-      ret = `>=${M}.0.0${z} <${+M + 1}.0.0-0`;
-    } else if (isX(p)) {
-      if (M === '0') {
-        ret = `>=${M}.${m}.0${z} <${M}.${+m + 1}.0-0`;
-      } else {
-        ret = `>=${M}.${m}.0${z} <${+M + 1}.0.0-0`;
-      }
-    } else if (pr) {
-      debug$1('replaceCaret pr', pr);
-      if (M === '0') {
-        if (m === '0') {
-          ret = `>=${M}.${m}.${p}-${pr
-          } <${M}.${m}.${+p + 1}-0`;
+        if (isX(M)) {
+            ret = '';
+        } else if (isX(m)) {
+            ret = `>=${M}.0.0${z} <${+M + 1}.0.0-0`;
+        } else if (isX(p)) {
+            if (M === '0') {
+                ret = `>=${M}.${m}.0${z} <${M}.${+m + 1}.0-0`;
+            } else {
+                ret = `>=${M}.${m}.0${z} <${+M + 1}.0.0-0`;
+            }
+        } else if (pr) {
+            debug$1('replaceCaret pr', pr);
+            if (M === '0') {
+                if (m === '0') {
+                    ret = `>=${M}.${m}.${p}-${pr} <${M}.${m}.${+p + 1}-0`;
+                } else {
+                    ret = `>=${M}.${m}.${p}-${pr} <${M}.${+m + 1}.0-0`;
+                }
+            } else {
+                ret = `>=${M}.${m}.${p}-${pr} <${+M + 1}.0.0-0`;
+            }
         } else {
-          ret = `>=${M}.${m}.${p}-${pr
-          } <${M}.${+m + 1}.0-0`;
+            debug$1('no pr');
+            if (M === '0') {
+                if (m === '0') {
+                    ret = `>=${M}.${m}.${p}${z} <${M}.${m}.${+p + 1}-0`;
+                } else {
+                    ret = `>=${M}.${m}.${p}${z} <${M}.${+m + 1}.0-0`;
+                }
+            } else {
+                ret = `>=${M}.${m}.${p} <${+M + 1}.0.0-0`;
+            }
         }
-      } else {
-        ret = `>=${M}.${m}.${p}-${pr
-        } <${+M + 1}.0.0-0`;
-      }
-    } else {
-      debug$1('no pr');
-      if (M === '0') {
-        if (m === '0') {
-          ret = `>=${M}.${m}.${p
-          }${z} <${M}.${m}.${+p + 1}-0`;
-        } else {
-          ret = `>=${M}.${m}.${p
-          }${z} <${M}.${+m + 1}.0-0`;
-        }
-      } else {
-        ret = `>=${M}.${m}.${p
-        } <${+M + 1}.0.0-0`;
-      }
-    }
 
-    debug$1('caret return', ret);
-    return ret
-  })
+        debug$1('caret return', ret);
+        return ret;
+    });
 };
 
 const replaceXRanges = (comp, options) => {
-  debug$1('replaceXRanges', comp, options);
-  return comp
-    .split(/\s+/)
-    .map((c) => replaceXRange(c, options))
-    .join(' ')
+    debug$1('replaceXRanges', comp, options);
+    return comp
+        .split(/\s+/)
+        .map((c) => replaceXRange(c, options))
+        .join(' ');
 };
 
 const replaceXRange = (comp, options) => {
-  comp = comp.trim();
-  const r = options.loose ? re$1[t$1.XRANGELOOSE] : re$1[t$1.XRANGE];
-  return comp.replace(r, (ret, gtlt, M, m, p, pr) => {
-    debug$1('xRange', comp, ret, gtlt, M, m, p, pr);
-    const xM = isX(M);
-    const xm = xM || isX(m);
-    const xp = xm || isX(p);
-    const anyX = xp;
+    comp = comp.trim();
+    const r = options.loose ? re$1[t$1.XRANGELOOSE] : re$1[t$1.XRANGE];
+    return comp.replace(r, (ret, gtlt, M, m, p, pr) => {
+        debug$1('xRange', comp, ret, gtlt, M, m, p, pr);
+        const xM = isX(M);
+        const xm = xM || isX(m);
+        const xp = xm || isX(p);
+        const anyX = xp;
 
-    if (gtlt === '=' && anyX) {
-      gtlt = '';
-    }
-
-    // if we're including prereleases in the match, then we need
-    // to fix this to -0, the lowest possible prerelease value
-    pr = options.includePrerelease ? '-0' : '';
-
-    if (xM) {
-      if (gtlt === '>' || gtlt === '<') {
-        // nothing is allowed
-        ret = '<0.0.0-0';
-      } else {
-        // nothing is forbidden
-        ret = '*';
-      }
-    } else if (gtlt && anyX) {
-      // we know patch is an x, because we have any x at all.
-      // replace X with 0
-      if (xm) {
-        m = 0;
-      }
-      p = 0;
-
-      if (gtlt === '>') {
-        // >1 => >=2.0.0
-        // >1.2 => >=1.3.0
-        gtlt = '>=';
-        if (xm) {
-          M = +M + 1;
-          m = 0;
-          p = 0;
-        } else {
-          m = +m + 1;
-          p = 0;
+        if (gtlt === '=' && anyX) {
+            gtlt = '';
         }
-      } else if (gtlt === '<=') {
-        // <=0.7.x is actually <0.8.0, since any 0.7.x should
-        // pass.  Similarly, <=7.x is actually <8.0.0, etc.
-        gtlt = '<';
-        if (xm) {
-          M = +M + 1;
-        } else {
-          m = +m + 1;
+
+        // if we're including prereleases in the match, then we need
+        // to fix this to -0, the lowest possible prerelease value
+        pr = options.includePrerelease ? '-0' : '';
+
+        if (xM) {
+            if (gtlt === '>' || gtlt === '<') {
+                // nothing is allowed
+                ret = '<0.0.0-0';
+            } else {
+                // nothing is forbidden
+                ret = '*';
+            }
+        } else if (gtlt && anyX) {
+            // we know patch is an x, because we have any x at all.
+            // replace X with 0
+            if (xm) {
+                m = 0;
+            }
+            p = 0;
+
+            if (gtlt === '>') {
+                // >1 => >=2.0.0
+                // >1.2 => >=1.3.0
+                gtlt = '>=';
+                if (xm) {
+                    M = +M + 1;
+                    m = 0;
+                    p = 0;
+                } else {
+                    m = +m + 1;
+                    p = 0;
+                }
+            } else if (gtlt === '<=') {
+                // <=0.7.x is actually <0.8.0, since any 0.7.x should
+                // pass.  Similarly, <=7.x is actually <8.0.0, etc.
+                gtlt = '<';
+                if (xm) {
+                    M = +M + 1;
+                } else {
+                    m = +m + 1;
+                }
+            }
+
+            if (gtlt === '<') {
+                pr = '-0';
+            }
+
+            ret = `${gtlt + M}.${m}.${p}${pr}`;
+        } else if (xm) {
+            ret = `>=${M}.0.0${pr} <${+M + 1}.0.0-0`;
+        } else if (xp) {
+            ret = `>=${M}.${m}.0${pr} <${M}.${+m + 1}.0-0`;
         }
-      }
 
-      if (gtlt === '<') {
-        pr = '-0';
-      }
+        debug$1('xRange return', ret);
 
-      ret = `${gtlt + M}.${m}.${p}${pr}`;
-    } else if (xm) {
-      ret = `>=${M}.0.0${pr} <${+M + 1}.0.0-0`;
-    } else if (xp) {
-      ret = `>=${M}.${m}.0${pr
-      } <${M}.${+m + 1}.0-0`;
-    }
-
-    debug$1('xRange return', ret);
-
-    return ret
-  })
+        return ret;
+    });
 };
 
 // Because * is AND-ed with everything else in the comparator,
 // and '' means "any version", just remove the *s entirely.
 const replaceStars = (comp, options) => {
-  debug$1('replaceStars', comp, options);
-  // Looseness is ignored here.  star is always as loose as it gets!
-  return comp
-    .trim()
-    .replace(re$1[t$1.STAR], '')
+    debug$1('replaceStars', comp, options);
+    // Looseness is ignored here.  star is always as loose as it gets!
+    return comp.trim().replace(re$1[t$1.STAR], '');
 };
 
 const replaceGTE0 = (comp, options) => {
-  debug$1('replaceGTE0', comp, options);
-  return comp
-    .trim()
-    .replace(re$1[options.includePrerelease ? t$1.GTE0PRE : t$1.GTE0], '')
+    debug$1('replaceGTE0', comp, options);
+    return comp.trim().replace(re$1[options.includePrerelease ? t$1.GTE0PRE : t$1.GTE0], '');
 };
 
 // This function is passed to string.replace(re[t.HYPHENRANGE])
@@ -7788,205 +7959,207 @@ const replaceGTE0 = (comp, options) => {
 // 1.2 - 3.4.5 => >=1.2.0 <=3.4.5
 // 1.2.3 - 3.4 => >=1.2.0 <3.5.0-0 Any 3.4.x will do
 // 1.2 - 3.4 => >=1.2.0 <3.5.0-0
-const hyphenReplace = incPr => ($0,
-  from, fM, fm, fp, fpr, fb,
-  to, tM, tm, tp, tpr, tb) => {
-  if (isX(fM)) {
-    from = '';
-  } else if (isX(fm)) {
-    from = `>=${fM}.0.0${incPr ? '-0' : ''}`;
-  } else if (isX(fp)) {
-    from = `>=${fM}.${fm}.0${incPr ? '-0' : ''}`;
-  } else if (fpr) {
-    from = `>=${from}`;
-  } else {
-    from = `>=${from}${incPr ? '-0' : ''}`;
-  }
+const hyphenReplace = (incPr) => ($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr, tb) => {
+    if (isX(fM)) {
+        from = '';
+    } else if (isX(fm)) {
+        from = `>=${fM}.0.0${incPr ? '-0' : ''}`;
+    } else if (isX(fp)) {
+        from = `>=${fM}.${fm}.0${incPr ? '-0' : ''}`;
+    } else if (fpr) {
+        from = `>=${from}`;
+    } else {
+        from = `>=${from}${incPr ? '-0' : ''}`;
+    }
 
-  if (isX(tM)) {
-    to = '';
-  } else if (isX(tm)) {
-    to = `<${+tM + 1}.0.0-0`;
-  } else if (isX(tp)) {
-    to = `<${tM}.${+tm + 1}.0-0`;
-  } else if (tpr) {
-    to = `<=${tM}.${tm}.${tp}-${tpr}`;
-  } else if (incPr) {
-    to = `<${tM}.${tm}.${+tp + 1}-0`;
-  } else {
-    to = `<=${to}`;
-  }
+    if (isX(tM)) {
+        to = '';
+    } else if (isX(tm)) {
+        to = `<${+tM + 1}.0.0-0`;
+    } else if (isX(tp)) {
+        to = `<${tM}.${+tm + 1}.0-0`;
+    } else if (tpr) {
+        to = `<=${tM}.${tm}.${tp}-${tpr}`;
+    } else if (incPr) {
+        to = `<${tM}.${tm}.${+tp + 1}-0`;
+    } else {
+        to = `<=${to}`;
+    }
 
-  return `${from} ${to}`.trim()
+    return `${from} ${to}`.trim();
 };
 
 const testSet = (set, version, options) => {
-  for (let i = 0; i < set.length; i++) {
-    if (!set[i].test(version)) {
-      return false
-    }
-  }
-
-  if (version.prerelease.length && !options.includePrerelease) {
-    // Find the set of versions that are allowed to have prereleases
-    // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
-    // That should allow `1.2.3-pr.2` to pass.
-    // However, `1.2.4-alpha.notready` should NOT be allowed,
-    // even though it's within the range set by the comparators.
     for (let i = 0; i < set.length; i++) {
-      debug$1(set[i].semver);
-      if (set[i].semver === Comparator$4.ANY) {
-        continue
-      }
-
-      if (set[i].semver.prerelease.length > 0) {
-        const allowed = set[i].semver;
-        if (allowed.major === version.major &&
-            allowed.minor === version.minor &&
-            allowed.patch === version.patch) {
-          return true
+        if (!set[i].test(version)) {
+            return false;
         }
-      }
     }
 
-    // Version has a -pre, but it's not one of the ones we like.
-    return false
-  }
+    if (version.prerelease.length && !options.includePrerelease) {
+        // Find the set of versions that are allowed to have prereleases
+        // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
+        // That should allow `1.2.3-pr.2` to pass.
+        // However, `1.2.4-alpha.notready` should NOT be allowed,
+        // even though it's within the range set by the comparators.
+        for (let i = 0; i < set.length; i++) {
+            debug$1(set[i].semver);
+            if (set[i].semver === Comparator$4.ANY) {
+                continue;
+            }
 
-  return true
+            if (set[i].semver.prerelease.length > 0) {
+                const allowed = set[i].semver;
+                if (
+                    allowed.major === version.major &&
+                    allowed.minor === version.minor &&
+                    allowed.patch === version.patch
+                ) {
+                    return true;
+                }
+            }
+        }
+
+        // Version has a -pre, but it's not one of the ones we like.
+        return false;
+    }
+
+    return true;
 };
 
 const ANY$2 = Symbol('SemVer ANY');
 // hoisted class for cyclic dependency
 class Comparator$3 {
-  static get ANY () {
-    return ANY$2
-  }
-
-  constructor (comp, options) {
-    options = parseOptions(options);
-
-    if (comp instanceof Comparator$3) {
-      if (comp.loose === !!options.loose) {
-        return comp
-      } else {
-        comp = comp.value;
-      }
+    static get ANY() {
+        return ANY$2;
     }
 
-    comp = comp.trim().split(/\s+/).join(' ');
-    debug('comparator', comp, options);
-    this.options = options;
-    this.loose = !!options.loose;
-    this.parse(comp);
+    constructor(comp, options) {
+        options = parseOptions(options);
 
-    if (this.semver === ANY$2) {
-      this.value = '';
-    } else {
-      this.value = this.operator + this.semver.version;
+        if (comp instanceof Comparator$3) {
+            if (comp.loose === !!options.loose) {
+                return comp;
+            } else {
+                comp = comp.value;
+            }
+        }
+
+        comp = comp.trim().split(/\s+/).join(' ');
+        debug('comparator', comp, options);
+        this.options = options;
+        this.loose = !!options.loose;
+        this.parse(comp);
+
+        if (this.semver === ANY$2) {
+            this.value = '';
+        } else {
+            this.value = this.operator + this.semver.version;
+        }
+
+        debug('comp', this);
     }
 
-    debug('comp', this);
-  }
+    parse(comp) {
+        const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR];
+        const m = comp.match(r);
 
-  parse (comp) {
-    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR];
-    const m = comp.match(r);
+        if (!m) {
+            throw new TypeError(`Invalid comparator: ${comp}`);
+        }
 
-    if (!m) {
-      throw new TypeError(`Invalid comparator: ${comp}`)
+        this.operator = m[1] !== undefined ? m[1] : '';
+        if (this.operator === '=') {
+            this.operator = '';
+        }
+
+        // if it literally is just '>' or '' then allow anything.
+        if (!m[2]) {
+            this.semver = ANY$2;
+        } else {
+            this.semver = new SemVer$5(m[2], this.options.loose);
+        }
     }
 
-    this.operator = m[1] !== undefined ? m[1] : '';
-    if (this.operator === '=') {
-      this.operator = '';
+    toString() {
+        return this.value;
     }
 
-    // if it literally is just '>' or '' then allow anything.
-    if (!m[2]) {
-      this.semver = ANY$2;
-    } else {
-      this.semver = new SemVer$5(m[2], this.options.loose);
-    }
-  }
+    test(version) {
+        debug('Comparator.test', version, this.options.loose);
 
-  toString () {
-    return this.value
-  }
+        if (this.semver === ANY$2 || version === ANY$2) {
+            return true;
+        }
 
-  test (version) {
-    debug('Comparator.test', version, this.options.loose);
+        if (typeof version === 'string') {
+            try {
+                version = new SemVer$5(version, this.options);
+            } catch (er) {
+                return false;
+            }
+        }
 
-    if (this.semver === ANY$2 || version === ANY$2) {
-      return true
-    }
-
-    if (typeof version === 'string') {
-      try {
-        version = new SemVer$5(version, this.options);
-      } catch (er) {
-        return false
-      }
+        return cmp$1(version, this.operator, this.semver, this.options);
     }
 
-    return cmp$1(version, this.operator, this.semver, this.options)
-  }
+    intersects(comp, options) {
+        if (!(comp instanceof Comparator$3)) {
+            throw new TypeError('a Comparator is required');
+        }
 
-  intersects (comp, options) {
-    if (!(comp instanceof Comparator$3)) {
-      throw new TypeError('a Comparator is required')
-    }
+        if (this.operator === '') {
+            if (this.value === '') {
+                return true;
+            }
+            return new Range$a(comp.value, options).test(this.value);
+        } else if (comp.operator === '') {
+            if (comp.value === '') {
+                return true;
+            }
+            return new Range$a(this.value, options).test(comp.semver);
+        }
 
-    if (this.operator === '') {
-      if (this.value === '') {
-        return true
-      }
-      return new Range$a(comp.value, options).test(this.value)
-    } else if (comp.operator === '') {
-      if (comp.value === '') {
-        return true
-      }
-      return new Range$a(this.value, options).test(comp.semver)
-    }
+        options = parseOptions(options);
 
-    options = parseOptions(options);
+        // Special cases where nothing can possibly be lower
+        if (options.includePrerelease && (this.value === '<0.0.0-0' || comp.value === '<0.0.0-0')) {
+            return false;
+        }
+        if (!options.includePrerelease && (this.value.startsWith('<0.0.0') || comp.value.startsWith('<0.0.0'))) {
+            return false;
+        }
 
-    // Special cases where nothing can possibly be lower
-    if (options.includePrerelease &&
-      (this.value === '<0.0.0-0' || comp.value === '<0.0.0-0')) {
-      return false
+        // Same direction increasing (> or >=)
+        if (this.operator.startsWith('>') && comp.operator.startsWith('>')) {
+            return true;
+        }
+        // Same direction decreasing (< or <=)
+        if (this.operator.startsWith('<') && comp.operator.startsWith('<')) {
+            return true;
+        }
+        // same SemVer and both sides are inclusive (<= or >=)
+        if (this.semver.version === comp.semver.version && this.operator.includes('=') && comp.operator.includes('=')) {
+            return true;
+        }
+        // opposite directions less than
+        if (
+            cmp$1(this.semver, '<', comp.semver, options) &&
+            this.operator.startsWith('>') &&
+            comp.operator.startsWith('<')
+        ) {
+            return true;
+        }
+        // opposite directions greater than
+        if (
+            cmp$1(this.semver, '>', comp.semver, options) &&
+            this.operator.startsWith('<') &&
+            comp.operator.startsWith('>')
+        ) {
+            return true;
+        }
+        return false;
     }
-    if (!options.includePrerelease &&
-      (this.value.startsWith('<0.0.0') || comp.value.startsWith('<0.0.0'))) {
-      return false
-    }
-
-    // Same direction increasing (> or >=)
-    if (this.operator.startsWith('>') && comp.operator.startsWith('>')) {
-      return true
-    }
-    // Same direction decreasing (< or <=)
-    if (this.operator.startsWith('<') && comp.operator.startsWith('<')) {
-      return true
-    }
-    // same SemVer and both sides are inclusive (<= or >=)
-    if (
-      (this.semver.version === comp.semver.version) &&
-      this.operator.includes('=') && comp.operator.includes('=')) {
-      return true
-    }
-    // opposite directions less than
-    if (cmp$1(this.semver, '<', comp.semver, options) &&
-      this.operator.startsWith('>') && comp.operator.startsWith('<')) {
-      return true
-    }
-    // opposite directions greater than
-    if (cmp$1(this.semver, '>', comp.semver, options) &&
-      this.operator.startsWith('<') && comp.operator.startsWith('>')) {
-      return true
-    }
-    return false
-  }
 }
 
 var comparator = Comparator$3;
@@ -8000,12 +8173,12 @@ const Range$a = range;
 
 const Range$9 = range;
 const satisfies$4 = (version, range, options) => {
-  try {
-    range = new Range$9(range, options);
-  } catch (er) {
-    return false
-  }
-  return range.test(version)
+    try {
+        range = new Range$9(range, options);
+    } catch (er) {
+        return false;
+    }
+    return range.test(version);
 };
 var satisfies_1 = satisfies$4;
 
@@ -8013,8 +8186,13 @@ const Range$8 = range;
 
 // Mostly just for testing and legacy API reasons
 const toComparators$1 = (range, options) =>
-  new Range$8(range, options).set
-    .map(comp => comp.map(c => c.value).join(' ').trim().split(' '));
+    new Range$8(range, options).set.map((comp) =>
+        comp
+            .map((c) => c.value)
+            .join(' ')
+            .trim()
+            .split(' '),
+    );
 
 var toComparators_1 = toComparators$1;
 
@@ -8022,50 +8200,50 @@ const SemVer$4 = semver$1;
 const Range$7 = range;
 
 const maxSatisfying$1 = (versions, range, options) => {
-  let max = null;
-  let maxSV = null;
-  let rangeObj = null;
-  try {
-    rangeObj = new Range$7(range, options);
-  } catch (er) {
-    return null
-  }
-  versions.forEach((v) => {
-    if (rangeObj.test(v)) {
-      // satisfies(v, range, options)
-      if (!max || maxSV.compare(v) === -1) {
-        // compare(max, v, true)
-        max = v;
-        maxSV = new SemVer$4(max, options);
-      }
+    let max = null;
+    let maxSV = null;
+    let rangeObj = null;
+    try {
+        rangeObj = new Range$7(range, options);
+    } catch (er) {
+        return null;
     }
-  });
-  return max
+    versions.forEach((v) => {
+        if (rangeObj.test(v)) {
+            // satisfies(v, range, options)
+            if (!max || maxSV.compare(v) === -1) {
+                // compare(max, v, true)
+                max = v;
+                maxSV = new SemVer$4(max, options);
+            }
+        }
+    });
+    return max;
 };
 var maxSatisfying_1 = maxSatisfying$1;
 
 const SemVer$3 = semver$1;
 const Range$6 = range;
 const minSatisfying$1 = (versions, range, options) => {
-  let min = null;
-  let minSV = null;
-  let rangeObj = null;
-  try {
-    rangeObj = new Range$6(range, options);
-  } catch (er) {
-    return null
-  }
-  versions.forEach((v) => {
-    if (rangeObj.test(v)) {
-      // satisfies(v, range, options)
-      if (!min || minSV.compare(v) === 1) {
-        // compare(min, v, true)
-        min = v;
-        minSV = new SemVer$3(min, options);
-      }
+    let min = null;
+    let minSV = null;
+    let rangeObj = null;
+    try {
+        rangeObj = new Range$6(range, options);
+    } catch (er) {
+        return null;
     }
-  });
-  return min
+    versions.forEach((v) => {
+        if (rangeObj.test(v)) {
+            // satisfies(v, range, options)
+            if (!min || minSV.compare(v) === 1) {
+                // compare(min, v, true)
+                min = v;
+                minSV = new SemVer$3(min, options);
+            }
+        }
+    });
+    return min;
 };
 var minSatisfying_1 = minSatisfying$1;
 
@@ -8074,72 +8252,72 @@ const Range$5 = range;
 const gt$2 = gt_1;
 
 const minVersion$1 = (range, loose) => {
-  range = new Range$5(range, loose);
+    range = new Range$5(range, loose);
 
-  let minver = new SemVer$2('0.0.0');
-  if (range.test(minver)) {
-    return minver
-  }
-
-  minver = new SemVer$2('0.0.0-0');
-  if (range.test(minver)) {
-    return minver
-  }
-
-  minver = null;
-  for (let i = 0; i < range.set.length; ++i) {
-    const comparators = range.set[i];
-
-    let setMin = null;
-    comparators.forEach((comparator) => {
-      // Clone to avoid manipulating the comparator's semver object.
-      const compver = new SemVer$2(comparator.semver.version);
-      switch (comparator.operator) {
-        case '>':
-          if (compver.prerelease.length === 0) {
-            compver.patch++;
-          } else {
-            compver.prerelease.push(0);
-          }
-          compver.raw = compver.format();
-          /* fallthrough */
-        case '':
-        case '>=':
-          if (!setMin || gt$2(compver, setMin)) {
-            setMin = compver;
-          }
-          break
-        case '<':
-        case '<=':
-          /* Ignore maximum versions */
-          break
-        /* istanbul ignore next */
-        default:
-          throw new Error(`Unexpected operation: ${comparator.operator}`)
-      }
-    });
-    if (setMin && (!minver || gt$2(minver, setMin))) {
-      minver = setMin;
+    let minver = new SemVer$2('0.0.0');
+    if (range.test(minver)) {
+        return minver;
     }
-  }
 
-  if (minver && range.test(minver)) {
-    return minver
-  }
+    minver = new SemVer$2('0.0.0-0');
+    if (range.test(minver)) {
+        return minver;
+    }
 
-  return null
+    minver = null;
+    for (let i = 0; i < range.set.length; ++i) {
+        const comparators = range.set[i];
+
+        let setMin = null;
+        comparators.forEach((comparator) => {
+            // Clone to avoid manipulating the comparator's semver object.
+            const compver = new SemVer$2(comparator.semver.version);
+            switch (comparator.operator) {
+                case '>':
+                    if (compver.prerelease.length === 0) {
+                        compver.patch++;
+                    } else {
+                        compver.prerelease.push(0);
+                    }
+                    compver.raw = compver.format();
+                /* fallthrough */
+                case '':
+                case '>=':
+                    if (!setMin || gt$2(compver, setMin)) {
+                        setMin = compver;
+                    }
+                    break;
+                case '<':
+                case '<=':
+                    /* Ignore maximum versions */
+                    break;
+                /* istanbul ignore next */
+                default:
+                    throw new Error(`Unexpected operation: ${comparator.operator}`);
+            }
+        });
+        if (setMin && (!minver || gt$2(minver, setMin))) {
+            minver = setMin;
+        }
+    }
+
+    if (minver && range.test(minver)) {
+        return minver;
+    }
+
+    return null;
 };
 var minVersion_1 = minVersion$1;
 
 const Range$4 = range;
 const validRange$1 = (range, options) => {
-  try {
-    // Return '*' instead of '' so that truthiness works.
-    // This will throw if it's invalid anyway
-    return new Range$4(range, options).range || '*'
-  } catch (er) {
-    return null
-  }
+    try {
+        // Return '*' instead of '' so that truthiness works.
+        // This will throw if it's invalid anyway
+        return new Range$4(range, options).range || '*';
+    } catch (er) {
+        return null;
+    }
 };
 var valid$1 = validRange$1;
 
@@ -8154,72 +8332,71 @@ const lte$1 = lte_1;
 const gte$1 = gte_1;
 
 const outside$3 = (version, range, hilo, options) => {
-  version = new SemVer$1(version, options);
-  range = new Range$3(range, options);
+    version = new SemVer$1(version, options);
+    range = new Range$3(range, options);
 
-  let gtfn, ltefn, ltfn, comp, ecomp;
-  switch (hilo) {
-    case '>':
-      gtfn = gt$1;
-      ltefn = lte$1;
-      ltfn = lt$1;
-      comp = '>';
-      ecomp = '>=';
-      break
-    case '<':
-      gtfn = lt$1;
-      ltefn = gte$1;
-      ltfn = gt$1;
-      comp = '<';
-      ecomp = '<=';
-      break
-    default:
-      throw new TypeError('Must provide a hilo val of "<" or ">"')
-  }
-
-  // If it satisfies the range it is not outside
-  if (satisfies$3(version, range, options)) {
-    return false
-  }
-
-  // From now on, variable terms are as if we're in "gtr" mode.
-  // but note that everything is flipped for the "ltr" function.
-
-  for (let i = 0; i < range.set.length; ++i) {
-    const comparators = range.set[i];
-
-    let high = null;
-    let low = null;
-
-    comparators.forEach((comparator) => {
-      if (comparator.semver === ANY$1) {
-        comparator = new Comparator$2('>=0.0.0');
-      }
-      high = high || comparator;
-      low = low || comparator;
-      if (gtfn(comparator.semver, high.semver, options)) {
-        high = comparator;
-      } else if (ltfn(comparator.semver, low.semver, options)) {
-        low = comparator;
-      }
-    });
-
-    // If the edge version comparator has a operator then our version
-    // isn't outside it
-    if (high.operator === comp || high.operator === ecomp) {
-      return false
+    let gtfn, ltefn, ltfn, comp, ecomp;
+    switch (hilo) {
+        case '>':
+            gtfn = gt$1;
+            ltefn = lte$1;
+            ltfn = lt$1;
+            comp = '>';
+            ecomp = '>=';
+            break;
+        case '<':
+            gtfn = lt$1;
+            ltefn = gte$1;
+            ltfn = gt$1;
+            comp = '<';
+            ecomp = '<=';
+            break;
+        default:
+            throw new TypeError('Must provide a hilo val of "<" or ">"');
     }
 
-    // If the lowest version comparator has an operator and our version
-    // is less than it then it isn't higher than the range
-    if ((!low.operator || low.operator === comp) &&
-        ltefn(version, low.semver)) {
-      return false
-    } else if (low.operator === ecomp && ltfn(version, low.semver)) {
-      return false
+    // If it satisfies the range it is not outside
+    if (satisfies$3(version, range, options)) {
+        return false;
     }
-  }
-  return true
+
+    // From now on, variable terms are as if we're in "gtr" mode.
+    // but note that everything is flipped for the "ltr" function.
+
+    for (let i = 0; i < range.set.length; ++i) {
+        const comparators = range.set[i];
+
+        let high = null;
+        let low = null;
+
+        comparators.forEach((comparator) => {
+            if (comparator.semver === ANY$1) {
+                comparator = new Comparator$2('>=0.0.0');
+            }
+            high = high || comparator;
+            low = low || comparator;
+            if (gtfn(comparator.semver, high.semver, options)) {
+                high = comparator;
+            } else if (ltfn(comparator.semver, low.semver, options)) {
+                low = comparator;
+            }
+        });
+
+        // If the edge version comparator has a operator then our version
+        // isn't outside it
+        if (high.operator === comp || high.operator === ecomp) {
+            return false;
+        }
+
+        // If the lowest version comparator has an operator and our version
+        // is less than it then it isn't higher than the range
+        if ((!low.operator || low.operator === comp) && ltefn(version, low.semver)) {
+            return false;
+        } else if (low.operator === ecomp && ltfn(version, low.semver)) {
+            return false;
+        }
+    }
+    return true;
 };
 
 var outside_1 = outside$3;
@@ -8236,9 +8413,9 @@ var ltr_1 = ltr$1;
 
 const Range$2 = range;
 const intersects$1 = (r1, r2, options) => {
-  r1 = new Range$2(r1, options);
-  r2 = new Range$2(r2, options);
-  return r1.intersects(r2, options)
+    r1 = new Range$2(r1, options);
+    r2 = new Range$2(r2, options);
+    return r1.intersects(r2, options);
 };
 var intersects_1 = intersects$1;
 
@@ -8248,46 +8425,46 @@ var intersects_1 = intersects$1;
 const satisfies$2 = satisfies_1;
 const compare$2 = compare_1;
 var simplify = (versions, range, options) => {
-  const set = [];
-  let first = null;
-  let prev = null;
-  const v = versions.sort((a, b) => compare$2(a, b, options));
-  for (const version of v) {
-    const included = satisfies$2(version, range, options);
-    if (included) {
-      prev = version;
-      if (!first) {
-        first = version;
-      }
-    } else {
-      if (prev) {
-        set.push([first, prev]);
-      }
-      prev = null;
-      first = null;
+    const set = [];
+    let first = null;
+    let prev = null;
+    const v = versions.sort((a, b) => compare$2(a, b, options));
+    for (const version of v) {
+        const included = satisfies$2(version, range, options);
+        if (included) {
+            prev = version;
+            if (!first) {
+                first = version;
+            }
+        } else {
+            if (prev) {
+                set.push([first, prev]);
+            }
+            prev = null;
+            first = null;
+        }
     }
-  }
-  if (first) {
-    set.push([first, null]);
-  }
+    if (first) {
+        set.push([first, null]);
+    }
 
-  const ranges = [];
-  for (const [min, max] of set) {
-    if (min === max) {
-      ranges.push(min);
-    } else if (!max && min === v[0]) {
-      ranges.push('*');
-    } else if (!max) {
-      ranges.push(`>=${min}`);
-    } else if (min === v[0]) {
-      ranges.push(`<=${max}`);
-    } else {
-      ranges.push(`${min} - ${max}`);
+    const ranges = [];
+    for (const [min, max] of set) {
+        if (min === max) {
+            ranges.push(min);
+        } else if (!max && min === v[0]) {
+            ranges.push('*');
+        } else if (!max) {
+            ranges.push(`>=${min}`);
+        } else if (min === v[0]) {
+            ranges.push(`<=${max}`);
+        } else {
+            ranges.push(`${min} - ${max}`);
+        }
     }
-  }
-  const simplified = ranges.join(' || ');
-  const original = typeof range.raw === 'string' ? range.raw : String(range);
-  return simplified.length < original.length ? simplified : range
+    const simplified = ranges.join(' || ');
+    const original = typeof range.raw === 'string' ? range.raw : String(range);
+    return simplified.length < original.length ? simplified : range;
 };
 
 const Range$1 = range;
@@ -8333,207 +8510,207 @@ const compare$1 = compare_1;
 // - Else return true
 
 const subset$1 = (sub, dom, options = {}) => {
-  if (sub === dom) {
-    return true
-  }
-
-  sub = new Range$1(sub, options);
-  dom = new Range$1(dom, options);
-  let sawNonNull = false;
-
-  OUTER: for (const simpleSub of sub.set) {
-    for (const simpleDom of dom.set) {
-      const isSub = simpleSubset(simpleSub, simpleDom, options);
-      sawNonNull = sawNonNull || isSub !== null;
-      if (isSub) {
-        continue OUTER
-      }
+    if (sub === dom) {
+        return true;
     }
-    // the null set is a subset of everything, but null simple ranges in
-    // a complex range should be ignored.  so if we saw a non-null range,
-    // then we know this isn't a subset, but if EVERY simple range was null,
-    // then it is a subset.
-    if (sawNonNull) {
-      return false
+
+    sub = new Range$1(sub, options);
+    dom = new Range$1(dom, options);
+    let sawNonNull = false;
+
+    OUTER: for (const simpleSub of sub.set) {
+        for (const simpleDom of dom.set) {
+            const isSub = simpleSubset(simpleSub, simpleDom, options);
+            sawNonNull = sawNonNull || isSub !== null;
+            if (isSub) {
+                continue OUTER;
+            }
+        }
+        // the null set is a subset of everything, but null simple ranges in
+        // a complex range should be ignored.  so if we saw a non-null range,
+        // then we know this isn't a subset, but if EVERY simple range was null,
+        // then it is a subset.
+        if (sawNonNull) {
+            return false;
+        }
     }
-  }
-  return true
+    return true;
 };
 
 const minimumVersionWithPreRelease = [new Comparator$1('>=0.0.0-0')];
 const minimumVersion = [new Comparator$1('>=0.0.0')];
 
 const simpleSubset = (sub, dom, options) => {
-  if (sub === dom) {
-    return true
-  }
+    if (sub === dom) {
+        return true;
+    }
 
-  if (sub.length === 1 && sub[0].semver === ANY) {
+    if (sub.length === 1 && sub[0].semver === ANY) {
+        if (dom.length === 1 && dom[0].semver === ANY) {
+            return true;
+        } else if (options.includePrerelease) {
+            sub = minimumVersionWithPreRelease;
+        } else {
+            sub = minimumVersion;
+        }
+    }
+
     if (dom.length === 1 && dom[0].semver === ANY) {
-      return true
-    } else if (options.includePrerelease) {
-      sub = minimumVersionWithPreRelease;
-    } else {
-      sub = minimumVersion;
-    }
-  }
-
-  if (dom.length === 1 && dom[0].semver === ANY) {
-    if (options.includePrerelease) {
-      return true
-    } else {
-      dom = minimumVersion;
-    }
-  }
-
-  const eqSet = new Set();
-  let gt, lt;
-  for (const c of sub) {
-    if (c.operator === '>' || c.operator === '>=') {
-      gt = higherGT(gt, c, options);
-    } else if (c.operator === '<' || c.operator === '<=') {
-      lt = lowerLT(lt, c, options);
-    } else {
-      eqSet.add(c.semver);
-    }
-  }
-
-  if (eqSet.size > 1) {
-    return null
-  }
-
-  let gtltComp;
-  if (gt && lt) {
-    gtltComp = compare$1(gt.semver, lt.semver, options);
-    if (gtltComp > 0) {
-      return null
-    } else if (gtltComp === 0 && (gt.operator !== '>=' || lt.operator !== '<=')) {
-      return null
-    }
-  }
-
-  // will iterate one or zero times
-  for (const eq of eqSet) {
-    if (gt && !satisfies$1(eq, String(gt), options)) {
-      return null
+        if (options.includePrerelease) {
+            return true;
+        } else {
+            dom = minimumVersion;
+        }
     }
 
-    if (lt && !satisfies$1(eq, String(lt), options)) {
-      return null
+    const eqSet = new Set();
+    let gt, lt;
+    for (const c of sub) {
+        if (c.operator === '>' || c.operator === '>=') {
+            gt = higherGT(gt, c, options);
+        } else if (c.operator === '<' || c.operator === '<=') {
+            lt = lowerLT(lt, c, options);
+        } else {
+            eqSet.add(c.semver);
+        }
+    }
+
+    if (eqSet.size > 1) {
+        return null;
+    }
+
+    let gtltComp;
+    if (gt && lt) {
+        gtltComp = compare$1(gt.semver, lt.semver, options);
+        if (gtltComp > 0) {
+            return null;
+        } else if (gtltComp === 0 && (gt.operator !== '>=' || lt.operator !== '<=')) {
+            return null;
+        }
+    }
+
+    // will iterate one or zero times
+    for (const eq of eqSet) {
+        if (gt && !satisfies$1(eq, String(gt), options)) {
+            return null;
+        }
+
+        if (lt && !satisfies$1(eq, String(lt), options)) {
+            return null;
+        }
+
+        for (const c of dom) {
+            if (!satisfies$1(eq, String(c), options)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    let higher, lower;
+    let hasDomLT, hasDomGT;
+    // if the subset has a prerelease, we need a comparator in the superset
+    // with the same tuple and a prerelease, or it's not a subset
+    let needDomLTPre = lt && !options.includePrerelease && lt.semver.prerelease.length ? lt.semver : false;
+    let needDomGTPre = gt && !options.includePrerelease && gt.semver.prerelease.length ? gt.semver : false;
+    // exception: <1.2.3-0 is the same as <1.2.3
+    if (
+        needDomLTPre &&
+        needDomLTPre.prerelease.length === 1 &&
+        lt.operator === '<' &&
+        needDomLTPre.prerelease[0] === 0
+    ) {
+        needDomLTPre = false;
     }
 
     for (const c of dom) {
-      if (!satisfies$1(eq, String(c), options)) {
-        return false
-      }
+        hasDomGT = hasDomGT || c.operator === '>' || c.operator === '>=';
+        hasDomLT = hasDomLT || c.operator === '<' || c.operator === '<=';
+        if (gt) {
+            if (needDomGTPre) {
+                if (
+                    c.semver.prerelease &&
+                    c.semver.prerelease.length &&
+                    c.semver.major === needDomGTPre.major &&
+                    c.semver.minor === needDomGTPre.minor &&
+                    c.semver.patch === needDomGTPre.patch
+                ) {
+                    needDomGTPre = false;
+                }
+            }
+            if (c.operator === '>' || c.operator === '>=') {
+                higher = higherGT(gt, c, options);
+                if (higher === c && higher !== gt) {
+                    return false;
+                }
+            } else if (gt.operator === '>=' && !satisfies$1(gt.semver, String(c), options)) {
+                return false;
+            }
+        }
+        if (lt) {
+            if (needDomLTPre) {
+                if (
+                    c.semver.prerelease &&
+                    c.semver.prerelease.length &&
+                    c.semver.major === needDomLTPre.major &&
+                    c.semver.minor === needDomLTPre.minor &&
+                    c.semver.patch === needDomLTPre.patch
+                ) {
+                    needDomLTPre = false;
+                }
+            }
+            if (c.operator === '<' || c.operator === '<=') {
+                lower = lowerLT(lt, c, options);
+                if (lower === c && lower !== lt) {
+                    return false;
+                }
+            } else if (lt.operator === '<=' && !satisfies$1(lt.semver, String(c), options)) {
+                return false;
+            }
+        }
+        if (!c.operator && (lt || gt) && gtltComp !== 0) {
+            return false;
+        }
     }
 
-    return true
-  }
-
-  let higher, lower;
-  let hasDomLT, hasDomGT;
-  // if the subset has a prerelease, we need a comparator in the superset
-  // with the same tuple and a prerelease, or it's not a subset
-  let needDomLTPre = lt &&
-    !options.includePrerelease &&
-    lt.semver.prerelease.length ? lt.semver : false;
-  let needDomGTPre = gt &&
-    !options.includePrerelease &&
-    gt.semver.prerelease.length ? gt.semver : false;
-  // exception: <1.2.3-0 is the same as <1.2.3
-  if (needDomLTPre && needDomLTPre.prerelease.length === 1 &&
-      lt.operator === '<' && needDomLTPre.prerelease[0] === 0) {
-    needDomLTPre = false;
-  }
-
-  for (const c of dom) {
-    hasDomGT = hasDomGT || c.operator === '>' || c.operator === '>=';
-    hasDomLT = hasDomLT || c.operator === '<' || c.operator === '<=';
-    if (gt) {
-      if (needDomGTPre) {
-        if (c.semver.prerelease && c.semver.prerelease.length &&
-            c.semver.major === needDomGTPre.major &&
-            c.semver.minor === needDomGTPre.minor &&
-            c.semver.patch === needDomGTPre.patch) {
-          needDomGTPre = false;
-        }
-      }
-      if (c.operator === '>' || c.operator === '>=') {
-        higher = higherGT(gt, c, options);
-        if (higher === c && higher !== gt) {
-          return false
-        }
-      } else if (gt.operator === '>=' && !satisfies$1(gt.semver, String(c), options)) {
-        return false
-      }
+    // if there was a < or >, and nothing in the dom, then must be false
+    // UNLESS it was limited by another range in the other direction.
+    // Eg, >1.0.0 <1.0.1 is still a subset of <2.0.0
+    if (gt && hasDomLT && !lt && gtltComp !== 0) {
+        return false;
     }
-    if (lt) {
-      if (needDomLTPre) {
-        if (c.semver.prerelease && c.semver.prerelease.length &&
-            c.semver.major === needDomLTPre.major &&
-            c.semver.minor === needDomLTPre.minor &&
-            c.semver.patch === needDomLTPre.patch) {
-          needDomLTPre = false;
-        }
-      }
-      if (c.operator === '<' || c.operator === '<=') {
-        lower = lowerLT(lt, c, options);
-        if (lower === c && lower !== lt) {
-          return false
-        }
-      } else if (lt.operator === '<=' && !satisfies$1(lt.semver, String(c), options)) {
-        return false
-      }
+
+    if (lt && hasDomGT && !gt && gtltComp !== 0) {
+        return false;
     }
-    if (!c.operator && (lt || gt) && gtltComp !== 0) {
-      return false
+
+    // we needed a prerelease range in a specific tuple, but didn't get one
+    // then this isn't a subset.  eg >=1.2.3-pre is not a subset of >=1.0.0,
+    // because it includes prereleases in the 1.2.3 tuple
+    if (needDomGTPre || needDomLTPre) {
+        return false;
     }
-  }
 
-  // if there was a < or >, and nothing in the dom, then must be false
-  // UNLESS it was limited by another range in the other direction.
-  // Eg, >1.0.0 <1.0.1 is still a subset of <2.0.0
-  if (gt && hasDomLT && !lt && gtltComp !== 0) {
-    return false
-  }
-
-  if (lt && hasDomGT && !gt && gtltComp !== 0) {
-    return false
-  }
-
-  // we needed a prerelease range in a specific tuple, but didn't get one
-  // then this isn't a subset.  eg >=1.2.3-pre is not a subset of >=1.0.0,
-  // because it includes prereleases in the 1.2.3 tuple
-  if (needDomGTPre || needDomLTPre) {
-    return false
-  }
-
-  return true
+    return true;
 };
 
 // >=1.2.3 is lower than >1.2.3
 const higherGT = (a, b, options) => {
-  if (!a) {
-    return b
-  }
-  const comp = compare$1(a.semver, b.semver, options);
-  return comp > 0 ? a
-    : comp < 0 ? b
-    : b.operator === '>' && a.operator === '>=' ? b
-    : a
+    if (!a) {
+        return b;
+    }
+    const comp = compare$1(a.semver, b.semver, options);
+    return comp > 0 ? a : comp < 0 ? b : b.operator === '>' && a.operator === '>=' ? b : a;
 };
 
 // <=1.2.3 is higher than <1.2.3
 const lowerLT = (a, b, options) => {
-  if (!a) {
-    return b
-  }
-  const comp = compare$1(a.semver, b.semver, options);
-  return comp < 0 ? a
-    : comp > 0 ? b
-    : b.operator === '<' && a.operator === '<=' ? b
-    : a
+    if (!a) {
+        return b;
+    }
+    const comp = compare$1(a.semver, b.semver, options);
+    return comp < 0 ? a : comp > 0 ? b : b.operator === '<' && a.operator === '<=' ? b : a;
 };
 
 var subset_1 = subset$1;
@@ -8581,56 +8758,56 @@ const intersects = intersects_1;
 const simplifyRange = simplify;
 const subset = subset_1;
 var semver = {
-  parse,
-  valid,
-  clean,
-  inc,
-  diff,
-  major,
-  minor,
-  patch,
-  prerelease,
-  compare,
-  rcompare,
-  compareLoose,
-  compareBuild,
-  sort,
-  rsort,
-  gt,
-  lt,
-  eq,
-  neq,
-  gte,
-  lte,
-  cmp,
-  coerce,
-  Comparator,
-  Range,
-  satisfies,
-  toComparators,
-  maxSatisfying,
-  minSatisfying,
-  minVersion,
-  validRange,
-  outside,
-  gtr,
-  ltr,
-  intersects,
-  simplifyRange,
-  subset,
-  SemVer,
-  re: internalRe.re,
-  src: internalRe.src,
-  tokens: internalRe.t,
-  SEMVER_SPEC_VERSION: constants.SEMVER_SPEC_VERSION,
-  RELEASE_TYPES: constants.RELEASE_TYPES,
-  compareIdentifiers: identifiers.compareIdentifiers,
-  rcompareIdentifiers: identifiers.rcompareIdentifiers,
+    parse,
+    valid,
+    clean,
+    inc,
+    diff,
+    major,
+    minor,
+    patch,
+    prerelease,
+    compare,
+    rcompare,
+    compareLoose,
+    compareBuild,
+    sort,
+    rsort,
+    gt,
+    lt,
+    eq,
+    neq,
+    gte,
+    lte,
+    cmp,
+    coerce,
+    Comparator,
+    Range,
+    satisfies,
+    toComparators,
+    maxSatisfying,
+    minSatisfying,
+    minVersion,
+    validRange,
+    outside,
+    gtr,
+    ltr,
+    intersects,
+    simplifyRange,
+    subset,
+    SemVer,
+    re: internalRe.re,
+    src: internalRe.src,
+    tokens: internalRe.t,
+    SEMVER_SPEC_VERSION: constants.SEMVER_SPEC_VERSION,
+    RELEASE_TYPES: constants.RELEASE_TYPES,
+    compareIdentifiers: identifiers.compareIdentifiers,
+    rcompareIdentifiers: identifiers.rcompareIdentifiers,
 };
 
 const DEFAULT_SETTINGS = {
-    version: "",
-    previousVersion: "",
+    version: '',
+    previousVersion: '',
     groupBy: LinkGrouping.ByFolder,
     expandedFolderItems: [],
     expandedFileItems: [],
@@ -8639,7 +8816,7 @@ const DEFAULT_SETTINGS = {
     fileSort: FileSort.CountDesc,
     linkSort: LinkSort.CountDesc,
     linkFilter: {
-        filterString: "",
+        filterString: '',
         matchCase: false,
     },
     ignoredFolders: [],
@@ -8651,23 +8828,23 @@ class BrokenLinks extends obsidian.Plugin {
             yield this.loadSettings();
             yield this.runSettingsVersionCheck();
             this.registerView(BROKEN_LINKS_VIEW_TYPE, (leaf) => new BrokenLinksView(leaf, this));
-            this.addRibbonIcon("unlink", "View broken links", () => {
+            this.addRibbonIcon('unlink', 'View broken links', () => {
                 this.activateView();
             });
             this.addCommand({
-                id: "list",
-                name: "View broken links",
+                id: 'list',
+                name: 'View broken links',
                 callback: () => {
                     this.activateView();
                 },
             });
             this.addSettingTab(new BrokenLinksSettingsTab(this.app, this));
-            console.log("Broken Links plugin loaded");
+            console.log('Broken Links plugin loaded');
         });
     }
     onunload() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Broken Links plugin unloaded");
+            console.log('Broken Links plugin unloaded');
         });
     }
     loadSettings() {
@@ -8688,8 +8865,7 @@ class BrokenLinks extends obsidian.Plugin {
             if (leaves.length > 0) {
                 // A leaf with the Broken Links view already exists, use that
                 leaf = leaves[0];
-            }
-            else {
+            } else {
                 // The view could not be found in the workspace,
                 // create a new leaf in the right sidebar
                 leaf = workspace.getRightLeaf(false);
@@ -8701,68 +8877,69 @@ class BrokenLinks extends obsidian.Plugin {
     }
     updateView() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.app.workspace.getLeavesOfType(BROKEN_LINKS_VIEW_TYPE).forEach((leaf) => __awaiter(this, void 0, void 0, function* () {
-                if (leaf.view instanceof BrokenLinksView) {
-                    yield leaf.view.updateView();
-                }
-            }));
+            this.app.workspace.getLeavesOfType(BROKEN_LINKS_VIEW_TYPE).forEach((leaf) =>
+                __awaiter(this, void 0, void 0, function* () {
+                    if (leaf.view instanceof BrokenLinksView) {
+                        yield leaf.view.updateView();
+                    }
+                }),
+            );
         });
     }
     runSettingsVersionCheck() {
         return __awaiter(this, void 0, void 0, function* () {
             // Check previous version
-            if (!semver.valid(this.settings.version))
-                this.settings.version = "1.0.0";
+            if (!semver.valid(this.settings.version)) this.settings.version = '1.0.0';
             if (semver.lt(this.settings.version, this.manifest.version)) {
                 // Changes to settings in 1.2.0
-                if (semver.lt(this.settings.version, "1.2.0")) {
+                if (semver.lt(this.settings.version, '1.2.0')) {
                     switch (this.settings.groupBy) {
-                        case "folder":
+                        case 'folder':
                         default:
                             this.settings.groupBy = LinkGrouping.ByFolder;
                             break;
-                        case "file":
+                        case 'file':
                             this.settings.groupBy = LinkGrouping.ByFile;
                             break;
-                        case "link":
+                        case 'link':
                             this.settings.groupBy = LinkGrouping.ByLink;
                             break;
                     }
                     switch (this.settings.folderSort) {
-                        case "nameAsc":
+                        case 'nameAsc':
                         default:
                             this.settings.folderSort = FolderSort.NameAsc;
                             break;
-                        case "nameDesc":
+                        case 'nameDesc':
                             this.settings.folderSort = FolderSort.NameDesc;
                             break;
                     }
                     switch (this.settings.fileSort) {
-                        case "nameAsc":
+                        case 'nameAsc':
                             this.settings.fileSort = FileSort.NameAsc;
                             break;
-                        case "nameDesc":
+                        case 'nameDesc':
                             this.settings.fileSort = FileSort.NameDesc;
                             break;
-                        case "countAsc":
+                        case 'countAsc':
                             this.settings.fileSort = FileSort.CountAsc;
                             break;
-                        case "countDesc":
+                        case 'countDesc':
                         default:
                             this.settings.fileSort = FileSort.CountDesc;
                             break;
                     }
                     switch (this.settings.linkSort) {
-                        case "nameAsc":
+                        case 'nameAsc':
                             this.settings.linkSort = LinkSort.NameAsc;
                             break;
-                        case "nameDesc":
+                        case 'nameDesc':
                             this.settings.linkSort = LinkSort.NameDesc;
                             break;
-                        case "countAsc":
+                        case 'countAsc':
                             this.settings.linkSort = LinkSort.CountAsc;
                             break;
-                        case "countDesc":
+                        case 'countDesc':
                         default:
                             this.settings.linkSort = LinkSort.CountDesc;
                             break;

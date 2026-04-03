@@ -3,9 +3,9 @@
 ## Tasks with code blocks - code-blocks wrongly hidden
 
 - [ ] #task Task in 'code_block_in_task' level-1-b
-  ```sh
-  ls -la
-  ```
+    ```sh
+    ls -la
+    ```
 
 Related issues:
 
@@ -15,6 +15,6 @@ Related issues:
 ## Non-tasks with code blocks - code blocks rendered correctly
 
 - [ ] Non-task in 'code_block_in_task' level-1-b
-  ```sh
-  ls -la
-  ```
+    ```sh
+    ls -la
+    ```

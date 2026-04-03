@@ -1,8 +1,8 @@
 {
-   "name": "Prism",
-   "version": "3.6.0",
-   "minAppVersion": "1.6.0",
-   "author": "Damian Korcz",
-   "authorUrl": "https://github.com/damiankorcz",
-   "fundingUrl": "https://www.buymeacoffee.com/DamianKorcz"
+    "name": "Prism",
+    "version": "3.6.0",
+    "minAppVersion": "1.6.0",
+    "author": "Damian Korcz",
+    "authorUrl": "https://github.com/damiankorcz",
+    "fundingUrl": "https://www.buymeacoffee.com/DamianKorcz"
 }

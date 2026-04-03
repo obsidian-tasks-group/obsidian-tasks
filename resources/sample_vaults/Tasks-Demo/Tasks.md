@@ -3,6 +3,7 @@
 ## All
 
 ```tasks
+
 ```
 
 ## Open tasks from Important Project

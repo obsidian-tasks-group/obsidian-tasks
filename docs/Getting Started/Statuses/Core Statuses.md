@@ -26,7 +26,7 @@ This is what the Core Statuses look like initially in Tasks' settings:
 Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
 
 > [!info]
-You can edit the 'Todo' core status to make its Next Status Symbol be `/` and enable `Todo` -> `In Progress` -> `Done`, if you prefer.
+> You can edit the 'Todo' core status to make its Next Status Symbol be `/` and enable `Todo` -> `In Progress` -> `Done`, if you prefer.
 
 > [!Tip]
 > Use the "Review and check your Statuses" button at any time to [[Check your Statuses]] and to visualise them.
@@ -44,8 +44,8 @@ And this is how you can use them:
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
-| ----- | ----- | ----- | ----- | ----- |
-| `space` | `x` | Todo | `TODO` | No |
-| `x` | `space` | Done | `DONE` | No |
+| ------------- | ------------------ | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------- |
+| `space`       | `x`                | Todo                                                                                        | `TODO`                                                                                | No                   |
+| `x`           | `space`            | Done                                                                                        | `DONE`                                                                                | No                   |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->

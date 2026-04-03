@@ -1,267 +1,267 @@
 {
-  "main": {
-    "loadingPlugin": "加载插件: {{name}} v{{version}}",
-    "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
-  },
-  "modals": {
-    "customStatusModal": {
-      "editAvailableAsCommand": {
-        "description": "如果启用，此状态将作为命令可用,因此您可以指定快捷键并使用它切换状态。",
-        "name": "可用作命令"
-      },
-      "editNextStatusSymbol": {
-        "description": "单击时，这是下一步应该使用的符号。",
-        "name": "任务下一个状态符号"
-      },
-      "editStatusName": {
-        "description": "这是任务状态的友好名称.",
-        "name": "任务状态名称"
-      },
-      "editStatusSymbol": {
-        "description": "这是方括号中的字符。（仅可编辑自定义状态,不可编辑核心状态。）",
-        "name": "任务状态符号"
-      },
-      "editStatusType": {
-        "description": "控制搜索和切换状态的行为。",
-        "name": "任务状态类型"
-      },
-      "fixErrorsBeforeSaving": "在保存前修复错误。"
-    }
-  },
-  "reports": {
-    "statusRegistry": {
-      "about": {
-        "createdBy": "此文件由 Obsidian tasks 插件(version {{version}})创建,以帮助可视化此仓库中的任务状态.",
-        "deleteFileAnyTime": "您可以随时删除此文件.",
-        "title": "关于此文件",
-        "updateReport": {
-          "line1": "如果更改 Tasks 状态设置,则可以通过以下方式获取更新后的报告:",
-          "line2": "前往 `设置` -> `Tasks`。",
-          "line3": "点击 `查看并检查您的状态`。"
+    "main": {
+        "loadingPlugin": "加载插件: {{name}} v{{version}}",
+        "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
+    },
+    "modals": {
+        "customStatusModal": {
+            "editAvailableAsCommand": {
+                "description": "如果启用，此状态将作为命令可用,因此您可以指定快捷键并使用它切换状态。",
+                "name": "可用作命令"
+            },
+            "editNextStatusSymbol": {
+                "description": "单击时，这是下一步应该使用的符号。",
+                "name": "任务下一个状态符号"
+            },
+            "editStatusName": {
+                "description": "这是任务状态的友好名称.",
+                "name": "任务状态名称"
+            },
+            "editStatusSymbol": {
+                "description": "这是方括号中的字符。（仅可编辑自定义状态,不可编辑核心状态。）",
+                "name": "任务状态符号"
+            },
+            "editStatusType": {
+                "description": "控制搜索和切换状态的行为。",
+                "name": "任务状态类型"
+            },
+            "fixErrorsBeforeSaving": "在保存前修复错误。"
         }
-      },
-      "columnHeadings": {
-        "nextStatusSymbol": "下一个状态符号",
-        "problems": "问题 (如果存在)",
-        "statusName": "状态名称",
-        "statusSymbol": "状态符号",
-        "statusType": "状态类型"
-      },
-      "loadedSettings": {
-        "settingsActuallyUsed": "这些是 Tasks 实际使用的设置.",
-        "switchToLivePreview": "切换到实时预览或阅读模式以查看图表.",
-        "title": "已加载设置"
-      },
-      "messages": {
-        "cannotFindNextStatus": "未能意外找到下一个状态.",
-        "duplicateSymbol": "重复的符号 '{{symbol}}':此状态将被忽略.",
-        "emptySymbol": "空符号:此状态将被忽略.",
-        "nextSymbolUnknown": "下一个符号 {{symbol}} 未知:请创建符号为 {{symbol}} 的状态.",
-        "notConventionalType": "供参考,状态符号 {{symbol}} 的常规类型是 {{type}}:您可能希望查看此类型.",
-        "wrongTypeAfterDone": {
-          "line1": "此`完成`状态后跟随的是{{nextType}}，而不是`待办`或`进行中`。",
-          "line2": "如果用于完成一个重复任务，它后面会跟着待办`或`进行中`，以确保下一个任务符合“未完成”的筛选条件。",
-          "line3": "请参阅[重复任务和自定义状态]({{helpURL}})。"
+    },
+    "reports": {
+        "statusRegistry": {
+            "about": {
+                "createdBy": "此文件由 Obsidian tasks 插件(version {{version}})创建,以帮助可视化此仓库中的任务状态.",
+                "deleteFileAnyTime": "您可以随时删除此文件.",
+                "title": "关于此文件",
+                "updateReport": {
+                    "line1": "如果更改 Tasks 状态设置,则可以通过以下方式获取更新后的报告:",
+                    "line2": "前往 `设置` -> `Tasks`。",
+                    "line3": "点击 `查看并检查您的状态`。"
+                }
+            },
+            "columnHeadings": {
+                "nextStatusSymbol": "下一个状态符号",
+                "problems": "问题 (如果存在)",
+                "statusName": "状态名称",
+                "statusSymbol": "状态符号",
+                "statusType": "状态类型"
+            },
+            "loadedSettings": {
+                "settingsActuallyUsed": "这些是 Tasks 实际使用的设置.",
+                "switchToLivePreview": "切换到实时预览或阅读模式以查看图表.",
+                "title": "已加载设置"
+            },
+            "messages": {
+                "cannotFindNextStatus": "未能意外找到下一个状态.",
+                "duplicateSymbol": "重复的符号 '{{symbol}}':此状态将被忽略.",
+                "emptySymbol": "空符号:此状态将被忽略.",
+                "nextSymbolUnknown": "下一个符号 {{symbol}} 未知:请创建符号为 {{symbol}} 的状态.",
+                "notConventionalType": "供参考,状态符号 {{symbol}} 的常规类型是 {{type}}:您可能希望查看此类型.",
+                "wrongTypeAfterDone": {
+                    "line1": "此`完成`状态后跟随的是{{nextType}}，而不是`待办`或`进行中`。",
+                    "line2": "如果用于完成一个重复任务，它后面会跟着待办`或`进行中`，以确保下一个任务符合“未完成”的筛选条件。",
+                    "line3": "请参阅[重复任务和自定义状态]({{helpURL}})。"
+                }
+            },
+            "sampleTasks": {
+                "line1": "这里是用于实际任务使用的各种状态的示例任务行，供您进行实验。",
+                "line2": "创建此文件时，任务描述中的状态符号和名称是正确的。",
+                "line3": "如果您自创建以来修改了样例任务，可以在下方的任务搜索的分组标题中查看当前的状态类型和名称。",
+                "tip": {
+                    "line1": "提示：如果所有复选框看起来都一样...",
+                    "line2": "如果在阅读模式或实时预览中所有复选框看起来都一样，请参阅[自定义状态样式]({{url}})，了解如何选择主题或CSS片段来为您的状态设置样式。"
+                },
+                "title": "样例任务"
+            },
+            "searchSampleTasks": {
+                "line1": "此任务搜索显示了此文件中的所有任务，按其状态类型和状态名称进行分组。",
+                "title": "搜索样例任务"
+            },
+            "statusSettings": {
+                "comment": {
+                    "line1": "切换到实时预览或阅读模式以查看表格.",
+                    "line2": "如果状态名称中有任何Markdown格式字符,如 '*' 或 '_',",
+                    "line3": "黑曜石只能在阅读模式下正确渲染表格."
+                },
+                "theseAreStatusValues": "这些是核心和自定义状态部分中的状态值.",
+                "title": "状态设置"
+            }
         }
-      },
-      "sampleTasks": {
-        "line1": "这里是用于实际任务使用的各种状态的示例任务行，供您进行实验。",
-        "line2": "创建此文件时，任务描述中的状态符号和名称是正确的。",
-        "line3": "如果您自创建以来修改了样例任务，可以在下方的任务搜索的分组标题中查看当前的状态类型和名称。",
-        "tip": {
-          "line1": "提示：如果所有复选框看起来都一样...",
-          "line2": "如果在阅读模式或实时预览中所有复选框看起来都一样，请参阅[自定义状态样式]({{url}})，了解如何选择主题或CSS片段来为您的状态设置样式。"
-        },
-        "title": "样例任务"
-      },
-      "searchSampleTasks": {
-        "line1": "此任务搜索显示了此文件中的所有任务，按其状态类型和状态名称进行分组。",
-        "title": "搜索样例任务"
-      },
-      "statusSettings": {
-        "comment": {
-          "line1": "切换到实时预览或阅读模式以查看表格.",
-          "line2": "如果状态名称中有任何Markdown格式字符,如 '*' 或 '_',",
-          "line3": "黑曜石只能在阅读模式下正确渲染表格."
-        },
-        "theseAreStatusValues": "这些是核心和自定义状态部分中的状态值.",
-        "title": "状态设置"
-      }
-    }
-  },
-  "settings": {
-    "autoSuggest": {
-      "heading": "自动建议",
-      "maxSuggestions": {
-        "description": "当自动建议菜单弹出时，应显示多少条建议 (包含 \"⏎\" 选项)。",
-        "name": "要显示的最大自动建议数"
-      },
-      "minLength": {
-        "description": "如果高于0，则只有在识别出任何支持的关键字的开头时才会触发自动建议。",
-        "name": "自动建议的最小匹配长度"
-      },
-      "toggle": {
-        "description": "启用此功能将在识别的任务行内输入时打开智能建议菜单。",
-        "name": "自动建议任务内容"
-      }
     },
-    "changeRequiresRestart": "需要重启。",
-    "dates": {
-      "cancelledDate": {
-        "description": "启用此功能将在任务设置为取消时，在其末尾添加时间戳 ❌ YYYY-MM-DD。",
-        "name": "设置每个已取消的任务的取消日期"
-      },
-      "createdDate": {
-        "description": "启用此功能将在通过“Create or edit task”命令或完成重复任务时，在其他日期值之前添加时间戳➕YYYY-MM-DD。",
-        "name": "设置每个已添加任务的创建日期"
-      },
-      "doneDate": {
-        "description": "启用此功能将在任务被设置为完成时，在其末尾添加时间戳 ✅ YYYY-MM-DD。",
-        "name": "设置每个已完成任务的完成日期"
-      },
-      "heading": "日期"
-    },
-    "datesFromFileNames": {
-      "heading": "从文件名中提取日期",
-      "scheduledDate": {
-        "extraFormat": {
-          "description": {
-            "line1": "任务插件在将文件名用作未注明日期任务的计划日期时，将识别的附加日期格式。",
-            "line2": "语法参考"
-          },
-          "name": "为无日期任务添加文件名日期格式作为计划日期",
-          "placeholder": "示例：MMM DD YYYY"
+    "settings": {
+        "autoSuggest": {
+            "heading": "自动建议",
+            "maxSuggestions": {
+                "description": "当自动建议菜单弹出时，应显示多少条建议 (包含 \"⏎\" 选项)。",
+                "name": "要显示的最大自动建议数"
+            },
+            "minLength": {
+                "description": "如果高于0，则只有在识别出任何支持的关键字的开头时才会触发自动建议。",
+                "name": "自动建议的最小匹配长度"
+            },
+            "toggle": {
+                "description": "启用此功能将在识别的任务行内输入时打开智能建议菜单。",
+                "name": "自动建议任务内容"
+            }
         },
-        "folders": {
-          "description": "如果要在全局使用默认的计划日期，请保留为空,或者输入以逗号分隔的文件夹列表。",
-          "name": "具有默认计划日期的文件夹"
+        "changeRequiresRestart": "需要重启。",
+        "dates": {
+            "cancelledDate": {
+                "description": "启用此功能将在任务设置为取消时，在其末尾添加时间戳 ❌ YYYY-MM-DD。",
+                "name": "设置每个已取消的任务的取消日期"
+            },
+            "createdDate": {
+                "description": "启用此功能将在通过“Create or edit task”命令或完成重复任务时，在其他日期值之前添加时间戳➕YYYY-MM-DD。",
+                "name": "设置每个已添加任务的创建日期"
+            },
+            "doneDate": {
+                "description": "启用此功能将在任务被设置为完成时，在其末尾添加时间戳 ✅ YYYY-MM-DD。",
+                "name": "设置每个已完成任务的完成日期"
+            },
+            "heading": "日期"
         },
-        "toggle": {
-          "description": {
-            "line1": "用于节省输入计划日期 (⏳) 的时间。",
-            "line2": "如果启用此选项，则任何未注明日期的任务都将被赋予从其文件名中提取的默认“计划日期”。",
-            "line3": "默认情况下，Tasks 插件将匹配 <code>YYYY-MM-DD</code> 和 <code>YYYYMMDD</code> 两种日期格式。",
-            "line4": "未注明日期的任务指没有截止日期 (📅 ), 计划日期 (⏳) 和开始日期(🛫) 的任务。"
-          },
-          "name": "将文件名用作未注明日期的任务的计划日期"
+        "datesFromFileNames": {
+            "heading": "从文件名中提取日期",
+            "scheduledDate": {
+                "extraFormat": {
+                    "description": {
+                        "line1": "任务插件在将文件名用作未注明日期任务的计划日期时，将识别的附加日期格式。",
+                        "line2": "语法参考"
+                    },
+                    "name": "为无日期任务添加文件名日期格式作为计划日期",
+                    "placeholder": "示例：MMM DD YYYY"
+                },
+                "folders": {
+                    "description": "如果要在全局使用默认的计划日期，请保留为空,或者输入以逗号分隔的文件夹列表。",
+                    "name": "具有默认计划日期的文件夹"
+                },
+                "toggle": {
+                    "description": {
+                        "line1": "用于节省输入计划日期 (⏳) 的时间。",
+                        "line2": "如果启用此选项，则任何未注明日期的任务都将被赋予从其文件名中提取的默认“计划日期”。",
+                        "line3": "默认情况下，Tasks 插件将匹配 <code>YYYY-MM-DD</code> 和 <code>YYYYMMDD</code> 两种日期格式。",
+                        "line4": "未注明日期的任务指没有截止日期 (📅 ), 计划日期 (⏳) 和开始日期(🛫) 的任务。"
+                    },
+                    "name": "将文件名用作未注明日期的任务的计划日期"
+                }
+            }
+        },
+        "dialogs": {
+            "accessKeys": {
+                "description": "如果对话框中各种控件的快捷键与系统快捷键发生冲突，您可以在这里停用它们。",
+                "name": "在对话框中使用快捷键"
+            },
+            "heading": "对话框"
+        },
+        "format": {
+            "description": {
+                "line1": "Tasks 用于读取和写入任务的格式.",
+                "line2": "<b>重点:</b> 目前 Tasks 只支持同时使用一种格式。选择 dataview 将 <b>使 Tasks 停止读取自有的表情符号格式</b>"
+            },
+            "displayName": {
+                "dataview": "Dataview 格式",
+                "tasksEmojiFormat": "Tasks 表情格式"
+            },
+            "name": "任务格式"
+        },
+        "globalFilter": {
+            "filter": {
+                "description": {
+                    "line1": "建议：如果您希望仓库中的所有任务列表项都由此插件管理，请留空。",
+                    "line2": "如果您希望 Tasks 仅作用于 \"<code>- [ ]</code>\" 任务列表项的子集，请使用全局筛选器,以便只有在其描述中包含指定的字符串的任务列表项才被视为任务。",
+                    "line3": "例如，如果将全局筛选器设置为 <code>#task</code>，则 Tasks 插件将仅处理标记为 <code>#task</code> 的任务列表项。",
+                    "line4": "其他任务列表项将保持正常,不会出现在查询中或设置完成日期。"
+                },
+                "name": "全局筛选器",
+                "placeholder": "例如:#task 或 TODO"
+            },
+            "heading": "全局任务筛选器",
+            "removeFilter": {
+                "description": "启用此选项将在显示任务时从任务描述中删除设置为全局筛选器的字符串.",
+                "name": "从描述中删除全局筛选器"
+            }
+        },
+        "globalQuery": {
+            "heading": "全局查询",
+            "query": {
+                "description": "自动包含在库中每个 Tasks 块开头的查询语句.用于添加默认过滤器或布局选项。",
+                "placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency"
+            }
+        },
+        "presets": {
+            "buttons": {
+                "addNewPreset": ""
+            },
+            "line1": "您可以在这里定义命名指令，可以在多个查询中重复使用。一个名为 '{{name}}' 的预设可以在任务查询中使用 '{{instruction1}}' 或 '{{instruction2}}'。",
+            "line2": "任何打开的任务查询在预设被编辑时都会自动重新加载。",
+            "name": "预设"
+        },
+        "recurringTasks": {
+            "heading": "重复性任务",
+            "nextLine": {
+                "description": "启用此功能后，任务的下一次重复将显示在已完成任务的下一行。若关闭此功能，则下一次重复将出现在已完成任务的上一行。",
+                "name": "把任务的下一次重复放在下一行"
+            },
+            "removeScheduledDate": {
+                "description": {
+                    "line1": "开启此选项后，当任务至少设置了开始日期(🛫)或计划日期(📅)中的一个时，该任务的下一次重复周期将不再包含计划日期(⏳)。",
+                    "line2": "此功能适用于你希望将开始和截止日期延续到下一个周期，但计划日期暂不设置，等实际开始处理时再确定的情况。"
+                },
+                "name": "在重复性任务中移除计划日期"
+            }
+        },
+        "seeTheDocumentation": "参阅文档",
+        "statuses": {
+            "collections": {
+                "anuppuccinTheme": "AnuPpuccin 主题",
+                "auraTheme": "Aura 主题",
+                "borderTheme": "Border 主题",
+                "buttons": {
+                    "addCollection": {
+                        "name": "{{themeName}}: 添加 {{numberOfStatuses}} 种支持状态"
+                    }
+                },
+                "ebullientworksTheme": "Ebullientworks 主题",
+                "itsThemeAndSlrvbCheckboxes": "ITS 主题和 SlRvb 复选框",
+                "lytModeTheme": "LYT Mode 主题 (仅深色模式)",
+                "minimalTheme": "Minimal 主题",
+                "thingsTheme": "Things 主题"
+            },
+            "coreStatuses": {
+                "buttons": {
+                    "checkStatuses": {
+                        "name": "查看并检查您的状态",
+                        "tooltip": "在库的根目录下创建一个新文件,包含当前状态设置的 Mermaid 图表."
+                    }
+                },
+                "description": {
+                    "line1": "这些是 Tasks 原生支持的核心状态，不需要自定义CSS样式或主题。",
+                    "line2": "您可以在下面编辑和添加自定义状态。"
+                },
+                "heading": "核心状态"
+            },
+            "customStatuses": {
+                "buttons": {
+                    "addAllUnknown": {
+                        "name": "添加所有未知状态类型"
+                    },
+                    "addNewStatus": {
+                        "name": "添加新任务状态"
+                    },
+                    "resetCustomStatuses": {
+                        "name": "重置自定义状态类型为默认值"
+                    }
+                },
+                "description": {
+                    "line1": "您应该首先<b>选择并安装 CSS代码段或主题<b>以设置自定义复选框的样式",
+                    "line2": "然后，使用下面的按钮设置您的自定义状态,以匹配您选择的CSS复选框.",
+                    "line3": "<b>注意</b>任何与更早的状态具有相同符号的状态都将被忽略.您可以通过运行“Create or edit task”命令并查看“Status”下拉列表来确认实际加载的状态。",
+                    "line4": "参阅文档！"
+                },
+                "heading": "自定义状态"
+            },
+            "heading": "任务状态"
         }
-      }
-    },
-    "dialogs": {
-      "accessKeys": {
-        "description": "如果对话框中各种控件的快捷键与系统快捷键发生冲突，您可以在这里停用它们。",
-        "name": "在对话框中使用快捷键"
-      },
-      "heading": "对话框"
-    },
-    "format": {
-      "description": {
-        "line1": "Tasks 用于读取和写入任务的格式.",
-        "line2": "<b>重点:</b> 目前 Tasks 只支持同时使用一种格式。选择 dataview 将 <b>使 Tasks 停止读取自有的表情符号格式</b>"
-      },
-      "displayName": {
-        "dataview": "Dataview 格式",
-        "tasksEmojiFormat": "Tasks 表情格式"
-      },
-      "name": "任务格式"
-    },
-    "globalFilter": {
-      "filter": {
-        "description": {
-          "line1": "建议：如果您希望仓库中的所有任务列表项都由此插件管理，请留空。",
-          "line2": "如果您希望 Tasks 仅作用于 \"<code>- [ ]</code>\" 任务列表项的子集，请使用全局筛选器,以便只有在其描述中包含指定的字符串的任务列表项才被视为任务。",
-          "line3": "例如，如果将全局筛选器设置为 <code>#task</code>，则 Tasks 插件将仅处理标记为 <code>#task</code> 的任务列表项。",
-          "line4": "其他任务列表项将保持正常,不会出现在查询中或设置完成日期。"
-        },
-        "name": "全局筛选器",
-        "placeholder": "例如:#task 或 TODO"
-      },
-      "heading": "全局任务筛选器",
-      "removeFilter": {
-        "description": "启用此选项将在显示任务时从任务描述中删除设置为全局筛选器的字符串.",
-        "name": "从描述中删除全局筛选器"
-      }
-    },
-    "globalQuery": {
-      "heading": "全局查询",
-      "query": {
-        "description": "自动包含在库中每个 Tasks 块开头的查询语句.用于添加默认过滤器或布局选项。",
-        "placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency"
-      }
-    },
-    "presets": {
-      "buttons": {
-        "addNewPreset": ""
-      },
-      "line1": "您可以在这里定义命名指令，可以在多个查询中重复使用。一个名为 '{{name}}' 的预设可以在任务查询中使用 '{{instruction1}}' 或 '{{instruction2}}'。",
-      "line2": "任何打开的任务查询在预设被编辑时都会自动重新加载。",
-      "name": "预设"
-    },
-    "recurringTasks": {
-      "heading": "重复性任务",
-      "nextLine": {
-        "description": "启用此功能后，任务的下一次重复将显示在已完成任务的下一行。若关闭此功能，则下一次重复将出现在已完成任务的上一行。",
-        "name": "把任务的下一次重复放在下一行"
-      },
-      "removeScheduledDate": {
-        "description": {
-          "line1": "开启此选项后，当任务至少设置了开始日期(🛫)或计划日期(📅)中的一个时，该任务的下一次重复周期将不再包含计划日期(⏳)。",
-          "line2": "此功能适用于你希望将开始和截止日期延续到下一个周期，但计划日期暂不设置，等实际开始处理时再确定的情况。"
-        },
-        "name": "在重复性任务中移除计划日期"
-      }
-    },
-    "seeTheDocumentation": "参阅文档",
-    "statuses": {
-      "collections": {
-        "anuppuccinTheme": "AnuPpuccin 主题",
-        "auraTheme": "Aura 主题",
-        "borderTheme": "Border 主题",
-        "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: 添加 {{numberOfStatuses}} 种支持状态"
-          }
-        },
-        "ebullientworksTheme": "Ebullientworks 主题",
-        "itsThemeAndSlrvbCheckboxes": "ITS 主题和 SlRvb 复选框",
-        "lytModeTheme": "LYT Mode 主题 (仅深色模式)",
-        "minimalTheme": "Minimal 主题",
-        "thingsTheme": "Things 主题"
-      },
-      "coreStatuses": {
-        "buttons": {
-          "checkStatuses": {
-            "name": "查看并检查您的状态",
-            "tooltip": "在库的根目录下创建一个新文件,包含当前状态设置的 Mermaid 图表."
-          }
-        },
-        "description": {
-          "line1": "这些是 Tasks 原生支持的核心状态，不需要自定义CSS样式或主题。",
-          "line2": "您可以在下面编辑和添加自定义状态。"
-        },
-        "heading": "核心状态"
-      },
-      "customStatuses": {
-        "buttons": {
-          "addAllUnknown": {
-            "name": "添加所有未知状态类型"
-          },
-          "addNewStatus": {
-            "name": "添加新任务状态"
-          },
-          "resetCustomStatuses": {
-            "name": "重置自定义状态类型为默认值"
-          }
-        },
-        "description": {
-          "line1": "您应该首先<b>选择并安装 CSS代码段或主题<b>以设置自定义复选框的样式",
-          "line2": "然后，使用下面的按钮设置您的自定义状态,以匹配您选择的CSS复选框.",
-          "line3": "<b>注意</b>任何与更早的状态具有相同符号的状态都将被忽略.您可以通过运行“Create or edit task”命令并查看“Status”下拉列表来确认实际加载的状态。",
-          "line4": "参阅文档！"
-        },
-        "heading": "自定义状态"
-      },
-      "heading": "任务状态"
     }
-  }
 }

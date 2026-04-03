@@ -275,7 +275,10 @@ export class Setting {
 export class PluginSettingTab {
     public containerEl = document.createElement('div');
 
-    constructor(public app: App, public plugin: Plugin) {}
+    constructor(
+        public app: App,
+        public plugin: Plugin,
+    ) {}
 
     display(): void {}
     hide(): void {}

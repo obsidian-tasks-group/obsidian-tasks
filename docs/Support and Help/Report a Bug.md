@@ -76,17 +76,17 @@ To enable us to copy the raw text of your task, you need to put the task between
 
 For example:
 
-````text
+```text
 ~~~
 - [ ] My lovely task with 📅 2023-04-10 that Tasks search does not find
 ~~~
-````
+```
 
 This will display as:
 
-````text
+```text
 - [ ] My lovely task with 📅 2023-04-10 that Tasks search does not find
-````
+```
 
 #### Format Tasks query blocks
 
@@ -160,7 +160,7 @@ This is the level of detail required for a developer to be able to reproduce a b
 >         ````
 >
 > 4. View in **Reading Mode**:
->    - Confirm that the group heading in the tasks code block is `2022-11-02 Wednesday`, matching the date in the file name (as opposed to `No scheduled date`, which would mean that the setting has not enabled)
+>     - Confirm that the group heading in the tasks code block is `2022-11-02 Wednesday`, matching the date in the file name (as opposed to `No scheduled date`, which would mean that the setting has not enabled)
 > 5. Click on the Pencil icon to the right of the task in the tasks code block
 > 6. Change the scheduled date to `2023-01-13`
 > 7. Click Apply
@@ -169,8 +169,8 @@ This is the level of detail required for a developer to be able to reproduce a b
 >     - **Expected behaviour:**
 >         - The original task line has `⏳ 2023-01-13`
 >         - In the tasks code block:
->           - The group heading changes to `⏳ 2023-01-13 Friday`
->           - The task contains `⏳ 2023-01-13`
+>             - The group heading changes to `⏳ 2023-01-13 Friday`
+>             - The task contains `⏳ 2023-01-13`
 > 8. Repeat the editing steps above in **Live Preview** mode
 >     - The same thing happens: the edited date is not applied to the task line
 

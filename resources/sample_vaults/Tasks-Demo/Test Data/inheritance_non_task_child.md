@@ -1,4 +1,4 @@
--  [ ] #task task parent
+- [ ] #task task parent
     - [ ] #task task child
     - [ ] non-task child
     - [x] non-task child status x

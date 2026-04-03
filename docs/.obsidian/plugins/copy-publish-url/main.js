@@ -27,4 +27,280 @@ This plugin is MIT-licensed:
 
 */
 
-var d=Object.create;var h=Object.defineProperty;var g=Object.getOwnPropertyDescriptor;var f=Object.getOwnPropertyNames;var C=Object.getPrototypeOf,y=Object.prototype.hasOwnProperty;var c=n=>h(n,"__esModule",{value:!0});var P=(n,i)=>{c(n);for(var e in i)h(n,e,{get:i[e],enumerable:!0})},U=(n,i,e)=>{if(i&&typeof i=="object"||typeof i=="function")for(let t of f(i))!y.call(n,t)&&t!=="default"&&h(n,t,{get:()=>i[t],enumerable:!(e=g(i,t))||e.enumerable});return n},m=n=>U(c(h(n!=null?d(C(n)):{},"default",n&&n.__esModule&&"default"in n?{get:()=>n.default,enumerable:!0}:{value:n,enumerable:!0})),n);P(exports,{default:()=>p});var o=m(require("obsidian"));var a=m(require("obsidian")),u=class extends a.PluginSettingTab{constructor(i,e){super(i,e);this.plugin=e}display(){let{containerEl:i}=this,{settings:e}=this.plugin;i.empty(),i.createEl("h2",{text:"Publish and GitHub URL plugin settings"}),new a.Setting(i).setName("Index note of your published vault").setDesc("Please use the relative path from the vault root. You do not need to include the .md extension.").addText(t=>{t.setPlaceholder("Index").setValue(e.homeNote).onChange(async s=>{s.trim().slice(-3)===".md"?e.homeNote=s.trim().slice(0,-3):e.homeNote=s.trim(),await this.plugin.saveSettings()})}),new a.Setting(i).setName("Publish base path").setDesc("Please enter the base path of your publish site.").addText(t=>{t.setPlaceholder("https://publish.obsidian.md/help/").setValue(e.publishPath).onChange(async s=>{s.trim().slice(-1)==="/"?e.publishPath=s.trim():e.publishPath=s.trim()+"/",await this.plugin.saveSettings()})}),new a.Setting(i).setName("Show in file menu").setDesc("Enable it to show the Copy Publish URL action in the file menu.").addToggle(t=>{t.setValue(e.enableContext),t.onChange(async s=>{e.enableContext=s,await this.plugin.saveSettings(),s?this.plugin.fileMenuEvent(!0):this.plugin.fileMenuEvent(!1)})}),new a.Setting(i).setName("Open current note in browser").setDesc("Enable it to get a command to open the current note on the Obsidian Publish site.").addToggle(t=>{t.setValue(this.plugin.settings.enableOpenUrl),t.onChange(async s=>{this.plugin.settings.enableOpenUrl=s,await this.plugin.saveSettings(),s?this.plugin.addCommand(this.plugin.returnOpenCommand()):this.app.commands.removeCommand(`${this.plugin.manifest.id}:open-publish-url`)})}),new a.Setting(i).setName("GitHub Commit History Command").setDesc("Enable it to add a command for opening the commit history of the current note on GitHub.").addToggle(t=>{t.setValue(e.enableGithub),t.onChange(async s=>{e.enableGithub=s,await this.plugin.saveSettings(),s?this.plugin.addCommand(this.plugin.returnGithubOpenCommand()):this.app.commands.removeCommand(`${this.plugin.manifest.id}:open-git-history`),this.display()})}),this.plugin.settings.enableGithub&&(new a.Setting(i).setName("GitHub repository URL").setDesc("Please enter the URL of your GitHub repository.").addText(t=>{t.setPlaceholder("https://github.com/obsidian-community/obsidian-hub").setValue(e.remoteUrl).onChange(async s=>{s.trim().slice(-1)==="/"?e.remoteUrl=s.trim():e.remoteUrl=s.trim()+"/",await this.plugin.saveSettings()})}),new a.Setting(i).setName("Branch name").setDesc("Please enter the branch name.").addText(t=>{t.setPlaceholder("main").setValue(e.branch).onChange(async s=>{e.branch=s.trim(),await this.plugin.saveSettings()})}))}};var w={homeNote:"",publishPath:"",enableContext:!1,enableOpenUrl:!0,enableGithub:!1,remoteUrl:"",branch:"main"};function b(n,i){let e=n.metadataCache.getFileCache(i),t=e==null?void 0:e.frontmatter;if(t)try{return t.publish!==!1}catch(s){return!0}else return!0}var p=class extends o.Plugin{constructor(){super(...arguments);this.returnOpenCommand=()=>({id:"open-publish-url",name:"Open Publish URL in browser",checkCallback:this.giveCallback(this.openPublishUrl.bind(this))});this.returnCopyCommand=()=>({id:"copy-publish-url",name:"Copy Publish URL",checkCallback:this.giveCallback(this.copyPublishUrl.bind(this))});this.returnGithubOpenCommand=()=>({id:"open-git-history",name:"Open Commit History on GitHub",checkCallback:this.giveGithubCallback(this.openGithubHistory.bind(this))});this.fileMenuCallbackFunc=(i,e,t)=>{if(e instanceof o.TFile){if(b(this.app,e)){i.addSeparator();let l=e.path;i.addItem(r=>{r.setTitle("Copy Publish URL").setIcon("link").onClick(async()=>{await this.copyPublishUrl(l)})})}else return!1;i.addSeparator()}}}getPublishUrl(i){var l,r;let e=this.settings.publishPath,t=i.slice(0,-3);t===this.settings.homeNote&&t.includes("/")&&(t=t.split("/").last());let s=(r=(l=this.app.metadataCache.getFileCache(this.app.workspace.getActiveFile()))==null?void 0:l.frontmatter)==null?void 0:r.permalink;return s&&(t=s),e=encodeURI(e+t),e=e.replace(/%20/g,"+"),e}async copyPublishUrl(i){let e=this.getPublishUrl(i);await navigator.clipboard.writeText(e),new o.Notice("Publish Url copied to your clipboard")}openPublishUrl(i){let e=this.getPublishUrl(i);window.open(e)}openGithubHistory(i){let t=this.settings.remoteUrl+`commits/${this.settings.branch}/${i}`,s=encodeURI(t);window.open(s)}giveCallback(i){return e=>{let t=this.app.workspace.getActiveFile();return t?(e||(async()=>{if(!b(this.app,t)){new o.Notice("This note contains the publish: false flag.");return}let l=t.path;await i(l)})(),!0):!1}}giveGithubCallback(i){return e=>{let t=this.app.workspace.getActiveFile();return t?(e||(async()=>{let s=t.path;await i(s)})(),!0):!1}}fileMenuEvent(i){i?this.registerEvent(this.app.workspace.on("file-menu",this.fileMenuCallbackFunc)):this.app.workspace.off("file-menu",this.fileMenuCallbackFunc)}async onload(){console.log("loading Copy Publish URL plugin"),await this.loadSettings(),this.addCommand(this.returnCopyCommand()),this.settings.enableOpenUrl&&this.addCommand(this.returnOpenCommand()),this.settings.enableContext&&this.fileMenuEvent(!0),this.settings.enableGithub&&this.addCommand(this.returnGithubOpenCommand()),this.addSettingTab(new u(this.app,this))}onunload(){console.log("unloading Copy Publish URL plugin")}async loadSettings(){this.settings=Object.assign({},w,await this.loadData())}async saveSettings(){await this.saveData(this.settings)}};
+var d = Object.create;
+var h = Object.defineProperty;
+var g = Object.getOwnPropertyDescriptor;
+var f = Object.getOwnPropertyNames;
+var C = Object.getPrototypeOf,
+    y = Object.prototype.hasOwnProperty;
+var c = (n) => h(n, '__esModule', { value: !0 });
+var P = (n, i) => {
+        c(n);
+        for (var e in i) h(n, e, { get: i[e], enumerable: !0 });
+    },
+    U = (n, i, e) => {
+        if ((i && typeof i == 'object') || typeof i == 'function')
+            for (let t of f(i))
+                !y.call(n, t) &&
+                    t !== 'default' &&
+                    h(n, t, { get: () => i[t], enumerable: !(e = g(i, t)) || e.enumerable });
+        return n;
+    },
+    m = (n) =>
+        U(
+            c(
+                h(
+                    n != null ? d(C(n)) : {},
+                    'default',
+                    n && n.__esModule && 'default' in n
+                        ? { get: () => n.default, enumerable: !0 }
+                        : { value: n, enumerable: !0 },
+                ),
+            ),
+            n,
+        );
+P(exports, { default: () => p });
+var o = m(require('obsidian'));
+var a = m(require('obsidian')),
+    u = class extends a.PluginSettingTab {
+        constructor(i, e) {
+            super(i, e);
+            this.plugin = e;
+        }
+        display() {
+            let { containerEl: i } = this,
+                { settings: e } = this.plugin;
+            (i.empty(),
+                i.createEl('h2', { text: 'Publish and GitHub URL plugin settings' }),
+                new a.Setting(i)
+                    .setName('Index note of your published vault')
+                    .setDesc(
+                        'Please use the relative path from the vault root. You do not need to include the .md extension.',
+                    )
+                    .addText((t) => {
+                        t.setPlaceholder('Index')
+                            .setValue(e.homeNote)
+                            .onChange(async (s) => {
+                                (s.trim().slice(-3) === '.md'
+                                    ? (e.homeNote = s.trim().slice(0, -3))
+                                    : (e.homeNote = s.trim()),
+                                    await this.plugin.saveSettings());
+                            });
+                    }),
+                new a.Setting(i)
+                    .setName('Publish base path')
+                    .setDesc('Please enter the base path of your publish site.')
+                    .addText((t) => {
+                        t.setPlaceholder('https://publish.obsidian.md/help/')
+                            .setValue(e.publishPath)
+                            .onChange(async (s) => {
+                                (s.trim().slice(-1) === '/'
+                                    ? (e.publishPath = s.trim())
+                                    : (e.publishPath = s.trim() + '/'),
+                                    await this.plugin.saveSettings());
+                            });
+                    }),
+                new a.Setting(i)
+                    .setName('Show in file menu')
+                    .setDesc('Enable it to show the Copy Publish URL action in the file menu.')
+                    .addToggle((t) => {
+                        (t.setValue(e.enableContext),
+                            t.onChange(async (s) => {
+                                ((e.enableContext = s),
+                                    await this.plugin.saveSettings(),
+                                    s ? this.plugin.fileMenuEvent(!0) : this.plugin.fileMenuEvent(!1));
+                            }));
+                    }),
+                new a.Setting(i)
+                    .setName('Open current note in browser')
+                    .setDesc('Enable it to get a command to open the current note on the Obsidian Publish site.')
+                    .addToggle((t) => {
+                        (t.setValue(this.plugin.settings.enableOpenUrl),
+                            t.onChange(async (s) => {
+                                ((this.plugin.settings.enableOpenUrl = s),
+                                    await this.plugin.saveSettings(),
+                                    s
+                                        ? this.plugin.addCommand(this.plugin.returnOpenCommand())
+                                        : this.app.commands.removeCommand(
+                                              `${this.plugin.manifest.id}:open-publish-url`,
+                                          ));
+                            }));
+                    }),
+                new a.Setting(i)
+                    .setName('GitHub Commit History Command')
+                    .setDesc('Enable it to add a command for opening the commit history of the current note on GitHub.')
+                    .addToggle((t) => {
+                        (t.setValue(e.enableGithub),
+                            t.onChange(async (s) => {
+                                ((e.enableGithub = s),
+                                    await this.plugin.saveSettings(),
+                                    s
+                                        ? this.plugin.addCommand(this.plugin.returnGithubOpenCommand())
+                                        : this.app.commands.removeCommand(
+                                              `${this.plugin.manifest.id}:open-git-history`,
+                                          ),
+                                    this.display());
+                            }));
+                    }),
+                this.plugin.settings.enableGithub &&
+                    (new a.Setting(i)
+                        .setName('GitHub repository URL')
+                        .setDesc('Please enter the URL of your GitHub repository.')
+                        .addText((t) => {
+                            t.setPlaceholder('https://github.com/obsidian-community/obsidian-hub')
+                                .setValue(e.remoteUrl)
+                                .onChange(async (s) => {
+                                    (s.trim().slice(-1) === '/'
+                                        ? (e.remoteUrl = s.trim())
+                                        : (e.remoteUrl = s.trim() + '/'),
+                                        await this.plugin.saveSettings());
+                                });
+                        }),
+                    new a.Setting(i)
+                        .setName('Branch name')
+                        .setDesc('Please enter the branch name.')
+                        .addText((t) => {
+                            t.setPlaceholder('main')
+                                .setValue(e.branch)
+                                .onChange(async (s) => {
+                                    ((e.branch = s.trim()), await this.plugin.saveSettings());
+                                });
+                        })));
+        }
+    };
+var w = {
+    homeNote: '',
+    publishPath: '',
+    enableContext: !1,
+    enableOpenUrl: !0,
+    enableGithub: !1,
+    remoteUrl: '',
+    branch: 'main',
+};
+function b(n, i) {
+    let e = n.metadataCache.getFileCache(i),
+        t = e == null ? void 0 : e.frontmatter;
+    if (t)
+        try {
+            return t.publish !== !1;
+        } catch (s) {
+            return !0;
+        }
+    else return !0;
+}
+var p = class extends o.Plugin {
+    constructor() {
+        super(...arguments);
+        this.returnOpenCommand = () => ({
+            id: 'open-publish-url',
+            name: 'Open Publish URL in browser',
+            checkCallback: this.giveCallback(this.openPublishUrl.bind(this)),
+        });
+        this.returnCopyCommand = () => ({
+            id: 'copy-publish-url',
+            name: 'Copy Publish URL',
+            checkCallback: this.giveCallback(this.copyPublishUrl.bind(this)),
+        });
+        this.returnGithubOpenCommand = () => ({
+            id: 'open-git-history',
+            name: 'Open Commit History on GitHub',
+            checkCallback: this.giveGithubCallback(this.openGithubHistory.bind(this)),
+        });
+        this.fileMenuCallbackFunc = (i, e, t) => {
+            if (e instanceof o.TFile) {
+                if (b(this.app, e)) {
+                    i.addSeparator();
+                    let l = e.path;
+                    i.addItem((r) => {
+                        r.setTitle('Copy Publish URL')
+                            .setIcon('link')
+                            .onClick(async () => {
+                                await this.copyPublishUrl(l);
+                            });
+                    });
+                } else return !1;
+                i.addSeparator();
+            }
+        };
+    }
+    getPublishUrl(i) {
+        var l, r;
+        let e = this.settings.publishPath,
+            t = i.slice(0, -3);
+        t === this.settings.homeNote && t.includes('/') && (t = t.split('/').last());
+        let s =
+            (r =
+                (l = this.app.metadataCache.getFileCache(this.app.workspace.getActiveFile())) == null
+                    ? void 0
+                    : l.frontmatter) == null
+                ? void 0
+                : r.permalink;
+        return (s && (t = s), (e = encodeURI(e + t)), (e = e.replace(/%20/g, '+')), e);
+    }
+    async copyPublishUrl(i) {
+        let e = this.getPublishUrl(i);
+        (await navigator.clipboard.writeText(e), new o.Notice('Publish Url copied to your clipboard'));
+    }
+    openPublishUrl(i) {
+        let e = this.getPublishUrl(i);
+        window.open(e);
+    }
+    openGithubHistory(i) {
+        let t = this.settings.remoteUrl + `commits/${this.settings.branch}/${i}`,
+            s = encodeURI(t);
+        window.open(s);
+    }
+    giveCallback(i) {
+        return (e) => {
+            let t = this.app.workspace.getActiveFile();
+            return t
+                ? (e ||
+                      (async () => {
+                          if (!b(this.app, t)) {
+                              new o.Notice('This note contains the publish: false flag.');
+                              return;
+                          }
+                          let l = t.path;
+                          await i(l);
+                      })(),
+                  !0)
+                : !1;
+        };
+    }
+    giveGithubCallback(i) {
+        return (e) => {
+            let t = this.app.workspace.getActiveFile();
+            return t
+                ? (e ||
+                      (async () => {
+                          let s = t.path;
+                          await i(s);
+                      })(),
+                  !0)
+                : !1;
+        };
+    }
+    fileMenuEvent(i) {
+        i
+            ? this.registerEvent(this.app.workspace.on('file-menu', this.fileMenuCallbackFunc))
+            : this.app.workspace.off('file-menu', this.fileMenuCallbackFunc);
+    }
+    async onload() {
+        (console.log('loading Copy Publish URL plugin'),
+            await this.loadSettings(),
+            this.addCommand(this.returnCopyCommand()),
+            this.settings.enableOpenUrl && this.addCommand(this.returnOpenCommand()),
+            this.settings.enableContext && this.fileMenuEvent(!0),
+            this.settings.enableGithub && this.addCommand(this.returnGithubOpenCommand()),
+            this.addSettingTab(new u(this.app, this)));
+    }
+    onunload() {
+        console.log('unloading Copy Publish URL plugin');
+    }
+    async loadSettings() {
+        this.settings = Object.assign({}, w, await this.loadData());
+    }
+    async saveSettings() {
+        await this.saveData(this.settings);
+    }
+};

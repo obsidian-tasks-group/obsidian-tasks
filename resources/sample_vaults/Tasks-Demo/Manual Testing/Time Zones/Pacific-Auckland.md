@@ -41,6 +41,6 @@ hide backlinks
 ## Background
 
 - This manual test shows the existence of the bug logged in:
-  - [Completing a daily recurring task creates task set to same day [the day before Australian clocks switch to daylight savings]](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2309)
+    - [Completing a daily recurring task creates task set to same day [the day before Australian clocks switch to daylight savings]](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2309)
 - It was written to test the behaviour of pull request \#3121:
-  - [fix: advance recurring tasks correctly at start of Daylight Savings Time](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/3121)
+    - [fix: advance recurring tasks correctly at start of Daylight Savings Time](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/3121)

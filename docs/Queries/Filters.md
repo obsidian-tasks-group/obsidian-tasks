@@ -75,12 +75,12 @@ There are several options available when searching with a particular date:
 This table may help visualise these options:
 
 | option         | all earlier dates | `search date` | all later dates |
-|----------------| ----------------- | ------------ | --------------- |
-| `before`       | matches           |              |                 |
-| `on or before` | matches           | matches      |                 |
-| `on`           |                   | matches      |                 |
-| `on or after`  |                   | matches      | matches         |
-| `after`        |                   |              | matches         |
+| -------------- | ----------------- | ------------- | --------------- |
+| `before`       | matches           |               |                 |
+| `on or before` | matches           | matches       |                 |
+| `on`           |                   | matches       |                 |
+| `on or after`  |                   | matches       | matches         |
+| `after`        |                   |               | matches         |
 
 > [!released]
 > `on or before` and `on or after` were introduced in Tasks 4.6.0.
@@ -124,7 +124,7 @@ Use `next tuesday` instead if you mean "next tuesday".
 ### Searching date ranges
 
 > [!released]
-Date range searches were introduced in Tasks 2.0.0.
+> Date range searches were introduced in Tasks 2.0.0.
 
 Tasks allows date searches to specify a pair of dates, `<date range>`.
 
@@ -156,12 +156,12 @@ There are several options available when searching with date ranges:
 This table may help visualise these options:
 
 | option         | all earlier dates | `start date` | all dates<br>inside the range | `end date` | all later dates |
-| -------------- | ----------------- | ------------ | -------------------------------- | ---------- | --------------- |
-| `before`       | matches           |              |                                  |            |                 |
-| `in or before` | matches           | matches      | matches                          | matches    |                 |
-| `in`           |                   | matches      | matches                          | matches    |                 |
-| `in or after`  |                   | matches      | matches                          | matches    | matches         |
-| `after`        |                   |              |                                  |            | matches         |
+| -------------- | ----------------- | ------------ | ----------------------------- | ---------- | --------------- |
+| `before`       | matches           |              |                               |            |                 |
+| `in or before` | matches           | matches      | matches                       | matches    |                 |
+| `in`           |                   | matches      | matches                       | matches    |                 |
+| `in or after`  |                   | matches      | matches                       | matches    | matches         |
+| `after`        |                   |              |                               |            | matches         |
 
 > [!released]
 > `in or before` and `in or after` were introduced in Tasks 4.6.0.
@@ -184,8 +184,8 @@ Example absolute date ranges:
 - `2022-01-01 2023-02-01`
 
 > [!warning]
-Prior to Tasks 2.0.0, the second date in absolute date ranges was ignored.
-See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
+> Prior to Tasks 2.0.0, the second date in absolute date ranges was ignored.
+> See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
 #### Relative date ranges
 
@@ -211,8 +211,8 @@ Example relative date ranges:
 - `on or before next year`
 
 > [!warning]
-Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
-See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
+> Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
+> See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
 #### Numbered date ranges
 
@@ -241,7 +241,7 @@ Filters that search for text strings have two flavours.
 In the following examples, we describe the `heading` filter, but these comments apply to all the text filters.
 
 1. `heading (includes|does not include) <search text>`
-    - It matches all tasks in a section whose heading contains the string `<search text>`  at least once.
+    - It matches all tasks in a section whose heading contains the string `<search text>` at least once.
         - That is, it is a sub-string search.
         - So `heading includes Day Planner` will match tasks in sections `## Monday Day Planner` and `## Day Planner for typical day`.
     - It ignores capitalization. Searches are case-insensitive.
@@ -259,7 +259,7 @@ In the following examples, we describe the `heading` filter, but these comments 
 ## Matching multiple filters
 
 > [!released]
-Boolean combinations were introduced in Tasks 1.9.0
+> Boolean combinations were introduced in Tasks 1.9.0
 
 Each line of a query has to match in order for a task to be listed.
 In other words, lines are considered to have an 'AND' operator between them.
@@ -324,7 +324,7 @@ filter by function ! task.isDone
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
 > [!released]
-`status.name` text searching was introduced in Tasks 1.23.0.
+> `status.name` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
@@ -352,7 +352,7 @@ filter by function task.status.name === 'Unknown'
   - Or see the 'custom filtering' examples below.
 
 > [!released]
-`status.type` text searching was introduced in Tasks 1.23.0.
+> `status.type` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
@@ -582,7 +582,7 @@ For more information, see [[Dates#Due date|Due date]].
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by due date** is now possible, using `task.due`.
 
-These examples all use  `task.due` property, which is a `TasksDate` object. See [[Task Properties#Values in TasksDate Properties|Values in TasksDate Properties]] to explore its capabilities.
+These examples all use `task.due` property, which is a `TasksDate` object. See [[Task Properties#Values in TasksDate Properties|Values in TasksDate Properties]] to explore its capabilities.
 
 Some of these examples use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
 
@@ -918,6 +918,7 @@ Such tasks look like they have a date, but that date will never be found. When v
 Any such mistakes can be found systematically with this search:
 
 <!-- include: ValidateTasks.test.validate-tasks_find_problem_dates.approved.text -->
+
 ````text
 ```tasks
 # These instructions need to be all on one line:
@@ -929,11 +930,12 @@ Any such mistakes can be found systematically with this search:
 group by path
 ```
 ````
+
 <!-- endInclude -->
 
 > [!warning]
 > If the above search finds any tasks with invalid dates, they are best fixed by clicking on the [[Backlinks|backlink]] to navigate
-to the incorrect line, and fixing it by directly typing in the new date.
+> to the incorrect line, and fixing it by directly typing in the new date.
 
 If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
 the original, incorrect value.
@@ -952,7 +954,7 @@ As well as the date-related searches above, these filters search other propertie
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
 > [!released]
-`regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 For precise searches, it may help to know that `description`:
 
@@ -1057,7 +1059,7 @@ There is no built-in instruction to filter by urgency.
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by urgency** is now possible, using `task.urgency`.
 
 > [!Warning]
-> Please read the following examples carefully. To use `task.urgency`  with `filter by function` successfully, it is important to understand how to handle searches for non-integer numbers.
+> Please read the following examples carefully. To use `task.urgency` with `filter by function` successfully, it is important to understand how to handle searches for non-integer numbers.
 
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
 
@@ -1124,7 +1126,7 @@ filter by function task.urgency === 10.29
 For more information, see [[Recurring Tasks]].
 
 > [!released]
-`recurrence` text searching was introduced in Tasks 1.22.0.
+> `recurrence` text searching was introduced in Tasks 1.22.0.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by recurrence** is now possible, using `task.isRecurring` and `task.recurrenceRule`.
 
@@ -1195,7 +1197,7 @@ filter by function task.recurrenceRule.includes("every week") && !task.recurrenc
 ### Tags
 
 > [!released]
-Introduced in Tasks 1.6.0.
+> Introduced in Tasks 1.6.0.
 
 See [[Tags]] for important information about how tags behave in the Tasks plugin.
 
@@ -1265,7 +1267,7 @@ filter by function task.tags.find( (tag) => tag.split('/').length >= 3 ) && true
   - Searches for a single-character tag `#t`, with no sub-tags, because `$` matches the end of the tag text.
 - `tag regex matches /#book$/i`
   - The trailing `i` means case-insensitive.
-  - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
+  - Searches for tags such as `#book`, `#Book`, `#BOOK` and the `$` prevents matching of `#books`, `#book/literature`, etc.
 
 ### Original Markdown
 
@@ -1300,8 +1302,10 @@ Tasks calls these characters "List Markers", and here are examples tasks showing
 
 ```markdown
 - [ ] hyphen
+
 * [ ] asterisk
-+ [ ] plus
+
+- [ ] plus
 
 ---
 
@@ -1310,8 +1314,8 @@ Tasks calls these characters "List Markers", and here are examples tasks showing
 
 ---
 
-1) [ ] numbered task with parenthesis
-2) [ ] another numbered task with parenthesis
+1. [ ] numbered task with parenthesis
+2. [ ] another numbered task with parenthesis
 ```
 
 As an example, you could put an instruction in your Tasks [[Global Query]] saying that Tasks searches should ignore all tasks that start with `+`.
@@ -1325,19 +1329,19 @@ Here are some examples. (By changing `===` to `!==`, you could _exclude_ tasks w
 <!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.listMarker_docs.approved.md -->
 
 ```javascript
-filter by function task.listMarker === '-' 
+filter by function task.listMarker === '-'
 ```
 
 - Find tasks in unordered lists whose checkboxes begin `- [`
 
 ```javascript
-filter by function task.listMarker === '+' 
+filter by function task.listMarker === '+'
 ```
 
 - Find tasks in unordered lists whose checkboxes begin `+ [`
 
 ```javascript
-filter by function task.listMarker === '*' 
+filter by function task.listMarker === '*'
 ```
 
 - Find tasks in unordered lists whose checkboxes begin `* [`
@@ -1412,6 +1416,7 @@ filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 
 - By lower-casing both values, we do not have to worry about manually lower-casing them in our query.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ### Root
 
 > [!released]
@@ -1528,7 +1533,7 @@ Note that the file name includes the `.md` extension.
 
 - `filename (includes|does not include) <filename>`
   - Matches case-insensitive (disregards capitalization).
-  - Use `{{query.file.filename}}`  or `{{query.file.filenameWithoutExtension}}` as a placeholder for the file name of the file containing the current query.
+  - Use `{{query.file.filename}}` or `{{query.file.filenameWithoutExtension}}` as a placeholder for the file name of the file containing the current query.
     - For example, `filename includes {{query.file.filename}}`
     - Useful reading: [[Query Properties]] and [[Placeholders]]
 - `filename (regex matches|regex does not match) /<JavaScript-style Regex>/`
@@ -1577,7 +1582,7 @@ filter by function task.file.filename.includes("4.1.0 Release")
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
 > [!released]
-`regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by heading** is now possible, using `task.heading`.
 
@@ -1642,63 +1647,63 @@ This Appendix shows how the results of various searches have changes, to enable 
 
 Unchanged interpretation of various **[[Filters#Absolute dates|absolute due date]]** filters:
 
-| keyword     | Tasks 1.25.0 and earlier                                                                          | Tasks 2.0.0 onwards                                                                              |
-| ----------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **Summary** | All searches behave logically, using the correct date.                                            | Identical behaviour to previous releases.                                                         |
-| `before`    | `due before 2023-02-09` =><br>  due date is before<br>2023-02-09 (Thursday 9th February 2023)<br> | `due before 2023-02-09` =><br>  due date is before<br>2023-02-09 (Thursday 9th February 2023)<br> |
-| `on`        | `due on 2023-02-09` =><br>  due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>         | `due on 2023-02-09` =><br>  due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>         |
-| `in`        | `due in 2023-02-09` =><br>  due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>         | `due in 2023-02-09` =><br>  due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>         |
-|             | `due 2023-02-09` =><br>  due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>            | `due 2023-02-09` =><br>  due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>            |
-| `after`     | `due after 2023-02-09` =><br>  due date is after<br>2023-02-09 (Thursday 9th February 2023)<br>   | `due after 2023-02-09` =><br>  due date is after<br>2023-02-09 (Thursday 9th February 2023)<br>   |
+| keyword     | Tasks 1.25.0 and earlier                                                                         | Tasks 2.0.0 onwards                                                                              |
+| ----------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| **Summary** | All searches behave logically, using the correct date.                                           | Identical behaviour to previous releases.                                                        |
+| `before`    | `due before 2023-02-09` =><br> due date is before<br>2023-02-09 (Thursday 9th February 2023)<br> | `due before 2023-02-09` =><br> due date is before<br>2023-02-09 (Thursday 9th February 2023)<br> |
+| `on`        | `due on 2023-02-09` =><br> due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>         | `due on 2023-02-09` =><br> due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>         |
+| `in`        | `due in 2023-02-09` =><br> due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>         | `due in 2023-02-09` =><br> due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>         |
+|             | `due 2023-02-09` =><br> due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>            | `due 2023-02-09` =><br> due date is on<br>2023-02-09 (Thursday 9th February 2023)<br>            |
+| `after`     | `due after 2023-02-09` =><br> due date is after<br>2023-02-09 (Thursday 9th February 2023)<br>   | `due after 2023-02-09` =><br> due date is after<br>2023-02-09 (Thursday 9th February 2023)<br>   |
 
 ### due (before|on|in||after) absolute date range: results improved
 
 Differences in interpretation of various **[[Filters#Absolute date ranges|absolute due date range]]** filters:
 
-| keyword     | Tasks 1.25.0 and earlier                                                                                    | Tasks 2.0.0 onwards                                                                                                                                               |
-| ----------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Summary** | The second date is ignored: only the first date is used.                                                    | The values are interpreted as a date range.<br>`after` takes the end date in to account.                                                                                                                                                                   |
-| `before`    | `due before 2023-02-07 2023-02-11` =><br>  due date is before<br>2023-02-07 (Tuesday 7th February 2023)<br> | `due before 2023-02-07 2023-02-11` =><br>  due date is before<br>2023-02-07 (Tuesday 7th February 2023)<br>                                                        |
-| `on`        | `due on 2023-02-07 2023-02-11` =><br>  due date is on<br>2023-02-07 (Tuesday 7th February 2023)<br>         | `due on 2023-02-07 2023-02-11` =><br>  due date is between<br>2023-02-07 (Tuesday 7th February 2023) and<br>2023-02-11 (Saturday 11th February 2023) inclusive<br> |
-| `in`        | `due in 2023-02-07 2023-02-11` =><br>  due date is on<br>2023-02-07 (Tuesday 7th February 2023)<br>         | `due in 2023-02-07 2023-02-11` =><br>  due date is between<br>2023-02-07 (Tuesday 7th February 2023) and<br>2023-02-11 (Saturday 11th February 2023) inclusive<br> |
-|             | `due 2023-02-07 2023-02-11` =><br>  due date is on<br>2023-02-07 (Tuesday 7th February 2023)<br>            | `due 2023-02-07 2023-02-11` =><br>  due date is between<br>2023-02-07 (Tuesday 7th February 2023) and<br>2023-02-11 (Saturday 11th February 2023) inclusive<br>    |
-| `after`     | `due after 2023-02-07 2023-02-11` =><br>  due date is after<br>2023-02-07 (Tuesday 7th February 2023)<br>   | `due after 2023-02-07 2023-02-11` =><br>  due date is after<br>2023-02-11 (Saturday 11th February 2023)<br>                                                        |
+| keyword     | Tasks 1.25.0 and earlier                                                                                   | Tasks 2.0.0 onwards                                                                                                                                               |
+| ----------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Summary** | The second date is ignored: only the first date is used.                                                   | The values are interpreted as a date range.<br>`after` takes the end date in to account.                                                                          |
+| `before`    | `due before 2023-02-07 2023-02-11` =><br> due date is before<br>2023-02-07 (Tuesday 7th February 2023)<br> | `due before 2023-02-07 2023-02-11` =><br> due date is before<br>2023-02-07 (Tuesday 7th February 2023)<br>                                                        |
+| `on`        | `due on 2023-02-07 2023-02-11` =><br> due date is on<br>2023-02-07 (Tuesday 7th February 2023)<br>         | `due on 2023-02-07 2023-02-11` =><br> due date is between<br>2023-02-07 (Tuesday 7th February 2023) and<br>2023-02-11 (Saturday 11th February 2023) inclusive<br> |
+| `in`        | `due in 2023-02-07 2023-02-11` =><br> due date is on<br>2023-02-07 (Tuesday 7th February 2023)<br>         | `due in 2023-02-07 2023-02-11` =><br> due date is between<br>2023-02-07 (Tuesday 7th February 2023) and<br>2023-02-11 (Saturday 11th February 2023) inclusive<br> |
+|             | `due 2023-02-07 2023-02-11` =><br> due date is on<br>2023-02-07 (Tuesday 7th February 2023)<br>            | `due 2023-02-07 2023-02-11` =><br> due date is between<br>2023-02-07 (Tuesday 7th February 2023) and<br>2023-02-11 (Saturday 11th February 2023) inclusive<br>    |
+| `after`     | `due after 2023-02-07 2023-02-11` =><br> due date is after<br>2023-02-07 (Tuesday 7th February 2023)<br>   | `due after 2023-02-07 2023-02-11` =><br> due date is after<br>2023-02-11 (Saturday 11th February 2023)<br>                                                        |
 
 ### due (before|on|in||after) last week: results improved
 
 Differences in interpretation of various **[[Filters#Relative date ranges|relative due date range]]** filters, when run on `2023-02-10` (Friday 10th February 2023):
 
-| keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 2.0.0 onwards                                                                                                                               |
-| ----------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Summary** | `last week` is interpreted as a single date:<br> `7 days before the current date`.             | `last week` is interpreted as a date range:<br>the previous `Monday to Sunday`.<br>`after` takes the end date in to account.                       |
-| `before`    | `due before last week` =><br>  due date is before<br>2023-02-03 (Friday 3rd February 2023)<br> | `due before last week` =><br>  due date is before<br>2023-01-30 (Monday 30th January 2023)<br>                                                     |
-| `on`        | `due on last week` =><br>  due date is on<br>2023-02-03 (Friday 3rd February 2023)<br>         | `due on last week` =><br>  due date is between<br>2023-01-30 (Monday 30th January 2023) and<br>2023-02-05 (Sunday 5th February 2023) inclusive<br> |
-| `in`        | `due in last week` =><br>  due date is on<br>2023-02-03 (Friday 3rd February 2023)<br>         | `due in last week` =><br>  due date is between<br>2023-01-30 (Monday 30th January 2023) and<br>2023-02-05 (Sunday 5th February 2023) inclusive<br> |
-|             | `due last week` =><br>  due date is on<br>2023-02-03 (Friday 3rd February 2023)<br>            | `due last week` =><br>  due date is between<br>2023-01-30 (Monday 30th January 2023) and<br>2023-02-05 (Sunday 5th February 2023) inclusive<br>    |
-| `after`     | `due after last week` =><br>  due date is after<br>2023-02-03 (Friday 3rd February 2023)<br>   | `due after last week` =><br>  due date is after<br>2023-02-05 (Sunday 5th February 2023)<br>                                                       |
+| keyword     | Tasks 1.25.0 and earlier                                                                      | Tasks 2.0.0 onwards                                                                                                                               |
+| ----------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Summary** | `last week` is interpreted as a single date:<br> `7 days before the current date`.            | `last week` is interpreted as a date range:<br>the previous `Monday to Sunday`.<br>`after` takes the end date in to account.                      |
+| `before`    | `due before last week` =><br> due date is before<br>2023-02-03 (Friday 3rd February 2023)<br> | `due before last week` =><br> due date is before<br>2023-01-30 (Monday 30th January 2023)<br>                                                     |
+| `on`        | `due on last week` =><br> due date is on<br>2023-02-03 (Friday 3rd February 2023)<br>         | `due on last week` =><br> due date is between<br>2023-01-30 (Monday 30th January 2023) and<br>2023-02-05 (Sunday 5th February 2023) inclusive<br> |
+| `in`        | `due in last week` =><br> due date is on<br>2023-02-03 (Friday 3rd February 2023)<br>         | `due in last week` =><br> due date is between<br>2023-01-30 (Monday 30th January 2023) and<br>2023-02-05 (Sunday 5th February 2023) inclusive<br> |
+|             | `due last week` =><br> due date is on<br>2023-02-03 (Friday 3rd February 2023)<br>            | `due last week` =><br> due date is between<br>2023-01-30 (Monday 30th January 2023) and<br>2023-02-05 (Sunday 5th February 2023) inclusive<br>    |
+| `after`     | `due after last week` =><br> due date is after<br>2023-02-03 (Friday 3rd February 2023)<br>   | `due after last week` =><br> due date is after<br>2023-02-05 (Sunday 5th February 2023)<br>                                                       |
 
 ### due (before|on|in||after) this week: results improved
 
 Differences in interpretation of various **[[Filters#Relative date ranges|relative due date range]]** filters, when run on `2023-02-10` (Friday 10th February 2023):
 
-| keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 2.0.0 onwards                                                                                                                                |
-| ----------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Summary** | `this week` is interpreted as a single date:<br>`the sunday before the current date`           | `this week` is interpreted as a date range:<br>the `Monday to Sunday containing the current day`.<br>`after` takes the end date in to account.      |
-| `before`    | `due before this week` =><br>  due date is before<br>2023-02-05 (Sunday 5th February 2023)<br> | `due before this week` =><br>  due date is before<br>2023-02-06 (Monday 6th February 2023)<br>                                                      |
-| `on`        | `due on this week` =><br>  due date is on<br>2023-02-05 (Sunday 5th February 2023)<br>         | `due on this week` =><br>  due date is between<br>2023-02-06 (Monday 6th February 2023) and<br>2023-02-12 (Sunday 12th February 2023) inclusive<br> |
-| `in`        | `due in this week` =><br>  due date is on<br>2023-02-05 (Sunday 5th February 2023)<br>         | `due in this week` =><br>  due date is between<br>2023-02-06 (Monday 6th February 2023) and<br>2023-02-12 (Sunday 12th February 2023) inclusive<br> |
-|             | `due this week` =><br>  due date is on<br>2023-02-05 (Sunday 5th February 2023)<br>            | `due this week` =><br>  due date is between<br>2023-02-06 (Monday 6th February 2023) and<br>2023-02-12 (Sunday 12th February 2023) inclusive<br>    |
-| `after`     | `due after this week` =><br>  due date is after<br>2023-02-05 (Sunday 5th February 2023)<br>   | `due after this week` =><br>  due date is after<br>2023-02-12 (Sunday 12th February 2023)<br>                                                       |
+| keyword     | Tasks 1.25.0 and earlier                                                                      | Tasks 2.0.0 onwards                                                                                                                                |
+| ----------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Summary** | `this week` is interpreted as a single date:<br>`the sunday before the current date`          | `this week` is interpreted as a date range:<br>the `Monday to Sunday containing the current day`.<br>`after` takes the end date in to account.     |
+| `before`    | `due before this week` =><br> due date is before<br>2023-02-05 (Sunday 5th February 2023)<br> | `due before this week` =><br> due date is before<br>2023-02-06 (Monday 6th February 2023)<br>                                                      |
+| `on`        | `due on this week` =><br> due date is on<br>2023-02-05 (Sunday 5th February 2023)<br>         | `due on this week` =><br> due date is between<br>2023-02-06 (Monday 6th February 2023) and<br>2023-02-12 (Sunday 12th February 2023) inclusive<br> |
+| `in`        | `due in this week` =><br> due date is on<br>2023-02-05 (Sunday 5th February 2023)<br>         | `due in this week` =><br> due date is between<br>2023-02-06 (Monday 6th February 2023) and<br>2023-02-12 (Sunday 12th February 2023) inclusive<br> |
+|             | `due this week` =><br> due date is on<br>2023-02-05 (Sunday 5th February 2023)<br>            | `due this week` =><br> due date is between<br>2023-02-06 (Monday 6th February 2023) and<br>2023-02-12 (Sunday 12th February 2023) inclusive<br>    |
+| `after`     | `due after this week` =><br> due date is after<br>2023-02-05 (Sunday 5th February 2023)<br>   | `due after this week` =><br> due date is after<br>2023-02-12 (Sunday 12th February 2023)<br>                                                       |
 
 ### due (before|on|in||after) next week: results improved
 
 Differences in interpretation of various **[[Filters#Relative date ranges|relative due date range]]** filters, when run on `2023-02-10` (Friday 10th February 2023):
 
-| keyword     | Tasks 1.25.0 and earlier                                                                        | Tasks 2.0.0 onwards                                                                                                                                 |
-| ----------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Summary** | `next week` is interpreted as a single date:<br> `7 days after the current date`.               | `next week` is interpreted as a date range:<br>the next `Monday to Sunday`.<br>`after` takes the end date in to account.                             |
-| `before`    | `due before next week` =><br>  due date is before<br>2023-02-17 (Friday 17th February 2023)<br> | `due before next week` =><br>  due date is before<br>2023-02-13 (Monday 13th February 2023)<br>                                                      |
-| `on`        | `due on next week` =><br>  due date is on<br>2023-02-17 (Friday 17th February 2023)<br>         | `due on next week` =><br>  due date is between<br>2023-02-13 (Monday 13th February 2023) and<br>2023-02-19 (Sunday 19th February 2023) inclusive<br> |
-| `in`        | `due in next week` =><br>  due date is on<br>2023-02-17 (Friday 17th February 2023)<br>         | `due in next week` =><br>  due date is between<br>2023-02-13 (Monday 13th February 2023) and<br>2023-02-19 (Sunday 19th February 2023) inclusive<br> |
-|             | `due next week` =><br>  due date is on<br>2023-02-17 (Friday 17th February 2023)<br>            | `due next week` =><br>  due date is between<br>2023-02-13 (Monday 13th February 2023) and<br>2023-02-19 (Sunday 19th February 2023) inclusive<br>    |
-| `after`     | `due after next week` =><br>  due date is after<br>2023-02-17 (Friday 17th February 2023)<br>   | `due after next week` =><br>  due date is after<br>2023-02-19 (Sunday 19th February 2023)<br>                                                        |
+| keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 2.0.0 onwards                                                                                                                                 |
+| ----------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Summary** | `next week` is interpreted as a single date:<br> `7 days after the current date`.              | `next week` is interpreted as a date range:<br>the next `Monday to Sunday`.<br>`after` takes the end date in to account.                            |
+| `before`    | `due before next week` =><br> due date is before<br>2023-02-17 (Friday 17th February 2023)<br> | `due before next week` =><br> due date is before<br>2023-02-13 (Monday 13th February 2023)<br>                                                      |
+| `on`        | `due on next week` =><br> due date is on<br>2023-02-17 (Friday 17th February 2023)<br>         | `due on next week` =><br> due date is between<br>2023-02-13 (Monday 13th February 2023) and<br>2023-02-19 (Sunday 19th February 2023) inclusive<br> |
+| `in`        | `due in next week` =><br> due date is on<br>2023-02-17 (Friday 17th February 2023)<br>         | `due in next week` =><br> due date is between<br>2023-02-13 (Monday 13th February 2023) and<br>2023-02-19 (Sunday 19th February 2023) inclusive<br> |
+|             | `due next week` =><br> due date is on<br>2023-02-17 (Friday 17th February 2023)<br>            | `due next week` =><br> due date is between<br>2023-02-13 (Monday 13th February 2023) and<br>2023-02-19 (Sunday 19th February 2023) inclusive<br>    |
+| `after`     | `due after next week` =><br> due date is after<br>2023-02-17 (Friday 17th February 2023)<br>   | `due after next week` =><br> due date is after<br>2023-02-19 (Sunday 19th February 2023)<br>                                                        |

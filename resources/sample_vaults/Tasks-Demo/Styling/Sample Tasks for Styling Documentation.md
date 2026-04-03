@@ -50,6 +50,6 @@ Another tag example:
 ## Grid Layout
 
 - [x] #task Something I already did 🔼 ➕ 2023-03-11 🛫 2023-03-19 ⏳ 2023-03-18 📅 2023-04-25 ✅ 2023-04-01
-- [ ] #task Do something moderately important  🔼 🔁 every 2 weeks ➕ 2023-04-01  🛫 2023-04-09 ⏳ 2023-04-08 📅 2023-04-15
+- [ ] #task Do something moderately important 🔼 🔁 every 2 weeks ➕ 2023-04-01 🛫 2023-04-09 ⏳ 2023-04-08 📅 2023-04-15
 - [ ] #task Do something that has an indented bullet note
-  - Here is a tip on how to do that
+    - Here is a tip on how to do that

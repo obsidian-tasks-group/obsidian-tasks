@@ -1,4 +1,7 @@
 - [ ] hyphen
+
 * [ ] asterisk
-+ [ ] plus
+
+- [ ] plus
+
 1. [ ] numbered task

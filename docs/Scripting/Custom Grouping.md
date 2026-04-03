@@ -60,7 +60,7 @@ The expression is evaluated (calculated) on each task that matches your query, a
 | Desired heading                                                             | Values that you can return                                                                             |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | A single group name for the task                                            | A single value, such as `'group name'`.<br>An array, with a single value in, such as `['group name']`. |
-| Display the task potentially more than once (as is done by `group by tags`) | An array of values, such as:<br>`['heading 1', 'heading 2']`                                             |
+| Display the task potentially more than once (as is done by `group by tags`) | An array of values, such as:<br>`['heading 1', 'heading 2']`                                           |
 | No heading                                                                  | `null`<br>Empty string `''`<br>Empty array `[]`                                                        |
 
 The `expression` can:
@@ -81,7 +81,7 @@ The `expression` must:
 >
 > ```javascript
 > group by function task.description.replaceAll('_', '\\_')
->```
+> ```
 
 ## Example custom groups
 

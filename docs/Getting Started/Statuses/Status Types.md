@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - Status Type
+    - Status Type
 ---
 
 # Status Types
@@ -88,6 +88,7 @@ The `status.type` filter uses a new pattern in the Tasks code which some refer t
 If Tasks does not understand a `status.type` instruction, it reports this kind of message:
 
 <!-- snippet: StatusTypeField.test.status.name_status.name_with_invalid_line_is_helpful.approved.text -->
+
 ```text
 Tasks query: Invalid status.type instruction: 'status.type in progress'.
     Allowed options: 'is' and 'is not' (without quotes).
@@ -96,6 +97,7 @@ Tasks query: Invalid status.type instruction: 'status.type in progress'.
                            so 'in_progress' works too, for example.
     Example:         status.type is not NON_TASK
 ```
+
 <!-- endSnippet -->
 
 ### Status Types in Tasks filters
@@ -111,24 +113,24 @@ The tasks shown are purely examples for context. For example, the `~` column is 
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.Status_Transitions_status-types.approved.md -->
 
-| Operation and status.type | TODO | IN_PROGRESS | ON_HOLD | DONE | CANCELLED | NON_TASK |
-| ----- | ----- | ----- | ----- | ----- | ----- | ----- |
-| Example Task | `- [ ] demo` | `- [/] demo` | `- [h] demo` | `- [x] demo` | `- [-] demo` | `- [~] demo` |
-| Matches `not done` | YES | YES | YES | no | no | no |
-| Matches `done` | no | no | no | YES | YES | YES |
-| Matches `status.type is TODO` | YES | no | no | no | no | no |
-| Matches `status.type is IN_PROGRESS` | no | YES | no | no | no | no |
-| Matches `status.type is ON_HOLD` | no | no | YES | no | no | no |
-| Matches `status.type is DONE` | no | no | no | YES | no | no |
-| Matches `status.type is CANCELLED` | no | no | no | no | YES | no |
-| Matches `status.type is NON_TASK` | no | no | no | no | no | YES |
-| Matches `status.name includes todo` | YES | no | no | no | no | no |
-| Matches `status.name includes in progress` | no | YES | no | no | no | no |
-| Matches `status.name includes on hold` | no | no | YES | no | no | no |
-| Matches `status.name includes done` | no | no | no | YES | no | no |
-| Matches `status.name includes cancelled` | no | no | no | no | YES | no |
-| Name for `group by status` | Todo | Todo | Todo | Done | Done | Done |
-| Name for `group by status.type` | %%2%%TODO | %%1%%IN_PROGRESS | %%3%%ON_HOLD | %%4%%DONE | %%5%%CANCELLED | %%6%%NON_TASK |
-| Name for `group by status.name` | Todo | In Progress | On Hold | Done | Cancelled | My custom status |
+| Operation and status.type                  | TODO         | IN_PROGRESS      | ON_HOLD      | DONE         | CANCELLED      | NON_TASK         |
+| ------------------------------------------ | ------------ | ---------------- | ------------ | ------------ | -------------- | ---------------- |
+| Example Task                               | `- [ ] demo` | `- [/] demo`     | `- [h] demo` | `- [x] demo` | `- [-] demo`   | `- [~] demo`     |
+| Matches `not done`                         | YES          | YES              | YES          | no           | no             | no               |
+| Matches `done`                             | no           | no               | no           | YES          | YES            | YES              |
+| Matches `status.type is TODO`              | YES          | no               | no           | no           | no             | no               |
+| Matches `status.type is IN_PROGRESS`       | no           | YES              | no           | no           | no             | no               |
+| Matches `status.type is ON_HOLD`           | no           | no               | YES          | no           | no             | no               |
+| Matches `status.type is DONE`              | no           | no               | no           | YES          | no             | no               |
+| Matches `status.type is CANCELLED`         | no           | no               | no           | no           | YES            | no               |
+| Matches `status.type is NON_TASK`          | no           | no               | no           | no           | no             | YES              |
+| Matches `status.name includes todo`        | YES          | no               | no           | no           | no             | no               |
+| Matches `status.name includes in progress` | no           | YES              | no           | no           | no             | no               |
+| Matches `status.name includes on hold`     | no           | no               | YES          | no           | no             | no               |
+| Matches `status.name includes done`        | no           | no               | no           | YES          | no             | no               |
+| Matches `status.name includes cancelled`   | no           | no               | no           | no           | YES            | no               |
+| Name for `group by status`                 | Todo         | Todo             | Todo         | Done         | Done           | Done             |
+| Name for `group by status.type`            | %%2%%TODO    | %%1%%IN_PROGRESS | %%3%%ON_HOLD | %%4%%DONE    | %%5%%CANCELLED | %%6%%NON_TASK    |
+| Name for `group by status.name`            | Todo         | In Progress      | On Hold      | Done         | Cancelled      | My custom status |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->

@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - Support and Help/Missing tags, aliases and cssclasses in Obsidian some 1.9.x versions
+    - Support and Help/Missing tags, aliases and cssclasses in Obsidian some 1.9.x versions
 ---
 
 # Missing tags, aliases and cssclasses in some Obsidian 1.9.x versions
@@ -22,6 +22,7 @@ aliases:
 > The [Bases](https://help.obsidian.md/bases) functionality in Obsidian 1.9.x is amazing.
 >
 > However, it is important to note the following in the [Obsidian 1.9.0 (Insider) changelog](https://obsidian.md/changelog/2025-05-21-desktop-v1.9.0/):
+>
 > > [!Quote] Breaking changes
 > > We have officially removed support for the properties `tag`, `alias`, `cssclass` in favor of `tags`, `aliases` and `cssclasses`. In addition, the values of these properties _must_ be a list. If the current value is a text property, it will no longer be recognized by Obsidian.
 
@@ -75,7 +76,7 @@ alias: My Note Title
 # After
 
 aliases:
-  - My Note Title
+    - My Note Title
 ```
 
 **Tags:**
@@ -88,8 +89,8 @@ tag: project, important
 # After
 
 tags:
-  - project
-  - important
+    - project
+    - important
 ```
 
 **CSS Classes:**
@@ -102,7 +103,7 @@ cssclass: custom-style
 # After
 
 cssclasses:
-  - custom-style
+    - custom-style
 ```
 
 ## How to fix unsupported properties

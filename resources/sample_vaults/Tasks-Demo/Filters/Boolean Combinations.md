@@ -1,6 +1,6 @@
 ---
 tags:
- - examples
+    - examples
 ---
 
 # Boolean Combinations

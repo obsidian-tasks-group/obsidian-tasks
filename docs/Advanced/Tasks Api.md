@@ -9,7 +9,7 @@ publish: true
 ## Tasks API Interface
 
 > [!released]
-The Tasks API Interface was introduced in Tasks 2.0.0.
+> The Tasks API Interface was introduced in Tasks 2.0.0.
 
 Tasks exposes an API that can be used to integrate Tasks in other Plugins, scripts or
 dynamic code blocks.
@@ -21,6 +21,7 @@ however, this depends on the context of the executing script.
 This is the interface the API exposes:
 
 <!-- snippet: TasksApiV1.ts -->
+
 ```ts
 /**
  * Tasks API v1 interface
@@ -55,12 +56,13 @@ export interface TasksApiV1 {
     executeToggleTaskDoneCommand: (line: string, path: string) => string;
 }
 ```
+
 <!-- endSnippet -->
 
 ## `createTaskLineModal(): Promise<string>;`
 
 > [!released]
-This method was introduced in Tasks 2.0.0.
+> This method was introduced in Tasks 2.0.0.
 
 This method opens the Tasks [[Create or edit Task|Create or edit task UI]] and returns the Markdown for the task entered.
 If data entry is cancelled, an empty string is returned.
@@ -79,12 +81,14 @@ console.log(taskLine);
 
 > [!Tip]- Find plugins that use the Tasks API to create tasks
 > [Search GitHub for plugins which may use this function](https://github.com/search?q=createTaskLineModal+NOT+is%3Afork+NOT+repo%3Aobsidian-tasks-group%2Fobsidian-tasks+NOT+path%3A*.md&type=code), and by using `createTaskLineModal()`, will fully respect your Tasks settings.
+>
 > > [!warning]
 > >
 > > - You will need to be logged in to GitHub for this search to work.
 > > - Not all of these plugins have been reviewed by the Obsidian team: you should search for them in `Settings` > `Community plugins` - or review in [Plugins - Obsidian](https://obsidian.md/plugins) - for safety.
 
 ### Usage with QuickAdd
+
 One of the most common usage scenarios is probably in combination with the [QuickAdd](https://github.com/chhoumann/quickadd) plugin
 to automatically add tasks to a specific file.
 
@@ -131,6 +135,7 @@ console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
 
 > [!Tip]- Find plugins that use the Tasks API to toggle tasks
 > [Search GitHub for plugins which may use this function](https://github.com/search?q=executeToggleTaskDoneCommand+NOT+is%3Afork+NOT+repo%3Aobsidian-tasks-group%2Fobsidian-tasks+NOT+path%3A*.md&type=code), and by using `executeToggleTaskDoneCommand()`, will fully respect your Tasks settings.
+>
 > > [!warning]
 > >
 > > - You will need to be logged in to GitHub for this search to work.
@@ -170,6 +175,7 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
 
 > [!Tip]- Find plugins that use the Tasks API to suggest task properties
 > [Search GitHub for plugins which may use this function](https://github.com/search?q=showTasksPluginAutoSuggest+NOT+is%3Afork+NOT+repo%3Aobsidian-tasks-group%2Fobsidian-tasks+NOT+path%3A*.md&type=code), and by using `showTasksPluginAutoSuggest()`, will fully respect your Tasks settings.
+>
 > > [!warning]
 > >
 > > - You will need to be logged in to GitHub for this search to work.
@@ -182,8 +188,5 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
 - Searching tasks:
   - It is not yet possible to run Tasks searches via the API. We are tracking this in [issue #2459](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2459).
 - Ambiguity when `editTaskLineModal()` returns empty string:
-  - `editTaskLineModal()` returns an empty string in both these situations:
-        1. the user clicked Cancel
-        2. the user completed a task like this, which uses  [[On Completion]]'s `delete` facility:
-            - `- [ ] Delete me when done 🏁 delete`
+  - `editTaskLineModal()` returns an empty string in both these situations: 1. the user clicked Cancel 2. the user completed a task like this, which uses [[On Completion]]'s `delete` facility: - `- [ ] Delete me when done 🏁 delete`
   - Fixing this would require introducing `TasksApiV1` .

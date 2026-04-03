@@ -37,10 +37,9 @@ Given a page that you wish to rename and/or move to a different folder.
 > ---
 > publish: true
 > aliases:
->   - 
-> --- 
+>     -
+> ---
 > ```
->
 >
 > ... to this ...
 >
@@ -48,7 +47,7 @@ Given a page that you wish to rename and/or move to a different folder.
 > ---
 > publish: true
 > aliases:
->   - Current/Path/To/Documentation File
+>     - Current/Path/To/Documentation File
 > ---
 > ```
 >

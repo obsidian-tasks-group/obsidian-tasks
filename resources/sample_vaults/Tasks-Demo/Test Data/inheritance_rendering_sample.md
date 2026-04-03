@@ -1,4 +1,4 @@
--  grandparent list item
+- grandparent list item
     - [ ] parent 1
         - [ ] child 1
             - [ ] grandchild 1

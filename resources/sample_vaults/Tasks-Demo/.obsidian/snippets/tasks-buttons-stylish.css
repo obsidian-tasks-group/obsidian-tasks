@@ -6,7 +6,8 @@
     content: '\1f4a4';
 }
 
-.tasks-edit, .tasks-postpone {
+.tasks-edit,
+.tasks-postpone {
     background: linear-gradient(to bottom, #ffda89, #ffa07a);
     padding: 2px 5px;
     border-radius: var(--radius-s);

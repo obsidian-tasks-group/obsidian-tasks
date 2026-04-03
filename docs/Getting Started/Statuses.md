@@ -9,7 +9,7 @@ publish: true
 ## Introduction
 
 > [!released]
-Custom Statuses were introduced in Tasks 1.23.0.
+> Custom Statuses were introduced in Tasks 1.23.0.
 
 This page provides an overview of using Tasks with **Custom Statuses**, which some people refer to as Custom Checkboxes or Alternative/Alternate Checkboxes.
 
@@ -41,7 +41,7 @@ Status is just Tasks' name for:
 1. the character (`symbol`) between the `[` and `]` in a task line
 2. AND some options that you can customise, to tell tasks how to treat all your tasks with that character.
 
-Some obsidian users call them other names, like 'Alternative Checkboxes', but that is more about how they are displayed, rather than about the actual *behaviour* of tasks with particular statuses.
+Some obsidian users call them other names, like 'Alternative Checkboxes', but that is more about how they are displayed, rather than about the actual _behaviour_ of tasks with particular statuses.
 
 ### What's IN a Status?
 
@@ -189,7 +189,7 @@ See [[Toggling and Editing Statuses#'Tasks Change status to...' commands|'Tasks:
 For details, see [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
 > [!info]
-We envisage adding `status.symbol`. We are tracking this in [issue #1630](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1630).
+> We envisage adding `status.symbol`. We are tracking this in [issue #1630](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1630).
 
 ## Credit: Sytone and the 'Tasks SQL Powered' plugin
 

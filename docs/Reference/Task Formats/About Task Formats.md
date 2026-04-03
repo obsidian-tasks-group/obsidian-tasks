@@ -42,7 +42,7 @@ Tasks supports these task formats:
 >
 > If you select Dataview format, Tasks will no longer read any of its own Emoji signifiers (until you change the format back to Tasks again).
 >
-> We are tracking this in [issue #1891](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1891), and Tasks will be taught to *read* all supported task formats in a future release.
+> We are tracking this in [issue #1891](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1891), and Tasks will be taught to _read_ all supported task formats in a future release.
 
 ### Tasks features that respect the chosen format
 

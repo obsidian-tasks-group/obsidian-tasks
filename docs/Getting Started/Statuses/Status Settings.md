@@ -11,7 +11,7 @@ publish: true
 This is what you see in the Tasks settings when you first look at the Task Statuses section:
 
 ![Initial Task Statuses Settings](../../images/settings-statuses-initial.png)<br>
-*Initial Task Statuses Settings*
+_Initial Task Statuses Settings_
 
 There are two sections:
 
@@ -28,7 +28,7 @@ There are two sections:
 
 We also see that each status consists of:
 
-- **Status Symbol** (for example, `x` and  `-`)
+- **Status Symbol** (for example, `x` and `-`)
 - **Status Name** (for example, 'In Progress')
 - **Next Status Symbol** (for example, `x` and `space`)
 - **Status Type** (one of `TODO`, `DONE`, `IN_PROGRESS` or `CANCELLED`)
@@ -38,7 +38,7 @@ We also see that each status consists of:
 This adds a new, empty row to the Custom Statuses section.
 
 ![An empty Status, which can be edited and deleted](../../images/settings-custom-statuses-new-empty-status.png)<br>
-*An empty Status, which can be edited and deleted*
+_An empty Status, which can be edited and deleted_
 
 You can then click its Pencil icon and fill in the details for your new Status.
 
@@ -51,7 +51,7 @@ This button populates the Custom Statuses list with all the statuses supported b
 You may wish to delete the default custom statuses first, so that you only see the Minimal statuses.
 
 ![The first few statuses supported by Minimal](../../images/settings-custom-statuses-minimal-theme-first-few.png)<br>
-*The first few statuses supported by Minimal*
+_The first few statuses supported by Minimal_
 
 The [[Minimal Theme]] page shows the full list statuses that will be added, and what they look like in that theme.
 
@@ -60,7 +60,7 @@ The [[Minimal Theme]] page shows the full list statuses that will be added, and 
 This button populates the Custom Statuses list with all the statuses supported by the ITS Theme, and also the identical SlRvb's Alternate Checkboxes.
 
 ![The first few statuses supported by ITS Theme and SlRvb's Alternate Checkboxes](../../images/settings-custom-statuses-its-theme-first-few.png)<br>
-*The first few statuses supported by ITS Theme and SlRvb's Alternate Checkboxes*
+_The first few statuses supported by ITS Theme and SlRvb's Alternate Checkboxes_
 
 You can see screenshots, and the statuses that will be added:
 
@@ -84,7 +84,7 @@ This can be a convenient way to populate the Custom Statuses settings.
 For example, in a vault that has already used a few custom statuses, we might see:
 
 ![Example result from adding all Unknown statuses](../../images/settings-custom-statuses-add-unknown-statuses.png)<br>
-*Example result from adding all Unknown statuses*
+_Example result from adding all Unknown statuses_
 
 ## Reset Custom Status Types to Defaults
 

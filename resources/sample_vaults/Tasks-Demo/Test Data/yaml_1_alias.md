@@ -1,6 +1,6 @@
 ---
 aliases:
-  - YAML Alias 1
+    - YAML Alias 1
 ---
 
 # yaml_1_alias

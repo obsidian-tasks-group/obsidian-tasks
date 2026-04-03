@@ -92,8 +92,8 @@ Sample code block:
 
 ### How the code works
 
-- The sample code block above  is a `dataviewjs` code block, which generates a Tasks code block!
-- By putting a backtick character (``` ` ```) at both ends of the `query` value, we can create a multi-line string, and we can embed values inside that string using `${...}`.
+- The sample code block above is a `dataviewjs` code block, which generates a Tasks code block!
+- By putting a backtick character (`` ` ``) at both ends of the `query` value, we can create a multi-line string, and we can embed values inside that string using `${...}`.
   - To find out more about this JavaScript technique, see [Template literals (Template strings)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
 - The Dataview magic bit is the use of `dv.current().file.path`, which gives the path of the file containing code block.
 - The line `dv.paragraph('```tasks\n' + query + '\n```');`:

@@ -13,6 +13,7 @@ These samples demonstrate all the fields supported by the Tasks plugin's parsing
 ## Tasks Emoji Format for Dates
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dates_tasksPluginEmoji-snippet.approved.md -->
+
 ```md
 - [ ] #task Has a created date ➕ 2023-04-13
 - [ ] #task Has a scheduled date ⏳ 2023-04-14
@@ -21,6 +22,7 @@ These samples demonstrate all the fields supported by the Tasks plugin's parsing
 - [x] #task Has a done date ✅ 2023-04-17
 - [-] #task Has a cancelled date ❌ 2023-04-18
 ```
+
 <!-- endSnippet -->
 
 For more information, see [[Dates]].
@@ -28,6 +30,7 @@ For more information, see [[Dates]].
 ## Tasks Emoji Format for Priorities
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Priorities_tasksPluginEmoji-snippet.approved.md -->
+
 ```md
 - [ ] #task Lowest priority ⏬
 - [ ] #task Low priority 🔽
@@ -36,6 +39,7 @@ For more information, see [[Dates]].
 - [ ] #task High priority ⏫
 - [ ] #task Highest priority 🔺
 ```
+
 <!-- endSnippet -->
 
 For more information, see [[Priority]].
@@ -51,23 +55,27 @@ For more information, see [[Recurring Tasks]].
 ## Tasks Emoji Format for OnCompletion
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_OnCompletion_tasksPluginEmoji-snippet.approved.md -->
+
 ```md
 - [ ] #task Keep this task when done
 - [ ] #task Keep this task when done too 🏁 keep
 - [ ] #task Remove this task when done 🏁 delete
 - [ ] #task Remove completed instance of this recurring task when done 🔁 every day 🏁 delete
 ```
+
 <!-- endSnippet -->
 
 For more information, see [[On Completion]].
 
-## Tasks Emoji  Format for Dependencies
+## Tasks Emoji Format for Dependencies
 
 <!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Dependencies_tasksPluginEmoji-snippet.approved.md -->
+
 ```md
 - [ ] #task do this first 🆔 dcf64c
 - [ ] #task do this after first and some other task ⛔ dcf64c,0h17ye
 ```
+
 <!-- endSnippet -->
 
 For more information, see [[Task Dependencies]].
@@ -90,7 +98,7 @@ See [[Tasks Emoji Format#Unicode Variation Selectors]] below.
 
 ### Unicode Variation Selectors
 
-Tasks does not understand unicode [Variation Selectors](https://en.wikipedia.org/wiki/Variation_Selectors_(Unicode_block)).
+Tasks does not understand unicode [Variation Selectors](<https://en.wikipedia.org/wiki/Variation_Selectors_(Unicode_block)>).
 
 There has been a report of this preventing Tasks from reading the High Priority emoji (⏫) correctly, when added manually.
 

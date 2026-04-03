@@ -27,7 +27,7 @@ As installed, the Tasks plugin supports just two statuses for your tasks:
 Many users would like to represent other statuses, such as Cancelled, Delegated, Blocked and many more.
 
 > [!released]
-Custom statuses were introduced in Tasks 1.23.0.
+> Custom statuses were introduced in Tasks 1.23.0.
 
 Tasks now allows you to add custom statuses to your settings, to give you powerful control over what happens next when you click on the task's checkbox.
 
@@ -47,11 +47,11 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 
 <!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
-| Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
-| ----- | ----- | ----- | ----- | ----- |
-| `!` | `D` | Important | `TODO` | Yes |
-| `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
-| `X` | `!` | Done - Important | `DONE` | Yes |
+| Status Symbol | Next Status Symbol | Status Name       | Status Type   | Needs Custom Styling |
+| ------------- | ------------------ | ----------------- | ------------- | -------------------- |
+| `!`           | `D`                | Important         | `TODO`        | Yes                  |
+| `D`           | `X`                | Doing - Important | `IN_PROGRESS` | Yes                  |
+| `X`           | `!`                | Done - Important  | `DONE`        | Yes                  |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
@@ -82,7 +82,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 > Once you are happy with your statuses, we recommend restarting Obsidian, to ensure that all tasks and query results use the correct settings.
 
 > [!warning]
-Tasks currently allows creation of more than one status with the same symbol. It silently ignores any duplicate symbols: only the first will be used. If in doubt, examine the available statuses in the status dropdown in the [[Create or edit Task|‘Create or edit Task’ Modal]].
+> Tasks currently allows creation of more than one status with the same symbol. It silently ignores any duplicate symbols: only the first will be used. If in doubt, examine the available statuses in the status dropdown in the [[Create or edit Task|‘Create or edit Task’ Modal]].
 
 ### Test the new statuses
 

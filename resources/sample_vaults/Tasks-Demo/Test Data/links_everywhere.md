@@ -1,7 +1,8 @@
 ---
-link-in-frontmatter: "[[link_in_yaml]]"
-link-in-frontmatter-to-heading: "[[#A link in a link_in_heading]]"
+link-in-frontmatter: '[[link_in_yaml]]'
+link-in-frontmatter-to-heading: '[[#A link in a link_in_heading]]'
 ---
+
 # links_everywhere
 
 A link in the file body: [[link_in_file_body]]

@@ -23,33 +23,58 @@ PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 
 function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    function adopt(value) {
+        return value instanceof P
+            ? value
+            : new P(function (resolve) {
+                  resolve(value);
+              });
+    }
     return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator['throw'](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 }
 
-typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-    var e = new Error(message);
-    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
+typeof SuppressedError === 'function'
+    ? SuppressedError
+    : function (error, suppressed, message) {
+          var e = new Error(message);
+          return ((e.name = 'SuppressedError'), (e.error = error), (e.suppressed = suppressed), e);
+      };
 
 const DEFAULT_SETTINGS = {
     regex: /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/i,
-    lineRegex: /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
-    linkRegex: /^\[([^\[\]]*)\]\((https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})\)$/i,
-    linkLineRegex: /\[([^\[\]]*)\]\((https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})\)/gi,
+    lineRegex:
+        /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+    linkRegex:
+        /^\[([^\[\]]*)\]\((https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})\)$/i,
+    linkLineRegex:
+        /\[([^\[\]]*)\]\((https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})\)/gi,
     imageRegex: /\.(gif|jpe?g|tiff?|png|webp|bmp|tga|psd|ai)$/i,
     enhanceDefaultPaste: true,
     shouldPreserveSelectionAsTitle: false,
     enhanceDropEvents: true,
-    websiteBlacklist: "",
+    websiteBlacklist: '',
     maximumTitleLength: 0,
     useNewScraper: false,
-    linkPreviewApiKey: "",
+    linkPreviewApiKey: '',
     useBetterPasteId: false,
 };
 class AutoLinkTitleSettingTab extends obsidian.PluginSettingTab {
@@ -61,92 +86,111 @@ class AutoLinkTitleSettingTab extends obsidian.PluginSettingTab {
         let { containerEl } = this;
         containerEl.empty();
         new obsidian.Setting(containerEl)
-            .setName("Enhance Default Paste")
-            .setDesc("Fetch the link title when pasting a link in the editor with the default paste command")
-            .addToggle((val) => val
-            .setValue(this.plugin.settings.enhanceDefaultPaste)
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            console.log(value);
-            this.plugin.settings.enhanceDefaultPaste = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setName('Enhance Default Paste')
+            .setDesc('Fetch the link title when pasting a link in the editor with the default paste command')
+            .addToggle((val) =>
+                val.setValue(this.plugin.settings.enhanceDefaultPaste).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        console.log(value);
+                        this.plugin.settings.enhanceDefaultPaste = value;
+                        yield this.plugin.saveSettings();
+                    }),
+                ),
+            );
         new obsidian.Setting(containerEl)
-            .setName("Enhance Drop Events")
-            .setDesc("Fetch the link title when drag and dropping a link from another program")
-            .addToggle((val) => val
-            .setValue(this.plugin.settings.enhanceDropEvents)
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            console.log(value);
-            this.plugin.settings.enhanceDropEvents = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setName('Enhance Drop Events')
+            .setDesc('Fetch the link title when drag and dropping a link from another program')
+            .addToggle((val) =>
+                val.setValue(this.plugin.settings.enhanceDropEvents).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        console.log(value);
+                        this.plugin.settings.enhanceDropEvents = value;
+                        yield this.plugin.saveSettings();
+                    }),
+                ),
+            );
         new obsidian.Setting(containerEl)
-            .setName("Maximum title length")
-            .setDesc("Set the maximum length of the title. Set to 0 to disable.")
-            .addText((val) => val
-            .setValue(this.plugin.settings.maximumTitleLength.toString(10))
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            const titleLength = Number(value);
-            this.plugin.settings.maximumTitleLength =
-                isNaN(titleLength) || titleLength < 0 ? 0 : titleLength;
-            yield this.plugin.saveSettings();
-        })));
+            .setName('Maximum title length')
+            .setDesc('Set the maximum length of the title. Set to 0 to disable.')
+            .addText((val) =>
+                val.setValue(this.plugin.settings.maximumTitleLength.toString(10)).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        const titleLength = Number(value);
+                        this.plugin.settings.maximumTitleLength =
+                            isNaN(titleLength) || titleLength < 0 ? 0 : titleLength;
+                        yield this.plugin.saveSettings();
+                    }),
+                ),
+            );
         new obsidian.Setting(containerEl)
-            .setName("Preserve selection as title")
-            .setDesc("Whether to prefer selected text as title over fetched title when pasting")
-            .addToggle((val) => val
-            .setValue(this.plugin.settings.shouldPreserveSelectionAsTitle)
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            console.log(value);
-            this.plugin.settings.shouldPreserveSelectionAsTitle = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setName('Preserve selection as title')
+            .setDesc('Whether to prefer selected text as title over fetched title when pasting')
+            .addToggle((val) =>
+                val.setValue(this.plugin.settings.shouldPreserveSelectionAsTitle).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        console.log(value);
+                        this.plugin.settings.shouldPreserveSelectionAsTitle = value;
+                        yield this.plugin.saveSettings();
+                    }),
+                ),
+            );
         new obsidian.Setting(containerEl)
-            .setName("Website Blacklist")
-            .setDesc("List of strings (comma separated) that disable autocompleting website titles. Can be URLs or arbitrary text.")
-            .addTextArea((val) => val
-            .setValue(this.plugin.settings.websiteBlacklist)
-            .setPlaceholder("localhost, tiktok.com")
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            this.plugin.settings.websiteBlacklist = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setName('Website Blacklist')
+            .setDesc(
+                'List of strings (comma separated) that disable autocompleting website titles. Can be URLs or arbitrary text.',
+            )
+            .addTextArea((val) =>
+                val
+                    .setValue(this.plugin.settings.websiteBlacklist)
+                    .setPlaceholder('localhost, tiktok.com')
+                    .onChange((value) =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            this.plugin.settings.websiteBlacklist = value;
+                            yield this.plugin.saveSettings();
+                        }),
+                    ),
+            );
         new obsidian.Setting(containerEl)
-            .setName("Use New Scraper")
-            .setDesc("Use experimental new scraper, seems to work well on desktop but not mobile.")
-            .addToggle((val) => val
-            .setValue(this.plugin.settings.useNewScraper)
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            console.log(value);
-            this.plugin.settings.useNewScraper = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setName('Use New Scraper')
+            .setDesc('Use experimental new scraper, seems to work well on desktop but not mobile.')
+            .addToggle((val) =>
+                val.setValue(this.plugin.settings.useNewScraper).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        console.log(value);
+                        this.plugin.settings.useNewScraper = value;
+                        yield this.plugin.saveSettings();
+                    }),
+                ),
+            );
         new obsidian.Setting(containerEl)
-            .setName("Use Better Fetching Placeholder")
-            .setDesc("Use a more readable placeholder when fetching the title of a link.")
-            .addToggle((val) => val
-            .setValue(this.plugin.settings.useBetterPasteId)
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            console.log(value);
-            this.plugin.settings.useBetterPasteId = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setName('Use Better Fetching Placeholder')
+            .setDesc('Use a more readable placeholder when fetching the title of a link.')
+            .addToggle((val) =>
+                val.setValue(this.plugin.settings.useBetterPasteId).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        console.log(value);
+                        this.plugin.settings.useBetterPasteId = value;
+                        yield this.plugin.saveSettings();
+                    }),
+                ),
+            );
         new obsidian.Setting(containerEl)
-            .setName("LinkPreview API Key")
-            .setDesc("API key for the LinkPreview.net service. Get one at https://my.linkpreview.net/access_keys")
-            .addText((text) => text
-            .setValue(this.plugin.settings.linkPreviewApiKey || "")
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            const trimmedValue = value.trim();
-            if (trimmedValue.length > 0 && trimmedValue.length !== 32) {
-                new obsidian.Notice("LinkPreview API key must be 32 characters long");
-                this.plugin.settings.linkPreviewApiKey = "";
-            }
-            else {
-                this.plugin.settings.linkPreviewApiKey = trimmedValue;
-            }
-            yield this.plugin.saveSettings();
-        })));
+            .setName('LinkPreview API Key')
+            .setDesc('API key for the LinkPreview.net service. Get one at https://my.linkpreview.net/access_keys')
+            .addText((text) =>
+                text.setValue(this.plugin.settings.linkPreviewApiKey || '').onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        const trimmedValue = value.trim();
+                        if (trimmedValue.length > 0 && trimmedValue.length !== 32) {
+                            new obsidian.Notice('LinkPreview API key must be 32 characters long');
+                            this.plugin.settings.linkPreviewApiKey = '';
+                        } else {
+                            this.plugin.settings.linkPreviewApiKey = trimmedValue;
+                        }
+                        yield this.plugin.saveSettings();
+                    }),
+                ),
+            );
     }
 }
 
@@ -155,14 +199,17 @@ class CheckIf {
         let cursor = editor.getCursor();
         // Check if the characters before the url are ]( to indicate a markdown link
         var titleEnd = editor.getRange({ ch: cursor.ch - 2, line: cursor.line }, { ch: cursor.ch, line: cursor.line });
-        return titleEnd == "](";
+        return titleEnd == '](';
     }
     static isAfterQuote(editor) {
         let cursor = editor.getCursor();
         // Check if the characters before the url are " or ' to indicate we want the url directly
         // This is common in elements like <a href="linkhere"></a>
-        var beforeChar = editor.getRange({ ch: cursor.ch - 1, line: cursor.line }, { ch: cursor.ch, line: cursor.line });
-        return beforeChar == "\"" || beforeChar == "'";
+        var beforeChar = editor.getRange(
+            { ch: cursor.ch - 1, line: cursor.line },
+            { ch: cursor.ch, line: cursor.line },
+        );
+        return beforeChar == '"' || beforeChar == "'";
     }
     static isUrl(text) {
         let urlRegex = new RegExp(DEFAULT_SETTINGS.regex);
@@ -226,8 +273,7 @@ class EditorExtensions {
         let l = 0;
         let offset = -1;
         let r = -1;
-        for (; (r = substr.indexOf("\n", r + 1)) !== -1; l++, offset = r)
-            ;
+        for (; (r = substr.indexOf('\n', r + 1)) !== -1; l++, offset = r);
         offset += 1;
         let ch = content.substr(offset, index - offset).length;
         return { line: l, ch: ch };
@@ -244,8 +290,7 @@ function scrape(url) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield obsidian.requestUrl(url);
-            if (!response.headers['content-type'].includes('text/html'))
-                return getUrlFinalSegment$1(url);
+            if (!response.headers['content-type'].includes('text/html')) return getUrlFinalSegment$1(url);
             const html = response.text;
             const doc = new DOMParser().parseFromString(html, 'text/html');
             const title = doc.querySelector('title');
@@ -259,8 +304,7 @@ function scrape(url) {
                 return url;
             }
             return title.innerText;
-        }
-        catch (ex) {
+        } catch (ex) {
             console.error(ex);
             return '';
         }
@@ -271,8 +315,7 @@ function getUrlFinalSegment$1(url) {
         const segments = new URL(url).pathname.split('/');
         const last = segments.pop() || segments.pop(); // Handle potential trailing slash
         return last;
-    }
-    catch (_) {
+    } catch (_) {
         return 'File';
     }
 }
@@ -285,9 +328,9 @@ function getPageTitle$1(url) {
     });
 }
 
-const electronPkg = require("electron");
+const electronPkg = require('electron');
 function blank(text) {
-    return text === undefined || text === null || text === "";
+    return text === undefined || text === null || text === '';
 }
 function notBlank(text) {
     return !blank(text);
@@ -296,8 +339,8 @@ function notBlank(text) {
 function load(window, url) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => {
-            window.webContents.on("did-finish-load", (event) => resolve(event));
-            window.webContents.on("did-fail-load", (event) => reject(event));
+            window.webContents.on('did-finish-load', (event) => resolve(event));
+            window.webContents.on('did-fail-load', (event) => reject(event));
             window.loadURL(url);
         });
     });
@@ -318,7 +361,7 @@ function electronGetPageTitle(url) {
                 show: false,
             });
             window.webContents.setAudioMuted(true);
-            window.webContents.on("will-navigate", (event, newUrl) => {
+            window.webContents.on('will-navigate', (event, newUrl) => {
                 event.preventDefault();
                 window.loadURL(newUrl);
             });
@@ -328,19 +371,16 @@ function electronGetPageTitle(url) {
                 window.destroy();
                 if (notBlank(title)) {
                     return title;
-                }
-                else {
+                } else {
                     return url;
                 }
-            }
-            catch (ex) {
+            } catch (ex) {
                 window.destroy();
                 return url;
             }
-        }
-        catch (ex) {
+        } catch (ex) {
             console.error(ex);
-            return "";
+            return '';
         }
     });
 }
@@ -348,11 +388,11 @@ function nonElectronGetPageTitle(url) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const html = yield obsidian.request({ url });
-            const doc = new DOMParser().parseFromString(html, "text/html");
-            const title = doc.querySelectorAll("title")[0];
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const title = doc.querySelectorAll('title')[0];
             if (title == null || blank(title === null || title === void 0 ? void 0 : title.innerText)) {
                 // If site is javascript based and has a no-title attribute when unloaded, use it.
-                var noTitle = title === null || title === void 0 ? void 0 : title.getAttr("no-title");
+                var noTitle = title === null || title === void 0 ? void 0 : title.getAttr('no-title');
                 if (notBlank(noTitle)) {
                     return noTitle;
                 }
@@ -360,10 +400,9 @@ function nonElectronGetPageTitle(url) {
                 return url;
             }
             return title.innerText;
-        }
-        catch (ex) {
+        } catch (ex) {
             console.error(ex);
-            return "";
+            return '';
         }
     });
 }
@@ -372,27 +411,25 @@ function getUrlFinalSegment(url) {
         const segments = new URL(url).pathname.split('/');
         const last = segments.pop() || segments.pop(); // Handle potential trailing slash
         return last;
-    }
-    catch (_) {
-        return "File";
+    } catch (_) {
+        return 'File';
     }
 }
 function tryGetFileType(url) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch(url, { method: "HEAD" });
+            const response = yield fetch(url, { method: 'HEAD' });
             // Ensure site returns an ok status code before scraping
             if (!response.ok) {
-                return "Site Unreachable";
+                return 'Site Unreachable';
             }
             // Ensure site is an actual HTML page and not a pdf or 3 gigabyte video file.
-            let contentType = response.headers.get("content-type");
-            if (!contentType.includes("text/html")) {
+            let contentType = response.headers.get('content-type');
+            if (!contentType.includes('text/html')) {
                 return getUrlFinalSegment(url);
             }
             return null;
-        }
-        catch (err) {
+        } catch (err) {
             return null;
         }
     });
@@ -400,8 +437,8 @@ function tryGetFileType(url) {
 function getPageTitle(url) {
     return __awaiter(this, void 0, void 0, function* () {
         // If we're on Desktop use the Electron scraper
-        if (!(url.startsWith("http") || url.startsWith("https"))) {
-            url = "https://" + url;
+        if (!(url.startsWith('http') || url.startsWith('https'))) {
+            url = 'https://' + url;
         }
         // Try to do a HEAD request to see if the site is reachable and if it's an HTML page
         // If we error out due to CORS, we'll just try to scrape the page anyway.
@@ -411,8 +448,7 @@ function getPageTitle(url) {
         }
         if (electronPkg != null) {
             return electronGetPageTitle(url);
-        }
-        else {
+        } else {
             return nonElectronGetPageTitle(url);
         }
     });
@@ -434,10 +470,10 @@ class AutoLinkTitle extends obsidian.Plugin {
     }
     onload() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("loading obsidian-auto-link-title");
+            console.log('loading obsidian-auto-link-title');
             yield this.loadSettings();
             this.blacklist = this.settings.websiteBlacklist
-                .split(",")
+                .split(',')
                 .map((s) => s.trim())
                 .filter((s) => s.length > 0);
             // Listen to paste event
@@ -445,32 +481,32 @@ class AutoLinkTitle extends obsidian.Plugin {
             // Listen to drop event
             this.dropFunction = this.dropUrlWithTitle.bind(this);
             this.addCommand({
-                id: "auto-link-title-paste",
-                name: "Paste URL and auto fetch title",
+                id: 'auto-link-title-paste',
+                name: 'Paste URL and auto fetch title',
                 editorCallback: (editor) => this.manualPasteUrlWithTitle(editor),
                 hotkeys: [],
             });
             this.addCommand({
-                id: "auto-link-title-normal-paste",
-                name: "Normal paste (no fetching behavior)",
+                id: 'auto-link-title-normal-paste',
+                name: 'Normal paste (no fetching behavior)',
                 editorCallback: (editor) => this.normalPaste(editor),
                 hotkeys: [
                     {
-                        modifiers: ["Mod", "Shift"],
-                        key: "v",
+                        modifiers: ['Mod', 'Shift'],
+                        key: 'v',
                     },
                 ],
             });
-            this.registerEvent(this.app.workspace.on("editor-paste", this.pasteFunction));
-            this.registerEvent(this.app.workspace.on("editor-drop", this.dropFunction));
+            this.registerEvent(this.app.workspace.on('editor-paste', this.pasteFunction));
+            this.registerEvent(this.app.workspace.on('editor-drop', this.dropFunction));
             this.addCommand({
-                id: "enhance-url-with-title",
-                name: "Enhance existing URL with link and title",
+                id: 'enhance-url-with-title',
+                name: 'Enhance existing URL with link and title',
                 editorCallback: (editor) => this.addTitleToLink(editor),
                 hotkeys: [
                     {
-                        modifiers: ["Mod", "Shift"],
-                        key: "e",
+                        modifiers: ['Mod', 'Shift'],
+                        key: 'e',
                     },
                 ],
             });
@@ -479,9 +515,8 @@ class AutoLinkTitle extends obsidian.Plugin {
     }
     addTitleToLink(editor) {
         // Only attempt fetch if online
-        if (!navigator.onLine)
-            return;
-        let selectedText = (EditorExtensions.getSelectedText(editor) || "").trim();
+        if (!navigator.onLine) return;
+        let selectedText = (EditorExtensions.getSelectedText(editor) || '').trim();
         // If the cursor is on a raw html link, convert to a markdown link and fetch title
         if (CheckIf.isUrl(selectedText)) {
             this.convertUrlToTitledLink(editor, selectedText);
@@ -495,8 +530,7 @@ class AutoLinkTitle extends obsidian.Plugin {
     normalPaste(editor) {
         return __awaiter(this, void 0, void 0, function* () {
             let clipboardText = yield navigator.clipboard.readText();
-            if (clipboardText === null || clipboardText === "")
-                return;
+            if (clipboardText === null || clipboardText === '') return;
             editor.replaceSelection(clipboardText);
         });
     }
@@ -509,8 +543,7 @@ class AutoLinkTitle extends obsidian.Plugin {
                 editor.replaceSelection(clipboardText);
                 return;
             }
-            if (clipboardText == null || clipboardText == "")
-                return;
+            if (clipboardText == null || clipboardText == '') return;
             // If its not a URL, we return false to allow the default paste handler to take care of it.
             // Similarly, image urls don't have a meaningful <title> attribute so downloading it
             // to fetch the title is a waste of bandwidth.
@@ -527,7 +560,7 @@ class AutoLinkTitle extends obsidian.Plugin {
             }
             // If url is pasted over selected text and setting is enabled, no need to fetch title,
             // just insert a link
-            let selectedText = (EditorExtensions.getSelectedText(editor) || "").trim();
+            let selectedText = (EditorExtensions.getSelectedText(editor) || '').trim();
             if (selectedText && this.settings.shouldPreserveSelectionAsTitle) {
                 editor.replaceSelection(`[${selectedText}](${clipboardText})`);
                 return;
@@ -542,14 +575,11 @@ class AutoLinkTitle extends obsidian.Plugin {
             if (!this.settings.enhanceDefaultPaste) {
                 return;
             }
-            if (clipboard.defaultPrevented)
-                return;
+            if (clipboard.defaultPrevented) return;
             // Only attempt fetch if online
-            if (!navigator.onLine)
-                return;
-            let clipboardText = clipboard.clipboardData.getData("text/plain");
-            if (clipboardText === null || clipboardText === "")
-                return;
+            if (!navigator.onLine) return;
+            let clipboardText = clipboard.clipboardData.getData('text/plain');
+            if (clipboardText === null || clipboardText === '') return;
             // If its not a URL, we return false to allow the default paste handler to take care of it.
             // Similarly, image urls don't have a meaningful <title> attribute so downloading it
             // to fetch the title is a waste of bandwidth.
@@ -568,7 +598,7 @@ class AutoLinkTitle extends obsidian.Plugin {
             }
             // If url is pasted over selected text and setting is enabled, no need to fetch title,
             // just insert a link
-            let selectedText = (EditorExtensions.getSelectedText(editor) || "").trim();
+            let selectedText = (EditorExtensions.getSelectedText(editor) || '').trim();
             if (selectedText && this.settings.shouldPreserveSelectionAsTitle) {
                 editor.replaceSelection(`[${selectedText}](${clipboardText})`);
                 return;
@@ -583,14 +613,11 @@ class AutoLinkTitle extends obsidian.Plugin {
             if (!this.settings.enhanceDropEvents) {
                 return;
             }
-            if (dropEvent.defaultPrevented)
-                return;
+            if (dropEvent.defaultPrevented) return;
             // Only attempt fetch if online
-            if (!navigator.onLine)
-                return;
-            let dropText = dropEvent.dataTransfer.getData("text/plain");
-            if (dropText === null || dropText === "")
-                return;
+            if (!navigator.onLine) return;
+            let dropText = dropEvent.dataTransfer.getData('text/plain');
+            if (dropText === null || dropText === '') return;
             // If its not a URL, we return false to allow the default paste handler to take care of it.
             // Similarly, image urls don't have a meaningful <title> attribute so downloading it
             // to fetch the title is a waste of bandwidth.
@@ -609,7 +636,7 @@ class AutoLinkTitle extends obsidian.Plugin {
             }
             // If url is pasted over selected text and setting is enabled, no need to fetch title,
             // just insert a link
-            let selectedText = (EditorExtensions.getSelectedText(editor) || "").trim();
+            let selectedText = (EditorExtensions.getSelectedText(editor) || '').trim();
             if (selectedText && this.settings.shouldPreserveSelectionAsTitle) {
                 editor.replaceSelection(`[${selectedText}](${dropText})`);
                 return;
@@ -648,8 +675,7 @@ class AutoLinkTitle extends obsidian.Plugin {
             const start = text.indexOf(pasteId);
             if (start < 0) {
                 console.log(`Unable to find text "${pasteId}" in current editor, bailing out; link ${url}`);
-            }
-            else {
+            } else {
                 const end = start + pasteId.length;
                 const startPos = EditorExtensions.getEditorPositionFromIndex(text, start);
                 const endPos = EditorExtensions.getEditorPositionFromIndex(text, end);
@@ -658,59 +684,54 @@ class AutoLinkTitle extends obsidian.Plugin {
         });
     }
     escapeMarkdown(text) {
-        var unescaped = text.replace(/\\(\*|_|`|~|\\|\[|\])/g, "$1"); // unescape any "backslashed" character
-        var escaped = unescaped.replace(/(\*|_|`|<|>|~|\\|\[|\])/g, "\\$1"); // escape *, _, `, ~, \, [, ], <, and >
-        var escaped = unescaped.replace(/(\*|_|`|\||<|>|~|\\|\[|\])/g, "\\$1"); // escape *, _, `, ~, \, |, [, ], <, and >
+        var unescaped = text.replace(/\\(\*|_|`|~|\\|\[|\])/g, '$1'); // unescape any "backslashed" character
+        var escaped = unescaped.replace(/(\*|_|`|<|>|~|\\|\[|\])/g, '\\$1'); // escape *, _, `, ~, \, [, ], <, and >
+        var escaped = unescaped.replace(/(\*|_|`|\||<|>|~|\\|\[|\])/g, '\\$1'); // escape *, _, `, ~, \, |, [, ], <, and >
         return escaped;
     }
     fetchUrlTitleViaLinkPreview(url) {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.settings.linkPreviewApiKey.length !== 32) {
-                console.error("LinkPreview API key is not 32 characters long, please check your settings");
-                return "";
+                console.error('LinkPreview API key is not 32 characters long, please check your settings');
+                return '';
             }
             try {
                 const apiEndpoint = `https://api.linkpreview.net/?q=${encodeURIComponent(url)}`;
                 const response = yield fetch(apiEndpoint, {
                     headers: {
-                        "X-Linkpreview-Api-Key": this.settings.linkPreviewApiKey,
+                        'X-Linkpreview-Api-Key': this.settings.linkPreviewApiKey,
                     },
                 });
                 const data = yield response.json();
                 return data.title;
-            }
-            catch (error) {
+            } catch (error) {
                 console.error(error);
-                return "";
+                return '';
             }
         });
     }
     fetchUrlTitle(url) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let title = "";
+                let title = '';
                 title = yield this.fetchUrlTitleViaLinkPreview(url);
                 console.log(`Title via Link Preview: ${title}`);
-                if (title === "") {
-                    console.log("Title via Link Preview failed, falling back to scraper");
+                if (title === '') {
+                    console.log('Title via Link Preview failed, falling back to scraper');
                     if (this.settings.useNewScraper) {
-                        console.log("Using new scraper");
+                        console.log('Using new scraper');
                         title = yield getPageTitle$1(url);
-                    }
-                    else {
-                        console.log("Using old scraper");
+                    } else {
+                        console.log('Using old scraper');
                         title = yield getPageTitle(url);
                     }
                 }
                 console.log(`Title: ${title}`);
-                title =
-                    title.replace(/(\r\n|\n|\r)/gm, "").trim() ||
-                        "Title Unavailable | Site Unreachable";
+                title = title.replace(/(\r\n|\n|\r)/gm, '').trim() || 'Title Unavailable | Site Unreachable';
                 return title;
-            }
-            catch (error) {
+            } catch (error) {
                 console.error(error);
-                return "Error fetching title";
+                return 'Error fetching title';
             }
         });
     }
@@ -719,11 +740,10 @@ class AutoLinkTitle extends obsidian.Plugin {
         return urlRegex.exec(link)[2];
     }
     getPasteId() {
-        var base = "Fetching Title";
+        var base = 'Fetching Title';
         if (this.settings.useBetterPasteId) {
             return this.getBetterPasteId(base);
-        }
-        else {
+        } else {
             return `${base}#${this.createBlockHash()}`;
         }
     }
@@ -731,8 +751,8 @@ class AutoLinkTitle extends obsidian.Plugin {
         // After every character, add 0, 1 or 2 invisible characters
         // so that to the user it looks just like the base string.
         // The number of combinations is 3^14 = 4782969
-        let result = "";
-        var invisibleCharacter = "\u200B";
+        let result = '';
+        var invisibleCharacter = '\u200B';
         var maxInvisibleCharacters = 2;
         for (var i = 0; i < base.length; i++) {
             var count = Math.floor(Math.random() * (maxInvisibleCharacters + 1));
@@ -742,8 +762,8 @@ class AutoLinkTitle extends obsidian.Plugin {
     }
     // Custom hashid by @shabegom
     createBlockHash() {
-        let result = "";
-        var characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+        let result = '';
+        var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
         var charactersLength = characters.length;
         for (var i = 0; i < 4; i++) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -751,7 +771,7 @@ class AutoLinkTitle extends obsidian.Plugin {
         return result;
     }
     onunload() {
-        console.log("unloading obsidian-auto-link-title");
+        console.log('unloading obsidian-auto-link-title');
     }
     loadSettings() {
         return __awaiter(this, void 0, void 0, function* () {

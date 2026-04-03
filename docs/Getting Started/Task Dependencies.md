@@ -14,7 +14,7 @@ This can be useful for mapping out projects, where one part needs to be complete
 By specifying these dependencies, Obsidian Tasks can streamline your workflow by displaying only the tasks that are actionable at any given moment.
 
 > [!NOTE]
-> The Tasks plugin exclusively allows for 'Finish to start (FS)' dependencies, meaning Task A needs to be finished before you start on Task B. You can learn more about this concept [on Wikipedia](https://en.wikipedia.org/wiki/Dependency_(project_management)).
+> The Tasks plugin exclusively allows for 'Finish to start (FS)' dependencies, meaning Task A needs to be finished before you start on Task B. You can learn more about this concept [on Wikipedia](<https://en.wikipedia.org/wiki/Dependency_(project_management)>).
 
 > [!Tip]
 > This page explains the dependencies facility and how to use it.
@@ -81,13 +81,14 @@ The following are examples of valid `id` values:
 Task `id` values are intended to be **unique across the whole vault**, each different `id` being only used on one task. However, there is no checking for this.
 
 %%
+
 #### Duplicate `id` values
 
 This section commented out for now, because although the search handles tasks with duplicate `id` well, the Edit Task modal does not make clear when a task depends on the same `id` multiple times.
 
-Task `id` values are *intended* to be unique across the whole vault.
+Task `id` values are _intended_ to be unique across the whole vault.
 
-However, a task that depends on an `id` that occurs multiple times in your vault will depend on *all* those other tasks. You can use this to your advantage, if you want to quickly make one task depend on a long list of other tasks.
+However, a task that depends on an `id` that occurs multiple times in your vault will depend on _all_ those other tasks. You can use this to your advantage, if you want to quickly make one task depend on a long list of other tasks.
 %%
 
 ### `dependsOn`
@@ -255,7 +256,7 @@ is blocked
 
 ### Non-blocked tasks
 
-To find tasks which are **not** `blocked` and *can* be acted on, use:
+To find tasks which are **not** `blocked` and _can_ be acted on, use:
 
 ````text
 ```tasks
@@ -267,7 +268,7 @@ is not blocked
 ### Demonstration of blocking and blocked
 
 > [!Example] Blocking occurs
-> If *both* ends of a `dependsOn` link are `TODO`, `IN_PROGRESS` or `ON_HOLD`, blocking occurs:
+> If _both_ ends of a `dependsOn` link are `TODO`, `IN_PROGRESS` or `ON_HOLD`, blocking occurs:
 >
 > ```mermaid
 > flowchart BT
@@ -282,7 +283,7 @@ is not blocked
 > ```
 
 > [!Example] No blocking
-> If *either* end of  `dependsOn` link is `DONE`, `CANCELLED` or `NON_TASK`, no blocking occurs:
+> If _either_ end of `dependsOn` link is `DONE`, `CANCELLED` or `NON_TASK`, no blocking occurs:
 >
 > ```mermaid
 > flowchart BT
@@ -297,7 +298,7 @@ is not blocked
 > ```
 
 > [!Example] A mixture
-> A task is only un-blocked when *all* of the tasks it `dependsOn` have been `DONE` or `CANCELLED` (or marked as `NON_TASK`):
+> A task is only un-blocked when _all_ of the tasks it `dependsOn` have been `DONE` or `CANCELLED` (or marked as `NON_TASK`):
 >
 > ```mermaid
 > flowchart BT

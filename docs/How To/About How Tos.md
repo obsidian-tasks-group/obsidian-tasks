@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - How To/How Tos
+    - How To/How Tos
 ---
 
 # About How Tos

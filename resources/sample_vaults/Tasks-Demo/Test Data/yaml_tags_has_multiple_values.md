@@ -1,7 +1,7 @@
 ---
 tags:
-  - multiple1
-  - multiple2
+    - multiple1
+    - multiple2
 ---
 
 # yaml_tags_has_multiple_values

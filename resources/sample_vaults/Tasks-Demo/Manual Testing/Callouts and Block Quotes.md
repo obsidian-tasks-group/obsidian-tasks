@@ -22,7 +22,7 @@
 > sort by description
 > ```
 
-### 1.3 Short Mode, without headings -  not in callout
+### 1.3 Short Mode, without headings - not in callout
 
 ```tasks
 path includes {{query.file.path}}
@@ -35,7 +35,7 @@ sort by description
 ## 2 Vanilla
 
 - [ ] #task Task 1 Vanilla
-  - Child list item of 'Task 1 Vanilla'
+    - Child list item of 'Task 1 Vanilla'
 - [ ] #task Task 2 Vanilla
 
 ## 3 Callout
@@ -43,22 +43,21 @@ sort by description
 > [!NOTE]
 >
 > - [ ] #task Task 1 Callout
->   - Child list item of 'Task 1 Callout'
+>     - Child list item of 'Task 1 Callout'
 > - [ ] #task Task 2 Callout
 
 ### 3.1 Callout containing Blockquote
 
 > [!NOTE]
-> >
-> > - [ ] #task Task 1 Callout containing Blockquote
-> >   - Child list item of 'Task 1 Callout containing Blockquote'
-> > - [ ] #task Task 2 Callout containing Blockquote
 >
+> > - [ ] #task Task 1 Callout containing Blockquote
+> >     - Child list item of 'Task 1 Callout containing Blockquote'
+> > - [ ] #task Task 2 Callout containing Blockquote
 
 ## 4 Blockquote
 
 > - [ ] #task Task 1 Blockquote
->   - Child list item of 'Task 1 Blockquote'
+>     - Child list item of 'Task 1 Blockquote'
 > - [ ] #task Task 2 Blockquote
 
 ### 4.1 Blockquote containing Callout
@@ -66,7 +65,7 @@ sort by description
 > > [!NOTE]
 > >
 > > - [ ] #task Task 1 Blockquote containing Callout
-> >   - Child list item of 'Task 1 Blockquote containing Callout'
+> >     - Child list item of 'Task 1 Blockquote containing Callout'
 > > - [ ] #task Task 2 Blockquote containing Callout
 
 ## 5 Numbered task in unordered list
@@ -78,7 +77,7 @@ The following tasks have extra properties on them so that, when in short mode, t
 
 ## 6 Not currently treated as a task by Tasks
 
-x - [ ] #task  wibble
+x - [ ] #task wibble
 
 ```text
 - [ ] #task Task 1 Vanilla

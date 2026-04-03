@@ -44,6 +44,7 @@ Follow these steps, which assume you have already [turned off Obsidian's Restric
 5. After experimenting, delete any labels and widgets that you do not need.
 
 <!-- snippet: DocsSamplesForDefaults.test.DocsSamplesForDefaults_meta-bind-widgets-snippet.approved.md -->
+
 ```md
 toolbar: `INPUT[toggle:TQ_show_toolbar]`
 short mode: `INPUT[toggle:TQ_short_mode]`
@@ -61,6 +62,7 @@ task count: `INPUT[toggle:TQ_show_task_count]`
 extra instructions: `INPUT[textArea:TQ_extra_instructions]`
 explain: `INPUT[toggle:TQ_explain]`
 ```
+
 <!-- endSnippet -->
 
 ## Why provide this?
@@ -76,7 +78,7 @@ However, the development process went something like this:
     - horrible for us to document,
     - horrible for users to have to copy and understand, cluttering up their searches.
 3. Implement the [[Query File Defaults]] mechanism.
-4. Discover that using Obsidian's [Properties view](https://help.obsidian.md/Plugins/Properties+view) core plugin was *sort-of-OK*, but:
+4. Discover that using Obsidian's [Properties view](https://help.obsidian.md/Plugins/Properties+view) core plugin was _sort-of-OK_, but:
     - it was a little tedious opening and closing that side-panel,
     - it does not do a very good job editing multi-line strings, which are useful with `TQ_extra_instructions`.
 5. Experiment with [[Meta Bind Plugin]] and decide this use of it is a relatively easy and big step forward, until such time as Obsidian has its own user interface!

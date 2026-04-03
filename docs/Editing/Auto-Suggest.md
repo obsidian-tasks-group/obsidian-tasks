@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - Getting Started/Auto-Suggest
+    - Getting Started/Auto-Suggest
 ---
 
 # Intelligent Auto-Suggest
@@ -9,7 +9,7 @@ aliases:
 ## Introduction
 
 > [!released]
-Introduced in Tasks 1.9.0.
+> Introduced in Tasks 1.9.0.
 
 The [[Priority|Priorities]], [[Dates]], [[Recurring Tasks]], [[Task Dependencies]] and [[On Completion]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
 
@@ -21,7 +21,7 @@ It is particularly powerful when creating and editing tasks on mobile phones.
 > [!released]
 >
 > - `➕ created today` was introduced in Tasks 3.2.0.
-> - `🆔 id`  and `⛔ depends on id` were introduced in Tasks 7.4.0.
+> - `🆔 id` and `⛔ depends on id` were introduced in Tasks 7.4.0.
 
 Developers of other task plugins may offer this Auto-Suggest facility to their users: see [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]].
 
@@ -38,19 +38,17 @@ Here is a more detailed walk through of the creation of a new task, which can be
     ![auto-suggest-menu-initial-menu](../images/auto-suggest-menu-initial-menu.png)
 
     **Note**: the auto-suggest menu pops up only if the cursor is in a line that is recognized as a task, that is, the line contains:
+    - a bullet with a checkbox, that is, starting with one of these three characters:
+        - `- [ ]`
+        - `* [ ]`
+        - `+ [ ]`
+    - and the global filter (if any),
+    - and the status symbol (the character between `[` and `]`) does not have [[Status Types|status type]] `NON_TASK`.
 
-     - a bullet with a checkbox, that is, starting with one of these three characters:
-         - `- [ ]`
-         - `* [ ]`
-         - `+ [ ]`
-     - and the global filter (if any),
-     - and the status symbol (the character between `[` and `]`) does not have [[Status Types|status type]] `NON_TASK`.
-
-     Tasks also tries to display the auto-suggest menu based on context. For example, suggestions will only appear
-      within square brackets `[]` or parentheses `()` when using the [[Dataview Format#Bracketed inline fields|Dataview Task Format]].
+    Tasks also tries to display the auto-suggest menu based on context. For example, suggestions will only appear
+    within square brackets `[]` or parentheses `()` when using the [[Dataview Format#Bracketed inline fields|Dataview Task Format]].
 
 2. You can keep typing (to ignore the suggestions), or select one of the menu items in a variety of ways:
-
     - mouse-click on menu item
     - use the up/down keyboard keys and then type `Return` or `Enter`
     - type a few more characters, to make the menu items more specific. For example, type `pri` to show all the options for setting the task's priority.
@@ -168,11 +166,13 @@ Obsidian loads community plugins in the order they appear in your plugin list. T
 **Note:** Tasks auto-suggest will only appear on lines that start with `- [ ]` and contain the global filter (if one is set).
 
 ### Strategies
+
 To simultaneously use auto-suggest features from other plugins, a strategy must be implemented to minimize conflicts. Plugin specific settings and plugin load order can be utilized to obtain a mostly seamless experience.
 
 In Obsidian plugins that load first have suggestions prioritized. Given that, it makes sense to load plugins with less suggestions and/or less trigger text first. Doing so will pass priority to the next plugin when suggestions run out.
 
 #### Configure Plugin Specific Settings
+
 **Tasks Plugin:**
 
 - Go to Settings → Tasks → Auto-suggest
@@ -192,6 +192,7 @@ In Obsidian plugins that load first have suggestions prioritized. Given that, it
 - Note: This plugin provides many suggestions and should load last
 
 #### Set Load Orders
+
 Choose one of these methods:
 
 ##### Method A: Manual Load Order (No Additional Plugins)
@@ -227,6 +228,7 @@ With proper configuration, you should see:
 2. Various Compliments provides general text suggestions
 
 #### Troubleshooting
+
 **General:**
 
 - Restart Obsidian after changing settings or load order
@@ -341,74 +343,76 @@ As you type, the options are filtered. For example, if you haven't yet added any
 Similarly, you can type some fraction of the word `start` (of whatever length is needed by the 'Minimum match length' setting) and you will get a suggestion to turn it into the emoji. Pressing `<enter>` then immediately adds the start emoji: 🛫.
 
 <!-- include: Suggestor.test.auto-complete_with__emoji__symbols_show_all_suggested_text.approved.md -->
-| Searchable Text | Text that is added |
-| ----- | ----- |
-| ⏎ | &lt;new line> |
-| 📅 due date | 📅  |
-| 🛫 start date | 🛫  |
-| ⏳ scheduled date | ⏳  |
-| ⏫ high priority | ⏫  |
-| 🔼 medium priority | 🔼  |
-| 🔽 low priority | 🔽  |
-| 🔺 highest priority | 🔺  |
-| ⏬ lowest priority | ⏬  |
-| 🔁 recurring (repeat) | 🔁  |
-| ➕ created today (2022-07-11) | ➕ 2022-07-11  |
-| 🆔 id | 🆔  |
-| ⛔ depends on id | ⛔  |
-| 🏁 on completion | 🏁  |
-| every | 🔁 every  |
-| every day | 🔁 every day  |
-| every week | 🔁 every week  |
-| every month | 🔁 every month  |
-| every month on the | 🔁 every month on the  |
-| every year | 🔁 every year  |
-| every week on Sunday | 🔁 every week on Sunday  |
-| every week on Monday | 🔁 every week on Monday  |
-| every week on Tuesday | 🔁 every week on Tuesday  |
-| every week on Wednesday | 🔁 every week on Wednesday  |
-| every week on Thursday | 🔁 every week on Thursday  |
-| every week on Friday | 🔁 every week on Friday  |
-| every week on Saturday | 🔁 every week on Saturday  |
-| today (2022-07-11) | 📅 2022-07-11  |
-| tomorrow (2022-07-12) | 📅 2022-07-12  |
-| Sunday (2022-07-17) | 📅 2022-07-17  |
-| Monday (2022-07-18) | 📅 2022-07-18  |
-| Tuesday (2022-07-12) | 📅 2022-07-12  |
-| Wednesday (2022-07-13) | 📅 2022-07-13  |
-| Thursday (2022-07-14) | 📅 2022-07-14  |
-| Friday (2022-07-15) | 📅 2022-07-15  |
-| Saturday (2022-07-16) | 📅 2022-07-16  |
-| next week (2022-07-18) | 📅 2022-07-18  |
-| next month (2022-08-11) | 📅 2022-08-11  |
-| next year (2023-07-11) | 📅 2023-07-11  |
-| today (2022-07-11) | ⏳ 2022-07-11  |
-| tomorrow (2022-07-12) | ⏳ 2022-07-12  |
-| Sunday (2022-07-17) | ⏳ 2022-07-17  |
-| Monday (2022-07-18) | ⏳ 2022-07-18  |
-| Tuesday (2022-07-12) | ⏳ 2022-07-12  |
-| Wednesday (2022-07-13) | ⏳ 2022-07-13  |
-| Thursday (2022-07-14) | ⏳ 2022-07-14  |
-| Friday (2022-07-15) | ⏳ 2022-07-15  |
-| Saturday (2022-07-16) | ⏳ 2022-07-16  |
-| next week (2022-07-18) | ⏳ 2022-07-18  |
-| next month (2022-08-11) | ⏳ 2022-08-11  |
-| next year (2023-07-11) | ⏳ 2023-07-11  |
-| today (2022-07-11) | 🛫 2022-07-11  |
-| tomorrow (2022-07-12) | 🛫 2022-07-12  |
-| Sunday (2022-07-17) | 🛫 2022-07-17  |
-| Monday (2022-07-18) | 🛫 2022-07-18  |
-| Tuesday (2022-07-12) | 🛫 2022-07-12  |
-| Wednesday (2022-07-13) | 🛫 2022-07-13  |
-| Thursday (2022-07-14) | 🛫 2022-07-14  |
-| Friday (2022-07-15) | 🛫 2022-07-15  |
-| Saturday (2022-07-16) | 🛫 2022-07-16  |
-| next week (2022-07-18) | 🛫 2022-07-18  |
-| next month (2022-08-11) | 🛫 2022-08-11  |
-| next year (2023-07-11) | 🛫 2023-07-11  |
-| delete | 🏁 delete  |
-| keep | 🏁 keep  |
-| generate unique id | 🆔 ******  |
+
+| Searchable Text               | Text that is added         |
+| ----------------------------- | -------------------------- |
+| ⏎                             | &lt;new line>              |
+| 📅 due date                   | 📅                         |
+| 🛫 start date                 | 🛫                         |
+| ⏳ scheduled date             | ⏳                         |
+| ⏫ high priority              | ⏫                         |
+| 🔼 medium priority            | 🔼                         |
+| 🔽 low priority               | 🔽                         |
+| 🔺 highest priority           | 🔺                         |
+| ⏬ lowest priority            | ⏬                         |
+| 🔁 recurring (repeat)         | 🔁                         |
+| ➕ created today (2022-07-11) | ➕ 2022-07-11              |
+| 🆔 id                         | 🆔                         |
+| ⛔ depends on id              | ⛔                         |
+| 🏁 on completion              | 🏁                         |
+| every                         | 🔁 every                   |
+| every day                     | 🔁 every day               |
+| every week                    | 🔁 every week              |
+| every month                   | 🔁 every month             |
+| every month on the            | 🔁 every month on the      |
+| every year                    | 🔁 every year              |
+| every week on Sunday          | 🔁 every week on Sunday    |
+| every week on Monday          | 🔁 every week on Monday    |
+| every week on Tuesday         | 🔁 every week on Tuesday   |
+| every week on Wednesday       | 🔁 every week on Wednesday |
+| every week on Thursday        | 🔁 every week on Thursday  |
+| every week on Friday          | 🔁 every week on Friday    |
+| every week on Saturday        | 🔁 every week on Saturday  |
+| today (2022-07-11)            | 📅 2022-07-11              |
+| tomorrow (2022-07-12)         | 📅 2022-07-12              |
+| Sunday (2022-07-17)           | 📅 2022-07-17              |
+| Monday (2022-07-18)           | 📅 2022-07-18              |
+| Tuesday (2022-07-12)          | 📅 2022-07-12              |
+| Wednesday (2022-07-13)        | 📅 2022-07-13              |
+| Thursday (2022-07-14)         | 📅 2022-07-14              |
+| Friday (2022-07-15)           | 📅 2022-07-15              |
+| Saturday (2022-07-16)         | 📅 2022-07-16              |
+| next week (2022-07-18)        | 📅 2022-07-18              |
+| next month (2022-08-11)       | 📅 2022-08-11              |
+| next year (2023-07-11)        | 📅 2023-07-11              |
+| today (2022-07-11)            | ⏳ 2022-07-11              |
+| tomorrow (2022-07-12)         | ⏳ 2022-07-12              |
+| Sunday (2022-07-17)           | ⏳ 2022-07-17              |
+| Monday (2022-07-18)           | ⏳ 2022-07-18              |
+| Tuesday (2022-07-12)          | ⏳ 2022-07-12              |
+| Wednesday (2022-07-13)        | ⏳ 2022-07-13              |
+| Thursday (2022-07-14)         | ⏳ 2022-07-14              |
+| Friday (2022-07-15)           | ⏳ 2022-07-15              |
+| Saturday (2022-07-16)         | ⏳ 2022-07-16              |
+| next week (2022-07-18)        | ⏳ 2022-07-18              |
+| next month (2022-08-11)       | ⏳ 2022-08-11              |
+| next year (2023-07-11)        | ⏳ 2023-07-11              |
+| today (2022-07-11)            | 🛫 2022-07-11              |
+| tomorrow (2022-07-12)         | 🛫 2022-07-12              |
+| Sunday (2022-07-17)           | 🛫 2022-07-17              |
+| Monday (2022-07-18)           | 🛫 2022-07-18              |
+| Tuesday (2022-07-12)          | 🛫 2022-07-12              |
+| Wednesday (2022-07-13)        | 🛫 2022-07-13              |
+| Thursday (2022-07-14)         | 🛫 2022-07-14              |
+| Friday (2022-07-15)           | 🛫 2022-07-15              |
+| Saturday (2022-07-16)         | 🛫 2022-07-16              |
+| next week (2022-07-18)        | 🛫 2022-07-18              |
+| next month (2022-08-11)       | 🛫 2022-08-11              |
+| next year (2023-07-11)        | 🛫 2023-07-11              |
+| delete                        | 🏁 delete                  |
+| keep                          | 🏁 keep                    |
+| generate unique id            | 🆔 **\*\***                |
+
 <!-- endInclude -->
 
 ### How can I use auto-suggest features from other plugins together with the Tasks auto-suggest?

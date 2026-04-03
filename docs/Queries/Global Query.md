@@ -7,7 +7,7 @@ publish: true
 ## Summary
 
 > [!released]
-The Global Query setting was added in Tasks 3.5.0.
+> The Global Query setting was added in Tasks 3.5.0.
 
 Global Query is a powerful and flexible alternative to the [[Global Filter]].
 
@@ -48,7 +48,7 @@ For example, this allows you to have your task searches ignore certain folders b
 > Any use of `ignore global query` inside the Global Query itself is harmless, but ignored.
 
 > [!released]
-The `ignore global query` instruction was added in Tasks 4.6.0.
+> The `ignore global query` instruction was added in Tasks 4.6.0.
 
 ## Examples
 
@@ -85,7 +85,6 @@ Currently, any query that is allowed in a task block will also work as your Glob
 
 > [!example]
 > **Show up to 50 tasks**
->
 >
 > ````text
 > ```tasks

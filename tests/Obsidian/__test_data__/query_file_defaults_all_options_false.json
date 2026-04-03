@@ -1,148 +1,146 @@
 {
-  "cachedMetadata": {
-    "frontmatter": {
-      "TQ_explain": false,
-      "TQ_extra_instructions": "# press shift-return to add new lines\nnot done",
-      "TQ_short_mode": false,
-      "TQ_show_backlink": false,
-      "TQ_show_cancelled_date": false,
-      "TQ_show_created_date": false,
-      "TQ_show_depends_on": false,
-      "TQ_show_done_date": false,
-      "TQ_show_due_date": false,
-      "TQ_show_edit_button": false,
-      "TQ_show_id": false,
-      "TQ_show_on_completion": false,
-      "TQ_show_postpone_button": false,
-      "TQ_show_priority": false,
-      "TQ_show_recurrence_rule": false,
-      "TQ_show_scheduled_date": false,
-      "TQ_show_start_date": false,
-      "TQ_show_tags": false,
-      "TQ_show_task_count": false,
-      "TQ_show_toolbar": false,
-      "TQ_show_tree": false,
-      "TQ_show_urgency": false
+    "cachedMetadata": {
+        "frontmatter": {
+            "TQ_explain": false,
+            "TQ_extra_instructions": "# press shift-return to add new lines\nnot done",
+            "TQ_short_mode": false,
+            "TQ_show_backlink": false,
+            "TQ_show_cancelled_date": false,
+            "TQ_show_created_date": false,
+            "TQ_show_depends_on": false,
+            "TQ_show_done_date": false,
+            "TQ_show_due_date": false,
+            "TQ_show_edit_button": false,
+            "TQ_show_id": false,
+            "TQ_show_on_completion": false,
+            "TQ_show_postpone_button": false,
+            "TQ_show_priority": false,
+            "TQ_show_recurrence_rule": false,
+            "TQ_show_scheduled_date": false,
+            "TQ_show_start_date": false,
+            "TQ_show_tags": false,
+            "TQ_show_task_count": false,
+            "TQ_show_toolbar": false,
+            "TQ_show_tree": false,
+            "TQ_show_urgency": false
+        },
+        "frontmatterLinks": [],
+        "frontmatterPosition": {
+            "end": {
+                "col": 3,
+                "line": 25,
+                "offset": 608
+            },
+            "start": {
+                "col": 0,
+                "line": 0,
+                "offset": 0
+            }
+        },
+        "headings": [
+            {
+                "heading": "query_file_defaults_all_options_false",
+                "level": 1,
+                "position": {
+                    "end": {
+                        "col": 39,
+                        "line": 27,
+                        "offset": 649
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 27,
+                        "offset": 610
+                    }
+                }
+            }
+        ],
+        "listItems": [
+            {
+                "parent": -29,
+                "position": {
+                    "end": {
+                        "col": 59,
+                        "line": 29,
+                        "offset": 710
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 29,
+                        "offset": 651
+                    }
+                },
+                "task": " "
+            }
+        ],
+        "sections": [
+            {
+                "position": {
+                    "end": {
+                        "col": 3,
+                        "line": 25,
+                        "offset": 608
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                },
+                "type": "yaml"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 39,
+                        "line": 27,
+                        "offset": 649
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 27,
+                        "offset": 610
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 59,
+                        "line": 29,
+                        "offset": 710
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 29,
+                        "offset": 651
+                    }
+                },
+                "type": "list"
+            }
+        ],
+        "tags": [
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 29,
+                        "offset": 662
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 29,
+                        "offset": 657
+                    }
+                },
+                "tag": "#task"
+            }
+        ]
     },
-    "frontmatterLinks": [],
-    "frontmatterPosition": {
-      "end": {
-        "col": 3,
-        "line": 25,
-        "offset": 608
-      },
-      "start": {
-        "col": 0,
-        "line": 0,
-        "offset": 0
-      }
-    },
-    "headings": [
-      {
-        "heading": "query_file_defaults_all_options_false",
-        "level": 1,
-        "position": {
-          "end": {
-            "col": 39,
-            "line": 27,
-            "offset": 649
-          },
-          "start": {
-            "col": 0,
-            "line": 27,
-            "offset": 610
-          }
-        }
-      }
-    ],
-    "listItems": [
-      {
-        "parent": -29,
-        "position": {
-          "end": {
-            "col": 59,
-            "line": 29,
-            "offset": 710
-          },
-          "start": {
-            "col": 0,
-            "line": 29,
-            "offset": 651
-          }
-        },
-        "task": " "
-      }
-    ],
-    "sections": [
-      {
-        "position": {
-          "end": {
-            "col": 3,
-            "line": 25,
-            "offset": 608
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        },
-        "type": "yaml"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 39,
-            "line": 27,
-            "offset": 649
-          },
-          "start": {
-            "col": 0,
-            "line": 27,
-            "offset": 610
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 59,
-            "line": 29,
-            "offset": 710
-          },
-          "start": {
-            "col": 0,
-            "line": 29,
-            "offset": 651
-          }
-        },
-        "type": "list"
-      }
-    ],
-    "tags": [
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 29,
-            "offset": 662
-          },
-          "start": {
-            "col": 6,
-            "line": 29,
-            "offset": 657
-          }
-        },
-        "tag": "#task"
-      }
-    ]
-  },
-  "fileContents": "---\nTQ_explain: false\nTQ_extra_instructions: |-\n  # press shift-return to add new lines\n  not done\nTQ_short_mode: false\nTQ_show_backlink: false\nTQ_show_cancelled_date: false\nTQ_show_created_date: false\nTQ_show_depends_on: false\nTQ_show_done_date: false\nTQ_show_due_date: false\nTQ_show_edit_button: false\nTQ_show_id: false\nTQ_show_on_completion: false\nTQ_show_postpone_button: false\nTQ_show_priority: false\nTQ_show_recurrence_rule: false\nTQ_show_scheduled_date: false\nTQ_show_start_date: false\nTQ_show_tags: false\nTQ_show_task_count: false\nTQ_show_toolbar: false\nTQ_show_tree: false\nTQ_show_urgency: false\n---\n\n# query_file_defaults_all_options_false\n\n- [ ] #task Task in 'query_file_defaults_all_options_false'\n",
-  "filePath": "Test Data/query_file_defaults_all_options_false.md",
-  "getAllTags": [
-    "#task"
-  ],
-  "parseFrontMatterTags": null,
-  "resolveLinkToPath": {}
+    "fileContents": "---\nTQ_explain: false\nTQ_extra_instructions: |-\n  # press shift-return to add new lines\n  not done\nTQ_short_mode: false\nTQ_show_backlink: false\nTQ_show_cancelled_date: false\nTQ_show_created_date: false\nTQ_show_depends_on: false\nTQ_show_done_date: false\nTQ_show_due_date: false\nTQ_show_edit_button: false\nTQ_show_id: false\nTQ_show_on_completion: false\nTQ_show_postpone_button: false\nTQ_show_priority: false\nTQ_show_recurrence_rule: false\nTQ_show_scheduled_date: false\nTQ_show_start_date: false\nTQ_show_tags: false\nTQ_show_task_count: false\nTQ_show_toolbar: false\nTQ_show_tree: false\nTQ_show_urgency: false\n---\n\n# query_file_defaults_all_options_false\n\n- [ ] #task Task in 'query_file_defaults_all_options_false'\n",
+    "filePath": "Test Data/query_file_defaults_all_options_false.md",
+    "getAllTags": ["#task"],
+    "parseFrontMatterTags": null,
+    "resolveLinkToPath": {}
 }

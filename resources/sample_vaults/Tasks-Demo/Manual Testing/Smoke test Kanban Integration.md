@@ -1,7 +1,5 @@
 ---
-
 kanban-plugin: board
-
 ---
 
 ## To Do
@@ -9,11 +7,10 @@ kanban-plugin: board
 - [ ] #task Should show Tasks context menu
 - [ ] Should not show Tasks context menu
 
-
-
-
 %% kanban:settings
+
 ```
 {"kanban-plugin":"board","list-collapse":[false]}
 ```
+
 %%

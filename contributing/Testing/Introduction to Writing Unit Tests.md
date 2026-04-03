@@ -49,4 +49,4 @@ Generally, by reading and experimenting with existing tests, you will likely see
 
 ## Getting help writing tests
 
-If you need help with writing tests, start a [Development Discussion](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/development)  on Discord, and we will help you out.
+If you need help with writing tests, start a [Development Discussion](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/development) on Discord, and we will help you out.

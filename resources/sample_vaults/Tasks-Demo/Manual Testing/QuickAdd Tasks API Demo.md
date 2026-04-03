@@ -28,26 +28,28 @@ Edit Task Command:
 
 ```js
 const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
-let editedTaskLine = await tasksApi.editTaskLineModal('- [ ] #task Do every day 🔼 🔁 every day ➕ 2025-07-06 ⏳ 2025-07-06');
+let editedTaskLine = await tasksApi.editTaskLineModal(
+    '- [ ] #task Do every day 🔼 🔁 every day ➕ 2025-07-06 ⏳ 2025-07-06',
+);
 console.log(editedTaskLine);
 ```
 
 - [ ] #task Test Populated Values in Modal
 
- 1. Open modal with the sample task text above.
- 2. Verify that the task properties are populated in the modal.
- 3. Mark Task Done
- 4. Expected
+1.  Open modal with the sample task text above.
+2.  Verify that the task properties are populated in the modal.
+3.  Mark Task Done
+4.  Expected
 
 > - [ ] #task Do every day 🔼 🔁 every day ⏳ 2025-07-07
 > - [x] #task Do every day 🔼 🔁 every day ➕ 2025-07-06 ⏳ 2025-07-06 ✅ 2025-07-06
 
 - [ ] #task Reverse the order of Recurring tasks in the Tasks settings
 
- 1. Reverse the order of Recurring tasks in the Tasks settings
- 2. Open modal with the sample task text above.
- 3. Change the Status to Done
- 4. Expected
+1.  Reverse the order of Recurring tasks in the Tasks settings
+2.  Open modal with the sample task text above.
+3.  Change the Status to Done
+4.  Expected
 
 > - [x] #task Do every day 🔼 🔁 every day ➕ 2025-07-06 ⏳ 2025-07-06 ✅ 2025-07-06
 > - [ ] #task Do every day 🔼 🔁 every day ⏳ 2025-07-07

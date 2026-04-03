@@ -2,7 +2,7 @@
 
 Thanks to check:
 
-- The text in  `_` in the file name should not be displayed as italic, in group headings
+- The text in `_` in the file name should not be displayed as italic, in group headings
 - The text in `_` in the H1 in this file should be rendered as italic
 
 ## 1 Heading with percent comment %% percent %%
@@ -33,7 +33,7 @@ Thanks to check:
 >
 > ```tasks
 > path includes Markdown in group _non-italic filename_
-> 
+>
 > group by backlink
 > group by filename
 > group by heading

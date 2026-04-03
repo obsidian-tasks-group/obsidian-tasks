@@ -11,7 +11,7 @@ Then do one of the following options...
 
 ## Option 1: Download Tasks-Demo test vault with the build's Tasks plugin installed
 
-1. In the Artifacts section at the bottom, click on the link whose name starts with **Tasks-Demo-...**, for example  **Tasks-Demo-VerifyCommit-Build1367-Run1**.
+1. In the Artifacts section at the bottom, click on the link whose name starts with **Tasks-Demo-...**, for example **Tasks-Demo-VerifyCommit-Build1367-Run1**.
     - This will download a zip file containing a copy of the Tasks-Demo sample vault, including the build of the plugin.
     - The numbers in the file name will vary.
 2. Optionally, rename the zip file to give it a meaningful name.

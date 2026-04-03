@@ -1,7 +1,7 @@
 ---
 publish: true
 aliases:
-  - Queries/Queries
+    - Queries/Queries
 ---
 
 # About Queries
@@ -18,7 +18,7 @@ The simplest way to query tasks is this:
     ```tasks
     ```
 
-In Live Preview and Reading modes, this will list *all* tasks from your vault, regardless of their properties like status.
+In Live Preview and Reading modes, this will list _all_ tasks from your vault, regardless of their properties like status.
 
 This is probably not what you want.
 Therefore, Tasks allows you to set query options to filter the tasks that you want to show.
@@ -133,7 +133,7 @@ By default, the result list will list tasks unindented.
 > Use the `show tree` instruction to indent tasks and list items in query results. See [[Layout#Hide and Show Tree|Hide and Show Tree]].
 >
 > ![Sample search results with 'show tree' instruction](../images/show-tree.png)
-<span class="caption">Sample search results with 'show tree' instruction</span>
+> <span class="caption">Sample search results with 'show tree' instruction</span>
 
 You can see related feature requests in:
 
@@ -144,6 +144,6 @@ You can see related feature requests in:
 
 > [!warning]
 > The result list will not contain any footnotes of the original task.
-> The footnotes will *not* be carried over to documents with ```tasks blocks. We are tracking this in [issue #2571](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2571).
+> The footnotes will _not_ be carried over to documents with ```tasks blocks. We are tracking this in [issue #2571](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2571).
 
 See also [[Getting Started#Tasks with Footnotes]].

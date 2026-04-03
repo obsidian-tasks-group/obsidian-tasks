@@ -1,8 +1,8 @@
 ---
 TQ_explain: false
 TQ_extra_instructions: |-
-  # press shift-return to add new lines
-  not done
+    # press shift-return to add new lines
+    not done
 TQ_short_mode: false
 TQ_show_backlink: false
 TQ_show_cancelled_date: false

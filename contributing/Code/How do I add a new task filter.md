@@ -8,7 +8,7 @@ All the following steps would be done in the same branch, for inclusion in the s
 ## Update src/
 
 - Implement the search filter:
-  - [ ] Add to  [src/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Filter) a  new class that inherits [Field](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/DateField.ts)
+  - [ ] Add to [src/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Filter) a new class that inherits [Field](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/DateField.ts)
   - Typically, this can be done by inheriting one of the partial implementations:
     - [DateField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/DateField.ts)
     - [TextField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/TextField.ts)
@@ -27,7 +27,7 @@ For help on writing and running the tests, see [[About Testing]]
 - [ ] Add to [tests/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Query/Filter) a new test file.
   - This should focus on testing whether or not individual Task objects, with carefully selected sample date, match the filter.
   - Think about edge cases.
-- [ ] Add the new instruction(s) to  'Query parsing' test in  [tests/Query/Query.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Query.test.ts)
+- [ ] Add the new instruction(s) to 'Query parsing' test in [tests/Query/Query.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Query.test.ts)
   - This verifies that the new filter instruction has been correctly wired in to the Query class.
 
 ## Update doc/

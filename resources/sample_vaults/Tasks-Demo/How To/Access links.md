@@ -141,7 +141,7 @@ group by function task.outlinks.map(link => link.markdown).sort().join(' · ')
 
 ### Group tasks by the files they link to
 
-The value of `link.destinationPath`  is null if the link is broken.
+The value of `link.destinationPath` is null if the link is broken.
 
 ````text
 ```tasks

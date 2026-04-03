@@ -1,6 +1,6 @@
 # Parent-Child relationships - Searches
 
-*See [[Parent-Child relationships - Tasks]].*
+_See [[Parent-Child relationships - Tasks]]._
 
 Purpose: Compare the behaviour of similar Dataview and Tasks plugins, to aid in implementing Parent-Child relationships in the Tasks plugin.
 

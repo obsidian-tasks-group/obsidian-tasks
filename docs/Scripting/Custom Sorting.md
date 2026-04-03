@@ -39,6 +39,7 @@ You use the instruction `sort by function` and then add a rule, written in JavaS
 The Reference section [[Task Properties]] shows all the task properties available for use in custom sorting.
 
 The available task properties are also shown in the [[Quick Reference]] table.
+
 ### Available Query Properties
 
 The Reference section [[Query Properties]] shows all the query properties available for use in custom sorting.
@@ -60,7 +61,7 @@ This table shows how the supported sort key value types behave.
 | Numbers                            | Example: `sort by function task.description.length`<br>Numbers are sorted in ascending order. The lower the number, the earlier the task is sorted.                                         |
 | Boolean values: `true` and `false` | Example: `sort by function task.status.name.includes('!!')` <br>Tasks with sort key `true` sort before ones with `false`.                                                                   |
 | `TasksDate` and `Moment` objects   | Example: `sort by function task.created`<br>See [[Sorting#How dates are sorted\|How dates are sorted]].                                                                                     |
-| `null`                             | `null` sorts after valid `TasksDate` and `Moment` objects, and before all other sort key values.                                                                                                                                                                                            |
+| `null`                             | `null` sorts after valid `TasksDate` and `Moment` objects, and before all other sort key values.                                                                                            |
 
 The `expression` can:
 
@@ -165,7 +166,7 @@ sort by function task.file.path === query.file.path
 > [!Tip]
 > To test the values obtained from your sort key, replace `sort by` with `group by`. The generated group headings provide a sort of "debugger" to show expression values.
 >
-> However, be aware that whilst  `group by` expressions can return arrays of values, `sort by` does not yet support arrays.
+> However, be aware that whilst `group by` expressions can return arrays of values, `sort by` does not yet support arrays.
 
 ## Limitations of Custom Sorting
 

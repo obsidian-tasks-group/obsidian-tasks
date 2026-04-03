@@ -25,7 +25,6 @@
 - [u] #task `u` Up
 - [d] #task `d` Down
 
-
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type

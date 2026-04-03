@@ -1,246 +1,244 @@
 {
-  "cachedMetadata": {
-    "frontmatter": {
-      "link-in-frontmatter": "[[link_in_yaml]]",
-      "link-in-frontmatter-to-heading": "[[#A link in a link_in_heading]]"
+    "cachedMetadata": {
+        "frontmatter": {
+            "link-in-frontmatter": "[[link_in_yaml]]",
+            "link-in-frontmatter-to-heading": "[[#A link in a link_in_heading]]"
+        },
+        "frontmatterLinks": [
+            {
+                "displayText": "link_in_yaml",
+                "key": "link-in-frontmatter",
+                "link": "link_in_yaml",
+                "original": "[[link_in_yaml]]"
+            },
+            {
+                "displayText": "A link in a link_in_heading",
+                "key": "link-in-frontmatter-to-heading",
+                "link": "#A link in a link_in_heading",
+                "original": "[[#A link in a link_in_heading]]"
+            }
+        ],
+        "frontmatterPosition": {
+            "end": {
+                "col": 3,
+                "line": 3,
+                "offset": 114
+            },
+            "start": {
+                "col": 0,
+                "line": 0,
+                "offset": 0
+            }
+        },
+        "headings": [
+            {
+                "heading": "links_everywhere",
+                "level": 1,
+                "position": {
+                    "end": {
+                        "col": 18,
+                        "line": 4,
+                        "offset": 133
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 4,
+                        "offset": 115
+                    }
+                }
+            },
+            {
+                "heading": "A link in a [[link_in_heading]]",
+                "level": 2,
+                "position": {
+                    "end": {
+                        "col": 34,
+                        "line": 8,
+                        "offset": 217
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 8,
+                        "offset": 183
+                    }
+                }
+            }
+        ],
+        "links": [
+            {
+                "displayText": "link_in_file_body",
+                "link": "link_in_file_body",
+                "original": "[[link_in_file_body]]",
+                "position": {
+                    "end": {
+                        "col": 46,
+                        "line": 6,
+                        "offset": 181
+                    },
+                    "start": {
+                        "col": 25,
+                        "line": 6,
+                        "offset": 160
+                    }
+                }
+            },
+            {
+                "displayText": "link_in_heading",
+                "link": "link_in_heading",
+                "original": "[[link_in_heading]]",
+                "position": {
+                    "end": {
+                        "col": 34,
+                        "line": 8,
+                        "offset": 217
+                    },
+                    "start": {
+                        "col": 15,
+                        "line": 8,
+                        "offset": 198
+                    }
+                }
+            },
+            {
+                "displayText": "link_in_task_wikilink",
+                "link": "link_in_task_wikilink",
+                "original": "[[link_in_task_wikilink]]",
+                "position": {
+                    "end": {
+                        "col": 86,
+                        "line": 10,
+                        "offset": 305
+                    },
+                    "start": {
+                        "col": 61,
+                        "line": 10,
+                        "offset": 280
+                    }
+                }
+            }
+        ],
+        "listItems": [
+            {
+                "parent": -10,
+                "position": {
+                    "end": {
+                        "col": 86,
+                        "line": 10,
+                        "offset": 305
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 10,
+                        "offset": 219
+                    }
+                },
+                "task": " "
+            }
+        ],
+        "sections": [
+            {
+                "position": {
+                    "end": {
+                        "col": 3,
+                        "line": 3,
+                        "offset": 114
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 0,
+                        "offset": 0
+                    }
+                },
+                "type": "yaml"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 18,
+                        "line": 4,
+                        "offset": 133
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 4,
+                        "offset": 115
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 46,
+                        "line": 6,
+                        "offset": 181
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 6,
+                        "offset": 135
+                    }
+                },
+                "type": "paragraph"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 34,
+                        "line": 8,
+                        "offset": 217
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 8,
+                        "offset": 183
+                    }
+                },
+                "type": "heading"
+            },
+            {
+                "position": {
+                    "end": {
+                        "col": 86,
+                        "line": 10,
+                        "offset": 305
+                    },
+                    "start": {
+                        "col": 0,
+                        "line": 10,
+                        "offset": 219
+                    }
+                },
+                "type": "list"
+            }
+        ],
+        "tags": [
+            {
+                "position": {
+                    "end": {
+                        "col": 11,
+                        "line": 10,
+                        "offset": 230
+                    },
+                    "start": {
+                        "col": 6,
+                        "line": 10,
+                        "offset": 225
+                    }
+                },
+                "tag": "#task"
+            }
+        ]
     },
-    "frontmatterLinks": [
-      {
-        "displayText": "link_in_yaml",
-        "key": "link-in-frontmatter",
-        "link": "link_in_yaml",
-        "original": "[[link_in_yaml]]"
-      },
-      {
-        "displayText": "A link in a link_in_heading",
-        "key": "link-in-frontmatter-to-heading",
-        "link": "#A link in a link_in_heading",
-        "original": "[[#A link in a link_in_heading]]"
-      }
-    ],
-    "frontmatterPosition": {
-      "end": {
-        "col": 3,
-        "line": 3,
-        "offset": 114
-      },
-      "start": {
-        "col": 0,
-        "line": 0,
-        "offset": 0
-      }
-    },
-    "headings": [
-      {
-        "heading": "links_everywhere",
-        "level": 1,
-        "position": {
-          "end": {
-            "col": 18,
-            "line": 4,
-            "offset": 133
-          },
-          "start": {
-            "col": 0,
-            "line": 4,
-            "offset": 115
-          }
-        }
-      },
-      {
-        "heading": "A link in a [[link_in_heading]]",
-        "level": 2,
-        "position": {
-          "end": {
-            "col": 34,
-            "line": 8,
-            "offset": 217
-          },
-          "start": {
-            "col": 0,
-            "line": 8,
-            "offset": 183
-          }
-        }
-      }
-    ],
-    "links": [
-      {
-        "displayText": "link_in_file_body",
-        "link": "link_in_file_body",
-        "original": "[[link_in_file_body]]",
-        "position": {
-          "end": {
-            "col": 46,
-            "line": 6,
-            "offset": 181
-          },
-          "start": {
-            "col": 25,
-            "line": 6,
-            "offset": 160
-          }
-        }
-      },
-      {
-        "displayText": "link_in_heading",
-        "link": "link_in_heading",
-        "original": "[[link_in_heading]]",
-        "position": {
-          "end": {
-            "col": 34,
-            "line": 8,
-            "offset": 217
-          },
-          "start": {
-            "col": 15,
-            "line": 8,
-            "offset": 198
-          }
-        }
-      },
-      {
-        "displayText": "link_in_task_wikilink",
-        "link": "link_in_task_wikilink",
-        "original": "[[link_in_task_wikilink]]",
-        "position": {
-          "end": {
-            "col": 86,
-            "line": 10,
-            "offset": 305
-          },
-          "start": {
-            "col": 61,
-            "line": 10,
-            "offset": 280
-          }
-        }
-      }
-    ],
-    "listItems": [
-      {
-        "parent": -10,
-        "position": {
-          "end": {
-            "col": 86,
-            "line": 10,
-            "offset": 305
-          },
-          "start": {
-            "col": 0,
-            "line": 10,
-            "offset": 219
-          }
-        },
-        "task": " "
-      }
-    ],
-    "sections": [
-      {
-        "position": {
-          "end": {
-            "col": 3,
-            "line": 3,
-            "offset": 114
-          },
-          "start": {
-            "col": 0,
-            "line": 0,
-            "offset": 0
-          }
-        },
-        "type": "yaml"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 18,
-            "line": 4,
-            "offset": 133
-          },
-          "start": {
-            "col": 0,
-            "line": 4,
-            "offset": 115
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 46,
-            "line": 6,
-            "offset": 181
-          },
-          "start": {
-            "col": 0,
-            "line": 6,
-            "offset": 135
-          }
-        },
-        "type": "paragraph"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 34,
-            "line": 8,
-            "offset": 217
-          },
-          "start": {
-            "col": 0,
-            "line": 8,
-            "offset": 183
-          }
-        },
-        "type": "heading"
-      },
-      {
-        "position": {
-          "end": {
-            "col": 86,
-            "line": 10,
-            "offset": 305
-          },
-          "start": {
-            "col": 0,
-            "line": 10,
-            "offset": 219
-          }
-        },
-        "type": "list"
-      }
-    ],
-    "tags": [
-      {
-        "position": {
-          "end": {
-            "col": 11,
-            "line": 10,
-            "offset": 230
-          },
-          "start": {
-            "col": 6,
-            "line": 10,
-            "offset": 225
-          }
-        },
-        "tag": "#task"
-      }
-    ]
-  },
-  "fileContents": "---\nlink-in-frontmatter: \"[[link_in_yaml]]\"\nlink-in-frontmatter-to-heading: \"[[#A link in a link_in_heading]]\"\n---\n# links_everywhere\n\nA link in the file body: [[link_in_file_body]]\n\n## A link in a [[link_in_heading]]\n\n- [ ] #task Task in 'links_everywhere' - a link on the task: [[link_in_task_wikilink]]\n",
-  "filePath": "Test Data/links_everywhere.md",
-  "getAllTags": [
-    "#task"
-  ],
-  "parseFrontMatterTags": null,
-  "resolveLinkToPath": {
-    "#A link in a link_in_heading": "Test Data/links_everywhere.md",
-    "link_in_file_body": "Test Data/link_in_file_body.md",
-    "link_in_heading": "Test Data/link_in_heading.md",
-    "link_in_task_wikilink": "Test Data/link_in_task_wikilink.md",
-    "link_in_yaml": "Test Data/link_in_yaml.md"
-  }
+    "fileContents": "---\nlink-in-frontmatter: \"[[link_in_yaml]]\"\nlink-in-frontmatter-to-heading: \"[[#A link in a link_in_heading]]\"\n---\n# links_everywhere\n\nA link in the file body: [[link_in_file_body]]\n\n## A link in a [[link_in_heading]]\n\n- [ ] #task Task in 'links_everywhere' - a link on the task: [[link_in_task_wikilink]]\n",
+    "filePath": "Test Data/links_everywhere.md",
+    "getAllTags": ["#task"],
+    "parseFrontMatterTags": null,
+    "resolveLinkToPath": {
+        "#A link in a link_in_heading": "Test Data/links_everywhere.md",
+        "link_in_file_body": "Test Data/link_in_file_body.md",
+        "link_in_heading": "Test Data/link_in_heading.md",
+        "link_in_task_wikilink": "Test Data/link_in_task_wikilink.md",
+        "link_in_yaml": "Test Data/link_in_yaml.md"
+    }
 }

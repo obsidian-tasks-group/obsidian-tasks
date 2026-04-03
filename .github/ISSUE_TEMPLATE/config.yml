@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Ask a question
-    url: https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/new?category=q-a
-    about: Ask for help with using the Tasks plugin. In case your question has been asked before, for quicker results you can search existing Discussion Q&As.
+    - name: Ask a question
+      url: https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/new?category=q-a
+      about: Ask for help with using the Tasks plugin. In case your question has been asked before, for quicker results you can search existing Discussion Q&As.

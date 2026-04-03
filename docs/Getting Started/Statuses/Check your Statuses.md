@@ -46,7 +46,7 @@ The sections are:
 Here is an example report, that is generated from the problem statuses shown in [[Recurring Tasks and Custom Statuses#When DONE is not followed by TODO or IN_PROGRESS|When DONE is not followed by TODO or IN_PROGRESS]]:
 
 ![Example statuses report](../../images/settings-statuses-report.png)<br>
-*Example statuses report*
+_Example statuses report_
 
 ### Sample tasks sections
 
@@ -57,4 +57,4 @@ Their appearance depends on your choice of Theme or CSS snippet.
 Here is what it might look like with the **Minimal theme**, and **Colorful Headings** enabled in the **Minimal Theme Settings plugin**:
 
 ![Example statuses report samples](../../images/settings-statuses-report-samples.png)<br>
-*Example statuses report samples*
+_Example statuses report samples_
