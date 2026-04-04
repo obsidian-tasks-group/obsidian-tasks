@@ -23,7 +23,7 @@ Then:
 - **Or** use `yarn deploy:local` to copy all 3 plugin files (`main.js`, `manifest.json`, `styles.css`) into the Tasks-Demo sample vault.
   - This runs a cross-platform Node.js script that works on Windows, macOS and Linux.
   - By default it copies to `resources/sample_vaults/Tasks-Demo/.obsidian/plugins/obsidian-tasks-plugin`.
-  - To copy to a different vault, pass the destination as an argument: `yarn deploy:local /path/to/vault/.obsidian/plugins/obsidian-tasks-plugin`.
+  - To copy to a different vault, pass the vault folder as an argument: `yarn deploy:local /path/to/vault`.
   - You must remember to repeat the copy step after every build.
   - PowerShell users can alternatively use `yarn deploy:local:pwsh` which runs the original PowerShell script that creates symbolic links instead of copying.
 
