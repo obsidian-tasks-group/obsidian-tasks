@@ -2,7 +2,6 @@ import type { PostfixExpression } from 'boon-js';
 import { parse as boonParse } from 'boon-js';
 import type { Token } from 'boon-js/lib/types';
 
-import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task/Task';
 import { Explanation } from '../Explain/Explanation';
 import type { SearchInfo } from '../SearchInfo';
@@ -26,13 +25,17 @@ import { BooleanPreprocessor, type BooleanPreprocessorResult } from './BooleanPr
  * evaluates the complete postfix expression by going through the individual filters and then resolving
  * the expression into a single boolean entity.
  */
+export type ParseFilterFunction = (filterString: string) => FilterOrErrorMessage | null;
+
 export class BooleanField extends Field {
     private readonly basicBooleanRegexp;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
     private subFields: Record<string, Filter> = {};
+    private readonly parseFilter: ParseFilterFunction;
 
-    constructor() {
+    constructor(parseFilter: ParseFilterFunction) {
         super();
+        this.parseFilter = parseFilter;
         // First pattern in this matches conventional (filter1) OR (filter2) and similar
         // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
 
@@ -97,7 +100,7 @@ export class BooleanField extends Field {
                     const filter = filters[placeholder];
                     token.value = filter;
                     if (!(filter in this.subFields)) {
-                        const parsedField = parseFilter(filter);
+                        const parsedField = this.parseFilter(filter);
                         if (parsedField === null) {
                             return this.helpMessage(line, `couldn't parse sub-expression '${filter}'`, parseResult);
                         }
@@ -290,7 +293,7 @@ For help, see:
     }
 
     private stringifySubExpressionStatus(line: string) {
-        const parsedField = parseFilter(line);
+        const parsedField = this.parseFilter(line);
         if (!parsedField) {
             return 'ERROR:\n           do not understand query';
         }

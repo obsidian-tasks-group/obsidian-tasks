@@ -9,7 +9,7 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { DateFallback } from '../../src/DateTime/DateFallback';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import type { Task } from '../../src/Task/Task';
+import { Task } from '../../src/Task/Task';
 import EditTask from '../../src/ui/EditTask.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
@@ -36,8 +36,14 @@ function constructSerialisingOnSubmit(task: Task) {
     });
 
     const onSubmit = (updatedTasks: Task[]): void => {
-        const serializedTask = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
-            .map((task: Task) => task.toFileLineString())
+        const shouldClearInferred = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks);
+        const serializedTask = updatedTasks
+            .map((t: Task, i: number) => {
+                if (shouldClearInferred[i]) {
+                    return new Task({ ...t, scheduledDateIsInferred: false }).toFileLineString();
+                }
+                return t.toFileLineString();
+            })
             .join('\n');
         resolvePromise(serializedTask);
     };

@@ -1,15 +1,13 @@
-import {
-    DEFAULT_MAX_GENERIC_SUGGESTIONS,
-    makeDefaultSuggestionBuilder,
-    onlySuggestIfBracketOpen,
-} from '../Suggestor/DefaultSuggestionBuilder';
+import { makeDefaultSuggestionBuilder } from '../Suggestor/DefaultSuggestionBuilder';
+import { DEFAULT_MAX_GENERIC_SUGGESTIONS, onlySuggestIfBracketOpen } from '../Suggestor/SuggestionDefaults';
 import { StatusConfiguration } from '../Statuses/StatusConfiguration';
 import { Status } from '../Statuses/Status';
 import type { LogOptions } from '../lib/logging';
 import { i18n } from '../i18n/i18n';
 import { type PresetsMap, defaultPresets } from '../Query/Presets/Presets';
-import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
-import { DEFAULT_SYMBOLS, DefaultTaskSerializer } from '../TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS, DEFAULT_SYMBOLS } from '../TaskSerializer/TaskSerializerSymbols';
+import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
+import { DefaultTaskSerializer } from '../TaskSerializer/DefaultTaskSerializer';
 import { DebugSettings } from './DebugSettings';
 import { type EditModalShowSettings, defaultEditModalShowSettings } from './EditModalShowSettings';
 import { StatusSettings } from './StatusSettings';

@@ -8,6 +8,7 @@ import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
+import { parseFilter } from '../../../src/Query/FilterParser';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
@@ -202,7 +203,7 @@ describe('search description for short tags, excluding sub-tags', () => {
 
     it('should search for a short tag anywhere', () => {
         // Arrange
-        const filter = new BooleanField().createFilterOrErrorMessage(
+        const filter = new BooleanField(parseFilter).createFilterOrErrorMessage(
             String.raw`(description regex matches /#t\s/i) OR (description regex matches /#t$/i)`,
         );
 

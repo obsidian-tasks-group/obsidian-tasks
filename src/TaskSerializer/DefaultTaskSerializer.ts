@@ -6,47 +6,11 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import type { TaskDetails, TaskSerializer } from '.';
+import type { TaskDetails, TaskSerializer } from './TaskSerializerTypes';
+import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from './TaskSerializerSymbols';
 
-/* Interface describing the symbols that {@link DefaultTaskSerializer}
- * uses to serialize and deserialize tasks.
- *
- * @interface DefaultTaskSerializerSymbols
- */
-export interface DefaultTaskSerializerSymbols {
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    readonly prioritySymbols: {
-        Highest: string;
-        High: string;
-        Medium: string;
-        Low: string;
-        Lowest: string;
-        None: string;
-    };
-    readonly startDateSymbol: string;
-    readonly createdDateSymbol: string;
-    readonly scheduledDateSymbol: string;
-    readonly dueDateSymbol: string;
-    readonly doneDateSymbol: string;
-    readonly cancelledDateSymbol: string;
-    readonly recurrenceSymbol: string;
-    readonly onCompletionSymbol: string;
-    readonly idSymbol: string;
-    readonly dependsOnSymbol: string;
-    readonly TaskFormatRegularExpressions: {
-        priorityRegex: RegExp;
-        startDateRegex: RegExp;
-        createdDateRegex: RegExp;
-        scheduledDateRegex: RegExp;
-        dueDateRegex: RegExp;
-        doneDateRegex: RegExp;
-        cancelledDateRegex: RegExp;
-        recurrenceRegex: RegExp;
-        onCompletionRegex: RegExp;
-        idRegex: RegExp;
-        dependsOnRegex: RegExp;
-    };
-}
+// Re-export for backward compatibility
+export { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols, taskIdRegex, taskIdSequenceRegex } from './TaskSerializerSymbols';
 
 /**
  * Represents the mutable state during task line parsing.
@@ -55,68 +19,6 @@ interface ParsingState {
     line: string;
     matched: boolean;
 }
-
-// The allowed characters in a single task id:
-export const taskIdRegex = /[a-zA-Z0-9-_]+/;
-
-// The allowed characters in a comma-separated sequence of task ids:
-export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
-
-function dateFieldRegex(symbols: string) {
-    return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2})');
-}
-
-function fieldRegex(symbols: string, valueRegexString: string) {
-    // \uFE0F? allows an optional Variant Selector 16 on emojis.
-    let source = symbols + '\uFE0F?';
-    if (valueRegexString !== '') {
-        source += ' *' + valueRegexString;
-    }
-    // The regexes end with `$` because they will be matched and
-    // removed from the end until none are left.
-    source += '$';
-    // nosemgrep: detect-non-literal-regexp — constructed from internal regex source
-    return new RegExp(source); // Remove the 'u' flag, to fix parsing on iPadOS/iOS 18.6 and 26 Public Beta 2
-}
-
-/**
- * A symbol map for obsidian-task's default task style.
- * Uses emojis to concisely convey meaning
- */
-export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
-    // NEW_TASK_FIELD_EDIT_REQUIRED
-    prioritySymbols: {
-        Highest: '🔺',
-        High: '⏫',
-        Medium: '🔼',
-        Low: '🔽',
-        Lowest: '⏬',
-        None: '',
-    },
-    startDateSymbol: '🛫',
-    createdDateSymbol: '➕',
-    scheduledDateSymbol: '⏳',
-    dueDateSymbol: '📅',
-    doneDateSymbol: '✅',
-    cancelledDateSymbol: '❌',
-    recurrenceSymbol: '🔁',
-    onCompletionSymbol: '🏁',
-    dependsOnSymbol: '⛔',
-    idSymbol: '🆔',
-    TaskFormatRegularExpressions: {
-        priorityRegex: fieldRegex('(🔺|⏫|🔼|🔽|⏬)', ''),
-        startDateRegex: dateFieldRegex('🛫'),
-        createdDateRegex: dateFieldRegex('➕'),
-        scheduledDateRegex: dateFieldRegex('(?:⏳|⌛)'),
-        dueDateRegex: dateFieldRegex('(?:📅|📆|🗓)'),
-        doneDateRegex: dateFieldRegex('✅'),
-        cancelledDateRegex: dateFieldRegex('❌'),
-        recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)'),
-        onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)'),
-        dependsOnRegex: fieldRegex('⛔', '(' + taskIdSequenceRegex.source + ')'),
-        idRegex: fieldRegex('🆔', '(' + taskIdRegex.source + ')'),
-    },
-} as const;
 
 function symbolAndStringValue(shortMode: boolean, symbol: string, value: string) {
     if (!value) return '';

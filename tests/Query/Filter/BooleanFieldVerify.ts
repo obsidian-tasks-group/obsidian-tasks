@@ -2,6 +2,7 @@ import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { errorMessageForException } from '../../../src/lib/ExceptionTools';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { BooleanDelimiters } from '../../../src/Query/Filter/BooleanDelimiters';
+import { parseFilter } from '../../../src/Query/FilterParser';
 
 export const inputs = `
 (not done) AND (is recurring)
@@ -258,7 +259,7 @@ export function verifyBooleanExpressionExplanation() {
         }
 
         let result: string = '';
-        const filterOrErrorMessage = new BooleanField().createFilterOrErrorMessage(input);
+        const filterOrErrorMessage = new BooleanField(parseFilter).createFilterOrErrorMessage(input);
         if (filterOrErrorMessage.isValid()) {
             result = filterOrErrorMessage.filter!.explainFilterIndented('  ');
         } else {

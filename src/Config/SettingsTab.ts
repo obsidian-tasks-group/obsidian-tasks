@@ -1,6 +1,6 @@
 import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
-import type TasksPlugin from '../main';
+import type { ITasksPlugin } from '../ITasksPlugin';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
 import type { StatusCollection } from '../Statuses/StatusCollection';
@@ -32,11 +32,11 @@ export class SettingsTab extends PluginSettingTab {
         insertCustomTaskStatusSettings: this.insertCustomTaskStatusSettings.bind(this),
     };
 
-    private readonly plugin: TasksPlugin;
+    private readonly plugin: ITasksPlugin;
     private readonly presetsSettingsUI;
     private readonly events: TasksEvents;
 
-    constructor({ plugin, events }: { plugin: TasksPlugin; events: TasksEvents }) {
+    constructor({ plugin, events }: { plugin: ITasksPlugin; events: TasksEvents }) {
         super(plugin.app, plugin);
 
         this.plugin = plugin;
@@ -864,7 +864,7 @@ function createRowForTaskStatus(
     statuses: StatusConfiguration[],
     statusSettings: StatusSettings,
     settings: SettingsTab,
-    plugin: TasksPlugin,
+    plugin: ITasksPlugin,
     isCoreStatus: boolean,
 ) {
     //const taskStatusDiv = containerEl.createEl('div');

@@ -1,6 +1,5 @@
 import type { Moment } from 'moment';
 import { getSettings } from '../Config/Settings';
-import { Task } from '../Task/Task';
 import type { TaskLocation } from '../Task/TaskLocation';
 
 type TaskWithDateFallbackFields = {
@@ -12,12 +11,19 @@ type TaskWithDateFallbackFields = {
 };
 
 /**
+ * Fields that DateFallback methods may modify. Callers use this
+ * to construct a new Task with the updated values.
+ */
+export interface DateFallbackUpdate {
+    scheduledDate: Moment | null;
+    scheduledDateIsInferred: boolean;
+    taskLocation?: TaskLocation;
+}
+
+/**
  * Implement date from path detection
  */
 export class DateFallback {
-    private static createTask<TTask>(args: any): TTask {
-        return new Task(args) as TTask;
-    }
 
     /**
      * Attempt to parse the filename to extract a date taking user settings into account. If date inference is not
@@ -95,16 +101,18 @@ export class DateFallback {
     }
 
     /**
-     * Implement the logic to update the fields related to date fallback of a task when its file has moved
+     * Compute the updated date fallback fields when a task's file has moved.
+     * Returns the fields that need to change; the caller constructs the new Task.
+     *
      * @param task         - task to update
      * @param newLocation  - new location
      * @param fallbackDate - fallback date from new location, for efficiency. Can be null
      */
-    public static updateTaskPath<TTask extends TaskWithDateFallbackFields>(
-        task: TTask,
+    public static updateTaskPath(
+        task: TaskWithDateFallbackFields,
         newLocation: TaskLocation,
         fallbackDate: Moment | null,
-    ): TTask {
+    ): DateFallbackUpdate {
         // initialize with values from before the path was changed
         let scheduledDate = task.scheduledDate;
         let scheduledDateIsInferred = task.scheduledDateIsInferred;
@@ -137,32 +145,30 @@ export class DateFallback {
             }
         }
 
-        return DateFallback.createTask<TTask>({
-            ...task,
+        return {
             taskLocation: newLocation,
             scheduledDate,
             scheduledDateIsInferred,
-        });
+        };
     }
 
     /**
-     * Update an array of updated tasks to remove the inferred scheduled date status if the scheduled date has been
-     * modified as compared to the original date
+     * For each task in updatedTasks, check if the inferred scheduled date status should be removed
+     * because the scheduled date was modified compared to the original.
+     * Returns an array of booleans: true means scheduledDateIsInferred should be set to false for that task.
+     * The caller is responsible for constructing new Task objects when needed.
      */
-    public static removeInferredStatusIfNeeded<TTask extends TaskWithDateFallbackFields>(
-        originalTask: TTask,
-        updatedTasks: TTask[],
-    ): TTask[] {
+    public static removeInferredStatusIfNeeded(
+        originalTask: TaskWithDateFallbackFields,
+        updatedTasks: TaskWithDateFallbackFields[],
+    ): boolean[] {
         const inferredScheduledDate = originalTask.scheduledDateIsInferred ? originalTask.scheduledDate : null;
 
-        return updatedTasks.map((task: TTask) => {
+        return updatedTasks.map((task) => {
             if (inferredScheduledDate !== null && !inferredScheduledDate.isSame(task.scheduledDate, 'day')) {
-                // if a fallback date was used before modification, and the scheduled date was modified, we have to mark
-                // the scheduled date as not inferred anymore.
-                task = DateFallback.createTask<TTask>({ ...task, scheduledDateIsInferred: false });
+                return true; // caller should set scheduledDateIsInferred = false
             }
-
-            return task;
+            return false;
         });
     }
 }

@@ -1,6 +1,6 @@
 import { App, Editor, EditorSuggest, MarkdownView, Notice, TFile, editorInfoField } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
-import type TasksPlugin from 'main';
+import type { ITasksPlugin } from '../ITasksPlugin';
 import { ensureTaskHasId } from '../Task/TaskDependency';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
@@ -22,9 +22,9 @@ function showError(message: string) {
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private settings: Settings;
-    private plugin: TasksPlugin;
+    private plugin: ITasksPlugin;
 
-    constructor(app: App, settings: Settings, plugin: TasksPlugin) {
+    constructor(app: App, settings: Settings, plugin: ITasksPlugin) {
         super(app);
         this.settings = settings;
         this.plugin = plugin;

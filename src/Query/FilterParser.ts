@@ -68,7 +68,7 @@ export const fieldCreators: EndsWith<BooleanField> = [
     () => new DependsOnField(),
     () => new BlockingField(),
     () => new RandomField(),
-    () => new BooleanField(), // --- Please make sure to keep BooleanField last (see comment above) ---
+    () => new BooleanField(parseFilter), // --- Please make sure to keep BooleanField last (see comment above) ---
 ];
 
 // This type helps verify that BooleanField is kept last

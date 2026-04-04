@@ -2,7 +2,7 @@ import type { EventRef, Events as ObsidianEvents } from 'obsidian';
 
 import type { Task } from '../Task/Task';
 import { logging } from '../lib/logging';
-import type { State } from './Cache';
+import type { State } from './CacheState';
 
 enum Event {
     CacheUpdate = 'obsidian-tasks-plugin:cache-update',

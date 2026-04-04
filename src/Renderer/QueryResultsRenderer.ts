@@ -13,8 +13,7 @@ import { type HTMLQueryRendererParameters, HtmlQueryResultsRenderer } from './Ht
 import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import { type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 
-export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
-export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
+export type { BacklinksEventHandler, EditButtonClickHandler } from './RendererTypes';
 
 /**
  * The `QueryResultsRenderer` class is responsible for rendering the results

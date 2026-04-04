@@ -1,5 +1,5 @@
 import { Setting, TextAreaComponent } from 'obsidian';
-import type TasksPlugin from '../main';
+import type { ITasksPlugin } from '../ITasksPlugin';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { PresetsSettingsService, type RenamesInProgress } from '../Query/Presets/PresetsSettingsService';
 import type { PresetsMap } from '../Query/Presets/Presets';
@@ -14,7 +14,7 @@ type RefreshViewCallback = () => void;
  * This class handles rendering, updating, and managing the presets settings UI components.
  */
 export class PresetsSettingsUI {
-    private readonly plugin: TasksPlugin;
+    private readonly plugin: ITasksPlugin;
     private readonly events: TasksEvents;
     private readonly presetsSettingsService = new PresetsSettingsService();
     private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
@@ -24,7 +24,7 @@ export class PresetsSettingsUI {
      * @param plugin The Tasks plugin instance
      * @param events The plugin's events object
      */
-    constructor(plugin: TasksPlugin, events: TasksEvents) {
+    constructor(plugin: ITasksPlugin, events: TasksEvents) {
         this.plugin = plugin;
         this.events = events;
     }

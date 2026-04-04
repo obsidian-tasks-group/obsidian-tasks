@@ -1,4 +1,4 @@
-import type TasksPlugin from '../main';
+import type { ITasksPlugin } from '../ITasksPlugin';
 import { toggleLine } from '../Commands/ToggleDone';
 import { createTaskLineModal } from './createTaskLineModal';
 import type { TasksApiV1 } from './TasksApiV1';
@@ -9,7 +9,7 @@ import { editTaskLineModal } from './editTaskLineModal';
  *
  * @param plugin - Tasks Plugin instance
  */
-export const tasksApiV1 = (plugin: TasksPlugin): TasksApiV1 => {
+export const tasksApiV1 = (plugin: ITasksPlugin): TasksApiV1 => {
     const app = plugin.app;
     const onSaveSettings = async () => await plugin.saveSettings();
 

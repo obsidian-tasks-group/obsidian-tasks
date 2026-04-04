@@ -11,7 +11,7 @@ import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import type { BacklinksEventHandler, EditButtonClickHandler } from './QueryResultsRenderer';
+import type { BacklinksEventHandler, EditButtonClickHandler } from './RendererTypes';
 import { QueryResultsRendererBase } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
 

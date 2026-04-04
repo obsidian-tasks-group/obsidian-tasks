@@ -405,7 +405,7 @@ describe('update fallback date when path is changed', () => {
         const fallbackDate = DateFallback.fromPath(newPath);
 
         // Act
-        const updatedTask = DateFallback.updateTaskPath(
+        const update = DateFallback.updateTaskPath(
             task,
             task.taskLocation.fromRenamedFile(new TasksFile(newPath)),
             fallbackDate,
@@ -413,12 +413,12 @@ describe('update fallback date when path is changed', () => {
 
         // Assert
         if (expectedScheduledDate === null) {
-            expect(updatedTask.scheduledDate).toBeNull();
+            expect(update.scheduledDate).toBeNull();
         } else {
-            expect(updatedTask.scheduledDate).toEqualMoment(expectedScheduledDate);
+            expect(update.scheduledDate).toEqualMoment(expectedScheduledDate);
         }
 
-        expect(updatedTask.scheduledDateIsInferred).toBe(expectedIsInferred);
+        expect(update.scheduledDateIsInferred).toBe(expectedIsInferred);
     });
 });
 
@@ -430,10 +430,10 @@ describe('remove inferred status if scheduled date changed', () => {
         const updatedTask = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(true).build();
 
         // act
-        const [processedTask] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+        const [shouldClear] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
 
-        // assert
-        expect(processedTask.scheduledDateIsInferred).toBe(true);
+        // assert: should NOT clear inferred, so the task keeps scheduledDateIsInferred = true
+        expect(shouldClear).toBe(false);
     });
 
     it('should remove scheduled-date-is-inferred if the date was changed', () => {
@@ -443,10 +443,10 @@ describe('remove inferred status if scheduled date changed', () => {
         const updatedTask = new TaskBuilder().scheduledDate('2022-11-15').scheduledDateIsInferred(false).build();
 
         // act
-        const [processedTask] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+        const [shouldClear] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
 
-        // assert
-        expect(processedTask.scheduledDateIsInferred).toBe(false);
+        // assert: should clear inferred status
+        expect(shouldClear).toBe(true);
     });
 
     it('should not set scheduled-date-is-inferred if a scheduled date was added', () => {
@@ -456,9 +456,9 @@ describe('remove inferred status if scheduled date changed', () => {
         const updatedTask = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(false).build();
 
         // act
-        const [processedTask] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+        const [shouldClear] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
 
-        // assert
-        expect(processedTask.scheduledDateIsInferred).toBe(false);
+        // assert: original was not inferred, so no clearing needed
+        expect(shouldClear).toBe(false);
     });
 });

@@ -6,7 +6,7 @@ import { Lazy } from '../lib/Lazy';
 import { DateFallback } from '../DateTime/DateFallback';
 import { ListItem } from '../Task/ListItem';
 import { TaskLocation } from '../Task/TaskLocation';
-import { Cache } from './Cache';
+import { getPrecedingHeader, getSection } from './CacheHelpers';
 
 export class FileParser {
     private readonly filePath: string;
@@ -83,7 +83,7 @@ export class FileParser {
             if (currentSection === null || currentSection.position.end.line < lineNumber) {
                 // We went past the current section (or this is the first task).
                 // Find the section that is relevant for this task and the following of the same section.
-                currentSection = Cache.getSection(lineNumber, this.fileCache.sections);
+                currentSection = getSection(lineNumber, this.fileCache.sections);
                 sectionIndex = 0;
             }
 
@@ -103,7 +103,7 @@ export class FileParser {
                 lineNumber,
                 currentSection.position.start.line,
                 sectionIndex,
-                Cache.getPrecedingHeader(lineNumber, this.fileCache.headings),
+                getPrecedingHeader(lineNumber, this.fileCache.headings),
             );
             sectionIndex = this.parseLine(listItem, line, taskLocation, lineNumber, sectionIndex);
         }

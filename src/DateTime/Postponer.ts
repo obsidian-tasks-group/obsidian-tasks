@@ -116,12 +116,14 @@ function createPostponedTaskFromDate(
 }
 
 function createTaskFromDate(task: Task, dateFieldToPostpone: HappensDate, postponedDate: moment.Moment | null) {
-    const postponedTask = DateFallback.removeInferredStatusIfNeeded(task, [
-        new Task({
-            ...task,
-            [dateFieldToPostpone]: postponedDate,
-        }),
-    ])[0];
+    const updatedTask = new Task({
+        ...task,
+        [dateFieldToPostpone]: postponedDate,
+    });
+    const shouldClearInferred = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+    const postponedTask = shouldClearInferred[0]
+        ? new Task({ ...updatedTask, scheduledDateIsInferred: false })
+        : updatedTask;
     return { postponedDate, postponedTask };
 }
 

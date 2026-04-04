@@ -1,7 +1,6 @@
 import {
     type CachedMetadata,
     type EventRef,
-    type HeadingCache,
     type ListItemCache,
     type SectionCache,
     type Workspace,
@@ -21,12 +20,10 @@ import { PerformanceTracker } from '../lib/PerformanceTracker';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import type { TasksEvents } from './TasksEvents';
 import { FileParser } from './FileParser';
+import { getPrecedingHeader, getSection } from './CacheHelpers';
+import { State } from './CacheState';
 
-export enum State {
-    Cold = 'Cold',
-    Initializing = 'Initializing',
-    Warm = 'Warm',
-}
+export { State } from './CacheState';
 
 export class Cache {
     logger = logging.getLogger('tasks.Cache');
@@ -213,7 +210,11 @@ export class Cache {
                     }
                     const taskLocation = task.taskLocation.fromRenamedFile(tasksFile);
                     if (useFilenameAsScheduledDate) {
-                        return DateFallback.updateTaskPath(task, taskLocation, fallbackDate.value);
+                        const update = DateFallback.updateTaskPath(task, taskLocation, fallbackDate.value);
+                        return new Task({
+                            ...task,
+                            ...update,
+                        });
                     }
                     return new Task({
                         ...task,
@@ -380,32 +381,10 @@ session.
     }
 
     public static getSection(lineNumberTask: number, sections: SectionCache[] | undefined): SectionCache | null {
-        if (sections === undefined) {
-            return null;
-        }
-
-        for (const section of sections) {
-            if (section.position.start.line <= lineNumberTask && section.position.end.line >= lineNumberTask) {
-                return section;
-            }
-        }
-
-        return null;
+        return getSection(lineNumberTask, sections);
     }
 
-    public static getPrecedingHeader(lineNumberTask: number, headings: HeadingCache[] | undefined): string | null {
-        if (headings === undefined) {
-            return null;
-        }
-
-        let precedingHeader: string | null = null;
-
-        for (const heading of headings) {
-            if (heading.position.start.line > lineNumberTask) {
-                return precedingHeader;
-            }
-            precedingHeader = heading.heading;
-        }
-        return precedingHeader;
+    public static getPrecedingHeader(lineNumberTask: number, headings: import('obsidian').HeadingCache[] | undefined): string | null {
+        return getPrecedingHeader(lineNumberTask, headings);
     }
 }

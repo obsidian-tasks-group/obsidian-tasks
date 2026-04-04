@@ -12,14 +12,14 @@ import {
 import { App, Keymap } from 'obsidian';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
-import type TasksPlugin from '../main';
+import type { ITasksPlugin } from '../ITasksPlugin';
 import type { State } from '../Obsidian/Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../DateTime/DateFallback';
-import type { Task } from '../Task/Task';
+import { Task } from '../Task/Task';
 import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
 
@@ -34,10 +34,10 @@ type RenderParams = { tasks: Task[]; state: State };
  */
 export class QueryRenderer {
     private readonly app: App;
-    private readonly plugin: TasksPlugin;
+    private readonly plugin: ITasksPlugin;
     private readonly events: TasksEvents;
 
-    constructor({ plugin, events }: { plugin: TasksPlugin; events: TasksEvents }) {
+    constructor({ plugin, events }: { plugin: ITasksPlugin; events: TasksEvents }) {
         this.app = plugin.app;
         this.plugin = plugin;
         this.events = events;
@@ -90,7 +90,7 @@ export class QueryRenderer {
  */
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
-    private readonly plugin: TasksPlugin;
+    private readonly plugin: ITasksPlugin;
     private readonly events: TasksEvents;
 
     private renderEventRef: EventRef | undefined;
@@ -113,7 +113,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         tasksFile,
     }: {
         app: App;
-        plugin: TasksPlugin;
+        plugin: ITasksPlugin;
         events: TasksEvents;
         container: HTMLElement;
         source: string;
@@ -353,9 +353,13 @@ function createEditTaskPencilClickHandler(app: App, onSaveSettings: () => Promis
         event.preventDefault();
 
         const onSubmit = async (updatedTasks: Task[]): Promise<void> => {
+            const shouldClearInferred = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks);
+            const newTasks = updatedTasks.map((t, i) =>
+                shouldClearInferred[i] ? new Task({ ...t, scheduledDateIsInferred: false }) : t,
+            );
             await replaceTaskWithTasks({
                 originalTask: task,
-                newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
+                newTasks,
             });
         };
 

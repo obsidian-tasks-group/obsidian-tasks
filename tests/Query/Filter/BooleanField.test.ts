@@ -3,6 +3,7 @@
  */
 import moment from 'moment';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
+import { parseFilter } from '../../../src/Query/FilterParser';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
@@ -21,9 +22,9 @@ function testWithDescription(filter: FilterOrErrorMessage, description: string, 
 
 function createValidFilter(instruction: string) {
     // First make sure that BooleanField recognises the instruction as valid
-    expect(new BooleanField().canCreateFilterForLine(instruction)).toEqual(true);
+    expect(new BooleanField(parseFilter).canCreateFilterForLine(instruction)).toEqual(true);
 
-    return new BooleanField().createFilterOrErrorMessage(instruction);
+    return new BooleanField(parseFilter).createFilterOrErrorMessage(instruction);
 }
 
 describe('boolean query - filter', () => {
@@ -204,7 +205,7 @@ describe('boolean query - filter', () => {
 
         describe('Mixed delimiters', () => {
             it('should not allow a mixture of () and "" delimiters any more - breaking change in 7.0.0', () => {
-                const filter = new BooleanField().createFilterOrErrorMessage('(not done) AND "is recurring"');
+                const filter = new BooleanField(parseFilter).createFilterOrErrorMessage('(not done) AND "is recurring"');
                 expect(filter.error).toBeDefined();
             });
         });
@@ -239,7 +240,7 @@ describe('boolean query - filter', () => {
         ])(
             'should report expected error message: on "%s" - expected "%s"',
             (instruction: string, expectedError: string) => {
-                const filter = new BooleanField().createFilterOrErrorMessage(instruction);
+                const filter = new BooleanField(parseFilter).createFilterOrErrorMessage(instruction);
                 expect(filter.error).toContain(expectedError);
             },
         );
@@ -266,7 +267,7 @@ describe('boolean query - filter', () => {
             ['(path includes a) XOR(path includes b)'],
             ['NOT(path includes b)'],
         ])('should report expected error message: on "%s" - expected "%s"', (instruction: string) => {
-            const filter = new BooleanField().createFilterOrErrorMessage(instruction);
+            const filter = new BooleanField(parseFilter).createFilterOrErrorMessage(instruction);
             expect(filter.error).toBeUndefined();
         });
     });

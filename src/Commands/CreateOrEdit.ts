@@ -1,6 +1,6 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
 import { TaskModal } from '../Obsidian/TaskModal';
-import type { Task } from '../Task/Task';
+import { Task } from '../Task/Task';
 import { DateFallback } from '../DateTime/DateFallback';
 import { taskFromLine } from './CreateOrEditTaskParser';
 
@@ -32,8 +32,14 @@ export const createOrEdit = (
     const task = taskFromLine({ line, path });
 
     const onSubmit = (updatedTasks: Task[]): void => {
-        const serialized = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
-            .map((task: Task) => task.toFileLineString())
+        const shouldClearInferred = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks);
+        const serialized = updatedTasks
+            .map((t: Task, i: number) => {
+                if (shouldClearInferred[i]) {
+                    return new Task({ ...t, scheduledDateIsInferred: false }).toFileLineString();
+                }
+                return t.toFileLineString();
+            })
             .join('\n');
         editor.setLine(lineNumber, serialized);
     };
