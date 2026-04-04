@@ -62,6 +62,20 @@ export class SettingsTab extends PluginSettingTab {
         containerEl.empty();
         this.containerEl.addClass('tasks-settings');
 
+        this.addTaskFormatSection(containerEl);
+        this.addGlobalFilterSection(containerEl);
+        this.addGlobalQuerySection(containerEl);
+        this.addSearchResultsSection(containerEl);
+        this.addPresetsSection(containerEl);
+        this.addStatusesSection(containerEl);
+        this.addDatesSection(containerEl);
+        this.addDatesFromFileNamesSection(containerEl);
+        this.addRecurringTasksSection(containerEl);
+        this.addAutoSuggestSection(containerEl);
+        this.addDialogsSection(containerEl);
+    }
+
+    private addTaskFormatSection(containerEl: HTMLElement): void {
         new Setting(containerEl)
             .setName(i18n.t('settings.format.name'))
             .setDesc(
@@ -84,7 +98,9 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+    }
 
+    private addGlobalFilterSection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.globalFilter.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -141,7 +157,9 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
         setSettingVisibility(globalFilterHidden, getSettings().globalFilter.length > 0);
+    }
 
+    private addGlobalQuerySection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.globalQuery.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -169,7 +187,9 @@ export class SettingsTab extends PluginSettingTab {
                         });
                 }),
         );
+    }
 
+    private addSearchResultsSection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.searchResults.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -187,7 +207,9 @@ export class SettingsTab extends PluginSettingTab {
                     this.events.triggerReloadOpenSearchResults();
                 });
             });
+    }
 
+    private addPresetsSection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl)
             .setName(i18n.t('settings.presets.name'))
@@ -208,7 +230,9 @@ export class SettingsTab extends PluginSettingTab {
             );
         // ---------------------------------------------------------------------------
         this.presetsSettingsUI.renderPresetsSettings(containerEl);
+    }
 
+    private addStatusesSection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -290,7 +314,9 @@ export class SettingsTab extends PluginSettingTab {
             const detailsContainer = this.addOneSettingsBlock(containerEl, heading, headingOpened);
             detailsContainer.open = initiallyOpen;
         });
+    }
 
+    private addDatesSection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.dates.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -349,7 +375,9 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+    }
 
+    private addDatesFromFileNamesSection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.datesFromFileNames.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -428,7 +456,9 @@ export class SettingsTab extends PluginSettingTab {
             });
         setSettingVisibility(scheduledDateExtraFormat, getSettings().useFilenameAsScheduledDate);
         setSettingVisibility(scheduledDateFolders, getSettings().useFilenameAsScheduledDate);
+    }
 
+    private addRecurringTasksSection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.recurringTasks.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -468,7 +498,9 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+    }
 
+    private addAutoSuggestSection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.autoSuggest.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -536,7 +568,9 @@ export class SettingsTab extends PluginSettingTab {
             });
         setSettingVisibility(autoSuggestMinimumMatchLength, getSettings().autoSuggestInEditor);
         setSettingVisibility(autoSuggestMaximumSuggestions, getSettings().autoSuggestInEditor);
+    }
 
+    private addDialogsSection(containerEl: HTMLElement): void {
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.dialogs.heading')).setHeading();
         // ---------------------------------------------------------------------------
