@@ -82,8 +82,8 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.due.category.sortOrder` | `number` | `3` | `number` | `4` |
 | `task.due.category.groupText` | `string` | `'%%3%% Future'` [^commented] | `string` | `'%%4%% Undated'` [^commented] |
 | `task.due.fromNow.name` | `string` | `'in 22 days'` | `string` | `''` |
-| `task.due.fromNow.sortOrder` | `number` | `320230704` | `number` | `0` |
-| `task.due.fromNow.groupText` | `string` | `'%%320230704%% in 22 days'` [^commented] | `string` | `''` |
+| `task.due.fromNow.sortOrder` | `number` | `3202307040000` | `number` | `0` |
+| `task.due.fromNow.groupText` | `string` | `'%%3202307040000%% in 22 days'` [^commented] | `string` | `''` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
