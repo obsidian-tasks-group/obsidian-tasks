@@ -154,17 +154,6 @@
       },
       "heading": "Dialogs"
     },
-    "searchResults": {
-      "heading": "Search results",
-      "taskCountLocation": {
-        "description": "Choose whether the task count is shown at the top or bottom of query results.",
-        "name": "Task count location",
-        "options": {
-          "bottom": "Bottom",
-          "top": "Top"
-        }
-      }
-    },
     "format": {
       "description": {
         "line1": "The format that Tasks uses to read and write tasks.",
@@ -220,6 +209,17 @@
           "line2": "This is for when you want the Start and Due dates to carry forward to the next recurrence, but you will set the Scheduled date in future, once you plan to work on it."
         },
         "name": "Remove scheduled date on recurrence"
+      }
+    },
+    "searchResults": {
+      "heading": "Search results",
+      "taskCountLocation": {
+        "description": "Choose whether the task count is shown at the top or bottom of query results.",
+        "name": "Task count location",
+        "options": {
+          "bottom": "Bottom",
+          "top": "Top"
+        }
       }
     },
     "seeTheDocumentation": "See the documentation",
