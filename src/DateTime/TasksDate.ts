@@ -97,7 +97,7 @@ export class TasksDate {
         //   - sorts in ascending order of the date.
 
         const now = window.moment();
-        const earlier = date.isSameOrBefore(now, 'day');
+        const earlier = date.isSameOrBefore(now, 'second');
         const startDateOfThisGroup = this.fromNowStartDateOfGroup(date, earlier, now);
         const splitPastAndFutureDates = earlier ? 1 : 3;
         return Number(splitPastAndFutureDates + startDateOfThisGroup.format('YYYYMMDD'));
