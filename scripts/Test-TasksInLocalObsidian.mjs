@@ -7,7 +7,7 @@
 //
 // Usage:
 //   node scripts/Test-TasksInLocalObsidian.mjs
-//   node scripts/Test-TasksInLocalObsidian.mjs /path/to/vault/.obsidian/plugins/obsidian-tasks-plugin
+//   node scripts/Test-TasksInLocalObsidian.mjs /path/to/vault
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,18 +17,14 @@ const FILES_TO_COPY = ['main.js', 'manifest.json', 'styles.css'];
 
 // Default destination is the Tasks-Demo sample vault in this repository.
 // path.join() is used instead of hardcoded separators for cross-platform compatibility.
-const DEFAULT_DEST = path.join(
-    'resources',
-    'sample_vaults',
-    'Tasks-Demo',
-    '.obsidian',
-    'plugins',
-    'obsidian-tasks-plugin',
-);
+const DEFAULT_DEST = path.join('resources', 'sample_vaults', 'Tasks-Demo');
+
+const PLUGIN_SUFFIX = path.join('.obsidian', 'plugins', 'obsidian-tasks-plugin');
 
 // Allow overriding the destination via a CLI argument, e.g.:
-//   node scripts/Test-TasksInLocalObsidian.mjs /path/to/my-vault/.obsidian/plugins/obsidian-tasks-plugin
-const dest = process.argv[2] || DEFAULT_DEST;
+//   node scripts/Test-TasksInLocalObsidian.mjs /path/to/my-vault
+const rawDest = process.argv[2] || DEFAULT_DEST;
+const dest = path.join(rawDest, PLUGIN_SUFFIX);
 
 // Validate that the destination folder exists before attempting to copy.
 if (!fs.existsSync(dest)) {
