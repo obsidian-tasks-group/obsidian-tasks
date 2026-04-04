@@ -38,7 +38,7 @@ yarn build:dev
 yarn deploy:local /path/to/your/vault
 ```
 
-And make sure you set up Hot Reload for the Tasks plugin in that vault.
+And make sure you set up [Hot Reload](https://github.com/pjeby/hot-reload) for the Tasks plugin in that vault.
 
 ## Appendix: Original development instructions
 
@@ -66,6 +66,3 @@ Then:
   - To copy to a different vault, pass the vault folder as an argument: `yarn deploy:local /path/to/vault`.
   - You must remember to repeat the copy step after every build.
   - PowerShell users can alternatively use `yarn deploy:local:pwsh` which runs the original PowerShell script that creates symbolic links instead of copying.
-
-It is recommended you use the [Hot-Reload](https://github.com/pjeby/hot-reload) plugin in that vault also;
-it will automatically reload the plugin when files change.
