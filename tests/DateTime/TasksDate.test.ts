@@ -110,6 +110,18 @@ describe('TasksDate', () => {
         },
     );
 
+    it.failing('should sort group categories in ascending order by date', () => {
+        // See:
+        //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2789
+        //      Inconsistent sort order of groups by date categories (sometimes)
+        const sampleDateGroupNames: ReadonlyArray<string> = sampleDatesSortedByDate.map((values) => values[1]);
+        const sampleDateGroupNamesSorted = [...sampleDateGroupNames].sort((a, b) =>
+            a.localeCompare(b, undefined, { numeric: true }),
+        );
+
+        expect(sampleDateGroupNamesSorted).toEqual(sampleDateGroupNames);
+    });
+
     it('should categorise edge-case dates for grouping, relative to today', () => {
         expect(new TasksDate(null).fromNow.groupText).toEqual('');
         // Invalid dates always get put first
