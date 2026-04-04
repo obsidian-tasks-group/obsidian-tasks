@@ -24,6 +24,10 @@ const future = new TasksDate(moment('2023-06-12'));
 const invalid = new TasksDate(moment('2023-02-31'));
 const undated = new TasksDate(null);
 
+function numericStringCompare(a: string, b: string): number {
+    return a.localeCompare(b, undefined, { numeric: true });
+}
+
 describe('TasksDate', () => {
     it('should format valid dates', () => {
         const date = '2023-10-13';
@@ -116,9 +120,7 @@ describe('TasksDate', () => {
         //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2789
         //      Inconsistent sort order of groups by date categories (sometimes)
         const sampleDateGroupNames: ReadonlyArray<string> = sampleDatesSortedByDate.map((values) => values[1]);
-        const sampleDateGroupNamesSorted = [...sampleDateGroupNames].sort((a, b) =>
-            a.localeCompare(b, undefined, { numeric: true }),
-        );
+        const sampleDateGroupNamesSorted = [...sampleDateGroupNames].sort((a, b) => numericStringCompare(a, b));
 
         expect(sampleDateGroupNamesSorted).toEqual(sampleDateGroupNames);
     });
