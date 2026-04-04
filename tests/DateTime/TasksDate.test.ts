@@ -102,7 +102,7 @@ describe('TasksDate', () => {
     it('should confirm that sample dates really are sorted old-to-new', () => {
         // A later test depends on the date values really being ascending, so we enforce that here.
         const sampleDates: ReadonlyArray<string> = sampleDatesSortedByDate.map((values) => values[0]);
-        const sampleDatesSorted = [...sampleDates].sort();
+        const sampleDatesSorted = [...sampleDates].sort((a, b) => numericStringCompare(a, b));
 
         expect(sampleDatesSorted).toEqual(sampleDates);
     });
