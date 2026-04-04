@@ -18,7 +18,12 @@ const FILES_TO_COPY = ['main.js', 'manifest.json', 'styles.css'];
 // Default destination is the Tasks-Demo sample vault in this repository.
 // path.join() is used instead of hardcoded separators for cross-platform compatibility.
 const DEFAULT_DEST = path.join(
-    'resources', 'sample_vaults', 'Tasks-Demo', '.obsidian', 'plugins', 'obsidian-tasks-plugin',
+    'resources',
+    'sample_vaults',
+    'Tasks-Demo',
+    '.obsidian',
+    'plugins',
+    'obsidian-tasks-plugin',
 );
 
 // Allow overriding the destination via a CLI argument, e.g.:
