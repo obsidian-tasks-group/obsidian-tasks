@@ -14,7 +14,7 @@ let isInitialized = false;
 // Get Obsidian language settings
 const getObsidianLanguage = (): string => {
     const storedLanguage = localStorage.getItem('language');
-    const selectedLanguage = storedLanguage?.toLowerCase() || 'en';
+    const selectedLanguage = storedLanguage || 'en';
 
     console.log(`Language in Obsidian settings: '${selectedLanguage}'; requesting Tasks in '${selectedLanguage}'.`);
     return selectedLanguage;
