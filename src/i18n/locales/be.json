@@ -211,6 +211,17 @@
         "name": ""
       }
     },
+    "searchResults": {
+      "heading": "",
+      "taskCountLocation": {
+        "description": "",
+        "name": "",
+        "options": {
+          "bottom": "",
+          "top": ""
+        }
+      }
+    },
     "seeTheDocumentation": "Глядзіце дакументацыю",
     "statuses": {
       "collections": {

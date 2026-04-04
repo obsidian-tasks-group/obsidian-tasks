@@ -211,6 +211,17 @@
         "name": "Geplantes Datum bei Wiederholung entfernen"
       }
     },
+    "searchResults": {
+      "heading": "",
+      "taskCountLocation": {
+        "description": "",
+        "name": "",
+        "options": {
+          "bottom": "",
+          "top": ""
+        }
+      }
+    },
     "seeTheDocumentation": "Vgl. die Dokumentation",
     "statuses": {
       "collections": {
