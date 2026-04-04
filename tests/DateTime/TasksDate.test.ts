@@ -67,7 +67,7 @@ describe('TasksDate', () => {
     });
 
     // For behaviour, see https://momentjs.com/docs/#/displaying/fromnow/
-    it.each([
+    const sampleDatesSortedByDate = [
         ['1899-04-30T18:44:54.240Z', '%%118990611%% 124 years ago'],
         ['2021-01-20T07:04:35.022Z', '%%120210611%% 2 years ago'],
         ['2022-07-25T08:40:50.048Z', '%%120220611%% a year ago'],
@@ -93,7 +93,9 @@ describe('TasksDate', () => {
         ['2024-05-02T03:53:43.120Z', '%%320240611%% in a year'],
         ['2024-12-14T08:15:40.973Z', '%%320250611%% in 2 years'],
         ['2032-12-25T14:41:16.452Z', '%%320330611%% in 10 years'],
-    ])(
+    ];
+
+    it.each(sampleDatesSortedByDate)(
         'should categorise dates for grouping, relative to today: on "%s" - expected "%s"',
         (date: string, expectedResult: string) => {
             const tasksDate = new TasksDate(moment(date));
