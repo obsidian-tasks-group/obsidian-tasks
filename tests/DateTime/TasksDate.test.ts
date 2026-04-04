@@ -93,7 +93,7 @@ describe('TasksDate', () => {
         ['2024-05-02T03:53:43.120Z', '%%320240611%% in a year'],
         ['2024-12-14T08:15:40.973Z', '%%320250611%% in 2 years'],
         ['2032-12-25T14:41:16.452Z', '%%320330611%% in 10 years'],
-    ];
+    ] as const;
 
     it.each(sampleDatesSortedByDate)(
         'should categorise dates for grouping, relative to today: on "%s" - expected "%s"',
