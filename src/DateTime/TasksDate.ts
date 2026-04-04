@@ -100,7 +100,7 @@ export class TasksDate {
         const earlier = date.isSameOrBefore(now, 'second');
         const startDateOfThisGroup = this.fromNowStartDateOfGroup(date, earlier, now);
         const splitPastAndFutureDates = earlier ? 1 : 3;
-        return Number(splitPastAndFutureDates + startDateOfThisGroup.format('YYYYMMDD'));
+        return Number(splitPastAndFutureDates + startDateOfThisGroup.format('YYYYMMDDHHmm'));
     }
 
     private fromNowStartDateOfGroup(date: moment.Moment, earlier: boolean, now: any) {
