@@ -3,6 +3,7 @@ import be from './locales/be.json';
 import de from './locales/de.json';
 import en from './locales/en.json';
 import ko from './locales/ko.json';
+import pt_br from './locales/pt_br.json';
 import ru from './locales/ru.json';
 import uk from './locales/uk.json';
 import vi from './locales/vi.json';
@@ -32,6 +33,7 @@ export const initializeI18n = async () => {
                 de: { translation: de }, // German
                 en: { translation: en }, // English
                 ko: { translation: ko }, // Korean
+                pt: { translation: pt_br }, // Portuguese (Brazil)
                 ru: { translation: ru }, // Russian
                 uk: { translation: uk }, // Ukrainian
                 vi: { translation: vi }, // Vietnamese
