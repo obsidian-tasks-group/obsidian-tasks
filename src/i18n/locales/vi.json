@@ -211,6 +211,17 @@
         "name": "Xóa ngày đã lên lịch khi lặp lại"
       }
     },
+    "searchResults": {
+      "heading": "",
+      "taskCountLocation": {
+        "description": "",
+        "name": "",
+        "options": {
+          "bottom": "",
+          "top": ""
+        }
+      }
+    },
     "seeTheDocumentation": "Xem tài liệu",
     "statuses": {
       "collections": {

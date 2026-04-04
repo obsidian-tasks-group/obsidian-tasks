@@ -154,17 +154,6 @@
       },
       "heading": "Diálogos"
     },
-    "searchResults": {
-      "heading": "Resultados da pesquisa",
-      "taskCountLocation": {
-        "description": "Escolha se a contagem de tarefas deve ser mostrada na parte superior ou inferior dos resultados da consulta.",
-        "name": "Localização da contagem de tarefas",
-        "options": {
-          "bottom": "Inferior",
-          "top": "Superior"
-        }
-      }
-    },
     "format": {
       "description": {
         "line1": "O formato que o Tasks usa para ler e escrever tarefas.",
@@ -220,6 +209,17 @@
           "line2": "Isto é útil para quando você deseja que as datas de Início e Vencimento sejam mantidas na próxima recorrência, mas pretende definir a data Agendada no futuro, quando for planejar trabalhar nela."
         },
         "name": "Remover data agendada na recorrência"
+      }
+    },
+    "searchResults": {
+      "heading": "Resultados da pesquisa",
+      "taskCountLocation": {
+        "description": "Escolha se a contagem de tarefas deve ser mostrada na parte superior ou inferior dos resultados da consulta.",
+        "name": "Localização da contagem de tarefas",
+        "options": {
+          "bottom": "Inferior",
+          "top": "Superior"
+        }
       }
     },
     "seeTheDocumentation": "Veja a documentação",

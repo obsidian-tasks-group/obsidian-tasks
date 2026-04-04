@@ -14,7 +14,7 @@ let isInitialized = false;
 // Get Obsidian language settings
 const getObsidianLanguage = (): string => {
     const storedLanguage = localStorage.getItem('language');
-    const selectedLanguage = storedLanguage?.toLowerCase() || 'en';
+    const selectedLanguage = storedLanguage || 'en';
 
     console.log(`Language in Obsidian settings: '${selectedLanguage}'; requesting Tasks in '${selectedLanguage}'.`);
     return selectedLanguage;
@@ -29,11 +29,14 @@ export const initializeI18n = async () => {
             returnEmptyString: false, // Use fallback language if i18next-parser put in empty value for untranslated text
             resources: {
                 // alphabetical order:
+                // key:         the Obsidian "Language code", defined in
+                //              https://github.com/obsidianmd/obsidian-translations?tab=readme-ov-file#existing-languages
+                // translation: the filename of the JSON file in locales subdirectory
                 be: { translation: be }, // Belarusian
                 de: { translation: de }, // German
                 en: { translation: en }, // English
                 ko: { translation: ko }, // Korean
-                pt: { translation: pt_br }, // Portuguese (Brazil)
+                'pt-BR': { translation: pt_br }, // Portuguese (Brazil)
                 ru: { translation: ru }, // Russian
                 uk: { translation: uk }, // Ukrainian
                 vi: { translation: vi }, // Vietnamese
@@ -45,6 +48,10 @@ export const initializeI18n = async () => {
         });
 
         isInitialized = true;
+
+        // Report the translation we ended up using:
+        const resolvedResource = i18next.languages.find((lang) => i18next.hasResourceBundle(lang, 'translation'));
+        console.log(`Using Tasks in: '${resolvedResource}'; fallback chain: [${i18next.languages.join(', ')}].`);
     }
 };
 
