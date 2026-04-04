@@ -95,6 +95,13 @@ describe('TasksDate', () => {
         ['2032-12-25T14:41:16.452Z', '%%320330611%% in 10 years'],
     ] as const;
 
+    it('should confirm that sample dates really are sorted old-to-new', () => {
+        const sampleDates: ReadonlyArray<string> = sampleDatesSortedByDate.map((values) => values[0]);
+        const sampleDatesSorted = [...sampleDates].sort();
+
+        expect(sampleDatesSorted).toEqual(sampleDates);
+    });
+
     it.each(sampleDatesSortedByDate)(
         'should categorise dates for grouping, relative to today: on "%s" - expected "%s"',
         (date: string, expectedResult: string) => {
