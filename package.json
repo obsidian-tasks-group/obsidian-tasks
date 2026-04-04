@@ -102,5 +102,8 @@
         "*.{json,md,css}": [
             "prettier --write"
         ]
+    },
+    "resolutions": {
+        "smol-toml": "1.6.1"
     }
 }
