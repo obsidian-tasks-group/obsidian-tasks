@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 describe('i18n locale consistency', () => {
     it('should have the same number of locales in i18n.ts and i18next-parser.config.js', () => {
