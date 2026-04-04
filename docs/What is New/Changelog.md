@@ -16,6 +16,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
   - Add [[Toggling and Editing Statuses#'Tasks Change status to...' commands|'Change status to...' commands]].
   - Add [[Layout#Task count location|Task count location]] setting, to move task count to the top of the results.
   - Add `task.listMarker`. See [[Filters#List Marker|List Marker filters]].
+  - Add Brazilian Portuguese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
   - Add [Integration Tests](https://publish.obsidian.md/tasks-contributing/Testing/Integration+Tests) section to the [Contributing Guide](https://publish.obsidian.md/tasks-contributing/Welcome).
 - 7.23.0:
   - Changes to most of the Tasks [[settings]] now take immediate effect. A few remaining settings are now marked with `REQUIRES RESTART`.
