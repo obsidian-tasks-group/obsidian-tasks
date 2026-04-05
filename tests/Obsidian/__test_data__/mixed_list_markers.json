@@ -53,14 +53,30 @@
         "parent": -3,
         "position": {
           "end": {
-            "col": 20,
+            "col": 29,
             "line": 3,
-            "offset": 59
+            "offset": 68
           },
           "start": {
             "col": 0,
             "line": 3,
             "offset": 39
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -4,
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 4,
+            "offset": 106
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 69
           }
         },
         "task": " "
@@ -115,9 +131,9 @@
       {
         "position": {
           "end": {
-            "col": 20,
+            "col": 29,
             "line": 3,
-            "offset": 59
+            "offset": 68
           },
           "start": {
             "col": 0,
@@ -126,10 +142,25 @@
           }
         },
         "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 37,
+            "line": 4,
+            "offset": 106
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 69
+          }
+        },
+        "type": "list"
       }
     ]
   },
-  "fileContents": "- [ ] hyphen\n* [ ] asterisk\n+ [ ] plus\n1. [ ] numbered task\n",
+  "fileContents": "- [ ] hyphen\n* [ ] asterisk\n+ [ ] plus\n1. [ ] numbered task with dot\n1) [ ] numbered task with parenthesis\n",
   "filePath": "Test Data/mixed_list_markers.md",
   "getAllTags": [],
   "parseFrontMatterTags": null,

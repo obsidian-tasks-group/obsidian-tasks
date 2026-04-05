@@ -212,7 +212,8 @@ group by id
             - [ ] hyphen
             - [ ] asterisk
             - [ ] plus
-            - [ ] numbered task
+            - [ ] numbered task with dot
+            - [ ] numbered task with parenthesis
             "
         `);
     });
