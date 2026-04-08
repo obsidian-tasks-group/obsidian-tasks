@@ -4,7 +4,7 @@ import { State } from '../../src/Obsidian/Cache';
 import { Priority } from '../../src/Task/Priority';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { readMarkdown } from '../TestingTools/TestHelpers';
+import { fromMarkdown } from '../TestingTools/TestHelpers';
 import { createMarkdownRenderer, renderMarkdown } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -54,7 +54,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
     });
 
     it('should write one grouping level', async () => {
-        const tasks = readMarkdown(`
+        const tasks = fromMarkdown(`
 - [ ] 4444
 - [ ] 333
 - [ ] 55555
@@ -79,7 +79,7 @@ describe('MarkdownQueryResultsRenderer tests', () => {
     });
 
     it('should write four grouping levels', async () => {
-        const tasks = readMarkdown(`
+        const tasks = fromMarkdown(`
 - [ ] 1 ⏳ 2025-10-29
 - [ ] 2 ⏬
 - [ ] 3 ⏫ ⏳ 2025-10-30
