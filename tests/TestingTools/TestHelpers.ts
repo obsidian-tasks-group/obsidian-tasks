@@ -39,6 +39,11 @@ export function fromLines({
     return lines.map((line) => fromLine({ line, path, precedingHeader }));
 }
 
+export function readMarkdown(tasksMarkdown: string) {
+    const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
+    return fromLines({ lines });
+}
+
 /**
  * @see toLines
  * @see fromLine

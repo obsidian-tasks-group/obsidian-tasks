@@ -4,15 +4,10 @@ import { State } from '../../src/Obsidian/Cache';
 import { Priority } from '../../src/Task/Priority';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { fromLines } from '../TestingTools/TestHelpers';
+import { readMarkdown } from '../TestingTools/TestHelpers';
 import { createMarkdownRenderer, renderMarkdown } from './RenderingTestHelpers';
 
 window.moment = moment;
-
-function readMarkdown(tasksMarkdown: string) {
-    const lines = tasksMarkdown.split('\n').filter((line) => line.length > 0);
-    return fromLines({ lines });
-}
 
 afterEach(() => {
     GlobalFilter.getInstance().reset();
