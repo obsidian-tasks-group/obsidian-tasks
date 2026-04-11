@@ -33,11 +33,8 @@ export class Feature {
      * @type {Feature[]}
      */
     static get values(): Feature[] {
-        let availableFeatures: Feature[] = [];
-
-        featuresJson.forEach((feature) => {
-            availableFeatures = [
-                ...availableFeatures,
+        return featuresJson.map(
+            (feature) =>
                 new Feature(
                     feature.internalName,
                     feature.index,
@@ -46,9 +43,7 @@ export class Feature {
                     feature.enabledByDefault,
                     feature.stable,
                 ),
-            ];
-        });
-        return availableFeatures;
+        );
     }
 
     /**
