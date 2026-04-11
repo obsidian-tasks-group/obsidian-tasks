@@ -136,6 +136,7 @@ describe('TasksDate', () => {
         const thisTime = '2023-06-11 20:00';
         const taskTime = '2023-06-13 20:00';
 
+        // The initial '3' indicates that the date is in future of the current time.
         const expectedTaskTimeSortOrder = 3 * 1e12 + 2023 * 1e8 + 6 * 1e6 + 13 * 1e4 + 20 * 1e2;
         expect(expectedTaskTimeSortOrder).toEqual(3202306132000);
 
