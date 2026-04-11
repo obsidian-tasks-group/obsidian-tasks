@@ -140,6 +140,12 @@ describe('TasksDate', () => {
         expect(expectedTaskTimeSortOrder).toEqual(3202306132000);
 
         describe('should calculate correct sort order for fromNow value in given language, for a date in two days', () => {
+            const locales = ['en', 'es'];
+            it.each(locales)('%s locale', (loc: string) => {
+                const now = moment(taskTime);
+                expect(new TasksDate(now.clone().locale(loc)).fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder);
+            });
+
             it('English locale', () => {
                 jest.setSystemTime(new Date(thisTime));
 
