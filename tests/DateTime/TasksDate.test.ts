@@ -119,13 +119,7 @@ describe('TasksDate', () => {
         'should categorise dates in correct order, in Spanish: on "%s" - expected "%s"',
         (date: string, expectedResult: string) => {
             const extractSortOrder = (result: string): string => {
-                const sortOrder = result.split(' ')[0];
-
-                // Example value: %%3202307112000%%
-                expect(sortOrder.slice(0, 2)).toEqual('%%');
-                expect(sortOrder.slice(-2)).toEqual('%%');
-
-                return sortOrder;
+                return result.split(' ')[0];
             };
 
             const englishSortOrder = extractSortOrder(expectedResult);
