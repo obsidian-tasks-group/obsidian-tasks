@@ -115,6 +115,25 @@ describe('TasksDate', () => {
         },
     );
 
+    it.each(sampleDatesSortedByDate)(
+        'should categorise dates in correct order, in Spanish: on "%s" - expected "%s"',
+        (date: string, expectedResult: string) => {
+            const expectedSortOrder = expectedResult.split(' ')[0];
+
+            // Example value: %%3202307112000%%
+            expect(expectedSortOrder.slice(0, 2)).toEqual('%%');
+            expect(expectedSortOrder.slice(-2)).toEqual('%%');
+
+            // Check that if we ask for the group name on a Spanish language machine,
+            // we get the same sort order:
+            const tasksDate = new TasksDate(moment(date).locale('es'));
+            const spanishGroupText = tasksDate.fromNow.groupText;
+            const actualSortOrder = spanishGroupText.split(' ')[0];
+
+            expect(actualSortOrder).toEqual(expectedSortOrder);
+        },
+    );
+
     it('should sort group categories in ascending order by date', () => {
         // See:
         //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2789
