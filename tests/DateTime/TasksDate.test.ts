@@ -143,7 +143,8 @@ describe('TasksDate', () => {
             const locales = ['en', 'es'];
             it.each(locales)('%s locale', (loc: string) => {
                 const now = moment(taskTime);
-                expect(new TasksDate(now.clone().locale(loc)).fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder);
+                const tasksDate = new TasksDate(now.clone().locale(loc));
+                expect(tasksDate.fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder);
             });
 
             it('English locale', () => {
