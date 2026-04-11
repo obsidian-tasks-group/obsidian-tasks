@@ -134,7 +134,7 @@ describe('TasksDate', () => {
             // we get the same sort order:
             const tasksDate = new TasksDate(moment(date).locale('es'));
             const spanishGroupText = tasksDate.fromNow.groupText;
-            const actualSortOrder = spanishGroupText.split(' ')[0];
+            const actualSortOrder = extractSortOrder(spanishGroupText);
 
             expect(actualSortOrder).toEqual(expectedSortOrder);
         },
