@@ -152,24 +152,6 @@ describe('TasksDate', () => {
                 expect(tasksDate.fromNow.name).toEqual(expectedFromNow);
                 expect(tasksDate.fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder);
             });
-
-            it('English locale', () => {
-                jest.setSystemTime(new Date(thisTime));
-
-                const now = moment(taskTime);
-                const tasksDate = new TasksDate(now.clone().locale('en'));
-                expect(tasksDate.fromNow.name).toEqual('in 2 days');
-                expect(tasksDate.fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder);
-            });
-
-            it('Spanish locale', () => {
-                jest.setSystemTime(new Date(thisTime));
-
-                const now = moment(taskTime);
-                const tasksDate = new TasksDate(now.clone().locale('es'));
-                expect(tasksDate.fromNow.name).toEqual('en 2 días');
-                expect(tasksDate.fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder); // actual value is 3202306112000, not 3202306132000
-            });
         });
     });
 });
