@@ -116,7 +116,7 @@ describe('TasksDate', () => {
     );
 
     it.each(sampleDatesSortedByDate)(
-        'should categorise dates in correct order, in Spanish: on "%s" - expected "%s"',
+        'should categorise dates for grouping, in correct order, in Spanish: on "%s"',
         (date: string, expectedResult: string) => {
             const extractSortOrder = (result: string): string => {
                 return result.split(' ')[0];
