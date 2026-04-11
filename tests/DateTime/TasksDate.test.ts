@@ -115,6 +115,24 @@ describe('TasksDate', () => {
         },
     );
 
+    it.each(sampleDatesSortedByDate)(
+        'should categorise dates for grouping, in correct order, in Spanish: on "%s"',
+        (date: string, expectedResult: string) => {
+            const extractSortOrder = (result: string): string => {
+                return result.split(' ')[0];
+            };
+
+            const englishSortOrder = extractSortOrder(expectedResult);
+
+            // Check that if we ask for the group name on a Spanish language machine,
+            // we get the same sort order:
+            const tasksDate = new TasksDate(moment(date).locale('es'));
+            const spanishSortOrder = extractSortOrder(tasksDate.fromNow.groupText);
+
+            expect(spanishSortOrder).toEqual(englishSortOrder);
+        },
+    );
+
     it('should sort group categories in ascending order by date', () => {
         // See:
         //      https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2789
@@ -130,6 +148,30 @@ describe('TasksDate', () => {
         // Invalid dates always get put first
         expect(new TasksDate(moment('1999-02-31')).fromNow.groupText).toEqual('%%0%% Invalid date');
         expect(new TasksDate(moment('2023-02-31')).fromNow.groupText).toEqual('%%0%% Invalid date');
+    });
+
+    describe('language-aware fromNow() calculations', () => {
+        const thisTime = '2023-06-11 20:00';
+        const taskTime = '2023-06-13 20:00';
+
+        // The initial '3' indicates that the date is in future of the current time.
+        const expectedTaskTimeSortOrder = 3 * 1e12 + 2023 * 1e8 + 6 * 1e6 + 13 * 1e4 + 20 * 1e2;
+        expect(expectedTaskTimeSortOrder).toEqual(3202306132000);
+
+        describe('should calculate correct sort order for fromNow value in given language, for a date in two days', () => {
+            const locales = [
+                ['en', 'in 2 days'],
+                ['es', 'en 2 días'],
+            ];
+            it.each(locales)('%s locale', (loc: string, expectedFromNow: string) => {
+                jest.setSystemTime(new Date(thisTime));
+
+                const now = moment(taskTime);
+                const tasksDate = new TasksDate(now.clone().locale(loc));
+                expect(tasksDate.fromNow.name).toEqual(expectedFromNow);
+                expect(tasksDate.fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder);
+            });
+        });
     });
 });
 
