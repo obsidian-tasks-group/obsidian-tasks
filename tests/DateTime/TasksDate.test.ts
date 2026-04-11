@@ -149,7 +149,7 @@ describe('TasksDate', () => {
                 expect(tasksDate.fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder);
             });
 
-            it.failing('Spanish locale', () => {
+            it('Spanish locale', () => {
                 jest.setSystemTime(new Date(thisTime));
 
                 const now = moment(taskTime);

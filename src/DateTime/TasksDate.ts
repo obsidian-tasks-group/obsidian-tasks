@@ -108,7 +108,8 @@ export class TasksDate {
 
         // https://momentjs.com/docs/#/displaying/fromnow/
         // 'If you pass true, you can get the value without the suffix.'
-        const words = date.fromNow(true).split(' ');
+        // We change the locale to english, to get values like 'hours', 'days', 'years' that we can pass to Moment.
+        const words = date.clone().locale('en').fromNow(true).split(' ');
 
         let multiplier: number;
         const word0AsNumber = Number(words[0]);
