@@ -131,6 +131,34 @@ describe('TasksDate', () => {
         expect(new TasksDate(moment('1999-02-31')).fromNow.groupText).toEqual('%%0%% Invalid date');
         expect(new TasksDate(moment('2023-02-31')).fromNow.groupText).toEqual('%%0%% Invalid date');
     });
+
+    describe('language-aware fromNow() calculations', () => {
+        const thisTime = '2023-06-11 20:00';
+        const taskTime = '2023-06-13 20:00';
+
+        const expectedTaskTimeSortOrder = 3 * 1e12 + 2023 * 1e8 + 6 * 1e6 + 13 * 1e4 + 20 * 1e2;
+        expect(expectedTaskTimeSortOrder).toEqual(3202306132000);
+
+        describe('should calculate correct sort order for fromNow value in given language, for a date in two days', () => {
+            it('English locale', () => {
+                jest.setSystemTime(new Date(thisTime));
+
+                const now = moment(taskTime);
+                const tasksDate = new TasksDate(now.clone().locale('en'));
+                expect(tasksDate.fromNow.name).toEqual('in 2 days');
+                expect(tasksDate.fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder);
+            });
+
+            it.failing('Spanish locale', () => {
+                jest.setSystemTime(new Date(thisTime));
+
+                const now = moment(taskTime);
+                const tasksDate = new TasksDate(now.clone().locale('es'));
+                expect(tasksDate.fromNow.name).toEqual('en 2 días');
+                expect(tasksDate.fromNow.sortOrder).toEqual(expectedTaskTimeSortOrder); // actual value is 3202306112000, not 3202306132000
+            });
+        });
+    });
 });
 
 describe('TasksDate - postpone', () => {
