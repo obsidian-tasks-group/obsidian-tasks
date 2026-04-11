@@ -119,23 +119,23 @@ describe('TasksDate', () => {
         'should categorise dates in correct order, in Spanish: on "%s" - expected "%s"',
         (date: string, expectedResult: string) => {
             const extractSortOrder = (result: string): string => {
-                const expectedSortOrder = result.split(' ')[0];
+                const sortOrder = result.split(' ')[0];
 
                 // Example value: %%3202307112000%%
-                expect(expectedSortOrder.slice(0, 2)).toEqual('%%');
-                expect(expectedSortOrder.slice(-2)).toEqual('%%');
+                expect(sortOrder.slice(0, 2)).toEqual('%%');
+                expect(sortOrder.slice(-2)).toEqual('%%');
 
-                return expectedSortOrder;
+                return sortOrder;
             };
 
-            const expectedSortOrder = extractSortOrder(expectedResult);
+            const englishSortOrder = extractSortOrder(expectedResult);
 
             // Check that if we ask for the group name on a Spanish language machine,
             // we get the same sort order:
             const tasksDate = new TasksDate(moment(date).locale('es'));
-            const actualSortOrder = extractSortOrder(tasksDate.fromNow.groupText);
+            const spanishSortOrder = extractSortOrder(tasksDate.fromNow.groupText);
 
-            expect(actualSortOrder).toEqual(expectedSortOrder);
+            expect(spanishSortOrder).toEqual(englishSortOrder);
         },
     );
 
