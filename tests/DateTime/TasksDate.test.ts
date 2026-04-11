@@ -133,8 +133,7 @@ describe('TasksDate', () => {
             // Check that if we ask for the group name on a Spanish language machine,
             // we get the same sort order:
             const tasksDate = new TasksDate(moment(date).locale('es'));
-            const spanishGroupText = tasksDate.fromNow.groupText;
-            const actualSortOrder = extractSortOrder(spanishGroupText);
+            const actualSortOrder = extractSortOrder(tasksDate.fromNow.groupText);
 
             expect(actualSortOrder).toEqual(expectedSortOrder);
         },
