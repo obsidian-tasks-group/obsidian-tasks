@@ -50,6 +50,16 @@
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+## Tasks Format for Duration
+
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForTaskFormats.test.Serializer_Duration_tasksPluginEmoji-include.approved.md -->
+
+- [ ] #task hours and minutes ⏱ 1h30m
+- [ ] #task only hours ⏱ 2h
+- [ ] #task only minutes ⏱ 45m
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## Confirming that the fields are read correctly
 
 ```tasks

@@ -4,6 +4,7 @@ import moment from 'moment';
 import type { TaskDetails } from '../../src/TaskSerializer';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Priority } from '../../src/Task/Priority';
+import { Duration } from '../../src/Task/Duration';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 
 declare global {
@@ -78,6 +79,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
     return {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         ...t,
+        duration: t.duration?.toText() ?? null,
         startDate: t.startDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         createdDate: t.createdDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         scheduledDate: t.scheduledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
@@ -103,6 +105,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         description: '',
         priority: Priority.None,
+        duration: Duration.None,
         startDate: null,
         createdDate: null,
         scheduledDate: null,

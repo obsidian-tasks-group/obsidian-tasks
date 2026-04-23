@@ -97,7 +97,7 @@ export class TaskFieldHTMLData {
         // TS2345: Argument of type 'string[] | Moment' is not assignable to parameter of type 'Moment'.
         // Type 'string[]' is missing the following properties from type 'Moment': format, startOf, endOf, add, and 78 more.
         if (!Array.isArray(date) && date instanceof window.moment) {
-            const attributeValue = dateToAttribute(date);
+            const attributeValue = dateToAttribute(<Moment>date);
             if (attributeValue) {
                 return attributeValue;
             }
@@ -172,16 +172,19 @@ function createDateField(className: string, attributeName: string) {
 
 const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     // NEW_TASK_FIELD_EDIT_REQUIRED
-    createdDate: createDateField('task-created', 'taskCreated'),
-    dueDate: createDateField('task-due', 'taskDue'),
-    startDate: createDateField('task-start', 'taskStart'),
-    scheduledDate: createDateField('task-scheduled', 'taskScheduled'),
-    doneDate: createDateField('task-done', 'taskDone'),
-    cancelledDate: createDateField('task-cancelled', 'taskCancelled'),
-
     priority: new TaskFieldHTMLData('task-priority', 'taskPriority', (_component, task) => {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),
+    duration: new TaskFieldHTMLData('task-duration', 'taskDuration', (_component, task) => {
+        return task.duration.toText();
+    }),
+
+    createdDate: createDateField('task-created', 'taskCreated'),
+    startDate: createDateField('task-start', 'taskStart'),
+    scheduledDate: createDateField('task-scheduled', 'taskScheduled'),
+    dueDate: createDateField('task-due', 'taskDue'),
+    doneDate: createDateField('task-done', 'taskDone'),
+    cancelledDate: createDateField('task-cancelled', 'taskCancelled'),
 
     description: createFieldWithoutDataAttributes('task-description'),
     recurrenceRule: createFieldWithoutDataAttributes('task-recurring'),

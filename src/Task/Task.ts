@@ -18,6 +18,7 @@ import type { TaskLocation } from './TaskLocation';
 import type { Priority } from './Priority';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
 import { OnCompletion, handleOnCompletion } from './OnCompletion';
+import { Duration } from './Duration';
 
 /**
  * Storage for the task line, broken down in to sections.
@@ -45,6 +46,7 @@ export class Task extends ListItem {
     public readonly tags: string[];
 
     public readonly priority: Priority;
+    public readonly duration: Duration;
 
     private readonly _createdDate: Moment | null;
     private readonly _startDate: Moment | null;
@@ -85,6 +87,7 @@ export class Task extends ListItem {
         indentation: string;
         listMarker: string;
         priority: Priority;
+        duration?: Duration;
         createdDate?: moment.Moment | null;
         startDate?: moment.Moment | null;
         scheduledDate?: moment.Moment | null;
@@ -109,6 +112,7 @@ export class Task extends ListItem {
             indentation,
             listMarker,
             priority,
+            duration,
             createdDate,
             startDate,
             scheduledDate,
@@ -140,6 +144,7 @@ export class Task extends ListItem {
         this.tags = tags;
 
         this.priority = priority;
+        this.duration = duration ?? Duration.None;
 
         this._createdDate = this.resolveDate(createdDate, args._createdDate);
         this._startDate = this.resolveDate(startDate, args._startDate);
@@ -653,6 +658,20 @@ export class Task extends ListItem {
         return this._urgency;
     }
 
+    /**
+     * Return the hours component of the task's duration, or null if no duration is set.
+     */
+    public get durationHours(): number | null {
+        return this.duration === Duration.None ? null : this.duration.hours;
+    }
+
+    /**
+     * Return the minutes component of the task's duration, or null if no duration is set.
+     */
+    public get durationMinutes(): number | null {
+        return this.duration === Duration.None ? null : this.duration.minutes;
+    }
+
     public get cancelledDate(): Moment | null {
         return this._cancelledDate?.clone() ?? null;
     }
@@ -850,6 +869,10 @@ export class Task extends ListItem {
         }
 
         if (!this.status.identicalTo(other.status)) {
+            return false;
+        }
+
+        if (this.duration.totalMinutes !== other.duration.totalMinutes) {
             return false;
         }
 
