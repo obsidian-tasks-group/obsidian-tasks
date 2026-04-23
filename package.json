@@ -78,7 +78,7 @@
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
     "boon-js": "^2.0.5",
-    "chrono-node": "2.3.9",
+    "chrono-node": "2.9.0",
     "eventemitter2": "^6.4.5",
     "flatpickr": "^4.6.13",
     "i18next": "^24.2.1",
