@@ -4,6 +4,7 @@ import tsparser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import svelte from 'eslint-plugin-svelte';
 import svelteParser from 'svelte-eslint-parser';
 import globals from 'globals';
 
@@ -61,6 +62,7 @@ export default [
             'sort-imports': ['error', { ignoreDeclarationSort: true }],
         },
     },
+    ...svelte.configs['flat/recommended'],
     {
         files: ['**/*.svelte'],
         languageOptions: {
@@ -78,6 +80,11 @@ export default [
         rules: {
             'no-inner-declarations': 0,
             'no-unused-vars': 0, // Configured in tsconfig instead.
+            // For now, disable checks that were not previously run
+            'svelte/no-at-html-tags': 0,
+            'svelte/require-each-key': 0,
+            'svelte/no-reactive-functions': 0,
+            'svelte/no-unused-svelte-ignore': 0,
         },
     },
     {
