@@ -61,7 +61,7 @@ export default defineConfig([
             // incrementally later on.
             '@microsoft/sdl/no-inner-html': 0,
             '@typescript-eslint/no-base-to-string': 0,
-            '@typescript-eslint/no-deprecated': 0,
+            '@typescript-eslint/no-deprecated': 0, // in tests: `toThrowError` is deprecated. in favor of `toThrow`
             '@typescript-eslint/no-explicit-any': 0,
             '@typescript-eslint/no-floating-promises': 0,
             '@typescript-eslint/no-for-in-array': 0,
@@ -89,7 +89,7 @@ export default defineConfig([
             'no-undef': 0,
             'no-unsanitized/method': 0,
             'no-unsanitized/property': 0,
-            'obsidianmd/hardcoded-config-path': 0,
+            'obsidianmd/hardcoded-config-path': 0, // These were all 'https://publish.obsidian.md/tasks/' references!!!
             'obsidianmd/no-nodejs-modules': 0, // Can disable this on test files
             'obsidianmd/no-static-styles-assignment': 0, // This likely does need addressing
             'obsidianmd/prefer-active-doc': 0,
