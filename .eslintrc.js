@@ -22,7 +22,7 @@ module.exports = {
             modules: true,
         },
     },
-    plugins: ['@typescript-eslint', 'import', 'svelte3'],
+    plugins: ['@typescript-eslint', 'import', 'svelte'],
     rules: {
         'linebreak-style': ['error', 'unix'],
         quotes: ['error', 'single', { avoidEscape: true }],
