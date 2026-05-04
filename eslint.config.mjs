@@ -97,15 +97,8 @@ export default defineConfig([
             'obsidianmd/detach-leaves': 0,
             'obsidianmd/editor-drop-paste': 0,
             'obsidianmd/hardcoded-config-path': 0,
-            'obsidianmd/no-forbidden-elements': 0,
-            'obsidianmd/no-nodejs-modules': 0,
-            'obsidianmd/no-plugin-as-component': 0,
-            'obsidianmd/no-sample-code': 0,
-            'obsidianmd/no-static-styles-assignment': 0,
-            'obsidianmd/no-tfile-tfolder-cast': 0,
-            'obsidianmd/no-unsupported-api': 0,
-            'obsidianmd/no-view-references-in-plugin': 0,
-            'obsidianmd/object-assign': 0,
+            'obsidianmd/no-nodejs-modules': 0, // Can disable this on test files
+            'obsidianmd/no-static-styles-assignment': 0, // This likely does need addressing
             'obsidianmd/prefer-abstract-input-suggest': 0,
             'obsidianmd/prefer-active-doc': 0,
             'obsidianmd/prefer-active-window-timers': 0,
