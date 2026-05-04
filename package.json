@@ -10,7 +10,7 @@
     "dev": "node esbuild.config.mjs",
     "build": "node esbuild.config.mjs production",
     "build:dev": "node esbuild.config.mjs development",
-    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint ./src --fix && ESLINT_USE_FLAT_CONFIG=true eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
+    "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
     "lint:markdown": "markdownlint-cli2 --fix \"**/*.md\" ",
     "test": "jest --ci",
     "test:dev": "jest --watch",
