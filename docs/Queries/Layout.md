@@ -97,7 +97,7 @@ By default, the task count is shown at the **bottom** of query results. You can 
 This is a global setting that applies to all task queries. Individual queries can still use `hide task count` to hide the count entirely.
 
 > [!released]
-> The 'Task count location' setting was introduced in Tasks X.Y.Z.
+> The 'Task count location' setting was introduced in Tasks 7.24.0.
 
 ### Toolbar  
 

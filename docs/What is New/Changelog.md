@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 7.x releases
 
-- X.Y.Z:
+- 7.24.0:
   - Add [[Toggling and Editing Statuses#'Tasks Change status to...' commands|'Change status to...' commands]].
   - Add [[Layout#Task count location|Task count location]] setting, to move task count to the top of the results.
   - Add `task.listMarker`. See [[Filters#List Marker|List Marker filters]].

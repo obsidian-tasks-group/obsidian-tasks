@@ -1318,7 +1318,7 @@ As an example, you could put an instruction in your Tasks [[Global Query]] sayin
 
 There is no built-in instruction to filter by the task's list marker.
 
-Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by the task's list marker** is now possible, using `task.listMarker`.
+Since Tasks 7.24.0, **[[Custom Filters|custom filtering]] by the task's list marker** is now possible, using `task.listMarker`.
 
 Here are some examples. (By changing `===` to `!==`, you could _exclude_ tasks with the given list marker.)
 

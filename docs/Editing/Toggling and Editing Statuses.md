@@ -112,7 +112,7 @@ Obsidian allows you to assign a [hotkey](https://help.obsidian.md/Customization/
 > These commands correctly add Done dates and create new instances of recurring tasks when changing to a `DONE` status, just like the [[#'Change task status' context menu]].
 
 > [!released]
-> The 'Change status to...' commands were introduced in Tasks X.Y.Z.
+> The 'Change status to...' commands were introduced in Tasks 7.24.0.
 
 ## Edit task modal
 
