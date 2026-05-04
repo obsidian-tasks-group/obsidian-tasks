@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import { defineConfig } from "eslint/config";
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
@@ -22,7 +23,7 @@ const prettierRules = {
     ],
 };
 
-export default [
+export default defineConfig([
     {
         ignores: ['main.js', 'tests/.obsidian/**'],
     },
@@ -96,4 +97,4 @@ export default [
             },
         },
     },
-];
+]);
