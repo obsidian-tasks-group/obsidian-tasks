@@ -52,6 +52,7 @@
     "eslint": "9.26.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-obsidianmd": "^0.2.9",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-svelte": "^3.17.1",
     "globals": "^13.0.0",
