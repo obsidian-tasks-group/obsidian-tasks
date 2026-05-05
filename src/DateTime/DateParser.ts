@@ -1,5 +1,4 @@
 import * as chrono from 'chrono-node';
-import type { Moment } from 'moment';
 import { DateRange } from './DateRange';
 
 export class DateParser {

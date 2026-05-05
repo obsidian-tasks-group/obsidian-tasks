@@ -1,5 +1,3 @@
-import type { Moment } from 'moment';
-
 /**
  * Represent an inclusive span of time between two days at 00:00 local time.
  */

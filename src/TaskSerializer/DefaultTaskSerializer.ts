@@ -1,4 +1,3 @@
-import type { Moment } from 'moment';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { OnCompletion, parseOnCompletionValue } from '../Task/OnCompletion';
 import { Occurrence } from '../Task/Occurrence';

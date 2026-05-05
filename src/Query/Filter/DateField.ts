@@ -1,4 +1,3 @@
-import type { Moment } from 'moment';
 import { DateRange } from '../../DateTime/DateRange';
 import type { Task } from '../../Task/Task';
 import { DateParser } from '../../DateTime/DateParser';

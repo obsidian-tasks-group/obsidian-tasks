@@ -1,4 +1,3 @@
-import type { Moment } from 'moment';
 import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { StatusRegistry } from '../Statuses/StatusRegistry';

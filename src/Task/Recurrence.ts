@@ -1,5 +1,4 @@
 // begin-snippet: declare-Moment-type-in-src
-import type { Moment } from 'moment';
 // end-snippet
 import { RRule } from 'rrule';
 import type { Occurrence } from './Occurrence';

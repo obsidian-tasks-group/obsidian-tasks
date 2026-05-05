@@ -1,4 +1,3 @@
-import type { Moment } from 'moment';
 import { type App, Component, MarkdownRenderer } from 'obsidian';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { TASK_FORMATS, getSettings } from '../Config/Settings';
