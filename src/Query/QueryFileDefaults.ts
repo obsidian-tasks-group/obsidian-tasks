@@ -13,12 +13,22 @@ interface BaseQueryProperty {
     type: string;
 }
 
-interface QueryProperty extends BaseQueryProperty {
-    display?: string;
-    handler: Handler;
-    trueValue?: string;
-    falseValue?: string;
+interface InstructionQueryProperty extends BaseQueryProperty {
+    handler: Handler.Instruction;
+    trueValue: string;
+    falseValue: string;
 }
+
+interface ShowAndHideQueryProperty extends BaseQueryProperty {
+    handler: Handler.ShowAndHide;
+    display: string;
+}
+
+interface AddValueQueryProperty extends BaseQueryProperty {
+    handler: Handler.AddValue;
+}
+
+type QueryProperty = InstructionQueryProperty | ShowAndHideQueryProperty | AddValueQueryProperty;
 
 // Steps for adding a new property to Query File Defaults:
 // 1. Add the new value to queryProperties below.
@@ -48,7 +58,6 @@ const queryProperties: QueryProperty[] = [
     {
         name: 'TQ_explain',
         type: 'checkbox',
-        display: 'explain',
         handler: Handler.Instruction,
         trueValue: 'explain',
         falseValue: '',
@@ -56,7 +65,6 @@ const queryProperties: QueryProperty[] = [
     {
         name: 'TQ_short_mode',
         type: 'checkbox',
-        display: 'short mode',
         handler: Handler.Instruction,
         trueValue: 'short mode',
         falseValue: 'full mode',
