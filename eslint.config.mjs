@@ -73,7 +73,6 @@ export default defineConfig([
             '@typescript-eslint/no-unsafe-argument': 0,
             '@typescript-eslint/no-unsafe-assignment': 0,
             '@typescript-eslint/no-unsafe-call': 0,
-            '@typescript-eslint/no-unsafe-enum-comparison': 0,
             '@typescript-eslint/no-unsafe-function-type': 0,
             '@typescript-eslint/no-unsafe-member-access': 0,
             '@typescript-eslint/no-unsafe-return': 0,
