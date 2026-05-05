@@ -309,7 +309,7 @@ const timingMap: TimingMap = {};
  * @return {*}
  */
 export const logCall = (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
-    const originalMethod = descriptor.value;
+    const originalMethod = descriptor.value as (...args: unknown[]) => unknown;
     //const logger = logging.getLogger('taskssql.perf');
     descriptor.value = function (...args: any[]) {
         const startTime = new Date(Date.now());
@@ -344,7 +344,7 @@ export const logCall = (target: Object, propertyKey: string, descriptor: Propert
 
 export function logCallDetails() {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        const originalMethod = descriptor.value;
+        const originalMethod = descriptor.value as (...args: unknown[]) => Promise<unknown>;
         const logger = logging.getLogger('tasks');
 
         descriptor.value = async function (...args: any[]) {

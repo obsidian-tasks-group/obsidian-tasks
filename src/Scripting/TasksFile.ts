@@ -10,7 +10,7 @@ export class TasksFile {
     private readonly _path: string;
     private readonly _cachedMetadata: CachedMetadata;
     // Always make TasksFile.frontmatter.tags exist and be empty, even if no frontmatter present:
-    private readonly _frontmatter = { tags: [] } as any;
+    private readonly _frontmatter = { tags: [] } as Record<string, unknown>;
     private readonly _tags: string[] = [];
 
     private readonly _outlinksInProperties: Readonly<Link[]> = [];

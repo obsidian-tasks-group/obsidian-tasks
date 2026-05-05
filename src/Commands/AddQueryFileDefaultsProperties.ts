@@ -2,7 +2,7 @@ import { type App, Notice, type TFile } from 'obsidian';
 import { QueryFileDefaults } from '../Query/QueryFileDefaults';
 
 export async function ensureQueryFileDefaultsInFrontmatter(app: App, file: TFile) {
-    await app.fileManager.processFrontMatter(file, (frontmatter) => {
+    await app.fileManager.processFrontMatter(file, (frontmatter: Record<string, unknown>) => {
         const requiredKeys = new QueryFileDefaults().allPropertyNamesSorted();
         let updated = false;
         requiredKeys.forEach((key) => {

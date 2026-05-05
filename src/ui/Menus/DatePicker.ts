@@ -4,6 +4,10 @@ import { RemoveTaskDate, SetTaskDate } from '../EditInstructions/DateInstruction
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import type { TaskSaver } from './TaskEditingMenu';
 
+interface LocaleWithWeekInfo extends Intl.Locale {
+    weekInfo?: { firstDay: number };
+}
+
 /**
  * A calendar date picker which edits a date value in a {@link Task} object.
  * @param parentElement
@@ -28,7 +32,7 @@ export function promptForDate(
         locale: {
             // Try to determine the first day of the week based on the locale, or use Monday
             // if unavailable
-            firstDayOfWeek: (new Intl.Locale(navigator.language) as any).weekInfo?.firstDay ?? 1,
+            firstDayOfWeek: (new Intl.Locale(navigator.language) as LocaleWithWeekInfo).weekInfo?.firstDay ?? 1,
         },
         onClose: async (selectedDates, _dateStr, instance) => {
             if (selectedDates.length > 0) {

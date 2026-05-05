@@ -9,7 +9,7 @@ export function getValueType(value: any): string {
 
     const type = typeof value;
     if (type === 'object') {
-        return value.constructor.name;
+        return (value as object).constructor.name;
     }
 
     return type;
