@@ -8,6 +8,15 @@ enum Handler {
     AddValue = 'addValue',
 }
 
+interface QueryProperty {
+    name: string;
+    type: string;
+    display?: string;
+    handler: Handler;
+    trueValue?: string;
+    falseValue?: string;
+}
+
 // Steps for adding a new property to Query File Defaults:
 // 1. Add the new value to queryProperties below.
 // 2. Add it to metaBindPluginWidgets() below
@@ -26,7 +35,7 @@ enum Handler {
 // Note: This file is excluded from SonarCloud duplication-checks,
 //       as the duplication here provides clarity.
 // Instructions are listed in the order that items are displayed in Tasks search results
-const queryProperties = [
+const queryProperties: QueryProperty[] = [
     {
         name: 'TQ_show_toolbar',
         type: 'checkbox',
@@ -183,7 +192,7 @@ export class QueryFileDefaults {
         return instructions.filter((i) => i !== '').join('\n');
     }
 
-    private generateInstruction(queryFile: TasksFile, prop: any) {
+    private generateInstruction(queryFile: TasksFile, prop: QueryProperty) {
         const hasProperty = queryFile.hasProperty(prop.name);
         const value = queryFile.property(prop.name);
         switch (prop.handler) {
