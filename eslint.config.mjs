@@ -72,7 +72,6 @@ const typescriptCommonRules = {
     '@typescript-eslint/unbound-method': 0,
     'import/no-extraneous-dependencies': 0,
     'no-restricted-globals': 0,
-    'no-restricted-imports': 0,
     'no-undef': 0,
     'no-unsanitized/method': 0,
     'no-unsanitized/property': 0,
@@ -112,6 +111,7 @@ export default defineConfig([
         },
         rules:  {
             ...typescriptCommonRules,
+            'no-restricted-imports': 0, // It's fine for tests to import moment from moment.
         },
     },
     ...svelte.configs['flat/recommended'],
