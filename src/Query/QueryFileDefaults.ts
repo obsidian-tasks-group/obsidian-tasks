@@ -202,8 +202,6 @@ export class QueryFileDefaults {
                 return (hasProperty && (value ? 'show ' + prop.display : 'hide ' + prop.display)) || '';
             case Handler.AddValue:
                 return hasProperty ? value || '' : '';
-            default:
-                throw new Error('Unknown handler type: ' + prop.handler + '.');
         }
     }
 
