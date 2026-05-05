@@ -1,4 +1,3 @@
-import type { Moment, unitOfTime } from 'moment';
 import { capitalizeFirstLetter } from '../lib/StringHelpers';
 import { Task } from '../Task/Task';
 import { DateFallback } from './DateFallback';
@@ -58,7 +57,7 @@ export function getDateFieldToPostpone(task: Task): HappensDate | null {
 export function createPostponedTask(
     task: Task,
     dateFieldToPostpone: HappensDate,
-    timeUnit: unitOfTime.DurationConstructor,
+    timeUnit: moment.unitOfTime.DurationConstructor,
     amount: number,
 ) {
     const dateToPostpone = task[dateFieldToPostpone];
@@ -78,7 +77,7 @@ export function createPostponedTask(
 export function createFixedDateTask(
     task: Task,
     dateFieldToPostpone: HappensDate,
-    timeUnit: unitOfTime.DurationConstructor,
+    timeUnit: moment.unitOfTime.DurationConstructor,
     amount: number,
 ) {
     const dateToPostpone = window.moment();
@@ -98,7 +97,7 @@ export function createFixedDateTask(
 export function createTaskWithDateRemoved(
     task: Task,
     dateFieldToPostpone: HappensDate,
-    _timeUnit: unitOfTime.DurationConstructor,
+    _timeUnit: moment.unitOfTime.DurationConstructor,
     _amount: number,
 ) {
     return createTaskFromDate(task, dateFieldToPostpone, null);
@@ -108,7 +107,7 @@ function createPostponedTaskFromDate(
     dateToPostpone: moment.Moment | null,
     task: Task,
     dateFieldToPostpone: HappensDate,
-    timeUnit: unitOfTime.DurationConstructor,
+    timeUnit: moment.unitOfTime.DurationConstructor,
     amount: number,
 ): { postponedDate: moment.Moment | null; postponedTask: Task } {
     const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
@@ -135,7 +134,7 @@ export function postponementSuccessMessage(postponedDate: Moment | null, dateFie
     }
 }
 
-export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
+export function postponeButtonTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
     return `ℹ️ ${buttonText} (right-click for more options)`;
 }
@@ -148,7 +147,7 @@ export function postponeButtonTitle(task: Task, amount: number, timeUnit: unitOf
  *
  * @see fixedDateMenuItemTitle
  */
-export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
+export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = task[updatedDateType] as Moment;
     return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
@@ -162,7 +161,7 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: unit
  *
  * @see postponeMenuItemTitle
  */
-export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: unitOfTime.DurationConstructor) {
+export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = window.moment().startOf('day');
     return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
@@ -176,7 +175,7 @@ export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: uni
  *
  * @see postponeMenuItemTitle
  */
-export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: unitOfTime.DurationConstructor) {
+export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: moment.unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     return removeDateMenuItemTitleForField(updatedDateType, task);
 }
@@ -201,7 +200,7 @@ export function postponeMenuItemTitleFromDate(
     updatedDateType: AllTaskDateFields,
     dateToUpdate: moment.Moment,
     amount: number,
-    timeUnit: unitOfTime.DurationConstructor,
+    timeUnit: moment.unitOfTime.DurationConstructor,
 ) {
     const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
     const formattedNewDate = postponedDate.format('ddd Do MMM');
