@@ -203,16 +203,16 @@ export class QueryFileDefaults {
         return instructions.filter((i) => i !== '').join('\n');
     }
 
-    private generateInstruction(queryFile: TasksFile, prop: QueryProperty) {
+    private generateInstruction(queryFile: TasksFile, prop: QueryProperty): string {
         const hasProperty = queryFile.hasProperty(prop.name);
-        const value = queryFile.property(prop.name);
+        const value: unknown = queryFile.property(prop.name);
         switch (prop.handler) {
             case Handler.Instruction:
                 return (hasProperty && (value ? prop.trueValue : prop.falseValue)) || '';
             case Handler.ShowAndHide:
                 return (hasProperty && (value ? 'show ' + prop.display : 'hide ' + prop.display)) || '';
             case Handler.AddValue:
-                return hasProperty ? value || '' : '';
+                return hasProperty && typeof value === 'string' ? value : '';
         }
     }
 
