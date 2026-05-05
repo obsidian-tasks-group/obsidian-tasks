@@ -22,6 +22,20 @@ const prettierRules = {
     ],
 };
 
+const typescriptLanguageOptions = {
+    parser: tsparser,
+    parserOptions: {
+        projectService: true,
+    },
+    globals: {
+        ...globals.es2015,
+        ...globals.node,
+        ...globals.browser,
+        Atomics: 'readonly',
+        SharedArrayBuffer: 'readonly',
+    },
+};
+
 const typescriptCommonRules = {
     ...prettierRules,
     'linebreak-style': ['error', 'unix'],
@@ -81,19 +95,7 @@ export default defineConfig([
     ...obsidianmd.configs.recommended,
     {
         files: ['**/*.ts'],
-        languageOptions: {
-            parser: tsparser,
-            parserOptions: {
-                projectService: true,
-            },
-            globals: {
-                ...globals.es2015,
-                ...globals.node,
-                ...globals.browser,
-                Atomics: 'readonly',
-                SharedArrayBuffer: 'readonly',
-            },
-        },
+        languageOptions: typescriptLanguageOptions,
         plugins: {
             prettier,
         },
