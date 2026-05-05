@@ -42,7 +42,7 @@ const typescriptCommonRules = {
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single', {avoidEscape: true}],
     '@typescript-eslint/no-unused-vars': on_or_off, // Configured in tsconfig instead.
-    'no-unused-vars': on_or_off, // Configured in tsconfig instead.
+    'no-unused-vars': 0, // Untyped rules have turned out to be unreliable
     semi: ['error', 'always'],
     'import/order': 'error',
     'sort-imports': ['error', {ignoreDeclarationSort: true}],
