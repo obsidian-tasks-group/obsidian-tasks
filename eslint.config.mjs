@@ -59,7 +59,6 @@ const typescriptCommonRules = {
     '@typescript-eslint/no-misused-promises': on_or_off,
     '@typescript-eslint/no-namespace': on_or_off,
     '@typescript-eslint/no-redundant-type-constituents': on_or_off,
-    '@typescript-eslint/no-unnecessary-type-assertion': on_or_off,
     '@typescript-eslint/no-unsafe-argument': on_or_off,
     '@typescript-eslint/no-unsafe-assignment': on_or_off,
     '@typescript-eslint/no-unsafe-call': on_or_off,
