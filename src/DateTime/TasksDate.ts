@@ -1,4 +1,4 @@
-import type { DurationInputArg2, Moment, unitOfTime } from 'moment';
+import type { DurationInputArg2 } from 'moment';
 import { Notice } from 'obsidian';
 import { PropertyCategory } from '../lib/PropertyCategory';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
@@ -122,7 +122,7 @@ export class TasksDate {
         return earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
     }
 
-    public postpone(unitOfTime: unitOfTime.DurationConstructor = 'days', amount: number = 1) {
+    public postpone(unitOfTime: moment.unitOfTime.DurationConstructor = 'days', amount: number = 1) {
         if (!this._date) throw new Notice('Cannot postpone a null date');
 
         const today = window.moment().startOf('day');
