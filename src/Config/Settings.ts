@@ -268,8 +268,8 @@ export function getUserSelectedTaskFormat(): TaskFormat {
  *
  * Note: The vault's 'data.json' file is only updated when the user opens the Tasks settings UI.
  */
-function migrateSettings(loadedSettings: any): Partial<Settings> {
-    const migratedSettings = { ...loadedSettings };
+function migrateSettings(loadedSettings: Record<string, unknown>): Partial<Settings> {
+    const migratedSettings: Record<string, unknown> = { ...loadedSettings };
 
     // Migrate 'includes' to 'presets' if present
     if ('includes' in migratedSettings && !('presets' in migratedSettings)) {

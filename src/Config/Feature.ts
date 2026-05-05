@@ -82,9 +82,7 @@ export class Feature {
         }
 
         throw new RangeError(
-            `Illegal argument passed to fromString(): ${name} does not correspond to any available Feature ${
-                (this as any).prototype.constructor.name
-            }`,
+            `Illegal argument passed to fromString(): ${name} does not correspond to any available Feature ${this.name}`,
         );
     }
 }
