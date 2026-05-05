@@ -65,6 +65,6 @@ export class Sorter {
 
     private static makeReversedComparator(comparator: Comparator): Comparator {
         // Note: This can return -0.
-        return (a, b, searchInfo) => (comparator(a, b, searchInfo) * -1) as -1 | 0 | 1;
+        return (a, b, searchInfo) => comparator(a, b, searchInfo) * -1;
     }
 }

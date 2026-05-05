@@ -900,14 +900,7 @@ export class Task extends ListItem {
      * See also {@link AllTaskDateFields}
      */
     public static allDateFields(): (keyof Task)[] {
-        return [
-            'createdDate' as keyof Task,
-            'startDate' as keyof Task,
-            'scheduledDate' as keyof Task,
-            'dueDate' as keyof Task,
-            'doneDate' as keyof Task,
-            'cancelledDate' as keyof Task,
-        ];
+        return ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate', 'cancelledDate'];
     }
 
     /**

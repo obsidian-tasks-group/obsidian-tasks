@@ -55,7 +55,7 @@ export abstract class MultiTextField extends TextField {
 
     protected getFilter(matcher: IStringMatcher, negate: boolean): FilterFunction {
         return (task: Task) => {
-            const match = matcher!.matchesAnyOf(this.values(task));
+            const match = matcher.matchesAnyOf(this.values(task));
             return negate ? !match : match;
         };
     }

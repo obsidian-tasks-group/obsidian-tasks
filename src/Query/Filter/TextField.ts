@@ -92,7 +92,7 @@ export abstract class TextField extends Field {
 
     protected getFilter(matcher: IStringMatcher, negate: boolean): FilterFunction {
         return (task: Task) => {
-            const match = matcher!.matches(this.value(task));
+            const match = matcher.matches(this.value(task));
             return negate ? !match : match;
         };
     }

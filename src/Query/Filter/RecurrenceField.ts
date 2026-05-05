@@ -9,7 +9,7 @@ export class RecurrenceField extends TextField {
 
     value(task: Task): string {
         if (task.recurrence !== null) {
-            return task.recurrence!.toText();
+            return task.recurrence.toText();
         } else {
             return '';
         }
@@ -22,7 +22,7 @@ export class RecurrenceField extends TextField {
     public grouper(): GrouperFunction {
         return (task: Task) => {
             if (task.recurrence !== null) {
-                return [task.recurrence!.toText()];
+                return [task.recurrence.toText()];
             } else {
                 return ['None'];
             }
