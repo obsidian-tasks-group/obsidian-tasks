@@ -261,13 +261,9 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   518:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/QueryFileDefaults.ts
-    6:5   warning  'Instruction' is defined but never used                                                                                                                                  no-unused-vars
-    7:5   warning  'ShowAndHide' is defined but never used                                                                                                                                  no-unused-vars
-    8:5   warning  'AddValue' is defined but never used                                                                                                                                     no-unused-vars
-  191:60  warning  Unsafe return of a value of type `any`                                                                                                                                   @typescript-eslint/no-unsafe-return
-  197:15  warning  Unsafe assignment of an `any` value                                                                                                                                      @typescript-eslint/no-unsafe-assignment
-  204:17  warning  Unsafe return of a value of type `any`                                                                                                                                   @typescript-eslint/no-unsafe-return
-  206:60  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never`  @typescript-eslint/restrict-plus-operands
+  6:5  warning  'Instruction' is defined but never used  no-unused-vars
+  7:5  warning  'ShowAndHide' is defined but never used  no-unused-vars
+  8:5  warning  'AddValue' is defined but never used     no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Sort/Sort.ts
   10:25  warning  'a' is defined but never used  no-unused-vars
@@ -634,7 +630,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   11:26  warning  'originalTask' is defined but never used  no-unused-vars
   11:46  warning  'newTasks' is defined but never used      no-unused-vars
 
-✖ 446 problems (0 errors, 446 warnings)
+✖ 442 problems (0 errors, 442 warnings)
   0 errors and 65 warnings potentially fixable with the `--fix` option.
 
 
@@ -644,4 +640,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 22.00s.
+Done in 20.65s.
