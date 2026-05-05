@@ -23,6 +23,26 @@ import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
 import { PresetsSettingsUI } from './PresetsSettingsUI';
 
+interface SettingConfiguration {
+    name: string;
+    description: string;
+    type: string;
+    initialValue: string;
+    placeholder: string;
+    settingName: string;
+    featureFlag: string;
+    notice: { class: string; text: string | null; html: string | null } | null;
+}
+
+interface HeadingConfiguration {
+    text: string;
+    level: string;
+    class: string;
+    open: boolean;
+    notice: { class: string; text: string | null; html: string | null } | null;
+    settings: SettingConfiguration[];
+}
+
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
     // custom function and specify it from the json file. It will
@@ -284,7 +304,7 @@ export class SettingsTab extends PluginSettingTab {
         ];
 
         // Original usage remains unchanged
-        settingsJson.forEach((heading) => {
+        settingsJson.forEach((heading: HeadingConfiguration) => {
             const initiallyOpen = headingOpened[heading.text] ?? true;
             const detailsContainer = this.addOneSettingsBlock(containerEl, heading, headingOpened);
             detailsContainer.open = initiallyOpen;
@@ -566,7 +586,7 @@ export class SettingsTab extends PluginSettingTab {
 
     private addOneSettingsBlock(
         containerEl: HTMLElement,
-        heading: any,
+        heading: HeadingConfiguration,
         headingOpened: HeadingState,
     ): HTMLDetailsElement {
         const detailsContainer = containerEl.createEl('details', {
@@ -596,7 +616,7 @@ export class SettingsTab extends PluginSettingTab {
         // This will process all the settings from settingsConfiguration.json and render
         // them out reducing the duplication of the code in this file. This will become
         // more important as features are being added over time.
-        heading.settings.forEach((setting: any) => {
+        heading.settings.forEach((setting: SettingConfiguration) => {
             if (setting.featureFlag !== '' && !isFeatureEnabled(setting.featureFlag)) {
                 // The settings configuration has a featureFlag set and the user has not
                 // enabled it. Skip adding the settings option.
@@ -666,7 +686,7 @@ export class SettingsTab extends PluginSettingTab {
             if (setting.notice !== null) {
                 const notice = detailsContainer.createEl('p', {
                     cls: setting.notice.class,
-                    text: setting.notice.text,
+                    text: setting.notice.text ?? '',
                 });
                 if (setting.notice.html !== null) {
                     notice.insertAdjacentHTML('beforeend', setting.notice.html);
