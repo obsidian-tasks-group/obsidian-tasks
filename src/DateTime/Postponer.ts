@@ -206,13 +206,13 @@ export function postponeMenuItemTitleFromDate(
     const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
     const formattedNewDate = postponedDate.format('ddd Do MMM');
 
-    const amountOrArticle = amount != 1 ? amount : 'a';
+    const amountOrArticle = amount != 1 ? Math.abs(amount) : 'a';
     if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
         const updatedDateDisplayText = prettyPrintDateFieldName(updatedDateType);
         const title =
             amount >= 0
                 ? `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`
-                : `${updatedDateDisplayText} ${-amountOrArticle} ${timeUnit} ago, on ${formattedNewDate}`;
+                : `${updatedDateDisplayText} ${amountOrArticle} ${timeUnit} ago, on ${formattedNewDate}`;
         return title
             .replace(' 1 day ago', ' yesterday')
             .replace(' in 0 days', ' today')
@@ -222,6 +222,6 @@ export function postponeMenuItemTitleFromDate(
     if (amount >= 0) {
         return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
     } else {
-        return `Backdate ${updatedDateDisplayText} by ${-amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
+        return `Backdate ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
     }
 }
