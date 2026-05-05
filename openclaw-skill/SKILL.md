@@ -5,23 +5,23 @@ description: Use this skill when an OpenClaw agent needs to list, create, toggle
 
 # Obsidian Tasks CLI
 
-Use this repo's CLI to manage markdown task lines. Always pass `--vault <vault>`.
+Use the CLI shipped in the installed plugin folder. Always pass `--vault <vault>`.
 
 ```bash
-PLUGIN_REPO=/path/to/obsidian-tasks
-npm --prefix "$PLUGIN_REPO" run cli-build
-node "$PLUGIN_REPO/openclaw-tasks-cli.cjs" list --vault <vault>
+VAULT=/path/to/vault
+CLI="$VAULT/.obsidian/plugins/obsidian-tasks-plugin/openclaw-tasks-cli.cjs"
+node "$CLI" list --vault "$VAULT"
 ```
 
 Create or update tasks:
 
 ```bash
-node "$PLUGIN_REPO/openclaw-tasks-cli.cjs" create --vault <vault> --path "Tasks.md" --text "Review inbox"
-node "$PLUGIN_REPO/openclaw-tasks-cli.cjs" toggle --vault <vault> --path "Tasks.md" --line 12
-node "$PLUGIN_REPO/openclaw-tasks-cli.cjs" complete --vault <vault> --path "Tasks.md" --line 12
+node "$CLI" create --vault "$VAULT" --path "Tasks.md" --text "Review inbox"
+node "$CLI" toggle --vault "$VAULT" --path "Tasks.md" --line 12
+node "$CLI" complete --vault "$VAULT" --path "Tasks.md" --line 12
 ```
 
-If installed or linked, `obsidian-tasks-cli ...` may be used instead.
+If the installed plugin does not include the CLI yet, use `obsidian-tasks-cli` from `PATH` or `node "$PLUGIN_REPO/openclaw-tasks-cli.cjs"` from a checkout.
 
 ## Safety
 

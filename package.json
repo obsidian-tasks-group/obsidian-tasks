@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "node esbuild.config.mjs production",
-    "cli-build": "node openclaw-tasks-cli.cjs help > /dev/null",
+    "postbuild": "npm run cli-build",
+    "cli-build": "mkdir -p dist && cp openclaw-tasks-cli.cjs openclaw-plugin-cli.cjs dist/ && node openclaw-tasks-cli.cjs help > /dev/null",
     "build:dev": "node esbuild.config.mjs development",
     "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
     "lint:markdown": "markdownlint-cli2 --fix \"**/*.md\" ",
