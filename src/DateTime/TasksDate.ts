@@ -103,7 +103,7 @@ export class TasksDate {
         return Number(splitPastAndFutureDates + startDateOfThisGroup.format('YYYYMMDDHHmm'));
     }
 
-    private fromNowStartDateOfGroup(date: moment.Moment, earlier: boolean, now: any) {
+    private fromNowStartDateOfGroup(date: moment.Moment, earlier: boolean, now: Moment): Moment {
         // Calculate the earliest of all dates with the same 'fromNow()' name.
 
         // https://momentjs.com/docs/#/displaying/fromnow/
