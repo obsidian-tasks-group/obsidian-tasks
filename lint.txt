@@ -1,49 +1,18 @@
 yarn run v1.22.19
 $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-check
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Api/TasksApiV1.ts
-  21:23  warning  'taskLine' is defined but never used  no-unused-vars
-  31:36  warning  'line' is defined but never used      no-unused-vars
-  31:50  warning  'path' is defined but never used      no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Api/createTaskLineModal.ts
-  20:26  warning  'input' is defined but never used  no-unused-vars
-  21:56  warning  '_' is defined but never used      no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Api/editTaskLineModal.ts
-  25:26  warning  'input' is defined but never used  no-unused-vars
-  26:56  warning  '_' is defined but never used      no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Commands/CreateEditorCallback.ts
-  27:32  warning  'line' is defined but never used  no-unused-vars
-  27:46  warning  'path' is defined but never used  no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Commands/index.ts
   46:19  warning  Use sentence case for UI text. Expected: 'Add all query file defaults properties'  obsidianmd/ui/sentence-case
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/CustomStatusModal.ts
-   63:20  warning  '_setting' is defined but never used                                                                                                                                no-unused-vars
-   79:20  warning  '_setting' is defined but never used                                                                                                                                no-unused-vars
-   94:20  warning  '_setting' is defined but never used                                                                                                                                no-unused-vars
-  171:9   warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/Feature.ts
-  20:25  warning  'internalName' is defined but never used      no-unused-vars
-  21:25  warning  'index' is defined but never used             no-unused-vars
-  22:25  warning  'description' is defined but never used       no-unused-vars
-  23:25  warning  'displayName' is defined but never used       no-unused-vars
-  24:25  warning  'enabledByDefault' is defined but never used  no-unused-vars
-  25:25  warning  'stable' is defined but never used            no-unused-vars
+  171:9  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/PresetsSettingsUI.ts
   104:51  warning  Promise returned in function argument where a void return was expected                                                                                                                             @typescript-eslint/no-misused-promises
   105:54  warning  Promise returned in function argument where a void return was expected                                                                                                                             @typescript-eslint/no-misused-promises
   131:13  warning  Avoid setting styles directly via `element.style.cursor`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
-  132:64  warning  '_e' is defined but never used                                                                                                                                                                     no-unused-vars
   135:17  warning  Avoid setting styles directly via `element.style.cursor`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
-  137:62  warning  '_e' is defined but never used                                                                                                                                                                     no-unused-vars
   138:17  warning  Avoid setting styles directly via `element.style.cursor`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
-  184:46  warning  '_e' is defined but never used                                                                                                                                                                     no-unused-vars
   213:42  warning  Promise returned in function argument where a void return was expected                                                                                                                             @typescript-eslint/no-misused-promises
   287:28  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                         obsidianmd/prefer-active-doc
   338:13  warning  Avoid setting styles directly via `element.style.height`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
@@ -89,46 +58,15 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   30:13  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
 Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
 If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-  62:58  warning  '_forwardDate' is defined but never used                                                                                                                                                                                                                                                                                                    no-unused-vars
-  86:58  warning  '_forwardDate' is defined but never used                                                                                                                                                                                                                                                                                                    no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/DateTime/Postponer.ts
-  100:5   warning  '_timeUnit' is defined but never used  no-unused-vars
-  101:5   warning  '_amount' is defined but never used    no-unused-vars
-  178:53  warning  '_amount' is defined but never used    no-unused-vars
-  178:70  warning  '_timeUnit' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/DateTime/TasksDate.ts
   125:32  warning  Expected an error object to be thrown  @typescript-eslint/only-throw-error
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/IQuery.ts
-  65:25  warning  'tasks' is defined but never used         no-unused-vars
-  87:11  warning  'message' is defined but never used       no-unused-vars
-  87:28  warning  'objects' is defined but never used       no-unused-vars
   87:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  97:10  warning  'message' is defined but never used       no-unused-vars
-  97:27  warning  'objects' is defined but never used       no-unused-vars
   97:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Layout/TaskLayoutOptions.ts
-   9:5  warning  'Description' is defined but never used     no-unused-vars
-  10:5  warning  'Id' is defined but never used              no-unused-vars
-  11:5  warning  'DependsOn' is defined but never used       no-unused-vars
-  12:5  warning  'Priority' is defined but never used        no-unused-vars
-  13:5  warning  'RecurrenceRule' is defined but never used  no-unused-vars
-  14:5  warning  'OnCompletion' is defined but never used    no-unused-vars
-  15:5  warning  'CreatedDate' is defined but never used     no-unused-vars
-  16:5  warning  'StartDate' is defined but never used       no-unused-vars
-  17:5  warning  'ScheduledDate' is defined but never used   no-unused-vars
-  18:5  warning  'DueDate' is defined but never used         no-unused-vars
-  19:5  warning  'CancelledDate' is defined but never used   no-unused-vars
-  20:5  warning  'DoneDate' is defined but never used        no-unused-vars
-  21:5  warning  'BlockLink' is defined but never used       no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/Cache.ts
-   26:5   warning  'Cold' is defined but never used                                                                                                                                                                                                                                                                                                            no-unused-vars
-   27:5   warning  'Initializing' is defined but never used                                                                                                                                                                                                                                                                                                    no-unused-vars
-   28:5   warning  'Warm' is defined but never used                                                                                                                                                                                                                                                                                                            no-unused-vars
   102:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
   152:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
   159:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
@@ -141,30 +79,16 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   302:17  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
 Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
 If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-  346:25  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                               no-unused-vars
   346:28  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
-  346:33  warning  'filePath' is defined but never used                                                                                                                                                                                                                                                                                                        no-unused-vars
-  346:51  warning  'listItem' is defined but never used                                                                                                                                                                                                                                                                                                        no-unused-vars
-  346:76  warning  'line' is defined but never used                                                                                                                                                                                                                                                                                                            no-unused-vars
   353:45  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/File.ts
-   21:37  warning  'message' is defined but never used                                                        no-unused-vars
   150:9   warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-active-window-timers
   150:20  warning  Promise returned in function argument where a void return was expected                     @typescript-eslint/no-misused-promises
-  240:38  warning  '_' is assigned a value but never used                                                     no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/FileParser.ts
-  17:38  warning  'e' is defined but never used             no-unused-vars
   17:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  17:46  warning  'filePath' is defined but never used      no-unused-vars
-  17:64  warning  'listItem' is defined but never used      no-unused-vars
-  17:89  warning  'line' is defined but never used          no-unused-vars
-  30:25  warning  'e' is defined but never used             no-unused-vars
   30:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  30:33  warning  'filePath' is defined but never used      no-unused-vars
-  30:51  warning  'listItem' is defined but never used      no-unused-vars
-  30:76  warning  'line' is defined but never used          no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/InlineRenderer.ts
   33:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
@@ -182,8 +106,6 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   32:9  warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/TaskModal.ts
-  14:16  warning  'updatedTasks' is defined but never used                                                                                                                                                                  no-unused-vars
-  22:32  warning  'updatedTasks' is defined but never used                                                                                                                                                                  no-unused-vars
   42:30  warning  Use sentence case for UI text. Expected: 'Create or edit task'                                                                                                                                            obsidianmd/ui/sentence-case
   43:9   warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
   45:31  warning  Use 'createEl('button')' instead of 'document.createElement('button')'                                                                                                                                    obsidianmd/prefer-create-el
@@ -191,33 +113,9 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   55:21  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                        @typescript-eslint/no-floating-promises
   63:9   warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/TasksEvents.ts
-   8:5   warning  'CacheUpdate' is defined but never used              no-unused-vars
-   9:5   warning  'RequestCacheUpdate' is defined but never used       no-unused-vars
-  10:5   warning  'ReloadOpenSearchResults' is defined but never used  no-unused-vars
-  11:5   warning  'ReloadVault' is defined but never used              no-unused-vars
-  30:36  warning  'cacheData' is defined but never used                no-unused-vars
-  46:43  warning  'fn' is defined but never used                       no-unused-vars
-  46:48  warning  'cacheData' is defined but never used                no-unused-vars
-  54:43  warning  'cacheData' is defined but never used                no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/BacklinkField.ts
-  23:28  warning  '_line' is defined but never used  no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/BooleanField.ts
   193:58  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Token`  @typescript-eslint/restrict-plus-operands
   193:58  warning  'token' will use Object's default stringification format ('[object Object]') when stringified                                                                            @typescript-eslint/no-base-to-string
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/DateField.ts
-   14:35  warning  'date' is defined but never used  no-unused-vars
-  166:26  warning  'task' is defined but never used  no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/Field.ts
-  42:48  warning  'line' is defined but never used  no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/Filter.ts
-  13:31  warning  'task' is defined but never used        no-unused-vars
-  13:43  warning  'searchInfo' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/FunctionField.ts
    79:23  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
@@ -235,55 +133,19 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   248:11  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
   274:15  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/MultiTextField.ts
-  54:28  warning  'task' is defined but never used  no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/TextField.ts
-  91:27  warning  'task' is defined but never used  no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/UrgencyField.ts
-  13:28  warning  '_line' is defined but never used  no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Group/Grouper.ts
-  16:32  warning  'task' is defined but never used        no-unused-vars
-  16:44  warning  'searchInfo' is defined but never used  no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Group/GroupingTreeNode.ts
   32:13  warning  Unsafe return of type `Map<any, any>` from function with return type `Map<string[], T[]>`  @typescript-eslint/no-unsafe-return
   41:9   warning  Unsafe return of type `Map<any, any>` from function with return type `Map<string[], T[]>`  @typescript-eslint/no-unsafe-return
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Matchers/IStringMatcher.ts
-  14:29  warning  'stringToSearch' is defined but never used  no-unused-vars
-  31:33  warning  'instruction' is defined but never used     no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Query.ts
   514:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   518:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/QueryFileDefaults.ts
-  6:5  warning  'Instruction' is defined but never used  no-unused-vars
-  7:5  warning  'ShowAndHide' is defined but never used  no-unused-vars
-  8:5  warning  'AddValue' is defined but never used     no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Sort/Sort.ts
-  10:25  warning  'a' is defined but never used  no-unused-vars
-  10:34  warning  'b' is defined but never used  no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Sort/Sorter.ts
-  17:27  warning  'a' is defined but never used           no-unused-vars
-  17:36  warning  'b' is defined but never used           no-unused-vars
-  17:45  warning  'searchInfo' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlQueryResultsRenderer.ts
    50:38  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                                                                                        obsidianmd/prefer-create-el
    50:38  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                          obsidianmd/prefer-active-doc
    52:44  warning  Use 'createEl('li')' instead of 'document.createElement('li')'                                                                                                      obsidianmd/prefer-create-el
    52:44  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                          obsidianmd/prefer-active-doc
-   58:13  warning  'app' is defined but never used                                                                                                                                     no-unused-vars
-   59:13  warning  'markdown' is defined but never used                                                                                                                                no-unused-vars
-   60:13  warning  'el' is defined but never used                                                                                                                                      no-unused-vars
-   61:13  warning  'sourcePath' is defined but never used                                                                                                                              no-unused-vars
-   62:13  warning  'component' is defined but never used                                                                                                                               no-unused-vars
   106:9   warning  Unsafe assignment to innerHTML                                                                                                                                      no-unsanitized/property
   106:9   warning  Do not write to DOM directly using innerHTML/outerHTML property                                                                                                     @microsoft/sdl/no-inner-html
   110:36  warning  Use sentence case for UI text. Expected: 'Loading tasks ...'                                                                                                        obsidianmd/ui/sentence-case
@@ -291,12 +153,6 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   270:44  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
   294:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
   299:48  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/MarkdownQueryResultsRenderer.ts
-  33:41  warning  '_queryResult' is defined but never used    no-unused-vars
-  37:41  warning  '_queryResult' is defined but never used    no-unused-vars
-  76:35  warning  '_taskIndex' is defined but never used      no-unused-vars
-  91:47  warning  '_listItemIndex' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryRenderer.ts
    47:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
@@ -316,45 +172,9 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   367:13  warning  Promise-returning function provided to property where a void return was expected                                                                                                                                                                                                                                                            @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryResultsRenderer.ts
-   16:38  warning  'ev' is defined but never used                                          no-unused-vars
-   16:54  warning  'task' is defined but never used                                        no-unused-vars
-   17:39  warning  'event' is defined but never used                                       no-unused-vars
-   17:58  warning  'task' is defined but never used                                        no-unused-vars
-   17:70  warning  'allTasks' is defined but never used                                    no-unused-vars
-   50:9   warning  'app' is defined but never used                                         no-unused-vars
-   51:9   warning  'markdown' is defined but never used                                    no-unused-vars
-   52:9   warning  'el' is defined but never used                                          no-unused-vars
-   53:9   warning  'sourcePath' is defined but never used                                  no-unused-vars
-   54:9   warning  'component' is defined but never used                                   no-unused-vars
-   66:13  warning  'app' is defined but never used                                         no-unused-vars
-   67:13  warning  'markdown' is defined but never used                                    no-unused-vars
-   68:13  warning  'el' is defined but never used                                          no-unused-vars
-   69:13  warning  'sourcePath' is defined but never used                                  no-unused-vars
-   70:13  warning  'component' is defined but never used                                   no-unused-vars
   241:46  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryResultsRendererBase.ts
-   90:50  warning  'queryResult' is defined but never used    no-unused-vars
-   92:50  warning  'queryResult' is defined but never used    no-unused-vars
-   94:43  warning  'errorMessage' is defined but never used   no-unused-vars
-   98:42  warning  'explanation' is defined but never used    no-unused-vars
-  212:36  warning  'listItem' is defined but never used       no-unused-vars
-  212:56  warning  'listItemIndex' is defined but never used  no-unused-vars
-  214:32  warning  'task' is defined but never used           no-unused-vars
-  214:44  warning  'taskIndex' is defined but never used      no-unused-vars
-  234:40  warning  'group' is defined but never used          no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/TaskFieldRenderer.ts
-   46:34  warning  'component' is defined but never used  no-unused-vars
-   46:66  warning  'task' is defined but never used       no-unused-vars
-  171:29  warning  'c' is defined but never used          no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/TaskLineRenderer.ts
-   23:5   warning  'app' is defined but never used                                                                                                                                                                                                                                                                                                             no-unused-vars
-   24:5   warning  'text' is defined but never used                                                                                                                                                                                                                                                                                                            no-unused-vars
-   25:5   warning  'element' is defined but never used                                                                                                                                                                                                                                                                                                         no-unused-vars
-   26:5   warning  'path' is defined but never used                                                                                                                                                                                                                                                                                                            no-unused-vars
-   27:5   warning  'obsidianComponent' is defined but never used                                                                                                                                                                                                                                                                                               no-unused-vars
    52:42  warning  Use 'createEl(tagName)' instead of 'document.createElement(tagName)'                                                                                                                                                                                                                                                                        obsidianmd/prefer-create-el
    52:42  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                                                                                                                                                                  obsidianmd/prefer-active-doc
   101:24  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
@@ -384,7 +204,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   23:57  warning  Implied eval. Do not use the Function constructor to create functions                                                    @typescript-eslint/no-implied-eval
   42:48  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-  43:46  warning  '_' is defined but never used                                                                                            no-unused-vars
   43:60  warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
   44:5   warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
   44:12  warning  Unsafe call of a `Function` typed value                                                                                  @typescript-eslint/no-unsafe-call
@@ -408,23 +227,11 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   236:15  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
   242:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusConfiguration.ts
-   5:5  warning  'TODO' is defined but never used         no-unused-vars
-   6:5  warning  'DONE' is defined but never used         no-unused-vars
-   7:5  warning  'IN_PROGRESS' is defined but never used  no-unused-vars
-   8:5  warning  'ON_HOLD' is defined but never used      no-unused-vars
-   9:5  warning  'CANCELLED' is defined but never used    no-unused-vars
-  10:5  warning  'NON_TASK' is defined but never used     no-unused-vars
-  11:5  warning  'EMPTY' is defined but never used        no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusRegistryReport.ts
   62:14  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value  obsidianmd/hardcoded-config-path
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusSettingsReport.ts
   61:17  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value  obsidianmd/hardcoded-config-path
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusValidator.ts
-  31:24  warning  '_name' is assigned a value but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/EditorSuggestorPopup.ts
    95:15  warning  Unsafe assignment of an error typed value                                                                                                                           @typescript-eslint/no-unsafe-assignment
@@ -433,7 +240,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   115:26  warning  Unsafe member access .state on a type that cannot be resolved                                                                                                       @typescript-eslint/no-unsafe-member-access
   118:44  warning  Unexpected any. Specify a different type                                                                                                                            @typescript-eslint/no-explicit-any
   126:5   warning  Promise-returning method provided where a void return was expected by extended/implemented type 'EditorSuggest<SuggestInfoWithContext>'                             @typescript-eslint/no-misused-promises
-  126:59  warning  '_evt' is defined but never used                                                                                                                                    no-unused-vars
   136:13  warning  Unsafe call of an `any` typed value                                                                                                                                 @typescript-eslint/no-unsafe-call
   136:24  warning  Unexpected any. Specify a different type                                                                                                                            @typescript-eslint/no-explicit-any
   136:30  warning  Unsafe member access .cm on an `any` value                                                                                                                          @typescript-eslint/no-unsafe-member-access
@@ -447,27 +253,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
    38:12  warning  Avoid using 'globalThis'. Use 'activeDocument' for popout window compatibility  obsidianmd/prefer-active-doc
   261:59  warning  Unexpected any. Specify a different type                                        @typescript-eslint/no-explicit-any
   492:57  warning  Invalid type "string | string[]" of template literal expression                 @typescript-eslint/restrict-template-expressions
-  577:19  warning  'datePrefix' is defined but never used                                          no-unused-vars
-  577:39  warning  'genericMatch' is defined but never used                                        no-unused-vars
-  646:72  warning  '_' is defined but never used                                                   no-unused-vars
-  685:72  warning  '_' is defined but never used                                                   no-unused-vars
-  751:13  warning  'cursor' is defined but never used                                              no-unused-vars
-  752:13  warning  'editor' is defined but never used                                              no-unused-vars
-  753:13  warning  'lineHasGlobalFilter' is defined but never used                                 no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/index.ts
-  27:5  warning  'line' is defined but never used              no-unused-vars
-  28:5  warning  'cursorPos' is defined but never used         no-unused-vars
-  29:5  warning  'settings' is defined but never used          no-unused-vars
-  30:5  warning  'allTasks' is defined but never used          no-unused-vars
-  31:5  warning  'canSaveEdits' is defined but never used      no-unused-vars
-  32:5  warning  'taskToSuggestFor' is defined but never used  no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/LinkResolver.ts
-  3:39  warning  'rawLink' is defined but never used      no-unused-vars
-  3:59  warning  'sourcePath' is defined but never used   no-unused-vars
-  5:40  warning  '_rawLink' is defined but never used     no-unused-vars
-  5:61  warning  '_sourcePath' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/ListItem.ts
   125:19  warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
@@ -475,19 +260,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   159:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/OnCompletion.ts
-   5:5   warning  'Ignore' is defined but never used                                                                                                                        no-unused-vars
-   6:5   warning  'Keep' is defined but never used                                                                                                                          no-unused-vars
-   7:5   warning  'Delete' is defined but never used                                                                                                                        no-unused-vars
   58:5   warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
   58:40  warning  Invalid type "never" of template literal expression                                                                                                       @typescript-eslint/restrict-template-expressions
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Priority.ts
-  12:5  warning  'Highest' is defined but never used  no-unused-vars
-  13:5  warning  'High' is defined but never used     no-unused-vars
-  14:5  warning  'Medium' is defined but never used   no-unused-vars
-  15:5  warning  'None' is defined but never used     no-unused-vars
-  16:5  warning  'Low' is defined but never used      no-unused-vars
-  17:5  warning  'Lowest' is defined but never used   no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Recurrence.ts
   54:17  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
@@ -505,18 +279,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   848:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
   848:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/TaskLocation.ts
-  90:17  warning  '_tasksFile' is assigned a value but never used  no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/TaskSerializer/DefaultTaskSerializer.ts
-  152:33  warning  'symbols' is defined but never used                  no-unused-vars
   237:85  warning  Invalid type "never" of template literal expression  @typescript-eslint/restrict-template-expressions
-  271:75  warning  'date' is defined but never used                     no-unused-vars
-  281:71  warning  'match' is defined but never used                    no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/TaskSerializer/index.ts
-  54:17  warning  'line' is defined but never used  no-unused-vars
-  62:15  warning  'task' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/i18n/i18n.ts
   16:28  warning  Unexpected use of 'localStorage'. Prefer `App#saveLocalStorage` / `App#loadLocalStorage` functions to write / read localStorage data that's unique to a vault  no-restricted-globals
@@ -529,11 +293,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
    6:79  warning  Unexpected any. Specify a different type                                                                                                                                 @typescript-eslint/no-explicit-any
   12:19  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Error`  @typescript-eslint/restrict-plus-operands
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/Lazy.ts
-  11:25  warning  'fetch' is defined but never used  no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/MockDataCreator.ts
-  3:15  warning  'Task' is defined but never used                                        no-unused-vars
   3:15  warning  'Task' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/PerformanceTracker.ts
@@ -549,7 +309,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/logging.ts
    36:14  warning  Unexpected any. Specify a different type                                                                                                                            @typescript-eslint/no-explicit-any
-  113:34  warning  'logEntry' is defined but never used                                                                                                                                no-unused-vars
   142:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console            obsidianmd/rule-custom-message
   148:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console            obsidianmd/rule-custom-message
   157:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console            obsidianmd/rule-custom-message
@@ -568,10 +327,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   286:67  warning  Unexpected any. Specify a different type                                                                                                                            @typescript-eslint/no-explicit-any
   289:68  warning  Unexpected any. Specify a different type                                                                                                                            @typescript-eslint/no-explicit-any
   311:33  warning  Prefer using the primitive `object` as a type name, rather than the upper-cased `Object`                                                                            @typescript-eslint/no-wrapper-object-types
-  312:52  warning  'args' is defined but never used                                                                                                                                    no-unused-vars
   314:43  warning  Unexpected any. Specify a different type                                                                                                                            @typescript-eslint/no-explicit-any
   346:30  warning  Unexpected any. Specify a different type                                                                                                                            @typescript-eslint/no-explicit-any
-  347:56  warning  'args' is defined but never used                                                                                                                                    no-unused-vars
   350:53  warning  Unexpected any. Specify a different type                                                                                                                            @typescript-eslint/no-explicit-any
   419:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
   424:5   warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console            obsidianmd/rule-custom-message
@@ -594,17 +351,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   147:17  warning  Unsafe call of a type that could not be resolved                                   @typescript-eslint/no-unsafe-call
   147:37  warning  Unsafe member access .setType on a type that cannot be resolved                    @typescript-eslint/no-unsafe-member-access
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/EditInstructions/DateInstructions.ts
-  102:22  warning  '_task' is defined but never used  no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/EditInstructions/MenuDividerInstruction.ts
-  10:11  warning  '_task' is defined but never used  no-unused-vars
-  18:22  warning  '_task' is defined but never used  no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/EditInstructions/TaskEditingInstruction.ts
-  19:11  warning  'task' is defined but never used  no-unused-vars
-  30:22  warning  'task' is defined but never used  no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/DatePicker.ts
   37:9   warning  Promise-returning function provided to property where a void return was expected                                                                                                                           @typescript-eslint/no-misused-promises
   47:37  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                                                                                                                               obsidianmd/prefer-create-el
@@ -617,20 +363,9 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   86:38  warning  Promise returned in function argument where a void return was expected                                                                                                                                     @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
-   17:24  warning  'task' is defined but never used                                                                                                                                                                          no-unused-vars
-   17:36  warning  'amount' is defined but never used                                                                                                                                                                        no-unused-vars
-   17:52  warning  'timeUnit' is defined but never used                                                                                                                                                                      no-unused-vars
-   20:5   warning  'task' is defined but never used                                                                                                                                                                          no-unused-vars
-   21:5   warning  'dateFieldToPostpone' is defined but never used                                                                                                                                                           no-unused-vars
-   22:5   warning  'timeUnit' is defined but never used                                                                                                                                                                      no-unused-vars
-   23:5   warning  'amount' is defined but never used                                                                                                                                                                        no-unused-vars
-  125:9   warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
+  125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/TaskEditingMenu.ts
-  11:26  warning  'originalTask' is defined but never used  no-unused-vars
-  11:46  warning  'newTasks' is defined but never used      no-unused-vars
-
-✖ 442 problems (0 errors, 442 warnings)
+✖ 247 problems (0 errors, 247 warnings)
   0 errors and 65 warnings potentially fixable with the `--fix` option.
 
 
@@ -640,4 +375,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 20.65s.
+Done in 20.08s.
