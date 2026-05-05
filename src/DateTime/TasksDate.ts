@@ -1,4 +1,3 @@
-import type { DurationInputArg2 } from 'moment';
 import { Notice } from 'obsidian';
 import { PropertyCategory } from '../lib/PropertyCategory';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
@@ -118,7 +117,7 @@ export class TasksDate {
         } else {
             multiplier = word0AsNumber; // examples: '10 years', '6 months', '11 hours'
         }
-        const unit = words[1] as DurationInputArg2; // day, days, weeks, month, year
+        const unit = words[1] as moment.DurationInputArg2; // day, days, weeks, month, year
         return earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
     }
 
