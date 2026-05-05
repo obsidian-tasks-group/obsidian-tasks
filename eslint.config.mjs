@@ -112,7 +112,7 @@ export default defineConfig([
         },
         rules:  {
             ...typescriptCommonRules,
-            'no-restricted-imports': on_or_off, // It's fine for tests to import moment from moment.
+            'no-restricted-imports': 0, // It's fine for tests to import moment from moment.
         },
     },
     ...svelte.configs['flat/recommended'],
