@@ -56,7 +56,7 @@ function checkNextStatusSymbol(statuses: StatusConfiguration[], status: StatusCo
     // See issues #2089 and #2304.
     const nextStatus = statuses[indexOfNextSymbol];
     if (nextStatus) {
-        if (nextStatus.type !== 'TODO' && nextStatus.type !== 'IN_PROGRESS') {
+        if (nextStatus.type !== StatusType.TODO && nextStatus.type !== StatusType.IN_PROGRESS) {
             const helpURL =
                 'https://publish.obsidian.md/tasks/Getting+Started/Statuses/Recurring+Tasks+and+Custom+Statuses';
             const nextType = getPrintableSymbol(nextStatus.type);

@@ -1,4 +1,5 @@
 import type { Task } from './Task';
+import { Priority } from './Priority';
 
 export class Urgency {
     private static readonly dueCoefficient = 12.0;
@@ -42,25 +43,20 @@ export class Urgency {
         }
 
         switch (task.priority) {
-            // Highest
-            case '0':
+            case Priority.Highest:
                 urgency += 1.5 * Urgency.priorityCoefficient;
                 break;
-            // High
-            case '1':
+            case Priority.High:
                 urgency += 1.0 * Urgency.priorityCoefficient;
                 break;
-            // Medium
-            case '2':
+            case Priority.Medium:
                 urgency += 0.65 * Urgency.priorityCoefficient;
                 break;
-            // None
-            case '3':
+            case Priority.None:
                 urgency += 0.325 * Urgency.priorityCoefficient;
                 break;
             // no modification for "Low" priority
-            // Lowest
-            case '5':
+            case Priority.Lowest:
                 urgency -= 0.3 * Urgency.priorityCoefficient;
                 break;
         }

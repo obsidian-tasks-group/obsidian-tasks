@@ -1,6 +1,6 @@
 import type { PostfixExpression } from 'boon-js';
 import { parse as boonParse } from 'boon-js';
-import type { Token } from 'boon-js/lib/types';
+import { type Token, Tokens } from 'boon-js/lib/types';
 
 import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task/Task';
@@ -92,7 +92,7 @@ export class BooleanField extends Field {
             // Construct sub-field map, i.e. have subFields include a filter function for every
             // final token in the expression
             for (const token of postfixExpression) {
-                if (token.name === 'IDENTIFIER' && token.value) {
+                if (token.name === Tokens.IDENTIFIER && token.value) {
                     const placeholder = token.value.trim();
                     const filter = filters[placeholder];
                     token.value = filter;
@@ -111,7 +111,7 @@ export class BooleanField extends Field {
                             this.subFields[filter] = parsedField.filter;
                         }
                     }
-                } else if (token.name === 'OPERATOR') {
+                } else if (token.name === Tokens.OPERATOR) {
                     // While we're already iterating over the expression, although we don't need the operators at
                     // this stage but only in filterTaskWithParsedQuery below, we're using the opportunity to verify
                     // they are valid. If we won't, then an invalid operator will only be detected when the query is
@@ -160,7 +160,7 @@ export class BooleanField extends Field {
         };
         const booleanStack: string[] = [];
         for (const token of postfixExpression) {
-            if (token.name === 'IDENTIFIER') {
+            if (token.name === Tokens.IDENTIFIER) {
                 // Identifiers are the sub-fields of the expression, the actual filters, e.g. 'description includes foo'.
                 // For each identifier we created earlier the corresponding Filter, so now we can just evaluate the given
                 // task for each identifier that we find in the postfix expression.
@@ -168,7 +168,7 @@ export class BooleanField extends Field {
                 const filter = this.subFields[token.value.trim()];
                 const result = filter.filterFunction(task, searchInfo);
                 booleanStack.push(toString(result));
-            } else if (token.name === 'OPERATOR') {
+            } else if (token.name === Tokens.OPERATOR) {
                 // To evaluate an operator we need to pop the required number of items from the boolean stack,
                 // do the logical evaluation and push back the result
                 if (token.value === 'NOT') {
@@ -206,9 +206,9 @@ export class BooleanField extends Field {
         // For an explanation of the code, see the JSdoc and comments of filterTaskWithParsedQuery()
         const explanationStack: Explanation[] = [];
         for (const token of postfixExpression) {
-            if (token.name === 'IDENTIFIER') {
+            if (token.name === Tokens.IDENTIFIER) {
                 this.explainExpression(token, explanationStack);
-            } else if (token.name === 'OPERATOR') {
+            } else if (token.name === Tokens.OPERATOR) {
                 this.explainOperator(token, explanationStack);
             } else {
                 throw Error('Unsupported token type: ' + token.name);
