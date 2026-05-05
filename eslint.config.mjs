@@ -86,6 +86,7 @@ const typescriptCommonRules = {
     'obsidianmd/rule-custom-message': 0,
     'obsidianmd/ui/sentence-case': 0,
 };
+
 export default defineConfig([
     {
         ignores: ['**/main.js'],
@@ -94,12 +95,24 @@ export default defineConfig([
     prettierConfig,
     ...obsidianmd.configs.recommended,
     {
-        files: ['**/*.ts'],
+        files: ['src/**/*.ts'],
         languageOptions: typescriptLanguageOptions,
         plugins: {
             prettier,
         },
-        rules: typescriptCommonRules,
+        rules:  {
+            ...typescriptCommonRules,
+        },
+    },
+    {
+        files: ['tests/**/*.ts'],
+        languageOptions: typescriptLanguageOptions,
+        plugins: {
+            prettier,
+        },
+        rules:  {
+            ...typescriptCommonRules,
+        },
     },
     ...svelte.configs['flat/recommended'],
     {
