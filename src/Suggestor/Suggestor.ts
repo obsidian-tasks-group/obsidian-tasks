@@ -745,6 +745,16 @@ export function canSuggestForLine(line: string, cursor: EditorPosition, editor: 
     return lineHasGlobalFilter && cursorIsInTaskLineDescription(line, cursor.ch);
 }
 
+interface EditorWithTasksSuggest {
+    editorComponent?: {
+        showTasksPluginAutoSuggest?: (
+            cursor: EditorPosition,
+            editor: Editor,
+            lineHasGlobalFilter: boolean,
+        ) => boolean | undefined;
+    };
+}
+
 /**
  * This function is to specifically allow other plugins to offer Tasks auto suggest.
  *
@@ -766,7 +776,11 @@ function editorIsRequestingSuggest(
     cursor: EditorPosition,
     lineHasGlobalFilter: boolean,
 ): boolean | undefined {
-    return (editor as any)?.editorComponent?.showTasksPluginAutoSuggest?.(cursor, editor, lineHasGlobalFilter);
+    return (editor as unknown as EditorWithTasksSuggest)?.editorComponent?.showTasksPluginAutoSuggest?.(
+        cursor,
+        editor,
+        lineHasGlobalFilter,
+    );
 }
 
 /**
