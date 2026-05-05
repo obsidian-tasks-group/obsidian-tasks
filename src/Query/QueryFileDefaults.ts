@@ -8,9 +8,12 @@ enum Handler {
     AddValue = 'addValue',
 }
 
-interface QueryProperty {
+interface BaseQueryProperty {
     name: string;
     type: string;
+}
+
+interface QueryProperty extends BaseQueryProperty {
     display?: string;
     handler: Handler;
     trueValue?: string;
