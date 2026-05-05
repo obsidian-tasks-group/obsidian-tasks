@@ -76,7 +76,6 @@ export default defineConfig([
             '@typescript-eslint/no-unsafe-function-type': 0,
             '@typescript-eslint/no-unsafe-member-access': 0,
             '@typescript-eslint/no-unsafe-return': 0,
-            '@typescript-eslint/no-unsafe-unary-minus': 0,
             '@typescript-eslint/no-wrapper-object-types': 0,
             '@typescript-eslint/only-throw-error': 0,
             '@typescript-eslint/restrict-plus-operands': 0,
