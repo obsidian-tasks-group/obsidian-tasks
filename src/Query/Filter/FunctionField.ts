@@ -141,11 +141,12 @@ export class FunctionField extends Field {
         }
 
         if (valueAType === 'string') {
-            return valueA.localeCompare(valueB, undefined, { numeric: true });
+            return (valueA as string).localeCompare(valueB as string, undefined, { numeric: true });
         }
 
         if (valueAType === 'TasksDate') {
-            return compareByDate(valueA.moment, valueB.moment);
+            type WithMoment = { moment: Parameters<typeof compareByDate>[0] };
+            return compareByDate((valueA as WithMoment).moment, (valueB as WithMoment).moment);
         }
 
         if (valueAType === 'boolean') {
@@ -273,7 +274,7 @@ export function groupByFunction(task: Task, arg: GroupingArg, queryContext?: Que
         const result = parseAndEvaluateExpression(task, arg, queryContext);
 
         if (Array.isArray(result)) {
-            return result.map((h) => h.toString());
+            return result.map((h: unknown) => (h as { toString(): string }).toString());
         }
 
         // Task uses null to represent missing information.
@@ -296,7 +297,7 @@ export function groupByFunction(task: Task, arg: GroupingArg, queryContext?: Que
         // on undefined.toString() will give an exception and a useful error
         // message below. This is a feature: it gives users feedback on the problem
         // instruction line.
-        const group = result.toString();
+        const group = (result as { toString(): string }).toString();
         return [group];
     } catch (e) {
         const errorMessage = `Error: Failed calculating expression "${arg}". The error message was: `;
