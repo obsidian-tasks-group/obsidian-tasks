@@ -73,7 +73,6 @@ Prefer explicitly defining any function parameters and return type              
   692:21  warning  Unsafe call to notice.insertAdjacentHTML for argument 1                                                                                                                                                 no-unsanitized/method
   692:21  warning  Do not write to DOM using insertAdjacentHTML method                                                                                                                                                     @microsoft/sdl/no-inner-html
   790:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                                                                                                  obsidianmd/prefer-create-el
-  841:41  warning  This assertion is unnecessary since it does not change the type of the expression                                                                                                                       @typescript-eslint/no-unnecessary-type-assertion
   919:33  warning  Promise-returning function provided to variable where a void return was expected                                                                                                                        @typescript-eslint/no-misused-promises
   969:5   warning  Avoid setting styles directly via `element.style.display`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically      obsidianmd/no-static-styles-assignment
   970:5   warning  Avoid setting styles directly via `element.style.marginRight`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
@@ -237,16 +236,10 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   274:15  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/MultiTextField.ts
-  54:28  warning  'task' is defined but never used                                                   no-unused-vars
-  58:27  warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/RecurrenceField.ts
-  12:20  warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
-  25:25  warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+  54:28  warning  'task' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/TextField.ts
-  91:27  warning  'task' is defined but never used                                                   no-unused-vars
-  95:27  warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+  91:27  warning  'task' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/UrgencyField.ts
   13:28  warning  '_line' is defined but never used  no-unused-vars
@@ -281,10 +274,9 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   10:34  warning  'b' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Sort/Sorter.ts
-  17:27  warning  'a' is defined but never used                                                                 no-unused-vars
-  17:36  warning  'b' is defined but never used                                                                 no-unused-vars
-  17:45  warning  'searchInfo' is defined but never used                                                        no-unused-vars
-  68:38  warning  This assertion is unnecessary since the receiver accepts the original type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+  17:27  warning  'a' is defined but never used           no-unused-vars
+  17:36  warning  'b' is defined but never used           no-unused-vars
+  17:45  warning  'searchInfo' is defined but never used  no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlQueryResultsRenderer.ts
    50:38  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                                                                                        obsidianmd/prefer-create-el
@@ -516,12 +508,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   176:93  warning  Unexpected any. Specify a different type                                                          @typescript-eslint/no-explicit-any
   848:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
   848:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
-  904:13  warning  This assertion is unnecessary since the receiver accepts the original type of the expression      @typescript-eslint/no-unnecessary-type-assertion
-  905:13  warning  This assertion is unnecessary since the receiver accepts the original type of the expression      @typescript-eslint/no-unnecessary-type-assertion
-  906:13  warning  This assertion is unnecessary since the receiver accepts the original type of the expression      @typescript-eslint/no-unnecessary-type-assertion
-  907:13  warning  This assertion is unnecessary since the receiver accepts the original type of the expression      @typescript-eslint/no-unnecessary-type-assertion
-  908:13  warning  This assertion is unnecessary since the receiver accepts the original type of the expression      @typescript-eslint/no-unnecessary-type-assertion
-  909:13  warning  This assertion is unnecessary since the receiver accepts the original type of the expression      @typescript-eslint/no-unnecessary-type-assertion
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/TaskLocation.ts
   90:17  warning  '_tasksFile' is assigned a value but never used  no-unused-vars
@@ -648,8 +634,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   11:26  warning  'originalTask' is defined but never used  no-unused-vars
   11:46  warning  'newTasks' is defined but never used      no-unused-vars
 
-✖ 458 problems (0 errors, 458 warnings)
-  0 errors and 77 warnings potentially fixable with the `--fix` option.
+✖ 446 problems (0 errors, 446 warnings)
+  0 errors and 65 warnings potentially fixable with the `--fix` option.
 
 
 ====================================
@@ -658,4 +644,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 20.75s.
+Done in 22.00s.
