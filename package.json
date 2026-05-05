@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "node esbuild.config.mjs production",
+    "cli-build": "node openclaw-tasks-cli.cjs help > /dev/null",
     "build:dev": "node esbuild.config.mjs development",
     "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
     "lint:markdown": "markdownlint-cli2 --fix \"**/*.md\" ",
@@ -21,6 +22,9 @@
     "circular-deps-text": "madge --circular --extensions ts ./src > circular-deps.txt",
     "circular-deps-image": "madge --circular --extensions ts ./src --image circular-deps.png",
     "code-docs": "typedoc \"src/**/*\""
+  },
+  "bin": {
+    "obsidian-tasks-cli": "./openclaw-tasks-cli.cjs"
   },
   "keywords": [
     "obsidian",
