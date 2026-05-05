@@ -73,7 +73,7 @@ const typescriptCommonRules = {
     '@typescript-eslint/unbound-method': on_or_off,
     'import/no-extraneous-dependencies': on_or_off,
     'no-restricted-globals': on_or_off,
-    'no-undef': on_or_off,
+    'no-undef': 0, // Always off, because Moment is not provided by Obsidian when we run eslint
     'no-unsanitized/method': on_or_off,
     'no-unsanitized/property': on_or_off,
     'obsidianmd/hardcoded-config-path': on_or_off, // These were all 'https://publish.obsidian.md/tasks/' references!!!
