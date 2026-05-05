@@ -1,4 +1,3 @@
-import type { unitOfTime } from 'moment';
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import { Task } from '../../Task/Task';
 import { postponeMenuItemTitleFromDate, removeDateMenuItemTitleForField } from '../../DateTime/Postponer';
@@ -55,7 +54,7 @@ export class SetRelativeTaskDate extends SetTaskDate {
         dateFieldToEdit: AllTaskDateFields,
         taskDueToday: Task,
         amount: number,
-        timeUnit: unitOfTime.DurationConstructor,
+        timeUnit: moment.unitOfTime.DurationConstructor,
     ) {
         const currentDate = taskDueToday[dateFieldToEdit] ?? window.moment();
         const title = postponeMenuItemTitleFromDate(dateFieldToEdit, currentDate, amount, timeUnit);
