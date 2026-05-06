@@ -588,12 +588,15 @@ description includes \
             EnableJsInTasksQueries.getInstance().set(true);
         });
 
+        function checkQueryErrorMessage(query: Query, instruction: string): void {
+            expect(query.error).toContain(EnableJsInTasksQueries.getHelpMessage());
+            expect(query.error).toContain(instruction);
+        }
+
         it('"filter by function" should have meaningful parse-time error', () => {
             const instruction = 'filter by function true';
             const query = new Query(instruction);
-
-            expect(query.error).toContain(EnableJsInTasksQueries.getHelpMessage());
-            expect(query.error).toContain(instruction);
+            checkQueryErrorMessage(query, instruction);
         });
     });
 
