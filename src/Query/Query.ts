@@ -468,7 +468,15 @@ ${statement.explainStatement('    ')}
      * @private
      */
     private parseGroupBy(line: string, statement: Statement): boolean {
-        const groupingMaybe = FilterParser.parseGrouper(line);
+        let groupingMaybe: Grouper | null;
+        try {
+            groupingMaybe = FilterParser.parseGrouper(line);
+        } catch (e) {
+            const message = e instanceof Error ? e.message : 'Unknown error';
+            this.setError(message, statement);
+            return true;
+        }
+
         if (groupingMaybe) {
             groupingMaybe.setStatement(statement);
             this._grouping.push(groupingMaybe);

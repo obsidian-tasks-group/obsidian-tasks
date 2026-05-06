@@ -604,6 +604,12 @@ description includes \
             const query = new Query(instruction);
             checkQueryErrorMessage(query, instruction);
         });
+
+        it('"group by function" should have meaningful parse-time error', () => {
+            const instruction = 'group by function "hello"';
+            const query = new Query(instruction);
+            checkQueryErrorMessage(query, instruction);
+        });
     });
 
     it('should allow spaces between show or hide and a Query option', () => {

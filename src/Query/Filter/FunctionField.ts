@@ -219,6 +219,11 @@ export class FunctionField extends Field {
         if (match === null) {
             return null;
         }
+
+        if (!EnableJsInTasksQueries.getInstance().get()) {
+            throw new Error(EnableJsInTasksQueries.getHelpMessage());
+        }
+
         const reverse = !!match[1];
         const args = match[2];
         return new Grouper(line, 'function', createGrouperFunctionFromLine(args), reverse);
