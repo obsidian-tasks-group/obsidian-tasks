@@ -25,7 +25,7 @@ export class FunctionField extends Field {
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         if (!EnableJsInTasksQueries.getInstance().get()) {
-            return FilterOrErrorMessage.fromError(line, 'JavaScript is disabled in Tasks queries');
+            return FilterOrErrorMessage.fromError(line, EnableJsInTasksQueries.getHelpMessage());
         }
 
         const match = Field.getMatch(this.filterRegExp(), line);
