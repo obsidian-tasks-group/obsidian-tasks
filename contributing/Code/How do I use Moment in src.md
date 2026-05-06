@@ -21,7 +21,7 @@ To declare the type `Moment`, for use as the type of a variable, field or functi
 
 <!-- snippet: declare-Moment-type-in-src -->
 ```ts
-import type { Moment } from 'moment';
+
 ```
 <!-- endSnippet -->
 
