@@ -1,4 +1,4 @@
-import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
+import { Notice, PluginSettingTab, Setting, debounce, sanitizeHTMLToDom } from 'obsidian';
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
@@ -64,8 +64,7 @@ export class SettingsTab extends PluginSettingTab {
         this.events = events;
     }
 
-    private static createFragmentWithHTML = (html: string) =>
-        createFragment((documentFragment) => (documentFragment.createDiv().innerHTML = html));
+    private static createFragmentWithHTML = (html: string) => sanitizeHTMLToDom(html);
 
     public async saveSettings(update?: boolean): Promise<void> {
         await this.plugin.saveSettings();
@@ -689,7 +688,7 @@ export class SettingsTab extends PluginSettingTab {
                     text: setting.notice.text ?? '',
                 });
                 if (setting.notice.html !== null) {
-                    notice.insertAdjacentHTML('beforeend', setting.notice.html);
+                    notice.append(sanitizeHTMLToDom(setting.notice.html));
                 }
             }
         });
