@@ -24,7 +24,7 @@ describe('EnableJsInTasksQueries', () => {
         expect(setting.get()).toBe(true);
     });
 
-    it('can be enabled', () => {
+    it('should save the updated value to local storage', () => {
         const storage = new InMemoryLocalStorageProvider();
         const setting = new EnableJsInTasksQueries(storage);
 
@@ -34,7 +34,7 @@ describe('EnableJsInTasksQueries', () => {
         expect(storage.load(ENABLE_JS_IN_TASKS_QUERIES_KEY)).toBe(true);
     });
 
-    it('can be disabled after being enabled', () => {
+    it('should save false after previously saving true', () => {
         const storage = new InMemoryLocalStorageProvider();
         const setting = new EnableJsInTasksQueries(storage);
 
