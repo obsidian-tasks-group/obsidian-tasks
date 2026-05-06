@@ -78,6 +78,16 @@ describe('HtmlQueryResultsRenderer tests', () => {
         await verifyRenderedHtml(allTasks, 'apple sauce');
     });
 
+    it('error message with angle brackets', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedHtml(allTasks, 'price<10 & value>5');
+    });
+
+    it('error message with ampersand and quotes', async () => {
+        const allTasks = [TaskBuilder.createFullyPopulatedTask()];
+        await verifyRenderedHtml(allTasks, 'this & that "test"');
+    });
+
     it('explain', async () => {
         GlobalQuery.getInstance().set('hide toolbar');
         const allTasks = [TaskBuilder.createFullyPopulatedTask()];
