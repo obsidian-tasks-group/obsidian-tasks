@@ -15,7 +15,11 @@ export const mockHTMLRenderer = async (_obsidianApp: App, text: string, element:
     // instead of the rendered HTMLSpanElement.innerText,
     // we need the plain HTML here like in TaskLineRenderer.renderComponentText(),
     // to ensure that description and tags are retained.
-    element.innerHTML = text;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    while (doc.body.firstChild) {
+        element.appendChild(doc.body.firstChild);
+    }
 };
 
 export const mockTextRenderer = async (_obsidianApp: App, text: string, element: HTMLSpanElement, _path: string) => {
