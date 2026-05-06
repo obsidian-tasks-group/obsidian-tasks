@@ -70,6 +70,10 @@ export class FunctionField extends Field {
             return null;
         }
 
+        if (!EnableJsInTasksQueries.getInstance().get()) {
+            throw new Error(EnableJsInTasksQueries.getHelpMessage());
+        }
+
         const reverse = !!match[1];
         const expression = match[2];
         const taskExpression = new TaskExpression(expression);

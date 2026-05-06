@@ -443,7 +443,15 @@ ${statement.explainStatement('    ')}
     }
 
     private parseSortBy(line: string, statement: Statement): boolean {
-        const sortingMaybe = FilterParser.parseSorter(line);
+        let sortingMaybe: Sorter | null = null;
+        try {
+            sortingMaybe = FilterParser.parseSorter(line);
+        } catch (e) {
+            const message = e instanceof Error ? e.message : 'Unknown error';
+            this.setError(message, statement);
+            return true;
+        }
+
         if (sortingMaybe) {
             sortingMaybe.setStatement(statement);
             this._sorting.push(sortingMaybe);
@@ -451,7 +459,6 @@ ${statement.explainStatement('    ')}
         }
         return false;
     }
-
     /**
      * Parsing of `group by` lines, for grouping that is implemented in the {@link Field}
      * classes.

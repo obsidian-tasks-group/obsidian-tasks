@@ -598,6 +598,12 @@ description includes \
             const query = new Query(instruction);
             checkQueryErrorMessage(query, instruction);
         });
+
+        it('"sort by function" should have meaningful parse-time error', () => {
+            const instruction = 'sort by function 5';
+            const query = new Query(instruction);
+            checkQueryErrorMessage(query, instruction);
+        });
     });
 
     it('should allow spaces between show or hide and a Query option', () => {
