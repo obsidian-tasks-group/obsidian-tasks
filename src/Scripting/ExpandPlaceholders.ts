@@ -84,9 +84,20 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
             }
         }
 
+        if (shouldReportExpressionParseError(reconstructed)) {
+            throw Error(functionOrError.error ?? `Problem parsing placeholder expression: {{${reconstructed}}}`);
+        }
+
         // Fall back on returning the raw string, including {{ and }} - and get Mustache to report the error.
         return _match;
     });
+}
+
+function shouldReportExpressionParseError(reconstructed: string): boolean {
+    // Plain Mustache placeholders such as {{query.file.path}} should still work when
+    // JavaScript is disabled. Placeholders containing parentheses are treated as
+    // JavaScript expression placeholders, so preserve parse errors for them.
+    return reconstructed.includes('(') || reconstructed.includes(')');
 }
 
 function createExpressionParameters(view: any): ExpressionParameter[] {

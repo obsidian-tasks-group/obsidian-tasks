@@ -1,5 +1,6 @@
 import { QueryComponentOrError } from '../Query/QueryComponentOrError';
 import { errorMessageForException } from '../lib/ExceptionTools';
+import { EnableJsInTasksQueries } from '../Config/EnableJsInTasksQueries';
 
 export class FunctionOrError extends QueryComponentOrError<Function> {}
 
@@ -17,6 +18,10 @@ export type ExpressionParameter = [name: string, value: any];
  * @see evaluateExpressionOrCatch
  */
 export function parseExpression(paramsArgs: ExpressionParameter[], arg: string): FunctionOrError {
+    if (!EnableJsInTasksQueries.getInstance().get()) {
+        return FunctionOrError.fromError(arg, EnableJsInTasksQueries.getHelpMessage());
+    }
+
     try {
         const parameterNames = paramsArgs.map(([name]) => name);
         const input = arg.includes('return') ? arg : `return ${arg}`;
