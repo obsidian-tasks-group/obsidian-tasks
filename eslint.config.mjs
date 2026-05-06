@@ -49,7 +49,6 @@ const typescriptCommonRules = {
 
     // Bulk-disable new rules that fail, in order to be able to enable them
     // incrementally later on.
-    '@microsoft/sdl/no-inner-html': on_or_off,
     '@typescript-eslint/no-base-to-string': on_or_off,
     '@typescript-eslint/no-deprecated': on_or_off, // in tests: `toThrowError` is deprecated. in favor of `toThrow`
     '@typescript-eslint/no-explicit-any': on_or_off,
@@ -111,7 +110,6 @@ export default defineConfig([
         },
         rules:  {
             ...typescriptCommonRules,
-            '@microsoft/sdl/no-inner-html': 0,
             '@typescript-eslint/no-base-to-string': 0,
             '@typescript-eslint/no-deprecated': 0, // in tests: `toThrowError` is deprecated. in favor of `toThrow`
             '@typescript-eslint/no-explicit-any': 0,
