@@ -66,4 +66,28 @@ describe('EnableJsInTasksQueries', () => {
 
         expect(setting.get()).toBe(true);
     });
+
+    it('should provide access to the initialised global instance', () => {
+        const storage = new InMemoryLocalStorageProvider();
+
+        storage.save(ENABLE_JS_IN_TASKS_QUERIES_KEY, true);
+
+        const setting = EnableJsInTasksQueries.initialise(storage);
+
+        expect(EnableJsInTasksQueries.getInstance()).toBe(setting);
+        expect(EnableJsInTasksQueries.getInstance().get()).toBe(true);
+    });
+
+    it('should replace the global instance when initialised again', () => {
+        const firstStorage = new InMemoryLocalStorageProvider();
+        const secondStorage = new InMemoryLocalStorageProvider();
+
+        firstStorage.save(ENABLE_JS_IN_TASKS_QUERIES_KEY, true);
+        secondStorage.save(ENABLE_JS_IN_TASKS_QUERIES_KEY, false);
+
+        EnableJsInTasksQueries.initialise(firstStorage);
+        EnableJsInTasksQueries.initialise(secondStorage);
+
+        expect(EnableJsInTasksQueries.getInstance().get()).toBe(false);
+    });
 });
