@@ -1,5 +1,3 @@
-// begin-snippet: declare-Moment-type-in-src
-// end-snippet
 import { RRule } from 'rrule';
 import type { Occurrence } from './Occurrence';
 
