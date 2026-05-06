@@ -22,6 +22,7 @@ import { StatusSettings } from './StatusSettings';
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
 import { PresetsSettingsUI } from './PresetsSettingsUI';
+import { EnableJsInTasksQueries } from './EnableJsInTasksQueries';
 
 interface SettingConfiguration {
     name: string;
@@ -187,6 +188,26 @@ export class SettingsTab extends PluginSettingTab {
                         });
                 }),
         );
+
+        // TODO Add translation strings, once the wording is finalised.
+        // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('Searches')).setHeading();
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName(i18n.t('Enable custom searches'))
+            .setDesc(
+                i18n.t(
+                    'Enable the "filter by function", "sort by function" and "group by function" instructions. These allow running user-written JavaScript in task searches. This is potentially DANGEROUS, thus it is disabled by default.',
+                ),
+            )
+            .addToggle((toggle) => {
+                toggle.setValue(EnableJsInTasksQueries.getInstance().get()).onChange(async (value) => {
+                    EnableJsInTasksQueries.getInstance().set(value);
+
+                    this.events.triggerReloadOpenSearchResults();
+                });
+            });
 
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.searchResults.heading')).setHeading();
