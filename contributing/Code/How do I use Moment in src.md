@@ -17,23 +17,12 @@ See also the equivalent [[How do I use Moment in tests]].
 
 ## Using Moment as a type in src/
 
-To declare the type `Moment`, for use as the type of a variable, field or function return type in files that will be **released** in the Tasks plugin:
+The file [src/global.d.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/global.d.ts) declares the `Moment` type automatically, so it is no longer necessary to import `Moment` in files in `src/`.
 
-<!-- snippet: declare-Moment-type-in-src -->
-```ts
+Other Moment types can be used like this, with no imports:
 
-```
-<!-- endSnippet -->
-
-> [!Warning]
-> Do not import all of `moment` in any file in src/:
->
-> ```ts
-> // Please do not use this line in any code in `src/`
-> import moment from 'moment';
-> ```
->
-> It adds about 60 kb to the released `main.js` needlessly.
+- `moment.DurationInputArg2`
+- `moment.unitOfTime`
 
 ## Calling moment() in src/
 
