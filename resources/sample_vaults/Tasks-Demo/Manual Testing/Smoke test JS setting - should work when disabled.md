@@ -3,7 +3,7 @@ TQ_extra_instructions: |-
   limit 1
   hide toolbar
   ignore global query
-TQ_explain: true
+TQ_explain: false
 ---
 
 # Smoke test JS setting - should work when disabled
