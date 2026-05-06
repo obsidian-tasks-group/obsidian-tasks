@@ -589,11 +589,11 @@ description includes \
         });
 
         it('"filter by function" should have meaningful parse-time error', () => {
-            const query = new Query('filter by function true');
-            expect(query.error).toMatchInlineSnapshot(`
-                "JavaScript is disabled in Tasks queries
-                Problem line: "filter by function true""
-            `);
+            const instruction = 'filter by function true';
+            const query = new Query(instruction);
+
+            expect(query.error).toContain(EnableJsInTasksQueries.getHelpMessage());
+            expect(query.error).toContain(instruction);
         });
     });
 
