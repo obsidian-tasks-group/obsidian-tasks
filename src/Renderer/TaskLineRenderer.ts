@@ -285,7 +285,7 @@ export class TaskLineRenderer {
         if (component === TaskLayoutComponent.Description) {
             return await this.renderDescription(task, span, isTaskInQueryFile);
         }
-        span.innerHTML = componentString;
+        span.textContent = componentString;
     }
 
     private async renderDescription(task: Task, span: HTMLSpanElement, isTaskInQueryFile: boolean) {
