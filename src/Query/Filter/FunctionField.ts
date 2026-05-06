@@ -8,6 +8,7 @@ import type { SearchInfo } from '../SearchInfo';
 import { Sorter } from '../Sort/Sorter';
 import { compareByDate } from '../../DateTime/DateTools';
 import { getValueType } from '../../lib/TypeDetection';
+import { EnableJsInTasksQueries } from '../../Config/EnableJsInTasksQueries';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -23,6 +24,10 @@ export class FunctionField extends Field {
     // -----------------------------------------------------------------------------------------------------------------
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        if (!EnableJsInTasksQueries.getInstance().get()) {
+            return FilterOrErrorMessage.fromError(line, 'JavaScript is disabled in Tasks queries');
+        }
+
         const match = Field.getMatch(this.filterRegExp(), line);
         if (match === null) {
             return FilterOrErrorMessage.fromError(line, 'Unable to parse line');

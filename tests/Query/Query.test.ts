@@ -23,6 +23,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
 
 window.moment = moment;
 
@@ -575,6 +576,24 @@ description includes \
 
             // Assert
             expect(query.error).toBeUndefined();
+        });
+    });
+
+    describe('disabling JavaScript execution', () => {
+        beforeEach(() => {
+            EnableJsInTasksQueries.getInstance().set(false);
+        });
+
+        afterEach(() => {
+            EnableJsInTasksQueries.getInstance().set(true);
+        });
+
+        it('"filter by function" should have meaningful parse-time error', () => {
+            const query = new Query('filter by function true');
+            expect(query.error).toMatchInlineSnapshot(`
+                "JavaScript is disabled in Tasks queries
+                Problem line: "filter by function true""
+            `);
         });
     });
 
