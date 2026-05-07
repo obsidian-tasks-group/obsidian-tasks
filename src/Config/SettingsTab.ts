@@ -189,7 +189,6 @@ export class SettingsTab extends PluginSettingTab {
                 }),
         );
 
-        // TODO Add translation strings, once the wording is finalised.
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.searches.heading')).setHeading();
         // ---------------------------------------------------------------------------
