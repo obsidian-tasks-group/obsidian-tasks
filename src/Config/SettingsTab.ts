@@ -198,10 +198,10 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.searches.enableCustomSearches.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    '<p>Enables "filter by function", "sort by function", and "group by function", which execute JavaScript in Tasks queries.</p>' +
-                        '<p>Malicious JavaScript in a Tasks query or Markdown file could run inside Obsidian and access or modify your vault contents, local files, or other system resources.</p>' +
-                        '<p><b>Only enable this if you trust the current and future contents of this vault, including files you may later download, copy, or sync from other people.</b></p>' +
-                        '<p>This setting is stored on this device only; enable it separately on each device where you use this vault.</p>',
+                    `<p>${i18n.t('settings.searches.enableCustomSearches.description.line1')}</p>` +
+                        `<p>${i18n.t('settings.searches.enableCustomSearches.description.line2')}</p>` +
+                        `<p><b>${i18n.t('settings.searches.enableCustomSearches.description.line3')}</b></p>` +
+                        `<p>${i18n.t('settings.searches.enableCustomSearches.description.line4')}</p>`,
                 ),
             )
             .addToggle((toggle) => {
