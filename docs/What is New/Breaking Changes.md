@@ -19,7 +19,7 @@ In this case, as we use [semantic versioning](https://semver.org), we will alway
 
 To help users updating across multiple Tasks releases, we collect here links to the few Tasks breaking changes - most recent first.
 
-## Tasks 8.0.0 (May 2026)
+## Tasks 8.0.0 (8 May 2026)
 
 *Release notes: [Tasks 8.0.0](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/780.0).*
 

@@ -8,7 +8,7 @@ publish: true
 
 **ACCEPTED** - Decision made on 2026-04-20
 
-Implementation completed on 2026-05-07 after discussion with the Obsidian team.
+Implementation completed on 2026-05-08 after discussion with the Obsidian team.
 
 ## Context
 
