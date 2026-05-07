@@ -6,7 +6,9 @@ publish: true
 
 ## Status
 
-**ACCEPTED** - Decision made on 2026-05-04
+**ACCEPTED** - Decision made on 2026-04-20
+
+Implementation completed on 2026-05-07 after discussion with the Obsidian team.
 
 ## Context
 
@@ -53,8 +55,8 @@ filter by function task.tags.find( (tag) => tag.includes('/') ) && true || false
 
 The `new Function()` call in `Expression.ts` executing this JavaScript is therefore working
 as designed. A user typing `filter by function require('child_process').execSync('calc')`
-into their own vault is running their own code, which is no different in principle from using
-the browser console.
+into their own vault is intentionally running privileged JavaScript inside Obsidian, similar
+in effect to running code in the developer console.
 
 ### The Placeholder Expansion Path
 
@@ -69,6 +71,11 @@ This means the attack path and the legitimate usage path are structurally identi
 the expander's perspective. Both involve content containing `{{...}}` that resolves through
 multiple passes. Blocking re-expansion, or escaping `{{`/`}}` in resolved values, would
 break legitimate user workflows.
+
+Some placeholder expressions also use JavaScript-like syntax, for example, function calls
+such as `{{query.file.property('task_instruction')}}`. These are safe when they resolve to
+known placeholder behaviour, but the syntax means the implementation must distinguish
+between documented placeholder forms and arbitrary JavaScript expressions.
 
 ### The Obsidian Trust Model
 
@@ -141,16 +148,20 @@ API access. Would imply the issue is resolved when it is not, creating false con
 
 ### 5. Opt-in plugin setting to enable JavaScript execution
 
-Add a plugin setting, disabled by default, that gates the `filter|sort|group by function`
-functionality. Users who wish to use this feature must explicitly enable it and acknowledge
+Add a plugin setting, disabled by default, that gates JavaScript execution in Tasks queries.
+This includes the `filter|sort|group by function` functionality and arbitrary JavaScript
+expressions in placeholders.
+
+Users who wish to use these features must explicitly enable the setting and acknowledge
 the associated risk. This is consistent with how some other Obsidian plugins handle the same
 situation, for example:
 
 > "Enable JavaScript — Enable features that run user written JavaScript. This is
 > potentially DANGEROUS, thus it's disabled by default."
 
-When the feature is disabled and a query contains a `by function` instruction, the query
-would fail with a clear, actionable error message directing the user to the setting.
+When the feature is disabled and a query contains a `by function` instruction, or an
+unsupported placeholder requiring JavaScript evaluation, the query would fail with a clear,
+actionable error message directing the user to the setting.
 
 **Assessment:** Selected. See rationale below.
 
@@ -165,12 +176,25 @@ regardless. Does not address the placeholder expansion path at all.
 
 ## Decision
 
-Add a plugin setting — **disabled by default** — that gates the `filter by function`,
-`sort by function`, and `group by function` functionality.
+Add a plugin setting — **disabled by default** — that gates JavaScript execution in Tasks
+queries.
+
+This setting applies to:
+
+- `filter by function`
+- `sort by function`
+- `group by function`
+- arbitrary JavaScript expressions in placeholders
 
 When the setting is disabled (the default for new installs and existing installs after
-the upgrade), any query containing a `by function` instruction will fail with a clear
-error message that names the setting and explains why it exists.
+the upgrade), any query containing JavaScript execution will fail with a clear error message
+that names the setting and explains why it exists.
+
+Documented placeholder forms that can be resolved without arbitrary JavaScript execution
+may continue to work while the setting is disabled.
+
+This is a consent and communication response, not a sandbox. Enabling the setting restores
+arbitrary JavaScript execution with the privileges available to the Tasks plugin.
 
 Additionally, raise the issue with the Obsidian team, as the underlying vault trust model
 is a platform-level concern.
@@ -195,15 +219,15 @@ function` are engaged enough to find a settings toggle.
 
 ### Positive
 
-- Existing `by function` users are unaffected once they enable the setting.
+- Existing users of JavaScript in Tasks queries are unaffected once they enable the setting.
 - New users and users upgrading are prompted to make an explicit, informed choice.
 - The plugin's position on JavaScript execution is clearly communicated.
 - Consistent with the broader Obsidian plugin ecosystem norms.
 
 ### Negative
 
-- Breaking change: all existing `by function` queries stop working until the user enables
-  the setting.
+- Breaking change: all existing queries that rely on JavaScript execution stop working until
+  the user enables the setting.
 - Users will inevitably file bug reports, though a clear error message should reduce these
   significantly compared to a silent failure.
 - Users may enable the setting without reading the warning, limiting the practical security
@@ -212,21 +236,22 @@ function` are engaged enough to find a settings toggle.
 ### Neutral
 
 - The underlying technical capability (`new Function()`) is unchanged.
-- The placeholder expansion path is unchanged.
+- The iterative placeholder expansion mechanism is unchanged, but JavaScript evaluation
+  during expansion is gated by the setting.
 - The Obsidian-level trust model is unchanged; this decision acknowledges that and routes
   the systemic concern appropriately.
 
-## Open Questions
+## Other Questions
 
 1. Should the setting warning text mention specific risks (filesystem access, data
    exfiltration) or remain general?
+    - Yes, it should say enough to convey to users the severity of the concern if they could run untrusted code.
 2. Should the error message shown to users when the setting is disabled link to
    documentation?
-3. Should there be a separate setting for placeholder-based JavaScript execution
-   (`{{query.file.property(...)}}` expressions) vs. `by function` instructions, or is one
-   combined setting clearer?
-4. What should the migration story be for users upgrading from an older version — silent
+    - Yes. Implemented.
+3. What should the migration story be for users upgrading from an older version — silent
    disable, or a one-time modal prompt?
+    - Silent. Because of time limitations and the importance of getting the release out.
 
 ## Further Work
 
