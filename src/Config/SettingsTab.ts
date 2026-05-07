@@ -198,7 +198,7 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('Enable custom searches'))
             .setDesc(
                 i18n.t(
-                    'Enable the "filter by function", "sort by function" and "group by function" instructions. These allow running user-written JavaScript in task searches. This is potentially DANGEROUS, thus it is disabled by default.',
+                    'Enables "filter by function", "sort by function", and "group by function", which execute JavaScript in Tasks queries. Malicious JavaScript in a Tasks query or Markdown file could run inside Obsidian and access or modify your vault contents, local files, or other system resources. Only enable this if you trust the contents of this vault, especially files downloaded, copied, or synced from other people.',
                 ),
             )
             .addToggle((toggle) => {
