@@ -69,8 +69,8 @@ function notResolved(): KnownPlaceholderResolution {
 
 function singleStringArgumentRegex(functionName: string): RegExp {
     // escape dots in property name, such as query.file.path
-    const escapedFunctionName = functionName.replace(/\./g, '\\.');
-    return new RegExp(`^${escapedFunctionName}\\((['"])([^'"]*)\\1\\)$`);
+    const escapedFunctionName = functionName.replace(/\./g, String.raw`\.`);
+    return new RegExp(String.raw`^${escapedFunctionName}\((['"])([^'"]*)\1\)$`);
 }
 
 function getSingleStringArgument(expression: string, regex: RegExp): string | null {
