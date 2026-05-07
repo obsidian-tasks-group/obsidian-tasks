@@ -41,6 +41,32 @@ describe('Placeholders - disabling execution', () => {
         worksWithoutJsExecution(instruction);
     });
 
+    it('"{{query.file.hasProperty()}}" should work when JS execution disabled', () => {
+        const instruction = 'description includes {{query.file.hasProperty("sample_number_property")}}';
+        worksWithoutJsExecution(instruction);
+    });
+
+    it('"{{query.file.property()}} - with missing property" should preserve the existing null placeholder error when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.property("non_existent_property")}}';
+        const query = new Query(instruction, tasksFile);
+
+        expect(query.error).toContain("Invalid placeholder result 'null'");
+        expect(query.error).toContain(instruction);
+    });
+
+    it('"{{query.file.property()}} - with expression argument" should have meaningful parse-time error when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.property("sample_" + "number_property")}}';
+        failsWithoutJsExecution(instruction);
+    });
+
+    it('"{{query.file.noSuchProperty}}" should preserve the existing unknown property error when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.noSuchProperty}}';
+        const query = new Query(instruction, tasksFile);
+
+        expect(query.error).toContain('Unknown property: query.file.noSuchProperty');
+        expect(query.error).toContain(instruction);
+    });
+
     it('"{{query.file.path.toUpperCase()}}" should have meaningful parse-time error', () => {
         const instruction = 'path includes {{query.file.path.toUpperCase()}}';
         failsWithoutJsExecution(instruction);
