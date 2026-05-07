@@ -1,5 +1,6 @@
 import Mustache from 'mustache';
 import proxyData from 'mustache-validator';
+import { EnableJsInTasksQueries } from '../Config/EnableJsInTasksQueries';
 import { type ExpressionParameter, evaluateExpression, parseExpression } from './Expression';
 
 // https://github.com/janl/mustache.js
@@ -67,7 +68,15 @@ const PLACEHOLDER_REGEX = new RegExp(
 );
 
 function evaluateAnyFunctionCalls(template: string, view: any) {
-    return template.replace(PLACEHOLDER_REGEX, (_match, reconstructed) => {
+    return template.replace(PLACEHOLDER_REGEX, (_match, reconstructed: string) => {
+        if (!EnableJsInTasksQueries.getInstance().get()) {
+            if (isPlainMustachePlaceholder(reconstructed)) {
+                return _match;
+            }
+
+            throw Error(EnableJsInTasksQueries.getHelpMessage());
+        }
+
         const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
         const functionOrError = parseExpression(paramsArgs, reconstructed);
         if (functionOrError.isValid()) {
@@ -84,20 +93,21 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
             }
         }
 
-        if (shouldReportExpressionParseError(reconstructed)) {
-            throw Error(functionOrError.error ?? `Problem parsing placeholder expression: {{${reconstructed}}}`);
-        }
-
         // Fall back on returning the raw string, including {{ and }} - and get Mustache to report the error.
         return _match;
     });
 }
 
-function shouldReportExpressionParseError(reconstructed: string): boolean {
-    // Plain Mustache placeholders such as {{query.file.path}} should still work when
-    // JavaScript is disabled. Placeholders containing parentheses are treated as
-    // JavaScript expression placeholders, so preserve parse errors for them.
-    return reconstructed.includes('(') || reconstructed.includes(')');
+function isPlainMustachePlaceholder(reconstructed: string): boolean {
+    // Allow only simple dotted property lookups, such as
+    //   query.file.path
+    //   preset.this_file
+    //
+    // These can be resolved by Mustache without evaluating JavaScript.
+    // Anything else, such as "4 + 6", "query.file.path.toUpperCase()" or
+    // "query.file.property('task_instruction')", requires JavaScript expression
+    // evaluation and is therefore blocked when JavaScript is disabled.
+    return /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*)*$/.test(reconstructed.trim());
 }
 
 function createExpressionParameters(view: any): ExpressionParameter[] {

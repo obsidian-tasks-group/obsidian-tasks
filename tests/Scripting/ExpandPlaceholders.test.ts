@@ -32,7 +32,7 @@ describe('Placeholders - disabling execution', () => {
         checkQueryErrorMessage(query, instruction);
     });
 
-    it.failing('"{{4 + 6}}" should have meaningful parse-time error', () => {
+    it('"{{4 + 6}}" should have meaningful parse-time error', () => {
         const instruction = 'path includes {{4 + 6}}';
         const query = new Query(instruction, tasksFile);
         checkQueryErrorMessage(query, instruction);
