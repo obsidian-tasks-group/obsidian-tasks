@@ -25,6 +25,11 @@ describe('Placeholders - disabling execution', () => {
         expect(query.error).toBeUndefined();
     }
 
+    function failsWithoutJsExecution(instruction: string): void {
+        const query = new Query(instruction, tasksFile);
+        checkQueryErrorMessage(query, instruction);
+    }
+
     it('"{{query.file.path}}" should work when JS execution disabled', () => {
         const instruction = 'path includes {{query.file.path}}';
         worksWithoutJsExecution(instruction);
@@ -32,14 +37,12 @@ describe('Placeholders - disabling execution', () => {
 
     it('"{{query.file.path.toUpperCase()}}" should have meaningful parse-time error', () => {
         const instruction = 'path includes {{query.file.path.toUpperCase()}}';
-        const query = new Query(instruction, tasksFile);
-        checkQueryErrorMessage(query, instruction);
+        failsWithoutJsExecution(instruction);
     });
 
     it('"{{4 + 6}}" should have meaningful parse-time error', () => {
         const instruction = 'path includes {{4 + 6}}';
-        const query = new Query(instruction, tasksFile);
-        checkQueryErrorMessage(query, instruction);
+        failsWithoutJsExecution(instruction);
     });
 });
 
