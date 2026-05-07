@@ -9,6 +9,11 @@ publish: true
 > [!released]
 > Expressions were introduced in Tasks 4.0.0.
 
+> [!warning] JavaScript must be enabled
+> This facility executes JavaScript and requires [[JavaScript in Tasks Queries|JavaScript in Tasks queries]] to be enabled.
+> Only enable it if you trust the current and future contents of the vault.
+> This requirement was added in Tasks X.Y.Z.
+
 ## Introduction
 
 > [!Note]

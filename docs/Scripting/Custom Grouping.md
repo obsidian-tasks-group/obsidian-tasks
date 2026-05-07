@@ -9,6 +9,11 @@ publish: true
 > [!released]
 > Custom grouping was introduced in Tasks 4.0.0.
 
+> [!warning] JavaScript must be enabled
+> This feature executes JavaScript and requires [[JavaScript in Tasks Queries|JavaScript in Tasks queries]] to be enabled.
+> Only enable it if you trust the current and future contents of the vault.
+> This requirement was added in Tasks X.Y.Z.
+
 ## Summary
 
 - Define your own custom task groups, using JavaScript expressions such as:
