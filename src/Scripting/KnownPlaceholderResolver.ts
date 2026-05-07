@@ -43,11 +43,7 @@ export function resolveKnownPlaceholder(reconstructed: string, queryContext: Que
 
     const functionName = 'query.file.property';
     const escapedFunctionName = functionName.replace(/\./g, '\\.');
-    const propertyNameRegex = new RegExp('^query\\.file\\.property\\(([\'"])([^\'"]*)\\1\\)$');
-    const propertyNameRegex2 = new RegExp(`^${escapedFunctionName}\\((['"])([^'"]*)\\1\\)$`);
-    if (propertyNameRegex.source !== propertyNameRegex2.source) {
-        throw new Error('Placeholder regexes must match');
-    }
+    const propertyNameRegex = new RegExp(`^${escapedFunctionName}\\((['"])([^'"]*)\\1\\)$`);
     const propertyName = getSingleStringArgument(placeholder, propertyNameRegex);
     if (propertyName !== null) {
         return resolved(queryFile.property(propertyName));
