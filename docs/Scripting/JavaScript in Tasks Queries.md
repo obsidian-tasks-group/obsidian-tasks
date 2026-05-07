@@ -63,7 +63,7 @@ For example, these do not require JavaScript:
 
 - regular filters such as `not done`, `due before tomorrow`, and `path includes ...`
 - regular sorting and grouping instructions
-- presets
+- presets that only use instructions that do not require JavaScript
 - documented non-JavaScript placeholders such as `{{query.file.path}}`
 - documented file-property placeholders such as `{{query.file.property("name")}}`
 
@@ -89,7 +89,7 @@ If you sync your vault between devices, enable **Enable custom searches** on eac
 
 ### Do I need to rewrite my existing queries?
 
-No. Existing `filter by function`, `sort by function`, and `group by function` queries can continue to work unchanged once you enable **Enable custom searches**.
+No. Existing `filter by function`, `sort by function`, and `group by function` queries can continue to work unchanged once you enable **Enable custom searches**, if you feel it is safe to do so.
 
 ## See also
 
