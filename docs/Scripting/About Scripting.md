@@ -18,7 +18,7 @@ We are using the word 'scripting' in a very loose sense here:
 > [!warning] JavaScript must be enabled
 > Most of these instructions in this section execute JavaScript and require [[JavaScript in Tasks Queries|JavaScript in Tasks queries]] to be enabled.
 > Only enable it if you trust the current and future contents of the vault.
-> This requirement was added in Tasks X.Y.Z.
+> This requirement was added in Tasks 8.0.0.
 
 ## Placeholder capabilities
 

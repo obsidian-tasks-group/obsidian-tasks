@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tasks",
-  "version": "7.24.0",
+  "version": "8.0.0",
   "description": "Task management for the Obsidian knowledge base",
   "main": "main.js",
   "engines": {
@@ -10,7 +10,7 @@
     "dev": "node esbuild.config.mjs",
     "build": "node esbuild.config.mjs production",
     "build:dev": "node esbuild.config.mjs development",
-    "lint":        "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
+    "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
     "lint:no-fix": "eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-check",
     "lint:markdown": "markdownlint-cli2 --fix \"**/*.md\" ",
     "test": "jest --ci",

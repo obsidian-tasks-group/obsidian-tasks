@@ -1,7 +1,7 @@
 # JavaScript in Tasks Queries
 
 > [!released]
-> Since Tasks X.Y.Z, JavaScript in Tasks queries is disabled by default.
+> Since Tasks 8.0.0, JavaScript in Tasks queries is disabled by default.
 > This was a breaking change for users of `filter by function`, `sort by function`, and `group by function`.
 
 Some advanced Tasks query instructions can execute JavaScript:

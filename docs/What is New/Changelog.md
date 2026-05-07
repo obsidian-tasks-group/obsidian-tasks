@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
-- X.Y.Z:
+- 8.0.0:
   - **Breaking change**:
     - JavaScript in Tasks queries is now disabled by default.
     - This affects `filter by function`, `sort by function`, `group by function` and any use of undocumented JavaScript expressions inside `{{...}}` placeholders.
