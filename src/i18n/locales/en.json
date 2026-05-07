@@ -211,6 +211,9 @@
         "name": "Remove scheduled date on recurrence"
       }
     },
+    "searches": {
+      "heading": "Searches"
+    },
     "searchResults": {
       "heading": "Search results",
       "taskCountLocation": {
