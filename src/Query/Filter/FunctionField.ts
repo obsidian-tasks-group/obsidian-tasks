@@ -9,6 +9,7 @@ import { Sorter } from '../Sort/Sorter';
 import { compareByDate } from '../../DateTime/DateTools';
 import { getValueType } from '../../lib/TypeDetection';
 import { EnableJsInTasksQueries } from '../../Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from '../../Scripting/JsInTasksQueriesDisabledError';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -71,7 +72,7 @@ export class FunctionField extends Field {
         }
 
         if (!EnableJsInTasksQueries.getInstance().get()) {
-            throw new Error(EnableJsInTasksQueries.getHelpMessage());
+            throw new JsInTasksQueriesDisabledError();
         }
 
         const reverse = !!match[1];
