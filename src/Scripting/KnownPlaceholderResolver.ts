@@ -10,19 +10,15 @@ export type KnownPlaceholderResolution =
       };
 
 /**
- * Resolve documented placeholders that are safe to evaluate without JavaScript execution.
+ * Resolve documented query placeholders that are safe to evaluate without JavaScript execution.
  *
  * This intentionally supports only known placeholder expressions. It is not a JavaScript parser.
  * Expressions not recognised here should fall back to JavaScript evaluation only when JavaScript
  * execution is enabled.
  */
-export function resolveKnownPlaceholder(reconstructed: string, view: unknown): KnownPlaceholderResolution {
-    if (!isQueryContext(view)) {
-        return notResolved();
-    }
-
+export function resolveKnownPlaceholder(reconstructed: string, queryContext: QueryContext): KnownPlaceholderResolution {
     const placeholder = reconstructed.trim();
-    const queryFile = view.query.file;
+    const queryFile = queryContext.query.file;
 
     switch (placeholder) {
         case 'query.file.path':
@@ -74,15 +70,4 @@ function notResolved(): KnownPlaceholderResolution {
 function getSingleStringArgument(expression: string, regex: RegExp): string | null {
     const match = expression.match(regex);
     return match?.[2] ?? null;
-}
-
-function isQueryContext(view: unknown): view is QueryContext {
-    return (
-        typeof view === 'object' &&
-        view !== null &&
-        'query' in view &&
-        typeof (view as QueryContext).query === 'object' &&
-        (view as QueryContext).query !== null &&
-        'file' in (view as QueryContext).query
-    );
 }

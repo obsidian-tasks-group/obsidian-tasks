@@ -97,12 +97,6 @@ describe('KnownPlaceholderResolver', () => {
         it('does not resolve non-query placeholders', () => {
             expectPlaceholderNotToBeResolved('preset.this_file');
         });
-
-        it('does not resolve placeholders if the view is not a QueryContext', () => {
-            expect(resolveKnownPlaceholder('query.file.path', { query: {} })).toEqual({
-                resolved: false,
-            });
-        });
     });
 
     describe('formatting', () => {
