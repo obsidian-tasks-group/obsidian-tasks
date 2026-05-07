@@ -4,7 +4,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Query } from '../../src/Query/Query';
 import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
-import { checkQueryErrorMessage } from './ScriptingTestHelpers';
+import { expectQueryErrorToMentionDisabledJavaScript } from './ScriptingTestHelpers';
 
 describe('Placeholders - disabling execution', () => {
     beforeEach(() => {
@@ -24,7 +24,7 @@ describe('Placeholders - disabling execution', () => {
 
     function failsWithoutJsExecution(instruction: string): void {
         const query = new Query(instruction, tasksFile);
-        checkQueryErrorMessage(query, instruction);
+        expectQueryErrorToMentionDisabledJavaScript(query, instruction);
     }
 
     it('"{{query.file.path}}" should work when JS execution disabled', () => {

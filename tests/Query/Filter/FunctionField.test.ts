@@ -24,7 +24,7 @@ import { TasksDate } from '../../../src/DateTime/TasksDate';
 import { Priority } from '../../../src/Task/Priority';
 import { TasksFile } from '../../../src/Scripting/TasksFile';
 import { EnableJsInTasksQueries } from '../../../src/Config/EnableJsInTasksQueries';
-import { checkQueryErrorMessage } from '../../Scripting/ScriptingTestHelpers';
+import { expectQueryErrorToMentionDisabledJavaScript } from '../../Scripting/ScriptingTestHelpers';
 
 window.moment = moment;
 
@@ -58,19 +58,19 @@ describe('FunctionField - disabling execution', () => {
     it('"filter by function" should have meaningful parse-time error', () => {
         const instruction = 'filter by function true';
         const query = new Query(instruction);
-        checkQueryErrorMessage(query, instruction);
+        expectQueryErrorToMentionDisabledJavaScript(query, instruction);
     });
 
     it('"sort by function" should have meaningful parse-time error', () => {
         const instruction = 'sort by function 5';
         const query = new Query(instruction);
-        checkQueryErrorMessage(query, instruction);
+        expectQueryErrorToMentionDisabledJavaScript(query, instruction);
     });
 
     it('"group by function" should have meaningful parse-time error', () => {
         const instruction = 'group by function "hello"';
         const query = new Query(instruction);
-        checkQueryErrorMessage(query, instruction);
+        expectQueryErrorToMentionDisabledJavaScript(query, instruction);
     });
 });
 
