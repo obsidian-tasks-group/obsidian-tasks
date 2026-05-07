@@ -10,11 +10,40 @@ import { continueLinesFlattened } from '../../src/Query/Scanner';
 import { constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from '../../src/Scripting/JsInTasksQueriesDisabledError';
 import { formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
 
 describe('Expression', () => {
+    describe('Expression - disabling execution', () => {
+        beforeEach(() => {
+            EnableJsInTasksQueries.getInstance().set(false);
+        });
+
+        afterEach(() => {
+            EnableJsInTasksQueries.getInstance().set(true);
+        });
+
+        it('parsing expressions should throw exception if JS execution disabled', () => {
+            expect(() => parseExpression([], '42')).toThrow(JsInTasksQueriesDisabledError);
+        });
+
+        it('evaluating expressions should throw exception if JS execution disabled', () => {
+            // Turn on JS expression to allow parsing.
+            EnableJsInTasksQueries.getInstance().set(true);
+            const functionOrError = parseExpression([], '42');
+            expect(functionOrError.queryComponent).toBeDefined();
+            const func: Function = functionOrError.queryComponent!;
+
+            // Turn off JS execution, so we can test evaluation fails.
+            EnableJsInTasksQueries.getInstance().set(false);
+
+            expect(() => evaluateExpression(func, [])).toThrow(JsInTasksQueriesDisabledError);
+        });
+    });
+
     describe('support simple calculations', () => {
         it('should calculate simple expression', () => {
             expect('1 + 1').toEvaluateAs(2);

@@ -15,6 +15,11 @@ We are using the word 'scripting' in a very loose sense here:
 - For now, it refers only to writing JavaScript expressions in Tasks query blocks.
 - It is intended to evolve in to something broader over time.
 
+> [!warning] JavaScript must be enabled
+> Most of these instructions in this section execute JavaScript and require [[JavaScript in Tasks Queries|JavaScript in Tasks queries]] to be enabled.
+> Only enable it if you trust the current and future contents of the vault.
+> This requirement was added in Tasks X.Y.Z.
+
 ## Placeholder capabilities
 
 - [[Placeholders]] - use placeholder text in native Tasks queries, such as  `{{query.file.path}}` to refer to some properties of the file containing the query.

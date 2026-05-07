@@ -23,6 +23,8 @@ import { Query } from '../../../src/Query/Query';
 import { TasksDate } from '../../../src/DateTime/TasksDate';
 import { Priority } from '../../../src/Task/Priority';
 import { TasksFile } from '../../../src/Scripting/TasksFile';
+import { EnableJsInTasksQueries } from '../../../src/Config/EnableJsInTasksQueries';
+import { expectQueryErrorToMentionDisabledJavaScript } from '../../Scripting/ScriptingTestHelpers';
 
 window.moment = moment;
 
@@ -38,6 +40,38 @@ const undated = new TasksDate(null);
 beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date(today));
+});
+
+// -----------------------------------------------------------------------------------------------------------------
+// Disabling JavaScript execution
+// -----------------------------------------------------------------------------------------------------------------
+
+describe('FunctionField - disabling execution', () => {
+    beforeEach(() => {
+        EnableJsInTasksQueries.getInstance().set(false);
+    });
+
+    afterEach(() => {
+        EnableJsInTasksQueries.getInstance().set(true);
+    });
+
+    it('"filter by function" should have meaningful parse-time error', () => {
+        const instruction = 'filter by function true';
+        const query = new Query(instruction);
+        expectQueryErrorToMentionDisabledJavaScript(query, instruction);
+    });
+
+    it('"sort by function" should have meaningful parse-time error', () => {
+        const instruction = 'sort by function 5';
+        const query = new Query(instruction);
+        expectQueryErrorToMentionDisabledJavaScript(query, instruction);
+    });
+
+    it('"group by function" should have meaningful parse-time error', () => {
+        const instruction = 'group by function "hello"';
+        const query = new Query(instruction);
+        expectQueryErrorToMentionDisabledJavaScript(query, instruction);
+    });
 });
 
 // -----------------------------------------------------------------------------------------------------------------

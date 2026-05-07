@@ -20,6 +20,8 @@ import { tasksApiV1 } from './Api';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { QueryFileDefaults } from './Query/QueryFileDefaults';
 import { LinkResolver } from './Task/LinkResolver';
+import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
+import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -37,6 +39,8 @@ export default class TasksPlugin extends Plugin {
         log('info', i18n.t('main.loadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
 
         await this.loadSettings();
+
+        EnableJsInTasksQueries.initialise(new ObsidianLocalStorageProvider(this.app));
 
         // Configure logging.
         const { loggingOptions } = getSettings();

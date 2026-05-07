@@ -211,6 +211,18 @@
         "name": "Remove scheduled date on recurrence"
       }
     },
+    "searches": {
+      "heading": "Searches",
+      "enableCustomSearches": {
+        "description": {
+          "line1": "Enables '{{filterByFunction}}', '{{sortByFunction}}', and '{{groupByFunction}}', which execute JavaScript in Tasks queries.",
+          "line2": "Malicious JavaScript in a Tasks query or Markdown file could run inside Obsidian and access or modify your vault contents, local files, or other system resources.",
+          "line3": "Only enable this if you trust the current and future contents of this vault, including files you may later download, copy, or sync from other people.",
+          "line4": "This setting is stored on this device only; enable it separately on each device where you use this vault."
+        },
+        "name": "Enable custom searches"
+      }
+    },
     "searchResults": {
       "heading": "Search results",
       "taskCountLocation": {

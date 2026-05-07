@@ -14,7 +14,8 @@
     "daily_note_done_this_day": "# Tasks that have been done this day - requires YYYY-MM-DD file name\ndone\ndone {{query.file.filenameWithoutExtension}}",
     "filter_by_context": "filter by function let fn = (ctx) => task.tags.includes(`#context/${ctx}`); return fn",
     "extract_contexts_1": "ctx => task.tags.includes(`#context/${ctx}`)",
-    "extract_contexts_2": "(ctx => task.tags.includes(`#context/${ctx}`))"
+    "extract_contexts_2": "(ctx => task.tags.includes(`#context/${ctx}`))",
+    "path_includes_test_data": "path includes Test Data"
   },
   "globalQuery": "# Exclude templates files:\nroot does not include _meta\n\n# Ignore the sample tasks that demonstrate Theme and Snippet support:\npath does not include Manual Testing/SlrVb's Alternative Checkboxes\npath does not include Styling/Snippet -\npath does not include Styling/Theme -\n",
   "globalFilter": "#task",

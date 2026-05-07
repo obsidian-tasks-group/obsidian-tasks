@@ -11,3 +11,4 @@ This a collection of [Architecture decision records (ADRs)](https://github.com/j
 If a design decision was non-obvious, we will record the thought process here.
 
 - [[ADR-001 - Nomenclature for Reusable Instruction Blocks Feature]]
+- [[ADR-002 - Security Response to JavaScript Execution in Queries]]

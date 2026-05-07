@@ -1,6 +1,78 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
+import { Query } from '../../src/Query/Query';
+import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { expectQueryErrorToMentionDisabledJavaScript } from './ScriptingTestHelpers';
+
+describe('Placeholders - disabling execution', () => {
+    beforeEach(() => {
+        EnableJsInTasksQueries.getInstance().set(false);
+    });
+
+    afterEach(() => {
+        EnableJsInTasksQueries.getInstance().set(true);
+    });
+
+    const tasksFile = getTasksFileFromMockData('yaml_all_property_types_populated');
+
+    function worksWithoutJsExecution(instruction: string): void {
+        const query = new Query(instruction, tasksFile);
+        expect(query.error).toBeUndefined();
+    }
+
+    function failsWithoutJsExecution(instruction: string): void {
+        const query = new Query(instruction, tasksFile);
+        expectQueryErrorToMentionDisabledJavaScript(query, instruction);
+    }
+
+    it('"{{query.file.path}}" should work when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.path}}';
+        worksWithoutJsExecution(instruction);
+    });
+
+    it('"{{query.file.property()}} - with existent property" should work when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.property("sample_number_property")}}';
+        worksWithoutJsExecution(instruction);
+    });
+
+    it('"{{query.file.hasProperty()}}" should work when JS execution disabled', () => {
+        const instruction = 'description includes {{query.file.hasProperty("sample_number_property")}}';
+        worksWithoutJsExecution(instruction);
+    });
+
+    it('"{{query.file.property()}} - with missing property" should preserve the existing null placeholder error when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.property("non_existent_property")}}';
+        const query = new Query(instruction, tasksFile);
+
+        expect(query.error).toContain("Invalid placeholder result 'null'");
+        expect(query.error).toContain(instruction);
+    });
+
+    it('"{{query.file.property()}} - with expression argument" should have meaningful parse-time error when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.property("sample_" + "number_property")}}';
+        failsWithoutJsExecution(instruction);
+    });
+
+    it('"{{query.file.noSuchProperty}}" should preserve the existing unknown property error when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.noSuchProperty}}';
+        const query = new Query(instruction, tasksFile);
+
+        expect(query.error).toContain('Unknown property: query.file.noSuchProperty');
+        expect(query.error).toContain(instruction);
+    });
+
+    it('"{{query.file.path.toUpperCase()}}" should have meaningful parse-time error', () => {
+        const instruction = 'path includes {{query.file.path.toUpperCase()}}';
+        failsWithoutJsExecution(instruction);
+    });
+
+    it('"{{4 + 6}}" should have meaningful parse-time error', () => {
+        const instruction = 'path includes {{4 + 6}}';
+        failsWithoutJsExecution(instruction);
+    });
+});
 
 describe('ExpandTemplate', () => {
     const tasksFile = new TasksFile('a/b/path with space.md');
@@ -121,6 +193,13 @@ describe('ExpandTemplate with functions', () => {
                 math: { square: (x: string) => parseInt(x) ** 2 },
             });
             expect(output).toEqual('Result: 16');
+        });
+
+        it('Objects use default stringification format', () => {
+            // Note: This is not necessarily the "correct" behaviour:
+            //       it is just demonstrating the "current" behaviour.
+            const output = expandPlaceholders('{{ { path: "x.md" } }}', {});
+            expect(output).toEqual('[object Object]');
         });
     });
 

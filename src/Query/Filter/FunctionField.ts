@@ -8,6 +8,8 @@ import type { SearchInfo } from '../SearchInfo';
 import { Sorter } from '../Sort/Sorter';
 import { compareByDate } from '../../DateTime/DateTools';
 import { getValueType } from '../../lib/TypeDetection';
+import { EnableJsInTasksQueries } from '../../Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from '../../Scripting/JsInTasksQueriesDisabledError';
 import { Field } from './Field';
 import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
@@ -23,6 +25,10 @@ export class FunctionField extends Field {
     // -----------------------------------------------------------------------------------------------------------------
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        if (!EnableJsInTasksQueries.getInstance().get()) {
+            return FilterOrErrorMessage.fromError(line, JsInTasksQueriesDisabledError.helpMessage);
+        }
+
         const match = Field.getMatch(this.filterRegExp(), line);
         if (match === null) {
             return FilterOrErrorMessage.fromError(line, 'Unable to parse line');
@@ -63,6 +69,10 @@ export class FunctionField extends Field {
         const match = Field.getMatch(this.sorterRegExp(), line);
         if (match === null) {
             return null;
+        }
+
+        if (!EnableJsInTasksQueries.getInstance().get()) {
+            throw new JsInTasksQueriesDisabledError();
         }
 
         const reverse = !!match[1];
@@ -210,6 +220,11 @@ export class FunctionField extends Field {
         if (match === null) {
             return null;
         }
+
+        if (!EnableJsInTasksQueries.getInstance().get()) {
+            throw new JsInTasksQueriesDisabledError();
+        }
+
         const reverse = !!match[1];
         const args = match[2];
         return new Grouper(line, 'function', createGrouperFunctionFromLine(args), reverse);

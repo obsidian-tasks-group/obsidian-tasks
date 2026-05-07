@@ -1,6 +1,10 @@
 import Mustache from 'mustache';
 import proxyData from 'mustache-validator';
+import { EnableJsInTasksQueries } from '../Config/EnableJsInTasksQueries';
 import { type ExpressionParameter, evaluateExpression, parseExpression } from './Expression';
+import type { QueryContext } from './QueryContext';
+import { resolveKnownPlaceholder } from './KnownPlaceholderResolver';
+import { JsInTasksQueriesDisabledError } from './JsInTasksQueriesDisabledError';
 
 // https://github.com/janl/mustache.js
 
@@ -47,7 +51,7 @@ The error message was:
 
 The problem is in:
     ${template}`;
-        throw Error(message);
+        throw new Error(message);
     }
 }
 
@@ -67,26 +71,72 @@ const PLACEHOLDER_REGEX = new RegExp(
 );
 
 function evaluateAnyFunctionCalls(template: string, view: any) {
-    return template.replace(PLACEHOLDER_REGEX, (_match, reconstructed) => {
+    return template.replace(PLACEHOLDER_REGEX, (_match, reconstructed: string) => {
+        if (isQueryContext(view)) {
+            const knownPlaceholder = resolveKnownPlaceholder(reconstructed, view);
+            if (knownPlaceholder.resolved) {
+                const result = knownPlaceholder.value;
+                if (result === null) {
+                    throwInvalidPlaceholderError(reconstructed);
+                }
+                if (result !== undefined) {
+                    // Existing placeholder behaviour intentionally uses JavaScript string coercion.
+                    // This preserves - for now - compatibility, including existing handling of object results.
+                    return String(result);
+                }
+            }
+        }
+
+        if (!EnableJsInTasksQueries.getInstance().get()) {
+            if (isPlainMustachePlaceholder(reconstructed)) {
+                return _match;
+            }
+
+            throw new JsInTasksQueriesDisabledError();
+        }
+
         const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
         const functionOrError = parseExpression(paramsArgs, reconstructed);
         if (functionOrError.isValid()) {
             const result = evaluateExpression(functionOrError.queryComponent!, paramsArgs);
             if (result === null) {
-                throw Error(
-                    `Invalid placeholder result 'null'.
-    Check for missing file property in this expression:
-        {{${reconstructed}}}`,
-                );
+                throwInvalidPlaceholderError(reconstructed);
             }
             if (result !== undefined) {
-                return result;
+                return String(result);
             }
         }
 
         // Fall back on returning the raw string, including {{ and }} - and get Mustache to report the error.
         return _match;
     });
+}
+
+function isQueryContext(view: any): view is QueryContext {
+    return view?.query?.file !== undefined;
+}
+
+function throwInvalidPlaceholderError(reconstructed: string): void {
+    throw new Error(
+        `Invalid placeholder result 'null'.
+    Check for missing file property in this expression:
+        {{${reconstructed}}}`,
+    );
+}
+
+function isPlainMustachePlaceholder(reconstructed: string): boolean {
+    // This recognises placeholders that Mustache can resolve as ordinary dotted
+    // property lookups, without evaluating JavaScript, such as:
+    //   query.file.path
+    //   preset.this_file
+    //
+    // This is only a conservative subset of the documented placeholder API.
+    // Some documented query.file placeholders, such as
+    //   query.file.property('task_instruction')
+    //   query.file.hasProperty('task_instruction')
+    // are also safe in principle, but need explicit handling because their syntax
+    // looks like JavaScript function calls.
+    return /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*)*$/.test(reconstructed.trim());
 }
 
 function createExpressionParameters(view: any): ExpressionParameter[] {

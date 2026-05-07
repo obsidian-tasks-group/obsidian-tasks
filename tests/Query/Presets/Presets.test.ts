@@ -8,6 +8,8 @@ import { Query } from '../../../src/Query/Query';
 import { TasksFile } from '../../../src/Scripting/TasksFile';
 import type { Statement } from '../../../src/Query/Statement';
 import { type PresetsMap, defaultPresets } from '../../../src/Query/Presets/Presets';
+import { EnableJsInTasksQueries } from '../../../src/Config/EnableJsInTasksQueries';
+import { expectQueryErrorToMentionDisabledJavaScript } from '../../Scripting/ScriptingTestHelpers';
 
 window.moment = moment;
 
@@ -567,5 +569,21 @@ describe('include settings tests', () => {
 
         const query = new Query(instructions, new TasksFile('anywhere.md'));
         expect(query.error).toBeUndefined();
+    });
+});
+
+describe('FunctionField - disabling execution', () => {
+    beforeEach(() => {
+        EnableJsInTasksQueries.getInstance().set(false);
+    });
+
+    afterEach(() => {
+        EnableJsInTasksQueries.getInstance().set(true);
+    });
+
+    it('should refuse run presets that execute JS, if JS execution is disabled', () => {
+        const instruction = 'preset this_folder_only';
+        const query = new Query(instruction);
+        expectQueryErrorToMentionDisabledJavaScript(query, instruction);
     });
 });
