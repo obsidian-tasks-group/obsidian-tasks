@@ -80,6 +80,8 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
                     throwInvalidPlaceholderError(reconstructed);
                 }
                 if (result !== undefined) {
+                    // Existing placeholder behaviour intentionally uses JavaScript string coercion.
+                    // This preserves - for now - compatibility, including existing handling of object results.
                     return String(result);
                 }
             }

@@ -194,6 +194,13 @@ describe('ExpandTemplate with functions', () => {
             });
             expect(output).toEqual('Result: 16');
         });
+
+        it('Objects use default stringification format', () => {
+            // Note: This is not necessarily the "correct" behaviour:
+            //       it is just demonstrating the "current" behaviour.
+            const output = expandPlaceholders('{{ { path: "x.md" } }}', {});
+            expect(output).toEqual('[object Object]');
+        });
     });
 
     describe('Complex Nested Paths', () => {
