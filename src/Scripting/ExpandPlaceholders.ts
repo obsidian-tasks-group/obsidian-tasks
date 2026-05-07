@@ -97,11 +97,7 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
         if (functionOrError.isValid()) {
             const result = evaluateExpression(functionOrError.queryComponent!, paramsArgs);
             if (result === null) {
-                throw Error(
-                    `Invalid placeholder result 'null'.
-    Check for missing file property in this expression:
-        {{${reconstructed}}}`,
-                );
+                throwInvalidPlaceholderError(reconstructed);
             }
             if (result !== undefined) {
                 return String(result);
