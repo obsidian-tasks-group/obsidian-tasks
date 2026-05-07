@@ -212,7 +212,10 @@
       }
     },
     "searches": {
-      "heading": "Searches"
+      "heading": "Searches",
+      "enableCustomSearches": {
+        "name": "Enable custom searches"
+      }
     },
     "searchResults": {
       "heading": "Search results",

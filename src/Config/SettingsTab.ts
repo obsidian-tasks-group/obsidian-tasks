@@ -195,7 +195,7 @@ export class SettingsTab extends PluginSettingTab {
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName('Enable custom searches')
+            .setName(i18n.t('settings.searches.enableCustomSearches.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     '<p>Enables "filter by function", "sort by function", and "group by function", which execute JavaScript in Tasks queries.</p>' +
