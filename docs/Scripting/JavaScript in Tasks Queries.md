@@ -30,6 +30,8 @@ You are affected if you use any of these instructions in Tasks query blocks:
 - `sort by function`
 - `group by function`
 
+Some users may also be affected if they rely on undocumented JavaScript expressions inside `{{...}}` placeholders. Documented placeholders continue to work without enabling JavaScript.
+
 Most Tasks users are not affected. Regular filters, sorting, grouping, presets, and documented non-JavaScript placeholders continue to work without this setting.
 
 ## How to enable JavaScript in Tasks queries
