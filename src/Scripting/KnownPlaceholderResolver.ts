@@ -46,7 +46,7 @@ export function resolveKnownPlaceholder(reconstructed: string, queryContext: Que
         return resolved(queryFile.property(propertyName));
     }
 
-    const hasPropertyName = getSingleStringArgument(placeholder, /^query\.file\.hasProperty\((['"])([^'"]*)\1\)$/);
+    const hasPropertyName = getSingleStringArgument(placeholder, singleStringArgumentRegex('query.file.hasProperty'));
     if (hasPropertyName !== null) {
         return resolved(queryFile.hasProperty(hasPropertyName));
     }
