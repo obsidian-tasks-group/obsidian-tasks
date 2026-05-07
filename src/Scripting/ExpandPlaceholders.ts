@@ -99,14 +99,17 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
 }
 
 function isPlainMustachePlaceholder(reconstructed: string): boolean {
-    // Allow only simple dotted property lookups, such as
+    // This recognises placeholders that Mustache can resolve as ordinary dotted
+    // property lookups, without evaluating JavaScript, such as:
     //   query.file.path
     //   preset.this_file
     //
-    // These can be resolved by Mustache without evaluating JavaScript.
-    // Anything else, such as "4 + 6", "query.file.path.toUpperCase()" or
-    // "query.file.property('task_instruction')", requires JavaScript expression
-    // evaluation and is therefore blocked when JavaScript is disabled.
+    // This is only a conservative subset of the documented placeholder API.
+    // Some documented query.file placeholders, such as
+    //   query.file.property('task_instruction')
+    //   query.file.hasProperty('task_instruction')
+    // are also safe in principle, but need explicit handling because their syntax
+    // looks like JavaScript function calls.
     return /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*)*$/.test(reconstructed.trim());
 }
 
