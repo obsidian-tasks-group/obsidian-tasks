@@ -26,7 +26,7 @@ export class FunctionField extends Field {
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         if (!EnableJsInTasksQueries.getInstance().get()) {
-            return FilterOrErrorMessage.fromError(line, EnableJsInTasksQueries.getHelpMessage());
+            return FilterOrErrorMessage.fromError(line, JsInTasksQueriesDisabledError.helpMessage);
         }
 
         const match = Field.getMatch(this.filterRegExp(), line);

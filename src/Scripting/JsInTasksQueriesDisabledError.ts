@@ -1,5 +1,5 @@
 export class JsInTasksQueriesDisabledError extends Error {
-    private static readonly helpMessage = 'JavaScript is disabled in Tasks queries';
+    public static readonly helpMessage = 'JavaScript is disabled in Tasks queries';
 
     constructor() {
         super(JsInTasksQueriesDisabledError.helpMessage);

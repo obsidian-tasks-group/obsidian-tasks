@@ -24,6 +24,7 @@ import { TasksDate } from '../../../src/DateTime/TasksDate';
 import { Priority } from '../../../src/Task/Priority';
 import { TasksFile } from '../../../src/Scripting/TasksFile';
 import { EnableJsInTasksQueries } from '../../../src/Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from '../../../src/Scripting/JsInTasksQueriesDisabledError';
 
 window.moment = moment;
 
@@ -55,7 +56,7 @@ describe('FunctionField - disabling execution', () => {
     });
 
     function checkQueryErrorMessage(query: Query, instruction: string): void {
-        expect(query.error).toContain(EnableJsInTasksQueries.getHelpMessage());
+        expect(query.error).toContain(JsInTasksQueriesDisabledError.helpMessage);
         expect(query.error).toContain(instruction);
     }
 

@@ -18,7 +18,7 @@ export type ExpressionParameter = [name: string, value: any];
  */
 export function parseExpression(paramsArgs: ExpressionParameter[], arg: string): FunctionOrError {
     // if (!EnableJsInTasksQueries.getInstance().get()) {
-    //     return FunctionOrError.fromError(arg, EnableJsInTasksQueries.getHelpMessage());
+    //     return FunctionOrError.fromError(arg, JsInTasksQueriesDisabledError.helpMessage);
     // }
 
     try {

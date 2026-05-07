@@ -55,10 +55,6 @@ export class EnableJsInTasksQueries {
         return EnableJsInTasksQueries.instance;
     }
 
-    public static getHelpMessage() {
-        return 'JavaScript is disabled in Tasks queries';
-    }
-
     public get(): boolean {
         return this.value;
     }
