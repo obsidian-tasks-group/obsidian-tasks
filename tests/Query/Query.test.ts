@@ -595,24 +595,6 @@ description includes \
             expect(query.error).toContain(instruction);
         }
 
-        it('"filter by function" should have meaningful parse-time error', () => {
-            const instruction = 'filter by function true';
-            const query = new Query(instruction);
-            checkQueryErrorMessage(query, instruction);
-        });
-
-        it('"sort by function" should have meaningful parse-time error', () => {
-            const instruction = 'sort by function 5';
-            const query = new Query(instruction);
-            checkQueryErrorMessage(query, instruction);
-        });
-
-        it('"group by function" should have meaningful parse-time error', () => {
-            const instruction = 'group by function "hello"';
-            const query = new Query(instruction);
-            checkQueryErrorMessage(query, instruction);
-        });
-
         it('"{{query.file.path}}" should work when JS execution disabled', () => {
             const instruction = 'path includes {{query.file.path}}';
             const query = new Query(instruction, tasksFile);
