@@ -51,7 +51,7 @@ The error message was:
 
 The problem is in:
     ${template}`;
-        throw Error(message);
+        throw new Error(message);
     }
 }
 
