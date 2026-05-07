@@ -26,6 +26,7 @@ We are using the word 'scripting' in a very loose sense here:
 
 ## Scripting capabilities
 
+- [[JavaScript in Tasks Queries]] - Since Tasks 8.0.0, JavaScript in Tasks queries is disabled by default - find out why and what to do about it.
 - [[Custom Filters]] - write short JavaScript expressions to create task search filters.
   - See also the many `filter by function` examples added to the [[Filters]] documentation.
 - [[Custom Sorting]] - write short JavaScript expressions to sort tasks in Tasks query results.
