@@ -200,7 +200,8 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     '<p>Enables "filter by function", "sort by function", and "group by function", which execute JavaScript in Tasks queries.</p>' +
                         '<p>Malicious JavaScript in a Tasks query or Markdown file could run inside Obsidian and access or modify your vault contents, local files, or other system resources.</p>' +
-                        '<p><b>Only enable this if you trust the contents of this vault, especially files downloaded, copied, or synced from other people.</b></p>',
+                        '<p><b>Only enable this if you trust the current and future contents of this vault, including files you may later download, copy, or sync from other people.</b></p>' +
+                        '<p>This setting is stored on this device only; enable it separately on each device where you use this vault.</p>',
                 ),
             )
             .addToggle((toggle) => {
