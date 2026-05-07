@@ -2,6 +2,8 @@ import Mustache from 'mustache';
 import proxyData from 'mustache-validator';
 import { EnableJsInTasksQueries } from '../Config/EnableJsInTasksQueries';
 import { type ExpressionParameter, evaluateExpression, parseExpression } from './Expression';
+import type { QueryContext } from './QueryContext';
+import { resolveKnownPlaceholder } from './KnownPlaceholderResolver';
 
 // https://github.com/janl/mustache.js
 
@@ -69,6 +71,23 @@ const PLACEHOLDER_REGEX = new RegExp(
 
 function evaluateAnyFunctionCalls(template: string, view: any) {
     return template.replace(PLACEHOLDER_REGEX, (_match, reconstructed: string) => {
+        if (isQueryContext(view)) {
+            const knownPlaceholder = resolveKnownPlaceholder(reconstructed, view);
+            if (knownPlaceholder.resolved) {
+                const result = knownPlaceholder.value;
+                if (result === null) {
+                    throw Error(
+                        `Invalid placeholder result 'null'.
+    Check for missing file property in this expression:
+        {{${reconstructed}}}`,
+                    );
+                }
+                if (result !== undefined) {
+                    return String(result);
+                }
+            }
+        }
+
         if (!EnableJsInTasksQueries.getInstance().get()) {
             if (isPlainMustachePlaceholder(reconstructed)) {
                 return _match;
@@ -89,13 +108,17 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
                 );
             }
             if (result !== undefined) {
-                return result;
+                return String(result);
             }
         }
 
         // Fall back on returning the raw string, including {{ and }} - and get Mustache to report the error.
         return _match;
     });
+}
+
+function isQueryContext(view: any): view is QueryContext {
+    return view?.query?.file !== undefined;
 }
 
 function isPlainMustachePlaceholder(reconstructed: string): boolean {

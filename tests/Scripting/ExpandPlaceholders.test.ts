@@ -3,6 +3,7 @@ import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Query } from '../../src/Query/Query';
 import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
 describe('Placeholders - disabling execution', () => {
     beforeEach(() => {
@@ -13,7 +14,7 @@ describe('Placeholders - disabling execution', () => {
         EnableJsInTasksQueries.getInstance().set(true);
     });
 
-    const tasksFile = new TasksFile('anywhere.md');
+    const tasksFile = getTasksFileFromMockData('yaml_all_property_types_populated');
 
     function checkQueryErrorMessage(query: Query, instruction: string): void {
         expect(query.error).toContain(EnableJsInTasksQueries.getHelpMessage());
@@ -35,8 +36,8 @@ describe('Placeholders - disabling execution', () => {
         worksWithoutJsExecution(instruction);
     });
 
-    it.failing('"{{query.file.path}}" should work when JS execution disabled', () => {
-        const instruction = 'path includes {{query.file.property("project")}}';
+    it('"{{query.file.property()}} - with existent property" should work when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.property("sample_number_property")}}';
         worksWithoutJsExecution(instruction);
     });
 
