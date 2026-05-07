@@ -19,6 +19,28 @@ In this case, as we use [semantic versioning](https://semver.org), we will alway
 
 To help users updating across multiple Tasks releases, we collect here links to the few Tasks breaking changes - most recent first.
 
+## Tasks 8.0.0 (May 2026)
+
+*Release notes: [Tasks 8.0.0](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/780.0).*
+
+### JavaScript in Tasks queries is now disabled by default
+
+Tasks queries no longer execute JavaScript by default. This affects `filter by function`,
+`sort by function`, and `group by function` instructions.
+
+If you use these instructions, your queries will now show an error until you enable the
+setting **Tasks → Searches → Enable custom searches**.
+
+This change was made because JavaScript in Tasks queries can run inside Obsidian and could
+access or modify vault contents, local files, or other system resources. Only enable this
+setting if you trust the current and future contents of the vault, including Markdown files
+downloaded, copied, or synced from other people.
+
+The setting is stored separately on each device, so if you sync your vault between devices,
+you must enable it separately on each device where you want to use custom searches.
+
+See [[JavaScript in Tasks Queries]] for details.
+
 ## Tasks 7.0.0 (14 April 2024)
 
 *Release notes: [Tasks 7.0.0](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/7.0.0).*
