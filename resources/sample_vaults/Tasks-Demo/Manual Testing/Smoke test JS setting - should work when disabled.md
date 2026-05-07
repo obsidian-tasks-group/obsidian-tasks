@@ -4,6 +4,7 @@ TQ_extra_instructions: |-
   hide toolbar
   ignore global query
 TQ_explain: false
+task_instruction: not done
 ---
 
 # Smoke test JS setting - should work when disabled
@@ -44,6 +45,12 @@ group by status.type
 
 ```tasks
 path includes {{query.file.path}}
+```
+
+### {{query.file.property("task_instruction")}}
+
+```tasks
+{{query.file.property("task_instruction")}}
 ```
 
 ## Presets

@@ -22,6 +22,12 @@ See also [[Smoke test JS setting - should work when disabled]].
 path includes {{query.file.path.toUpperCase()}}
 ```
 
+### path includes {{4 + 6}}
+
+```tasks
+path includes {{4 + 6}}
+```
+
 ## Accessing task properties
 
 ### sort by function task.lineNumber
