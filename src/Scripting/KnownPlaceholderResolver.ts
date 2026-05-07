@@ -41,9 +41,7 @@ export function resolveKnownPlaceholder(reconstructed: string, queryContext: Que
             return resolved(queryFile.outlinks);
     }
 
-    const functionName = 'query.file.property';
-    const propertyNameRegex = singleStringArgumentRegex(functionName);
-    const propertyName = getSingleStringArgument(placeholder, propertyNameRegex);
+    const propertyName = getSingleStringArgument(placeholder, singleStringArgumentRegex('query.file.property'));
     if (propertyName !== null) {
         return resolved(queryFile.property(propertyName));
     }
