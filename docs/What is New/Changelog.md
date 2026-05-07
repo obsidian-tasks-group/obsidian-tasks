@@ -10,6 +10,14 @@ See also [[Breaking Changes]]: Tasks releases with version numbers ending `.0.0`
 
 _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)..._
 
+## 8.x releases
+
+- X.Y.Z:
+  - **Breaking change**:
+    - JavaScript in Tasks queries is now disabled by default.
+    - This affects `filter by function`, `sort by function`, and `group by function`.
+    - See [[JavaScript in Tasks Queries]] before deciding whether to enable it.
+
 ## 7.x releases
 
 - 7.24.0:
