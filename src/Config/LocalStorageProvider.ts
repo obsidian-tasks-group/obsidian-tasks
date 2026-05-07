@@ -7,10 +7,10 @@ export interface LocalStorageProvider {
     /**
      * Load a value from the local storage. null means the key is not present.
      */
-    load(key: string): unknown | null;
+    load(key: string): unknown;
 
     /**
      * Save a value to the local storage. null means remove the key if it was already present.
      */
-    save(key: string, value: unknown | null): void;
+    save(key: string, value: unknown): void;
 }

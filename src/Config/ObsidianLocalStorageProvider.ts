@@ -7,11 +7,11 @@ import type { LocalStorageProvider } from './LocalStorageProvider';
 export class ObsidianLocalStorageProvider implements LocalStorageProvider {
     constructor(private readonly app: App) {}
 
-    public load(key: string): unknown | null {
+    public load(key: string): unknown {
         return this.app.loadLocalStorage(key);
     }
 
-    public save(key: string, value: unknown | null): void {
+    public save(key: string, value: unknown): void {
         this.app.saveLocalStorage(key, value);
     }
 }

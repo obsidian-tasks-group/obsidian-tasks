@@ -6,7 +6,7 @@ import type { LocalStorageProvider } from './LocalStorageProvider';
 export class InMemoryLocalStorageProvider implements LocalStorageProvider {
     private readonly values = new Map<string, unknown>();
 
-    public load(key: string): unknown | null {
+    public load(key: string): unknown {
         if (!this.values.has(key)) {
             return null;
         }
@@ -14,7 +14,7 @@ export class InMemoryLocalStorageProvider implements LocalStorageProvider {
         return this.values.get(key) ?? null;
     }
 
-    public save(key: string, value: unknown | null): void {
+    public save(key: string, value: unknown): void {
         if (value === null) {
             this.values.delete(key);
             return;
