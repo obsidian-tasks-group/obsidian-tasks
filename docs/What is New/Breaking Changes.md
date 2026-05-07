@@ -28,6 +28,8 @@ To help users updating across multiple Tasks releases, we collect here links to 
 Tasks queries no longer execute JavaScript by default. This affects `filter by function`,
 `sort by function`, and `group by function` instructions.
 
+Some users may also be affected if they rely on undocumented JavaScript expressions inside `{{...}}` placeholders.
+
 If you use these instructions, your queries will now show an error until you enable the
 setting **Tasks → Searches → Enable custom searches**.
 
