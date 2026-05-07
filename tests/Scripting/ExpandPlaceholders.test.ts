@@ -35,6 +35,11 @@ describe('Placeholders - disabling execution', () => {
         worksWithoutJsExecution(instruction);
     });
 
+    it.failing('"{{query.file.path}}" should work when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.property("project")}}';
+        worksWithoutJsExecution(instruction);
+    });
+
     it('"{{query.file.path.toUpperCase()}}" should have meaningful parse-time error', () => {
         const instruction = 'path includes {{query.file.path.toUpperCase()}}';
         failsWithoutJsExecution(instruction);
