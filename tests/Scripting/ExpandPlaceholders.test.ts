@@ -4,7 +4,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Query } from '../../src/Query/Query';
 import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
-import { JsInTasksQueriesDisabledError } from '../../src/Scripting/JsInTasksQueriesDisabledError';
+import { checkQueryErrorMessage } from './ScriptingTestHelpers';
 
 describe('Placeholders - disabling execution', () => {
     beforeEach(() => {
@@ -16,11 +16,6 @@ describe('Placeholders - disabling execution', () => {
     });
 
     const tasksFile = getTasksFileFromMockData('yaml_all_property_types_populated');
-
-    function checkQueryErrorMessage(query: Query, instruction: string): void {
-        expect(query.error).toContain(JsInTasksQueriesDisabledError.helpMessage);
-        expect(query.error).toContain(instruction);
-    }
 
     function worksWithoutJsExecution(instruction: string): void {
         const query = new Query(instruction, tasksFile);

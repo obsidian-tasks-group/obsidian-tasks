@@ -3,6 +3,13 @@ import { TasksDate } from '../../src/DateTime/TasksDate';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 import { Task } from '../../src/Task/Task';
 import { Link } from '../../src/Task/Link';
+import type { Query } from '../../src/Query/Query';
+import { JsInTasksQueriesDisabledError } from '../../src/Scripting/JsInTasksQueriesDisabledError';
+
+export function checkQueryErrorMessage(query: Query, instruction: string): void {
+    expect(query.error).toContain(JsInTasksQueriesDisabledError.helpMessage);
+    expect(query.error).toContain(instruction);
+}
 
 export function formatToRepresentType(x: any): string {
     if (typeof x === 'string') {
