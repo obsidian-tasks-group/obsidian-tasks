@@ -20,10 +20,14 @@ describe('Placeholders - disabling execution', () => {
         expect(query.error).toContain(instruction);
     }
 
-    it('"{{query.file.path}}" should work when JS execution disabled', () => {
-        const instruction = 'path includes {{query.file.path}}';
+    function worksWithoutJsExecution(instruction: string): void {
         const query = new Query(instruction, tasksFile);
         expect(query.error).toBeUndefined();
+    }
+
+    it('"{{query.file.path}}" should work when JS execution disabled', () => {
+        const instruction = 'path includes {{query.file.path}}';
+        worksWithoutJsExecution(instruction);
     });
 
     it('"{{query.file.path.toUpperCase()}}" should have meaningful parse-time error', () => {
