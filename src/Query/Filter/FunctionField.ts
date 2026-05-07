@@ -222,7 +222,7 @@ export class FunctionField extends Field {
         }
 
         if (!EnableJsInTasksQueries.getInstance().get()) {
-            throw new Error(EnableJsInTasksQueries.getHelpMessage());
+            throw new JsInTasksQueriesDisabledError();
         }
 
         const reverse = !!match[1];

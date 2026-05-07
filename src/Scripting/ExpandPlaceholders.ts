@@ -4,6 +4,7 @@ import { EnableJsInTasksQueries } from '../Config/EnableJsInTasksQueries';
 import { type ExpressionParameter, evaluateExpression, parseExpression } from './Expression';
 import type { QueryContext } from './QueryContext';
 import { resolveKnownPlaceholder } from './KnownPlaceholderResolver';
+import { JsInTasksQueriesDisabledError } from './JsInTasksQueriesDisabledError';
 
 // https://github.com/janl/mustache.js
 
@@ -89,7 +90,7 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
                 return _match;
             }
 
-            throw Error(EnableJsInTasksQueries.getHelpMessage());
+            throw new JsInTasksQueriesDisabledError();
         }
 
         const paramsArgs: ExpressionParameter[] = createExpressionParameters(view);
