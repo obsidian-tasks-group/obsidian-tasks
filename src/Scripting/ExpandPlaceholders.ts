@@ -115,7 +115,7 @@ function isQueryContext(view: any): view is QueryContext {
 }
 
 function throwInvalidPlaceholderError(reconstructed: string): void {
-    throw Error(
+    throw new Error(
         `Invalid placeholder result 'null'.
     Check for missing file property in this expression:
         {{${reconstructed}}}`,
