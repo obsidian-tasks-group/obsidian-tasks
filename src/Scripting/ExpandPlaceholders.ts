@@ -76,11 +76,7 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
             if (knownPlaceholder.resolved) {
                 const result = knownPlaceholder.value;
                 if (result === null) {
-                    throw Error(
-                        `Invalid placeholder result 'null'.
-    Check for missing file property in this expression:
-        {{${reconstructed}}}`,
-                    );
+                    throwInvalidPlaceholderError(reconstructed);
                 }
                 if (result !== undefined) {
                     return String(result);
@@ -119,6 +115,14 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
 
 function isQueryContext(view: any): view is QueryContext {
     return view?.query?.file !== undefined;
+}
+
+function throwInvalidPlaceholderError(reconstructed: string): void {
+    throw Error(
+        `Invalid placeholder result 'null'.
+    Check for missing file property in this expression:
+        {{${reconstructed}}}`,
+    );
 }
 
 function isPlainMustachePlaceholder(reconstructed: string): boolean {
