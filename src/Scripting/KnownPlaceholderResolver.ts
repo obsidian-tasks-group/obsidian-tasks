@@ -74,6 +74,6 @@ function singleStringArgumentRegex(functionName: string): RegExp {
 }
 
 function getSingleStringArgument(expression: string, regex: RegExp): string | null {
-    const match = expression.match(regex);
+    const match = new RegExp(regex).exec(expression);
     return match?.[2] ?? null;
 }
