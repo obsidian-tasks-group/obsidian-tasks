@@ -41,7 +41,7 @@ export function resolveKnownPlaceholder(reconstructed: string, queryContext: Que
             return resolved(queryFile.outlinks);
     }
 
-    const propertyNameRegex = /^query\.file\.property\((['"])([^'"]*)\1\)$/;
+    const propertyNameRegex = new RegExp('^query\\.file\\.property\\(([\'"])([^\'"]*)\\1\\)$');
     const propertyName = getSingleStringArgument(placeholder, propertyNameRegex);
     if (propertyName !== null) {
         return resolved(queryFile.property(propertyName));
