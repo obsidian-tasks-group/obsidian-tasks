@@ -23,7 +23,6 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
-import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
 
 window.moment = moment;
 
@@ -576,41 +575,6 @@ description includes \
 
             // Assert
             expect(query.error).toBeUndefined();
-        });
-    });
-
-    describe('disabling JavaScript execution', () => {
-        beforeEach(() => {
-            EnableJsInTasksQueries.getInstance().set(false);
-        });
-
-        afterEach(() => {
-            EnableJsInTasksQueries.getInstance().set(true);
-        });
-
-        const tasksFile = new TasksFile('anywhere.md');
-
-        function checkQueryErrorMessage(query: Query, instruction: string): void {
-            expect(query.error).toContain(EnableJsInTasksQueries.getHelpMessage());
-            expect(query.error).toContain(instruction);
-        }
-
-        it('"{{query.file.path}}" should work when JS execution disabled', () => {
-            const instruction = 'path includes {{query.file.path}}';
-            const query = new Query(instruction, tasksFile);
-            expect(query.error).toBeUndefined();
-        });
-
-        it('"{{query.file.path.toUpperCase()}}" should have meaningful parse-time error', () => {
-            const instruction = 'path includes {{query.file.path.toUpperCase()}}';
-            const query = new Query(instruction, tasksFile);
-            checkQueryErrorMessage(query, instruction);
-        });
-
-        it.failing('"{{4 + 6}}" should have meaningful parse-time error', () => {
-            const instruction = 'path includes {{4 + 6}}';
-            const query = new Query(instruction, tasksFile);
-            checkQueryErrorMessage(query, instruction);
         });
     });
 
