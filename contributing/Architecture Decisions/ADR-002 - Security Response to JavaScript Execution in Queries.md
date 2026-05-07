@@ -6,7 +6,7 @@ publish: true
 
 ## Status
 
-**DRAFT** - Pending feedback before implementation
+**ACCEPTED** - Decision made on 2026-05-04
 
 ## Context
 
@@ -230,9 +230,7 @@ function` are engaged enough to find a settings toggle.
 
 ## Further Work
 
-- Implementation of the opt-in setting and associated error messaging.
 - User-facing documentation update explaining the setting and the reasoning behind it.
-- Raise the vault trust model concern with the Obsidian team.
 - Longer-term: continue improving the core query language to reduce the need for
   `by function` in common cases.
 
