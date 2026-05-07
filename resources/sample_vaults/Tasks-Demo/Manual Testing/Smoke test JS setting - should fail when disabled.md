@@ -64,3 +64,17 @@ group by function task.status.type
 ```tasks
 filter by function true
 ```
+
+## Presets
+
+### preset this_folder_only
+
+```tasks
+preset this_folder_only
+```
+
+### {{preset.this_folder_only}}
+
+```tasks
+{{preset.this_folder_only}}
+```
