@@ -1,9 +1,9 @@
 import { resolveKnownPlaceholder } from '../../src/Scripting/KnownPlaceholderResolver';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
-import { TasksFile } from '../../src/Scripting/TasksFile';
+import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
 describe('KnownPlaceholderResolver', () => {
-    const tasksFile = new TasksFile('root/sub-folder/file containing query.md');
+    const tasksFile = getTasksFileFromMockData('yaml_all_property_types_populated');
     const queryContext = makeQueryContext(tasksFile);
 
     function expectResolvedPlaceholderToBe(placeholder: string, expectedValue: unknown) {
@@ -23,39 +23,45 @@ describe('KnownPlaceholderResolver', () => {
 
     describe('query.file properties', () => {
         it('resolves query.file.path', () => {
-            expectResolvedPlaceholderToBe('query.file.path', 'root/sub-folder/file containing query.md');
+            expectResolvedPlaceholderToBe('query.file.path', 'Test Data/yaml_all_property_types_populated.md');
         });
 
         it('resolves query.file.pathWithoutExtension', () => {
-            expectResolvedPlaceholderToBe('query.file.pathWithoutExtension', 'root/sub-folder/file containing query');
+            expectResolvedPlaceholderToBe(
+                'query.file.pathWithoutExtension',
+                'Test Data/yaml_all_property_types_populated',
+            );
         });
 
         it('resolves query.file.root', () => {
-            expectResolvedPlaceholderToBe('query.file.root', 'root/');
+            expectResolvedPlaceholderToBe('query.file.root', 'Test Data/');
         });
 
         it('resolves query.file.folder', () => {
-            expectResolvedPlaceholderToBe('query.file.folder', 'root/sub-folder/');
+            expectResolvedPlaceholderToBe('query.file.folder', 'Test Data/');
         });
 
         it('resolves query.file.filename', () => {
-            expectResolvedPlaceholderToBe('query.file.filename', 'file containing query.md');
+            expectResolvedPlaceholderToBe('query.file.filename', 'yaml_all_property_types_populated.md');
         });
 
         it('resolves query.file.filenameWithoutExtension', () => {
-            expectResolvedPlaceholderToBe('query.file.filenameWithoutExtension', 'file containing query');
+            expectResolvedPlaceholderToBe('query.file.filenameWithoutExtension', 'yaml_all_property_types_populated');
         });
 
         it('resolves query.file.outlinksInProperties', () => {
-            expectResolvedPlaceholderToBe('query.file.outlinksInProperties', []);
+            expectResolvedPlaceholderToBe(
+                'query.file.outlinksInProperties',
+                queryContext.query.file.outlinksInProperties,
+            );
         });
 
         it('resolves query.file.outlinksInBody', () => {
-            expectResolvedPlaceholderToBe('query.file.outlinksInBody', []);
+            expectResolvedPlaceholderToBe('query.file.outlinksInBody', queryContext.query.file.outlinksInBody);
         });
 
         it('resolves query.file.outlinks', () => {
-            expectResolvedPlaceholderToBe('query.file.outlinks', []);
+            expectResolvedPlaceholderToBe('query.file.outlinks', queryContext.query.file.outlinks);
         });
     });
 
@@ -65,7 +71,7 @@ describe('KnownPlaceholderResolver', () => {
         });
 
         it('resolves query.file.hasProperty() with double quotes', () => {
-            expectResolvedPlaceholderToBe('query.file.hasProperty("non_existent_property")', false);
+            expectResolvedPlaceholderToBe('query.file.hasProperty("sample_link_property")', true);
         });
 
         it('resolves query.file.property() with single quotes', () => {
@@ -73,7 +79,7 @@ describe('KnownPlaceholderResolver', () => {
         });
 
         it('resolves query.file.property() with double quotes', () => {
-            expectResolvedPlaceholderToBe('query.file.property("non_existent_property")', null);
+            expectResolvedPlaceholderToBe('query.file.property("sample_number_property")', 246);
         });
     });
 
@@ -101,7 +107,7 @@ describe('KnownPlaceholderResolver', () => {
 
     describe('formatting', () => {
         it('ignores whitespace around placeholder expression', () => {
-            expectResolvedPlaceholderToBe(' query.file.path ', 'root/sub-folder/file containing query.md');
+            expectResolvedPlaceholderToBe(' query.file.path ', 'Test Data/yaml_all_property_types_populated.md');
         });
     });
 });
