@@ -21,7 +21,7 @@ To help users updating across multiple Tasks releases, we collect here links to 
 
 ## Tasks 8.0.0 (8 May 2026)
 
-*Release notes: [Tasks 8.0.0](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/780.0).*
+*Release notes: [Tasks 8.0.0](https://github.com/obsidian-tasks-group/obsidian-tasks/releases/tag/8.0.0).*
 
 ### JavaScript in Tasks queries is now disabled by default
 
