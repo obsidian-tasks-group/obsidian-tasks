@@ -36,6 +36,10 @@ const typescriptLanguageOptions = {
     },
 };
 
+// Set on_or_off to 1, and run the following to update the current lint issues lint.txt
+//    yarn lint:no-fix 2>&1 > lint.txt; grep problems lint.txt
+// Revert on_or_off to 0 before committing.
+// I am charting these over time to track progress.
 const on_or_off = 0;
 const typescriptCommonRules = {
     ...prettierRules,

@@ -21,32 +21,28 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
   213:5  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/SettingsTab.ts
-   50:37  warning  The `Function` type accepts any function-like value.
+    51:37  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type                                                                                 @typescript-eslint/no-unsafe-function-type
-   68:47  warning  Unsafe assignment to innerHTML                                                                                                                                                                          no-unsanitized/property
-   68:47  warning  Do not write to DOM directly using innerHTML/outerHTML property                                                                                                                                         @microsoft/sdl/no-inner-html
-   92:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  120:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  173:54  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  225:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  324:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  342:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  360:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  392:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  461:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  480:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  504:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  570:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-  602:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                      @typescript-eslint/no-floating-promises
-  683:17  warning  Unsafe call of a `Function` typed value                                                                                                                                                                 @typescript-eslint/no-unsafe-call
-  692:21  warning  Unsafe call to notice.insertAdjacentHTML for argument 1                                                                                                                                                 no-unsanitized/method
-  692:21  warning  Do not write to DOM using insertAdjacentHTML method                                                                                                                                                     @microsoft/sdl/no-inner-html
-  790:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                                                                                                  obsidianmd/prefer-create-el
-  919:33  warning  Promise-returning function provided to variable where a void return was expected                                                                                                                        @typescript-eslint/no-misused-promises
-  969:5   warning  Avoid setting styles directly via `element.style.display`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically      obsidianmd/no-static-styles-assignment
-  970:5   warning  Avoid setting styles directly via `element.style.marginRight`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
-  971:5   warning  Avoid setting styles directly via `element.style.minWidth`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically     obsidianmd/no-static-styles-assignment
-  978:9   warning  Unsafe call of a type that could not be resolved                                                                                                                                                        @typescript-eslint/no-unsafe-call
+    92:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   120:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   173:54  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   251:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   350:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   368:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   386:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   418:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   487:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   506:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   530:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   596:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
+   628:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                      @typescript-eslint/no-floating-promises
+   709:17  warning  Unsafe call of a `Function` typed value                                                                                                                                                                 @typescript-eslint/no-unsafe-call
+   816:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                                                                                                  obsidianmd/prefer-create-el
+   945:33  warning  Promise-returning function provided to variable where a void return was expected                                                                                                                        @typescript-eslint/no-misused-promises
+   995:5   warning  Avoid setting styles directly via `element.style.display`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically      obsidianmd/no-static-styles-assignment
+   996:5   warning  Avoid setting styles directly via `element.style.marginRight`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
+   997:5   warning  Avoid setting styles directly via `element.style.minWidth`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically     obsidianmd/no-static-styles-assignment
+  1004:9   warning  Unsafe call of a type that could not be resolved                                                                                                                                                        @typescript-eslint/no-unsafe-call
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/DateTime/DateParser.ts
   26:13  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
@@ -118,41 +114,39 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   193:58  warning  'token' will use Object's default stringification format ('[object Object]') when stringified                                                                            @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/FunctionField.ts
-   79:23  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
-   80:23  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
-   92:41  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  106:9   warning  Unsafe return of a value of type `any`                                         @typescript-eslint/no-unsafe-return
-  121:40  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  121:53  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  166:57  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  166:70  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  175:34  warning  Unsafe argument of type `any` assigned to a parameter of type `Moment | null`  @typescript-eslint/no-unsafe-argument
-  175:42  warning  Unsafe argument of type `any` assigned to a parameter of type `Moment | null`  @typescript-eslint/no-unsafe-argument
-  181:55  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  181:68  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  248:11  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
-  274:15  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
+   89:23  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
+   90:23  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
+  102:41  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
+  116:9   warning  Unsafe return of a value of type `any`                                         @typescript-eslint/no-unsafe-return
+  131:40  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
+  131:53  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
+  176:57  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
+  176:70  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
+  185:34  warning  Unsafe argument of type `any` assigned to a parameter of type `Moment | null`  @typescript-eslint/no-unsafe-argument
+  185:42  warning  Unsafe argument of type `any` assigned to a parameter of type `Moment | null`  @typescript-eslint/no-unsafe-argument
+  191:55  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
+  191:68  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
+  263:11  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
+  289:15  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Group/GroupingTreeNode.ts
   32:13  warning  Unsafe return of type `Map<any, any>` from function with return type `Map<string[], T[]>`  @typescript-eslint/no-unsafe-return
   41:9   warning  Unsafe return of type `Map<any, any>` from function with return type `Map<string[], T[]>`  @typescript-eslint/no-unsafe-return
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Query.ts
-  514:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  518:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  529:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  533:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlQueryResultsRenderer.ts
    50:38  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                                                                                        obsidianmd/prefer-create-el
    50:38  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                          obsidianmd/prefer-active-doc
    52:44  warning  Use 'createEl('li')' instead of 'document.createElement('li')'                                                                                                      obsidianmd/prefer-create-el
    52:44  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                          obsidianmd/prefer-active-doc
-  106:9   warning  Unsafe assignment to innerHTML                                                                                                                                      no-unsanitized/property
-  106:9   warning  Do not write to DOM directly using innerHTML/outerHTML property                                                                                                     @microsoft/sdl/no-inner-html
-  110:36  warning  Use sentence case for UI text. Expected: 'Loading tasks ...'                                                                                                        obsidianmd/ui/sentence-case
-  266:40  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
-  270:44  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
-  294:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
-  299:48  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+  111:36  warning  Use sentence case for UI text. Expected: 'Loading tasks ...'                                                                                                        obsidianmd/ui/sentence-case
+  267:40  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+  271:44  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+  295:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  300:48  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryRenderer.ts
    47:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
@@ -181,36 +175,38 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
 Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
 If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
   179:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  288:9   warning  Unsafe assignment to innerHTML (Variable 'componentString' declared as function parameter, which is considered unsafe. 'FunctionExpression' at 278:37)                                                                                                                                                                                      no-unsanitized/property
-  288:9   warning  Do not write to DOM directly using innerHTML/outerHTML property                                                                                                                                                                                                                                                                             @microsoft/sdl/no-inner-html
   474:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/ExpandPlaceholders.ts
-  23:60  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-  27:9   warning  Unsafe return of a value of type `any`                                                                  @typescript-eslint/no-unsafe-return
-  69:59  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-  72:61  warning  Unsafe argument of type `any` assigned to a parameter of type `string`                                  @typescript-eslint/no-unsafe-argument
-  74:19  warning  Unsafe assignment of an `any` value                                                                     @typescript-eslint/no-unsafe-assignment
-  83:17  warning  Unsafe return of a value of type `any`                                                                  @typescript-eslint/no-unsafe-return
-  92:43  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-  93:27  warning  Unsafe argument of type `any` assigned to a parameter of type `{ [s: string]: any; } | ArrayLike<any>`  @typescript-eslint/no-unsafe-argument
+   27:60  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
+   31:9   warning  Unsafe return of a value of type `any`                                                                  @typescript-eslint/no-unsafe-return
+   73:59  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
+   85:35  warning  'result' may use Object's default stringification format ('[object Object]') when stringified           @typescript-eslint/no-base-to-string
+  101:19  warning  Unsafe assignment of an `any` value                                                                     @typescript-eslint/no-unsafe-assignment
+  115:31  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
+  116:18  warning  Unsafe member access .query on an `any` value                                                           @typescript-eslint/no-unsafe-member-access
+  142:43  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
+  143:27  warning  Unsafe argument of type `any` assigned to a parameter of type `{ [s: string]: any; } | ArrayLike<any>`  @typescript-eslint/no-unsafe-argument
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/Expression.ts
-   4:60  warning  The `Function` type accepts any function-like value.
+   6:60  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-   9:57  warning  Unexpected any. Specify a different type                                                                                 @typescript-eslint/no-explicit-any
-  23:39  warning  The `Function` type accepts any function-like value.
+  11:57  warning  Unexpected any. Specify a different type                                                                                 @typescript-eslint/no-explicit-any
+  29:39  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-  23:57  warning  Implied eval. Do not use the Function constructor to create functions                                                    @typescript-eslint/no-implied-eval
-  42:48  warning  The `Function` type accepts any function-like value.
+  29:57  warning  Implied eval. Do not use the Function constructor to create functions                                                    @typescript-eslint/no-implied-eval
+  48:48  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-  43:60  warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
-  44:5   warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
-  44:12  warning  Unsafe call of a `Function` typed value                                                                                  @typescript-eslint/no-unsafe-call
-  44:23  warning  Unsafe spread of an `any[]` array type                                                                                   @typescript-eslint/no-unsafe-argument
-  56:55  warning  The `Function` type accepts any function-like value.
+  53:60  warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
+  54:5   warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
+  54:12  warning  Unsafe call of a `Function` typed value                                                                                  @typescript-eslint/no-unsafe-call
+  54:23  warning  Unsafe spread of an `any[]` array type                                                                                   @typescript-eslint/no-unsafe-argument
+  66:55  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-  58:9   warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
+  68:9   warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
+
+/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/JsInTasksQueriesDisabledError.ts
+  7:9  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value  obsidianmd/hardcoded-config-path
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/QueryContext.ts
   27:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
@@ -264,7 +260,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   58:40  warning  Invalid type "never" of template literal expression                                                                                                       @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Recurrence.ts
-  54:17  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
+  52:17  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Task.ts
   102:24  warning  Unexpected any. Specify a different type                                                          @typescript-eslint/no-explicit-any
@@ -335,21 +331,21 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   425:5   warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console            obsidianmd/rule-custom-message
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/main.ts
-   94:13  warning  Unsafe assignment of an `any` value                                                @typescript-eslint/no-unsafe-assignment
-   95:24  warning  Unsafe argument of type `any` assigned to a parameter of type `Partial<Settings>`  @typescript-eslint/no-unsafe-argument
-  100:40  warning  Unsafe argument of type `any` assigned to a parameter of type `string`             @typescript-eslint/no-unsafe-argument
-  100:52  warning  Unsafe member access .globalFilter on an `any` value                               @typescript-eslint/no-unsafe-member-access
-  101:58  warning  Unsafe argument of type `any` assigned to a parameter of type `boolean`            @typescript-eslint/no-unsafe-argument
-  101:70  warning  Unsafe member access .removeGlobalFilter on an `any` value                         @typescript-eslint/no-unsafe-member-access
-  102:39  warning  Unsafe argument of type `any` assigned to a parameter of type `string`             @typescript-eslint/no-unsafe-argument
-  102:51  warning  Unsafe member access .globalQuery on an `any` value                                @typescript-eslint/no-unsafe-member-access
-  138:19  warning  Unsafe assignment of an error typed value                                          @typescript-eslint/no-unsafe-assignment
-  139:19  warning  Unsafe assignment of an error typed value                                          @typescript-eslint/no-unsafe-assignment
-  139:36  warning  Unsafe call of a type that could not be resolved                                   @typescript-eslint/no-unsafe-call
-  139:56  warning  Unsafe member access .getAllProperties on a type that cannot be resolved           @typescript-eslint/no-unsafe-member-access
-  144:36  warning  Unsafe member access [field] on a type that cannot be resolved                     @typescript-eslint/no-unsafe-member-access
-  147:17  warning  Unsafe call of a type that could not be resolved                                   @typescript-eslint/no-unsafe-call
-  147:37  warning  Unsafe member access .setType on a type that cannot be resolved                    @typescript-eslint/no-unsafe-member-access
+   98:13  warning  Unsafe assignment of an `any` value                                                @typescript-eslint/no-unsafe-assignment
+   99:24  warning  Unsafe argument of type `any` assigned to a parameter of type `Partial<Settings>`  @typescript-eslint/no-unsafe-argument
+  104:40  warning  Unsafe argument of type `any` assigned to a parameter of type `string`             @typescript-eslint/no-unsafe-argument
+  104:52  warning  Unsafe member access .globalFilter on an `any` value                               @typescript-eslint/no-unsafe-member-access
+  105:58  warning  Unsafe argument of type `any` assigned to a parameter of type `boolean`            @typescript-eslint/no-unsafe-argument
+  105:70  warning  Unsafe member access .removeGlobalFilter on an `any` value                         @typescript-eslint/no-unsafe-member-access
+  106:39  warning  Unsafe argument of type `any` assigned to a parameter of type `string`             @typescript-eslint/no-unsafe-argument
+  106:51  warning  Unsafe member access .globalQuery on an `any` value                                @typescript-eslint/no-unsafe-member-access
+  142:19  warning  Unsafe assignment of an error typed value                                          @typescript-eslint/no-unsafe-assignment
+  143:19  warning  Unsafe assignment of an error typed value                                          @typescript-eslint/no-unsafe-assignment
+  143:36  warning  Unsafe call of a type that could not be resolved                                   @typescript-eslint/no-unsafe-call
+  143:56  warning  Unsafe member access .getAllProperties on a type that cannot be resolved           @typescript-eslint/no-unsafe-member-access
+  148:36  warning  Unsafe member access [field] on a type that cannot be resolved                     @typescript-eslint/no-unsafe-member-access
+  151:17  warning  Unsafe call of a type that could not be resolved                                   @typescript-eslint/no-unsafe-call
+  151:37  warning  Unsafe member access .setType on a type that cannot be resolved                    @typescript-eslint/no-unsafe-member-access
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/DatePicker.ts
   37:9   warning  Promise-returning function provided to property where a void return was expected                                                                                                                           @typescript-eslint/no-misused-promises
@@ -365,8 +361,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 247 problems (0 errors, 247 warnings)
-  0 errors and 65 warnings potentially fixable with the `--fix` option.
+✖ 241 problems (0 errors, 241 warnings)
+  0 errors and 66 warnings potentially fixable with the `--fix` option.
 
 
 ====================================
@@ -375,4 +371,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 20.08s.
+Done in 20.20s.
