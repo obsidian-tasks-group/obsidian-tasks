@@ -212,7 +212,6 @@
       }
     },
     "searches": {
-      "heading": "Searches",
       "enableCustomSearches": {
         "description": {
           "line1": "Enables '{{filterByFunction}}', '{{sortByFunction}}', and '{{groupByFunction}}', which execute JavaScript in Tasks queries.",
@@ -221,7 +220,8 @@
           "line4": "This setting is stored on this device only; enable it separately on each device where you use this vault."
         },
         "name": "Enable custom searches"
-      }
+      },
+      "heading": "Searches"
     },
     "searchResults": {
       "heading": "Search results",
