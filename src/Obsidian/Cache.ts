@@ -282,21 +282,31 @@ export class Cache {
 
     private getFilesToIndex(): TFile[] {
         const allMarkdownFiles = this.vault.getMarkdownFiles();
+        const filtered = Cache.filterFilesToIndex(allMarkdownFiles, this.extendedMetadataCache);
 
-        if (!this.extendedMetadataCache?.isReady) {
+        if (filtered.length < allMarkdownFiles.length) {
+            this.logger.debug(
+                `Cache.getFilesToIndex(): Extended cache filtered ${allMarkdownFiles.length} files down to ${filtered.length}`,
+            );
+        }
+
+        return filtered;
+    }
+
+    public static filterFilesToIndex(
+        allMarkdownFiles: TFile[],
+        extendedMetadataCache: ExtendedMetadataCacheAPI | undefined,
+    ): TFile[] {
+        if (!extendedMetadataCache?.isReady) {
             return allMarkdownFiles;
         }
 
-        const filesWithTasks = this.extendedMetadataCache.getFilesWithTasks();
+        const filesWithTasks = extendedMetadataCache.getFilesWithTasks();
         if (filesWithTasks.size === 0) {
             return allMarkdownFiles;
         }
 
-        const filtered = allMarkdownFiles.filter((file) => filesWithTasks.has(file.path));
-        this.logger.debug(
-            `Cache.getFilesToIndex(): Extended cache filtered ${allMarkdownFiles.length} files down to ${filtered.length}`,
-        );
-        return filtered;
+        return allMarkdownFiles.filter((file) => filesWithTasks.has(file.path));
     }
 
     private async indexFile(file: TFile): Promise<void> {
@@ -351,12 +361,17 @@ export class Cache {
     }
 
     private removeTasksForPath(path: string): void {
-        const existingTasks = this.tasksByPath.get(path);
+        this.tasks = Cache.removeTasksForPathFromArray(this.tasks, this.tasksByPath, path);
+    }
+
+    public static removeTasksForPathFromArray(tasks: Task[], tasksByPath: Map<string, Task[]>, path: string): Task[] {
+        const existingTasks = tasksByPath.get(path);
         if (existingTasks && existingTasks.length > 0) {
-            const pathsToRemove = new Set(existingTasks);
-            this.tasks = this.tasks.filter((task) => !pathsToRemove.has(task));
+            const tasksToRemove = new Set(existingTasks);
+            tasks = tasks.filter((task) => !tasksToRemove.has(task));
         }
-        this.tasksByPath.delete(path);
+        tasksByPath.delete(path);
+        return tasks;
     }
 
     private getTasksFromFileContent(
