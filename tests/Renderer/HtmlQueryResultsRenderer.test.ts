@@ -419,17 +419,17 @@ function makeRendererWithFiles(source: string, allTasks: Task[], markdownFiles: 
     return { query, renderer };
 }
 
+async function getBacklinkText(allTasks: Task[], markdownFiles: TFile[]): Promise<string | null> {
+    const { query, renderer } = makeRendererWithFiles('', allTasks, markdownFiles);
+    const container = document.createElement('div');
+    renderer.content = container;
+    await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
+
+    const backlinkEl = container.querySelector('.tasks-backlink .internal-link');
+    return backlinkEl?.textContent ?? null;
+}
+
 describe('HtmlQueryResultsRenderer - filename uniqueness caching', () => {
-    async function getBacklinkText(allTasks: Task[], markdownFiles: TFile[]): Promise<string | null> {
-        const { query, renderer } = makeRendererWithFiles('', allTasks, markdownFiles);
-        const container = document.createElement('div');
-        renderer.content = container;
-        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
-
-        const backlinkEl = container.querySelector('.tasks-backlink .internal-link');
-        return backlinkEl?.textContent ?? null;
-    }
-
     it('should show short filename when basename is unique', async () => {
         const task = new TaskBuilder().path('folder/myNote.md').precedingHeader('Section').build();
         const files = [makeTFile('folder/myNote.md'), makeTFile('other/different.md')];
