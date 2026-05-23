@@ -1,10 +1,12 @@
 import moment from 'moment/moment';
+import type { TFile } from 'obsidian';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
 import type { Query } from '../../src/Query/Query';
 import { getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
+import type { HTMLQueryRendererParameters } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { HtmlQueryResultsRenderer } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
@@ -384,5 +386,135 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
         expect(description).toMatchInlineSnapshot(
             '"<span>#task Task with \\[\\[#Escaped Links\\]\\] escaped link</span>"',
         );
+    });
+});
+
+describe('HtmlQueryResultsRenderer - filename uniqueness caching', () => {
+    function makeTFile(path: string): TFile {
+        const basename = path.replace(/^.*\//, '').replace(/\.[^.]+$/, '');
+        return { path, basename } as TFile;
+    }
+
+    function makeRendererWithFiles(source: string, allTasks: Task[], markdownFiles: TFile[]) {
+        const tasksFile = new TasksFile('query.md');
+        const query = getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
+
+        const params: HTMLQueryRendererParameters = {
+            allTasks: () => allTasks,
+            allMarkdownFiles: () => markdownFiles,
+            backlinksClickHandler: () => Promise.resolve(),
+            backlinksMousedownHandler: () => Promise.resolve(),
+            editTaskPencilClickHandler: () => {},
+        };
+
+        const renderer = new HtmlQueryResultsRenderer(
+            () => Promise.resolve(),
+            null,
+            mockApp,
+            mockHTMLRenderer,
+            params,
+            source,
+            tasksFile,
+            query,
+        );
+        return { query, renderer };
+    }
+
+    async function getBacklinkText(allTasks: Task[], markdownFiles: TFile[]): Promise<string | null> {
+        const { query, renderer } = makeRendererWithFiles('', allTasks, markdownFiles);
+        const container = document.createElement('div');
+        renderer.content = container;
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
+
+        const backlinkEl = container.querySelector('.tasks-backlink .internal-link');
+        return backlinkEl?.textContent ?? null;
+    }
+
+    it('should show short filename when basename is unique', async () => {
+        const task = new TaskBuilder().path('folder/myNote.md').precedingHeader('Section').build();
+        const files = [makeTFile('folder/myNote.md'), makeTFile('other/different.md')];
+
+        const linkText = await getBacklinkText([task], files);
+
+        expect(linkText).toEqual('myNote > Section');
+    });
+
+    it('should show full path when basename is not unique', async () => {
+        const task = new TaskBuilder().path('folder/myNote.md').precedingHeader('Section').build();
+        const files = [makeTFile('folder/myNote.md'), makeTFile('other/myNote.md')];
+
+        const linkText = await getBacklinkText([task], files);
+
+        expect(linkText).toEqual('/folder/myNote.md > Section');
+    });
+
+    it('should show short filename when file list is empty', async () => {
+        const task = new TaskBuilder().path('folder/myNote.md').precedingHeader('Section').build();
+
+        const linkText = await getBacklinkText([task], []);
+
+        // Empty file list → basename count is 0 → treated as unique → short name
+        expect(linkText).toEqual('myNote > Section');
+    });
+
+    it('should handle multiple tasks with different uniqueness', async () => {
+        const uniqueTask = new TaskBuilder().path('a/unique.md').description('unique task').build();
+        const sharedTask = new TaskBuilder().path('a/shared.md').description('shared task').build();
+        const files = [makeTFile('a/unique.md'), makeTFile('a/shared.md'), makeTFile('b/shared.md')];
+
+        const { query, renderer } = makeRendererWithFiles('sort by description', [uniqueTask, sharedTask], files);
+        const container = document.createElement('div');
+        renderer.content = container;
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks([uniqueTask, sharedTask]));
+
+        const backlinks = container.querySelectorAll('.tasks-backlink .internal-link');
+        expect(backlinks.length).toBe(2);
+
+        const backlinkTexts = Array.from(backlinks).map((el) => el.textContent);
+        expect(backlinkTexts).toContain('/a/shared.md');
+        expect(backlinkTexts).toContain('unique');
+    });
+
+    it('should invalidate basename cache between renders', async () => {
+        const task = new TaskBuilder().path('folder/myNote.md').build();
+
+        const uniqueFiles = [makeTFile('folder/myNote.md')];
+        const duplicateFiles = [makeTFile('folder/myNote.md'), makeTFile('other/myNote.md')];
+
+        let currentFiles = uniqueFiles;
+        const tasksFile = new TasksFile('query.md');
+        const query = getQueryForQueryRenderer('', GlobalQuery.getInstance(), tasksFile);
+
+        const params: HTMLQueryRendererParameters = {
+            allTasks: () => [task],
+            allMarkdownFiles: () => currentFiles,
+            backlinksClickHandler: () => Promise.resolve(),
+            backlinksMousedownHandler: () => Promise.resolve(),
+            editTaskPencilClickHandler: () => {},
+        };
+
+        const renderer = new HtmlQueryResultsRenderer(
+            () => Promise.resolve(),
+            null,
+            mockApp,
+            mockHTMLRenderer,
+            params,
+            '',
+            tasksFile,
+            query,
+        );
+
+        const container1 = document.createElement('div');
+        renderer.content = container1;
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks([task]));
+        const link1 = container1.querySelector('.tasks-backlink .internal-link');
+        expect(link1?.textContent).toEqual('myNote');
+
+        currentFiles = duplicateFiles;
+        const container2 = document.createElement('div');
+        renderer.content = container2;
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks([task]));
+        const link2 = container2.querySelector('.tasks-backlink .internal-link');
+        expect(link2?.textContent).toEqual('/folder/myNote.md');
     });
 });
