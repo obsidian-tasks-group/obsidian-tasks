@@ -7129,6 +7129,11 @@ object.values@^1.1.7:
     define-properties "^1.2.0"
     es-abstract "^1.22.1"
 
+obsidian-extended-metadatacache@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/obsidian-extended-metadatacache/-/obsidian-extended-metadatacache-0.5.1.tgz#26bd8be926bf678c93273d55c4ef75fedab0cfde"
+  integrity sha512-KkkHo1L2NRtiPyNh5MWOiUxC+eKku+csTduXkRdqQ+jhNC6Rm6Qm3vdwOvmTNBfyoYUaGn3G0nPAtIgDvX8GSA==
+
 obsidian-typings@^2.11.1:
   version "2.11.1"
   resolved "https://registry.yarnpkg.com/obsidian-typings/-/obsidian-typings-2.11.1.tgz#83285273597734c284488aab3c62a818058cdb1a"

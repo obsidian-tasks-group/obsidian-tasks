@@ -88,6 +88,7 @@
     "i18next": "^24.2.1",
     "mustache": "^4.2.0",
     "mustache-validator": "^0.2.0",
+    "obsidian-extended-metadatacache": "^0.5.1",
     "rrule": "^2.8.1"
   }
 }
