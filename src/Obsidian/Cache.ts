@@ -8,6 +8,7 @@ import {
     debounce,
 } from 'obsidian';
 import { MetadataCache, Notice, TAbstractFile, TFile, Vault } from 'obsidian';
+import type { ExtendedMetadataCacheAPI } from 'obsidian-extended-metadatacache';
 import { Mutex } from 'async-mutex';
 import { TasksFile } from '../Scripting/TasksFile';
 import { ListItem } from '../Task/ListItem';
@@ -41,9 +42,12 @@ export class Cache {
     private readonly events: TasksEvents;
     private readonly eventsEventReferences: EventRef[];
 
+    private readonly extendedMetadataCache: ExtendedMetadataCacheAPI | undefined;
+
     private readonly tasksMutex: Mutex;
     private state: State;
     private tasks: Task[];
+    private tasksByPath: Map<string, Task[]> = new Map();
 
     private readonly notifySubscribersDebounced = debounce(
         () => this.notifySubscribersNotDebounced(),
@@ -66,15 +70,18 @@ export class Cache {
         vault,
         workspace,
         events,
+        extendedMetadataCache,
     }: {
         metadataCache: MetadataCache;
         vault: Vault;
         workspace: Workspace;
         events: TasksEvents;
+        extendedMetadataCache?: ExtendedMetadataCacheAPI;
     }) {
         this.logger.debug('Creating Cache object');
 
         this.metadataCache = metadataCache;
+        this.extendedMetadataCache = extendedMetadataCache;
         this.metadataCacheEventReferences = [];
 
         this.vault = vault;
@@ -186,10 +193,7 @@ export class Cache {
             this.logger.debug(`Cache.subscribeToVault.deletedEventReference() ${file.path}`);
 
             this.tasksMutex.runExclusive(() => {
-                this.tasks = this.tasks.filter((task: Task) => {
-                    return task.path !== file.path;
-                });
-
+                this.removeTasksForPath(file.path);
                 this.notifySubscribers();
             });
         });
@@ -207,19 +211,29 @@ export class Cache {
                 const tasksFile = new TasksFile(file.path, fileCache ?? undefined);
                 const fallbackDate = new Lazy(() => DateFallback.fromPath(file.path));
 
+                const renamedTasks: Task[] = [];
                 this.tasks = this.tasks.map((task: Task): Task => {
                     if (task.path !== oldPath) {
                         return task;
                     }
                     const taskLocation = task.taskLocation.fromRenamedFile(tasksFile);
+                    let updated: Task;
                     if (useFilenameAsScheduledDate) {
-                        return DateFallback.updateTaskPath(task, taskLocation, fallbackDate.value);
+                        updated = DateFallback.updateTaskPath(task, taskLocation, fallbackDate.value);
+                    } else {
+                        updated = new Task({
+                            ...task,
+                            taskLocation,
+                        });
                     }
-                    return new Task({
-                        ...task,
-                        taskLocation,
-                    });
+                    renamedTasks.push(updated);
+                    return updated;
                 });
+
+                this.tasksByPath.delete(oldPath);
+                if (renamedTasks.length > 0) {
+                    this.tasksByPath.set(file.path, renamedTasks);
+                }
 
                 this.notifySubscribers();
             });
@@ -250,23 +264,39 @@ export class Cache {
             this.state = State.Initializing;
             this.logger.debug('Cache.loadVault(): state = Initializing');
 
+            const filesToIndex = this.getFilesToIndex();
+
             await Promise.all(
-                this.vault.getMarkdownFiles().map((file: TFile) => {
+                filesToIndex.map((file: TFile) => {
                     return this.indexFile(file);
                 }),
             );
             this.state = State.Warm;
-            // TODO Why is this displayed twice:
             this.logger.debug('Cache.loadVault(): state = Warm');
 
-            // Report that we have finished loading before notifying subscribers,
-            // so we don't double-count things like redrawing search results.
-            // These have their own timer code.
             measureLoad.finish();
 
-            // Notify that the cache is now warm:
             this.notifySubscribers();
         });
+    }
+
+    private getFilesToIndex(): TFile[] {
+        const allMarkdownFiles = this.vault.getMarkdownFiles();
+
+        if (!this.extendedMetadataCache?.isReady) {
+            return allMarkdownFiles;
+        }
+
+        const filesWithTasks = this.extendedMetadataCache.getFilesWithTasks();
+        if (filesWithTasks.size === 0) {
+            return allMarkdownFiles;
+        }
+
+        const filtered = allMarkdownFiles.filter((file) => filesWithTasks.has(file.path));
+        this.logger.debug(
+            `Cache.getFilesToIndex(): Extended cache filtered ${allMarkdownFiles.length} files down to ${filtered.length}`,
+        );
+        return filtered;
     }
 
     private async indexFile(file: TFile): Promise<void> {
@@ -282,9 +312,7 @@ export class Cache {
 
         this.logger.debug('Cache.indexFile: ' + file.path);
 
-        const oldTasks = this.tasks.filter((task: Task) => {
-            return task.path === file.path;
-        });
+        const oldTasks = this.tasksByPath.get(file.path) ?? [];
 
         const listItems = fileCache.listItems;
         // When there is no list items cache, there are no tasks.
@@ -307,35 +335,28 @@ export class Cache {
         // If there are no changes in any of the tasks, there's
         // nothing to do, so just return.
         if (ListItem.listsAreIdentical(oldTasks, newTasks)) {
-            // This code kept for now, to allow for debugging during development.
-            // It is too verbose to release to users.
-            // if (this.getState() == State.Warm) {
-            //     this.logger.debug(`Tasks unchanged in ${file.path}`);
-            // }
             return;
         }
 
-        // Temporary edit - See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
-        /*
-        if (this.getState() == State.Warm) {
-            // this.logger.debug(`Cache read: ${file.path}`);
-            this.logger.debug(
-                `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
-            );
-        }
-        */
-
         // Remove all tasks from this file from the cache before
         // adding the ones that are currently in the file.
-        this.tasks = this.tasks.filter((task: Task) => {
-            return task.path !== file.path;
-        });
+        this.removeTasksForPath(file.path);
 
         this.tasks.push(...newTasks);
+        this.tasksByPath.set(file.path, newTasks);
         this.logger.debug('Cache.indexFile: ' + file.path + `: read ${newTasks.length} task(s)`);
 
         // All updated, inform our subscribers.
         this.notifySubscribers();
+    }
+
+    private removeTasksForPath(path: string): void {
+        const existingTasks = this.tasksByPath.get(path);
+        if (existingTasks && existingTasks.length > 0) {
+            const pathsToRemove = new Set(existingTasks);
+            this.tasks = this.tasks.filter((task) => !pathsToRemove.has(task));
+        }
+        this.tasksByPath.delete(path);
     }
 
     private getTasksFromFileContent(

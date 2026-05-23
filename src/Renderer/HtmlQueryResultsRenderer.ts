@@ -52,6 +52,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     private lastLIElement: HTMLLIElement = document.createElement('li');
 
     private readonly htmlQueryRendererParameters: HTMLQueryRendererParameters;
+    private basenameCount: Map<string, number> | undefined;
 
     constructor(
         renderMarkdown: (
@@ -86,7 +87,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected beginRender(): void {
-        return;
+        this.basenameCount = undefined;
     }
 
     protected renderSearchResultsHeader(queryResult: QueryResult): void {
@@ -151,7 +152,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected async addTask(task: Task, taskIndex: number): Promise<void> {
-        const isFilenameUnique = this.isFilenameUnique({ task }, this.htmlQueryRendererParameters.allMarkdownFiles());
+        const isFilenameUnique = this.isFilenameUnique({ task });
         const listItem = this.lastLIElement;
 
         await this.taskLineRenderer.renderTaskLine({
@@ -310,22 +311,24 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    private isFilenameUnique({ task }: { task: Task }, allMarkdownFiles: TFile[]): boolean | undefined {
-        // Will match the filename without extension (the file's "basename").
+    private getBasenameCount(): Map<string, number> {
+        if (this.basenameCount === undefined) {
+            this.basenameCount = new Map();
+            for (const file of this.htmlQueryRendererParameters.allMarkdownFiles()) {
+                this.basenameCount.set(file.basename, (this.basenameCount.get(file.basename) ?? 0) + 1);
+            }
+        }
+        return this.basenameCount;
+    }
+
+    private isFilenameUnique({ task }: { task: Task }): boolean | undefined {
         const filenameMatch = task.path.match(/([^/]*)\..+$/i);
         if (filenameMatch === null) {
             return undefined;
         }
 
-        const filename = filenameMatch[1];
-        const allFilesWithSameName = allMarkdownFiles.filter((file: TFile) => {
-            if (file.basename === filename) {
-                // Found a file with the same name (it might actually be the same file, but we'll take that into account later.)
-                return true;
-            }
-        });
-
-        return allFilesWithSameName.length < 2;
+        const basename = filenameMatch[1];
+        return (this.getBasenameCount().get(basename) ?? 0) < 2;
     }
 
     private getGroupingAttribute() {

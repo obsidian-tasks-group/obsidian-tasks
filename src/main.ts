@@ -1,4 +1,5 @@
 import { Plugin, type Reference, getLinkpath } from 'obsidian';
+import { type ExtendedMetadataCacheHandle, getAPI } from 'obsidian-extended-metadatacache';
 
 import type { Task } from 'Task/Task';
 import { i18n, initializeI18n } from './i18n/i18n';
@@ -25,6 +26,7 @@ import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
+    private extendedCacheHandle: ExtendedMetadataCacheHandle | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
 
@@ -66,11 +68,15 @@ export default class TasksPlugin extends Plugin {
         // Load configured status types.
         await this.loadTaskStatuses();
 
+        // Initialize extended metadata cache for inverse lookups (metadata → files).
+        this.extendedCacheHandle = getAPI(this.app);
+
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,
             workspace: this.app.workspace,
             events,
+            extendedMetadataCache: this.extendedCacheHandle.api,
         });
 
         this.inlineRenderer = new InlineRenderer({ plugin: this, app: this.app });
@@ -92,6 +98,7 @@ export default class TasksPlugin extends Plugin {
     onunload() {
         log('info', i18n.t('main.unloadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
         this.cache?.unload();
+        this.extendedCacheHandle?.release();
     }
 
     async loadSettings() {
