@@ -146,6 +146,7 @@ export default defineConfig([
             'obsidianmd/hardcoded-config-path': 0, // These were all 'https://publish.obsidian.md/tasks/' references!!!
             'obsidianmd/no-nodejs-modules': 0, // Can disable this on test files
             'obsidianmd/no-static-styles-assignment': 0, // This likely does need addressing
+            'obsidianmd/no-tfile-tfolder-cast': 0, // Tests need mock TFile/TFolder objects
             'obsidianmd/prefer-active-doc': 0,
             'obsidianmd/prefer-active-window-timers': 0,
             'obsidianmd/prefer-create-el': 0,
