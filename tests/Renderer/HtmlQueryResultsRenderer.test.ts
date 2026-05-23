@@ -389,37 +389,37 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
     });
 });
 
+function makeTFile(path: string): TFile {
+    const basename = path.replace(/^.*\//, '').replace(/\.[^.]+$/, '');
+    return { path, basename } as TFile;
+}
+
+function makeRendererWithFiles(source: string, allTasks: Task[], markdownFiles: TFile[]) {
+    const tasksFile = new TasksFile('query.md');
+    const query = getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
+
+    const params: HTMLQueryRendererParameters = {
+        allTasks: () => allTasks,
+        allMarkdownFiles: () => markdownFiles,
+        backlinksClickHandler: () => Promise.resolve(),
+        backlinksMousedownHandler: () => Promise.resolve(),
+        editTaskPencilClickHandler: () => {},
+    };
+
+    const renderer = new HtmlQueryResultsRenderer(
+        () => Promise.resolve(),
+        null,
+        mockApp,
+        mockHTMLRenderer,
+        params,
+        source,
+        tasksFile,
+        query,
+    );
+    return { query, renderer };
+}
+
 describe('HtmlQueryResultsRenderer - filename uniqueness caching', () => {
-    function makeTFile(path: string): TFile {
-        const basename = path.replace(/^.*\//, '').replace(/\.[^.]+$/, '');
-        return { path, basename } as TFile;
-    }
-
-    function makeRendererWithFiles(source: string, allTasks: Task[], markdownFiles: TFile[]) {
-        const tasksFile = new TasksFile('query.md');
-        const query = getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
-
-        const params: HTMLQueryRendererParameters = {
-            allTasks: () => allTasks,
-            allMarkdownFiles: () => markdownFiles,
-            backlinksClickHandler: () => Promise.resolve(),
-            backlinksMousedownHandler: () => Promise.resolve(),
-            editTaskPencilClickHandler: () => {},
-        };
-
-        const renderer = new HtmlQueryResultsRenderer(
-            () => Promise.resolve(),
-            null,
-            mockApp,
-            mockHTMLRenderer,
-            params,
-            source,
-            tasksFile,
-            query,
-        );
-        return { query, renderer };
-    }
-
     async function getBacklinkText(allTasks: Task[], markdownFiles: TFile[]): Promise<string | null> {
         const { query, renderer } = makeRendererWithFiles('', allTasks, markdownFiles);
         const container = document.createElement('div');

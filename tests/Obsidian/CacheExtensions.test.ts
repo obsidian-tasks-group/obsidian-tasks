@@ -16,6 +16,10 @@ function makeExtendedCache(opts: { isReady: boolean; filesWithTasks: Set<string>
     } as unknown as ExtendedMetadataCacheAPI;
 }
 
+function makeTask(path: string, description: string): Task {
+    return new TaskBuilder().path(path).description(description).build();
+}
+
 describe('Cache.filterFilesToIndex', () => {
     const fileA = makeTFile('notes/a.md');
     const fileB = makeTFile('notes/b.md');
@@ -74,10 +78,6 @@ describe('Cache.filterFilesToIndex', () => {
 });
 
 describe('Cache.removeTasksForPathFromArray', () => {
-    function makeTask(path: string, description: string): Task {
-        return new TaskBuilder().path(path).description(description).build();
-    }
-
     it('should remove tasks for an existing path', () => {
         const taskA1 = makeTask('a.md', 'task A1');
         const taskA2 = makeTask('a.md', 'task A2');
@@ -178,10 +178,6 @@ describe('Cache.removeTasksForPathFromArray', () => {
 });
 
 describe('tasksByPath consistency', () => {
-    function makeTask(path: string, description: string): Task {
-        return new TaskBuilder().path(path).description(description).build();
-    }
-
     it('should maintain consistency after sequential add and remove operations', () => {
         const taskA = makeTask('a.md', 'A');
         const taskB = makeTask('b.md', 'B');
