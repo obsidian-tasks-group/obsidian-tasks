@@ -43,11 +43,11 @@ export class Cache {
     private readonly eventsEventReferences: EventRef[];
 
     private readonly extendedMetadataCache: ExtendedMetadataCacheAPI | undefined;
+    private readonly tasksByPath: Map<string, Task[]> = new Map();
 
     private readonly tasksMutex: Mutex;
     private state: State;
     private tasks: Task[];
-    private tasksByPath: Map<string, Task[]> = new Map();
 
     private readonly notifySubscribersDebounced = debounce(
         () => this.notifySubscribersNotDebounced(),
