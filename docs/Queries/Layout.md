@@ -212,6 +212,9 @@ hide nested backlink
 > `hide nested backlink` only has a visible effect together with `show tree`.
 > In the default flat layout there are no nested tasks, so the instruction does nothing.
 >
+> In `short mode` ([[#Short Mode]]), all backlinks are in the `🔗` compact mode, so `hide nested backlink`
+> has no visible effect.
+>
 > To hide backlinks on **all** tasks, including the top-level ones, use `hide backlink` instead.
 
 ## Example of show and hide
