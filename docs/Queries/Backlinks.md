@@ -33,6 +33,15 @@ You can click on a backlink to navigate directly to the task's source line.
 > [!released]
 > Navigating directly to the task line was introduced in Tasks 3.4.0.
 
+## Hiding and shortening backlinks
+
+You can control backlinks in search results with these query instructions:
+
+- `hide backlink` removes backlinks from all tasks. See [[Layout]].
+- `hide nested backlink` keeps the full backlink on top-level tasks but replaces the repeated
+  backlink on nested tasks (when using `show tree`) with a compact `🔗` link.
+  See [[Layout#Hide and Show Nested Backlink|Nested Backlink]].
+
 ## Support
 
 We use the label `scope: backlinks` to track feedback on backlinks:

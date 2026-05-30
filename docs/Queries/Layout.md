@@ -69,6 +69,7 @@ The following query elements exist:
 | `edit button`     | Shown   | Edit task button                | [[Create or edit Task]]       |
 | `postpone button` | Shown   | Postpone button on dates        | [[Postponing]]                |
 | `backlink`        | Shown   | Task backlink for tasks         | [[Backlinks]]                 |
+| `nested backlink` | Shown   | Full backlink on nested tasks   | [[#Hide and Show Nested Backlink\|Nested Backlink]] |
 | `urgency`         | Hidden  | Task urgency score              | [[Urgency]]                   |
 | `task count`      | Shown   | Total number of tasks           |                               |
 
@@ -77,6 +78,7 @@ The following query elements exist:
 > - `urgency` was introduced in Tasks 1.14.0.
 > - `tree` was introduced in Tasks 7.12.0.
 > - `toolbar` was introduced in Tasks 7.23.0.
+> - `nested backlink` was introduced in Tasks X.Y.Z.
 
 All of these query elements except `urgency` and `tree` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score or tree view.
@@ -183,6 +185,34 @@ The `show tree` instruction enables us to see the parent/child relationships in 
   - Child tasks and list items are displayed in the order that they appear in the file. They are not affected by any `sort by` instructions.
 - For now, the **tree layout is turned off by default**, whilst we explore how it should interact with the filtering instructions.
   - We hope to make it the default behaviour in a future release.
+
+### Hide and Show Nested Backlink
+
+> [!released]
+> `nested backlink` was introduced in Tasks X.Y.Z.
+
+When you use `show tree`, every nested task shows its own [[Backlinks|backlink]], which repeats the
+same filename and heading as its top-level parent task. This can add a lot of repeated text to the results.
+
+The `hide nested backlink` instruction removes that repetition: nested tasks are instead given a
+compact `🔗` link to their source line (the same compact link used by [[#Short Mode]]), whilst the
+**top-level tasks keep their full backlink**.
+
+````text
+```tasks
+not done
+filename includes Party Planner
+
+show tree
+hide nested backlink
+```
+````
+
+> [!Note]
+> `hide nested backlink` only has a visible effect together with `show tree`.
+> In the default flat layout there are no nested tasks, so the instruction does nothing.
+>
+> To hide backlinks on **all** tasks, including the top-level ones, use `hide backlink` instead.
 
 ## Example of show and hide
 
