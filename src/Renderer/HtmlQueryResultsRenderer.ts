@@ -175,12 +175,15 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         const shortMode = this.query.queryLayoutOptions.shortMode;
 
-        if (!this.query.queryLayoutOptions.hideBacklinks) {
-            // Nested tasks always have the same backlink as their top-level parent, so when
-            // 'hide nested backlink' is set we render them with the compact 🔗 link (as in short mode).
-            const isNested = this.nestingLevel > 0;
-            const useShortBacklink = shortMode || (this.query.queryLayoutOptions.hideNestedBacklinks && isNested);
-            this.addBacklinks(extrasSpan, task, useShortBacklink, isFilenameUnique);
+        // hide backlink when `hide backlinks` is set
+        // or when `hide nested backlinks` is set and the task is nested
+        const isNested = this.nestingLevel > 0;
+        const hideBacklink =
+            this.query.queryLayoutOptions.hideBacklinks ||
+            (this.query.queryLayoutOptions.hideNestedBacklinks && isNested);
+
+        if (!hideBacklink) {
+            this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
         }
 
         if (!this.query.queryLayoutOptions.hideEditButton) {

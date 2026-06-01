@@ -69,7 +69,7 @@ The following query elements exist:
 | `edit button`     | Shown   | Edit task button                | [[Create or edit Task]]       |
 | `postpone button` | Shown   | Postpone button on dates        | [[Postponing]]                |
 | `backlink`        | Shown   | Task backlink for tasks         | [[Backlinks]]                 |
-| `nested backlink` | Shown   | Full backlink on nested tasks   | [[#Hide and Show Nested Backlink\|Nested Backlink]] |
+| `nested backlink` | Shown   | Backlink on nested tasks        | [[#Hide and Show Nested Backlink\|Nested Backlink]] |
 | `urgency`         | Hidden  | Task urgency score              | [[Urgency]]                   |
 | `task count`      | Shown   | Total number of tasks           |                               |
 
@@ -194,9 +194,8 @@ The `show tree` instruction enables us to see the parent/child relationships in 
 When you use `show tree`, every nested task shows its own [[Backlinks|backlink]], which repeats the
 same filename and heading as its top-level parent task. This can add a lot of repeated text to the results.
 
-The `hide nested backlink` instruction removes that repetition: nested tasks are instead given a
-compact `🔗` link to their source line (the same compact link used by [[#Short Mode]]), whilst the
-**top-level tasks keep their full backlink**.
+The `hide nested backlink` instruction removes that repetition by **hiding the backlink on nested tasks
+entirely**, whilst the **top-level tasks keep their full backlink**.
 
 ````text
 ```tasks
@@ -209,11 +208,8 @@ hide nested backlink
 ````
 
 > [!Note]
-> `hide nested backlink` only has a visible effect together with `show tree`.
+> `hide nested backlink` only affects nested tasks, so it only has a visible effect together with `show tree`.
 > In the default flat layout there are no nested tasks, so the instruction does nothing.
->
-> In `short mode` ([[#Short Mode]]), all backlinks are in the `🔗` compact mode, so `hide nested backlink`
-> has no visible effect.
 >
 > To hide backlinks on **all** tasks, including the top-level ones, use `hide backlink` instead.
 

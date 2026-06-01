@@ -181,7 +181,7 @@ group by function 'level4'
 
     it('hide nested backlinks - tree', async () => {
         // Top-level tasks (parent and sibling) keep their full backlink,
-        // while every nested task is rendered with the compact 🔗 link instead.
+        // while every nested task has its backlink hidden entirely.
         const allTasks = readTasksFromSimulatedFile(
             'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
         );
