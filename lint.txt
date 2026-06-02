@@ -255,9 +255,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   159:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
   159:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/OnCompletion.ts
-  58:41  warning  Invalid type "never" of template literal expression  @typescript-eslint/restrict-template-expressions
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Task.ts
   102:24  warning  Unexpected any. Specify a different type                                                          @typescript-eslint/no-explicit-any
   143:9   warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
@@ -270,9 +267,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   176:93  warning  Unexpected any. Specify a different type                                                          @typescript-eslint/no-explicit-any
   848:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
   848:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/TaskSerializer/DefaultTaskSerializer.ts
-  237:85  warning  Invalid type "never" of template literal expression  @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/i18n/i18n.ts
   65:9  warning  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
@@ -349,7 +343,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 233 problems (0 errors, 233 warnings)
+✖ 231 problems (0 errors, 231 warnings)
   0 errors and 66 warnings potentially fixable with the `--fix` option.
 
 
@@ -359,4 +353,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 20.22s.
+Done in 30.09s.
