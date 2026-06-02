@@ -169,7 +169,7 @@ export abstract class Field {
      */
     protected sorterRegExp(): RegExp {
         if (!this.supportsSorting()) {
-            throw Error(`sorterRegExp() unimplemented for ${this.fieldNameSingular()}`);
+            throw new Error(`sorterRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
         return new RegExp(`^sort by ${this.fieldNameSingularEscaped()}( reverse)?`, 'i');
@@ -197,7 +197,7 @@ export abstract class Field {
      * particular {@link Field} implementation.
      */
     public comparator(): Comparator {
-        throw Error(`comparator() unimplemented for ${this.fieldNameSingular()}`);
+        throw new Error(`comparator() unimplemented for ${this.fieldNameSingular()}`);
     }
 
     /**
@@ -280,7 +280,7 @@ export abstract class Field {
      */
     protected grouperRegExp(): RegExp {
         if (!this.supportsGrouping()) {
-            throw Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
+            throw new Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
         // The $ at end is required to distinguish between group by status and status.name
@@ -309,7 +309,7 @@ export abstract class Field {
      * particular {@link Field} implementation.
      */
     public grouper(): GrouperFunction {
-        throw Error(`grouper() unimplemented for ${this.fieldNameSingular()}`);
+        throw new Error(`grouper() unimplemented for ${this.fieldNameSingular()}`);
     }
 
     /**

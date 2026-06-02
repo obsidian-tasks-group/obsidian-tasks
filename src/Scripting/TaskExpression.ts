@@ -74,7 +74,7 @@ export class TaskExpression {
      */
     public evaluate(task: Task, queryContext?: QueryContext) {
         if (!this.isValid()) {
-            throw Error(
+            throw new Error(
                 `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`,
             );
         }

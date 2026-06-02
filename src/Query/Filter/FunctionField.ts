@@ -242,7 +242,7 @@ export class FunctionField extends Field {
      * @throws Error
      */
     public grouper(): GrouperFunction {
-        throw Error('grouper() function not valid for FunctionField. Use createGrouperFromLine() instead.');
+        throw new Error('grouper() function not valid for FunctionField. Use createGrouperFromLine() instead.');
     }
 }
 
@@ -268,7 +268,7 @@ export function filterByFunction(expression: TaskExpression, task: Task, queryCo
         return result;
     }
 
-    throw Error(`filtering function must return true or false. This returned "${result}".`);
+    throw new Error(`filtering function must return true or false. This returned "${result}".`);
 }
 
 // -----------------------------------------------------------------------------------------------------------------
