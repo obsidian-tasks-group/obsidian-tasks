@@ -110,8 +110,8 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   63:9   warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/BooleanField.ts
-  193:58  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Token`  @typescript-eslint/restrict-plus-operands
-  193:58  warning  'token' will use Object's default stringification format ('[object Object]') when stringified                                                                            @typescript-eslint/no-base-to-string
+  193:62  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Token`  @typescript-eslint/restrict-plus-operands
+  193:62  warning  'token' will use Object's default stringification format ('[object Object]') when stringified                                                                            @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/FunctionField.ts
    89:23  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
@@ -353,4 +353,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 30.09s.
+Done in 26.11s.
