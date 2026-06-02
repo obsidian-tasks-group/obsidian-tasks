@@ -256,11 +256,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   159:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/OnCompletion.ts
-  58:5   warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-  58:40  warning  Invalid type "never" of template literal expression                                                                                                       @typescript-eslint/restrict-template-expressions
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Recurrence.ts
-  52:17  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
+  58:41  warning  Invalid type "never" of template literal expression  @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Task.ts
   102:24  warning  Unexpected any. Specify a different type                                                          @typescript-eslint/no-explicit-any
@@ -279,9 +275,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   237:85  warning  Invalid type "never" of template literal expression  @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/i18n/i18n.ts
-  20:5  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-  55:9  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-  72:9  warning  Unsafe return of a value of type `any`                                                                                                                    @typescript-eslint/no-unsafe-return
+  65:9  warning  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/ExceptionTools.ts
    6:79  warning  Unexpected any. Specify a different type                                                                                                                                 @typescript-eslint/no-explicit-any
@@ -293,10 +287,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/PerformanceTracker.ts
   56:13  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
   58:13  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/RegExpTools.ts
-  36:9  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-  37:9  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/TypeDetection.ts
   5:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
@@ -359,7 +349,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 239 problems (0 errors, 239 warnings)
+✖ 233 problems (0 errors, 233 warnings)
   0 errors and 66 warnings potentially fixable with the `--fix` option.
 
 
@@ -369,4 +359,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 19.81s.
+Done in 20.22s.
