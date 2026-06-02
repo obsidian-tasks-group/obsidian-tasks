@@ -1,7 +1,6 @@
-import process from 'process';
+import process from 'node:process';
 import { sassPlugin } from 'esbuild-sass-plugin';
 import esbuild from 'esbuild';
-import builtins from 'builtin-modules';
 import esbuildSvelte from 'esbuild-svelte';
 import sveltePreprocess from 'svelte-preprocess';
 
@@ -196,7 +195,6 @@ const buildOptions = {
         '@codemirror/stream-parser',
         '@codemirror/text',
         '@codemirror/view',
-        ...builtins,
     ],
     format: 'cjs',
     logLevel: 'info',
