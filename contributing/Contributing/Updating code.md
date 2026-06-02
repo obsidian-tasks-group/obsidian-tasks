@@ -52,8 +52,11 @@ Before submitting:
 
 ## Creating the PR
 
-1. [ ] Use the PR template.
-2. [ ] Write a clear description of what the PR does and why (link to the issue).
+1. [ ] Use the [PR template](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/.github/pull_request_template.md).
+2. [ ] Write a clear description – from a user perspective – of what the PR does and why (link to the issue).
+    - We will delete any detailed descriptions of the changes in the code, however, or lists of tests, however, because:
+        1. the changes should be self-explanatory in the code,
+        2. and they tend to become inaccurate as code evolves during the PR review process.
 3. [ ] Keep the title concise (e.g., "Fix: task completion not saving" or "Feature: add recurring tasks").
 
 Once submitted, maintainers will review when they have capacity.
