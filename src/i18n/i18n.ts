@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import { getLanguage } from 'obsidian';
 import be from './locales/be.json';
 import de from './locales/de.json';
 import en from './locales/en.json';
@@ -13,7 +14,7 @@ let isInitialized = false;
 
 // Get Obsidian language settings
 const getObsidianLanguage = (): string => {
-    const storedLanguage = localStorage.getItem('language');
+    const storedLanguage = getLanguage();
     const selectedLanguage = storedLanguage || 'en';
 
     console.log(`Language in Obsidian settings: '${selectedLanguage}'; requesting Tasks in '${selectedLanguage}'.`);

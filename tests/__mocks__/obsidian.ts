@@ -243,6 +243,10 @@ export function debounce<T extends unknown[], V>(
     return debouncer;
 }
 
+export function getLanguage() {
+    return 'en';
+}
+
 /**
  * A mock implementation of the Obsidian Modal class.
  * Without this testing the TaskModal throws an error attempting to extend Modal
