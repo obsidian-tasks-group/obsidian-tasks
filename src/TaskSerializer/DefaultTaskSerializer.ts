@@ -234,7 +234,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
             case TaskLayoutComponent.BlockLink:
                 return task.blockLink ?? '';
             default:
-                throw new Error(`Don't know how to render task component of type '${component}'`);
+                // 'as string' overrides ESLint 'Invalid type "never" of template literal expression' error,
+                // whilst still allowing the run-time to check that we've handled all cases, if new
+                // components are added in future.
+                throw new Error(`Don't know how to render task component of type '${component as string}'`);
         }
     }
 

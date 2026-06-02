@@ -55,7 +55,7 @@ export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[]
 
     // We will only reach here when adding a new option to OnCompletion, and before
     // the handler code has been added. This is expected to be found in tests.
-    console.warn(`OnCompletion action ${ocAction} not yet implemented.`);
+    console.warn(`OnCompletion action ${ocAction as string} not yet implemented.`);
 
     return newTasks;
 }
