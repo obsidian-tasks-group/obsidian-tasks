@@ -82,7 +82,7 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
                 if (result !== undefined) {
                     // Existing placeholder behaviour intentionally uses JavaScript string coercion.
                     // This preserves - for now - compatibility, including existing handling of object results.
-                    return String(result);
+                    return stringifyPlaceholderResult(result);
                 }
             }
         }
@@ -103,13 +103,17 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
                 throwInvalidPlaceholderError(reconstructed);
             }
             if (result !== undefined) {
-                return String(result);
+                return stringifyPlaceholderResult(result);
             }
         }
 
         // Fall back on returning the raw string, including {{ and }} - and get Mustache to report the error.
         return _match;
     });
+}
+
+function stringifyPlaceholderResult(result: unknown): string {
+    return String(result);
 }
 
 function isQueryContext(view: any): view is QueryContext {
