@@ -80,8 +80,6 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
                     throwInvalidPlaceholderError(reconstructed);
                 }
                 if (result !== undefined) {
-                    // Existing placeholder behaviour intentionally uses JavaScript string coercion.
-                    // This preserves - for now - compatibility, including existing handling of object results.
                     return stringifyPlaceholderResult(result);
                 }
             }
@@ -113,6 +111,10 @@ function evaluateAnyFunctionCalls(template: string, view: any) {
 }
 
 function stringifyPlaceholderResult(result: unknown): string {
+    if (typeof result === 'object') {
+        return JSON.stringify(result);
+    }
+
     return String(result);
 }
 
