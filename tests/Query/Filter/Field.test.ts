@@ -8,7 +8,7 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 class TestFieldSortingUnSupported extends Field {
     // Filtering
     createFilterOrErrorMessage(_line: string): FilterOrErrorMessage {
-        throw Error(`createFilterOrErrorMessage() unimplemented for ${this.fieldName()}`);
+        throw new Error(`createFilterOrErrorMessage() unimplemented for ${this.fieldName()}`);
     }
 
     fieldName(): string {
@@ -16,14 +16,14 @@ class TestFieldSortingUnSupported extends Field {
     }
 
     protected filterRegExp(): RegExp | null {
-        throw Error(`filterRegExp() unimplemented for ${this.fieldName()}`);
+        throw new Error(`filterRegExp() unimplemented for ${this.fieldName()}`);
     }
 }
 
 class DescriptionLengthField extends Field {
     // Filtering
     createFilterOrErrorMessage(_line: string): FilterOrErrorMessage {
-        throw Error(`createFilterOrErrorMessage() unimplemented for ${this.fieldName()}`);
+        throw new Error(`createFilterOrErrorMessage() unimplemented for ${this.fieldName()}`);
     }
 
     fieldName(): string {
@@ -31,7 +31,7 @@ class DescriptionLengthField extends Field {
     }
 
     protected filterRegExp(): RegExp | null {
-        throw Error(`filterRegExp() unimplemented for ${this.fieldName()}`);
+        throw new Error(`filterRegExp() unimplemented for ${this.fieldName()}`);
     }
 
     // Sorting
