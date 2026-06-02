@@ -1,6 +1,5 @@
 import type { ListItemCache, Pos } from 'obsidian';
 import type { ListItem } from '../Task/ListItem';
-import type { Task } from '../Task/Task';
 
 // See File.test.ts for how to use this.
 
