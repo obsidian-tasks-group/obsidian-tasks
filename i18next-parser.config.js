@@ -10,6 +10,7 @@ module.exports = {
         'pt_br',
         'ru',
         'uk',
+        'tr',
         'vi',
         'zh_cn',
     ],

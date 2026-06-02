@@ -7,6 +7,7 @@ import pt_br from './locales/pt_br.json';
 import ru from './locales/ru.json';
 import uk from './locales/uk.json';
 import vi from './locales/vi.json';
+import tr from './locales/tr.json';
 import zh_cn from './locales/zh_cn.json';
 
 let isInitialized = false;
@@ -38,6 +39,7 @@ export const initializeI18n = async () => {
                 ko: { translation: ko }, // Korean
                 'pt-BR': { translation: pt_br }, // Portuguese (Brazil)
                 ru: { translation: ru }, // Russian
+                tr: { translation: tr }, // Turkish
                 uk: { translation: uk }, // Ukrainian
                 vi: { translation: vi }, // Vietnamese
                 zh: { translation: zh_cn }, // Chinese (Simplified)
