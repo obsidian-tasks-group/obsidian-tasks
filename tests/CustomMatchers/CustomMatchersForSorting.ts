@@ -9,6 +9,7 @@ import { TasksFile } from '../../src/Scripting/TasksFile';
 declare global {
     namespace jest {
         interface Matchers<R> {
+            toBeSorted(): R; // see https://www.npmjs.com/package/jest-sorted
             toGiveCompareToResult(expected: number): R;
             toCompareTasksWithResult(expected: number): R;
         }

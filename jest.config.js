@@ -20,6 +20,7 @@ module.exports = {
     setupFilesAfterEnv: [
         '<rootDir>/tests/jest.setup.ts',
         '<rootDir>/tests/CustomMatchers/jest.custom_matchers.setup.ts',
+        'jest-sorted',
     ],
     globalSetup: './tests/global-setup.js',
 };
