@@ -1,5 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import i18next from 'i18next';
 import { initializeI18n } from '../../src/i18n/i18n';
 
 function readI18nJsonImports(): Readonly<string[]> {
@@ -24,6 +25,15 @@ describe('i18n locale consistency', () => {
 
     it('"i18n.ts" should list Json imports in alphabetical order', () => {
         expect(i18nImports).toEqual([...i18nImports].sort());
+    });
+
+    it('"i18n.ts" should list resources imports in alphabetical order', () => {
+        // initializeI18n() must have been called before accessing i18next.store.data
+        // In Jest, beforeAll() runs after the describe() callback body has been evaluated,
+        // but before the tests inside that 'describe' are executed.
+        // This means we have to get the i18next keys inside an 'it' block.
+        const i18nResourceNames = Object.keys(i18next.store.data);
+        expect(i18nResourceNames).toEqual([...i18nResourceNames].sort());
     });
 
     it('"i18next-parser.config.js" should list locales in alphabetical order', () => {
