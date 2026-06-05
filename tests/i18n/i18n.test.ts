@@ -59,11 +59,13 @@ describe('i18n locale consistency', () => {
         });
     });
 
-    it('"i18next-parser.config.js" should list locales in alphabetical order', () => {
-        expect(parserLocales).toBeSorted();
-    });
+    describe('"i18next-parser.config.js"', () => {
+        it('should list locales in alphabetical order', () => {
+            expect(parserLocales).toBeSorted();
+        });
 
-    it('"i18next-parser.config.js" should reference all JSON files', () => {
-        expect(parserLocales).toEqual(allJsonLocaleFileBaseNames);
+        it('should reference all JSON files', () => {
+            expect(parserLocales).toEqual(allJsonLocaleFileBaseNames);
+        });
     });
 });
