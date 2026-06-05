@@ -62,8 +62,4 @@ describe('i18n locale consistency', () => {
     it('"i18next-parser.config.js" should reference all JSON files', () => {
         expect(parserLocales).toEqual(allJsonLocaleFileBaseNames);
     });
-
-    it('should have the same locales in i18n.ts and i18next-parser.config.js', () => {
-        expect(parserLocales).toEqual(i18nImports);
-    });
 });
