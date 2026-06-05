@@ -7,7 +7,7 @@ function readI18nJsonImports(): Readonly<string[]> {
     return [...i18nSource.matchAll(/^import\s+\w+\s+from\s+'.*\/(\w+)\.json'/gm)].map((m) => m[1]);
 }
 
-function getI18nextParserLocales(): any {
+function getI18nextParserLocales(): Readonly<string[]> {
     // Find the locales used by 'yarn extract-i18n'
     const parserConfig = require('../../i18next-parser.config.js');
     return parserConfig.locales;
