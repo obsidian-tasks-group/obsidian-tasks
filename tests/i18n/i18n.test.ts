@@ -1,5 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { initializeI18n } from '../../src/i18n/i18n';
 
 function readI18nJsonImports(): Readonly<string[]> {
     // Find the names of JSON locale files imported by the plugin:
@@ -12,6 +13,10 @@ function getI18nextParserLocales(): Readonly<string[]> {
     const parserConfig = require('../../i18next-parser.config.js');
     return parserConfig.locales;
 }
+
+beforeAll(async () => {
+    await initializeI18n();
+});
 
 describe('i18n locale consistency', () => {
     const i18nImports = readI18nJsonImports();
