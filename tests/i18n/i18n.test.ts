@@ -15,8 +15,10 @@ function getI18nextParserLocales(): Readonly<string[]> {
     return parserConfig.locales;
 }
 
+let i18nResourceNames: ReadonlyArray<string>;
 beforeAll(async () => {
     await initializeI18n();
+    i18nResourceNames = Object.keys(i18next.store.data);
 });
 
 describe('i18n locale consistency', () => {
@@ -28,11 +30,6 @@ describe('i18n locale consistency', () => {
     });
 
     it('"i18n.ts" should list resources imports in alphabetical order', () => {
-        // initializeI18n() must have been called before accessing i18next.store.data
-        // In Jest, beforeAll() runs after the describe() callback body has been evaluated,
-        // but before the tests inside that 'describe' are executed.
-        // This means we have to get the i18next keys inside an 'it' block.
-        const i18nResourceNames = Object.keys(i18next.store.data);
         expect(i18nResourceNames).toEqual([...i18nResourceNames].sort());
     });
 
