@@ -1,5 +1,7 @@
 import i18next from 'i18next';
 import { getLanguage } from 'obsidian';
+
+// alphabetical order:
 import be from './locales/be.json';
 import de from './locales/de.json';
 import en from './locales/en.json';

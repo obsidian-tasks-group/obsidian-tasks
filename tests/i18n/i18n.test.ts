@@ -10,6 +10,10 @@ function readI18nJsonImports(): Readonly<string[]> {
 describe('i18n locale consistency', () => {
     const i18nImports = readI18nJsonImports();
 
+    it('"i18n.ts" should list Json imports in alphabetical order', () => {
+        expect(i18nImports).toEqual([...i18nImports].sort());
+    });
+
     it('should have the same locales in i18n.ts and i18next-parser.config.js', () => {
         // Find the locales used by 'yarn extract-i18n'
         const parserConfig = require('../../i18next-parser.config.js');
