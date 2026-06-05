@@ -8,9 +8,9 @@ function readI18nJsonImports(): string[] {
 }
 
 describe('i18n locale consistency', () => {
-    it('should have the same locales in i18n.ts and i18next-parser.config.js', () => {
-        const i18nImports = readI18nJsonImports();
+    const i18nImports = readI18nJsonImports();
 
+    it('should have the same locales in i18n.ts and i18next-parser.config.js', () => {
         // Find the locales used by 'yarn extract-i18n'
         const parserConfig = require('../../i18next-parser.config.js');
         const parserLocales = parserConfig.locales;
