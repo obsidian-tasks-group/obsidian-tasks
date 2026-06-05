@@ -1,0 +1,290 @@
+{
+  "main": {
+    "loadingPlugin": "Eklenti yükleniyor: {{name}} v{{version}}",
+    "unloadingPlugin": "Eklenti kaldırılıyor: {{name}} v{{version}}"
+  },
+  "modals": {
+    "customStatusModal": {
+      "editAvailableAsCommand": {
+        "description": "Etkinleştirilirse bu durum bir komut olarak kullanılabilir hale gelir; böylece kısayol tuşu atayabilir ve durumu bu tuş ile değiştirebilirsiniz.",
+        "name": "Komut olarak kullanılabilir"
+      },
+      "editNextStatusSymbol": {
+        "description": "Bu öğeye tıklandığında kullanılacak olan sonraki durum simgesi.",
+        "name": "Görevin Sonraki Durum Simgesi"
+      },
+      "editStatusName": {
+        "description": "Görev durumunun görünen adı.",
+        "name": "Görev Durum Adı"
+      },
+      "editStatusSymbol": {
+        "description": "Köşeli parantezler arasındaki karakterdir. (Yalnızca Özel durumlar için düzenlenebilir; Temel durumlar için düzenlenemez.)",
+        "name": "Görev Durum Simgesi"
+      },
+      "editStatusType": {
+        "description": "Durumun arama ve geçişlerde nasıl davranacağını belirler.",
+        "name": "Görev Durum Türü"
+      },
+      "fixErrorsBeforeSaving": "Kaydetmeden önce hataları düzeltin."
+    }
+  },
+  "reports": {
+    "statusRegistry": {
+      "about": {
+        "createdBy": "Bu dosya, kasadaki görev durumlarını görselleştirmeye yardımcı olmak amacıyla Obsidian Tasks eklentisi (sürüm {{version}}) tarafından oluşturulmuştur.",
+        "deleteFileAnyTime": "Bu dosyayı istediğiniz zaman silebilirsiniz.",
+        "title": "Bu dosya hakkında",
+        "updateReport": {
+          "line1": "Tasks durum ayarlarını değiştirirseniz, güncel raporu şu şekilde alabilirsiniz:",
+          "line2": "`Ayarlar` -> `Tasks` bölümüne gidin.",
+          "line3": "`Durumlarınızı inceleyin ve kontrol edin` seçeneğine tıklayın."
+        }
+      },
+      "columnHeadings": {
+        "nextStatusSymbol": "Sonraki Durum Simgesi",
+        "problems": "Sorunlar (varsa)",
+        "statusName": "Durum Adı",
+        "statusSymbol": "Durum Simgesi",
+        "statusType": "Durum Türü"
+      },
+      "loadedSettings": {
+        "settingsActuallyUsed": "Tasks tarafından gerçekte kullanılan ayarlar bunlardır.",
+        "switchToLivePreview": "Diyagramı görmek için Canlı Önizleme veya Okuma Moduna geçin.",
+        "title": "Yüklenen Ayarlar"
+      },
+      "messages": {
+        "cannotFindNextStatus": "Sonraki durum bulunurken beklenmeyen bir hata oluştu.",
+        "duplicateSymbol": "Yinelenen simge '{{symbol}}': bu durum yok sayılacak.",
+        "emptySymbol": "Boş simge: bu durum yok sayılacak.",
+        "nextSymbolUnknown": "Sonraki simge {{symbol}} bilinmiyor: {{symbol}} simgesiyle bir durum oluşturun.",
+        "notConventionalType": "Bilgi amaçlı: {{symbol}} durum simgesi için alışılmış tür {{type}} şeklindedir; bu türü gözden geçirmek isteyebilirsiniz.",
+        "wrongTypeAfterDone": {
+          "line1": "Bu `DONE` durumunu `TODO` veya `IN_PROGRESS` değil, {{nextType}} izliyor.",
+          "line2": "Tekrarlayan bir görevi tamamlamak için kullanılırsa, bir sonraki görevin `not done` filtresine uyması için bunun yerine `TODO` veya `IN_PROGRESS` izleyecektir.",
+          "line3": "Bkz. [Tekrarlayan Görevler ve Özel Durumlar]({{helpURL}})."
+        }
+      },
+      "sampleTasks": {
+        "line1": "Aşağıda, görevler tarafından gerçekte kullanılan her durum için denemek üzere bir örnek görev satırı yer almaktadır.",
+        "line2": "Dosya oluşturulduğunda görev açıklamalarındaki durum simgeleri ve adları doğruydu.",
+        "line3": "Örnek görevleri oluşturulduktan bu yana değiştirdiyseniz, aşağıdaki Tasks aramasındaki grup başlıklarında güncel durum türlerini ve adlarını görebilirsiniz.",
+        "tip": {
+          "line1": "İpucu: Tüm onay kutularınız aynı görünüyorsa...",
+          "line2": "Okuma Modu veya Canlı Önizleme'de tüm onay kutuları aynı görünüyorsa, durumlarınızı şekillendirmek için bir tema veya CSS snippet'i seçmek amacıyla [Özel durumları şekillendir]({{url}}) sayfasına bakın."
+        },
+        "title": "Örnek Görevler"
+      },
+      "searchSampleTasks": {
+        "line1": "Bu Tasks araması, bu dosyadaki tüm görevleri durum türlerine ve durum adlarına göre gruplandırarak gösterir.",
+        "title": "Örnek Görevlerde Ara"
+      },
+      "statusSettings": {
+        "comment": {
+          "line1": "Tabloyu görmek için Canlı Önizleme veya Okuma Moduna geçin.",
+          "line2": "Durum adlarında '*' veya '_' gibi Markdown biçimlendirme karakterleri varsa,",
+          "line3": "Obsidian tabloyu yalnızca Okuma Modunda doğru şekilde oluşturabilir."
+        },
+        "theseAreStatusValues": "Bunlar, Temel ve Özel durum bölümlerindeki durum değerleridir.",
+        "title": "Durum Ayarları"
+      }
+    }
+  },
+  "settings": {
+    "autoSuggest": {
+      "heading": "Otomatik öneri",
+      "maxSuggestions": {
+        "description": "Otomatik öneri menüsü açıldığında kaç öneri gösterilmeli (\"⏎\" seçeneği dahil).",
+        "name": "Gösterilecek maksimum otomatik öneri sayısı"
+      },
+      "minLength": {
+        "description": "0'dan büyükse, otomatik öneri yalnızca desteklenen anahtar kelimelerden herhangi birinin başlangıcı tanındığında tetiklenir.",
+        "name": "Otomatik öneri için minimum eşleşme uzunluğu"
+      },
+      "toggle": {
+        "description": "Bu seçeneği etkinleştirirseniz, tanınan bir görev satırında yazarken akıllı bir öneri menüsü açılır.",
+        "name": "Görev içeriği için otomatik öneri"
+      }
+    },
+    "changeRequiresRestart": "YENİDEN BAŞLATMA GEREKTİRİR.",
+    "dates": {
+      "cancelledDate": {
+        "description": "Bu seçeneği etkinleştirirseniz, bir görev iptal durumuna geçirildiğinde sonuna ❌ YYYY-AA-GG zaman damgası eklenir.",
+        "name": "İptal edilen her göreve iptal tarihi ekle"
+      },
+      "createdDate": {
+        "description": "Bu seçeneği etkinleştirirseniz, 'Görev oluştur veya düzenle' komutuyla ya da tekrarlayan bir görev tamamlanarak bir görev oluşturulduğunda diğer tarih değerlerinden önce ➕ YYYY-AA-GG zaman damgası eklenir.",
+        "name": "Eklenen her göreve oluşturulma tarihi ekle"
+      },
+      "doneDate": {
+        "description": "Bu seçeneği etkinleştirirseniz, bir görev tamamlandı durumuna geçirildiğinde sonuna ✅ YYYY-AA-GG zaman damgası eklenir.",
+        "name": "Tamamlanan her göreve tamamlanma tarihi ekle"
+      },
+      "heading": "Tarihler"
+    },
+    "datesFromFileNames": {
+      "heading": "Dosya adlarından tarihler",
+      "scheduledDate": {
+        "extraFormat": {
+          "description": {
+            "line1": "Tasks eklentisinin, tarihlenmemiş görevler için dosya adını Zamanlanmış tarih olarak kullanırken tanıyacağı ek bir tarih biçimi.",
+            "line2": "Söz dizimi Başvurusu"
+          },
+          "name": "Tarihlenmemiş görevler için Zamanlanmış tarih olarak ek dosya adı tarih biçimi",
+          "placeholder": "örnek: MMM GG YYYY"
+        },
+        "folders": {
+          "description": "Varsayılan Zamanlanmış tarihleri her yerde kullanmak istiyorsanız boş bırakın ya da virgülle ayrılmış klasör listesi girin.",
+          "name": "Varsayılan Zamanlanmış tarihlere sahip klasörler"
+        },
+        "toggle": {
+          "description": {
+            "line1": "Zamanlanmış (⏳) tarihleri girerken zaman kazanın.",
+            "line2": "Bu seçenek etkinleştirilirse, tarihlenmemiş görevlere dosya adından çıkarılan varsayılan bir Zamanlanmış tarih verilir.",
+            "line3": "Tasks eklentisi varsayılan olarak hem <code>YYYY-AA-GG</code> hem de <code>YYYYAAGG</code> tarih biçimlerini tanır.",
+            "line4": "Tarihlenmemiş görevlerde Son Tarih (📅), Zamanlanmış (⏳) ve Başlangıç (🛫) tarihlerinden hiçbiri bulunmaz."
+          },
+          "name": "Tarihlenmemiş görevler için dosya adını Zamanlanmış tarih olarak kullan"
+        }
+      }
+    },
+    "dialogs": {
+      "accessKeys": {
+        "description": "İletişim kutularındaki çeşitli denetimler için erişim tuşları (klavye kısayolları), sistem klavye kısayollarıyla veya sizin için önemli olan yardımcı teknoloji işlevleriyle çakışıyorsa, bunları burada devre dışı bırakmak isteyebilirsiniz.",
+        "name": "İletişim kutularında erişim tuşları sağla"
+      },
+      "heading": "İletişim Kutuları"
+    },
+    "format": {
+      "description": {
+        "line1": "Tasks'ın görevleri okumak ve yazmak için kullandığı biçim.",
+        "line2": "<b>Önemli:</b> Tasks şu anda aynı anda yalnızca bir biçimi desteklemektedir. Dataview seçildiğinde Tasks <b>kendi emoji imlerini okumayı durdurur</b>."
+      },
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Tasks Emoji Biçimi"
+      },
+      "name": "Görev Biçimi"
+    },
+    "globalFilter": {
+      "filter": {
+        "description": {
+          "line1": "Öneri: Kasanızdaki tüm kontrol listesi öğelerinin bu eklenti tarafından yönetilen görevler olmasını istiyorsanız boş bırakın.",
+          "line2": "Tasks'ın yalnızca \"<code>- [ ]</code>\" kontrol listesi öğelerinizin bir alt kümesi üzerinde işlem yapmasını istiyorsanız genel filtre kullanın; bu sayede bir kontrol listesi öğesinin görev olarak kabul edilmesi için açıklamasında belirtilen dizeyi içermesi gerekir.",
+          "line3": "Örneğin, genel filtreyi <code>#task</code> olarak ayarlarsanız, Tasks eklentisi yalnızca <code>#task</code> etiketiyle işaretlenmiş kontrol listesi öğelerini işler.",
+          "line4": "Diğer kontrol listesi öğeleri normal kontrol listesi öğeleri olarak kalır ve sorgularda görünmez ya da tamamlanma tarihi almaz."
+        },
+        "name": "Genel filtre",
+        "placeholder": "örn. #task veya TODO"
+      },
+      "heading": "Genel görev filtresi",
+      "removeFilter": {
+        "description": "Bu seçeneği etkinleştirirseniz, bir görev görüntülenirken açıklamasından genel filtre olarak ayarladığınız dize kaldırılır.",
+        "name": "Açıklamadan genel filtreyi kaldır"
+      }
+    },
+    "globalQuery": {
+      "heading": "Genel Sorgu",
+      "query": {
+        "description": "Kasadaki her Tasks bloğunun başına otomatik olarak eklenen sorgu. Varsayılan filtreler veya düzen seçenekleri eklemek için kullanışlıdır.",
+        "placeholder": "Örneğin...\npath does not include _templates/\nlimit 300\nshow urgency"
+      }
+    },
+    "presets": {
+      "buttons": {
+        "addNewPreset": "Yeni ön ayar ekle"
+      },
+      "line1": "Burada birden fazla sorguda yeniden kullanabileceğiniz adlandırılmış talimatlar tanımlayabilirsiniz. '{{name}}' adlı bir ön ayar, Tasks sorgularında '{{instruction1}}' veya '{{instruction2}}' ile kullanılabilir.",
+      "line2": "Ön ayarlar düzenlendiğinde açık Tasks sorguları otomatik olarak yeniden yüklenir.",
+      "name": "Ön Ayarlar"
+    },
+    "recurringTasks": {
+      "heading": "Tekrarlayan görevler",
+      "nextLine": {
+        "description": "Bu seçeneği etkinleştirirseniz, bir görevin sonraki tekrarı tamamlanan görevin altındaki satırda görünür. Aksi takdirde sonraki tekrar tamamlanandan önce görünür.",
+        "name": "Sonraki tekrar bir alt satırda görünsün"
+      },
+      "removeScheduledDate": {
+        "description": {
+          "line1": "Bu seçeneği etkinleştirirseniz, Başlangıç (🛫) veya Son Tarih (📅) tarihlerinden en az biri mevcutsa görevin sonraki tekrarında Zamanlanmış (⏳) tarih olmaz.",
+          "line2": "Bu seçenek; Başlangıç ve Son Tarih tarihlerinin bir sonraki tekrara taşınmasını, ancak Zamanlanmış tarihin üzerinde çalışmayı planladığınızda ileride belirlenmesini istediğinizde kullanışlıdır."
+        },
+        "name": "Tekrarda zamanlanmış tarihi kaldır"
+      }
+    },
+    "searches": {
+      "enableCustomSearches": {
+        "description": {
+          "line1": "Tasks sorgularında JavaScript çalıştıran '{{filterByFunction}}', '{{sortByFunction}}' ve '{{groupByFunction}}' özelliklerini etkinleştirir.",
+          "line2": "Bir Tasks sorgusunda veya Markdown dosyasında kötü amaçlı JavaScript, Obsidian içinde çalışarak kasa içeriklerinize, yerel dosyalarınıza veya diğer sistem kaynaklarına erişebilir ya da bunları değiştirebilir.",
+          "line3": "Bunu yalnızca bu kasanın mevcut ve gelecekteki içeriklerine (başkalarından daha sonra indirebileceğiniz, kopyalayabileceğiniz veya eşitleyebileceğiniz dosyalar dahil) güveniyorsanız etkinleştirin.",
+          "line4": "Bu ayar yalnızca bu cihazda saklanır; bu kasayı kullandığınız her cihazda ayrı ayrı etkinleştirin."
+        },
+        "name": "Özel aramaları etkinleştir"
+      },
+      "heading": "Aramalar"
+    },
+    "searchResults": {
+      "heading": "Arama sonuçları",
+      "taskCountLocation": {
+        "description": "Görev sayısının sorgu sonuçlarının üstünde mi yoksa altında mı gösterileceğini seçin.",
+        "name": "Görev sayısı konumu",
+        "options": {
+          "bottom": "Alt",
+          "top": "Üst"
+        }
+      }
+    },
+    "seeTheDocumentation": "Belgelere bakın",
+    "statuses": {
+      "collections": {
+        "anuppuccinTheme": "AnuPpuccin Teması",
+        "auraTheme": "Aura Teması",
+        "borderTheme": "Border Teması",
+        "buttons": {
+          "addCollection": {
+            "name": "{{themeName}}: {{numberOfStatuses}} desteklenen Durumu ekle"
+          }
+        },
+        "ebullientworksTheme": "Ebullientworks Teması",
+        "itsThemeAndSlrvbCheckboxes": "ITS Teması & SlRvb Onay Kutuları",
+        "lytModeTheme": "LYT Mode Teması (Yalnızca karanlık mod)",
+        "minimalTheme": "Minimal Tema",
+        "thingsTheme": "Things Teması"
+      },
+      "coreStatuses": {
+        "buttons": {
+          "checkStatuses": {
+            "name": "Durumlarınızı inceleyin ve kontrol edin",
+            "tooltip": "Kasanın kök dizininde, mevcut durum ayarlarının Mermaid diyagramını içeren yeni bir dosya oluşturur."
+          }
+        },
+        "description": {
+          "line1": "Bunlar, Tasks'ın özel CSS stillendirmesi veya tema gerektirmeksizin yerel olarak desteklediği temel durumlardır.",
+          "line2": "Aşağıdaki bölümde kendi özel durumlarınızı düzenleyebilir ve ekleyebilirsiniz."
+        },
+        "heading": "Temel Durumlar"
+      },
+      "customStatuses": {
+        "buttons": {
+          "addAllUnknown": {
+            "name": "Tüm Bilinmeyen Durum Türlerini Ekle"
+          },
+          "addNewStatus": {
+            "name": "Yeni Görev Durumu Ekle"
+          },
+          "resetCustomStatuses": {
+            "name": "Özel Durum Türlerini Varsayılanlara Sıfırla"
+          }
+        },
+        "description": {
+          "line1": "Önce özel onay kutularını şekillendirmek için <b>bir CSS Snippet veya Tema seçip yükleyin</b>.",
+          "line2": "Ardından, seçtiğiniz CSS onay kutularıyla eşleşecek şekilde özel durumlarınızı ayarlamak için aşağıdaki düğmeleri kullanın.",
+          "line3": "<b>Not:</b> Daha önce yer alan durumlarla aynı simgeye sahip durumlar yok sayılır. Gerçekte yüklenen durumları 'Görev oluştur veya düzenle' komutunu çalıştırıp Durum açılır menüsüne bakarak doğrulayabilirsiniz.",
+          "line4": "Başlamak için belgelere bakın!"
+        },
+        "heading": "Özel Durumlar"
+      },
+      "heading": "Görev Durumları"
+    }
+  }
+}

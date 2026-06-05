@@ -12,6 +12,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
+- X.Y.Z:
+  - Add Turkish translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
 - 8.0.0:
   - **Breaking change**:
     - JavaScript in Tasks queries is now disabled by default.
