@@ -7,6 +7,12 @@ function readI18nJsonImports(): Readonly<string[]> {
     return [...i18nSource.matchAll(/^import\s+\w+\s+from\s+'.*\/(\w+)\.json'/gm)].map((m) => m[1]);
 }
 
+function getI18nextParserLocales(): any {
+    // Find the locales used by 'yarn extract-i18n'
+    const parserConfig = require('../../i18next-parser.config.js');
+    return parserConfig.locales;
+}
+
 describe('i18n locale consistency', () => {
     const i18nImports = readI18nJsonImports();
 
@@ -15,9 +21,7 @@ describe('i18n locale consistency', () => {
     });
 
     it('should have the same locales in i18n.ts and i18next-parser.config.js', () => {
-        // Find the locales used by 'yarn extract-i18n'
-        const parserConfig = require('../../i18next-parser.config.js');
-        const parserLocales = parserConfig.locales;
+        const parserLocales = getI18nextParserLocales();
 
         expect(parserLocales).toEqual(i18nImports);
     });
