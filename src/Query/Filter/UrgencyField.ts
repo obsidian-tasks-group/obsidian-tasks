@@ -23,7 +23,7 @@ export class UrgencyField extends Field {
     }
 
     protected filterRegExp(): RegExp | null {
-        throw Error(`filterRegExp() unimplemented for ${this.fieldName()}`);
+        throw new Error(`filterRegExp() unimplemented for ${this.fieldName()}`);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

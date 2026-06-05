@@ -33,8 +33,6 @@ export function escapeRegExp(s: string) {
  */
 export function checkRegExpsIdentical(regexp1: RegExp, regexp2: RegExp) {
     if (regexp1.toString() !== regexp2.toString()) {
-        console.log(regexp1.toString());
-        console.log(regexp2.toString());
         throw new Error(`regular expressions differ:
 ${regexp1.toString()}
 ${regexp2.toString()}

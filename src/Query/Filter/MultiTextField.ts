@@ -69,7 +69,7 @@ export abstract class MultiTextField extends TextField {
 
     protected grouperRegExp(): RegExp {
         if (!this.supportsGrouping()) {
-            throw Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
+            throw new Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
         return new RegExp(`^group by ${this.fieldNamePlural()}( reverse)?$`, 'i');

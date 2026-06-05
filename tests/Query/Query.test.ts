@@ -958,7 +958,7 @@ group by folder
                 const source = `
 filter by function \\
     if (!query.file.hasProperty('root_dirs_to_search')) { \\
-        throw Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); \\
+        throw new Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); \\
     } \\
     const roots = query.file.property('root_dirs_to_search'); \\
     return roots.includes(task.file.root);
@@ -974,12 +974,12 @@ filter by function \\
                 expect(query.explainQuery()).toMatchInlineSnapshot(`
                     "filter by function \\
                         if (!query.file.hasProperty('root_dirs_to_search')) { \\
-                            throw Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); \\
+                            throw new Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); \\
                         } \\
                         const roots = query.file.property('root_dirs_to_search'); \\
                         return roots.includes(task.file.root);
                      =>
-                    filter by function if (!query.file.hasProperty('root_dirs_to_search')) { throw Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); } const roots = query.file.property('root_dirs_to_search'); return roots.includes(task.file.root);
+                    filter by function if (!query.file.hasProperty('root_dirs_to_search')) { throw new Error('Please set the "root_dirs_to_search" list property, with each value ending in a backslash...'); } const roots = query.file.property('root_dirs_to_search'); return roots.includes(task.file.root);
                     "
                 `);
 

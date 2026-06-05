@@ -164,7 +164,7 @@ export class BooleanField extends Field {
                 // Identifiers are the sub-fields of the expression, the actual filters, e.g. 'description includes foo'.
                 // For each identifier we created earlier the corresponding Filter, so now we can just evaluate the given
                 // task for each identifier that we find in the postfix expression.
-                if (token.value == null) throw Error('null token value'); // This should not happen
+                if (token.value == null) throw new Error('null token value'); // This should not happen
                 const filter = this.subFields[token.value.trim()];
                 const result = filter.filterFunction(task, searchInfo);
                 booleanStack.push(toString(result));
@@ -187,10 +187,10 @@ export class BooleanField extends Field {
                     const arg2 = toBool(booleanStack.pop());
                     booleanStack.push(toString((arg1 && !arg2) || (!arg1 && arg2)));
                 } else {
-                    throw Error('Unsupported operator: ' + token.value);
+                    throw new Error('Unsupported operator: ' + token.value);
                 }
             } else {
-                throw Error('Unsupported token type: ' + token);
+                throw new Error('Unsupported token type: ' + token);
             }
         }
         // Eventually the result of the expression for this Task is the only item left in the boolean stack
@@ -211,7 +211,7 @@ export class BooleanField extends Field {
             } else if (token.name === Tokens.OPERATOR) {
                 this.explainOperator(token, explanationStack);
             } else {
-                throw Error('Unsupported token type: ' + token.name);
+                throw new Error('Unsupported token type: ' + token.name);
             }
         }
         // Eventually the Explanation is the only item left in the boolean stack
@@ -220,7 +220,7 @@ export class BooleanField extends Field {
 
     private explainExpression(token: Token, explanationStack: Explanation[]) {
         if (token.value == null) {
-            throw Error('null token value'); // This should not happen
+            throw new Error('null token value'); // This should not happen
         }
         const filter = this.subFields[token.value.trim()];
         const explanation = this.simulateExplainFilter(filter);
@@ -253,7 +253,7 @@ export class BooleanField extends Field {
             const arg1 = explanationStack.pop();
             explanationStack.push(Explanation.booleanXor([arg1!, arg2!]));
         } else {
-            throw Error('Unsupported operator: ' + token.value);
+            throw new Error('Unsupported operator: ' + token.value);
         }
     }
 

@@ -110,8 +110,8 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   63:9   warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/BooleanField.ts
-  193:58  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Token`  @typescript-eslint/restrict-plus-operands
-  193:58  warning  'token' will use Object's default stringification format ('[object Object]') when stringified                                                                            @typescript-eslint/no-base-to-string
+  193:62  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Token`  @typescript-eslint/restrict-plus-operands
+  193:62  warning  'token' will use Object's default stringification format ('[object Object]') when stringified                                                                            @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/FunctionField.ts
    89:23  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
@@ -181,12 +181,12 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
    27:60  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
    31:9   warning  Unsafe return of a value of type `any`                                                                  @typescript-eslint/no-unsafe-return
    73:59  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-   85:35  warning  'result' may use Object's default stringification format ('[object Object]') when stringified           @typescript-eslint/no-base-to-string
-  101:19  warning  Unsafe assignment of an `any` value                                                                     @typescript-eslint/no-unsafe-assignment
-  115:31  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-  116:18  warning  Unsafe member access .query on an `any` value                                                           @typescript-eslint/no-unsafe-member-access
-  142:43  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-  143:27  warning  Unsafe argument of type `any` assigned to a parameter of type `{ [s: string]: any; } | ArrayLike<any>`  @typescript-eslint/no-unsafe-argument
+   99:19  warning  Unsafe assignment of an `any` value                                                                     @typescript-eslint/no-unsafe-assignment
+  118:19  warning  'result' may use Object's default stringification format ('[object Object]') when stringified           @typescript-eslint/no-base-to-string
+  121:31  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
+  122:18  warning  Unsafe member access .query on an `any` value                                                           @typescript-eslint/no-unsafe-member-access
+  148:43  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
+  149:27  warning  Unsafe argument of type `any` assigned to a parameter of type `{ [s: string]: any; } | ArrayLike<any>`  @typescript-eslint/no-unsafe-argument
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/Expression.ts
    6:60  warning  The `Function` type accepts any function-like value.
@@ -255,13 +255,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   159:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
   159:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/OnCompletion.ts
-  58:5   warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-  58:40  warning  Invalid type "never" of template literal expression                                                                                                       @typescript-eslint/restrict-template-expressions
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Recurrence.ts
-  52:17  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Task.ts
   102:24  warning  Unexpected any. Specify a different type                                                          @typescript-eslint/no-explicit-any
   143:9   warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
@@ -275,30 +268,16 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   848:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
   848:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/TaskSerializer/DefaultTaskSerializer.ts
-  237:85  warning  Invalid type "never" of template literal expression  @typescript-eslint/restrict-template-expressions
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/i18n/i18n.ts
-  16:28  warning  Unexpected use of 'localStorage'. Prefer `App#saveLocalStorage` / `App#loadLocalStorage` functions to write / read localStorage data that's unique to a vault  no-restricted-globals
-  16:28  warning  Use Obsidian's 'getLanguage()' instead of 'localStorage.getItem("language")' to detect the user's language                                                     obsidianmd/prefer-get-language
-  19:5   warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console       obsidianmd/rule-custom-message
-  54:9   warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console       obsidianmd/rule-custom-message
-  71:9   warning  Unsafe return of a value of type `any`                                                                                                                         @typescript-eslint/no-unsafe-return
+  65:9  warning  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/ExceptionTools.ts
    6:79  warning  Unexpected any. Specify a different type                                                                                                                                 @typescript-eslint/no-explicit-any
   12:19  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Error`  @typescript-eslint/restrict-plus-operands
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/MockDataCreator.ts
-  3:15  warning  'Task' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/PerformanceTracker.ts
   56:13  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
   58:13  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/RegExpTools.ts
-  36:9  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-  37:9  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/TypeDetection.ts
   5:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
@@ -361,7 +340,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 241 problems (0 errors, 241 warnings)
+✖ 230 problems (0 errors, 230 warnings)
   0 errors and 66 warnings potentially fixable with the `--fix` option.
 
 
@@ -371,4 +350,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 20.20s.
+Done in 20.29s.

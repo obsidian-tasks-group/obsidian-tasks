@@ -45,12 +45,9 @@ export class Recurrence {
                     occurrence,
                 });
             }
-        } catch (e) {
+        } catch {
             // Could not read recurrence rule. User possibly not done typing.
-            // Print error message, as it is useful if a test file has not set up window.moment
-            if (e instanceof Error) {
-                console.log(e.message);
-            }
+            return null;
         }
 
         return null;

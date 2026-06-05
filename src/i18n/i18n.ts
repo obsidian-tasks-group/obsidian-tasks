@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import { getLanguage } from 'obsidian';
 import be from './locales/be.json';
 import de from './locales/de.json';
 import en from './locales/en.json';
@@ -13,11 +14,8 @@ let isInitialized = false;
 
 // Get Obsidian language settings
 const getObsidianLanguage = (): string => {
-    const storedLanguage = localStorage.getItem('language');
-    const selectedLanguage = storedLanguage || 'en';
-
-    console.log(`Language in Obsidian settings: '${selectedLanguage}'; requesting Tasks in '${selectedLanguage}'.`);
-    return selectedLanguage;
+    const storedLanguage = getLanguage();
+    return storedLanguage || 'en';
 };
 
 // Define a function to initialize i18next
@@ -48,10 +46,6 @@ export const initializeI18n = async () => {
         });
 
         isInitialized = true;
-
-        // Report the translation we ended up using:
-        const resolvedResource = i18next.languages.find((lang) => i18next.hasResourceBundle(lang, 'translation'));
-        console.log(`Using Tasks in: '${resolvedResource}'; fallback chain: [${i18next.languages.join(', ')}].`);
     }
 };
 
