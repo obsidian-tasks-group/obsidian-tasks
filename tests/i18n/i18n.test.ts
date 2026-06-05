@@ -35,12 +35,14 @@ describe('i18n locale consistency', () => {
     const i18nImports = readI18nJsonImports();
     const parserLocales = getI18nextParserLocales();
 
-    it('"i18n.ts" should list Json imports in alphabetical order', () => {
-        expect(i18nImports).toBeSorted();
-    });
+    describe('"i18n.ts" imports', () => {
+        it('should list Json imports in alphabetical order', () => {
+            expect(i18nImports).toBeSorted();
+        });
 
-    it('"i18n.ts" should should import all JSON files', () => {
-        expect(i18nImports).toEqual(allJsonLocaleFileBaseNames);
+        it('should should import all JSON files', () => {
+            expect(i18nImports).toEqual(allJsonLocaleFileBaseNames);
+        });
     });
 
     it('"i18n.ts" should list resources imports in alphabetical order', () => {
