@@ -21,6 +21,10 @@ describe('i18n locale consistency', () => {
         expect(i18nImports).toEqual([...i18nImports].sort());
     });
 
+    it('"i18next-parser.config.js" should list locales in alphabetical order', () => {
+        expect(parserLocales).toEqual([...parserLocales].sort());
+    });
+
     it('should have the same locales in i18n.ts and i18next-parser.config.js', () => {
         expect(parserLocales).toEqual(i18nImports);
     });
