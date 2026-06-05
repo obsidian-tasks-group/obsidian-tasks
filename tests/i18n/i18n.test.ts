@@ -50,7 +50,7 @@ describe('i18n locale consistency', () => {
             expect(i18nResourceNames).toBeSorted();
         });
 
-        it('resources should reference all JSON files', () => {
+        it('should reference all JSON files', () => {
             // The resource names may differ from the JSON file names:
             //     "pt_br" vs "pt-BR"
             //     "zh_cn" vs "zh"
