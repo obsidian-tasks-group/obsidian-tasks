@@ -5,9 +5,9 @@ import en from './locales/en.json';
 import ko from './locales/ko.json';
 import pt_br from './locales/pt_br.json';
 import ru from './locales/ru.json';
+import tr from './locales/tr.json';
 import uk from './locales/uk.json';
 import vi from './locales/vi.json';
-import tr from './locales/tr.json';
 import zh_cn from './locales/zh_cn.json';
 
 let isInitialized = false;
