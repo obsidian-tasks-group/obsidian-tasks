@@ -26,15 +26,15 @@ describe('i18n locale consistency', () => {
     const parserLocales = getI18nextParserLocales();
 
     it('"i18n.ts" should list Json imports in alphabetical order', () => {
-        expect(i18nImports).toEqual([...i18nImports].sort());
+        expect(i18nImports).toBeSorted();
     });
 
     it('"i18n.ts" should list resources imports in alphabetical order', () => {
-        expect(i18nResourceNames).toEqual([...i18nResourceNames].sort());
+        expect(i18nResourceNames).toBeSorted();
     });
 
     it('"i18next-parser.config.js" should list locales in alphabetical order', () => {
-        expect(parserLocales).toEqual([...parserLocales].sort());
+        expect(parserLocales).toBeSorted();
     });
 
     it('should have the same locales in i18n.ts and i18next-parser.config.js', () => {
