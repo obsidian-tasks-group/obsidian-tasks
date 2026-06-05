@@ -18,7 +18,7 @@ function getI18nextParserLocales(): Readonly<string[]> {
 let i18nResourceNames: ReadonlyArray<string>;
 beforeAll(async () => {
     await initializeI18n();
-    i18nResourceNames = Object.keys(i18next.store.data);
+    i18nResourceNames = Object.freeze(Object.keys(i18next.store.data));
 });
 
 describe('i18n locale consistency', () => {
