@@ -15,14 +15,13 @@ function getI18nextParserLocales(): any {
 
 describe('i18n locale consistency', () => {
     const i18nImports = readI18nJsonImports();
+    const parserLocales = getI18nextParserLocales();
 
     it('"i18n.ts" should list Json imports in alphabetical order', () => {
         expect(i18nImports).toEqual([...i18nImports].sort());
     });
 
     it('should have the same locales in i18n.ts and i18next-parser.config.js', () => {
-        const parserLocales = getI18nextParserLocales();
-
         expect(parserLocales).toEqual(i18nImports);
     });
 });
