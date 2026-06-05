@@ -68,6 +68,11 @@ expect.extend({
 });
 
 // ---------------------------------------------------------------------
+// CustomMatchersForSorting
+// ---------------------------------------------------------------------
+import './CustomMatchersForSorting';
+
+// ---------------------------------------------------------------------
 // CustomMatchersForTaskBuilder
 // ---------------------------------------------------------------------
 import { toBeIdenticalTo } from './CustomMatchersForTaskBuilder';
