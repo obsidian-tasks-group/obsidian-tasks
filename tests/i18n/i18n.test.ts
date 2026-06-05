@@ -32,10 +32,10 @@ beforeAll(async () => {
 
 describe('i18n locale consistency', () => {
     const allJsonLocaleFileBaseNames = getAllLocaleJsonFileBaseNames();
-    const i18nImports = readI18nJsonImports();
-    const parserLocales = getI18nextParserLocales();
 
     describe('"i18n.ts" imports', () => {
+        const i18nImports = readI18nJsonImports();
+
         it('should list Json imports in alphabetical order', () => {
             expect(i18nImports).toBeSorted();
         });
@@ -60,6 +60,8 @@ describe('i18n locale consistency', () => {
     });
 
     describe('"i18next-parser.config.js"', () => {
+        const parserLocales = getI18nextParserLocales();
+
         it('should list locales in alphabetical order', () => {
             expect(parserLocales).toBeSorted();
         });
