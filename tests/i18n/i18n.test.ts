@@ -45,16 +45,18 @@ describe('i18n locale consistency', () => {
         });
     });
 
-    it('"i18n.ts" should list resources imports in alphabetical order', () => {
-        expect(i18nResourceNames).toBeSorted();
-    });
+    describe('"i18n.ts" resources', () => {
+        it('should list resources imports in alphabetical order', () => {
+            expect(i18nResourceNames).toBeSorted();
+        });
 
-    it('"i18n.ts" resources should reference all JSON files', () => {
-        // The resource names may differ from the JSON file names:
-        //     "pt_br" vs "pt-BR"
-        //     "zh_cn" vs "zh"
-        // So we just check the number of entries, rather than the string values:
-        expect(i18nResourceNames.length).toEqual(allJsonLocaleFileBaseNames.length);
+        it('resources should reference all JSON files', () => {
+            // The resource names may differ from the JSON file names:
+            //     "pt_br" vs "pt-BR"
+            //     "zh_cn" vs "zh"
+            // So we just check the number of entries, rather than the string values:
+            expect(i18nResourceNames.length).toEqual(allJsonLocaleFileBaseNames.length);
+        });
     });
 
     it('"i18next-parser.config.js" should list locales in alphabetical order', () => {
