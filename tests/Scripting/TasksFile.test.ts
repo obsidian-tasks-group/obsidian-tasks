@@ -12,10 +12,14 @@ afterEach(() => {
     LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
 });
 
+function createTestTasksFile(path: string): TasksFile {
+    return new TasksFile(path);
+}
+
 describe('TasksFile', () => {
     it('should provide access to path', () => {
         const path = 'a/b/c/d.md';
-        const file = new TasksFile(path);
+        const file = createTestTasksFile(path);
         expect(file.path).toEqual(path);
     });
 
