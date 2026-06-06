@@ -6,15 +6,12 @@ import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { getAllTags, getFirstLinkpathDest, parseFrontMatterTags } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 afterEach(() => {
     LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
 });
-
-function createTestTasksFile(path: string): TasksFile {
-    return new TasksFile(path);
-}
 
 describe('TasksFile', () => {
     it('should provide access to path', () => {
