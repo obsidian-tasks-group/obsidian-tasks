@@ -65,4 +65,13 @@ describe('FileParser', () => {
         const tasks = readTasksFromSimulatedFile('numbered_list_items_with_paren');
         expect(tasks[0].path).toEqual('Test Data/numbered_list_items_with_paren.md');
     });
+
+    it('readTasksFromSimulatedFile() should preserve metadata', () => {
+        const tasks = readTasksFromSimulatedFile('yaml_custom_number_property');
+        expect(tasks[0].taskLocation.tasksFile.cachedMetadata.frontmatter).toMatchInlineSnapshot(`
+            {
+              "custom_number_prop": 42,
+            }
+        `);
+    });
 });
