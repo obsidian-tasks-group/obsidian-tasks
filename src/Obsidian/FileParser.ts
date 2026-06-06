@@ -24,7 +24,6 @@ export class FileParser {
 
     constructor(
         tasksFile: TasksFile,
-        filePath: string,
         fileContent: string,
         listItems: ListItemCache[],
         logger: Logger,
@@ -32,7 +31,7 @@ export class FileParser {
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
         this.tasksFile = tasksFile;
-        this.filePath = filePath;
+        this.filePath = tasksFile.path;
         this.fileContent = fileContent;
         this.listItems = listItems;
         this.logger = logger;

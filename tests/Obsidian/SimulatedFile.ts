@@ -59,7 +59,6 @@ export function readTasksFromSimulatedFile(filename: MockDataName): Task[] {
     const logger = logging.getLogger('testCache');
     const fileParser = new FileParser(
         new TasksFile(testData.filePath, testData.cachedMetadata),
-        testData.filePath,
         testData.fileContents,
         testData.cachedMetadata.listItems!,
         logger,
