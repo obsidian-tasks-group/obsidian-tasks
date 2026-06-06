@@ -9,6 +9,7 @@ import { TaskLocation } from '../Task/TaskLocation';
 import { Cache } from './Cache';
 
 export class FileParser {
+    private readonly tasksFile: TasksFile;
     private readonly filePath: string;
     private readonly fileContent: string;
     private readonly listItems: ListItemCache[];
@@ -29,6 +30,7 @@ export class FileParser {
         fileCache: CachedMetadata,
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
+        this.tasksFile = new TasksFile(filePath, fileCache);
         this.filePath = filePath;
         this.fileContent = fileContent;
         this.listItems = listItems;
@@ -51,7 +53,7 @@ export class FileParser {
             return this.tasks;
         }
 
-        const tasksFile = new TasksFile(this.filePath, this.fileCache);
+        const tasksFile = this.tasksFile;
         const linesInFile = this.fileLines.length;
 
         // this.logger.debug(`FileParser.parseFileContent() reading ${this.filePath}`);
