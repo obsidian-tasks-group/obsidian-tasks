@@ -5,7 +5,6 @@ import moment from 'moment';
 import type { Moment } from 'moment';
 
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
 import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
@@ -22,6 +21,7 @@ import { SampleTasks } from '../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../TestingTools/FilterTestHelpers';
 import type { TasksDate } from '../../src/DateTime/TasksDate';
 import { OnCompletion } from '../../src/Task/OnCompletion';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
@@ -488,7 +488,7 @@ describe('parsing tags', () => {
             // Act
             const task = Task.fromLine({
                 line: markdownTask,
-                taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('file.md')),
+                taskLocation: TaskLocation.fromUnknownPosition(createTestTasksFile('file.md')),
                 fallbackDate: null,
             });
 

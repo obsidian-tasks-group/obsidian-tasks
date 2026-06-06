@@ -5,8 +5,9 @@ import type { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { Query } from '../../src/Query/Query';
 import { explainResults } from '../../src/Query/QueryRendererHelper';
 import type { Task } from '../../src/Task/Task';
-import { type OptionalTasksFile, TasksFile } from '../../src/Scripting/TasksFile';
+import type { OptionalTasksFile } from '../../src/Scripting/TasksFile';
 import { verifyMarkdown } from './VerifyMarkdown';
+import { createTestTasksFile } from './TasksFileHelpers';
 
 export function printIteration<T1>(func: <T1>(t1: T1) => any, params1: T1[]): string {
     const EMPTY_ENTRY = {};
@@ -94,7 +95,7 @@ export function verifyTaskBlockExplanation(
     globalFilter: GlobalFilter,
     globalQuery: GlobalQuery,
     options?: Options,
-    tasksFile: OptionalTasksFile = new TasksFile('some/sample/file path.md'),
+    tasksFile: OptionalTasksFile = createTestTasksFile('some/sample/file path.md'),
 ): void {
     const explanation = explainResults(instructions, globalFilter, globalQuery, tasksFile);
 

@@ -3,7 +3,6 @@
  */
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
 import { Task } from '../../src/Task/Task';
 import { OnCompletion } from '../../src/Task/OnCompletion';
@@ -23,6 +22,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
 import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 window.moment = moment;
 
@@ -44,7 +44,7 @@ function sortInstructionLines(filters: ReadonlyArray<string>) {
 
 function isValidQueryFilter(filter: string) {
     // Arrange
-    const query = new Query(filter, new TasksFile('anywhere.md'));
+    const query = new Query(filter, createTestTasksFile('anywhere.md'));
 
     // Assert
     expect(query.error).toBeUndefined();
@@ -113,7 +113,7 @@ description includes Simple Line
 description includes \
     from a Continuation Line
         `;
-        const query = new Query(source, new TasksFile('test.md'));
+        const query = new Query(source, createTestTasksFile('test.md'));
         expect(query.error).toBeUndefined();
         const statements = query.statements;
         expect(statements.length).toEqual(3);
@@ -627,7 +627,7 @@ description includes \
 
     describe('should include instruction in parsing error messages', () => {
         function getQueryError(source: string) {
-            return new Query(source, new TasksFile('Example Path.md')).error;
+            return new Query(source, createTestTasksFile('Example Path.md')).error;
         }
 
         it('for invalid regular expression filter', () => {
@@ -758,7 +758,7 @@ Problem statement:
         it('should expand placeholder values in filters, but not source', () => {
             // Arrange
             const rawQuery = 'path includes {{query.file.path}}';
-            const tasksFile = new TasksFile('a/b/path with space.md');
+            const tasksFile = createTestTasksFile('a/b/path with space.md');
 
             // Act
             const query = new Query(rawQuery, tasksFile);
@@ -789,7 +789,7 @@ Problem statement:
         it('should report error if non-existent placeholder used', () => {
             // Arrange
             const source = 'path includes {{query.file.noSuchProperty}}';
-            const tasksFile = new TasksFile('a/b/path with space.md');
+            const tasksFile = createTestTasksFile('a/b/path with space.md');
 
             // Act
             const query = new Query(source, tasksFile);
@@ -810,7 +810,7 @@ Problem statement:
         it('should not report error if comment contains a non-existent placeholder', () => {
             // Arrange
             const source = '  #  path includes {{query.file.noSuchProperty}}';
-            const tasksFile = new TasksFile('a/b/path with space.md');
+            const tasksFile = createTestTasksFile('a/b/path with space.md');
 
             // Act
             const query = new Query(source, tasksFile);
@@ -825,7 +825,7 @@ Problem statement:
             const source = `{{error 1}}
 {{error 2}}
 {{error 3}}`;
-            const tasksFile = new TasksFile('a/b/path with space.md');
+            const tasksFile = createTestTasksFile('a/b/path with space.md');
 
             // Act
             const query = new Query(source, tasksFile);
@@ -1005,7 +1005,7 @@ describe('Query', () => {
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('Ab/C D')),
+                    taskLocation: TaskLocation.fromUnknownPosition(createTestTasksFile('Ab/C D')),
                     indentation: '',
                     listMarker: '-',
                     priority: Priority.None,
@@ -1027,7 +1027,7 @@ describe('Query', () => {
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('FF/C D')),
+                    taskLocation: TaskLocation.fromUnknownPosition(createTestTasksFile('FF/C D')),
                     indentation: '',
                     listMarker: '-',
                     priority: Priority.None,
@@ -1494,7 +1494,7 @@ describe('Query', () => {
     describe('query path and metadata', function () {
         it('should provide access to the path of the query', () => {
             const path = 'query location.md';
-            const query = new Query('not done', new TasksFile(path));
+            const query = new Query('not done', createTestTasksFile(path));
 
             expect(query.filePath).toEqual(path);
         });
@@ -1529,7 +1529,7 @@ describe('Query', () => {
 
         it('should pass the query path through to filter functions', () => {
             // Arrange
-            const queryTasksFile = new TasksFile('this/was/passed/in/correctly.md');
+            const queryTasksFile = createTestTasksFile('this/was/passed/in/correctly.md');
             const query = new Query('', queryTasksFile);
 
             const matchesIfSearchInfoHasCorrectPath = (_task: Task, searchInfo: SearchInfo) => {
@@ -1642,7 +1642,7 @@ describe('Query', () => {
             const source = 'group by function query.file.path';
             const sourceUpper = 'GROUP BY FUNCTION query.file.path';
 
-            const tasksFile = new TasksFile('hello.md');
+            const tasksFile = createTestTasksFile('hello.md');
             const query = new Query(source, tasksFile);
             const queryUpper = new Query(sourceUpper, tasksFile);
 
@@ -1842,7 +1842,7 @@ Problem statement:
         it('should save the source correctly in a Statement object', () => {
             const source = String.raw`(path includes A) OR \
                 (path includes {{query.file.path}})`;
-            const query = new Query(source, new TasksFile('Test.md'));
+            const query = new Query(source, createTestTasksFile('Test.md'));
 
             expect(query.error).toBeUndefined();
             const filter = query.filters[0];

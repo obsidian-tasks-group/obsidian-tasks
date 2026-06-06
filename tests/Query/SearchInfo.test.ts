@@ -1,10 +1,10 @@
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { TasksFile } from '../../src/Scripting/TasksFile';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 describe('SearchInfo', () => {
     const path = 'a/b/c.md';
-    const tasksFile = new TasksFile(path);
+    const tasksFile = createTestTasksFile(path);
 
     it('should not be able to modify SearchInfo.allTasks directly', () => {
         const tasks = [new TaskBuilder().build()];

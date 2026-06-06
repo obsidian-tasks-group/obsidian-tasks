@@ -1,4 +1,3 @@
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Link } from '../../src/Task/Link';
 
 import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
@@ -8,6 +7,7 @@ import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 function getLink(testDataName: MockDataName, index: number) {
     const data = MockDataLoader.get(testDataName);
@@ -292,10 +292,12 @@ describe('linkClass', () => {
             const linkToAFolder = getLink('link_in_task_wikilink', 2);
             expect(linkToAFolder.originalMarkdown).toMatchInlineSnapshot('"[[Test Data/link_in_task_wikilink]]"');
 
-            expect(linkToAFolder.linksTo(new TasksFile('Test Data/link_in_task_wikilink.md'))).toEqual(true);
-            expect(linkToAFolder.linksTo(new TasksFile('link_in_task_wikilink.md'))).toEqual(false);
-            expect(linkToAFolder.linksTo(new TasksFile('Wrong Test Data/link_in_task_wikilink.md'))).toEqual(false);
-            expect(linkToAFolder.linksTo(new TasksFile('something_obviously_different.md'))).toEqual(false);
+            expect(linkToAFolder.linksTo(createTestTasksFile('Test Data/link_in_task_wikilink.md'))).toEqual(true);
+            expect(linkToAFolder.linksTo(createTestTasksFile('link_in_task_wikilink.md'))).toEqual(false);
+            expect(linkToAFolder.linksTo(createTestTasksFile('Wrong Test Data/link_in_task_wikilink.md'))).toEqual(
+                false,
+            );
+            expect(linkToAFolder.linksTo(createTestTasksFile('something_obviously_different.md'))).toEqual(false);
         });
     });
 });

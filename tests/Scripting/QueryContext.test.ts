@@ -6,9 +6,9 @@ import { RootField } from '../../src/Query/Filter/RootField';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { FunctionField } from '../../src/Query/Filter/FunctionField';
 import { SearchInfo } from '../../src/Query/SearchInfo';
-import { TasksFile } from '../../src/Scripting/TasksFile';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
-const tasksFile = new TasksFile('a/b/c.md');
+const tasksFile = createTestTasksFile('a/b/c.md');
 const task = new TaskBuilder().path(tasksFile.path).build();
 const queryContext = makeQueryContext(tasksFile);
 

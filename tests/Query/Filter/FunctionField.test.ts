@@ -22,9 +22,9 @@ import { fromLine } from '../../TestingTools/TestHelpers';
 import { Query } from '../../../src/Query/Query';
 import { TasksDate } from '../../../src/DateTime/TasksDate';
 import { Priority } from '../../../src/Task/Priority';
-import { TasksFile } from '../../../src/Scripting/TasksFile';
 import { EnableJsInTasksQueries } from '../../../src/Config/EnableJsInTasksQueries';
 import { expectQueryErrorToMentionDisabledJavaScript } from '../../Scripting/ScriptingTestHelpers';
+import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 
 window.moment = moment;
 
@@ -94,7 +94,7 @@ describe('FunctionField - filtering', () => {
             'filter by function task.file.path === query.file.path',
         );
         expect(tasksInSameFileAsQuery).toBeValid();
-        const queryTasksFile = new TasksFile('/a/b/query.md');
+        const queryTasksFile = createTestTasksFile('/a/b/query.md');
 
         const taskInQueryFile: Task = new TaskBuilder().path(queryTasksFile.path).build();
         const taskNotInQueryFile: Task = new TaskBuilder().path('some other path.md').build();
@@ -652,8 +652,11 @@ describe('FunctionField - grouping - example functions', () => {
         const line = 'group by function query.file.filename';
         const grouper = createGrouper(line);
         const task = new TaskBuilder().build();
-        toGroupTaskUsingSearchInfo(grouper, task, new SearchInfo(new TasksFile('queries/query file.md'), [task]), [
-            'query file.md',
-        ]);
+        toGroupTaskUsingSearchInfo(
+            grouper,
+            task,
+            new SearchInfo(createTestTasksFile('queries/query file.md'), [task]),
+            ['query file.md'],
+        );
     });
 });

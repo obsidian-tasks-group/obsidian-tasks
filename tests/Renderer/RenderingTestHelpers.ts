@@ -4,11 +4,11 @@ import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorM
 import { Query } from '../../src/Query/Query';
 import type { HTMLQueryRendererParameters } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { toMarkdown } from '../TestingTools/TestHelpers';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 export const mockHTMLRenderer = async (_obsidianApp: App, text: string, element: HTMLSpanElement, _path: string) => {
     // Contrary to the default mockTextRenderer(),
@@ -37,7 +37,7 @@ export function makeHtmlQueryRendererParameters(allTasks: Task[]): HTMLQueryRend
 }
 
 export function createMarkdownRenderer(source: string) {
-    const tasksFile = new TasksFile('query.md');
+    const tasksFile = createTestTasksFile('query.md');
     const query = new Query(source, tasksFile);
 
     const renderer = new MarkdownQueryResultsRenderer(source, tasksFile, query);

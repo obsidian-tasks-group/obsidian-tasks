@@ -5,11 +5,11 @@
 import moment from 'moment';
 import { getSettings, resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { Query } from '../../../src/Query/Query';
-import { TasksFile } from '../../../src/Scripting/TasksFile';
 import type { Statement } from '../../../src/Query/Statement';
 import { type PresetsMap, defaultPresets } from '../../../src/Query/Presets/Presets';
 import { EnableJsInTasksQueries } from '../../../src/Config/EnableJsInTasksQueries';
 import { expectQueryErrorToMentionDisabledJavaScript } from '../../Scripting/ScriptingTestHelpers';
+import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 
 window.moment = moment;
 
@@ -26,7 +26,7 @@ export function makeIncludes(...entries: [string, string][]): PresetsMap {
     return Object.fromEntries(entries);
 }
 
-const tasksFile = new TasksFile('root/folder/stuff.md');
+const tasksFile = createTestTasksFile('root/folder/stuff.md');
 
 function createQuery(source: string, includes: PresetsMap) {
     updateSettings({ presets: includes });
@@ -567,7 +567,7 @@ describe('include settings tests', () => {
         expect(name).toBeDefined();
         expect(instructions).toBeDefined();
 
-        const query = new Query(instructions, new TasksFile('anywhere.md'));
+        const query = new Query(instructions, createTestTasksFile('anywhere.md'));
         expect(query.error).toBeUndefined();
     });
 });

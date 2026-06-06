@@ -1,5 +1,6 @@
-import { TasksFile } from '../../src/Scripting/TasksFile';
+import type { TasksFile } from '../../src/Scripting/TasksFile';
 import { TaskLocation } from '../../src/Task/TaskLocation';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 describe('TaskLocation', () => {
     it('should store the full task location', () => {
@@ -12,7 +13,7 @@ describe('TaskLocation', () => {
 
         // Act
         const taskLocation = new TaskLocation(
-            new TasksFile(path),
+            createTestTasksFile(path),
             lineNumber,
             sectionStart,
             sectionIndex,
@@ -33,7 +34,7 @@ describe('TaskLocation', () => {
         const path = 'a/b/c.md';
 
         // Act
-        const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile(path));
+        const taskLocation = TaskLocation.fromUnknownPosition(createTestTasksFile(path));
 
         // Assert
         expect(taskLocation.path).toStrictEqual(path);
@@ -51,7 +52,7 @@ describe('TaskLocation', () => {
         const sectionIndex = 10;
         const precedingHeader = 'My Previous Header';
         const taskLocation = new TaskLocation(
-            new TasksFile(path),
+            createTestTasksFile(path),
             lineNumber,
             sectionStart,
             sectionIndex,
@@ -60,7 +61,7 @@ describe('TaskLocation', () => {
 
         // Act
         const newPath = 'd/e/f.md';
-        const newLocation = taskLocation.fromRenamedFile(new TasksFile(newPath));
+        const newLocation = taskLocation.fromRenamedFile(createTestTasksFile(newPath));
 
         // Assert
         expect(newLocation.path).toStrictEqual(newPath);
@@ -71,13 +72,13 @@ describe('TaskLocation', () => {
     });
 
     it('should recognise unknown paths', () => {
-        expect(TaskLocation.fromUnknownPosition(new TasksFile('x.md')).hasKnownPath).toBe(true);
-        expect(TaskLocation.fromUnknownPosition(new TasksFile('')).hasKnownPath).toBe(false);
+        expect(TaskLocation.fromUnknownPosition(createTestTasksFile('x.md')).hasKnownPath).toBe(true);
+        expect(TaskLocation.fromUnknownPosition(createTestTasksFile('')).hasKnownPath).toBe(false);
     });
 });
 
 describe('TaskLocation - identicalTo', function () {
-    const tasksFile: TasksFile = new TasksFile('x.md');
+    const tasksFile: TasksFile = createTestTasksFile('x.md');
     const lineNumber: number = 40;
     const sectionStart: number = 30;
     const sectionIndex: number = 3;
@@ -91,7 +92,13 @@ describe('TaskLocation - identicalTo', function () {
     });
 
     it('should check tasksFile', () => {
-        const rhs = new TaskLocation(new TasksFile('y.md'), lineNumber, sectionStart, sectionIndex, precedingHeader);
+        const rhs = new TaskLocation(
+            createTestTasksFile('y.md'),
+            lineNumber,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        );
         expect(lhs.identicalTo(rhs)).toEqual(false);
     });
 

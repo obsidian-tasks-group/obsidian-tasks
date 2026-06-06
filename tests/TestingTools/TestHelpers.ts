@@ -1,6 +1,6 @@
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
+import { createTestTasksFile } from './TasksFileHelpers';
 
 /**
  * @see fromLines
@@ -17,7 +17,7 @@ export function fromLine({
 }) {
     return Task.fromLine({
         line,
-        taskLocation: new TaskLocation(new TasksFile(path), 0, 0, 0, precedingHeader),
+        taskLocation: new TaskLocation(createTestTasksFile(path), 0, 0, 0, precedingHeader),
         fallbackDate: null,
     })!;
 }
@@ -77,7 +77,7 @@ export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, p
     for (const line of taskLines) {
         const task = Task.fromLine({
             line: line,
-            taskLocation: new TaskLocation(new TasksFile(path), 0, 0, 0, precedingHeader),
+            taskLocation: new TaskLocation(createTestTasksFile(path), 0, 0, 0, precedingHeader),
             fallbackDate: null,
         });
         if (task) {

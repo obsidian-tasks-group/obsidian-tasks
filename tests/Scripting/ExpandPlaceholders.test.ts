@@ -1,9 +1,9 @@
 import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Query } from '../../src/Query/Query';
 import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { expectQueryErrorToMentionDisabledJavaScript } from './ScriptingTestHelpers';
 
 describe('Placeholders - disabling execution', () => {
@@ -75,7 +75,7 @@ describe('Placeholders - disabling execution', () => {
 });
 
 describe('ExpandTemplate', () => {
-    const tasksFile = new TasksFile('a/b/path with space.md');
+    const tasksFile = createTestTasksFile('a/b/path with space.md');
 
     it('hard-coded call', () => {
         const view = {
@@ -148,7 +148,7 @@ The problem is in:
     });
 
     it('should throw an error if unknown template nested field used', () => {
-        const queryContext = makeQueryContext(new TasksFile('stuff.md'));
+        const queryContext = makeQueryContext(createTestTasksFile('stuff.md'));
         const source = '{{ query.file.nonsense }}';
 
         expect(() => expandPlaceholders(source, queryContext)).toThrow(

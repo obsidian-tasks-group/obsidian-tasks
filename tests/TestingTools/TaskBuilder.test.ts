@@ -6,9 +6,9 @@ import moment from 'moment';
 import type { Task } from '../../src/Task/Task';
 import { ListItem } from '../../src/Task/ListItem';
 import { TaskLocation } from '../../src/Task/TaskLocation';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { TaskBuilder } from './TaskBuilder';
 import { MockDataLoader } from './MockDataLoader';
+import { createTestTasksFile } from './TasksFileHelpers';
 
 export {};
 
@@ -28,7 +28,7 @@ describe('TaskBuilder', () => {
     });
 
     it('should allow parent to be supplied', () => {
-        const location = TaskLocation.fromUnknownPosition(new TasksFile('somewhere.md'));
+        const location = TaskLocation.fromUnknownPosition(createTestTasksFile('somewhere.md'));
         const parent = ListItem.fromListItemLine('- any old list item', null, location);
         const builder = new TaskBuilder();
         const task = builder.parent(parent).build();
