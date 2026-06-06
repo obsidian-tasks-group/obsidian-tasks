@@ -1,7 +1,7 @@
 import type { CachedMetadata, ListItemCache, SectionCache } from 'obsidian';
 import type { Logger } from '../lib/logging';
 import { Task } from '../Task/Task';
-import { TasksFile } from '../Scripting/TasksFile';
+import type { TasksFile } from '../Scripting/TasksFile';
 import { Lazy } from '../lib/Lazy';
 import { DateFallback } from '../DateTime/DateFallback';
 import { ListItem } from '../Task/ListItem';
@@ -23,6 +23,7 @@ export class FileParser {
     private readonly dateFromFileName: Lazy<moment.Moment | null>;
 
     constructor(
+        tasksFile: TasksFile,
         filePath: string,
         fileContent: string,
         listItems: ListItemCache[],
@@ -30,7 +31,7 @@ export class FileParser {
         fileCache: CachedMetadata,
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
-        this.tasksFile = new TasksFile(filePath, fileCache);
+        this.tasksFile = tasksFile;
         this.filePath = filePath;
         this.fileContent = fileContent;
         this.listItems = listItems;
