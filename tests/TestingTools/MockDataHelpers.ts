@@ -1,7 +1,8 @@
-import { TasksFile } from '../../src/Scripting/TasksFile';
+import type { TasksFile } from '../../src/Scripting/TasksFile';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { MockDataLoader } from './MockDataLoader';
+import { createTestTasksFile } from './TasksFileHelpers';
 
 /**
  * @file This file provides functions for testing {@link TasksFile} from data in `tests/Obsidian/__test_data__`.
@@ -27,7 +28,7 @@ import { MockDataLoader } from './MockDataLoader';
 export function getTasksFileFromMockData(testDataName: MockDataName) {
     const data = MockDataLoader.get(testDataName);
     const cachedMetadata = data.cachedMetadata;
-    return new TasksFile(data.filePath, cachedMetadata);
+    return createTestTasksFile(data.filePath, cachedMetadata);
 }
 
 /**

@@ -1,6 +1,5 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Reference } from 'obsidian';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
@@ -105,7 +104,7 @@ describe('TasksFile - raw frontmatter - identicalTo', () => {
 
 describe('TasksFile - reading frontmatter', () => {
     it('should read file if not given CachedMetadata', () => {
-        const tasksFile = new TasksFile('some path.md', {});
+        const tasksFile = createTestTasksFile('some path.md', {});
 
         expect(tasksFile.cachedMetadata.frontmatter).toBeUndefined();
         expect(tasksFile.frontmatter).toEqual({ tags: [] });
@@ -451,14 +450,14 @@ describe('TasksFile - identicalTo', () => {
     const cachedMetadata = {};
 
     it('should detect identical objects', () => {
-        const lhs = new TasksFile(path, cachedMetadata);
-        const rhs = new TasksFile(path, cachedMetadata);
+        const lhs = createTestTasksFile(path, cachedMetadata);
+        const rhs = createTestTasksFile(path, cachedMetadata);
         expect(lhs.identicalTo(rhs)).toEqual(true);
     });
 
     it('should check path', () => {
-        const lhs = new TasksFile(path, cachedMetadata);
-        const rhs = new TasksFile('somewhere else.md', cachedMetadata);
+        const lhs = createTestTasksFile(path, cachedMetadata);
+        const rhs = createTestTasksFile('somewhere else.md', cachedMetadata);
         expect(lhs.identicalTo(rhs)).toEqual(false);
     });
 
