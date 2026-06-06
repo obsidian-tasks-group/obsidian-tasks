@@ -60,4 +60,9 @@ describe('FileParser', () => {
         expect(tasks.length).toEqual(1);
         expect(tasks[0].description).toEqual("#task Task line 1 in 'zero_width' - indented by tab character");
     });
+
+    it('readTasksFromSimulatedFile() should preserve file path', () => {
+        const tasks = readTasksFromSimulatedFile('numbered_list_items_with_paren');
+        expect(tasks[0].path).toEqual('Test Data/numbered_list_items_with_paren.md');
+    });
 });
