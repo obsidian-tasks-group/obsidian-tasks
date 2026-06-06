@@ -62,7 +62,6 @@ export function readTasksFromSimulatedFile(filename: MockDataName): Task[] {
         testData.fileContents,
         testData.cachedMetadata.listItems!,
         logger,
-        testData.cachedMetadata,
         errorReporter,
     );
     return fileParser.parseFileContent();

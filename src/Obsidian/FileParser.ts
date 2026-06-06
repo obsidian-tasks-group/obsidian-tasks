@@ -27,7 +27,6 @@ export class FileParser {
         fileContent: string,
         listItems: ListItemCache[],
         logger: Logger,
-        fileCache: CachedMetadata,
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
         this.tasksFile = tasksFile;
@@ -35,7 +34,7 @@ export class FileParser {
         this.fileContent = fileContent;
         this.listItems = listItems;
         this.logger = logger;
-        this.fileCache = fileCache;
+        this.fileCache = tasksFile.cachedMetadata;
         this.errorReporter = errorReporter;
         this.fileLines = this.fileContent.split('\n');
 
