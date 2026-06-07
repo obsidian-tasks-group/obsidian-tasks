@@ -295,6 +295,7 @@ export class Cache {
             // Only read the file and process for tasks if there are list items.
             const fileContent = await this.vault.cachedRead(file);
             newTasks = this.getTasksFromFileContent(
+                new TasksFile(file.path, fileCache),
                 fileContent,
                 listItems,
                 fileCache,
@@ -339,14 +340,14 @@ export class Cache {
     }
 
     private getTasksFromFileContent(
+        tasksFile: TasksFile,
         fileContent: string,
         listItems: ListItemCache[],
-        fileCache: CachedMetadata,
-        filePath: string,
+        _fileCache: CachedMetadata,
+        _filePath: string,
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
         logger: Logger,
     ): Task[] {
-        const tasksFile = new TasksFile(filePath, fileCache);
         const fileParser = new FileParser(tasksFile, fileContent, listItems, logger, errorReporter);
         return fileParser.parseFileContent();
     }
