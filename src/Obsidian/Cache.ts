@@ -1,5 +1,4 @@
 import {
-    type CachedMetadata,
     type EventRef,
     type HeadingCache,
     type ListItemCache,
@@ -298,8 +297,6 @@ export class Cache {
                 new TasksFile(file.path, fileCache),
                 fileContent,
                 listItems,
-                fileCache,
-                file.path,
                 this.reportTaskParsingErrorToUser,
                 this.logger,
             );
@@ -343,8 +340,6 @@ export class Cache {
         tasksFile: TasksFile,
         fileContent: string,
         listItems: ListItemCache[],
-        _fileCache: CachedMetadata,
-        _filePath: string,
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
         logger: Logger,
     ): Task[] {
