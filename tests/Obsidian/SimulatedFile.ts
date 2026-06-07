@@ -3,6 +3,7 @@ import type { Task } from 'Task/Task';
 import { logging } from '../../src/lib/logging';
 import { FileParser } from '../../src/Obsidian/FileParser';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { AllMockDataNames, type MockDataName } from './AllCacheSampleData';
 
 /**
@@ -57,11 +58,10 @@ export function readTasksFromSimulatedFile(filename: MockDataName): Task[] {
     const testData = MockDataLoader.get(filename);
     const logger = logging.getLogger('testCache');
     const fileParser = new FileParser(
-        testData.filePath,
+        createTestTasksFile(testData.filePath, testData.cachedMetadata),
         testData.fileContents,
         testData.cachedMetadata.listItems!,
         logger,
-        testData.cachedMetadata,
         errorReporter,
     );
     return fileParser.parseFileContent();

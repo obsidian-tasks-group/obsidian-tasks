@@ -9,7 +9,7 @@ import { Query } from '../../../src/Query/Query';
 import { Explainer } from '../../../src/Query/Explain/Explainer';
 import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { DebugSettings } from '../../../src/Config/DebugSettings';
-import { TasksFile } from '../../../src/Scripting/TasksFile';
+import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 
 window.moment = moment;
 
@@ -19,7 +19,7 @@ window.moment = moment;
  */
 function makeQueryFromContinuationLines(lines: string[]) {
     const source = lines.join('\\\n');
-    const query = new Query(source, new TasksFile('sample.md'));
+    const query = new Query(source, createTestTasksFile('sample.md'));
     expect(query.error).toBeUndefined();
     return query;
 }
@@ -73,7 +73,7 @@ ignore global query
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(true) });
 
-        const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
+        const query = new Query(sampleOfAllInstructionTypes, createTestTasksFile('sample.md'));
         expect(explainer.explainQuery(query)).toMatchInlineSnapshot(`
             "ignore global query
 
@@ -127,7 +127,7 @@ ignore global query
         // Disable sort instructions
         updateSettings({ debugSettings: new DebugSettings(true) });
 
-        const query = new Query(sampleOfAllInstructionTypes, new TasksFile('sample.md'));
+        const query = new Query(sampleOfAllInstructionTypes, createTestTasksFile('sample.md'));
         const indentedExplainer = new Explainer('  ');
         expect(indentedExplainer.explainQuery(query)).toMatchInlineSnapshot(`
             "  ignore global query

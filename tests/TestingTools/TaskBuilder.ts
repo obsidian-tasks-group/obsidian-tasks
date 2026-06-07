@@ -1,6 +1,5 @@
 // Builder
 import type { Moment } from 'moment';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Status } from '../../src/Statuses/Status';
 import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Occurrence } from '../../src/Task/Occurrence';
@@ -14,6 +13,7 @@ import type { ListItem } from '../../src/Task/ListItem';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { MockDataLoader } from './MockDataLoader';
+import { createTestTasksFile } from './TasksFileHelpers';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -85,7 +85,7 @@ export class TaskBuilder {
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
-                new TasksFile(this._path, cachedMetadata),
+                createTestTasksFile(this._path, cachedMetadata),
                 this._lineNumber,
                 this._sectionStart,
                 this._sectionIndex,

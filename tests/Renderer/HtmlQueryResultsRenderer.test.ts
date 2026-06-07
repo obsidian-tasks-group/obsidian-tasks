@@ -6,11 +6,12 @@ import { State } from '../../src/Obsidian/Cache';
 import type { Query } from '../../src/Query/Query';
 import { getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
 import { HtmlQueryResultsRenderer } from '../../src/Renderer/HtmlQueryResultsRenderer';
-import { TasksFile } from '../../src/Scripting/TasksFile';
+import type { TasksFile } from '../../src/Scripting/TasksFile';
 import type { Task } from '../../src/Task/Task';
 import { mockApp } from '../__mocks__/obsidian';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { makeHtmlQueryRendererParameters, mockHTMLRenderer, verifyRenderedTasks } from './RenderingTestHelpers';
 
 window.moment = moment;
@@ -32,7 +33,7 @@ function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]
 }
 
 async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm) {
-    const tasksFile = new TasksFile('query.md');
+    const tasksFile = createTestTasksFile('query.md');
     const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
 
     const container = document.createElement('div');
@@ -205,7 +206,7 @@ sort by function reverse task.lineNumber
 });
 
 describe('Reusing HtmlQueryResultsRenderer', () => {
-    const tasksFile = new TasksFile('anywhere.md');
+    const tasksFile = createTestTasksFile('anywhere.md');
 
     it('should render the same thing twice - tree', async () => {
         const allTasks = readTasksFromSimulatedFile(
@@ -237,7 +238,7 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
 });
 
 describe('HtmlQueryResultsRenderer - task count location setting', () => {
-    const tasksFile = new TasksFile('query.md');
+    const tasksFile = createTestTasksFile('query.md');
     const source = 'hide toolbar\nhide backlinks\nhide edit button';
     const allTasks = readTasksFromSimulatedFile('inheritance_1parent1child');
 
@@ -308,7 +309,7 @@ For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsi
 
     async function renderTask(task: Task, queryFilePath: string = 'query.md') {
         const allTasks = [task];
-        const { renderer, query } = makeHtmlRenderer('', new TasksFile(queryFilePath), allTasks);
+        const { renderer, query } = makeHtmlRenderer('', createTestTasksFile(queryFilePath), allTasks);
         const container = document.createElement('div');
 
         renderer.content = container;

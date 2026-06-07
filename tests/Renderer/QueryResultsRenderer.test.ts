@@ -7,10 +7,11 @@ import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
 import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
-import { TasksFile } from '../../src/Scripting/TasksFile';
+import type { TasksFile } from '../../src/Scripting/TasksFile';
 import { mockApp } from '../__mocks__/obsidian';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import {
     makeHtmlQueryRendererParameters,
     mockHTMLRenderer,
@@ -50,7 +51,7 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
 }
 
 async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm): Promise<void> {
-    const renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), allTasks);
+    const renderer = makeQueryResultsRenderer(source, createTestTasksFile('file.md'), allTasks);
     const container = document.createElement('div');
 
     await renderer.render(state, allTasks, container);
@@ -63,14 +64,14 @@ describe('QueryResultsRenderer - accessing results', () => {
     const twoTasks = [...aTask, new TaskBuilder().description('another task').build()];
 
     it('should have empty results before rendering', () => {
-        const renderer = makeQueryResultsRenderer('', new TasksFile('file.md'), aTask);
+        const renderer = makeQueryResultsRenderer('', createTestTasksFile('file.md'), aTask);
 
         expect(renderer.queryResult.totalTasksCount).toEqual(0);
         expect(renderer.filteredQueryResult.totalTasksCount).toEqual(0);
     });
 
     it('should have actual results after rendering', async () => {
-        const renderer = makeQueryResultsRenderer('', new TasksFile('file.md'), aTask);
+        const renderer = makeQueryResultsRenderer('', createTestTasksFile('file.md'), aTask);
 
         await renderer.render(State.Warm, aTask, document.createElement('div'));
 
@@ -79,7 +80,7 @@ describe('QueryResultsRenderer - accessing results', () => {
     });
 
     it('should have actual result after filtering results', async () => {
-        const renderer = makeQueryResultsRenderer('', new TasksFile('file.md'), twoTasks);
+        const renderer = makeQueryResultsRenderer('', createTestTasksFile('file.md'), twoTasks);
 
         await renderer.render(State.Warm, twoTasks, document.createElement('div'));
 
@@ -145,11 +146,11 @@ describe('QueryResultsRenderer - responding to file edits', () => {
     it('should update the query when its file path is changed', () => {
         // Arrange
         const source = 'path includes {{query.file.path}}';
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('oldPath.md'), []);
+        const renderer = makeQueryResultsRenderer(source, createTestTasksFile('oldPath.md'), []);
         expect(renderer.query.explainQuery()).toContain('path includes oldPath.md');
 
         // Act
-        renderer.setTasksFile(new TasksFile('newPath.md'));
+        renderer.setTasksFile(createTestTasksFile('newPath.md'));
 
         // Assert
         expect(renderer.query.explainQuery()).toContain('path includes newPath.md');
@@ -159,7 +160,7 @@ describe('QueryResultsRenderer - responding to file edits', () => {
         // Arrange
         updateSettings({ presets: { CurrentGrouping: 'group by PATH' } });
         const source = 'preset CurrentGrouping';
-        const renderer = makeQueryResultsRenderer(source, new TasksFile('any file.md'), []);
+        const renderer = makeQueryResultsRenderer(source, createTestTasksFile('any file.md'), []);
         expect(renderer.query.explainQuery()).toContain('group by PATH');
 
         // Act
@@ -183,7 +184,7 @@ class RendererStoryboard {
 
     constructor(source: string, allTasks: Task[]) {
         this.allTasks = allTasks;
-        this.renderer = makeQueryResultsRenderer(source, new TasksFile('file.md'), allTasks);
+        this.renderer = makeQueryResultsRenderer(source, createTestTasksFile('file.md'), allTasks);
     }
 
     /**

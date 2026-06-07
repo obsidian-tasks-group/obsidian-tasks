@@ -15,9 +15,9 @@ import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { fromLine, fromLines } from '../../TestingTools/TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { TasksFile } from '../../../src/Scripting/TasksFile';
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import type { TaskGroup } from '../../../src/Query/Group/TaskGroup';
+import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 
 window.moment = moment;
 
@@ -101,7 +101,7 @@ describe('Grouping tasks', () => {
         };
         const grouper: Grouper = new Grouper('group by test', 'test', groupByQueryPath, false);
 
-        const tasksFile = new TasksFile('somewhere/anything.md');
+        const tasksFile = createTestTasksFile('somewhere/anything.md');
         const tasks = [new TaskBuilder().build()];
         const searchInfo = new SearchInfo(tasksFile, tasks);
 

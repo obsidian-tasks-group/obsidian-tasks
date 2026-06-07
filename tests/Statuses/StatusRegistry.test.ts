@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
@@ -12,6 +11,7 @@ import type { StatusCollection, StatusCollectionEntry } from '../../src/Statuses
 import * as TestHelpers from '../TestingTools/TestHelpers';
 import * as StatusExamples from '../TestingTools/StatusExamples';
 import { constructStatuses } from '../TestingTools/StatusesTestHelpers';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -377,7 +377,7 @@ describe('StatusRegistry', () => {
         const sectionIndex = 1209;
         const precedingHeader = 'Eloquent Section';
         const taskLocation = new TaskLocation(
-            new TasksFile(path),
+            createTestTasksFile(path),
             lineNumber,
             sectionStart,
             sectionIndex,

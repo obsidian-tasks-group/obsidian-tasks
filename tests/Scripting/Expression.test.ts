@@ -9,9 +9,9 @@ import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { continueLinesFlattened } from '../../src/Query/Scanner';
 import { constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
 import { JsInTasksQueriesDisabledError } from '../../src/Scripting/JsInTasksQueriesDisabledError';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
@@ -84,7 +84,7 @@ describe('Expression', () => {
     });
 
     const task = TaskBuilder.createFullyPopulatedTask();
-    const queryContext = makeQueryContext(new TasksFile('temp.md'));
+    const queryContext = makeQueryContext(createTestTasksFile('temp.md'));
 
     describe('detect errors at parse stage', () => {
         it('should report meaningful error message for parentheses too few parentheses', () => {

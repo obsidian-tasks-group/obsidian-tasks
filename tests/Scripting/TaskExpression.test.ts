@@ -1,18 +1,18 @@
 import { TaskExpression, constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
-import { TasksFile } from '../../src/Scripting/TasksFile';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 describe('TaskExpression', () => {
     describe('low level functions', () => {
         it('should allow passing QueryContext or null to constructArguments()', () => {
             const task = new TaskBuilder().build();
             constructArguments(task, null);
-            constructArguments(task, makeQueryContext(new TasksFile('dummy.md')));
+            constructArguments(task, makeQueryContext(createTestTasksFile('dummy.md')));
         });
 
         it('should calculate an expression value from a QueryContext', () => {
-            const queryContext = makeQueryContext(new TasksFile('test.md'));
+            const queryContext = makeQueryContext(createTestTasksFile('test.md'));
             const task = new TaskBuilder().build();
             const result = parseAndEvaluateExpression(task, 'query.file.path', queryContext);
             expect(result).toEqual('test.md');
@@ -70,7 +70,7 @@ describe('TaskExpression', () => {
     });
 
     describe('evaluating', () => {
-        const queryContext = makeQueryContext(new TasksFile('dummy.md'));
+        const queryContext = makeQueryContext(createTestTasksFile('dummy.md'));
         it('should evaluate a valid task property and give correct result', () => {
             // Arrange
             const taskExpression = new TaskExpression('task.description');

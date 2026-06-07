@@ -1,7 +1,7 @@
 import type { CachedMetadata, ListItemCache, SectionCache } from 'obsidian';
 import type { Logger } from '../lib/logging';
 import { Task } from '../Task/Task';
-import { TasksFile } from '../Scripting/TasksFile';
+import type { TasksFile } from '../Scripting/TasksFile';
 import { Lazy } from '../lib/Lazy';
 import { DateFallback } from '../DateTime/DateFallback';
 import { ListItem } from '../Task/ListItem';
@@ -9,11 +9,10 @@ import { TaskLocation } from '../Task/TaskLocation';
 import { Cache } from './Cache';
 
 export class FileParser {
-    private readonly filePath: string;
+    private readonly tasksFile: TasksFile;
     private readonly fileContent: string;
     private readonly listItems: ListItemCache[];
     private readonly logger: Logger;
-    private readonly fileCache: CachedMetadata;
     private readonly errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void;
 
     private readonly fileLines: string[];
@@ -22,23 +21,29 @@ export class FileParser {
     private readonly dateFromFileName: Lazy<moment.Moment | null>;
 
     constructor(
-        filePath: string,
+        tasksFile: TasksFile,
         fileContent: string,
         listItems: ListItemCache[],
         logger: Logger,
-        fileCache: CachedMetadata,
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
-        this.filePath = filePath;
+        this.tasksFile = tasksFile;
         this.fileContent = fileContent;
         this.listItems = listItems;
         this.logger = logger;
-        this.fileCache = fileCache;
         this.errorReporter = errorReporter;
         this.fileLines = this.fileContent.split('\n');
 
         // Lazily store date extracted from filename to avoid parsing more than needed
         this.dateFromFileName = new Lazy(() => DateFallback.fromPath(this.filePath));
+    }
+
+    public get filePath(): string {
+        return this.tasksFile.path;
+    }
+
+    public get fileCache(): CachedMetadata {
+        return this.tasksFile.cachedMetadata;
     }
 
     /**
@@ -51,7 +56,6 @@ export class FileParser {
             return this.tasks;
         }
 
-        const tasksFile = new TasksFile(this.filePath, this.fileCache);
         const linesInFile = this.fileLines.length;
 
         // this.logger.debug(`FileParser.parseFileContent() reading ${this.filePath}`);
@@ -99,7 +103,7 @@ export class FileParser {
             }
 
             const taskLocation = new TaskLocation(
-                tasksFile,
+                this.tasksFile,
                 lineNumber,
                 currentSection.position.start.line,
                 sectionIndex,

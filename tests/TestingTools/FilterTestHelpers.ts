@@ -1,10 +1,10 @@
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { Task } from '../../src/Task/Task';
 import { Query } from '../../src/Query/Query';
 import { TaskLocation } from '../../src/Task/TaskLocation';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import type { TaskBuilder } from './TaskBuilder';
+import { createTestTasksFile } from './TasksFileHelpers';
 
 /**
  * Convenience function to test a Filter on a single Task
@@ -79,7 +79,7 @@ export function shouldSupportFiltering(
         (taskLine) =>
             Task.fromLine({
                 line: taskLine,
-                taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('')),
+                taskLocation: TaskLocation.fromUnknownPosition(createTestTasksFile('')),
                 fallbackDate: null, // For tests scheduled date needs to be set explicitly
             }) as Task,
     );

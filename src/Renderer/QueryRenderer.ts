@@ -59,9 +59,9 @@ export class QueryRenderer {
         //    continuation lines.
         const app = this.app;
         const filePath = context.sourcePath;
-        const tFile = app.vault.getAbstractFileByPath(filePath);
+        const tFile = app.vault.getFileByPath(filePath);
         let fileCache: CachedMetadata | null = null;
-        if (tFile && tFile instanceof TFile) {
+        if (tFile) {
             fileCache = app.metadataCache.getFileCache(tFile);
         }
         const tasksFile = new TasksFile(filePath, fileCache ?? {});

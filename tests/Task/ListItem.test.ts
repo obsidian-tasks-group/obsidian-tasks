@@ -4,7 +4,6 @@
 import moment from 'moment/moment';
 
 import type { Reference } from 'obsidian';
-import { TasksFile } from '../../src/Scripting/TasksFile';
 import { ListItem } from '../../src/Task/ListItem';
 import { Task } from '../../src/Task/Task';
 import { TaskLocation } from '../../src/Task/TaskLocation';
@@ -12,11 +11,12 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { LinkResolver } from '../../src/Task/LinkResolver';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { createChildListItem } from './ListItemHelpers';
 
 window.moment = moment;
 
-const taskLocation = TaskLocation.fromUnknownPosition(new TasksFile('anything.md'));
+const taskLocation = TaskLocation.fromUnknownPosition(createTestTasksFile('anything.md'));
 
 afterEach(() => {
     LinkResolver.getInstance().resetGetFirstLinkpathDestFn();
@@ -53,7 +53,7 @@ describe('list item tests', () => {
         const parentListItem = ListItem.fromListItemLine('- parent item', null, taskLocation)!;
         const firstReadTask = Task.fromLine({
             line: '    - [ ] child task',
-            taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('x.md')),
+            taskLocation: TaskLocation.fromUnknownPosition(createTestTasksFile('x.md')),
             fallbackDate: null,
         });
 
@@ -67,7 +67,7 @@ describe('list item tests', () => {
     it('should create a list item child for a task parent', () => {
         const parentTask = Task.fromLine({
             line: '- [ ] parent task',
-            taskLocation: TaskLocation.fromUnknownPosition(new TasksFile('x.md')),
+            taskLocation: TaskLocation.fromUnknownPosition(createTestTasksFile('x.md')),
             fallbackDate: null,
         });
         const childListItem = ListItem.fromListItemLine('    - child item', parentTask, taskLocation)!;
@@ -302,12 +302,12 @@ describe('identicalTo', () => {
         const item1 = ListItem.fromListItemLine(
             '- same',
             null,
-            TaskLocation.fromUnknownPosition(new TasksFile('anything.md')),
+            TaskLocation.fromUnknownPosition(createTestTasksFile('anything.md')),
         )!;
         const item2 = ListItem.fromListItemLine(
             '- same',
             null,
-            TaskLocation.fromUnknownPosition(new TasksFile('something.md')),
+            TaskLocation.fromUnknownPosition(createTestTasksFile('something.md')),
         )!;
 
         expect(item2.identicalTo(item1)).toEqual(false);
