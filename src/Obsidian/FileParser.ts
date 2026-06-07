@@ -13,7 +13,7 @@ export class FileParser {
     private readonly fileContent: string;
     private readonly listItems: ListItemCache[];
     private readonly logger: Logger;
-    private readonly fileCache: CachedMetadata;
+    private readonly _fileCache: CachedMetadata;
     private readonly errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void;
 
     private readonly fileLines: string[];
@@ -32,7 +32,7 @@ export class FileParser {
         this.fileContent = fileContent;
         this.listItems = listItems;
         this.logger = logger;
-        this.fileCache = tasksFile.cachedMetadata;
+        this._fileCache = tasksFile.cachedMetadata;
         this.errorReporter = errorReporter;
         this.fileLines = this.fileContent.split('\n');
 
@@ -42,6 +42,10 @@ export class FileParser {
 
     public get filePath(): string {
         return this.tasksFile.path;
+    }
+
+    public get fileCache(): CachedMetadata {
+        return this._fileCache;
     }
 
     /**
