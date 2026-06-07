@@ -10,7 +10,6 @@ import { Cache } from './Cache';
 
 export class FileParser {
     private readonly tasksFile: TasksFile;
-    private readonly _filePath: string;
     private readonly fileContent: string;
     private readonly listItems: ListItemCache[];
     private readonly logger: Logger;
@@ -30,7 +29,6 @@ export class FileParser {
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
         this.tasksFile = tasksFile;
-        this._filePath = tasksFile.path;
         this.fileContent = fileContent;
         this.listItems = listItems;
         this.logger = logger;
@@ -43,7 +41,7 @@ export class FileParser {
     }
 
     public get filePath(): string {
-        return this._filePath;
+        return this.tasksFile.path;
     }
 
     /**
