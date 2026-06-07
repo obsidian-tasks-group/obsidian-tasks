@@ -56,7 +56,6 @@ export class FileParser {
             return this.tasks;
         }
 
-        const tasksFile = this.tasksFile;
         const linesInFile = this.fileLines.length;
 
         // this.logger.debug(`FileParser.parseFileContent() reading ${this.filePath}`);
@@ -104,7 +103,7 @@ export class FileParser {
             }
 
             const taskLocation = new TaskLocation(
-                tasksFile,
+                this.tasksFile,
                 lineNumber,
                 currentSection.position.start.line,
                 sectionIndex,
