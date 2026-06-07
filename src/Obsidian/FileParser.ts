@@ -10,7 +10,7 @@ import { Cache } from './Cache';
 
 export class FileParser {
     private readonly tasksFile: TasksFile;
-    private readonly filePath: string;
+    private readonly _filePath: string;
     private readonly fileContent: string;
     private readonly listItems: ListItemCache[];
     private readonly logger: Logger;
@@ -30,7 +30,7 @@ export class FileParser {
         errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
         this.tasksFile = tasksFile;
-        this.filePath = tasksFile.path;
+        this._filePath = tasksFile.path;
         this.fileContent = fileContent;
         this.listItems = listItems;
         this.logger = logger;
@@ -40,6 +40,10 @@ export class FileParser {
 
         // Lazily store date extracted from filename to avoid parsing more than needed
         this.dateFromFileName = new Lazy(() => DateFallback.fromPath(this.filePath));
+    }
+
+    public get filePath(): string {
+        return this._filePath;
     }
 
     /**
