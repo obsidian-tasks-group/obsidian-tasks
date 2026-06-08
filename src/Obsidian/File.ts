@@ -194,7 +194,7 @@ async function getTaskAndFileLines(task: ListItem, vault: Vault): Promise<[numbe
     // Validate our inputs.
     // For permanent failures, return nothing.
     // For failures that might be fixed if we wait for a little while, return retry().
-    const file = vault.getFileByPath(task.path);
+    const file = task.file.tFile || vault.getFileByPath(task.path);
     if (!file) {
         throw new WarningWorthRetrying(`Tasks: No file found for task ${task.description}. Retrying ...`);
     }
