@@ -80,6 +80,8 @@ export class InlineRenderer {
         }
 
         const path = context.sourcePath;
+        const tasksFile = new TasksFile(path);
+
         const section = context.getSectionInfo(element);
 
         if (section === null) {
@@ -100,7 +102,6 @@ export class InlineRenderer {
             }
 
             const precedingHeader = null; // We don't need the preceding header for in-line rendering.
-            const tasksFile = new TasksFile(path);
             const task = Task.fromLine({
                 line,
                 taskLocation: new TaskLocation(tasksFile, lineNumber, section.lineStart, sectionIndex, precedingHeader),
