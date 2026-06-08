@@ -59,12 +59,7 @@ export class QueryRenderer {
         //    continuation lines.
         const app = this.app;
         const filePath = context.sourcePath;
-        const tFile = app.vault.getFileByPath(filePath);
-        let fileCache: CachedMetadata | null = null;
-        if (tFile) {
-            fileCache = app.metadataCache.getFileCache(tFile);
-        }
-        const tasksFile = new TasksFile(filePath, fileCache ?? {});
+        const tasksFile = this.getTasksFile(app, filePath);
 
         const queryRenderChild = new QueryRenderChild({
             app: app,
@@ -76,6 +71,15 @@ export class QueryRenderer {
         });
         context.addChild(queryRenderChild);
         queryRenderChild.load();
+    }
+
+    private getTasksFile(app: App, filePath: string): TasksFile {
+        const tFile = app.vault.getFileByPath(filePath);
+        let fileCache: CachedMetadata | null = null;
+        if (tFile) {
+            fileCache = app.metadataCache.getFileCache(tFile);
+        }
+        return new TasksFile(filePath, fileCache ?? {});
     }
 }
 
