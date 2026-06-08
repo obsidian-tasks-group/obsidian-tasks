@@ -2904,12 +2904,10 @@ cheerio@^1.0.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-chrono-node@2.3.9:
-  version "2.3.9"
-  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.3.9.tgz#27f6174f796d094721566d7b00fd514501ad6ef5"
-  integrity sha512-Qg6zmsGwaWzWiMKapr060sL6zgfBIkTxnyCTd7KGQ0YDTYg0VvBfqRRBuaOkGjiVGdKPM/cp4QQTLcpUhZQxXg==
-  dependencies:
-    dayjs "^1.10.0"
+chrono-node@2.9.1:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.9.1.tgz#047a287bfcd60e310a293c64750a2ae8a3f69549"
+  integrity sha512-nqP8Zp11efCYQIESXPxeDM8ikzN5BDb3Zzou+a66fZq+X2hzKFdsNLQE2/uBAh//BZEMbaMo1eTnagK7hOenAg==
 
 ci-info@^3.2.0:
   version "3.9.0"
@@ -3170,11 +3168,6 @@ data-view-byte-offset@^1.0.1:
     call-bound "^1.0.2"
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
-
-dayjs@^1.10.0:
-  version "1.10.7"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
-  integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
 
 dbly-linked-list@0.3.4:
   version "0.3.4"
