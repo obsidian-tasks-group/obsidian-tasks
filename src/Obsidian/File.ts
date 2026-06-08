@@ -46,7 +46,7 @@ export const initializeFile = ({
  * sectionIdx in the source file it was originally found in. It will fail otherwise.
  *
  * If this might be called in a callback some time after the originalTask object was
- * created, it is recommended that originalTask's TaskFile has its tFile populated.
+ * created, it is recommended that originalTask's {@link TasksFile} has its tFile populated.
  * This will allow edits to be saved even if the task's Markdown file has been renamed
  * since the task was originally created.
  */
