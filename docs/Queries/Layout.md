@@ -68,8 +68,8 @@ The following query elements exist:
 | `tree`            | Hidden  | Task parent/child relationships | [[#Hide and Show Tree\|Tree]] |
 | `edit button`     | Shown   | Edit task button                | [[Create or edit Task]]       |
 | `postpone button` | Shown   | Postpone button on dates        | [[Postponing]]                |
-| `backlink`        | Shown   | Task backlink for tasks         | [[Backlinks]]                 |
-| `nested backlink` | Shown   | Backlink on nested tasks        | [[#Hide and Show Nested Backlink\|Nested Backlink]] |
+| `backlink`        | Shown   | Backlink on top-level tasks     | [[Backlinks]]                 |
+| `nested backlink` | Hidden  | Backlink on nested tasks        | [[#Hide and Show Nested Backlink\|Nested Backlink]] |
 | `urgency`         | Hidden  | Task urgency score              | [[Urgency]]                   |
 | `task count`      | Shown   | Total number of tasks           |                               |
 
@@ -80,8 +80,9 @@ The following query elements exist:
 > - `toolbar` was introduced in Tasks 7.23.0.
 > - `nested backlink` was introduced in Tasks X.Y.Z.
 
-All of these query elements except `urgency` and `tree` are shown by default, so you will use the command `hide`
-if you do not want to show any of them, or the command `show` to show the urgency score or tree view.
+All of these query elements except `urgency`, `tree` and `nested backlink` are shown by default, so you will use the
+command `hide` if you do not want to show any of them, or the command `show` to show the urgency score, tree view or
+nested backlinks.
 
 For example:
 
@@ -191,11 +192,11 @@ The `show tree` instruction enables us to see the parent/child relationships in 
 > [!released]
 > `nested backlink` was introduced in Tasks X.Y.Z.
 
-When you use `show tree`, every nested task shows its own [[Backlinks|backlink]], which repeats the
-same filename and heading as its top-level parent task. This can add a lot of repeated text to the results.
+When you use `show tree`, nested tasks can show their own [[Backlinks|backlink]], which repeats the
+same filename and heading as their top-level parent task. This can add a lot of repeated text to the results.
 
-The `hide nested backlink` instruction removes that repetition by **hiding the backlink on nested tasks
-entirely**, whilst the **top-level tasks keep their full backlink**.
+To avoid this repetition, **nested backlinks are hidden by default**, whilst **top-level tasks keep their full
+backlink**. The `show nested backlink` instruction shows the backlink on nested tasks as well:
 
 ````text
 ```tasks
@@ -203,15 +204,18 @@ not done
 filename includes Party Planner
 
 show tree
-hide nested backlink
+show nested backlink
 ```
 ````
 
 > [!Note]
-> `hide nested backlink` only affects nested tasks, so it only has a visible effect together with `show tree`.
+> `nested backlink` only affects nested tasks, so it only has a visible effect together with `show tree`.
 > In the default flat layout there are no nested tasks, so the instruction does nothing.
 >
-> To hide backlinks on **all** tasks, including the top-level ones, use `hide backlink` instead.
+> `backlink` and `nested backlink` are independent:
+>
+> - `backlink` controls the backlink on top-level tasks (shown by default). Use `hide backlink` to hide it.
+> - `nested backlink` controls the backlink on nested tasks (hidden by default). Use `show nested backlink` to show it.
 
 ## Example of show and hide
 

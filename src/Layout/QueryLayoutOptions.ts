@@ -8,7 +8,7 @@ export class QueryLayoutOptions {
     hidePostponeButton: boolean = false;
     hideTaskCount: boolean = false;
     hideBacklinks: boolean = false;
-    hideNestedBacklinks: boolean = false;
+    hideNestedBacklinks: boolean = true;
     hideEditButton: boolean = false;
     hideUrgency: boolean = true;
     hideTree: boolean = true;
