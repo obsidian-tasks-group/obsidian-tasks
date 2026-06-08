@@ -1,4 +1,11 @@
-import { type CachedMetadata, type FrontMatterCache, type Reference, getAllTags, parseFrontMatterTags } from 'obsidian';
+import {
+    type CachedMetadata,
+    type FrontMatterCache,
+    type Reference,
+    type TFile,
+    getAllTags,
+    parseFrontMatterTags,
+} from 'obsidian';
 import { Link } from '../Task/Link';
 
 export type OptionalTasksFile = TasksFile | undefined;
@@ -7,7 +14,9 @@ export type OptionalTasksFile = TasksFile | undefined;
  * A simple class to provide access to file information via 'task.file' in scripting code.
  */
 export class TasksFile {
-    private readonly _path: string;
+    private readonly _path: string; // the original path, at the moment of creation.
+    public readonly tFile?: TFile; // the TFile object for the file, needed for reliable writing. Reflects the current path after any renames.
+
     private readonly _cachedMetadata: CachedMetadata;
     // Always make TasksFile.frontmatter.tags exist and be empty, even if no frontmatter present:
     private readonly _frontmatter = { tags: [] } as Record<string, unknown>;
@@ -16,8 +25,10 @@ export class TasksFile {
     private readonly _outlinksInProperties: Readonly<Link[]> = [];
     private readonly _outlinksInBody: Readonly<Link[]> = [];
 
-    constructor(path: string, cachedMetadata: CachedMetadata = {}) {
+    constructor(path: string, cachedMetadata: CachedMetadata = {}, tFile?: TFile) {
         this._path = path;
+        this.tFile = tFile;
+
         this._cachedMetadata = cachedMetadata;
 
         const rawFrontmatter = cachedMetadata.frontmatter;

@@ -207,6 +207,7 @@ describe('EditableTask tests', () => {
                   "_outlinksInProperties": [],
                   "_path": "some/folder/fileName.md",
                   "_tags": [],
+                  "tFile": undefined,
                 },
               },
             }
