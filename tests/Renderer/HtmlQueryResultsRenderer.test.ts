@@ -188,6 +188,14 @@ group by function 'level4'
         await verifyRenderedHtml(allTasks, showTree + 'hide nested backlink\nsort by function task.lineNumber');
     });
 
+    it('show nested backlinks - tree', async () => {
+        // With 'show nested backlink', nested tasks render their full backlink too (not just top-level).
+        const allTasks = readTasksFromSimulatedFile(
+            'inheritance_1parent2children2grandchildren1sibling_start_with_heading',
+        );
+        await verifyRenderedHtml(allTasks, showTree + 'show nested backlink\nsort by function task.lineNumber');
+    });
+
     it('hide nested backlinks - flat is a no-op', async () => {
         // Without 'show tree' there are no nested tasks, so 'hide nested backlink' changes nothing:
         // all tasks keep their full backlink.

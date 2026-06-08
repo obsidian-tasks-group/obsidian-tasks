@@ -10,7 +10,7 @@ describe('parsing query show/hide layout options', () => {
         // Alphabetical order
         ['backlink', 'hideBacklinks', false],
         ['edit button', 'hideEditButton', false],
-        ['nested backlink', 'hideNestedBacklinks', false],
+        ['nested backlink', 'hideNestedBacklinks', true],
         ['postpone button', 'hidePostponeButton', false],
         ['task count', 'hideTaskCount', false],
         ['toolbar', 'hideToolbar', false],
