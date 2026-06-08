@@ -80,7 +80,8 @@ export class InlineRenderer {
         }
 
         const path = context.sourcePath;
-        const tasksFile = new TasksFile(path);
+        const file = this.app.vault.getFileByPath(path) || undefined;
+        const tasksFile = new TasksFile(path, {}, file);
 
         const section = context.getSectionInfo(element);
 
