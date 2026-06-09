@@ -5,6 +5,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
+import { getSettings } from '../Config/Settings';
 
 export const newLivePreviewExtension = () => {
     return ViewPlugin.fromClass(LivePreviewExtension);
@@ -54,12 +55,13 @@ class LivePreviewExtension implements PluginValue {
         const ancestor = target.closest('ul.plugin-tasks-query-result, div.callout-content');
         if (ancestor) {
             if (ancestor.matches('div.callout-content')) {
-                // Error message for now.
-                const msg =
-                    'obsidian-tasks-plugin warning: Tasks cannot add or remove completion dates or make the next copy of a recurring task for tasks written inside a callout when you click their checkboxes in Live Preview. \n' +
-                    'If you wanted Tasks to do these things, please undo your change, then either click the line of the task and use the "Toggle Task Done" command, or switch to Reading View to click the checkbox.';
-                console.warn(msg);
-                new Notice(msg, 45000);
+                if (!getSettings().dismissedNotices['live-preview-callout-warning']) {
+                    const msg =
+                        'obsidian-tasks-plugin warning: Tasks cannot add or remove completion dates or make the next copy of a recurring task for tasks written inside a callout when you click their checkboxes in Live Preview. \n' +
+                        'If you wanted Tasks to do these things, please undo your change, then either click the line of the task and use the "Toggle Task Done" command, or switch to Reading View to click the checkbox.';
+                    console.warn(msg);
+                    new Notice(msg, 45000);
+                }
             }
             return false;
         }
