@@ -7,8 +7,20 @@ import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
 import { getSettings } from '../Config/Settings';
 
-export const newLivePreviewExtension = () => {
-    return ViewPlugin.fromClass(LivePreviewExtension);
+interface SettingsSaver {
+    saveSettings(): Promise<void>;
+}
+
+// CodeMirror constructs view plugins with only the EditorView, so capture the Tasks plugin here
+// to enable us to ask the plugin to save settings.
+export const newLivePreviewExtension = (plugin: SettingsSaver) => {
+    return ViewPlugin.fromClass(
+        class extends LivePreviewExtension {
+            constructor(view: EditorView) {
+                super(view, plugin);
+            }
+        },
+    );
 };
 
 /**
@@ -24,9 +36,11 @@ export const newLivePreviewExtension = () => {
  */
 class LivePreviewExtension implements PluginValue {
     private readonly view: EditorView;
+    private readonly plugin: SettingsSaver;
 
-    constructor(view: EditorView) {
+    constructor(view: EditorView, plugin: SettingsSaver) {
         this.view = view;
+        this.plugin = plugin;
 
         this.handleClickEvent = this.handleClickEvent.bind(this);
         this.view.dom.addEventListener('click', this.handleClickEvent);
@@ -74,9 +88,9 @@ class LivePreviewExtension implements PluginValue {
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
 
-                    checkbox.addEventListener('change', () => {
+                    checkbox.addEventListener('change', async () => {
                         getSettings().dismissedNotices[dontShowAgainKey] = checkbox.checked;
-                        // TODO Save settings between sessions
+                        await this.plugin.saveSettings();
                     });
 
                     label.appendChild(checkbox);
