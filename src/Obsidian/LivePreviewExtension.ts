@@ -55,12 +55,37 @@ class LivePreviewExtension implements PluginValue {
         const ancestor = target.closest('ul.plugin-tasks-query-result, div.callout-content');
         if (ancestor) {
             if (ancestor.matches('div.callout-content')) {
-                if (!getSettings().dismissedNotices['live-preview-callout-warning']) {
+                const dontShowAgainKey = 'live-preview-callout-warning';
+                if (!getSettings().dismissedNotices[dontShowAgainKey]) {
+                    const fragment = document.createDocumentFragment();
+
                     const msg =
                         'obsidian-tasks-plugin warning: Tasks cannot add or remove completion dates or make the next copy of a recurring task for tasks written inside a callout when you click their checkboxes in Live Preview. \n' +
                         'If you wanted Tasks to do these things, please undo your change, then either click the line of the task and use the "Toggle Task Done" command, or switch to Reading View to click the checkbox.';
+                    const message = document.createElement('div');
+                    message.textContent = msg;
+
+                    const label = document.createElement('label');
+                    // TODO Move styles out of source code
+                    label.style.display = 'block';
+                    label.style.marginTop = '0.75em';
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+
+                    checkbox.addEventListener('change', () => {
+                        getSettings().dismissedNotices[dontShowAgainKey] = checkbox.checked;
+                        // TODO Save settings between sessions
+                    });
+
+                    label.appendChild(checkbox);
+                    label.appendText(' Do not show me this message again');
+
+                    fragment.appendChild(message);
+                    fragment.appendChild(label);
+
                     console.warn(msg);
-                    new Notice(msg, 45000);
+                    new Notice(fragment, 45000);
                 }
             }
             return false;
