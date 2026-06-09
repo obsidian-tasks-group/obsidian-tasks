@@ -132,7 +132,11 @@ const defaultSettings: Readonly<Settings> = {
     },
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
-    dismissedNotices: {},
+    dismissedNotices: {
+        // Note: if any new options are added here, there will need to be a mechanism
+        // to add the new values to pre-existing user settings.
+        'live-preview-callout-warning': false,
+    },
 
     features: Feature.settingsFlags,
     generalSettings: {

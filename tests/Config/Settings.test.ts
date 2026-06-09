@@ -58,7 +58,7 @@ describe('dismissible notices', function () {
     describe('live preview callout warning', () => {
         const id = 'live-preview-callout-warning';
 
-        it.failing('should not dismiss callout warning by default', () => {
+        it('should not dismiss callout warning by default', () => {
             // Initially gives undefined: need to initialise settings
             expect(getSettings().dismissedNotices[id]).toBe(false);
         });
