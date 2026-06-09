@@ -18,6 +18,7 @@ import { type EditModalShowSettings, defaultEditModalShowSettings } from './Edit
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
+import type { FirstDayOfWeekOption } from './FirstDayOfWeek';
 
 interface SettingsMap {
     [key: string]: string | boolean;
@@ -83,6 +84,7 @@ export interface Settings {
     searchResults: {
         taskCountLocation: 'top' | 'bottom';
     };
+    firstDayOfWeek: FirstDayOfWeekOption;
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -125,6 +127,7 @@ const defaultSettings: Readonly<Settings> = {
     searchResults: {
         taskCountLocation: 'bottom',
     },
+    firstDayOfWeek: 'locale-default',
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
     features: Feature.settingsFlags,

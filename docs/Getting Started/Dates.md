@@ -116,6 +116,14 @@ The date types in this section are optional.
 
 Image of the default settings for tracking task histories.
 
+#### Start of week in date pickers
+
+When you use date picker calendars in Tasks, you can control which day appears as the first column.
+
+By default, Tasks uses your operating system's locale to determine whether weeks start on Sunday, Monday, or another day. If you prefer a different start day, you can change this in Settings → Tasks → First day of week.
+
+For more details, see [[Settings#First day of week|First day of week setting]].
+
 ### Created date
 
 > [!released]
