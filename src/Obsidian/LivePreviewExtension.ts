@@ -70,6 +70,8 @@ class LivePreviewExtension implements PluginValue {
         if (ancestor) {
             if (ancestor.matches('div.callout-content')) {
                 const dontShowAgainKey = 'live-preview-callout-warning';
+
+                // TODO Extract this into a function that can be re-used by other notices in future.
                 if (!getSettings().dismissedNotices[dontShowAgainKey]) {
                     const fragment = document.createDocumentFragment();
 
