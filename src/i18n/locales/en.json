@@ -29,6 +29,7 @@
     }
   },
   "notices": {
+    "do-not-show-message-again": "Do not show me this message again",
     "live-preview-callout-warning": {
       "line1": "Obsidian does not currently give plugins the correct task line when you click a checkbox inside a callout in Live Preview.",
       "line2": "Instead, Obsidian reports that the callout title is being edited.",

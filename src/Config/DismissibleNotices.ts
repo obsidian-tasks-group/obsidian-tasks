@@ -1,4 +1,5 @@
 import { Notice } from 'obsidian';
+import { i18n } from '../i18n/i18n';
 import { getSettings } from './Settings';
 
 export type DismissibleNoticeId = 'live-preview-callout-warning';
@@ -35,7 +36,7 @@ export function showDismissibleNotice(
     });
 
     label.appendChild(checkbox);
-    label.appendText(' Do not show me this message again');
+    label.appendText(' ' + i18n.t('notices.do-not-show-message-again'));
 
     fragment.appendChild(message);
     fragment.appendChild(label);
