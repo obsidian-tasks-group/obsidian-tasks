@@ -7,6 +7,19 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/CustomStatusModal.ts
   171:9  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
 
+/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/DismissibleNotices.ts
+  21:22  warning  Use 'createFragment()' instead of 'document.createDocumentFragment()'                                                                                                                                 obsidianmd/prefer-create-el
+  21:22  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                            obsidianmd/prefer-active-doc
+  23:21  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                                                                                                                          obsidianmd/prefer-create-el
+  23:21  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                            obsidianmd/prefer-active-doc
+  26:19  warning  Use 'createEl('label')' instead of 'document.createElement('label')'                                                                                                                                  obsidianmd/prefer-create-el
+  26:19  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                            obsidianmd/prefer-active-doc
+  27:5   warning  Avoid setting styles directly via `element.style.display`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically    obsidianmd/no-static-styles-assignment
+  28:5   warning  Avoid setting styles directly via `element.style.marginTop`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
+  30:22  warning  Use 'createEl('input')' instead of 'document.createElement('input')'                                                                                                                                  obsidianmd/prefer-create-el
+  30:22  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                            obsidianmd/prefer-active-doc
+  33:41  warning  Promise returned in function argument where a void return was expected                                                                                                                                @typescript-eslint/no-misused-promises
+
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/PresetsSettingsUI.ts
   104:51  warning  Promise returned in function argument where a void return was expected                                                                                                                             @typescript-eslint/no-misused-promises
   105:54  warning  Promise returned in function argument where a void return was expected                                                                                                                             @typescript-eslint/no-misused-promises
@@ -18,7 +31,7 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
   338:13  warning  Avoid setting styles directly via `element.style.height`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/Settings.ts
-  213:5  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+  224:5  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/SettingsTab.ts
     51:37  warning  The `Function` type accepts any function-like value.
@@ -63,40 +76,40 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   97:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/Cache.ts
-  102:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  152:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  159:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  160:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  176:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  177:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  188:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  204:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  238:64  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  302:17  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+  101:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
+  151:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
+  158:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
+  159:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
+  175:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
+  176:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
+  187:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
+  203:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
+  237:64  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
+  300:17  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
 Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
 If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-  346:28  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
-  353:45  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
+  343:28  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
+  350:45  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/File.ts
-  150:9   warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-active-window-timers
-  150:20  warning  Promise returned in function argument where a void return was expected                     @typescript-eslint/no-misused-promises
+  155:9   warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-active-window-timers
+  155:20  warning  Promise returned in function argument where a void return was expected                     @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/FileParser.ts
-  17:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  30:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  16:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  28:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/InlineRenderer.ts
   33:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/LivePreviewExtension.ts
-   31:49  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+   41:49  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
 Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
 If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-   35:52  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+   45:52  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
 Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
 If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-  133:13  warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility                                                                                                                                                                                                                                                   obsidianmd/prefer-active-window-timers
+  145:13  warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility                                                                                                                                                                                                                                                   obsidianmd/prefer-active-window-timers
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/OptionsModal.ts
   32:9  warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
@@ -150,20 +163,20 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryRenderer.ts
    47:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  132:13  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+  136:13  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
 Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
 If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-  135:13  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+  139:13  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
 Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
 If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-  157:47  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  160:57  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  236:51  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  252:13  warning  Use 'activeWindow.clearTimeout()' instead of 'clearTimeout()' for popout window compatibility                                                                                                                                                                                                                                               obsidianmd/prefer-active-window-timers
-  277:35  warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility                                                                                                                                                                                                                                                   obsidianmd/prefer-active-window-timers
-  284:51  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  298:31  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  367:13  warning  Promise-returning function provided to property where a void return was expected                                                                                                                                                                                                                                                            @typescript-eslint/no-misused-promises
+  161:47  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
+  164:57  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
+  240:51  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
+  256:13  warning  Use 'activeWindow.clearTimeout()' instead of 'clearTimeout()' for popout window compatibility                                                                                                                                                                                                                                               obsidianmd/prefer-active-window-timers
+  281:35  warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility                                                                                                                                                                                                                                                   obsidianmd/prefer-active-window-timers
+  288:51  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
+  302:31  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
+  371:13  warning  Promise-returning function provided to property where a void return was expected                                                                                                                                                                                                                                                            @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryResultsRenderer.ts
   241:46  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
@@ -217,11 +230,11 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   95:9  warning  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/TasksFile.ts
-   25:13  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
-  213:15  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
-  230:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  236:15  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
-  242:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   36:13  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
+  224:15  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
+  241:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  247:15  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
+  253:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusRegistryReport.ts
   62:14  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value  obsidianmd/hardcoded-config-path
@@ -269,7 +282,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   848:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/i18n/i18n.ts
-  65:9  warning  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
+  69:9  warning  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/ExceptionTools.ts
    6:79  warning  Unexpected any. Specify a different type                                                                                                                                 @typescript-eslint/no-explicit-any
@@ -340,8 +353,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 230 problems (0 errors, 230 warnings)
-  0 errors and 66 warnings potentially fixable with the `--fix` option.
+✖ 241 problems (0 errors, 241 warnings)
+  0 errors and 74 warnings potentially fixable with the `--fix` option.
 
 
 ====================================
@@ -350,4 +363,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 20.29s.
+Done in 21.42s.
