@@ -24,8 +24,7 @@ export function showDismissibleNotice(
     message.textContent = msg;
 
     const label = createEl('label');
-    label.style.display = 'block';
-    label.style.marginTop = '0.75em';
+    label.addClass('tasks-dismissible-notice-checkbox-label');
 
     const checkbox = createEl('input');
     checkbox.type = 'checkbox';
