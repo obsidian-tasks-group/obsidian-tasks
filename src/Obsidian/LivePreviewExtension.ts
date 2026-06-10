@@ -66,10 +66,9 @@ class LivePreviewExtension implements PluginValue {
             if (ancestor.matches('div.callout-content')) {
                 const dontShowAgainKey = 'live-preview-callout-warning';
                 const msg =
-                    'obsidian-tasks-plugin warning:\n\n' +
-                    'Obsidian does not currently give Tasks the correct task line when you click a checkbox inside a callout in Live Preview.\n\n' +
+                    'Obsidian does not currently give plugins the correct task line when you click a checkbox inside a callout in Live Preview.\n\n' +
                     'Instead, Obsidian reports that the callout title is being edited.\n\n' +
-                    'So Tasks cannot safely add or remove completion dates, or create the next copy of a recurring task.\n\n' +
+                    'So the Tasks plugin cannot safely add or remove completion dates, or create the next copy of a recurring task.\n\n' +
                     'To complete the task correctly:\n' +
                     '1. Undo your checkbox change.\n' +
                     '2. Then either click the task line and run the "Toggle Task Done" command, or switch to Reading View and click the checkbox there.';
