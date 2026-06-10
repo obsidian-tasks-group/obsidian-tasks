@@ -29,14 +29,14 @@
     }
   },
   "notices": {
-    "do-not-show-message-again": "",
+    "do-not-show-message-again": "不要再显示此消息",
     "live-preview-callout-warning": {
-      "line1": "",
-      "line2": "",
-      "line3": "",
-      "line4": "",
-      "line5": "",
-      "line6": ""
+      "line1": "目前，在实时预览中点击标注块内的复选框时，Obsidian 不会向插件提供正确的任务行。",
+      "line2": "相反，Obsidian 会报告正在编辑标注块标题。",
+      "line3": "因此，Tasks 插件无法安全地添加或移除完成日期，也无法创建重复任务的下一份副本。",
+      "line4": "要正确完成该任务：",
+      "line5": "1. 撤销你对复选框所做的更改。",
+      "line6": "2. 然后点击任务行并运行 \"{{commandName}}\" 命令，或者切换到阅读视图并在那里点击复选框。"
     }
   },
   "reports": {
