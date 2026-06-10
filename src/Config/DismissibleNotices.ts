@@ -18,16 +18,16 @@ export function showDismissibleNotice(
         return;
     }
 
-    const fragment = document.createDocumentFragment();
+    const fragment = createFragment();
 
-    const message = document.createElement('div');
+    const message = createDiv();
     message.textContent = msg;
 
-    const label = document.createElement('label');
+    const label = createEl('label');
     label.style.display = 'block';
     label.style.marginTop = '0.75em';
 
-    const checkbox = document.createElement('input');
+    const checkbox = createEl('input');
     checkbox.type = 'checkbox';
 
     checkbox.addEventListener('change', () => {
