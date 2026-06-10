@@ -69,9 +69,8 @@ class LivePreviewExtension implements PluginValue {
                     'obsidian-tasks-plugin warning:\n\n' +
                     'Tasks cannot add or remove completion dates or make the next copy of a recurring task for tasks written inside a callout when you click their checkboxes in Live Preview. \n\n' +
                     'If you wanted Tasks to do these things, please undo your change, then either click the line of the task and use the "Toggle Task Done" command, or switch to Reading View to click the checkbox.';
-                const settingsSaver = this.plugin;
 
-                showDismissibleNotice(dontShowAgainKey, msg, settingsSaver);
+                showDismissibleNotice(dontShowAgainKey, msg, this.plugin);
             }
             return false;
         }
