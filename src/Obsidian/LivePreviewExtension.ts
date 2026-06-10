@@ -78,7 +78,7 @@ class LivePreviewExtension implements PluginValue {
                     '\n' +
                     i18n.t('notices.live-preview-callout-warning.line5') +
                     '\n' +
-                    i18n.t('notices.live-preview-callout-warning.line6', { command: ToggleTaskDoneCommandName });
+                    i18n.t('notices.live-preview-callout-warning.line6', { commandName: ToggleTaskDoneCommandName });
                 showDismissibleNotice(dontShowAgainKey, msg, this.plugin);
             }
             return false;
