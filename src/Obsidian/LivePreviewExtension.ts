@@ -1,5 +1,5 @@
-import { EditorView, ViewPlugin } from '@codemirror/view';
 import type { PluginValue } from '@codemirror/view';
+import { EditorView, ViewPlugin } from '@codemirror/view';
 import { TasksFile } from '../Scripting/TasksFile';
 
 import { Task } from '../Task/Task';
@@ -66,21 +66,16 @@ class LivePreviewExtension implements PluginValue {
         if (ancestor) {
             if (ancestor.matches('div.callout-content')) {
                 const dontShowAgainKey = 'live-preview-callout-warning';
-                const line1 = i18n.t('notices.live-preview-callout-warning.line1');
-                const line2 = i18n.t('notices.live-preview-callout-warning.line2');
-                const line3 = i18n.t('notices.live-preview-callout-warning.line3');
-                const line4 = i18n.t('notices.live-preview-callout-warning.line4');
-                const line5 = i18n.t('notices.live-preview-callout-warning.line5');
                 const msg =
-                    line1 +
+                    i18n.t('notices.live-preview-callout-warning.line1') +
                     '\n\n' +
-                    line2 +
+                    i18n.t('notices.live-preview-callout-warning.line2') +
                     '\n\n' +
-                    line3 +
+                    i18n.t('notices.live-preview-callout-warning.line3') +
                     '\n\n' +
-                    line4 +
+                    i18n.t('notices.live-preview-callout-warning.line4') +
                     '\n' +
-                    line5 +
+                    i18n.t('notices.live-preview-callout-warning.line5') +
                     '\n' +
                     i18n.t('notices.live-preview-callout-warning.line6');
                 showDismissibleNotice(dontShowAgainKey, msg, this.plugin);
