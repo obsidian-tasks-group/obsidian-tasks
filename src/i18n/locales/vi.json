@@ -28,6 +28,17 @@
       "fixErrorsBeforeSaving": "Vui lòng sửa lỗi trước khi lưu."
     }
   },
+  "notices": {
+    "do-not-show-message-again": "Không hiển thị lại thông báo này",
+    "live-preview-callout-warning": {
+      "line1": "Hiện tại Obsidian không cung cấp cho plugin đúng dòng tác vụ khi bạn nhấp vào hộp kiểm bên trong callout ở chế độ Live Preview.",
+      "line2": "Thay vào đó, Obsidian báo rằng tiêu đề của callout đang được chỉnh sửa.",
+      "line3": "Vì vậy, plugin Tasks không thể thêm hoặc xóa ngày hoàn thành một cách an toàn, hoặc tạo bản sao tiếp theo của một tác vụ lặp lại.",
+      "line4": "Để hoàn thành tác vụ đúng cách:",
+      "line5": "1. Hoàn tác thay đổi hộp kiểm của bạn.",
+      "line6": "2. Sau đó, hãy nhấp vào dòng tác vụ và chạy lệnh \"{{commandName}}\", hoặc chuyển sang Reading View và nhấp vào hộp kiểm ở đó."
+    }
+  },
   "reports": {
     "statusRegistry": {
       "about": {

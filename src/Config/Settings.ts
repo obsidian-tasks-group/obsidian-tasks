@@ -18,6 +18,7 @@ import { type EditModalShowSettings, defaultEditModalShowSettings } from './Edit
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
+import type { DismissedNotices } from './DismissibleNotices';
 
 interface SettingsMap {
     [key: string]: string | boolean;
@@ -90,6 +91,10 @@ export interface Settings {
     // Edit modal field render settings.
     isShownInEditModal: EditModalShowSettings;
 
+    // Notices that the user has chosen not to see again.
+    // Keys are stable notice IDs.
+    dismissedNotices: DismissedNotices;
+
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
 
@@ -127,6 +132,12 @@ const defaultSettings: Readonly<Settings> = {
     },
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
+    dismissedNotices: {
+        // Note: if any new options are added here, there will need to be a mechanism
+        // to add the new values to pre-existing user settings.
+        'live-preview-callout-warning': false,
+    },
+
     features: Feature.settingsFlags,
     generalSettings: {
         /* Prevent duplicate values in user settings for now,

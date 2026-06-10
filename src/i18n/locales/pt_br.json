@@ -28,6 +28,17 @@
       "fixErrorsBeforeSaving": "Corrija os erros antes de salvar."
     }
   },
+  "notices": {
+    "do-not-show-message-again": "Não mostrar esta mensagem novamente",
+    "live-preview-callout-warning": {
+      "line1": "Atualmente, o Obsidian não fornece aos plugins a linha de tarefa correta quando você clica em uma caixa de seleção dentro de um callout na Visualização ao vivo.",
+      "line2": "Em vez disso, o Obsidian informa que o título do callout está sendo editado.",
+      "line3": "Por isso, o plugin Tasks não consegue adicionar ou remover datas de conclusão com segurança, nem criar a próxima cópia de uma tarefa recorrente.",
+      "line4": "Para concluir a tarefa corretamente:",
+      "line5": "1. Desfaça a alteração da caixa de seleção.",
+      "line6": "2. Em seguida, clique na linha da tarefa e execute o comando \"{{commandName}}\", ou alterne para a Visualização de leitura e clique na caixa de seleção lá."
+    }
+  },
   "reports": {
     "statusRegistry": {
       "about": {

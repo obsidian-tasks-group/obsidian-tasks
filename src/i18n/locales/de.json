@@ -28,6 +28,17 @@
       "fixErrorsBeforeSaving": "Fehler vor dem Speichern beheben."
     }
   },
+  "notices": {
+    "do-not-show-message-again": "Diese Meldung nicht mehr anzeigen",
+    "live-preview-callout-warning": {
+      "line1": "Obsidian liefert Plugins derzeit nicht die korrekte Aufgabenzeile, wenn du in der Live-Vorschau innerhalb eines Callouts auf ein Kontrollkästchen klickst.",
+      "line2": "Stattdessen meldet Obsidian, dass der Callout-Titel bearbeitet wird.",
+      "line3": "Daher kann das Tasks-Plugin Abschlussdaten nicht sicher hinzufügen oder entfernen und auch nicht die nächste Kopie einer wiederkehrenden Aufgabe erstellen.",
+      "line4": "So schließt du die Aufgabe korrekt ab:",
+      "line5": "1. Mache deine Änderung am Kontrollkästchen rückgängig.",
+      "line6": "2. Klicke dann entweder auf die Aufgabenzeile und führe den Befehl \"{{commandName}}\" aus, oder wechsle zur Leseansicht und klicke dort auf das Kontrollkästchen."
+    }
+  },
   "reports": {
     "statusRegistry": {
       "about": {

@@ -28,6 +28,17 @@
       "fixErrorsBeforeSaving": "Kaydetmeden önce hataları düzeltin."
     }
   },
+  "notices": {
+    "do-not-show-message-again": "Bu mesajı bana bir daha gösterme",
+    "live-preview-callout-warning": {
+      "line1": "Obsidian şu anda Canlı Önizleme'de bir callout içindeki onay kutusuna tıkladığınızda eklentilere doğru görev satırını sağlamıyor.",
+      "line2": "Bunun yerine Obsidian, callout başlığının düzenlendiğini bildiriyor.",
+      "line3": "Bu nedenle Tasks eklentisi tamamlanma tarihlerini güvenli bir şekilde ekleyemez veya kaldıramaz ya da yinelenen bir görevin sonraki kopyasını oluşturamaz.",
+      "line4": "Görevi doğru şekilde tamamlamak için:",
+      "line5": "1. Onay kutusu değişikliğinizi geri alın.",
+      "line6": "2. Ardından görev satırına tıklayıp \"{{commandName}}\" komutunu çalıştırın veya Okuma Görünümü'ne geçip onay kutusuna orada tıklayın."
+    }
+  },
   "reports": {
     "statusRegistry": {
       "about": {

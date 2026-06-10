@@ -28,6 +28,17 @@
       "fixErrorsBeforeSaving": "저장하기 전에 오류를 수정하세요."
     }
   },
+  "notices": {
+    "do-not-show-message-again": "이 메시지를 다시 표시하지 않기",
+    "live-preview-callout-warning": {
+      "line1": "현재 Obsidian은 라이브 미리보기에서 콜아웃 안의 체크박스를 클릭할 때 플러그인에 올바른 작업 줄을 제공하지 않습니다.",
+      "line2": "대신 Obsidian은 콜아웃 제목이 편집되고 있다고 보고합니다.",
+      "line3": "따라서 Tasks 플러그인은 완료 날짜를 안전하게 추가하거나 제거할 수 없으며, 반복 작업의 다음 사본도 만들 수 없습니다.",
+      "line4": "작업을 올바르게 완료하려면:",
+      "line5": "1. 체크박스 변경을 실행 취소하세요.",
+      "line6": "2. 그런 다음 작업 줄을 클릭하고 \"{{commandName}}\" 명령을 실행하거나, 읽기 보기로 전환한 뒤 그곳에서 체크박스를 클릭하세요."
+    }
+  },
   "reports": {
     "statusRegistry": {
       "about": {

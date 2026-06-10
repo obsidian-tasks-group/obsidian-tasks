@@ -1,13 +1,23 @@
-import { EditorView, ViewPlugin } from '@codemirror/view';
 import type { PluginValue } from '@codemirror/view';
-import { Notice } from 'obsidian';
+import { EditorView, ViewPlugin } from '@codemirror/view';
 import { TasksFile } from '../Scripting/TasksFile';
 
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
+import { type SettingsSaver, showDismissibleNotice } from '../Config/DismissibleNotices';
+import { i18n } from '../i18n/i18n';
+import { ToggleTaskDoneCommandName } from '../Commands';
 
-export const newLivePreviewExtension = () => {
-    return ViewPlugin.fromClass(LivePreviewExtension);
+// CodeMirror constructs view plugins with only the EditorView, so capture the Tasks plugin here
+// to enable us to ask the plugin to save settings.
+export const newLivePreviewExtension = (plugin: SettingsSaver) => {
+    return ViewPlugin.fromClass(
+        class extends LivePreviewExtension {
+            constructor(view: EditorView) {
+                super(view, plugin);
+            }
+        },
+    );
 };
 
 /**
@@ -23,9 +33,11 @@ export const newLivePreviewExtension = () => {
  */
 class LivePreviewExtension implements PluginValue {
     private readonly view: EditorView;
+    private readonly plugin: SettingsSaver;
 
-    constructor(view: EditorView) {
+    constructor(view: EditorView, plugin: SettingsSaver) {
         this.view = view;
+        this.plugin = plugin;
 
         this.handleClickEvent = this.handleClickEvent.bind(this);
         this.view.dom.addEventListener('click', this.handleClickEvent);
@@ -54,12 +66,20 @@ class LivePreviewExtension implements PluginValue {
         const ancestor = target.closest('ul.plugin-tasks-query-result, div.callout-content');
         if (ancestor) {
             if (ancestor.matches('div.callout-content')) {
-                // Error message for now.
+                const dontShowAgainKey = 'live-preview-callout-warning';
                 const msg =
-                    'obsidian-tasks-plugin warning: Tasks cannot add or remove completion dates or make the next copy of a recurring task for tasks written inside a callout when you click their checkboxes in Live Preview. \n' +
-                    'If you wanted Tasks to do these things, please undo your change, then either click the line of the task and use the "Toggle Task Done" command, or switch to Reading View to click the checkbox.';
-                console.warn(msg);
-                new Notice(msg, 45000);
+                    i18n.t('notices.live-preview-callout-warning.line1') +
+                    '\n\n' +
+                    i18n.t('notices.live-preview-callout-warning.line2') +
+                    '\n\n' +
+                    i18n.t('notices.live-preview-callout-warning.line3') +
+                    '\n\n' +
+                    i18n.t('notices.live-preview-callout-warning.line4') +
+                    '\n' +
+                    i18n.t('notices.live-preview-callout-warning.line5') +
+                    '\n' +
+                    i18n.t('notices.live-preview-callout-warning.line6', { commandName: ToggleTaskDoneCommandName });
+                showDismissibleNotice(dontShowAgainKey, msg, this.plugin);
             }
             return false;
         }

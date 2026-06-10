@@ -28,6 +28,17 @@
       "fixErrorsBeforeSaving": "Fix errors before saving."
     }
   },
+  "notices": {
+    "do-not-show-message-again": "Do not show me this message again",
+    "live-preview-callout-warning": {
+      "line1": "Obsidian does not currently give plugins the correct task line when you click a checkbox inside a callout in Live Preview.",
+      "line2": "Instead, Obsidian reports that the callout title is being edited.",
+      "line3": "So the Tasks plugin cannot safely add or remove completion dates, or create the next copy of a recurring task.",
+      "line4": "To complete the task correctly:",
+      "line5": "1. Undo your checkbox change.",
+      "line6": "2. Then either click the task line and run the \"{{commandName}}\" command, or switch to Reading View and click the checkbox there."
+    }
+  },
   "reports": {
     "statusRegistry": {
       "about": {
