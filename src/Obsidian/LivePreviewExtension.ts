@@ -1,12 +1,10 @@
-import { EditorView, ViewPlugin } from '@codemirror/view';
 import type { PluginValue } from '@codemirror/view';
-import { Notice } from 'obsidian';
+import { EditorView, ViewPlugin } from '@codemirror/view';
 import { TasksFile } from '../Scripting/TasksFile';
 
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
-import { getSettings } from '../Config/Settings';
-import type { DismissibleNoticeId, SettingsSaver } from '../Config/DismissibleNotices';
+import { type SettingsSaver, showDismissibleNotice } from '../Config/DismissibleNotices';
 
 // CodeMirror constructs view plugins with only the EditorView, so capture the Tasks plugin here
 // to enable us to ask the plugin to save settings.
@@ -19,38 +17,6 @@ export const newLivePreviewExtension = (plugin: SettingsSaver) => {
         },
     );
 };
-
-function showDismissibleNotice(dontShowAgainKey: DismissibleNoticeId, msg: string, settingsSaver: SettingsSaver): void {
-    if (getSettings().dismissedNotices[dontShowAgainKey]) {
-        return;
-    }
-
-    const fragment = document.createDocumentFragment();
-
-    const message = document.createElement('div');
-    message.textContent = msg;
-
-    const label = document.createElement('label');
-    label.style.display = 'block';
-    label.style.marginTop = '0.75em';
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-
-    checkbox.addEventListener('change', async () => {
-        getSettings().dismissedNotices[dontShowAgainKey] = checkbox.checked;
-        await settingsSaver.saveSettings();
-    });
-
-    label.appendChild(checkbox);
-    label.appendText(' Do not show me this message again');
-
-    fragment.appendChild(message);
-    fragment.appendChild(label);
-
-    console.warn(msg);
-    new Notice(fragment, 45000);
-}
 
 /**
  * Integrate custom handling of checkbox clicks in the Obsidian editor's Live Preview mode.
