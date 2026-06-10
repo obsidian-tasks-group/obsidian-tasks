@@ -66,13 +66,11 @@ class LivePreviewExtension implements PluginValue {
         if (ancestor) {
             if (ancestor.matches('div.callout-content')) {
                 const dontShowAgainKey = 'live-preview-callout-warning';
-                const line1 =
-                    'Obsidian does not currently give plugins the correct task line when you click a checkbox inside a callout in Live Preview.';
-                const line2 = 'Instead, Obsidian reports that the callout title is being edited.';
-                const line3 =
-                    'So the Tasks plugin cannot safely add or remove completion dates, or create the next copy of a recurring task.';
-                const line4 = 'To complete the task correctly:';
-                const line5 = '1. Undo your checkbox change.';
+                const line1 = i18n.t('notices.live-preview-callout-warning.line1');
+                const line2 = i18n.t('notices.live-preview-callout-warning.line2');
+                const line3 = i18n.t('notices.live-preview-callout-warning.line3');
+                const line4 = i18n.t('notices.live-preview-callout-warning.line4');
+                const line5 = i18n.t('notices.live-preview-callout-warning.line5');
                 const msg =
                     line1 +
                     '\n\n' +
