@@ -6,7 +6,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
 import { getSettings } from '../Config/Settings';
-import type { SettingsSaver } from '../Config/DismissibleNotices';
+import type { DismissibleNoticeId, SettingsSaver } from '../Config/DismissibleNotices';
 
 // CodeMirror constructs view plugins with only the EditorView, so capture the Tasks plugin here
 // to enable us to ask the plugin to save settings.
@@ -19,6 +19,37 @@ export const newLivePreviewExtension = (plugin: SettingsSaver) => {
         },
     );
 };
+
+function showDismissibleNotice(dontShowAgainKey: DismissibleNoticeId, msg: string, settingsSaver: SettingsSaver): void {
+    if (!getSettings().dismissedNotices[dontShowAgainKey]) {
+        const fragment = document.createDocumentFragment();
+
+        const message = document.createElement('div');
+        message.textContent = msg;
+
+        const label = document.createElement('label');
+        // TODO Move styles out of source code
+        label.style.display = 'block';
+        label.style.marginTop = '0.75em';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+
+        checkbox.addEventListener('change', async () => {
+            getSettings().dismissedNotices[dontShowAgainKey] = checkbox.checked;
+            await settingsSaver.saveSettings();
+        });
+
+        label.appendChild(checkbox);
+        label.appendText(' Do not show me this message again');
+
+        fragment.appendChild(message);
+        fragment.appendChild(label);
+
+        console.warn(msg);
+        new Notice(fragment, 45000);
+    }
+}
 
 /**
  * Integrate custom handling of checkbox clicks in the Obsidian editor's Live Preview mode.
@@ -73,34 +104,7 @@ class LivePreviewExtension implements PluginValue {
                     'If you wanted Tasks to do these things, please undo your change, then either click the line of the task and use the "Toggle Task Done" command, or switch to Reading View to click the checkbox.';
                 const settingsSaver = this.plugin;
 
-                if (!getSettings().dismissedNotices[dontShowAgainKey]) {
-                    const fragment = document.createDocumentFragment();
-
-                    const message = document.createElement('div');
-                    message.textContent = msg;
-
-                    const label = document.createElement('label');
-                    // TODO Move styles out of source code
-                    label.style.display = 'block';
-                    label.style.marginTop = '0.75em';
-
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-
-                    checkbox.addEventListener('change', async () => {
-                        getSettings().dismissedNotices[dontShowAgainKey] = checkbox.checked;
-                        await settingsSaver.saveSettings();
-                    });
-
-                    label.appendChild(checkbox);
-                    label.appendText(' Do not show me this message again');
-
-                    fragment.appendChild(message);
-                    fragment.appendChild(label);
-
-                    console.warn(msg);
-                    new Notice(fragment, 45000);
-                }
+                showDismissibleNotice(dontShowAgainKey, msg, settingsSaver);
             }
             return false;
         }
