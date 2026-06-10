@@ -6,10 +6,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
 import { getSettings } from '../Config/Settings';
-
-interface SettingsSaver {
-    saveSettings(): Promise<void>;
-}
+import type { SettingsSaver } from '../Config/DismissibleNotices';
 
 // CodeMirror constructs view plugins with only the EditorView, so capture the Tasks plugin here
 // to enable us to ask the plugin to save settings.
