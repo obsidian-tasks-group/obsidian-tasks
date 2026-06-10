@@ -28,6 +28,11 @@
       "fixErrorsBeforeSaving": "Fix errors before saving."
     }
   },
+  "notices": {
+    "live-preview-callout-warning": {
+      "line6": "2. Then either click the task line and run the \"Toggle Task Done\" command, or switch to Reading View and click the checkbox there."
+    }
+  },
   "reports": {
     "statusRegistry": {
       "about": {

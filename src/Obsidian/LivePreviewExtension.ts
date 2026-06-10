@@ -5,6 +5,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
 import { type SettingsSaver, showDismissibleNotice } from '../Config/DismissibleNotices';
+import { i18n } from '../i18n/i18n';
 
 // CodeMirror constructs view plugins with only the EditorView, so capture the Tasks plugin here
 // to enable us to ask the plugin to save settings.
@@ -71,7 +72,7 @@ class LivePreviewExtension implements PluginValue {
                     'So the Tasks plugin cannot safely add or remove completion dates, or create the next copy of a recurring task.\n\n' +
                     'To complete the task correctly:\n' +
                     '1. Undo your checkbox change.\n' +
-                    '2. Then either click the task line and run the "Toggle Task Done" command, or switch to Reading View and click the checkbox there.';
+                    i18n.t('notices.live-preview-callout-warning.line6');
                 showDismissibleNotice(dontShowAgainKey, msg, this.plugin);
             }
             return false;
