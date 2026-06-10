@@ -1,5 +1,5 @@
-import type { PluginValue } from '@codemirror/view';
 import { EditorView, ViewPlugin } from '@codemirror/view';
+import type { PluginValue } from '@codemirror/view';
 import { TasksFile } from '../Scripting/TasksFile';
 
 import { Task } from '../Task/Task';
