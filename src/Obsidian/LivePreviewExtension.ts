@@ -6,6 +6,7 @@ import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
 import { type SettingsSaver, showDismissibleNotice } from '../Config/DismissibleNotices';
 import { i18n } from '../i18n/i18n';
+import { ToggleTaskDoneCommandName } from '../Commands';
 
 // CodeMirror constructs view plugins with only the EditorView, so capture the Tasks plugin here
 // to enable us to ask the plugin to save settings.
@@ -77,7 +78,7 @@ class LivePreviewExtension implements PluginValue {
                     '\n' +
                     i18n.t('notices.live-preview-callout-warning.line5') +
                     '\n' +
-                    i18n.t('notices.live-preview-callout-warning.line6', { command: 'Toggle Task Done' });
+                    i18n.t('notices.live-preview-callout-warning.line6', { command: ToggleTaskDoneCommandName });
                 showDismissibleNotice(dontShowAgainKey, msg, this.plugin);
             }
             return false;
