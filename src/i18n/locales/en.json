@@ -35,7 +35,7 @@
       "line3": "So the Tasks plugin cannot safely add or remove completion dates, or create the next copy of a recurring task.",
       "line4": "To complete the task correctly:",
       "line5": "1. Undo your checkbox change.",
-      "line6": "2. Then either click the task line and run the \"Toggle Task Done\" command, or switch to Reading View and click the checkbox there."
+      "line6": "2. Then either click the task line and run the \"{{command}}\" command, or switch to Reading View and click the checkbox there."
     }
   },
   "reports": {
