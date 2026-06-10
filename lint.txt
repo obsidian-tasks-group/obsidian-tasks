@@ -8,17 +8,8 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
   171:9  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/DismissibleNotices.ts
-  21:22  warning  Use 'createFragment()' instead of 'document.createDocumentFragment()'                                                                                                                                 obsidianmd/prefer-create-el
-  21:22  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                            obsidianmd/prefer-active-doc
-  23:21  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                                                                                                                          obsidianmd/prefer-create-el
-  23:21  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                            obsidianmd/prefer-active-doc
-  26:19  warning  Use 'createEl('label')' instead of 'document.createElement('label')'                                                                                                                                  obsidianmd/prefer-create-el
-  26:19  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                            obsidianmd/prefer-active-doc
-  27:5   warning  Avoid setting styles directly via `element.style.display`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically    obsidianmd/no-static-styles-assignment
-  28:5   warning  Avoid setting styles directly via `element.style.marginTop`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
-  30:22  warning  Use 'createEl('input')' instead of 'document.createElement('input')'                                                                                                                                  obsidianmd/prefer-create-el
-  30:22  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                            obsidianmd/prefer-active-doc
-  33:41  warning  Promise returned in function argument where a void return was expected                                                                                                                                @typescript-eslint/no-misused-promises
+  27:5  warning  Avoid setting styles directly via `element.style.display`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically    obsidianmd/no-static-styles-assignment
+  28:5  warning  Avoid setting styles directly via `element.style.marginTop`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/PresetsSettingsUI.ts
   104:51  warning  Promise returned in function argument where a void return was expected                                                                                                                             @typescript-eslint/no-misused-promises
@@ -50,7 +41,6 @@ Prefer explicitly defining any function parameters and return type              
    596:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
    628:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                      @typescript-eslint/no-floating-promises
    709:17  warning  Unsafe call of a `Function` typed value                                                                                                                                                                 @typescript-eslint/no-unsafe-call
-   816:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                                                                                                  obsidianmd/prefer-create-el
    945:33  warning  Promise-returning function provided to variable where a void return was expected                                                                                                                        @typescript-eslint/no-misused-promises
    995:5   warning  Avoid setting styles directly via `element.style.display`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically      obsidianmd/no-static-styles-assignment
    996:5   warning  Avoid setting styles directly via `element.style.marginRight`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
@@ -117,8 +107,6 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/TaskModal.ts
   42:30  warning  Use sentence case for UI text. Expected: 'Create or edit task'                                                                                                                                            obsidianmd/ui/sentence-case
   43:9   warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
-  45:31  warning  Use 'createEl('button')' instead of 'document.createElement('button')'                                                                                                                                    obsidianmd/prefer-create-el
-  45:31  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                                obsidianmd/prefer-active-doc
   55:21  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                        @typescript-eslint/no-floating-promises
   63:9   warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
@@ -151,10 +139,6 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   533:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlQueryResultsRenderer.ts
-   50:38  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                                                                                        obsidianmd/prefer-create-el
-   50:38  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                          obsidianmd/prefer-active-doc
-   52:44  warning  Use 'createEl('li')' instead of 'document.createElement('li')'                                                                                                      obsidianmd/prefer-create-el
-   52:44  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                          obsidianmd/prefer-active-doc
   111:36  warning  Use sentence case for UI text. Expected: 'Loading tasks ...'                                                                                                        obsidianmd/ui/sentence-case
   267:40  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
   271:44  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
@@ -182,8 +166,6 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   241:46  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/TaskLineRenderer.ts
-   52:42  warning  Use 'createEl(tagName)' instead of 'document.createElement(tagName)'                                                                                                                                                                                                                                                                        obsidianmd/prefer-create-el
-   52:42  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                                                                                                                                                                  obsidianmd/prefer-active-doc
   101:24  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
 Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
 If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
@@ -341,20 +323,16 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/DatePicker.ts
   37:9   warning  Promise-returning function provided to property where a void return was expected                                                                                                                           @typescript-eslint/no-misused-promises
-  47:37  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                                                                                                                               obsidianmd/prefer-create-el
-  47:37  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                                 obsidianmd/prefer-active-doc
   48:13  warning  Avoid setting styles directly via `element.style.display`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically         obsidianmd/no-static-styles-assignment
   49:13  warning  Avoid setting styles directly via `element.style.justifyContent`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
   50:13  warning  Avoid setting styles directly via `element.style.marginTop`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically       obsidianmd/no-static-styles-assignment
-  81:20  warning  Use 'createEl('button')' instead of 'document.createElement('button')'                                                                                                                                     obsidianmd/prefer-create-el
-  81:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                                 obsidianmd/prefer-active-doc
   86:38  warning  Promise returned in function argument where a void return was expected                                                                                                                                     @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 241 problems (0 errors, 241 warnings)
-  0 errors and 74 warnings potentially fixable with the `--fix` option.
+✖ 219 problems (0 errors, 219 warnings)
+  0 errors and 53 warnings potentially fixable with the `--fix` option.
 
 
 ====================================
@@ -363,4 +341,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 21.42s.
+Done in 21.93s.
