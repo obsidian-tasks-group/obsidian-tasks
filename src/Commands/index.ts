@@ -7,6 +7,8 @@ import { toggleDone } from './ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
 import { createSetStatusCommands } from './ChangeStatusCommands';
 
+export const ToggleTaskDoneCommandName = 'Toggle task done';
+
 export class Commands {
     private readonly plugin: TasksPlugin;
 
@@ -36,7 +38,7 @@ export class Commands {
 
         plugin.addCommand({
             id: 'toggle-done',
-            name: 'Toggle task done',
+            name: ToggleTaskDoneCommandName,
             icon: 'check-in-circle',
             editorCheckCallback: toggleDone,
         });
