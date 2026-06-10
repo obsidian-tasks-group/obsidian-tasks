@@ -30,9 +30,9 @@ export function showDismissibleNotice(
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
 
-    checkbox.addEventListener('change', async () => {
+    checkbox.addEventListener('change', () => {
         getSettings().dismissedNotices[dontShowAgainKey] = checkbox.checked;
-        await settingsSaver.saveSettings();
+        void settingsSaver.saveSettings();
     });
 
     label.appendChild(checkbox);
