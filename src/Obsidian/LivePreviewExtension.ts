@@ -39,7 +39,6 @@ class LivePreviewExtension implements PluginValue {
         this.view = view;
         this.plugin = plugin;
 
-        this.handleClickEvent = this.handleClickEvent.bind(this);
         this.view.dom.addEventListener('click', this.handleClickEvent);
     }
 
@@ -47,7 +46,7 @@ class LivePreviewExtension implements PluginValue {
         this.view.dom.removeEventListener('click', this.handleClickEvent);
     }
 
-    private handleClickEvent(event: MouseEvent): boolean {
+    private readonly handleClickEvent = (event: MouseEvent): boolean => {
         const { target } = event;
 
         // Only handle checkbox clicks.
@@ -156,5 +155,5 @@ class LivePreviewExtension implements PluginValue {
         }
 
         return true;
-    }
+    };
 }

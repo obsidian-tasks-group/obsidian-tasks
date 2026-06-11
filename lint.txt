@@ -79,13 +79,7 @@ If a function does not access `this`, it can be annotated with `this: void`  @ty
   33:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/LivePreviewExtension.ts
-   43:49  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
-Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
-If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-   47:52  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
-Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
-If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-  153:13  warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility                                                                                                                                                                                                                                                   obsidianmd/prefer-active-window-timers
+  152:13  warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-active-window-timers
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/OptionsModal.ts
   32:9  warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
@@ -323,7 +317,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 225 problems (0 errors, 225 warnings)
+✖ 223 problems (0 errors, 223 warnings)
   0 errors and 66 warnings potentially fixable with the `--fix` option.
 
 
@@ -333,4 +327,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 21.65s.
+Done in 21.52s.
