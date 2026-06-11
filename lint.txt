@@ -129,18 +129,15 @@ Prefer explicitly defining any function parameters and return type              
   300:48  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryRenderer.ts
-   47:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                                                                                                                                                          @typescript-eslint/no-floating-promises
-  136:13  warning  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
-Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
-If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
-  161:47  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  164:57  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  240:51  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  256:13  warning  Use 'activeWindow.clearTimeout()' instead of 'clearTimeout()' for popout window compatibility                                                                                                                                                                                                                                               obsidianmd/prefer-active-window-timers
-  281:35  warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility                                                                                                                                                                                                                                                   obsidianmd/prefer-active-window-timers
-  288:51  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  302:31  warning  Promise returned in function argument where a void return was expected                                                                                                                                                                                                                                                                      @typescript-eslint/no-misused-promises
-  371:13  warning  Promise-returning function provided to property where a void return was expected                                                                                                                                                                                                                                                            @typescript-eslint/no-misused-promises
+   47:17  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  162:47  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+  165:57  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+  241:51  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+  257:13  warning  Use 'activeWindow.clearTimeout()' instead of 'clearTimeout()' for popout window compatibility                                                                       obsidianmd/prefer-active-window-timers
+  282:35  warning  Use 'activeWindow.setTimeout()' instead of 'setTimeout()' for popout window compatibility                                                                           obsidianmd/prefer-active-window-timers
+  289:51  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+  303:31  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+  372:13  warning  Promise-returning function provided to property where a void return was expected                                                                                    @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryResultsRenderer.ts
   241:46  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
@@ -314,7 +311,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 222 problems (0 errors, 222 warnings)
+✖ 221 problems (0 errors, 221 warnings)
   0 errors and 66 warnings potentially fixable with the `--fix` option.
 
 
@@ -324,4 +321,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 21.70s.
+Done in 21.79s.

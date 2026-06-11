@@ -133,7 +133,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.containerEl.className,
             source,
             tasksFile,
-            MarkdownRenderer.render,
+            (app, markdown, el, sourcePath, component) =>
+                MarkdownRenderer.render(app, markdown, el, sourcePath, component),
             this,
             this.app,
             TaskLineRenderer.obsidianMarkdownRenderer,
