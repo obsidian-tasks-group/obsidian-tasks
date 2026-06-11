@@ -72,7 +72,6 @@ const typescriptCommonRules = {
     '@typescript-eslint/only-throw-error': on_or_off,
     '@typescript-eslint/restrict-plus-operands': on_or_off,
     '@typescript-eslint/restrict-template-expressions': on_or_off,
-    '@typescript-eslint/unbound-method': on_or_off,
     'import/no-extraneous-dependencies': on_or_off,
     'no-restricted-globals': on_or_off,
     'no-undef': 0, // Always off, because Moment is not provided by Obsidian when we run eslint
