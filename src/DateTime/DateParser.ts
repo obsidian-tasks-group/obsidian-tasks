@@ -41,7 +41,7 @@ export class DateParser {
         return DateRange.buildInvalid();
     }
 
-    private static parseAbsoluteDateRange(input: string, forwardDate: boolean): DateRange {
+    private static parseAbsoluteDateRange(this: void, input: string, forwardDate: boolean): DateRange {
         const result = chrono.parse(input, undefined, {
             forwardDate: forwardDate,
         });
@@ -59,7 +59,7 @@ export class DateParser {
         return new DateRange(start, end);
     }
 
-    private static parseRelativeDateRange(input: string, _forwardDate: boolean): DateRange {
+    private static parseRelativeDateRange(this: void, input: string, _forwardDate: boolean): DateRange {
         const relativeDateRangeRegexp = /(last|this|next) (week|month|quarter|year)/;
         const relativeDateRangeMatch = input.match(relativeDateRangeRegexp);
         if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
@@ -83,7 +83,7 @@ export class DateParser {
         return DateRange.buildInvalid();
     }
 
-    private static parseNumberedDateRange(input: string, _forwardDate: boolean): DateRange {
+    private static parseNumberedDateRange(this: void, input: string, _forwardDate: boolean): DateRange {
         const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
             [/^\s*[0-9]{4}\s*$/, 'YYYY', 'year'],
             [/^\s*[0-9]{4}-Q[1-4]\s*$/, 'YYYY-Q', 'quarter'],
