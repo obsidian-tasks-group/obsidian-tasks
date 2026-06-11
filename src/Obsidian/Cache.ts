@@ -347,7 +347,12 @@ export class Cache {
         return fileParser.parseFileContent();
     }
 
-    private reportTaskParsingErrorToUser(e: any, filePath: string, listItem: ListItemCache, line: string) {
+    private readonly reportTaskParsingErrorToUser = (
+        e: any,
+        filePath: string,
+        listItem: ListItemCache,
+        line: string,
+    ) => {
         const msg = `There was an error reading one of the tasks in this vault.
 The following task has been ignored, to prevent Tasks queries getting stuck with 'Loading Tasks ...'
 Error: ${e}
@@ -374,7 +379,7 @@ session.
         if (this.state === State.Initializing) {
             new Notice(msg, 10000);
         }
-    }
+    };
 
     public static getSection(lineNumberTask: number, sections: SectionCache[] | undefined): SectionCache | null {
         if (sections === undefined) {
