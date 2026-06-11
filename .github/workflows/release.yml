@@ -7,6 +7,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+
     steps:
     - uses: actions/checkout@v6
       with:
@@ -35,6 +40,13 @@ jobs:
         mkdir ${{ github.event.repository.name }}
         cp main.js manifest.json styles.css README.md ${{ github.event.repository.name }}
         zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
+
+    - name: Attest build provenance
+      uses: actions/attest@v4
+      with:
+        subject-path: |
+          main.js
+          styles.css
 
     # Create the release on github
     - name: Create Release
