@@ -85,7 +85,7 @@ const typescriptCommonRules = {
     'obsidianmd/prefer-create-el': on_or_off,
     'obsidianmd/prefer-get-language': on_or_off,
     'obsidianmd/rule-custom-message': on_or_off,
-    'obsidianmd/ui/sentence-case': on_or_off,
+    'obsidianmd/ui/sentence-case': 0, // Obsidian's scanner now disables this
 };
 
 export default defineConfig([

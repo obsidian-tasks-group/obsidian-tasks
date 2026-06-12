@@ -1,9 +1,6 @@
 yarn run v1.22.19
 $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-check
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Commands/index.ts
-  48:19  warning  Use sentence case for UI text. Expected: 'Add all query file defaults properties'  obsidianmd/ui/sentence-case
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/CustomStatusModal.ts
   171:9  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
 
@@ -70,7 +67,6 @@ Prefer explicitly defining any function parameters and return type              
   32:9  warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/TaskModal.ts
-  42:30  warning  Use sentence case for UI text. Expected: 'Create or edit task'                                                                                                                                            obsidianmd/ui/sentence-case
   43:9   warning  Avoid setting styles directly via `element.style.paddingBottom`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
   45:31  warning  Use 'createEl('button')' instead of 'document.createElement('button')'                                                                                                                                    obsidianmd/prefer-create-el
   45:31  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                                                                obsidianmd/prefer-active-doc
@@ -110,7 +106,6 @@ Prefer explicitly defining any function parameters and return type              
    50:38  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                          obsidianmd/prefer-active-doc
    52:44  warning  Use 'createEl('li')' instead of 'document.createElement('li')'                                                                                                      obsidianmd/prefer-create-el
    52:44  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                                                                                          obsidianmd/prefer-active-doc
-  111:36  warning  Use sentence case for UI text. Expected: 'Loading tasks ...'                                                                                                        obsidianmd/ui/sentence-case
   267:40  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
   271:44  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
   295:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
@@ -290,7 +285,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 206 problems (0 errors, 206 warnings)
+✖ 203 problems (0 errors, 203 warnings)
   0 errors and 66 warnings potentially fixable with the `--fix` option.
 
 
@@ -300,4 +295,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 20.28s.
+Done in 20.30s.
