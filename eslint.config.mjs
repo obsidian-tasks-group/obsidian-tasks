@@ -77,7 +77,7 @@ const typescriptCommonRules = {
     'no-undef': 0, // Always off, because Moment is not provided by Obsidian when we run eslint
     'no-unsanitized/method': on_or_off,
     'no-unsanitized/property': on_or_off,
-    'obsidianmd/hardcoded-config-path': on_or_off, // These were all 'https://publish.obsidian.md/tasks/' references!!!
+    'obsidianmd/hardcoded-config-path': 0, // These were all 'https://publish.obsidian.md/tasks/' references!!!
     'obsidianmd/no-nodejs-modules': on_or_off, // Can disable this on test files
     'obsidianmd/no-static-styles-assignment': on_or_off, // This likely does need addressing
     'obsidianmd/prefer-active-doc': on_or_off,

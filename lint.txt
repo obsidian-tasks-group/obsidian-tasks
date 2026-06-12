@@ -23,18 +23,6 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/SettingsTab.ts
     51:37  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type                                                                                 @typescript-eslint/no-unsafe-function-type
-    92:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   120:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   173:54  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   251:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   350:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   368:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   386:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   418:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   487:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   506:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   530:50  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
-   596:29  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value                                                        obsidianmd/hardcoded-config-path
    628:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator                                      @typescript-eslint/no-floating-promises
    709:17  warning  Unsafe call of a `Function` typed value                                                                                                                                                                 @typescript-eslint/no-unsafe-call
    816:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                                                                                                  obsidianmd/prefer-create-el
@@ -176,9 +164,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
   68:9   warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/JsInTasksQueriesDisabledError.ts
-  7:9  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value  obsidianmd/hardcoded-config-path
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/QueryContext.ts
   27:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
@@ -193,12 +178,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   241:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   247:15  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
   253:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusRegistryReport.ts
-  62:14  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value  obsidianmd/hardcoded-config-path
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusSettingsReport.ts
-  61:17  warning  Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value  obsidianmd/hardcoded-config-path
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/EditorSuggestorPopup.ts
    95:15  warning  Unsafe assignment of an error typed value                                                                                                                           @typescript-eslint/no-unsafe-assignment
@@ -311,7 +290,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/PostponeMenu.ts
   125:9  warning  Avoid setting styles directly via `element.style.pointerEvents`. Use CSS classes for better theming and maintainability. Use the `setCssProps` function if the CSS properties need to change dynamically  obsidianmd/no-static-styles-assignment
 
-✖ 221 problems (0 errors, 221 warnings)
+✖ 206 problems (0 errors, 206 warnings)
   0 errors and 66 warnings potentially fixable with the `--fix` option.
 
 
@@ -321,4 +300,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 21.79s.
+Done in 20.28s.
