@@ -609,4 +609,50 @@ describe('task line rendering - preserving classes and data attributes', () => {
         expect(replacement.getAttribute('data-test-color')).toBe('red');
         expect(replacement.getAttribute('data-custom')).toBe('value');
     });
+
+    /*
+     * Create an original list item, along with a parent element,
+     * and a fully rendered task list item, so it carries the classes
+     * and data attributes that Tasks itself adds
+     */
+    const originalAndRenderedReplacement = async (taskLine: string) => {
+        const replacement = await renderListItem(fromLine({ line: taskLine }));
+        const list = document.createElement('ul');
+        const original = createAndAppendElement('li', list);
+        return { original, replacement };
+    };
+
+    it("should have the Tasks plugin's own classes after the replacement", async () => {
+        const { original, replacement } = await originalAndRenderedReplacement('- [x] A complete task');
+        original.classList.add('test-plugin-class');
+
+        reconcileReplacementTask(original, replacement);
+
+        expect(replacement.classList.contains('task-list-item')).toBe(true);
+        expect(replacement.classList.contains('is-checked')).toBe(true);
+        expect(replacement.classList.contains('plugin-tasks-list-item')).toBe(true);
+    });
+
+    it("should have the Tasks plugin's own data attributes after the replacement", async () => {
+        const { original, replacement } = await originalAndRenderedReplacement('- [x] A complete task');
+        original.setAttribute('data-custom', 'value');
+
+        reconcileReplacementTask(original, replacement);
+
+        expect(replacement.hasAttribute('data-task')).toBe(true);
+        expect(replacement.hasAttribute('data-line')).toBe(true);
+        expect(replacement.hasAttribute('data-task-status-name')).toBe(true);
+        expect(replacement.hasAttribute('data-task-status-type')).toBe(true);
+    });
+
+    it("should not overwrite the replacement's own data attributes with the original's", async () => {
+        const { original, replacement } = await originalAndRenderedReplacement('- [x] A complete task');
+        original.setAttribute('data-task', ' ');
+        original.setAttribute('data-line', '99');
+
+        reconcileReplacementTask(original, replacement);
+
+        expect(replacement.getAttribute('data-task')).toBe('x');
+        expect(replacement.getAttribute('data-line')).toBe('0');
+    });
 });
