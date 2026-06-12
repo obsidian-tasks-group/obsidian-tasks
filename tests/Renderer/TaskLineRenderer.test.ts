@@ -10,7 +10,11 @@ import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
 import { DateParser } from '../../src/DateTime/DateParser';
 import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
-import { TaskLineRenderer, createAndAppendElement } from '../../src/Renderer/TaskLineRenderer';
+import {
+    TaskLineRenderer,
+    createAndAppendElement,
+    reconcileReplacementTask,
+} from '../../src/Renderer/TaskLineRenderer';
 import type { Task } from '../../src/Task/Task';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
@@ -567,5 +571,42 @@ ${task.toFileLineString()}
 
     it('Minimal task - short mode', async () => {
         await renderAndVerifyHTML(minimalTask, layoutOptionsShortMode());
+    });
+});
+
+describe('task line rendering - preserving classes and data attributes', () => {
+    /*
+     * Create an original list item, along with a parent element,
+     * and a separate replacement list item.
+     * Note the plain li elements will only be used by tests that check
+     * persistence of pre-existing classes and attributes during the
+     * replacement
+     */
+    const originalAndReplacement = () => {
+        const list = document.createElement('ul');
+        const original = createAndAppendElement('li', list);
+        const replacement = document.createElement('li');
+        return { original, replacement };
+    };
+
+    it.failing('copies pre-existing classes from the original onto the replacement', () => {
+        const { original, replacement } = originalAndReplacement();
+        original.classList.add('test-plugin-class', 'another-plugin-class');
+
+        reconcileReplacementTask(original, replacement);
+
+        expect(replacement.classList.contains('test-plugin-class')).toBe(true);
+        expect(replacement.classList.contains('another-plugin-class')).toBe(true);
+    });
+
+    it.failing('copies pre-existing data attributes from the original onto the replacement', () => {
+        const { original, replacement } = originalAndReplacement();
+        original.setAttribute('data-test-color', 'red');
+        original.setAttribute('data-custom', 'value');
+
+        reconcileReplacementTask(original, replacement);
+
+        expect(replacement.getAttribute('data-test-color')).toBe('red');
+        expect(replacement.getAttribute('data-custom')).toBe('value');
     });
 });
