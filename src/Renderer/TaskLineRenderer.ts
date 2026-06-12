@@ -58,10 +58,16 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
  * Replace the original list item that Obsidian rendered in Reading View with the one
  * that Tasks has rendered.
  *
+ * Any classes added to the original element by Obsidian or other plugins' Markdown post-processors
+ * prior to this plugin's Markdown post-processor running are copied onto the replacement so that
+ * they are not lost when Tasks swaps in its own rendered element.
+ *
  * @param original - the list item rendered by Obsidian, which is being replaced.
  * @param replacement - the list item rendered by Tasks, which takes its place.
  */
 export function reconcileReplacementTask(original: HTMLElement, replacement: HTMLElement): void {
+    original.classList.forEach((cls) => replacement.classList.add(cls)); // Copy classes from original to replacement
+
     original.replaceWith(replacement);
 }
 

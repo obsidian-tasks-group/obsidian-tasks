@@ -589,7 +589,7 @@ describe('task line rendering - preserving classes and data attributes', () => {
         return { original, replacement };
     };
 
-    it.failing('copies pre-existing classes from the original onto the replacement', () => {
+    it('copies pre-existing classes from the original onto the replacement', () => {
         const { original, replacement } = originalAndReplacement();
         original.classList.add('test-plugin-class', 'another-plugin-class');
 
