@@ -55,6 +55,17 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
 }
 
 /**
+ * Replace the original list item that Obsidian rendered in Reading View with the one
+ * that Tasks has rendered.
+ *
+ * @param original - the list item rendered by Obsidian, which is being replaced.
+ * @param replacement - the list item rendered by Tasks, which takes its place.
+ */
+export function reconcileReplacementTask(original: HTMLElement, replacement: HTMLElement): void {
+    original.replaceWith(replacement);
+}
+
+/**
  * `TaskLineRenderer` is responsible for rendering task details as HTML list items with
  * various customization options.
  *
