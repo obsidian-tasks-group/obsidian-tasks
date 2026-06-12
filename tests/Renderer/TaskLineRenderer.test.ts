@@ -599,7 +599,7 @@ describe('task line rendering - preserving classes and data attributes', () => {
         expect(replacement.classList.contains('another-plugin-class')).toBe(true);
     });
 
-    it.failing('copies pre-existing data attributes from the original onto the replacement', () => {
+    it('copies pre-existing data attributes from the original onto the replacement', () => {
         const { original, replacement } = originalAndReplacement();
         original.setAttribute('data-test-color', 'red');
         original.setAttribute('data-custom', 'value');
