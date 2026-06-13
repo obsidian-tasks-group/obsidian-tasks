@@ -52,6 +52,16 @@ The fields shown below can be surrounded by either `[]` or `()`.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+## Dataview Format for Duration
+
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForTaskFormats.test.Serializer_Duration_dataview-include.approved.md -->
+
+- [ ] #task hours and minutes  [duration:: 1h30m]
+- [ ] #task only hours  [duration:: 2h]
+- [ ] #task only minutes  [duration:: 45m]
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## All Dataview Fields
 
 - [ ] #task Has one of every field except done  [priority:: high]  [repeat:: every day]  [start:: 2023-04-24]  [scheduled:: 2023-04-26]  [due:: 2023-04-27]

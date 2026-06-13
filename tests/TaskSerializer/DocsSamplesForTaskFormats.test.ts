@@ -106,4 +106,21 @@ describe('Serializer', () => {
             verifyMarkdownForDocs(allDependencyLines());
         });
     });
+
+    describe('Duration', () => {
+        function allOtherLines() {
+            const tasks = SampleTasks.withRepresentativeDurationValues();
+            return tasks.map((t) => t.toFileLineString()).join('\n');
+        }
+
+        it.each(Object.keys(TASK_FORMATS))('%s-snippet', (key: string) => {
+            updateSettings({ taskFormat: key as keyof TASK_FORMATS });
+            verifyMarkdown(allOtherLines());
+        });
+
+        it.each(Object.keys(TASK_FORMATS))('%s-include', (key: string) => {
+            updateSettings({ taskFormat: key as keyof TASK_FORMATS });
+            verifyMarkdownForDocs(allOtherLines());
+        });
+    });
 });

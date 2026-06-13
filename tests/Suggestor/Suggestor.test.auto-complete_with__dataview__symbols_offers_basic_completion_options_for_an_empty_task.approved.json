@@ -41,6 +41,10 @@
     "appendText": "repeat:: "
   },
   {
+    "displayText": "duration:: duration",
+    "appendText": "duration:: "
+  },
+  {
     "textToMatch": "created:: created",
     "displayText": "created:: created today (2022-07-11)",
     "appendText": "created:: 2022-07-11] ",
