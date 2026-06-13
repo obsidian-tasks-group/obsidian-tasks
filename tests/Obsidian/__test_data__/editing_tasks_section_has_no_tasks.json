@@ -1,0 +1,108 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "Section 1",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      },
+      {
+        "heading": "Section 2",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 24
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 13
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -3,
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 3,
+            "offset": 41
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 25
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 0,
+            "offset": 11
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 24
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 13
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 3,
+            "offset": 41
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 25
+          }
+        },
+        "type": "list"
+      }
+    ]
+  },
+  "fileContents": "# Section 1\n\n# Section 2\n- [ ] Task in S2\n",
+  "filePath": "Test Data/editing_tasks_section_has_no_tasks.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}
