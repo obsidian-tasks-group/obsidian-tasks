@@ -5,7 +5,7 @@ import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { TasksFile } from '../Scripting/TasksFile';
 import { Task } from '../Task/Task';
-import { TaskLineRenderer, createAndAppendElement } from '../Renderer/TaskLineRenderer';
+import { TaskLineRenderer, createAndAppendElement, reconcileReplacementTask } from '../Renderer/TaskLineRenderer';
 import { TaskLocation } from '../Task/TaskLocation';
 
 /**
@@ -166,7 +166,7 @@ export class InlineRenderer {
                 }
             }
 
-            renderedElement.replaceWith(taskElement);
+            reconcileReplacementTask(renderedElement, taskElement);
         }
     }
 }
