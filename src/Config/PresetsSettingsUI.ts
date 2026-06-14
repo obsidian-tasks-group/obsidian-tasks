@@ -334,7 +334,13 @@ export class PresetsSettingsUI {
      */
     private setupAutoResizingTextarea(textArea: TextAreaComponent) {
         const resize = () => {
-            textArea.inputEl.style.height = 'auto'; // reset first
+            // Reset height first.
+            // We have to use setCssProps to stop Obsidian esling from complaining
+            // about the more simple assignment of a fixed 'auto' height.
+            textArea.inputEl.setCssProps({
+                height: 'auto',
+            });
+
             textArea.inputEl.style.height = `${textArea.inputEl.scrollHeight}px`;
         };
 
