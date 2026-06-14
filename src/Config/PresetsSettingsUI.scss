@@ -71,9 +71,14 @@
         .tasks-presets-drag-handle {
             grid-area: drag;
             color: var(--text-muted);
+            cursor: grab;
 
             &:hover {
                 color: var(--text-normal);
+            }
+
+            &.tasks-presets-drag-handle-active {
+                cursor: grabbing;
             }
         }
 

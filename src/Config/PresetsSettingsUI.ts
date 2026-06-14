@@ -128,14 +128,13 @@ export class PresetsSettingsUI {
             btn.extraSettingsEl.addClass('tasks-presets-drag-handle');
             btn.setIcon('grip-vertical').setTooltip('Drag to reorder');
 
-            btn.extraSettingsEl.style.cursor = 'grab';
             btn.extraSettingsEl.addEventListener('mousedown', (_e) => {
                 // Enable dragging only when mousedown starts on the handle
                 wrapper.draggable = true;
-                btn.extraSettingsEl.style.cursor = 'grabbing';
+                btn.extraSettingsEl.addClass('tasks-presets-drag-handle-active');
             });
             btn.extraSettingsEl.addEventListener('mouseup', (_e) => {
-                btn.extraSettingsEl.style.cursor = 'grab';
+                btn.extraSettingsEl.removeClass('tasks-presets-drag-handle-active');
             });
         });
 
