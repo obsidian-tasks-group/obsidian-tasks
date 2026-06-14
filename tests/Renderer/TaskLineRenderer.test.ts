@@ -610,6 +610,17 @@ describe('task line rendering - preserving classes and data attributes', () => {
         expect(replacement.getAttribute('data-custom')).toBe('value');
     });
 
+    it('does not copy pre-existing non-data attributes from the original onto the replacement', () => {
+        const { original, replacement } = originalAndReplacement();
+        original.setAttribute('test-attr', 'value');
+        original.setAttribute('aria-label', 'a task');
+
+        reconcileReplacementTask(original, replacement);
+
+        expect(replacement.hasAttribute('test-attr')).toBe(false);
+        expect(replacement.hasAttribute('aria-label')).toBe(false);
+    });
+
     /*
      * Create an original list item, along with a parent element,
      * and a fully rendered task list item, so it carries the classes
