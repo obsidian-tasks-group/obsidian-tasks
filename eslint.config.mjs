@@ -53,6 +53,8 @@ const typescriptCommonRules = {
 
     // Bulk-disable new rules that fail, in order to be able to enable them
     // incrementally later on.
+    // Once code in src/ directory all passes, change the value to 1, instead of on_or_off
+    '@microsoft/sdl/no-inner-html': 1,
     '@typescript-eslint/no-base-to-string': on_or_off,
     '@typescript-eslint/no-deprecated': 1,
     '@typescript-eslint/no-explicit-any': on_or_off,
@@ -62,6 +64,7 @@ const typescriptCommonRules = {
     '@typescript-eslint/no-misused-promises': on_or_off,
     '@typescript-eslint/no-namespace': 1,
     '@typescript-eslint/no-redundant-type-constituents': 1,
+    '@typescript-eslint/no-unnecessary-type-assertion': 1,
     '@typescript-eslint/no-unsafe-argument': on_or_off,
     '@typescript-eslint/no-unsafe-assignment': on_or_off,
     '@typescript-eslint/no-unsafe-call': on_or_off,
@@ -72,6 +75,7 @@ const typescriptCommonRules = {
     '@typescript-eslint/only-throw-error': on_or_off,
     '@typescript-eslint/restrict-plus-operands': on_or_off,
     '@typescript-eslint/restrict-template-expressions': on_or_off,
+    '@typescript-eslint/unbound-method': 1,
     'import/no-extraneous-dependencies': 1,
     'no-restricted-globals': 1,
     'no-undef': 0, // Always off, because Moment is not provided by Obsidian when we run eslint
@@ -79,6 +83,7 @@ const typescriptCommonRules = {
     'no-unsanitized/property': 1,
     'obsidianmd/hardcoded-config-path': 0, // These were all 'https://publish.obsidian.md/tasks/' references!!!
     'obsidianmd/no-nodejs-modules': 1, // Can disable this on test files
+    'obsidianmd/no-static-styles-assignment': 1,
     'obsidianmd/prefer-active-doc': on_or_off,
     'obsidianmd/prefer-active-window-timers': on_or_off,
     'obsidianmd/prefer-create-el': on_or_off,
