@@ -79,7 +79,6 @@ const typescriptCommonRules = {
     'no-unsanitized/property': on_or_off,
     'obsidianmd/hardcoded-config-path': 0, // These were all 'https://publish.obsidian.md/tasks/' references!!!
     'obsidianmd/no-nodejs-modules': on_or_off, // Can disable this on test files
-    'obsidianmd/no-static-styles-assignment': on_or_off, // This likely does need addressing
     'obsidianmd/prefer-active-doc': on_or_off,
     'obsidianmd/prefer-active-window-timers': on_or_off,
     'obsidianmd/prefer-create-el': on_or_off,
