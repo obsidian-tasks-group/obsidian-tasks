@@ -54,14 +54,14 @@ const typescriptCommonRules = {
     // Bulk-disable new rules that fail, in order to be able to enable them
     // incrementally later on.
     '@typescript-eslint/no-base-to-string': on_or_off,
-    '@typescript-eslint/no-deprecated': on_or_off, // in tests: `toThrowError` is deprecated. in favor of `toThrow`
+    '@typescript-eslint/no-deprecated': 1,
     '@typescript-eslint/no-explicit-any': on_or_off,
     '@typescript-eslint/no-floating-promises': on_or_off,
-    '@typescript-eslint/no-for-in-array': on_or_off,
+    '@typescript-eslint/no-for-in-array': 1,
     '@typescript-eslint/no-implied-eval': on_or_off,
     '@typescript-eslint/no-misused-promises': on_or_off,
-    '@typescript-eslint/no-namespace': on_or_off,
-    '@typescript-eslint/no-redundant-type-constituents': on_or_off,
+    '@typescript-eslint/no-namespace': 1,
+    '@typescript-eslint/no-redundant-type-constituents': 1,
     '@typescript-eslint/no-unsafe-argument': on_or_off,
     '@typescript-eslint/no-unsafe-assignment': on_or_off,
     '@typescript-eslint/no-unsafe-call': on_or_off,
@@ -72,17 +72,17 @@ const typescriptCommonRules = {
     '@typescript-eslint/only-throw-error': on_or_off,
     '@typescript-eslint/restrict-plus-operands': on_or_off,
     '@typescript-eslint/restrict-template-expressions': on_or_off,
-    'import/no-extraneous-dependencies': on_or_off,
-    'no-restricted-globals': on_or_off,
+    'import/no-extraneous-dependencies': 1,
+    'no-restricted-globals': 1,
     'no-undef': 0, // Always off, because Moment is not provided by Obsidian when we run eslint
-    'no-unsanitized/method': on_or_off,
-    'no-unsanitized/property': on_or_off,
+    'no-unsanitized/method': 1,
+    'no-unsanitized/property': 1,
     'obsidianmd/hardcoded-config-path': 0, // These were all 'https://publish.obsidian.md/tasks/' references!!!
-    'obsidianmd/no-nodejs-modules': on_or_off, // Can disable this on test files
+    'obsidianmd/no-nodejs-modules': 1, // Can disable this on test files
     'obsidianmd/prefer-active-doc': on_or_off,
     'obsidianmd/prefer-active-window-timers': on_or_off,
     'obsidianmd/prefer-create-el': on_or_off,
-    'obsidianmd/prefer-get-language': on_or_off,
+    'obsidianmd/prefer-get-language': 1,
     'obsidianmd/rule-custom-message': on_or_off,
     'obsidianmd/ui/sentence-case': 0, // Obsidian's scanner now disables this
 };
