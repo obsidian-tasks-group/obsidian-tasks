@@ -41,7 +41,6 @@ export class TaskModal extends Modal {
     public onOpen(): void {
         this.titleEl.setText('Create or edit Task');
         this.modalEl.addClass('tasks-edit-modal-container');
-        this.modalEl.style.paddingBottom = '0';
 
         const optionsButton = document.createElement('button');
         // Add same classes as the default Obsidian modal close button.
