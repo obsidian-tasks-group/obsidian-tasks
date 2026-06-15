@@ -992,9 +992,9 @@ function makeMultilineTextSetting(setting: Setting) {
         return;
     }
 
-    settingEl.style.display = 'block';
-    infoEl.style.marginRight = '0px';
-    textEl.style.minWidth = '-webkit-fill-available';
+    settingEl.addClass('tasks-setting-multiline-text');
+    infoEl.addClass('tasks-setting-multiline-text-info');
+    textEl.addClass('tasks-setting-multiline-text-textarea');
 }
 
 function setSettingVisibility(setting: Setting | null, visible: boolean) {

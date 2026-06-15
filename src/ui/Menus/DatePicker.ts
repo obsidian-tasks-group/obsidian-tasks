@@ -45,9 +45,7 @@ export function promptForDate(
         onReady: (_selectedDates, _dateStr, instance) => {
             // Add custom buttons dynamically
             const buttonContainer = document.createElement('div');
-            buttonContainer.style.display = 'flex';
-            buttonContainer.style.justifyContent = 'space-between';
-            buttonContainer.style.marginTop = '10px';
+            buttonContainer.classList.add('tasks-date-picker-buttons');
 
             // Create "Clear" button
             addButton(buttonContainer, instance, task, taskSaver, 'Clear', () => {

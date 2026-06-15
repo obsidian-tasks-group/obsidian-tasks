@@ -122,7 +122,8 @@ export class PostponeMenu extends TaskEditingMenu {
         postponedDate: Moment | null,
     ) {
         // Disable the button to prevent update error due to the task not being reloaded yet.
-        button.style.pointerEvents = 'none';
+        // (we cannot use Obsidian's addClass method because it is not available when this code is run in tests.)
+        button.classList.add('tasks-no-pointer-events');
 
         const successMessage = postponementSuccessMessage(postponedDate, updatedDateType);
         new Notice(successMessage, 2000);

@@ -74,3 +74,15 @@
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
+.tasks-settings .tasks-setting-multiline-text {
+    display: block;
+}
+
+.tasks-settings .tasks-setting-multiline-text-info {
+    margin-right: 0;
+}
+
+.tasks-settings .tasks-setting-multiline-text-textarea {
+    min-width: -webkit-fill-available;
+}
