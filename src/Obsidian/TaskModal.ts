@@ -60,7 +60,6 @@ export class TaskModal extends Modal {
         this.modalEl.appendChild(optionsButton);
 
         const { contentEl } = this;
-        this.contentEl.style.paddingBottom = '0';
 
         const statusOptions = this.getKnownStatusesAndCurrentTaskStatusIfNotKnown();
 
