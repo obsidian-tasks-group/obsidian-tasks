@@ -994,7 +994,7 @@ function makeMultilineTextSetting(setting: Setting) {
 
     settingEl.addClass('tasks-setting-multiline-text');
     infoEl.addClass('tasks-setting-multiline-text-info');
-    textEl.style.minWidth = '-webkit-fill-available';
+    textEl.addClass('tasks-setting-multiline-text-textarea');
 }
 
 function setSettingVisibility(setting: Setting | null, visible: boolean) {

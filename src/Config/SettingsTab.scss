@@ -82,3 +82,7 @@
 .tasks-settings .tasks-setting-multiline-text-info {
     margin-right: 0;
 }
+
+.tasks-settings .tasks-setting-multiline-text-textarea {
+    min-width: -webkit-fill-available;
+}
