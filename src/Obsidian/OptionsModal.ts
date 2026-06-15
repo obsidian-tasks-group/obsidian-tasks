@@ -29,7 +29,6 @@ export class OptionsModal extends Modal {
         this.modalEl.addClass('tasks-options-modal-container');
 
         const { contentEl } = this;
-        this.contentEl.style.paddingBottom = '0';
 
         new ModalOptionsEditor({
             target: contentEl,
