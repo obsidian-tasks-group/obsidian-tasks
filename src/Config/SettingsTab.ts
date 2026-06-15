@@ -993,7 +993,7 @@ function makeMultilineTextSetting(setting: Setting) {
     }
 
     settingEl.addClass('tasks-setting-multiline-text');
-    infoEl.style.marginRight = '0px';
+    infoEl.addClass('tasks-setting-multiline-text-info');
     textEl.style.minWidth = '-webkit-fill-available';
 }
 
