@@ -8,7 +8,7 @@ export class Lazy<T> {
      * Construct a lazy object
      * @param obtain a function that produces a value
      */
-    constructor(private obtain: () => T) {}
+    constructor(private readonly obtain: () => T) {}
 
     /**
      * Retrieve the lazy value, calling the obtain function the first time.
