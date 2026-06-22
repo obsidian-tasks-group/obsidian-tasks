@@ -222,6 +222,17 @@
         "name": "Remove scheduled date on recurrence"
       }
     },
+    "searchResults": {
+      "heading": "Search results",
+      "taskCountLocation": {
+        "description": "Choose whether the task count is shown at the top or bottom of query results.",
+        "name": "Task count location",
+        "options": {
+          "bottom": "Bottom",
+          "top": "Top"
+        }
+      }
+    },
     "searches": {
       "enableCustomSearches": {
         "description": {
@@ -233,17 +244,6 @@
         "name": "Enable custom searches"
       },
       "heading": "Searches"
-    },
-    "searchResults": {
-      "heading": "Search results",
-      "taskCountLocation": {
-        "description": "Choose whether the task count is shown at the top or bottom of query results.",
-        "name": "Task count location",
-        "options": {
-          "bottom": "Bottom",
-          "top": "Top"
-        }
-      }
     },
     "seeTheDocumentation": "See the documentation",
     "statuses": {
