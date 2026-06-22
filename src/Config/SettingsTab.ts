@@ -67,7 +67,7 @@ export class SettingsTab extends PluginSettingTab {
 
     private static readonly createFragmentWithHTML = (html: string) => sanitizeHTMLToDom(html);
 
-    public async saveSettings(update?: boolean): Promise<void> {
+    public async saveSettingsAndRebuildSettingsTab(update?: boolean): Promise<void> {
         await this.plugin.saveSettings();
 
         if (update) {
@@ -987,7 +987,7 @@ async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings
     // This saves the user from having to restart Obsidian in order to apply the changed status(es).
     StatusSettings.applyToStatusRegistry(statusTypes, StatusRegistry.getInstance());
 
-    await settings.saveSettings(true);
+    await settings.saveSettingsAndRebuildSettingsTab(true);
 }
 
 function makeMultilineTextSetting(setting: Setting) {
