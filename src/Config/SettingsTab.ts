@@ -71,7 +71,14 @@ export class SettingsTab extends PluginSettingTab {
         await this.plugin.saveSettings();
 
         if (update) {
+            // Rebuilding the settings tab resets it to the top, so restore how far down it was.
+            const previousDistanceFromTop = this.containerEl.scrollTop;
+
             this.display();
+
+            requestAnimationFrame(() => {
+                this.containerEl.scrollTo({ top: previousDistanceFromTop });
+            });
         }
     }
 
