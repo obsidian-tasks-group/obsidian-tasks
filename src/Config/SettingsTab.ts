@@ -65,13 +65,20 @@ export class SettingsTab extends PluginSettingTab {
         this.events = events;
     }
 
-    private static createFragmentWithHTML = (html: string) => sanitizeHTMLToDom(html);
+    private static readonly createFragmentWithHTML = (html: string) => sanitizeHTMLToDom(html);
 
-    public async saveSettings(update?: boolean): Promise<void> {
+    public async saveSettingsAndRebuildSettingsTab(update?: boolean): Promise<void> {
         await this.plugin.saveSettings();
 
         if (update) {
+            // Rebuilding the settings tab resets it to the top, so restore how far down it was.
+            const previousDistanceFromTop = this.containerEl.scrollTop;
+
             this.display();
+
+            requestAnimationFrame(() => {
+                this.containerEl.scrollTo({ top: previousDistanceFromTop });
+            });
         }
     }
 
@@ -980,7 +987,7 @@ async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings
     // This saves the user from having to restart Obsidian in order to apply the changed status(es).
     StatusSettings.applyToStatusRegistry(statusTypes, StatusRegistry.getInstance());
 
-    await settings.saveSettings(true);
+    await settings.saveSettingsAndRebuildSettingsTab(true);
 }
 
 function makeMultilineTextSetting(setting: Setting) {
