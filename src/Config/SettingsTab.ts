@@ -65,7 +65,7 @@ export class SettingsTab extends PluginSettingTab {
         this.events = events;
     }
 
-    private static createFragmentWithHTML = (html: string) => sanitizeHTMLToDom(html);
+    private static readonly createFragmentWithHTML = (html: string) => sanitizeHTMLToDom(html);
 
     public async saveSettings(update?: boolean): Promise<void> {
         await this.plugin.saveSettings();
