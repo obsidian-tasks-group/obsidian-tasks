@@ -18,7 +18,7 @@
     "test:integration": "jest --config jest.integration.config.js",
     "deploy:local": "node ./scripts/Test-TasksInLocalObsidian.mjs",
     "deploy:local:pwsh": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1",
-    "extract-i18n": "npx i18next-parser",
+    "extract-i18n": "npx i18next-parser && node ./scripts/removeFinalEolFromI18n.mjs",
     "circular-deps-text": "madge --circular --extensions ts ./src > circular-deps.txt",
     "circular-deps-image": "madge --circular --extensions ts ./src --image circular-deps.png",
     "code-docs": "typedoc \"src/**/*\""
