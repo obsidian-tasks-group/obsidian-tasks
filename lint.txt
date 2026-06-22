@@ -16,11 +16,11 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/SettingsTab.ts
     51:37  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type                                             @typescript-eslint/no-unsafe-function-type
-   628:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
-   709:17  warning  Unsafe call of a `Function` typed value                                                                                                                             @typescript-eslint/no-unsafe-call
-   816:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                                                              obsidianmd/prefer-create-el
-   945:33  warning  Promise-returning function provided to variable where a void return was expected                                                                                    @typescript-eslint/no-misused-promises
-  1004:9   warning  Unsafe call of a type that could not be resolved                                                                                                                    @typescript-eslint/no-unsafe-call
+   633:13  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+   714:17  warning  Unsafe call of a `Function` typed value                                                                                                                             @typescript-eslint/no-unsafe-call
+   821:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                                                              obsidianmd/prefer-create-el
+   950:33  warning  Promise-returning function provided to variable where a void return was expected                                                                                    @typescript-eslint/no-misused-promises
+  1009:9   warning  Unsafe call of a type that could not be resolved                                                                                                                    @typescript-eslint/no-unsafe-call
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/DateTime/TasksDate.ts
   125:32  warning  Expected an error object to be thrown  @typescript-eslint/only-throw-error
@@ -277,4 +277,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 21.53s.
+Done in 20.56s.
