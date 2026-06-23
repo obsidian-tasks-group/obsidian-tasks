@@ -1,0 +1,17 @@
+views:
+  - type: table
+    name: Pages and tags
+    filters:
+      and:
+        - '!file.inFolder("_meta/templates")'
+        - file.ext == "md"
+    groupBy:
+      property: file.folder
+      direction: ASC
+    order:
+      - file.name
+      - file.tags
+      - tags
+    columnSize:
+      file.tags: 268
+    rowHeight: medium
