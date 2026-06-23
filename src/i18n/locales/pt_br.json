@@ -222,6 +222,17 @@
         "name": "Remover data agendada na recorrência"
       }
     },
+    "searchResults": {
+      "heading": "Resultados da pesquisa",
+      "taskCountLocation": {
+        "description": "Escolha se a contagem de tarefas deve ser mostrada na parte superior ou inferior dos resultados da consulta.",
+        "name": "Localização da contagem de tarefas",
+        "options": {
+          "bottom": "Inferior",
+          "top": "Superior"
+        }
+      }
+    },
     "searches": {
       "enableCustomSearches": {
         "description": {
@@ -233,17 +244,6 @@
         "name": ""
       },
       "heading": ""
-    },
-    "searchResults": {
-      "heading": "Resultados da pesquisa",
-      "taskCountLocation": {
-        "description": "Escolha se a contagem de tarefas deve ser mostrada na parte superior ou inferior dos resultados da consulta.",
-        "name": "Localização da contagem de tarefas",
-        "options": {
-          "bottom": "Inferior",
-          "top": "Superior"
-        }
-      }
     },
     "seeTheDocumentation": "Veja a documentação",
     "statuses": {

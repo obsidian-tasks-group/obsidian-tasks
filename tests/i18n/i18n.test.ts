@@ -1,13 +1,13 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import i18next from 'i18next';
-import { initializeI18n } from '../../src/i18n/i18n';
 
 function getAllLocaleJsonFileBaseNames(): string[] {
     const localesDir = path.resolve(__dirname, '../../src/i18n/locales');
     return fs
         .readdirSync(localesDir)
         .filter((file) => file.endsWith('.json'))
+        .filter((file) => !file.endsWith('_old.json')) // skip any backup files created by 'yarn extract-i18n'
         .sort()
         .map((file) => file.replace('.json', ''));
 }
@@ -26,7 +26,7 @@ function getI18nextParserLocales(): Readonly<string[]> {
 
 let i18nResourceNames: ReadonlyArray<string>;
 beforeAll(async () => {
-    await initializeI18n();
+    // initializeI18n is called in jest.setup.ts
     i18nResourceNames = Object.freeze(Object.keys(i18next.store.data));
 });
 

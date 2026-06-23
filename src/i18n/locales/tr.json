@@ -222,6 +222,17 @@
         "name": "Tekrarda zamanlanmış tarihi kaldır"
       }
     },
+    "searchResults": {
+      "heading": "Arama sonuçları",
+      "taskCountLocation": {
+        "description": "Görev sayısının sorgu sonuçlarının üstünde mi yoksa altında mı gösterileceğini seçin.",
+        "name": "Görev sayısı konumu",
+        "options": {
+          "bottom": "Alt",
+          "top": "Üst"
+        }
+      }
+    },
     "searches": {
       "enableCustomSearches": {
         "description": {
@@ -233,17 +244,6 @@
         "name": "Özel aramaları etkinleştir"
       },
       "heading": "Aramalar"
-    },
-    "searchResults": {
-      "heading": "Arama sonuçları",
-      "taskCountLocation": {
-        "description": "Görev sayısının sorgu sonuçlarının üstünde mi yoksa altında mı gösterileceğini seçin.",
-        "name": "Görev sayısı konumu",
-        "options": {
-          "bottom": "Alt",
-          "top": "Üst"
-        }
-      }
     },
     "seeTheDocumentation": "Belgelere bakın",
     "statuses": {
