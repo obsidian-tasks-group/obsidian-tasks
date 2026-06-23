@@ -7,6 +7,7 @@ function getAllLocaleJsonFileBaseNames(): string[] {
     return fs
         .readdirSync(localesDir)
         .filter((file) => file.endsWith('.json'))
+        .filter((file) => !file.endsWith('_old.json')) // skip any backup files created by 'yarn extract-i18n'
         .sort()
         .map((file) => file.replace('.json', ''));
 }
