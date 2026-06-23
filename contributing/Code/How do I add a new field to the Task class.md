@@ -11,7 +11,7 @@ The many steps below can be split over several PRs, to make work - and code revi
 
 For example, It's fine to have a first release of a feature without `sort by` and `group by`. In this case, add a feature request issue for the missing capabilities, and note in the documentation, for example:
 
-"Sorting and grouping by blah is not yet supported. We are tracking this in [issue #nnnn](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/nnn)."
+"Sorting and grouping by blah is not yet supported. We are tracking this in [issue \#nnnn](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/nnn)."
 
 ## Storing the field and testing it
 
