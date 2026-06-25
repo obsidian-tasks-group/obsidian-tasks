@@ -77,6 +77,29 @@ filter by function task.file.property('tags').includes('#sample-tag')
 
 Note that this is an exact tag search. It will not match `#sample-tag/some-sub-tag`.
 
+#### Show tasks from files with a specific tag in frontmatter - starting with a substring
+
+For finding tags *beginning* with a particular string, we have to test each individual tag value, specifying the leading `#`:
+
+```javascript
+filter by function task.file.property('tags').some(tag => tag.includes('#sample/'))
+```
+
+An example of a frontmatter section that will be found by this search:
+
+```yaml
+tags:
+  - sample/tag/value
+```
+
+#### Show tasks from files with a specific tag in frontmatter - substring in any position
+
+For finding tags with a particular string *anywhere*, we have to test each individual tag value, without the leading `#`:
+
+```javascript
+filter by function task.file.property('tags').some(tag => tag.includes('/tag/'))
+```
+
 #### Do not show any tasks from files with a specific tag in frontmatter
 
 ```javascript
