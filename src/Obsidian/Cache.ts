@@ -148,7 +148,12 @@ export class Cache {
             // We only want to initialize if we haven't already.
             if (!this.loadedAfterFirstResolve) {
                 this.loadedAfterFirstResolve = true;
-                this.loadVault();
+                // eslint revealed a possibly missing await here.
+                // But in testing, we found that commenting out this line prevented the usual double-reading
+                // of all files in the vault during start-up.
+                // For now, we are marking the promise as void, in order to be able to leave
+                // @typescript-eslint/no-floating-promises turned on, to catch future promise errors.
+                void this.loadVault();
             }
         });
         this.metadataCacheEventReferences.push(resolvedEventeReference);
