@@ -289,10 +289,10 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
         button.title = buttonTooltipText;
 
-        button.addEventListener('click', (ev: MouseEvent) => {
+        button.addEventListener('click', async (ev: MouseEvent) => {
             ev.preventDefault(); // suppress the default click behavior
             ev.stopPropagation(); // suppress further event propagation
-            PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit);
+            await PostponeMenu.postponeOnClickCallback(button, task, amount, timeUnit);
         });
 
         /** Open a context menu on right-click.
