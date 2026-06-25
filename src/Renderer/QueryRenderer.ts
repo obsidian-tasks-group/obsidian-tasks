@@ -43,8 +43,8 @@ export class QueryRenderer {
         this.events = events;
 
         plugin.registerMarkdownCodeBlockProcessor('tasks', (source, el, ctx) => {
-            plugin.app.workspace.onLayoutReady(() => {
-                this.addQueryRenderChild(source, el, ctx);
+            plugin.app.workspace.onLayoutReady(async () => {
+                await this.addQueryRenderChild(source, el, ctx);
             });
         });
     }
