@@ -155,9 +155,7 @@ export class Cache {
 
         // Does not fire when starting up obsidian and only works for changes.
         const changedEventReference = this.metadataCache.on('changed', (file: TFile) => {
-            this.tasksMutex.runExclusive(() => {
-                this.indexFile(file);
-            });
+            this.tasksMutex.runExclusive(() => this.indexFile(file));
         });
         this.metadataCacheEventReferences.push(changedEventReference);
     }
