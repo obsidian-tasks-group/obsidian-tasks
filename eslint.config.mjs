@@ -58,7 +58,7 @@ const typescriptCommonRules = {
     '@typescript-eslint/no-base-to-string': on_or_off,
     '@typescript-eslint/no-deprecated': 1,
     '@typescript-eslint/no-explicit-any': on_or_off,
-    '@typescript-eslint/no-floating-promises': on_or_off,
+    '@typescript-eslint/no-floating-promises': 1,
     '@typescript-eslint/no-for-in-array': 1,
     '@typescript-eslint/no-implied-eval': on_or_off,
     '@typescript-eslint/no-misused-promises': on_or_off,
