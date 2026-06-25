@@ -40,7 +40,7 @@ export class CustomStatusModal extends Modal {
         );
     }
 
-    async display() {
+    display() {
         const { contentEl } = this;
 
         contentEl.empty();

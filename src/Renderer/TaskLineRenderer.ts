@@ -195,7 +195,7 @@ export class TaskLineRenderer {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2130
         const addEventListeners = task.taskLocation.hasKnownPath;
         if (addEventListeners) {
-            checkbox.addEventListener('click', (event: MouseEvent) => {
+            checkbox.addEventListener('click', async (event: MouseEvent) => {
                 event.preventDefault();
                 // It is required to stop propagation so that obsidian won't write the file with the
                 // checkbox (un)checked. Obsidian would write after us and overwrite our change.
@@ -204,7 +204,7 @@ export class TaskLineRenderer {
                 // Should be re-rendered as enabled after update in file.
                 checkbox.disabled = true;
                 const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
-                replaceTaskWithTasks({
+                await replaceTaskWithTasks({
                     originalTask: task,
                     newTasks: toggledTasks,
                 });
@@ -485,11 +485,12 @@ export class TaskLineRenderer {
 
     public async renderListItem(li: HTMLLIElement, listItem: ListItem, listItemIndex: number): Promise<HTMLLIElement> {
         if (listItem.statusCharacter) {
+            // special case: handle toggling of task lines without the global query, in Tasks search results
             const checkbox = createAndAppendElement('input', li);
             checkbox.classList.add('task-list-item-checkbox');
             checkbox.type = 'checkbox';
 
-            checkbox.addEventListener('click', (event: MouseEvent) => {
+            checkbox.addEventListener('click', async (event: MouseEvent) => {
                 event.preventDefault();
                 // It is required to stop propagation so that obsidian won't write the file with the
                 // checkbox (un)checked. Obsidian would write after us and overwrite our change.
@@ -499,7 +500,7 @@ export class TaskLineRenderer {
                 checkbox.disabled = true;
 
                 const checkedOrUncheckedListItem = listItem.checkOrUncheck();
-                replaceTaskWithTasks({ originalTask: listItem, newTasks: checkedOrUncheckedListItem });
+                await replaceTaskWithTasks({ originalTask: listItem, newTasks: checkedOrUncheckedListItem });
             });
 
             if (listItem.statusCharacter !== ' ') {

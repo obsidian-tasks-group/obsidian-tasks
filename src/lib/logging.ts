@@ -1,4 +1,3 @@
-import { Platform, Plugin } from 'obsidian';
 /*
  * EventEmitter2 is an implementation of the EventEmitter module found in Node.js.
  * In addition to having a better benchmark performance than EventEmitter and being
@@ -392,36 +391,4 @@ export function log(logLevel: TLogLevelName, message: string) {
         default:
             break;
     }
-}
-
-/**
- * This allows the plugin to be debugged in a mobile application
- * add it when debugging on a device. Not meant to be used by
- * end users. Add it into main.ts and remove before you commit.
- *
- * @param {Plugin} plugin
- * @return {*}
- */
-export function monkeyPatchConsole(plugin: Plugin) {
-    if (!Platform.isMobile) {
-        return;
-    }
-
-    const logFile = `${plugin.manifest.dir}/tasks-logs.txt`;
-    const logs: string[] = [];
-    const logMessages =
-        (prefix: string) =>
-        (...messages: unknown[]) => {
-            logs.push(`\n[${prefix}]`);
-            for (const message of messages) {
-                logs.push(String(message));
-            }
-            plugin.app.vault.adapter.write(logFile, logs.join(' '));
-        };
-
-    console.debug = logMessages('debug');
-    console.error = logMessages('error');
-    console.info = logMessages('info');
-    console.log = logMessages('log');
-    console.warn = logMessages('warn');
 }

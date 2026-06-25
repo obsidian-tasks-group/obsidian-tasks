@@ -96,9 +96,9 @@ export class Cache {
         // Subscribe to vault and load cache later when workspace is ready,
         // prevents create events for every file, but loadVault cover all files anyway.
         // For details see: https://docs.obsidian.md/Reference/TypeScript+API/Vault/on('create')
-        this.workspace.onLayoutReady(() => {
+        this.workspace.onLayoutReady(async () => {
             this.subscribeToVault();
-            this.loadVault();
+            await this.loadVault();
         });
 
         this.subscribeToEvents();
@@ -148,16 +148,19 @@ export class Cache {
             // We only want to initialize if we haven't already.
             if (!this.loadedAfterFirstResolve) {
                 this.loadedAfterFirstResolve = true;
-                this.loadVault();
+                // eslint revealed a possibly missing await here.
+                // But in testing, we found that commenting out this line prevented the usual double-reading
+                // of all files in the vault during start-up.
+                // For now, we are marking the promise as void, in order to be able to leave
+                // @typescript-eslint/no-floating-promises turned on, to catch future promise errors.
+                void this.loadVault();
             }
         });
         this.metadataCacheEventReferences.push(resolvedEventeReference);
 
         // Does not fire when starting up obsidian and only works for changes.
-        const changedEventReference = this.metadataCache.on('changed', (file: TFile) => {
-            this.tasksMutex.runExclusive(() => {
-                this.indexFile(file);
-            });
+        const changedEventReference = this.metadataCache.on('changed', async (file: TFile) => {
+            await this.tasksMutex.runExclusive(() => this.indexFile(file));
         });
         this.metadataCacheEventReferences.push(changedEventReference);
     }
@@ -166,25 +169,23 @@ export class Cache {
         this.logger.debug('Cache.subscribeToVault()');
         const { useFilenameAsScheduledDate } = getSettings();
 
-        const createdEventReference = this.vault.on('create', (file: TAbstractFile) => {
+        const createdEventReference = this.vault.on('create', async (file: TAbstractFile) => {
             if (!(file instanceof TFile)) {
                 return;
             }
             this.logger.debug(`Cache.subscribeToVault.createdEventReference() ${file.path}`);
 
-            this.tasksMutex.runExclusive(() => {
-                this.indexFile(file);
-            });
+            await this.tasksMutex.runExclusive(() => this.indexFile(file));
         });
         this.vaultEventReferences.push(createdEventReference);
 
-        const deletedEventReference = this.vault.on('delete', (file: TAbstractFile) => {
+        const deletedEventReference = this.vault.on('delete', async (file: TAbstractFile) => {
             if (!(file instanceof TFile)) {
                 return;
             }
             this.logger.debug(`Cache.subscribeToVault.deletedEventReference() ${file.path}`);
 
-            this.tasksMutex.runExclusive(() => {
+            await this.tasksMutex.runExclusive(() => {
                 this.tasks = this.tasks.filter((task: Task) => {
                     return task.path !== file.path;
                 });
@@ -194,13 +195,13 @@ export class Cache {
         });
         this.vaultEventReferences.push(deletedEventReference);
 
-        const renamedEventReference = this.vault.on('rename', (file: TAbstractFile, oldPath: string) => {
+        const renamedEventReference = this.vault.on('rename', async (file: TAbstractFile, oldPath: string) => {
             if (!(file instanceof TFile)) {
                 return;
             }
             this.logger.debug(`Cache.subscribeToVault.renamedEventReference() ${file.path}`);
 
-            this.tasksMutex.runExclusive(() => {
+            await this.tasksMutex.runExclusive(() => {
                 const fileCache = this.metadataCache.getFileCache(file);
                 // TODO What if the file has been renamed but the cache not yet updated?
                 const tasksFile = new TasksFile(file.path, fileCache ?? undefined);
