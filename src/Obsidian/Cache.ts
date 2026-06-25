@@ -190,13 +190,13 @@ export class Cache {
         });
         this.vaultEventReferences.push(deletedEventReference);
 
-        const renamedEventReference = this.vault.on('rename', (file: TAbstractFile, oldPath: string) => {
+        const renamedEventReference = this.vault.on('rename', async (file: TAbstractFile, oldPath: string) => {
             if (!(file instanceof TFile)) {
                 return;
             }
             this.logger.debug(`Cache.subscribeToVault.renamedEventReference() ${file.path}`);
 
-            this.tasksMutex.runExclusive(() => {
+            await this.tasksMutex.runExclusive(() => {
                 const fileCache = this.metadataCache.getFileCache(file);
                 // TODO What if the file has been renamed but the cache not yet updated?
                 const tasksFile = new TasksFile(file.path, fileCache ?? undefined);
