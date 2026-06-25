@@ -164,15 +164,13 @@ export class Cache {
         this.logger.debug('Cache.subscribeToVault()');
         const { useFilenameAsScheduledDate } = getSettings();
 
-        const createdEventReference = this.vault.on('create', (file: TAbstractFile) => {
+        const createdEventReference = this.vault.on('create', async (file: TAbstractFile) => {
             if (!(file instanceof TFile)) {
                 return;
             }
             this.logger.debug(`Cache.subscribeToVault.createdEventReference() ${file.path}`);
 
-            this.tasksMutex.runExclusive(() => {
-                this.indexFile(file);
-            });
+            await this.tasksMutex.runExclusive(() => this.indexFile(file));
         });
         this.vaultEventReferences.push(createdEventReference);
 
