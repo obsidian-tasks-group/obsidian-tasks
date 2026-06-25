@@ -29,8 +29,8 @@ export class InlineRenderer {
         this.app = app;
 
         plugin.registerMarkdownPostProcessor((el, ctx) => {
-            plugin.app.workspace.onLayoutReady(() => {
-                this.markdownPostProcessor(el, ctx);
+            plugin.app.workspace.onLayoutReady(async () => {
+                await this.markdownPostProcessor(el, ctx);
             });
         });
     }
