@@ -630,7 +630,7 @@ export class SettingsTab extends PluginSettingTab {
         detailsContainer.ontoggle = () => {
             headingOpened[heading.text] = detailsContainer.open;
             updateSettings({ headingOpened: headingOpened });
-            this.plugin.saveSettings();
+            void this.plugin.saveSettings();
         };
         const summary = detailsContainer.createEl('summary');
         new Setting(summary).setHeading().setName(heading.text);
