@@ -51,9 +51,7 @@ export class TaskModal extends Modal {
         optionsButton.onclick = () => {
             const optionsModal = new OptionsModal({
                 app: this.app,
-                onSave: () => {
-                    this.onSaveSettings();
-                },
+                onSave: () => this.onSaveSettings(),
             });
             optionsModal.open();
         };
