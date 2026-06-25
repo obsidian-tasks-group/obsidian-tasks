@@ -174,13 +174,13 @@ export class Cache {
         });
         this.vaultEventReferences.push(createdEventReference);
 
-        const deletedEventReference = this.vault.on('delete', (file: TAbstractFile) => {
+        const deletedEventReference = this.vault.on('delete', async (file: TAbstractFile) => {
             if (!(file instanceof TFile)) {
                 return;
             }
             this.logger.debug(`Cache.subscribeToVault.deletedEventReference() ${file.path}`);
 
-            this.tasksMutex.runExclusive(() => {
+            await this.tasksMutex.runExclusive(() => {
                 this.tasks = this.tasks.filter((task: Task) => {
                     return task.path !== file.path;
                 });
