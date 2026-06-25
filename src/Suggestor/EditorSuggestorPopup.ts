@@ -179,7 +179,7 @@ file: '${newTask.path}'
                     value.context.editor.replaceRange(newTask.toFileLineString(), start, end);
                 } else {
                     // Replace Task in File Context
-                    replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
+                    await replaceTaskWithTasks({ originalTask: value.taskItDependsOn, newTasks: newTask });
                 }
             }
         }
