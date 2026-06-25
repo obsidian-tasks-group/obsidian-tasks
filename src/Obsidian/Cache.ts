@@ -96,9 +96,9 @@ export class Cache {
         // Subscribe to vault and load cache later when workspace is ready,
         // prevents create events for every file, but loadVault cover all files anyway.
         // For details see: https://docs.obsidian.md/Reference/TypeScript+API/Vault/on('create')
-        this.workspace.onLayoutReady(() => {
+        this.workspace.onLayoutReady(async () => {
             this.subscribeToVault();
-            this.loadVault();
+            await this.loadVault();
         });
 
         this.subscribeToEvents();
