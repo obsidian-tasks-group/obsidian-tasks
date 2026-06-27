@@ -1,0 +1,59 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "Just a heading",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 0,
+            "offset": 16
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 16,
+            "line": 0,
+            "offset": 16
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 9,
+            "line": 2,
+            "offset": 27
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 18
+          }
+        },
+        "type": "paragraph"
+      }
+    ]
+  },
+  "fileContents": "# Just a heading\n\nSome text\n",
+  "filePath": "Test Data/editing_tasks_one_heading_no_tasks.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

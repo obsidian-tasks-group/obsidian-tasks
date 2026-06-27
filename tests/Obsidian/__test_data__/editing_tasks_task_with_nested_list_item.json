@@ -1,0 +1,111 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "Heading",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 9,
+            "line": 0,
+            "offset": 9
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 2,
+            "offset": 29
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 11
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 3,
+            "offset": 61
+          },
+          "start": {
+            "col": 2,
+            "line": 3,
+            "offset": 32
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 9,
+            "line": 0,
+            "offset": 9
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 31,
+            "line": 3,
+            "offset": 61
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 11
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 22
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 17
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# Heading\n\n- [ ] #task Task 1\n    - Task 1's nested list item\n",
+  "filePath": "Test Data/editing_tasks_task_with_nested_list_item.md",
+  "getAllTags": [
+    "#task"
+  ],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}
