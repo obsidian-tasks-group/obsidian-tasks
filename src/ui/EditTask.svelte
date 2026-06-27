@@ -73,7 +73,7 @@
         mountComplete = true;
 
         setTimeout(() => {
-            descriptionInput.focus();
+            descriptionInput.focus({ preventScroll: true });
         }, 10);
     });
 
