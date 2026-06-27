@@ -10,6 +10,7 @@ describe('TaskLayoutOptions', () => {
             id
             dependsOn
             priority
+            duration
             recurrenceRule
             onCompletion
             createdDate
@@ -66,6 +67,7 @@ describe('TaskLayoutOptions', () => {
             id
             dependsOn
             priority
+            duration
             recurrenceRule
             onCompletion
             createdDate
@@ -85,6 +87,7 @@ describe('TaskLayoutOptions', () => {
             id
             dependsOn
             priority
+            duration
             recurrenceRule
             onCompletion
             createdDate
@@ -140,6 +143,7 @@ describe('TaskLayoutOptions', () => {
             "id
             dependsOn
             priority
+            duration
             recurrenceRule
             onCompletion
             createdDate

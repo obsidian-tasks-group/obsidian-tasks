@@ -9,6 +9,7 @@ export interface EditModalShowSettings {
     // NEW_TASK_FIELD_EDIT_REQUIRED
     priority: boolean;
 
+    duration: boolean;
     recurrence: boolean;
     due: boolean;
     scheduled: boolean;
@@ -26,6 +27,7 @@ export interface EditModalShowSettings {
 export const defaultEditModalShowSettings: Readonly<EditModalShowSettings> = {
     priority: true,
 
+    duration: true,
     recurrence: true,
     due: true,
     scheduled: true,
