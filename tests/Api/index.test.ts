@@ -3,7 +3,7 @@ import type TasksPlugin from '../../src/main';
 import type { Task } from '../../src/Task/Task';
 import { createTaskLineModal } from '../../src/Api/createTaskLineModal';
 import { editTaskLineModal } from '../../src/Api/editTaskLineModal';
-import { tasksApiV1 } from '../../src/Api/index';
+import { tasksApiV1, tasksApiV2 } from '../../src/Api/index';
 
 jest.mock('../../src/Api/createTaskLineModal', () => ({
     createTaskLineModal: jest.fn(),
@@ -43,5 +43,35 @@ describe('definition of public Api', () => {
 
         await publicApi.editTaskLineModal(taskLine);
         expect(editTaskLineModal).toHaveBeenCalledWith(app, taskLine, tasks, expect.any(Function));
+    });
+
+    it('should preserve apiV1 methods in tasksApiV2', async () => {
+        const task = jest.fn();
+        const app = {} as App; // Mock the app object
+        const tasks = [task as Partial<Task>];
+        const mockPlugin = {
+            getTasks: () => tasks,
+            app,
+        } as Partial<TasksPlugin> as TasksPlugin;
+
+        const publicApi = tasksApiV2(mockPlugin);
+
+        await publicApi.createTaskLineModal();
+        expect(createTaskLineModal).toHaveBeenCalledWith(app, tasks, expect.any(Function));
+        expect(publicApi.executeToggleTaskDoneCommand).toEqual(expect.any(Function));
+    });
+
+    it('should expose tasksApiV2 methods', async () => {
+        const mockPlugin = {
+            getTasks: () => [],
+            app: {} as App,
+        } as Partial<TasksPlugin> as TasksPlugin;
+
+        const publicApi = tasksApiV2(mockPlugin);
+
+        expect(publicApi.queryTasks).toEqual(expect.any(Function));
+        expect(publicApi.createTask).toEqual(expect.any(Function));
+        expect(publicApi.editTask).toEqual(expect.any(Function));
+        expect(publicApi.ensureTaskHasUniqueId).toEqual(expect.any(Function));
     });
 });
