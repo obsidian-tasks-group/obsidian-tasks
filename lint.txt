@@ -173,10 +173,9 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   492:57  warning  Invalid type "string | string[]" of template literal expression                                         @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/ListItem.ts
-  125:19  warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
-  125:30  warning  A `require()` style import is forbidden                                                           @typescript-eslint/no-require-imports
-  159:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
-  159:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
+  126:19  warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
+  160:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
+  160:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Task.ts
   102:24  warning  Unexpected any. Specify a different type                                                          @typescript-eslint/no-explicit-any
@@ -254,7 +253,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
   84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 178 problems (0 errors, 178 warnings)
+✖ 177 problems (0 errors, 177 warnings)
   0 errors and 63 warnings potentially fixable with the `--fix` option.
 
 
@@ -273,4 +272,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 20.41s.
+Done in 20.50s.
