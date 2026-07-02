@@ -2,6 +2,8 @@ import { ensureTaskHasUniqueId } from '../../src/Api/TaskV1';
 import type { TaskV1 } from '../../src/Api/TasksApiV2';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
+const originalCrypto = globalThis.crypto;
+
 const makeTaskV1 = (overrides: Partial<TaskV1> = {}): TaskV1 => ({
     id: '',
     description: 'Do the thing',
@@ -24,11 +26,27 @@ const makeTaskV1 = (overrides: Partial<TaskV1> = {}): TaskV1 => ({
     ...overrides,
 });
 
-const generatedIdFor = (randomValue: number): string => randomValue.toString(36).slice(2, 10);
+const mockCryptoValues = (...values: number[][]) => {
+    const getRandomValues = jest.fn((array: Uint8Array) => {
+        array.set(values.shift() ?? []);
+        return array;
+    });
+
+    Object.defineProperty(globalThis, 'crypto', {
+        value: { getRandomValues },
+        configurable: true,
+    });
+
+    return getRandomValues;
+};
 
 describe('ensureTaskHasUniqueId', () => {
     afterEach(() => {
         jest.restoreAllMocks();
+        Object.defineProperty(globalThis, 'crypto', {
+            value: originalCrypto,
+            configurable: true,
+        });
     });
 
     it('returns the same object when the task already has a non-empty id', () => {
@@ -52,32 +70,15 @@ describe('ensureTaskHasUniqueId', () => {
     });
 
     it('retries when the generated id already belongs to an existing task', () => {
-        const firstRandomValue = 0.5;
-        const secondRandomValue = 0.25;
-        const existingId = generatedIdFor(firstRandomValue);
-        const uniqueId = generatedIdFor(secondRandomValue);
-        jest.spyOn(Math, 'random').mockReturnValueOnce(firstRandomValue).mockReturnValueOnce(secondRandomValue);
+        const getRandomValues = mockCryptoValues([0, 1, 2, 3, 4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14, 15]);
         const task = makeTaskV1();
-        const existingTask = new TaskBuilder().id(existingId).build();
+        const existingTask = new TaskBuilder().id('abcdefgh').build();
 
         const result = ensureTaskHasUniqueId(task, [existingTask]);
 
-        expect(result.id).toBe(uniqueId);
-        expect(result.id).not.toBe(existingId);
-        expect(Math.random).toHaveBeenCalledTimes(2);
-    });
-
-    it('retries when the generated id is empty', () => {
-        const validRandomValue = 0.25;
-        const validId = generatedIdFor(validRandomValue);
-        jest.spyOn(Math, 'random').mockReturnValueOnce(0).mockReturnValueOnce(validRandomValue);
-        const task = makeTaskV1();
-
-        const result = ensureTaskHasUniqueId(task, []);
-
-        expect(result.id).toBe(validId);
-        expect(result.id).not.toBe('');
-        expect(Math.random).toHaveBeenCalledTimes(2);
+        expect(result.id).toBe('ijklmnop');
+        expect(result.id).not.toBe(existingTask.id);
+        expect(getRandomValues).toHaveBeenCalledTimes(2);
     });
 
     it('does not mutate the original task when generating an id', () => {

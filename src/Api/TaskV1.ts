@@ -64,8 +64,14 @@ const descriptionWithTags = (description: string, tags: string[] | undefined): s
 
 export type { TaskV1 } from './TasksApiV2';
 
+const taskIdCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_';
+const taskIdLength = 8;
+
 const randomId = (): string => {
-    return Math.random().toString(36).slice(2, 10);
+    const randomValues = new Uint8Array(taskIdLength);
+    globalThis.crypto.getRandomValues(randomValues);
+
+    return Array.from(randomValues, (value) => taskIdCharacters[value % taskIdCharacters.length]).join('');
 };
 
 /**
@@ -196,7 +202,7 @@ export const ensureTaskHasUniqueId = (task: TaskV1, allTasks: Task[]): TaskV1 =>
 
     const existingIds = new Set(allTasks.map((existingTask) => existingTask.id).filter((id) => id !== ''));
     let id = randomId();
-    while (id === '' || existingIds.has(id)) {
+    while (existingIds.has(id)) {
         id = randomId();
     }
 
