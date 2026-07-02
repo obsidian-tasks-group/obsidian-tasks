@@ -122,6 +122,7 @@ export class ListItem {
 
         while (closestParentTask !== null) {
             // Lazy load the Task class to avoid circular dependencies
+            // eslint-disable-next-line @typescript-eslint/no-require-imports -- "needed to avoid circular dependencies"
             const { Task } = require('./Task');
             if (closestParentTask instanceof Task) {
                 return closestParentTask as Task;
