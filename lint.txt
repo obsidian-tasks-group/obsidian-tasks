@@ -2,9 +2,6 @@ yarn run v1.22.19
 $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-check
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/PresetsSettingsUI.ts
-  104:51  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
-  105:54  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
-  212:42  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
   286:28  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/Settings.ts
@@ -15,7 +12,6 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
    714:17  warning  Unsafe call of a `Function` typed value                                                                                  @typescript-eslint/no-unsafe-call
    821:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                   obsidianmd/prefer-create-el
-   950:33  warning  Promise-returning function provided to variable where a void return was expected                                         @typescript-eslint/no-misused-promises
   1009:9   warning  Unsafe call of a type that could not be resolved                                                                         @typescript-eslint/no-unsafe-call
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/DateTime/TasksDate.ts
@@ -247,7 +243,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
   84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 173 problems (0 errors, 173 warnings)
+✖ 169 problems (0 errors, 169 warnings)
   0 errors and 66 warnings potentially fixable with the `--fix` option.
 
 
@@ -257,4 +253,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 25.70s.
+Done in 24.17s.
