@@ -402,7 +402,7 @@ export class TaskLineRenderer {
          * https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state
          */
         function tagToAttributeValue(tag: string) {
-            // eslint-disable-next-line no-control-regex
+            // eslint-disable-next-line no-control-regex -- sanitize tag names for double-quoted HTML attributes
             const illegalChars = /["&\x00\r\n]/g;
             let sanitizedTag = tag.replace(illegalChars, '-');
             // And if after sanitization the name starts with dashes or underscores, remove them.

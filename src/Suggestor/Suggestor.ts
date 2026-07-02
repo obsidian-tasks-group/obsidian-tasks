@@ -26,7 +26,7 @@ import type { SuggestInfo, SuggestionBuilder } from '.';
 export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
 
 declare global {
-    // eslint-disable-next-line no-var
+    // eslint-disable-next-line no-var -- required to declare a globalThis property in TypeScript
     var SHOW_DEPENDENCY_SUGGESTIONS: boolean;
 }
 
