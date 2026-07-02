@@ -68,7 +68,7 @@ export class SettingsTab extends PluginSettingTab {
     private static readonly createFragmentWithHTML = (html: string) => sanitizeHTMLToDom(html);
 
     public async saveSettingsAndRebuildSettingsTab(): Promise<void> {
-        await this.plugin.saveSettings();
+        void this.plugin.saveSettings();
 
         // Rebuilding the settings tab resets it to the top, so restore how far down it was.
         const previousDistanceFromTop = this.containerEl.scrollTop;
