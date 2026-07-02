@@ -98,11 +98,10 @@ Prefer explicitly defining any function parameters and return type              
   241:46  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/TaskLineRenderer.ts
-   52:42  warning  Use 'createEl(tagName)' instead of 'document.createElement(tagName)'                                    obsidianmd/prefer-create-el
-   52:42  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                              obsidianmd/prefer-active-doc
-  198:48  warning  Promise returned in function argument where a void return was expected                                  @typescript-eslint/no-misused-promises
-  405:0   warning  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary  eslint-comments/require-description
-  493:48  warning  Promise returned in function argument where a void return was expected                                  @typescript-eslint/no-misused-promises
+   52:42  warning  Use 'createEl(tagName)' instead of 'document.createElement(tagName)'        obsidianmd/prefer-create-el
+   52:42  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
+  198:48  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
+  493:48  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/ExpandPlaceholders.ts
    27:60  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
@@ -166,11 +165,10 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   213:36  warning  Unsafe member access .save on a type that cannot be resolved                                                                             @typescript-eslint/no-unsafe-member-access
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/Suggestor.ts
-   29:0   warning  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary  eslint-comments/require-description
-   35:1   warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility                obsidianmd/no-global-this
-   38:12  warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility                obsidianmd/no-global-this
-  261:59  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-  492:57  warning  Invalid type "string | string[]" of template literal expression                                         @typescript-eslint/restrict-template-expressions
+   35:1   warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility  obsidianmd/no-global-this
+   38:12  warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility  obsidianmd/no-global-this
+  261:59  warning  Unexpected any. Specify a different type                                                  @typescript-eslint/no-explicit-any
+  492:57  warning  Invalid type "string | string[]" of template literal expression                           @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/ListItem.ts
   126:19  warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
@@ -253,7 +251,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
   84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 177 problems (0 errors, 177 warnings)
+✖ 175 problems (0 errors, 175 warnings)
   0 errors and 63 warnings potentially fixable with the `--fix` option.
 
 
@@ -272,4 +270,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 20.50s.
+Done in 20.98s.
