@@ -64,6 +64,7 @@ const typescriptCommonRules = {
     '@typescript-eslint/no-misused-promises': on_or_off,
     '@typescript-eslint/no-namespace': 1,
     '@typescript-eslint/no-redundant-type-constituents': 1,
+    '@typescript-eslint/no-require-imports': on_or_off,
     '@typescript-eslint/no-unnecessary-type-assertion': 1,
     '@typescript-eslint/no-unsafe-argument': on_or_off,
     '@typescript-eslint/no-unsafe-assignment': on_or_off,
@@ -76,19 +77,23 @@ const typescriptCommonRules = {
     '@typescript-eslint/restrict-plus-operands': on_or_off,
     '@typescript-eslint/restrict-template-expressions': on_or_off,
     '@typescript-eslint/unbound-method': 1,
+    'eslint-comments/require-description': on_or_off,
     'import/no-extraneous-dependencies': 1,
     'no-restricted-globals': 1,
     'no-undef': 0, // Always off, because Moment is not provided by Obsidian when we run eslint
     'no-unsanitized/method': 1,
     'no-unsanitized/property': 1,
     'obsidianmd/hardcoded-config-path': 0, // These were all 'https://publish.obsidian.md/tasks/' references!!!
+    'obsidianmd/no-global-this': on_or_off,
     'obsidianmd/no-nodejs-modules': 1, // Can disable this on test files
     'obsidianmd/no-static-styles-assignment': 1,
     'obsidianmd/prefer-active-doc': on_or_off,
     'obsidianmd/prefer-active-window-timers': on_or_off,
     'obsidianmd/prefer-create-el': on_or_off,
     'obsidianmd/prefer-get-language': 1,
+    'obsidianmd/prefer-window-timers': on_or_off,
     'obsidianmd/rule-custom-message': on_or_off,
+    'obsidianmd/settings-tab/prefer-setting-definitions': on_or_off,
     'obsidianmd/ui/sentence-case': 0, // Obsidian's scanner now disables this
 };
 
@@ -126,6 +131,7 @@ export default defineConfig([
             '@typescript-eslint/no-misused-promises': 0,
             '@typescript-eslint/no-namespace': 0,
             '@typescript-eslint/no-redundant-type-constituents': 0,
+            '@typescript-eslint/no-restricted-imports':0,
             '@typescript-eslint/no-unnecessary-type-assertion': 0,
             '@typescript-eslint/no-unsafe-argument': 0,
             '@typescript-eslint/no-unsafe-assignment': 0,
@@ -147,6 +153,7 @@ export default defineConfig([
             'no-unsanitized/property': 0,
             'no-unused-vars': 0,
             'obsidianmd/hardcoded-config-path': 0, // These were all 'https://publish.obsidian.md/tasks/' references!!!
+            'obsidianmd/no-global-this': 0,
             'obsidianmd/no-nodejs-modules': 0, // Can disable this on test files
             'obsidianmd/no-static-styles-assignment': 0, // This likely does need addressing
             'obsidianmd/prefer-active-doc': 0,

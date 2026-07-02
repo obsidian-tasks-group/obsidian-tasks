@@ -52,7 +52,7 @@
     "esbuild-svelte": "^0.8.2",
     "eslint": "9.26.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-obsidianmd": "^0.2.9",
+    "eslint-plugin-obsidianmd": "^0.4.0",
     "eslint-plugin-prettier": "^4.2.5",
     "eslint-plugin-svelte": "^3.19.0",
     "globals": "^13.0.0",
