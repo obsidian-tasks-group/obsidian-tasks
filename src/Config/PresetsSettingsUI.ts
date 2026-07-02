@@ -382,7 +382,7 @@ export class PresetsSettingsUI {
         // TODO Consider how this relates to the validation code - should it refuse to save settings if validation fails?
         // Update the settings in storage
         updateSettings({ presets: updatedPresets });
-        await this.plugin.saveSettings();
+        void this.plugin.saveSettings();
 
         // Update the local settings object to reflect the changes
         settings.presets = { ...updatedPresets };
