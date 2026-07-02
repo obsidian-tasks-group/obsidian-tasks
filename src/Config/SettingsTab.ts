@@ -67,8 +67,8 @@ export class SettingsTab extends PluginSettingTab {
 
     private static readonly createFragmentWithHTML = (html: string) => sanitizeHTMLToDom(html);
 
-    public async saveSettingsAndRebuildSettingsTab(): Promise<void> {
-        await this.plugin.saveSettings();
+    public saveSettingsAndRebuildSettingsTab(): void {
+        void this.plugin.saveSettings();
 
         // Rebuilding the settings tab resets it to the top, so restore how far down it was.
         const previousDistanceFromTop = this.containerEl.scrollTop;
@@ -825,12 +825,12 @@ export class SettingsTab extends PluginSettingTab {
             button
                 .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addNewStatus.name'))
                 .setCta()
-                .onClick(async () => {
+                .onClick(() => {
                     StatusSettings.addStatus(
                         statusSettings.customStatuses,
                         new StatusConfiguration('', '', '', false, StatusType.TODO),
                     );
-                    await updateAndSaveStatusSettings(statusSettings, settings);
+                    updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         setting.infoEl.remove();
@@ -855,8 +855,8 @@ export class SettingsTab extends PluginSettingTab {
                     themeName: name,
                     numberOfStatuses: collection.length,
                 });
-                button.setButtonText(label).onClick(async () => {
-                    await addCustomStatesToSettings(collection, statusSettings, settings);
+                button.setButtonText(label).onClick(() => {
+                    addCustomStatesToSettings(collection, statusSettings, settings);
                 });
             });
             addStatusesSupportedByThisTheme.infoEl.remove();
@@ -867,7 +867,7 @@ export class SettingsTab extends PluginSettingTab {
             button
                 .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.name'))
                 .setCta()
-                .onClick(async () => {
+                .onClick(() => {
                     const tasks = this.plugin.getTasks();
                     const allStatuses = tasks.map((task) => {
                         return task.status;
@@ -879,7 +879,7 @@ export class SettingsTab extends PluginSettingTab {
                     unknownStatuses.forEach((s) => {
                         StatusSettings.addStatus(statusSettings.customStatuses, s);
                     });
-                    await updateAndSaveStatusSettings(statusSettings, settings);
+                    updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         addAllUnknownStatuses.infoEl.remove();
@@ -891,7 +891,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setWarning()
                 .onClick(async () => {
                     StatusSettings.resetAllCustomStatuses(statusSettings);
-                    await updateAndSaveStatusSettings(statusSettings, settings);
+                    updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         clearCustomStatuses.infoEl.remove();
@@ -932,9 +932,9 @@ function createRowForTaskStatus(
             extra
                 .setIcon('cross')
                 .setTooltip('Delete')
-                .onClick(async () => {
+                .onClick(() => {
                     if (StatusSettings.deleteStatus(statuses, statusType)) {
-                        await updateAndSaveStatusSettings(statusSettings, settings);
+                        updateAndSaveStatusSettings(statusSettings, settings);
                     }
                 });
         });
@@ -944,13 +944,13 @@ function createRowForTaskStatus(
         extra
             .setIcon('pencil')
             .setTooltip('Edit')
-            .onClick(async () => {
+            .onClick(() => {
                 const modal = new CustomStatusModal(plugin, statusType, isCoreStatus);
 
-                modal.onClose = async () => {
+                modal.onClose = () => {
                     if (modal.saved) {
                         if (StatusSettings.replaceStatus(statuses, statusType, modal.statusConfiguration())) {
-                            await updateAndSaveStatusSettings(statusSettings, settings);
+                            updateAndSaveStatusSettings(statusSettings, settings);
                         }
                     }
                 };
@@ -962,7 +962,7 @@ function createRowForTaskStatus(
     setting.infoEl.remove();
 }
 
-async function addCustomStatesToSettings(
+function addCustomStatesToSettings(
     supportedStatuses: StatusCollection,
     statusSettings: StatusSettings,
     settings: SettingsTab,
@@ -973,10 +973,10 @@ async function addCustomStatesToSettings(
         new Notice(notice);
     });
 
-    await updateAndSaveStatusSettings(statusSettings, settings);
+    updateAndSaveStatusSettings(statusSettings, settings);
 }
 
-async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: SettingsTab) {
+function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: SettingsTab) {
     updateSettings({
         statusSettings: statusTypes,
     });
@@ -985,7 +985,7 @@ async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings
     // This saves the user from having to restart Obsidian in order to apply the changed status(es).
     StatusSettings.applyToStatusRegistry(statusTypes, StatusRegistry.getInstance());
 
-    await settings.saveSettingsAndRebuildSettingsTab();
+    settings.saveSettingsAndRebuildSettingsTab();
 }
 
 function makeMultilineTextSetting(setting: Setting) {
