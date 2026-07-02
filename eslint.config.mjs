@@ -88,7 +88,6 @@ const typescriptCommonRules = {
     'obsidianmd/no-nodejs-modules': 1, // Can disable this on test files
     'obsidianmd/no-static-styles-assignment': 1,
     'obsidianmd/prefer-active-doc': on_or_off,
-    'obsidianmd/prefer-active-window-timers': on_or_off,
     'obsidianmd/prefer-create-el': on_or_off,
     'obsidianmd/prefer-get-language': 1,
     'obsidianmd/prefer-window-timers': on_or_off,
@@ -157,7 +156,6 @@ export default defineConfig([
             'obsidianmd/no-nodejs-modules': 0, // Can disable this on test files
             'obsidianmd/no-static-styles-assignment': 0, // This likely does need addressing
             'obsidianmd/prefer-active-doc': 0,
-            'obsidianmd/prefer-active-window-timers': 0,
             'obsidianmd/prefer-create-el': 0,
             'obsidianmd/prefer-get-language': 0,
             'obsidianmd/rule-custom-message': 0,
@@ -182,7 +180,6 @@ export default defineConfig([
         rules: {
             'no-inner-declarations': 0,
             'no-unused-vars': 0, // Configured in tsconfig instead.
-            "obsidianmd/prefer-active-window-timers": 0,
             // For now, disable checks that were not previously run
             'svelte/no-at-html-tags': 0,
             'svelte/require-each-key': 0,
