@@ -96,7 +96,7 @@ export class PresetsSettingsUI {
                 if (newKey && newKey !== key) {
                     const updatedPresets = this.presetsSettingsService.renamePreset(settings.presets, key, newKey);
                     if (updatedPresets) {
-                        await this.savePresetsSettings(updatedPresets, settings, refreshView);
+                        this.savePresetsSettings(updatedPresets, settings, refreshView);
                     }
                 }
             };
@@ -119,7 +119,7 @@ export class PresetsSettingsUI {
 
             return textArea.onChange(async (newValue) => {
                 const updatedPresets = this.presetsSettingsService.updatePresetValue(settings.presets, key, newValue);
-                await this.savePresetsSettings(updatedPresets, settings, null);
+                this.savePresetsSettings(updatedPresets, settings, null);
             });
         });
 
@@ -145,7 +145,7 @@ export class PresetsSettingsUI {
                 .setTooltip('Delete')
                 .onClick(async () => {
                     const updatedPresets = this.presetsSettingsService.deletePreset(settings.presets, key);
-                    await this.savePresetsSettings(updatedPresets, settings, refreshView);
+                    this.savePresetsSettings(updatedPresets, settings, refreshView);
                 });
         });
 
@@ -226,7 +226,7 @@ export class PresetsSettingsUI {
             const updatedPresets = this.presetsSettingsService.reorderPreset(settings.presets, draggedKey, targetIndex);
 
             if (updatedPresets) {
-                await this.savePresetsSettings(updatedPresets, settings, refreshView);
+                this.savePresetsSettings(updatedPresets, settings, refreshView);
             }
 
             this.clearDropIndicators();
@@ -363,7 +363,7 @@ export class PresetsSettingsUI {
                 .setCta()
                 .onClick(async () => {
                     const { presets: updatedPresets } = this.presetsSettingsService.addPreset(settings.presets);
-                    await this.savePresetsSettings(updatedPresets, settings, refreshView);
+                    this.savePresetsSettings(updatedPresets, settings, refreshView);
                 });
         });
     }
@@ -374,7 +374,7 @@ export class PresetsSettingsUI {
      * @param settings The current settings object to update
      * @param refreshView Callback to refresh the view (pass null if no refresh is needed)
      */
-    private async savePresetsSettings(
+    private savePresetsSettings(
         updatedPresets: PresetsMap,
         settings: Settings,
         refreshView: RefreshViewCallback | null,
