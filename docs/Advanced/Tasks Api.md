@@ -18,6 +18,9 @@ The Tasks API is available from `app.plugins.plugins['obsidian-tasks-plugin'].ap
 where `app` is the Obsidian App. A reference to the Obsidian App is usually available via `this.app`,
 however, this depends on the context of the executing script.
 
+Tasks also exposes `apiV2`, which includes all `apiV1` methods and adds versioned task objects,
+task search, task creation, task editing, and task ID generation.
+
 This is the interface the API exposes:
 
 <!-- snippet: TasksApiV1.ts -->
@@ -56,6 +59,130 @@ export interface TasksApiV1 {
 }
 ```
 <!-- endSnippet -->
+
+## Tasks API V2 Interface
+
+Use `app.plugins.plugins['obsidian-tasks-plugin'].apiV2` to access V2.
+
+V2 returns `TaskV1` objects instead of the internal Tasks `Task` class.
+Date fields are strings in `YYYY-MM-DD` format or `null`.
+Line numbers are zero-based, matching Obsidian's editor and cache positions.
+
+```ts
+interface TaskV1 {
+    id: string;
+    description: string;
+    status: string;
+    priority: string;
+    createdDate: string | null;
+    startDate: string | null;
+    scheduledDate: string | null;
+    dueDate: string | null;
+    doneDate: string | null;
+    cancelledDate: string | null;
+    recurrenceRule: string;
+    onCompletion: string;
+    dependsOn: string[];
+    tags: string[];
+    blockLink: string;
+    originalMarkdown: string;
+    path: string;
+    lineNumber: number;
+}
+
+interface TaskCreationDestinationV1 {
+    path: string;
+    line?: number;
+    placement?: 'before' | 'after' | 'replace' | 'append';
+}
+
+interface TasksApiV2 extends TasksApiV1 {
+    queryTasks(query: string): TaskV1[];
+    createTask(
+        destination: TaskCreationDestinationV1,
+        description: string,
+        taskData?: Partial<TaskV1>,
+    ): Promise<TaskV1>;
+    editTask(taskId: string, taskData: Partial<TaskV1>): Promise<TaskV1>;
+    ensureTaskHasUniqueId(task: TaskV1): TaskV1;
+}
+```
+
+## `queryTasks(query: string): TaskV1[];`
+
+Runs a Tasks query over the current task cache and returns matching tasks as `TaskV1` objects.
+Invalid queries throw an error.
+Query strings use the same syntax as Tasks code blocks.
+See [[About Queries]], [[Filters]], [[Combining Filters]], and [[Regular Expressions]] for the full query language.
+
+```javascript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV2;
+const dueSoon = tasksApi.queryTasks('not done\ndue before tomorrow');
+```
+
+Find open tasks in a project tag or work folder:
+
+```javascript
+const projectTasks = tasksApi.queryTasks('not done\n(description includes #project) OR (path includes Work/)');
+```
+
+Find high-priority tasks:
+
+```javascript
+const highPriorityTasks = tasksApi.queryTasks('priority is high');
+```
+
+Find tasks whose descriptions match a regular expression:
+
+```javascript
+const waitingTasks = tasksApi.queryTasks('description regex matches /waiting|blocked/i');
+```
+
+## `createTask(destination, description, taskData?): Promise<TaskV1>;`
+
+Creates a task in an existing Markdown file and returns the created task as `TaskV1`.
+`taskData` can override fields such as `status`, `priority`, dates, dependencies, `id`, and tags.
+
+If `destination.line` is supplied, `placement` defaults to `after`.
+If `placement` is `append`, the task is written at the end of the file.
+If neither `line` nor `placement` is supplied, Tasks appends after the last existing task line in that file;
+if the file has no task lines, Tasks appends at EOF.
+
+If a global filter is configured and the description does not already include it,
+Tasks prepends the global filter before writing the task.
+The returned `TaskV1.description` omits the configured global filter; `originalMarkdown` contains the exact written line.
+
+```javascript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV2;
+const task = await tasksApi.createTask(
+    { path: 'Tasks.md', line: 4, placement: 'after' },
+    'Book flights',
+    { dueDate: '2026-08-01', priority: '1' },
+);
+```
+
+## `editTask(taskId: string, taskData: Partial<TaskV1>): Promise<TaskV1>;`
+
+Edits the task with the supplied ID and returns the edited task as `TaskV1`.
+The task ID must be non-empty and must match exactly one task in the current Tasks cache.
+
+```javascript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV2;
+const task = await tasksApi.editTask('abc123', {
+    description: 'Book flights and hotel',
+    dueDate: '2026-08-02',
+});
+```
+
+## `ensureTaskHasUniqueId(task: TaskV1): TaskV1;`
+
+Returns the same task object if it already has a non-empty ID.
+Otherwise, returns a copy with a generated ID that does not collide with current task IDs.
+
+```javascript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV2;
+const taskWithId = tasksApi.ensureTaskHasUniqueId(task);
+```
 
 ## `createTaskLineModal(): Promise<string>;`
 
@@ -179,8 +306,6 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
 
 - Auto Suggest:
   - It is not yet possible for [[auto-suggest]] to add [[Task Dependencies|dependencies]] when Auto-Suggest is used in [[Kanban plugin]] cards - or any other plugins that use the [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]]. We are tracking this in [issue #3274](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3274).
-- Searching tasks:
-  - It is not yet possible to run Tasks searches via the API. We are tracking this in [issue #2459](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2459).
 - Ambiguity when `editTaskLineModal()` returns empty string:
   - `editTaskLineModal()` returns an empty string in both these situations:
         1. the user clicked Cancel

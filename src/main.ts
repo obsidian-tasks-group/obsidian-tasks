@@ -16,7 +16,7 @@ import { StatusRegistry } from './Statuses/StatusRegistry';
 import { log, logging } from './lib/logging';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
-import { tasksApiV1 } from './Api';
+import { tasksApiV1, tasksApiV2 } from './Api';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { QueryFileDefaults } from './Query/QueryFileDefaults';
 import { LinkResolver } from './Task/LinkResolver';
@@ -30,6 +30,10 @@ export default class TasksPlugin extends Plugin {
 
     get apiV1() {
         return tasksApiV1(this);
+    }
+
+    get apiV2() {
+        return tasksApiV2(this);
     }
 
     async onload() {
