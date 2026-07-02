@@ -92,7 +92,7 @@ export class PresetsSettingsUI {
             });
 
             // Handle renaming a preset
-            const commitRename = async () => {
+            const commitRename = () => {
                 if (newKey && newKey !== key) {
                     const updatedPresets = this.presetsSettingsService.renamePreset(settings.presets, key, newKey);
                     if (updatedPresets) {
@@ -102,7 +102,7 @@ export class PresetsSettingsUI {
             };
 
             text.inputEl.addEventListener('blur', commitRename);
-            text.inputEl.addEventListener('keydown', async (e) => {
+            text.inputEl.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     text.inputEl.blur(); // trigger blur handler
@@ -209,7 +209,7 @@ export class PresetsSettingsUI {
         });
 
         // Drop
-        wrapper.addEventListener('drop', async (e) => {
+        wrapper.addEventListener('drop', (e) => {
             e.preventDefault();
 
             const draggedKey = e.dataTransfer?.getData('text/plain');
