@@ -825,7 +825,7 @@ export class SettingsTab extends PluginSettingTab {
             button
                 .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addNewStatus.name'))
                 .setCta()
-                .onClick(async () => {
+                .onClick(() => {
                     StatusSettings.addStatus(
                         statusSettings.customStatuses,
                         new StatusConfiguration('', '', '', false, StatusType.TODO),
@@ -855,8 +855,8 @@ export class SettingsTab extends PluginSettingTab {
                     themeName: name,
                     numberOfStatuses: collection.length,
                 });
-                button.setButtonText(label).onClick(async () => {
-                    await addCustomStatesToSettings(collection, statusSettings, settings);
+                button.setButtonText(label).onClick(() => {
+                    addCustomStatesToSettings(collection, statusSettings, settings);
                 });
             });
             addStatusesSupportedByThisTheme.infoEl.remove();
@@ -867,7 +867,7 @@ export class SettingsTab extends PluginSettingTab {
             button
                 .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.name'))
                 .setCta()
-                .onClick(async () => {
+                .onClick(() => {
                     const tasks = this.plugin.getTasks();
                     const allStatuses = tasks.map((task) => {
                         return task.status;
@@ -932,7 +932,7 @@ function createRowForTaskStatus(
             extra
                 .setIcon('cross')
                 .setTooltip('Delete')
-                .onClick(async () => {
+                .onClick(() => {
                     if (StatusSettings.deleteStatus(statuses, statusType)) {
                         updateAndSaveStatusSettings(statusSettings, settings);
                     }
@@ -944,10 +944,10 @@ function createRowForTaskStatus(
         extra
             .setIcon('pencil')
             .setTooltip('Edit')
-            .onClick(async () => {
+            .onClick(() => {
                 const modal = new CustomStatusModal(plugin, statusType, isCoreStatus);
 
-                modal.onClose = async () => {
+                modal.onClose = () => {
                     if (modal.saved) {
                         if (StatusSettings.replaceStatus(statuses, statusType, modal.statusConfiguration())) {
                             updateAndSaveStatusSettings(statusSettings, settings);
@@ -962,7 +962,7 @@ function createRowForTaskStatus(
     setting.infoEl.remove();
 }
 
-async function addCustomStatesToSettings(
+function addCustomStatesToSettings(
     supportedStatuses: StatusCollection,
     statusSettings: StatusSettings,
     settings: SettingsTab,
