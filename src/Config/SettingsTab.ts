@@ -830,7 +830,7 @@ export class SettingsTab extends PluginSettingTab {
                         statusSettings.customStatuses,
                         new StatusConfiguration('', '', '', false, StatusType.TODO),
                     );
-                    await updateAndSaveStatusSettings(statusSettings, settings);
+                    updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         setting.infoEl.remove();
@@ -879,7 +879,7 @@ export class SettingsTab extends PluginSettingTab {
                     unknownStatuses.forEach((s) => {
                         StatusSettings.addStatus(statusSettings.customStatuses, s);
                     });
-                    await updateAndSaveStatusSettings(statusSettings, settings);
+                    updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         addAllUnknownStatuses.infoEl.remove();
@@ -891,7 +891,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setWarning()
                 .onClick(async () => {
                     StatusSettings.resetAllCustomStatuses(statusSettings);
-                    await updateAndSaveStatusSettings(statusSettings, settings);
+                    updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         clearCustomStatuses.infoEl.remove();
@@ -934,7 +934,7 @@ function createRowForTaskStatus(
                 .setTooltip('Delete')
                 .onClick(async () => {
                     if (StatusSettings.deleteStatus(statuses, statusType)) {
-                        await updateAndSaveStatusSettings(statusSettings, settings);
+                        updateAndSaveStatusSettings(statusSettings, settings);
                     }
                 });
         });
@@ -950,7 +950,7 @@ function createRowForTaskStatus(
                 modal.onClose = async () => {
                     if (modal.saved) {
                         if (StatusSettings.replaceStatus(statuses, statusType, modal.statusConfiguration())) {
-                            await updateAndSaveStatusSettings(statusSettings, settings);
+                            updateAndSaveStatusSettings(statusSettings, settings);
                         }
                     }
                 };
@@ -973,10 +973,10 @@ async function addCustomStatesToSettings(
         new Notice(notice);
     });
 
-    await updateAndSaveStatusSettings(statusSettings, settings);
+    updateAndSaveStatusSettings(statusSettings, settings);
 }
 
-async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: SettingsTab) {
+function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: SettingsTab) {
     updateSettings({
         statusSettings: statusTypes,
     });
