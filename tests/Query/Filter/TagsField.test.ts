@@ -349,15 +349,16 @@ describe('tag/tags', () => {
         );
 
         test.each<[string, FilteringCase]>(TagFilteringCases)(
-            'should filter tags without globalFilter %s',
+            'should filter tags without globalFilter - plural instructions - %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
-                // Arrange
-
-                // Run on the plural version of the filter first.
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            },
+        );
 
+        test.each<[string, FilteringCase]>(TagFilteringCases)(
+            'should filter tags without globalFilter - singular instructions - %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
                 const singular = filters.map((filter) => singulariseInstruction(filter));
-
                 shouldSupportFiltering(singular, allTaskLines, expectedResult);
             },
         );
