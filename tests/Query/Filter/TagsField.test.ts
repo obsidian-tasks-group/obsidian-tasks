@@ -224,6 +224,11 @@ describe('tag/tags', () => {
         ];
 
         function pluraliseTagInstruction(filter: string): string {
+            // Run a remap of filter to use alternative grammar for single and plural tag/tags.
+            // tags include #home vs tag includes #home. The first is preferred as it is a collection.
+            //  tags -> tag
+            //  include -> includes
+            //  does not include -> do not include
             return filter
                 .replace('tags', 'tag')
                 .replace('include', 'includes')
@@ -239,11 +244,6 @@ describe('tag/tags', () => {
                 // Run on the plural version of the filter first.
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
-                // Run a remap of filter to use alternative grammar for single and plural tag/tags.
-                // tags include #home vs tag includes #home. The first is preferred as it is a collection.
-                //  tags -> tag
-                //  include -> includes
-                //  does not include -> do not include
                 filters.map((filter) => pluraliseTagInstruction(filter));
 
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
@@ -261,11 +261,6 @@ describe('tag/tags', () => {
                 // Run on the plural version of the filter first.
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
-                // Run a remap of filter to use alternative grammar for single and plural tag/tags.
-                // tags include #home vs tag includes #home. The first is preferred as it is a collection.
-                //  tags -> tag
-                //  include -> includes
-                //  does not include -> do not include
                 filters.map((filter) => pluraliseTagInstruction(filter));
 
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
