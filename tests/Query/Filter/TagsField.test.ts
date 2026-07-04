@@ -258,9 +258,7 @@ describe('tag/tags', () => {
                     expect(singularisedErrorMessage).toBeUndefined();
                     return {
                         original: filter,
-                        originalErrorMessage: filterErrorMessage,
                         singularised: singularised,
-                        singularisedErrorMessage: singularisedErrorMessage,
                     };
                 }),
             );
@@ -269,63 +267,43 @@ describe('tag/tags', () => {
                 [
                   {
                     "original": "tags include #home",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag includes #home",
-                    "singularisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags do not include #home",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag does not include #home",
-                    "singularisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags include home",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag includes home",
-                    "singularisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags do not include home",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag does not include home",
-                    "singularisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags include #HoMe",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag includes #HoMe",
-                    "singularisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags do not include #HoMe",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag does not include #HoMe",
-                    "singularisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags include HoMe",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag includes HoMe",
-                    "singularisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags do not include HoMe",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag does not include HoMe",
-                    "singularisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags include TopLevelItem",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag includes TopLevelItem",
-                    "singularisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags do not include TopLevelItem",
-                    "originalErrorMessage": undefined,
                     "singularised": "tag does not include TopLevelItem",
-                    "singularisedErrorMessage": undefined,
                   },
                 ]
             `);
