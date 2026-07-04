@@ -235,7 +235,7 @@ describe('tag/tags', () => {
                 .replace('does not include', 'do not include');
         }
 
-        test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
+        test.each<[string, FilteringCase]>(TagFilteringCases)(
             'should filter tag with globalFilter %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
                 // Arrange
@@ -253,7 +253,7 @@ describe('tag/tags', () => {
             },
         );
 
-        test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
+        test.each<[string, FilteringCase]>(TagFilteringCases)(
             'should filter tags without globalFilter %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
                 // Arrange
