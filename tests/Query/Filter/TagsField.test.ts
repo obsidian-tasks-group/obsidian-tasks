@@ -241,7 +241,7 @@ describe('tag/tags', () => {
         }
 
         test.each<[string, FilteringCase]>(TagFilteringCases)(
-            'pluralised instruction should differ from original %s',
+            'singularised instruction should differ from original %s',
             (_, { filters }) => {
                 const singularisedFilters = filters.map((filter) => singulariseInstruction(filter));
                 expect(singularisedFilters).not.toEqual(filters);
