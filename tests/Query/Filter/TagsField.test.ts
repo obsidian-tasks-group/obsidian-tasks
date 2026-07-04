@@ -229,7 +229,7 @@ describe('tag/tags', () => {
         ];
 
         function singulariseInstruction(filter: string): string {
-            // Run a remap of filter to use alternative grammar for single and plural tag/tags.
+            // Remap filter to use alternative grammar for single and plural tag/tags.
             // tags include #home vs tag includes #home. The first is preferred as it is a collection.
 
             // The documented forms are:
