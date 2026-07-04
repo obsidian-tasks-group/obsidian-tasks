@@ -231,13 +231,13 @@ describe('tag/tags', () => {
         function pluraliseTagInstruction(filter: string): string {
             // Run a remap of filter to use alternative grammar for single and plural tag/tags.
             // tags include #home vs tag includes #home. The first is preferred as it is a collection.
-            //  tags -> tag
-            //  include -> includes
-            //  does not include -> do not include
+
+            // The documented forms are:
+            // tags (include|do not include) <tag> or
+            // tag (includes|does not include) <tag>
             return filter
-                .replace('tags', 'tag')
-                .replace('include', 'includes')
-                .replace('does not include', 'do not include');
+                .replace('tags include ', 'tag includes ')
+                .replace('tags do not include ', 'tag does not include ');
         }
 
         test.each<[string, FilteringCase]>(TagFilteringCases)(
@@ -249,8 +249,6 @@ describe('tag/tags', () => {
         );
 
         it('should correctly pluralise instructions', () => {
-            // It looks like pluraliseTagInstruction() is generating invalid instructions,
-            // so first make them visible.
             const pluralisedFilters = TagFilteringCases.flatMap(([, { filters }]) =>
                 filters.map((filter) => {
                     const filterErrorMessage = new Query(filter).error;
@@ -276,9 +274,8 @@ describe('tag/tags', () => {
                   {
                     "original": "tags do not include #home",
                     "originalErrorMessage": undefined,
-                    "pluralised": "tag do not includes #home",
-                    "pluralisedErrorMessage": "do not understand query
-                Problem line: "tag do not includes #home"",
+                    "pluralised": "tag does not include #home",
+                    "pluralisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags include home",
@@ -289,9 +286,8 @@ describe('tag/tags', () => {
                   {
                     "original": "tags do not include home",
                     "originalErrorMessage": undefined,
-                    "pluralised": "tag do not includes home",
-                    "pluralisedErrorMessage": "do not understand query
-                Problem line: "tag do not includes home"",
+                    "pluralised": "tag does not include home",
+                    "pluralisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags include #HoMe",
@@ -302,9 +298,8 @@ describe('tag/tags', () => {
                   {
                     "original": "tags do not include #HoMe",
                     "originalErrorMessage": undefined,
-                    "pluralised": "tag do not includes #HoMe",
-                    "pluralisedErrorMessage": "do not understand query
-                Problem line: "tag do not includes #HoMe"",
+                    "pluralised": "tag does not include #HoMe",
+                    "pluralisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags include HoMe",
@@ -315,9 +310,8 @@ describe('tag/tags', () => {
                   {
                     "original": "tags do not include HoMe",
                     "originalErrorMessage": undefined,
-                    "pluralised": "tag do not includes HoMe",
-                    "pluralisedErrorMessage": "do not understand query
-                Problem line: "tag do not includes HoMe"",
+                    "pluralised": "tag does not include HoMe",
+                    "pluralisedErrorMessage": undefined,
                   },
                   {
                     "original": "tags include TopLevelItem",
@@ -328,9 +322,8 @@ describe('tag/tags', () => {
                   {
                     "original": "tags do not include TopLevelItem",
                     "originalErrorMessage": undefined,
-                    "pluralised": "tag do not includes TopLevelItem",
-                    "pluralisedErrorMessage": "do not understand query
-                Problem line: "tag do not includes TopLevelItem"",
+                    "pluralised": "tag does not include TopLevelItem",
+                    "pluralisedErrorMessage": undefined,
                   },
                 ]
             `);
