@@ -228,7 +228,7 @@ describe('tag/tags', () => {
             ],
         ];
 
-        function pluraliseTagInstruction(filter: string): string {
+        function singulariseInstruction(filter: string): string {
             // Run a remap of filter to use alternative grammar for single and plural tag/tags.
             // tags include #home vs tag includes #home. The first is preferred as it is a collection.
 
@@ -243,7 +243,7 @@ describe('tag/tags', () => {
         test.each<[string, FilteringCase]>(TagFilteringCases)(
             'pluralised instruction should differ from original %s',
             (_, { filters }) => {
-                const pluralisedFilters = filters.map((filter) => pluraliseTagInstruction(filter));
+                const pluralisedFilters = filters.map((filter) => singulariseInstruction(filter));
                 expect(pluralisedFilters).not.toEqual(filters);
             },
         );
@@ -252,7 +252,7 @@ describe('tag/tags', () => {
             const pluralisedFilters = TagFilteringCases.flatMap(([, { filters }]) =>
                 filters.map((filter) => {
                     const filterErrorMessage = new Query(filter).error;
-                    const pluralised = pluraliseTagInstruction(filter);
+                    const pluralised = singulariseInstruction(filter);
                     const pluralisedErrorMessage = new Query(pluralised).error;
                     return {
                         original: filter,
@@ -338,7 +338,7 @@ describe('tag/tags', () => {
                 // Run on the plural version of the filter first.
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
-                filters.map((filter) => pluraliseTagInstruction(filter));
+                filters.map((filter) => singulariseInstruction(filter));
 
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
             },
@@ -352,7 +352,7 @@ describe('tag/tags', () => {
                 // Run on the plural version of the filter first.
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
-                filters.map((filter) => pluraliseTagInstruction(filter));
+                filters.map((filter) => singulariseInstruction(filter));
 
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
             },
