@@ -249,7 +249,7 @@ describe('tag/tags', () => {
         );
 
         it('should correctly pluralise instructions', () => {
-            const ouput = TagFilteringCases.flatMap(([, { filters }]) =>
+            const output = TagFilteringCases.flatMap(([, { filters }]) =>
                 filters.map((filter) => {
                     const singularised = singulariseInstruction(filter);
                     expect(new Query(filter).error).toBeUndefined();
@@ -261,7 +261,7 @@ describe('tag/tags', () => {
                 }),
             );
 
-            expect(ouput).toMatchInlineSnapshot(`
+            expect(output).toMatchInlineSnapshot(`
                 [
                   {
                     "original": "tags include #home",
