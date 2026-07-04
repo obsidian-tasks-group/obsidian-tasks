@@ -243,8 +243,8 @@ describe('tag/tags', () => {
         test.each<[string, FilteringCase]>(TagFilteringCases)(
             'pluralised instruction should differ from original %s',
             (_, { filters }) => {
-                const pluralisedFilters = filters.map((filter) => singulariseInstruction(filter));
-                expect(pluralisedFilters).not.toEqual(filters);
+                const singularisedFilters = filters.map((filter) => singulariseInstruction(filter));
+                expect(singularisedFilters).not.toEqual(filters);
             },
         );
 
@@ -252,13 +252,13 @@ describe('tag/tags', () => {
             const pluralisedFilters = TagFilteringCases.flatMap(([, { filters }]) =>
                 filters.map((filter) => {
                     const filterErrorMessage = new Query(filter).error;
-                    const pluralised = singulariseInstruction(filter);
-                    const pluralisedErrorMessage = new Query(pluralised).error;
+                    const singularised = singulariseInstruction(filter);
+                    const singularisedErrorMessage = new Query(singularised).error;
                     return {
                         original: filter,
                         originalErrorMessage: filterErrorMessage,
-                        pluralised: pluralised,
-                        pluralisedErrorMessage: pluralisedErrorMessage,
+                        pluralised: singularised,
+                        pluralisedErrorMessage: singularisedErrorMessage,
                     };
                 }),
             );
