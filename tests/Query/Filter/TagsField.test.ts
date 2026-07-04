@@ -354,6 +354,18 @@ describe('tag/tags', () => {
             // Act, Assert
             shouldSupportFiltering(filters, defaultTasksWithTags, []);
         });
+
+        it('should find tasks with sub-tags of global filter', () => {
+            GlobalFilter.getInstance().set('#task');
+            const filters: Array<string> = ['tags include #task'];
+            const taskLines = [
+                // force line break
+                '- [ ] #task Task 1',
+                '- [ ] #task Task 2 - with sub-task #task/sub',
+            ];
+
+            shouldSupportFiltering(filters, taskLines, ['- [ ] #task Task 2 - with sub-task #task/sub']);
+        });
     });
 
     it('tag/tags - regex matches short tag', () => {
