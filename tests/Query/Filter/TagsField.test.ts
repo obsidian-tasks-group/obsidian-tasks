@@ -251,11 +251,9 @@ describe('tag/tags', () => {
         it('should correctly pluralise instructions', () => {
             const ouput = TagFilteringCases.flatMap(([, { filters }]) =>
                 filters.map((filter) => {
-                    const filterErrorMessage = new Query(filter).error;
-                    expect(filterErrorMessage).toBeUndefined();
+                    expect(new Query(filter).error).toBeUndefined();
                     const singularised = singulariseInstruction(filter);
-                    const singularisedErrorMessage = new Query(singularised).error;
-                    expect(singularisedErrorMessage).toBeUndefined();
+                    expect(new Query(singularised).error).toBeUndefined();
                     return {
                         original: filter,
                         singular: singularised,
