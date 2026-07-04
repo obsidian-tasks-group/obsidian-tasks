@@ -10,6 +10,15 @@ import type { Grouper } from '../../../src/Query/Group/Grouper';
 import { TaskGroups } from '../../../src/Query/Group/TaskGroups';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { sortBy } from '../../TestingTools/SortingTestHelpers';
+import { Query } from '../../../src/Query/Query';
+
+beforeEach(() => {
+    GlobalFilter.getInstance().reset();
+});
+
+afterEach(() => {
+    GlobalFilter.getInstance().reset();
+});
 
 describe('tag presence & absence', () => {
     it.each(['has tag', 'has tags'])('should have "%s" filtering', (filterLine: string) => {
@@ -51,8 +60,6 @@ describe('tag presence & absence', () => {
         expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one ');
         expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one #two ');
         expect(filter).not.toMatchTaskFromLine('- [ ] #task global filter is not a tag');
-
-        GlobalFilter.getInstance().reset();
     });
 
     it('should filter together with the global filter ("no tags")', () => {
@@ -68,8 +75,6 @@ describe('tag presence & absence', () => {
         expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one ');
         expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one #two ');
         expect(filter).toMatchTaskFromLine('- [ ] #task global filter is not a tag');
-
-        GlobalFilter.getInstance().reset();
     });
 
     it('should honour original case, when explaining simple filters', () => {
@@ -223,55 +228,116 @@ describe('tag/tags', () => {
             ],
         ];
 
-        test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
-            'should filter tag with globalFilter %s',
-            (_, { tasks: allTaskLines, filters, expectedResult }) => {
-                // Arrange
-                GlobalFilter.getInstance().set('#task');
+        function singulariseInstruction(filter: string): string {
+            // Remap filter to use alternative grammar for single and plural tag/tags.
+            // tags include #home vs tag includes #home. The first is preferred as it is a collection.
 
-                // Run on the plural version of the filter first.
-                shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            // The documented forms are:
+            // tags (include|do not include) <tag> or
+            // tag (includes|does not include) <tag>
+            return filter
+                .replace('tags include ', 'tag includes ')
+                .replace('tags do not include ', 'tag does not include ');
+        }
 
-                // Run a remap of filter to use alternative grammar for single and plural tag/tags.
-                // tags include #home vs tag includes #home. The first is preferred as it is a collection.
-                //  tags -> tag
-                //  include -> includes
-                //  does not include -> do not include
-                filters.map((filter) => {
-                    return filter
-                        .replace('tags', 'tag')
-                        .replace('include', 'includes')
-                        .replace('does not include', 'do not include');
-                });
-
-                shouldSupportFiltering(filters, allTaskLines, expectedResult);
-
-                // Cleanup
-                GlobalFilter.getInstance().reset();
+        test.each<[string, FilteringCase]>(TagFilteringCases)(
+            'singularised instruction should differ from original %s',
+            (_, { filters }) => {
+                const singularisedFilters = filters.map((filter) => singulariseInstruction(filter));
+                expect(singularisedFilters).not.toEqual(filters);
             },
         );
 
-        test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
-            'should filter tags without globalFilter %s',
-            (_, { tasks: allTaskLines, filters, expectedResult }) => {
-                // Arrange
-
-                // Run on the plural version of the filter first.
-                shouldSupportFiltering(filters, allTaskLines, expectedResult);
-
-                // Run a remap of filter to use alternative grammar for single and plural tag/tags.
-                // tags include #home vs tag includes #home. The first is preferred as it is a collection.
-                //  tags -> tag
-                //  include -> includes
-                //  does not include -> do not include
+        it('should correctly pluralise instructions', () => {
+            const output = TagFilteringCases.flatMap(([, { filters }]) =>
                 filters.map((filter) => {
-                    return filter
-                        .replace('tags', 'tag')
-                        .replace('include', 'includes')
-                        .replace('does not include', 'do not include');
-                });
+                    const singularised = singulariseInstruction(filter);
+                    expect(new Query(filter).error).toBeUndefined();
+                    expect(new Query(singularised).error).toBeUndefined();
+                    return {
+                        original: filter,
+                        singular: singularised,
+                    };
+                }),
+            );
+
+            expect(output).toMatchInlineSnapshot(`
+                [
+                  {
+                    "original": "tags include #home",
+                    "singular": "tag includes #home",
+                  },
+                  {
+                    "original": "tags do not include #home",
+                    "singular": "tag does not include #home",
+                  },
+                  {
+                    "original": "tags include home",
+                    "singular": "tag includes home",
+                  },
+                  {
+                    "original": "tags do not include home",
+                    "singular": "tag does not include home",
+                  },
+                  {
+                    "original": "tags include #HoMe",
+                    "singular": "tag includes #HoMe",
+                  },
+                  {
+                    "original": "tags do not include #HoMe",
+                    "singular": "tag does not include #HoMe",
+                  },
+                  {
+                    "original": "tags include HoMe",
+                    "singular": "tag includes HoMe",
+                  },
+                  {
+                    "original": "tags do not include HoMe",
+                    "singular": "tag does not include HoMe",
+                  },
+                  {
+                    "original": "tags include TopLevelItem",
+                    "singular": "tag includes TopLevelItem",
+                  },
+                  {
+                    "original": "tags do not include TopLevelItem",
+                    "singular": "tag does not include TopLevelItem",
+                  },
+                ]
+            `);
+        });
+
+        test.each<[string, FilteringCase]>(TagFilteringCases)(
+            'should filter tag with globalFilter - plural instructions - %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                GlobalFilter.getInstance().set('#task');
 
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            },
+        );
+
+        test.each<[string, FilteringCase]>(TagFilteringCases)(
+            'should filter tag with globalFilter - singular instructions - %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                GlobalFilter.getInstance().set('#task');
+
+                const singular = filters.map((filter) => singulariseInstruction(filter));
+                shouldSupportFiltering(singular, allTaskLines, expectedResult);
+            },
+        );
+
+        test.each<[string, FilteringCase]>(TagFilteringCases)(
+            'should filter tags without globalFilter - plural instructions - %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            },
+        );
+
+        test.each<[string, FilteringCase]>(TagFilteringCases)(
+            'should filter tags without globalFilter - singular instructions - %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                const singular = filters.map((filter) => singulariseInstruction(filter));
+                shouldSupportFiltering(singular, allTaskLines, expectedResult);
             },
         );
 
@@ -287,9 +353,6 @@ describe('tag/tags', () => {
 
             // Act, Assert
             shouldSupportFiltering(filters, defaultTasksWithTags, []);
-
-            // Cleanup
-            GlobalFilter.getInstance().reset();
         });
     });
 
@@ -500,9 +563,6 @@ describe('Sort by tags', () => {
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
         ).toEqual(expectedOrder);
-
-        // Cleanup
-        GlobalFilter.getInstance().reset();
     });
 
     it('should sort correctly reversed by tag defaulting to first with global filter', () => {
@@ -532,9 +592,6 @@ describe('Sort by tags', () => {
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
         ).toEqual(expectedOrder);
-
-        // Cleanup
-        GlobalFilter.getInstance().reset();
     });
 
     it('should sort correctly by second tag with global filter', () => {
@@ -559,9 +616,6 @@ describe('Sort by tags', () => {
 
         // Assert
         expect(result).toEqual(expectedOrder);
-
-        // Cleanup
-        GlobalFilter.getInstance().reset();
     });
 
     it('should sort correctly reversed by second tag with global filter', () => {
@@ -586,9 +640,6 @@ describe('Sort by tags', () => {
 
         // Assert
         expect(result).toEqual(expectedOrder);
-
-        // Cleanup
-        GlobalFilter.getInstance().reset();
     });
 
     // Issue #1407 - Multiple 'sort by tag' lines ignored all but last one

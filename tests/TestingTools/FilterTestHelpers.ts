@@ -75,6 +75,9 @@ export function shouldSupportFiltering(
     // Arrange
     const query = new Query(filters.join('\n'));
 
+    // Ensure that the query is valid to guard against tests looking like they are passing when they gave invalid inputs.
+    expect(query.error).toBeUndefined();
+
     const tasks = allTaskLines.map(
         (taskLine) =>
             Task.fromLine({
