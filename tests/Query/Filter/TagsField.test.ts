@@ -258,7 +258,7 @@ describe('tag/tags', () => {
                     expect(singularisedErrorMessage).toBeUndefined();
                     return {
                         original: filter,
-                        singularised: singularised,
+                        singular: singularised,
                     };
                 }),
             );
@@ -267,43 +267,43 @@ describe('tag/tags', () => {
                 [
                   {
                     "original": "tags include #home",
-                    "singularised": "tag includes #home",
+                    "singular": "tag includes #home",
                   },
                   {
                     "original": "tags do not include #home",
-                    "singularised": "tag does not include #home",
+                    "singular": "tag does not include #home",
                   },
                   {
                     "original": "tags include home",
-                    "singularised": "tag includes home",
+                    "singular": "tag includes home",
                   },
                   {
                     "original": "tags do not include home",
-                    "singularised": "tag does not include home",
+                    "singular": "tag does not include home",
                   },
                   {
                     "original": "tags include #HoMe",
-                    "singularised": "tag includes #HoMe",
+                    "singular": "tag includes #HoMe",
                   },
                   {
                     "original": "tags do not include #HoMe",
-                    "singularised": "tag does not include #HoMe",
+                    "singular": "tag does not include #HoMe",
                   },
                   {
                     "original": "tags include HoMe",
-                    "singularised": "tag includes HoMe",
+                    "singular": "tag includes HoMe",
                   },
                   {
                     "original": "tags do not include HoMe",
-                    "singularised": "tag does not include HoMe",
+                    "singular": "tag does not include HoMe",
                   },
                   {
                     "original": "tags include TopLevelItem",
-                    "singularised": "tag includes TopLevelItem",
+                    "singular": "tag includes TopLevelItem",
                   },
                   {
                     "original": "tags do not include TopLevelItem",
-                    "singularised": "tag does not include TopLevelItem",
+                    "singular": "tag does not include TopLevelItem",
                   },
                 ]
             `);
