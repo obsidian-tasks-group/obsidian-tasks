@@ -223,6 +223,13 @@ describe('tag/tags', () => {
             ],
         ];
 
+        function pluraliseTagInstruction(filter: string): string {
+            return filter
+                .replace('tags', 'tag')
+                .replace('include', 'includes')
+                .replace('does not include', 'do not include');
+        }
+
         test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
             'should filter tag with globalFilter %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
@@ -265,10 +272,7 @@ describe('tag/tags', () => {
                 //  include -> includes
                 //  does not include -> do not include
                 filters.map((filter) => {
-                    return filter
-                        .replace('tags', 'tag')
-                        .replace('include', 'includes')
-                        .replace('does not include', 'do not include');
+                    return pluraliseTagInstruction(filter);
                 });
 
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
