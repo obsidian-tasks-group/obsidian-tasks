@@ -338,9 +338,9 @@ describe('tag/tags', () => {
                 // Run on the plural version of the filter first.
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
-                filters.map((filter) => singulariseInstruction(filter));
+                const singular = filters.map((filter) => singulariseInstruction(filter));
 
-                shouldSupportFiltering(filters, allTaskLines, expectedResult);
+                shouldSupportFiltering(singular, allTaskLines, expectedResult);
             },
         );
 
@@ -352,9 +352,9 @@ describe('tag/tags', () => {
                 // Run on the plural version of the filter first.
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
-                filters.map((filter) => singulariseInstruction(filter));
+                const singular = filters.map((filter) => singulariseInstruction(filter));
 
-                shouldSupportFiltering(filters, allTaskLines, expectedResult);
+                shouldSupportFiltering(singular, allTaskLines, expectedResult);
             },
         );
 
