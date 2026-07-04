@@ -271,9 +271,7 @@ describe('tag/tags', () => {
                 //  tags -> tag
                 //  include -> includes
                 //  does not include -> do not include
-                filters.map((filter) => {
-                    return pluraliseTagInstruction(filter);
-                });
+                filters.map((filter) => pluraliseTagInstruction(filter));
 
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
             },
