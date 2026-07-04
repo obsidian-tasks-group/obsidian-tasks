@@ -252,8 +252,10 @@ describe('tag/tags', () => {
             const ouput = TagFilteringCases.flatMap(([, { filters }]) =>
                 filters.map((filter) => {
                     const filterErrorMessage = new Query(filter).error;
+                    expect(filterErrorMessage).toBeUndefined();
                     const singularised = singulariseInstruction(filter);
                     const singularisedErrorMessage = new Query(singularised).error;
+                    expect(singularisedErrorMessage).toBeUndefined();
                     return {
                         original: filter,
                         originalErrorMessage: filterErrorMessage,
