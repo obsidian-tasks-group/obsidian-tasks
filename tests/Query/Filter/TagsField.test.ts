@@ -11,6 +11,14 @@ import { TaskGroups } from '../../../src/Query/Group/TaskGroups';
 import { SearchInfo } from '../../../src/Query/SearchInfo';
 import { sortBy } from '../../TestingTools/SortingTestHelpers';
 
+beforeEach(() => {
+    GlobalFilter.getInstance().reset();
+});
+
+afterEach(() => {
+    GlobalFilter.getInstance().reset();
+});
+
 describe('tag presence & absence', () => {
     it.each(['has tag', 'has tags'])('should have "%s" filtering', (filterLine: string) => {
         // Arrange
@@ -51,8 +59,6 @@ describe('tag presence & absence', () => {
         expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one ');
         expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one #two ');
         expect(filter).not.toMatchTaskFromLine('- [ ] #task global filter is not a tag');
-
-        GlobalFilter.getInstance().reset();
     });
 
     it('should filter together with the global filter ("no tags")', () => {
@@ -68,8 +74,6 @@ describe('tag presence & absence', () => {
         expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one ');
         expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one #two ');
         expect(filter).toMatchTaskFromLine('- [ ] #task global filter is not a tag');
-
-        GlobalFilter.getInstance().reset();
     });
 
     it('should honour original case, when explaining simple filters', () => {
@@ -247,9 +251,6 @@ describe('tag/tags', () => {
                 filters.map((filter) => pluraliseTagInstruction(filter));
 
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
-
-                // Cleanup
-                GlobalFilter.getInstance().reset();
             },
         );
 
@@ -279,9 +280,6 @@ describe('tag/tags', () => {
 
             // Act, Assert
             shouldSupportFiltering(filters, defaultTasksWithTags, []);
-
-            // Cleanup
-            GlobalFilter.getInstance().reset();
         });
     });
 
@@ -492,9 +490,6 @@ describe('Sort by tags', () => {
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
         ).toEqual(expectedOrder);
-
-        // Cleanup
-        GlobalFilter.getInstance().reset();
     });
 
     it('should sort correctly reversed by tag defaulting to first with global filter', () => {
@@ -524,9 +519,6 @@ describe('Sort by tags', () => {
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
         ).toEqual(expectedOrder);
-
-        // Cleanup
-        GlobalFilter.getInstance().reset();
     });
 
     it('should sort correctly by second tag with global filter', () => {
@@ -551,9 +543,6 @@ describe('Sort by tags', () => {
 
         // Assert
         expect(result).toEqual(expectedOrder);
-
-        // Cleanup
-        GlobalFilter.getInstance().reset();
     });
 
     it('should sort correctly reversed by second tag with global filter', () => {
@@ -578,9 +567,6 @@ describe('Sort by tags', () => {
 
         // Assert
         expect(result).toEqual(expectedOrder);
-
-        // Cleanup
-        GlobalFilter.getInstance().reset();
     });
 
     // Issue #1407 - Multiple 'sort by tag' lines ignored all but last one
