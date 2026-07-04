@@ -240,6 +240,70 @@ describe('tag/tags', () => {
         }
 
         test.each<[string, FilteringCase]>(TagFilteringCases)(
+            'pluralised instruction should differ from original %s',
+            (_, { filters }) => {
+                const pluralisedFilters = filters.map((filter) => pluraliseTagInstruction(filter));
+                expect(pluralisedFilters).not.toEqual(filters);
+            },
+        );
+
+        it('should correctly pluralise instructions', () => {
+            // It looks like pluraliseTagInstruction() is generating invalid instructions,
+            // so first make them visible.
+            const pluralisedFilters = TagFilteringCases.flatMap(([, { filters }]) =>
+                filters.map((filter) => ({
+                    original: filter,
+                    pluralised: pluraliseTagInstruction(filter),
+                })),
+            );
+
+            expect(pluralisedFilters).toMatchInlineSnapshot(`
+                [
+                  {
+                    "original": "tags include #home",
+                    "pluralised": "tag includes #home",
+                  },
+                  {
+                    "original": "tags do not include #home",
+                    "pluralised": "tag do not includes #home",
+                  },
+                  {
+                    "original": "tags include home",
+                    "pluralised": "tag includes home",
+                  },
+                  {
+                    "original": "tags do not include home",
+                    "pluralised": "tag do not includes home",
+                  },
+                  {
+                    "original": "tags include #HoMe",
+                    "pluralised": "tag includes #HoMe",
+                  },
+                  {
+                    "original": "tags do not include #HoMe",
+                    "pluralised": "tag do not includes #HoMe",
+                  },
+                  {
+                    "original": "tags include HoMe",
+                    "pluralised": "tag includes HoMe",
+                  },
+                  {
+                    "original": "tags do not include HoMe",
+                    "pluralised": "tag do not includes HoMe",
+                  },
+                  {
+                    "original": "tags include TopLevelItem",
+                    "pluralised": "tag includes TopLevelItem",
+                  },
+                  {
+                    "original": "tags do not include TopLevelItem",
+                    "pluralised": "tag do not includes TopLevelItem",
+                  },
+                ]
+            `);
+        });
+
+        test.each<[string, FilteringCase]>(TagFilteringCases)(
             'should filter tag with globalFilter %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
                 // Arrange
