@@ -65,6 +65,28 @@ describe('parsing view mode', () => {
         },
     );
 
+    it('should report invalid columns grouping', () => {
+        const options = new ViewLayoutOptions();
+        const result = parseQueryViewMode(options, 'columns by nonsense');
+
+        expect(result.success).toEqual(false);
+        expect(options.viewMode).toEqual('list');
+        expect(options.grouper).toBeNull();
+
+        if (!result.success) {
+            expect(result.error).toMatchInlineSnapshot(`
+                "do not understand columns grouping "by nonsense"
+
+                Columns view grouping uses the same fields as "group by".
+
+                For example:
+                    view columns by priority
+                    view columns by root
+                    view columns by status.type reverse"
+            `);
+        }
+    });
+
     it('should report available options for unknown mode', () => {
         const options = new ViewLayoutOptions();
         const initialMode = 'columns';

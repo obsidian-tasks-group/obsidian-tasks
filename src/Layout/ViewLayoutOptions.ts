@@ -51,10 +51,23 @@ function parseColumnsViewMode(viewLayoutOptions: ViewLayoutOptions, remainder: s
         return missingColumnsGroupingError();
     }
 
-    viewLayoutOptions.viewMode = 'columns';
     // Make a copy of the viewMode string, with initial columns word replaced by 'group'
     const groupInstruction = 'group ' + remainder;
-    viewLayoutOptions.grouper = parseGrouper(groupInstruction);
+    const grouper = parseGrouper(groupInstruction);
+
+    if (grouper === null) {
+        return {
+            success: false,
+            error: `do not understand columns grouping "${remainder}"
+
+Columns view grouping uses the same fields as "group by".
+
+${columnsViewExamples()}`,
+        };
+    }
+
+    viewLayoutOptions.viewMode = 'columns';
+    viewLayoutOptions.grouper = grouper;
     return { success: true };
 }
 
