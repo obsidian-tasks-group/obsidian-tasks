@@ -1,19 +1,37 @@
 export const queryViewModes = ['list', 'columns'] as const;
 export type QueryViewMode = (typeof queryViewModes)[number];
 
+export type ParseViewLayoutOptionResult = { success: true } | { success: false; error: string };
+
 export class ViewLayoutOptions {
     viewMode: QueryViewMode = 'list';
 }
-export function parseQueryViewMode(viewLayoutOptions: ViewLayoutOptions, viewMode: string): boolean {
+export function parseQueryViewMode(
+    viewLayoutOptions: ViewLayoutOptions,
+    viewMode: string,
+): ParseViewLayoutOptionResult {
     if (viewMode === 'list') {
         viewLayoutOptions.viewMode = 'list';
-        return true;
+        return { success: true };
     }
 
     if (viewMode === 'columns') {
         viewLayoutOptions.viewMode = 'columns';
-        return true;
+        return { success: true };
     }
 
-    return false;
+    return unknownViewModeError(viewMode);
+}
+
+function unknownViewModeError(viewMode: string): ParseViewLayoutOptionResult {
+    return {
+        success: false,
+        error: `do not understand view mode "${viewMode}"
+
+The available view modes are:
+${queryViewModes.map((mode) => `    ${mode}`).join('\n')}
+
+For example:
+    view ${queryViewModes[0]}`,
+    };
 }
