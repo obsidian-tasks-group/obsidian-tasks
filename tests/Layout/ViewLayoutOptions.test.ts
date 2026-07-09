@@ -67,6 +67,17 @@ describe('parsing view mode', () => {
         },
     );
 
+    it('should parse columns mode grouped by function', () => {
+        const options = new ViewLayoutOptions();
+
+        const result = parseQueryViewMode(options, 'columns by function task.status.symbol');
+
+        expect(result).toEqual({ success: true });
+        expect(options.viewMode).toEqual('columns');
+        expect(options.grouper).not.toBeNull();
+        expect(options.grouper?.property).toEqual('function');
+    });
+
     it('should not allow extra instructions for list mode', () => {
         const options = new ViewLayoutOptions();
         options.viewMode = 'columns';
