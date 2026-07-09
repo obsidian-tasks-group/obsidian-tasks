@@ -10,12 +10,12 @@ export function parseQueryViewMode(
     viewLayoutOptions: ViewLayoutOptions,
     viewMode: string,
 ): ParseViewLayoutOptionResult {
-    if (viewMode === 'list') {
+    if (viewMode.toLowerCase() === 'list') {
         viewLayoutOptions.viewMode = 'list';
         return { success: true };
     }
 
-    if (viewMode === 'columns') {
+    if (viewMode.toLowerCase() === 'columns') {
         viewLayoutOptions.viewMode = 'columns';
         return { success: true };
     }

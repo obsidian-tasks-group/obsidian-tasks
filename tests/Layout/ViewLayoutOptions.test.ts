@@ -18,19 +18,19 @@ describe('storing view mode', () => {
 });
 
 describe('parsing view mode', () => {
-    it('should parse list mode', () => {
+    it.each(['list', 'LIST'])('should parse "%s" mode', (mode) => {
         const options = new ViewLayoutOptions();
         options.viewMode = 'columns';
 
-        const result = parseQueryViewMode(options, 'list');
+        const result = parseQueryViewMode(options, mode);
         expect(result.success).toEqual(true);
         expect(options.viewMode).toEqual('list');
     });
 
-    it('should parse columns mode', () => {
+    it.each(['columns', 'COLUMNS'])('should parse "%s" mode', (mode) => {
         const options = new ViewLayoutOptions();
 
-        const result = parseQueryViewMode(options, 'columns');
+        const result = parseQueryViewMode(options, mode);
 
         expect(result.success).toEqual(true);
         expect(options.viewMode).toEqual('columns');
