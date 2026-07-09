@@ -15,20 +15,39 @@ export function parseQueryViewMode(
     viewLayoutOptions: ViewLayoutOptions,
     viewMode: string,
 ): ParseViewLayoutOptionResult {
-    if (viewMode.toLowerCase() === 'list') {
+    const { mode, remainder } = splitViewInstruction(viewMode);
+
+    if (mode.toLowerCase() === 'list') {
         viewLayoutOptions.viewMode = 'list';
         return { success: true };
     }
 
-    if (viewMode.toLowerCase().startsWith('columns')) {
+    if (mode.toLowerCase() === 'columns') {
         viewLayoutOptions.viewMode = 'columns';
         // Make a copy of the viewMode string, with initial columns word replaced by 'group'
-        const groupInstruction = viewMode.replace(/^columns/, 'group');
+        const groupInstruction = 'group ' + remainder;
         viewLayoutOptions.grouper = parseGrouper(groupInstruction);
         return { success: true };
     }
 
     return unknownViewModeError(viewMode);
+}
+
+function splitViewInstruction(viewMode: string): { mode: string; remainder: string } {
+    const trimmedViewMode = viewMode.trim();
+    const firstSpace = trimmedViewMode.indexOf(' ');
+
+    if (firstSpace === -1) {
+        return {
+            mode: trimmedViewMode,
+            remainder: '',
+        };
+    }
+
+    return {
+        mode: trimmedViewMode.slice(0, firstSpace),
+        remainder: trimmedViewMode.slice(firstSpace + 1).trim(),
+    };
 }
 
 function unknownViewModeError(viewMode: string): ParseViewLayoutOptionResult {
