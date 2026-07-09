@@ -1902,6 +1902,31 @@ Problem line: "view nonsense"`);
 `;
             searchTasksAndTestResultsAsMarkdown(tasksAsMarkdown, source, expectedResultsAsMarkdown);
         });
+
+        it('should prepend the "view columns" grouper to any user-supplied groups', () => {
+            // Arrange
+            const source = `
+                view columns by status.name
+                group by priority
+                `;
+
+            // In column view, the view's grouper ('by priority', here) is injected before
+            // all the user-supplied groups.
+            const expectedResultsAsMarkdown = `
+#### Done
+
+##### %%4%%Low priority
+
+- [x] Task 2 - Done   priority 🔽
+
+#### Todo
+
+##### %%1%%High priority
+
+- [ ] Task 1 - Todo - high priority ⏫
+`;
+            searchTasksAndTestResultsAsMarkdown(tasksAsMarkdown, source, expectedResultsAsMarkdown);
+        });
     });
 
     describe('error handling', () => {

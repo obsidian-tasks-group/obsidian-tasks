@@ -380,7 +380,7 @@ ${statement.explainStatement('    ')}
             // grouper, so that rendering can later display each top-level group in its own column.
             const useColumnsGrouper =
                 this.viewLayoutOptions.viewMode === 'columns' && this.viewLayoutOptions.grouper !== null;
-            const groupers = useColumnsGrouper ? [this.viewLayoutOptions.grouper!] : this.grouping;
+            const groupers = useColumnsGrouper ? [this.viewLayoutOptions.grouper!, ...this.grouping] : this.grouping;
             const taskGroups = new TaskGroups(groupers, tasksSortedLimited, searchInfo);
 
             if (this._taskGroupLimit !== undefined) {
