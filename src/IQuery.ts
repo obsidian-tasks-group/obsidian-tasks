@@ -3,6 +3,7 @@ import type { QueryLayoutOptions } from './Layout/QueryLayoutOptions';
 import type { Task } from './Task/Task';
 import type { Grouper } from './Query/Group/Grouper';
 import type { QueryResult } from './Query/QueryResult';
+import type { ViewLayoutOptions } from './Layout/ViewLayoutOptions';
 
 /**
  * Standard interface for the query engine used by Tasks, multiple
@@ -51,6 +52,11 @@ export interface IQuery {
      * @type {QueryLayoutOptions}
      */
     queryLayoutOptions: QueryLayoutOptions;
+
+    /**
+     * The view mode for displayed results, such as List or Columns/Kanban.
+     */
+    viewLayoutOptions: ViewLayoutOptions;
 
     /**
      * Main method for executing the query. This will be called by the
