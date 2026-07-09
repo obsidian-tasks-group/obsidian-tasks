@@ -65,6 +65,16 @@ describe('parsing view mode', () => {
         },
     );
 
+    it('should not allow extra instructions for list mode', () => {
+        const options = new ViewLayoutOptions();
+        options.viewMode = 'columns';
+
+        const result = parseQueryViewMode(options, 'list by priority');
+
+        expect(result.success).toEqual(false);
+        expect(options.viewMode).toEqual('columns');
+    });
+
     it('should report invalid columns grouping', () => {
         const options = new ViewLayoutOptions();
         const result = parseQueryViewMode(options, 'columns by nonsense');

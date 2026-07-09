@@ -18,7 +18,7 @@ export function parseQueryViewMode(
     const { mode, remainder } = splitViewInstruction(viewMode);
 
     if (mode === 'list') {
-        return parseListViewMode(viewLayoutOptions);
+        return parseListViewMode(viewLayoutOptions, viewMode, remainder);
     }
 
     if (mode === 'columns') {
@@ -45,7 +45,15 @@ function splitViewInstruction(viewMode: string): { mode: string; remainder: stri
     };
 }
 
-function parseListViewMode(viewLayoutOptions: ViewLayoutOptions): ParseViewLayoutOptionResult {
+function parseListViewMode(
+    viewLayoutOptions: ViewLayoutOptions,
+    viewMode: string,
+    remainder: string,
+): ParseViewLayoutOptionResult {
+    if (remainder !== '') {
+        return unknownViewModeError(viewMode);
+    }
+
     viewLayoutOptions.viewMode = 'list';
     return { success: true };
 }
