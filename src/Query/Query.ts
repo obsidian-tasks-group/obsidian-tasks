@@ -376,7 +376,12 @@ ${statement.explainStatement('    ')}
             const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks, searchInfo);
             const tasksSortedLimited = tasksSorted.slice(0, this.limit);
 
-            const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited, searchInfo);
+            // If we are in the 'columns' view, use its grouper as our first (ond initially, only)
+            // grouper, so that rendering can later display each top-level group in its own column.
+            const useColumnsGrouper =
+                this.viewLayoutOptions.viewMode === 'columns' && this.viewLayoutOptions.grouper !== null;
+            const groupers = useColumnsGrouper ? [this.viewLayoutOptions.grouper!] : this.grouping;
+            const taskGroups = new TaskGroups(groupers, tasksSortedLimited, searchInfo);
 
             if (this._taskGroupLimit !== undefined) {
                 taskGroups.applyTaskLimit(this._taskGroupLimit);

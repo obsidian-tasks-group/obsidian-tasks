@@ -1000,6 +1000,37 @@ filter by function \\
     });
 });
 
+/**
+ * Applies a query to a collection of tasks represented in Markdown format and verifies the results
+ * against a given expected output rendered in Markdown.
+ *
+ * It runs the search a second time, checking the query works when it's in all-capitals.
+ *
+ * @param tasksAsMarkdown - The tasks represented in Markdown format.
+ * @param source - The query string to apply to the tasks.
+ * @param expectedResultsAsMarkdown - The expected results, in Markdown format, to compare against.
+ */
+function searchTasksAndTestResultsAsMarkdown(
+    tasksAsMarkdown: string,
+    source: string,
+    expectedResultsAsMarkdown: string,
+) {
+    // Arrange
+    const sourceUpper = source.toUpperCase();
+    const query = new Query(source);
+    const queryUpper = new Query(sourceUpper);
+
+    const tasks = createTasksFromMarkdown(tasksAsMarkdown, 'some_markdown_file', 'Some Heading');
+
+    // Act
+    const queryResult = query.applyQueryToTasks(tasks);
+    const queryUpperResult = queryUpper.applyQueryToTasks(tasks);
+
+    // Assert
+    expect(queryResult.asMarkdown()).toEqual(expectedResultsAsMarkdown);
+    expect(queryUpperResult.asMarkdown()).toEqual(expectedResultsAsMarkdown);
+}
+
 describe('Query', () => {
     describe('filtering', () => {
         it('filters paths case insensitive', () => {
@@ -1844,6 +1875,32 @@ Problem line: "view nonsense"`);
 
             expect(queryResult.totalTasksCountBeforeLimit).toEqual(6);
             expect(queryUpperResult.totalTasksCountBeforeLimit).toEqual(6);
+        });
+    });
+
+    describe('grouping instructions in conjunction with columns view', () => {
+        const tasksAsMarkdown = `
+- [ ] Task 1 - Todo - high priority ⏫
+- [x] Task 2 - Done   priority 🔽
+            `;
+
+        it('should apply the "view columns" grouper automatically', () => {
+            const source = `
+                view columns by priority
+                `;
+
+            // In column view, the view's grouper ('by priority', here) is injected as
+            // the first (ond only) grouper in the search.
+            const expectedResultsAsMarkdown = `
+#### %%1%%High priority
+
+- [ ] Task 1 - Todo - high priority ⏫
+
+#### %%4%%Low priority
+
+- [x] Task 2 - Done   priority 🔽
+`;
+            searchTasksAndTestResultsAsMarkdown(tasksAsMarkdown, source, expectedResultsAsMarkdown);
         });
     });
 
