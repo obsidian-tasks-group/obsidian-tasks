@@ -4,6 +4,12 @@ import {
     parseQueryViewMode,
 } from '../../src/Layout/ViewLayoutOptions';
 import { PriorityField } from '../../src/Query/Filter/PriorityField';
+import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from '../../src/Scripting/JsInTasksQueriesDisabledError';
+
+afterEach(() => {
+    EnableJsInTasksQueries.getInstance().set(true);
+});
 
 describe('storing view mode', () => {
     it('should default to list view', () => {
@@ -76,6 +82,17 @@ describe('parsing view mode', () => {
         expect(options.viewMode).toEqual('columns');
         expect(options.grouper).not.toBeNull();
         expect(options.grouper?.property).toEqual('function');
+    });
+
+    it('should not support columns grouped by function when JS execution is disabled', () => {
+        EnableJsInTasksQueries.getInstance().set(false);
+
+        const options = new ViewLayoutOptions();
+
+        // Test that the following line throws JsInTasksQueriesDisabledError
+        expect(() => parseQueryViewMode(options, 'columns by function task.status.symbol')).toThrow(
+            JsInTasksQueriesDisabledError,
+        );
     });
 
     it('should not allow extra instructions for list mode', () => {
