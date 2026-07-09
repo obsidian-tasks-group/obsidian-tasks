@@ -8,12 +8,14 @@ describe('storing view mode', () => {
     it('should default to list view', () => {
         const options = new ViewLayoutOptions();
         expect(options.viewMode).toEqual('list');
+        expect(options.grouper).toBeNull();
     });
 
     it('should support columns view', () => {
         const options = new ViewLayoutOptions();
         options.viewMode = 'columns';
         expect(options.viewMode).toEqual('columns');
+        expect(options.grouper).toBeNull();
     });
 });
 
@@ -25,6 +27,7 @@ describe('parsing view mode', () => {
         const result = parseQueryViewMode(options, mode);
         expect(result.success).toEqual(true);
         expect(options.viewMode).toEqual('list');
+        expect(options.grouper).toBeNull();
     });
 
     it.each(['columns', 'COLUMNS'])('should parse "%s" mode', (mode) => {
@@ -34,6 +37,17 @@ describe('parsing view mode', () => {
 
         expect(result.success).toEqual(true);
         expect(options.viewMode).toEqual('columns');
+    });
+
+    it.failing('should parse columns mode grouped by priority', () => {
+        const options = new ViewLayoutOptions();
+
+        const result = parseQueryViewMode(options, 'columns by priority');
+
+        expect(result).toEqual({ success: true });
+        expect(options.viewMode).toEqual('columns');
+        expect(options.grouper).not.toBeNull();
+        expect(options.grouper?.property).toEqual('priority');
     });
 
     it('should report available options for unknown mode', () => {

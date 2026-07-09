@@ -1,3 +1,5 @@
+import type { Grouper } from '../Query/Group/Grouper';
+
 export const queryViewModes = ['list', 'columns'] as const;
 export type QueryViewMode = (typeof queryViewModes)[number];
 
@@ -5,7 +7,9 @@ export type ParseViewLayoutOptionResult = { success: true } | { success: false; 
 
 export class ViewLayoutOptions {
     viewMode: QueryViewMode = 'list';
+    grouper: Grouper | null = null;
 }
+
 export function parseQueryViewMode(
     viewLayoutOptions: ViewLayoutOptions,
     viewMode: string,
