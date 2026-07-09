@@ -543,6 +543,8 @@ description includes \
             'show toolbar',
             'show tree',
             'show urgency',
+            'view columns',
+            'view list',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
@@ -1563,6 +1565,27 @@ describe('Query', () => {
         it('should hide "tree" by default', () => {
             const query = new Query('');
             expect(query.queryLayoutOptions.hideTree).toEqual(true);
+        });
+    });
+
+    describe('view mode', () => {
+        it('should default to "list" view', () => {
+            const query = new Query('');
+            expect(query.viewLayoutOptions.viewMode).toEqual('list');
+        });
+
+        it('should give a meaningful error message for unknown view mode', () => {
+            const query = new Query('view nonsense');
+            expect(query.viewLayoutOptions.viewMode).toEqual('list');
+            expect(query.error).toEqual(`do not understand view mode "nonsense"
+
+The available view modes are:
+    list
+    columns
+
+For example:
+    view list
+Problem line: "view nonsense"`);
         });
     });
 
