@@ -17,12 +17,12 @@ export function parseQueryViewMode(
 ): ParseViewLayoutOptionResult {
     const { mode, remainder } = splitViewInstruction(viewMode);
 
-    if (mode.toLowerCase() === 'list') {
+    if (mode === 'list') {
         viewLayoutOptions.viewMode = 'list';
         return { success: true };
     }
 
-    if (mode.toLowerCase() === 'columns') {
+    if (mode === 'columns') {
         viewLayoutOptions.viewMode = 'columns';
         // Make a copy of the viewMode string, with initial columns word replaced by 'group'
         const groupInstruction = 'group ' + remainder;
@@ -39,13 +39,13 @@ function splitViewInstruction(viewMode: string): { mode: string; remainder: stri
 
     if (firstSpace === -1) {
         return {
-            mode: trimmedViewMode,
+            mode: trimmedViewMode.toLowerCase(),
             remainder: '',
         };
     }
 
     return {
-        mode: trimmedViewMode.slice(0, firstSpace),
+        mode: trimmedViewMode.slice(0, firstSpace).toLowerCase(),
         remainder: trimmedViewMode.slice(firstSpace + 1).trim(),
     };
 }
