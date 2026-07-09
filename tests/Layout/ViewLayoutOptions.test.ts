@@ -27,7 +27,7 @@ describe('parsing view mode', () => {
         expect(options.viewMode).toEqual('list');
     });
 
-    it('should parse columns mode grouped by priority', () => {
+    it('should parse columns mode', () => {
         const options = new ViewLayoutOptions();
 
         const result = parseQueryViewMode(options, 'columns');
