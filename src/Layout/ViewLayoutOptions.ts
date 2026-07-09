@@ -23,11 +23,7 @@ export function parseQueryViewMode(
     }
 
     if (mode === 'columns') {
-        viewLayoutOptions.viewMode = 'columns';
-        // Make a copy of the viewMode string, with initial columns word replaced by 'group'
-        const groupInstruction = 'group ' + remainder;
-        viewLayoutOptions.grouper = parseGrouper(groupInstruction);
-        return { success: true };
+        return parseColumnsViewMode(viewLayoutOptions, remainder);
     }
 
     return unknownViewModeError(viewMode);
@@ -48,6 +44,14 @@ function splitViewInstruction(viewMode: string): { mode: string; remainder: stri
         mode: trimmedViewMode.slice(0, firstSpace).toLowerCase(),
         remainder: trimmedViewMode.slice(firstSpace + 1).trim(),
     };
+}
+
+function parseColumnsViewMode(viewLayoutOptions: ViewLayoutOptions, remainder: string): ParseViewLayoutOptionResult {
+    viewLayoutOptions.viewMode = 'columns';
+    // Make a copy of the viewMode string, with initial columns word replaced by 'group'
+    const groupInstruction = 'group ' + remainder;
+    viewLayoutOptions.grouper = parseGrouper(groupInstruction);
+    return { success: true };
 }
 
 function unknownViewModeError(viewMode: string): ParseViewLayoutOptionResult {
