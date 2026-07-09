@@ -1575,6 +1575,30 @@ describe('Query', () => {
             expect(query.viewLayoutOptions.viewMode).toEqual('list');
         });
 
+        it('should reject columns view without a grouping expression', () => {
+            const query = new Query('view columns');
+
+            expect(query.viewLayoutOptions.viewMode).toEqual('list');
+            expect(query.viewLayoutOptions.grouper).toBeNull();
+            expect(query.error).toEqual(`columns view requires a grouping expression
+
+For example:
+    view columns by priority
+    view columns by root
+    view columns by status.type reverse
+Problem line: "view columns"`);
+        });
+
+        it('should allow columns view to be grouped by priority', () => {
+            const query = new Query('view columns by priority');
+
+            expect(query.error).toBeUndefined();
+            expect(query.viewLayoutOptions.viewMode).toEqual('columns');
+            expect(query.viewLayoutOptions.grouper).not.toBeNull();
+            expect(query.viewLayoutOptions.grouper?.property).toEqual('priority');
+            expect(query.grouping).toHaveLength(0);
+        });
+
         it('should give a meaningful error message for unknown view mode', () => {
             const query = new Query('view nonsense');
             expect(query.viewLayoutOptions.viewMode).toEqual('list');
