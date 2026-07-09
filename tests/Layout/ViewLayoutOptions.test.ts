@@ -30,13 +30,25 @@ describe('parsing view mode', () => {
         expect(options.grouper).toBeNull();
     });
 
-    it.each(['columns', 'COLUMNS'])('should parse "%s" mode', (mode) => {
+    it('should report an error for columns mode without a grouping expression', () => {
         const options = new ViewLayoutOptions();
 
-        const result = parseQueryViewMode(options, mode);
+        const result = parseQueryViewMode(options, 'columns');
 
-        expect(result.success).toEqual(true);
-        expect(options.viewMode).toEqual('columns');
+        expect(result.success).toEqual(false);
+        expect(options.viewMode).toEqual('list');
+        expect(options.grouper).toBeNull();
+
+        if (!result.success) {
+            expect(result.error).toMatchInlineSnapshot(`
+                "columns view requires a grouping expression
+
+                For example:
+                    view columns by priority
+                    view columns by root
+                    view columns by status.type reverse"
+            `);
+        }
     });
 
     it.each(['columns by priority', 'COLUMNS BY PRIORITY'])(

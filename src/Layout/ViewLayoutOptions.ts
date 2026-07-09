@@ -47,11 +47,31 @@ function splitViewInstruction(viewMode: string): { mode: string; remainder: stri
 }
 
 function parseColumnsViewMode(viewLayoutOptions: ViewLayoutOptions, remainder: string): ParseViewLayoutOptionResult {
+    if (remainder === '') {
+        return missingColumnsGroupingError();
+    }
+
     viewLayoutOptions.viewMode = 'columns';
     // Make a copy of the viewMode string, with initial columns word replaced by 'group'
     const groupInstruction = 'group ' + remainder;
     viewLayoutOptions.grouper = parseGrouper(groupInstruction);
     return { success: true };
+}
+
+function missingColumnsGroupingError(): ParseViewLayoutOptionResult {
+    return {
+        success: false,
+        error: `columns view requires a grouping expression
+
+${columnsViewExamples()}`,
+    };
+}
+
+function columnsViewExamples(): string {
+    return `For example:
+    view columns by priority
+    view columns by root
+    view columns by status.type reverse`;
 }
 
 function unknownViewModeError(viewMode: string): ParseViewLayoutOptionResult {

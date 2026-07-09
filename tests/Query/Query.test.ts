@@ -543,7 +543,6 @@ description includes \
             'show toolbar',
             'show tree',
             'show urgency',
-            'view columns',
             'view columns by function task.status.symbol',
             'view columns by priority',
             'view list',
