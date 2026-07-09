@@ -1,3 +1,4 @@
+import { parseGrouper } from '../Query/FilterParser';
 import type { Grouper } from '../Query/Group/Grouper';
 
 export const queryViewModes = ['list', 'columns'] as const;
@@ -19,8 +20,11 @@ export function parseQueryViewMode(
         return { success: true };
     }
 
-    if (viewMode.toLowerCase() === 'columns') {
+    if (viewMode.toLowerCase().startsWith('columns')) {
         viewLayoutOptions.viewMode = 'columns';
+        // Make a copy of the viewMode string, with initial columns word replaced by 'group'
+        const groupInstruction = viewMode.replace(/^columns/, 'group');
+        viewLayoutOptions.grouper = parseGrouper(groupInstruction);
         return { success: true };
     }
 

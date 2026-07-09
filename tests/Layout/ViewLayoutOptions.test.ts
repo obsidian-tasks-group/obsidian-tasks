@@ -39,7 +39,7 @@ describe('parsing view mode', () => {
         expect(options.viewMode).toEqual('columns');
     });
 
-    it.failing('should parse columns mode grouped by priority', () => {
+    it('should parse columns mode grouped by priority', () => {
         const options = new ViewLayoutOptions();
 
         const result = parseQueryViewMode(options, 'columns by priority');
