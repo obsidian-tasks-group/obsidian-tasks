@@ -39,16 +39,19 @@ describe('parsing view mode', () => {
         expect(options.viewMode).toEqual('columns');
     });
 
-    it('should parse columns mode grouped by priority', () => {
-        const options = new ViewLayoutOptions();
+    it.each(['columns by priority', 'COLUMNS BY PRIORITY'])(
+        'should parse columns grouped by priority: "%s"',
+        (mode) => {
+            const options = new ViewLayoutOptions();
 
-        const result = parseQueryViewMode(options, 'columns by priority');
+            const result = parseQueryViewMode(options, mode);
 
-        expect(result).toEqual({ success: true });
-        expect(options.viewMode).toEqual('columns');
-        expect(options.grouper).not.toBeNull();
-        expect(options.grouper?.property).toEqual('priority');
-    });
+            expect(result).toEqual({ success: true });
+            expect(options.viewMode).toEqual('columns');
+            expect(options.grouper).not.toBeNull();
+            expect(options.grouper?.property).toEqual('priority');
+        },
+    );
 
     it('should report available options for unknown mode', () => {
         const options = new ViewLayoutOptions();
