@@ -55,6 +55,7 @@ function parseListViewMode(
     }
 
     viewLayoutOptions.viewMode = 'list';
+    viewLayoutOptions.grouper = null;
     return { success: true };
 }
 

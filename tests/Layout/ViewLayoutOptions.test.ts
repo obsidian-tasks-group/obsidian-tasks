@@ -3,6 +3,7 @@ import {
     ViewLayoutOptions,
     parseQueryViewMode,
 } from '../../src/Layout/ViewLayoutOptions';
+import { PriorityField } from '../../src/Query/Filter/PriorityField';
 
 describe('storing view mode', () => {
     it('should default to list view', () => {
@@ -23,6 +24,7 @@ describe('parsing view mode', () => {
     it.each(['list', 'LIST'])('should parse "%s" mode', (mode) => {
         const options = new ViewLayoutOptions();
         options.viewMode = 'columns';
+        options.grouper = new PriorityField().createNormalGrouper();
 
         const result = parseQueryViewMode(options, mode);
         expect(result.success).toEqual(true);
@@ -68,11 +70,13 @@ describe('parsing view mode', () => {
     it('should not allow extra instructions for list mode', () => {
         const options = new ViewLayoutOptions();
         options.viewMode = 'columns';
+        options.grouper = new PriorityField().createNormalGrouper();
 
         const result = parseQueryViewMode(options, 'list by priority');
 
         expect(result.success).toEqual(false);
         expect(options.viewMode).toEqual('columns');
+        expect(options.grouper).not.toBeNull();
     });
 
     it('should report invalid columns grouping', () => {
