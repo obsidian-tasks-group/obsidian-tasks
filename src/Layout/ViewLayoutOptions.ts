@@ -18,8 +18,7 @@ export function parseQueryViewMode(
     const { mode, remainder } = splitViewInstruction(viewMode);
 
     if (mode === 'list') {
-        viewLayoutOptions.viewMode = 'list';
-        return { success: true };
+        return parseListViewMode(viewLayoutOptions);
     }
 
     if (mode === 'columns') {
@@ -44,6 +43,11 @@ function splitViewInstruction(viewMode: string): { mode: string; remainder: stri
         mode: trimmedViewMode.slice(0, firstSpace).toLowerCase(),
         remainder: trimmedViewMode.slice(firstSpace + 1).trim(),
     };
+}
+
+function parseListViewMode(viewLayoutOptions: ViewLayoutOptions): ParseViewLayoutOptionResult {
+    viewLayoutOptions.viewMode = 'list';
+    return { success: true };
 }
 
 function parseColumnsViewMode(viewLayoutOptions: ViewLayoutOptions, remainder: string): ParseViewLayoutOptionResult {
