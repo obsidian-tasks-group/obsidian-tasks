@@ -543,6 +543,9 @@ description includes \
             'show toolbar',
             'show tree',
             'show urgency',
+            'view columns by function task.status.symbol',
+            'view columns by priority',
+            'view list',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
@@ -996,6 +999,37 @@ filter by function \\
         });
     });
 });
+
+/**
+ * Applies a query to a collection of tasks represented in Markdown format and verifies the results
+ * against a given expected output rendered in Markdown.
+ *
+ * It runs the search a second time, checking the query works when it's in all-capitals.
+ *
+ * @param tasksAsMarkdown - The tasks represented in Markdown format.
+ * @param source - The query string to apply to the tasks.
+ * @param expectedResultsAsMarkdown - The expected results, in Markdown format, to compare against.
+ */
+function searchTasksAndTestResultsAsMarkdown(
+    tasksAsMarkdown: string,
+    source: string,
+    expectedResultsAsMarkdown: string,
+) {
+    // Arrange
+    const sourceUpper = source.toUpperCase();
+    const query = new Query(source);
+    const queryUpper = new Query(sourceUpper);
+
+    const tasks = createTasksFromMarkdown(tasksAsMarkdown, 'some_markdown_file', 'Some Heading');
+
+    // Act
+    const queryResult = query.applyQueryToTasks(tasks);
+    const queryUpperResult = queryUpper.applyQueryToTasks(tasks);
+
+    // Assert
+    expect(queryResult.asMarkdown()).toEqual(expectedResultsAsMarkdown);
+    expect(queryUpperResult.asMarkdown()).toEqual(expectedResultsAsMarkdown);
+}
 
 describe('Query', () => {
     describe('filtering', () => {
@@ -1566,6 +1600,51 @@ describe('Query', () => {
         });
     });
 
+    describe('view mode', () => {
+        it('should default to "list" view', () => {
+            const query = new Query('');
+            expect(query.viewLayoutOptions.viewMode).toEqual('list');
+        });
+
+        it('should reject columns view without a grouping expression', () => {
+            const query = new Query('view columns');
+
+            expect(query.viewLayoutOptions.viewMode).toEqual('list');
+            expect(query.viewLayoutOptions.grouper).toBeNull();
+            expect(query.error).toEqual(`columns view requires a grouping expression
+
+For example:
+    view columns by priority
+    view columns by root
+    view columns by status.type reverse
+Problem line: "view columns"`);
+        });
+
+        it('should allow columns view to be grouped by priority', () => {
+            const query = new Query('view columns by priority');
+
+            expect(query.error).toBeUndefined();
+            expect(query.viewLayoutOptions.viewMode).toEqual('columns');
+            expect(query.viewLayoutOptions.grouper).not.toBeNull();
+            expect(query.viewLayoutOptions.grouper?.property).toEqual('priority');
+            expect(query.grouping).toHaveLength(0);
+        });
+
+        it('should give a meaningful error message for unknown view mode', () => {
+            const query = new Query('view nonsense');
+            expect(query.viewLayoutOptions.viewMode).toEqual('list');
+            expect(query.error).toEqual(`do not understand view mode "nonsense"
+
+The available view modes are:
+    list
+    columns
+
+For example:
+    view list
+Problem line: "view nonsense"`);
+        });
+    });
+
     describe('sorting', () => {
         const doneTask = new TaskBuilder().status(Status.DONE).build();
         const todoTask = new TaskBuilder().status(Status.TODO).build();
@@ -1796,6 +1875,57 @@ describe('Query', () => {
 
             expect(queryResult.totalTasksCountBeforeLimit).toEqual(6);
             expect(queryUpperResult.totalTasksCountBeforeLimit).toEqual(6);
+        });
+    });
+
+    describe('grouping instructions in conjunction with columns view', () => {
+        const tasksAsMarkdown = `
+- [ ] Task 1 - Todo - high priority ⏫
+- [x] Task 2 - Done   priority 🔽
+            `;
+
+        it('should apply the "view columns" grouper automatically', () => {
+            const source = `
+                view columns by priority
+                `;
+
+            // In column view, the view's grouper ('by priority', here) is injected as
+            // the first (ond only) grouper in the search.
+            const expectedResultsAsMarkdown = `
+#### %%1%%High priority
+
+- [ ] Task 1 - Todo - high priority ⏫
+
+#### %%4%%Low priority
+
+- [x] Task 2 - Done   priority 🔽
+`;
+            searchTasksAndTestResultsAsMarkdown(tasksAsMarkdown, source, expectedResultsAsMarkdown);
+        });
+
+        it('should prepend the "view columns" grouper to any user-supplied groups', () => {
+            // Arrange
+            const source = `
+                view columns by status.name
+                group by priority
+                `;
+
+            // In column view, the view's grouper ('by priority', here) is injected before
+            // all the user-supplied groups.
+            const expectedResultsAsMarkdown = `
+#### Done
+
+##### %%4%%Low priority
+
+- [x] Task 2 - Done   priority 🔽
+
+#### Todo
+
+##### %%1%%High priority
+
+- [ ] Task 1 - Todo - high priority ⏫
+`;
+            searchTasksAndTestResultsAsMarkdown(tasksAsMarkdown, source, expectedResultsAsMarkdown);
         });
     });
 

@@ -2,6 +2,7 @@ import { getSettings } from '../Config/Settings';
 import type { IQuery } from '../IQuery';
 import { QueryLayoutOptions, parseQueryShowHideOptions } from '../Layout/QueryLayoutOptions';
 import { TaskLayoutOptions, parseTaskShowHideOptions } from '../Layout/TaskLayoutOptions';
+import { ViewLayoutOptions, parseQueryViewMode } from '../Layout/ViewLayoutOptions';
 import { errorMessageForException } from '../lib/ExceptionTools';
 import { logging } from '../lib/logging';
 import { expandPlaceholders } from '../Scripting/ExpandPlaceholders';
@@ -38,6 +39,7 @@ export class Query implements IQuery {
 
     private readonly _taskLayoutOptions: TaskLayoutOptions = new TaskLayoutOptions();
     private readonly _queryLayoutOptions: QueryLayoutOptions = new QueryLayoutOptions();
+    private readonly _viewLayoutOptions: ViewLayoutOptions = new ViewLayoutOptions();
     public readonly layoutStatements: Statement[] = [];
 
     private readonly _filters: Filter[] = [];
@@ -46,6 +48,7 @@ export class Query implements IQuery {
     private readonly _grouping: Grouper[] = [];
     private _ignoreGlobalQuery: boolean = false;
 
+    private readonly viewModeRegexp = /^view +(.*)/i;
     private readonly hideOptionsRegexp = /^(hide|show) +(.*)/i;
     private readonly shortModeRegexp = /^short/i;
     private readonly fullModeRegexp = /^full/i;
@@ -143,6 +146,9 @@ export class Query implements IQuery {
             case this.parseSortBy(line, statement):
                 break;
             case this.parseGroupBy(line, statement):
+                break;
+            case this.viewModeRegexp.test(line):
+                this.parseViewMode(statement);
                 break;
             case this.hideOptionsRegexp.test(line):
                 this.parseHideOptions(statement);
@@ -293,6 +299,10 @@ ${source}`;
         return this._taskLayoutOptions;
     }
 
+    get viewLayoutOptions(): ViewLayoutOptions {
+        return this._viewLayoutOptions;
+    }
+
     public get queryLayoutOptions(): QueryLayoutOptions {
         return this._queryLayoutOptions;
     }
@@ -366,7 +376,12 @@ ${statement.explainStatement('    ')}
             const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks, searchInfo);
             const tasksSortedLimited = tasksSorted.slice(0, this.limit);
 
-            const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited, searchInfo);
+            // If we are in the 'columns' view, use its grouper as our first grouper
+            // so that rendering can later display each top-level group in its own column.
+            const useColumnsGrouper =
+                this.viewLayoutOptions.viewMode === 'columns' && this.viewLayoutOptions.grouper !== null;
+            const groupers = useColumnsGrouper ? [this.viewLayoutOptions.grouper!, ...this.grouping] : this.grouping;
+            const taskGroups = new TaskGroups(groupers, tasksSortedLimited, searchInfo);
 
             if (this._taskGroupLimit !== undefined) {
                 taskGroups.applyTaskLimit(this._taskGroupLimit);
@@ -382,6 +397,23 @@ ${statement.explainStatement('    ')}
             }
             return QueryResult.fromError(message);
         }
+    }
+
+    private parseViewMode(statement: Statement): void {
+        const line = statement.anyPlaceholdersExpanded;
+        const viewModeMatch = line.match(this.viewModeRegexp);
+        if (viewModeMatch === null) {
+            return;
+        }
+
+        const result = parseQueryViewMode(this._viewLayoutOptions, viewModeMatch[1].trim());
+
+        if (result.success) {
+            this.saveLayoutStatement(statement);
+            return;
+        }
+
+        this.setError(result.error, statement);
     }
 
     private parseHideOptions(statement: Statement): void {

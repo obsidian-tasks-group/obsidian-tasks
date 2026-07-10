@@ -350,6 +350,14 @@ describe('explain layout instructions', () => {
         expect(explainLayout('full mode')).toEqual('full mode\n');
     });
 
+    it('should explain view list', () => {
+        expect(explainLayout('view list')).toEqual('view list\n');
+    });
+
+    it('should explain view columns by priority', () => {
+        expect(explainLayout('view columns by priority')).toEqual('view columns by priority\n');
+    });
+
     it('should NOT explain explain', () => {
         // Intentionally do not explain the 'explain' instruction, as it just clutters up the documentation.
         expect(explainLayout('explain')).toEqual('');
