@@ -34,7 +34,12 @@ export abstract class QueryResultsRendererBase {
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
         const query = this.query;
-        const error = query.error;
+
+        let error = query.error;
+        if (query.viewLayoutOptions.viewMode === 'columns') {
+            error = '"view columns" is not yet supported.';
+        }
+
         if (state === State.Warm && error === undefined) {
             await this.renderQuerySearchResults(queryResult);
         } else if (error) {
