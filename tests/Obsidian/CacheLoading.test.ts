@@ -47,6 +47,7 @@ function createCacheEnvironment({
     getFileCache?: (file: TFile) => CachedMetadata | null;
 }) {
     let layoutReadyCallback: (() => Promise<void>) | undefined;
+    let reloadVaultCallback: (() => Promise<void>) | undefined;
     const metadataCache = {
         getFileCache: jest.fn(getFileCache),
         offref: jest.fn(),
@@ -65,7 +66,10 @@ function createCacheEnvironment({
     } as unknown as Workspace;
     const events = {
         off: jest.fn(),
-        onReloadVault: jest.fn(() => eventReference),
+        onReloadVault: jest.fn((callback: () => Promise<void>) => {
+            reloadVaultCallback = callback;
+            return eventReference;
+        }),
         onRequestCacheUpdate: jest.fn(() => eventReference),
         triggerCacheUpdate: jest.fn(),
     } as unknown as TasksEvents;
@@ -83,11 +87,15 @@ function createCacheEnvironment({
             expect(layoutReadyCallback).toBeDefined();
             await layoutReadyCallback?.();
         },
+        runReloadVault: async () => {
+            expect(reloadVaultCallback).toBeDefined();
+            await reloadVaultCallback?.();
+        },
     };
 }
 
 describe('Cache loading', () => {
-    it.failing('should limit how many files are indexed concurrently', async () => {
+    it('should limit how many files are indexed concurrently', async () => {
         const files = Array.from({ length: 12 }, (_value, index) => createFile(`${index}.md`));
         let activeReads = 0;
         let maximumActiveReads = 0;
@@ -106,7 +114,7 @@ describe('Cache loading', () => {
         expect(cache.getState()).toBe(State.Warm);
     });
 
-    it.failing('should not read a file whose metadata contains only plain list items', async () => {
+    it('should not read a file whose metadata contains only plain list items', async () => {
         const file = createFile('plain-list.md');
         const cachedRead = jest.fn<Promise<string>, [TFile]>(async () => '- a plain list item');
         const plainListMetadata: CachedMetadata = {
@@ -123,7 +131,7 @@ describe('Cache loading', () => {
         expect(cachedRead).not.toHaveBeenCalled();
     });
 
-    it.failing('should keep loading when one file read fails', async () => {
+    it('should keep loading when one file read fails', async () => {
         const unavailableFile = createFile('unavailable.md');
         const readableFile = createFile('readable.md');
         const readError = new Error('ETIMEDOUT: connection timed out, read');
@@ -144,5 +152,29 @@ describe('Cache loading', () => {
         expect(cache.getTasks()).toHaveLength(1);
         expect(cache.getTasks()[0].path).toBe(readableFile.path);
         expect(cache.logger.error).toHaveBeenCalledWith(expect.stringContaining(unavailableFile.path), readError);
+    });
+
+    it('should preserve previously cached tasks when a later read fails', async () => {
+        const file = createFile('temporarily-unavailable.md');
+        const readError = new Error('EIO: input/output error, read');
+        let shouldReadFail = false;
+        const cachedRead = jest.fn<Promise<string>, [TFile]>(async () => {
+            if (shouldReadFail) {
+                throw readError;
+            }
+            return taskData.fileContents;
+        });
+        const { cache, runLayoutReady, runReloadVault } = createCacheEnvironment({ files: [file], cachedRead });
+
+        await runLayoutReady();
+        const previouslyCachedTasks = cache.getTasks();
+        expect(previouslyCachedTasks).toHaveLength(1);
+
+        shouldReadFail = true;
+        await expect(runReloadVault()).resolves.toBeUndefined();
+
+        expect(cache.getState()).toBe(State.Warm);
+        expect(cache.getTasks()).toEqual(previouslyCachedTasks);
+        expect(cache.logger.error).toHaveBeenCalledWith(expect.stringContaining(file.path), readError);
     });
 });

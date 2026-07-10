@@ -21,6 +21,8 @@ import { GlobalFilter } from '../Config/GlobalFilter';
 import type { TasksEvents } from './TasksEvents';
 import { FileParser } from './FileParser';
 
+const MAX_CONCURRENT_FILE_READS = 4;
+
 export enum State {
     Cold = 'Cold',
     Initializing = 'Initializing',
@@ -250,11 +252,7 @@ export class Cache {
             this.state = State.Initializing;
             this.logger.debug('Cache.loadVault(): state = Initializing');
 
-            await Promise.all(
-                this.vault.getMarkdownFiles().map((file: TFile) => {
-                    return this.indexFile(file);
-                }),
-            );
+            await this.indexFiles(this.vault.getMarkdownFiles());
             this.state = State.Warm;
             // TODO Why is this displayed twice:
             this.logger.debug('Cache.loadVault(): state = Warm');
@@ -267,6 +265,20 @@ export class Cache {
             // Notify that the cache is now warm:
             this.notifySubscribers();
         });
+    }
+
+    private async indexFiles(files: TFile[]): Promise<void> {
+        let nextFileIndex = 0;
+        const indexNextFile = async () => {
+            while (nextFileIndex < files.length) {
+                const file = files[nextFileIndex];
+                nextFileIndex++;
+                await this.indexFile(file);
+            }
+        };
+
+        const workerCount = Math.min(MAX_CONCURRENT_FILE_READS, files.length);
+        await Promise.all(Array.from({ length: workerCount }, () => indexNextFile()));
     }
 
     private async indexFile(file: TFile): Promise<void> {
@@ -291,9 +303,19 @@ export class Cache {
         // Still continue to notify watchers of removal.
 
         let newTasks: Task[] = [];
-        if (listItems !== undefined) {
-            // Only read the file and process for tasks if there are list items.
-            const fileContent = await this.vault.cachedRead(file);
+        const hasTaskListItem = listItems?.some((listItem) => listItem.task !== undefined) ?? false;
+        if (listItems !== undefined && hasTaskListItem) {
+            // Only read the file and process for tasks if there are task list items.
+            let fileContent: string;
+            try {
+                fileContent = await this.vault.cachedRead(file);
+            } catch (error) {
+                this.logger.error(
+                    `Cache.indexFile: unable to read ${file.path}; keeping its previously cached tasks`,
+                    error,
+                );
+                return;
+            }
             newTasks = this.getTasksFromFileContent(
                 new TasksFile(file.path, fileCache),
                 fileContent,
