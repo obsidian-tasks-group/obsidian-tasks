@@ -33,6 +33,4 @@ The reminder date doesn't change when completing the task, the date will change 
 ![image](https://user-images.githubusercontent.com/38974541/143463881-e4af4b91-426f-48e8-938e-4a1053b06677.png)
 ![image](https://user-images.githubusercontent.com/38974541/143464983-542675ae-a467-41c0-aaca-1075c42f8328.png)
 
-Recurring tasks completed from the Reminders popup or notification also produce the correct next occurrence.
-
 ---
