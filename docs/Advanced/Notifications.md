@@ -22,13 +22,9 @@ The order is important when writing the task. Tasks requires the reminder date a
 - [ ] #task task name ⏰ YYYY-MM-DD HH:mm 📅 YYYY-MM-DD ⏫ 🔁 every week 🛫 YYYY-MM-DD ⏳ YYYY-MM-DD
 ```
 
----
+With Reminders' "Distinguish between reminder date and due date" setting enabled, a reminder date you insert (for example via Reminders' auto-complete popup) is automatically placed before the other Tasks fields for you, and using the Reminders "remind later"/"defer" action only ever rewrites the ⏰ date — it no longer overwrites the fields between ⏰ and 📅.
 
-> [!warning]
-> The output of the "Create or Edit Tasks" command will not put the due date directly behind the reminder date where Reminders wants it.
-You must fix this manually if you want to use the Reminders "defer" command;
-**otherwise (as of August 2022), using the Reminders "defer" command will overwrite all information between the ⏰ and 📅 emoji!**
-See [this issue in Reminders to check the current status](https://github.com/uphy/obsidian-reminder/issues/100).
+Reminders can also fall back to 📅 (due), then ⏳ (scheduled), then 🛫 (start) as the reminder date when no ⏰ is present, via its "Fall back to due, scheduled, or start date" setting — see [Reminders' docs](https://uphy.github.io/obsidian-reminder/guide/interop-tasks.html#fall-back-to-due-scheduled-or-start-date).
 
 ## How to complete the reminder
 
@@ -37,10 +33,6 @@ The reminder date doesn't change when completing the task, the date will change 
 ![image](https://user-images.githubusercontent.com/38974541/143463881-e4af4b91-426f-48e8-938e-4a1053b06677.png)
 ![image](https://user-images.githubusercontent.com/38974541/143464983-542675ae-a467-41c0-aaca-1075c42f8328.png)
 
----
-
-> [!warning]
-> Completing recurring tasks does not work correctly with Reminders as of August 2022.
-See [this issue in Reminders to check the current status](https://github.com/uphy/obsidian-reminder/issues/93).
+Recurring tasks completed from the Reminders popup or notification also produce the correct next occurrence.
 
 ---
