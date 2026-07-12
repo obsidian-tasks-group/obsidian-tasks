@@ -30,7 +30,7 @@ Reminders can also fall back to 📅 (due), then ⏳ (scheduled), then 🛫 (sta
 
 The reminder date doesn't change when completing the task, the date will change only when you complete it from the reminder popup or from the notification.
 
-![image](https://user-images.githubusercontent.com/38974541/143463881-e4af4b91-426f-48e8-938e-4a1053b06677.png)
+![image](../images/reminder-popup.png)
 ![image](https://user-images.githubusercontent.com/38974541/143464983-542675ae-a467-41c0-aaca-1075c42f8328.png)
 
 ---
