@@ -37,4 +37,11 @@ describe('columns rendering', () => {
         const { query, renderer } = makeColumnRenderer(due_columns, allTasks);
         verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
     });
+
+    it('renders due date column', () => {
+        const allTasks = [new TaskBuilder().dueDate('2026-07-13').build()];
+
+        const { query, renderer } = makeColumnRenderer(due_columns, allTasks);
+        verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
+    });
 });
