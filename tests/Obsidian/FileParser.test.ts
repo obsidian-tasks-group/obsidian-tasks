@@ -1,7 +1,53 @@
+import type { CachedMetadata, ListItemCache } from 'obsidian';
+import { FileParser } from '../../src/Obsidian/FileParser';
+import type { TasksFile } from '../../src/Scripting/TasksFile';
+import { logging } from '../../src/lib/logging';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { readTasksFromSimulatedFile } from './SimulatedFile';
 
 describe('FileParser', () => {
+    it('ignores stale non-list cache entries without changing supported list parsing', () => {
+        const lines = [
+            '# Heading',
+            'Prose line',
+            '',
+            '- parent list item',
+            '  - [ ] child task',
+            '+ plus list item',
+            '* star list item',
+            '> - quoted list item',
+            '1. numbered list item',
+            '1) alternate numbered list item',
+        ];
+        const position = (line: number) => ({
+            start: { line, col: 0, offset: 0 },
+            end: { line, col: lines[line].length, offset: lines[line].length },
+        });
+        const listItems: ListItemCache[] = lines.map((_line, line) => ({
+            parent: line === 4 ? 3 : -1,
+            position: position(line),
+        }));
+        listItems[4].task = ' ';
+        const cachedMetadata: CachedMetadata = {
+            listItems,
+            sections: [
+                { type: 'paragraph', position: { start: position(0).start, end: position(lines.length - 1).end } },
+            ],
+        };
+        const logger = logging.getLogger('FileParser.test');
+        const warn = jest.spyOn(logger, 'warn');
+        const debug = jest.spyOn(logger, 'debug');
+        const tasksFile = { path: 'stale-cache.md', cachedMetadata } as TasksFile;
+        const parser = new FileParser(tasksFile, lines.join('\n'), listItems, logger, jest.fn());
+
+        const tasks = parser.parseFileContent();
+
+        expect(warn).not.toHaveBeenCalled();
+        expect(debug).toHaveBeenCalledTimes(3);
+        expect(tasks).toHaveLength(1);
+        expect(tasks[0].parent?.description).toEqual('parent list item');
+    });
+
     it('should set all non-TasksFile data in TaskLocation', () => {
         // This test exists to detect accidental changes to the task-reading code.
         // I found that intentionally breaking the setting of _sectionIndex was

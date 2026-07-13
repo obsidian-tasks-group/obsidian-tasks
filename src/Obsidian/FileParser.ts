@@ -5,6 +5,7 @@ import type { TasksFile } from '../Scripting/TasksFile';
 import { Lazy } from '../lib/Lazy';
 import { DateFallback } from '../DateTime/DateFallback';
 import { ListItem } from '../Task/ListItem';
+import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { TaskLocation } from '../Task/TaskLocation';
 import { Cache } from './Cache';
 
@@ -123,6 +124,15 @@ export class FileParser {
         sectionIndex: number,
     ) {
         if (listItem.task === undefined) {
+            // CachedMetadata can temporarily contain stale listItems entries
+            // that point at headings, prose or blank lines. Do not send those
+            // lines through ListItem parsing, where they produce a misleading
+            // warning. This uses Tasks' existing marker grammar so supported
+            // bullet, numbered and blockquote list styles remain unchanged.
+            if (!TaskRegularExpressions.listItemRegex.test(line)) {
+                this.logger.debug(`${this.filePath}: line ${lineNumber} - ignoring non-list listItems cache entry.`);
+                return sectionIndex;
+            }
             this.createListItem(listItem, line, lineNumber, taskLocation);
             return sectionIndex;
         }
