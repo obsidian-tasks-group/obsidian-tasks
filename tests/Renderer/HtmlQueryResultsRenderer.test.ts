@@ -3,7 +3,6 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { State } from '../../src/Obsidian/Cache';
-import type { Query } from '../../src/Query/Query';
 import { getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
 import { HtmlQueryResultsRenderer } from '../../src/Renderer/HtmlQueryResultsRenderer';
 import type { TasksFile } from '../../src/Scripting/TasksFile';
@@ -12,7 +11,13 @@ import { mockApp } from '../__mocks__/obsidian';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
-import { makeHtmlQueryRendererParameters, mockHTMLRenderer, verifyRenderedTasks } from './RenderingTestHelpers';
+import {
+    makeHtmlQueryRendererParameters,
+    mockHTMLRenderer,
+    renderTasks,
+    verifyHtmlFromRenderer,
+    verifyRenderedTasks,
+} from './RenderingTestHelpers';
 
 window.moment = moment;
 
@@ -32,36 +37,10 @@ function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]
     return { query, renderer };
 }
 
-export async function verifyHtmlFromRenderer(
-    renderer: HtmlQueryResultsRenderer,
-    state: State,
-    query: Query,
-    allTasks: Task[],
-) {
-    const container = document.createElement('div');
-    renderer.content = container;
-    await renderer.renderQuery(state, query.applyQueryToTasks(allTasks));
-
-    verifyRenderedTasks(container, allTasks);
-}
-
 async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm) {
     const tasksFile = createTestTasksFile('query.md');
     const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
     await verifyHtmlFromRenderer(renderer, state, query, allTasks);
-}
-
-async function renderTasks(
-    state: State,
-    renderer: HtmlQueryResultsRenderer,
-    allTasks: Task[],
-    query: Query,
-): Promise<HTMLDivElement> {
-    const container = document.createElement('div');
-
-    renderer.content = container;
-    await renderer.renderQuery(state, query.applyQueryToTasks(allTasks));
-    return container;
 }
 
 beforeEach(() => {
