@@ -32,15 +32,23 @@ function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]
     return { query, renderer };
 }
 
-async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm) {
-    const tasksFile = createTestTasksFile('query.md');
-    const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
-
+export async function verifyHtmlFromRenderer(
+    renderer: HtmlQueryResultsRenderer,
+    state: State,
+    query: Query,
+    allTasks: Task[],
+) {
     const container = document.createElement('div');
     renderer.content = container;
     await renderer.renderQuery(state, query.applyQueryToTasks(allTasks));
 
     verifyRenderedTasks(container, allTasks);
+}
+
+async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm) {
+    const tasksFile = createTestTasksFile('query.md');
+    const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
+    await verifyHtmlFromRenderer(renderer, state, query, allTasks);
 }
 
 async function renderTasks(
