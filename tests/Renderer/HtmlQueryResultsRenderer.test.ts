@@ -180,6 +180,71 @@ group by function 'level4'
         await verifyRenderedHtml(allTasks, 'show tree');
     });
 
+    describe('nested backlinks', () => {
+        // The 'hide nested backlink' instruction is not yet implemented in the renderer,
+        // so all these approved files currently show the unchanged rendering.
+        // The behaviour - and the affected approved files - will change in the next commit.
+        const allTasks = () =>
+            readTasksFromSimulatedFile('inheritance_1parent2children2grandchildren1sibling_start_with_heading');
+        const sortByLineNumber = 'sort by function task.lineNumber\n';
+
+        it('show tree and hide nested backlink', async () => {
+            // Behaviour change pending: top-level tasks (parent and sibling) will keep their
+            // full backlink, and nested tasks will have their backlink hidden.
+            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'hide nested backlink');
+        });
+
+        it('show tree and show nested backlink', async () => {
+            // 'show nested backlink' is the default: all tasks show their backlink,
+            // exactly as if the instruction was absent. This must never change.
+            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'show nested backlink');
+        });
+
+        it('hide tree and hide nested backlink - flat is a no-op', async () => {
+            // Without 'show tree' there are no nested tasks, so 'hide nested backlink'
+            // changes nothing: all tasks keep their full backlink. This must never change.
+            await verifyRenderedHtml(allTasks(), hideTree + sortByLineNumber + 'hide nested backlink');
+        });
+
+        it('show tree, hide backlink and show nested backlink - hide backlink is stronger', async () => {
+            // 'hide backlink' hides all backlinks, and 'show nested backlink' (the default)
+            // cannot re-show them: 'show tree + hide backlink' queries written before
+            // 'nested backlink' existed must keep hiding all backlinks. This must never change.
+            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'hide backlink\nshow nested backlink');
+        });
+
+        it('show tree, hide backlink and hide nested backlink', async () => {
+            // Both instructions hide backlinks, so no backlinks are shown anywhere.
+            // This must never change.
+            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'hide backlink\nhide nested backlink');
+        });
+
+        it('show tree, short mode and hide nested backlink', async () => {
+            // Behaviour change pending: top-level tasks will keep their short-mode 🔗 backlink,
+            // and nested tasks will have their backlink hidden.
+            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'short mode\nhide nested backlink');
+        });
+
+        it.failing('should hide backlinks on nested tasks with "hide nested backlink"', async () => {
+            const source = showTree + sortByLineNumber + 'hide nested backlink';
+            const { renderer, query } = makeHtmlRenderer(source, createTestTasksFile('query.md'), allTasks());
+            const container = await renderTasks(State.Warm, renderer, allTasks(), query);
+
+            const backlinkOf = (li: Element) => li.querySelector(':scope > .task-extras > .tasks-backlink');
+            const listItems = Array.from(container.querySelectorAll('li'));
+            const topLevelItems = listItems.filter((li) => li.parentElement?.closest('li') === null);
+            const nestedItems = listItems.filter((li) => !topLevelItems.includes(li));
+
+            // Top-level tasks (parent and sibling) keep their backlink:
+            expect(topLevelItems.length).toEqual(2);
+            topLevelItems.forEach((li) => expect(backlinkOf(li)).not.toBeNull());
+
+            // Nested tasks (children and grandchildren) have their backlink hidden:
+            expect(nestedItems.length).toEqual(4);
+            nestedItems.forEach((li) => expect(backlinkOf(li)).toBeNull());
+        });
+    });
+
     it('should render grandchildren once under the parent', async () => {
         const allTasks = readTasksFromSimulatedFile('inheritance_1parent2children2grandchildren1sibling');
         await verifyRenderedHtml(
