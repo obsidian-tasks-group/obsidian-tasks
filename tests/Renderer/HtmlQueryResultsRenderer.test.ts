@@ -233,11 +233,11 @@ group by function 'level4'
             const nestedItems = listItems.filter((li) => !topLevelItems.includes(li));
 
             // Top-level tasks (parent and sibling) keep their backlink:
-            expect(topLevelItems.length).toEqual(2);
+            expect(topLevelItems).toHaveLength(2);
             topLevelItems.forEach((li) => expect(backlinkOf(li)).not.toBeNull());
 
             // Nested tasks (children and grandchildren) have their backlink hidden:
-            expect(nestedItems.length).toEqual(4);
+            expect(nestedItems).toHaveLength(4);
             nestedItems.forEach((li) => expect(backlinkOf(li)).toBeNull());
         });
     });
