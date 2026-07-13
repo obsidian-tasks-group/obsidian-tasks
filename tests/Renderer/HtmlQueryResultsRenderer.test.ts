@@ -181,16 +181,13 @@ group by function 'level4'
     });
 
     describe('nested backlinks', () => {
-        // The 'hide nested backlink' instruction is not yet implemented in the renderer,
-        // so all these approved files currently show the unchanged rendering.
-        // The behaviour - and the affected approved files - will change in the next commit.
         const allTasks = () =>
             readTasksFromSimulatedFile('inheritance_1parent2children2grandchildren1sibling_start_with_heading');
         const sortByLineNumber = 'sort by function task.lineNumber\n';
 
         it('show tree and hide nested backlink', async () => {
-            // Behaviour change pending: top-level tasks (parent and sibling) will keep their
-            // full backlink, and nested tasks will have their backlink hidden.
+            // Top-level tasks (parent and sibling) keep their full backlink,
+            // and nested tasks have their backlink hidden.
             await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'hide nested backlink');
         });
 
@@ -220,12 +217,12 @@ group by function 'level4'
         });
 
         it('show tree, short mode and hide nested backlink', async () => {
-            // Behaviour change pending: top-level tasks will keep their short-mode 🔗 backlink,
-            // and nested tasks will have their backlink hidden.
+            // Top-level tasks keep their short-mode 🔗 backlink,
+            // and nested tasks have their backlink hidden.
             await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'short mode\nhide nested backlink');
         });
 
-        it.failing('should hide backlinks on nested tasks with "hide nested backlink"', async () => {
+        it('should hide backlinks on nested tasks with "hide nested backlink"', async () => {
             const source = showTree + sortByLineNumber + 'hide nested backlink';
             const { renderer, query } = makeHtmlRenderer(source, createTestTasksFile('query.md'), allTasks());
             const container = await renderTasks(State.Warm, renderer, allTasks(), query);
