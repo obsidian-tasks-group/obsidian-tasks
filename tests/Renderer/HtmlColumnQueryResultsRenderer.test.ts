@@ -29,11 +29,12 @@ function makeColumnRenderer(source: string, allTasks: Task[]) {
 }
 
 describe('columns rendering', () => {
+    const due_columns = 'view columns by due\nhide backlink\nhide edit button';
+
     it('renders no due date column', () => {
-        const source = 'view columns by due\nhide backlink\nhide edit button';
         const allTasks = [new TaskBuilder().build()];
 
-        const { query, renderer } = makeColumnRenderer(source, allTasks);
+        const { query, renderer } = makeColumnRenderer(due_columns, allTasks);
         verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
     });
 });
