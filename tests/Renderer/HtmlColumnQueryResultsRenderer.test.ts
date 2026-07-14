@@ -42,6 +42,13 @@ describe('columns rendering', () => {
     const due_columns = 'view columns by due\nhide backlink\nhide edit button';
     const priority_columns = 'view columns by priority\nhide backlink\nhide edit button';
 
+    it('renders no search results', () => {
+        const allTasks: Task[] = [];
+
+        const { query, renderer } = makeColumnRenderer(due_columns, allTasks);
+        verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
+    });
+
     it('renders no due date column', () => {
         const allTasks = [new TaskBuilder().build()];
 
