@@ -140,6 +140,16 @@ describe('QueryResultsRenderer - rendering queries', () => {
 
         await verifyRenderedHtml(twoTasks, source);
     });
+
+    it('should render columns view', async () => {
+        const source = 'view columns by function task.description';
+        const twoTasks: Task[] = [
+            new TaskBuilder().description('first').build(),
+            new TaskBuilder().description('second').build(),
+        ];
+
+        await verifyRenderedHtml(twoTasks, source);
+    });
 });
 
 describe('QueryResultsRenderer - responding to file edits', () => {
