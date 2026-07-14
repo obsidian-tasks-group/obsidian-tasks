@@ -98,7 +98,7 @@ export abstract class QueryResultsRendererBase {
 
     protected abstract renderExplanation(explanation: string | null): void;
 
-    private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
+    protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         for (const group of tasksSortedLimitedGrouped.groups) {
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
@@ -226,7 +226,7 @@ export abstract class QueryResultsRendererBase {
      *                        in which case no headings will be added.
      * @private
      */
-    private async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
+    protected async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
         for (const heading of groupHeadings) {
             await this.addGroupHeading(heading);
         }
