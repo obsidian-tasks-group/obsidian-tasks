@@ -63,6 +63,13 @@ describe('columns rendering', () => {
         verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
     });
 
+    it('renders due date column and scheduled date groups', () => {
+        const allTasks = [new TaskBuilder().dueDate('2026-06-23').scheduledDate('2025-12-01').build()];
+
+        const { query, renderer } = makeColumnRenderer(due_columns + '\ngroup by scheduled', allTasks);
+        verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
+    });
+
     it('renders two priority columns', () => {
         const allTasks = [
             new TaskBuilder().priority(Priority.Highest).build(),
