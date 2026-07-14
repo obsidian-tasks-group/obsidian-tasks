@@ -8,9 +8,12 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
 
         const columnsContainer = createAndAppendElement('div', originalParent);
         columnsContainer.classList.add('tasks-columns');
-        this.content = columnsContainer;
 
         for (const group of tasksSortedLimitedGrouped.groups) {
+            const columnContainer = createAndAppendElement('div', columnsContainer);
+            columnContainer.classList.add('tasks-columns-column');
+            this.content = columnContainer;
+
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
             await this.addGroupHeadings(group.groupHeadings);
