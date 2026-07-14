@@ -11,6 +11,15 @@ import { makeHtmlQueryRendererParameters, mockHTMLRenderer, verifyHtmlFromRender
 
 window.moment = moment;
 
+beforeAll(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2026-07-13'));
+});
+
+afterAll(() => {
+    jest.useRealTimers();
+});
+
 function makeColumnRenderer(source: string, allTasks: Task[]) {
     const tasksFile = createTestTasksFile('query.md');
     const query = getQueryForQueryRenderer(source, GlobalQuery.getInstance(), tasksFile);
