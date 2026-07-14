@@ -10,6 +10,10 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
         columnsContainer.classList.add('tasks-columns');
 
         for (const group of tasksSortedLimitedGrouped.groups) {
+            if (group.tasks.length === 0) {
+                continue;
+            }
+
             const columnContainer = createAndAppendElement('div', columnsContainer);
             columnContainer.classList.add('tasks-columns-column');
             this.content = columnContainer;
