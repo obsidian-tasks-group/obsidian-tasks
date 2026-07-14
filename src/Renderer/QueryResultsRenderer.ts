@@ -162,8 +162,8 @@ export class QueryResultsRenderer {
         measureRender.start();
 
         const htmlRenderer =
-            this.query.viewLayoutOptions.viewMode === 'list'
-                ? new HtmlQueryResultsRenderer(
+            this.query.viewLayoutOptions.viewMode === 'columns'
+                ? new HtmlColumnQueryResultsRenderer(
                       this.renderMarkdown,
                       this.obsidianComponent,
                       this.obsidianApp,
@@ -173,7 +173,7 @@ export class QueryResultsRenderer {
                       this.tasksFile,
                       this.query,
                   )
-                : new HtmlColumnQueryResultsRenderer(
+                : new HtmlQueryResultsRenderer(
                       this.renderMarkdown,
                       this.obsidianComponent,
                       this.obsidianApp,
