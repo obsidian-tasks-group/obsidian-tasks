@@ -86,9 +86,10 @@ export async function verifyHtmlFromRenderer(
     verifyRenderedTasks(container, allTasks);
 }
 
-export function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): void {
+export function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): string {
     const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, allTasks);
     verifyWithFileExtension(tasksAsMarkdown + prettyHTML, 'html');
+    return prettyHTML;
 }
 
 export async function renderTasks(
