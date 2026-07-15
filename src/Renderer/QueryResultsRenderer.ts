@@ -9,6 +9,7 @@ import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
 import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { Task } from '../Task/Task';
+import { HtmlColumnQueryResultsRenderer } from './HtmlColumnQueryResultsRenderer';
 import { type HTMLQueryRendererParameters, HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
 import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
 import { type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
@@ -160,17 +161,28 @@ export class QueryResultsRenderer {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
-        const htmlRenderer = new HtmlQueryResultsRenderer(
-            this.renderMarkdown,
-            this.obsidianComponent,
-            this.obsidianApp,
-            this.textRenderer,
-            this.htmlQueryRendererParameters,
-            this.source,
-            this.tasksFile,
-            this.query,
-        );
-
+        const htmlRenderer =
+            this.query.viewLayoutOptions.viewMode === 'columns'
+                ? new HtmlColumnQueryResultsRenderer(
+                      this.renderMarkdown,
+                      this.obsidianComponent,
+                      this.obsidianApp,
+                      this.textRenderer,
+                      this.htmlQueryRendererParameters,
+                      this.source,
+                      this.tasksFile,
+                      this.query,
+                  )
+                : new HtmlQueryResultsRenderer(
+                      this.renderMarkdown,
+                      this.obsidianComponent,
+                      this.obsidianApp,
+                      this.textRenderer,
+                      this.htmlQueryRendererParameters,
+                      this.source,
+                      this.tasksFile,
+                      this.query,
+                  );
         htmlRenderer.content = content;
         await htmlRenderer.renderQuery(state, queryResult);
         measureRender.finish();

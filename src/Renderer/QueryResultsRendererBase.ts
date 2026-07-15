@@ -34,11 +34,7 @@ export abstract class QueryResultsRendererBase {
         // console messages in large vaults, if Obsidian was opened with any
         // notes with tasks code blocks in Reading or Live Preview mode.
         const query = this.query;
-
-        let error = query.error;
-        if (query.viewLayoutOptions.viewMode === 'columns') {
-            error = '"view columns" is not yet supported.';
-        }
+        const error = query.error;
 
         if (state === State.Warm && error === undefined) {
             await this.renderQuerySearchResults(queryResult);
@@ -102,7 +98,7 @@ export abstract class QueryResultsRendererBase {
 
     protected abstract renderExplanation(explanation: string | null): void;
 
-    private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
+    protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         for (const group of tasksSortedLimitedGrouped.groups) {
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
@@ -230,7 +226,7 @@ export abstract class QueryResultsRendererBase {
      *                        in which case no headings will be added.
      * @private
      */
-    private async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
+    protected async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
         for (const heading of groupHeadings) {
             await this.addGroupHeading(heading);
         }

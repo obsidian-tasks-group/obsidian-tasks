@@ -50,13 +50,13 @@ function makeQueryResultsRenderer(source: string, tasksFile: TasksFile, allTasks
     return queryResultsRenderer;
 }
 
-async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm): Promise<void> {
+async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm): Promise<string> {
     const renderer = makeQueryResultsRenderer(source, createTestTasksFile('file.md'), allTasks);
     const container = document.createElement('div');
 
     await renderer.render(state, allTasks, container);
 
-    verifyRenderedTasks(container, allTasks);
+    return verifyRenderedTasks(container, allTasks);
 }
 
 describe('QueryResultsRenderer - accessing results', () => {
@@ -139,6 +139,17 @@ describe('QueryResultsRenderer - rendering queries', () => {
         ];
 
         await verifyRenderedHtml(twoTasks, source);
+    });
+
+    it('should render columns view', async () => {
+        const source = 'view columns by function task.description';
+        const twoTasks: Task[] = [
+            new TaskBuilder().description('first').build(),
+            new TaskBuilder().description('second').build(),
+        ];
+
+        const html = await verifyRenderedHtml(twoTasks, source);
+        expect(html).toContain('<div class="tasks-columns">');
     });
 });
 

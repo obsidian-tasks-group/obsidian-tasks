@@ -1,0 +1,15 @@
+.tasks-columns {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    align-items: flex-start;
+    padding: 0.5rem 0;
+
+    &-column {
+        flex: 0 0 18rem;
+        border: 1px solid var(--background-modifier-border);
+        border-radius: 8px;
+        background: var(--background-secondary);
+        padding: 0 0.5rem;
+    }
+}
