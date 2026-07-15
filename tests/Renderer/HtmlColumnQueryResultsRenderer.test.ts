@@ -42,41 +42,39 @@ describe('columns rendering', () => {
     const due_columns = 'view columns by due\nhide backlink\nhide edit button';
     const priority_columns = 'view columns by priority\nhide backlink\nhide edit button';
 
-    it('renders no search results', () => {
-        const allTasks: Task[] = [];
+    const noTasks: Task[] = [];
+    const emptyTask = [new TaskBuilder().build()];
 
-        const { query, renderer } = makeColumnRenderer(due_columns, allTasks);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
+    const withDue = [new TaskBuilder().dueDate('2026-07-13').build()];
+    const withDueAndScheduled = [new TaskBuilder().dueDate('2026-06-23').scheduledDate('2025-12-01').build()];
+
+    const twoPriorities = [
+        new TaskBuilder().priority(Priority.Highest).build(),
+        new TaskBuilder().priority(Priority.Low).build(),
+    ];
+
+    it('renders no search results', () => {
+        const { query, renderer } = makeColumnRenderer(due_columns, noTasks);
+        verifyHtmlFromRenderer(renderer, State.Warm, query, noTasks);
     });
 
     it('renders no due date column', () => {
-        const allTasks = [new TaskBuilder().build()];
-
-        const { query, renderer } = makeColumnRenderer(due_columns, allTasks);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
+        const { query, renderer } = makeColumnRenderer(due_columns, emptyTask);
+        verifyHtmlFromRenderer(renderer, State.Warm, query, emptyTask);
     });
 
     it('renders due date column', () => {
-        const allTasks = [new TaskBuilder().dueDate('2026-07-13').build()];
-
-        const { query, renderer } = makeColumnRenderer(due_columns, allTasks);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
+        const { query, renderer } = makeColumnRenderer(due_columns, withDue);
+        verifyHtmlFromRenderer(renderer, State.Warm, query, withDue);
     });
 
     it('renders due date column and scheduled date groups', () => {
-        const allTasks = [new TaskBuilder().dueDate('2026-06-23').scheduledDate('2025-12-01').build()];
-
-        const { query, renderer } = makeColumnRenderer(due_columns + '\ngroup by scheduled', allTasks);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
+        const { query, renderer } = makeColumnRenderer(due_columns + '\ngroup by scheduled', withDueAndScheduled);
+        verifyHtmlFromRenderer(renderer, State.Warm, query, withDueAndScheduled);
     });
 
     it('renders two priority columns', () => {
-        const allTasks = [
-            new TaskBuilder().priority(Priority.Highest).build(),
-            new TaskBuilder().priority(Priority.Low).build(),
-        ];
-
-        const { query, renderer } = makeColumnRenderer(priority_columns, allTasks);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, allTasks);
+        const { query, renderer } = makeColumnRenderer(priority_columns, twoPriorities);
+        verifyHtmlFromRenderer(renderer, State.Warm, query, twoPriorities);
     });
 });
