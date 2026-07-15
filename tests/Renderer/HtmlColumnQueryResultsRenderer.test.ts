@@ -53,28 +53,33 @@ describe('columns rendering', () => {
         new TaskBuilder().priority(Priority.Low).build(),
     ];
 
-    it('renders no search results', () => {
+    it('renders no search results', async () => {
         const { query, renderer } = makeColumnRenderer(due_columns, noTasks);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, noTasks);
+        await verifyHtmlFromRenderer(renderer, State.Warm, query, noTasks);
     });
 
-    it('renders no due date column', () => {
+    it('renders no due date column', async () => {
         const { query, renderer } = makeColumnRenderer(due_columns, emptyTask);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, emptyTask);
+        await verifyHtmlFromRenderer(renderer, State.Warm, query, emptyTask);
     });
 
-    it('renders due date column', () => {
+    it('renders due date column', async () => {
         const { query, renderer } = makeColumnRenderer(due_columns, withDue);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, withDue);
+        await verifyHtmlFromRenderer(renderer, State.Warm, query, withDue);
     });
 
-    it('renders due date column and scheduled date groups', () => {
+    it('renders due date column and scheduled date groups', async () => {
         const { query, renderer } = makeColumnRenderer(due_columns + '\ngroup by scheduled', withDueAndScheduled);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, withDueAndScheduled);
+        await verifyHtmlFromRenderer(renderer, State.Warm, query, withDueAndScheduled);
     });
 
-    it('renders two priority columns', () => {
+    it('renders two priority columns', async () => {
         const { query, renderer } = makeColumnRenderer(priority_columns, twoPriorities);
-        verifyHtmlFromRenderer(renderer, State.Warm, query, twoPriorities);
+        await verifyHtmlFromRenderer(renderer, State.Warm, query, twoPriorities);
+    });
+
+    it('renders one column with two headings', async () => {
+        const { query, renderer } = makeColumnRenderer(due_columns + '\ngroup by priority', twoPriorities);
+        await verifyHtmlFromRenderer(renderer, State.Warm, query, twoPriorities);
     });
 });
