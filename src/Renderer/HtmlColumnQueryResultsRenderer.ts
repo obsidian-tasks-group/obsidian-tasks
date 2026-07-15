@@ -14,9 +14,11 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 continue;
             }
 
-            const columnContainer = createAndAppendElement('div', columnsContainer);
-            columnContainer.classList.add('tasks-columns-column');
-            this.content = columnContainer;
+            if (group.groupHeadings[0].nestingLevel === 0) {
+                const columnContainer = createAndAppendElement('div', columnsContainer);
+                columnContainer.classList.add('tasks-columns-column');
+                this.content = columnContainer;
+            }
 
             // If there were no 'group by' instructions, group.groupHeadings
             // will be empty, and no headings will be added.
