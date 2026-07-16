@@ -273,7 +273,8 @@ export class Cache {
             while (nextFileIndex < files.length) {
                 const file = files[nextFileIndex];
                 nextFileIndex++;
-                await this.indexFile(file);
+                // loadVault() notifies subscribers once, after every worker finishes and the cache is warm.
+                await this.indexFile(file, false);
             }
         };
 
@@ -281,7 +282,7 @@ export class Cache {
         await Promise.all(Array.from({ length: workerCount }, () => indexNextFile()));
     }
 
-    private async indexFile(file: TFile): Promise<void> {
+    private async indexFile(file: TFile, notifyOnChange = true): Promise<void> {
         const fileCache = this.metadataCache.getFileCache(file);
         if (fileCache === null || fileCache === undefined) {
             return;
@@ -310,6 +311,8 @@ export class Cache {
             try {
                 fileContent = await this.vault.cachedRead(file);
             } catch (error) {
+                // A failed read is not evidence that the tasks were deleted. Keep the last successfully read tasks;
+                // task edits read and validate the current file contents before writing any changes.
                 this.logger.error(
                     `Cache.indexFile: unable to read ${file.path}; keeping its previously cached tasks`,
                     error,
@@ -355,8 +358,10 @@ export class Cache {
         this.tasks.push(...newTasks);
         this.logger.debug('Cache.indexFile: ' + file.path + `: read ${newTasks.length} task(s)`);
 
-        // All updated, inform our subscribers.
-        this.notifySubscribers();
+        if (notifyOnChange) {
+            // All updated, inform our subscribers.
+            this.notifySubscribers();
+        }
     }
 
     private getTasksFromFileContent(
