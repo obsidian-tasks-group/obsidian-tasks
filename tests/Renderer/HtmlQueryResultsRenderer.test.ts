@@ -37,10 +37,14 @@ function makeHtmlRenderer(source: string, tasksFile: TasksFile, allTasks: Task[]
     return { query, renderer };
 }
 
-async function verifyRenderedHtml(allTasks: Task[], source: string, state: State = State.Warm) {
+async function verifyRenderedHtml(
+    allTasks: Task[],
+    source: string,
+    state: State = State.Warm,
+): Promise<HTMLDivElement> {
     const tasksFile = createTestTasksFile('query.md');
     const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
-    await verifyHtmlFromRenderer(renderer, state, query, allTasks);
+    return await verifyHtmlFromRenderer(renderer, state, query, allTasks);
 }
 
 beforeEach(() => {
