@@ -175,7 +175,14 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         const shortMode = this.query.queryLayoutOptions.shortMode;
 
-        if (!this.query.queryLayoutOptions.hideBacklinks) {
+        // hide backlink when `hide backlinks` is set
+        // or when `hide nested backlinks` is set and the task is nested
+        const isNested = this.nestingLevel > 0;
+        const hideBacklink =
+            this.query.queryLayoutOptions.hideBacklinks ||
+            (this.query.queryLayoutOptions.hideNestedBacklinks && isNested);
+
+        if (!hideBacklink) {
             this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
         }
 

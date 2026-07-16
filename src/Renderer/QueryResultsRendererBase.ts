@@ -17,6 +17,12 @@ export abstract class QueryResultsRendererBase {
 
     protected readonly addedListItems: Set<ListItem> = new Set<ListItem>();
 
+    /**
+     * The current depth in the rendered task tree: 0 for top-level (outermost) tasks,
+     * and 1 or more for tasks rendered recursively as children. See {@link addChildren}.
+     */
+    protected nestingLevel = 0;
+
     protected constructor(source: string, tasksFile: TasksFile, query: IQuery) {
         this.source = source;
         this.tasksFile = tasksFile;
@@ -105,6 +111,7 @@ export abstract class QueryResultsRendererBase {
             await this.addGroupHeadings(group.groupHeadings);
 
             this.addedListItems.clear();
+            this.nestingLevel = 0;
             await this.addTaskList(group.tasks);
         }
     }
@@ -216,7 +223,12 @@ export abstract class QueryResultsRendererBase {
 
     private async addChildren(children: ListItem[]) {
         if (children.length > 0) {
-            await this.addTaskList(children);
+            this.nestingLevel += 1;
+            try {
+                await this.addTaskList(children);
+            } finally {
+                this.nestingLevel -= 1;
+            }
         }
     }
 
