@@ -255,38 +255,38 @@ group by function 'level4'
                 hideTree + sortByLineNumber + 'hide nested backlink',
             );
 
-            const filenameAndHeadingAsBacklink =
+            const fullBacklinkText =
                 '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)';
             expect(renderedTaskBacklinks(container)).toEqual([
                 {
                     description: '#task parent task',
                     nestingLevel: 0,
-                    backlinkText: filenameAndHeadingAsBacklink,
+                    backlinkText: fullBacklinkText,
                 },
                 {
                     description: '#task child task 1',
                     nestingLevel: 0,
-                    backlinkText: filenameAndHeadingAsBacklink,
+                    backlinkText: fullBacklinkText,
                 },
                 {
                     description: '#task grandchild 1',
                     nestingLevel: 0,
-                    backlinkText: filenameAndHeadingAsBacklink,
+                    backlinkText: fullBacklinkText,
                 },
                 {
                     description: '#task child task 2',
                     nestingLevel: 0,
-                    backlinkText: filenameAndHeadingAsBacklink,
+                    backlinkText: fullBacklinkText,
                 },
                 {
                     description: '#task grandchild 2',
                     nestingLevel: 0,
-                    backlinkText: filenameAndHeadingAsBacklink,
+                    backlinkText: fullBacklinkText,
                 },
                 {
                     description: '#task sibling',
                     nestingLevel: 0,
-                    backlinkText: filenameAndHeadingAsBacklink,
+                    backlinkText: fullBacklinkText,
                 },
             ]);
         });
