@@ -249,7 +249,45 @@ group by function 'level4'
         it('hide tree and hide nested backlink - flat is a no-op', async () => {
             // Without 'show tree' there are no nested tasks, so 'hide nested backlink'
             // changes nothing: all tasks keep their full backlink. This must never change.
-            await verifyRenderedHtml(allTasks(), hideTree + sortByLineNumber + 'hide nested backlink');
+            const container = await verifyRenderedHtml(
+                allTasks(),
+                hideTree + sortByLineNumber + 'hide nested backlink',
+            );
+
+            const filenameAndHeadingAsBacklink =
+                '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)';
+            expect(renderedTaskBacklinks(container)).toEqual([
+                {
+                    description: '#task parent task',
+                    nestingLevel: 0,
+                    backlinkText: filenameAndHeadingAsBacklink,
+                },
+                {
+                    description: '#task child task 1',
+                    nestingLevel: 0,
+                    backlinkText: filenameAndHeadingAsBacklink,
+                },
+                {
+                    description: '#task grandchild 1',
+                    nestingLevel: 0,
+                    backlinkText: filenameAndHeadingAsBacklink,
+                },
+                {
+                    description: '#task child task 2',
+                    nestingLevel: 0,
+                    backlinkText: filenameAndHeadingAsBacklink,
+                },
+                {
+                    description: '#task grandchild 2',
+                    nestingLevel: 0,
+                    backlinkText: filenameAndHeadingAsBacklink,
+                },
+                {
+                    description: '#task sibling',
+                    nestingLevel: 0,
+                    backlinkText: filenameAndHeadingAsBacklink,
+                },
+            ]);
         });
 
         it('show tree, hide backlink and show nested backlink - hide backlink is stronger', async () => {
