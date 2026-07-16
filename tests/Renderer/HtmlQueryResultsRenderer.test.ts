@@ -217,36 +217,12 @@ group by function 'level4'
             const fullBacklinkText =
                 '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)';
             expectRenderedTaskBacklinks(container, [
-                {
-                    description: '#task parent task',
-                    nestingLevel: 0,
-                    backlinkText: fullBacklinkText,
-                },
-                {
-                    description: '#task child task 1',
-                    nestingLevel: 1,
-                    backlinkText: null,
-                },
-                {
-                    description: '#task grandchild 1',
-                    nestingLevel: 2,
-                    backlinkText: null,
-                },
-                {
-                    description: '#task child task 2',
-                    nestingLevel: 1,
-                    backlinkText: null,
-                },
-                {
-                    description: '#task grandchild 2',
-                    nestingLevel: 2,
-                    backlinkText: null,
-                },
-                {
-                    description: '#task sibling',
-                    nestingLevel: 0,
-                    backlinkText: fullBacklinkText,
-                },
+                { description: '#task parent task', nestingLevel: 0, backlinkText: fullBacklinkText },
+                { description: '#task child task 1', nestingLevel: 1, backlinkText: null },
+                { description: '#task grandchild 1', nestingLevel: 2, backlinkText: null },
+                { description: '#task child task 2', nestingLevel: 1, backlinkText: null },
+                { description: '#task grandchild 2', nestingLevel: 2, backlinkText: null },
+                { description: '#task sibling', nestingLevel: 0, backlinkText: fullBacklinkText },
             ]);
         });
 
