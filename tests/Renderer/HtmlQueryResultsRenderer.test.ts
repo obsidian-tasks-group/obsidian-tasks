@@ -214,12 +214,13 @@ group by function 'level4'
                 showTree + sortByLineNumber + 'hide nested backlink',
             );
 
+            const fullBacklinkText =
+                '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)';
             expect(renderedTaskBacklinks(container)).toEqual([
                 {
                     description: '#task parent task',
                     nestingLevel: 0,
-                    backlinkText:
-                        '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)',
+                    backlinkText: fullBacklinkText,
                 },
                 {
                     description: '#task child task 1',
@@ -244,8 +245,7 @@ group by function 'level4'
                 {
                     description: '#task sibling',
                     nestingLevel: 0,
-                    backlinkText:
-                        '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)',
+                    backlinkText: fullBacklinkText,
                 },
             ]);
         });
