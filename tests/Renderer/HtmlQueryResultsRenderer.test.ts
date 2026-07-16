@@ -271,19 +271,55 @@ group by function 'level4'
             // 'hide backlink' hides all backlinks, and 'show nested backlink' (the default)
             // cannot re-show them: 'show tree + hide backlink' queries written before
             // 'nested backlink' existed must keep hiding all backlinks. This must never change.
-            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'hide backlink\nshow nested backlink');
+            const container = await verifyRenderedHtml(
+                allTasks(),
+                showTree + sortByLineNumber + 'hide backlink\nshow nested backlink',
+            );
+
+            expectRenderedTaskBacklinks(container, [
+                { description: '#task parent task', nestingLevel: 0, backlinkText: null },
+                { description: '#task child task 1', nestingLevel: 1, backlinkText: null },
+                { description: '#task grandchild 1', nestingLevel: 2, backlinkText: null },
+                { description: '#task child task 2', nestingLevel: 1, backlinkText: null },
+                { description: '#task grandchild 2', nestingLevel: 2, backlinkText: null },
+                { description: '#task sibling', nestingLevel: 0, backlinkText: null },
+            ]);
         });
 
         it('show tree, hide backlink and hide nested backlink', async () => {
             // Both instructions hide backlinks, so no backlinks are shown anywhere.
             // This must never change.
-            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'hide backlink\nhide nested backlink');
+            const container = await verifyRenderedHtml(
+                allTasks(),
+                showTree + sortByLineNumber + 'hide backlink\nhide nested backlink',
+            );
+
+            expectRenderedTaskBacklinks(container, [
+                { description: '#task parent task', nestingLevel: 0, backlinkText: null },
+                { description: '#task child task 1', nestingLevel: 1, backlinkText: null },
+                { description: '#task grandchild 1', nestingLevel: 2, backlinkText: null },
+                { description: '#task child task 2', nestingLevel: 1, backlinkText: null },
+                { description: '#task grandchild 2', nestingLevel: 2, backlinkText: null },
+                { description: '#task sibling', nestingLevel: 0, backlinkText: null },
+            ]);
         });
 
         it('show tree, short mode and hide nested backlink', async () => {
             // Top-level tasks keep their short-mode 🔗 backlink,
             // and nested tasks have their backlink hidden.
-            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'short mode\nhide nested backlink');
+            const container = await verifyRenderedHtml(
+                allTasks(),
+                showTree + sortByLineNumber + 'short mode\nhide nested backlink',
+            );
+
+            expectRenderedTaskBacklinks(container, [
+                { description: '#task parent task', nestingLevel: 0, backlinkText: '🔗' },
+                { description: '#task child task 1', nestingLevel: 1, backlinkText: null },
+                { description: '#task grandchild 1', nestingLevel: 2, backlinkText: null },
+                { description: '#task child task 2', nestingLevel: 1, backlinkText: null },
+                { description: '#task grandchild 2', nestingLevel: 2, backlinkText: null },
+                { description: '#task sibling', nestingLevel: 0, backlinkText: '🔗' },
+            ]);
         });
 
         it('should hide backlinks on nested tasks with "hide nested backlink"', async () => {
