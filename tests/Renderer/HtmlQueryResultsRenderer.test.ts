@@ -257,7 +257,7 @@ group by function 'level4'
 
             const fullBacklinkText =
                 '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)';
-            expect(renderedTaskBacklinks(container)).toEqual([
+            expectRenderedTaskBacklinks(container, [
                 {
                     description: '#task parent task',
                     nestingLevel: 0,
