@@ -12,6 +12,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
+- X.Y.Z:
+  - Add [[Layout#Hide and Show Nested Backlink|'hide nested backlink']] instruction, for when '`show tree`' makes the output just too cluttered.
 - 8.1.0:
   - Add Turkish translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
 - 8.0.0:
