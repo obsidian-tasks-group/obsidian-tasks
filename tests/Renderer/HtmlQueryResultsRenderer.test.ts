@@ -47,6 +47,12 @@ async function verifyRenderedHtml(
     return await verifyHtmlFromRenderer(renderer, state, query, allTasks);
 }
 
+type RenderedTaskBacklink = {
+    description: string;
+    nestingLevel: number;
+    backlinkText: string | null;
+};
+
 function renderedTaskNestingLevel(li: Element) {
     let nestingLevel = 0;
     let parentListItem = li.parentElement?.closest('li');
@@ -65,6 +71,10 @@ function renderedTaskBacklinks(container: HTMLElement) {
         nestingLevel: renderedTaskNestingLevel(li),
         backlinkText: li.querySelector(':scope > .task-extras > .tasks-backlink')?.textContent?.trim() ?? null,
     }));
+}
+
+function expectRenderedTaskBacklinks(container: HTMLElement, expected: RenderedTaskBacklink[]) {
+    expect(renderedTaskBacklinks(container)).toEqual(expected);
 }
 
 beforeEach(() => {
@@ -243,7 +253,22 @@ group by function 'level4'
         it('show tree and show nested backlink', async () => {
             // 'show nested backlink' is the default: all tasks show their backlink,
             // exactly as if the instruction was absent. This must never change.
-            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'show nested backlink');
+            const container = await verifyRenderedHtml(
+                allTasks(),
+                showTree + sortByLineNumber + 'show nested backlink',
+            );
+
+            const fullBacklinkText =
+                '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)';
+
+            expectRenderedTaskBacklinks(container, [
+                { description: '#task parent task', nestingLevel: 0, backlinkText: fullBacklinkText },
+                { description: '#task child task 1', nestingLevel: 1, backlinkText: fullBacklinkText },
+                { description: '#task grandchild 1', nestingLevel: 2, backlinkText: fullBacklinkText },
+                { description: '#task child task 2', nestingLevel: 1, backlinkText: fullBacklinkText },
+                { description: '#task grandchild 2', nestingLevel: 2, backlinkText: fullBacklinkText },
+                { description: '#task sibling', nestingLevel: 0, backlinkText: fullBacklinkText },
+            ]);
         });
 
         it('hide tree and hide nested backlink - flat is a no-op', async () => {
