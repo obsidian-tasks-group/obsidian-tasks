@@ -47,6 +47,26 @@ async function verifyRenderedHtml(
     return await verifyHtmlFromRenderer(renderer, state, query, allTasks);
 }
 
+function renderedTaskNestingLevel(li: Element) {
+    let nestingLevel = 0;
+    let parentListItem = li.parentElement?.closest('li');
+
+    while (parentListItem !== null && parentListItem !== undefined) {
+        nestingLevel += 1;
+        parentListItem = parentListItem.parentElement?.closest('li');
+    }
+
+    return nestingLevel;
+}
+
+function renderedTaskBacklinks(container: HTMLElement) {
+    return Array.from(container.querySelectorAll('li.task-list-item')).map((li) => ({
+        description: li.querySelector(':scope > .tasks-list-text .task-description')?.textContent?.trim() ?? '',
+        nestingLevel: renderedTaskNestingLevel(li),
+        backlinkText: li.querySelector(':scope > .task-extras > .tasks-backlink')?.textContent?.trim() ?? null,
+    }));
+}
+
 beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date('2023-07-05'));
@@ -179,7 +199,45 @@ group by function 'level4'
         it('show tree and hide nested backlink', async () => {
             // Top-level tasks (parent and sibling) keep their full backlink,
             // and nested tasks have their backlink hidden.
-            await verifyRenderedHtml(allTasks(), showTree + sortByLineNumber + 'hide nested backlink');
+            const container = await verifyRenderedHtml(
+                allTasks(),
+                showTree + sortByLineNumber + 'hide nested backlink',
+            );
+
+            expect(renderedTaskBacklinks(container)).toEqual([
+                {
+                    description: '#task parent task',
+                    nestingLevel: 0,
+                    backlinkText:
+                        '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)',
+                },
+                {
+                    description: '#task child task 1',
+                    nestingLevel: 1,
+                    backlinkText: null,
+                },
+                {
+                    description: '#task grandchild 1',
+                    nestingLevel: 2,
+                    backlinkText: null,
+                },
+                {
+                    description: '#task child task 2',
+                    nestingLevel: 1,
+                    backlinkText: null,
+                },
+                {
+                    description: '#task grandchild 2',
+                    nestingLevel: 2,
+                    backlinkText: null,
+                },
+                {
+                    description: '#task sibling',
+                    nestingLevel: 0,
+                    backlinkText:
+                        '(inheritance_1parent2children2grandchildren1sibling_start_with_heading > Test heading)',
+                },
+            ]);
         });
 
         it('show tree and show nested backlink', async () => {
