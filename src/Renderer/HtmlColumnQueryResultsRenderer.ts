@@ -30,4 +30,10 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
 
         this.content = originalParent;
     }
+
+    protected extendTaskBehaviour(listItem: HTMLLIElement) {
+        if (this.nestingLevel === 0) {
+            listItem.classList.add('tasks-columns-column-card');
+        }
+    }
 }
