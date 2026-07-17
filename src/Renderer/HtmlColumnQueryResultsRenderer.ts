@@ -1,10 +1,11 @@
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import type { Task } from '../Task/Task';
+import { DragState } from './DragState';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
-    private draggedTask?: Task;
+    private readonly dragState = new DragState();
 
     protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         const originalParent = this.content;
@@ -31,9 +32,9 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 columnContainer.addEventListener('drop', (e) => {
                     // Fires when a card is released over this column. preventDefault()
                     // stops the browser's default handling; here we read the Task object
-                    // that the dragged card stashed on the instance during dragstart.
+                    // that the dragged card recorded in DragState during dragstart.
                     e.preventDefault();
-                    console.log({ droppedTask: this.draggedTask });
+                    console.log({ droppedTask: this.dragState.dragged });
                 });
 
                 this.content = columnContainer;
@@ -57,14 +58,24 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
 
             listItem.addEventListener('dragstart', (e) => {
                 // Fires when the user starts dragging this card (only possible because
-                // of draggable = true above). We stash the whole Task object on the
-                // instance so the column's 'drop' handler can read it back. Do NOT
+                // of draggable = true above). We record the whole Task object in
+                // DragState so the column's 'drop' handler can read it back. Do NOT
                 // preventDefault here - that would cancel the drag before it starts.
                 console.log('drag start', task);
-                this.draggedTask = task;
+                this.dragState.start(task);
                 if (e.dataTransfer) {
                     e.dataTransfer.effectAllowed = 'move';
                 }
+            });
+
+            listItem.addEventListener('dragend', () => {
+                // 'dragend' is fired every time the dragged object's drag has ended
+                // regardless of drag's target, so we clear the state here to be sure that
+                // we never end up in a stale state.
+                // 'drop' only fires when the card lands on a valid target.
+                // A cancelled drag (Escape, or a release over empty space) fires no 'drop',
+                // which would leave a stale task for the next drag to read.
+                this.dragState.clear();
             });
         }
     }
