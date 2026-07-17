@@ -154,7 +154,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.htmlQueryRendererParameters.allMarkdownFiles());
         const listItem = this.lastLIElement;
 
-        this.extendTaskBehaviour(listItem);
+        this.extendTaskBehaviour(listItem, task);
 
         await this.taskLineRenderer.renderTaskLine({
             li: listItem,
@@ -199,7 +199,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         this.currentULElement().appendChild(listItem);
     }
 
-    protected extendTaskBehaviour(_listItem: HTMLLIElement) {}
+    protected extendTaskBehaviour(_listItem: HTMLLIElement, _task: Task) {}
 
     private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = createAndAppendElement('a', listItem);
