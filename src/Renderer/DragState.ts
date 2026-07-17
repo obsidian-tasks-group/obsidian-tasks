@@ -1,4 +1,6 @@
 import type { Task } from '../Task/Task';
+import type { TaskEditingInstruction } from '../ui/EditInstructions/TaskEditingInstruction';
+import { defaultTaskSaver } from '../ui/Menus/TaskEditingMenu';
 
 /**
  * Tracks which {@link Task} is currently being dragged during a drag-and-drop operation.
@@ -17,7 +19,8 @@ export class DragState {
     }
 
     /** The task currently being dragged, or `undefined` if no drag is in progress. */
-    public get dragged(): Task | undefined {
+    public async dragged(instruction: TaskEditingInstruction): Promise<Task | undefined> {
+        await defaultTaskSaver(this.draggedTask!, instruction.apply(this.draggedTask!));
         return this.draggedTask;
     }
 

@@ -1,8 +1,32 @@
 import type { TaskGroups } from '../Query/Group/TaskGroups';
+import { Priority } from '../Task/Priority';
 import type { Task } from '../Task/Task';
+import { SetPriority } from '../ui/EditInstructions/PriorityInstructions';
 import { DragState } from './DragState';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
+
+function getInstruction(displayName: string) {
+    if (displayName.includes('Highest')) {
+        return new SetPriority(Priority.Highest);
+    }
+    if (displayName.includes('High')) {
+        return new SetPriority(Priority.High);
+    }
+    if (displayName.includes('Medium')) {
+        return new SetPriority(Priority.Medium);
+    }
+    if (displayName.includes('None')) {
+        return new SetPriority(Priority.None);
+    }
+    if (displayName.includes('Low')) {
+        return new SetPriority(Priority.Low);
+    }
+    if (displayName.includes('Lowest')) {
+        return new SetPriority(Priority.Lowest);
+    }
+    return null;
+}
 
 export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     private readonly dragState = new DragState();
@@ -29,12 +53,15 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                     e.preventDefault();
                 });
 
-                columnContainer.addEventListener('drop', (e) => {
+                const instruction = getInstruction(group.groupHeadings[0].displayName);
+                columnContainer.addEventListener('drop', async (e) => {
                     // Fires when a card is released over this column. preventDefault()
                     // stops the browser's default handling; here we read the Task object
                     // that the dragged card recorded in DragState during dragstart.
                     e.preventDefault();
-                    console.log({ droppedTask: this.dragState.dragged });
+                    if (instruction) {
+                        await this.dragState.dragged(instruction);
+                    }
                 });
 
                 this.content = columnContainer;
