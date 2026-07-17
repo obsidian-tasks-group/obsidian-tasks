@@ -19,11 +19,11 @@ function getInstruction(displayName: string) {
     if (displayName.includes('None')) {
         return new SetPriority(Priority.None);
     }
-    if (displayName.includes('Low')) {
-        return new SetPriority(Priority.Low);
-    }
     if (displayName.includes('Lowest')) {
         return new SetPriority(Priority.Lowest);
+    }
+    if (displayName.includes('Low')) {
+        return new SetPriority(Priority.Low);
     }
     return null;
 }
