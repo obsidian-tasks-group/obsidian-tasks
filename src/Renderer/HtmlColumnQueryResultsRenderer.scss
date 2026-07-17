@@ -11,5 +11,11 @@
         border-radius: 8px;
         background: var(--background-secondary);
         padding: 0 0.5rem;
+
+        &-card {
+            //border: 1px solid red;
+            cursor: grab;
+            user-select: none;
+        }
     }
 }
