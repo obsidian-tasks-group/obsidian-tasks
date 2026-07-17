@@ -4,6 +4,8 @@ import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
 
 export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
+    private draggedTask?: Task;
+
     protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         const originalParent = this.content;
 
@@ -24,16 +26,14 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                     // dragover is what marks this column as a valid drop target - without
                     // it, the 'drop' event below never fires.
                     e.preventDefault();
-                    console.log('dragover');
                 });
 
                 columnContainer.addEventListener('drop', (e) => {
                     // Fires when a card is released over this column. preventDefault()
-                    // stops the browser's default handling; here we read the payload that
-                    // was stashed in dragstart.
+                    // stops the browser's default handling; here we read the Task object
+                    // that the dragged card stashed on the instance during dragstart.
                     e.preventDefault();
-                    const draggedKey = e.dataTransfer?.getData('text/plain');
-                    console.log({ draggedKey });
+                    console.log({ droppedTask: this.draggedTask });
                 });
 
                 this.content = columnContainer;
@@ -57,13 +57,12 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
 
             listItem.addEventListener('dragstart', (e) => {
                 // Fires when the user starts dragging this card (only possible because
-                // of draggable = true above). We stash the task's id in the drag payload
-                // so the column's 'drop' handler can read it back. Do NOT preventDefault
-                // here - that would cancel the drag before it starts.
-                console.log('drag start - begin');
+                // of draggable = true above). We stash the whole Task object on the
+                // instance so the column's 'drop' handler can read it back. Do NOT
+                // preventDefault here - that would cancel the drag before it starts.
+                console.log('drag start', task);
+                this.draggedTask = task;
                 if (e.dataTransfer) {
-                    e.dataTransfer.setData('text/plain', task.id);
-                    console.log('drag start - data set');
                     e.dataTransfer.effectAllowed = 'move';
                 }
             });
