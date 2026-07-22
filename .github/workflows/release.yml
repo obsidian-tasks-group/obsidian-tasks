@@ -13,7 +13,7 @@ jobs:
       attestations: write
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
