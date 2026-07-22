@@ -36,7 +36,7 @@
     "@codemirror/view": "^6.2.0",
     "@eslint/js": "^8.57.0",
     "@eslint/json": "0.14.0",
-    "@evilmartians/lefthook": "^1.7.2",
+    "@evilmartians/lefthook": "^2.1.10",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/svelte": "^3.2.2",
     "@tsconfig/svelte": "^3.0.0",
