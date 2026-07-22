@@ -85,3 +85,16 @@ describe('RegexMatcher flags', () => {
         expect(t).toThrowError("Invalid flags supplied to RegExp constructor 'ii'");
     });
 });
+
+describe('RegexMatcher ReDoS protection', () => {
+    it.failing('should reject regex vulnerable to catastrophic backtracking (ReDoS)', () => {
+        // Issue #3944
+        const t = () => {
+            RegexMatcher.validateAndConstruct('/(a+)+$/');
+        };
+        expect(t).toThrow(SyntaxError);
+        expect(t).toThrowError(
+            'Regular expression /(a+)+$/ rejected because it may be vulnerable to catastrophic backtracking.',
+        );
+    });
+});
