@@ -38,8 +38,8 @@ CAUTION! Regular expression (or 'regex') searching is a powerful
 but advanced feature that requires thorough knowledge in order to
 use successfully, and not miss intended search results.
 
-Patterns with nested quantifiers (e.g. (a+)+) are rejected because
-they can cause extreme slowdowns (catastrophic backtracking).
+Patterns with nested quantifiers (for example (a+)+) are rejected
+because they can cause extreme slowdowns (catastrophic backtracking).
 `,
         );
     });
