@@ -4998,9 +4998,9 @@ heimdalljs@^0.2.6:
     rsvp "~3.2.1"
 
 hono@^4.11.4:
-  version "4.12.23"
-  resolved "https://registry.yarnpkg.com/hono/-/hono-4.12.23.tgz#998b91651686149f0e6edbb8564d604da04f3cf8"
-  integrity sha512-eIaZ9qDgu7XV0pxOCrg7/WhnQ6Ivm22UcxhXx/A3dcbqbbYgBEkc6e/J/s7j2tS96zoB0S9VBdLwQNCWwUo4LA==
+  version "4.12.31"
+  resolved "https://registry.yarnpkg.com/hono/-/hono-4.12.31.tgz#2ccaaf3ccd82db372f169c5b39c065c31ff36294"
+  integrity sha512-zJIHFrl6bq3RDd2YusFNCDlM8qUprxKswyi/OPzPyzKDdyBXDqWx8bZlZ7R+saTdSTatUmb3O7K4SspGPaEOQg==
 
 html-encoding-sniffer@^4.0.0:
   version "4.0.0"
