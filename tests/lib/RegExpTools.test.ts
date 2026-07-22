@@ -47,6 +47,15 @@ describe('validateRegExpSafety', () => {
         expect(result).toContain('catastrophic backtracking');
     });
 
+    it.failing('should reject unsafe pattern, but safe-regex2 does not detect it ', () => {
+        // If this starts passing after a future update to safe-regex2:
+        // 1. Activate this pattern in the 'known false negative' comment above
+        // 2. Delete this test.
+        const result = validateRegExpSafety('(a|a)*$');
+        expect(result).not.toBeNull();
+        expect(result).toContain('catastrophic backtracking');
+    });
+
     it('should reject patterns exceeding the maximum length', () => {
         const longPattern = 'a'.repeat(501);
         const result = validateRegExpSafety(longPattern);
