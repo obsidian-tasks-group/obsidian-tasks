@@ -1,3 +1,31 @@
+import safe from 'safe-regex2';
+
+const MAX_REGEX_PATTERN_LENGTH = 500;
+
+/**
+ * Check whether a regular expression pattern is safe from catastrophic backtracking (ReDoS).
+ *
+ * Uses the {@link https://github.com/fastify/safe-regex2 | safe-regex2} library to detect
+ * patterns with a star height greater than 1 (nested quantifiers such as `(a+)+`),
+ * which can cause exponential matching time against certain inputs.
+ *
+ * Also enforces a maximum pattern length as defense-in-depth.
+ *
+ * @param pattern - The regex source string (without surrounding slashes or flags).
+ * @returns `null` if the pattern is safe, or a string describing the problem if it is unsafe.
+ */
+export function validateRegExpSafety(pattern: string): string | null {
+    if (pattern.length > MAX_REGEX_PATTERN_LENGTH) {
+        return `Regular expression pattern is too long (${pattern.length} characters, maximum ${MAX_REGEX_PATTERN_LENGTH}).`;
+    }
+
+    if (!safe(pattern, { limit: 25 })) {
+        return 'Regular expression may cause performance problems (possible catastrophic backtracking detected).';
+    }
+
+    return null;
+}
+
 /**
  * Escape a string so it can be used as part of a RegExp literally.
  * Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
