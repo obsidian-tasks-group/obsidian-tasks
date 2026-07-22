@@ -97,4 +97,41 @@ describe('RegexMatcher ReDoS protection', () => {
             'Regular expression /(a+)+$/ rejected because it may be vulnerable to catastrophic backtracking.',
         );
     });
+
+    it.each([
+        ['/(a+)+$/'],
+        ['/(a+)+b/'],
+        // Note: /(a|a)*$/ is a known false negative in safe-regex2 (not detected)
+        ['/(.*)*$/'],
+        ['/(a+){10}/'],
+        ['/(x+x+)+y/'],
+    ])('should reject unsafe pattern: %s', (pattern: string) => {
+        const t = () => {
+            RegexMatcher.validateAndConstruct(pattern);
+        };
+        // TODO it.each() does not support .failing
+        //      Remove the '.not' once the check is implemented.
+        expect(t).not.toThrow(Error);
+        expect(t).not.toThrowError('catastrophic backtracking');
+    });
+
+    it.each([
+        ['/hello world/i'],
+        [String.raw`/\d\d:\d\d/`],
+        ['/(beep|boop)*/'],
+        ['/waiting|waits|wartet/i'],
+        ['/^Log/i'],
+    ])('should accept safe pattern: %s', (pattern: string) => {
+        const matcher = RegexMatcher.validateAndConstruct(pattern);
+        expect(matcher).not.toBeNull();
+    });
+
+    it.failing('should reject patterns exceeding the maximum length', () => {
+        const longPattern = '/' + 'a'.repeat(501) + '/';
+        const t = () => {
+            RegexMatcher.validateAndConstruct(longPattern);
+        };
+        expect(t).toThrow(Error);
+        expect(t).toThrowError('too long');
+    });
 });
