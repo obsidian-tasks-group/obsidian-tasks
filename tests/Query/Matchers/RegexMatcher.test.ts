@@ -94,7 +94,7 @@ describe('RegexMatcher ReDoS protection', () => {
         };
         expect(t).toThrow(SyntaxError);
         expect(t).toThrowError(
-            'Regular expression may cause performance problems (possible catastrophic backtracking detected',
+            'Regular expression /(a+)+$/ may cause performance problems (possible catastrophic backtracking detected)',
         );
     });
 

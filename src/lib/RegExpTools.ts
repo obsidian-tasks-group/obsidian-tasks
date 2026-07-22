@@ -20,7 +20,7 @@ export function validateRegExpSafety(pattern: string): string | null {
     }
 
     if (!safe(pattern, { limit: 25 })) {
-        return 'Regular expression may cause performance problems (possible catastrophic backtracking detected).';
+        return `Regular expression /${pattern}/ may cause performance problems (possible catastrophic backtracking detected).`;
     }
 
     return null;
