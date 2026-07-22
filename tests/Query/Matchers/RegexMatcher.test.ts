@@ -87,14 +87,14 @@ describe('RegexMatcher flags', () => {
 });
 
 describe('RegexMatcher ReDoS protection', () => {
-    it.failing('should reject regex vulnerable to catastrophic backtracking (ReDoS)', () => {
+    it('should reject regex vulnerable to catastrophic backtracking (ReDoS)', () => {
         // Issue #3944
         const t = () => {
             RegexMatcher.validateAndConstruct('/(a+)+$/');
         };
         expect(t).toThrow(SyntaxError);
         expect(t).toThrowError(
-            'Regular expression /(a+)+$/ rejected because it may be vulnerable to catastrophic backtracking.',
+            'Regular expression may cause performance problems (possible catastrophic backtracking detected',
         );
     });
 
@@ -109,10 +109,8 @@ describe('RegexMatcher ReDoS protection', () => {
         const t = () => {
             RegexMatcher.validateAndConstruct(pattern);
         };
-        // TODO it.each() does not support .failing
-        //      Remove the '.not' once the check is implemented.
-        expect(t).not.toThrow(Error);
-        expect(t).not.toThrowError('catastrophic backtracking');
+        expect(t).toThrow(Error);
+        expect(t).toThrowError('catastrophic backtracking');
     });
 
     it.each([
@@ -126,7 +124,7 @@ describe('RegexMatcher ReDoS protection', () => {
         expect(matcher).not.toBeNull();
     });
 
-    it.failing('should reject patterns exceeding the maximum length', () => {
+    it('should reject patterns exceeding the maximum length', () => {
         const longPattern = '/' + 'a'.repeat(501) + '/';
         const t = () => {
             RegexMatcher.validateAndConstruct(longPattern);

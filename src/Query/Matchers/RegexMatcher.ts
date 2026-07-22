@@ -1,3 +1,4 @@
+import { validateRegExpSafety } from '../../lib/RegExpTools';
 import { Explanation } from '../Explain/Explanation';
 import { IStringMatcher } from './IStringMatcher';
 
@@ -36,7 +37,13 @@ export class RegexMatcher extends IStringMatcher {
         const query = regexInput.match(regexPattern);
 
         if (query !== null) {
+            // Validate syntax first so that genuine SyntaxErrors (e.g. unterminated groups)
+            // are reported before the safety check, which can misclassify malformed patterns.
             const regExp = new RegExp(query[1], query[2]);
+            const safetyError = validateRegExpSafety(query[1]);
+            if (safetyError !== null) {
+                throw new SyntaxError(safetyError);
+            }
             return new RegexMatcher(regExp);
         } else {
             return null;
@@ -74,6 +81,9 @@ to find them literally, you must add a \ before them:
 CAUTION! Regular expression (or 'regex') searching is a powerful
 but advanced feature that requires thorough knowledge in order to
 use successfully, and not miss intended search results.
+
+Patterns with nested quantifiers (e.g. (a+)+) are rejected because
+they can cause extreme slowdowns (catastrophic backtracking).
 `;
     }
 
