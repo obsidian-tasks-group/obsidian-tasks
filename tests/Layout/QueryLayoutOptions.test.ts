@@ -13,6 +13,7 @@ describe('parsing query show/hide layout options', () => {
         ['nested backlink', 'hideNestedBacklinks', false],
         ['postpone button', 'hidePostponeButton', false],
         ['task count', 'hideTaskCount', false],
+        ['group task count', 'hideGroupTaskCount', true],
         ['toolbar', 'hideToolbar', false],
         ['tree', 'hideTree', true],
         ['urgency', 'hideUrgency', true],
