@@ -11,6 +11,7 @@ import { mockApp } from '../__mocks__/obsidian';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
+import { fromMarkdown } from '../TestingTools/TestHelpers';
 import {
     makeHtmlQueryRendererParameters,
     mockHTMLRenderer,
@@ -185,6 +186,25 @@ group by function task.description.length
 group by function 'level2'
 group by function 'level3'
 group by function 'level4'
+`,
+        );
+    });
+
+    it('should write group task count, if enabled', async () => {
+        // Not yet implemented...
+        const tasks = fromMarkdown(`
+- [ ] 1 ⏳ 2025-10-29
+- [ ] 2 ⏬
+- [ ] 3 ⏫ ⏳ 2025-10-30
+- [ ] 4 ⏳ 2025-10-29
+`);
+
+        await verifyRenderedHtml(
+            tasks,
+            `
+group by priority
+group by scheduled
+show group task count
 `,
         );
     });
