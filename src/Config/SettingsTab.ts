@@ -1,4 +1,16 @@
-import { Notice, PluginSettingTab, Setting, debounce, sanitizeHTMLToDom } from 'obsidian';
+import {
+    type ConfirmationButton,
+    ConfirmationModal,
+    Menu,
+    Notice,
+    PluginSettingTab,
+    Setting,
+    type SettingDefinition,
+    type SettingDefinitionItem,
+    debounce,
+    requireApiVersion,
+    sanitizeHTMLToDom,
+} from 'obsidian';
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
@@ -21,6 +33,7 @@ import { StatusSettings } from './StatusSettings';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
+import { GlobalQueryModal } from './GlobalQueryModal';
 import { PresetsSettingsUI } from './PresetsSettingsUI';
 import { EnableJsInTasksQueries } from './EnableJsInTasksQueries';
 
@@ -44,6 +57,15 @@ interface HeadingConfiguration {
     settings: SettingConfiguration[];
 }
 
+/**
+ * The plugin's settings tab, with two implementations of the UI:
+ *
+ * - {@link getSettingDefinitions} — the declarative API, used by Obsidian 1.13.0 and later.
+ * - {@link display} — the imperative fallback, used by older Obsidian versions.
+ *
+ * Obsidian picks the right path per host, so BOTH implementations must be
+ * updated whenever a setting is added, removed or changed.
+ */
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
     // custom function and specify it from the json file. It will
@@ -69,15 +91,784 @@ export class SettingsTab extends PluginSettingTab {
 
     public saveSettingsAndRebuildSettingsTab(): void {
         void this.plugin.saveSettings();
+        this.rebuildSettingsTab();
+    }
 
+    private rebuildSettingsTab(): void {
         // Rebuilding the settings tab resets it to the top, so restore how far down it was.
         const previousDistanceFromTop = this.containerEl.scrollTop;
 
-        this.display();
+        if (requireApiVersion('1.13.0')) {
+            // Obsidian 1.13.0+ renders this tab from getSettingDefinitions(),
+            // so rebuild it declaratively. display() would render nothing here.
+            this.update();
+        } else {
+            this.display();
+        }
 
         requestAnimationFrame(() => {
             this.containerEl.scrollTo({ top: previousDistanceFromTop });
         });
+    }
+
+    // -----------------------------------------------------------------------
+    // Declarative settings API (Obsidian 1.13.0+)
+    //
+    // The plugin keeps its data in a module-level object accessed via
+    // getSettings/updateSettings, not on this.plugin.settings. Override the
+    // default control-binding hooks so declarative `control` definitions read
+    // and write through those helpers.
+    // -----------------------------------------------------------------------
+
+    public getControlValue(key: string): unknown {
+        return (getSettings() as unknown as Record<string, unknown>)[key];
+    }
+
+    public async setControlValue(key: string, value: unknown): Promise<void> {
+        updateSettings({ [key]: value });
+        await this.plugin.saveSettings();
+    }
+
+    /**
+     * Convenience: build a `render` callback that adds a toggle plus a docs
+     * extraButton. Reads/writes via the same getControlValue/setControlValue
+     * bridge as a `control` definition.
+     */
+    private renderToggleWithDocs(key: keyof ReturnType<typeof getSettings>, docsUrl: string) {
+        return this.withDocs((setting: Setting) => {
+            setting.addToggle((toggle) => {
+                toggle.setValue(this.getControlValue(key) as boolean).onChange(async (value) => {
+                    await this.setControlValue(key, value);
+                });
+            });
+        }, docsUrl);
+    }
+
+    /**
+     * Convenience: build a `render` callback that adds a docs extraButton onto
+     * an existing render callback.
+     */
+    private withDocs(inner: (setting: Setting) => void, docsUrl: string) {
+        return (setting: Setting) => {
+            setting.addExtraButton((btn) =>
+                btn
+                    .setIcon('book-open')
+                    .setTooltip(i18n.t('settings.seeTheDocumentation'))
+                    .onClick(() => window.open(docsUrl, '_blank')),
+            );
+            inner(setting);
+        };
+    }
+
+    /**
+     * Wrap a render callback with a "Reload" button that appears after the
+     * underlying control changes. Use for settings whose effect only takes
+     * after the host window reloads (`settings.changeRequiresRestart`).
+     *
+     * The inner callback receives a `markChanged()` it must call from its own
+     * onChange handler to reveal the reload button.
+     */
+    private withReload(inner: (setting: Setting, markChanged: () => void) => void) {
+        return (setting: Setting) => {
+            let reloadBtnEl: HTMLButtonElement | null = null;
+            const markChanged = () => {
+                if (reloadBtnEl) {
+                    return;
+                }
+                setting.addButton((btn) => {
+                    btn.setButtonText(i18n.t('common.reload'))
+                        .setCta()
+                        .onClick(() => window.location.reload());
+                    // Place the Reload button before the row's control, matching
+                    // Obsidian's own "Relaunch" placement on restart-required
+                    // settings.
+                    setting.controlEl.prepend(btn.buttonEl);
+                    reloadBtnEl = btn.buttonEl;
+                });
+            };
+            inner(setting, markChanged);
+        };
+    }
+
+    public getSettingDefinitions(): SettingDefinitionItem[] {
+        return [
+            this.taskFormatDefinition(),
+            this.globalDefaultsGroup(),
+            this.searchesGroup(),
+            this.presetsPage(),
+            this.statusesPage(),
+            this.datesGroup(),
+            this.datesFromFilenamesGroup(),
+            this.recurringTasksGroup(),
+            this.taskEntryGroup(),
+        ];
+    }
+
+    // ---- Task format (general, no heading) --------------------------------
+
+    private taskFormatDefinition(): SettingDefinitionItem {
+        return {
+            name: i18n.t('settings.format.name'),
+            desc: SettingsTab.createFragmentWithHTML(
+                `<p>${i18n.t('settings.format.description.line1')}</p>` +
+                    `<p>${i18n.t('settings.format.description.line2')}</p>`,
+            ),
+            render: this.withDocs(
+                this.withReload((setting, markChanged) => {
+                    setting.addDropdown((dropdown) => {
+                        for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
+                            dropdown.addOption(key, TASK_FORMATS[key].getDisplayName());
+                        }
+                        dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
+                            updateSettings({ taskFormat: value as keyof TASK_FORMATS });
+                            await this.plugin.saveSettings();
+                            markChanged();
+                        });
+                    });
+                }),
+                'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
+            ),
+        };
+    }
+
+    // ---- Global defaults (filter + query) ---------------------------------
+
+    private globalDefaultsGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.globalDefaults.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.globalFilter.filter.name'),
+                    desc: SettingsTab.createFragmentWithHTML(
+                        `<p><b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
+                            `<p>${i18n.t('settings.globalFilter.filter.description.line2')}</p>` +
+                            `<p>${i18n.t('settings.globalFilter.filter.description.line3')} ` +
+                            `${i18n.t('settings.globalFilter.filter.description.line4')}</p>`,
+                    ),
+                    render: this.withDocs((setting) => {
+                        setting.addText((text) => {
+                            text.setPlaceholder(i18n.t('settings.globalFilter.filter.placeholder'))
+                                .setValue(GlobalFilter.getInstance().get())
+                                .onChange(
+                                    debounce(
+                                        async (value) => {
+                                            updateSettings({ globalFilter: value });
+                                            GlobalFilter.getInstance().set(value);
+                                            await this.plugin.saveSettings();
+                                            // Re-evaluate the 'visible' predicate of the remove-filter row.
+                                            if (requireApiVersion('1.13.0')) {
+                                                this.refreshDomState();
+                                            }
+                                            this.events.triggerReloadVault();
+                                        },
+                                        500,
+                                        true,
+                                    ),
+                                );
+                        });
+                    }, 'https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
+                },
+                {
+                    name: i18n.t('settings.globalFilter.removeFilter.name'),
+                    desc: i18n.t('settings.globalFilter.removeFilter.description'),
+                    visible: () => getSettings().globalFilter.length > 0,
+                    render: this.withReload((setting, markChanged) => {
+                        setting.addToggle((toggle) => {
+                            toggle.setValue(getSettings().removeGlobalFilter).onChange(async (value) => {
+                                updateSettings({ removeGlobalFilter: value });
+                                GlobalFilter.getInstance().setRemoveGlobalFilter(value);
+                                await this.plugin.saveSettings();
+                                markChanged();
+                            });
+                        });
+                    }),
+                },
+                {
+                    name: i18n.t('settings.globalQuery.heading'),
+                    desc: i18n.t('settings.globalQuery.query.shortDescription'),
+                    render: this.withDocs((setting) => {
+                        setting.addExtraButton((btn) =>
+                            btn
+                                .setIcon('pencil')
+                                .setTooltip(i18n.t('common.edit'))
+                                .onClick(() => {
+                                    new GlobalQueryModal(this.app, getSettings().globalQuery, async (value) => {
+                                        updateSettings({ globalQuery: value });
+                                        GlobalQuery.getInstance().set(value);
+                                        await this.plugin.saveSettings();
+                                        this.events.triggerReloadOpenSearchResults();
+                                    }).open();
+                                }),
+                        );
+                    }, 'https://publish.obsidian.md/tasks/Queries/Global+Query'),
+                },
+            ],
+        };
+    }
+
+    // ---- Searches & search results ---------------------------------------
+
+    private searchesGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.searches.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.searches.enableCustomSearches.name'),
+                    desc: SettingsTab.createFragmentWithHTML(
+                        i18n.t('settings.searches.enableCustomSearches.description.line1', {
+                            filterByFunction: '<code>filter by function</code>',
+                            sortByFunction: '<code>sort by function</code>',
+                            groupByFunction: '<code>group by function</code>',
+                        }),
+                    ),
+                    render: (setting) => {
+                        setting.addToggle((toggle) => {
+                            toggle.setValue(EnableJsInTasksQueries.getInstance().get()).onChange((value) => {
+                                if (!value) {
+                                    // Turning OFF: no confirmation needed.
+                                    EnableJsInTasksQueries.getInstance().set(false);
+                                    this.events.triggerReloadOpenSearchResults();
+                                    return;
+                                }
+                                // Turning ON: require explicit acknowledgement.
+                                this.confirmEnableCustomSearches((confirmed) => {
+                                    if (confirmed) {
+                                        EnableJsInTasksQueries.getInstance().set(true);
+                                        this.events.triggerReloadOpenSearchResults();
+                                    } else {
+                                        // Revert the toggle UI back to off.
+                                        toggle.setValue(false);
+                                    }
+                                });
+                            });
+                        });
+                    },
+                },
+                {
+                    name: i18n.t('settings.searchResults.taskCountLocation.name'),
+                    desc: i18n.t('settings.searchResults.taskCountLocation.description'),
+                    render: (setting) => {
+                        setting.addDropdown((dropdown) => {
+                            dropdown.addOption('top', i18n.t('settings.searchResults.taskCountLocation.options.top'));
+                            dropdown.addOption(
+                                'bottom',
+                                i18n.t('settings.searchResults.taskCountLocation.options.bottom'),
+                            );
+                            dropdown.setValue(getSettings().searchResults.taskCountLocation).onChange(async (value) => {
+                                updateSettings({
+                                    searchResults: { taskCountLocation: value as 'top' | 'bottom' },
+                                });
+                                await this.plugin.saveSettings();
+                                this.events.triggerReloadOpenSearchResults();
+                            });
+                        });
+                    },
+                },
+            ],
+        };
+    }
+
+    /**
+     * Show a {@link ConfirmationModal} explaining the risks of enabling custom
+     * searches (which let queries execute arbitrary JavaScript). The user must
+     * tick a checkbox before the Enable button is available. Calls back with
+     * `true` if the user enabled, `false` if they cancelled or closed.
+     */
+    private confirmEnableCustomSearches(callback: (confirmed: boolean) => void): void {
+        // The version check is always true in practice: this method is only
+        // called from the declarative settings path, which requires 1.13.0+.
+        if (requireApiVersion('1.13.0')) {
+            const modal = new ConfirmationModal(this.app);
+            modal.setTitle(i18n.t('settings.searches.enableCustomSearches.name'));
+
+            modal.contentEl.createEl('p', {
+                cls: 'setting-item-description',
+                text: i18n.t('settings.searches.enableCustomSearches.description.line2'),
+            });
+            const warningEl = modal.contentEl.createEl('p', { cls: 'setting-item-description mod-warning' });
+            warningEl.createEl('b', {
+                text: i18n.t('settings.searches.enableCustomSearches.description.line3'),
+            });
+            modal.contentEl.createEl('p', {
+                cls: 'setting-item-description',
+                text: i18n.t('settings.searches.enableCustomSearches.description.line4'),
+            });
+
+            let acknowledged = false;
+            let enableBtn: ConfirmationButton | null = null;
+            modal.addCheckbox(i18n.t('settings.searches.enableCustomSearches.confirm.acknowledge'), (value) => {
+                acknowledged = value;
+                if (enableBtn) {
+                    enableBtn.setDisabled(!acknowledged);
+                }
+            });
+
+            let decided = false;
+            modal.addButton((btn) => {
+                enableBtn = btn;
+                btn.setButtonText(i18n.t('settings.searches.enableCustomSearches.confirm.enable'))
+                    .setCta()
+                    .setDisabled(true)
+                    .onClick(() => {
+                        if (!acknowledged) {
+                            return true; // keep the modal open
+                        }
+                        decided = true;
+                        callback(true);
+                        return undefined;
+                    });
+            });
+            modal.addCancelButton();
+
+            const originalOnClose = modal.onClose.bind(modal);
+            modal.onClose = () => {
+                originalOnClose();
+                if (!decided) {
+                    callback(false);
+                }
+            };
+            modal.open();
+        } else {
+            callback(false);
+        }
+    }
+
+    // ---- Presets (sub-page) ----------------------------------------------
+
+    private presetsPage(): SettingDefinitionItem {
+        return {
+            type: 'page',
+            name: i18n.t('settings.presets.name'),
+            desc: SettingsTab.createFragmentWithHTML(
+                '<p>' +
+                    i18n.t('settings.presets.line1', {
+                        name: '<code>name</code>',
+                        instruction1: '<code>preset name</code>',
+                        instruction2: '<code>{{preset.name}}</code>',
+                    }) +
+                    '</p><p>' +
+                    i18n.t('settings.presets.line2') +
+                    '</p>' +
+                    this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+            ),
+            items: this.presetsSettingsUI.getPresetsDefinitions(() => this.rebuildSettingsTab()),
+        };
+    }
+
+    // ---- Statuses (sub-page) ---------------------------------------------
+
+    private statusesPage(): SettingDefinitionItem {
+        const { statusSettings } = getSettings();
+
+        // Built alongside the row definitions, so the custom-statuses search
+        // can filter on the underlying status (symbol, name and type), not
+        // just the definition's display name.
+        const rowStatuses = new WeakMap<SettingDefinition, StatusConfiguration>();
+        const statusRow = (status: StatusConfiguration, isCoreStatus: boolean): SettingDefinition => {
+            const row = this.statusRow(status, isCoreStatus);
+            rowStatuses.set(row, status);
+            return row;
+        };
+
+        return {
+            type: 'page',
+            name: i18n.t('settings.statuses.heading'),
+            items: [
+                {
+                    type: 'list',
+                    heading: i18n.t('settings.statuses.coreStatuses.heading'),
+                    items: [
+                        ...statusSettings.coreStatuses.map((status) => statusRow(status, true)),
+                        {
+                            name: i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.name'),
+                            desc: i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.tooltip'),
+                            searchable: false,
+                            action: async () => {
+                                await this.createStatusRegistryReport();
+                            },
+                        },
+                    ],
+                },
+                {
+                    type: 'list',
+                    heading: i18n.t('settings.statuses.customStatuses.heading'),
+                    emptyState: i18n.t('settings.statuses.customStatuses.emptyState'),
+                    search: {
+                        placeholder: i18n.t('settings.statuses.filter.placeholder'),
+                        match: (def, query) => {
+                            const status = rowStatuses.get(def);
+                            if (!status) {
+                                return true;
+                            }
+                            const q = query.toLowerCase();
+                            return (
+                                status.name.toLowerCase().includes(q) ||
+                                status.symbol.toLowerCase().includes(q) ||
+                                humanizeStatusType(status.type).toLowerCase().includes(q)
+                            );
+                        },
+                    },
+                    extraButtons: [
+                        (btn) =>
+                            btn
+                                .setIcon('book-open')
+                                .setTooltip(i18n.t('settings.seeTheDocumentation'))
+                                .onClick(() =>
+                                    window.open('https://publish.obsidian.md/tasks/Getting+Started/Statuses', '_blank'),
+                                ),
+                        (btn) => {
+                            btn.setIcon('lucide-palette').setTooltip(
+                                i18n.t('settings.statuses.buttons.importFromTheme'),
+                            );
+                            btn.extraSettingsEl.addEventListener('click', (evt) => {
+                                const menu = new Menu();
+                                for (const { name, collection } of getThemeCollections()) {
+                                    menu.addItem((item) =>
+                                        item
+                                            .setTitle(
+                                                i18n.t('settings.statuses.collections.buttons.importCollection.name', {
+                                                    themeName: name,
+                                                    numberOfStatuses: collection.length,
+                                                }),
+                                            )
+                                            .onClick(() => {
+                                                const { statusSettings: current } = getSettings();
+                                                addCustomStatesToSettings(collection, current, this);
+                                            }),
+                                    );
+                                }
+                                menu.showAtMouseEvent(evt);
+                            });
+                        },
+                    ],
+                    onDelete: (index) => {
+                        const { statusSettings: current } = getSettings();
+                        current.customStatuses.splice(index, 1);
+                        updateAndSaveStatusSettings(current, this);
+                    },
+                    addItem: {
+                        name: i18n.t('settings.statuses.buttons.addStatus'),
+                        action: () => {
+                            const draft = new StatusConfiguration('', '', '', false, StatusType.TODO);
+                            const modal = new CustomStatusModal(this.plugin, draft, false);
+                            modal.onClose = () => {
+                                if (!modal.saved) {
+                                    return;
+                                }
+                                const { statusSettings: current } = getSettings();
+                                StatusSettings.addStatus(current.customStatuses, modal.statusConfiguration());
+                                updateAndSaveStatusSettings(current, this);
+                            };
+                            modal.open();
+                        },
+                    },
+                    items: statusSettings.customStatuses.map((status) => statusRow(status, false)),
+                },
+                {
+                    name: i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.name'),
+                    desc: i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.description'),
+                    searchable: false,
+                    action: () => {
+                        const { statusSettings: current } = getSettings();
+                        const tasks = this.plugin.getTasks();
+                        const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(
+                            tasks.map((task) => task.status),
+                        );
+                        if (unknownStatuses.length === 0) {
+                            return;
+                        }
+                        unknownStatuses.forEach((s) => {
+                            StatusSettings.addStatus(current.customStatuses, s);
+                        });
+                        updateAndSaveStatusSettings(current, this);
+                    },
+                },
+                {
+                    name: i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.name'),
+                    desc: i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.description'),
+                    searchable: false,
+                    action: () => {
+                        const { statusSettings: current } = getSettings();
+                        StatusSettings.resetAllCustomStatuses(current);
+                        updateAndSaveStatusSettings(current, this);
+                    },
+                },
+            ],
+        };
+    }
+
+    /**
+     * Builds one list row for a single status. The row's `name` is the
+     * status's friendly name, with the symbol prepended as a `<code>` chip; a
+     * pencil extraButton opens the existing edit modal. Deletion is wired by
+     * the list's `onDelete`, so no per-row delete button is needed.
+     */
+    private statusRow(status: StatusConfiguration, isCoreStatus: boolean): SettingDefinition {
+        const symbol = status.symbol || ' ';
+        return {
+            name: status.name || i18n.t('settings.statuses.unnamed'),
+            render: (setting) => {
+                // Prepend the symbol to the left of the row's name — reads as
+                // the list marker for the friendly name beside it (`- [/] In progress`).
+                setting.nameEl.prepend(createEl('code', { cls: 'tasks-status-symbol', text: `- [${symbol}]` }));
+                setting.addExtraButton((btn) => {
+                    btn.setIcon('pencil')
+                        .setTooltip(i18n.t('common.edit'))
+                        .onClick(() => {
+                            const modal = new CustomStatusModal(this.plugin, status, isCoreStatus);
+                            modal.onClose = () => {
+                                if (!modal.saved) {
+                                    return;
+                                }
+                                const { statusSettings: current } = getSettings();
+                                const list = isCoreStatus ? current.coreStatuses : current.customStatuses;
+                                if (StatusSettings.replaceStatus(list, status, modal.statusConfiguration())) {
+                                    updateAndSaveStatusSettings(current, this);
+                                }
+                            };
+                            modal.open();
+                        });
+                });
+            },
+        };
+    }
+
+    private async createStatusRegistryReport(): Promise<void> {
+        const { statusSettings } = getSettings();
+        const buttonName = i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.name');
+
+        // Generate a new file unique file name, in the root of the vault
+        const now = window.moment();
+        const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
+        const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
+
+        // Create the report
+        const version = this.plugin.manifest.version;
+        const fileContent = createStatusRegistryReport(
+            statusSettings,
+            StatusRegistry.getInstance(),
+            buttonName,
+            version,
+        );
+
+        // Save the file, and open it
+        const file = await this.app.vault.create(filename, fileContent);
+        const leaf = this.app.workspace.getLeaf(true);
+        await leaf.openFile(file);
+    }
+
+    // ---- Dates ------------------------------------------------------------
+
+    private datesGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.dates.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.dates.createdDate.name'),
+                    desc: i18n.t('settings.dates.createdDate.description'),
+                    render: this.renderToggleWithDocs(
+                        'setCreatedDate',
+                        'https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date',
+                    ),
+                },
+                {
+                    name: i18n.t('settings.dates.doneDate.name'),
+                    desc: i18n.t('settings.dates.doneDate.description'),
+                    render: this.renderToggleWithDocs(
+                        'setDoneDate',
+                        'https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date',
+                    ),
+                },
+                {
+                    name: i18n.t('settings.dates.cancelledDate.name'),
+                    desc: i18n.t('settings.dates.cancelledDate.description'),
+                    render: this.renderToggleWithDocs(
+                        'setCancelledDate',
+                        'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
+                    ),
+                },
+            ],
+        };
+    }
+
+    // ---- Dates from file names -------------------------------------------
+
+    private datesFromFilenamesGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.datesFromFileNames.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.datesFromFileNames.scheduledDate.toggle.name'),
+                    desc: SettingsTab.createFragmentWithHTML(
+                        `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1')} ` +
+                            `${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2')}</p>` +
+                            `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3')} ` +
+                            `${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4')}</p>`,
+                    ),
+                    render: this.withDocs(
+                        this.withReload((setting, markChanged) => {
+                            setting.addToggle((toggle) => {
+                                toggle.setValue(getSettings().useFilenameAsScheduledDate).onChange(async (value) => {
+                                    updateSettings({ useFilenameAsScheduledDate: value });
+                                    await this.plugin.saveSettings();
+                                    // Re-evaluate the 'visible' predicates of the dependent rows.
+                                    if (requireApiVersion('1.13.0')) {
+                                        this.refreshDomState();
+                                    }
+                                    markChanged();
+                                });
+                            });
+                        }),
+                        'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
+                    ),
+                },
+                {
+                    name: i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.name'),
+                    desc: i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.description.line1'),
+                    visible: () => getSettings().useFilenameAsScheduledDate,
+                    render: this.withDocs(
+                        this.withReload((setting, markChanged) => {
+                            setting.addText((text) => {
+                                text.setPlaceholder(
+                                    i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.placeholder'),
+                                )
+                                    .setValue(getSettings().filenameAsScheduledDateFormat)
+                                    .onChange(async (value) => {
+                                        updateSettings({ filenameAsScheduledDateFormat: value });
+                                        await this.plugin.saveSettings();
+                                        markChanged();
+                                    });
+                            });
+                        }),
+                        'https://momentjs.com/docs/#/displaying/format/',
+                    ),
+                },
+                {
+                    name: i18n.t('settings.datesFromFileNames.scheduledDate.folders.name'),
+                    desc: i18n.t('settings.datesFromFileNames.scheduledDate.folders.description'),
+                    visible: () => getSettings().useFilenameAsScheduledDate,
+                    render: this.withReload((setting, markChanged) => {
+                        setting.addText((input) => {
+                            input
+                                .setValue(SettingsTab.renderFolderArray(getSettings().filenameAsDateFolders))
+                                .onChange(async (value) => {
+                                    const folders = SettingsTab.parseCommaSeparatedFolders(value);
+                                    updateSettings({ filenameAsDateFolders: folders });
+                                    await this.plugin.saveSettings();
+                                    markChanged();
+                                });
+                        });
+                    }),
+                },
+            ],
+        };
+    }
+
+    // ---- Recurring tasks --------------------------------------------------
+
+    private recurringTasksGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.recurringTasks.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.recurringTasks.nextLine.name'),
+                    desc: i18n.t('settings.recurringTasks.nextLine.description'),
+                    render: this.renderToggleWithDocs(
+                        'recurrenceOnNextLine',
+                        'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
+                    ),
+                },
+                {
+                    name: i18n.t('settings.recurringTasks.removeScheduledDate.name'),
+                    desc: SettingsTab.createFragmentWithHTML(
+                        `<p>${i18n.t('settings.recurringTasks.removeScheduledDate.description.line1')}</p>` +
+                            `<p>${i18n.t('settings.recurringTasks.removeScheduledDate.description.line2')}</p>`,
+                    ),
+                    render: this.renderToggleWithDocs(
+                        'removeScheduledDateOnRecurrence',
+                        'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
+                    ),
+                },
+            ],
+        };
+    }
+
+    // ---- Task entry (auto-suggest + dialog access keys) -------------------
+
+    private taskEntryGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.taskEntry.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.autoSuggest.toggle.name'),
+                    desc: i18n.t('settings.autoSuggest.toggle.description'),
+                    render: this.withDocs(
+                        this.withReload((setting, markChanged) => {
+                            setting.addToggle((toggle) => {
+                                toggle.setValue(getSettings().autoSuggestInEditor).onChange(async (value) => {
+                                    updateSettings({ autoSuggestInEditor: value });
+                                    await this.plugin.saveSettings();
+                                    // Re-evaluate the 'visible' predicates of the dependent rows.
+                                    if (requireApiVersion('1.13.0')) {
+                                        this.refreshDomState();
+                                    }
+                                    markChanged();
+                                });
+                            });
+                        }),
+                        'https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest',
+                    ),
+                },
+                {
+                    name: i18n.t('settings.autoSuggest.minLength.name'),
+                    desc: i18n.t('settings.autoSuggest.minLength.description'),
+                    visible: () => getSettings().autoSuggestInEditor,
+                    render: this.withReload((setting, markChanged) => {
+                        setting.addSlider((slider) => {
+                            slider
+                                .setLimits(0, 3, 1)
+                                .setValue(getSettings().autoSuggestMinMatch)
+                                .onChange(async (value) => {
+                                    updateSettings({ autoSuggestMinMatch: value });
+                                    await this.plugin.saveSettings();
+                                    markChanged();
+                                });
+                        });
+                    }),
+                },
+                {
+                    name: i18n.t('settings.autoSuggest.maxSuggestions.name'),
+                    desc: i18n.t('settings.autoSuggest.maxSuggestions.description'),
+                    visible: () => getSettings().autoSuggestInEditor,
+                    render: this.withReload((setting, markChanged) => {
+                        setting.addSlider((slider) => {
+                            slider
+                                .setLimits(3, 20, 1)
+                                .setValue(getSettings().autoSuggestMaxItems)
+                                .onChange(async (value) => {
+                                    updateSettings({ autoSuggestMaxItems: value });
+                                    await this.plugin.saveSettings();
+                                    markChanged();
+                                });
+                        });
+                    }),
+                },
+                {
+                    name: i18n.t('settings.dialogs.accessKeys.name'),
+                    desc: i18n.t('settings.dialogs.accessKeys.description'),
+                    render: this.renderToggleWithDocs(
+                        'provideAccessKeys',
+                        'https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts',
+                    ),
+                },
+            ],
+        };
     }
 
     public display(): void {
@@ -836,20 +1627,7 @@ export class SettingsTab extends PluginSettingTab {
         setting.infoEl.remove();
 
         /* -------------------- Add all Status types supported by ... buttons -------------------- */
-        type NamedTheme = [string, StatusCollection];
-        const themes: NamedTheme[] = [
-            // Light and Dark themes - alphabetical order
-            [i18n.t('settings.statuses.collections.anuppuccinTheme'), Themes.anuppuccinSupportedStatuses()],
-            [i18n.t('settings.statuses.collections.auraTheme'), Themes.auraSupportedStatuses()],
-            [i18n.t('settings.statuses.collections.borderTheme'), Themes.borderSupportedStatuses()],
-            [i18n.t('settings.statuses.collections.ebullientworksTheme'), Themes.ebullientworksSupportedStatuses()],
-            [i18n.t('settings.statuses.collections.itsThemeAndSlrvbCheckboxes'), Themes.itsSupportedStatuses()],
-            [i18n.t('settings.statuses.collections.minimalTheme'), Themes.minimalSupportedStatuses()],
-            [i18n.t('settings.statuses.collections.thingsTheme'), Themes.thingsSupportedStatuses()],
-            // Dark only themes - alphabetical order
-            [i18n.t('settings.statuses.collections.lytModeTheme'), Themes.lytModeSupportedStatuses()],
-        ];
-        for (const [name, collection] of themes) {
+        for (const { name, collection } of getThemeCollections()) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
                 const label = i18n.t('settings.statuses.collections.buttons.addCollection.name', {
                     themeName: name,
@@ -896,6 +1674,58 @@ export class SettingsTab extends PluginSettingTab {
         });
         clearCustomStatuses.infoEl.remove();
     }
+}
+
+/**
+ * Human-readable label for a {@link StatusType}. The enum values are
+ * SCREAMING_SNAKE_CASE for storage; we surface friendlier titles in the UI.
+ */
+export function humanizeStatusType(type: StatusType): string {
+    switch (type) {
+        case StatusType.TODO:
+            return i18n.t('settings.statuses.types.todo');
+        case StatusType.IN_PROGRESS:
+            return i18n.t('settings.statuses.types.inProgress');
+        case StatusType.ON_HOLD:
+            return i18n.t('settings.statuses.types.onHold');
+        case StatusType.DONE:
+            return i18n.t('settings.statuses.types.done');
+        case StatusType.CANCELLED:
+            return i18n.t('settings.statuses.types.cancelled');
+        case StatusType.NON_TASK:
+            return i18n.t('settings.statuses.types.nonTask');
+        case StatusType.EMPTY:
+            return i18n.t('settings.statuses.types.empty');
+    }
+}
+
+/**
+ * Returns the named theme collections used to seed common status sets.
+ * Shared between the imperative `display()` path and the declarative
+ * statuses page's "Import from theme" menu.
+ */
+function getThemeCollections(): { name: string; collection: StatusCollection }[] {
+    return [
+        // Light and Dark themes - alphabetical order
+        {
+            name: i18n.t('settings.statuses.collections.anuppuccinTheme'),
+            collection: Themes.anuppuccinSupportedStatuses(),
+        },
+        { name: i18n.t('settings.statuses.collections.auraTheme'), collection: Themes.auraSupportedStatuses() },
+        { name: i18n.t('settings.statuses.collections.borderTheme'), collection: Themes.borderSupportedStatuses() },
+        {
+            name: i18n.t('settings.statuses.collections.ebullientworksTheme'),
+            collection: Themes.ebullientworksSupportedStatuses(),
+        },
+        {
+            name: i18n.t('settings.statuses.collections.itsThemeAndSlrvbCheckboxes'),
+            collection: Themes.itsSupportedStatuses(),
+        },
+        { name: i18n.t('settings.statuses.collections.minimalTheme'), collection: Themes.minimalSupportedStatuses() },
+        { name: i18n.t('settings.statuses.collections.thingsTheme'), collection: Themes.thingsSupportedStatuses() },
+        // Dark only themes - alphabetical order
+        { name: i18n.t('settings.statuses.collections.lytModeTheme'), collection: Themes.lytModeSupportedStatuses() },
+    ];
 }
 
 /**
