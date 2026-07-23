@@ -109,7 +109,7 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         return '    '.repeat(indentationLevel);
     }
 
-    protected addGroupHeading(group: GroupDisplayHeading): Promise<void> {
+    protected addGroupHeading(group: GroupDisplayHeading, _groupTaskCountSuffix: string | null): Promise<void> {
         const headingPrefix = '#'.repeat(Math.min(4 + group.nestingLevel, 6));
         this.markdownLines.push(`${headingPrefix} ${group.displayName}`);
         this.addEmptyLine();

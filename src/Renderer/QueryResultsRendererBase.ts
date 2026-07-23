@@ -241,9 +241,9 @@ export abstract class QueryResultsRendererBase {
      */
     protected async addGroupHeadings(group: TaskGroup) {
         for (const heading of group.groupHeadings) {
-            await this.addGroupHeading(heading);
+            await this.addGroupHeading(heading, null);
         }
     }
 
-    protected abstract addGroupHeading(group: GroupDisplayHeading): Promise<void>;
+    protected abstract addGroupHeading(group: GroupDisplayHeading, groupTaskCountSuffix: string | null): Promise<void>;
 }
