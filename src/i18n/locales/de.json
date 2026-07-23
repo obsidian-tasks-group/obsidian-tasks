@@ -1,4 +1,11 @@
 {
+  "common": {
+    "cancel": "",
+    "delete": "",
+    "edit": "",
+    "reload": "",
+    "save": ""
+  },
   "main": {
     "loadingPlugin": "Lade Plugin: {{name}} v{{version}}",
     "unloadingPlugin": "Entlade Plugin: {{name}} v{{version}}"
@@ -25,7 +32,25 @@
         "description": "Kontrollieren Sie, wie der Status beim Suchen und Umschalten funktioniert.",
         "name": "Typ des Aufgabenstatus"
       },
-      "fixErrorsBeforeSaving": "Fehler vor dem Speichern beheben."
+      "fixErrorsBeforeSaving": "Fehler vor dem Speichern beheben.",
+      "title": {
+        "editCoreStatus": "",
+        "editCustomStatus": ""
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "",
+        "name": "",
+        "placeholder": "",
+        "required": ""
+      },
+      "query": {
+        "description": "",
+        "name": "",
+        "placeholder": ""
+      },
+      "title": ""
     }
   },
   "notices": {
@@ -176,6 +201,9 @@
       },
       "name": "Aufgabenformat"
     },
+    "globalDefaults": {
+      "heading": ""
+    },
     "globalFilter": {
       "filter": {
         "description": {
@@ -197,13 +225,15 @@
       "heading": "Globale Abfrage",
       "query": {
         "description": "Fügen Sie automatisch eine Abfrage am Anfang jedes Tasks-Blocks im Tresor hinzu. Nützlich für Standardfilter oder Layout-Optionen.",
-        "placeholder": "Zum Beispiel...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "Zum Beispiel...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": ""
       },
+      "emptyState": "",
       "line1": "",
       "line2": "",
       "name": ""
@@ -235,6 +265,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "",
+          "enable": ""
+        },
         "description": {
           "line1": "",
           "line2": "",
@@ -247,6 +281,10 @@
     },
     "seeTheDocumentation": "Vgl. die Dokumentation",
     "statuses": {
+      "buttons": {
+        "addStatus": "",
+        "importFromTheme": ""
+      },
       "collections": {
         "anuppuccinTheme": "AnuPpuccin Theme",
         "auraTheme": "Aura Theme",
@@ -254,6 +292,9 @@
         "buttons": {
           "addCollection": {
             "name": "{{themeName}}: Füge {{numberOfStatuses}} unterstützte Status hinzu"
+          },
+          "importCollection": {
+            "name": ""
           }
         },
         "ebullientworksTheme": "Ebullientworks Theme",
@@ -278,12 +319,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "",
             "name": "Alle unbekannten Statustypen hinzufügen"
           },
           "addNewStatus": {
             "name": "Neuen Aufgabenstatus hinzufügen"
           },
           "resetCustomStatuses": {
+            "description": "",
             "name": "Benutzerdefinierte Statustypen auf Standard zurücksetzen"
           }
         },
@@ -293,9 +336,26 @@
           "line3": "Hinweis: Status mit dem gleichen Symbol wie ein früherer Status ignorieren wir. Bestätigen Sie die tatsächlich geladenen Status, indem Sie den 'Aufgabe erstellen oder bearbeiten'-Befehl ausführen und das Status-Dropdown anschauen.",
           "line4": "Nutzen Sie die Dokumentation, um loszulegen!"
         },
+        "emptyState": "",
         "heading": "Benutzerdefinierte Status"
       },
-      "heading": "Aufgabenstatus"
+      "filter": {
+        "placeholder": ""
+      },
+      "heading": "Aufgabenstatus",
+      "types": {
+        "cancelled": "",
+        "done": "",
+        "empty": "",
+        "inProgress": "",
+        "nonTask": "",
+        "onHold": "",
+        "todo": ""
+      },
+      "unnamed": ""
+    },
+    "taskEntry": {
+      "heading": ""
     }
   }
 }

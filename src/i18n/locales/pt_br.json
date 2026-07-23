@@ -1,4 +1,11 @@
 {
+  "common": {
+    "cancel": "",
+    "delete": "",
+    "edit": "",
+    "reload": "",
+    "save": ""
+  },
   "main": {
     "loadingPlugin": "Carregando plugin: {{name}} v{{version}}",
     "unloadingPlugin": "Descarregando plugin: {{name}} v{{version}}"
@@ -25,7 +32,25 @@
         "description": "Controla como o status se comporta em relação a pesquisas e alternância.",
         "name": "Tipo de Status da Tarefa"
       },
-      "fixErrorsBeforeSaving": "Corrija os erros antes de salvar."
+      "fixErrorsBeforeSaving": "Corrija os erros antes de salvar.",
+      "title": {
+        "editCoreStatus": "",
+        "editCustomStatus": ""
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "",
+        "name": "",
+        "placeholder": "",
+        "required": ""
+      },
+      "query": {
+        "description": "",
+        "name": "",
+        "placeholder": ""
+      },
+      "title": ""
     }
   },
   "notices": {
@@ -176,6 +201,9 @@
       },
       "name": "Formato da Tarefa"
     },
+    "globalDefaults": {
+      "heading": ""
+    },
     "globalFilter": {
       "filter": {
         "description": {
@@ -197,13 +225,15 @@
       "heading": "Consulta Global",
       "query": {
         "description": "Uma consulta que é incluída automaticamente no início de cada bloco do Tasks no cofre. Útil para adicionar filtros padrão ou opções de layout.",
-        "placeholder": "Por exemplo...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "Por exemplo...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Adicionar nova predefinição"
       },
+      "emptyState": "",
       "line1": "Você pode definir instruções nomeadas aqui, que podem ser reutilizadas em várias consultas. Uma predefinição chamada '{{name}}' pode ser usada em consultas do Tasks com '{{instruction1}}' ou '{{instruction2}}'.",
       "line2": "Quaisquer consultas do Tasks abertas são recarregadas automaticamente quando as predefinições são editadas.",
       "name": "Predefinições (Presets)"
@@ -235,6 +265,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "",
+          "enable": ""
+        },
         "description": {
           "line1": "",
           "line2": "",
@@ -247,6 +281,10 @@
     },
     "seeTheDocumentation": "Veja a documentação",
     "statuses": {
+      "buttons": {
+        "addStatus": "",
+        "importFromTheme": ""
+      },
       "collections": {
         "anuppuccinTheme": "Tema AnuPpuccin",
         "auraTheme": "Tema Aura",
@@ -254,6 +292,9 @@
         "buttons": {
           "addCollection": {
             "name": "{{themeName}}: Adicionar {{numberOfStatuses}} Status suportados"
+          },
+          "importCollection": {
+            "name": ""
           }
         },
         "ebullientworksTheme": "Tema Ebullientworks",
@@ -278,12 +319,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "",
             "name": "Adicionar Todos os Tipos de Status Desconhecidos"
           },
           "addNewStatus": {
             "name": "Adicionar Novo Status de Tarefa"
           },
           "resetCustomStatuses": {
+            "description": "",
             "name": "Redefinir Tipos de Status Personalizados para os Padrões"
           }
         },
@@ -293,9 +336,26 @@
           "line3": "<b>Nota:</b> Qualquer status com o mesmo símbolo de um status anterior será ignorado. Você pode confirmar os status que foram realmente carregados executando o comando 'Criar ou editar tarefa' e olhando a lista suspensa de Status.",
           "line4": "Veja a documentação para começar!"
         },
+        "emptyState": "",
         "heading": "Status Personalizados"
       },
-      "heading": "Status das Tarefas"
+      "filter": {
+        "placeholder": ""
+      },
+      "heading": "Status das Tarefas",
+      "types": {
+        "cancelled": "",
+        "done": "",
+        "empty": "",
+        "inProgress": "",
+        "nonTask": "",
+        "onHold": "",
+        "todo": ""
+      },
+      "unnamed": ""
+    },
+    "taskEntry": {
+      "heading": ""
     }
   }
 }

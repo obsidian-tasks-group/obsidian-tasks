@@ -1,4 +1,11 @@
 {
+  "common": {
+    "cancel": "",
+    "delete": "",
+    "edit": "",
+    "reload": "",
+    "save": ""
+  },
   "main": {
     "loadingPlugin": "Загрузка плагина: {{name}} v{{version}}",
     "unloadingPlugin": "Выгрузка плагина: {{name}} v{{version}}"
@@ -25,7 +32,25 @@
         "description": "Управление поведением статуса при поиске и переключении.",
         "name": "Тип статуса задачи"
       },
-      "fixErrorsBeforeSaving": "Исправьте ошибки перед сохранением."
+      "fixErrorsBeforeSaving": "Исправьте ошибки перед сохранением.",
+      "title": {
+        "editCoreStatus": "",
+        "editCustomStatus": ""
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "",
+        "name": "",
+        "placeholder": "",
+        "required": ""
+      },
+      "query": {
+        "description": "",
+        "name": "",
+        "placeholder": ""
+      },
+      "title": ""
     }
   },
   "notices": {
@@ -176,6 +201,9 @@
       },
       "name": "Формат задач"
     },
+    "globalDefaults": {
+      "heading": ""
+    },
     "globalFilter": {
       "filter": {
         "description": {
@@ -197,13 +225,15 @@
       "heading": "Глобальный запрос",
       "query": {
         "description": "Запрос, который автоматически включается в начало каждого блока Tasks в хранилище. Полезно для добавления фильтров по умолчанию или параметров макета.",
-        "placeholder": "Например...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "Например...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": ""
       },
+      "emptyState": "",
       "line1": "",
       "line2": "",
       "name": ""
@@ -235,6 +265,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "",
+          "enable": ""
+        },
         "description": {
           "line1": "",
           "line2": "",
@@ -247,6 +281,10 @@
     },
     "seeTheDocumentation": "Смотрите документацию",
     "statuses": {
+      "buttons": {
+        "addStatus": "",
+        "importFromTheme": ""
+      },
       "collections": {
         "anuppuccinTheme": "Тема AnuPpuccin",
         "auraTheme": "Тема Aura",
@@ -254,6 +292,9 @@
         "buttons": {
           "addCollection": {
             "name": "{{themeName}}: Добавить {{numberOfStatuses}} поддерживаемых статусов"
+          },
+          "importCollection": {
+            "name": ""
           }
         },
         "ebullientworksTheme": "Тема Ebullientworks",
@@ -278,12 +319,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "",
             "name": "Добавить все неизвестные типы статусов"
           },
           "addNewStatus": {
             "name": "Добавить новый статус задачи"
           },
           "resetCustomStatuses": {
+            "description": "",
             "name": "Сбросить пользовательские типы статусов к значениям по умолчанию"
           }
         },
@@ -293,9 +336,26 @@
           "line3": "<b>Примечание.</b> Любые статусы с тем же символом, что и у более ранних статусов, будут игнорироваться. Вы можете подтвердить фактически загруженные статусы, запустив команду 'Создать или редактировать задачу' и посмотрев на раскрывающийся список статусов.",
           "line4": "Смотрите документацию, чтобы начать!"
         },
+        "emptyState": "",
         "heading": "Пользовательские статусы"
       },
-      "heading": "Статусы задач"
+      "filter": {
+        "placeholder": ""
+      },
+      "heading": "Статусы задач",
+      "types": {
+        "cancelled": "",
+        "done": "",
+        "empty": "",
+        "inProgress": "",
+        "nonTask": "",
+        "onHold": "",
+        "todo": ""
+      },
+      "unnamed": ""
+    },
+    "taskEntry": {
+      "heading": ""
     }
   }
 }

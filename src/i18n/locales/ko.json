@@ -1,4 +1,11 @@
 {
+  "common": {
+    "cancel": "",
+    "delete": "",
+    "edit": "",
+    "reload": "",
+    "save": ""
+  },
   "main": {
     "loadingPlugin": "플러그인 로드 중: {{name}} v{{version}}",
     "unloadingPlugin": "플러그인 언로드 중: {{name}} v{{version}}"
@@ -25,7 +32,25 @@
         "description": "검색 및 상태 전환 시 어떻게 동작할지 제어합니다.",
         "name": "상태 유형"
       },
-      "fixErrorsBeforeSaving": "저장하기 전에 오류를 수정하세요."
+      "fixErrorsBeforeSaving": "저장하기 전에 오류를 수정하세요.",
+      "title": {
+        "editCoreStatus": "",
+        "editCustomStatus": ""
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "",
+        "name": "",
+        "placeholder": "",
+        "required": ""
+      },
+      "query": {
+        "description": "",
+        "name": "",
+        "placeholder": ""
+      },
+      "title": ""
     }
   },
   "notices": {
@@ -176,6 +201,9 @@
       },
       "name": "작업 형식"
     },
+    "globalDefaults": {
+      "heading": ""
+    },
     "globalFilter": {
       "filter": {
         "description": {
@@ -197,13 +225,15 @@
       "heading": "전역 쿼리",
       "query": {
         "description": "보관소의 모든 Tasks 블록 시작에 자동으로 포함되는 쿼리입니다. 기본 필터나 레이아웃 옵션을 추가할 때 유용합니다.",
-        "placeholder": "예시...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "예시...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "새 프리셋 추가"
       },
+      "emptyState": "",
       "line1": "여기서 이름 있는 지침을 정의해 여러 쿼리에서 재사용할 수 있습니다. '{{name}}' 프리셋은 Tasks 쿼리에서 '{{instruction1}}' 또는 '{{instruction2}}'로 사용할 수 있습니다.",
       "line2": "프리셋을 수정하면 열려 있는 모든 Tasks 쿼리가 자동으로 새로고침됩니다.",
       "name": "프리셋"
@@ -235,6 +265,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "",
+          "enable": ""
+        },
         "description": {
           "line1": "",
           "line2": "",
@@ -247,6 +281,10 @@
     },
     "seeTheDocumentation": "문서 보기",
     "statuses": {
+      "buttons": {
+        "addStatus": "",
+        "importFromTheme": ""
+      },
       "collections": {
         "anuppuccinTheme": "AnuPpuccin 테마",
         "auraTheme": "Aura 테마",
@@ -254,6 +292,9 @@
         "buttons": {
           "addCollection": {
             "name": "{{themeName}}: 지원되는 상태 {{numberOfStatuses}}개 추가"
+          },
+          "importCollection": {
+            "name": ""
           }
         },
         "ebullientworksTheme": "Ebullientworks 테마",
@@ -278,12 +319,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "",
             "name": "알 수 없는 모든 상태 유형 추가"
           },
           "addNewStatus": {
             "name": "새 작업 상태 추가"
           },
           "resetCustomStatuses": {
+            "description": "",
             "name": "사용자 정의 상태를 기본값으로 재설정"
           }
         },
@@ -293,9 +336,26 @@
           "line3": "<b>참고:</b> 이전에 정의된 상태와 기호가 동일한 상태는 무시됩니다. '작업 생성/편집' 명령어의 상태 드롭다운 메뉴에서 실제로 로드된 상태를 확인할 수 있습니다.",
           "line4": "시작하려면 문서를 참고하세요!"
         },
+        "emptyState": "",
         "heading": "사용자 정의 상태"
       },
-      "heading": "작업 상태"
+      "filter": {
+        "placeholder": ""
+      },
+      "heading": "작업 상태",
+      "types": {
+        "cancelled": "",
+        "done": "",
+        "empty": "",
+        "inProgress": "",
+        "nonTask": "",
+        "onHold": "",
+        "todo": ""
+      },
+      "unnamed": ""
+    },
+    "taskEntry": {
+      "heading": ""
     }
   }
 }
