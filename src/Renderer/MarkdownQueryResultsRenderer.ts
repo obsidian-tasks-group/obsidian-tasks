@@ -109,11 +109,10 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         return '    '.repeat(indentationLevel);
     }
 
-    protected addGroupHeading(group: GroupDisplayHeading, groupTaskCountSuffix: string | null): Promise<void> {
+    protected addGroupHeading(group: GroupDisplayHeading, groupTaskCountSuffix: string): Promise<void> {
         const headingPrefix = '#'.repeat(Math.min(4 + group.nestingLevel, 6));
-        const displayName =
-            groupTaskCountSuffix === null ? group.displayName : `${group.displayName} ${groupTaskCountSuffix}`;
-        this.markdownLines.push(`${headingPrefix} ${displayName}`);
+        const countText = groupTaskCountSuffix === '' ? '' : ` ${groupTaskCountSuffix}`;
+        this.markdownLines.push(`${headingPrefix} ${group.displayName}${countText}`);
         this.addEmptyLine();
         return Promise.resolve();
     }

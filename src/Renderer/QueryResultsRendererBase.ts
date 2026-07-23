@@ -248,13 +248,13 @@ export abstract class QueryResultsRendererBase {
         }
     }
 
-    private groupTaskCountSuffix(group: TaskGroup, headingIndex: number, lastHeadingIndex: number): string | null {
+    private groupTaskCountSuffix(group: TaskGroup, headingIndex: number, lastHeadingIndex: number): string {
         if (this.query.queryLayoutOptions.hideGroupTaskCount) {
-            return null;
+            return '';
         }
 
         if (headingIndex !== lastHeadingIndex) {
-            return null;
+            return '';
         }
 
         const taskCount = group.tasks.length;
@@ -262,5 +262,5 @@ export abstract class QueryResultsRendererBase {
         return `(${taskCount} ${taskLabel})`;
     }
 
-    protected abstract addGroupHeading(group: GroupDisplayHeading, groupTaskCountSuffix: string | null): Promise<void>;
+    protected abstract addGroupHeading(group: GroupDisplayHeading, groupTaskCountSuffix: string): Promise<void>;
 }
