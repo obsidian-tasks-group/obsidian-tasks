@@ -135,7 +135,7 @@ group by id
         `);
     });
 
-    it.failing('should write group task count, if enabled', async () => {
+    it('should write group task count, if enabled', async () => {
         const tasks = fromMarkdown(`
 - [ ] 1 ⏳ 2025-10-29
 - [ ] 2 ⏬

@@ -240,9 +240,26 @@ export abstract class QueryResultsRendererBase {
      * @private
      */
     protected async addGroupHeadings(group: TaskGroup) {
-        for (const heading of group.groupHeadings) {
-            await this.addGroupHeading(heading, null);
+        const lastHeadingIndex = group.groupHeadings.length - 1;
+
+        for (const [index, heading] of group.groupHeadings.entries()) {
+            const groupTaskCountSuffix = this.groupTaskCountSuffix(group, index, lastHeadingIndex);
+            await this.addGroupHeading(heading, groupTaskCountSuffix);
         }
+    }
+
+    private groupTaskCountSuffix(group: TaskGroup, headingIndex: number, lastHeadingIndex: number): string | null {
+        if (this.query.queryLayoutOptions.hideGroupTaskCount) {
+            return null;
+        }
+
+        if (headingIndex !== lastHeadingIndex) {
+            return null;
+        }
+
+        const taskCount = group.tasks.length;
+        const taskLabel = taskCount === 1 ? 'task' : 'tasks';
+        return `(${taskCount} ${taskLabel})`;
     }
 
     protected abstract addGroupHeading(group: GroupDisplayHeading, groupTaskCountSuffix: string | null): Promise<void>;
