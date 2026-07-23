@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
-- X.Y.Z:
+- 8.3.0:
   - Add [[Layout#Hide and Show Nested Backlink|'hide nested backlink']] instruction, for when '`show tree`' makes the output just too cluttered.
   - [[Notifications]] page updated to better match the current behaviour of the [Reminder](https://community.obsidian.md/plugins/obsidian-reminder-plugin) plugin.
   - [[Regular Expressions|Regular expression]] searches have been made safer:

@@ -43,7 +43,7 @@ You can control backlinks in search results with these query instructions:
   See [[Layout#Hide and Show Nested Backlink|Nested Backlink]].
 
 > [!released]
-> `hide nested backlink` was introduced in Tasks X.Y.Z.
+> `hide nested backlink` was introduced in Tasks 8.3.0.
 
 ## Support
 

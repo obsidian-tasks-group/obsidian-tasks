@@ -150,7 +150,7 @@ Implementation details:
 Please be aware of the following limitations in Tasks' implementation of regular expression searching:
 
 - [Lookahead and Lookbehind](https://www.regular-expressions.info/lookaround.html) searches are untested, and are presumed not to work on Apple mobile devices, or to cause serious performance problems with slow searches.
-- Since Tasks X.Y.Z:
+- Since Tasks 8.3.0:
   - the maximum allowed length of regular expression search strings is now 500 characters.
   - code has been added to prevent malicious searches (accidental or intentional) from freezing Obsidian by [Catastrophic Backtracking](https://www.regular-expressions.info/catastrophic.html).
 

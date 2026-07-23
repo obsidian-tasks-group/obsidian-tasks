@@ -78,7 +78,7 @@ The following query elements exist:
 > - `urgency` was introduced in Tasks 1.14.0.
 > - `tree` was introduced in Tasks 7.12.0.
 > - `toolbar` was introduced in Tasks 7.23.0.
-> - `nested backlink` was introduced in Tasks X.Y.Z.
+> - `nested backlink` was introduced in Tasks 8.3.0.
 
 All of these query elements except `urgency` and `tree` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score or tree view.
@@ -189,7 +189,7 @@ The `show tree` instruction enables us to see the parent/child relationships in 
 ### Hide and Show Nested Backlink
 
 > [!released]
-> `hide nested backlink` was introduced in Tasks X.Y.Z.
+> `hide nested backlink` was introduced in Tasks 8.3.0.
 
 When you use `show tree`, every nested task shows its own [[Backlinks|backlink]], which repeats the
 same filename and heading as its top-level parent task. This can add a lot of repeated text to the results.
