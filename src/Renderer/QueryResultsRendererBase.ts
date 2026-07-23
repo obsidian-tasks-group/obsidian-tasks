@@ -235,13 +235,13 @@ export abstract class QueryResultsRendererBase {
 
     /**
      * Display headings for a group of tasks.
-     * @param groupHeadings - The headings to display. This can be an empty array,
+     * @param _groupHeadings - The headings to display. This can be an empty array,
      *                        in which case no headings will be added.
-     * @param _group - The group whose headings are being displayed.
+     * @param group - The group whose headings are being displayed.
      * @private
      */
-    protected async addGroupHeadings(groupHeadings: GroupDisplayHeading[], _group: TaskGroup) {
-        for (const heading of groupHeadings) {
+    protected async addGroupHeadings(_groupHeadings: GroupDisplayHeading[], group: TaskGroup) {
+        for (const heading of group.groupHeadings) {
             await this.addGroupHeading(heading);
         }
     }
