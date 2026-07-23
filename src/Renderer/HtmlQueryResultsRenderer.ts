@@ -219,7 +219,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         span.classList.add('tasks-urgency');
     }
 
-    protected async addGroupHeading(group: GroupDisplayHeading, _groupTaskCountSuffix: string): Promise<void> {
+    protected async addGroupHeading(group: GroupDisplayHeading, _groupTaskCountText: string): Promise<void> {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {

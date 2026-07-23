@@ -262,5 +262,5 @@ export abstract class QueryResultsRendererBase {
         return `(${taskCount} ${taskLabel})`;
     }
 
-    protected abstract addGroupHeading(group: GroupDisplayHeading, groupTaskCountSuffix: string): Promise<void>;
+    protected abstract addGroupHeading(group: GroupDisplayHeading, groupTaskCountText: string): Promise<void>;
 }
