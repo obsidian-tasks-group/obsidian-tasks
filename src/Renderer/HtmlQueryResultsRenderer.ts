@@ -231,17 +231,12 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const headerEl = createAndAppendElement(header, this.content);
         headerEl.classList.add('tasks-group-heading');
 
+        const groupText = group.displayName;
         if (this.obsidianComponent === null) {
-            headerEl.textContent = 'For test purposes: ' + group.displayName;
+            headerEl.textContent = 'For test purposes: ' + groupText;
             return;
         }
-        await this.renderMarkdown(
-            this.obsidianApp,
-            group.displayName,
-            headerEl,
-            this.tasksFile.path,
-            this.obsidianComponent,
-        );
+        await this.renderMarkdown(this.obsidianApp, groupText, headerEl, this.tasksFile.path, this.obsidianComponent);
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
