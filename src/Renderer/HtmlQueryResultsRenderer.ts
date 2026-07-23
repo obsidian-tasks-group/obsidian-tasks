@@ -219,7 +219,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         span.classList.add('tasks-urgency');
     }
 
-    protected async addGroupHeading(group: GroupDisplayHeading, _groupTaskCountText: string): Promise<void> {
+    protected async addGroupHeading(group: GroupDisplayHeading, groupTaskCountText: string): Promise<void> {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
@@ -231,7 +231,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const headerEl = createAndAppendElement(header, this.content);
         headerEl.classList.add('tasks-group-heading');
 
-        const groupText = group.displayName;
+        const countText = groupTaskCountText === '' ? '' : ` ${groupTaskCountText}`;
+        const groupText = `${group.displayName}${countText}`;
+
         if (this.obsidianComponent === null) {
             headerEl.textContent = 'For test purposes: ' + groupText;
             return;
