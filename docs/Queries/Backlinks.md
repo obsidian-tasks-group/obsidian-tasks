@@ -42,6 +42,9 @@ You can control backlinks in search results with these query instructions:
   backlink on nested tasks (when using `show tree`).
   See [[Layout#Hide and Show Nested Backlink|Nested Backlink]].
 
+> [!released]
+> `hide nested backlink` was introduced in Tasks X.Y.Z.
+
 ## Support
 
 We use the label `scope: backlinks` to track feedback on backlinks:

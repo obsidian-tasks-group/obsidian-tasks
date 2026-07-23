@@ -101,7 +101,7 @@ This is a global setting that applies to all task queries. Individual queries ca
 > [!released]
 > The 'Task count location' setting was introduced in Tasks 7.24.0.
 
-### Toolbar  
+### Toolbar
 
 The toolbar appears at the top of Tasks search results.
 
@@ -124,7 +124,7 @@ It allows you to:
   - Elements not copied:
     - The task count
 
-> [!released]  
+> [!released]
 > `show toolbar` and `hide toolbar` were introduced in Tasks 7.23.0.
 
 ### Hide and Show Tree
@@ -189,7 +189,7 @@ The `show tree` instruction enables us to see the parent/child relationships in 
 ### Hide and Show Nested Backlink
 
 > [!released]
-> `nested backlink` was introduced in Tasks X.Y.Z.
+> `hide nested backlink` was introduced in Tasks X.Y.Z.
 
 When you use `show tree`, every nested task shows its own [[Backlinks|backlink]], which repeats the
 same filename and heading as its top-level parent task. This can add a lot of repeated text to the results.
