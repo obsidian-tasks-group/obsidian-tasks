@@ -107,9 +107,8 @@ export abstract class QueryResultsRendererBase {
 
     protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         for (const group of tasksSortedLimitedGrouped.groups) {
-            // If there were no 'group by' instructions, group.groupHeadings
-            // will be empty, and no headings will be added.
-            await this.addGroupHeadings(group.groupHeadings, group);
+            // If there were no 'group by' instructions, no headings will be added.
+            await this.addGroupHeadings(group);
 
             this.addedListItems.clear();
             this.nestingLevel = 0;
@@ -235,12 +234,12 @@ export abstract class QueryResultsRendererBase {
 
     /**
      * Display headings for a group of tasks.
-     * @param _groupHeadings - The headings to display. This can be an empty array,
      *                        in which case no headings will be added.
-     * @param group - The group whose headings are being displayed.
+     * @param group - The group whose headings are being displayed. The group may be empty,
+     *                in which case no headings will be added.
      * @private
      */
-    protected async addGroupHeadings(_groupHeadings: GroupDisplayHeading[], group: TaskGroup) {
+    protected async addGroupHeadings(group: TaskGroup) {
         for (const heading of group.groupHeadings) {
             await this.addGroupHeading(heading);
         }
