@@ -207,6 +207,9 @@ hide nested backlink
 ```
 ````
 
+![Comparison of search results when using `show tree`. Left: nested backlinks shown. Right: nested backlinks hidden.](../images/search-results-hide-nested-backlink.png)
+<span class="caption">Comparison of search results when using `show tree`. **Left**: nested backlinks shown. **Right**: nested backlinks hidden.</span>
+
 > [!Note]
 > `hide nested backlink` only affects nested tasks, so it only has a visible effect together with `show tree`.
 > In the default flat layout there are no nested tasks, so the instruction does nothing.
