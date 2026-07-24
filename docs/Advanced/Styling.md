@@ -196,6 +196,7 @@ The following additional components have the following classes:
 | tasks-postpone                 | This is applied to the SPAN that wraps the postpone button/icon shown after the edit button/icon                |
 | tasks-urgency                  | This is applied to the SPAN that wraps the urgency score if displayed on the task.                              |
 | tasks-group-heading            | This is applied to H4, H5 and H6 group headings                                                                 |
+| tasks-group-count              | This is applied inside the lowest level group heading, if `show group count` instruction is used.               |
 
 > [!released]
 >
@@ -203,6 +204,7 @@ The following additional components have the following classes:
 > - `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
 > - `tasks-postpone` was added in Tasks 5.3.0.
 > - Styling of the Edit and Postpone buttons was changed in Tasks 6.0.0: see [[How to style buttons]].
+> - `tasks-group-count` was added in Tasks X.Y.Z.
 
 ## CSS Examples
 
