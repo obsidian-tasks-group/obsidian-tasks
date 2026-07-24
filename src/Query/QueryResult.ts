@@ -9,6 +9,14 @@ function taskCountPluralised(tasksCount: number) {
     return `task${tasksCount !== 1 ? 's' : ''}`;
 }
 
+function totalTasksCountDisplayText(tasksCount: number, tasksCountBeforeLimit: number): string {
+    if (tasksCount === tasksCountBeforeLimit) {
+        return `${tasksCount} ${taskCountPluralised(tasksCount)}`;
+    } else {
+        return `${tasksCount} of ${tasksCountBeforeLimit} ${taskCountPluralised(tasksCountBeforeLimit)}`;
+    }
+}
+
 export class QueryResult {
     public readonly taskGroups: TaskGroups;
     public readonly totalTasksCountBeforeLimit: number = 0;
@@ -37,11 +45,7 @@ export class QueryResult {
     public totalTasksCountDisplayText() {
         const tasksCount = this.totalTasksCount;
         const tasksCountBeforeLimit = this.totalTasksCountBeforeLimit;
-        if (tasksCount === tasksCountBeforeLimit) {
-            return `${tasksCount} ${taskCountPluralised(tasksCount)}`;
-        } else {
-            return `${tasksCount} of ${tasksCountBeforeLimit} ${taskCountPluralised(tasksCountBeforeLimit)}`;
-        }
+        return totalTasksCountDisplayText(tasksCount, tasksCountBeforeLimit);
     }
 
     public get groups(): TaskGroup[] {
