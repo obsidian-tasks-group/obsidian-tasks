@@ -178,20 +178,8 @@ describe('QueryResultsRenderer - rendering queries', () => {
         const expectedPriorityHeading = '"tasks-group-heading">For test purposes: %%3%%Normal priority';
 
         const expectedTask1Heading = makeHeadingAndCountHtml('1', '1 task');
-
-        const expectedTasks2And3Heading = [
-            '  <h5 class="tasks-group-heading">',
-            '    For test purposes: 2+3',
-            '    <span class="tasks-group-count">(2 tasks)</span>',
-            '  </h5>',
-        ].join('\n');
-
-        const expectedTasks2And3HeadingLimited = [
-            '  <h5 class="tasks-group-heading">',
-            '    For test purposes: 2+3',
-            '    <span class="tasks-group-count">(1 of 2 tasks)</span>',
-            '  </h5>',
-        ].join('\n');
+        const expectedTasks2And3Heading = makeHeadingAndCountHtml('2+3', '2 tasks');
+        const expectedTasks2And3HeadingLimited = makeHeadingAndCountHtml('2+3', '1 of 2 tasks');
 
         it('should render group counts', async () => {
             const html = await verifyRenderedHtml(threeTasks, showGroupCountHideOtherStuff);
