@@ -4,18 +4,7 @@ import type { Filter } from './Filter/Filter';
 import { TaskGroups } from './Group/TaskGroups';
 import type { TaskGroup } from './Group/TaskGroup';
 import { SearchInfo } from './SearchInfo';
-
-function taskCountPluralised(tasksCount: number) {
-    return `task${tasksCount !== 1 ? 's' : ''}`;
-}
-
-function totalTasksCountDisplayText(tasksCount: number, tasksCountBeforeLimit: number): string {
-    if (tasksCount === tasksCountBeforeLimit) {
-        return `${tasksCount} ${taskCountPluralised(tasksCount)}`;
-    } else {
-        return `${tasksCount} of ${tasksCountBeforeLimit} ${taskCountPluralised(tasksCountBeforeLimit)}`;
-    }
-}
+import { totalTasksCountDisplayText } from './TaskCountDisplayText';
 
 export class QueryResult {
     public readonly taskGroups: TaskGroups;
