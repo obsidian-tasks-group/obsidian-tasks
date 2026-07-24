@@ -134,19 +134,19 @@ describe('QueryResult', () => {
 
         // Cases where a limit was applied
 
-        it('should show original number of matching tasks if limit was applied', () => {
+        it('should show original number of matching tasks if limit 0 was applied', () => {
             const tasks: Task[] = [];
             const queryResult = createUngroupedQueryResultWithLimit(tasks, 1);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('0 of 1 task');
         });
 
-        it('should show original number of matching tasks if limit was applied', () => {
+        it('should show original number of matching tasks if limit 1 was applied', () => {
             const tasks = [fromLine({ line: '- [ ] Do something' })];
             const queryResult = createUngroupedQueryResultWithLimit(tasks, 2);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('1 of 2 tasks');
         });
 
-        it('should show original number of matching tasks if limit was applied', () => {
+        it('should show original number of matching tasks if limit 2 was applied', () => {
             const queryResult = createUngroupedQueryResultWithLimit(twoMoreComplicatedTasks, 9);
             expect(queryResult.totalTasksCountDisplayText()).toEqual('2 of 9 tasks');
         });
