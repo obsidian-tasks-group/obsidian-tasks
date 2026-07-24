@@ -231,10 +231,14 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const headerEl = createAndAppendElement(header, this.content);
         headerEl.classList.add('tasks-group-heading');
 
-        const countText = groupTaskCountText === '' ? '' : ` ${groupTaskCountText}`;
-        const groupText = `${group.displayName}${countText}`;
+        await this.renderGroupHeadingText(headerEl, group.displayName);
 
-        await this.renderGroupHeadingText(headerEl, groupText);
+        if (groupTaskCountText !== '') {
+            headerEl.append(' ');
+            const countSpan = createAndAppendElement('span', headerEl);
+            countSpan.classList.add('tasks-group-count');
+            countSpan.textContent = groupTaskCountText;
+        }
     }
 
     private async renderGroupHeadingText(container: HTMLHeadingElement, displayName: string): Promise<void> {
