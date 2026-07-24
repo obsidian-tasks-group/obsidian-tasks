@@ -50,43 +50,13 @@ export class PresetsSettingsUI {
     public getPresetsDefinitions(refresh: () => void): SettingDefinitionItem[] {
         const presets = getSettings().presets;
 
-        const openEditForm = (key: string | null) => {
-            const initial = key === null ? { name: '', value: '' } : { name: key, value: presets[key] ?? '' };
-            new EditPresetModal(this.plugin.app, getSettings().presets, key, initial, (name, value) => {
-                let next = getSettings().presets;
-                if (key !== null && key !== name) {
-                    const renamed = this.presetsSettingsService.renamePreset(next, key, name);
-                    if (!renamed) {
-                        return;
-                    }
-                    next = renamed;
-                }
-                next = this.presetsSettingsService.updatePresetValue(next, name, value);
-                this.savePresetsSettings(next, getSettings(), refresh);
-            }).open();
-        };
-
-        const presetRow = (key: string): SettingDefinition => ({
-            name: key,
-            desc: presets[key] ?? '',
-            searchable: false,
-            render: (setting) => {
-                setting.addExtraButton((btn) =>
-                    btn
-                        .setIcon('lucide-pencil')
-                        .setTooltip(i18n.t('common.edit'))
-                        .onClick(() => openEditForm(key)),
-                );
-            },
-        });
-
         return [
             {
                 type: 'list',
                 emptyState: i18n.t('settings.presets.emptyState'),
                 addItem: {
                     name: i18n.t('settings.presets.buttons.addNewPreset'),
-                    action: () => openEditForm(null),
+                    action: () => this.openEditPresetForm(null, refresh),
                 },
                 onReorder: (oldIndex, newIndex) => {
                     const currentKeys = Object.keys(getSettings().presets);
@@ -109,9 +79,46 @@ export class PresetsSettingsUI {
                     const updated = this.presetsSettingsService.deletePreset(getSettings().presets, key);
                     this.savePresetsSettings(updated, getSettings(), refresh);
                 },
-                items: Object.keys(presets).map(presetRow),
+                items: Object.keys(presets).map((key) => this.presetRow(key, presets[key] ?? '', refresh)),
             },
         ];
+    }
+
+    private presetRow(key: string, value: string, refresh: () => void): SettingDefinition {
+        return {
+            name: key,
+            desc: value,
+            searchable: false,
+            render: (setting) => {
+                setting.addExtraButton((btn) =>
+                    btn
+                        .setIcon('lucide-pencil')
+                        .setTooltip(i18n.t('common.edit'))
+                        .onClick(() => this.openEditPresetForm(key, refresh)),
+                );
+            },
+        };
+    }
+
+    /**
+     * Open the modal that creates a preset (`key === null`) or edits the
+     * preset named `key`, persisting the result when the user saves.
+     */
+    private openEditPresetForm(key: string | null, refresh: () => void): void {
+        const presets = getSettings().presets;
+        const initial = key === null ? { name: '', value: '' } : { name: key, value: presets[key] ?? '' };
+        new EditPresetModal(this.plugin.app, presets, key, initial, (name, value) => {
+            let next = getSettings().presets;
+            if (key !== null && key !== name) {
+                const renamed = this.presetsSettingsService.renamePreset(next, key, name);
+                if (!renamed) {
+                    return;
+                }
+                next = renamed;
+            }
+            next = this.presetsSettingsService.updatePresetValue(next, name, value);
+            this.savePresetsSettings(next, getSettings(), refresh);
+        }).open();
     }
 
     /**

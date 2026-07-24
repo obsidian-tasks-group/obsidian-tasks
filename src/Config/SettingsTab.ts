@@ -7,6 +7,7 @@ import {
     Setting,
     type SettingDefinition,
     type SettingDefinitionItem,
+    type ToggleComponent,
     debounce,
     requireApiVersion,
     sanitizeHTMLToDom,
@@ -154,7 +155,7 @@ export class SettingsTab extends PluginSettingTab {
                 btn
                     .setIcon('book-open')
                     .setTooltip(i18n.t('settings.seeTheDocumentation'))
-                    .onClick(() => window.open(docsUrl, '_blank')),
+                    .onClick(() => window.open(docsUrl, '_blank', 'noopener')),
             );
             inner(setting);
         };
@@ -170,24 +171,27 @@ export class SettingsTab extends PluginSettingTab {
      */
     private withReload(inner: (setting: Setting, markChanged: () => void) => void) {
         return (setting: Setting) => {
-            let reloadBtnEl: HTMLButtonElement | null = null;
+            let reloadBtnAdded = false;
             const markChanged = () => {
-                if (reloadBtnEl) {
-                    return;
+                if (!reloadBtnAdded) {
+                    reloadBtnAdded = true;
+                    this.addReloadButton(setting);
                 }
-                setting.addButton((btn) => {
-                    btn.setButtonText(i18n.t('common.reload'))
-                        .setCta()
-                        .onClick(() => window.location.reload());
-                    // Place the Reload button before the row's control, matching
-                    // Obsidian's own "Relaunch" placement on restart-required
-                    // settings.
-                    setting.controlEl.prepend(btn.buttonEl);
-                    reloadBtnEl = btn.buttonEl;
-                });
             };
             inner(setting, markChanged);
         };
+    }
+
+    private addReloadButton(setting: Setting): void {
+        setting.addButton((btn) => {
+            btn.setButtonText(i18n.t('common.reload'))
+                .setCta()
+                .onClick(() => window.location.reload());
+            // Place the Reload button before the row's control, matching
+            // Obsidian's own "Relaunch" placement on restart-required
+            // settings.
+            setting.controlEl.prepend(btn.buttonEl);
+        });
     }
 
     public getSettingDefinitions(): SettingDefinitionItem[] {
@@ -292,19 +296,21 @@ export class SettingsTab extends PluginSettingTab {
                             btn
                                 .setIcon('pencil')
                                 .setTooltip(i18n.t('common.edit'))
-                                .onClick(() => {
-                                    new GlobalQueryModal(this.app, getSettings().globalQuery, async (value) => {
-                                        updateSettings({ globalQuery: value });
-                                        GlobalQuery.getInstance().set(value);
-                                        await this.plugin.saveSettings();
-                                        this.events.triggerReloadOpenSearchResults();
-                                    }).open();
-                                }),
+                                .onClick(() => this.openGlobalQueryModal()),
                         );
                     }, 'https://publish.obsidian.md/tasks/Queries/Global+Query'),
                 },
             ],
         };
+    }
+
+    private openGlobalQueryModal(): void {
+        new GlobalQueryModal(this.app, getSettings().globalQuery, async (value) => {
+            updateSettings({ globalQuery: value });
+            GlobalQuery.getInstance().set(value);
+            await this.plugin.saveSettings();
+            this.events.triggerReloadOpenSearchResults();
+        }).open();
     }
 
     // ---- Searches & search results ---------------------------------------
@@ -323,28 +329,7 @@ export class SettingsTab extends PluginSettingTab {
                             groupByFunction: '<code>group by function</code>',
                         }),
                     ),
-                    render: (setting) => {
-                        setting.addToggle((toggle) => {
-                            toggle.setValue(EnableJsInTasksQueries.getInstance().get()).onChange((value) => {
-                                if (!value) {
-                                    // Turning OFF: no confirmation needed.
-                                    EnableJsInTasksQueries.getInstance().set(false);
-                                    this.events.triggerReloadOpenSearchResults();
-                                    return;
-                                }
-                                // Turning ON: require explicit acknowledgement.
-                                this.confirmEnableCustomSearches((confirmed) => {
-                                    if (confirmed) {
-                                        EnableJsInTasksQueries.getInstance().set(true);
-                                        this.events.triggerReloadOpenSearchResults();
-                                    } else {
-                                        // Revert the toggle UI back to off.
-                                        toggle.setValue(false);
-                                    }
-                                });
-                            });
-                        });
-                    },
+                    render: (setting) => this.renderEnableCustomSearchesToggle(setting),
                 },
                 {
                     name: i18n.t('settings.searchResults.taskCountLocation.name'),
@@ -368,6 +353,31 @@ export class SettingsTab extends PluginSettingTab {
                 },
             ],
         };
+    }
+
+    private renderEnableCustomSearchesToggle(setting: Setting): void {
+        setting.addToggle((toggle) => {
+            toggle.setValue(EnableJsInTasksQueries.getInstance().get()).onChange((value) => {
+                if (!value) {
+                    // Turning OFF: no confirmation needed.
+                    EnableJsInTasksQueries.getInstance().set(false);
+                    this.events.triggerReloadOpenSearchResults();
+                    return;
+                }
+                // Turning ON: require explicit acknowledgement.
+                this.confirmEnableCustomSearches((confirmed) => this.applyCustomSearchesChoice(toggle, confirmed));
+            });
+        });
+    }
+
+    private applyCustomSearchesChoice(toggle: ToggleComponent, confirmed: boolean): void {
+        if (confirmed) {
+            EnableJsInTasksQueries.getInstance().set(true);
+            this.events.triggerReloadOpenSearchResults();
+        } else {
+            // Revert the toggle UI back to off.
+            toggle.setValue(false);
+        }
     }
 
     /**
@@ -516,31 +526,17 @@ export class SettingsTab extends PluginSettingTab {
                                 .setIcon('book-open')
                                 .setTooltip(i18n.t('settings.seeTheDocumentation'))
                                 .onClick(() =>
-                                    window.open('https://publish.obsidian.md/tasks/Getting+Started/Statuses', '_blank'),
+                                    window.open(
+                                        'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
+                                        '_blank',
+                                        'noopener',
+                                    ),
                                 ),
                         (btn) => {
                             btn.setIcon('lucide-palette').setTooltip(
                                 i18n.t('settings.statuses.buttons.importFromTheme'),
                             );
-                            btn.extraSettingsEl.addEventListener('click', (evt) => {
-                                const menu = new Menu();
-                                for (const { name, collection } of getThemeCollections()) {
-                                    menu.addItem((item) =>
-                                        item
-                                            .setTitle(
-                                                i18n.t('settings.statuses.collections.buttons.importCollection.name', {
-                                                    themeName: name,
-                                                    numberOfStatuses: collection.length,
-                                                }),
-                                            )
-                                            .onClick(() => {
-                                                const { statusSettings: current } = getSettings();
-                                                addCustomStatesToSettings(collection, current, this);
-                                            }),
-                                    );
-                                }
-                                menu.showAtMouseEvent(evt);
-                            });
+                            btn.extraSettingsEl.addEventListener('click', (evt) => this.showImportFromThemeMenu(evt));
                         },
                     ],
                     onDelete: (index) => {
@@ -600,6 +596,30 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     /**
+     * Show a menu of the theme status collections; choosing one imports its
+     * statuses into the custom statuses list.
+     */
+    private showImportFromThemeMenu(evt: MouseEvent): void {
+        const menu = new Menu();
+        for (const { name, collection } of getThemeCollections()) {
+            menu.addItem((item) =>
+                item
+                    .setTitle(
+                        i18n.t('settings.statuses.collections.buttons.importCollection.name', {
+                            themeName: name,
+                            numberOfStatuses: collection.length,
+                        }),
+                    )
+                    .onClick(() => {
+                        const { statusSettings: current } = getSettings();
+                        addCustomStatesToSettings(collection, current, this);
+                    }),
+            );
+        }
+        menu.showAtMouseEvent(evt);
+    }
+
+    /**
      * Builds one list row for a single status. The row's `name` is the
      * status's friendly name, with the symbol prepended as a `<code>` chip; a
      * pencil extraButton opens the existing edit modal. Deletion is wired by
@@ -616,23 +636,28 @@ export class SettingsTab extends PluginSettingTab {
                 setting.addExtraButton((btn) => {
                     btn.setIcon('pencil')
                         .setTooltip(i18n.t('common.edit'))
-                        .onClick(() => {
-                            const modal = new CustomStatusModal(this.plugin, status, isCoreStatus);
-                            modal.onClose = () => {
-                                if (!modal.saved) {
-                                    return;
-                                }
-                                const { statusSettings: current } = getSettings();
-                                const list = isCoreStatus ? current.coreStatuses : current.customStatuses;
-                                if (StatusSettings.replaceStatus(list, status, modal.statusConfiguration())) {
-                                    updateAndSaveStatusSettings(current, this);
-                                }
-                            };
-                            modal.open();
-                        });
+                        .onClick(() => this.openEditStatusModal(status, isCoreStatus));
                 });
             },
         };
+    }
+
+    /**
+     * Open the edit modal for a status, and persist the edit when it is saved.
+     */
+    private openEditStatusModal(status: StatusConfiguration, isCoreStatus: boolean): void {
+        const modal = new CustomStatusModal(this.plugin, status, isCoreStatus);
+        modal.onClose = () => {
+            if (!modal.saved) {
+                return;
+            }
+            const { statusSettings: current } = getSettings();
+            const list = isCoreStatus ? current.coreStatuses : current.customStatuses;
+            if (StatusSettings.replaceStatus(list, status, modal.statusConfiguration())) {
+                updateAndSaveStatusSettings(current, this);
+            }
+        };
+        modal.open();
     }
 
     private async createStatusRegistryReport(): Promise<void> {
