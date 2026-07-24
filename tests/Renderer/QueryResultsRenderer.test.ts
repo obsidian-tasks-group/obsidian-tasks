@@ -167,16 +167,19 @@ describe('QueryResultsRenderer - rendering queries', () => {
             new TaskBuilder().description('2+3').build(),
         ];
 
+        const makeHeadingAndCountHtml = (expectedHeading: string, expectedCountLabel: string): string =>
+            [
+                '  <h5 class="tasks-group-heading">',
+                `    For test purposes: ${expectedHeading}`,
+                `    <span class="tasks-group-count">(${expectedCountLabel})</span>`,
+                '  </h5>',
+            ].join('\n');
+
         const expectedPriorityHeading = '"tasks-group-heading">For test purposes: %%3%%Normal priority';
 
         const expectedHeading = '1';
         const expectedCountLabel = '1 task';
-        const expectedTask1Heading = [
-            '  <h5 class="tasks-group-heading">',
-            `    For test purposes: ${expectedHeading}`,
-            `    <span class="tasks-group-count">(${expectedCountLabel})</span>`,
-            '  </h5>',
-        ].join('\n');
+        const expectedTask1Heading = makeHeadingAndCountHtml(expectedHeading, expectedCountLabel);
 
         const expectedTasks2And3Heading = [
             '  <h5 class="tasks-group-heading">',
