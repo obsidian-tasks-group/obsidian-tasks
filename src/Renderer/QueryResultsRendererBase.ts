@@ -257,9 +257,7 @@ export abstract class QueryResultsRendererBase {
             return '';
         }
 
-        const taskCount = group.tasks.length;
-        const taskLabel = taskCount === 1 ? 'task' : 'tasks';
-        return `(${taskCount} ${taskLabel})`;
+        return `(${group.describeTaskCount()})`;
     }
 
     protected abstract addGroupHeading(group: GroupDisplayHeading, groupTaskCountText: string): Promise<void>;
