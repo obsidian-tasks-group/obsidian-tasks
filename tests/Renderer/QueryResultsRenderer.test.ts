@@ -169,10 +169,12 @@ describe('QueryResultsRenderer - rendering queries', () => {
 
         const expectedPriorityHeading = '"tasks-group-heading">For test purposes: %%3%%Normal priority';
 
+        const expectedHeading = '1';
+        const expectedCountLabel = '1 task';
         const expectedTask1Heading = [
             '  <h5 class="tasks-group-heading">',
-            '    For test purposes: 1',
-            '    <span class="tasks-group-count">(1 task)</span>',
+            `    For test purposes: ${expectedHeading}`,
+            `    <span class="tasks-group-count">(${expectedCountLabel})</span>`,
             '  </h5>',
         ].join('\n');
 
