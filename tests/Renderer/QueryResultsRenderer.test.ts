@@ -162,24 +162,24 @@ describe('QueryResultsRenderer - rendering queries', () => {
         ].join('\n');
 
         const threeTasks: Task[] = [
-            new TaskBuilder().description('1st').build(),
-            new TaskBuilder().description('2nd and 3rd').build(),
-            new TaskBuilder().description('2nd and 3rd').build(),
+            new TaskBuilder().description('1').build(),
+            new TaskBuilder().description('2+3').build(),
+            new TaskBuilder().description('2+3').build(),
         ];
 
         it('should render group counts', async () => {
             const html = await verifyRenderedHtml(threeTasks, showGroupCountHideOtherStuff);
             expect(html).toContain('"tasks-group-heading">For test purposes: %%3%%Normal priority');
-            expect(html).toContain('"tasks-group-heading">For test purposes: 1st (1 task)');
-            expect(html).toContain('"tasks-group-heading">For test purposes: 2nd and 3rd (2 tasks)');
+            expect(html).toContain('"tasks-group-heading">For test purposes: 1 (1 task)');
+            expect(html).toContain('"tasks-group-heading">For test purposes: 2+3 (2 tasks)');
         });
 
         it('should render limited group counts', async () => {
             const query = 'limit groups 1\n' + showGroupCountHideOtherStuff;
             const html = await verifyRenderedHtml(threeTasks, query);
             expect(html).toContain('"tasks-group-heading">For test purposes: %%3%%Normal priority');
-            expect(html).toContain('"tasks-group-heading">For test purposes: 1st (1 task)');
-            expect(html).toContain('"tasks-group-heading">For test purposes: 2nd and 3rd (1 of 2 tasks)');
+            expect(html).toContain('"tasks-group-heading">For test purposes: 1 (1 task)');
+            expect(html).toContain('"tasks-group-heading">For test purposes: 2+3 (1 of 2 tasks)');
         });
     });
 });
