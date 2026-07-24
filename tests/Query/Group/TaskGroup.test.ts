@@ -32,15 +32,15 @@ describe('TaskGroup', () => {
 
         // Cases where a limit was applied
 
-        it.failing('should show original number of matching tasks if limit 0 was applied', () => {
+        it('should show original number of matching tasks if limit 0 was applied', () => {
             expect(createTaskGroupAndApplyLimit(1, 0)).toEqual('0 of 1 task');
         });
 
-        it.failing('should show original number of matching tasks if limit 1 was applied', () => {
+        it('should show original number of matching tasks if limit 1 was applied', () => {
             expect(createTaskGroupAndApplyLimit(2, 1)).toEqual('1 of 2 tasks');
         });
 
-        it.failing('should show original number of matching tasks if limit 2 was applied', () => {
+        it('should show original number of matching tasks if limit 2 was applied', () => {
             expect(createTaskGroupAndApplyLimit(9, 2)).toEqual('2 of 9 tasks');
         });
     });

@@ -53,6 +53,12 @@ export class TaskGroup {
     public tasks: Task[];
 
     /**
+     * The number of tasks originally in this group, before any group limit
+     * was applied.
+     */
+    private readonly _totalTasksCountBeforeLimit: number;
+
+    /**
      * Constructor
      * @param {string[]} groups - See {@link groups} for details
      * @param tasks {Task[]} - See {@link tasks} for details
@@ -61,6 +67,7 @@ export class TaskGroup {
         this.groups = groups;
         this.groupHeadings = [];
         this.tasks = tasks;
+        this._totalTasksCountBeforeLimit = tasks.length;
     }
 
     public setGroupHeadings(headingsForTaskGroup: GroupDisplayHeading[]) {
@@ -83,7 +90,7 @@ export class TaskGroup {
 
     public describeTaskCount() {
         const tasksCount = this.tasks.length;
-        return totalTasksCountDisplayText(tasksCount, tasksCount);
+        return totalTasksCountDisplayText(tasksCount, this._totalTasksCountBeforeLimit);
     }
 
     /**
