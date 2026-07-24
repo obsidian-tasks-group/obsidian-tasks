@@ -234,11 +234,22 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const countText = groupTaskCountText === '' ? '' : ` ${groupTaskCountText}`;
         const groupText = `${group.displayName}${countText}`;
 
+        await this.renderGroupHeadingText(headerEl, groupText);
+    }
+
+    private async renderGroupHeadingText(container: HTMLHeadingElement, displayName: string): Promise<void> {
         if (this.obsidianComponent === null) {
-            headerEl.textContent = 'For test purposes: ' + groupText;
+            container.textContent = 'For test purposes: ' + displayName;
             return;
         }
-        await this.renderMarkdown(this.obsidianApp, groupText, headerEl, this.tasksFile.path, this.obsidianComponent);
+
+        await this.renderMarkdown(
+            this.obsidianApp,
+            displayName,
+            container,
+            this.tasksFile.path,
+            this.obsidianComponent,
+        );
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
