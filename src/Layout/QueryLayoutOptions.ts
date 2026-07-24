@@ -33,7 +33,7 @@ export function parseQueryShowHideOptions(queryLayoutOptions: QueryLayoutOptions
         ['nested backlink', 'hideNestedBacklinks'],
         ['postpone button', 'hidePostponeButton'],
         ['task count', 'hideTaskCount'],
-        ['group task count', 'hideGroupTaskCount'],
+        ['group count', 'hideGroupTaskCount'],
         ['toolbar', 'hideToolbar'],
         ['tree', 'hideTree'],
         ['urgency', 'hideUrgency'],

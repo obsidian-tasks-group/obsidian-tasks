@@ -204,7 +204,7 @@ group by function 'level4'
             `
 group by priority
 group by scheduled
-show group task count
+show group count
 `,
         );
     });

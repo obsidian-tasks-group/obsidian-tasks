@@ -154,7 +154,7 @@ describe('QueryResultsRenderer - rendering queries', () => {
 
     describe('group counts', () => {
         const showGroupCountHideOtherStuff = [
-            'show group task count',
+            'show group count',
             'group by priority',
             'group by function task.description',
             'hide edit button',

@@ -147,7 +147,7 @@ group by id
             `
 group by priority
 group by scheduled
-show group task count
+show group count
 `,
             tasks,
         );
