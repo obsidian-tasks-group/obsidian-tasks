@@ -31,8 +31,8 @@
   "notices": {
     "do-not-show-message-again": "No volver a mostrar este mensaje",
     "live-preview-callout-warning": {
-      "line1": "Actualmente Obsidian no proporciona a los complementos la línea de tarea correcta cuando haces clic en una casilla dentro de un callout en la Vista previa en vivo.",
-      "line2": "En su lugar, Obsidian informa que se está editando el título del callout.",
+      "line1": "Actualmente Obsidian no proporciona a los complementos la línea de tarea correcta cuando haces clic en una casilla dentro de un destacado en la Vista previa en vivo.",
+      "line2": "En su lugar, Obsidian informa que se está editando el título del destacado.",
       "line3": "Por eso el complemento Tasks no puede añadir ni quitar fechas de finalización de forma segura, ni crear la siguiente copia de una tarea recurrente.",
       "line4": "Para completar la tarea correctamente:",
       "line5": "1. Deshaz el cambio de la casilla.",
