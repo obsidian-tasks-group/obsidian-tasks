@@ -41,6 +41,13 @@
     padding-left: 20px;
 }
 
+.tasks-group-count {
+    color: var(--text-faint);
+    font-size: 0.85em;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
 /* Tooltip pop up above the description in short mode */
 .tooltip.pop-up {
     animation: pop-up-animation 200ms forwards ease-in-out;
