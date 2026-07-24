@@ -12,6 +12,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
+- X.Y.Z:
+  - Add [[Grouping#Showing the number of tasks in a group|show group count]] instruction. For now, this only shows numbers of tasks in the lowest-level groups.
 - 8.3.0:
   - Add [[Layout#Hide and Show Nested Backlink|'hide nested backlink']] instruction, for when '`show tree`' makes the output just too cluttered.
   - [[Notifications]] page updated to better match the current behaviour of the [Reminder](https://community.obsidian.md/plugins/obsidian-reminder-plugin) plugin.

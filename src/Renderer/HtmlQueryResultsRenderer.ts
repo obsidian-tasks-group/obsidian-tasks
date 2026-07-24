@@ -219,7 +219,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         span.classList.add('tasks-urgency');
     }
 
-    protected async addGroupHeading(group: GroupDisplayHeading) {
+    protected async addGroupHeading(group: GroupDisplayHeading, groupTaskCountText: string): Promise<void> {
         // Headings nested to 2 or more levels are all displayed with 'h6:
         let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
@@ -231,17 +231,46 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const headerEl = createAndAppendElement(header, this.content);
         headerEl.classList.add('tasks-group-heading');
 
+        await this.renderGroupHeadingText(headerEl, group.displayName);
+
+        if (groupTaskCountText !== '') {
+            this.appendGroupTaskCount(headerEl, groupTaskCountText);
+        }
+    }
+
+    private async renderGroupHeadingText(container: HTMLElement, displayName: string): Promise<void> {
+        // In tests, we write plain text directly instead of using Obsidian's Markdown renderer.
         if (this.obsidianComponent === null) {
-            headerEl.textContent = 'For test purposes: ' + group.displayName;
+            container.textContent = 'For test purposes: ' + displayName;
             return;
         }
+
         await this.renderMarkdown(
             this.obsidianApp,
-            group.displayName,
-            headerEl,
+            displayName,
+            container,
             this.tasksFile.path,
             this.obsidianComponent,
         );
+    }
+
+    private appendGroupTaskCount(headerEl: HTMLElement, groupTaskCountText: string): void {
+        const countSpan = headerEl.ownerDocument.createElement('span');
+        countSpan.classList.add('tasks-group-count');
+        countSpan.textContent = groupTaskCountText;
+
+        // Obsidian's Markdown renderer usually wraps heading text in a single <p>.
+        // Append the count inside that paragraph so it stays on the same line.
+        const onlyChild = headerEl.firstElementChild;
+        if (headerEl.childElementCount === 1 && onlyChild instanceof HTMLParagraphElement) {
+            onlyChild.append(' ');
+            onlyChild.appendChild(countSpan);
+            return;
+        }
+
+        // Fall back to appending directly to the heading element.
+        headerEl.append(' ');
+        headerEl.appendChild(countSpan);
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {

@@ -109,9 +109,10 @@ export class MarkdownQueryResultsRenderer extends QueryResultsRendererBase {
         return '    '.repeat(indentationLevel);
     }
 
-    protected addGroupHeading(group: GroupDisplayHeading): Promise<void> {
+    protected addGroupHeading(group: GroupDisplayHeading, groupTaskCountText: string): Promise<void> {
         const headingPrefix = '#'.repeat(Math.min(4 + group.nestingLevel, 6));
-        this.markdownLines.push(`${headingPrefix} ${group.displayName}`);
+        const countText = groupTaskCountText === '' ? '' : ` ${groupTaskCountText}`;
+        this.markdownLines.push(`${headingPrefix} ${group.displayName}${countText}`);
         this.addEmptyLine();
         return Promise.resolve();
     }

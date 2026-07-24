@@ -1042,6 +1042,22 @@ For example:
 >
 > The [[Sorting|sort by]] facility, by contrast, controls the order in which displays are displayed *inside* each group.
 
+### Showing the number of tasks in a group
+
+Since Tasks X.Y.Z, you can show or hide the number of tasks in each group heading with these instructions:
+
+```plain text
+show group count
+hide group count
+```
+
+When enabled, Tasks shows the number of tasks in each group heading.
+
+For now, the count is shown only on the lowest-level groups.
+
+This option is off by default. To turn it on, add `show group count` to your query.  
+If you want it in all your searches, add it to your [[Global Query]].
+
 ### Limiting group size
 
 You can limit the number of tasks in each group, perhaps to work on the most important things first.
