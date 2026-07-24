@@ -234,10 +234,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         await this.renderGroupHeadingText(headerEl, group.displayName);
 
         if (groupTaskCountText !== '') {
-            headerEl.append(' ');
-            const countSpan = createAndAppendElement('span', headerEl);
-            countSpan.classList.add('tasks-group-count');
-            countSpan.textContent = groupTaskCountText;
+            this.appendGroupTaskCount(headerEl, groupTaskCountText);
         }
     }
 
@@ -254,6 +251,13 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             this.tasksFile.path,
             this.obsidianComponent,
         );
+    }
+
+    private appendGroupTaskCount(headerEl: HTMLElement, groupTaskCountText: string): void {
+        headerEl.append(' ');
+        const countSpan = createAndAppendElement('span', headerEl);
+        countSpan.classList.add('tasks-group-count');
+        countSpan.textContent = groupTaskCountText;
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
