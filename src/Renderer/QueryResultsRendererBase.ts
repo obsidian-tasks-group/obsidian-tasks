@@ -234,7 +234,6 @@ export abstract class QueryResultsRendererBase {
 
     /**
      * Display headings for a group of tasks.
-     *                        in which case no headings will be added.
      * @param group - The group whose headings are being displayed. The group may be empty,
      *                in which case no headings will be added.
      * @private
