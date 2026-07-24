@@ -241,7 +241,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
-    private async renderGroupHeadingText(container: HTMLHeadingElement, displayName: string): Promise<void> {
+    private async renderGroupHeadingText(container: HTMLElement, displayName: string): Promise<void> {
         if (this.obsidianComponent === null) {
             container.textContent = 'For test purposes: ' + displayName;
             return;
