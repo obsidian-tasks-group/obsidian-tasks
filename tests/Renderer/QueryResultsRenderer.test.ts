@@ -177,23 +177,19 @@ describe('QueryResultsRenderer - rendering queries', () => {
 
         const expectedPriorityHeading = '"tasks-group-heading">For test purposes: %%3%%Normal priority';
 
-        const expectedTask1Heading = makeHeadingAndCountHtml('1', '1 task');
-        const expectedTasks2And3Heading = makeHeadingAndCountHtml('2+3', '2 tasks');
-        const expectedTasks2And3HeadingLimited = makeHeadingAndCountHtml('2+3', '1 of 2 tasks');
-
         it('should render group counts', async () => {
             const html = await verifyRenderedHtml(threeTasks, showGroupCountHideOtherStuff);
             expect(html).toContain(expectedPriorityHeading);
-            expect(html).toContain(expectedTask1Heading);
-            expect(html).toContain(expectedTasks2And3Heading);
+            expect(html).toContain(makeHeadingAndCountHtml('1', '1 task'));
+            expect(html).toContain(makeHeadingAndCountHtml('2+3', '2 tasks'));
         });
 
         it('should render limited group counts', async () => {
             const query = 'limit groups 1\n' + showGroupCountHideOtherStuff;
             const html = await verifyRenderedHtml(threeTasks, query);
             expect(html).toContain(expectedPriorityHeading);
-            expect(html).toContain(expectedTask1Heading);
-            expect(html).toContain(expectedTasks2And3HeadingLimited);
+            expect(html).toContain(makeHeadingAndCountHtml('1', '1 task'));
+            expect(html).toContain(makeHeadingAndCountHtml('2+3', '1 of 2 tasks'));
         });
     });
 });
