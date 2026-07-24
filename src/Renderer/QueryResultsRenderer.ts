@@ -234,6 +234,14 @@ export class QueryResultsRenderer {
     }
 
     private filterResults() {
+        if (this._filterString === '') {
+            // As well as for efficiency, this early-return ensures the
+            // correct group counts can be displayed on headings,
+            // at least when the toolbar filter is empty.
+            this.filteredQueryResult = this.queryResult;
+            return;
+        }
+
         const { filter, error } = new DescriptionField().createFilterOrErrorMessage(
             'description includes ' + this._filterString,
         );

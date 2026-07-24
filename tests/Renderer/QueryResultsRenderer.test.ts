@@ -174,12 +174,12 @@ describe('QueryResultsRenderer - rendering queries', () => {
             expect(html).toContain('"tasks-group-heading">For test purposes: 2nd and 3rd (2 tasks)');
         });
 
-        it.failing('should render limited group counts', async () => {
+        it('should render limited group counts', async () => {
             const query = 'limit groups 1\n' + showGroupCountHideOtherStuff;
             const html = await verifyRenderedHtml(threeTasks, query);
             expect(html).toContain('"tasks-group-heading">For test purposes: %%3%%Normal priority');
             expect(html).toContain('"tasks-group-heading">For test purposes: 1st (1 task)');
-            expect(html).toContain('"tasks-group-heading">For test purposes: 2nd and 3rd (1 of 2 tasks)'); // shows (1 task)
+            expect(html).toContain('"tasks-group-heading">For test purposes: 2nd and 3rd (1 of 2 tasks)');
         });
     });
 });
