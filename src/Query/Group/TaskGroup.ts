@@ -1,4 +1,5 @@
 import type { Task } from '../../Task/Task';
+import { totalTasksCountDisplayText } from '../TaskCountDisplayText';
 import type { GroupDisplayHeading } from './GroupDisplayHeading';
 
 /**
@@ -78,6 +79,11 @@ export class TaskGroup {
      */
     public applyTaskLimit(limit: number) {
         this.tasks = this.tasks.slice(0, limit);
+    }
+
+    public describeTaskCount() {
+        const tasksCount = this.tasks.length;
+        return totalTasksCountDisplayText(tasksCount, tasksCount);
     }
 
     /**
