@@ -191,7 +191,6 @@ group by function 'level4'
     });
 
     it('should write group task count, if enabled', async () => {
-        // Not yet implemented...
         const tasks = fromMarkdown(`
 - [ ] 1 ⏳ 2025-10-29
 - [ ] 2 ⏬
