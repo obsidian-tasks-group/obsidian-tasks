@@ -249,7 +249,7 @@ export abstract class QueryResultsRendererBase {
     }
 
     private groupTaskCountSuffix(group: TaskGroup, headingIndex: number, lastHeadingIndex: number): string {
-        if (this.query.queryLayoutOptions.hideGroupTaskCount) {
+        if (this.query.queryLayoutOptions.hideGroupCount) {
             return '';
         }
 
