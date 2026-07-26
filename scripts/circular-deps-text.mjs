@@ -39,13 +39,16 @@ const result = spawnSync(
 
 const stdout = result.stdout ?? '';
 
-const stableOutput = stdout
-    .split(/\r?\n/)
-    .slice(1)
-    .map((line) => line.replace(/^\d+\)\s+/, ''))
-    .join('\n')
-    .replace(/^\s*\n/, '')
-    .trimEnd() + '\n';
+const stableOutput =
+    'Current circular dependencies:\n\n' +
+    stdout
+        .split(/\r?\n/)
+        .slice(1)
+        .map((line) => line.replace(/^\d+\)\s+/, ''))
+        .join('\n')
+        .replace(/^\s*\n/, '')
+        .trimEnd() +
+    '\n';
 
 process.stdout.write(stableOutput);
 

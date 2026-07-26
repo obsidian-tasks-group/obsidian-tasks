@@ -1,3 +1,5 @@
+Current circular dependencies:
+
 Config/Settings.ts > Config/DismissibleNotices.ts
 Config/Settings.ts > Suggestor/Suggestor.ts
 Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts
