@@ -9,7 +9,7 @@ export const defaultPresets = {
     hide_non_date_fields:
         '# Hide all the non-date fields, but not tags\nhide id\nhide depends on\nhide recurrence rule\nhide on completion\nhide priority',
     hide_query_elements:
-        '# Hide toolbar, postpone, edit and backlinks\nhide toolbar\nhide postpone button\nhide edit button\nhide backlinks',
+        '# Hide toolbar, postpone, edit, backlinks and task count\nhide toolbar\nhide postpone button\nhide edit button\nhide backlinks\nhide task count',
     hide_everything:
         '# Hide everything except description and any tags\npreset hide_date_fields\npreset hide_non_date_fields\npreset hide_query_elements',
 };
