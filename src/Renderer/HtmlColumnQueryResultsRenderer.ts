@@ -1,8 +1,10 @@
 import type { TaskGroups } from '../Query/Group/TaskGroups';
-import type { Task } from '../Task/Task';
+import { Task } from '../Task/Task';
 import { SetPriority } from '../ui/EditInstructions/PriorityInstructions';
 import type { TaskEditingInstruction } from '../ui/EditInstructions/TaskEditingInstruction';
 import type { TaskGroup } from '../Query/Group/TaskGroup';
+import { SetTaskDate } from '../ui/EditInstructions/DateInstructions';
+import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
 import { DragState } from './DragState';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
 import { createAndAppendElement } from './TaskLineRenderer';
@@ -97,6 +99,25 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
             return new SetPriority(firstTask.priority);
         }
 
+        const dateField = (Task.allDateFields() as AllTaskDateFields[]).find(
+            (field) => this.groupedPropertyForDateField(field) === groupedBy,
+        );
+        if (dateField) {
+            const rawDate = firstTask[dateField];
+            if (!rawDate?.isValid()) {
+                return null;
+            }
+
+            return new SetTaskDate(dateField, rawDate.toDate());
+        }
+
         return null;
+    }
+
+    /**
+     * Convert Task field names like 'dueDate' to groupedBy names like 'due'
+     */
+    private groupedPropertyForDateField(field: AllTaskDateFields): string {
+        return field.replace(/Date$/, '');
     }
 }
