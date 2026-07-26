@@ -550,11 +550,12 @@ describe('include settings tests', () => {
             hide recurrence rule
             hide on completion
             hide priority",
-              "hide_query_elements": "# Hide toolbar, postpone, edit and backlinks
+              "hide_query_elements": "# Hide toolbar, postpone, edit, backlinks and task count
             hide toolbar
             hide postpone button
             hide edit button
-            hide backlinks",
+            hide backlinks
+            hide task count",
               "this_file": "path includes {{query.file.path}}",
               "this_folder": "folder includes {{query.file.folder}}",
               "this_folder_only": "filter by function task.file.folder === query.file.folder",
