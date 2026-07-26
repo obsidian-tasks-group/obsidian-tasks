@@ -53,6 +53,7 @@ jobs:
       - name: Identify circular dependencies
         run: |
           yarn run circular-deps-text || echo continuing after error message
+          git diff circular-deps.txt  || echo continuing after error message
           yarn run circular-deps-image
 
       - name: Archive circular dependencies results
