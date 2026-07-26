@@ -98,7 +98,7 @@ const typescriptCommonRules = {
 
 export default defineConfig([
     {
-        ignores: ['**/main.js'],
+        ignores: ['**/main.js', 'scripts/**'],
     },
     js.configs.recommended,
     prettierConfig,
