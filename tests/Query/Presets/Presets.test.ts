@@ -543,7 +543,8 @@ describe('include settings tests', () => {
               "hide_everything": "# Hide everything except description and any tags
             preset hide_date_fields
             preset hide_non_date_fields
-            preset hide_query_elements",
+            preset hide_query_elements
+            hide task count",
               "hide_non_date_fields": "# Hide all the non-date fields, but not tags
             hide id
             hide depends on

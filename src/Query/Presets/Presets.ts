@@ -11,7 +11,7 @@ export const defaultPresets = {
     hide_query_elements:
         '# Hide toolbar, postpone, edit and backlinks\nhide toolbar\nhide postpone button\nhide edit button\nhide backlinks',
     hide_everything:
-        '# Hide everything except description and any tags\npreset hide_date_fields\npreset hide_non_date_fields\npreset hide_query_elements',
+        '# Hide everything except description and any tags\npreset hide_date_fields\npreset hide_non_date_fields\npreset hide_query_elements\nhide task count',
 };
 
 function summariseInstruction(instructions: string) {
