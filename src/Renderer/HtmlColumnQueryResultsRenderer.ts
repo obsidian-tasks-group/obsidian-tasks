@@ -1,6 +1,6 @@
 import type { TaskGroups } from '../Query/Group/TaskGroups';
 import { Task } from '../Task/Task';
-import { SetPriority } from '../ui/EditInstructions/PriorityInstructions';
+import { createEditingInstructionForPriorityGroups } from '../ui/EditInstructions/PriorityInstructions';
 import type { TaskEditingInstruction } from '../ui/EditInstructions/TaskEditingInstruction';
 import type { TaskGroup } from '../Query/Group/TaskGroup';
 import { SetTaskDate } from '../ui/EditInstructions/DateInstructions';
@@ -101,7 +101,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
 
         const groupedBy = this.query.viewLayoutOptions.grouper?.property;
         if (groupedBy === 'priority') {
-            return new SetPriority(firstTask.priority);
+            return createEditingInstructionForPriorityGroups(firstTask);
         }
 
         const dateField = (Task.allDateFields() as AllTaskDateFields[]).find(
