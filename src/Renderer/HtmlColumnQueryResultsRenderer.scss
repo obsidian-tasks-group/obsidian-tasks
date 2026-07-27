@@ -12,9 +12,9 @@
         background: var(--background-secondary);
         padding: 0 0.5rem;
         transition:
-            border-color 120ms ease,
-            background-color 120ms ease,
-            opacity 120ms ease;
+            border-color 60ms ease,
+            background-color 60ms ease,
+            opacity 60ms ease;
 
         &.tasks-columns-column-drag-active {
             &.tasks-columns-column-can-drop {
