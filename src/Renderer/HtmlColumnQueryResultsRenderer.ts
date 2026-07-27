@@ -25,23 +25,24 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 const columnContainer = createAndAppendElement('div', columnsContainer);
                 columnContainer.classList.add('tasks-columns-column');
 
-                columnContainer.addEventListener('dragover', (e) => {
-                    // An element rejects drops by default. Calling preventDefault() on
-                    // dragover is what marks this column as a valid drop target - without
-                    // it, the 'drop' event below never fires.
-                    e.preventDefault();
-                });
-
+                // Only enable dropping in to a column that has an editing instruction:
                 const instruction = this.editingInstructionForColumn(group);
-                columnContainer.addEventListener('drop', async (e) => {
-                    // Fires when a card is released over this column. preventDefault()
-                    // stops the browser's default handling; here we read the Task object
-                    // that the dragged card recorded in DragState during dragstart.
-                    e.preventDefault();
-                    if (instruction) {
+                if (instruction) {
+                    columnContainer.addEventListener('dragover', (e) => {
+                        // An element rejects drops by default. Calling preventDefault() on
+                        // dragover is what marks this column as a valid drop target - without
+                        // it, the 'drop' event below never fires.
+                        e.preventDefault();
+                    });
+
+                    columnContainer.addEventListener('drop', async (e) => {
+                        // Fires when a card is released over this column. preventDefault()
+                        // stops the browser's default handling; here we read the Task object
+                        // that the dragged card recorded in DragState during dragstart.
+                        e.preventDefault();
                         await this.dragState.dragged(instruction);
-                    }
-                });
+                    });
+                }
 
                 this.content = columnContainer;
             }
@@ -59,7 +60,6 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     protected extendTaskBehaviour(listItem: HTMLLIElement, task: Task) {
         if (this.nestingLevel === 0) {
             listItem.classList.add('tasks-columns-column-card');
-            // TODO Only enable drag and drop when this column has an editing instruction associated with it.
             // TODO Provide visual indication of which columns the card can be dropped into.
             // TODO Prevent giving the appearance that the whole column can moved,
             //      if some characters in the heading and first task are selected.
