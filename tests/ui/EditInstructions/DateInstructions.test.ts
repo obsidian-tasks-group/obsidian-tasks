@@ -19,6 +19,7 @@ import { TaskLayoutComponent } from '../../../src/Layout/TaskLayoutOptions';
 import { TasksDate } from '../../../src/DateTime/TasksDate';
 import { SEPARATOR_INSTRUCTION_DISPLAY_NAME } from '../../../src/ui/EditInstructions/MenuDividerInstruction';
 import type { TaskEditingInstruction } from '../../../src/ui/EditInstructions/TaskEditingInstruction';
+import { fromMarkdown } from '../../TestingTools/TestHelpers';
 
 window.moment = moment;
 
@@ -404,5 +405,12 @@ describe('Creating Editing Instruction', () => {
         const newTask = taskWithInstructionApplied(instruction, taskToEdit);
 
         expect(newTask.startDate).toBeNull();
+    });
+
+    it('should refuse to copy an invalid date', () => {
+        const invalidDoneDateTask = fromMarkdown('- [ ] Something ✅ 2026-13-42')[0];
+        const instruction = createEditingInstructionForDateGroups('doneDate', invalidDoneDateTask);
+
+        expect(instruction).toBeNull();
     });
 });

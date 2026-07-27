@@ -176,8 +176,14 @@ export function createEditingInstructionForDateGroups(
     sampleTask: Task,
 ): TaskEditingInstruction | null {
     const rawDate = sampleTask[dateField];
+
     if (rawDate === null) {
         return new RemoveTaskDate(dateField, sampleTask);
+    }
+
+    if (!rawDate.isValid()) {
+        // refuse to create an instruction that would copy an invalid date
+        return null;
     }
     return new SetTaskDate(dateField, rawDate.toDate());
 }
