@@ -12,6 +12,9 @@ together with the name of the element.
 > [!released]
 The `show` commands were introduced in Tasks 1.14.0.
 
+> [!tip]
+> See also [[Views]], for choosing between Column and List result views.
+
 <!-- NEW_QUERY_INSTRUCTION_EDIT_REQUIRED -->
 
 ## Task Elements

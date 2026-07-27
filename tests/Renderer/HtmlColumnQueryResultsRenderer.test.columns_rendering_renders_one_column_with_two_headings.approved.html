@@ -5,14 +5,15 @@
 
 <div>
   <div class="tasks-columns">
-    <div class="tasks-columns-column">
+    <div class="tasks-columns-column tasks-columns-column-can-drop">
       <h4 class="tasks-group-heading">For test purposes: No due date</h4>
       <h5 class="tasks-group-heading">For test purposes: %%0%%Highest priority</h5>
       <ul
         class="contains-task-list plugin-tasks-query-result tasks-layout-hide-urgency tasks-layout-hide-backlinks tasks-layout-hide-edit-button"
         data-task-group-by="priority">
         <li
-          class="task-list-item plugin-tasks-list-item"
+          class="tasks-columns-column-card task-list-item plugin-tasks-list-item"
+          draggable="true"
           data-task-priority="highest"
           data-task=""
           data-line="0"
@@ -31,7 +32,8 @@
         class="contains-task-list plugin-tasks-query-result tasks-layout-hide-urgency tasks-layout-hide-backlinks tasks-layout-hide-edit-button"
         data-task-group-by="priority">
         <li
-          class="task-list-item plugin-tasks-list-item"
+          class="tasks-columns-column-card task-list-item plugin-tasks-list-item"
+          draggable="true"
           data-task-priority="low"
           data-task=""
           data-line="0"

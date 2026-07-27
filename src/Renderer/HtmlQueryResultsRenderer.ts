@@ -49,7 +49,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     // with the values of elements that will be rendered
     public content: HTMLDivElement = document.createElement('div');
     private readonly ulElementStack: HTMLUListElement[] = [];
-    private lastLIElement: HTMLLIElement = document.createElement('li');
+    protected lastLIElement: HTMLLIElement = document.createElement('li');
 
     private readonly htmlQueryRendererParameters: HTMLQueryRendererParameters;
 
@@ -154,6 +154,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const isFilenameUnique = this.isFilenameUnique({ task }, this.htmlQueryRendererParameters.allMarkdownFiles());
         const listItem = this.lastLIElement;
 
+        this.extendTaskBehaviour(listItem, task);
+
         await this.taskLineRenderer.renderTaskLine({
             li: listItem,
             task,
@@ -196,6 +198,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
         this.currentULElement().appendChild(listItem);
     }
+
+    protected extendTaskBehaviour(_listItem: HTMLLIElement, _task: Task) {}
 
     private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = createAndAppendElement('a', listItem);

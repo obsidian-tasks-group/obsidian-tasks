@@ -166,3 +166,24 @@ function allDateInstructions(task: Task, field: AllTaskDateFields, factor: numbe
         new RemoveTaskDate(field, task),
     ];
 }
+
+/**
+ * Return a Task editing instruction that can be used to make any other tasks
+ * have the same date value as the given task, for the given date field.
+ */
+export function createEditingInstructionForDateGroups(
+    dateField: AllTaskDateFields,
+    sampleTask: Task,
+): TaskEditingInstruction | null {
+    const rawDate = sampleTask[dateField];
+
+    if (rawDate === null) {
+        return new RemoveTaskDate(dateField, sampleTask);
+    }
+
+    if (!rawDate.isValid()) {
+        // refuse to create an instruction that would copy an invalid date
+        return null;
+    }
+    return new SetTaskDate(dateField, rawDate.toDate());
+}

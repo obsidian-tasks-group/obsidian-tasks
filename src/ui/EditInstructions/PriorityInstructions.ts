@@ -55,3 +55,11 @@ export function allPriorityInstructions() {
     }
     return instructions;
 }
+
+/**
+ * Return a Task editing instruction that can be used to make any other tasks
+ * have the same priority as the given task.
+ */
+export function createEditingInstructionForPriorityGroups(sampleTask: Task): TaskEditingInstruction {
+    return new SetPriority(sampleTask.priority);
+}
