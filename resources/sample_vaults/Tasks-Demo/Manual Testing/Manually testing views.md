@@ -4,13 +4,15 @@ TQ_extra_instructions: |-
   limit 5
   limit groups 1
   filter by function task.children.length > 0
+level_1_group: priority
 ---
 # Manually testing views
 
 ```tasks
 view list
+group by {{query.file.property('level_1_group')}}
 ```
 
 ```tasks
-view columns by priority
+view columns by {{query.file.property('level_1_group')}}
 ```
