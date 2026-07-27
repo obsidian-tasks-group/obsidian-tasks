@@ -13,6 +13,8 @@
         padding: 0 0.5rem;
 
         &-card {
+            // TODO Put a border around cards, to make it clear that nested tasks cannot be moved independently.
+            //      The checkbox should be inside the border.
             //border: 1px solid red;
             cursor: grab;
             user-select: none;

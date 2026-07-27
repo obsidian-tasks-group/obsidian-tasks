@@ -61,6 +61,10 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     protected extendTaskBehaviour(listItem: HTMLLIElement, task: Task) {
         if (this.nestingLevel === 0) {
             listItem.classList.add('tasks-columns-column-card');
+            // TODO Only enable drag and drop when this column has an editing instruction associated with it.
+            // TODO Provide visual indication of which columns the card can be dropped into.
+            // TODO Prevent giving the appearance that the whole column can moved,
+            //      if some characters in the heading and first task are selected.
             listItem.draggable = true;
 
             listItem.addEventListener('dragstart', (e) => {
@@ -88,6 +92,8 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     }
 
     private editingInstructionForColumn(group: TaskGroup): TaskEditingInstruction | null {
+        // TODO Move this code out to somewhere where it can be tested, and does not increase circular dependencies.
+        // TODO Support status.name groups, for destination column names that are unique.
         const firstTask = group.tasks[0];
         if (!firstTask) {
             return null;
