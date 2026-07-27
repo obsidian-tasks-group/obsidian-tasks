@@ -394,4 +394,15 @@ describe('Creating Editing Instruction', () => {
 
         expect(newTask.dueDate).toEqualMoment(moment(today));
     });
+
+    it('should create an instruction that removes a date', () => {
+        const undatedTask = new TaskBuilder().build();
+        const instruction = createEditingInstructionForDateGroups('startDate', undatedTask);
+        expect(instruction).not.toBeNull();
+
+        const taskToEdit = new TaskBuilder().startDate(today).build();
+        const newTask = taskWithInstructionApplied(instruction, taskToEdit);
+
+        expect(newTask.startDate).toBeNull();
+    });
 });

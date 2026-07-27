@@ -176,5 +176,8 @@ export function createEditingInstructionForDateGroups(
     sampleTask: Task,
 ): TaskEditingInstruction | null {
     const rawDate = sampleTask[dateField];
-    return new SetTaskDate(dateField, rawDate!.toDate());
+    if (rawDate === null) {
+        return new RemoveTaskDate(dateField, sampleTask);
+    }
+    return new SetTaskDate(dateField, rawDate.toDate());
 }
