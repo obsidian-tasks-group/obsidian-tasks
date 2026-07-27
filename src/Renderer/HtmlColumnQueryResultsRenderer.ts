@@ -114,9 +114,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
         return null;
     }
 
-    /**
-     * Convert Task field names like 'dueDate' to groupedBy names like 'due'
-     */
+    /** Convert Task field names like 'dueDate' to groupedBy names like 'due' */
     private groupedPropertyForDateField(field: AllTaskDateFields): string {
         return field.replace(/Date$/, '');
     }
