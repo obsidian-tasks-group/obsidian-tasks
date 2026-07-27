@@ -104,7 +104,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
         }
 
         const dateField = (Task.allDateFields() as AllTaskDateFields[]).find(
-            (field) => this.groupedPropertyForDateField(field) === groupedBy,
+            (field) => groupedPropertyForDateField(field) === groupedBy,
         );
         if (dateField) {
             return createEditingInstructionForDateGroups(dateField, firstTask);
@@ -112,9 +112,9 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
 
         return null;
     }
+}
 
-    /** Convert Task field names like 'dueDate' to groupedBy names like 'due' */
-    private groupedPropertyForDateField(field: AllTaskDateFields): string {
-        return field.replace(/Date$/, '');
-    }
+/** Convert Task field names like 'dueDate' to groupedBy names like 'due' */
+function groupedPropertyForDateField(field: AllTaskDateFields): string {
+    return field.replace(/Date$/, '');
 }
