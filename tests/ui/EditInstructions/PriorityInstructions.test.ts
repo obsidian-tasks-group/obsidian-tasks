@@ -1,6 +1,11 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { SetPriority, allPriorityInstructions } from '../../../src/ui/EditInstructions/PriorityInstructions';
+import {
+    SetPriority,
+    allPriorityInstructions,
+    createEditingInstructionForPriorityGroups,
+} from '../../../src/ui/EditInstructions/PriorityInstructions';
 import { Priority } from '../../../src/Task/Priority';
+import type { TaskEditingInstruction } from '../../../src/ui/EditInstructions/TaskEditingInstruction';
 
 describe('SetPriority', () => {
     const lowPriorityTask = new TaskBuilder().priority(Priority.Low).build();
@@ -52,5 +57,18 @@ describe('All Priority Instructions', () => {
         expect(allInstructions.length).toBe(6);
         expect(allInstructions[0].newPriority).toBe(Priority.Highest);
         expect(allInstructions[5].newPriority).toBe(Priority.Lowest);
+    });
+});
+
+describe('Creating Editing Instruction', () => {
+    it("should create an instruction that copies a task's priority", () => {
+        const sampleTask = new TaskBuilder().priority(Priority.Highest).build();
+        const instruction: TaskEditingInstruction = createEditingInstructionForPriorityGroups(sampleTask);
+
+        const taskToEdit = new TaskBuilder().priority(Priority.Lowest).build();
+        const newTasks = instruction.apply(taskToEdit);
+
+        expect(newTasks).toHaveLength(1);
+        expect(newTasks[0].priority).toEqual(Priority.Highest);
     });
 });
