@@ -9,9 +9,11 @@ import { createAndAppendElement } from './TaskLineRenderer';
 
 export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     private readonly dragState = new DragState();
+    private readonly columnContainers: HTMLDivElement[] = [];
 
     protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         const originalParent = this.content;
+        this.columnContainers.length = 0;
 
         const columnsContainer = createAndAppendElement('div', originalParent);
         columnsContainer.classList.add('tasks-columns');
@@ -24,10 +26,13 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
             if (group.groupHeadings[0].nestingLevel === 0) {
                 const columnContainer = createAndAppendElement('div', columnsContainer);
                 columnContainer.classList.add('tasks-columns-column');
+                this.columnContainers.push(columnContainer);
 
                 // Only enable dropping in to a column that has an editing instruction:
                 const instruction = this.editingInstructionForColumn(group);
                 if (instruction) {
+                    columnContainer.classList.add('tasks-columns-column-can-drop');
+
                     columnContainer.addEventListener('dragover', (e) => {
                         // An element rejects drops by default. Calling preventDefault() on
                         // dragover is what marks this column as a valid drop target - without
@@ -42,6 +47,8 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                         e.preventDefault();
                         await this.dragState.dragged(instruction);
                     });
+                } else {
+                    columnContainer.classList.add('tasks-columns-column-cannot-drop');
                 }
 
                 this.content = columnContainer;
@@ -60,7 +67,6 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     protected extendTaskBehaviour(listItem: HTMLLIElement, task: Task) {
         if (this.nestingLevel === 0) {
             listItem.classList.add('tasks-columns-column-card');
-            // TODO Provide visual indication of which columns the card can be dropped into.
             // TODO Prevent giving the appearance that the whole column can moved,
             //      if some characters in the heading and first task are selected.
             listItem.draggable = true;
@@ -70,8 +76,9 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 // of draggable = true above). We record the whole Task object in
                 // DragState so the column's 'drop' handler can read it back. Do NOT
                 // preventDefault here - that would cancel the drag before it starts.
-                console.log('drag start', task);
                 this.dragState.start(task);
+                this.updateColumnDropFeedback(true);
+
                 if (e.dataTransfer) {
                     e.dataTransfer.effectAllowed = 'move';
                 }
@@ -85,7 +92,14 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 // A cancelled drag (Escape, or a release over empty space) fires no 'drop',
                 // which would leave a stale task for the next drag to read.
                 this.dragState.clear();
+                this.updateColumnDropFeedback(false);
             });
+        }
+    }
+
+    private updateColumnDropFeedback(isDragging: boolean): void {
+        for (const columnContainer of this.columnContainers) {
+            columnContainer.classList.toggle('tasks-columns-column-drag-active', isDragging);
         }
     }
 

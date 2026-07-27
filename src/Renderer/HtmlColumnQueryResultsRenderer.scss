@@ -11,6 +11,22 @@
         border-radius: 8px;
         background: var(--background-secondary);
         padding: 0 0.5rem;
+        transition:
+            border-color 120ms ease,
+            background-color 120ms ease,
+            opacity 120ms ease;
+
+        &.tasks-columns-column-drag-active {
+            &.tasks-columns-column-can-drop {
+                border-color: var(--interactive-accent);
+                background: var(--background-secondary-alt);
+            }
+
+            &.tasks-columns-column-cannot-drop {
+                opacity: 0.6;
+                border-style: dashed;
+            }
+        }
 
         &-card {
             // TODO Put a border around cards, to make it clear that nested tasks cannot be moved independently.
