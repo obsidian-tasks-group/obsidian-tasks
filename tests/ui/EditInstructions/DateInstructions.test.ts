@@ -378,15 +378,19 @@ describe('DateInstruction lists', () => {
 });
 
 describe('Creating Editing Instruction', () => {
+    function taskWithInstructionApplied(instruction: TaskEditingInstruction | null, taskToEdit: Task): Task {
+        const newTasks = instruction!.apply(taskToEdit);
+        expect(newTasks).toHaveLength(1);
+        return newTasks[0];
+    }
+
     it('should create an instruction that copies a task due date', () => {
         const sampleTask = new TaskBuilder().dueDate(today).build();
         const instruction = createEditingInstructionForDateGroups('dueDate', sampleTask);
         expect(instruction).not.toBeNull();
 
         const taskToEdit = new TaskBuilder().build();
-        const newTasks = instruction!.apply(taskToEdit);
-        expect(newTasks).toHaveLength(1);
-        const newTask = newTasks[0];
+        const newTask = taskWithInstructionApplied(instruction, taskToEdit);
 
         expect(newTask.dueDate).toEqualMoment(moment(today));
     });
