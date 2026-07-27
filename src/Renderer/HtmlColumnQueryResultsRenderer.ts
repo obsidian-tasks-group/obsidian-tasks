@@ -10,10 +10,12 @@ import { createAndAppendElement } from './TaskLineRenderer';
 export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     private readonly dragState = new DragState();
     private readonly columnContainers: HTMLDivElement[] = [];
+    private activeDropColumn: HTMLDivElement | null = null;
 
     protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         const originalParent = this.content;
         this.columnContainers.length = 0;
+        this.activeDropColumn = null;
 
         const columnsContainer = createAndAppendElement('div', originalParent);
         columnsContainer.classList.add('tasks-columns');
@@ -33,11 +35,28 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 if (instruction) {
                     columnContainer.classList.add('tasks-columns-column-can-drop');
 
+                    columnContainer.addEventListener('dragenter', (e) => {
+                        e.preventDefault();
+                        this.activeDropColumn = columnContainer;
+                        this.updateColumnDropFeedback(true);
+                    });
+
                     columnContainer.addEventListener('dragover', (e) => {
                         // An element rejects drops by default. Calling preventDefault() on
                         // dragover is what marks this column as a valid drop target - without
                         // it, the 'drop' event below never fires.
                         e.preventDefault();
+                        this.activeDropColumn = columnContainer;
+                        this.updateColumnDropFeedback(true);
+                    });
+
+                    columnContainer.addEventListener('dragleave', (e) => {
+                        if (!columnContainer.contains(e.relatedTarget as Node | null)) {
+                            if (this.activeDropColumn === columnContainer) {
+                                this.activeDropColumn = null;
+                                this.updateColumnDropFeedback(true);
+                            }
+                        }
                     });
 
                     columnContainer.addEventListener('drop', async (e) => {
@@ -45,6 +64,8 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                         // stops the browser's default handling; here we read the Task object
                         // that the dragged card recorded in DragState during dragstart.
                         e.preventDefault();
+                        this.activeDropColumn = columnContainer;
+                        this.updateColumnDropFeedback(true);
                         await this.dragState.dragged(instruction);
                     });
                 } else {
@@ -77,6 +98,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 // DragState so the column's 'drop' handler can read it back. Do NOT
                 // preventDefault here - that would cancel the drag before it starts.
                 this.dragState.start(task);
+                this.activeDropColumn = null;
                 this.updateColumnDropFeedback(true);
 
                 if (e.dataTransfer) {
@@ -92,6 +114,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 // A cancelled drag (Escape, or a release over empty space) fires no 'drop',
                 // which would leave a stale task for the next drag to read.
                 this.dragState.clear();
+                this.activeDropColumn = null;
                 this.updateColumnDropFeedback(false);
             });
         }
@@ -100,6 +123,10 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     private updateColumnDropFeedback(isDragging: boolean): void {
         for (const columnContainer of this.columnContainers) {
             columnContainer.classList.toggle('tasks-columns-column-drag-active', isDragging);
+            columnContainer.classList.toggle(
+                'tasks-columns-column-current-drop-target',
+                isDragging && this.activeDropColumn === columnContainer,
+            );
         }
     }
 

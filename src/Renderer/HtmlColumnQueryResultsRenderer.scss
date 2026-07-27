@@ -14,7 +14,8 @@
         transition:
             border-color 60ms ease,
             background-color 60ms ease,
-            opacity 60ms ease;
+            opacity 60ms ease,
+            box-shadow 60ms ease;
 
         &.tasks-columns-column-drag-active {
             &.tasks-columns-column-can-drop {
@@ -25,6 +26,12 @@
             &.tasks-columns-column-cannot-drop {
                 opacity: 0.45;
             }
+        }
+
+        &.tasks-columns-column-current-drop-target {
+            border-color: var(--interactive-accent);
+            background: var(--background-modifier-hover);
+            box-shadow: 0 0 0 2px var(--interactive-accent);
         }
 
         &-card {
