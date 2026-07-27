@@ -1,9 +1,11 @@
 ---
 TQ_extra_instructions: |-
-  show tree
-  limit 5
-  limit groups 1
-  filter by function task.children.length > 0
+  not done
+  # show tree
+  # limit 200
+  limit groups 10
+  # filter by function task.children.length > 0
+  # filename includes acme
 level_1_group: priority
 ---
 # Manually testing views
