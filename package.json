@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tasks",
-  "version": "8.2.2",
+  "version": "8.3.0",
   "description": "Task management for the Obsidian knowledge base",
   "main": "main.js",
   "engines": {
@@ -19,7 +19,7 @@
     "deploy:local": "node ./scripts/Test-TasksInLocalObsidian.mjs",
     "deploy:local:pwsh": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1",
     "extract-i18n": "npx i18next-parser && node ./scripts/normalizeI18nLocales.mjs",
-    "circular-deps-text": "madge --circular --extensions ts ./src > circular-deps.txt",
+    "circular-deps-text": "node ./scripts/circular-deps-text.mjs > circular-deps.txt",
     "circular-deps-image": "madge --circular --extensions ts ./src --image circular-deps.png",
     "code-docs": "typedoc \"src/**/*\""
   },
@@ -47,7 +47,7 @@
     "@typescript-eslint/parser": "^8.0.0",
     "approvals": "^6.2.4",
     "async-mutex": "^0.5.0",
-    "esbuild": "0.27.4",
+    "esbuild": "0.28.1",
     "esbuild-sass-plugin": "^3.2.0",
     "esbuild-svelte": "^0.8.2",
     "eslint": "9.26.0",
@@ -89,6 +89,7 @@
     "i18next": "^24.2.1",
     "mustache": "^4.2.0",
     "mustache-validator": "^0.2.0",
-    "rrule": "^2.8.1"
+    "rrule": "^2.8.1",
+    "safe-regex2": "^5.1.1"
   }
 }

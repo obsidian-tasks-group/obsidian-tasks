@@ -78,12 +78,13 @@ export async function verifyHtmlFromRenderer(
     state: State,
     query: Query,
     allTasks: Task[],
-) {
+): Promise<HTMLDivElement> {
     const container = document.createElement('div');
     renderer.content = container;
     await renderer.renderQuery(state, query.applyQueryToTasks(allTasks));
 
     verifyRenderedTasks(container, allTasks);
+    return container;
 }
 
 export function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): string {

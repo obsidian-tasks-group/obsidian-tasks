@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install modules
         run: yarn
@@ -53,6 +53,7 @@ jobs:
       - name: Identify circular dependencies
         run: |
           yarn run circular-deps-text || echo continuing after error message
+          git diff circular-deps.txt  || echo continuing after error message
           yarn run circular-deps-image
 
       - name: Archive circular dependencies results

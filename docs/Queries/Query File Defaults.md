@@ -251,3 +251,5 @@ The `type` values are explained in the [Property types](https://help.obsidian.md
 - Tasks searches in **Canvas cards** cannot use [[Query File Defaults]], because the [Canvas format](https://jsoncanvas.org) does not support frontmatter/properties.
   - The workaround is to use the Canvas [Convert to file](https://help.obsidian.md/Plugins/Canvas#Add+text+cards) facility to convert cards which contain Tasks queries to a separate Markdown note, embedded in the canvas.
   - You can then add Query File Defaults to the new note.
+- Query File Defaults does not yet support the [[Layout#Hide and Show Nested Backlink|'hide nested backlink']] instruction
+  - We are tracking this in [issue #3938](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3938).

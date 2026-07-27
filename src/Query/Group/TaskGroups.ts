@@ -15,8 +15,8 @@ import type { TaskGroupingTreeStorage } from './TaskGroupingTreeStorage';
  * @see {@link Query.grouping}
  */
 export class TaskGroups {
-    private _groupers: Grouper[];
-    private _groups: TaskGroup[] = new Array<TaskGroup>();
+    private readonly _groupers: Grouper[];
+    private readonly _groups: TaskGroup[] = new Array<TaskGroup>();
     private _totalTaskCount = 0;
 
     /**

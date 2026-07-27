@@ -12,6 +12,18 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
+- X.Y.Z:
+  - Add [[Grouping#Showing the number of tasks in a group|show group count]] instruction. For now, this only shows numbers of tasks in the lowest-level groups.
+  - Add Spanish translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
+  - The [[Presets#Default Presets|default preset]] `hide_query_elements` now hides the task count. (Pre-existing Tasks settings are not updated, though.)
+- 8.3.0:
+  - Add [[Layout#Hide and Show Nested Backlink|'hide nested backlink']] instruction, for when '`show tree`' makes the output just too cluttered.
+  - [[Notifications]] page updated to better match the current behaviour of the [Reminder](https://community.obsidian.md/plugins/obsidian-reminder-plugin) plugin.
+  - [[Regular Expressions|Regular expression]] searches have been made safer:
+    - New maximum length for regex search strings: 500 characters.
+    - Prevent malicious searches freezing Obsidian by [Catastrophic Backtracking](https://www.regular-expressions.info/catastrophic.html).
+  - For contributors:
+    - Updated [Set up WebStorm for translation work](https://publish.obsidian.md/tasks-contributing/Translation/Set+up+WebStorm+for+translation+work).
 - 8.1.0:
   - Add Turkish translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
 - 8.0.0:

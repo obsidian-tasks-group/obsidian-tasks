@@ -37,6 +37,9 @@ to find them literally, you must add a \ before them:
 CAUTION! Regular expression (or 'regex') searching is a powerful
 but advanced feature that requires thorough knowledge in order to
 use successfully, and not miss intended search results.
+
+Patterns with nested quantifiers (for example (a+)+) are rejected
+because they can cause extreme slowdowns (catastrophic backtracking).
 `,
         );
     });
@@ -52,6 +55,32 @@ describe('explains regular sub-string searches', () => {
     it('should explain simple string search, preserving instruction case', () => {
         const field = new DescriptionField().createFilterOrErrorMessage('description INCLUDES hello');
         expect(field).toHaveExplanation('description INCLUDES hello');
+    });
+});
+
+describe('should reject unsafe regular expressions', () => {
+    it('should report catastrophic backtracking pattern', () => {
+        const instruction = 'description regex matches /(a+)+$/';
+        const filterOrError = new DescriptionField().createFilterOrErrorMessage(instruction);
+        expect(filterOrError).not.toBeValid();
+        expect(filterOrError.error).toContain('catastrophic backtracking');
+    });
+
+    it.each([
+        ['description regex matches /(a+)+$/'],
+        ['description regex matches /(x+x+)+y/'],
+        ['description regex matches /(.*)*$/'],
+        ['description regex does not match /(a+)+b/'],
+    ])('should reject unsafe pattern in filter: %s', (instruction: string) => {
+        const filterOrError = new DescriptionField().createFilterOrErrorMessage(instruction);
+        expect(filterOrError).not.toBeValid();
+        expect(filterOrError.error).toContain('catastrophic backtracking');
+    });
+
+    it('should still accept safe regex patterns', () => {
+        const instruction = 'description regex matches /waiting|waits|wartet/i';
+        const filterOrError = new DescriptionField().createFilterOrErrorMessage(instruction);
+        expect(filterOrError).toBeValid();
     });
 });
 

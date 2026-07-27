@@ -506,6 +506,7 @@ description includes \
             'hide done date',
             'hide due date',
             'hide edit button',
+            'hide group count',
             'hide id',
             'hide nested backlink',
             'hide nested backlinks',
@@ -534,6 +535,7 @@ description includes \
             'show done date',
             'show due date',
             'show edit button',
+            'show group count',
             'show id',
             'show nested backlink',
             'show nested backlinks',
@@ -668,6 +670,9 @@ to find them literally, you must add a \ before them:
 CAUTION! Regular expression (or 'regex') searching is a powerful
 but advanced feature that requires thorough knowledge in order to
 use successfully, and not miss intended search results.
+
+Patterns with nested quantifiers (for example (a+)+) are rejected
+because they can cause extreme slowdowns (catastrophic backtracking).
 
 Problem line: "${source}"`,
             );

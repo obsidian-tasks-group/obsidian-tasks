@@ -1,4 +1,4 @@
-import type { App, CachedMetadata, Debouncer, Reference } from 'obsidian';
+import type { App, CachedMetadata, Debouncer, Reference, TFile, Vault } from 'obsidian';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 
@@ -10,6 +10,27 @@ export {};
  * not a lot to mock in particular.
  */
 export const mockApp = {} as unknown as App;
+
+/**
+ * Creates a minimal Obsidian TFile for tests that only need file metadata.
+ *
+ * @param path - Vault-relative path to the file.
+ */
+export function createTFile(path: string): TFile {
+    const name = path.split('/').pop() ?? path;
+    const extension = name.includes('.') ? name.split('.').pop() ?? '' : '';
+    const basename = extension === '' ? name : name.slice(0, -(extension.length + 1));
+
+    return {
+        vault: {} as Vault,
+        path,
+        name,
+        parent: null,
+        stat: { ctime: 0, mtime: 0, size: 0 },
+        basename,
+        extension,
+    };
+}
 
 export class MenuItem {
     public title: string | DocumentFragment = '';

@@ -9,6 +9,7 @@ import type { QueryResult } from '../Query/QueryResult';
 import type { TasksFile } from '../Scripting/TasksFile';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
+import type { TaskGroup } from '../Query/Group/TaskGroup';
 
 export abstract class QueryResultsRendererBase {
     private readonly source: string;
@@ -106,9 +107,8 @@ export abstract class QueryResultsRendererBase {
 
     protected async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups) {
         for (const group of tasksSortedLimitedGrouped.groups) {
-            // If there were no 'group by' instructions, group.groupHeadings
-            // will be empty, and no headings will be added.
-            await this.addGroupHeadings(group.groupHeadings);
+            // If there were no 'group by' instructions, no headings will be added.
+            await this.addGroupHeadings(group);
 
             this.addedListItems.clear();
             this.nestingLevel = 0;
@@ -234,15 +234,30 @@ export abstract class QueryResultsRendererBase {
 
     /**
      * Display headings for a group of tasks.
-     * @param groupHeadings - The headings to display. This can be an empty array,
-     *                        in which case no headings will be added.
+     * @param group - The group whose headings are being displayed. The group may be empty,
+     *                in which case no headings will be added.
      * @private
      */
-    protected async addGroupHeadings(groupHeadings: GroupDisplayHeading[]) {
-        for (const heading of groupHeadings) {
-            await this.addGroupHeading(heading);
+    protected async addGroupHeadings(group: TaskGroup) {
+        const lastHeadingIndex = group.groupHeadings.length - 1;
+
+        for (const [index, heading] of group.groupHeadings.entries()) {
+            const groupTaskCountSuffix = this.groupTaskCountSuffix(group, index, lastHeadingIndex);
+            await this.addGroupHeading(heading, groupTaskCountSuffix);
         }
     }
 
-    protected abstract addGroupHeading(group: GroupDisplayHeading): Promise<void>;
+    private groupTaskCountSuffix(group: TaskGroup, headingIndex: number, lastHeadingIndex: number): string {
+        if (this.query.queryLayoutOptions.hideGroupCount) {
+            return '';
+        }
+
+        if (headingIndex !== lastHeadingIndex) {
+            return '';
+        }
+
+        return `(${group.describeTaskCount()})`;
+    }
+
+    protected abstract addGroupHeading(group: GroupDisplayHeading, groupTaskCountText: string): Promise<void>;
 }

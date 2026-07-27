@@ -151,6 +151,47 @@ describe('QueryResultsRenderer - rendering queries', () => {
         const html = await verifyRenderedHtml(twoTasks, source);
         expect(html).toContain('<div class="tasks-columns">');
     });
+
+    describe('group counts', () => {
+        const showGroupCountHideOtherStuff = [
+            'show group count',
+            'group by priority',
+            'group by function task.description',
+            'hide edit button',
+            'hide backlink',
+        ].join('\n');
+
+        const threeTasks: Task[] = [
+            new TaskBuilder().description('1').build(),
+            new TaskBuilder().description('2+3').build(),
+            new TaskBuilder().description('2+3').build(),
+        ];
+
+        const makeHeadingAndCountHtml = (expectedHeading: string, expectedCountLabel: string): string =>
+            [
+                '  <h5 class="tasks-group-heading">',
+                `    For test purposes: ${expectedHeading}`,
+                `    <span class="tasks-group-count">(${expectedCountLabel})</span>`,
+                '  </h5>',
+            ].join('\n');
+
+        const expectedPriorityHeading = '"tasks-group-heading">For test purposes: %%3%%Normal priority';
+
+        it('should render group counts', async () => {
+            const html = await verifyRenderedHtml(threeTasks, showGroupCountHideOtherStuff);
+            expect(html).toContain(expectedPriorityHeading);
+            expect(html).toContain(makeHeadingAndCountHtml('1', '1 task'));
+            expect(html).toContain(makeHeadingAndCountHtml('2+3', '2 tasks'));
+        });
+
+        it('should render limited group counts', async () => {
+            const query = 'limit groups 1\n' + showGroupCountHideOtherStuff;
+            const html = await verifyRenderedHtml(threeTasks, query);
+            expect(html).toContain(expectedPriorityHeading);
+            expect(html).toContain(makeHeadingAndCountHtml('1', '1 task'));
+            expect(html).toContain(makeHeadingAndCountHtml('2+3', '1 of 2 tasks'));
+        });
+    });
 });
 
 describe('QueryResultsRenderer - responding to file edits', () => {

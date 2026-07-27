@@ -166,6 +166,14 @@ MIT License
 
 Copyright (c) 2022 Elias Mangoro
 */
+
+/*
+License safe-regex2 (included library):
+
+MIT License
+
+Copyright (c) 2019-present The Fastify team <https://github.com/fastify/fastify#team>
+*/
 `;
 
 const prod = process.argv[2] === 'production';

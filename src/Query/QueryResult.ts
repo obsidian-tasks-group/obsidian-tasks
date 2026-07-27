@@ -4,10 +4,7 @@ import type { Filter } from './Filter/Filter';
 import { TaskGroups } from './Group/TaskGroups';
 import type { TaskGroup } from './Group/TaskGroup';
 import { SearchInfo } from './SearchInfo';
-
-function taskCountPluralised(tasksCount: number) {
-    return `task${tasksCount !== 1 ? 's' : ''}`;
-}
+import { totalTasksCountDisplayText } from './TaskCountDisplayText';
 
 export class QueryResult {
     public readonly taskGroups: TaskGroups;
@@ -37,11 +34,7 @@ export class QueryResult {
     public totalTasksCountDisplayText() {
         const tasksCount = this.totalTasksCount;
         const tasksCountBeforeLimit = this.totalTasksCountBeforeLimit;
-        if (tasksCount === tasksCountBeforeLimit) {
-            return `${tasksCount} ${taskCountPluralised(tasksCount)}`;
-        } else {
-            return `${tasksCount} of ${tasksCountBeforeLimit} ${taskCountPluralised(tasksCountBeforeLimit)}`;
-        }
+        return totalTasksCountDisplayText(tasksCount, tasksCountBeforeLimit);
     }
 
     public get groups(): TaskGroup[] {

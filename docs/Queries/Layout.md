@@ -62,31 +62,34 @@ hide created date
 
 The following query elements exist:
 
-| Element           | Default | Description                     | Details                       |
-| ----------------- | ------- | ------------------------------- | ----------------------------- |
-| toolbar           | Shown   | Copy and filter results         | [[#Toolbar]]                  |
-| `tree`            | Hidden  | Task parent/child relationships | [[#Hide and Show Tree\|Tree]] |
-| `edit button`     | Shown   | Edit task button                | [[Create or edit Task]]       |
-| `postpone button` | Shown   | Postpone button on dates        | [[Postponing]]                |
-| `backlink`        | Shown   | Task backlink for tasks         | [[Backlinks]]                 |
+| Element           | Default | Description                     | Details                                             |
+| ----------------- | ------- | ------------------------------- | --------------------------------------------------- |
+| toolbar           | Shown   | Copy and filter results         | [[#Toolbar]]                                        |
+| `tree`            | Hidden  | Task parent/child relationships | [[#Hide and Show Tree\|Tree]]                       |
+| `edit button`     | Shown   | Edit task button                | [[Create or edit Task]]                             |
+| `postpone button` | Shown   | Postpone button on dates        | [[Postponing]]                                      |
+| `backlink`        | Shown   | Task backlink for tasks         | [[Backlinks]]                                       |
 | `nested backlink` | Shown   | Backlink on nested tasks        | [[#Hide and Show Nested Backlink\|Nested Backlink]] |
-| `urgency`         | Hidden  | Task urgency score              | [[Urgency]]                   |
-| `task count`      | Shown   | Total number of tasks           |                               |
+| `urgency`         | Hidden  | Task urgency score              | [[Urgency]]                                         |
+| `task count`      | Shown   | Total number of tasks           |                                                     |
+| `group count`     | Hidden  | Number of tasks in leaf groups  |                                                     |
 
 > [!released]
 >
 > - `urgency` was introduced in Tasks 1.14.0.
 > - `tree` was introduced in Tasks 7.12.0.
 > - `toolbar` was introduced in Tasks 7.23.0.
-> - `nested backlink` was introduced in Tasks X.Y.Z.
+> - `nested backlink` was introduced in Tasks 8.3.0.
+> - `group count` was introduced in Tasks X.Y.Z.
 
-All of these query elements except `urgency` and `tree` are shown by default, so you will use the command `hide`
-if you do not want to show any of them, or the command `show` to show the urgency score or tree view.
+All of these query elements except `group count`, `urgency` and `tree` are shown by default, so you will use the command `hide`
+if you do not want to show any of them, or the command `show` to show the group count, urgency score or tree view.
 
 For example:
 
 ```text
 hide task count
+show group count
 ```
 
 ### Task count location
@@ -101,7 +104,7 @@ This is a global setting that applies to all task queries. Individual queries ca
 > [!released]
 > The 'Task count location' setting was introduced in Tasks 7.24.0.
 
-### Toolbar  
+### Toolbar
 
 The toolbar appears at the top of Tasks search results.
 
@@ -124,7 +127,7 @@ It allows you to:
   - Elements not copied:
     - The task count
 
-> [!released]  
+> [!released]
 > `show toolbar` and `hide toolbar` were introduced in Tasks 7.23.0.
 
 ### Hide and Show Tree
@@ -189,7 +192,7 @@ The `show tree` instruction enables us to see the parent/child relationships in 
 ### Hide and Show Nested Backlink
 
 > [!released]
-> `nested backlink` was introduced in Tasks X.Y.Z.
+> `hide nested backlink` was introduced in Tasks 8.3.0.
 
 When you use `show tree`, every nested task shows its own [[Backlinks|backlink]], which repeats the
 same filename and heading as its top-level parent task. This can add a lot of repeated text to the results.
@@ -206,6 +209,9 @@ show tree
 hide nested backlink
 ```
 ````
+
+![Comparison of search results when using `show tree`. Left: nested backlinks shown. Right: nested backlinks hidden.](../images/search-results-hide-nested-backlink.png)
+<span class="caption">Comparison of search results when using `show tree`. **Left**: nested backlinks shown. **Right**: nested backlinks hidden.</span>
 
 > [!Note]
 > `hide nested backlink` only affects nested tasks, so it only has a visible effect together with `show tree`.
