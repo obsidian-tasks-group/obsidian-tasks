@@ -21,10 +21,7 @@ import { createEditingInstructionForDateGroups } from './DateInstructions';
  * @returns A task editing instruction for moving another task into the group, or `null`
  * if no instruction can be created.
  */
-export function createEditingInstructionForGroup(
-    groupedBy: string | undefined,
-    firstTask: Task,
-): TaskEditingInstruction | null {
+export function createEditingInstructionForGroup(groupedBy: string, firstTask: Task): TaskEditingInstruction | null {
     // TODO Support status.name groups, for destination column names that are unique.
 
     if (groupedBy === 'priority') {

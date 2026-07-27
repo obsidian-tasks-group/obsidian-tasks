@@ -96,6 +96,9 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
         }
 
         const groupedBy = this.query.viewLayoutOptions.grouper?.property;
+        if (groupedBy === undefined) {
+            return null;
+        }
 
         return createEditingInstructionForGroup(groupedBy, firstTask);
     }
