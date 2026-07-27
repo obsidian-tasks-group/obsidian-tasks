@@ -11,6 +11,7 @@ import {
     SetTaskDate,
     allHappensDateInstructions,
     allLifeCycleDateInstructions,
+    createEditingInstructionForDateGroups,
 } from '../../../src/ui/EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from '../../../src/DateTime/DateFieldTypes';
 import { Task } from '../../../src/Task/Task';
@@ -373,5 +374,20 @@ describe('DateInstruction lists', () => {
                   Remove cancelled date => No Date"
             `);
         });
+    });
+});
+
+describe('Creating Editing Instruction', () => {
+    it('should create an instruction that copies a task due date', () => {
+        const sampleTask = new TaskBuilder().dueDate(today).build();
+        const instruction = createEditingInstructionForDateGroups('dueDate', sampleTask);
+        expect(instruction).not.toBeNull();
+
+        const taskToEdit = new TaskBuilder().build();
+        const newTasks = instruction!.apply(taskToEdit);
+        expect(newTasks).toHaveLength(1);
+        const newTask = newTasks[0];
+
+        expect(newTask.dueDate).toEqualMoment(moment(today));
     });
 });
