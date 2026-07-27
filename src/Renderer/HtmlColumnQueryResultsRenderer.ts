@@ -20,7 +20,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
         const columnsContainer = createAndAppendElement('div', originalParent);
         columnsContainer.classList.add('tasks-columns');
 
-        for (const [_index, group] of tasksSortedLimitedGrouped.groups.map((v, i) => [i, v] as const)) {
+        for (const group of tasksSortedLimitedGrouped.groups) {
             if (group.tasks.length === 0) {
                 continue;
             }
