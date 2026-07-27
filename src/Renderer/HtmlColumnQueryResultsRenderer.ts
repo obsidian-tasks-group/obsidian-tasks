@@ -3,7 +3,7 @@ import { Task } from '../Task/Task';
 import { createEditingInstructionForPriorityGroups } from '../ui/EditInstructions/PriorityInstructions';
 import type { TaskEditingInstruction } from '../ui/EditInstructions/TaskEditingInstruction';
 import type { TaskGroup } from '../Query/Group/TaskGroup';
-import { SetTaskDate } from '../ui/EditInstructions/DateInstructions';
+import { createEditingInstructionForDateGroups } from '../ui/EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
 import { DragState } from './DragState';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
@@ -92,7 +92,6 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     }
 
     private editingInstructionForColumn(group: TaskGroup): TaskEditingInstruction | null {
-        // TODO Move this code out to somewhere where it can be tested, and does not increase circular dependencies.
         // TODO Support status.name groups, for destination column names that are unique.
         const firstTask = group.tasks[0];
         if (!firstTask) {
@@ -108,12 +107,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
             (field) => this.groupedPropertyForDateField(field) === groupedBy,
         );
         if (dateField) {
-            const rawDate = firstTask[dateField];
-            if (!rawDate?.isValid()) {
-                return null;
-            }
-
-            return new SetTaskDate(dateField, rawDate.toDate());
+            return createEditingInstructionForDateGroups(dateField, firstTask);
         }
 
         return null;
