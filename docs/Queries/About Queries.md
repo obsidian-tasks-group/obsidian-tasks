@@ -89,6 +89,8 @@ In the following sections we will explain all the various options that are avail
 
 ### Controlling the display
 
+- [[Views]]
+  - View the Query's results in lists or columns (sometimes known as Kanban boards).
 - [[Limiting]]
   - Control the maximum number of tasks displayed in a Query's results, and in each group of tasks.
 - [[Sorting]]
