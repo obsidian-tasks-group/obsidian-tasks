@@ -19,4 +19,14 @@ other_files="
 
 for file in $other_files ; do
     cp -v $main_file $file
+
+    # Until Publish supports Obsidian 1.13 callout colour syntax, convert the colours
+    # for callouts on Publish back to the old syntax.
+    # From:
+    #   --callout-color: rgb(255, 23, 68);
+    # back to:
+    #   --callout-color: 255, 23, 68;
+    if [[ "$file" == *publish.css ]]; then
+        sed -E -i '' 's/(--callout-color:[[:space:]]*)rgb\(([[:space:]]*[0-9]+[[:space:]]*,[[:space:]]*[0-9]+[[:space:]]*,[[:space:]]*[0-9]+[[:space:]]*)\);/\1\2;/g' "$file"
+    fi
 done
