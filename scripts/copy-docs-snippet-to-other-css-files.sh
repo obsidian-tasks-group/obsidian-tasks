@@ -27,6 +27,6 @@ for file in $other_files ; do
     # back to:
     #   --callout-color: 255, 23, 68;
     if [[ "$file" == *publish.css ]]; then
-        sed -E -i '' 's/(--callout-color:[[:space:]]*)rgb\(([[:space:]]*[0-9]+[[:space:]]*,[[:space:]]*[0-9]+[[:space:]]*,[[:space:]]*[0-9]+[[:space:]]*)\);/\1\2;/g' "$file"
+        sed -E -i '' 's/(--callout-color:[[:space:]]*)rgb\((.*)\);/\1\2;/g' "$file"
     fi
 done
