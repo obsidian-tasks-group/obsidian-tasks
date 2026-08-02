@@ -52,7 +52,7 @@
             isolation: isolate;
 
             // Create a pseudo element that surrounds both the task description and its checkbox,
-            // so we can create a border that surrounds the whole task, including the checkbox:
+            // so we can draw a border surrounding the whole task including its checkbox:
             &:before {
                 content: "";
                 position: absolute;
