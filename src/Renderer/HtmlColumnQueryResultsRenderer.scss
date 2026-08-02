@@ -7,6 +7,9 @@
 
     &-column {
         flex: 0 0 18rem;
+        min-width: 18rem;
+        max-width: 18rem;
+
         border: 1px solid var(--background-modifier-border);
         border-radius: 8px;
         background: var(--background-secondary);
