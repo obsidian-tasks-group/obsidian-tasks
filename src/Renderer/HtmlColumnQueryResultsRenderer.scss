@@ -45,6 +45,11 @@
             // (it would be nice to skip this below the last task in each column or group):
             margin-bottom: 0.5rem;
 
+            // Ensure that the different background colour on cards does not obscure links
+            // and the backlink on tasks:
+            position: relative;
+            isolation: isolate;
+
             // Create a pseudo element that surrounds both the task description and its checkbox,
             // so we can create a border that surrounds the whole task, including the checkbox:
             &:before {
@@ -61,6 +66,10 @@
                 // Put a border around the task and its checkbox:
                 border: 1px solid var(--background-modifier-border);
                 border-radius: 6px;
+
+                // Give cards a different background colour:
+                z-index: -1;
+                background: var(--background-primary);
             }
         }
     }
