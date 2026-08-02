@@ -38,14 +38,26 @@
         }
 
         &-card {
-            // TODO Put a border around cards, to make it clear that nested tasks cannot be moved independently.
-            //      The checkbox should be inside the border.
             cursor: grab;
             user-select: none;
 
-            // Put a border around the task (the checkbox is currently before the box)
-            border: 1px solid var(--background-modifier-border);
-            border-radius: 6px;
+            // Create a pseudo element that surrounds both the task description and its checkbox,
+            // so we can create a border that surrounds the whole task, including the checkbox:
+            &:before {
+                content: "";
+                position: absolute;
+
+                // The pseudo element starts 3ch before the description, which is the offset
+                // used by Obsidian when positioning checkboxes:
+                top: 0;
+                left: -3ch;
+                width: calc(100% + 3ch);
+                height: 100%;
+
+                // Put a border around the task and its checkbox:
+                border: 1px solid var(--background-modifier-border);
+                border-radius: 6px;
+            }
         }
     }
 }
