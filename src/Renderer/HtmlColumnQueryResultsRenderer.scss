@@ -59,7 +59,7 @@
                 // The pseudo element starts 3ch before the description, which is the offset
                 // used by Obsidian when positioning checkboxes:
                 top: 0;
-                left: -3ch;
+                inset-inline-start: -3ch;
                 width: calc(100% + 3ch);
                 height: 100%;
 
