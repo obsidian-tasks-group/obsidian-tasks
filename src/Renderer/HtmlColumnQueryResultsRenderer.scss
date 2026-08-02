@@ -41,6 +41,10 @@
             cursor: grab;
             user-select: none;
 
+            // Ensure there is a bit of a vertical gap between cards in the same column
+            // (it would be nice to skip this below the last task in each column or group):
+            margin-bottom: 0.5rem;
+
             // Create a pseudo element that surrounds both the task description and its checkbox,
             // so we can create a border that surrounds the whole task, including the checkbox:
             &:before {
