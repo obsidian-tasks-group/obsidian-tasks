@@ -42,6 +42,10 @@
             //      The checkbox should be inside the border.
             cursor: grab;
             user-select: none;
+
+            // Put a border around the task (the checkbox is currently before the box)
+            border: 1px solid var(--background-modifier-border);
+            border-radius: 6px;
         }
     }
 }
