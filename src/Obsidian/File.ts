@@ -169,7 +169,7 @@ Recommendations:
         // Finally, we can insert 1 or more lines over the original task line:
         const updatedFileLines = [
             ...fileLines.slice(0, taskLineNumber),
-            ...newTasks.map((task: ListItem) => task.toFileLineString()),
+            ...newTasks.map((task: ListItem) => task.toFileLineString(true)),
             ...fileLines.slice(taskLineNumber + 1), // Only supports single-line tasks.
         ];
 

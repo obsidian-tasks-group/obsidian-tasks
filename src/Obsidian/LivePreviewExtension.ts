@@ -108,7 +108,7 @@ class LivePreviewExtension implements PluginValue {
 
         // Clicked on a task's checkbox. Toggle the task and set it.
         const toggled = task.toggleWithRecurrenceInUsersOrder();
-        const toggledString = toggled.map((t) => t.toFileLineString()).join(state.lineBreak);
+        const toggledString = toggled.map((t) => t.toFileLineString(true)).join(state.lineBreak);
 
         let to = line.to;
 
