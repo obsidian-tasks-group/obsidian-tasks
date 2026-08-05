@@ -266,7 +266,12 @@ export class ListItem {
 
     public toFileLineString(preserveTrailingWhitespace = false): string {
         const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
-        const markdownHardBreak = preserveTrailingWhitespace ? this.originalMarkdown.match(/ {2,}$/u)?.[0] ?? '' : '';
-        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}${markdownHardBreak}`;
+        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${
+            this.description
+        }${this.getMarkdownHardBreak(preserveTrailingWhitespace)}`;
+    }
+
+    protected getMarkdownHardBreak(preserveTrailingWhitespace: boolean): string {
+        return preserveTrailingWhitespace ? this.originalMarkdown.match(/ {2,}$/u)?.[0] ?? '' : '';
     }
 }
