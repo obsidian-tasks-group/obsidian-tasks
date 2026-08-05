@@ -272,6 +272,18 @@ export class ListItem {
     }
 
     protected getMarkdownHardBreak(preserveTrailingWhitespace: boolean): string {
-        return preserveTrailingWhitespace ? this.originalMarkdown.match(/ {2,}$/u)?.[0] ?? '' : '';
+        if (!preserveTrailingWhitespace) {
+            return '';
+        }
+
+        let trailingSpaces = 0;
+        for (let index = this.originalMarkdown.length - 1; index >= 0; index--) {
+            if (this.originalMarkdown[index] !== ' ') {
+                break;
+            }
+            trailingSpaces++;
+        }
+
+        return trailingSpaces >= 2 ? ' '.repeat(trailingSpaces) : '';
     }
 }
