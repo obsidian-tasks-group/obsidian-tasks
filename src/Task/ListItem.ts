@@ -277,17 +277,17 @@ export class ListItem {
         const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
         return `${this.indentation}${this.listMarker} ${statusCharacterToString}${
             this.description
-        }${this.getMarkdownHardBreak(preserveTrailingWhitespace)}`;
+        }${this.getMarkdownHardBreak(preserveTrailingWhitespace, this.originalMarkdown)}`;
     }
 
-    protected getMarkdownHardBreak(preserveTrailingWhitespace: boolean): string {
+    protected getMarkdownHardBreak(preserveTrailingWhitespace: boolean, originalMarkdown: string): string {
         if (!preserveTrailingWhitespace) {
             return '';
         }
 
         let trailingSpaces = 0;
-        for (let index = this.originalMarkdown.length - 1; index >= 0; index--) {
-            if (this.originalMarkdown[index] !== ' ') {
+        for (let index = originalMarkdown.length - 1; index >= 0; index--) {
+            if (originalMarkdown[index] !== ' ') {
                 break;
             }
             trailingSpaces++;

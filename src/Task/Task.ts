@@ -330,7 +330,7 @@ export class Task extends ListItem {
         // but two or more trailing spaces are meaningful.
         return `${this.indentation}${this.listMarker} [${
             this.status.symbol
-        }] ${this.toString()}${this.getMarkdownHardBreak(preserveTrailingWhitespace)}`;
+        }] ${this.toString()}${this.getMarkdownHardBreak(preserveTrailingWhitespace, this.originalMarkdown)}`;
     }
 
     /**
