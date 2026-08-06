@@ -191,11 +191,13 @@ describe('Sort', () => {
                     const description = `Start: ${pad(start[0]!)} Scheduled: ${pad(scheduled[0]!)} Due: ${pad(
                         due[0]!,
                     )}`;
-                    const line = `- [ ] ${description}`;
+
                     let dateFields = '';
                     dateFields += addDateIfSet('🛫', start[1]);
                     dateFields += addDateIfSet('⏳', scheduled[1]);
                     dateFields += addDateIfSet('📅', due[1]);
+
+                    const line = `- [ ] ${description}`;
                     const task = fromLine({ line: line + dateFields });
                     const description2 = `${description} urgency = ${task.urgency.toFixed(5)}`;
                     const task2 = new Task({ ...task, description: description2 });
