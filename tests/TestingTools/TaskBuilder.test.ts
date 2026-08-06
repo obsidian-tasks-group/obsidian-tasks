@@ -81,7 +81,7 @@ describe('TaskBuilder', () => {
     it('createFullyPopulatedTask() should populate every field', () => {
         const task: Task = TaskBuilder.createFullyPopulatedTask();
 
-        expect(getNullOrUnsetFields(task)).toEqual(['children', 'parent']);
+        expect(getNullOrUnsetFields(task)).toEqual(['children', 'markdownHardBreak', 'parent']);
         expect(getNullOrUnsetFields(task.taskLocation)).toEqual([]);
 
         expect(task.originalMarkdown).toEqual(

@@ -23,6 +23,7 @@ export class ListItem {
     public readonly indentation: string;
     public readonly listMarker: string;
     public readonly description: string;
+    public readonly markdownHardBreak: string;
     public readonly statusCharacter: string | null;
 
     public readonly taskLocation: TaskLocation;
@@ -48,6 +49,7 @@ export class ListItem {
         this.listMarker = listMarker;
         this.statusCharacter = statusCharacter;
         this.description = description;
+        this.markdownHardBreak = this.getMarkdownHardBreak(true, originalMarkdown);
         this.originalMarkdown = originalMarkdown;
 
         this.parent = parent;

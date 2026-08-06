@@ -162,6 +162,30 @@ describe('list item parsing', () => {
 
         expect(item).toBeNull();
     });
+
+    describe('trailing spaces - for hard breaks in markdown', () => {
+        it('should discard single trailing space when completing a task', () => {
+            const expected = '- foo';
+            const suffix = ' ';
+            const item = ListItem.fromListItemLine(expected + suffix, null, taskLocation)!;
+
+            expect(item.markdownHardBreak).toEqual('');
+        });
+
+        it('should preserve Markdown hard-break of 2 spaces when completing a task', () => {
+            const line = '- 2 trailing spaces  ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.markdownHardBreak).toEqual('  ');
+        });
+
+        it('should preserve Markdown hard-break of 3 spaces when completing a task', () => {
+            const line = '- 3 trailing spaces   ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.markdownHardBreak).toEqual('   ');
+        });
+    });
 });
 
 describe('list item writing', () => {
