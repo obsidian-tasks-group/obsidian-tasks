@@ -241,6 +241,22 @@ describe('Task rendering', () => {
         );
     });
 
+    it('should strip 1 trailing space from description', () => {
+        testDescriptionRender(
+            // force line break
+            'started with 1 trailing space ',
+            'started with 1 trailing space',
+        );
+    });
+
+    it('should strip 2 trailing spaces from description', () => {
+        testDescriptionRender(
+            // force line break
+            'started with 2 trailing spaces  ',
+            'started with 2 trailing spaces',
+        );
+    });
+
     const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
 
     it('should display valid created date', () => {
