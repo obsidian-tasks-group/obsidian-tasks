@@ -5,6 +5,15 @@ import type { TaskLocation } from './TaskLocation';
 import { TaskRegularExpressions } from './TaskRegularExpressions';
 import { Link } from './Link';
 
+/**
+ * Represents a single list item line.
+ *
+ * List items look like this:
+ * ```
+ * - This is a list item
+ * ```
+ * This is the base class of {@link Task}. Properties which are present in both tasks and list items are defined here.
+ */
 export class ListItem {
     // The original line read from file.
     public readonly originalMarkdown: string;
