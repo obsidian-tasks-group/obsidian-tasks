@@ -49,7 +49,7 @@ export class ListItem {
         this.listMarker = listMarker;
         this.statusCharacter = statusCharacter;
         this.description = description;
-        this.markdownHardBreak = this.getMarkdownHardBreak(true, originalMarkdown);
+        this.markdownHardBreak = this.getMarkdownHardBreak(originalMarkdown);
         this.originalMarkdown = originalMarkdown;
 
         this.parent = parent;
@@ -280,7 +280,7 @@ export class ListItem {
         return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}${this.markdownHardBreak}`;
     }
 
-    protected getMarkdownHardBreak(_preserveTrailingWhitespace: boolean, originalMarkdown: string): string {
+    protected getMarkdownHardBreak(originalMarkdown: string): string {
         let trailingSpaces = 0;
         for (let index = originalMarkdown.length - 1; index >= 0; index--) {
             if (originalMarkdown[index] !== ' ') {
