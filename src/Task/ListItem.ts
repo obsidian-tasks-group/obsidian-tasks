@@ -275,11 +275,9 @@ export class ListItem {
         });
     }
 
-    public toFileLineString(preserveTrailingWhitespace = false): string {
+    public toFileLineString(_preserveTrailingWhitespace = false): string {
         const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
-        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${
-            this.description
-        }${this.getMarkdownHardBreak(preserveTrailingWhitespace, this.originalMarkdown)}`;
+        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}${this.markdownHardBreak}`;
     }
 
     protected getMarkdownHardBreak(preserveTrailingWhitespace: boolean, originalMarkdown: string): string {
