@@ -8,7 +8,7 @@ window.moment = moment;
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Comparator } from '../../../src/Query/Sort/Sorter';
 import { Sorter } from '../../../src/Query/Sort/Sorter';
-import { Task } from '../../../src/Task/Task';
+import type { Task } from '../../../src/Task/Task';
 import { StatusField } from '../../../src/Query/Filter/StatusField';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import { PathField } from '../../../src/Query/Filter/PathField';
@@ -200,8 +200,7 @@ describe('Sort', () => {
                     const line = `- [ ] ${description}`;
                     const task = fromLine({ line: line + dateFields });
                     const urgencyDescription = ` urgency = ${task.urgency.toFixed(5)}`;
-                    const description2 = `${description}${urgencyDescription}`;
-                    const task2 = new Task({ ...task, description: description2 });
+                    const task2 = fromLine({ line: line + urgencyDescription + dateFields });
                     tasks.push(task2);
                 }
             }
