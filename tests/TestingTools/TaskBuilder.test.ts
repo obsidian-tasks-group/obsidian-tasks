@@ -26,7 +26,7 @@ describe('TaskBuilder', () => {
 
         it.each([
             ['should handle  0 trailing spaces', '', ''],
-            ['should discard 1 trailing space ', ' ', ''],
+            ['should discard 1 trailing space ', ' ', ''], // if only 1 trailing space, it should be discarded
             ['should retain  2 trailing spaces', '  ', '  '],
             ['should retain  3 trailing spaces', '   ', '   '],
             ['should retain  4 trailing spaces', '    ', '    '],
