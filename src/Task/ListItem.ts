@@ -275,7 +275,7 @@ export class ListItem {
         });
     }
 
-    public toFileLineString(_preserveTrailingWhitespace = false): string {
+    public toFileLineString(): string {
         const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
         return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}${this.markdownHardBreak}`;
     }

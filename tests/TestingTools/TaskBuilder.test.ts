@@ -35,7 +35,7 @@ describe('TaskBuilder', () => {
 
             expect(task.markdownHardBreak).toStrictEqual(expectedMarkdownHardBreak);
             expect(task.originalMarkdown).toEqual('- [ ] hello' + inputSuffix);
-            expect(task.toFileLineString(true)).toStrictEqual('- [ ] hello' + expectedMarkdownHardBreak);
+            expect(task.toFileLineString()).toStrictEqual('- [ ] hello' + expectedMarkdownHardBreak);
         });
     });
 

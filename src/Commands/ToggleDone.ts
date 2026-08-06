@@ -17,7 +17,7 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
         fallbackDate: null, // We don't need this to toggle it here in the editor.
     });
     if (task !== null) {
-        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString(true));
+        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
         const newLineNumber = lines.length > 0 ? lines.length - 1 : 0;
         return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
     } else {

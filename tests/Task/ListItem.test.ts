@@ -219,21 +219,21 @@ describe('list item writing', () => {
             const suffix = ' ';
             const item = ListItem.fromListItemLine(expected + suffix, null, taskLocation)!;
 
-            expect(item.toFileLineString(true)).toEqual(expected);
+            expect(item.toFileLineString()).toEqual(expected);
         });
 
         it('should preserve Markdown hard-break of 2 spaces when completing a task', () => {
             const line = '- 2 trailing spaces  ';
             const item = ListItem.fromListItemLine(line, null, taskLocation)!;
 
-            expect(item.toFileLineString(true)).toEqual(line);
+            expect(item.toFileLineString()).toEqual(line);
         });
 
         it('should preserve Markdown hard-break of 3 spaces when completing a task', () => {
             const line = '- 3 trailing spaces   ';
             const item = ListItem.fromListItemLine(line, null, taskLocation)!;
 
-            expect(item.toFileLineString(true)).toEqual(line);
+            expect(item.toFileLineString()).toEqual(line);
         });
     });
 });
