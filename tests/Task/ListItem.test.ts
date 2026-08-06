@@ -188,6 +188,30 @@ describe('list item writing', () => {
 
         expect(item.toFileLineString()).toEqual('* star');
     });
+
+    describe('trailing spaces', () => {
+        it('should discard single trailing space when completing a task', () => {
+            const expected = '- foo';
+            const suffix = ' ';
+            const item = ListItem.fromListItemLine(expected + suffix, null, taskLocation)!;
+
+            expect(item.toFileLineString(true)).toEqual(expected);
+        });
+
+        it('should preserve Markdown hard-break of 2 spaces when completing a task', () => {
+            const line = '- 2 trailing spaces  ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.toFileLineString(true)).toEqual(line);
+        });
+
+        it('should preserve Markdown hard-break of 3 spaces when completing a task', () => {
+            const line = '- 3 trailing spaces   ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.toFileLineString(true)).toEqual(line);
+        });
+    });
 });
 
 describe('related items', () => {
