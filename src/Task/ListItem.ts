@@ -291,14 +291,11 @@ export class ListItem {
             return '';
         }
 
-        let trailingSpaces = 0;
-        for (let index = originalMarkdown.length - 1; index >= 0; index--) {
-            if (originalMarkdown[index] !== ' ') {
-                break;
-            }
-            trailingSpaces++;
+        let markdownHardBreak = '  ';
+        while (originalMarkdown.endsWith(markdownHardBreak + ' ')) {
+            markdownHardBreak += ' ';
         }
 
-        return trailingSpaces >= 2 ? ' '.repeat(trailingSpaces) : '';
+        return markdownHardBreak;
     }
 }
