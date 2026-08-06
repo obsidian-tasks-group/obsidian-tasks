@@ -12,7 +12,10 @@ This section stores information about the design and implementation of the plugi
 
 ## Common processes
 
-- [[How do I add a new field to the Task class]]
+- How do I add a new field/property to:
+  - the [[How do I add a new field to the Task class|Task class]]
+  - the [[How do I add a new field to the ListItem class|ListItem class]], which is the base class of `Task`.
+  - and how do I decide whether the new field should go in [[How do I add a new field to the Task class#Should the new field be added to Task or ListItem?|Task or ListItem]]?
 - [[How do I add a new task filter]]
 - [[How do I add one-click support for new themes or snippets for custom statuses]]
 - [[How does Tasks handle status changes]]

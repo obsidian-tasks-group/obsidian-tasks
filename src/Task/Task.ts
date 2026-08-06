@@ -35,6 +35,8 @@ interface TaskComponents {
  * the extensions provided by this plugin. This is used to parse and
  * generate the markdown task for all updates and replacements.
  *
+ * See also {@link ListItem}.
+ *
  * @class Task
  */
 export class Task extends ListItem {
