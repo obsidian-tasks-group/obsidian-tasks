@@ -138,7 +138,7 @@ describe('ToggleDone', () => {
     });
 
     describe('trailing spaces', () => {
-        it('should discard single trailing space when completing a task', () => {
+        it('should discard single trailing space when toggling a task', () => {
             const incomplete = '- [ ] foo';
             const complete = '- [x] foo ✅ 2022-09-04';
 
@@ -146,7 +146,7 @@ describe('ToggleDone', () => {
             expect(toggleLine(complete + ' ', 'x.md').text).toStrictEqual(incomplete);
         });
 
-        it('should preserve Markdown hard-break of 2 spaces when completing a task', () => {
+        it('should preserve Markdown hard-break of 2 spaces when toggling a task', () => {
             const hardBreak = '  ';
             const incomplete = `- [ ] foo${hardBreak}`;
             const complete = `- [x] foo ✅ 2022-09-04${hardBreak}`;
@@ -155,7 +155,7 @@ describe('ToggleDone', () => {
             expect(toggleLine(complete, 'x.md').text).toStrictEqual(incomplete);
         });
 
-        it('should preserve Markdown hard-break of 3 spaces when completing a task', () => {
+        it('should preserve Markdown hard-break of 3 spaces when toggling a task', () => {
             const hardBreak = '   ';
             const incomplete = `- [ ] foo${hardBreak}`;
             const complete = `- [x] foo ✅ 2022-09-04${hardBreak}`;
