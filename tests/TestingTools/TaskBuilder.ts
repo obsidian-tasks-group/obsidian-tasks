@@ -33,6 +33,7 @@ export class TaskBuilder {
 
     private _status: Status = Status.TODO;
     private _description: string = 'my description';
+    private _markdownHardBreak: string = '';
     private _path: string = '';
     private _indentation: string = '';
     private _listMarker: string = '-';
@@ -109,7 +110,7 @@ export class TaskBuilder {
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
         });
-        const markdown = task.toFileLineString();
+        const markdown = task.toFileLineString() + this._markdownHardBreak;
         return new Task({
             ...task,
             originalMarkdown: markdown,
@@ -192,6 +193,16 @@ export class TaskBuilder {
      */
     public description(description: string): this {
         this._description = description;
+        return this;
+    }
+
+    /**
+     * Set the markdownHardBreak - empty by default, and can be 2 or more spaces at the end of the task line to force a line-break.
+     *
+     * @param markdownHardBreak - markdownHardBreak, for appending at the end of the task line
+     */
+    public markdownHardBreak(markdownHardBreak: string): this {
+        this._markdownHardBreak = markdownHardBreak;
         return this;
     }
 
