@@ -280,11 +280,7 @@ export class ListItem {
         return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}${this.markdownHardBreak}`;
     }
 
-    protected getMarkdownHardBreak(preserveTrailingWhitespace: boolean, originalMarkdown: string): string {
-        if (!preserveTrailingWhitespace) {
-            return '';
-        }
-
+    protected getMarkdownHardBreak(_preserveTrailingWhitespace: boolean, originalMarkdown: string): string {
         let trailingSpaces = 0;
         for (let index = originalMarkdown.length - 1; index >= 0; index--) {
             if (originalMarkdown[index] !== ' ') {
