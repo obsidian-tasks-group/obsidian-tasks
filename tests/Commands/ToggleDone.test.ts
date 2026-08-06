@@ -137,6 +137,15 @@ describe('ToggleDone', () => {
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description');
     });
 
+    it('should preserve Markdown hard-break spaces when completing a task', () => {
+        const hardBreak = '  ';
+        const incomplete = `- [ ] foo${hardBreak}`;
+        const complete = `- [x] foo ✅ 2022-09-04${hardBreak}`;
+
+        expect(toggleLine(incomplete, 'x.md').text).toStrictEqual(complete);
+        expect(toggleLine(complete, 'x.md').text).toStrictEqual(incomplete);
+    });
+
     it('should un-complete a completed task', () => {
         testToggleLine('|- [x]  ✅ 2022-09-04', '|- [ ] ');
         testToggleLine('1. [x]  ✅ 2022-09-04|', '1. [ ] |');

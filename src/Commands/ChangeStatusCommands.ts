@@ -23,7 +23,7 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
     });
 
     if (task !== null) {
-        const lines = task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString());
+        const lines = task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString(true));
         const newLineNumber = lines.length > 0 ? lines.length - 1 : 0;
         return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
     }

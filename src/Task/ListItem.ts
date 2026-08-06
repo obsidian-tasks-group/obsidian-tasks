@@ -273,8 +273,26 @@ export class ListItem {
         });
     }
 
-    public toFileLineString(): string {
+    public toFileLineString(preserveTrailingWhitespace = false): string {
         const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
-        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}`;
+        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${
+            this.description
+        }${this.getMarkdownHardBreak(preserveTrailingWhitespace)}`;
+    }
+
+    protected getMarkdownHardBreak(preserveTrailingWhitespace: boolean): string {
+        if (!preserveTrailingWhitespace) {
+            return '';
+        }
+
+        let trailingSpaces = 0;
+        for (let index = this.originalMarkdown.length - 1; index >= 0; index--) {
+            if (this.originalMarkdown[index] !== ' ') {
+                break;
+            }
+            trailingSpaces++;
+        }
+
+        return trailingSpaces >= 2 ? ' '.repeat(trailingSpaces) : '';
     }
 }
