@@ -19,10 +19,10 @@ Since all characteristics of list lines are also present in task lines, the [Tas
 Is the new property present in both list and task items?
 
 - Yes:
-  - Put the new property in `ListItem`
-  - Use the instructions in [[How do I add a new field to the ListItem class]]
+  - Put the new property in `ListItem`.
+  - Use the instructions in [[How do I add a new field to the ListItem class]].
 - No:
-  - Put the new property in `Task`
+  - Put the new property in `Task`.
   - Continue with the instructions below.
 
 ## Dividing up the work
