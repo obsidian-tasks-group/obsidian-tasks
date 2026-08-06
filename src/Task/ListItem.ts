@@ -280,6 +280,12 @@ export class ListItem {
         return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}${this.markdownHardBreak}`;
     }
 
+    /**
+     * Processes the given Markdown string to determine the appropriate hard break representation.
+     *
+     * @param originalMarkdown - The input Markdown string to analyse for trailing spaces.
+     * @return A string containing the trailing spaces if two or more are present; otherwise, an empty string.
+     */
     private getMarkdownHardBreak(originalMarkdown: string): string {
         let trailingSpaces = 0;
         for (let index = originalMarkdown.length - 1; index >= 0; index--) {
