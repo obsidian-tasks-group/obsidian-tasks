@@ -200,6 +200,9 @@ describe('Sort', () => {
                     const line = `- [ ] ${description}`;
                     const task = fromLine({ line: line + dateFields });
 
+                    // Re-read the updated line from Markdown instead of using spread-with-override.
+                    // This avoids preserving trailing spaces from `task` when creating `task2`.
+                    // It matters for the test case where `start`, `scheduled`, and `due` are all null.
                     const urgencyDescription = ` urgency = ${task.urgency.toFixed(5)}`;
                     const task2 = fromLine({ line: line + urgencyDescription + dateFields });
 
