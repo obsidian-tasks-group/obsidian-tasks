@@ -191,7 +191,7 @@ describe('Sort', () => {
                     const description = `Start: ${pad(start[0]!)} Scheduled: ${pad(scheduled[0]!)} Due: ${pad(
                         due[0]!,
                     )}`;
-                    let line = `- [ ] ${description}`;
+                    const line = `- [ ] ${description}`;
                     let dateFields = '';
                     dateFields += addDateIfSet('🛫', start[1]);
                     dateFields += addDateIfSet('⏳', scheduled[1]);
