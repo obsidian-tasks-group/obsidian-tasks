@@ -1,5 +1,30 @@
 # How do I add a new field to the Task class?
 
+## Should the new field be added to Task or ListItem?
+
+The `Task` class represents [task](https://obsidian.md/help/syntax#Task+lists) lines:
+
+```markdown
+- [ ] ...
+```
+
+The `ListItem` class represents - erm - [list](https://obsidian.md/help/syntax#Lists) items:
+
+```markdown
+- ...
+```
+
+Since all characteristics of list lines are also present in task lines, the [Task](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Task/Task.ts) class inherits [ListItem](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Task/ListItem.ts).
+
+Is the new property present in both list and task items?
+
+- Yes:
+  - Put the new property in `ListItem`
+  - Use the instructions in [[How do I add a new field to the ListItem class]]
+- No:
+  - Put the new property in `Task`
+  - Continue with the instructions below.
+
 ## Dividing up the work
 
 The many steps below can be split over several PRs, to make work - and code review - manageable.
@@ -42,7 +67,7 @@ For example, It's fine to have a first release of a feature without `sort by` an
   - Keep the same field order as in the `Task` class.
   - [ ] Update the `build()` method.
 - In [tests/TestingTools/TaskBuilder.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/TaskBuilder.test.ts):
-  - [ ] If the code in TaskBuild will be non-trivial, first add a failing test for it.
+  - [ ] If the code in TaskBuilder will be non-trivial, first add a failing test for it.
 
 ## Other code areas
 
