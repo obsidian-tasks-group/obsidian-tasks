@@ -287,6 +287,10 @@ export class ListItem {
      * @return A string containing the trailing spaces if two or more are present; otherwise, an empty string.
      */
     private getMarkdownHardBreak(originalMarkdown: string): string {
+        if (!originalMarkdown.endsWith('  ')) {
+            return '';
+        }
+
         let trailingSpaces = 0;
         for (let index = originalMarkdown.length - 1; index >= 0; index--) {
             if (originalMarkdown[index] !== ' ') {
