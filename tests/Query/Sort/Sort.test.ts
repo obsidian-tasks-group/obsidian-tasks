@@ -199,8 +199,10 @@ describe('Sort', () => {
 
                     const line = `- [ ] ${description}`;
                     const task = fromLine({ line: line + dateFields });
+
                     const urgencyDescription = ` urgency = ${task.urgency.toFixed(5)}`;
                     const task2 = fromLine({ line: line + urgencyDescription + dateFields });
+
                     tasks.push(task2);
                 }
             }
