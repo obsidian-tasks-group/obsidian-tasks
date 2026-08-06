@@ -49,7 +49,13 @@ export class ListItem {
         this.listMarker = listMarker;
         this.statusCharacter = statusCharacter;
         this.description = description;
+
+        // If there are 2 or more spaces at the end of the line, we retain them so that when
+        // the ListItem or Task is updated and written out, we keep the original formatting.
+        // There is intentionally no way to update this value once the task line has been read
+        // in from Markdown.
         this.markdownHardBreak = this.getMarkdownHardBreak(originalMarkdown);
+
         this.originalMarkdown = originalMarkdown;
 
         this.parent = parent;
