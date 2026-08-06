@@ -324,13 +324,13 @@ export class Task extends ListItem {
      * @note Output depends on {@link Settings.taskFormat}
      * @return {*}  {string}
      */
-    public toFileLineString(preserveTrailingWhitespace = false): string {
+    public toFileLineString(): string {
         // Preserve Markdown hard-break spaces from the original line when a task
         // edit is being written back. A single trailing space is formatting noise,
         // but two or more trailing spaces are meaningful.
-        return `${this.indentation}${this.listMarker} [${
-            this.status.symbol
-        }] ${this.toString()}${this.getMarkdownHardBreak(preserveTrailingWhitespace)}`;
+        return `${this.indentation}${this.listMarker} [${this.status.symbol}] ${this.toString()}${
+            this.markdownHardBreak
+        }`;
     }
 
     /**

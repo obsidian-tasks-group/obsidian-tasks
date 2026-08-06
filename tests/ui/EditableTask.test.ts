@@ -173,6 +173,7 @@ describe('EditableTask tests', () => {
               "id": "abcdef",
               "indentation": "  ",
               "listMarker": "-",
+              "markdownHardBreak": "",
               "onCompletion": "",
               "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
               "parent": null,

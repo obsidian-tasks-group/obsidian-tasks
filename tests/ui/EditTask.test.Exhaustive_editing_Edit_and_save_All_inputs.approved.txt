@@ -10,6 +10,14 @@ KEY: (globalFilter, set created date)
     '- [ ] plain text, not a list item'
 
 ('', false)
+    'plain text, not a list item, had 1 trailing space, should end up with none ' =>
+    '- [ ] plain text, not a list item, had 1 trailing space, should end up with none'
+
+('', false)
+    'plain text, not a list item, should retain its 2 trailing spaces  ' =>
+    '- [ ] plain text, not a list item, should retain its 2 trailing spaces'
+
+('', false)
     '-' =>
     '- [ ] simulate user typing text in to empty description field'
 
@@ -30,8 +38,24 @@ KEY: (globalFilter, set created date)
     '- [ ] list item, but no checkbox'
 
 ('', false)
+    '- list item, but no checkbox, had 1 trailing space, should end up with none ' =>
+    '- [ ] list item, but no checkbox, had 1 trailing space, should end up with none'
+
+('', false)
+    '- list item, but no checkbox, should retain its 2 trailing spaces  ' =>
+    '- [ ] list item, but no checkbox, should retain its 2 trailing spaces'
+
+('', false)
     '- [ ] checkbox with initial description' =>
     '- [ ] checkbox with initial description'
+
+('', false)
+    '- [ ] checkbox with initial description, had 1 trailing space, should end up with none ' =>
+    '- [ ] checkbox with initial description, had 1 trailing space, should end up with none'
+
+('', false)
+    '- [ ] checkbox with initial description, should retain its 2 trailing spaces  ' =>
+    '- [ ] checkbox with initial description, should retain its 2 trailing spaces  '
 
 ('', false)
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
@@ -54,6 +78,14 @@ KEY: (globalFilter, set created date)
     '- [ ] plain text, not a list item ➕ 2023-07-18'
 
 ('', true)
+    'plain text, not a list item, had 1 trailing space, should end up with none ' =>
+    '- [ ] plain text, not a list item, had 1 trailing space, should end up with none ➕ 2023-07-18'
+
+('', true)
+    'plain text, not a list item, should retain its 2 trailing spaces  ' =>
+    '- [ ] plain text, not a list item, should retain its 2 trailing spaces ➕ 2023-07-18'
+
+('', true)
     '-' =>
     '- [ ] simulate user typing text in to empty description field ➕ 2023-07-18'
 
@@ -74,8 +106,24 @@ KEY: (globalFilter, set created date)
     '- [ ] list item, but no checkbox ➕ 2023-07-18'
 
 ('', true)
+    '- list item, but no checkbox, had 1 trailing space, should end up with none ' =>
+    '- [ ] list item, but no checkbox, had 1 trailing space, should end up with none ➕ 2023-07-18'
+
+('', true)
+    '- list item, but no checkbox, should retain its 2 trailing spaces  ' =>
+    '- [ ] list item, but no checkbox, should retain its 2 trailing spaces ➕ 2023-07-18'
+
+('', true)
     '- [ ] checkbox with initial description' =>
     '- [ ] checkbox with initial description'
+
+('', true)
+    '- [ ] checkbox with initial description, had 1 trailing space, should end up with none ' =>
+    '- [ ] checkbox with initial description, had 1 trailing space, should end up with none'
+
+('', true)
+    '- [ ] checkbox with initial description, should retain its 2 trailing spaces  ' =>
+    '- [ ] checkbox with initial description, should retain its 2 trailing spaces  '
 
 ('', true)
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
@@ -98,6 +146,14 @@ KEY: (globalFilter, set created date)
     '- [ ] #task plain text, not a list item'
 
 ('#task', false)
+    'plain text, not a list item, had 1 trailing space, should end up with none ' =>
+    '- [ ] #task plain text, not a list item, had 1 trailing space, should end up with none'
+
+('#task', false)
+    'plain text, not a list item, should retain its 2 trailing spaces  ' =>
+    '- [ ] #task plain text, not a list item, should retain its 2 trailing spaces'
+
+('#task', false)
     '-' =>
     '- [ ] #task simulate user typing text in to empty description field'
 
@@ -118,8 +174,24 @@ KEY: (globalFilter, set created date)
     '- [ ] #task list item, but no checkbox'
 
 ('#task', false)
+    '- list item, but no checkbox, had 1 trailing space, should end up with none ' =>
+    '- [ ] #task list item, but no checkbox, had 1 trailing space, should end up with none'
+
+('#task', false)
+    '- list item, but no checkbox, should retain its 2 trailing spaces  ' =>
+    '- [ ] #task list item, but no checkbox, should retain its 2 trailing spaces'
+
+('#task', false)
     '- [ ] checkbox with initial description' =>
     '- [ ] #task checkbox with initial description'
+
+('#task', false)
+    '- [ ] checkbox with initial description, had 1 trailing space, should end up with none ' =>
+    '- [ ] #task checkbox with initial description, had 1 trailing space, should end up with none'
+
+('#task', false)
+    '- [ ] checkbox with initial description, should retain its 2 trailing spaces  ' =>
+    '- [ ] #task checkbox with initial description, should retain its 2 trailing spaces  '
 
 ('#task', false)
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>
@@ -142,6 +214,14 @@ KEY: (globalFilter, set created date)
     '- [ ] #task plain text, not a list item ➕ 2023-07-18'
 
 ('#task', true)
+    'plain text, not a list item, had 1 trailing space, should end up with none ' =>
+    '- [ ] #task plain text, not a list item, had 1 trailing space, should end up with none ➕ 2023-07-18'
+
+('#task', true)
+    'plain text, not a list item, should retain its 2 trailing spaces  ' =>
+    '- [ ] #task plain text, not a list item, should retain its 2 trailing spaces ➕ 2023-07-18'
+
+('#task', true)
     '-' =>
     '- [ ] #task simulate user typing text in to empty description field ➕ 2023-07-18'
 
@@ -162,8 +242,24 @@ KEY: (globalFilter, set created date)
     '- [ ] #task list item, but no checkbox ➕ 2023-07-18'
 
 ('#task', true)
+    '- list item, but no checkbox, had 1 trailing space, should end up with none ' =>
+    '- [ ] #task list item, but no checkbox, had 1 trailing space, should end up with none ➕ 2023-07-18'
+
+('#task', true)
+    '- list item, but no checkbox, should retain its 2 trailing spaces  ' =>
+    '- [ ] #task list item, but no checkbox, should retain its 2 trailing spaces ➕ 2023-07-18'
+
+('#task', true)
     '- [ ] checkbox with initial description' =>
     '- [ ] #task checkbox with initial description ➕ 2023-07-18'
+
+('#task', true)
+    '- [ ] checkbox with initial description, had 1 trailing space, should end up with none ' =>
+    '- [ ] #task checkbox with initial description, had 1 trailing space, should end up with none ➕ 2023-07-18'
+
+('#task', true)
+    '- [ ] checkbox with initial description, should retain its 2 trailing spaces  ' =>
+    '- [ ] #task checkbox with initial description, should retain its 2 trailing spaces ➕ 2023-07-18  '
 
 ('#task', true)
     '- [ ] checkbox with initial description and created date ➕ 2023-01-01' =>

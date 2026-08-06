@@ -23,6 +23,7 @@ export class ListItem {
     public readonly indentation: string;
     public readonly listMarker: string;
     public readonly description: string;
+    public readonly markdownHardBreak: string;
     public readonly statusCharacter: string | null;
 
     public readonly taskLocation: TaskLocation;
@@ -48,6 +49,13 @@ export class ListItem {
         this.listMarker = listMarker;
         this.statusCharacter = statusCharacter;
         this.description = description;
+
+        // If there are 2 or more spaces at the end of the line, we retain them so that when
+        // the ListItem or Task is updated and written out, we keep the original formatting.
+        // There is intentionally no way to update this value once the task line has been read
+        // in from Markdown.
+        this.markdownHardBreak = this.getMarkdownHardBreak(originalMarkdown);
+
         this.originalMarkdown = originalMarkdown;
 
         this.parent = parent;
@@ -273,26 +281,27 @@ export class ListItem {
         });
     }
 
-    public toFileLineString(preserveTrailingWhitespace = false): string {
+    public toFileLineString(): string {
         const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
-        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${
-            this.description
-        }${this.getMarkdownHardBreak(preserveTrailingWhitespace)}`;
+        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}${this.markdownHardBreak}`;
     }
 
-    protected getMarkdownHardBreak(preserveTrailingWhitespace: boolean): string {
-        if (!preserveTrailingWhitespace) {
+    /**
+     * Processes the given Markdown string to determine the appropriate hard break representation.
+     *
+     * @param originalMarkdown - The input Markdown string to analyse for trailing spaces.
+     * @return A string containing the trailing spaces if two or more are present; otherwise, an empty string.
+     */
+    private getMarkdownHardBreak(originalMarkdown: string): string {
+        if (!originalMarkdown.endsWith('  ')) {
             return '';
         }
 
-        let trailingSpaces = 0;
-        for (let index = this.originalMarkdown.length - 1; index >= 0; index--) {
-            if (this.originalMarkdown[index] !== ' ') {
-                break;
-            }
-            trailingSpaces++;
+        let markdownHardBreak = '  ';
+        while (originalMarkdown.endsWith(markdownHardBreak + ' ')) {
+            markdownHardBreak += ' ';
         }
 
-        return trailingSpaces >= 2 ? ' '.repeat(trailingSpaces) : '';
+        return markdownHardBreak;
     }
 }

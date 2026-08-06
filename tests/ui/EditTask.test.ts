@@ -241,6 +241,22 @@ describe('Task rendering', () => {
         );
     });
 
+    it('should strip 1 trailing space from description', () => {
+        testDescriptionRender(
+            // force line break
+            'started with 1 trailing space ',
+            'started with 1 trailing space',
+        );
+    });
+
+    it('should strip 2 trailing spaces from description', () => {
+        testDescriptionRender(
+            // force line break
+            'started with 2 trailing spaces  ',
+            'started with 2 trailing spaces',
+        );
+    });
+
     const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
 
     it('should display valid created date', () => {
@@ -641,12 +657,18 @@ describe('Exhaustive editing', () => {
         const initialTaskLineValues = [
             '',
             'plain text, not a list item',
+            'plain text, not a list item, had 1 trailing space, should end up with none ',
+            'plain text, not a list item, should retain its 2 trailing spaces  ', // TODO does not retain trailing spaces
             '-',
             '- ',
             '- [ ]',
             '- [ ] ',
             '- list item, but no checkbox',
+            '- list item, but no checkbox, had 1 trailing space, should end up with none ',
+            '- list item, but no checkbox, should retain its 2 trailing spaces  ', // TODO does not retain trailing spaces
             '- [ ] checkbox with initial description',
+            '- [ ] checkbox with initial description, had 1 trailing space, should end up with none ',
+            '- [ ] checkbox with initial description, should retain its 2 trailing spaces  ',
             '- [ ] checkbox with initial description and created date ➕ 2023-01-01',
             '- [ ] #task checkbox with global filter string and initial description',
             '- [ ] checkbox with initial description ending with task tag at end #task',

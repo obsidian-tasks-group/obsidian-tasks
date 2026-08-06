@@ -162,6 +162,30 @@ describe('list item parsing', () => {
 
         expect(item).toBeNull();
     });
+
+    describe('trailing spaces - for hard breaks in markdown', () => {
+        it('should discard single trailing space when parsing a list item', () => {
+            const expected = '- foo';
+            const suffix = ' ';
+            const item = ListItem.fromListItemLine(expected + suffix, null, taskLocation)!;
+
+            expect(item.markdownHardBreak).toEqual('');
+        });
+
+        it('should preserve Markdown hard-break of 2 spaces when parsing a list item', () => {
+            const line = '- 2 trailing spaces  ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.markdownHardBreak).toEqual('  ');
+        });
+
+        it('should preserve Markdown hard-break of 3 spaces when parsing a list item', () => {
+            const line = '- 3 trailing spaces   ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.markdownHardBreak).toEqual('   ');
+        });
+    });
 });
 
 describe('list item writing', () => {
@@ -187,6 +211,30 @@ describe('list item writing', () => {
         const item = ListItem.fromListItemLine('* star', null, taskLocation)!;
 
         expect(item.toFileLineString()).toEqual('* star');
+    });
+
+    describe('trailing spaces', () => {
+        it('should discard single trailing space when writing a list item', () => {
+            const expected = '- foo';
+            const suffix = ' ';
+            const item = ListItem.fromListItemLine(expected + suffix, null, taskLocation)!;
+
+            expect(item.toFileLineString()).toEqual(expected);
+        });
+
+        it('should preserve Markdown hard-break of 2 spaces when writing a list item', () => {
+            const line = '- 2 trailing spaces  ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.toFileLineString()).toEqual(line);
+        });
+
+        it('should preserve Markdown hard-break of 3 spaces when writing a list item', () => {
+            const line = '- 3 trailing spaces   ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.toFileLineString()).toEqual(line);
+        });
     });
 });
 
