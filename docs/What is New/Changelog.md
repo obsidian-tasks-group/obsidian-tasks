@@ -15,6 +15,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 - X.Y.Z:
   - Add [[Views|columns view]], supporting drag-and-drop edit for a growing number of properties.
   - Add [[Grouping#Showing the number of tasks in a group|show group count]] instruction. For now, this only shows numbers of tasks in the lowest-level groups.
+  - Add CSS example for [[Styling#Priority as a Background Color, for active tasks|colouring actionable tasks by their priority]].
   - Add Spanish translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
   - The [[Presets#Default Presets|default preset]] `hide_query_elements` now hides the task count. (Pre-existing Tasks settings are not updated, though.)
 - 8.3.0:
