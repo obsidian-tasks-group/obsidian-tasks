@@ -46,32 +46,12 @@
             // (it would be nice to skip this below the last task in each column or group):
             margin-bottom: 0.5rem;
 
-            // Ensure that the different background colour on cards does not obscure links
-            // and the backlink on tasks:
-            position: relative;
-            isolation: isolate;
+            // Put a border around the task and its checkbox:
+            border: 1px solid var(--background-modifier-border);
+            border-radius: 6px;
 
-            // Create a pseudo element that surrounds both the task description and its checkbox,
-            // so we can draw a border surrounding the whole task including its checkbox:
-            &:before {
-                content: "";
-                position: absolute;
-
-                // The pseudo element starts 3ch before the description, which is the offset
-                // used by Obsidian when positioning checkboxes:
-                top: 0;
-                inset-inline-start: -3ch;
-                width: calc(100% + 3ch);
-                height: 100%;
-
-                // Put a border around the task and its checkbox:
-                border: 1px solid var(--background-modifier-border);
-                border-radius: 6px;
-
-                // Give cards a different background colour:
-                z-index: -1;
-                background: var(--background-primary);
-            }
+            // Give cards a different background colour:
+            background: var(--background-primary);
         }
     }
 }
