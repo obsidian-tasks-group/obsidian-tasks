@@ -251,7 +251,9 @@ For example:
 
 ![Example of tasks-plugin-tags-links-recurrence-gray.css snippet](../../images/tasks-plugin-tags-links-recurrence-gray-snippet.png)
 
-### Priority as a Checkbox Color
+### Styling Tasks with Priorities
+
+#### Priority as a Checkbox Color
 
 The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in purple, red, orange, blue, cyan and green according to the tasks' priority:
 
