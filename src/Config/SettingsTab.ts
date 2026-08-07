@@ -268,6 +268,9 @@ export class SettingsTab extends PluginSettingTab {
             items: [
                 {
                     name: i18n.t('settings.globalFilter.filter.name'),
+                    // Group headings are not searchable, so the first row in
+                    // the group carries the heading as a search alias.
+                    aliases: [i18n.t('settings.globalDefaults.heading')],
                     desc: SettingsTab.createFragmentWithHTML(
                         `<p><b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
                             `<p>${i18n.t('settings.globalFilter.filter.description.line2')}</p>` +
@@ -533,7 +536,9 @@ export class SettingsTab extends PluginSettingTab {
                         {
                             name: i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.name'),
                             desc: i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.tooltip'),
-                            searchable: false,
+                            // List headings are not searchable, so this
+                            // always-present row carries the heading as an alias.
+                            aliases: [i18n.t('settings.statuses.coreStatuses.heading')],
                             action: async () => {
                                 await this.createStatusRegistryReport();
                             },
@@ -628,7 +633,7 @@ export class SettingsTab extends PluginSettingTab {
                         {
                             name: i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.name'),
                             desc: i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.description'),
-                            searchable: false,
+                            aliases: [i18n.t('settings.statuses.customStatuses.heading')],
                             action: () => {
                                 const { statusSettings: current } = getSettings();
                                 StatusSettings.resetAllCustomStatuses(current);
@@ -804,6 +809,7 @@ export class SettingsTab extends PluginSettingTab {
             items: [
                 {
                     name: i18n.t('settings.dates.createdDate.name'),
+                    aliases: [i18n.t('settings.dates.heading')],
                     desc: i18n.t('settings.dates.createdDate.description'),
                     render: this.renderToggleWithDocs(
                         'setCreatedDate',
@@ -839,6 +845,7 @@ export class SettingsTab extends PluginSettingTab {
             items: [
                 {
                     name: i18n.t('settings.datesFromFileNames.scheduledDate.toggle.name'),
+                    aliases: [i18n.t('settings.datesFromFileNames.heading')],
                     desc: SettingsTab.createFragmentWithHTML(
                         `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1')} ` +
                             `${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2')}</p>` +
@@ -913,6 +920,7 @@ export class SettingsTab extends PluginSettingTab {
             items: [
                 {
                     name: i18n.t('settings.recurringTasks.nextLine.name'),
+                    aliases: [i18n.t('settings.recurringTasks.heading')],
                     desc: i18n.t('settings.recurringTasks.nextLine.description'),
                     render: this.renderToggleWithDocs(
                         'recurrenceOnNextLine',
@@ -943,6 +951,7 @@ export class SettingsTab extends PluginSettingTab {
             items: [
                 {
                     name: i18n.t('settings.autoSuggest.toggle.name'),
+                    aliases: [i18n.t('settings.taskEntry.heading')],
                     desc: i18n.t('settings.autoSuggest.toggle.description'),
                     render: this.withDocs(
                         this.withReload('autoSuggestInEditor', (setting, refreshReloadButton) => {
