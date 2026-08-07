@@ -1,0 +1,60 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 0,
+            "offset": 12
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 1,
+            "offset": 25
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 13
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 12,
+            "line": 1,
+            "offset": 25
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      }
+    ]
+  },
+  "fileContents": "- [ ] Task 1\n- [ ] Task 2\n",
+  "filePath": "Test Data/editing_tasks_no_headings_two_tasks.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

@@ -1,0 +1,173 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "Heading",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 9,
+            "line": 0,
+            "offset": 9
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 2,
+            "offset": 24
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 11
+          }
+        }
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 3,
+            "offset": 43
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 25
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 4,
+            "offset": 57
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 44
+          }
+        }
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 5,
+            "offset": 76
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 58
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 6,
+            "offset": 90
+          },
+          "start": {
+            "col": 0,
+            "line": 6,
+            "offset": 77
+          }
+        }
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 9,
+            "line": 0,
+            "offset": 9
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 13,
+            "line": 6,
+            "offset": 90
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 11
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 3,
+            "offset": 36
+          },
+          "start": {
+            "col": 6,
+            "line": 3,
+            "offset": 31
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 5,
+            "offset": 69
+          },
+          "start": {
+            "col": 6,
+            "line": 5,
+            "offset": 64
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# Heading\n\n- List item 1\n- [ ] #task Task 1\n- List item 2\n- [ ] #task Task 2\n- List item 3\n",
+  "filePath": "Test Data/editing_tasks_mix_of_list_items_and_tasks_with_heading.md",
+  "getAllTags": [
+    "#task",
+    "#task"
+  ],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

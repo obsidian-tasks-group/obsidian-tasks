@@ -1,0 +1,124 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "Heading 1",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 3,
+            "offset": 57
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 46
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 25,
+            "line": 0,
+            "offset": 25
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 1,
+            "offset": 44
+          },
+          "start": {
+            "col": 0,
+            "line": 1,
+            "offset": 26
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -4,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 4,
+            "offset": 79
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 58
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 18,
+            "line": 1,
+            "offset": 44
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 3,
+            "offset": 57
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 46
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 4,
+            "offset": 79
+          },
+          "start": {
+            "col": 0,
+            "line": 4,
+            "offset": 58
+          }
+        },
+        "type": "list"
+      }
+    ]
+  },
+  "fileContents": "- [ ] Task before heading\n- [ ] Another task\n\n# Heading 1\n- [ ] Task in heading\n",
+  "filePath": "Test Data/editing_tests_tasks_before_first_heading.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

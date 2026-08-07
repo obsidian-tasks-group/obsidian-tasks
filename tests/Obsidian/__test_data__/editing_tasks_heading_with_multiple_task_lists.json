@@ -1,0 +1,222 @@
+{
+  "cachedMetadata": {
+    "headings": [
+      {
+        "heading": "heading with multiple task lists",
+        "level": 1,
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 0,
+            "offset": 34
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        }
+      }
+    ],
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 71,
+            "line": 2,
+            "offset": 107
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 36
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 71,
+            "line": 3,
+            "offset": 179
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 108
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -7,
+        "position": {
+          "end": {
+            "col": 71,
+            "line": 7,
+            "offset": 264
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 193
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -7,
+        "position": {
+          "end": {
+            "col": 71,
+            "line": 8,
+            "offset": 336
+          },
+          "start": {
+            "col": 0,
+            "line": 8,
+            "offset": 265
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 34,
+            "line": 0,
+            "offset": 34
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "heading"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 71,
+            "line": 3,
+            "offset": 179
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 36
+          }
+        },
+        "type": "list"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 10,
+            "line": 5,
+            "offset": 191
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 181
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 71,
+            "line": 8,
+            "offset": 336
+          },
+          "start": {
+            "col": 0,
+            "line": 7,
+            "offset": 193
+          }
+        },
+        "type": "list"
+      }
+    ],
+    "tags": [
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 2,
+            "offset": 47
+          },
+          "start": {
+            "col": 6,
+            "line": 2,
+            "offset": 42
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 3,
+            "offset": 119
+          },
+          "start": {
+            "col": 6,
+            "line": 3,
+            "offset": 114
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 7,
+            "offset": 204
+          },
+          "start": {
+            "col": 6,
+            "line": 7,
+            "offset": 199
+          }
+        },
+        "tag": "#task"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 11,
+            "line": 8,
+            "offset": 276
+          },
+          "start": {
+            "col": 6,
+            "line": 8,
+            "offset": 271
+          }
+        },
+        "tag": "#task"
+      }
+    ]
+  },
+  "fileContents": "# heading with multiple task lists\n\n- [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 1a\n- [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 1b\n\nNot a task\n\n- [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 2a\n- [ ] #task Task in 'editing_tasks_heading_with_multiple_task_lists' 2b\n",
+  "filePath": "Test Data/editing_tasks_heading_with_multiple_task_lists.md",
+  "getAllTags": [
+    "#task",
+    "#task",
+    "#task",
+    "#task"
+  ],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}
