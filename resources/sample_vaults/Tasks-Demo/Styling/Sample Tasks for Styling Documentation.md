@@ -22,7 +22,7 @@ When `tasks-plugin-tags-links-recurrence-gray` snippet is enabled:
 
 ~~~tasks
 heading includes Tasks
-group by {{query.file.property("groupby")}}
+#group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
@@ -49,7 +49,7 @@ When `tasks-plugin-priority-as-checkbox-color` is enabled:
 
 ~~~tasks
 heading includes Priority
-group by {{query.file.property("groupby")}}
+#group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
@@ -76,7 +76,7 @@ When `tasks-plugin-style-status-symbols` and Prism theme are enabled:
 
 ~~~tasks
 heading includes Custom Status Symbols
-group by {{query.file.property("groupby")}}
+#group by {{query.file.property("groupby")}}
 hide backlinks
 ~~~
 
@@ -105,7 +105,7 @@ When `tasks-plugin-style-status-types` and Prism theme are enabled:
 
 ~~~tasks
 heading includes Custom Status Types
-group by {{query.file.property("groupby")}}
+#group by {{query.file.property("groupby")}}
 hide backlink
 ~~~
 
@@ -132,7 +132,7 @@ When `tasks-plugin-color-due-today-and-overdue` snippet is enabled:
 
 ~~~tasks
 heading includes Due Dates
-group by {{query.file.property("groupby")}}
+#group by {{query.file.property("groupby")}}
 hide backlinks
 ~~~
 
@@ -164,7 +164,7 @@ When `tasks-plugin-highlight-specific-tag-round-red-description` is enabled:
 
 ~~~tasks
 heading includes Tags
-group by {{query.file.property("groupby")}}
+#group by {{query.file.property("groupby")}}
 hide backlinks
 ~~~
 
@@ -189,7 +189,7 @@ When `tasks-plugin-circular-checkboxes` snippet is enabled:
 
 ~~~tasks
 heading includes Circle Checkboxes
-group by {{query.file.property("groupby")}}
+#group by {{query.file.property("groupby")}}
 hide backlinks
 ~~~
 
@@ -220,7 +220,7 @@ In a Tasks query block:
 
 ~~~tasks
 heading includes Grid Layout
-group by {{query.file.property("groupby")}}
+#group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
