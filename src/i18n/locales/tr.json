@@ -2,6 +2,8 @@
   "common": {
     "cancel": "",
     "edit": "",
+    "moreInfo": "",
+    "okay": "",
     "reload": "",
     "save": ""
   },
@@ -282,7 +284,10 @@
     "statuses": {
       "buttons": {
         "addStatus": "",
-        "importFromTheme": ""
+        "importFromTheme": {
+          "description": "",
+          "name": ""
+        }
       },
       "collections": {
         "anuppuccinTheme": "AnuPpuccin Teması",

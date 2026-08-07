@@ -1,8 +1,9 @@
 import {
-    type ButtonComponent,
+    ButtonComponent,
     type ConfirmationButton,
     ConfirmationModal,
     Menu,
+    Modal,
     Notice,
     PluginSettingTab,
     Setting,
@@ -512,6 +513,20 @@ export class SettingsTab extends PluginSettingTab {
                 {
                     type: 'list',
                     heading: i18n.t('settings.statuses.coreStatuses.heading'),
+                    extraButtons: [
+                        (btn) =>
+                            btn
+                                .setIcon('info')
+                                .setTooltip(i18n.t('common.moreInfo'))
+                                .onClick(() =>
+                                    this.showInfoModal(
+                                        i18n.t('settings.statuses.coreStatuses.heading'),
+                                        `<p>${i18n.t('settings.statuses.coreStatuses.description.line1')}</p>` +
+                                            `<p>${i18n.t('settings.statuses.coreStatuses.description.line2')}</p>`,
+                                        'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
+                                    ),
+                                ),
+                    ],
                     items: [
                         ...statusSettings.coreStatuses.map((status) => statusRow(status, true)),
                         {
@@ -546,21 +561,17 @@ export class SettingsTab extends PluginSettingTab {
                     extraButtons: [
                         (btn) =>
                             btn
-                                .setIcon('book-open')
-                                .setTooltip(i18n.t('settings.seeTheDocumentation'))
+                                .setIcon('info')
+                                .setTooltip(i18n.t('common.moreInfo'))
                                 .onClick(() =>
-                                    window.open(
+                                    this.showInfoModal(
+                                        i18n.t('settings.statuses.customStatuses.heading'),
+                                        `<p>${i18n.t('settings.statuses.customStatuses.description.line1')}</p>` +
+                                            `<p>${i18n.t('settings.statuses.customStatuses.description.line2')}</p>` +
+                                            `<p>${i18n.t('settings.statuses.customStatuses.description.line3')}</p>`,
                                         'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
-                                        '_blank',
-                                        'noopener',
                                     ),
                                 ),
-                        (btn) => {
-                            btn.setIcon('lucide-palette').setTooltip(
-                                i18n.t('settings.statuses.buttons.importFromTheme'),
-                            );
-                            btn.extraSettingsEl.addEventListener('click', (evt) => this.showImportFromThemeMenu(evt));
-                        },
                     ],
                     onDelete: (index) => {
                         const { statusSettings: current } = getSettings();
@@ -586,43 +597,54 @@ export class SettingsTab extends PluginSettingTab {
                     items: statusSettings.customStatuses.map((status) => statusRow(status, false)),
                 },
                 {
-                    name: i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.name'),
-                    desc: i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.description'),
-                    searchable: false,
-                    action: () => {
-                        const { statusSettings: current } = getSettings();
-                        const tasks = this.plugin.getTasks();
-                        const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(
-                            tasks.map((task) => task.status),
-                        );
-                        if (unknownStatuses.length === 0) {
-                            return;
-                        }
-                        unknownStatuses.forEach((s) => {
-                            StatusSettings.addStatus(current.customStatuses, s);
-                        });
-                        updateAndSaveStatusSettings(current, this);
-                    },
-                },
-                {
-                    name: i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.name'),
-                    desc: i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.description'),
-                    searchable: false,
-                    action: () => {
-                        const { statusSettings: current } = getSettings();
-                        StatusSettings.resetAllCustomStatuses(current);
-                        updateAndSaveStatusSettings(current, this);
-                    },
+                    type: 'list',
+                    items: [
+                        {
+                            name: i18n.t('settings.statuses.buttons.importFromTheme.name'),
+                            desc: i18n.t('settings.statuses.buttons.importFromTheme.description'),
+                            searchable: false,
+                            action: (el) => this.showImportFromThemeMenu(el),
+                        },
+                        {
+                            name: i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.name'),
+                            desc: i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.description'),
+                            searchable: false,
+                            action: () => {
+                                const { statusSettings: current } = getSettings();
+                                const tasks = this.plugin.getTasks();
+                                const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(
+                                    tasks.map((task) => task.status),
+                                );
+                                if (unknownStatuses.length === 0) {
+                                    return;
+                                }
+                                unknownStatuses.forEach((s) => {
+                                    StatusSettings.addStatus(current.customStatuses, s);
+                                });
+                                updateAndSaveStatusSettings(current, this);
+                            },
+                        },
+                        {
+                            name: i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.name'),
+                            desc: i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.description'),
+                            searchable: false,
+                            action: () => {
+                                const { statusSettings: current } = getSettings();
+                                StatusSettings.resetAllCustomStatuses(current);
+                                updateAndSaveStatusSettings(current, this);
+                            },
+                        },
+                    ],
                 },
             ],
         };
     }
 
     /**
-     * Show a menu of the theme status collections; choosing one imports its
-     * statuses into the custom statuses list.
+     * Show a menu of the theme status collections, anchored below `anchorEl`;
+     * choosing one imports its statuses into the custom statuses list.
      */
-    private showImportFromThemeMenu(evt: MouseEvent): void {
+    private showImportFromThemeMenu(anchorEl: HTMLElement): void {
         const menu = new Menu();
         for (const { name, collection } of getThemeCollections()) {
             menu.addItem((item) =>
@@ -639,7 +661,29 @@ export class SettingsTab extends PluginSettingTab {
                     }),
             );
         }
-        menu.showAtMouseEvent(evt);
+        const rect = anchorEl.getBoundingClientRect();
+        menu.showAtPosition({ x: rect.left, y: rect.bottom });
+    }
+
+    /**
+     * Show a small modal with descriptive text about a section, opened from an
+     * info button in the section's header. The footer offers the section's
+     * documentation, and an Okay button to dismiss.
+     */
+    private showInfoModal(title: string, html: string, docsUrl: string): void {
+        const modal = new Modal(this.app);
+        modal.setTitle(title);
+        modal.contentEl.append(SettingsTab.createFragmentWithHTML(html));
+
+        const buttonContainerEl = modal.contentEl.createDiv({ cls: 'modal-button-container' });
+        new ButtonComponent(buttonContainerEl)
+            .setButtonText(i18n.t('settings.seeTheDocumentation'))
+            .onClick(() => window.open(docsUrl, '_blank', 'noopener'));
+        new ButtonComponent(buttonContainerEl)
+            .setButtonText(i18n.t('common.okay'))
+            .setCta()
+            .onClick(() => modal.close());
+        modal.open();
     }
 
     /**
