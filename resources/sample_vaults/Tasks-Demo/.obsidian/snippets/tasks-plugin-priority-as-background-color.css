@@ -3,7 +3,7 @@
     &[data-task-status-type="TODO"],
     &[data-task-status-type="IN_PROGRESS"] {
         background: rgb(from var(--priority-color) r g b / 0.2);
-        border: 1px solid rgb(from var(--priority-color) r g b / 0.3);
+        border: 1px rgb(from var(--priority-color) r g b / 0.3) solid;
 
         &[data-task-priority="highest"] {
             --priority-color: var(--color-purple);
