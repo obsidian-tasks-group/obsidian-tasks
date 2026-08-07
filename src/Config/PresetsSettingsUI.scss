@@ -2,6 +2,17 @@
 /* Presets section                               */
 /* ---------------------------------------------- */
 
+// Declarative settings (Obsidian 1.13.0+): the preset row shows a short
+// preview of the query — whitespace preserved, clamped to 3 lines.
+.tasks-presets-value-preview {
+    white-space: pre-wrap;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+}
+
 .tasks-settings {
     // Main wrapper for presets section
     .tasks-presets-wrapper {

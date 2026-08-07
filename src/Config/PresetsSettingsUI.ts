@@ -89,6 +89,7 @@ export class PresetsSettingsUI {
             name: key,
             desc: value,
             render: (setting) => {
+                setting.descEl.addClass('tasks-presets-value-preview');
                 setting.addExtraButton((btn) =>
                     btn
                         .setIcon('lucide-pencil')
