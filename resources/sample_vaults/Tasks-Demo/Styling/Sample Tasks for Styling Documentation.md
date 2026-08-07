@@ -30,7 +30,7 @@ heading includes Tasks
 view columns by {{query.file.property("groupby")}}
 ~~~
 
-## Priority
+## Priority shown in checkbox
 
 - [ ] #task Lowest priority example task ⏬
 - [ ] #task Low priority example task 🔽
@@ -39,21 +39,21 @@ view columns by {{query.file.property("groupby")}}
 - [ ] #task High priority example task ⏫
 - [ ] #task Highest priority example task 🔺
 
-### Priority Expected Appearance
+### Priority shown in checkbox Expected Appearance
 
 When `tasks-plugin-priority-as-checkbox-color` is enabled:
 
 ![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-priority-as-checkbox-color-snippet.png)
 
-### Priority Search Results
+### Priority shown in checkbox Search Results
 
 ~~~tasks
-heading includes Priority
+heading includes Priority shown in checkbox
 #group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
-heading includes Priority
+heading includes Priority shown in checkbox
 view columns by {{query.file.property("groupby")}}
 ~~~
 
