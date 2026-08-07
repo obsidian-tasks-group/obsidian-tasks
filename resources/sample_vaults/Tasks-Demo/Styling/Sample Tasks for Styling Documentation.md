@@ -21,12 +21,12 @@ When `tasks-plugin-tags-links-recurrence-gray` snippet is enabled:
 ### Tasks Search Results
 
 ~~~tasks
-heading includes Tasks
+filter by function task.heading == 'Tasks'
 #group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
-heading includes Tasks
+filter by function task.heading == 'Tasks'
 view columns by {{query.file.property("groupby")}}
 ~~~
 
@@ -160,9 +160,9 @@ hide backlink
 
 ## Due Dates
 
-- [ ] #task Something I should have done yesterday 📅 2023-04-01
+- [ ] #task Something I should have done yesterday 📅 2026-08-06
 - [-] #task A task I meant to do yesterday then cancelled, with a `-` symbol 📅 2023-04-01
-- [ ] #task A task I should do today 📅 2023-04-02
+- [ ] #task A task I should do today 📅 2026-08-07
 - [x] #task Something I did already today 📅 2023-04-02 ✅ 2023-04-02
 
 ### Due Dates Expected Appearance
