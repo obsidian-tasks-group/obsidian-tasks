@@ -57,6 +57,35 @@ heading includes Priority shown in checkbox
 view columns by {{query.file.property("groupby")}}
 ~~~
 
+## Priority shown in background
+
+- [ ] #task Lowest priority example task ⏬
+- [ ] #task Low priority example task 🔽
+- [ ] #task Normal priority example task
+- [ ] #task Medium priority example task 🔼
+- [ ] #task High priority example task ⏫
+- [ ] #task Highest priority example task 🔺
+
+### Priority shown in background Expected Appearance
+
+When `tasks-plugin-priority-as-background-color` is enabled:
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-priority-as-background-color-snippet.png)
+
+### Priority shown in background Search Results
+
+~~~tasks
+heading includes Priority shown in background
+#group by {{query.file.property("groupby")}}
+hide backlink
+~~~
+
+~~~tasks
+heading includes Priority shown in background
+view columns by {{query.file.property("groupby")}}
+hide backlink
+~~~
+
 ## Custom Status Symbols
 
 - [ ] #task Task with status Todo

@@ -1,0 +1,49 @@
+.task-list-item {
+    /* Make stand out in colour, if they still need work */
+    &[data-task-priority="highest"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-purple) r g b / 0.2);
+        }
+    }
+
+    &[data-task-priority="high"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-red) r g b / 0.2);
+        }
+    }
+
+    &[data-task-priority="medium"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-orange) r g b / 0.2);
+        }
+    }
+
+    &[data-task-priority="normal"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-blue) r g b / 0.2);
+        }
+    }
+
+    &[data-task-priority="low"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-cyan) r g b / 0.2);
+        }
+    }
+
+    &[data-task-priority="lowest"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-green) r g b / 0.2);
+        }
+    }
+
+    /* This part removes the regular priority emoticon */
+    span.task-priority {
+        display: none;
+    }
+}
