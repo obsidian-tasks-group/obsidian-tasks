@@ -315,7 +315,7 @@ describe('ToggleDone', () => {
             expect(line3).toStrictEqual('- [C] #task this is a task starting at Con');
         });
 
-        it.failing('when there is a global filter and task without global filter is toggled', () => {
+        it('when there is a global filter and task without global filter is toggled', () => {
             GlobalFilter.getInstance().set('#task');
 
             const line1 = '- [P] this is a task starting at Pro, not matching the global filter';
