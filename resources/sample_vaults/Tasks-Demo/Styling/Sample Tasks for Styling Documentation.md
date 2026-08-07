@@ -32,12 +32,12 @@ view columns by {{query.file.property("groupby")}}
 
 ## Priority shown in checkbox
 
-- [ ] #task Lowest priority example task ⏬
-- [ ] #task Low priority example task 🔽
-- [ ] #task Normal priority example task
-- [ ] #task Medium priority example task 🔼
-- [ ] #task High priority example task ⏫
 - [ ] #task Highest priority example task 🔺
+- [ ] #task High priority example task ⏫
+- [ ] #task Medium priority example task 🔼
+- [ ] #task Normal priority example task
+- [ ] #task Low priority example task 🔽
+- [ ] #task Lowest priority example task ⏬
 
 ### Priority shown in checkbox Expected Appearance
 
@@ -59,12 +59,12 @@ view columns by {{query.file.property("groupby")}}
 
 ## Priority shown in background
 
-- [ ] #task Lowest priority example task ⏬
-- [ ] #task Low priority example task 🔽
-- [ ] #task Normal priority example task
-- [ ] #task Medium priority example task 🔼
-- [ ] #task High priority example task ⏫
 - [ ] #task Highest priority example task 🔺
+- [ ] #task High priority example task ⏫
+- [ ] #task Medium priority example task 🔼
+- [ ] #task Normal priority example task
+- [ ] #task Low priority example task 🔽
+- [ ] #task Lowest priority example task ⏬
 
 ### Priority shown in background Expected Appearance
 
