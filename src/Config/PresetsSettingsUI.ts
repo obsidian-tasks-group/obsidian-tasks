@@ -88,7 +88,6 @@ export class PresetsSettingsUI {
         return {
             name: key,
             desc: value,
-            searchable: false,
             render: (setting) => {
                 setting.addExtraButton((btn) =>
                     btn
