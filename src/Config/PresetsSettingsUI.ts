@@ -507,32 +507,28 @@ class EditPresetModal extends Modal {
         private readonly onSave: (name: string, value: string) => void,
     ) {
         super(app);
-        this.modalEl.addClass('mod-lg');
+        this.modalEl.addClass('mod-lg', 'tasks-edit-preset-modal');
         this.setTitle(
             editingKey === null
                 ? i18n.t('settings.presets.buttons.addNewPreset')
                 : i18n.t('modals.editPresetModal.title'),
         );
 
-        let nameRef!: TextComponent;
-        let valueRef!: TextAreaComponent;
+        // Form layout: each field is a label above a full-width control,
+        // reusing Obsidian's own 'form-field' styling.
+        const nameFieldEl = this.contentEl.createEl('p', { cls: 'form-field' });
+        nameFieldEl.createEl('label', { text: i18n.t('modals.editPresetModal.name.name') });
+        this.nameInput = new TextComponent(nameFieldEl)
+            .setPlaceholder(i18n.t('modals.editPresetModal.name.placeholder'))
+            .setValue(initial.name);
 
-        new Setting(this.contentEl).setName(i18n.t('modals.editPresetModal.name.name')).addText((text) => {
-            text.setPlaceholder(i18n.t('modals.editPresetModal.name.placeholder')).setValue(initial.name);
-            nameRef = text;
-        });
-
-        new Setting(this.contentEl)
-            .setName(i18n.t('modals.editPresetModal.query.name'))
-            .setDesc(i18n.t('modals.editPresetModal.query.description'))
-            .addTextArea((text) => {
-                text.setPlaceholder(i18n.t('modals.editPresetModal.query.placeholder')).setValue(initial.value);
-                text.inputEl.rows = 6;
-                valueRef = text;
-            });
-
-        this.nameInput = nameRef;
-        this.valueInput = valueRef;
+        const queryFieldEl = this.contentEl.createEl('p', { cls: 'form-field' });
+        queryFieldEl.createEl('label', { text: i18n.t('modals.editPresetModal.query.name') });
+        queryFieldEl.createDiv({ cls: 'form-field-help', text: i18n.t('modals.editPresetModal.query.description') });
+        this.valueInput = new TextAreaComponent(queryFieldEl)
+            .setPlaceholder(i18n.t('modals.editPresetModal.query.placeholder'))
+            .setValue(initial.value);
+        this.valueInput.inputEl.rows = 12;
 
         this.nameInput.inputEl.addEventListener('keydown', (evt) => {
             if (!evt.isComposing && evt.key === 'Enter') {
@@ -542,11 +538,11 @@ class EditPresetModal extends Modal {
         });
 
         const buttonContainerEl = this.contentEl.createDiv({ cls: 'modal-button-container' });
+        new ButtonComponent(buttonContainerEl).setButtonText(i18n.t('common.cancel')).onClick(() => this.close());
         new ButtonComponent(buttonContainerEl)
             .setButtonText(i18n.t('common.save'))
             .setCta()
             .onClick(() => this.submit());
-        new ButtonComponent(buttonContainerEl).setButtonText(i18n.t('common.cancel')).onClick(() => this.close());
     }
 
     onOpen(): void {
