@@ -32,6 +32,7 @@ export class GlobalQueryModal extends Modal {
         this.textarea.inputEl.addClass('tasks-global-query-textarea');
 
         const buttonContainerEl = this.contentEl.createDiv({ cls: 'modal-button-container' });
+        new ButtonComponent(buttonContainerEl).setButtonText(i18n.t('common.cancel')).onClick(() => this.close());
         new ButtonComponent(buttonContainerEl)
             .setButtonText(i18n.t('common.save'))
             .setCta()
@@ -39,7 +40,6 @@ export class GlobalQueryModal extends Modal {
                 this.onSave(this.textarea.getValue());
                 this.close();
             });
-        new ButtonComponent(buttonContainerEl).setButtonText(i18n.t('common.cancel')).onClick(() => this.close());
     }
 
     onOpen(): void {

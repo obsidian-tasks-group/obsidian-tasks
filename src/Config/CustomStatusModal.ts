@@ -137,6 +137,10 @@ export class CustomStatusModal extends Modal {
         }
 
         const buttonContainerEl = contentEl.createDiv({ cls: 'modal-button-container' });
+        new ButtonComponent(buttonContainerEl).setButtonText(i18n.t('common.cancel')).onClick(() => {
+            this.saved = false;
+            this.close();
+        });
         new ButtonComponent(buttonContainerEl)
             .setButtonText(i18n.t('common.save'))
             .setCta()
@@ -151,10 +155,6 @@ export class CustomStatusModal extends Modal {
                 this.saved = true;
                 this.close();
             });
-        new ButtonComponent(buttonContainerEl).setButtonText(i18n.t('common.cancel')).onClick(() => {
-            this.saved = false;
-            this.close();
-        });
     }
 
     // updateTitle(admonitionPreview: HTMLElement, title: string) {

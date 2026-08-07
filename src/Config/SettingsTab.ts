@@ -439,6 +439,9 @@ export class SettingsTab extends PluginSettingTab {
             });
 
             let decided = false;
+            // Cancel first: on desktop, DOM order decides and the primary action
+            // belongs on the right. Mobile reorders Cancel with CSS regardless.
+            modal.addCancelButton();
             modal.addButton((btn) => {
                 enableBtn = btn;
                 btn.setButtonText(i18n.t('settings.searches.enableCustomSearches.confirm.enable'))
@@ -453,7 +456,6 @@ export class SettingsTab extends PluginSettingTab {
                         return undefined;
                     });
             });
-            modal.addCancelButton();
 
             const originalOnClose = modal.onClose.bind(modal);
             modal.onClose = () => {
