@@ -57,14 +57,14 @@ heading includes Priority
 view columns by {{query.file.property("groupby")}}
 ~~~
 
-## Custom Statuses
+## Custom Status Symbols
 
 - [ ] #task Task with status Todo
 - [/] #task Task with status In Progress
 - [x] #task Task with status Done
 - [-] #task Task with status Cancelled
 
-### Custom Statuses Expected Appearance
+### Custom Status Symbols Expected Appearance
 
 When `tasks-plugin-style-status-symbols` and Prism theme are enabled:
 
@@ -72,15 +72,15 @@ When `tasks-plugin-style-status-symbols` and Prism theme are enabled:
 
 (Note that the Prism theme no longer seems to show Cancelled tasks as greyed out.)
 
-### Custom Statuses Search Results
+### Custom Status Symbols Search Results
 
 ~~~tasks
-heading includes Custom Statuses
+heading includes Custom Status Symbols
 group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
-heading includes Custom Statuses
+heading includes Custom Status Symbols
 view columns by {{query.file.property("groupby")}}
 ~~~
 
