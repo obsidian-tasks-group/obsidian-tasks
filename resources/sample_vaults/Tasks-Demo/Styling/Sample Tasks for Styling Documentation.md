@@ -12,6 +12,10 @@ groupby: filename
 
 - [ ] #task Test Task #chores 🔁 every day 📅 2023-04-01
 
+### Tasks Expected Appearance
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-tags-links-recurrence-gray-snippet.png)
+
 ### Tasks Search Results
 
 ~~~tasks
@@ -33,6 +37,10 @@ view columns by {{query.file.property("groupby")}}
 - [ ] #task High priority example task ⏫
 - [ ] #task Highest priority example task 🔺
 
+### Priority Expected Appearance
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-priority-as-checkbox-color-snippet.png)
+
 ### Priority Search Results
 
 ~~~tasks
@@ -52,6 +60,10 @@ view columns by {{query.file.property("groupby")}}
 - [x] #task Task with status Done
 - [-] #task Task with status Cancelled
 
+### Custom Statuses Expected Appearance
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-style-status-symbols-snippet.png)
+
 ### Custom Statuses Search Results
 
 ~~~tasks
@@ -70,6 +82,10 @@ view columns by {{query.file.property("groupby")}}
 - [-] #task A task I meant to do yesterday then cancelled, with a `-` symbol 📅 2023-04-01
 - [ ] #task A task I should do today 📅 2023-04-02
 - [x] #task Something I did already today 📅 2023-04-02 ✅ 2023-04-02
+
+### Due Dates Expected Appearance
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-color-due-today-and-overdue-snippet.png)
 
 ### Due Dates Search Results
 
@@ -91,6 +107,12 @@ Another tag example:
 
 - [ ] #task Something else that is #task/strategic
 
+### Tags Expected Appearance
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-highlight-specific-tag-green-glow-snippet.png)
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-highlight-specific-tag-round-red-description-snippet.png)
+
 ### Tags Search Results
 
 ~~~tasks
@@ -107,6 +129,10 @@ view columns by {{query.file.property("groupby")}}
 
 - [ ] #task Something to do
 - [x] #task Something that is done ✅ 2023-04-01
+
+### Circle Checkboxes Expected Appearance
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-circular-checkboxes-snippet.png)
 
 ### Circle Checkboxes Search Results
 
@@ -126,6 +152,16 @@ view columns by {{query.file.property("groupby")}}
 - [ ] #task Do something moderately important  🔼 🔁 every 2 weeks ➕ 2023-04-01  🛫 2023-04-09 ⏳ 2023-04-08 📅 2023-04-15
 - [ ] #task Do something that has an indented bullet note
     - Here is a tip on how to do that
+
+### Grid Layout Expected Appearance
+
+In Reading view:
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-grid-layout-snippet-reading.png)
+
+In a Tasks query block:
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-grid-layout-snippet-query.png)
 
 ### Grid Layout Search Results
 
