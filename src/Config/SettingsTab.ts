@@ -509,6 +509,7 @@ export class SettingsTab extends PluginSettingTab {
         return {
             type: 'page',
             name: i18n.t('settings.statuses.heading'),
+            status: () => (this.statusesChangedSinceLoad() ? 'warning' : null),
             items: [
                 {
                     type: 'list',
@@ -641,6 +642,43 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     /**
+     * Status edits only fully take effect after a reload, so a Notice prompts
+     * for a reload whenever the statuses differ from those in use.
+     */
+    private statusesChangedSinceLoad(): boolean {
+        return (
+            JSON.stringify(getSettings().statusSettings) !== JSON.stringify(getSettingsAtPluginLoad().statusSettings)
+        );
+    }
+
+    private reloadNotice: Notice | null = null;
+
+    /**
+     * Show a Notice with a Reload button after a status edit. The one Notice
+     * is reused, so editing several statuses does not stack notices; it hides
+     * again if the statuses return to the values in use.
+     */
+    public refreshStatusesReloadNotice(): void {
+        if (!this.statusesChangedSinceLoad()) {
+            this.reloadNotice?.hide();
+            this.reloadNotice = null;
+            return;
+        }
+        if (this.reloadNotice !== null && this.reloadNotice.messageEl.isConnected) {
+            return;
+        }
+
+        const notice = new Notice(i18n.t('settings.statuses.reloadRequired'), 0);
+        const buttonContainerEl = notice.containerEl.createDiv('notice-button-container');
+        const ctaEl = buttonContainerEl.createDiv({ cls: 'notice-cta', text: i18n.t('common.reload') });
+        ctaEl.addEventListener('click', () => {
+            notice.hide();
+            window.location.reload();
+        });
+        this.reloadNotice = notice;
+    }
+
+    /**
      * Show a menu of the theme status collections, anchored below `anchorEl`;
      * choosing one imports its statuses into the custom statuses list.
      */
@@ -678,11 +716,9 @@ export class SettingsTab extends PluginSettingTab {
         const buttonContainerEl = modal.contentEl.createDiv({ cls: 'modal-button-container' });
         new ButtonComponent(buttonContainerEl)
             .setButtonText(i18n.t('settings.seeTheDocumentation'))
+            .setClass('mod-secondary')
             .onClick(() => window.open(docsUrl, '_blank', 'noopener'));
-        new ButtonComponent(buttonContainerEl)
-            .setButtonText(i18n.t('common.okay'))
-            .setCta()
-            .onClick(() => modal.close());
+        new ButtonComponent(buttonContainerEl).setButtonText(i18n.t('common.okay')).onClick(() => modal.close());
         modal.open();
     }
 
@@ -1908,6 +1944,7 @@ function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: Sett
     StatusSettings.applyToStatusRegistry(statusTypes, StatusRegistry.getInstance());
 
     settings.saveSettingsAndRebuildSettingsTab();
+    settings.refreshStatusesReloadNotice();
 }
 
 function makeMultilineTextSetting(setting: Setting) {

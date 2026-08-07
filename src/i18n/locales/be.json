@@ -347,6 +347,7 @@
         "placeholder": ""
       },
       "heading": "Статусы задач",
+      "reloadRequired": "",
       "types": {
         "cancelled": "",
         "done": "",

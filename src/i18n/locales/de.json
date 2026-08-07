@@ -347,6 +347,7 @@
         "placeholder": ""
       },
       "heading": "Aufgabenstatus",
+      "reloadRequired": "",
       "types": {
         "cancelled": "",
         "done": "",

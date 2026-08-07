@@ -347,6 +347,7 @@
         "placeholder": ""
       },
       "heading": "Trạng thái nhiệm vụ",
+      "reloadRequired": "",
       "types": {
         "cancelled": "",
         "done": "",

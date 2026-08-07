@@ -347,6 +347,7 @@
         "placeholder": ""
       },
       "heading": "Status das Tarefas",
+      "reloadRequired": "",
       "types": {
         "cancelled": "",
         "done": "",

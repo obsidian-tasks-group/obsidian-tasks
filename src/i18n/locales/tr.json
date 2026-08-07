@@ -347,6 +347,7 @@
         "placeholder": ""
       },
       "heading": "Görev Durumları",
+      "reloadRequired": "",
       "types": {
         "cancelled": "",
         "done": "",

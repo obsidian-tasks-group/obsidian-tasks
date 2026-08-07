@@ -347,6 +347,7 @@
         "placeholder": ""
       },
       "heading": "任务状态",
+      "reloadRequired": "",
       "types": {
         "cancelled": "",
         "done": "",
