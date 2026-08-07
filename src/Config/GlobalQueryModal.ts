@@ -12,7 +12,7 @@ export class GlobalQueryModal extends Modal {
 
     constructor(app: App, initial: string, private readonly onSave: (value: string) => void) {
         super(app);
-        this.modalEl.addClass('mod-lg');
+        this.modalEl.addClass('mod-lg', 'tasks-global-query-modal');
         this.setTitle(i18n.t('settings.globalQuery.heading'));
 
         this.contentEl.createEl('p', {

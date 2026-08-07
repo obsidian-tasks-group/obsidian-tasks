@@ -102,6 +102,12 @@
     margin-inline-end: 0.5em;
 }
 
+/* Global Query modal: wider than the default dialog, to give the query room. */
+.modal.tasks-global-query-modal {
+    --dialog-width: 800px;
+    --dialog-max-width: 90vw;
+}
+
 /* Global Query modal: full-width, multi-line textarea. */
 textarea.tasks-global-query-textarea {
     display: block;
