@@ -137,6 +137,32 @@ describe('ToggleDone', () => {
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description');
     });
 
+    describe('tag-only descriptions', () => {
+        it.failing('should not add a space when completing a task without a global filter', () => {
+            testToggleLine('- [ ] #tag|', '- [x] #tag| ✅ 2022-09-04');
+        });
+
+        it.failing('should not add a space when un-completing a task without a global filter', () => {
+            testToggleLine('- [x] #tag ✅ 2022-09-04|', '- [ ] #tag|');
+        });
+
+        it.failing('should not add a space when completing a task that matches the global filter', () => {
+            GlobalFilter.getInstance().set('#task');
+            testToggleLine('- [ ] #task|', '- [x] #task| ✅ 2022-09-04');
+        });
+
+        it.failing('should not add a space when un-completing a task that matches the global filter', () => {
+            GlobalFilter.getInstance().set('#task');
+            testToggleLine('- [x] #task ✅ 2022-09-04|', '- [ ] #task|');
+        });
+
+        it('should preserve spacing when a task does not match the global filter', () => {
+            GlobalFilter.getInstance().set('#task');
+            testToggleLine('- [ ] #other|', '- [x] #other|');
+            testToggleLine('- [x] #other|', '- [ ] #other|');
+        });
+    });
+
     describe('trailing spaces', () => {
         it('should discard single trailing space when toggling a task', () => {
             const incomplete = '- [ ] foo';
