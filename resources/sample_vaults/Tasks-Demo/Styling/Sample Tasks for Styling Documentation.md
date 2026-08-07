@@ -77,11 +77,13 @@ When `tasks-plugin-style-status-symbols` and Prism theme are enabled:
 ~~~tasks
 heading includes Custom Status Symbols
 group by {{query.file.property("groupby")}}
+hide backlinks
 ~~~
 
 ~~~tasks
 heading includes Custom Status Symbols
 view columns by {{query.file.property("groupby")}}
+hide backlinks
 ~~~
 
 ## Custom Status Types
@@ -104,11 +106,13 @@ When `tasks-plugin-style-status-types` and Prism theme are enabled:
 ~~~tasks
 heading includes Custom Status Types
 group by {{query.file.property("groupby")}}
+hide backlink
 ~~~
 
 ~~~tasks
 heading includes Custom Status Types
 view columns by {{query.file.property("groupby")}}
+hide backlink
 ~~~
 
 ## Due Dates
@@ -129,11 +133,13 @@ When `tasks-plugin-color-due-today-and-overdue` snippet is enabled:
 ~~~tasks
 heading includes Due Dates
 group by {{query.file.property("groupby")}}
+hide backlinks
 ~~~
 
 ~~~tasks
 heading includes Due Dates
 view columns by {{query.file.property("groupby")}}
+hide backlinks
 ~~~
 
 ## Tags
@@ -159,11 +165,13 @@ When `tasks-plugin-highlight-specific-tag-round-red-description` is enabled:
 ~~~tasks
 heading includes Tags
 group by {{query.file.property("groupby")}}
+hide backlinks
 ~~~
 
 ~~~tasks
 heading includes Tags
 view columns by {{query.file.property("groupby")}}
+hide backlinks
 ~~~
 
 ## Circle Checkboxes
@@ -182,11 +190,13 @@ When `tasks-plugin-circular-checkboxes` snippet is enabled:
 ~~~tasks
 heading includes Circle Checkboxes
 group by {{query.file.property("groupby")}}
+hide backlinks
 ~~~
 
 ~~~tasks
 heading includes Circle Checkboxes
 view columns by {{query.file.property("groupby")}}
+hide backlinks
 ~~~
 
 ## Grid Layout
