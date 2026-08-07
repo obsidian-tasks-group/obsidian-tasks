@@ -1,6 +1,8 @@
 ---
 TQ_extra_instructions: |-
   path includes Sample Tasks for Styling Documentation
+  hide toolbar
+  hide task counts
 groupby: filename
 ---
 
