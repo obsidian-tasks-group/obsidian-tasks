@@ -4,6 +4,7 @@
         &[data-task-status-type="TODO"],
         &[data-task-status-type="IN_PROGRESS"] {
             background: rgb(from var(--color-purple) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-purple) r g b / 0.3);
         }
     }
 
@@ -11,6 +12,7 @@
         &[data-task-status-type="TODO"],
         &[data-task-status-type="IN_PROGRESS"] {
             background: rgb(from var(--color-red) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-red) r g b / 0.3);
         }
     }
 
@@ -18,6 +20,7 @@
         &[data-task-status-type="TODO"],
         &[data-task-status-type="IN_PROGRESS"] {
             background: rgb(from var(--color-orange) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-orange) r g b / 0.3);
         }
     }
 
@@ -25,6 +28,7 @@
         &[data-task-status-type="TODO"],
         &[data-task-status-type="IN_PROGRESS"] {
             background: rgb(from var(--color-blue) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-blue) r g b / 0.3);
         }
     }
 
@@ -32,6 +36,7 @@
         &[data-task-status-type="TODO"],
         &[data-task-status-type="IN_PROGRESS"] {
             background: rgb(from var(--color-cyan) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-cyan) r g b / 0.3);
         }
     }
 
@@ -39,6 +44,7 @@
         &[data-task-status-type="TODO"],
         &[data-task-status-type="IN_PROGRESS"] {
             background: rgb(from var(--color-green) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-green) r g b / 0.3);
         }
     }
 
