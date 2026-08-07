@@ -310,34 +310,31 @@ The following rules remove the Tasks priority emoticon and render the tasks' bac
     /* Make stand out in colour, if they still need work */
     &[data-task-status-type="TODO"],
     &[data-task-status-type="IN_PROGRESS"] {
+        background: rgb(from var(--priority-color) r g b / 0.2);
+        border: 1px rgb(from var(--priority-color) r g b / 0.3) solid;
+
         &[data-task-priority="highest"] {
-            background: rgb(from var(--color-purple) r g b / 0.2);
-            border: 1px solid rgb(from var(--color-purple) r g b / 0.3);
+            --priority-color: var(--color-purple);
         }
 
         &[data-task-priority="high"] {
-            background: rgb(from var(--color-red) r g b / 0.2);
-            border: 1px solid rgb(from var(--color-red) r g b / 0.3);
+            --priority-color: var(--color-red);
         }
 
         &[data-task-priority="medium"] {
-            background: rgb(from var(--color-orange) r g b / 0.2);
-            border: 1px solid rgb(from var(--color-orange) r g b / 0.3);
+            --priority-color: var(--color-orange);
         }
 
         &[data-task-priority="normal"] {
-            background: rgb(from var(--color-blue) r g b / 0.2);
-            border: 1px solid rgb(from var(--color-blue) r g b / 0.3);
+            --priority-color: var(--color-blue);
         }
 
         &[data-task-priority="low"] {
-            background: rgb(from var(--color-cyan) r g b / 0.2);
-            border: 1px solid rgb(from var(--color-cyan) r g b / 0.3);
+            --priority-color: var(--color-cyan);
         }
 
         &[data-task-priority="lowest"] {
-            background: rgb(from var(--color-green) r g b / 0.2);
-            border: 1px solid rgb(from var(--color-green) r g b / 0.3);
+            --priority-color: var(--color-green);
         }
 
         /* This part removes the regular priority emoticon, only for the tasks that we are styling */
