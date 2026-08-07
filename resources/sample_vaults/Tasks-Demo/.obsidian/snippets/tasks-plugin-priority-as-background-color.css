@@ -3,31 +3,37 @@
     &[data-task-status-type="TODO"],
     &[data-task-status-type="IN_PROGRESS"] {
         &[data-task-priority="highest"] {
+            --priority-color: var(--color-purple);
             background: rgb(from var(--color-purple) r g b / 0.2);
             border: 1px solid rgb(from var(--color-purple) r g b / 0.3);
         }
 
         &[data-task-priority="high"] {
+            --priority-color: var(--color-red);
             background: rgb(from var(--color-red) r g b / 0.2);
             border: 1px solid rgb(from var(--color-red) r g b / 0.3);
         }
 
         &[data-task-priority="medium"] {
+            --priority-color: var(--color-orange);
             background: rgb(from var(--color-orange) r g b / 0.2);
             border: 1px solid rgb(from var(--color-orange) r g b / 0.3);
         }
 
         &[data-task-priority="normal"] {
+            --priority-color: var(--color-blue);
             background: rgb(from var(--color-blue) r g b / 0.2);
             border: 1px solid rgb(from var(--color-blue) r g b / 0.3);
         }
 
         &[data-task-priority="low"] {
+            --priority-color: var(--color-cyan);
             background: rgb(from var(--color-cyan) r g b / 0.2);
             border: 1px solid rgb(from var(--color-cyan) r g b / 0.3);
         }
 
         &[data-task-priority="lowest"] {
+            --priority-color: var(--color-green);
             background: rgb(from var(--color-green) r g b / 0.2);
             border: 1px solid rgb(from var(--color-green) r g b / 0.3);
         }
