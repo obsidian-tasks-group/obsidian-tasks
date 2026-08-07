@@ -1,4 +1,5 @@
 import {
+    type ButtonComponent,
     type ConfirmationButton,
     ConfirmationModal,
     Menu,
@@ -23,6 +24,7 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import * as Themes from './Themes';
 import {
     type HeadingState,
+    type Settings,
     TASK_FORMATS,
     getSettings,
     isFeatureEnabled,
@@ -59,6 +61,17 @@ interface HeadingConfiguration {
 }
 
 /**
+ * A snapshot of the settings when the plugin loaded.
+ * {@link SettingsTab.withReload} compares current values against these.
+ */
+let settingsAtPluginLoad: Settings | null = null;
+
+function getSettingsAtPluginLoad(): Settings {
+    settingsAtPluginLoad ??= JSON.parse(JSON.stringify(getSettings()));
+    return settingsAtPluginLoad as Settings;
+}
+
+/**
  * The plugin's settings tab, with two implementations of the UI:
  *
  * - {@link getSettingDefinitions} — the declarative API, used by Obsidian 1.13.0 and later.
@@ -86,6 +99,9 @@ export class SettingsTab extends PluginSettingTab {
         this.plugin = plugin;
         this.presetsSettingsUI = new PresetsSettingsUI(plugin, events);
         this.events = events;
+
+        // Record the setting values now, before the user can change them.
+        getSettingsAtPluginLoad();
     }
 
     private static readonly createFragmentWithHTML = (html: string) => sanitizeHTMLToDom(html);
@@ -115,10 +131,8 @@ export class SettingsTab extends PluginSettingTab {
     // -----------------------------------------------------------------------
     // Declarative settings API (Obsidian 1.13.0+)
     //
-    // The plugin keeps its data in a module-level object accessed via
-    // getSettings/updateSettings, not on this.plugin.settings. Override the
-    // default control-binding hooks so declarative `control` definitions read
-    // and write through those helpers.
+    // Settings live in a module-level store (getSettings/updateSettings), not
+    // on this.plugin.settings, so override the control-binding hooks.
     // -----------------------------------------------------------------------
 
     public getControlValue(key: string): unknown {
@@ -162,36 +176,45 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     /**
-     * Wrap a render callback with a "Reload" button that appears after the
-     * underlying control changes. Use for settings whose effect only takes
-     * after the host window reloads (`settings.changeRequiresRestart`).
+     * Wrap a render callback with a "Reload" button for a setting whose effect
+     * only takes after the host window reloads (`settings.changeRequiresRestart`).
      *
-     * The inner callback receives a `markChanged()` it must call from its own
-     * onChange handler to reveal the reload button.
+     * The button is shown whenever the setting's current value differs from
+     * the value in use since the plugin loaded, so it survives tab rebuilds and
+     * closing/reopening the settings, and it disappears again if the value is
+     * changed back.
+     *
+     * The inner callback receives a `refreshReloadButton()` it must call from
+     * its own onChange handler, after persisting the new value.
      */
-    private withReload(inner: (setting: Setting, markChanged: () => void) => void) {
+    private withReload(key: keyof Settings, inner: (setting: Setting, refreshReloadButton: () => void) => void) {
         return (setting: Setting) => {
-            let reloadBtnAdded = false;
-            const markChanged = () => {
-                if (!reloadBtnAdded) {
-                    reloadBtnAdded = true;
-                    this.addReloadButton(setting);
+            let reloadBtn: ButtonComponent | null = null;
+            const refreshReloadButton = () => {
+                const needsReload =
+                    JSON.stringify(getSettings()[key]) !== JSON.stringify(getSettingsAtPluginLoad()[key]);
+                if (needsReload && reloadBtn === null) {
+                    reloadBtn = this.addReloadButton(setting);
                 }
+                reloadBtn?.buttonEl.toggle(needsReload);
             };
-            inner(setting, markChanged);
+            inner(setting, refreshReloadButton);
+            // Show the button now if a reload is already pending.
+            refreshReloadButton();
         };
     }
 
-    private addReloadButton(setting: Setting): void {
+    private addReloadButton(setting: Setting): ButtonComponent {
+        let button!: ButtonComponent;
         setting.addButton((btn) => {
+            button = btn;
             btn.setButtonText(i18n.t('common.reload'))
                 .setCta()
                 .onClick(() => window.location.reload());
-            // Place the Reload button before the row's control, matching
-            // Obsidian's own "Relaunch" placement on restart-required
-            // settings.
+            // Put the button before the control, to match Obsidian's own 'Relaunch' buttons.
             setting.controlEl.prepend(btn.buttonEl);
         });
+        return button;
     }
 
     public getSettingDefinitions(): SettingDefinitionItem[] {
@@ -218,7 +241,7 @@ export class SettingsTab extends PluginSettingTab {
                     `<p>${i18n.t('settings.format.description.line2')}</p>`,
             ),
             render: this.withDocs(
-                this.withReload((setting, markChanged) => {
+                this.withReload('taskFormat', (setting, refreshReloadButton) => {
                     setting.addDropdown((dropdown) => {
                         for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
                             dropdown.addOption(key, TASK_FORMATS[key].getDisplayName());
@@ -226,7 +249,7 @@ export class SettingsTab extends PluginSettingTab {
                         dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
                             updateSettings({ taskFormat: value as keyof TASK_FORMATS });
                             await this.plugin.saveSettings();
-                            markChanged();
+                            refreshReloadButton();
                         });
                     });
                 }),
@@ -277,13 +300,13 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.globalFilter.removeFilter.name'),
                     desc: i18n.t('settings.globalFilter.removeFilter.description'),
                     visible: () => getSettings().globalFilter.length > 0,
-                    render: this.withReload((setting, markChanged) => {
+                    render: this.withReload('removeGlobalFilter', (setting, refreshReloadButton) => {
                         setting.addToggle((toggle) => {
                             toggle.setValue(getSettings().removeGlobalFilter).onChange(async (value) => {
                                 updateSettings({ removeGlobalFilter: value });
                                 GlobalFilter.getInstance().setRemoveGlobalFilter(value);
                                 await this.plugin.saveSettings();
-                                markChanged();
+                                refreshReloadButton();
                             });
                         });
                     }),
@@ -472,9 +495,7 @@ export class SettingsTab extends PluginSettingTab {
     private statusesPage(): SettingDefinitionItem {
         const { statusSettings } = getSettings();
 
-        // Built alongside the row definitions, so the custom-statuses search
-        // can filter on the underlying status (symbol, name and type), not
-        // just the definition's display name.
+        // Lets the custom-statuses search filter on the status symbol, name and type.
         const rowStatuses = new WeakMap<SettingDefinition, StatusConfiguration>();
         const statusRow = (status: StatusConfiguration, isCoreStatus: boolean): SettingDefinition => {
             const row = this.statusRow(status, isCoreStatus);
@@ -735,7 +756,7 @@ export class SettingsTab extends PluginSettingTab {
                             `${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4')}</p>`,
                     ),
                     render: this.withDocs(
-                        this.withReload((setting, markChanged) => {
+                        this.withReload('useFilenameAsScheduledDate', (setting, refreshReloadButton) => {
                             setting.addToggle((toggle) => {
                                 toggle.setValue(getSettings().useFilenameAsScheduledDate).onChange(async (value) => {
                                     updateSettings({ useFilenameAsScheduledDate: value });
@@ -744,7 +765,7 @@ export class SettingsTab extends PluginSettingTab {
                                     if (requireApiVersion('1.13.0')) {
                                         this.refreshDomState();
                                     }
-                                    markChanged();
+                                    refreshReloadButton();
                                 });
                             });
                         }),
@@ -756,7 +777,7 @@ export class SettingsTab extends PluginSettingTab {
                     desc: i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.description.line1'),
                     visible: () => getSettings().useFilenameAsScheduledDate,
                     render: this.withDocs(
-                        this.withReload((setting, markChanged) => {
+                        this.withReload('filenameAsScheduledDateFormat', (setting, refreshReloadButton) => {
                             setting.addText((text) => {
                                 text.setPlaceholder(
                                     i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.placeholder'),
@@ -765,7 +786,7 @@ export class SettingsTab extends PluginSettingTab {
                                     .onChange(async (value) => {
                                         updateSettings({ filenameAsScheduledDateFormat: value });
                                         await this.plugin.saveSettings();
-                                        markChanged();
+                                        refreshReloadButton();
                                     });
                             });
                         }),
@@ -776,7 +797,7 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.datesFromFileNames.scheduledDate.folders.name'),
                     desc: i18n.t('settings.datesFromFileNames.scheduledDate.folders.description'),
                     visible: () => getSettings().useFilenameAsScheduledDate,
-                    render: this.withReload((setting, markChanged) => {
+                    render: this.withReload('filenameAsDateFolders', (setting, refreshReloadButton) => {
                         setting.addText((input) => {
                             input
                                 .setValue(SettingsTab.renderFolderArray(getSettings().filenameAsDateFolders))
@@ -784,7 +805,7 @@ export class SettingsTab extends PluginSettingTab {
                                     const folders = SettingsTab.parseCommaSeparatedFolders(value);
                                     updateSettings({ filenameAsDateFolders: folders });
                                     await this.plugin.saveSettings();
-                                    markChanged();
+                                    refreshReloadButton();
                                 });
                         });
                     }),
@@ -834,7 +855,7 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.autoSuggest.toggle.name'),
                     desc: i18n.t('settings.autoSuggest.toggle.description'),
                     render: this.withDocs(
-                        this.withReload((setting, markChanged) => {
+                        this.withReload('autoSuggestInEditor', (setting, refreshReloadButton) => {
                             setting.addToggle((toggle) => {
                                 toggle.setValue(getSettings().autoSuggestInEditor).onChange(async (value) => {
                                     updateSettings({ autoSuggestInEditor: value });
@@ -843,7 +864,7 @@ export class SettingsTab extends PluginSettingTab {
                                     if (requireApiVersion('1.13.0')) {
                                         this.refreshDomState();
                                     }
-                                    markChanged();
+                                    refreshReloadButton();
                                 });
                             });
                         }),
@@ -854,7 +875,7 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.autoSuggest.minLength.name'),
                     desc: i18n.t('settings.autoSuggest.minLength.description'),
                     visible: () => getSettings().autoSuggestInEditor,
-                    render: this.withReload((setting, markChanged) => {
+                    render: this.withReload('autoSuggestMinMatch', (setting, refreshReloadButton) => {
                         setting.addSlider((slider) => {
                             slider
                                 .setLimits(0, 3, 1)
@@ -862,7 +883,7 @@ export class SettingsTab extends PluginSettingTab {
                                 .onChange(async (value) => {
                                     updateSettings({ autoSuggestMinMatch: value });
                                     await this.plugin.saveSettings();
-                                    markChanged();
+                                    refreshReloadButton();
                                 });
                         });
                     }),
@@ -871,7 +892,7 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.autoSuggest.maxSuggestions.name'),
                     desc: i18n.t('settings.autoSuggest.maxSuggestions.description'),
                     visible: () => getSettings().autoSuggestInEditor,
-                    render: this.withReload((setting, markChanged) => {
+                    render: this.withReload('autoSuggestMaxItems', (setting, refreshReloadButton) => {
                         setting.addSlider((slider) => {
                             slider
                                 .setLimits(3, 20, 1)
@@ -879,7 +900,7 @@ export class SettingsTab extends PluginSettingTab {
                                 .onChange(async (value) => {
                                     updateSettings({ autoSuggestMaxItems: value });
                                     await this.plugin.saveSettings();
-                                    markChanged();
+                                    refreshReloadButton();
                                 });
                         });
                     }),
