@@ -14,6 +14,8 @@ groupby: filename
 
 ### Tasks Expected Appearance
 
+When `tasks-plugin-tags-links-recurrence-gray` snippet is enabled:
+
 ![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-tags-links-recurrence-gray-snippet.png)
 
 ### Tasks Search Results
@@ -39,6 +41,8 @@ view columns by {{query.file.property("groupby")}}
 
 ### Priority Expected Appearance
 
+When `tasks-plugin-priority-as-checkbox-color` is enabled:
+
 ![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-priority-as-checkbox-color-snippet.png)
 
 ### Priority Search Results
@@ -62,7 +66,11 @@ view columns by {{query.file.property("groupby")}}
 
 ### Custom Statuses Expected Appearance
 
+When `tasks-plugin-style-status-symbols` and Prism theme are enabled:
+
 ![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-style-status-symbols-snippet.png)
+
+(Note that the Prism theme no longer seems to show Cancelled tasks as greyed out.)
 
 ### Custom Statuses Search Results
 
@@ -84,6 +92,8 @@ view columns by {{query.file.property("groupby")}}
 - [x] #task Something I did already today 📅 2023-04-02 ✅ 2023-04-02
 
 ### Due Dates Expected Appearance
+
+When `tasks-plugin-color-due-today-and-overdue` snippet is enabled:
 
 ![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-color-due-today-and-overdue-snippet.png)
 
@@ -109,7 +119,11 @@ Another tag example:
 
 ### Tags Expected Appearance
 
+When `tasks-plugin-highlight-specific-tag-green-glow-snippet` is enabled:
+
 ![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-highlight-specific-tag-green-glow-snippet.png)
+
+When `tasks-plugin-highlight-specific-tag-round-red-description` is enabled:
 
 ![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-highlight-specific-tag-round-red-description-snippet.png)
 
@@ -131,6 +145,8 @@ view columns by {{query.file.property("groupby")}}
 - [x] #task Something that is done ✅ 2023-04-01
 
 ### Circle Checkboxes Expected Appearance
+
+When `tasks-plugin-circular-checkboxes` snippet is enabled:
 
 ![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-circular-checkboxes-snippet.png)
 
