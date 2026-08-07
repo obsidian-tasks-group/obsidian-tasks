@@ -10,6 +10,7 @@ groupby: filename
 
 ~~~tasks
 heading includes Tasks
+group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
@@ -23,6 +24,7 @@ view columns by {{query.file.property("groupby")}}
 
 ~~~tasks
 heading includes Priority
+group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
@@ -41,6 +43,7 @@ view columns by {{query.file.property("groupby")}}
 
 ~~~tasks
 heading includes Custom Statuses
+group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
@@ -57,6 +60,7 @@ view columns by {{query.file.property("groupby")}}
 
 ~~~tasks
 heading includes Due Dates
+group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
@@ -73,6 +77,7 @@ view columns by {{query.file.property("groupby")}}
 
 ~~~tasks
 heading includes Tags
+group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
@@ -90,6 +95,7 @@ Another tag example:
 
 ~~~tasks
 heading includes Circle Checkboxes
+group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
@@ -104,6 +110,7 @@ view columns by {{query.file.property("groupby")}}
 
 ~~~tasks
 heading includes Grid Layout
+group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
