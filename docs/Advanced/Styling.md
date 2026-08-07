@@ -300,6 +300,74 @@ For example:
 
 ![Example of tasks-plugin-priority-as-checkbox-color.css snippet](../../images/tasks-plugin-priority-as-checkbox-color-snippet.png)
 
+#### Priority as a Background Color, for active tasks
+
+The following rules remove the Tasks priority emoticon and render the tasks' backgrounds in purple, red, orange, blue, cyan and green according to the tasks' priority. It only colours tasks with status types TODO and IN_PROGRESS, as these are the tasks that are actionable.
+
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-priority-as-background-color.css -->
+```css
+.task-list-item {
+    /* Make stand out in colour, if they still need work */
+    &[data-task-priority="highest"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-purple) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-purple) r g b / 0.3);
+        }
+    }
+
+    &[data-task-priority="high"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-red) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-red) r g b / 0.3);
+        }
+    }
+
+    &[data-task-priority="medium"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-orange) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-orange) r g b / 0.3);
+        }
+    }
+
+    &[data-task-priority="normal"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-blue) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-blue) r g b / 0.3);
+        }
+    }
+
+    &[data-task-priority="low"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-cyan) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-cyan) r g b / 0.3);
+        }
+    }
+
+    &[data-task-priority="lowest"] {
+        &[data-task-status-type="TODO"],
+        &[data-task-status-type="IN_PROGRESS"] {
+            background: rgb(from var(--color-green) r g b / 0.2);
+            border: 1px solid rgb(from var(--color-green) r g b / 0.3);
+        }
+    }
+
+    /* This part removes the regular priority emoticon */
+    span.task-priority {
+        display: none;
+    }
+}
+```
+<!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-priority-as-background-color.css snippet](../../images/tasks-plugin-priority-as-background-color-snippet.png)
+
 ### Styling Tasks with Custom Statuses
 
 #### Status Symbols
