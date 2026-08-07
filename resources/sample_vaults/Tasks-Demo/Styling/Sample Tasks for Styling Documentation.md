@@ -84,6 +84,33 @@ heading includes Custom Status Symbols
 view columns by {{query.file.property("groupby")}}
 ~~~
 
+## Custom Status Types
+
+- [ ] #task Task with status Todo
+- [/] #task Task with status In Progress
+- [x] #task Task with status Done
+- [-] #task Task with status Cancelled
+
+### Custom Status Types Expected Appearance
+
+When `tasks-plugin-style-status-types` and Prism theme are enabled:
+
+![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-style-status-types-snippet.png)
+
+(Note that the Prism theme no longer seems to show Cancelled tasks as greyed out.)
+
+### Custom Status Types Search Results
+
+~~~tasks
+heading includes Custom Status Types
+group by {{query.file.property("groupby")}}
+~~~
+
+~~~tasks
+heading includes Custom Status Types
+view columns by {{query.file.property("groupby")}}
+~~~
+
 ## Due Dates
 
 - [ ] #task Something I should have done yesterday 📅 2023-04-01
