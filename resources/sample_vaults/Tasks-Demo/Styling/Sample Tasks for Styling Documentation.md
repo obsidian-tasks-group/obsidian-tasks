@@ -1,6 +1,7 @@
 ---
 TQ_extra_instructions: |-
   path includes Sample Tasks for Styling Documentation
+groupby: filename
 ---
 
 # Sample Tasks for Styling Documentation
@@ -13,7 +14,7 @@ heading includes Tasks
 
 ~~~tasks
 heading includes Tasks
-view columns by filename
+view columns by {{query.file.property("groupby")}}
 ~~~
 
 - [ ] #task Test Task #chores 🔁 every day 📅 2023-04-01
@@ -26,7 +27,7 @@ heading includes Priority
 
 ~~~tasks
 heading includes Priority
-view columns by filename
+view columns by {{query.file.property("groupby")}}
 ~~~
 
 - [ ] #task Lowest priority example task ⏬
@@ -44,7 +45,7 @@ heading includes Custom Statuses
 
 ~~~tasks
 heading includes Custom Statuses
-view columns by filename
+view columns by {{query.file.property("groupby")}}
 ~~~
 
 - [ ] #task Task with status Todo
@@ -60,7 +61,7 @@ heading includes Due Dates
 
 ~~~tasks
 heading includes Due Dates
-view columns by filename
+view columns by {{query.file.property("groupby")}}
 ~~~
 
 - [ ] #task Something I should have done yesterday 📅 2023-04-01
@@ -76,7 +77,7 @@ heading includes Tags
 
 ~~~tasks
 heading includes Tags
-view columns by filename
+view columns by {{query.file.property("groupby")}}
 ~~~
 
 - [ ] #task Something to do #task/atHome
@@ -93,7 +94,7 @@ heading includes Circle Checkboxes
 
 ~~~tasks
 heading includes Circle Checkboxes
-view columns by filename
+view columns by {{query.file.property("groupby")}}
 ~~~
 
 - [ ] #task Something to do
@@ -107,7 +108,7 @@ heading includes Grid Layout
 
 ~~~tasks
 heading includes Grid Layout
-view columns by filename
+view columns by {{query.file.property("groupby")}}
 ~~~
 
 - [x] #task Something I already did 🔼 ➕ 2023-03-11 🛫 2023-03-19 ⏳ 2023-03-18 📅 2023-04-25 ✅ 2023-04-01
