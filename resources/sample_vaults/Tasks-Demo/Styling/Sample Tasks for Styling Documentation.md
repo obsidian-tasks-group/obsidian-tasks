@@ -10,6 +10,8 @@ groupby: filename
 
 ## Tasks
 
+### Tasks Search Results
+
 ~~~tasks
 heading includes Tasks
 group by {{query.file.property("groupby")}}
@@ -23,6 +25,8 @@ view columns by {{query.file.property("groupby")}}
 - [ ] #task Test Task #chores 🔁 every day 📅 2023-04-01
 
 ## Priority
+
+### Priority Search Results
 
 ~~~tasks
 heading includes Priority
@@ -43,6 +47,8 @@ view columns by {{query.file.property("groupby")}}
 
 ## Custom Statuses
 
+### Custom Statuses Search Results
+
 ~~~tasks
 heading includes Custom Statuses
 group by {{query.file.property("groupby")}}
@@ -60,6 +66,8 @@ view columns by {{query.file.property("groupby")}}
 
 ## Due Dates
 
+### Due Dates Search Results
+
 ~~~tasks
 heading includes Due Dates
 group by {{query.file.property("groupby")}}
@@ -76,6 +84,8 @@ view columns by {{query.file.property("groupby")}}
 - [x] #task Something I did already today 📅 2023-04-02 ✅ 2023-04-02
 
 ## Tags
+
+### Tags Search Results
 
 ~~~tasks
 heading includes Tags
@@ -95,6 +105,8 @@ Another tag example:
 
 ## Circle Checkboxes
 
+### Circle Checkboxes Search Results
+
 ~~~tasks
 heading includes Circle Checkboxes
 group by {{query.file.property("groupby")}}
@@ -109,6 +121,8 @@ view columns by {{query.file.property("groupby")}}
 - [x] #task Something that is done ✅ 2023-04-01
 
 ## Grid Layout
+
+### Grid Layout Search Results
 
 ~~~tasks
 heading includes Grid Layout
