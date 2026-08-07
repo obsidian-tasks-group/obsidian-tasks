@@ -3,7 +3,7 @@ TQ_extra_instructions: |-
   path includes Sample Tasks for Styling Documentation
   hide toolbar
   hide task counts
-groupby: filename
+groupby: function "Sample column heading"
 ---
 
 # Sample Tasks for Styling Documentation
