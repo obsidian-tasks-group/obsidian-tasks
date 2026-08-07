@@ -57,33 +57,47 @@ heading includes Priority shown in checkbox
 view columns by {{query.file.property("groupby")}}
 ~~~
 
-## Priority shown in background
+## Priority shown in background on active tasks
 
-- [ ] #task Highest priority example task 🔺
-- [ ] #task High priority example task ⏫
-- [ ] #task Medium priority example task 🔼
-- [ ] #task Normal priority example task
-- [ ] #task Low priority example task 🔽
-- [ ] #task Lowest priority example task ⏬
+"Active" means "TODO" or "IN_PROGRESS".
 
-### Priority shown in background Expected Appearance
+All the other status types are regarded as "Inactive" by this CSS snippet.
+
+- [ ] #task Highest priority example task - TODO 🔺
+- [ ] #task High priority example task - TODO ⏫
+- [ ] #task Medium priority example task - TODO 🔼
+- [ ] #task Normal priority example task - TODO
+- [ ] #task Low priority example task - TODO 🔽
+- [ ] #task Lowest priority example task - TODO ⏬
+- [x] #task Highest priority example task - DONE 🔺
+- [x] #task High priority example task - DONE ⏫
+- [x] #task Medium priority example task - DONE 🔼
+- [x] #task Normal priority example task - DONE
+- [x] #task Low priority example task - DONE 🔽
+- [x] #task Lowest priority example task - DONE ⏬
+
+### Priority shown in background on active tasks Expected Appearance
 
 When `tasks-plugin-priority-as-background-color` is enabled:
 
 ![Image](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/images/tasks-plugin-priority-as-background-color-snippet.png)
 
-### Priority shown in background Search Results
+### Priority shown in background on active tasks Search Results
 
 ~~~tasks
-heading includes Priority shown in background
+heading includes Priority shown in background on active tasks
 #group by {{query.file.property("groupby")}}
 hide backlink
+sort by function task.lineNumber
+group by status.type
 ~~~
 
 ~~~tasks
-heading includes Priority shown in background
+heading includes Priority shown in background on active tasks
 view columns by {{query.file.property("groupby")}}
 hide backlink
+sort by function task.lineNumber
+group by status.type
 ~~~
 
 ## Custom Status Symbols
