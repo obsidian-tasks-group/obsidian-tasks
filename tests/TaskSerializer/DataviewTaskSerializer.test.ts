@@ -223,7 +223,7 @@ describe('DataviewTaskSerializer', () => {
             });
         });
 
-        it.failing('should parse a description containing only tags without adding whitespace', () => {
+        it('should parse a description containing only tags without adding whitespace', () => {
             const description = '#hello #world #task';
             const taskDetails = deserialize(description);
             expect(taskDetails).toMatchTaskDetails({ tags: ['#hello', '#world', '#task'], description });

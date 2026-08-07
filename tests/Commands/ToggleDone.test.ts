@@ -130,7 +130,7 @@ describe('ToggleDone', () => {
         testToggleLine('1. [ ] |', '1. [x] |');
 
         // Done date is added if task does not match global filter
-        testToggleLine('- [ ] #task|', '- [x]  #tas|k ✅ 2022-09-04'); // Extra space added before #; cursor moves left
+        testToggleLine('- [ ] #task|', '- [x] #task| ✅ 2022-09-04');
         testToggleLine('* [ ] #task description|', '* [x] #task description| ✅ 2022-09-04');
 
         // Issue #449 - cursor jumped 13 characters to the right on completion
@@ -138,20 +138,20 @@ describe('ToggleDone', () => {
     });
 
     describe('tag-only descriptions', () => {
-        it.failing('should not add a space when completing a task without a global filter', () => {
+        it('should not add a space when completing a task without a global filter', () => {
             testToggleLine('- [ ] #tag|', '- [x] #tag| ✅ 2022-09-04');
         });
 
-        it.failing('should not add a space when un-completing a task without a global filter', () => {
+        it('should not add a space when un-completing a task without a global filter', () => {
             testToggleLine('- [x] #tag ✅ 2022-09-04|', '- [ ] #tag|');
         });
 
-        it.failing('should not add a space when completing a task that matches the global filter', () => {
+        it('should not add a space when completing a task that matches the global filter', () => {
             GlobalFilter.getInstance().set('#task');
             testToggleLine('- [ ] #task|', '- [x] #task| ✅ 2022-09-04');
         });
 
-        it.failing('should not add a space when un-completing a task that matches the global filter', () => {
+        it('should not add a space when un-completing a task that matches the global filter', () => {
             GlobalFilter.getInstance().set('#task');
             testToggleLine('- [x] #task ✅ 2022-09-04|', '- [ ] #task|');
         });
@@ -205,7 +205,7 @@ describe('ToggleDone', () => {
         testToggleLine('+ [x]  ✅ 2022-09-04|', '+ [ ] ✅ 2022-09-04|');
 
         // Done date is added if task matches the global filter
-        testToggleLine('|- [x] #task ✅ 2022-09-04', '|- [ ]  #task'); // Extra space added before #
+        testToggleLine('|- [x] #task ✅ 2022-09-04', '|- [ ] #task');
         testToggleLine('1. [x] #task description ✅ 2022-09-04|', '1. [ ] #task description|');
 
         // Issue #449 - cursor jumped 13 characters to the left on un-completion
