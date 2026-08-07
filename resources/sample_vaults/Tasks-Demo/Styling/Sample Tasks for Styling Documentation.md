@@ -1,17 +1,33 @@
+---
+TQ_extra_instructions: |-
+  path includes Sample Tasks for Styling Documentation
+---
+
 # Sample Tasks for Styling Documentation
 
-## Tasks in this file
-
-```tasks
-path includes Sample Tasks for Styling Documentation
-group by heading
-```
-
 ## Tasks
+
+~~~tasks
+heading includes Tasks
+~~~
+
+~~~tasks
+heading includes Tasks
+view columns by filename
+~~~
 
 - [ ] #task Test Task #chores 🔁 every day 📅 2023-04-01
 
 ## Priority
+
+~~~tasks
+heading includes Priority
+~~~
+
+~~~tasks
+heading includes Priority
+view columns by filename
+~~~
 
 - [ ] #task Lowest priority example task ⏬
 - [ ] #task Low priority example task 🔽
@@ -22,6 +38,15 @@ group by heading
 
 ## Custom Statuses
 
+~~~tasks
+heading includes Custom Statuses
+~~~
+
+~~~tasks
+heading includes Custom Statuses
+view columns by filename
+~~~
+
 - [ ] #task Task with status Todo
 - [/] #task Task with status In Progress
 - [x] #task Task with status Done
@@ -29,12 +54,30 @@ group by heading
 
 ## Due Dates
 
+~~~tasks
+heading includes Due Dates
+~~~
+
+~~~tasks
+heading includes Due Dates
+view columns by filename
+~~~
+
 - [ ] #task Something I should have done yesterday 📅 2023-04-01
 - [-] #task A task I meant to do yesterday then cancelled, with a `-` symbol 📅 2023-04-01
 - [ ] #task A task I should do today 📅 2023-04-02
 - [x] #task Something I did already today 📅 2023-04-02 ✅ 2023-04-02
 
 ## Tags
+
+~~~tasks
+heading includes Tags
+~~~
+
+~~~tasks
+heading includes Tags
+view columns by filename
+~~~
 
 - [ ] #task Something to do #task/atHome
 
@@ -44,10 +87,28 @@ Another tag example:
 
 ## Circle Checkboxes
 
+~~~tasks
+heading includes Circle Checkboxes
+~~~
+
+~~~tasks
+heading includes Circle Checkboxes
+view columns by filename
+~~~
+
 - [ ] #task Something to do
 - [x] #task Something that is done ✅ 2023-04-01
 
 ## Grid Layout
+
+~~~tasks
+heading includes Grid Layout
+~~~
+
+~~~tasks
+heading includes Grid Layout
+view columns by filename
+~~~
 
 - [x] #task Something I already did 🔼 ➕ 2023-03-11 🛫 2023-03-19 ⏳ 2023-03-18 📅 2023-04-25 ✅ 2023-04-01
 - [ ] #task Do something moderately important  🔼 🔁 every 2 weeks ➕ 2023-04-01  🛫 2023-04-09 ⏳ 2023-04-08 📅 2023-04-15
