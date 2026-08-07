@@ -308,57 +308,42 @@ The following rules remove the Tasks priority emoticon and render the tasks' bac
 ```css
 .task-list-item {
     /* Make stand out in colour, if they still need work */
-    &[data-task-priority="highest"] {
-        &[data-task-status-type="TODO"],
-        &[data-task-status-type="IN_PROGRESS"] {
+    &[data-task-status-type="TODO"],
+    &[data-task-status-type="IN_PROGRESS"] {
+        &[data-task-priority="highest"] {
             background: rgb(from var(--color-purple) r g b / 0.2);
             border: 1px solid rgb(from var(--color-purple) r g b / 0.3);
         }
-    }
 
-    &[data-task-priority="high"] {
-        &[data-task-status-type="TODO"],
-        &[data-task-status-type="IN_PROGRESS"] {
+        &[data-task-priority="high"] {
             background: rgb(from var(--color-red) r g b / 0.2);
             border: 1px solid rgb(from var(--color-red) r g b / 0.3);
         }
-    }
 
-    &[data-task-priority="medium"] {
-        &[data-task-status-type="TODO"],
-        &[data-task-status-type="IN_PROGRESS"] {
+        &[data-task-priority="medium"] {
             background: rgb(from var(--color-orange) r g b / 0.2);
             border: 1px solid rgb(from var(--color-orange) r g b / 0.3);
         }
-    }
 
-    &[data-task-priority="normal"] {
-        &[data-task-status-type="TODO"],
-        &[data-task-status-type="IN_PROGRESS"] {
+        &[data-task-priority="normal"] {
             background: rgb(from var(--color-blue) r g b / 0.2);
             border: 1px solid rgb(from var(--color-blue) r g b / 0.3);
         }
-    }
 
-    &[data-task-priority="low"] {
-        &[data-task-status-type="TODO"],
-        &[data-task-status-type="IN_PROGRESS"] {
+        &[data-task-priority="low"] {
             background: rgb(from var(--color-cyan) r g b / 0.2);
             border: 1px solid rgb(from var(--color-cyan) r g b / 0.3);
         }
-    }
 
-    &[data-task-priority="lowest"] {
-        &[data-task-status-type="TODO"],
-        &[data-task-status-type="IN_PROGRESS"] {
+        &[data-task-priority="lowest"] {
             background: rgb(from var(--color-green) r g b / 0.2);
             border: 1px solid rgb(from var(--color-green) r g b / 0.3);
         }
-    }
 
-    /* This part removes the regular priority emoticon */
-    span.task-priority {
-        display: none;
+        /* This part removes the regular priority emoticon, only for the tasks that we are styling */
+        span.task-priority {
+            display: none;
+        }
     }
 }
 ```
