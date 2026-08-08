@@ -1,5 +1,4 @@
 import { TasksFile } from '../Scripting/TasksFile';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
 
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
@@ -30,10 +29,10 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
         // The task regex will match checklist items.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch !== null) {
-            // Toggle the status of the checklist item.
+            // This line is already a checklist item, but without the global filter.
+            // So we toggle its status using the standard Obsidian toggling logic:
             const statusString = regexMatch[3];
-            const status = StatusRegistry.getInstance().bySymbol(statusString);
-            const newStatusString = status.nextStatusSymbol;
+            const newStatusString = statusString === ' ' ? 'x' : ' ';
             return { text: line.replace(TaskRegularExpressions.taskRegex, `$1$2 [${newStatusString}] $4`) };
         } else if (TaskRegularExpressions.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
