@@ -1,4 +1,4 @@
-import { Modal, Notice, Setting, TextComponent } from 'obsidian';
+import { ButtonComponent, Modal, Notice, Setting, TextComponent } from 'obsidian';
 import type { Plugin } from 'obsidian';
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
 import { StatusValidator } from '../Statuses/StatusValidator';
@@ -19,6 +19,11 @@ export class CustomStatusModal extends Modal {
     private isCoreStatus: boolean;
     constructor(public plugin: Plugin, statusType: StatusConfiguration, isCoreStatus: boolean) {
         super(plugin.app);
+        this.setTitle(
+            isCoreStatus
+                ? i18n.t('modals.customStatusModal.title.editCoreStatus')
+                : i18n.t('modals.customStatusModal.title.editCustomStatus'),
+        );
         this.statusSymbol = statusType.symbol;
         this.statusName = statusType.name;
         this.statusNextSymbol = statusType.nextStatusSymbol;
@@ -131,34 +136,25 @@ export class CustomStatusModal extends Modal {
                 });
         }
 
-        const footerEl = contentEl.createDiv();
-        const footerButtons = new Setting(footerEl);
-        footerButtons.addButton((b) => {
-            b.setTooltip('Save')
-                .setIcon('checkmark')
-                .onClick(async () => {
-                    const errors = validator.validate(this.statusConfiguration());
-                    if (errors.length > 0) {
-                        const message =
-                            errors.join('\n') + '\n\n' + i18n.t('modals.customStatusModal.fixErrorsBeforeSaving');
-                        // console.debug(message);
-                        new Notice(message);
-                        return;
-                    }
-                    this.saved = true;
-                    this.close();
-                });
-            return b;
+        const buttonContainerEl = contentEl.createDiv({ cls: 'modal-button-container' });
+        new ButtonComponent(buttonContainerEl).setButtonText(i18n.t('common.cancel')).onClick(() => {
+            this.saved = false;
+            this.close();
         });
-        footerButtons.addExtraButton((b) => {
-            b.setIcon('cross')
-                .setTooltip('Cancel')
-                .onClick(() => {
-                    this.saved = false;
-                    this.close();
-                });
-            return b;
-        });
+        new ButtonComponent(buttonContainerEl)
+            .setButtonText(i18n.t('common.save'))
+            .setCta()
+            .onClick(() => {
+                const errors = validator.validate(this.statusConfiguration());
+                if (errors.length > 0) {
+                    const message =
+                        errors.join('\n') + '\n\n' + i18n.t('modals.customStatusModal.fixErrorsBeforeSaving');
+                    new Notice(message);
+                    return;
+                }
+                this.saved = true;
+                this.close();
+            });
     }
 
     // updateTitle(admonitionPreview: HTMLElement, title: string) {

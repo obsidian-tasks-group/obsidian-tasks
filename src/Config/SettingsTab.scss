@@ -86,3 +86,34 @@
 .tasks-settings .tasks-setting-multiline-text-textarea {
     min-width: -webkit-fill-available;
 }
+
+/* The status symbol renders as a `<code>` element styled to match Obsidian's
+ * inline-code chrome — `var(--code-*)` tokens pick up the theme. */
+.tasks-status-symbol {
+    color: var(--code-normal);
+    font-family: var(--font-monospace);
+    background-color: var(--background-modifier-hover);
+    border-radius: var(--code-radius);
+    font-size: var(--code-size);
+    padding: 0.15em 0.3em;
+    border: var(--code-border-width) solid var(--code-border-color);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    margin-inline-end: 0.5em;
+}
+
+/* Global Query modal: wider than the default dialog, to give the query room. */
+.modal.tasks-global-query-modal {
+    --dialog-width: 800px;
+    --dialog-max-width: 90vw;
+}
+
+/* Global Query modal: full-width, multi-line textarea. */
+textarea.tasks-global-query-textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 16em;
+    font-family: var(--font-monospace);
+    resize: vertical;
+}

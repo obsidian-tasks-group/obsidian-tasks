@@ -1,4 +1,12 @@
 {
+  "common": {
+    "cancel": "",
+    "edit": "",
+    "moreInfo": "",
+    "okay": "",
+    "reload": "",
+    "save": ""
+  },
   "main": {
     "loadingPlugin": "Eklenti yükleniyor: {{name}} v{{version}}",
     "unloadingPlugin": "Eklenti kaldırılıyor: {{name}} v{{version}}"
@@ -25,7 +33,25 @@
         "description": "Durumun arama ve geçişlerde nasıl davranacağını belirler.",
         "name": "Görev Durum Türü"
       },
-      "fixErrorsBeforeSaving": "Kaydetmeden önce hataları düzeltin."
+      "fixErrorsBeforeSaving": "Kaydetmeden önce hataları düzeltin.",
+      "title": {
+        "editCoreStatus": "",
+        "editCustomStatus": ""
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "",
+        "name": "",
+        "placeholder": "",
+        "required": ""
+      },
+      "query": {
+        "description": "",
+        "name": "",
+        "placeholder": ""
+      },
+      "title": ""
     }
   },
   "notices": {
@@ -176,6 +202,9 @@
       },
       "name": "Görev Biçimi"
     },
+    "globalDefaults": {
+      "heading": ""
+    },
     "globalFilter": {
       "filter": {
         "description": {
@@ -197,13 +226,15 @@
       "heading": "Genel Sorgu",
       "query": {
         "description": "Kasadaki her Tasks bloğunun başına otomatik olarak eklenen sorgu. Varsayılan filtreler veya düzen seçenekleri eklemek için kullanışlıdır.",
-        "placeholder": "Örneğin...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "Örneğin...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Yeni ön ayar ekle"
       },
+      "emptyState": "",
       "line1": "Burada birden fazla sorguda yeniden kullanabileceğiniz adlandırılmış talimatlar tanımlayabilirsiniz. '{{name}}' adlı bir ön ayar, Tasks sorgularında '{{instruction1}}' veya '{{instruction2}}' ile kullanılabilir.",
       "line2": "Ön ayarlar düzenlendiğinde açık Tasks sorguları otomatik olarak yeniden yüklenir.",
       "name": "Ön Ayarlar"
@@ -235,6 +266,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "",
+          "enable": ""
+        },
         "description": {
           "line1": "Tasks sorgularında JavaScript çalıştıran '{{filterByFunction}}', '{{sortByFunction}}' ve '{{groupByFunction}}' özelliklerini etkinleştirir.",
           "line2": "Bir Tasks sorgusunda veya Markdown dosyasında kötü amaçlı JavaScript, Obsidian içinde çalışarak kasa içeriklerinize, yerel dosyalarınıza veya diğer sistem kaynaklarına erişebilir ya da bunları değiştirebilir.",
@@ -247,6 +282,13 @@
     },
     "seeTheDocumentation": "Belgelere bakın",
     "statuses": {
+      "buttons": {
+        "addStatus": "",
+        "importFromTheme": {
+          "description": "",
+          "name": ""
+        }
+      },
       "collections": {
         "anuppuccinTheme": "AnuPpuccin Teması",
         "auraTheme": "Aura Teması",
@@ -254,6 +296,9 @@
         "buttons": {
           "addCollection": {
             "name": "{{themeName}}: {{numberOfStatuses}} desteklenen Durumu ekle"
+          },
+          "importCollection": {
+            "name": ""
           }
         },
         "ebullientworksTheme": "Ebullientworks Teması",
@@ -278,12 +323,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "",
             "name": "Tüm Bilinmeyen Durum Türlerini Ekle"
           },
           "addNewStatus": {
             "name": "Yeni Görev Durumu Ekle"
           },
           "resetCustomStatuses": {
+            "description": "",
             "name": "Özel Durum Türlerini Varsayılanlara Sıfırla"
           }
         },
@@ -293,9 +340,27 @@
           "line3": "<b>Not:</b> Daha önce yer alan durumlarla aynı simgeye sahip durumlar yok sayılır. Gerçekte yüklenen durumları 'Görev oluştur veya düzenle' komutunu çalıştırıp Durum açılır menüsüne bakarak doğrulayabilirsiniz.",
           "line4": "Başlamak için belgelere bakın!"
         },
+        "emptyState": "",
         "heading": "Özel Durumlar"
       },
-      "heading": "Görev Durumları"
+      "filter": {
+        "placeholder": ""
+      },
+      "heading": "Görev Durumları",
+      "reloadRequired": "",
+      "types": {
+        "cancelled": "",
+        "done": "",
+        "empty": "",
+        "inProgress": "",
+        "nonTask": "",
+        "onHold": "",
+        "todo": ""
+      },
+      "unnamed": ""
+    },
+    "taskEntry": {
+      "heading": ""
     }
   }
 }

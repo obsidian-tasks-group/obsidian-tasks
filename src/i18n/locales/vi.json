@@ -1,4 +1,12 @@
 {
+  "common": {
+    "cancel": "",
+    "edit": "",
+    "moreInfo": "",
+    "okay": "",
+    "reload": "",
+    "save": ""
+  },
   "main": {
     "loadingPlugin": "Đang tải plugin: {{name}} v{{version}}",
     "unloadingPlugin": "Đang gỡ plugin: {{name}} v{{version}}"
@@ -25,7 +33,25 @@
         "description": "Kiểm soát cách trạng thái hoạt động khi tìm kiếm và chuyển trạng thái.",
         "name": "Loại trạng thái nhiệm vụ"
       },
-      "fixErrorsBeforeSaving": "Vui lòng sửa lỗi trước khi lưu."
+      "fixErrorsBeforeSaving": "Vui lòng sửa lỗi trước khi lưu.",
+      "title": {
+        "editCoreStatus": "",
+        "editCustomStatus": ""
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "",
+        "name": "",
+        "placeholder": "",
+        "required": ""
+      },
+      "query": {
+        "description": "",
+        "name": "",
+        "placeholder": ""
+      },
+      "title": ""
     }
   },
   "notices": {
@@ -176,6 +202,9 @@
       },
       "name": "Định dạng nhiệm vụ"
     },
+    "globalDefaults": {
+      "heading": ""
+    },
     "globalFilter": {
       "filter": {
         "description": {
@@ -197,13 +226,15 @@
       "heading": "Truy vấn toàn cục",
       "query": {
         "description": "Một truy vấn được tự động bao gồm ở đầu mỗi khối Tasks trong vault. Hữu ích để thêm bộ lọc mặc định hoặc tùy chọn bố cục.",
-        "placeholder": "Ví dụ...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "Ví dụ...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Thêm preset mới"
       },
+      "emptyState": "",
       "line1": "Bạn có thể định nghĩa các hướng dẫn được đặt tên ở đây, mà bạn có thể sử dụng lại trong nhiều truy vấn. Một preset có tên '{{name}}' có thể được sử dụng trong truy vấn Tasks với '{{instruction1}}' hoặc '{{instruction2}}'.",
       "line2": "Bất kỳ truy vấn Tasks nào đang mở sẽ được tải lại tự động khi các preset được chỉnh sửa.",
       "name": "Preset"
@@ -235,6 +266,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "",
+          "enable": ""
+        },
         "description": {
           "line1": "",
           "line2": "",
@@ -247,6 +282,13 @@
     },
     "seeTheDocumentation": "Xem tài liệu",
     "statuses": {
+      "buttons": {
+        "addStatus": "",
+        "importFromTheme": {
+          "description": "",
+          "name": ""
+        }
+      },
       "collections": {
         "anuppuccinTheme": "Theme AnuPpuccin",
         "auraTheme": "Theme Aura",
@@ -254,6 +296,9 @@
         "buttons": {
           "addCollection": {
             "name": "{{themeName}}: Thêm {{numberOfStatuses}} Trạng thái được hỗ trợ"
+          },
+          "importCollection": {
+            "name": ""
           }
         },
         "ebullientworksTheme": "Theme Ebullientworks",
@@ -278,12 +323,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "",
             "name": "Thêm tất cả loại trạng thái không xác định"
           },
           "addNewStatus": {
             "name": "Thêm trạng thái nhiệm vụ mới"
           },
           "resetCustomStatuses": {
+            "description": "",
             "name": "Đặt lại loại trạng thái tùy chỉnh về mặc định"
           }
         },
@@ -293,9 +340,27 @@
           "line3": "<b>Lưu ý</b> Bất kỳ trạng thái nào có cùng ký hiệu với bất kỳ trạng thái trước đó nào sẽ bị bỏ qua. Bạn có thể xác nhận các trạng thái thực sự được tải bằng cách chạy lệnh 'Tạo hoặc chỉnh sửa nhiệm vụ' và xem menu thả xuống Trạng thái.",
           "line4": "Xem tài liệu để bắt đầu!"
         },
+        "emptyState": "",
         "heading": "Trạng thái tùy chỉnh"
       },
-      "heading": "Trạng thái nhiệm vụ"
+      "filter": {
+        "placeholder": ""
+      },
+      "heading": "Trạng thái nhiệm vụ",
+      "reloadRequired": "",
+      "types": {
+        "cancelled": "",
+        "done": "",
+        "empty": "",
+        "inProgress": "",
+        "nonTask": "",
+        "onHold": "",
+        "todo": ""
+      },
+      "unnamed": ""
+    },
+    "taskEntry": {
+      "heading": ""
     }
   }
 }

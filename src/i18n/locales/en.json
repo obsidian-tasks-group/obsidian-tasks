@@ -1,4 +1,12 @@
 {
+  "common": {
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "moreInfo": "More info",
+    "okay": "Okay",
+    "reload": "Reload",
+    "save": "Save"
+  },
   "main": {
     "loadingPlugin": "Loading plugin: {{name}} v{{version}}",
     "unloadingPlugin": "Unloading plugin: {{name}} v{{version}}"
@@ -11,21 +19,39 @@
       },
       "editNextStatusSymbol": {
         "description": "When clicked on this is the symbol that should be used next.",
-        "name": "Task Next Status Symbol"
+        "name": "Next status symbol"
       },
       "editStatusName": {
         "description": "This is the friendly name of the task status.",
-        "name": "Task Status Name"
+        "name": "Name"
       },
       "editStatusSymbol": {
-        "description": "This is the character between the square braces. (It can only be edited for Custom statuses, and not Core statuses.)",
-        "name": "Task Status Symbol"
+        "description": "This is the character between the square braces. (It can only be edited for custom statuses, and not core statuses.)",
+        "name": "Symbol"
       },
       "editStatusType": {
         "description": "Control how the status behaves for searching and toggling.",
-        "name": "Task Status Type"
+        "name": "Type"
       },
-      "fixErrorsBeforeSaving": "Fix errors before saving."
+      "fixErrorsBeforeSaving": "Fix errors before saving.",
+      "title": {
+        "editCoreStatus": "Edit core status",
+        "editCustomStatus": "Edit custom status"
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "A preset with this name already exists",
+        "name": "Name",
+        "placeholder": "e.g. open tasks",
+        "required": "Required"
+      },
+      "query": {
+        "description": "Optional. You can fill this in later.",
+        "name": "Query",
+        "placeholder": "not done\npath includes Work"
+      },
+      "title": "Edit preset"
     }
   },
   "notices": {
@@ -48,7 +74,7 @@
         "updateReport": {
           "line1": "If you change the Tasks status settings, you can get an updated report by:",
           "line2": "Going to `Settings` -> `Tasks`.",
-          "line3": "Clicking on `Review and check your Statuses`."
+          "line3": "Clicking on `Review and check your statuses`."
         }
       },
       "columnHeadings": {
@@ -172,9 +198,12 @@
       },
       "displayName": {
         "dataview": "Dataview",
-        "tasksEmojiFormat": "Tasks Emoji Format"
+        "tasksEmojiFormat": "Tasks emoji format"
       },
-      "name": "Task Format"
+      "name": "Task format"
+    },
+    "globalDefaults": {
+      "heading": "Global defaults"
     },
     "globalFilter": {
       "filter": {
@@ -194,16 +223,18 @@
       }
     },
     "globalQuery": {
-      "heading": "Global Query",
+      "heading": "Global query",
       "query": {
         "description": "A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.",
-        "placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": "Instructions automatically included at the start of every Tasks block."
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Add new preset"
       },
+      "emptyState": "No presets yet.",
       "line1": "You can define named instructions here, that you can re-use in multiple queries. A preset called '{{name}}' can be used in Tasks queries with either '{{instruction1}}' or '{{instruction2}}'.",
       "line2": "Any open Tasks queries are reloaded automatically when presets are edited.",
       "name": "Presets"
@@ -235,6 +266,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "I understand the risks",
+          "enable": "Enable"
+        },
         "description": {
           "line1": "Enables '{{filterByFunction}}', '{{sortByFunction}}', and '{{groupByFunction}}', which execute JavaScript in Tasks queries.",
           "line2": "Malicious JavaScript in a Tasks query or Markdown file could run inside Obsidian and access or modify your vault contents, local files, or other system resources.",
@@ -247,55 +282,85 @@
     },
     "seeTheDocumentation": "See the documentation",
     "statuses": {
+      "buttons": {
+        "addStatus": "Add status",
+        "importFromTheme": {
+          "description": "Add the statuses supported by a theme or CSS snippet.",
+          "name": "Import from theme"
+        }
+      },
       "collections": {
-        "anuppuccinTheme": "AnuPpuccin Theme",
-        "auraTheme": "Aura Theme",
-        "borderTheme": "Border Theme",
+        "anuppuccinTheme": "AnuPpuccin",
+        "auraTheme": "Aura",
+        "borderTheme": "Border",
         "buttons": {
           "addCollection": {
-            "name": "{{themeName}}: Add {{numberOfStatuses}} supported Statuses"
+            "name": "{{themeName}}: add {{numberOfStatuses}} supported statuses"
+          },
+          "importCollection": {
+            "name": "{{themeName}} ({{numberOfStatuses}} statuses)"
           }
         },
-        "ebullientworksTheme": "Ebullientworks Theme",
-        "itsThemeAndSlrvbCheckboxes": "ITS Theme & SlRvb Checkboxes",
-        "lytModeTheme": "LYT Mode Theme (Dark mode only)",
-        "minimalTheme": "Minimal Theme",
-        "thingsTheme": "Things Theme"
+        "ebullientworksTheme": "Ebullientworks",
+        "itsThemeAndSlrvbCheckboxes": "ITS & SlRvb Checkboxes",
+        "lytModeTheme": "LYT Mode (dark mode only)",
+        "minimalTheme": "Minimal",
+        "thingsTheme": "Things"
       },
       "coreStatuses": {
         "buttons": {
           "checkStatuses": {
-            "name": "Review and check your Statuses",
+            "name": "Review and check your statuses",
             "tooltip": "Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings."
           }
         },
         "description": {
           "line1": "These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.",
-          "line2": "You can add edit and add your own custom statuses in the section below."
+          "line2": "You can add and edit your own custom statuses in the Custom statuses section."
         },
-        "heading": "Core Statuses"
+        "heading": "Core statuses"
       },
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "name": "Add All Unknown Status Types"
+            "description": "Add any status symbols found in your vault but not yet configured here.",
+            "name": "Add all unknown status types"
           },
           "addNewStatus": {
-            "name": "Add New Task Status"
+            "name": "Add new task status"
           },
           "resetCustomStatuses": {
-            "name": "Reset Custom Status Types to Defaults"
+            "description": "Discard all custom statuses and restore the defaults.",
+            "name": "Reset custom status types to defaults"
           }
         },
         "description": {
-          "line1": "You should first <b>select and install a CSS Snippet or Theme</b> to style custom checkboxes.",
-          "line2": "Then, use the buttons below to set up your custom statuses, to match your chosen CSS checkboxes.",
+          "line1": "You should first <b>select and install a CSS snippet or theme</b> to style custom checkboxes.",
+          "line2": "Then, set up your custom statuses to match your chosen CSS checkboxes.",
           "line3": "<b>Note</b> Any statuses with the same symbol as any earlier statuses will be ignored. You can confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down.",
           "line4": "See the documentation to get started!"
         },
-        "heading": "Custom Statuses"
+        "emptyState": "No custom statuses yet.",
+        "heading": "Custom statuses"
       },
-      "heading": "Task Statuses"
+      "filter": {
+        "placeholder": "Filter statuses…"
+      },
+      "heading": "Task statuses",
+      "reloadRequired": "Changes take effect after reload.",
+      "types": {
+        "cancelled": "Cancelled",
+        "done": "Done",
+        "empty": "Empty",
+        "inProgress": "In progress",
+        "nonTask": "Non-task",
+        "onHold": "On hold",
+        "todo": "To do"
+      },
+      "unnamed": "(unnamed)"
+    },
+    "taskEntry": {
+      "heading": "Task entry"
     }
   }
 }

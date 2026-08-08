@@ -1,4 +1,12 @@
 {
+  "common": {
+    "cancel": "",
+    "edit": "",
+    "moreInfo": "",
+    "okay": "",
+    "reload": "",
+    "save": ""
+  },
   "main": {
     "loadingPlugin": "加载插件: {{name}} v{{version}}",
     "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
@@ -25,7 +33,25 @@
         "description": "控制搜索和切换状态的行为。",
         "name": "任务状态类型"
       },
-      "fixErrorsBeforeSaving": "在保存前修复错误。"
+      "fixErrorsBeforeSaving": "在保存前修复错误。",
+      "title": {
+        "editCoreStatus": "",
+        "editCustomStatus": ""
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "",
+        "name": "",
+        "placeholder": "",
+        "required": ""
+      },
+      "query": {
+        "description": "",
+        "name": "",
+        "placeholder": ""
+      },
+      "title": ""
     }
   },
   "notices": {
@@ -176,6 +202,9 @@
       },
       "name": "任务格式"
     },
+    "globalDefaults": {
+      "heading": ""
+    },
     "globalFilter": {
       "filter": {
         "description": {
@@ -197,13 +226,15 @@
       "heading": "全局查询",
       "query": {
         "description": "自动包含在库中每个 Tasks 块开头的查询语句.用于添加默认过滤器或布局选项。",
-        "placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": ""
       },
+      "emptyState": "",
       "line1": "您可以在这里定义命名指令，可以在多个查询中重复使用。一个名为 '{{name}}' 的预设可以在任务查询中使用 '{{instruction1}}' 或 '{{instruction2}}'。",
       "line2": "任何打开的任务查询在预设被编辑时都会自动重新加载。",
       "name": "预设"
@@ -235,6 +266,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "",
+          "enable": ""
+        },
         "description": {
           "line1": "",
           "line2": "",
@@ -247,6 +282,13 @@
     },
     "seeTheDocumentation": "参阅文档",
     "statuses": {
+      "buttons": {
+        "addStatus": "",
+        "importFromTheme": {
+          "description": "",
+          "name": ""
+        }
+      },
       "collections": {
         "anuppuccinTheme": "AnuPpuccin 主题",
         "auraTheme": "Aura 主题",
@@ -254,6 +296,9 @@
         "buttons": {
           "addCollection": {
             "name": "{{themeName}}: 添加 {{numberOfStatuses}} 种支持状态"
+          },
+          "importCollection": {
+            "name": ""
           }
         },
         "ebullientworksTheme": "Ebullientworks 主题",
@@ -278,12 +323,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "",
             "name": "添加所有未知状态类型"
           },
           "addNewStatus": {
             "name": "添加新任务状态"
           },
           "resetCustomStatuses": {
+            "description": "",
             "name": "重置自定义状态类型为默认值"
           }
         },
@@ -293,9 +340,27 @@
           "line3": "<b>注意</b>任何与更早的状态具有相同符号的状态都将被忽略.您可以通过运行“Create or edit task”命令并查看“Status”下拉列表来确认实际加载的状态。",
           "line4": "参阅文档！"
         },
+        "emptyState": "",
         "heading": "自定义状态"
       },
-      "heading": "任务状态"
+      "filter": {
+        "placeholder": ""
+      },
+      "heading": "任务状态",
+      "reloadRequired": "",
+      "types": {
+        "cancelled": "",
+        "done": "",
+        "empty": "",
+        "inProgress": "",
+        "nonTask": "",
+        "onHold": "",
+        "todo": ""
+      },
+      "unnamed": ""
+    },
+    "taskEntry": {
+      "heading": ""
     }
   }
 }

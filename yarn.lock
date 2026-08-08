@@ -6936,10 +6936,10 @@ obsidian@1.12.3:
     "@types/codemirror" "5.60.8"
     moment "2.29.4"
 
-obsidian@1.8.7:
-  version "1.8.7"
-  resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-1.8.7.tgz#601e9ea1724289effa4c9bb3b4e20d327263634f"
-  integrity sha512-h4bWwNFAGRXlMlMAzdEiIM2ppTGlrh7uGOJS6w4gClrsjc+ei/3YAtU2VdFUlCiPuTHpY4aBpFJJW75S1Tl/JA==
+obsidian@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-1.13.1.tgz#3dc280d49e8391a0e2958ca90ee71a6d45fd14d6"
+  integrity sha512-qtTEA2pmhJzhuhJqzbBFRYhpIOqvW+krDYjtFynv66KbxBbumHBlsJfWw3I4jtnK/6fZwbQhCrmmDdRwXmX56w==
   dependencies:
     "@types/codemirror" "5.60.8"
     moment "2.29.4"
