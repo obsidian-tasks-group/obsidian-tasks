@@ -336,8 +336,24 @@ Availability of access keys:
         {/if}
     </section>
 
+    <!--
+    The 'mousedown|preventDefault' below stops these buttons needing to be tapped
+    twice on mobile.
+
+    While a field has focus, TaskModal.scss adds up to 360px of padding below the
+    modal content, so that the sticky button bar can be scrolled clear of the
+    software keyboard. WebKit does not give a <button> focus when it is tapped, but
+    it does blur the focused text field - so tapping Apply removes that padding
+    mid-tap and moves the button bar by several hundred pixels. The button is then no
+    longer under the finger, and the browser delivers the click to the <form> rather
+    than to the button, making the first tap appear to do nothing.
+
+    Cancelling the default action of 'mousedown' leaves focus where it is, so the
+    padding stays and the buttons do not move while they are being tapped. It does
+    not affect the click itself, nor keyboard activation.
+    -->
     <section class="tasks-modal-button-section">
-        <button disabled={!formIsValid} type="submit" class="mod-cta">Apply </button>
-        <button type="button" on:click={_onClose}>Cancel</button>
+        <button disabled={!formIsValid} type="submit" class="mod-cta" on:mousedown|preventDefault>Apply </button>
+        <button type="button" on:click={_onClose} on:mousedown|preventDefault>Cancel</button>
     </section>
 </form>
