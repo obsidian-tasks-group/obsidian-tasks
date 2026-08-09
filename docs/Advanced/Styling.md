@@ -251,7 +251,9 @@ For example:
 
 ![Example of tasks-plugin-tags-links-recurrence-gray.css snippet](../../images/tasks-plugin-tags-links-recurrence-gray-snippet.png)
 
-### Priority as a Checkbox Color
+### Styling Tasks with Priorities
+
+#### Priority as a Checkbox Color
 
 The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in purple, red, orange, blue, cyan and green according to the tasks' priority:
 
@@ -297,6 +299,56 @@ span.task-priority {
 For example:
 
 ![Example of tasks-plugin-priority-as-checkbox-color.css snippet](../../images/tasks-plugin-priority-as-checkbox-color-snippet.png)
+
+#### Priority as a Background Color, for active tasks
+
+The following rules remove the Tasks priority emoticon and render the tasks' backgrounds in purple, red, orange, blue, cyan and green according to the tasks' priority. It only colours tasks with status types TODO and IN_PROGRESS, as these are the tasks that are actionable.
+
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-priority-as-background-color.css -->
+```css
+.task-list-item {
+    /* Make stand out in colour, if they still need work */
+    &[data-task-status-type="TODO"],
+    &[data-task-status-type="IN_PROGRESS"] {
+        background: rgb(from var(--priority-color) r g b / 0.2);
+        border: 1px rgb(from var(--priority-color) r g b / 0.3) solid;
+
+        &[data-task-priority="highest"] {
+            --priority-color: var(--color-purple);
+        }
+
+        &[data-task-priority="high"] {
+            --priority-color: var(--color-red);
+        }
+
+        &[data-task-priority="medium"] {
+            --priority-color: var(--color-orange);
+        }
+
+        &[data-task-priority="normal"] {
+            --priority-color: var(--color-blue);
+        }
+
+        &[data-task-priority="low"] {
+            --priority-color: var(--color-cyan);
+        }
+
+        &[data-task-priority="lowest"] {
+            --priority-color: var(--color-green);
+        }
+
+        /* This part removes the regular priority emoticon, only for the tasks that we are styling */
+        span.task-priority {
+            display: none;
+        }
+    }
+}
+```
+<!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-priority-as-background-color.css snippet](../../images/tasks-plugin-priority-as-background-color-snippet.png)
 
 ### Styling Tasks with Custom Statuses
 

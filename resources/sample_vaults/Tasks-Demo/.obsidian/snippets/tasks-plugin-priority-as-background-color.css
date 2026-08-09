@@ -1,0 +1,37 @@
+.task-list-item {
+    /* Make stand out in colour, if they still need work */
+    &[data-task-status-type="TODO"],
+    &[data-task-status-type="IN_PROGRESS"] {
+        background: rgb(from var(--priority-color) r g b / 0.2);
+        border: 1px rgb(from var(--priority-color) r g b / 0.3) solid;
+
+        &[data-task-priority="highest"] {
+            --priority-color: var(--color-purple);
+        }
+
+        &[data-task-priority="high"] {
+            --priority-color: var(--color-red);
+        }
+
+        &[data-task-priority="medium"] {
+            --priority-color: var(--color-orange);
+        }
+
+        &[data-task-priority="normal"] {
+            --priority-color: var(--color-blue);
+        }
+
+        &[data-task-priority="low"] {
+            --priority-color: var(--color-cyan);
+        }
+
+        &[data-task-priority="lowest"] {
+            --priority-color: var(--color-green);
+        }
+
+        /* This part removes the regular priority emoticon, only for the tasks that we are styling */
+        span.task-priority {
+            display: none;
+        }
+    }
+}

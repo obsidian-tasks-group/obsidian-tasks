@@ -322,10 +322,10 @@ describe('ToggleDone', () => {
 
             // Assert
             const line2 = toggleLine(line1, 'x.md').text;
-            expect(line2).toStrictEqual('- [C] this is a task starting at Pro, not matching the global filter');
+            expect(line2).toStrictEqual('- [ ] this is a task starting at Pro, not matching the global filter');
 
             const line3 = toggleLine(line2, 'x.md').text;
-            expect(line3).toStrictEqual('- [P] this is a task starting at Pro, not matching the global filter');
+            expect(line3).toStrictEqual('- [x] this is a task starting at Pro, not matching the global filter');
         });
     });
 
