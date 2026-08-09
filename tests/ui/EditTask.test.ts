@@ -315,6 +315,20 @@ describe('Task editing', () => {
         GlobalFilter.getInstance().reset();
     });
 
+    it('should prevent button mousedown from blurring the focused field', () => {
+        const task = taskFromLine({ line: '- [ ] task', path: '' });
+        const { result } = renderAndCheckModal(task, () => {});
+
+        const apply = getAndCheckApplyButton(result);
+        const cancel = result.getByText('Cancel') as HTMLButtonElement;
+
+        const applyMouseDown = new MouseEvent('mousedown', { bubbles: true, cancelable: true });
+        const cancelMouseDown = new MouseEvent('mousedown', { bubbles: true, cancelable: true });
+
+        expect(apply.dispatchEvent(applyMouseDown)).toBe(false);
+        expect(cancel.dispatchEvent(cancelMouseDown)).toBe(false);
+    });
+
     async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
         const line = convertDescriptionToTaskLine(taskDescription);
         const editedTask = await editTaskLine(line, newDescription);
