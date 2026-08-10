@@ -55,8 +55,10 @@ describe('columns rendering', () => {
     ];
 
     it('renders no search results', async () => {
-        const { query, renderer } = makeColumnRenderer(due_columns, noTasks);
-        await verifyHtmlFromRenderer(renderer, State.Warm, query, noTasks);
+        const tasks = noTasks;
+        const source = due_columns;
+        const { query, renderer } = makeColumnRenderer(source, tasks);
+        await verifyHtmlFromRenderer(renderer, State.Warm, query, tasks);
     });
 
     it('renders no due date column', async () => {
