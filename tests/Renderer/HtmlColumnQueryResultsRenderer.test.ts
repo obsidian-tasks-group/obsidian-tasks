@@ -39,8 +39,9 @@ function makeColumnRenderer(source: string, allTasks: Task[]) {
 }
 
 describe('columns rendering', () => {
-    const due_columns = 'view columns by due\nhide backlink\nhide edit button';
-    const priority_columns = 'view columns by priority\nhide backlink\nhide edit button';
+    const commonInstructions = '\nhide backlink\nhide edit button';
+    const due_columns = 'view columns by due' + commonInstructions;
+    const priority_columns = 'view columns by priority' + commonInstructions;
 
     const noTasks: Task[] = [];
     const emptyTask = [new TaskBuilder().build()];
