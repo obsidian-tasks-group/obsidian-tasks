@@ -66,27 +66,22 @@ describe('columns rendering', () => {
     });
 
     it('renders no due date column', async () => {
-        const { query, renderer } = makeColumnRenderer(due_columns, emptyTask);
-        await verifyHtmlFromRenderer(renderer, State.Warm, query, emptyTask);
+        await verifyHtmlFromColumnRenderer(due_columns, emptyTask);
     });
 
     it('renders due date column', async () => {
-        const { query, renderer } = makeColumnRenderer(due_columns, withDue);
-        await verifyHtmlFromRenderer(renderer, State.Warm, query, withDue);
+        await verifyHtmlFromColumnRenderer(due_columns, withDue);
     });
 
     it('renders due date column and scheduled date groups', async () => {
-        const { query, renderer } = makeColumnRenderer(due_columns + '\ngroup by scheduled', withDueAndScheduled);
-        await verifyHtmlFromRenderer(renderer, State.Warm, query, withDueAndScheduled);
+        await verifyHtmlFromColumnRenderer(due_columns + '\ngroup by scheduled', withDueAndScheduled);
     });
 
     it('renders two priority columns', async () => {
-        const { query, renderer } = makeColumnRenderer(priority_columns, twoPriorities);
-        await verifyHtmlFromRenderer(renderer, State.Warm, query, twoPriorities);
+        await verifyHtmlFromColumnRenderer(priority_columns, twoPriorities);
     });
 
     it('renders one column with two headings', async () => {
-        const { query, renderer } = makeColumnRenderer(due_columns + '\ngroup by priority', twoPriorities);
-        await verifyHtmlFromRenderer(renderer, State.Warm, query, twoPriorities);
+        await verifyHtmlFromColumnRenderer(due_columns + '\ngroup by priority', twoPriorities);
     });
 });
