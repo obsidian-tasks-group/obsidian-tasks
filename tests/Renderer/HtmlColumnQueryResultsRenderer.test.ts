@@ -60,9 +60,7 @@ describe('columns rendering', () => {
     ];
 
     it('renders no search results', async () => {
-        const tasks = noTasks;
-        const source = due_columns;
-        await verifyHtmlFromColumnRenderer(source, tasks);
+        await verifyHtmlFromColumnRenderer(due_columns, noTasks);
     });
 
     it('renders no due date column', async () => {
