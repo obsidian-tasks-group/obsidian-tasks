@@ -47,9 +47,12 @@ describe('columns rendering', () => {
     const commonInstructions = '\nhide backlink\nhide edit button';
     const due_columns = 'view columns by due' + commonInstructions;
     const priority_columns = 'view columns by priority' + commonInstructions;
+    const tag_function_columns = 'view columns by function task.tags' + commonInstructions;
+    const empty_string_columns = 'view columns by function ""' + commonInstructions;
 
     const noTasks: Task[] = [];
     const emptyTask = [new TaskBuilder().build()];
+    const taskWithTag = [new TaskBuilder().tags(['#tag']).build()];
 
     const withDue = [new TaskBuilder().dueDate('2026-07-13').build()];
     const withDueAndScheduled = [new TaskBuilder().dueDate('2026-06-23').scheduledDate('2025-12-01').build()];
@@ -81,5 +84,16 @@ describe('columns rendering', () => {
 
     it('renders one column with two headings', async () => {
         await verifyHtmlFromColumnRenderer(due_columns + '\ngroup by priority', twoPriorities);
+    });
+
+    it('renders a custom tag column for task with a tag', async () => {
+        await verifyHtmlFromColumnRenderer(tag_function_columns, taskWithTag);
+    });
+
+    it.failing('renders a default heading for a column whose name is the empty string', async () => {
+        // This gives a traceback, and the error is:
+        //      Cannot read properties of undefined (reading 'nestingLevel')
+        //      TypeError: Cannot read properties of undefined (reading 'nestingLevel')
+        await verifyHtmlFromColumnRenderer(empty_string_columns, emptyTask);
     });
 });
