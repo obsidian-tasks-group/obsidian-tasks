@@ -90,10 +90,7 @@ describe('columns rendering', () => {
         await verifyHtmlFromColumnRenderer(tag_function_columns, taskWithTag);
     });
 
-    it.failing('renders a default heading for a column whose name is the empty string', async () => {
-        // This gives a traceback, and the error is:
-        //      Cannot read properties of undefined (reading 'nestingLevel')
-        //      TypeError: Cannot read properties of undefined (reading 'nestingLevel')
+    it('renders a default heading for a column whose name is the empty string', async () => {
         await verifyHtmlFromColumnRenderer(empty_string_columns, emptyTask);
     });
 });
