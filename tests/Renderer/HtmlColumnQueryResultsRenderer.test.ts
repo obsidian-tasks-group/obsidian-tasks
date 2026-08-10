@@ -38,6 +38,11 @@ function makeColumnRenderer(source: string, allTasks: Task[]) {
     return { query, renderer };
 }
 
+async function verifyHtmlFromColumnRenderer(source: string, tasks: Task[]) {
+    const { query, renderer } = makeColumnRenderer(source, tasks);
+    await verifyHtmlFromRenderer(renderer, State.Warm, query, tasks);
+}
+
 describe('columns rendering', () => {
     const commonInstructions = '\nhide backlink\nhide edit button';
     const due_columns = 'view columns by due' + commonInstructions;
@@ -57,8 +62,7 @@ describe('columns rendering', () => {
     it('renders no search results', async () => {
         const tasks = noTasks;
         const source = due_columns;
-        const { query, renderer } = makeColumnRenderer(source, tasks);
-        await verifyHtmlFromRenderer(renderer, State.Warm, query, tasks);
+        await verifyHtmlFromColumnRenderer(source, tasks);
     });
 
     it('renders no due date column', async () => {
