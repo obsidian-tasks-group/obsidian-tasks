@@ -25,7 +25,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 continue;
             }
 
-            if (group.groupHeadings[0].nestingLevel === 0) {
+            if (group.groupHeadings.length == 0 || group.groupHeadings[0].nestingLevel === 0) {
                 const columnContainer = createAndAppendElement('div', columnsContainer);
                 columnContainer.classList.add('tasks-columns-column');
                 this.columnContainers.push(columnContainer);
