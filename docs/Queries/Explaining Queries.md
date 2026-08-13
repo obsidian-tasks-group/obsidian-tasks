@@ -103,7 +103,8 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-  not done
+  not done =>
+    status type is TODO or IN_PROGRESS or ON_HOLD
 
   (due before tomorrow) AND (is recurring) =>
     AND (All of):
@@ -200,7 +201,8 @@ Explanation of the global query:
 
 Explanation of this Tasks code block query:
 
-  not done
+  not done =>
+    status type is TODO or IN_PROGRESS or ON_HOLD
 
   due next week =>
     due date is between:
@@ -252,7 +254,8 @@ Explanation of the Query File Defaults (from properties/frontmatter in the query
   folder includes {{query.file.folder}} =>
   folder includes Test Data/
 
-  not done
+  not done =>
+    status type is TODO or IN_PROGRESS or ON_HOLD
 
   short mode
 
