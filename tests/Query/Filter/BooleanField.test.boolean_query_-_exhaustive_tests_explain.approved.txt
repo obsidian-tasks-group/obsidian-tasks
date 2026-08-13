@@ -9,7 +9,8 @@ Input:
 Result:
   (not done) AND (is recurring) =>
     AND (All of):
-      not done
+      not done =>
+        status type is TODO or IN_PROGRESS or ON_HOLD
       is recurring
 
 
@@ -22,7 +23,8 @@ Input:
 Result:
   ((not done)) AND ((is recurring)) =>
     AND (All of):
-      not done
+      not done =>
+        status type is TODO or IN_PROGRESS or ON_HOLD
       is recurring
 
 
@@ -35,7 +37,8 @@ Input:
 Result:
   (not done) OR (is recurring) =>
     OR (At least one of):
-      not done
+      not done =>
+        status type is TODO or IN_PROGRESS or ON_HOLD
       is recurring
 
 
@@ -48,7 +51,8 @@ Input:
 Result:
   (not done) XOR (is recurring) =>
     XOR (Exactly one of):
-      not done
+      not done =>
+        status type is TODO or IN_PROGRESS or ON_HOLD
       is recurring
 
 
@@ -61,7 +65,8 @@ Input:
 Result:
   (not done) AND NOT (is recurring) =>
     AND (All of):
-      not done
+      not done =>
+        status type is TODO or IN_PROGRESS or ON_HOLD
       NOT:
         is recurring
 
@@ -75,7 +80,8 @@ Input:
 Result:
   (not done) OR NOT (is recurring) =>
     OR (At least one of):
-      not done
+      not done =>
+        status type is TODO or IN_PROGRESS or ON_HOLD
       NOT:
         is recurring
 
@@ -89,7 +95,8 @@ Input:
 Result:
   NOT (not done) =>
     NOT:
-      not done
+      not done =>
+        status type is TODO or IN_PROGRESS or ON_HOLD
 
 
 --------------------------------------------------------
@@ -2245,9 +2252,11 @@ Input:
 Result:
   (not done) OR NOT (not done) =>
     OR (At least one of):
-      not done
+      not done =>
+        status type is TODO or IN_PROGRESS or ON_HOLD
       NOT:
-        not done
+        not done =>
+          status type is TODO or IN_PROGRESS or ON_HOLD
 
 
 --------------------------------------------------------

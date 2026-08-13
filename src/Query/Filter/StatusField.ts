@@ -21,7 +21,7 @@ export class StatusField extends FilterInstructionsBasedField {
         //   StatusType.ON_HOLD
         //   StatusType.EMPTY (but it's an implementation detail, never shown to users)
         this._filters.add('done', (task: Task) => task.isDone, 'status type is DONE or CANCELLED or NON_TASK');
-        this._filters.add('not done', (task: Task) => !task.isDone);
+        this._filters.add('not done', (task: Task) => !task.isDone, 'status type is TODO or IN_PROGRESS or ON_HOLD');
     }
 
     public fieldName(): string {

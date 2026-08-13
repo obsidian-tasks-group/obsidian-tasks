@@ -69,7 +69,8 @@ describe('explain', () => {
 
             Explanation of the Query File Defaults (from properties/frontmatter in the query's file):
 
-              not done
+              not done =>
+                status type is TODO or IN_PROGRESS or ON_HOLD
 
               show toolbar
 

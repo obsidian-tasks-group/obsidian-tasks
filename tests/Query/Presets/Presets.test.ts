@@ -63,7 +63,8 @@ describe('include tests', () => {
             expectFiltersToBe(query, ['not done']);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "{{preset.not_done}} =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });
@@ -74,7 +75,8 @@ describe('include tests', () => {
             expectFiltersToBe(query, ['not done']);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "preset not_done =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });
@@ -88,7 +90,8 @@ describe('include tests', () => {
                 not_done
                  =>
                 preset not_done =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });
@@ -297,7 +300,8 @@ return "Hello World";`;
                 "( {{preset.filter1}} ) AND ( {{preset.filter2}} ) =>
                 ( not done ) AND ( due 2025-05-01 ) =>
                   AND (All of):
-                    not done
+                    not done =>
+                      status type is TODO or IN_PROGRESS or ON_HOLD
                     due 2025-05-01 =>
                       due date is on 2025-05-01 (Thursday 1st May 2025)
                 "
@@ -357,7 +361,8 @@ describe('include - explain output', () => {
                       start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
 
                 {{preset.out}}: statement 2 after expansion of placeholder =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });
@@ -378,7 +383,8 @@ describe('include - explain output', () => {
                       start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
 
                 preset out =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });

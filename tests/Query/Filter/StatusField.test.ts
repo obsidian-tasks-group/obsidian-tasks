@@ -70,12 +70,12 @@ describe('explaining status', () => {
 
     it('should explain "not done"', () => {
         const filter = new StatusField().createFilterOrErrorMessage('not done');
-        expect(filter).toHaveExplanation('not done');
+        expect(filter).toHaveExplanation('status type is TODO or IN_PROGRESS or ON_HOLD');
     });
 
     it('should honour original case, when explaining simple filters', () => {
         const filter = new StatusField().createFilterOrErrorMessage('NOT done');
-        expect(filter).toHaveExplanation('NOT done');
+        expect(filter).toHaveExplanation('status type is TODO or IN_PROGRESS or ON_HOLD');
     });
 });
 
