@@ -65,7 +65,7 @@ describe('status', () => {
 describe('explaining status', () => {
     it('should explain "done"', () => {
         const filter = new StatusField().createFilterOrErrorMessage('done');
-        expect(filter).toHaveExplanation('done');
+        expect(filter).toHaveExplanation('status type is DONE or CANCELLED or NON_TASK');
     });
 
     it('should explain "not done"', () => {

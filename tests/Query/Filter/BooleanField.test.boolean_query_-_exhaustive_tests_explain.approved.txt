@@ -1334,9 +1334,11 @@ Input:
 Result:
   (done) OR NOT (done) =>
     OR (At least one of):
-      done
+      done =>
+        status type is DONE or CANCELLED or NON_TASK
       NOT:
-        done
+        done =>
+          status type is DONE or CANCELLED or NON_TASK
 
 
 --------------------------------------------------------
