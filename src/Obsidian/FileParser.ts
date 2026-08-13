@@ -13,7 +13,7 @@ export class FileParser {
     private readonly fileContent: string;
     private readonly listItems: ListItemCache[];
     private readonly logger: Logger;
-    private readonly errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void;
+    private readonly errorReporter: (e: unknown, filePath: string, listItem: ListItemCache, line: string) => void;
 
     private readonly fileLines: string[];
     private readonly line2ListItem: Map<number, ListItem> = new Map();
@@ -25,7 +25,7 @@ export class FileParser {
         fileContent: string,
         listItems: ListItemCache[],
         logger: Logger,
-        errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+        errorReporter: (e: unknown, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
         this.tasksFile = tasksFile;
         this.fileContent = fileContent;
