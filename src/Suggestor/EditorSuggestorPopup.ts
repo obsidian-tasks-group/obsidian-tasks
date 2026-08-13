@@ -115,7 +115,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         return editor.cm.state.field(editorInfoField);
     }
 
-    private canSaveEdits(markdownFileInfo: any) {
+    private canSaveEdits(markdownFileInfo: unknown) {
         return markdownFileInfo instanceof MarkdownView;
     }
 
