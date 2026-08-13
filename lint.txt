@@ -207,28 +207,10 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   5:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/logging.ts
-   35:14  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
   141:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
   147:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
   156:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-  212:61  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  220:13  warning  Unsafe assignment of an `any` value                                                                                                                       @typescript-eslint/no-unsafe-assignment
-  240:45  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  243:45  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  246:44  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  249:44  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  252:45  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  261:84  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  269:13  warning  Unsafe assignment of an `any` value                                                                                                                       @typescript-eslint/no-unsafe-assignment
-  276:68  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  279:68  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  282:67  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  285:67  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  288:68  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
   310:33  warning  Prefer using the primitive `object` as a type name, rather than the upper-cased `Object`                                                                  @typescript-eslint/no-wrapper-object-types
-  313:43  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  345:30  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
-  349:53  warning  Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/main.ts
    98:13  warning  Unsafe assignment of an `any` value                                                @typescript-eslint/no-unsafe-assignment
@@ -255,8 +237,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
   84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 177 problems (0 errors, 177 warnings)
-  0 errors and 63 warnings potentially fixable with the `--fix` option.
+✖ 159 problems (0 errors, 159 warnings)
+  0 errors and 47 warnings potentially fixable with the `--fix` option.
 
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/Obsidian/CacheLoading.test.ts
@@ -272,4 +254,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 23.96s.
+Done in 25.00s.
