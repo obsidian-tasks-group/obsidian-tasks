@@ -22,4 +22,13 @@ describe('FilterInstruction', () => {
         const filterOrErrorMessage = filterInstruction.createFilterOrErrorMessage(line);
         expect(filterOrErrorMessage).toHaveExplanation(line);
     });
+
+    it('explanation can be made more specific', () => {
+        const line = 'do something';
+        const explanation = 'please do something';
+        const filterInstruction = new FilterInstruction(line, filter, explanation);
+
+        const filterOrErrorMessage = filterInstruction.createFilterOrErrorMessage(line);
+        expect(filterOrErrorMessage).toHaveExplanation(explanation);
+    });
 });

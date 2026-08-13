@@ -16,15 +16,18 @@ import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 export class FilterInstruction {
     private readonly _instruction: string;
     private readonly _filter: FilterFunction;
+    private readonly _explanation: string | undefined;
 
     /**
      * Constructor:
      * @param instruction - Full text of the instruction for the filter: must be matched exactly, ignoring capitalisation.
      * @param filter
+     * @param explanation - an optional explaination line. If not supplied, the supplied instruction line will be used.
      */
-    constructor(instruction: string, filter: FilterFunction) {
+    constructor(instruction: string, filter: FilterFunction, explanation?: string) {
         this._instruction = instruction;
         this._filter = filter;
+        this._explanation = explanation;
     }
 
     public canCreateFilterForLine(line: string): boolean {
@@ -33,7 +36,9 @@ export class FilterInstruction {
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         if (this.canCreateFilterForLine(line)) {
-            return FilterOrErrorMessage.fromFilter(new Filter(line, this._filter, new Explanation(line)));
+            return FilterOrErrorMessage.fromFilter(
+                new Filter(line, this._filter, new Explanation(this._explanation || line)),
+            );
         }
 
         return FilterOrErrorMessage.fromError(line, `do not understand filter: ${line}`);
