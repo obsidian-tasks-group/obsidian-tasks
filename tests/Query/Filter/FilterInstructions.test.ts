@@ -17,4 +17,12 @@ describe('FilterInstructions', () => {
         const invalidFilterOrError = instructions.createFilterOrErrorMessage('goodbye');
         expect(invalidFilterOrError).not.toBeValid();
     });
+
+    it('should be able to add a specific explanation', () => {
+        const instructions = new FilterInstructions();
+        instructions.add('simple instruction', (_task: Task) => true, 'here is some detailed explanation');
+
+        const filterOrErrorMessage = instructions.createFilterOrErrorMessage('simple instruction');
+        expect(filterOrErrorMessage).toHaveExplanation('here is some detailed explanation');
+    });
 });
