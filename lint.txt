@@ -77,14 +77,15 @@ Prefer explicitly defining any function parameters and return type              
   62:62  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlQueryResultsRenderer.ts
-   50:38  warning  Use 'createDiv()' instead of 'document.createElement('div')'                obsidianmd/prefer-create-el
-   50:38  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-   52:46  warning  Use 'createEl('li')' instead of 'document.createElement('li')'              obsidianmd/prefer-create-el
-   52:46  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-  307:40  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
-  311:44  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
-  332:42  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
-  340:48  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
+   50:38  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                             obsidianmd/prefer-create-el
+   50:38  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                               obsidianmd/prefer-active-doc
+   52:46  warning  Use 'createEl('li')' instead of 'document.createElement('li')'                                           obsidianmd/prefer-create-el
+   52:46  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                               obsidianmd/prefer-active-doc
+  262:27  warning  Use 'headerEl.ownerDocument.win.createSpan()' instead of 'headerEl.ownerDocument.createElement('span')'  obsidianmd/prefer-create-el
+  307:40  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
+  311:44  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
+  332:42  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
+  340:48  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryRenderer.ts
   162:47  warning  Promise returned in function argument where a void return was expected                                     @typescript-eslint/no-misused-promises
@@ -254,20 +255,14 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
   84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 176 problems (0 errors, 176 warnings)
+✖ 177 problems (0 errors, 177 warnings)
   0 errors and 63 warnings potentially fixable with the `--fix` option.
 
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/Obsidian/CacheLoading.test.ts
   109:44  warning  Use 'window.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-window-timers
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/TestingTools/AutoApprovingReporter.ts
-  3:12  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/i18n/i18n.test.ts
-  23:26  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
-
-✖ 3 problems (0 errors, 3 warnings)
+✖ 1 problem (0 errors, 1 warning)
   0 errors and 1 warning potentially fixable with the `--fix` option.
 
 
@@ -277,4 +272,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 25.62s.
+Done in 23.96s.
