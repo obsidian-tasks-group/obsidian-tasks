@@ -99,7 +99,7 @@ export class FunctionField extends Field {
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
 
-    public validateTaskSortKey(sortKey: any) {
+    public validateTaskSortKey(sortKey: unknown) {
         function throwSortKeyTypeError(sortKeyType: string) {
             throw new Error(`"${sortKeyType}" is not a valid sort key`);
         }
@@ -128,7 +128,7 @@ export class FunctionField extends Field {
      * @param valueA - a value that satisfies {@link validateTaskSortKey}.
      * @param valueB - a value that satisfies {@link validateTaskSortKey}.
      */
-    public compareTaskSortKeys(valueA: any, valueB: any) {
+    public compareTaskSortKeys(valueA: unknown, valueB: unknown) {
         // Precondition: Both parameter values have satisfied constraints in validateTaskSortKey().
 
         const valueAType = getValueType(valueA);
@@ -188,7 +188,7 @@ export class FunctionField extends Field {
         return undefined;
     }
 
-    private compareTaskSortKeysIfEitherIsNull(valueA: any, valueB: any) {
+    private compareTaskSortKeysIfEitherIsNull(valueA: unknown, valueB: unknown) {
         if (valueA === null && valueB === null) {
             return 0;
         }

@@ -130,6 +130,7 @@ export default defineConfig([
             '@typescript-eslint/no-misused-promises': 0,
             '@typescript-eslint/no-namespace': 0,
             '@typescript-eslint/no-redundant-type-constituents': 0,
+            '@typescript-eslint/no-require-imports': 0,
             '@typescript-eslint/no-restricted-imports':0,
             '@typescript-eslint/no-unnecessary-type-assertion': 0,
             '@typescript-eslint/no-unsafe-argument': 0,

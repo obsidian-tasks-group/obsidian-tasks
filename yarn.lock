@@ -3788,10 +3788,10 @@ eslint-plugin-no-unsanitized@^4.1.5:
   resolved "https://registry.yarnpkg.com/eslint-plugin-no-unsanitized/-/eslint-plugin-no-unsanitized-4.1.5.tgz#036c7c7ac4561ff0ee34c3d126b3b6e86037641c"
   integrity sha512-MSB4hXPVFQrI8weqzs6gzl7reP2k/qSjtCoL2vUMSDejIIq9YL1ZKvq5/ORBXab/PvfBBrWO2jWviYpL+4Ghfg==
 
-eslint-plugin-obsidianmd@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-obsidianmd/-/eslint-plugin-obsidianmd-0.4.0.tgz#bb4ce5a7f51496b0977d9b68bf82563eef3f55bd"
-  integrity sha512-qZsh8ydaeO7bC+XADWHGG9+CEwiKjoL7arZo1I93e0UHdQ863Jzt+xRk5VI0vo97SIJrA4vWwuz9K9/fggO35g==
+eslint-plugin-obsidianmd@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-obsidianmd/-/eslint-plugin-obsidianmd-0.4.1.tgz#595f8a2784b42332bcae284c0c88cb17cbcef01f"
+  integrity sha512-Nv3593kVsFOS8kir/HWaJ5CR3xcyiPWEPyXst5Pib8mxRYYuLYPpJS2ALMoZXHulHyiGwoYW8AaxvLRc4rhrRg==
   dependencies:
     "@eslint-community/eslint-plugin-eslint-comments" "^4.7.2"
     "@eslint/config-helpers" "^0.4.2"

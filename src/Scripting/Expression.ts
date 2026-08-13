@@ -8,7 +8,7 @@ export class FunctionOrError extends QueryComponentOrError<Function> {}
 /**
  * The name and value of a parameter, as a Tuple, for passing in to {@link parseExpression} and related functions.
  */
-export type ExpressionParameter = [name: string, value: any];
+export type ExpressionParameter = [name: string, value: unknown];
 
 /**
  * Parse a JavaScript expression, and return either a Function or an error message in a string.

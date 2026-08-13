@@ -90,7 +90,7 @@ export interface IQuery {
      * @param message
      * @param objects
      */
-    debug(message: string, objects?: any): void;
+    debug(message: string, objects?: unknown): void;
 
     /**
      * Write a warn log message.
@@ -100,5 +100,5 @@ export interface IQuery {
      * @param message
      * @param objects
      */
-    warn(message: string, objects?: any): void;
+    warn(message: string, objects?: unknown): void;
 }

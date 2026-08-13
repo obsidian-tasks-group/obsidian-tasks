@@ -24,7 +24,7 @@ export interface QueryContext {
     query: {
         file: TasksFile;
         allTasks: Readonly<Task[]>;
-        searchCache: Record<string, any>; // Added caching capability
+        searchCache: Record<string, unknown>; // Added caching capability
     };
     preset: PresetsMap;
 }

@@ -258,7 +258,7 @@ function filterGeneralSuggestionsForWordAtCursor(genericSuggestions: SuggestInfo
     return matchingSuggestions;
 }
 
-function defaultExtractor(symbol: string, suggestionText: any) {
+function defaultExtractor(symbol: string, suggestionText: string) {
     const displayText = `${suggestionText}`;
     const appendText = `${symbol} ${suggestionText}`;
     return { displayText, appendText };
