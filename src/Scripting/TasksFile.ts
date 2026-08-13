@@ -238,7 +238,7 @@ export class TasksFile {
      * https://publish.obsidian.md/tasks/Getting+Started/Obsidian+Properties#How+does+Tasks+treat+Obsidian+Properties%3F
      * @param key
      */
-    public property(key: string): any {
+    public property(key: string): unknown {
         const foundKey = this.findKeyInFrontmatter(key);
         if (foundKey === undefined) {
             return null;
@@ -250,7 +250,7 @@ export class TasksFile {
         }
 
         if (Array.isArray(propertyValue)) {
-            return propertyValue.filter((item: any) => item !== null);
+            return propertyValue.filter((item: unknown) => item !== null);
         }
 
         return propertyValue;
