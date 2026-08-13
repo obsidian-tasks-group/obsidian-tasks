@@ -60,6 +60,18 @@ describe('status', () => {
         expect(filter).toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'not done' type.
         expect(filter).not.toMatchTaskWithStatus(new StatusConfiguration('^', 'Non', 'x', true, StatusType.NON_TASK));
     });
+});
+
+describe('explaining status', () => {
+    it('should explain "done"', () => {
+        const filter = new StatusField().createFilterOrErrorMessage('done');
+        expect(filter).toHaveExplanation('done');
+    });
+
+    it('should explain "not done"', () => {
+        const filter = new StatusField().createFilterOrErrorMessage('not done');
+        expect(filter).toHaveExplanation('not done');
+    });
 
     it('should honour original case, when explaining simple filters', () => {
         const filter = new StatusField().createFilterOrErrorMessage('NOT done');
