@@ -558,11 +558,11 @@ ${statement.explainStatement('    ')}
         return queryInstanceCounter.toString().padStart(length, '0');
     }
 
-    public debug(message: string, objects?: any): void {
+    public debug(message: string, objects?: unknown): void {
         this.logger.debugWithId(this._queryId, `"${this.filePath}": ${message}`, objects);
     }
 
-    public warn(message: string, objects?: any): void {
+    public warn(message: string, objects?: unknown): void {
         this.logger.warnWithId(this._queryId, `"${this.filePath}": ${message}`, objects);
     }
 }
