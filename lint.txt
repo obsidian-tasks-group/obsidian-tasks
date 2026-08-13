@@ -19,10 +19,6 @@ Prefer explicitly defining any function parameters and return type              
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/DateTime/TasksDate.ts
   125:32  warning  Expected an error object to be thrown  @typescript-eslint/only-throw-error
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/IQuery.ts
-   93:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  103:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/Cache.ts
   240:64  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
   371:28  warning  Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any
@@ -32,10 +28,6 @@ Prefer explicitly defining any function parameters and return type              
   155:9   warning  Use 'window.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-window-timers
   155:20  warning  Promise returned in function argument where a void return was expected               @typescript-eslint/no-misused-promises
   245:38  warning  '_' is assigned a value but never used                                               @typescript-eslint/no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/FileParser.ts
-  16:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  28:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/LivePreviewExtension.ts
   152:13  warning  Use 'window.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-window-timers
@@ -50,28 +42,16 @@ Prefer explicitly defining any function parameters and return type              
   193:62  warning  'token' will use Object's default stringification format ('[object Object]') when stringified                                                                            @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/FunctionField.ts
-   89:23  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
-   90:23  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
-  102:41  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  116:9   warning  Unsafe return of a value of type `any`                                         @typescript-eslint/no-unsafe-return
-  131:40  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  131:53  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
   176:57  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
   176:70  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
   185:34  warning  Unsafe argument of type `any` assigned to a parameter of type `Moment | null`  @typescript-eslint/no-unsafe-argument
   185:42  warning  Unsafe argument of type `any` assigned to a parameter of type `Moment | null`  @typescript-eslint/no-unsafe-argument
-  191:55  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
-  191:68  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
   263:11  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
   289:15  warning  Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Group/GroupingTreeNode.ts
   32:13  warning  Unsafe return of type `Map<any, any>` from function with return type `Map<string[], T[]>`  @typescript-eslint/no-unsafe-return
   41:9   warning  Unsafe return of type `Map<any, any>` from function with return type `Map<string[], T[]>`  @typescript-eslint/no-unsafe-return
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Query.ts
-  561:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  565:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlColumnQueryResultsRenderer.ts
   62:62  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
@@ -108,36 +88,31 @@ Prefer explicitly defining any function parameters and return type              
   493:48  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/ExpandPlaceholders.ts
-   27:60  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-   31:9   warning  Unsafe return of a value of type `any`                                                                  @typescript-eslint/no-unsafe-return
-   73:59  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-   99:19  warning  Unsafe assignment of an `any` value                                                                     @typescript-eslint/no-unsafe-assignment
-  118:19  warning  'result' may use Object's default stringification format ('[object Object]') when stringified           @typescript-eslint/no-base-to-string
-  121:31  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-  122:18  warning  Unsafe member access .query on an `any` value                                                           @typescript-eslint/no-unsafe-member-access
-  148:43  warning  Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
-  149:27  warning  Unsafe argument of type `any` assigned to a parameter of type `{ [s: string]: any; } | ArrayLike<any>`  @typescript-eslint/no-unsafe-argument
+   27:60  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
+   31:9   warning  Unsafe return of a value of type `any`                                                                          @typescript-eslint/no-unsafe-return
+   73:59  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
+   99:19  warning  Unsafe assignment of an `any` value                                                                             @typescript-eslint/no-unsafe-assignment
+  118:19  warning  'result' may use Object's default stringification format ('[object Object]') when stringified                   @typescript-eslint/no-base-to-string
+  121:31  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
+  122:18  warning  Unsafe member access .query on an `any` value                                                                   @typescript-eslint/no-unsafe-member-access
+  148:43  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
+  149:12  warning  This assertion is unnecessary since the receiver accepts the original type of the expression                    @typescript-eslint/no-unnecessary-type-assertion
+  149:27  warning  Unsafe argument of type `any` assigned to a parameter of type `ArrayLike<unknown> | { [s: string]: unknown; }`  @typescript-eslint/no-unsafe-argument
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/Expression.ts
    6:60  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-  11:57  warning  Unexpected any. Specify a different type                                                                                 @typescript-eslint/no-explicit-any
   29:39  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
   29:57  warning  Implied eval. Do not use the Function constructor to create functions                                                    @typescript-eslint/no-implied-eval
   29:57  warning  [no-new-func] Using the `Function` constructor is dangerous because it executes arbitrary code, similar to `eval()`      obsidianmd/rule-custom-message
   48:48  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-  53:60  warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
   54:5   warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
   54:12  warning  Unsafe call of a `Function` typed value                                                                                  @typescript-eslint/no-unsafe-call
-  54:23  warning  Unsafe spread of an `any[]` array type                                                                                   @typescript-eslint/no-unsafe-argument
   66:55  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
   68:9   warning  Unsafe return of a value of type `any`                                                                                   @typescript-eslint/no-unsafe-return
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/QueryContext.ts
-  27:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/TaskExpression.ts
   45:5  warning  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
@@ -145,11 +120,9 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   95:9  warning  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/TasksFile.ts
-   36:13  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
-  224:15  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
-  241:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-  247:15  warning  Unsafe assignment of an `any` value       @typescript-eslint/no-unsafe-assignment
-  253:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   36:13  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+  224:15  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+  247:15  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusValidator.ts
   31:24  warning  '_name' is assigned a value but never used  @typescript-eslint/no-unused-vars
@@ -159,7 +132,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   115:9   warning  Unsafe return of a value of type error                                                                                                   @typescript-eslint/no-unsafe-return
   115:16  warning  Unsafe call of a type that could not be resolved                                                                                         @typescript-eslint/no-unsafe-call
   115:26  warning  Unsafe member access .state on a type that cannot be resolved                                                                            @typescript-eslint/no-unsafe-member-access
-  118:44  warning  Unexpected any. Specify a different type                                                                                                 @typescript-eslint/no-explicit-any
   126:5   warning  Promise-returning method provided where a void return was expected by extended/implemented type 'EditorSuggest<SuggestInfoWithContext>'  @typescript-eslint/no-misused-promises
   136:13  warning  Unsafe call of an `any` typed value                                                                                                      @typescript-eslint/no-unsafe-call
   136:24  warning  Unexpected any. Specify a different type                                                                                                 @typescript-eslint/no-explicit-any
@@ -171,7 +143,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/Suggestor.ts
    35:1   warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility  obsidianmd/no-global-this
    38:12  warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility  obsidianmd/no-global-this
-  261:59  warning  Unexpected any. Specify a different type                                                  @typescript-eslint/no-explicit-any
   492:57  warning  Invalid type "string | string[]" of template literal expression                           @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/ListItem.ts
@@ -196,15 +167,11 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   71:9  warning  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/ExceptionTools.ts
-   6:79  warning  Unexpected any. Specify a different type                                                                                                                                 @typescript-eslint/no-explicit-any
   12:19  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Error`  @typescript-eslint/restrict-plus-operands
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/PerformanceTracker.ts
   56:13  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
   58:13  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/TypeDetection.ts
-  5:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/logging.ts
   141:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
@@ -237,8 +204,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
   84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 159 problems (0 errors, 159 warnings)
-  0 errors and 47 warnings potentially fixable with the `--fix` option.
+✖ 136 problems (0 errors, 136 warnings)
+  0 errors and 29 warnings potentially fixable with the `--fix` option.
 
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/Obsidian/CacheLoading.test.ts
@@ -254,4 +221,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 25.00s.
+Done in 23.05s.
