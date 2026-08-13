@@ -14,8 +14,8 @@ import type { FilterFunction } from './Filter';
 export class FilterInstructions {
     private readonly _filters: FilterInstruction[] = [];
 
-    public add(instruction: string, filter: FilterFunction) {
-        this._filters.push(new FilterInstruction(instruction, filter));
+    public add(instruction: string, filter: FilterFunction, explanation?: string) {
+        this._filters.push(new FilterInstruction(instruction, filter, explanation));
     }
 
     public canCreateFilterForLine(line: string): boolean {

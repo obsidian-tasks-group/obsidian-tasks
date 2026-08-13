@@ -11,14 +11,17 @@ export class StatusField extends FilterInstructionsBasedField {
         // with any status character except space were considered by the status filter
         // instructions to be done.
         // In later versions:
-        //   StatusType.DONE counts as done
-        //   StatusType.CANCELLED counts as done
-        //   StatusType.TODO counts as not done
-        //   StatusType.IN_PROGRESS counts as not done
-        //   StatusType.ON_HOLD counts as not done
-        //   StatusType.NON_TASK counts as done
-        this._filters.add('done', (task: Task) => task.isDone);
-        this._filters.add('not done', (task: Task) => !task.isDone);
+        // treated as done:
+        //   StatusType.DONE
+        //   StatusType.CANCELLED
+        //   StatusType.NON_TASK
+        // treated as not done:
+        //   StatusType.TODO
+        //   StatusType.IN_PROGRESS
+        //   StatusType.ON_HOLD
+        //   StatusType.EMPTY (but it's an implementation detail, never shown to users)
+        this._filters.add('done', (task: Task) => task.isDone, 'status type is DONE or CANCELLED or NON_TASK');
+        this._filters.add('not done', (task: Task) => !task.isDone, 'status type is TODO or IN_PROGRESS or ON_HOLD');
     }
 
     public fieldName(): string {

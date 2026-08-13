@@ -83,7 +83,8 @@ ignore global query
             filter by function task.path === '{{query.file.path}}' =>
             filter by function task.path === 'sample.md'
 
-            not done
+            not done =>
+              status type is TODO or IN_PROGRESS or ON_HOLD
 
             (has start date) AND (description includes some) =>
               AND (All of):
@@ -138,7 +139,8 @@ ignore global query
               filter by function task.path === '{{query.file.path}}' =>
               filter by function task.path === 'sample.md'
 
-              not done
+              not done =>
+                status type is TODO or IN_PROGRESS or ON_HOLD
 
               (has start date) AND (description includes some) =>
                 AND (All of):

@@ -6,7 +6,8 @@ Explanation of the global query:
 
 Explanation of this Tasks code block query:
 
-  not done
+  not done =>
+    status type is TODO or IN_PROGRESS or ON_HOLD
 
   due next week =>
     due date is between:
