@@ -1,0 +1,20 @@
+.tasks-search-result {
+    min-width: 0;
+
+    .tasks-search-result__description {
+        overflow: hidden;
+        color: var(--text-normal);
+        font-weight: var(--font-semibold);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .tasks-search-result__location {
+        overflow: hidden;
+        margin-top: var(--size-2-1);
+        color: var(--text-muted);
+        font-size: var(--font-ui-smaller);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

@@ -9,6 +9,10 @@ export interface TaskSearchSuggestionText {
 }
 
 export function filterIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
+    if (query.trim() === '') {
+        return [];
+    }
+
     const normalizedQuery = query.toLowerCase();
     return tasks.filter((task) => !task.isDone && task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery));
 }
@@ -40,6 +44,7 @@ export class SearchTasksModal extends SuggestModal<Task> {
     constructor(app: App, private readonly getTasks: () => Task[]) {
         super(app);
         this.setPlaceholder('Search incomplete tasks');
+        this.emptyStateText = 'Type to search incomplete tasks.';
     }
 
     public getSuggestions(query: string): Task[] {
@@ -48,8 +53,17 @@ export class SearchTasksModal extends SuggestModal<Task> {
 
     public renderSuggestion(task: Task, el: HTMLElement): void {
         const suggestion = taskSearchSuggestionText(task);
-        el.createDiv({ text: suggestion.description });
-        el.createDiv({ text: `${suggestion.source} · ${suggestion.heading}`, cls: 'suggestion-note' });
+        el.classList.add('tasks-search-result');
+
+        const description = el.ownerDocument.createElement('div');
+        description.classList.add('tasks-search-result__description');
+        description.textContent = suggestion.description;
+        el.appendChild(description);
+
+        const location = el.ownerDocument.createElement('div');
+        location.classList.add('tasks-search-result__location');
+        location.textContent = `${suggestion.source} · ${suggestion.heading}`;
+        el.appendChild(location);
     }
 
     public onChooseSuggestion(task: Task, _evt: MouseEvent | KeyboardEvent): void {

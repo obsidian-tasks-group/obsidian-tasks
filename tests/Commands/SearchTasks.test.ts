@@ -1,4 +1,5 @@
 import {
+    SearchTasksModal,
     filterIncompleteTasksByDescription,
     openTaskAtSourceLocation,
     taskSearchSuggestionText,
@@ -51,8 +52,9 @@ describe('Search tasks', () => {
         );
     });
 
-    it('should return all incomplete tasks for an empty query', () => {
-        expect(filterIncompleteTasksByDescription(tasks, '')).toEqual([tasks[0], tasks[1], tasks[3]]);
+    it('should not show results until the user enters a search query', () => {
+        expect(filterIncompleteTasksByDescription(tasks, '')).toHaveLength(0);
+        expect(filterIncompleteTasksByDescription(tasks, '   ')).toHaveLength(0);
     });
 
     it('should not match task tags', () => {
@@ -75,6 +77,18 @@ describe('Search tasks', () => {
             source: 'Inbox.md',
             heading: 'No heading',
         });
+    });
+
+    it('should render a clear hierarchy for task descriptions and locations', () => {
+        const modal = new SearchTasksModal({} as any, () => tasks);
+        const element = document.createElement('div');
+
+        modal.renderSuggestion(tasks[0], element);
+
+        expect(element.querySelector('.tasks-search-result__description')?.textContent).toEqual('Write release notes');
+        expect(element.querySelector('.tasks-search-result__location')?.textContent).toEqual(
+            'Release.md · Preparation',
+        );
     });
 
     it('should open the selected task at its current source line', async () => {
