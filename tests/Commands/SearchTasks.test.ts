@@ -1,17 +1,22 @@
+import moment from 'moment';
 import {
     SearchTasksModal,
     filterIncompleteTasksByDescription,
     openTaskAtSourceLocation,
+    taskSearchMetadataText,
     taskSearchSuggestionText,
 } from '../../src/Commands/SearchTasks';
 import { Commands } from '../../src/Commands';
 import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { getTaskLineAndFile } from '../../src/Obsidian/File';
+import { Priority } from '../../src/Task/Priority';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 jest.mock('obsidian');
 jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
+
+window.moment = moment;
 
 describe('Search tasks', () => {
     const tasks = [
@@ -95,6 +100,22 @@ describe('Search tasks', () => {
             source: 'Inbox.md',
             heading: 'No heading',
         });
+    });
+
+    it('should prioritise due dates over other task metadata', () => {
+        const task = new TaskBuilder()
+            .dueDate('2023-07-04')
+            .scheduledDate('2023-07-03')
+            .startDate('2023-07-02')
+            .priority(Priority.High)
+            .build();
+
+        expect(taskSearchMetadataText(task)).toEqual([
+            expect.stringContaining('2023-07-04'),
+            expect.stringContaining('2023-07-03'),
+            expect.stringContaining('2023-07-02'),
+            expect.any(String),
+        ]);
     });
 
     it('should render a clear hierarchy for task descriptions and locations', () => {

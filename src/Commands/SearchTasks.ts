@@ -37,16 +37,15 @@ export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {
 export function taskSearchMetadataText(task: Task): string[] {
     const serializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
     const components = [
-        TaskLayoutComponent.Priority,
-        TaskLayoutComponent.StartDate,
-        TaskLayoutComponent.ScheduledDate,
         TaskLayoutComponent.DueDate,
+        TaskLayoutComponent.ScheduledDate,
+        TaskLayoutComponent.StartDate,
+        TaskLayoutComponent.Priority,
         TaskLayoutComponent.RecurrenceRule,
     ];
-    return [
-        task.status.name,
-        ...components.map((component) => serializer.componentToString(task, true, component).trim()),
-    ].filter((text) => text !== '');
+    return components
+        .map((component) => serializer.componentToString(task, false, component).trim())
+        .filter((text) => text !== '');
 }
 
 export async function openTaskAtSourceLocation(task: Task, app: App): Promise<void> {
