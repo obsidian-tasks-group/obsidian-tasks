@@ -231,16 +231,6 @@
           "bottom": "",
           "top": ""
         }
-      },
-      "taskSearch": {
-        "fuzzyMatching": {
-          "description": "",
-          "name": ""
-        },
-        "includeCompleted": {
-          "description": "",
-          "name": ""
-        }
       }
     },
     "searches": {
@@ -306,6 +296,17 @@
         "heading": "Користувацькі статуси"
       },
       "heading": "Статуси задач"
+    },
+    "taskSearch": {
+      "fuzzyMatching": {
+        "description": "",
+        "name": ""
+      },
+      "heading": "",
+      "includeCompleted": {
+        "description": "",
+        "name": ""
+      }
     }
   }
 }

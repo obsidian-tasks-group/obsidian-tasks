@@ -231,16 +231,6 @@
           "bottom": "",
           "top": ""
         }
-      },
-      "taskSearch": {
-        "fuzzyMatching": {
-          "description": "",
-          "name": ""
-        },
-        "includeCompleted": {
-          "description": "",
-          "name": ""
-        }
       }
     },
     "searches": {
@@ -306,6 +296,17 @@
         "heading": "사용자 정의 상태"
       },
       "heading": "작업 상태"
+    },
+    "taskSearch": {
+      "fuzzyMatching": {
+        "description": "",
+        "name": ""
+      },
+      "heading": "",
+      "includeCompleted": {
+        "description": "",
+        "name": ""
+      }
     }
   }
 }

@@ -238,9 +238,13 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
+        // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('settings.taskSearch.heading')).setHeading();
+        // ---------------------------------------------------------------------------
+
         new Setting(containerEl)
-            .setName(i18n.t('settings.searchResults.taskSearch.includeCompleted.name'))
-            .setDesc(i18n.t('settings.searchResults.taskSearch.includeCompleted.description'))
+            .setName(i18n.t('settings.taskSearch.includeCompleted.name'))
+            .setDesc(i18n.t('settings.taskSearch.includeCompleted.description'))
             .addToggle((toggle) => {
                 toggle.setValue(getSettings().searchTasks.includeCompleted).onChange(async (value) => {
                     updateSettings({ searchTasks: { ...getSettings().searchTasks, includeCompleted: value } });
@@ -249,8 +253,8 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName(i18n.t('settings.searchResults.taskSearch.fuzzyMatching.name'))
-            .setDesc(i18n.t('settings.searchResults.taskSearch.fuzzyMatching.description'))
+            .setName(i18n.t('settings.taskSearch.fuzzyMatching.name'))
+            .setDesc(i18n.t('settings.taskSearch.fuzzyMatching.description'))
             .addToggle((toggle) => {
                 toggle.setValue(getSettings().searchTasks.fuzzyMatching).onChange(async (value) => {
                     updateSettings({ searchTasks: { ...getSettings().searchTasks, fuzzyMatching: value } });

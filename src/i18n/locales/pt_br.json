@@ -231,16 +231,6 @@
           "bottom": "Inferior",
           "top": "Superior"
         }
-      },
-      "taskSearch": {
-        "fuzzyMatching": {
-          "description": "",
-          "name": ""
-        },
-        "includeCompleted": {
-          "description": "",
-          "name": ""
-        }
       }
     },
     "searches": {
@@ -306,6 +296,17 @@
         "heading": "Status Personalizados"
       },
       "heading": "Status das Tarefas"
+    },
+    "taskSearch": {
+      "fuzzyMatching": {
+        "description": "",
+        "name": ""
+      },
+      "heading": "",
+      "includeCompleted": {
+        "description": "",
+        "name": ""
+      }
     }
   }
 }
