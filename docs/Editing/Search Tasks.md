@@ -14,22 +14,6 @@ Each result shows a non-interactive checkbox for the task status, the rendered t
 
 ![Quick task search using the default settings](../images/search-tasks-default.png)
 
-## Settings
-
-The **Quick task search** settings are disabled by default.
-
-![Quick task search settings](../images/settings-quick-task-search.png)
-
-## Include completed tasks
-
-By default, task search only shows incomplete tasks. To also search completed and cancelled tasks, enable **Include completed tasks in task search** in the **Quick task search** section of Tasks settings.
-
-## Fuzzy matching
-
-By default, task search uses ordinary text matching. Enable **Use fuzzy matching in task search** in the **Quick task search** section of Tasks settings to allow non-contiguous characters to match a description. For example, `tdo` can match `todo`. Fuzzy results are ordered with the closest matches first.
-
-![Quick task search with completed-task and fuzzy matching enabled](../images/search-tasks-completed-fuzzy.png)
-
 You can assign a hotkey to `Tasks: Search tasks` in Obsidian's [Hotkeys settings](https://help.obsidian.md/Customization/Hotkeys).
 
 > [!released]

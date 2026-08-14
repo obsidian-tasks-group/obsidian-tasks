@@ -296,17 +296,6 @@
         "heading": "Özel Durumlar"
       },
       "heading": "Görev Durumları"
-    },
-    "taskSearch": {
-      "fuzzyMatching": {
-        "description": "",
-        "name": ""
-      },
-      "heading": "",
-      "includeCompleted": {
-        "description": "",
-        "name": ""
-      }
     }
   }
 }

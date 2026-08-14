@@ -296,17 +296,6 @@
         "heading": "Custom Statuses"
       },
       "heading": "Task Statuses"
-    },
-    "taskSearch": {
-      "fuzzyMatching": {
-        "description": "Allow non-contiguous characters to match task descriptions and rank the closest matches first.",
-        "name": "Use fuzzy matching in task search"
-      },
-      "heading": "Quick task search",
-      "includeCompleted": {
-        "description": "Also show completed and cancelled tasks in the Tasks: Search tasks command.",
-        "name": "Include completed tasks in task search"
-      }
     }
   }
 }

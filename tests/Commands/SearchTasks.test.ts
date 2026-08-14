@@ -7,7 +7,6 @@ import {
     taskSearchSuggestionText,
 } from '../../src/Commands/SearchTasks';
 import { Commands } from '../../src/Commands';
-import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { getTaskLineAndFile } from '../../src/Obsidian/File';
 import { Priority } from '../../src/Task/Priority';
 import { Status } from '../../src/Statuses/Status';
@@ -35,10 +34,6 @@ describe('Search tasks', () => {
         new TaskBuilder().description('Release completed').status(Status.DONE).path('Archive.md').build(),
         new TaskBuilder().description('Review a document').tags(['#release']).path('Projects/Review.md').build(),
     ];
-
-    afterEach(() => {
-        resetSettings();
-    });
 
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
         expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0], tasks[1]]);
@@ -69,34 +64,6 @@ describe('Search tasks', () => {
 
     it('should not match task tags', () => {
         expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
-    });
-
-    it('should only include completed tasks when configured to do so', () => {
-        expect(filterIncompleteTasksByDescription(tasks, 'release', false)).toEqual([tasks[0], tasks[1]]);
-        expect(filterIncompleteTasksByDescription(tasks, 'release', true)).toEqual([tasks[0], tasks[1], tasks[2]]);
-    });
-
-    it('should not include completed tasks in search by default', () => {
-        expect(getSettings().searchTasks.includeCompleted).toBe(false);
-        expect(getSettings().searchTasks.fuzzyMatching).toBe(false);
-
-        updateSettings({ searchTasks: { includeCompleted: true, fuzzyMatching: true } });
-
-        expect(getSettings().searchTasks.includeCompleted).toBe(true);
-        expect(getSettings().searchTasks.fuzzyMatching).toBe(true);
-    });
-
-    it('should support non-contiguous description matches when fuzzy matching is enabled', () => {
-        const task = new TaskBuilder().description('Todo task').build();
-
-        expect(filterIncompleteTasksByDescription([task], 'tdo')).toEqual([]);
-        expect(filterIncompleteTasksByDescription([task], 'tdo', false, true)).toEqual([task]);
-    });
-
-    it('should preserve the fuzzy matching default for existing task search settings', () => {
-        updateSettings({ searchTasks: { includeCompleted: true } as any });
-
-        expect(getSettings().searchTasks).toEqual({ includeCompleted: true, fuzzyMatching: false });
     });
 
     it('should provide the description, source file name, and preceding heading for each suggestion', () => {

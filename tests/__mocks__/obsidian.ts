@@ -241,30 +241,6 @@ export function prepareSimpleSearch(query: string): (text: string) => SearchResu
     };
 }
 
-/**
- * A fake implementation of Obsidian's prepareFuzzySearch().
- * It matches query characters in order, allowing intervening characters.
- */
-export function prepareFuzzySearch(query: string): (text: string) => SearchResult | null {
-    return function (text: string): SearchResult | null {
-        const normalizedQuery = query.toLowerCase();
-        const normalizedText = text.toLowerCase();
-        const matches: number[][] = [];
-        let searchFrom = 0;
-
-        for (const character of normalizedQuery) {
-            const matchIndex = normalizedText.indexOf(character, searchFrom);
-            if (matchIndex === -1) {
-                return null;
-            }
-            matches.push([matchIndex, matchIndex + 1]);
-            searchFrom = matchIndex + 1;
-        }
-
-        return matches.length === 0 ? null : { score: -searchFrom, matches };
-    };
-}
-
 type IconName = string;
 
 export function setIcon(element: HTMLElement, iconId: IconName): void {

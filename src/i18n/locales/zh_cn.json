@@ -296,17 +296,6 @@
         "heading": "自定义状态"
       },
       "heading": "任务状态"
-    },
-    "taskSearch": {
-      "fuzzyMatching": {
-        "description": "允许以非连续字符匹配任务描述，并将最接近的匹配排在前面。",
-        "name": "在任务搜索中使用模糊匹配"
-      },
-      "heading": "快速任务搜索",
-      "includeCompleted": {
-        "description": "在 Tasks: Search tasks 命令中同时显示已完成和已取消的任务。",
-        "name": "在任务搜索中包含已完成任务"
-      }
     }
   }
 }

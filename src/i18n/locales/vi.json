@@ -296,17 +296,6 @@
         "heading": "Trạng thái tùy chỉnh"
       },
       "heading": "Trạng thái nhiệm vụ"
-    },
-    "taskSearch": {
-      "fuzzyMatching": {
-        "description": "",
-        "name": ""
-      },
-      "heading": "",
-      "includeCompleted": {
-        "description": "",
-        "name": ""
-      }
     }
   }
 }
