@@ -26,6 +26,7 @@ describe('Search tasks', () => {
             .precedingHeader('Quality')
             .build(),
         new TaskBuilder().description('Release completed').status(Status.DONE).path('Archive.md').build(),
+        new TaskBuilder().description('Review a document').tags(['#release']).path('Projects/Review.md').build(),
     ];
 
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
@@ -51,7 +52,11 @@ describe('Search tasks', () => {
     });
 
     it('should return all incomplete tasks for an empty query', () => {
-        expect(filterIncompleteTasksByDescription(tasks, '')).toEqual([tasks[0], tasks[1]]);
+        expect(filterIncompleteTasksByDescription(tasks, '')).toEqual([tasks[0], tasks[1], tasks[3]]);
+    });
+
+    it('should not match task tags', () => {
+        expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
     });
 
     it('should provide the description, source file name, and preceding heading for each suggestion', () => {
@@ -86,5 +91,20 @@ describe('Search tasks', () => {
 
         expect(app.workspace.getLeaf).toHaveBeenCalledWith(false);
         expect(openFile).toHaveBeenCalledWith(file, { eState: { line: 12 } });
+    });
+
+    it('should handle a failure to open the selected task source', async () => {
+        const openFile = jest.fn().mockRejectedValue(new Error('Unable to open file'));
+        const app = {
+            vault: {},
+            workspace: { getLeaf: jest.fn(() => ({ openFile })) },
+        } as any;
+        const error = jest.spyOn(console, 'error').mockImplementation();
+        jest.mocked(getTaskLineAndFile).mockResolvedValue([12, { path: 'Projects/Release.md' } as any]);
+
+        await expect(openTaskAtSourceLocation(tasks[0], app)).resolves.toBeUndefined();
+
+        expect(error).toHaveBeenCalledWith('Tasks: Could not open task source.', expect.any(Error));
+        error.mockRestore();
     });
 });

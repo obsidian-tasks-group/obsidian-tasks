@@ -1,4 +1,4 @@
-import { type App, SuggestModal } from 'obsidian';
+import { type App, Notice, SuggestModal } from 'obsidian';
 import type { Task } from '../Task/Task';
 import { getTaskLineAndFile } from '../Obsidian/File';
 
@@ -10,12 +10,12 @@ export interface TaskSearchSuggestionText {
 
 export function filterIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
     const normalizedQuery = query.toLowerCase();
-    return tasks.filter((task) => !task.isDone && task.description.toLowerCase().includes(normalizedQuery));
+    return tasks.filter((task) => !task.isDone && task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery));
 }
 
 export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {
     return {
-        description: task.description,
+        description: task.descriptionWithoutTags,
         source: task.path.split('/').pop() ?? task.path,
         heading: task.precedingHeader ?? 'No heading',
     };
@@ -28,7 +28,12 @@ export async function openTaskAtSourceLocation(task: Task, app: App): Promise<vo
     }
 
     const [line, file] = result;
-    await app.workspace.getLeaf(false).openFile(file, { eState: { line } });
+    try {
+        await app.workspace.getLeaf(false).openFile(file, { eState: { line } });
+    } catch (error) {
+        console.error('Tasks: Could not open task source.', error);
+        new Notice('Tasks: Could not open task source.');
+    }
 }
 
 export class SearchTasksModal extends SuggestModal<Task> {
