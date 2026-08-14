@@ -282,3 +282,15 @@ export class Modal {
     public onOpen(): void {}
     public onClose(): void {}
 }
+
+export abstract class SuggestModal<T> extends Modal {
+    constructor(public readonly app: App) {
+        super();
+    }
+
+    public setPlaceholder(_placeholder: string): void {}
+
+    public abstract getSuggestions(query: string): T[] | Promise<T[]>;
+    public abstract renderSuggestion(value: T, el: HTMLElement): void;
+    public abstract onChooseSuggestion(item: T, evt: MouseEvent | KeyboardEvent): void;
+}
