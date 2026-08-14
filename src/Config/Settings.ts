@@ -86,6 +86,7 @@ export interface Settings {
     };
     searchTasks: {
         includeCompleted: boolean;
+        fuzzyMatching: boolean;
     };
 
     // The custom status states.
@@ -135,6 +136,7 @@ const defaultSettings: Readonly<Settings> = {
     },
     searchTasks: {
         includeCompleted: false,
+        fuzzyMatching: false,
     },
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
@@ -200,6 +202,7 @@ export const getSettings = (): Settings => {
     addNewOptionsToUserSettings(Feature.settingsFlags, settings.features);
     addNewOptionsToUserSettings(defaultSettings.loggingOptions.minLevels, settings.loggingOptions.minLevels);
     addNewOptionsToUserSettings(defaultSettings.debugSettings, settings.debugSettings);
+    settings.searchTasks = { ...defaultSettings.searchTasks, ...settings.searchTasks };
 
     // In case saves pre-dated StatusConfiguration.type
     // TODO Special case for symbol 'X' or 'x' (just in case)

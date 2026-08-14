@@ -14,6 +14,10 @@ Each result shows a non-interactive checkbox for the task status, the rendered t
 
 By default, task search only shows incomplete tasks. To also search completed and cancelled tasks, enable **Include completed tasks in task search** in Tasks settings, under **Search results**.
 
+## Fuzzy matching
+
+By default, task search uses ordinary text matching. Enable **Use fuzzy matching in task search** in Tasks settings, under **Search results**, to allow non-contiguous characters to match a description. For example, `tdo` can match `todo`. Fuzzy results are ordered with the closest matches first.
+
 You can assign a hotkey to `Tasks: Search tasks` in Obsidian's [Hotkeys settings](https://help.obsidian.md/Customization/Hotkeys).
 
 > [!released]

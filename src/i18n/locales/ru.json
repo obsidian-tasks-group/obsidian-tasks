@@ -233,6 +233,10 @@
         }
       },
       "taskSearch": {
+        "fuzzyMatching": {
+          "description": "",
+          "name": ""
+        },
         "includeCompleted": {
           "description": "",
           "name": ""

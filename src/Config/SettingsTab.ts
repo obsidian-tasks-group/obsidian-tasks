@@ -243,7 +243,17 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(i18n.t('settings.searchResults.taskSearch.includeCompleted.description'))
             .addToggle((toggle) => {
                 toggle.setValue(getSettings().searchTasks.includeCompleted).onChange(async (value) => {
-                    updateSettings({ searchTasks: { includeCompleted: value } });
+                    updateSettings({ searchTasks: { ...getSettings().searchTasks, includeCompleted: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.searchResults.taskSearch.fuzzyMatching.name'))
+            .setDesc(i18n.t('settings.searchResults.taskSearch.fuzzyMatching.description'))
+            .addToggle((toggle) => {
+                toggle.setValue(getSettings().searchTasks.fuzzyMatching).onChange(async (value) => {
+                    updateSettings({ searchTasks: { ...getSettings().searchTasks, fuzzyMatching: value } });
                     await this.plugin.saveSettings();
                 });
             });

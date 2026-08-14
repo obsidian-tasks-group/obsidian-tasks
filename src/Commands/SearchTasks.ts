@@ -1,4 +1,4 @@
-import { type App, Component, MarkdownRenderer, Notice, SuggestModal } from 'obsidian';
+import { type App, Component, MarkdownRenderer, Notice, SuggestModal, prepareFuzzySearch } from 'obsidian';
 import { TASK_FORMATS, getSettings } from '../Config/Settings';
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import type { Task } from '../Task/Task';
@@ -14,16 +14,27 @@ export function filterIncompleteTasksByDescription(
     tasks: readonly Task[],
     query: string,
     includeCompleted = false,
+    fuzzyMatching = false,
 ): Task[] {
     if (query.trim() === '') {
         return [];
     }
 
-    const normalizedQuery = query.toLowerCase();
-    return tasks.filter(
-        (task) =>
-            (includeCompleted || !task.isDone) && task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery),
-    );
+    const candidateTasks = tasks.filter((task) => includeCompleted || !task.isDone);
+    if (!fuzzyMatching) {
+        const normalizedQuery = query.toLowerCase();
+        return candidateTasks.filter((task) => task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery));
+    }
+
+    const preparedSearch = prepareFuzzySearch(query);
+    return candidateTasks
+        .map((task) => {
+            const match = preparedSearch(task.descriptionWithoutTags);
+            return match === null ? null : { task, score: match.score };
+        })
+        .filter((match): match is { task: Task; score: number } => match !== null)
+        .sort((a, b) => b.score - a.score)
+        .map((match) => match.task);
 }
 
 export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {
@@ -73,7 +84,12 @@ export class SearchTasksModal extends SuggestModal<Task> {
     }
 
     public getSuggestions(query: string): Task[] {
-        return filterIncompleteTasksByDescription(this.getTasks(), query, getSettings().searchTasks.includeCompleted);
+        return filterIncompleteTasksByDescription(
+            this.getTasks(),
+            query,
+            getSettings().searchTasks.includeCompleted,
+            getSettings().searchTasks.fuzzyMatching,
+        );
     }
 
     public renderSuggestion(task: Task, el: HTMLElement): void {

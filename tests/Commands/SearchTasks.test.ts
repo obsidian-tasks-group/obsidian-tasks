@@ -78,10 +78,25 @@ describe('Search tasks', () => {
 
     it('should not include completed tasks in search by default', () => {
         expect(getSettings().searchTasks.includeCompleted).toBe(false);
+        expect(getSettings().searchTasks.fuzzyMatching).toBe(false);
 
-        updateSettings({ searchTasks: { includeCompleted: true } });
+        updateSettings({ searchTasks: { includeCompleted: true, fuzzyMatching: true } });
 
         expect(getSettings().searchTasks.includeCompleted).toBe(true);
+        expect(getSettings().searchTasks.fuzzyMatching).toBe(true);
+    });
+
+    it('should support non-contiguous description matches when fuzzy matching is enabled', () => {
+        const task = new TaskBuilder().description('Todo task').build();
+
+        expect(filterIncompleteTasksByDescription([task], 'tdo')).toEqual([]);
+        expect(filterIncompleteTasksByDescription([task], 'tdo', false, true)).toEqual([task]);
+    });
+
+    it('should preserve the fuzzy matching default for existing task search settings', () => {
+        updateSettings({ searchTasks: { includeCompleted: true } as any });
+
+        expect(getSettings().searchTasks).toEqual({ includeCompleted: true, fuzzyMatching: false });
     });
 
     it('should provide the description, source file name, and preceding heading for each suggestion', () => {
