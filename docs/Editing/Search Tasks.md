@@ -8,7 +8,11 @@ Use the `Tasks: Search tasks` command to find an incomplete task recognised by T
 
 Start typing in the search dialog to filter tasks by their description. The search is case-insensitive and uses ordinary text matching. It does not search task tags, file names, or headings.
 
-Each result shows the task description, its source file name, and the preceding heading. Select a result with the arrow keys and press Enter to open the source note at the task line. Press Esc to close the dialog.
+Each result shows a non-interactive checkbox for the task status, the rendered task description, its source file name and preceding heading, and any priority, date or recurrence information. Select a result with the arrow keys and press Enter to open the source note at the task line. Press Esc to close the dialog.
+
+## Include completed tasks
+
+By default, task search only shows incomplete tasks. To also search completed and cancelled tasks, enable **Include completed tasks in task search** in Tasks settings, under **Search results**.
 
 You can assign a hotkey to `Tasks: Search tasks` in Obsidian's [Hotkeys settings](https://help.obsidian.md/Customization/Hotkeys).
 

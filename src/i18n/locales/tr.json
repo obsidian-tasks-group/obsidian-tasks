@@ -231,6 +231,12 @@
           "bottom": "Alt",
           "top": "Üst"
         }
+      },
+      "taskSearch": {
+        "includeCompleted": {
+          "description": "",
+          "name": ""
+        }
       }
     },
     "searches": {

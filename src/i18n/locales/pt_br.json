@@ -231,6 +231,12 @@
           "bottom": "Inferior",
           "top": "Superior"
         }
+      },
+      "taskSearch": {
+        "includeCompleted": {
+          "description": "",
+          "name": ""
+        }
       }
     },
     "searches": {

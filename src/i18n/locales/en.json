@@ -231,6 +231,12 @@
           "bottom": "Bottom",
           "top": "Top"
         }
+      },
+      "taskSearch": {
+        "includeCompleted": {
+          "description": "Also show completed and cancelled tasks in the Tasks: Search tasks command.",
+          "name": "Include completed tasks in task search"
+        }
       }
     },
     "searches": {

@@ -5,6 +5,7 @@ import {
     taskSearchSuggestionText,
 } from '../../src/Commands/SearchTasks';
 import { Commands } from '../../src/Commands';
+import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { getTaskLineAndFile } from '../../src/Obsidian/File';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -29,6 +30,10 @@ describe('Search tasks', () => {
         new TaskBuilder().description('Release completed').status(Status.DONE).path('Archive.md').build(),
         new TaskBuilder().description('Review a document').tags(['#release']).path('Projects/Review.md').build(),
     ];
+
+    afterEach(() => {
+        resetSettings();
+    });
 
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
         expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0], tasks[1]]);
@@ -61,6 +66,19 @@ describe('Search tasks', () => {
         expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
     });
 
+    it('should only include completed tasks when configured to do so', () => {
+        expect(filterIncompleteTasksByDescription(tasks, 'release', false)).toEqual([tasks[0], tasks[1]]);
+        expect(filterIncompleteTasksByDescription(tasks, 'release', true)).toEqual([tasks[0], tasks[1], tasks[2]]);
+    });
+
+    it('should not include completed tasks in search by default', () => {
+        expect(getSettings().searchTasks.includeCompleted).toBe(false);
+
+        updateSettings({ searchTasks: { includeCompleted: true } });
+
+        expect(getSettings().searchTasks.includeCompleted).toBe(true);
+    });
+
     it('should provide the description, source file name, and preceding heading for each suggestion', () => {
         expect(taskSearchSuggestionText(tasks[0])).toEqual({
             description: 'Write release notes',
@@ -85,10 +103,12 @@ describe('Search tasks', () => {
 
         modal.renderSuggestion(tasks[0], element);
 
+        expect(element.querySelector('.tasks-search-result__checkbox')).not.toBeNull();
         expect(element.querySelector('.tasks-search-result__description')?.textContent).toEqual('Write release notes');
         expect(element.querySelector('.tasks-search-result__location')?.textContent).toEqual(
             'Release.md · Preparation',
         );
+        expect(element.querySelector('.tasks-search-result__metadata')).not.toBeNull();
     });
 
     it('should open the selected task at its current source line', async () => {

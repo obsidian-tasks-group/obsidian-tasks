@@ -238,6 +238,16 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
+        new Setting(containerEl)
+            .setName(i18n.t('settings.searchResults.taskSearch.includeCompleted.name'))
+            .setDesc(i18n.t('settings.searchResults.taskSearch.includeCompleted.description'))
+            .addToggle((toggle) => {
+                toggle.setValue(getSettings().searchTasks.includeCompleted).onChange(async (value) => {
+                    updateSettings({ searchTasks: { includeCompleted: value } });
+                    await this.plugin.saveSettings();
+                });
+            });
+
         // ---------------------------------------------------------------------------
         new Setting(containerEl)
             .setName(i18n.t('settings.presets.name'))

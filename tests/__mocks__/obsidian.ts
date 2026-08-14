@@ -283,6 +283,18 @@ export class Modal {
     public onClose(): void {}
 }
 
+export class Component {
+    public load(): void {}
+    public unload(): void {}
+}
+
+export class MarkdownRenderer {
+    public static render(_app: App, markdown: string, el: HTMLElement): Promise<void> {
+        el.textContent = markdown;
+        return Promise.resolve();
+    }
+}
+
 export abstract class SuggestModal<T> extends Modal {
     constructor(public readonly app: App) {
         super();

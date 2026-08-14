@@ -231,6 +231,12 @@
           "bottom": "",
           "top": ""
         }
+      },
+      "taskSearch": {
+        "includeCompleted": {
+          "description": "在 Tasks: Search tasks 命令中同时显示已完成和已取消的任务。",
+          "name": "在任务搜索中包含已完成任务"
+        }
       }
     },
     "searches": {

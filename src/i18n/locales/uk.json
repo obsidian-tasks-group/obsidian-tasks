@@ -231,6 +231,12 @@
           "bottom": "",
           "top": ""
         }
+      },
+      "taskSearch": {
+        "includeCompleted": {
+          "description": "",
+          "name": ""
+        }
       }
     },
     "searches": {

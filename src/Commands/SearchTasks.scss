@@ -1,12 +1,29 @@
 .tasks-search-result {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: var(--size-2-2);
     min-width: 0;
+
+    .tasks-search-result__checkbox {
+        grid-row: 1 / span 2;
+        align-self: start;
+        margin-top: var(--size-2-1);
+        pointer-events: none;
+    }
 
     .tasks-search-result__description {
         overflow: hidden;
         color: var(--text-normal);
-        font-weight: var(--font-semibold);
+        font-weight: var(--font-semibold, 600);
         text-overflow: ellipsis;
         white-space: nowrap;
+
+        > p {
+            overflow: hidden;
+            margin: 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
     .tasks-search-result__location {
@@ -14,6 +31,19 @@
         margin-top: var(--size-2-1);
         color: var(--text-muted);
         font-size: var(--font-ui-smaller);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .tasks-search-result__metadata {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+        align-self: center;
+        max-width: 16rem;
+        overflow: hidden;
+        color: var(--text-muted);
+        font-size: var(--font-ui-smaller);
+        text-align: end;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
