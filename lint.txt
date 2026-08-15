@@ -2,14 +2,9 @@ yarn run v1.22.19
 $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-check
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Commands/QuickSearchTasks.ts
-   80:26  warning  Use 'createEl('input')' instead of 'document.createElement('input')'        obsidianmd/prefer-create-el
-   80:26  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-   88:29  warning  Use 'createDiv()' instead of 'document.createElement('div')'                obsidianmd/prefer-create-el
-   88:29  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-   98:26  warning  Use 'createDiv()' instead of 'document.createElement('div')'                obsidianmd/prefer-create-el
-   98:26  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-  103:26  warning  Use 'createDiv()' instead of 'document.createElement('div')'                obsidianmd/prefer-create-el
-  103:26  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
+   87:29  warning  Use 'el.createDiv()' instead of 'el.createEl('div')'  obsidianmd/prefer-create-el
+   96:26  warning  Use 'el.createDiv()' instead of 'el.createEl('div')'  obsidianmd/prefer-create-el
+  100:26  warning  Use 'el.createDiv()' instead of 'el.createEl('div')'  obsidianmd/prefer-create-el
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/PresetsSettingsUI.ts
   286:28  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
@@ -213,8 +208,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
   84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 143 problems (0 errors, 143 warnings)
-  0 errors and 32 warnings potentially fixable with the `--fix` option.
+✖ 138 problems (0 errors, 138 warnings)
+  0 errors and 31 warnings potentially fixable with the `--fix` option.
 
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/Obsidian/CacheLoading.test.ts
@@ -230,4 +225,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 22.05s.
+Done in 21.27s.

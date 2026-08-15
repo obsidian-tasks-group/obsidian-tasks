@@ -77,17 +77,15 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
         const suggestion = taskSearchSuggestionText(task);
         el.classList.add('tasks-quick-search-result');
 
-        const checkbox = document.createElement('input');
+        const checkbox = el.createEl('input');
         checkbox.type = 'checkbox';
         checkbox.checked = task.isDone;
         checkbox.tabIndex = -1;
         checkbox.classList.add('task-list-item-checkbox', 'tasks-quick-search-result-checkbox');
         checkbox.setAttribute('aria-label', `Task status: ${task.status.name}`);
-        el.appendChild(checkbox);
 
-        const description = document.createElement('div');
+        const description = el.createEl('div');
         description.classList.add('tasks-quick-search-result-description');
-        el.appendChild(description);
         const renderComponent = new Component();
         renderComponent.load();
         this.renderComponents.push(renderComponent);
@@ -95,15 +93,13 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
             description.textContent = suggestion.description;
         });
 
-        const location = document.createElement('div');
+        const location = el.createEl('div');
         location.classList.add('tasks-quick-search-result-location');
         location.textContent = `${suggestion.source} · ${suggestion.heading}`;
-        el.appendChild(location);
 
-        const metadata = document.createElement('div');
+        const metadata = el.createEl('div');
         metadata.classList.add('tasks-quick-search-result-metadata');
         metadata.textContent = taskSearchMetadataText(task).join(' ');
-        el.appendChild(metadata);
     }
 
     public onChooseSuggestion(task: Task, _evt: MouseEvent | KeyboardEvent): void {
