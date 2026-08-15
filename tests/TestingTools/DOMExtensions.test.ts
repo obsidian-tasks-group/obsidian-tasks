@@ -22,7 +22,7 @@ describe('Obsidian DOM extensions in tests', () => {
         expect(parent.firstElementChild).toBe(child);
     });
 
-    it.failing('createEl() should apply the type option to an input element', () => {
+    it('createEl() should apply the type option to an input element', () => {
         const parent = document.createElement('div') as HTMLElementWithCreateEl;
 
         const child = parent.createEl('input', { type: 'checkbox' });

@@ -10,8 +10,14 @@ if (HTMLElement.prototype.createEl === undefined) {
     HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
         this: HTMLElement,
         tag: K,
+        o?: { type?: string },
     ): HTMLElementTagNameMap[K] {
         const el = document.createElement(tag) as HTMLElementTagNameMap[K];
+
+        if (o?.type !== undefined && el instanceof HTMLInputElement) {
+            el.type = o.type;
+        }
+
         this.appendChild(el);
         return el;
     };
