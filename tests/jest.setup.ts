@@ -10,12 +10,16 @@ if (HTMLElement.prototype.createEl === undefined) {
     HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
         this: HTMLElement,
         tag: K,
-        o?: { type?: string },
+        o?: { type?: string; cls?: string[] },
     ): HTMLElementTagNameMap[K] {
         const el = document.createElement(tag) as HTMLElementTagNameMap[K];
 
         if (o?.type !== undefined && el instanceof HTMLInputElement) {
             el.type = o.type;
+        }
+
+        if (o?.cls !== undefined) {
+            el.classList.add(...o.cls);
         }
 
         this.appendChild(el);

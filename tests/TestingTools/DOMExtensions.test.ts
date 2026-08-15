@@ -34,7 +34,7 @@ describe('Obsidian DOM extensions in tests', () => {
         expect(child.type).toBe('checkbox');
     });
 
-    it.failing('createEl() should apply classes from the cls option', () => {
+    it('createEl() should apply classes from the cls option', () => {
         const parent = document.createElement('div') as HTMLElementWithCreateEl;
 
         const child = parent.createEl('input', {
