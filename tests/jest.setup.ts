@@ -2,6 +2,21 @@ import { EnableJsInTasksQueries } from '../src/Config/EnableJsInTasksQueries';
 import { InMemoryLocalStorageProvider } from '../src/Config/InMemoryLocalStorageProvider';
 import { initializeI18n } from '../src/i18n/i18n';
 
+/**
+ * Provide the minimal Obsidian-style createEl() behaviour in Jest:
+ * create the requested element, append it to the parent, and return it.
+ */
+if (HTMLElement.prototype.createEl === undefined) {
+    HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
+        this: HTMLElement,
+        tag: K,
+    ): HTMLElementTagNameMap[K] {
+        const el = document.createElement(tag) as HTMLElementTagNameMap[K];
+        this.appendChild(el);
+        return el;
+    };
+}
+
 // Tests should default to allowing JavaScript in Tasks queries.
 // Production code initialises this singleton separately in main.ts, using Obsidian local storage.
 EnableJsInTasksQueries.initialise(new InMemoryLocalStorageProvider());

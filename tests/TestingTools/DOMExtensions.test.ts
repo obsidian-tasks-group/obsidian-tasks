@@ -2,11 +2,15 @@
  * @jest-environment jsdom
  */
 
-describe('Obsidian DOM extensions in tests', () => {
-    it.failing('createEl() should create an element, append it to the parent, and return it', () => {
-        const parent = document.createElement('div');
+type HTMLElementWithCreateEl = HTMLElement & {
+    createEl<K extends keyof HTMLElementTagNameMap>(tag: K): HTMLElementTagNameMap[K];
+};
 
-        // Fails with parent.createEl is not a function
+describe('Obsidian DOM extensions in tests', () => {
+    it('createEl() should create an element, append it to the parent, and return it', () => {
+        const parent = document.createElement('div') as HTMLElementWithCreateEl;
+
+        // This documents the baseline behavior we rely on from Obsidian's createEl().
         const child = parent.createEl('input');
 
         expect(child.tagName).toBe('INPUT');
