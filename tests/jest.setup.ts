@@ -6,6 +6,9 @@ import type { CreateDivOptions, CreateElOptions } from './TestingTools/DOMExtens
 /**
  * Provide the minimal Obsidian-style createEl() behaviour in Jest:
  * create the requested element, append it to the parent, and return it.
+ *
+ * This is a partial re-implementation of:
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createEl/.
  */
 if (HTMLElement.prototype.createEl === undefined) {
     HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
@@ -32,6 +35,9 @@ if (HTMLElement.prototype.createEl === undefined) {
 /**
  * Provide the minimal Obsidian-style createDiv() behaviour in Jest
  * by delegating to createEl('div').
+ *
+ * This is a partial re-implementation of
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createDiv/.
  */
 if (HTMLElement.prototype.createDiv === undefined) {
     HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOptions): HTMLDivElement {
