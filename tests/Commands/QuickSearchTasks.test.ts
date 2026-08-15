@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { Notice } from 'obsidian';
 import {
     QuickSearchTasksModal,
     filterIncompleteTasksByDescription,
@@ -12,12 +13,16 @@ import { Priority } from '../../src/Task/Priority';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
-jest.mock('obsidian');
+jest.mock('obsidian', () => ({
+    ...jest.requireActual('../__mocks__/obsidian'),
+    Notice: jest.fn(),
+}));
 jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
 
 window.moment = moment;
 
 describe('Quick search', () => {
+    const MockedNotice = jest.mocked(Notice);
     const tasks = [
         new TaskBuilder()
             .description('Write release notes')
@@ -132,13 +137,21 @@ describe('Quick search', () => {
         expect(completeElement.querySelector('input')).toMatchObject({ checked: true });
     });
 
-    it('should not open a source file when the task can no longer be found', async () => {
+    it('should inform the user when the selected task can no longer be found', async () => {
         const app = { vault: {}, workspace: { getLeaf: jest.fn() } } as any;
+        const warning = jest.spyOn(console, 'warn').mockImplementation();
         jest.mocked(getTaskLineAndFile).mockResolvedValue(undefined);
 
         await openTaskAtSourceLocation(tasks[0], app);
 
         expect(app.workspace.getLeaf).not.toHaveBeenCalled();
+        expect(warning).toHaveBeenCalledWith(
+            'Tasks: Could not open the selected task.\nIt may have changed. Try searching again.',
+        );
+        expect(MockedNotice).toHaveBeenCalledWith(
+            'Tasks: Could not open the selected task.\nIt may have changed. Try searching again.',
+        );
+        warning.mockRestore();
     });
 
     it('should open the selected task at its current source line', async () => {

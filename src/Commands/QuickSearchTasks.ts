@@ -45,6 +45,9 @@ export async function openTaskAtSourceLocation(task: Task, app: App): Promise<vo
     const result = await getTaskLineAndFile(task, app.vault);
     if (result === undefined) {
         // The source file or task can change after the task cache was last refreshed.
+        const message = 'Tasks: Could not open the selected task.\nIt may have changed. Try searching again.';
+        console.warn(message);
+        new Notice(message);
         return;
     }
 
