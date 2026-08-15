@@ -22,7 +22,7 @@ describe('Obsidian DOM extensions in tests', () => {
         expect(parent.firstElementChild).toBe(child);
     });
 
-    it.failing('createDiv() should create a div, append it to the parent, and return it', () => {
+    it('createDiv() should create a div, append it to the parent, and return it', () => {
         const parent = document.createElement('section') as HTMLElementWithCreateDiv;
 
         const child = parent.createDiv();

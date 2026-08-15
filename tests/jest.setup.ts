@@ -17,6 +17,16 @@ if (HTMLElement.prototype.createEl === undefined) {
     };
 }
 
+/**
+ * Provide the minimal Obsidian-style createDiv() behaviour in Jest
+ * by delegating to createEl('div').
+ */
+if (HTMLElement.prototype.createDiv === undefined) {
+    HTMLElement.prototype.createDiv = function (this: HTMLElement): HTMLDivElement {
+        return this.createEl('div');
+    };
+}
+
 // Tests should default to allowing JavaScript in Tasks queries.
 // Production code initialises this singleton separately in main.ts, using Obsidian local storage.
 EnableJsInTasksQueries.initialise(new InMemoryLocalStorageProvider());
