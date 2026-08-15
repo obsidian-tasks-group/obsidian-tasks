@@ -33,8 +33,17 @@ if (HTMLElement.prototype.createEl === undefined) {
  * by delegating to createEl('div').
  */
 if (HTMLElement.prototype.createDiv === undefined) {
-    HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: { cls?: string[] | string }): HTMLDivElement {
-        return this.createEl('div', o);
+    HTMLElement.prototype.createDiv = function (
+        this: HTMLElement,
+        o?: { cls?: string[] | string; text?: string },
+    ): HTMLDivElement {
+        const div = this.createEl('div', o);
+
+        if (o?.text !== undefined) {
+            div.textContent = o.text;
+        }
+
+        return div;
     };
 }
 

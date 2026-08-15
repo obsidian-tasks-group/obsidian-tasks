@@ -10,7 +10,7 @@ type HTMLElementWithCreateEl = HTMLElement & {
 };
 
 type HTMLElementWithCreateDiv = HTMLElement & {
-    createDiv(o?: { cls?: string[] | string }): HTMLDivElement;
+    createDiv(o?: { cls?: string[] | string; text?: string }): HTMLDivElement;
 };
 
 function expectElementToHaveClasses(element: Element, expectedClasses: string[] | string) {
@@ -90,5 +90,15 @@ describe('Obsidian DOM extensions in tests', () => {
         });
 
         expectElementToHaveClasses(child, 'single-class-value');
+    });
+
+    it('createDiv() should apply text from the text option', () => {
+        const parent = document.createElement('section') as HTMLElementWithCreateDiv;
+
+        const child = parent.createDiv({
+            text: 'example text content',
+        });
+
+        expect(child.textContent).toBe('example text content');
     });
 });
