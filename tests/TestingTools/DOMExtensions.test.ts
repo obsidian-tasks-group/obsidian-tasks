@@ -3,7 +3,10 @@
  */
 
 type HTMLElementWithCreateEl = HTMLElement & {
-    createEl<K extends keyof HTMLElementTagNameMap>(tag: K, o?: { type?: string }): HTMLElementTagNameMap[K];
+    createEl<K extends keyof HTMLElementTagNameMap>(
+        tag: K,
+        o?: { type?: string; cls?: string[] },
+    ): HTMLElementTagNameMap[K];
 };
 
 type HTMLElementWithCreateDiv = HTMLElement & {
@@ -29,6 +32,17 @@ describe('Obsidian DOM extensions in tests', () => {
 
         expect(child.tagName).toBe('INPUT');
         expect(child.type).toBe('checkbox');
+    });
+
+    it.failing('createEl() should apply classes from the cls option', () => {
+        const parent = document.createElement('div') as HTMLElementWithCreateEl;
+
+        const child = parent.createEl('input', {
+            cls: ['task-list-item-checkbox', 'tasks-quick-search-result-checkbox'],
+        });
+
+        expect(child.classList).toContain('task-list-item-checkbox');
+        expect(child.classList).toContain('tasks-quick-search-result-checkbox');
     });
 
     it('createDiv() should create a div, append it to the parent, and return it', () => {
