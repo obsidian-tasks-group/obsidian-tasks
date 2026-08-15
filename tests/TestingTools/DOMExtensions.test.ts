@@ -10,7 +10,7 @@ type HTMLElementWithCreateEl = HTMLElement & {
 };
 
 type HTMLElementWithCreateDiv = HTMLElement & {
-    createDiv(): HTMLDivElement;
+    createDiv(o?: { cls?: string[] | string }): HTMLDivElement;
 };
 
 function expectElementToHaveClasses(element: Element, expectedClasses: string[] | string) {
@@ -70,5 +70,25 @@ describe('Obsidian DOM extensions in tests', () => {
         expect(child.tagName).toBe('DIV');
         expect(parent.children).toHaveLength(1);
         expect(parent.firstElementChild).toBe(child);
+    });
+
+    it('createDiv() should apply classes from the cls option', () => {
+        const parent = document.createElement('section') as HTMLElementWithCreateDiv;
+
+        const child = parent.createDiv({
+            cls: ['first-class', 'second-class'],
+        });
+
+        expectElementToHaveClasses(child, ['first-class', 'second-class']);
+    });
+
+    it('createDiv() should apply a class from the cls option', () => {
+        const parent = document.createElement('section') as HTMLElementWithCreateDiv;
+
+        const child = parent.createDiv({
+            cls: 'single-class-value',
+        });
+
+        expectElementToHaveClasses(child, 'single-class-value');
     });
 });
