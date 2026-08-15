@@ -85,8 +85,7 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
         checkbox.tabIndex = -1;
         checkbox.setAttribute('aria-label', `Task status: ${task.status.name}`);
 
-        const description = el.createDiv();
-        description.classList.add('tasks-quick-search-result-description');
+        const description = el.createDiv({ cls: 'tasks-quick-search-result-description' });
         const renderComponent = new Component();
         renderComponent.load();
         this.renderComponents.push(renderComponent);
@@ -94,12 +93,10 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
             description.textContent = suggestion.description;
         });
 
-        const location = el.createDiv();
-        location.classList.add('tasks-quick-search-result-location');
+        const location = el.createDiv({ cls: 'tasks-quick-search-result-location' });
         location.textContent = `${suggestion.source} · ${suggestion.heading}`;
 
-        const metadata = el.createDiv();
-        metadata.classList.add('tasks-quick-search-result-metadata');
+        const metadata = el.createDiv({ cls: 'tasks-quick-search-result-metadata' });
         metadata.textContent = taskSearchMetadataText(task).join(' ');
     }
 
