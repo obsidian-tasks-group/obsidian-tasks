@@ -4,7 +4,8 @@ publish: true
 
 # Quick Search
 
-You can assign a hotkey to `Tasks: Quick search` in Obsidian's [Hotkeys settings](https://help.obsidian.md/Customization/Hotkeys).
+> [!released]
+> Introduced in Tasks X.Y.Z.
 
 Use the `Tasks: Quick search` command to find an incomplete task recognised by Tasks anywhere in your vault. If you use a [[Global Filter]], only tasks that match it are searchable.
 
@@ -18,5 +19,4 @@ Each result shows a non-interactive checkbox for the task status, the rendered t
 ![Quick search results](../images/quick-search-results.png)
 <span class="caption">Quick search results</span>
 
-> [!released]
-> Introduced in Tasks X.Y.Z.
+You can assign a hotkey to `Tasks: Quick search` in Obsidian's [Hotkeys settings](https://help.obsidian.md/Customization/Hotkeys).
