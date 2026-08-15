@@ -5,13 +5,21 @@
 type HTMLElementWithCreateEl = HTMLElement & {
     createEl<K extends keyof HTMLElementTagNameMap>(
         tag: K,
-        o?: { type?: string; cls?: string[] },
+        o?: { type?: string; cls?: string[] | string },
     ): HTMLElementTagNameMap[K];
 };
 
 type HTMLElementWithCreateDiv = HTMLElement & {
     createDiv(): HTMLDivElement;
 };
+
+function expectElementToHaveClasses(element: Element, expectedClasses: string[] | string) {
+    const classes = Array.isArray(expectedClasses) ? expectedClasses : [expectedClasses];
+
+    for (const className of classes) {
+        expect(element.classList).toContain(className);
+    }
+}
 
 describe('Obsidian DOM extensions in tests', () => {
     it('createEl() should create an element, append it to the parent, and return it', () => {
@@ -41,8 +49,7 @@ describe('Obsidian DOM extensions in tests', () => {
             cls: ['task-list-item-checkbox', 'tasks-quick-search-result-checkbox'],
         });
 
-        expect(child.classList).toContain('task-list-item-checkbox');
-        expect(child.classList).toContain('tasks-quick-search-result-checkbox');
+        expectElementToHaveClasses(child, ['task-list-item-checkbox', 'tasks-quick-search-result-checkbox']);
     });
 
     it('createEl() should apply a class from the cls option', () => {
@@ -52,7 +59,7 @@ describe('Obsidian DOM extensions in tests', () => {
             cls: 'single-class-value',
         });
 
-        expect(child.classList).toContain('single-class-value');
+        expectElementToHaveClasses(child, 'single-class-value');
     });
 
     it('createDiv() should create a div, append it to the parent, and return it', () => {
