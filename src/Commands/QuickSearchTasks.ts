@@ -93,11 +93,15 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
             description.textContent = suggestion.description;
         });
 
-        const location = el.createDiv({ cls: 'tasks-quick-search-result-location' });
-        location.textContent = `${suggestion.source} · ${suggestion.heading}`;
+        el.createDiv({
+            cls: 'tasks-quick-search-result-location',
+            text: `${suggestion.source} · ${suggestion.heading}`,
+        });
 
-        const metadata = el.createDiv({ cls: 'tasks-quick-search-result-metadata' });
-        metadata.textContent = taskSearchMetadataText(task).join(' ');
+        el.createDiv({
+            cls: 'tasks-quick-search-result-metadata',
+            text: taskSearchMetadataText(task).join(' '),
+        });
     }
 
     public onChooseSuggestion(task: Task, _evt: MouseEvent | KeyboardEvent): void {
