@@ -1,17 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-
-type HTMLElementWithCreateEl = HTMLElement & {
-    createEl<K extends keyof HTMLElementTagNameMap>(
-        tag: K,
-        o?: { type?: string; cls?: string[] | string },
-    ): HTMLElementTagNameMap[K];
-};
-
-type HTMLElementWithCreateDiv = HTMLElement & {
-    createDiv(o?: { cls?: string[] | string; text?: string }): HTMLDivElement;
-};
+import type { HTMLElementWithCreateDiv, HTMLElementWithCreateEl } from './DOMExtensions';
 
 /**
  * Create a parent element typed for tests that exercise createEl().
