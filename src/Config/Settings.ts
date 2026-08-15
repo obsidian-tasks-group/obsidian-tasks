@@ -84,6 +84,7 @@ export interface Settings {
     searchResults: {
         taskCountLocation: 'top' | 'bottom';
     };
+
     // The custom status states.
     statusSettings: StatusSettings;
 
@@ -193,6 +194,7 @@ export const getSettings = (): Settings => {
     addNewOptionsToUserSettings(Feature.settingsFlags, settings.features);
     addNewOptionsToUserSettings(defaultSettings.loggingOptions.minLevels, settings.loggingOptions.minLevels);
     addNewOptionsToUserSettings(defaultSettings.debugSettings, settings.debugSettings);
+
     // In case saves pre-dated StatusConfiguration.type
     // TODO Special case for symbol 'X' or 'x' (just in case)
     settings.statusSettings.customStatuses.forEach((s, index, array) => {

@@ -1,11 +1,11 @@
 import moment from 'moment';
 import {
-    SearchTasksModal,
+    QuickSearchTasksModal,
     filterIncompleteTasksByDescription,
     openTaskAtSourceLocation,
     taskSearchMetadataText,
     taskSearchSuggestionText,
-} from '../../src/Commands/SearchTasks';
+} from '../../src/Commands/QuickSearchTasks';
 import { Commands } from '../../src/Commands';
 import { getTaskLineAndFile } from '../../src/Obsidian/File';
 import { Priority } from '../../src/Task/Priority';
@@ -17,7 +17,7 @@ jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
 
 window.moment = moment;
 
-describe('Search tasks', () => {
+describe('Quick search', () => {
     const tasks = [
         new TaskBuilder()
             .description('Write release notes')
@@ -39,7 +39,7 @@ describe('Search tasks', () => {
         expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0], tasks[1]]);
     });
 
-    it('should register the search tasks command', () => {
+    it('should register the quick search command', () => {
         const addCommand = jest.fn();
         new Commands({
             plugin: {
@@ -51,8 +51,8 @@ describe('Search tasks', () => {
 
         expect(addCommand).toHaveBeenCalledWith(
             expect.objectContaining({
-                id: 'search-tasks',
-                name: 'Search tasks',
+                id: 'quick-search',
+                name: 'Quick search',
             }),
         );
     });
@@ -84,12 +84,12 @@ describe('Search tasks', () => {
         });
     });
 
-    it('should prioritise due dates over other task metadata', () => {
+    it('should list due dates before scheduled and start dates in task metadata', () => {
         const task = new TaskBuilder()
-            .dueDate('2023-07-04')
-            .scheduledDate('2023-07-03')
-            .startDate('2023-07-02')
             .priority(Priority.High)
+            .startDate('2023-07-02')
+            .scheduledDate('2023-07-03')
+            .dueDate('2023-07-04')
             .build();
 
         expect(taskSearchMetadataText(task)).toEqual([
@@ -100,18 +100,45 @@ describe('Search tasks', () => {
         ]);
     });
 
-    it('should render a clear hierarchy for task descriptions and locations', () => {
-        const modal = new SearchTasksModal({} as any, () => tasks);
+    it('should render the checkbox, description, location, and metadata elements', () => {
+        const modal = new QuickSearchTasksModal({} as any, () => tasks);
         const element = document.createElement('div');
 
         modal.renderSuggestion(tasks[0], element);
 
-        expect(element.querySelector('.tasks-search-result__checkbox')).not.toBeNull();
-        expect(element.querySelector('.tasks-search-result__description')?.textContent).toEqual('Write release notes');
-        expect(element.querySelector('.tasks-search-result__location')?.textContent).toEqual(
+        expect(element.querySelector('.tasks-quick-search-result-checkbox')).not.toBeNull();
+        expect(element.querySelector('.tasks-quick-search-result-description')?.textContent).toEqual(
+            'Write release notes',
+        );
+        expect(element.querySelector('.tasks-quick-search-result-location')?.textContent).toEqual(
             'Release.md · Preparation',
         );
-        expect(element.querySelector('.tasks-search-result__metadata')).not.toBeNull();
+        expect(element.querySelector('.tasks-quick-search-result-metadata')).not.toBeNull();
+    });
+
+    it('should only check the checkbox for completed tasks', () => {
+        const modal = new QuickSearchTasksModal({} as any, () => tasks);
+        const incompleteElement = document.createElement('div');
+        const completeElement = document.createElement('div');
+        const inProgressTask = new TaskBuilder().description('In progress task').status(Status.IN_PROGRESS).build();
+
+        modal.renderSuggestion(inProgressTask, incompleteElement);
+        modal.renderSuggestion(tasks[2], completeElement);
+
+        expect(incompleteElement.querySelector('input')).toMatchObject({ checked: false });
+        expect(incompleteElement.querySelector('input')?.getAttribute('aria-label')).toEqual(
+            'Task status: In Progress',
+        );
+        expect(completeElement.querySelector('input')).toMatchObject({ checked: true });
+    });
+
+    it('should not open a source file when the task can no longer be found', async () => {
+        const app = { vault: {}, workspace: { getLeaf: jest.fn() } } as any;
+        jest.mocked(getTaskLineAndFile).mockResolvedValue(undefined);
+
+        await openTaskAtSourceLocation(tasks[0], app);
+
+        expect(app.workspace.getLeaf).not.toHaveBeenCalled();
     });
 
     it('should open the selected task at its current source line', async () => {

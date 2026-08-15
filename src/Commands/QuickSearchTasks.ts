@@ -44,6 +44,7 @@ export function taskSearchMetadataText(task: Task): string[] {
 export async function openTaskAtSourceLocation(task: Task, app: App): Promise<void> {
     const result = await getTaskLineAndFile(task, app.vault);
     if (result === undefined) {
+        // The source file or task can change after the task cache was last refreshed.
         return;
     }
 
@@ -56,7 +57,7 @@ export async function openTaskAtSourceLocation(task: Task, app: App): Promise<vo
     }
 }
 
-export class SearchTasksModal extends SuggestModal<Task> {
+export class QuickSearchTasksModal extends SuggestModal<Task> {
     private readonly renderComponents: Component[] = [];
 
     constructor(app: App, private readonly getTasks: () => Task[]) {
@@ -71,18 +72,18 @@ export class SearchTasksModal extends SuggestModal<Task> {
 
     public renderSuggestion(task: Task, el: HTMLElement): void {
         const suggestion = taskSearchSuggestionText(task);
-        el.classList.add('tasks-search-result');
+        el.classList.add('tasks-quick-search-result');
 
-        const checkbox = el.ownerDocument.createElement('input');
+        const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.checked = task.status.symbol !== ' ';
+        checkbox.checked = task.isDone;
         checkbox.tabIndex = -1;
-        checkbox.classList.add('task-list-item-checkbox', 'tasks-search-result__checkbox');
-        checkbox.setAttribute('aria-label', task.status.name);
+        checkbox.classList.add('task-list-item-checkbox', 'tasks-quick-search-result-checkbox');
+        checkbox.setAttribute('aria-label', `Task status: ${task.status.name}`);
         el.appendChild(checkbox);
 
-        const description = el.ownerDocument.createElement('div');
-        description.classList.add('tasks-search-result__description');
+        const description = document.createElement('div');
+        description.classList.add('tasks-quick-search-result-description');
         el.appendChild(description);
         const renderComponent = new Component();
         renderComponent.load();
@@ -91,13 +92,13 @@ export class SearchTasksModal extends SuggestModal<Task> {
             description.textContent = suggestion.description;
         });
 
-        const location = el.ownerDocument.createElement('div');
-        location.classList.add('tasks-search-result__location');
+        const location = document.createElement('div');
+        location.classList.add('tasks-quick-search-result-location');
         location.textContent = `${suggestion.source} · ${suggestion.heading}`;
         el.appendChild(location);
 
-        const metadata = el.ownerDocument.createElement('div');
-        metadata.classList.add('tasks-search-result__metadata');
+        const metadata = document.createElement('div');
+        metadata.classList.add('tasks-quick-search-result-metadata');
         metadata.textContent = taskSearchMetadataText(task).join(' ');
         el.appendChild(metadata);
     }

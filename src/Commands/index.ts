@@ -6,7 +6,7 @@ import { createOrEdit } from './CreateOrEdit';
 import { toggleDone } from './ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
 import { createSetStatusCommands } from './ChangeStatusCommands';
-import { SearchTasksModal } from './SearchTasks';
+import { QuickSearchTasksModal } from './QuickSearchTasks';
 
 export const ToggleTaskDoneCommandName = 'Toggle task done';
 
@@ -45,10 +45,10 @@ export class Commands {
         });
 
         plugin.addCommand({
-            id: 'search-tasks',
-            name: 'Search tasks',
+            id: 'quick-search',
+            name: 'Quick search',
             icon: 'search',
-            callback: () => new SearchTasksModal(this.app, () => this.plugin.getTasks()).open(),
+            callback: () => new QuickSearchTasksModal(this.app, () => this.plugin.getTasks()).open(),
         });
 
         plugin.addCommand({
