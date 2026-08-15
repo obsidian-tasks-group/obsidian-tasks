@@ -106,7 +106,6 @@ Prefer explicitly defining any function parameters and return type              
   121:31  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
   122:18  warning  Unsafe member access .query on an `any` value                                                                   @typescript-eslint/no-unsafe-member-access
   148:43  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
-  149:12  warning  This assertion is unnecessary since the receiver accepts the original type of the expression                    @typescript-eslint/no-unnecessary-type-assertion
   149:27  warning  Unsafe argument of type `any` assigned to a parameter of type `ArrayLike<unknown> | { [s: string]: unknown; }`  @typescript-eslint/no-unsafe-argument
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/Expression.ts
@@ -214,8 +213,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
   84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 144 problems (0 errors, 144 warnings)
-  0 errors and 33 warnings potentially fixable with the `--fix` option.
+✖ 143 problems (0 errors, 143 warnings)
+  0 errors and 32 warnings potentially fixable with the `--fix` option.
 
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/Obsidian/CacheLoading.test.ts
@@ -231,4 +230,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 21.63s.
+Done in 22.05s.
