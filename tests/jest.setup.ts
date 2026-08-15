@@ -1,6 +1,7 @@
 import { EnableJsInTasksQueries } from '../src/Config/EnableJsInTasksQueries';
 import { InMemoryLocalStorageProvider } from '../src/Config/InMemoryLocalStorageProvider';
 import { initializeI18n } from '../src/i18n/i18n';
+import type { CreateDivOptions, CreateElOptions } from './TestingTools/DOMExtensions';
 
 /**
  * Provide the minimal Obsidian-style createEl() behaviour in Jest:
@@ -10,7 +11,7 @@ if (HTMLElement.prototype.createEl === undefined) {
     HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
         this: HTMLElement,
         tag: K,
-        o?: { type?: string; cls?: string[] | string },
+        o?: CreateElOptions,
     ): HTMLElementTagNameMap[K] {
         const el = document.createElement(tag) as HTMLElementTagNameMap[K];
 
@@ -33,10 +34,7 @@ if (HTMLElement.prototype.createEl === undefined) {
  * by delegating to createEl('div').
  */
 if (HTMLElement.prototype.createDiv === undefined) {
-    HTMLElement.prototype.createDiv = function (
-        this: HTMLElement,
-        o?: { cls?: string[] | string; text?: string },
-    ): HTMLDivElement {
+    HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOptions): HTMLDivElement {
         const div = this.createEl('div', o);
 
         if (o?.text !== undefined) {
