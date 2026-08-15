@@ -3,7 +3,7 @@
  */
 
 type HTMLElementWithCreateEl = HTMLElement & {
-    createEl<K extends keyof HTMLElementTagNameMap>(tag: K): HTMLElementTagNameMap[K];
+    createEl<K extends keyof HTMLElementTagNameMap>(tag: K, o?: { type?: string }): HTMLElementTagNameMap[K];
 };
 
 type HTMLElementWithCreateDiv = HTMLElement & {
@@ -20,6 +20,15 @@ describe('Obsidian DOM extensions in tests', () => {
         expect(child.tagName).toBe('INPUT');
         expect(parent.children).toHaveLength(1);
         expect(parent.firstElementChild).toBe(child);
+    });
+
+    it.failing('createEl() should apply the type option to an input element', () => {
+        const parent = document.createElement('div') as HTMLElementWithCreateEl;
+
+        const child = parent.createEl('input', { type: 'checkbox' });
+
+        expect(child.tagName).toBe('INPUT');
+        expect(child.type).toBe('checkbox');
     });
 
     it('createDiv() should create a div, append it to the parent, and return it', () => {
