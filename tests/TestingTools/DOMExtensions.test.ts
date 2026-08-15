@@ -45,7 +45,7 @@ describe('Obsidian DOM extensions in tests', () => {
         expect(child.classList).toContain('tasks-quick-search-result-checkbox');
     });
 
-    it.failing('createEl() should apply a class from the cls option', () => {
+    it('createEl() should apply a class from the cls option', () => {
         const parent = document.createElement('div') as HTMLElementWithCreateEl;
 
         const child = parent.createEl('input', {

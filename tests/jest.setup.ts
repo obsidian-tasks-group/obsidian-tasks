@@ -10,7 +10,7 @@ if (HTMLElement.prototype.createEl === undefined) {
     HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
         this: HTMLElement,
         tag: K,
-        o?: { type?: string; cls?: string[] },
+        o?: { type?: string; cls?: string[] | string },
     ): HTMLElementTagNameMap[K] {
         const el = document.createElement(tag) as HTMLElementTagNameMap[K];
 
@@ -19,7 +19,8 @@ if (HTMLElement.prototype.createEl === undefined) {
         }
 
         if (o?.cls !== undefined) {
-            el.classList.add(...o.cls);
+            const classes = Array.isArray(o.cls) ? o.cls : [o.cls];
+            el.classList.add(...classes);
         }
 
         this.appendChild(el);
