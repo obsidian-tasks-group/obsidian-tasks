@@ -13,6 +13,26 @@ type HTMLElementWithCreateDiv = HTMLElement & {
     createDiv(o?: { cls?: string[] | string; text?: string }): HTMLDivElement;
 };
 
+/**
+ * Create a parent element typed for tests that exercise createEl().
+ *
+ * The choice of a <div> parent is arbitrary: these tests only care that
+ * createEl() creates and appends a child to some HTMLElement parent.
+ */
+function createParentWithCreateEl(): HTMLElementWithCreateEl {
+    return document.createElement('div') as HTMLElementWithCreateEl;
+}
+
+/**
+ * Create a parent element typed for tests that exercise createDiv().
+ *
+ * The choice of a <section> parent is also arbitrary and is only used to
+ * show that createDiv() works with any HTMLElement parent, not just <div>.
+ */
+function createParentWithCreateDiv(): HTMLElementWithCreateDiv {
+    return document.createElement('section') as HTMLElementWithCreateDiv;
+}
+
 function expectElementToHaveClasses(element: Element, expectedClasses: string[] | string) {
     const classes = Array.isArray(expectedClasses) ? expectedClasses : [expectedClasses];
 
@@ -23,7 +43,7 @@ function expectElementToHaveClasses(element: Element, expectedClasses: string[] 
 
 describe('Obsidian DOM extensions in tests - createEl()', () => {
     it('createEl() should create an element, append it to the parent, and return it', () => {
-        const parent = document.createElement('div') as HTMLElementWithCreateEl;
+        const parent = createParentWithCreateEl();
 
         // This documents the baseline behavior we rely on from Obsidian's createEl().
         const child = parent.createEl('input');
@@ -34,7 +54,7 @@ describe('Obsidian DOM extensions in tests - createEl()', () => {
     });
 
     it('createEl() should apply the type option to an input element', () => {
-        const parent = document.createElement('div') as HTMLElementWithCreateEl;
+        const parent = createParentWithCreateEl();
 
         const child = parent.createEl('input', { type: 'checkbox' });
 
@@ -43,7 +63,7 @@ describe('Obsidian DOM extensions in tests - createEl()', () => {
     });
 
     it('createEl() should apply classes from the cls option', () => {
-        const parent = document.createElement('div') as HTMLElementWithCreateEl;
+        const parent = createParentWithCreateEl();
 
         const child = parent.createEl('input', {
             cls: ['task-list-item-checkbox', 'tasks-quick-search-result-checkbox'],
@@ -53,7 +73,7 @@ describe('Obsidian DOM extensions in tests - createEl()', () => {
     });
 
     it('createEl() should apply a class from the cls option', () => {
-        const parent = document.createElement('div') as HTMLElementWithCreateEl;
+        const parent = createParentWithCreateEl();
 
         const child = parent.createEl('input', {
             cls: 'single-class-value',
@@ -65,7 +85,7 @@ describe('Obsidian DOM extensions in tests - createEl()', () => {
 
 describe('Obsidian DOM extensions in tests - createDiv()', () => {
     it('createDiv() should create a div, append it to the parent, and return it', () => {
-        const parent = document.createElement('section') as HTMLElementWithCreateDiv;
+        const parent = createParentWithCreateDiv();
 
         const child = parent.createDiv();
 
@@ -75,7 +95,7 @@ describe('Obsidian DOM extensions in tests - createDiv()', () => {
     });
 
     it('createDiv() should apply classes from the cls option', () => {
-        const parent = document.createElement('section') as HTMLElementWithCreateDiv;
+        const parent = createParentWithCreateDiv();
 
         const child = parent.createDiv({
             cls: ['first-class', 'second-class'],
@@ -85,7 +105,7 @@ describe('Obsidian DOM extensions in tests - createDiv()', () => {
     });
 
     it('createDiv() should apply a class from the cls option', () => {
-        const parent = document.createElement('section') as HTMLElementWithCreateDiv;
+        const parent = createParentWithCreateDiv();
 
         const child = parent.createDiv({
             cls: 'single-class-value',
@@ -95,7 +115,7 @@ describe('Obsidian DOM extensions in tests - createDiv()', () => {
     });
 
     it('createDiv() should apply text from the text option', () => {
-        const parent = document.createElement('section') as HTMLElementWithCreateDiv;
+        const parent = createParentWithCreateDiv();
 
         const child = parent.createDiv({
             text: 'example text content',
