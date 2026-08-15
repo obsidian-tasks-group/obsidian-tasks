@@ -77,10 +77,12 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
         const suggestion = taskSearchSuggestionText(task);
         el.classList.add('tasks-quick-search-result');
 
-        const checkbox = el.createEl('input', { type: 'checkbox' });
+        const checkbox = el.createEl('input', {
+            type: 'checkbox',
+            cls: ['task-list-item-checkbox', 'tasks-quick-search-result-checkbox'],
+        });
         checkbox.checked = task.isDone;
         checkbox.tabIndex = -1;
-        checkbox.classList.add('task-list-item-checkbox', 'tasks-quick-search-result-checkbox');
         checkbox.setAttribute('aria-label', `Task status: ${task.status.name}`);
 
         const description = el.createDiv();
