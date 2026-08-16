@@ -9,6 +9,9 @@ import type { CreateDivOptions, CreateElOptions } from './TestingTools/DOMExtens
  *
  * This is a partial re-implementation of:
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createEl/.
+ *
+ * See also the following, which is not yet supported in tests:
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createEl/
  */
 if (HTMLElement.prototype.createEl === undefined) {
     HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
@@ -38,7 +41,9 @@ if (HTMLElement.prototype.createEl === undefined) {
  *
  * This is a partial re-implementation of
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createDiv/.
- */
+ *
+ * See also the following, which is not yet supported in tests:
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createDiv/ */
 if (HTMLElement.prototype.createDiv === undefined) {
     HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOptions): HTMLDivElement {
         const div = this.createEl('div', o);
