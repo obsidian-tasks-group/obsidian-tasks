@@ -44,7 +44,7 @@ export function promptForDate(
         },
         onReady: (_selectedDates, _dateStr, instance) => {
             // Add custom buttons dynamically
-            const buttonContainer = document.createElement('div');
+            const buttonContainer = instance.calendarContainer.createDiv();
             buttonContainer.classList.add('tasks-date-picker-buttons');
 
             // Create "Clear" button
@@ -57,10 +57,6 @@ export function promptForDate(
                 const today = new Date();
                 return new SetTaskDate(dateFieldToEdit, today).apply(task);
             });
-
-            // Append the button container to the Flatpickr calendar container
-            const calendarContainer = instance.calendarContainer;
-            calendarContainer.appendChild(buttonContainer);
         },
     });
 
