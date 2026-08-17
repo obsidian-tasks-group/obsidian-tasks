@@ -23,6 +23,16 @@ function createParentWithCreateDiv(): HTMLElementWithCreateDiv {
     return document.createElement('section') as HTMLElementWithCreateDiv;
 }
 
+function expectCorrectTagNameAndParentChildStructure(
+    parent: HTMLElement,
+    child: HTMLInputElement,
+    expectedTagName: string,
+) {
+    expect(child.tagName).toBe(expectedTagName);
+    expect(parent.children).toHaveLength(1);
+    expect(parent.firstElementChild).toBe(child);
+}
+
 function expectElementToHaveClasses(element: Element, expectedClasses: string[] | string) {
     const classes = Array.isArray(expectedClasses) ? expectedClasses : [expectedClasses];
 
@@ -38,9 +48,7 @@ describe('Obsidian DOM extensions in tests - createEl()', () => {
         // This documents the baseline behavior we rely on from Obsidian's createEl().
         const child = parent.createEl('input');
 
-        expect(child.tagName).toBe('INPUT');
-        expect(parent.children).toHaveLength(1);
-        expect(parent.firstElementChild).toBe(child);
+        expectCorrectTagNameAndParentChildStructure(parent, child, 'INPUT');
     });
 
     it('createEl() should apply the type option to an input element', () => {
