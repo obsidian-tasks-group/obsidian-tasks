@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { type RenderResult, fireEvent, render } from '@testing-library/svelte';
+import { type RenderResult, fireEvent, render, waitFor } from '@testing-library/svelte';
 import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
@@ -794,5 +794,51 @@ describe('Hiding modal fields', () => {
         updateSettings({ isShownInEditModal: hideFields('before_this', 'after_this') });
 
         testElementNotRendered('line-after-dependencies');
+    });
+});
+
+describe('Buttons in the modal on mobile', () => {
+    // Regression test for the Apply button needing two taps on mobile.
+    //
+    // '.is-mobile .tasks-edit-modal-container:focus-within .modal-content' adds up to
+    // 360px of padding while a field has focus, to let the sticky button bar scroll
+    // clear of the software keyboard. WebKit does not focus a <button> when it is
+    // tapped, but it does blur the focused text field, so that padding is removed
+    // part-way through the tap and the button bar moves several hundred pixels. By
+    // the time the tap finishes, the button is no longer under the finger and the
+    // click is delivered to the <form> instead - so the first tap appears to do
+    // nothing.
+    //
+    // Preventing the default action of 'mousedown' stops the focus change, so the
+    // field keeps focus, the padding stays, and nothing moves during the tap.
+    //
+    // jsdom has no layout and does not move focus on 'mousedown', so this checks the
+    // one thing it can: that the default action is cancelled.
+    it.each([['Apply'], ['Cancel']])(
+        'should cancel the default focus change when %s is pressed',
+        async (buttonText) => {
+            const task = new TaskBuilder().build();
+            const { result } = renderAndCheckModal(task, () => {});
+
+            const button = result.getByText(buttonText) as HTMLButtonElement;
+
+            // fireEvent resolves to false when a listener called preventDefault().
+            await expect(fireEvent.mouseDown(button)).resolves.toBe(false);
+        },
+    );
+
+    it('should cancel the default focus change when a dependency is removed', async () => {
+        const blockingTask = new TaskBuilder().id('abcdef').description('Wash the bin').build();
+        const task = new TaskBuilder().dependsOn(['abcdef']).description('Take out the trash').build();
+        const { container } = renderAndCheckModal(task, () => {}, [task, blockingTask]);
+
+        // The dependency fields are only rendered once the component has mounted.
+        const deleteButton = await waitFor(() => {
+            const button = container.querySelector<HTMLButtonElement>('.task-dependency-delete');
+            expect(button).not.toBeNull();
+            return button!;
+        });
+
+        await expect(fireEvent.mouseDown(deleteButton)).resolves.toBe(false);
     });
 });
