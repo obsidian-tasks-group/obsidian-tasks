@@ -8,6 +8,9 @@ export type CreateDivOptions = {
     text?: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type -- types will likely be added in future
+export type CreateSpanOptions = {};
+
 // See jest.setup.ts for the test implementations of these functions.
 export type HTMLElementWithCreateEl = HTMLElement & {
     createEl<K extends keyof HTMLElementTagNameMap>(tag: K, o?: CreateElOptions): HTMLElementTagNameMap[K];
@@ -15,4 +18,8 @@ export type HTMLElementWithCreateEl = HTMLElement & {
 
 export type HTMLElementWithCreateDiv = HTMLElement & {
     createDiv(o?: CreateDivOptions): HTMLDivElement;
+};
+
+export type HTMLElementWithCreateSpan = HTMLElement & {
+    createSpan(o?: CreateSpanOptions): HTMLSpanElement;
 };

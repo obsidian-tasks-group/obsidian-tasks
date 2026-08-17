@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import type { HTMLElementWithCreateDiv, HTMLElementWithCreateEl } from './DOMExtensions';
+import type { HTMLElementWithCreateDiv, HTMLElementWithCreateEl, HTMLElementWithCreateSpan } from './DOMExtensions';
 
 /**
  * Create a parent element typed for tests that exercise createEl().
@@ -21,6 +21,13 @@ function createParentWithCreateEl(): HTMLElementWithCreateEl {
  */
 function createParentWithCreateDiv(): HTMLElementWithCreateDiv {
     return document.createElement('section') as HTMLElementWithCreateDiv;
+}
+
+/**
+ * Create a parent element typed for tests that exercise createSpan().
+ */
+function createParentWithCreateSpan(): HTMLElementWithCreateSpan {
+    return document.createElement('span') as HTMLElementWithCreateSpan;
 }
 
 function expectCorrectTagNameAndParentChildStructure(parent: HTMLElement, child: HTMLElement, expectedTagName: string) {
@@ -114,5 +121,15 @@ describe('Obsidian DOM extensions in tests - createDiv()', () => {
         });
 
         expect(child.textContent).toBe('example text content');
+    });
+});
+
+describe('Obsidian DOM extensions in tests - createSpan()', () => {
+    it('createSpan() should create a span, append it to the parent, and return it', () => {
+        const parent = createParentWithCreateSpan();
+
+        const child = parent.createSpan();
+
+        expectCorrectTagNameAndParentChildStructure(parent, child, 'SPAN');
     });
 });

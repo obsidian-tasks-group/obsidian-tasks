@@ -1,7 +1,7 @@
 import { EnableJsInTasksQueries } from '../src/Config/EnableJsInTasksQueries';
 import { InMemoryLocalStorageProvider } from '../src/Config/InMemoryLocalStorageProvider';
 import { initializeI18n } from '../src/i18n/i18n';
-import type { CreateDivOptions, CreateElOptions } from './TestingTools/DOMExtensions';
+import type { CreateDivOptions, CreateElOptions, CreateSpanOptions } from './TestingTools/DOMExtensions';
 
 /**
  * Provide the minimal Obsidian-style createEl() behaviour in Jest:
@@ -43,7 +43,8 @@ if (HTMLElement.prototype.createEl === undefined) {
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createDiv/.
  *
  * See also the following, which is not yet supported in tests:
- * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createDiv/ */
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createDiv/
+ */
 if (HTMLElement.prototype.createDiv === undefined) {
     HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOptions): HTMLDivElement {
         const div = this.createEl('div', o);
@@ -53,6 +54,22 @@ if (HTMLElement.prototype.createDiv === undefined) {
         }
 
         return div;
+    };
+}
+
+/**
+ * Provide the minimal Obsidian-style createSpan() behaviour in Jest
+ * by delegating to createEl('span').
+ *
+ * This is a partial re-implementation of
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createSpan/.
+ *
+ * See also the following, which is not yet supported in tests:
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createSpan/
+ */
+if (HTMLElement.prototype.createSpan === undefined) {
+    HTMLElement.prototype.createSpan = function (this: HTMLElement, o?: CreateSpanOptions): HTMLSpanElement {
+        return this.createEl('span', o);
     };
 }
 
