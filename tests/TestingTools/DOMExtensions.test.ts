@@ -23,11 +23,7 @@ function createParentWithCreateDiv(): HTMLElementWithCreateDiv {
     return document.createElement('section') as HTMLElementWithCreateDiv;
 }
 
-function expectCorrectTagNameAndParentChildStructure(
-    parent: HTMLElement,
-    child: HTMLInputElement,
-    expectedTagName: string,
-) {
+function expectCorrectTagNameAndParentChildStructure(parent: HTMLElement, child: HTMLElement, expectedTagName: string) {
     expect(child.tagName).toBe(expectedTagName);
     expect(parent.children).toHaveLength(1);
     expect(parent.firstElementChild).toBe(child);
@@ -87,9 +83,7 @@ describe('Obsidian DOM extensions in tests - createDiv()', () => {
 
         const child = parent.createDiv();
 
-        expect(child.tagName).toBe('DIV');
-        expect(parent.children).toHaveLength(1);
-        expect(parent.firstElementChild).toBe(child);
+        expectCorrectTagNameAndParentChildStructure(parent, child, 'DIV');
     });
 
     it('createDiv() should apply classes from the cls option', () => {
