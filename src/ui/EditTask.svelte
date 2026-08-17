@@ -9,7 +9,7 @@
     import DateEditor from './DateEditor.svelte';
     import Dependency from './Dependency.svelte';
     import { EditableTask } from './EditableTask';
-    import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import { focusOnceClearOfKeyboard, labelContentWithAccessKey } from './EditTaskHelpers';
     import PriorityEditor from './PriorityEditor.svelte';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
@@ -72,9 +72,9 @@
 
         mountComplete = true;
 
-        setTimeout(() => {
-            descriptionInput.focus({ preventScroll: true });
-        }, 10);
+        // Put the cursor in the Description field, ready to type. On a phone this has to wait for
+        // the modal to finish sliding up first, or the keyboard drags the form down with it
+        focusOnceClearOfKeyboard(descriptionInput);
     });
 
     const _onClose = () => {
