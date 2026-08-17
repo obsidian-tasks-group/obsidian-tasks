@@ -71,9 +71,7 @@ function addButton(
     buttonName: string,
     applyDate: () => Task[],
 ) {
-    const button = buttonContainer.createEl('button');
-    button.textContent = buttonName;
-    button.classList.add('flatpickr-button');
+    const button = buttonContainer.createEl('button', { cls: 'flatpickr-button', text: buttonName });
 
     button.addEventListener('click', async () => {
         const newTask = applyDate();
