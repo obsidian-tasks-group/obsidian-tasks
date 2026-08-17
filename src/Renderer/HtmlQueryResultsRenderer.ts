@@ -168,7 +168,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const footnotes = listItem.querySelectorAll('[data-footnote-id]');
         footnotes.forEach((footnote) => footnote.remove());
 
-        const extrasSpan = listItem.createEl('span');
+        const extrasSpan = listItem.createSpan();
         extrasSpan.classList.add('task-extras');
 
         if (!this.query.queryLayoutOptions.hideUrgency) {
@@ -218,7 +218,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private addUrgency(listItem: HTMLElement, task: Task) {
         const text = new Intl.NumberFormat().format(task.urgency);
-        const span = listItem.createEl('span');
+        const span = listItem.createSpan();
         span.textContent = text;
         span.classList.add('tasks-urgency');
     }
@@ -278,7 +278,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
-        const backLink = listItem.createEl('span');
+        const backLink = listItem.createSpan();
         backLink.classList.add('tasks-backlink');
 
         if (!shortMode) {

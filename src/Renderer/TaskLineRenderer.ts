@@ -149,7 +149,7 @@ export class TaskLineRenderer {
     }): Promise<void> {
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-        const textSpan = li.createEl('span');
+        const textSpan = li.createSpan();
         textSpan.classList.add('tasks-list-text');
         await this.taskToHtml(task, textSpan, li, isTaskInQueryFile);
 
@@ -220,13 +220,13 @@ export class TaskLineRenderer {
             );
             if (componentString) {
                 // Create the text span that will hold the rendered component
-                const span = parentElement.createEl('span');
+                const span = parentElement.createSpan();
 
                 // Inside that text span, we are creating another internal span, that will hold the text itself.
                 // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
                 // to differentiate between the container of the text and the text itself, so it will be possible
                 // to do things like surrounding only the text (rather than its whole placeholder) with a highlight
-                const internalSpan = span.createEl('span');
+                const internalSpan = span.createSpan();
                 await this.renderComponentText(internalSpan, componentString, component, task, isTaskInQueryFile);
                 this.addInternalClasses(component, internalSpan);
 
@@ -489,7 +489,7 @@ export class TaskLineRenderer {
             li.setAttribute('data-line', listItemIndex.toString());
         }
 
-        const span = li.createEl('span');
+        const span = li.createSpan();
         await this.textRenderer(
             this.obsidianApp,
             listItem.description,
