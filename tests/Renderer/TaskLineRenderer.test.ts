@@ -10,11 +10,7 @@ import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
 import { DateParser } from '../../src/DateTime/DateParser';
 import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
-import {
-    TaskLineRenderer,
-    createAndAppendElement,
-    reconcileReplacementTask,
-} from '../../src/Renderer/TaskLineRenderer';
+import { TaskLineRenderer, reconcileReplacementTask } from '../../src/Renderer/TaskLineRenderer';
 import type { Task } from '../../src/Task/Task';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
@@ -52,7 +48,7 @@ async function renderListItem(
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     const divElement = document.createElement('div');
-    const li = createAndAppendElement('li', divElement);
+    const li = divElement.createEl('li');
     await taskLineRenderer.renderTaskLine({
         li: li,
         task: task,
@@ -584,7 +580,7 @@ describe('task line rendering - preserving classes and data attributes', () => {
      */
     const originalAndReplacement = () => {
         const list = document.createElement('ul');
-        const original = createAndAppendElement('li', list);
+        const original = list.createEl('li');
         const replacement = document.createElement('li');
         return { original, replacement };
     };
@@ -629,7 +625,7 @@ describe('task line rendering - preserving classes and data attributes', () => {
     const originalAndRenderedReplacement = async (taskLine: string) => {
         const replacement = await renderListItem(fromLine({ line: taskLine }));
         const list = document.createElement('ul');
-        const original = createAndAppendElement('li', list);
+        const original = list.createEl('li');
         return { original, replacement };
     };
 

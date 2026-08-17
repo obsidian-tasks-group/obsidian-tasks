@@ -13,7 +13,7 @@ import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
 import type { BacklinksEventHandler, EditButtonClickHandler } from './QueryResultsRenderer';
 import { QueryResultsRendererBase } from './QueryResultsRendererBase';
-import { TaskLineRenderer, type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+import { TaskLineRenderer, type TextRenderer } from './TaskLineRenderer';
 
 /**
  * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.
@@ -102,8 +102,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderErrorMessage(errorMessage: string): void {
-        const container = createAndAppendElement('div', this.content);
-        const pre = createAndAppendElement('pre', container);
+        const container = this.content.createEl('div');
+        const pre = container.createEl('pre');
         pre.textContent = `Tasks query: ${errorMessage}`;
     }
 
@@ -112,7 +112,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderExplanation(explanation: string | null) {
-        const explanationsBlock = createAndAppendElement('pre', this.content);
+        const explanationsBlock = this.content.createEl('pre');
         explanationsBlock.classList.add('plugin-tasks-query-explanation');
         explanationsBlock.textContent = explanation;
     }
@@ -120,7 +120,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected beginTaskList(): void {
         const isFirstTaskListInContainer = this.ulElementStack.length === 0;
         const taskListContainer = isFirstTaskListInContainer ? this.content : this.lastLIElement;
-        const taskList = createAndAppendElement('ul', taskListContainer);
+        const taskList = taskListContainer.createEl('ul');
 
         taskList.classList.add(
             'contains-task-list',
@@ -143,7 +143,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     protected beginListItem(): void {
         const taskList = this.currentULElement();
-        this.lastLIElement = createAndAppendElement('li', taskList);
+        this.lastLIElement = taskList.createEl('li');
     }
 
     protected async addListItem(listItem: ListItem, listItemIndex: number): Promise<void> {
@@ -168,7 +168,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const footnotes = listItem.querySelectorAll('[data-footnote-id]');
         footnotes.forEach((footnote) => footnote.remove());
 
-        const extrasSpan = createAndAppendElement('span', listItem);
+        const extrasSpan = listItem.createEl('span');
         extrasSpan.classList.add('task-extras');
 
         if (!this.query.queryLayoutOptions.hideUrgency) {
@@ -202,7 +202,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected extendTaskBehaviour(_listItem: HTMLLIElement, _task: Task) {}
 
     private addEditButton(listItem: HTMLElement, task: Task) {
-        const editTaskPencil = createAndAppendElement('a', listItem);
+        const editTaskPencil = listItem.createEl('a');
         editTaskPencil.classList.add('tasks-edit');
         editTaskPencil.title = 'Edit task';
         editTaskPencil.href = '#';
@@ -218,7 +218,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private addUrgency(listItem: HTMLElement, task: Task) {
         const text = new Intl.NumberFormat().format(task.urgency);
-        const span = createAndAppendElement('span', listItem);
+        const span = listItem.createEl('span');
         span.textContent = text;
         span.classList.add('tasks-urgency');
     }
@@ -232,7 +232,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             header = 'h5';
         }
 
-        const headerEl = createAndAppendElement(header, this.content);
+        const headerEl = this.content.createEl(header);
         headerEl.classList.add('tasks-group-heading');
 
         await this.renderGroupHeadingText(headerEl, group.displayName);
@@ -278,14 +278,14 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
-        const backLink = createAndAppendElement('span', listItem);
+        const backLink = listItem.createEl('span');
         backLink.classList.add('tasks-backlink');
 
         if (!shortMode) {
             backLink.append(' (');
         }
 
-        const link = createAndAppendElement('a', backLink);
+        const link = backLink.createEl('a');
 
         link.rel = 'noopener';
         link.target = '_blank';
@@ -322,7 +322,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         const timeUnit = 'day';
         const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
 
-        const button = createAndAppendElement('a', listItem);
+        const button = listItem.createEl('a');
         button.classList.add('tasks-postpone');
         if (shortMode) {
             button.classList.add('tasks-postpone-short-mode');
@@ -344,7 +344,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private addTaskCount(queryResult: QueryResult) {
         if (!this.query.queryLayoutOptions.hideTaskCount) {
-            const taskCount = createAndAppendElement('div', this.content);
+            const taskCount = this.content.createEl('div');
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
         }

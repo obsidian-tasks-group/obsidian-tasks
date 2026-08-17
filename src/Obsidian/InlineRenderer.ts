@@ -5,7 +5,7 @@ import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { TasksFile } from '../Scripting/TasksFile';
 import { Task } from '../Task/Task';
-import { TaskLineRenderer, createAndAppendElement, reconcileReplacementTask } from '../Renderer/TaskLineRenderer';
+import { TaskLineRenderer, reconcileReplacementTask } from '../Renderer/TaskLineRenderer';
 import { TaskLocation } from '../Task/TaskLocation';
 
 /**
@@ -134,7 +134,7 @@ export class InlineRenderer {
             }
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const taskIndex: number = Number.parseInt(dataLine, 10);
-            const taskElement = createAndAppendElement('li', element);
+            const taskElement = element.createEl('li');
             await taskLineRenderer.renderTaskLine({
                 li: taskElement,
                 task,
