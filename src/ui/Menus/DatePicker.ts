@@ -76,8 +76,7 @@ function addButton(
     buttonName: string,
     applyDate: () => Task[],
 ) {
-    const button = document.createElement('button');
-    button.type = 'button';
+    const button = buttonContainer.createEl('button');
     button.textContent = buttonName;
     button.classList.add('flatpickr-button');
 
@@ -86,5 +85,4 @@ function addButton(
         await taskSaver(task, newTask);
         instance.destroy();
     });
-    buttonContainer.appendChild(button);
 }
