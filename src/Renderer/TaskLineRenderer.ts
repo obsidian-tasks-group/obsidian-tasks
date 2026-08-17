@@ -30,8 +30,8 @@ export type TextRenderer = (
 /**
  * Create an HTML element, and append it to a parent element.
  *
- * Unlike the equivalent Obsidian convenience function li.createEl(),
- * this can be called from our automated tests.
+ * This could actually now be inlined, as our tests do have a partial implementation
+ * of el.createEl()
  *
  * @param tagName - the type of element to be created, for example 'ul', 'div', 'span', 'li'.
  * @param parentElement - the parent element, to which the created element will be appended.
@@ -43,15 +43,7 @@ export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
     tagName: K,
     parentElement: HTMLElement,
 ): HTMLElementTagNameMap[K] {
-    // Maintenance note:
-    //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
-    //  when running tests, and we want the tests to be able to create the full div and span structure,
-    //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
-    //  appendChild() calls.
-
-    const el: HTMLElementTagNameMap[K] = document.createElement(tagName);
-    parentElement.appendChild(el);
-    return el;
+    return parentElement.createEl(tagName);
 }
 
 /**
