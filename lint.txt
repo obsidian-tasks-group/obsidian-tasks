@@ -13,7 +13,6 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
 Prefer explicitly defining any function parameters and return type                                                                                    @typescript-eslint/no-unsafe-function-type
     78:9   warning  Use 'window.requestAnimationFrame()' instead of 'requestAnimationFrame()' for popout window compatibility                                                                                                  obsidianmd/prefer-window-timers
    714:17  warning  Unsafe call of a `Function` typed value                                                                                                                                                                    @typescript-eslint/no-unsafe-call
-   821:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                                                                                                     obsidianmd/prefer-create-el
   1009:9   warning  Unsafe call of a type that could not be resolved                                                                                                                                                           @typescript-eslint/no-unsafe-call
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/DateTime/TasksDate.ts
@@ -33,9 +32,7 @@ Prefer explicitly defining any function parameters and return type              
   152:13  warning  Use 'window.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-window-timers
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/TaskModal.ts
-  45:31  warning  Use 'createEl('button')' instead of 'document.createElement('button')'            obsidianmd/prefer-create-el
-  45:31  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
-  54:17  warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
+  59:17  warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/BooleanField.ts
   193:62  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Token`  @typescript-eslint/restrict-plus-operands
@@ -54,13 +51,9 @@ Prefer explicitly defining any function parameters and return type              
   41:9   warning  Unsafe return of type `Map<any, any>` from function with return type `Map<string[], T[]>`  @typescript-eslint/no-unsafe-return
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlColumnQueryResultsRenderer.ts
-  62:62  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  61:62  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlQueryResultsRenderer.ts
-   50:38  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                             obsidianmd/prefer-create-el
-   50:38  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                               obsidianmd/prefer-active-doc
-   52:46  warning  Use 'createEl('li')' instead of 'document.createElement('li')'                                           obsidianmd/prefer-create-el
-   52:46  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                               obsidianmd/prefer-active-doc
   262:27  warning  Use 'headerEl.ownerDocument.win.createSpan()' instead of 'headerEl.ownerDocument.createElement('span')'  obsidianmd/prefer-create-el
   307:40  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
   311:44  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
@@ -82,10 +75,8 @@ Prefer explicitly defining any function parameters and return type              
   261:46  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/TaskLineRenderer.ts
-   52:42  warning  Use 'createEl(tagName)' instead of 'document.createElement(tagName)'        obsidianmd/prefer-create-el
-   52:42  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-  198:48  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
-  493:48  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
+  171:48  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  466:48  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/ExpandPlaceholders.ts
    27:60  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
@@ -197,14 +188,10 @@ Prefer explicitly defining any function parameters and return type  @typescript-
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/DatePicker.ts
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
-  47:37  warning  Use 'createDiv()' instead of 'document.createElement('div')'                      obsidianmd/prefer-create-el
-  47:37  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
-  79:20  warning  Use 'createEl('button')' instead of 'document.createElement('button')'            obsidianmd/prefer-create-el
-  79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
-  84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 135 problems (0 errors, 135 warnings)
-  0 errors and 28 warnings potentially fixable with the `--fix` option.
+✖ 122 problems (0 errors, 122 warnings)
+  0 errors and 21 warnings potentially fixable with the `--fix` option.
 
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/Obsidian/CacheLoading.test.ts
@@ -220,4 +207,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 21.45s.
+Done in 22.32s.
