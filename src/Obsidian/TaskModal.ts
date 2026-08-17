@@ -42,7 +42,7 @@ export class TaskModal extends Modal {
         this.titleEl.setText('Create or edit Task');
         this.modalEl.addClass('tasks-edit-modal-container');
 
-        const optionsButton = document.createElement('button');
+        const optionsButton = this.modalEl.createEl('button');
         // Add same classes as the default Obsidian modal close button.
         optionsButton.addClasses(['modal-close-button', 'mod-raised', 'clickable-icon']);
         // But overload the 'inset-inline-end' property for a correct position.
@@ -55,7 +55,6 @@ export class TaskModal extends Modal {
             });
             optionsModal.open();
         };
-        this.modalEl.appendChild(optionsButton);
 
         const { contentEl } = this;
 
