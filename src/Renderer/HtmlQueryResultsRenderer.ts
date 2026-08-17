@@ -102,7 +102,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     protected renderErrorMessage(errorMessage: string): void {
-        const container = this.content.createEl('div');
+        const container = this.content.createDiv();
         const pre = container.createEl('pre');
         pre.textContent = `Tasks query: ${errorMessage}`;
     }
@@ -344,7 +344,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private addTaskCount(queryResult: QueryResult) {
         if (!this.query.queryLayoutOptions.hideTaskCount) {
-            const taskCount = this.content.createEl('div');
+            const taskCount = this.content.createDiv();
             taskCount.classList.add('task-count');
             taskCount.textContent = queryResult.totalTasksCountDisplayText();
         }

@@ -340,7 +340,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async renderResults(state: State, tasks: Task[]) {
-        const content = this.containerEl.createEl('div');
+        const content = this.containerEl.createDiv();
         await this.queryResultsRenderer.render(state, tasks, content);
 
         this.containerEl.firstChild?.replaceWith(content);

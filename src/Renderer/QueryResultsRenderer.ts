@@ -193,7 +193,7 @@ export class QueryResultsRenderer {
             return;
         }
 
-        const toolbar = content.createEl('div');
+        const toolbar = content.createDiv();
         toolbar.classList.add('plugin-tasks-toolbar');
         this.addSearchBox(toolbar, content);
         this.addCopyButton(toolbar);

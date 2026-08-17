@@ -16,7 +16,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
         this.columnContainers.length = 0;
         this.activeDropColumn = null;
 
-        const columnsContainer = originalParent.createEl('div');
+        const columnsContainer = originalParent.createDiv();
         columnsContainer.classList.add('tasks-columns');
 
         for (const group of tasksSortedLimitedGrouped.groups) {
@@ -25,7 +25,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
             }
 
             if (group.groupHeadings.length == 0 || group.groupHeadings[0].nestingLevel === 0) {
-                const columnContainer = columnsContainer.createEl('div');
+                const columnContainer = columnsContainer.createDiv();
                 columnContainer.classList.add('tasks-columns-column');
                 this.columnContainers.push(columnContainer);
 
