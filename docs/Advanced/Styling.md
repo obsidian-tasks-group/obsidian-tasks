@@ -482,8 +482,16 @@ The following organizes the task structure into a 3-line grid, on which:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-grid-layout.css -->
 ```css
+/*
+ * The following defines a 2-level grid for displaying tasks.
+ * The top-level grid reserves column 1 for the task checkbox, then puts the "task text" next to it.
+ * The task text is made of its own internal grid that aligns the various components that are part of
+ * the task text: task-recurring, task-due, task-done, etc.
+ */
 ul > li.plugin-tasks-list-item {
-    grid-template-columns: 25px auto;
+    /* The first column is for the checkbox, but it is to the left of the grid, so we reserve
+     * a column of width 0 to it. */
+    grid-template-columns: 0px auto;
     display: grid;
     align-items: top;
 }
@@ -530,10 +538,11 @@ span.task-extras {
     font-size: small;
 }
 
-/* Make sure nested bullets in Reading mode get the whole width of the grid */
+/* Make sure nested bullets get the whole width of the grid */
+li.task-list-item ul.contains-task-list,
 li.task-list-item ul.has-list-bullet {
- grid-row: 3;
- grid-column: 1/10;
+    grid-row: 3;
+    grid-column: 1/10;
 }
 ```
 <!-- endSnippet -->
@@ -636,10 +645,16 @@ ul > li.plugin-tasks-list-item .task-list-item-checkbox {
     border-radius: 50%;
 }
 
-/* The following section organizes the task components in a grid, so the description will be on the first row
- * of each item and most components will be in the 2nd row. */
+/*
+ * The following defines a 2-level grid for displaying tasks.
+ * The top-level grid reserves column 1 for the task checkbox, then puts the "task text" next to it.
+ * The task text is made of its own internal grid that aligns the various components that are part of
+ * the task text: task-recurring, task-due, task-done, etc.
+ */
 ul > li.plugin-tasks-list-item {
-    grid-template-columns: 25px auto;
+    /* The first column is for the checkbox, but it is to the left of the grid, so we reserve
+     * a column of width 0 to it. */
+    grid-template-columns: 0px auto;
     display: grid;
     align-items: top;
 }
@@ -686,10 +701,11 @@ span.task-extras {
     font-size: small;
 }
 
-/* Make sure nested bullets in Reading mode get the whole width of the grid */
+/* Make sure nested bullets get the whole width of the grid */
+li.task-list-item ul.contains-task-list,
 li.task-list-item ul.has-list-bullet {
- grid-row: 3;
- grid-column: 1/10;
+    grid-row: 3;
+    grid-column: 1/10;
 }
 ```
 <!-- endSnippet -->
