@@ -263,11 +263,13 @@ In a Tasks query block:
 
 ~~~tasks
 heading includes Grid Layout
+sort by function task.lineNumber
 #group by {{query.file.property("groupby")}}
 ~~~
 
 ~~~tasks
 heading includes Grid Layout
+sort by function task.lineNumber
 view columns by {{query.file.property("groupby")}}
 ~~~
 
