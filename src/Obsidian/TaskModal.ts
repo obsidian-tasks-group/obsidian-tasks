@@ -42,11 +42,16 @@ export class TaskModal extends Modal {
         this.titleEl.setText('Create or edit Task');
         this.modalEl.addClass('tasks-edit-modal-container');
 
-        const optionsButton = document.createElement('button');
-        // Add same classes as the default Obsidian modal close button.
-        optionsButton.addClasses(['modal-close-button', 'mod-raised', 'clickable-icon']);
-        // But overload the 'inset-inline-end' property for a correct position.
-        optionsButton.addClass('modal-option-button');
+        const optionsButton = this.modalEl.createEl('button', {
+            cls: [
+                // Add same classes as the default Obsidian modal close button:
+                'modal-close-button',
+                'mod-raised',
+                'clickable-icon',
+                // But overload the 'inset-inline-end' property for a correct position:
+                'modal-option-button',
+            ],
+        });
         setIcon(optionsButton, 'settings');
         optionsButton.onclick = () => {
             const optionsModal = new OptionsModal({
@@ -55,7 +60,6 @@ export class TaskModal extends Modal {
             });
             optionsModal.open();
         };
-        this.modalEl.appendChild(optionsButton);
 
         const { contentEl } = this;
 

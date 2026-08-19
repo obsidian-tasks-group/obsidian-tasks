@@ -5,7 +5,6 @@ import type { TaskGroup } from '../Query/Group/TaskGroup';
 import { createEditingInstructionForGroup } from '../ui/EditInstructions/CreateEditingInstructionForGroup';
 import { DragState } from './DragState';
 import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
-import { createAndAppendElement } from './TaskLineRenderer';
 
 export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     private readonly dragState = new DragState();
@@ -17,7 +16,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
         this.columnContainers.length = 0;
         this.activeDropColumn = null;
 
-        const columnsContainer = createAndAppendElement('div', originalParent);
+        const columnsContainer = originalParent.createDiv();
         columnsContainer.classList.add('tasks-columns');
 
         for (const group of tasksSortedLimitedGrouped.groups) {
@@ -26,7 +25,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
             }
 
             if (group.groupHeadings.length == 0 || group.groupHeadings[0].nestingLevel === 0) {
-                const columnContainer = createAndAppendElement('div', columnsContainer);
+                const columnContainer = columnsContainer.createDiv();
                 columnContainer.classList.add('tasks-columns-column');
                 this.columnContainers.push(columnContainer);
 

@@ -146,5 +146,5 @@ function isPlainMustachePlaceholder(reconstructed: string): boolean {
 }
 
 function createExpressionParameters(view: any): ExpressionParameter[] {
-    return Object.entries(view) as ExpressionParameter[];
+    return Object.entries(view);
 }

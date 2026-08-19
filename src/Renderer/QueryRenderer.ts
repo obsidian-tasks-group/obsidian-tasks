@@ -21,7 +21,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
 import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
-import { TaskLineRenderer, createAndAppendElement } from './TaskLineRenderer';
+import { TaskLineRenderer } from './TaskLineRenderer';
 
 type RenderParams = { tasks: Task[]; state: State };
 
@@ -340,7 +340,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async renderResults(state: State, tasks: Task[]) {
-        const content = createAndAppendElement('div', this.containerEl);
+        const content = this.containerEl.createDiv();
         await this.queryResultsRenderer.render(state, tasks, content);
 
         this.containerEl.firstChild?.replaceWith(content);

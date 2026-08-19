@@ -818,7 +818,7 @@ export class SettingsTab extends PluginSettingTab {
             );
         });
 
-        containerEl.createEl('div');
+        containerEl.createDiv();
 
         /* -------------------- 'Add New Task Status' button -------------------- */
         const setting = new Setting(containerEl).addButton((button) => {

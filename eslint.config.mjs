@@ -87,8 +87,8 @@ const typescriptCommonRules = {
     'obsidianmd/no-global-this': on_or_off,
     'obsidianmd/no-nodejs-modules': 1, // Can disable this on test files
     'obsidianmd/no-static-styles-assignment': 1,
-    'obsidianmd/prefer-active-doc': on_or_off,
-    'obsidianmd/prefer-create-el': on_or_off,
+    'obsidianmd/prefer-active-doc': 1,
+    'obsidianmd/prefer-create-el': 1,
     'obsidianmd/prefer-get-language': 1,
     'obsidianmd/prefer-window-timers': on_or_off,
     'obsidianmd/rule-custom-message': on_or_off,

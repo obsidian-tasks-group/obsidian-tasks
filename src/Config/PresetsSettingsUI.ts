@@ -283,7 +283,7 @@ export class PresetsSettingsUI {
      * Clears all drop indicators
      */
     private clearDropIndicators() {
-        const containers = document.querySelectorAll('.tasks-presets-wrapper');
+        const containers = activeDocument.querySelectorAll('.tasks-presets-wrapper');
         containers.forEach((container) => {
             this.clearDropIndicator(container as HTMLElement);
         });

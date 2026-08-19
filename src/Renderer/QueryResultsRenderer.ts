@@ -12,7 +12,7 @@ import type { Task } from '../Task/Task';
 import { HtmlColumnQueryResultsRenderer } from './HtmlColumnQueryResultsRenderer';
 import { type HTMLQueryRendererParameters, HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
 import { MarkdownQueryResultsRenderer } from './MarkdownQueryResultsRenderer';
-import { type TextRenderer, createAndAppendElement } from './TaskLineRenderer';
+import type { TextRenderer } from './TaskLineRenderer';
 
 export type BacklinksEventHandler = (ev: MouseEvent, task: Task) => Promise<void>;
 export type EditButtonClickHandler = (event: MouseEvent, task: Task, allTasks: Task[]) => void;
@@ -193,16 +193,16 @@ export class QueryResultsRenderer {
             return;
         }
 
-        const toolbar = createAndAppendElement('div', content);
+        const toolbar = content.createDiv();
         toolbar.classList.add('plugin-tasks-toolbar');
         this.addSearchBox(toolbar, content);
         this.addCopyButton(toolbar);
     }
 
     private addSearchBox(toolbar: HTMLDivElement, content: HTMLDivElement) {
-        const label = createAndAppendElement('label', toolbar);
+        const label = toolbar.createEl('label');
         setIcon(label, 'lucide-filter');
-        const searchBox = createAndAppendElement('input', label);
+        const searchBox = label.createEl('input');
         searchBox.value = this._filterString;
         searchBox.placeholder = 'Filter by description...';
         setTooltip(searchBox, 'Filter results');
@@ -255,7 +255,7 @@ export class QueryResultsRenderer {
     }
 
     private addCopyButton(toolbar: HTMLDivElement) {
-        const copyButton = createAndAppendElement('button', toolbar);
+        const copyButton = toolbar.createEl('button');
         setIcon(copyButton, 'lucide-copy');
         setTooltip(copyButton, 'Copy results');
         copyButton.addEventListener('click', async () => {
