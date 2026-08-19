@@ -51,7 +51,7 @@ HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap
     tag: K,
     o?: CreateElOptions,
 ): HTMLElementTagNameMap[K] {
-    const el = createElementWithObsidianOptions(tag, o);
+    const el = createEl(tag, o);
 
     this.appendChild(el);
     return el;
