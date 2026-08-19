@@ -139,8 +139,12 @@ globalThis.createSpan = function (
  * This is a partial re-implementation of
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createSpan/.
  */
-HTMLElement.prototype.createSpan = function (this: HTMLElement, o?: CreateSpanOptions): HTMLSpanElement {
-    const span = createSpan(o);
+HTMLElement.prototype.createSpan = function (
+    this: HTMLElement,
+    o?: CreateSpanOptions,
+    callback?: (el: HTMLSpanElement) => void,
+): HTMLSpanElement {
+    const span = createSpan(o, callback);
 
     this.appendChild(span);
     return span;

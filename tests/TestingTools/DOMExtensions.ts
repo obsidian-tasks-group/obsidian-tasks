@@ -25,5 +25,5 @@ export type HTMLElementWithCreateDiv = HTMLElement & {
 };
 
 export type HTMLElementWithCreateSpan = HTMLElement & {
-    createSpan(o?: CreateSpanOptions): HTMLSpanElement;
+    createSpan(o?: CreateSpanOptions, callback?: (el: HTMLSpanElement) => void): HTMLSpanElement;
 };

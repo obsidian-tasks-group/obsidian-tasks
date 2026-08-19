@@ -337,7 +337,7 @@ describe('HTMLElement.createSpan()', () => {
         expectElementToHaveClasses(span, 'single-class-value');
     });
 
-    it.failing('createSpan() should call the callback with the created span', () => {
+    it('createSpan() should call the callback with the created span', () => {
         const callback = jest.fn();
 
         const span = parent.createSpan(undefined, callback);
