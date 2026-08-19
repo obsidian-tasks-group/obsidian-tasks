@@ -45,7 +45,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly taskLineRenderer: TaskLineRenderer;
 
-    // createDiv() creates dummy elements that must be overwritten later
+    // createDiv() and createEl() create dummy elements that must be overwritten later
     // with the values of elements that will be rendered
     public content: HTMLDivElement = createDiv();
     private readonly ulElementStack: HTMLUListElement[] = [];
