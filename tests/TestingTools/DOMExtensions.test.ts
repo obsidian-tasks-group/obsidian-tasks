@@ -205,7 +205,7 @@ describe('global createDiv()', () => {
         const div = createDiv({ text: 'example text content' }, callback);
 
         expect(div.textContent).toBe('example text content');
-        expect(callback).toHaveBeenCalledWith(div);
+        expectCallbackToHaveBeenCalledOnceWith(callback, div);
         expect((callback.mock.calls[0][0] as HTMLDivElement).textContent).toBe('example text content');
     });
 });
