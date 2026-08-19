@@ -8,8 +8,10 @@ export type CreateDivOptions = {
     text?: string | DocumentFragment;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type -- types will likely be added in future
-export type CreateSpanOptions = {};
+export type CreateSpanOptions = {
+    cls?: string[] | string;
+    text?: string | DocumentFragment;
+};
 
 // See jest.setup.ts for the test implementations of these functions.
 export type HTMLElementWithCreateEl = HTMLElement & {
@@ -25,5 +27,5 @@ export type HTMLElementWithCreateDiv = HTMLElement & {
 };
 
 export type HTMLElementWithCreateSpan = HTMLElement & {
-    createSpan(o?: CreateSpanOptions, callback?: (el: HTMLSpanElement) => void): HTMLSpanElement;
+    createSpan(o?: string | CreateSpanOptions, callback?: (el: HTMLSpanElement) => void): HTMLSpanElement;
 };

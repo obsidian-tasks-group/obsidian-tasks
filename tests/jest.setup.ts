@@ -141,7 +141,7 @@ globalThis.createSpan = function (
  */
 HTMLElement.prototype.createSpan = function (
     this: HTMLElement,
-    o?: CreateSpanOptions,
+    o?: string | CreateSpanOptions,
     callback?: (el: HTMLSpanElement) => void,
 ): HTMLSpanElement {
     const span = createSpan(o, callback);
