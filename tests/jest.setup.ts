@@ -3,18 +3,7 @@ import { InMemoryLocalStorageProvider } from '../src/Config/InMemoryLocalStorage
 import { initializeI18n } from '../src/i18n/i18n';
 import type { CreateDivOptions, CreateElOptions, CreateSpanOptions } from './TestingTools/DOMExtensions';
 
-/**
- * Provide the minimal Obsidian-style createEl() behaviour in Jest:
- * create the requested element, append it to the parent, and return it.
- *
- * This is a partial re-implementation of:
- * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createEl/.
- *
- * See also the following, which is not yet supported in tests:
- * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createEl/
- */
-HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
-    this: HTMLElement,
+function createElementWithObsidianOptions<K extends keyof HTMLElementTagNameMap>(
     tag: K,
     o?: CreateElOptions,
 ): HTMLElementTagNameMap[K] {
@@ -28,6 +17,41 @@ HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap
         const classes = Array.isArray(o.cls) ? o.cls : [o.cls];
         el.classList.add(...classes);
     }
+
+    return el;
+}
+
+/**
+ * Provide the minimal Obsidian-style createEl() behaviour in Jest:
+ * create the requested element, append it to the parent, and return it.
+ *
+ * This is a partial re-implementation of:
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createEl/
+ */
+globalThis.createEl = function <K extends keyof HTMLElementTagNameMap>(
+    tag: K,
+    o?: string | CreateElOptions,
+    callback?: (el: HTMLElementTagNameMap[K]) => void,
+): HTMLElementTagNameMap[K] {
+    const options: CreateElOptions | undefined = typeof o === 'string' ? { cls: o } : o;
+    const el = createElementWithObsidianOptions(tag, options);
+    callback?.(el);
+    return el;
+};
+
+/**
+ * Provide the minimal Obsidian-style createEl() behaviour in Jest:
+ * create the requested element, append it to the parent, and return it.
+ *
+ * This is a partial re-implementation of:
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createEl/.
+ */
+HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
+    this: HTMLElement,
+    tag: K,
+    o?: CreateElOptions,
+): HTMLElementTagNameMap[K] {
+    const el = createElementWithObsidianOptions(tag, o);
 
     this.appendChild(el);
     return el;
