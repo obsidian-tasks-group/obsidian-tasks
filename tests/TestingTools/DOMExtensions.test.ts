@@ -31,11 +31,19 @@ function createParentWithCreateSpan(): HTMLElementWithCreateSpan {
 }
 
 function createDocumentFragment(): DocumentFragment {
+    // See expectDocumentFragmentToHaveBeenUsed()
     const fragment = document.createDocumentFragment();
     const childSpan = document.createElement('span');
     childSpan.textContent = 'fragment text content';
     fragment.appendChild(childSpan);
     return fragment;
+}
+
+function expectDocumentFragmentToHaveBeenUsed(child: HTMLDivElement): void {
+    // See createDocumentFragment()
+    expect(child.childElementCount).toBe(1);
+    expect(child.firstElementChild?.tagName).toBe('SPAN');
+    expect(child.textContent).toBe('fragment text content');
 }
 
 function expectCorrectTagNameAndParentChildStructure(parent: HTMLElement, child: HTMLElement, expectedTagName: string) {
@@ -180,9 +188,7 @@ describe('global createDiv()', () => {
         });
 
         expect(child.tagName).toBe('DIV');
-        expect(child.childElementCount).toBe(1);
-        expect(child.firstElementChild?.tagName).toBe('SPAN');
-        expect(child.textContent).toBe('fragment text content');
+        expectDocumentFragmentToHaveBeenUsed(child);
     });
 
     it('createDiv() should apply both cls and text options', () => {
@@ -266,9 +272,7 @@ describe('HTMLElement.createDiv()', () => {
         });
 
         expectCorrectTagNameAndParentChildStructure(parent, child, 'DIV');
-        expect(child.childElementCount).toBe(1);
-        expect(child.firstElementChild?.tagName).toBe('SPAN');
-        expect(child.textContent).toBe('fragment text content');
+        expectDocumentFragmentToHaveBeenUsed(child);
     });
 
     it('createDiv() should call the callback with the created div', () => {
