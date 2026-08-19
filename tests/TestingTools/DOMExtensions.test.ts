@@ -109,6 +109,55 @@ describe('HTMLElement.createEl()', () => {
     });
 });
 
+describe('global createDiv()', () => {
+    it.failing('createDiv() should create a div', () => {
+        const child = createDiv();
+
+        expect(child.tagName).toBe('DIV');
+    });
+
+    it.failing('createDiv() should treat a string argument as a class name', () => {
+        const div = createDiv('single-class-value');
+
+        expect(div.tagName).toBe('DIV');
+        expectElementToHaveClasses(div, 'single-class-value');
+    });
+
+    it.failing('createDiv() should apply classes from the cls option', () => {
+        const child = createDiv({
+            cls: ['first-class', 'second-class'],
+        });
+
+        expectElementToHaveClasses(child, ['first-class', 'second-class']);
+    });
+
+    it.failing('createDiv() should apply a class from the cls option', () => {
+        const child = createDiv({
+            cls: 'single-class-value',
+        });
+
+        expectElementToHaveClasses(child, 'single-class-value');
+    });
+
+    it.failing('createDiv() should apply text from the text option', () => {
+        const child = createDiv({
+            text: 'example text content',
+        });
+
+        expect(child.textContent).toBe('example text content');
+    });
+
+    it.failing('createDiv() should call the callback with the created div', () => {
+        const callback = jest.fn();
+
+        const div = createDiv(undefined, callback);
+
+        expect(div.tagName).toBe('DIV');
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith(div);
+    });
+});
+
 describe('HTMLElement.createDiv()', () => {
     it('createDiv() should create a div, append it to the parent, and return it', () => {
         const parent = createParentWithCreateDiv();
