@@ -3,6 +3,10 @@ import { InMemoryLocalStorageProvider } from '../src/Config/InMemoryLocalStorage
 import { initializeI18n } from '../src/i18n/i18n';
 import type { CreateDivOptions, CreateElOptions, CreateSpanOptions } from './TestingTools/DOMExtensions';
 
+// ------------------------------------------------------------------
+// Mimics of Obsidian's createEl() implementations
+// ------------------------------------------------------------------
+
 /**
  * Provide the minimal Obsidian-style createEl() behaviour in Jest:
  * create the requested element, append it to the parent, and return it.
@@ -50,6 +54,10 @@ HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap
     return el;
 };
 
+// ------------------------------------------------------------------
+// Mimics of Obsidian's createDiv() implementations
+// ------------------------------------------------------------------
+
 /**
  * Provide the minimal Obsidian-style createDiv() behaviour in Jest
  * by delegating to createEl('div').
@@ -90,6 +98,10 @@ HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOpti
     return div;
 };
 
+// ------------------------------------------------------------------
+// Mimics of Obsidian's createSpan() implementations
+// ------------------------------------------------------------------
+
 /**
  * Provide the minimal Obsidian-style createSpan() behaviour in Jest
  * by delegating to createEl('span').
@@ -103,6 +115,10 @@ HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOpti
 HTMLElement.prototype.createSpan = function (this: HTMLElement, o?: CreateSpanOptions): HTMLSpanElement {
     return this.createEl('span', o);
 };
+
+// ------------------------------------------------------------------
+// Other global test code
+// ------------------------------------------------------------------
 
 // Tests should default to allowing JavaScript in Tasks queries.
 // Production code initialises this singleton separately in main.ts, using Obsidian local storage.
