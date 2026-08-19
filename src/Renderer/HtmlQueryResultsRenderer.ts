@@ -45,9 +45,9 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
 
     private readonly taskLineRenderer: TaskLineRenderer;
 
-    // document.createElement() creates dummy elements that must be overwritten later
+    // createDiv() creates dummy elements that must be overwritten later
     // with the values of elements that will be rendered
-    public content: HTMLDivElement = document.createElement('div');
+    public content: HTMLDivElement = createDiv();
     private readonly ulElementStack: HTMLUListElement[] = [];
     protected lastLIElement: HTMLLIElement = createEl('li');
 
@@ -259,7 +259,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private appendGroupTaskCount(headerEl: HTMLElement, groupTaskCountText: string): void {
-        const countSpan = headerEl.ownerDocument.createElement('span');
+        const countSpan = createSpan();
         countSpan.classList.add('tasks-group-count');
         countSpan.textContent = groupTaskCountText;
 
