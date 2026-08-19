@@ -44,6 +44,11 @@ function expectElementToHaveClasses(element: Element, expectedClasses: string[] 
     }
 }
 
+function expectCallbackToHaveBeenCalledOnceWith(callback: jest.Mock<any, any, any>, child: HTMLButtonElement): void {
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(child);
+}
+
 describe('global createEl()', () => {
     it('createEl() should create an element and return it', () => {
         const child = createEl('input');
@@ -64,8 +69,7 @@ describe('global createEl()', () => {
         const child = createEl('button', undefined, callback);
 
         expect(child.tagName).toBe('BUTTON');
-        expect(callback).toHaveBeenCalledTimes(1);
-        expect(callback).toHaveBeenCalledWith(child);
+        expectCallbackToHaveBeenCalledOnceWith(callback, child);
     });
 });
 
