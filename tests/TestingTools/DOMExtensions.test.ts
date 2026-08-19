@@ -50,6 +50,23 @@ describe('global createEl()', () => {
 
         expect(child.tagName).toBe('INPUT');
     });
+
+    it('createEl() should treat a string second argument as a class name', () => {
+        const child = createEl('p', 'single-class-value');
+
+        expect(child.tagName).toBe('P');
+        expectElementToHaveClasses(child, 'single-class-value');
+    });
+
+    it('createEl() should call the callback with the created element', () => {
+        const callback = jest.fn();
+
+        const child = createEl('button', undefined, callback);
+
+        expect(child.tagName).toBe('BUTTON');
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith(child);
+    });
 });
 
 describe('HTMLElement.createEl()', () => {
