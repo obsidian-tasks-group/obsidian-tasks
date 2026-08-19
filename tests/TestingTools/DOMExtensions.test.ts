@@ -313,9 +313,12 @@ describe('global createSpan()', () => {
 });
 
 describe('HTMLElement.createSpan()', () => {
-    it('createSpan() should create a span, append it to the parent, and return it', () => {
-        const parent = createParentWithCreateSpan();
+    let parent: HTMLElementWithCreateSpan;
+    beforeEach(() => {
+        parent = createParentWithCreateSpan();
+    });
 
+    it('createSpan() should create a span, append it to the parent, and return it', () => {
         const child = parent.createSpan();
 
         expectCorrectTagNameAndParentChildStructure(parent, child, 'SPAN');
