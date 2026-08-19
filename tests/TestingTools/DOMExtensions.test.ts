@@ -266,6 +266,16 @@ describe('HTMLElement.createDiv()', () => {
         expect(child.firstElementChild?.tagName).toBe('SPAN');
         expect(child.textContent).toBe('fragment text content');
     });
+
+    it.failing('createDiv() should call the callback with the created div', () => {
+        const callback = jest.fn();
+
+        const div = parent.createDiv(undefined, callback);
+
+        expect(div.tagName).toBe('DIV');
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith(div);
+    });
 });
 
 describe('HTMLElement.createSpan()', () => {
