@@ -44,7 +44,7 @@ function expectElementToHaveClasses(element: Element, expectedClasses: string[] 
     }
 }
 
-describe('Obsidian DOM extensions in tests - createEl()', () => {
+describe('HTMLElement.createEl()', () => {
     it('createEl() should create an element, append it to the parent, and return it', () => {
         const parent = createParentWithCreateEl();
 
@@ -84,7 +84,7 @@ describe('Obsidian DOM extensions in tests - createEl()', () => {
     });
 });
 
-describe('Obsidian DOM extensions in tests - createDiv()', () => {
+describe('HTMLElement.createDiv()', () => {
     it('createDiv() should create a div, append it to the parent, and return it', () => {
         const parent = createParentWithCreateDiv();
 
@@ -124,7 +124,7 @@ describe('Obsidian DOM extensions in tests - createDiv()', () => {
     });
 });
 
-describe('Obsidian DOM extensions in tests - createSpan()', () => {
+describe('HTMLElement.createSpan()', () => {
     it('createSpan() should create a span, append it to the parent, and return it', () => {
         const parent = createParentWithCreateSpan();
 
