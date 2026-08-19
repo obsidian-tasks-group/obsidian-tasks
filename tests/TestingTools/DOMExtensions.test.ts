@@ -30,6 +30,14 @@ function createParentWithCreateSpan(): HTMLElementWithCreateSpan {
     return document.createElement('span') as HTMLElementWithCreateSpan;
 }
 
+function createDocumentFragment(): DocumentFragment {
+    const fragment = document.createDocumentFragment();
+    const childSpan = document.createElement('span');
+    childSpan.textContent = 'fragment text content';
+    fragment.appendChild(childSpan);
+    return fragment;
+}
+
 function expectCorrectTagNameAndParentChildStructure(parent: HTMLElement, child: HTMLElement, expectedTagName: string) {
     expect(child.tagName).toBe(expectedTagName);
     expect(parent.children).toHaveLength(1);
@@ -165,10 +173,7 @@ describe('global createDiv()', () => {
     });
 
     it('createDiv() should apply DocumentFragment text content', () => {
-        const fragment = document.createDocumentFragment();
-        const childSpan = document.createElement('span');
-        childSpan.textContent = 'fragment text content';
-        fragment.appendChild(childSpan);
+        const fragment = createDocumentFragment();
 
         const child = createDiv({
             text: fragment,
@@ -254,10 +259,7 @@ describe('HTMLElement.createDiv()', () => {
     });
 
     it('createDiv() should apply DocumentFragment text content', () => {
-        const fragment = document.createDocumentFragment();
-        const childSpan = document.createElement('span');
-        childSpan.textContent = 'fragment text content';
-        fragment.appendChild(childSpan);
+        const fragment = createDocumentFragment();
 
         const child = parent.createDiv({
             text: fragment,
