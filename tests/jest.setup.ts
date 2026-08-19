@@ -83,16 +83,9 @@ globalThis.createDiv = function (
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createDiv/.
  */
 HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOptions): HTMLDivElement {
-    const div = this.createEl('div', o);
+    const div = createDiv(o);
 
-    if (o?.text !== undefined) {
-        if (typeof o.text === 'string') {
-            div.textContent = o.text;
-        } else {
-            div.replaceChildren(o.text);
-        }
-    }
-
+    this.appendChild(div);
     return div;
 };
 
