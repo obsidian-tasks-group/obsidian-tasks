@@ -233,7 +233,7 @@ describe('HTMLElement.createDiv()', () => {
         expect(child.textContent).toBe('example text content');
     });
 
-    it.failing('createDiv() should apply DocumentFragment text content', () => {
+    it('createDiv() should apply DocumentFragment text content', () => {
         const parent = createParentWithCreateDiv();
 
         const fragment = document.createDocumentFragment();

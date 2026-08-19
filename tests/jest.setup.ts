@@ -63,7 +63,11 @@ HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOpti
     const div = this.createEl('div', o);
 
     if (o?.text !== undefined) {
-        div.textContent = o.text;
+        if (typeof o.text === 'string') {
+            div.textContent = o.text;
+        } else {
+            div.replaceChildren(o.text);
+        }
     }
 
     return div;

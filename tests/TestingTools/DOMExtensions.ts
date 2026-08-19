@@ -5,7 +5,7 @@ export type CreateElOptions = {
 
 export type CreateDivOptions = {
     cls?: string[] | string;
-    text?: string;
+    text?: string | DocumentFragment;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type -- types will likely be added in future
