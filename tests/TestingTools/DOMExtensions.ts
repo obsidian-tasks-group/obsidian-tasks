@@ -13,7 +13,11 @@ export type CreateSpanOptions = {};
 
 // See jest.setup.ts for the test implementations of these functions.
 export type HTMLElementWithCreateEl = HTMLElement & {
-    createEl<K extends keyof HTMLElementTagNameMap>(tag: K, o?: string | CreateElOptions): HTMLElementTagNameMap[K];
+    createEl<K extends keyof HTMLElementTagNameMap>(
+        tag: K,
+        o?: string | CreateElOptions,
+        callback?: (el: HTMLElementTagNameMap[K]) => void,
+    ): HTMLElementTagNameMap[K];
 };
 
 export type HTMLElementWithCreateDiv = HTMLElement & {

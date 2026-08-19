@@ -112,7 +112,7 @@ describe('HTMLElement.createEl()', () => {
         expectElementToHaveClasses(child, 'single-class-value');
     });
 
-    it.failing('createEl() should call the callback with the created element', () => {
+    it('createEl() should call the callback with the created element', () => {
         const callback = jest.fn();
 
         const child = parent.createEl('button', undefined, callback);

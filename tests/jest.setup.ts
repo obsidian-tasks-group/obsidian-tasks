@@ -42,8 +42,9 @@ HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap
     this: HTMLElement,
     tag: K,
     o?: string | CreateElOptions,
+    callback?: (el: HTMLElementTagNameMap[K]) => void,
 ): HTMLElementTagNameMap[K] {
-    const el = createEl(tag, o);
+    const el = createEl(tag, o, callback);
 
     this.appendChild(el);
     return el;
