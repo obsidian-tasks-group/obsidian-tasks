@@ -21,7 +21,7 @@ export type HTMLElementWithCreateEl = HTMLElement & {
 };
 
 export type HTMLElementWithCreateDiv = HTMLElement & {
-    createDiv(o?: CreateDivOptions): HTMLDivElement;
+    createDiv(o?: string | CreateDivOptions): HTMLDivElement;
 };
 
 export type HTMLElementWithCreateSpan = HTMLElement & {

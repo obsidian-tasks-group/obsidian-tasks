@@ -220,6 +220,13 @@ describe('HTMLElement.createDiv()', () => {
         expectCorrectTagNameAndParentChildStructure(parent, child, 'DIV');
     });
 
+    it('createDiv() should treat a string argument as a class name', () => {
+        const div = parent.createDiv('single-class-value');
+
+        expect(div.tagName).toBe('DIV');
+        expectElementToHaveClasses(div, 'single-class-value');
+    });
+
     it('createDiv() should apply classes from the cls option', () => {
         const child = parent.createDiv({
             cls: ['first-class', 'second-class'],
