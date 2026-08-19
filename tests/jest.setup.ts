@@ -91,8 +91,12 @@ globalThis.createDiv = function (
  * This is a partial re-implementation of
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createDiv/.
  */
-HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: string | CreateDivOptions): HTMLDivElement {
-    const div = createDiv(o);
+HTMLElement.prototype.createDiv = function (
+    this: HTMLElement,
+    o?: string | CreateDivOptions,
+    callback?: (el: HTMLDivElement) => void,
+): HTMLDivElement {
+    const div = createDiv(o, callback);
 
     this.appendChild(div);
     return div;

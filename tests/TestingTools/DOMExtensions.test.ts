@@ -267,7 +267,7 @@ describe('HTMLElement.createDiv()', () => {
         expect(child.textContent).toBe('fragment text content');
     });
 
-    it.failing('createDiv() should call the callback with the created div', () => {
+    it('createDiv() should call the callback with the created div', () => {
         const callback = jest.fn();
 
         const div = parent.createDiv(undefined, callback);
