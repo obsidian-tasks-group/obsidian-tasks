@@ -1,9 +1,6 @@
 yarn run v1.22.19
 $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-check
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/PresetsSettingsUI.ts
-  286:28  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/Settings.ts
   224:5  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
 
@@ -54,11 +51,10 @@ Prefer explicitly defining any function parameters and return type              
   61:62  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlQueryResultsRenderer.ts
-  262:27  warning  Use 'headerEl.ownerDocument.win.createSpan()' instead of 'headerEl.ownerDocument.createElement('span')'  obsidianmd/prefer-create-el
-  307:40  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
-  311:44  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
-  332:42  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
-  340:48  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
+  307:40  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  311:44  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  332:42  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  340:48  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryRenderer.ts
   162:47  warning  Promise returned in function argument where a void return was expected                                     @typescript-eslint/no-misused-promises
@@ -190,7 +186,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
   76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 122 problems (0 errors, 122 warnings)
+✖ 120 problems (0 errors, 120 warnings)
   0 errors and 21 warnings potentially fixable with the `--fix` option.
 
 
@@ -207,4 +203,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 22.32s.
+Done in 21.30s.
