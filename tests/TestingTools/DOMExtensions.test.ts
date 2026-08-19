@@ -147,6 +147,16 @@ describe('global createDiv()', () => {
         expect(child.textContent).toBe('example text content');
     });
 
+    it.failing('createDiv() should apply both cls and text options', () => {
+        const div = createDiv({
+            cls: ['first-class', 'second-class'],
+            text: 'example text content',
+        });
+
+        expectElementToHaveClasses(div, ['first-class', 'second-class']);
+        expect(div.textContent).toBe('example text content');
+    });
+
     it.failing('createDiv() should call the callback with the created div', () => {
         const callback = jest.fn();
 
@@ -155,6 +165,16 @@ describe('global createDiv()', () => {
         expect(div.tagName).toBe('DIV');
         expect(callback).toHaveBeenCalledTimes(1);
         expect(callback).toHaveBeenCalledWith(div);
+    });
+
+    it.failing('createDiv() should apply text before calling the callback', () => {
+        const callback = jest.fn();
+
+        const div = createDiv({ text: 'example text content' }, callback);
+
+        expect(div.textContent).toBe('example text content');
+        expect(callback).toHaveBeenCalledWith(div);
+        expect((callback.mock.calls[0][0] as HTMLDivElement).textContent).toBe('example text content');
     });
 });
 
