@@ -49,7 +49,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     // with the values of elements that will be rendered
     public content: HTMLDivElement = document.createElement('div');
     private readonly ulElementStack: HTMLUListElement[] = [];
-    protected lastLIElement: HTMLLIElement = document.createElement('li');
+    protected lastLIElement: HTMLLIElement = createEl('li');
 
     private readonly htmlQueryRendererParameters: HTMLQueryRendererParameters;
 
