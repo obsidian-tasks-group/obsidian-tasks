@@ -70,9 +70,12 @@ describe('global createEl()', () => {
 });
 
 describe('HTMLElement.createEl()', () => {
-    it('createEl() should create an element, append it to the parent, and return it', () => {
-        const parent = createParentWithCreateEl();
+    let parent: HTMLElementWithCreateEl;
+    beforeEach(() => {
+        parent = createParentWithCreateEl();
+    });
 
+    it('createEl() should create an element, append it to the parent, and return it', () => {
         // This documents the baseline behavior we rely on from Obsidian's createEl().
         const child = parent.createEl('input');
 
@@ -80,8 +83,6 @@ describe('HTMLElement.createEl()', () => {
     });
 
     it('createEl() should apply the type option to an input element', () => {
-        const parent = createParentWithCreateEl();
-
         const child = parent.createEl('input', { type: 'checkbox' });
 
         expect(child.tagName).toBe('INPUT');
@@ -89,8 +90,6 @@ describe('HTMLElement.createEl()', () => {
     });
 
     it('createEl() should apply classes from the cls option', () => {
-        const parent = createParentWithCreateEl();
-
         const child = parent.createEl('input', {
             cls: ['task-list-item-checkbox', 'tasks-quick-search-result-checkbox'],
         });
@@ -99,8 +98,6 @@ describe('HTMLElement.createEl()', () => {
     });
 
     it('createEl() should apply a class from the cls option', () => {
-        const parent = createParentWithCreateEl();
-
         const child = parent.createEl('input', {
             cls: 'single-class-value',
         });
