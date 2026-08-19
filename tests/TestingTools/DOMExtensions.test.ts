@@ -82,6 +82,13 @@ describe('HTMLElement.createEl()', () => {
         expectCorrectTagNameAndParentChildStructure(parent, child, 'INPUT');
     });
 
+    it('createEl() should treat a string second argument as a class name', () => {
+        const child = parent.createEl('p', 'single-class-value');
+
+        expect(child.tagName).toBe('P');
+        expectElementToHaveClasses(child, 'single-class-value');
+    });
+
     it('createEl() should apply the type option to an input element', () => {
         const child = parent.createEl('input', { type: 'checkbox' });
 

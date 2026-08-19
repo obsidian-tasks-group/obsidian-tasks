@@ -41,7 +41,7 @@ globalThis.createEl = function <K extends keyof HTMLElementTagNameMap>(
 HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
     this: HTMLElement,
     tag: K,
-    o?: CreateElOptions,
+    o?: string | CreateElOptions,
 ): HTMLElementTagNameMap[K] {
     const el = createEl(tag, o);
 
