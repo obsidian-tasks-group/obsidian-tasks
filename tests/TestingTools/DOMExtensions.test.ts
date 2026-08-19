@@ -323,4 +323,29 @@ describe('HTMLElement.createSpan()', () => {
 
         expectCorrectTagNameAndParentChildStructure(parent, child, 'SPAN');
     });
+
+    it('createSpan() should treat a string argument as a class name', () => {
+        const span = parent.createSpan('single-class-value');
+
+        expect(span.tagName).toBe('SPAN');
+        expectElementToHaveClasses(span, 'single-class-value');
+    });
+
+    it.failing('createSpan() should call the callback with the created span', () => {
+        const callback = jest.fn();
+
+        const span = parent.createSpan(undefined, callback);
+
+        expect(span.tagName).toBe('SPAN');
+        expectCallbackToHaveBeenCalledOnceWith(callback, span);
+    });
+
+    it('createSpan() should apply a class from the cls option', () => {
+        const span = parent.createSpan({
+            cls: 'single-class-value',
+        });
+
+        expect(span.tagName).toBe('SPAN');
+        expectElementToHaveClasses(span, 'single-class-value');
+    });
 });
