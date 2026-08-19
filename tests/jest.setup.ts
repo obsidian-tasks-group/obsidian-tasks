@@ -13,27 +13,25 @@ import type { CreateDivOptions, CreateElOptions, CreateSpanOptions } from './Tes
  * See also the following, which is not yet supported in tests:
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createEl/
  */
-if (HTMLElement.prototype.createEl === undefined) {
-    HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
-        this: HTMLElement,
-        tag: K,
-        o?: CreateElOptions,
-    ): HTMLElementTagNameMap[K] {
-        const el = document.createElement(tag) as HTMLElementTagNameMap[K];
+HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap>(
+    this: HTMLElement,
+    tag: K,
+    o?: CreateElOptions,
+): HTMLElementTagNameMap[K] {
+    const el = document.createElement(tag) as HTMLElementTagNameMap[K];
 
-        if (o?.type !== undefined && el instanceof HTMLInputElement) {
-            el.type = o.type;
-        }
+    if (o?.type !== undefined && el instanceof HTMLInputElement) {
+        el.type = o.type;
+    }
 
-        if (o?.cls !== undefined) {
-            const classes = Array.isArray(o.cls) ? o.cls : [o.cls];
-            el.classList.add(...classes);
-        }
+    if (o?.cls !== undefined) {
+        const classes = Array.isArray(o.cls) ? o.cls : [o.cls];
+        el.classList.add(...classes);
+    }
 
-        this.appendChild(el);
-        return el;
-    };
-}
+    this.appendChild(el);
+    return el;
+};
 
 /**
  * Provide the minimal Obsidian-style createDiv() behaviour in Jest
@@ -45,17 +43,15 @@ if (HTMLElement.prototype.createEl === undefined) {
  * See also the following, which is not yet supported in tests:
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createDiv/
  */
-if (HTMLElement.prototype.createDiv === undefined) {
-    HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOptions): HTMLDivElement {
-        const div = this.createEl('div', o);
+HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOptions): HTMLDivElement {
+    const div = this.createEl('div', o);
 
-        if (o?.text !== undefined) {
-            div.textContent = o.text;
-        }
+    if (o?.text !== undefined) {
+        div.textContent = o.text;
+    }
 
-        return div;
-    };
-}
+    return div;
+};
 
 /**
  * Provide the minimal Obsidian-style createSpan() behaviour in Jest
@@ -67,11 +63,9 @@ if (HTMLElement.prototype.createDiv === undefined) {
  * See also the following, which is not yet supported in tests:
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createSpan/
  */
-if (HTMLElement.prototype.createSpan === undefined) {
-    HTMLElement.prototype.createSpan = function (this: HTMLElement, o?: CreateSpanOptions): HTMLSpanElement {
-        return this.createEl('span', o);
-    };
-}
+HTMLElement.prototype.createSpan = function (this: HTMLElement, o?: CreateSpanOptions): HTMLSpanElement {
+    return this.createEl('span', o);
+};
 
 // Tests should default to allowing JavaScript in Tasks queries.
 // Production code initialises this singleton separately in main.ts, using Obsidian local storage.
