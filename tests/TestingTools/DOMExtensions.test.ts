@@ -44,7 +44,7 @@ function expectElementToHaveClasses(element: Element, expectedClasses: string[] 
     }
 }
 
-function expectCallbackToHaveBeenCalledOnceWith(callback: jest.Mock<any, any, any>, child: HTMLButtonElement): void {
+function expectCallbackToHaveBeenCalledOnceWith(callback: jest.Mock<any, any, any>, child: HTMLElement): void {
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(child);
 }
@@ -122,8 +122,7 @@ describe('HTMLElement.createEl()', () => {
         const child = parent.createEl('button', undefined, callback);
 
         expect(child.tagName).toBe('BUTTON');
-        expect(callback).toHaveBeenCalledTimes(1);
-        expect(callback).toHaveBeenCalledWith(child);
+        expectCallbackToHaveBeenCalledOnceWith(callback, child);
     });
 });
 
@@ -197,8 +196,7 @@ describe('global createDiv()', () => {
         const div = createDiv(undefined, callback);
 
         expect(div.tagName).toBe('DIV');
-        expect(callback).toHaveBeenCalledTimes(1);
-        expect(callback).toHaveBeenCalledWith(div);
+        expectCallbackToHaveBeenCalledOnceWith(callback, div);
     });
 
     it('createDiv() should apply text before calling the callback', () => {
@@ -277,8 +275,7 @@ describe('HTMLElement.createDiv()', () => {
         const div = parent.createDiv(undefined, callback);
 
         expect(div.tagName).toBe('DIV');
-        expect(callback).toHaveBeenCalledTimes(1);
-        expect(callback).toHaveBeenCalledWith(div);
+        expectCallbackToHaveBeenCalledOnceWith(callback, div);
     });
 });
 
@@ -302,8 +299,7 @@ describe('global createSpan()', () => {
         const span = createSpan(undefined, callback);
 
         expect(span.tagName).toBe('SPAN');
-        expect(callback).toHaveBeenCalledTimes(1);
-        expect(callback).toHaveBeenCalledWith(span);
+        expectCallbackToHaveBeenCalledOnceWith(callback, span);
     });
 
     it('createSpan() should apply a class from the cls option', () => {
