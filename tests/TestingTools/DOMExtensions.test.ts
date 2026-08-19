@@ -39,7 +39,7 @@ function createDocumentFragment(): DocumentFragment {
     return fragment;
 }
 
-function expectDocumentFragmentToHaveBeenUsed(child: HTMLDivElement): void {
+function expectDocumentFragmentToHaveBeenUsed(child: HTMLElement): void {
     // See createDocumentFragment()
     expect(child.childElementCount).toBe(1);
     expect(child.firstElementChild?.tagName).toBe('SPAN');
@@ -353,5 +353,16 @@ describe('HTMLElement.createSpan()', () => {
 
         expect(span.tagName).toBe('SPAN');
         expectElementToHaveClasses(span, 'single-class-value');
+    });
+
+    it('createSpan() should apply DocumentFragment text content', () => {
+        const fragment = createDocumentFragment();
+
+        const child = parent.createSpan({
+            text: fragment,
+        });
+
+        expectCorrectTagNameAndParentChildStructure(parent, child, 'SPAN');
+        expectDocumentFragmentToHaveBeenUsed(child);
     });
 });
