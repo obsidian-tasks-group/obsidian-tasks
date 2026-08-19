@@ -110,11 +110,34 @@ HTMLElement.prototype.createDiv = function (
  * Provide the minimal Obsidian-style createSpan() behaviour in Jest
  * by delegating to createEl('span').
  *
- * This is a partial re-implementation of
- * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createSpan/.
- *
  * See also the following, which is not yet supported in tests:
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createSpan/
+ */
+globalThis.createSpan = function (
+    o?: string | CreateDivOptions,
+    callback?: (el: HTMLSpanElement) => void,
+): HTMLSpanElement {
+    const options: CreateDivOptions | undefined = typeof o === 'string' ? { cls: o } : o;
+    const span = createEl('span', options);
+
+    if (options?.text !== undefined) {
+        if (typeof options.text === 'string') {
+            span.textContent = options.text;
+        } else {
+            span.replaceChildren(options.text);
+        }
+    }
+
+    callback?.(span);
+    return span;
+};
+
+/**
+ * Provide the minimal Obsidian-style createSpan() behaviour in Jest
+ * by delegating to createEl('span').
+ *
+ * This is a partial re-implementation of
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createSpan/.
  */
 HTMLElement.prototype.createSpan = function (this: HTMLElement, o?: CreateSpanOptions): HTMLSpanElement {
     return this.createEl('span', o);

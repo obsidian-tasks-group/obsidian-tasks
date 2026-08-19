@@ -279,20 +279,20 @@ describe('HTMLElement.createDiv()', () => {
 });
 
 describe('global createSpan()', () => {
-    it.failing('createSpan() should create a span', () => {
+    it('createSpan() should create a span', () => {
         const child = createSpan();
 
         expect(child.tagName).toBe('SPAN');
     });
 
-    it.failing('createSpan() should treat a string argument as a class name', () => {
+    it('createSpan() should treat a string argument as a class name', () => {
         const span = createSpan('single-class-value');
 
         expect(span.tagName).toBe('SPAN');
         expectElementToHaveClasses(span, 'single-class-value');
     });
 
-    it.failing('createSpan() should call the callback with the created span', () => {
+    it('createSpan() should call the callback with the created span', () => {
         const callback = jest.fn();
 
         const span = createSpan(undefined, callback);
@@ -302,7 +302,7 @@ describe('global createSpan()', () => {
         expect(callback).toHaveBeenCalledWith(span);
     });
 
-    it.failing('createSpan() should apply a class from the cls option', () => {
+    it('createSpan() should apply a class from the cls option', () => {
         const span = createSpan({
             cls: 'single-class-value',
         });
