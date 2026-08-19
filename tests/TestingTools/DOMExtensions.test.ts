@@ -192,17 +192,18 @@ describe('global createDiv()', () => {
 });
 
 describe('HTMLElement.createDiv()', () => {
-    it('createDiv() should create a div, append it to the parent, and return it', () => {
-        const parent = createParentWithCreateDiv();
+    let parent: HTMLElementWithCreateDiv;
+    beforeEach(() => {
+        parent = createParentWithCreateDiv();
+    });
 
+    it('createDiv() should create a div, append it to the parent, and return it', () => {
         const child = parent.createDiv();
 
         expectCorrectTagNameAndParentChildStructure(parent, child, 'DIV');
     });
 
     it('createDiv() should apply classes from the cls option', () => {
-        const parent = createParentWithCreateDiv();
-
         const child = parent.createDiv({
             cls: ['first-class', 'second-class'],
         });
@@ -211,8 +212,6 @@ describe('HTMLElement.createDiv()', () => {
     });
 
     it('createDiv() should apply a class from the cls option', () => {
-        const parent = createParentWithCreateDiv();
-
         const child = parent.createDiv({
             cls: 'single-class-value',
         });
@@ -221,8 +220,6 @@ describe('HTMLElement.createDiv()', () => {
     });
 
     it('createDiv() should apply text from the text option', () => {
-        const parent = createParentWithCreateDiv();
-
         const child = parent.createDiv({
             text: 'example text content',
         });
@@ -231,8 +228,6 @@ describe('HTMLElement.createDiv()', () => {
     });
 
     it('createDiv() should apply DocumentFragment text content', () => {
-        const parent = createParentWithCreateDiv();
-
         const fragment = document.createDocumentFragment();
         const childSpan = document.createElement('span');
         childSpan.textContent = 'fragment text content';
