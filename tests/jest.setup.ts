@@ -3,24 +3,6 @@ import { InMemoryLocalStorageProvider } from '../src/Config/InMemoryLocalStorage
 import { initializeI18n } from '../src/i18n/i18n';
 import type { CreateDivOptions, CreateElOptions, CreateSpanOptions } from './TestingTools/DOMExtensions';
 
-function createElementWithObsidianOptions<K extends keyof HTMLElementTagNameMap>(
-    tag: K,
-    o?: CreateElOptions,
-): HTMLElementTagNameMap[K] {
-    const el = document.createElement(tag) as HTMLElementTagNameMap[K];
-
-    if (o?.type !== undefined && el instanceof HTMLInputElement) {
-        el.type = o.type;
-    }
-
-    if (o?.cls !== undefined) {
-        const classes = Array.isArray(o.cls) ? o.cls : [o.cls];
-        el.classList.add(...classes);
-    }
-
-    return el;
-}
-
 /**
  * Provide the minimal Obsidian-style createEl() behaviour in Jest:
  * create the requested element, append it to the parent, and return it.
@@ -34,7 +16,17 @@ globalThis.createEl = function <K extends keyof HTMLElementTagNameMap>(
     callback?: (el: HTMLElementTagNameMap[K]) => void,
 ): HTMLElementTagNameMap[K] {
     const options: CreateElOptions | undefined = typeof o === 'string' ? { cls: o } : o;
-    const el = createElementWithObsidianOptions(tag, options);
+    const el = document.createElement(tag) as HTMLElementTagNameMap[K];
+
+    if (options?.type !== undefined && el instanceof HTMLInputElement) {
+        el.type = options.type;
+    }
+
+    if (options?.cls !== undefined) {
+        const classes = Array.isArray(options.cls) ? options.cls : [options.cls];
+        el.classList.add(...classes);
+    }
+
     callback?.(el);
     return el;
 };
