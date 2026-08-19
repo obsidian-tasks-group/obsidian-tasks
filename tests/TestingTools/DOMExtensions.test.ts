@@ -111,6 +111,16 @@ describe('HTMLElement.createEl()', () => {
 
         expectElementToHaveClasses(child, 'single-class-value');
     });
+
+    it.failing('createEl() should call the callback with the created element', () => {
+        const callback = jest.fn();
+
+        const child = parent.createEl('button', undefined, callback);
+
+        expect(child.tagName).toBe('BUTTON');
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith(child);
+    });
 });
 
 describe('global createDiv()', () => {
