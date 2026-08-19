@@ -147,6 +147,22 @@ describe('global createDiv()', () => {
         expect(child.textContent).toBe('example text content');
     });
 
+    it.failing('createDiv() should apply DocumentFragment text content', () => {
+        const fragment = document.createDocumentFragment();
+        const childSpan = document.createElement('span');
+        childSpan.textContent = 'fragment text content';
+        fragment.appendChild(childSpan);
+
+        const child = createDiv({
+            text: fragment,
+        });
+
+        expect(child.tagName).toBe('DIV');
+        expect(child.childElementCount).toBe(1);
+        expect(child.firstElementChild?.tagName).toBe('SPAN');
+        expect(child.textContent).toBe('fragment text content');
+    });
+
     it.failing('createDiv() should apply both cls and text options', () => {
         const div = createDiv({
             cls: ['first-class', 'second-class'],
@@ -215,6 +231,24 @@ describe('HTMLElement.createDiv()', () => {
         });
 
         expect(child.textContent).toBe('example text content');
+    });
+
+    it.failing('createDiv() should apply DocumentFragment text content', () => {
+        const parent = createParentWithCreateDiv();
+
+        const fragment = document.createDocumentFragment();
+        const childSpan = document.createElement('span');
+        childSpan.textContent = 'fragment text content';
+        fragment.appendChild(childSpan);
+
+        const child = parent.createDiv({
+            text: fragment,
+        });
+
+        expectCorrectTagNameAndParentChildStructure(parent, child, 'DIV');
+        expect(child.childElementCount).toBe(1);
+        expect(child.firstElementChild?.tagName).toBe('SPAN');
+        expect(child.textContent).toBe('fragment text content');
     });
 });
 
