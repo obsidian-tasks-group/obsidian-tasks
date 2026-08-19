@@ -110,20 +110,20 @@ describe('HTMLElement.createEl()', () => {
 });
 
 describe('global createDiv()', () => {
-    it.failing('createDiv() should create a div', () => {
+    it('createDiv() should create a div', () => {
         const child = createDiv();
 
         expect(child.tagName).toBe('DIV');
     });
 
-    it.failing('createDiv() should treat a string argument as a class name', () => {
+    it('createDiv() should treat a string argument as a class name', () => {
         const div = createDiv('single-class-value');
 
         expect(div.tagName).toBe('DIV');
         expectElementToHaveClasses(div, 'single-class-value');
     });
 
-    it.failing('createDiv() should apply classes from the cls option', () => {
+    it('createDiv() should apply classes from the cls option', () => {
         const child = createDiv({
             cls: ['first-class', 'second-class'],
         });
@@ -131,7 +131,7 @@ describe('global createDiv()', () => {
         expectElementToHaveClasses(child, ['first-class', 'second-class']);
     });
 
-    it.failing('createDiv() should apply a class from the cls option', () => {
+    it('createDiv() should apply a class from the cls option', () => {
         const child = createDiv({
             cls: 'single-class-value',
         });
@@ -139,7 +139,7 @@ describe('global createDiv()', () => {
         expectElementToHaveClasses(child, 'single-class-value');
     });
 
-    it.failing('createDiv() should apply text from the text option', () => {
+    it('createDiv() should apply text from the text option', () => {
         const child = createDiv({
             text: 'example text content',
         });
@@ -147,7 +147,7 @@ describe('global createDiv()', () => {
         expect(child.textContent).toBe('example text content');
     });
 
-    it.failing('createDiv() should apply DocumentFragment text content', () => {
+    it('createDiv() should apply DocumentFragment text content', () => {
         const fragment = document.createDocumentFragment();
         const childSpan = document.createElement('span');
         childSpan.textContent = 'fragment text content';
@@ -163,7 +163,7 @@ describe('global createDiv()', () => {
         expect(child.textContent).toBe('fragment text content');
     });
 
-    it.failing('createDiv() should apply both cls and text options', () => {
+    it('createDiv() should apply both cls and text options', () => {
         const div = createDiv({
             cls: ['first-class', 'second-class'],
             text: 'example text content',
@@ -173,7 +173,7 @@ describe('global createDiv()', () => {
         expect(div.textContent).toBe('example text content');
     });
 
-    it.failing('createDiv() should call the callback with the created div', () => {
+    it('createDiv() should call the callback with the created div', () => {
         const callback = jest.fn();
 
         const div = createDiv(undefined, callback);
@@ -183,7 +183,7 @@ describe('global createDiv()', () => {
         expect(callback).toHaveBeenCalledWith(div);
     });
 
-    it.failing('createDiv() should apply text before calling the callback', () => {
+    it('createDiv() should apply text before calling the callback', () => {
         const callback = jest.fn();
 
         const div = createDiv({ text: 'example text content' }, callback);

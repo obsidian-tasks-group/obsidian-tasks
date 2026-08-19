@@ -53,11 +53,34 @@ HTMLElement.prototype.createEl = function <K extends keyof HTMLElementTagNameMap
  * Provide the minimal Obsidian-style createDiv() behaviour in Jest
  * by delegating to createEl('div').
  *
- * This is a partial re-implementation of
- * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createDiv/.
- *
  * See also the following, which is not yet supported in tests:
  * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createDiv/
+ */
+globalThis.createDiv = function (
+    o?: string | CreateDivOptions,
+    callback?: (el: HTMLDivElement) => void,
+): HTMLDivElement {
+    const options: CreateDivOptions | undefined = typeof o === 'string' ? { cls: o } : o;
+    const div = createEl('div', options);
+
+    if (options?.text !== undefined) {
+        if (typeof options.text === 'string') {
+            div.textContent = options.text;
+        } else {
+            div.replaceChildren(options.text);
+        }
+    }
+
+    callback?.(div);
+    return div;
+};
+
+/**
+ * Provide the minimal Obsidian-style createDiv() behaviour in Jest
+ * by delegating to createEl('div').
+ *
+ * This is a partial re-implementation of
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/Node/createDiv/.
  */
 HTMLElement.prototype.createDiv = function (this: HTMLElement, o?: CreateDivOptions): HTMLDivElement {
     const div = this.createEl('div', o);
