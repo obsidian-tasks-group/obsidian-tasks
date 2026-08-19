@@ -44,6 +44,14 @@ function expectElementToHaveClasses(element: Element, expectedClasses: string[] 
     }
 }
 
+describe('global createEl()', () => {
+    it.failing('createEl() should create an element and return it', () => {
+        const child = createEl('input');
+
+        expect(child.tagName).toBe('INPUT');
+    });
+});
+
 describe('HTMLElement.createEl()', () => {
     it('createEl() should create an element, append it to the parent, and return it', () => {
         const parent = createParentWithCreateEl();
