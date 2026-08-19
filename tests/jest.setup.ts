@@ -7,6 +7,23 @@ import type { CreateDivOptions, CreateElOptions, CreateSpanOptions } from './Tes
 // Mimics of Obsidian's createEl() implementations
 // ------------------------------------------------------------------
 
+function applyTextAndInvokeCallback<T extends HTMLElement>(
+    element: T,
+    options: { text?: string | DocumentFragment } | undefined,
+    callback?: (el: T) => void,
+): T {
+    if (options?.text !== undefined) {
+        if (typeof options.text === 'string') {
+            element.textContent = options.text;
+        } else {
+            element.replaceChildren(options.text);
+        }
+    }
+
+    callback?.(element);
+    return element;
+}
+
 /**
  * Provide the minimal Obsidian-style createEl() behaviour in Jest:
  * create the requested element, append it to the parent, and return it.
@@ -71,17 +88,7 @@ globalThis.createDiv = function (
 ): HTMLDivElement {
     const options: CreateDivOptions | undefined = typeof o === 'string' ? { cls: o } : o;
     const div = createEl('div', options);
-
-    if (options?.text !== undefined) {
-        if (typeof options.text === 'string') {
-            div.textContent = options.text;
-        } else {
-            div.replaceChildren(options.text);
-        }
-    }
-
-    callback?.(div);
-    return div;
+    return applyTextAndInvokeCallback(div, options, callback);
 };
 
 /**
@@ -119,17 +126,7 @@ globalThis.createSpan = function (
 ): HTMLSpanElement {
     const options: CreateDivOptions | undefined = typeof o === 'string' ? { cls: o } : o;
     const span = createEl('span', options);
-
-    if (options?.text !== undefined) {
-        if (typeof options.text === 'string') {
-            span.textContent = options.text;
-        } else {
-            span.replaceChildren(options.text);
-        }
-    }
-
-    callback?.(span);
-    return span;
+    return applyTextAndInvokeCallback(span, options, callback);
 };
 
 /**
