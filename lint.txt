@@ -119,7 +119,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   213:36  warning  Unsafe member access .save on a type that cannot be resolved                                                                             @typescript-eslint/no-unsafe-member-access
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/Suggestor.ts
-  492:57  warning  Invalid type "string | string[]" of template literal expression  @typescript-eslint/restrict-template-expressions
+  483:57  warning  Invalid type "string | string[]" of template literal expression  @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/ListItem.ts
   143:19  warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
@@ -189,4 +189,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 24.51s.
+Done in 30.80s.
