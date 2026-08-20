@@ -152,7 +152,7 @@ Recommendations:
 
         const timeout = Math.min(Math.pow(10, previousTries), 100); // 1, 10, 100, 100, 100, ...
         logger.debug(`timeout = ${timeout}`);
-        setTimeout(async () => {
+        window.setTimeout(async () => {
             await tryRepetitive({
                 originalTask,
                 newTasks,
