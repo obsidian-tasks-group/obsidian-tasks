@@ -99,7 +99,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private renderEventRef: EventRef | undefined;
     private reloadSearchResultsEventRef: EventRef | undefined;
-    private queryReloadTimeout: NodeJS.Timeout | undefined;
+    private queryReloadTimeout: number | undefined;
 
     private isCacheChangedSinceLastRedraw = false;
     private observer: IntersectionObserver | null = null;
@@ -279,7 +279,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
-        this.queryReloadTimeout = setTimeout(() => {
+        this.queryReloadTimeout = window.setTimeout(() => {
             this.queryResultsRenderer.query = getQueryForQueryRenderer(
                 this.queryResultsRenderer.source,
                 GlobalQuery.getInstance(),
