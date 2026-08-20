@@ -300,7 +300,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         // So note that any results we have already drawn are now out-of-date:
         this.isCacheChangedSinceLastRedraw = true;
 
-        requestAnimationFrame(async () => {
+        window.requestAnimationFrame(async () => {
             if (this.isRendering) {
                 return;
             }
