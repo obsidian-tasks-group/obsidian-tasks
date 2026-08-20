@@ -32,10 +32,10 @@ declare global {
 
 // Set default value for production to off, temporarily. It will be turned on in tests.
 export const showDependencySuggestionsDefault = true;
-globalThis.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
+window.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
 
 function includeDependencySuggestions(canSaveEdits: boolean) {
-    return globalThis.SHOW_DEPENDENCY_SUGGESTIONS && canSaveEdits;
+    return window.SHOW_DEPENDENCY_SUGGESTIONS && canSaveEdits;
 }
 
 export interface SuggestorParameters {
