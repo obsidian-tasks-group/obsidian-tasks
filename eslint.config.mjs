@@ -90,7 +90,7 @@ const typescriptCommonRules = {
     'obsidianmd/prefer-active-doc': 1,
     'obsidianmd/prefer-create-el': 1,
     'obsidianmd/prefer-get-language': 1,
-    'obsidianmd/prefer-window-timers': on_or_off,
+    'obsidianmd/prefer-window-timers': 1,
     'obsidianmd/rule-custom-message': on_or_off,
     'obsidianmd/settings-tab/prefer-setting-definitions': on_or_off,
     'obsidianmd/ui/sentence-case': 0, // Obsidian's scanner now disables this
