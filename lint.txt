@@ -119,9 +119,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   213:36  warning  Unsafe member access .save on a type that cannot be resolved                                                                             @typescript-eslint/no-unsafe-member-access
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/Suggestor.ts
-   35:1   warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility  obsidianmd/no-global-this
-   38:12  warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility  obsidianmd/no-global-this
-  492:57  warning  Invalid type "string | string[]" of template literal expression                           @typescript-eslint/restrict-template-expressions
+  492:57  warning  Invalid type "string | string[]" of template literal expression  @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/ListItem.ts
   143:19  warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
@@ -181,8 +179,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
   76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 115 problems (0 errors, 115 warnings)
-  0 errors and 15 warnings potentially fixable with the `--fix` option.
+✖ 113 problems (0 errors, 113 warnings)
+  0 errors and 13 warnings potentially fixable with the `--fix` option.
 
 
 ====================================
@@ -191,4 +189,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 25.20s.
+Done in 24.51s.
