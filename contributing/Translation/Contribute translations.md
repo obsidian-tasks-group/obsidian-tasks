@@ -19,7 +19,7 @@ Use this discussion on GitHub [Contribute to translating the Tasks plugin in to 
 
 ## Adding a new language
 
-If there is not already a file for your language in [src/i18n/locales/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/i18n/locales), follow [[Support a new language]].
+If there is not already a file for your language, follow [[Support a new language]].
 
 ## Doing the translation
 
@@ -29,5 +29,5 @@ You will be editing a file in [src/i18n/locales/](https://github.com/obsidian-ta
 2. Create a branch.
 3. Open a file-comparison tool and compare [en.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/locales/en.json) with the file for your language.
 4. Copy the English string to the other file, and then translate it.
-5. When you have finished, commit your language file: use the prefix `i18n:` on the commit message
+5. When you have finished, commit your language file: use the prefix `i18n:` on the commit message.
 6. Then create a pull request.
