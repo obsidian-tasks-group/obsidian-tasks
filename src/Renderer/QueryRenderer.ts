@@ -254,7 +254,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         if (this.queryReloadTimeout !== undefined) {
-            clearTimeout(this.queryReloadTimeout);
+            window.clearTimeout(this.queryReloadTimeout);
         }
 
         // Cancel any pending debounced renders
