@@ -21,7 +21,7 @@ Use this discussion on GitHub [Contribute to translating the Tasks plugin in to 
 
 If there is not already a file for your language, follow [[Support a new language]].
 
-## Doing the translation
+## Updating an existing translation
 
 You will be editing a file in [src/i18n/locales/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/i18n/locales), for your language.
 
