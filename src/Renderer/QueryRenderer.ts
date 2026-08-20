@@ -99,7 +99,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private renderEventRef: EventRef | undefined;
     private reloadSearchResultsEventRef: EventRef | undefined;
-    private queryReloadTimeout: NodeJS.Timeout | undefined;
+    private queryReloadTimeout: number | undefined;
 
     private isCacheChangedSinceLastRedraw = false;
     private observer: IntersectionObserver | null = null;
@@ -254,7 +254,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         if (this.queryReloadTimeout !== undefined) {
-            clearTimeout(this.queryReloadTimeout);
+            window.clearTimeout(this.queryReloadTimeout);
         }
 
         // Cancel any pending debounced renders
@@ -279,7 +279,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
-        this.queryReloadTimeout = setTimeout(() => {
+        this.queryReloadTimeout = window.setTimeout(() => {
             this.queryResultsRenderer.query = getQueryForQueryRenderer(
                 this.queryResultsRenderer.source,
                 GlobalQuery.getInstance(),
@@ -300,7 +300,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         // So note that any results we have already drawn are now out-of-date:
         this.isCacheChangedSinceLastRedraw = true;
 
-        requestAnimationFrame(async () => {
+        window.requestAnimationFrame(async () => {
             if (this.isRendering) {
                 return;
             }

@@ -106,7 +106,7 @@ describe('focusOnceClearOfKeyboard() tests', () => {
 
     async function waitForFrames(count: number) {
         for (let frame = 0; frame < count; frame++) {
-            await new Promise((resolve) => requestAnimationFrame(resolve));
+            await new Promise((resolve) => window.requestAnimationFrame(resolve));
         }
     }
 

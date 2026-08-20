@@ -75,7 +75,7 @@ export class SettingsTab extends PluginSettingTab {
 
         this.display();
 
-        requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
             this.containerEl.scrollTo({ top: previousDistanceFromTop });
         });
     }

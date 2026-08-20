@@ -149,7 +149,7 @@ class LivePreviewExtension implements PluginValue {
             // event target's opinion of the new status, as that facility means
             // that the new status *may* be different from that in the event.
             const desiredCheckedStatus = toggled[0].status.symbol !== ' ';
-            setTimeout(() => {
+            window.setTimeout(() => {
                 target.checked = desiredCheckedStatus;
             }, 1);
         }
