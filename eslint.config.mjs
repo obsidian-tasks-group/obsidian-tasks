@@ -84,7 +84,7 @@ const typescriptCommonRules = {
     'no-unsanitized/method': 1,
     'no-unsanitized/property': 1,
     'obsidianmd/hardcoded-config-path': 0, // These were all 'https://publish.obsidian.md/tasks/' references!!!
-    'obsidianmd/no-global-this': on_or_off,
+    'obsidianmd/no-global-this': 1,
     'obsidianmd/no-nodejs-modules': 1, // Can disable this on test files
     'obsidianmd/no-static-styles-assignment': 1,
     'obsidianmd/prefer-active-doc': 1,
