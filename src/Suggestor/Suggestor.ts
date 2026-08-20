@@ -35,7 +35,7 @@ export const showDependencySuggestionsDefault = true;
 window.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
 
 function includeDependencySuggestions(canSaveEdits: boolean) {
-    return window.SHOW_DEPENDENCY_SUGGESTIONS && canSaveEdits;
+    return canSaveEdits;
 }
 
 export interface SuggestorParameters {
