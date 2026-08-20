@@ -10,16 +10,16 @@ publish: true
 
 > [!info] Assumptions
 >
-> - We plan adopt a website to make it easy to add new translations.
+> - We plan to adopt a website to make it easy to add new translations.
 > - Until then, these notes assume some familiarity with the GitHub '**create branch, edit, then create pull request'** process.
 
 ## Getting help
 
-Use this discussion on GitHub [Contribute to translating the Tasks plugin in to non-English languages](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/3321) to discuss this process, and get help.
+Use this discussion on GitHub [Contribute to translating the Tasks plugin in to non-English languages](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/3321) to discuss this process and get help.
 
 ## Adding a new language
 
-If there is not already a file for your language in [src/i18n/locales/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/i18n/locales), please add a new comment on [GitHub](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/3321), requesting a developer to [[Support a new language|add files for your language]].
+If there is not already a file for your language in [src/i18n/locales/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/i18n/locales), follow [[Support a new language]].
 
 ## Doing the translation
 
