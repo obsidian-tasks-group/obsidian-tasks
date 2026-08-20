@@ -12,7 +12,6 @@ import {
     lastOpenBracket,
     makeDefaultSuggestionBuilder,
     onlySuggestIfBracketOpen,
-    showDependencySuggestionsDefault,
 } from '../../src/Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
@@ -464,11 +463,6 @@ ${JSON.stringify(suggestions[0], null, 4)}
     });
 
     it('show all suggested text', () => {
-        // Turn off dependency suggestions for now, as per default value,
-        // as the outputs of this test are embedded in the documentation,
-        // and I wish to hide ID and dependsOn there.
-        global.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
-
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
 
