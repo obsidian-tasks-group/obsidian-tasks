@@ -475,10 +475,9 @@ ${JSON.stringify(suggestions[0], null, 4)}
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
             `- [ ] some task ${onCompletionSymbol} `,
+            `- [ ] some task ${idSymbol} `,
+            `- [ ] some task ${dependsOnSymbol} `,
         ];
-        lines.push(`- [ ] some task ${idSymbol} `);
-        lines.push(`- [ ] some task ${dependsOnSymbol} `);
-
         const markdownTable = new MarkdownTable(['Searchable Text', 'Text that is added']);
         for (const line of lines) {
             let suggestions = buildSuggestions(line, line.length - 1, originalSettings, [], CAN_SAVE_EDITS);
