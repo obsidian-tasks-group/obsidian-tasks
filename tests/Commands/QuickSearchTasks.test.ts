@@ -100,6 +100,13 @@ describe('Finding matching tasks, honouring the Global Query', () => {
             ['Write release notes', 'Review RELEASE checklist'],
             ['Write release notes', 'Review RELEASE checklist'],
         ],
+        [
+            'should ignore Global Query with invalid search-time instruction',
+            'release',
+            'filter by function task.wibble',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes', 'Review RELEASE checklist'],
+        ],
     ])(
         '%s',
         (_, query: string, globalQuerySource: string, descriptions: string[], expectedFoundDescriptions: string[]) => {

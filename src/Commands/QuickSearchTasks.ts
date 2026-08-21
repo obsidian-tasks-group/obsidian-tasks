@@ -24,7 +24,12 @@ function getGlobalQueryFilters(): Filter[] {
 }
 
 function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo: SearchInfo): boolean {
-    return globalQueryFilters.every((filter) => filter.filterFunction(task, searchInfo));
+    try {
+        return globalQueryFilters.every((filter) => filter.filterFunction(task, searchInfo));
+    } catch {
+        // Silently ignore search-time errors from Global Query - just include the task in the search results
+        return true;
+    }
 }
 
 export function filterIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
