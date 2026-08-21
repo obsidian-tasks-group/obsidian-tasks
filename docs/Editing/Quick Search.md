@@ -7,7 +7,7 @@ publish: true
 > [!released]
 > Introduced in Tasks X.Y.Z.
 
-Use the `Tasks: Quick search` command to find an incomplete task recognised by Tasks anywhere in your vault. If you use a [[Global Filter]], only tasks that match it are searchable.
+Use the `Tasks: Quick search` command to find an incomplete task recognised by Tasks anywhere in your vault. If you use a [[Global Filter]], only tasks that match it are searchable. Similarly, if you use a [[Global Query]], only tasks that match it are searchable.
 
 ![The Command Palette showing Tasks: Quick search](../images/quick-search-command-palette.png)
 <span class="caption">The Command Palette showing Tasks: Quick search</span>
