@@ -85,7 +85,7 @@ describe('Finding matching tasks', () => {
 });
 
 describe('Finding matching tasks, honouring the Global Query', () => {
-    it.failing('should honour single-instruction Global Query', () => {
+    it('should honour single-instruction Global Query', () => {
         GlobalQuery.getInstance().set('description includes Write');
         // Should not match tasks[1] whose description is 'Review RELEASE checklist', and does not match the above Global Query
         expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0]]);
