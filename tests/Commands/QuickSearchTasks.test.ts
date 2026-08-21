@@ -59,7 +59,7 @@ describe('Registering the command', () => {
     });
 });
 
-describe('Quick search', () => {
+describe('Finding matching tasks', () => {
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
         expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0], tasks[1]]);
     });
@@ -72,7 +72,9 @@ describe('Quick search', () => {
     it('should not match task tags', () => {
         expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
     });
+});
 
+describe('Describing matching task', () => {
     it('should provide the description, source file name, and preceding heading for each suggestion', () => {
         expect(taskSearchSuggestionText(tasks[0])).toEqual({
             description: 'Write release notes',
@@ -106,7 +108,9 @@ describe('Quick search', () => {
             expect.any(String),
         ]);
     });
+});
 
+describe('Rendering matching tasks', () => {
     it('should render the checkbox, description, location, and metadata elements', () => {
         const modal = new QuickSearchTasksModal({} as any, () => tasks);
         const element = document.createElement('div');
@@ -138,7 +142,9 @@ describe('Quick search', () => {
         );
         expect(completeElement.querySelector('input')).toMatchObject({ checked: true });
     });
+});
 
+describe('Opening a selected task', () => {
     it('should inform the user when the selected task can no longer be found', async () => {
         const app = { vault: {}, workspace: { getLeaf: jest.fn() } } as any;
         const warning = jest.spyOn(console, 'warn').mockImplementation();
