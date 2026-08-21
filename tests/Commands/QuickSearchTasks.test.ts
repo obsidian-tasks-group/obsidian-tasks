@@ -85,7 +85,15 @@ describe('Finding matching tasks', () => {
 });
 
 describe('Finding matching tasks, honouring the Global Query', () => {
-    it.each([
+    type GlobalQueryTestCase = [
+        testName: string,
+        query: string,
+        globalQuerySource: string,
+        descriptions: string[],
+        expectedFoundDescriptions: string[],
+    ];
+
+    it.each<GlobalQueryTestCase>([
         [
             'should honour single-instruction Global Query',
             'release',
