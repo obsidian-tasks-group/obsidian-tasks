@@ -131,6 +131,14 @@ describe('Finding matching tasks, honouring the Global Query', () => {
             ['Write release notes'],
             { simple: 'description includes Write' },
         ],
+        [
+            'should honour placeholder-style presets in the Global Query',
+            'release',
+            '{{preset.simple}}',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes'],
+            { simple: 'description includes Write' },
+        ],
     ])(
         '%s',
         (
