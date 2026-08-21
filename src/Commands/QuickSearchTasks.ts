@@ -23,6 +23,10 @@ function getGlobalQueryFilters(): Filter[] {
     return query.filters;
 }
 
+function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo: SearchInfo): boolean {
+    return globalQueryFilters.every((filter) => filter.filterFunction(task, searchInfo));
+}
+
 export function filterIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
@@ -40,7 +44,7 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
         return (
             !task.isDone &&
             task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery) &&
-            globalQueryFilters.every((filter) => filter.filterFunction(task, searchInfo))
+            applyFiltersToTask(globalQueryFilters, task, searchInfo)
         );
     });
 }
