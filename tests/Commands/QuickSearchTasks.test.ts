@@ -149,10 +149,7 @@ describe('Finding matching tasks, honouring the Global Query', () => {
             expectedFoundDescriptions: string[],
             presets: PresetsMap,
         ) => {
-            if (presets !== undefined) {
-                updateSettings({ presets });
-            }
-
+            updateSettings({ presets });
             GlobalQuery.getInstance().set(globalQuerySource);
 
             const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
