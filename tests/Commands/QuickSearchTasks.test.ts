@@ -12,6 +12,8 @@ import { getTaskLineAndFile } from '../../src/Obsidian/File';
 import { Priority } from '../../src/Task/Priority';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { fromMarkdown } from '../TestingTools/TestHelpers';
 
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
@@ -38,6 +40,11 @@ const tasks = [
     new TaskBuilder().description('Release completed').status(Status.DONE).path('Archive.md').build(),
     new TaskBuilder().description('Review a document').tags(['#release']).path('Projects/Review.md').build(),
 ];
+
+afterEach(() => {
+    GlobalFilter.getInstance().reset();
+    GlobalFilter.getInstance().setRemoveGlobalFilter(false);
+});
 
 describe('Registering the command', () => {
     it('should register the quick search command', () => {
@@ -111,21 +118,53 @@ describe('Describing matching task', () => {
 });
 
 describe('Rendering matching tasks', () => {
+    function getCheckbox(element: HTMLDivElement): HTMLElement | null {
+        return element.querySelector('.tasks-quick-search-result-checkbox');
+    }
+
+    function getDescriptionTextContent(element: HTMLDivElement): string | null | undefined {
+        return element.querySelector('.tasks-quick-search-result-description')?.textContent;
+    }
+
+    function getLocationTextContent(element: HTMLDivElement): string | null | undefined {
+        return element.querySelector('.tasks-quick-search-result-location')?.textContent;
+    }
+
+    function getMetadata(element: HTMLDivElement): HTMLElement | null {
+        return element.querySelector('.tasks-quick-search-result-metadata');
+    }
+
     it('should render the checkbox, description, location, and metadata elements', () => {
         const modal = new QuickSearchTasksModal({} as any, () => tasks);
         const element = document.createElement('div');
 
         modal.renderSuggestion(tasks[0], element);
 
-        expect(element.querySelector('.tasks-quick-search-result-checkbox')).not.toBeNull();
-        expect(element.querySelector('.tasks-quick-search-result-description')?.textContent).toEqual(
-            'Write release notes',
-        );
-        expect(element.querySelector('.tasks-quick-search-result-location')?.textContent).toEqual(
-            'Release.md · Preparation',
-        );
-        expect(element.querySelector('.tasks-quick-search-result-metadata')).not.toBeNull();
+        expect(getCheckbox(element)).not.toBeNull();
+        expect(getDescriptionTextContent(element)).toEqual('Write release notes');
+        expect(getLocationTextContent(element)).toEqual('Release.md · Preparation');
+        expect(getMetadata(element)).not.toBeNull();
     });
+
+    it.each([
+        [false, '#task Do Stuff'],
+        [true, 'Do Stuff'],
+    ])(
+        'should honour "Remove global filter from description" setting: %s',
+        (removeGlobalFilter: boolean, expectedDescription: string) => {
+            GlobalFilter.getInstance().set('#task');
+            GlobalFilter.getInstance().setRemoveGlobalFilter(removeGlobalFilter);
+
+            const taskListWithGlobalFilter = fromMarkdown('- [ ] #task Do Stuff');
+
+            const modal = new QuickSearchTasksModal({} as any, () => taskListWithGlobalFilter);
+            const element = document.createElement('div');
+
+            modal.renderSuggestion(taskListWithGlobalFilter[0], element);
+
+            expect(getDescriptionTextContent(element)).toEqual(expectedDescription);
+        },
+    );
 
     it('should only check the checkbox for completed tasks', () => {
         const modal = new QuickSearchTasksModal({} as any, () => tasks);
