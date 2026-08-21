@@ -89,11 +89,13 @@ describe('Finding matching tasks, honouring the Global Query', () => {
         GlobalQuery.getInstance().set('description includes Write');
 
         const descriptions = ['Write release notes', 'Review RELEASE checklist'];
+        // Should not match task whose description is 'Review RELEASE checklist', and does not match the above Global Query
+        const expectedFoundDescriptions = ['Write release notes'];
+
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
         const foundDescriptions = filterIncompleteTasksByDescription(tasks, 'release').map((task) => task.description);
-        // Should not match task whose description is 'Review RELEASE checklist', and does not match the above Global Query
-        expect(foundDescriptions).toEqual(['Write release notes']);
+        expect(foundDescriptions).toEqual(expectedFoundDescriptions);
     });
 });
 
