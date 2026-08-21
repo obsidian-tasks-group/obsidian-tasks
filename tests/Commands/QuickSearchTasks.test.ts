@@ -39,11 +39,7 @@ const tasks = [
     new TaskBuilder().description('Review a document').tags(['#release']).path('Projects/Review.md').build(),
 ];
 
-describe('Quick search', () => {
-    it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
-        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0], tasks[1]]);
-    });
-
+describe('Registering the command', () => {
     it('should register the quick search command', () => {
         const addCommand = jest.fn();
         new Commands({
@@ -60,6 +56,12 @@ describe('Quick search', () => {
                 name: 'Quick search',
             }),
         );
+    });
+});
+
+describe('Quick search', () => {
+    it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
+        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0], tasks[1]]);
     });
 
     it('should not show results until the user enters a search query', () => {
