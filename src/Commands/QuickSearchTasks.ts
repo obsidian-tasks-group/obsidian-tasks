@@ -6,11 +6,16 @@ import { getTaskLineAndFile } from '../Obsidian/File';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { GlobalQuery } from '../Config/GlobalQuery';
 import { SearchInfo } from '../Query/SearchInfo';
+import type { Filter } from '../Query/Filter/Filter';
 
 export interface TaskSearchSuggestionText {
     description: string;
     source: string;
     heading: string;
+}
+
+function getGlobalQueryFilters(): Filter[] {
+    return GlobalQuery.getInstance().query().filters;
 }
 
 export function filterIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
@@ -23,7 +28,7 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
-    const globalQueryFilters = GlobalQuery.getInstance().query().filters;
+    const globalQueryFilters = getGlobalQueryFilters();
     const searchInfo = SearchInfo.fromAllTasks([...tasks]);
 
     return tasks.filter((task) => {
