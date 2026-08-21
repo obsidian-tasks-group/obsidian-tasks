@@ -12,6 +12,8 @@ import { getTaskLineAndFile } from '../../src/Obsidian/File';
 import { Priority } from '../../src/Task/Priority';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { fromMarkdown } from '../TestingTools/TestHelpers';
 
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
@@ -38,6 +40,11 @@ const tasks = [
     new TaskBuilder().description('Release completed').status(Status.DONE).path('Archive.md').build(),
     new TaskBuilder().description('Review a document').tags(['#release']).path('Projects/Review.md').build(),
 ];
+
+afterEach(() => {
+    GlobalFilter.getInstance().reset();
+    GlobalFilter.getInstance().setRemoveGlobalFilter(false);
+});
 
 describe('Registering the command', () => {
     it('should register the quick search command', () => {
@@ -138,6 +145,26 @@ describe('Rendering matching tasks', () => {
         expect(getLocationTextContent(element)).toEqual('Release.md · Preparation');
         expect(getMetadata(element)).not.toBeNull();
     });
+
+    it.each([
+        [false, '#task Do Stuff'],
+        [true, 'Do Stuff'],
+    ])(
+        'should honour "Remove global filter from description" setting: %s',
+        (removeGlobalFilter: boolean, expectedDescription: string) => {
+            GlobalFilter.getInstance().set('#task');
+            GlobalFilter.getInstance().setRemoveGlobalFilter(removeGlobalFilter);
+
+            const taskListWithGlobalFilter = fromMarkdown('- [ ] #task Do Stuff');
+
+            const modal = new QuickSearchTasksModal({} as any, () => taskListWithGlobalFilter);
+            const element = document.createElement('div');
+
+            modal.renderSuggestion(taskListWithGlobalFilter[0], element);
+
+            expect(getDescriptionTextContent(element)).toEqual(expectedDescription);
+        },
+    );
 
     it('should only check the checkbox for completed tasks', () => {
         const modal = new QuickSearchTasksModal({} as any, () => tasks);
