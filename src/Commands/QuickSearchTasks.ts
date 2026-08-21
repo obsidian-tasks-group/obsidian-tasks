@@ -89,7 +89,8 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
         const renderComponent = new Component();
         renderComponent.load();
         this.renderComponents.push(renderComponent);
-        void MarkdownRenderer.render(this.app, task.description, description, task.path, renderComponent).catch(() => {
+        const markdown = task.description;
+        void MarkdownRenderer.render(this.app, markdown, description, task.path, renderComponent).catch(() => {
             description.textContent = suggestion.description;
         });
 
