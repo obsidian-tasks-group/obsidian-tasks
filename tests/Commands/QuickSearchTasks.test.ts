@@ -14,6 +14,9 @@ import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { fromMarkdown } from '../TestingTools/TestHelpers';
+import { GlobalQuery } from '../../src/Config/GlobalQuery';
+import type { PresetsMap } from '../../src/Query/Presets/Presets';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
@@ -44,6 +47,10 @@ const tasks = [
 afterEach(() => {
     GlobalFilter.getInstance().reset();
     GlobalFilter.getInstance().setRemoveGlobalFilter(false);
+
+    GlobalQuery.getInstance().reset();
+
+    resetSettings();
 });
 
 describe('Registering the command', () => {
@@ -79,6 +86,78 @@ describe('Finding matching tasks', () => {
     it('should not match task tags', () => {
         expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
     });
+});
+
+describe('Finding matching tasks, honouring the Global Query', () => {
+    type GlobalQueryTestCase = [
+        testName: string,
+        query: string,
+        globalQuerySource: string,
+        descriptions: string[],
+        expectedFoundDescriptions: string[],
+        presets: PresetsMap,
+    ];
+
+    it.each<GlobalQueryTestCase>([
+        [
+            'should honour single-instruction Global Query',
+            'release',
+            'description includes Write',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes'],
+            {},
+        ],
+        [
+            'should ignore Global Query with invalid parse-time instruction',
+            'release',
+            'description includes Write\nUNKNOWN INSTRUCTION RENDERS GLOBAL QUERY INVALID',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes', 'Review RELEASE checklist'],
+            {},
+        ],
+        [
+            'should ignore Global Query with invalid search-time instruction',
+            'release',
+            'filter by function task.wibble',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes', 'Review RELEASE checklist'],
+            {},
+        ],
+        [
+            'should honour preset instructions in the Global Query',
+            'release',
+            'preset simple',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes'],
+            { simple: 'description includes Write' },
+        ],
+        [
+            'should honour placeholder-style presets in the Global Query',
+            'release',
+            '{{preset.simple}}',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes'],
+            { simple: 'description includes Write' },
+        ],
+    ])(
+        '%s',
+        (
+            _,
+            query: string,
+            globalQuerySource: string,
+            descriptions: string[],
+            expectedFoundDescriptions: string[],
+            presets: PresetsMap,
+        ) => {
+            updateSettings({ presets });
+            GlobalQuery.getInstance().set(globalQuerySource);
+
+            const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
+
+            const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
+            expect(foundDescriptions).toEqual(expectedFoundDescriptions);
+        },
+    );
 });
 
 describe('Describing matching task', () => {

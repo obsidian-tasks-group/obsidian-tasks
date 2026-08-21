@@ -4,11 +4,43 @@ import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import type { Task } from '../Task/Task';
 import { getTaskLineAndFile } from '../Obsidian/File';
 import { GlobalFilter } from '../Config/GlobalFilter';
+import { GlobalQuery } from '../Config/GlobalQuery';
+import { SearchInfo } from '../Query/SearchInfo';
+import type { Filter } from '../Query/Filter/Filter';
+import { TasksFile } from '../Scripting/TasksFile';
 
 export interface TaskSearchSuggestionText {
     description: string;
     source: string;
     heading: string;
+}
+
+function getGlobalQueryFilters(): Filter[] {
+    // The placeholder presents mechanism results in an exception being thrown
+    // if we do not provide a location for the query source file,
+    // and the Global Query contains placeholder presets as {{preset.simple}}:
+    //     Invalid Global Query: The query looks like it contains a placeholder, with "{{" and "}}"
+    //     but no file path has been supplied, so cannot expand placeholder values.
+    //     The query is:
+    //     {{preset.simple}}
+    // So we create a fake location for the query source file:
+    const dummyTasksFile = new TasksFile('Dummy Path for Quick Search command.md');
+
+    const query = GlobalQuery.getInstance().query(dummyTasksFile);
+    if (query.error !== undefined) {
+        // Silently ignore invalid Global Query
+        return [];
+    }
+    return query.filters;
+}
+
+function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo: SearchInfo): boolean {
+    try {
+        return globalQueryFilters.every((filter) => filter.filterFunction(task, searchInfo));
+    } catch {
+        // Silently ignore search-time errors from Global Query - just include the task in the search results
+        return true;
+    }
 }
 
 export function filterIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
@@ -17,7 +49,20 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
     }
 
     const normalizedQuery = query.toLowerCase();
-    return tasks.filter((task) => !task.isDone && task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery));
+
+    // Many users will have defined a Global Query in their Tasks settings,
+    // such as to tell Tasks to ignore tasks that are in their Template folder.
+    // So we want Quick Search to only return tasks that match the filters in the Global Query.
+    const globalQueryFilters = getGlobalQueryFilters();
+    const searchInfo = SearchInfo.fromAllTasks([...tasks]);
+
+    return tasks.filter((task) => {
+        return (
+            !task.isDone &&
+            task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery) &&
+            applyFiltersToTask(globalQueryFilters, task, searchInfo)
+        );
+    });
 }
 
 export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {
