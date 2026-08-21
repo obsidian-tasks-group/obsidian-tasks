@@ -14,6 +14,7 @@ import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { fromMarkdown } from '../TestingTools/TestHelpers';
+import { GlobalQuery } from '../../src/Config/GlobalQuery';
 
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
@@ -44,6 +45,8 @@ const tasks = [
 afterEach(() => {
     GlobalFilter.getInstance().reset();
     GlobalFilter.getInstance().setRemoveGlobalFilter(false);
+
+    GlobalQuery.getInstance().reset();
 });
 
 describe('Registering the command', () => {
@@ -78,6 +81,14 @@ describe('Finding matching tasks', () => {
 
     it('should not match task tags', () => {
         expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
+    });
+});
+
+describe('Finding matching tasks, honouring the Global Query', () => {
+    it.failing('should honour single-instruction Global Query', () => {
+        GlobalQuery.getInstance().set('description includes Write');
+        // Should not match tasks[1] whose description is 'Review RELEASE checklist', and does not match the above Global Query
+        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0]]);
     });
 });
 
