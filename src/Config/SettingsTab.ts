@@ -75,7 +75,7 @@ export class SettingsTab extends PluginSettingTab {
 
         this.display();
 
-        requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
             this.containerEl.scrollTo({ top: previousDistanceFromTop });
         });
     }
@@ -818,7 +818,7 @@ export class SettingsTab extends PluginSettingTab {
             );
         });
 
-        containerEl.createEl('div');
+        containerEl.createDiv();
 
         /* -------------------- 'Add New Task Status' button -------------------- */
         const setting = new Setting(containerEl).addButton((button) => {

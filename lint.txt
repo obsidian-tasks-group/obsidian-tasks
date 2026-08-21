@@ -1,19 +1,6 @@
 yarn run v1.22.19
 $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-check
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Commands/QuickSearchTasks.ts
-   80:26  warning  Use 'createEl('input')' instead of 'document.createElement('input')'        obsidianmd/prefer-create-el
-   80:26  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-   88:29  warning  Use 'createDiv()' instead of 'document.createElement('div')'                obsidianmd/prefer-create-el
-   88:29  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-   98:26  warning  Use 'createDiv()' instead of 'document.createElement('div')'                obsidianmd/prefer-create-el
-   98:26  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-  103:26  warning  Use 'createDiv()' instead of 'document.createElement('div')'                obsidianmd/prefer-create-el
-  103:26  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/PresetsSettingsUI.ts
-  286:28  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/Settings.ts
   224:5  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
 
@@ -21,9 +8,7 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
     47:14  warning  This PluginSettingTab does not implement getSettingDefinitions(); its settings will not appear in Obsidian's settings search for users on 1.13.0 or later. Consider adopting the declarative settings API  obsidianmd/settings-tab/prefer-setting-definitions
     51:37  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type                                                                                    @typescript-eslint/no-unsafe-function-type
-    78:9   warning  Use 'window.requestAnimationFrame()' instead of 'requestAnimationFrame()' for popout window compatibility                                                                                                  obsidianmd/prefer-window-timers
    714:17  warning  Unsafe call of a `Function` typed value                                                                                                                                                                    @typescript-eslint/no-unsafe-call
-   821:9   warning  Use 'containerEl.createDiv()' instead of 'containerEl.createEl('div')'                                                                                                                                     obsidianmd/prefer-create-el
   1009:9   warning  Unsafe call of a type that could not be resolved                                                                                                                                                           @typescript-eslint/no-unsafe-call
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/DateTime/TasksDate.ts
@@ -35,17 +20,11 @@ Prefer explicitly defining any function parameters and return type              
   379:12  warning  Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/File.ts
-  155:9   warning  Use 'window.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-window-timers
-  155:20  warning  Promise returned in function argument where a void return was expected               @typescript-eslint/no-misused-promises
-  245:38  warning  '_' is assigned a value but never used                                               @typescript-eslint/no-unused-vars
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/LivePreviewExtension.ts
-  152:13  warning  Use 'window.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-window-timers
+  155:27  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  245:38  warning  '_' is assigned a value but never used                                  @typescript-eslint/no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/TaskModal.ts
-  45:31  warning  Use 'createEl('button')' instead of 'document.createElement('button')'            obsidianmd/prefer-create-el
-  45:31  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
-  54:17  warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
+  59:17  warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/BooleanField.ts
   193:62  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Token`  @typescript-eslint/restrict-plus-operands
@@ -64,38 +43,28 @@ Prefer explicitly defining any function parameters and return type              
   41:9   warning  Unsafe return of type `Map<any, any>` from function with return type `Map<string[], T[]>`  @typescript-eslint/no-unsafe-return
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlColumnQueryResultsRenderer.ts
-  62:62  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  61:62  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/HtmlQueryResultsRenderer.ts
-   50:38  warning  Use 'createDiv()' instead of 'document.createElement('div')'                                             obsidianmd/prefer-create-el
-   50:38  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                               obsidianmd/prefer-active-doc
-   52:46  warning  Use 'createEl('li')' instead of 'document.createElement('li')'                                           obsidianmd/prefer-create-el
-   52:46  warning  Use 'activeDocument' instead of 'document' for popout window compatibility                               obsidianmd/prefer-active-doc
-  262:27  warning  Use 'headerEl.ownerDocument.win.createSpan()' instead of 'headerEl.ownerDocument.createElement('span')'  obsidianmd/prefer-create-el
-  307:40  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
-  311:44  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
-  332:42  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
-  340:48  warning  Promise returned in function argument where a void return was expected                                   @typescript-eslint/no-misused-promises
+  307:40  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  311:44  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  332:42  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  340:48  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryRenderer.ts
-  162:47  warning  Promise returned in function argument where a void return was expected                                     @typescript-eslint/no-misused-promises
-  165:57  warning  Promise returned in function argument where a void return was expected                                     @typescript-eslint/no-misused-promises
-  241:51  warning  Promise returned in function argument where a void return was expected                                     @typescript-eslint/no-misused-promises
-  257:13  warning  Use 'window.clearTimeout()' instead of 'clearTimeout()' for popout window compatibility                    obsidianmd/prefer-window-timers
-  282:35  warning  Use 'window.setTimeout()' instead of 'setTimeout()' for popout window compatibility                        obsidianmd/prefer-window-timers
-  289:51  warning  Promise returned in function argument where a void return was expected                                     @typescript-eslint/no-misused-promises
-  303:9   warning  Use 'window.requestAnimationFrame()' instead of 'requestAnimationFrame()' for popout window compatibility  obsidianmd/prefer-window-timers
-  303:31  warning  Promise returned in function argument where a void return was expected                                     @typescript-eslint/no-misused-promises
-  372:13  warning  Promise-returning function provided to property where a void return was expected                           @typescript-eslint/no-misused-promises
+  162:47  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  165:57  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  241:51  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  289:51  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  303:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  372:13  warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/QueryResultsRenderer.ts
   261:46  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Renderer/TaskLineRenderer.ts
-   52:42  warning  Use 'createEl(tagName)' instead of 'document.createElement(tagName)'        obsidianmd/prefer-create-el
-   52:42  warning  Use 'activeDocument' instead of 'document' for popout window compatibility  obsidianmd/prefer-active-doc
-  198:48  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
-  493:48  warning  Promise returned in function argument where a void return was expected      @typescript-eslint/no-misused-promises
+  171:48  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+  466:48  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/ExpandPlaceholders.ts
    27:60  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
@@ -106,7 +75,6 @@ Prefer explicitly defining any function parameters and return type              
   121:31  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
   122:18  warning  Unsafe member access .query on an `any` value                                                                   @typescript-eslint/no-unsafe-member-access
   148:43  warning  Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
-  149:12  warning  This assertion is unnecessary since the receiver accepts the original type of the expression                    @typescript-eslint/no-unnecessary-type-assertion
   149:27  warning  Unsafe argument of type `any` assigned to a parameter of type `ArrayLike<unknown> | { [s: string]: unknown; }`  @typescript-eslint/no-unsafe-argument
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/Expression.ts
@@ -151,9 +119,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   213:36  warning  Unsafe member access .save on a type that cannot be resolved                                                                             @typescript-eslint/no-unsafe-member-access
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/Suggestor.ts
-   35:1   warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility  obsidianmd/no-global-this
-   38:12  warning  Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility  obsidianmd/no-global-this
-  492:57  warning  Invalid type "string | string[]" of template literal expression                           @typescript-eslint/restrict-template-expressions
+  483:57  warning  Invalid type "string | string[]" of template literal expression  @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/ListItem.ts
   143:19  warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
@@ -206,23 +172,15 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   151:17  warning  Unsafe call of a type that could not be resolved                                   @typescript-eslint/no-unsafe-call
   151:37  warning  Unsafe member access .setType on a type that cannot be resolved                    @typescript-eslint/no-unsafe-member-access
 
+/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/EditTaskHelpers.ts
+  118:19  warning  Use 'modalEl.ownerDocument.win.createDiv()' instead of 'modalEl.ownerDocument.createElement('div')'  obsidianmd/prefer-create-el
+
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/DatePicker.ts
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
-  47:37  warning  Use 'createDiv()' instead of 'document.createElement('div')'                      obsidianmd/prefer-create-el
-  47:37  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
-  79:20  warning  Use 'createEl('button')' instead of 'document.createElement('button')'            obsidianmd/prefer-create-el
-  79:20  warning  Use 'activeDocument' instead of 'document' for popout window compatibility        obsidianmd/prefer-active-doc
-  84:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 144 problems (0 errors, 144 warnings)
-  0 errors and 33 warnings potentially fixable with the `--fix` option.
-
-
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/Obsidian/CacheLoading.test.ts
-  109:44  warning  Use 'window.setTimeout()' instead of 'setTimeout()' for popout window compatibility  obsidianmd/prefer-window-timers
-
-✖ 1 problem (0 errors, 1 warning)
-  0 errors and 1 warning potentially fixable with the `--fix` option.
+✖ 113 problems (0 errors, 113 warnings)
+  0 errors and 13 warnings potentially fixable with the `--fix` option.
 
 
 ====================================
@@ -231,4 +189,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 21.63s.
+Done in 30.80s.

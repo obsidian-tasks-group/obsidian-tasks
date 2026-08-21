@@ -77,17 +77,15 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
         const suggestion = taskSearchSuggestionText(task);
         el.classList.add('tasks-quick-search-result');
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
+        const checkbox = el.createEl('input', {
+            type: 'checkbox',
+            cls: ['task-list-item-checkbox', 'tasks-quick-search-result-checkbox'],
+        });
         checkbox.checked = task.isDone;
         checkbox.tabIndex = -1;
-        checkbox.classList.add('task-list-item-checkbox', 'tasks-quick-search-result-checkbox');
         checkbox.setAttribute('aria-label', `Task status: ${task.status.name}`);
-        el.appendChild(checkbox);
 
-        const description = document.createElement('div');
-        description.classList.add('tasks-quick-search-result-description');
-        el.appendChild(description);
+        const description = el.createDiv({ cls: 'tasks-quick-search-result-description' });
         const renderComponent = new Component();
         renderComponent.load();
         this.renderComponents.push(renderComponent);
@@ -95,15 +93,15 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
             description.textContent = suggestion.description;
         });
 
-        const location = document.createElement('div');
-        location.classList.add('tasks-quick-search-result-location');
-        location.textContent = `${suggestion.source} · ${suggestion.heading}`;
-        el.appendChild(location);
+        el.createDiv({
+            cls: 'tasks-quick-search-result-location',
+            text: `${suggestion.source} · ${suggestion.heading}`,
+        });
 
-        const metadata = document.createElement('div');
-        metadata.classList.add('tasks-quick-search-result-metadata');
-        metadata.textContent = taskSearchMetadataText(task).join(' ');
-        el.appendChild(metadata);
+        el.createDiv({
+            cls: 'tasks-quick-search-result-metadata',
+            text: taskSearchMetadataText(task).join(' '),
+        });
     }
 
     public onChooseSuggestion(task: Task, _evt: MouseEvent | KeyboardEvent): void {

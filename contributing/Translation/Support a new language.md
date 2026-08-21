@@ -6,29 +6,22 @@ publish: true
 
 <span class="related-pages">#i18n</span>
 
-These are the steps required to add support for a new language.
+These are the steps required to add support for a new language and submit it in a pull request.
 
-## Configure the new language
+## Add the new language
 
-1. Decide on the language code to be used.
-    - Use the same Laguage codes as Obsidian: see [Existing languages](https://github.com/obsidianmd/obsidian-translations?tab=readme-ov-file#existing-languages)
-2. Add the language code to `locales` in [i18next-parser.config.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/i18next-parser.config.js).
-3. Create the json file that will contain translations:
+1. Fork the Tasks repo, or synchronise your fork.
+2. Create a branch.
+3. Decide on the language code to be used.
+    - Use the same Language codes as Obsidian: see [Existing languages](https://github.com/obsidianmd/obsidian-translations?tab=readme-ov-file#existing-languages)
+4. Copy [src/i18n/locales/en.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/locales/en.json) to a new file in [src/i18n/locales/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/i18n/locales).
+    - For example, if adding `de`, create `src/i18n/locales/de.json`.
+5. Translate the strings in the new file.
+6. Add the language code to [i18next-parser.config.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/i18next-parser.config.js).
+7. Add the language to `import` and `resources` in [src/i18n/i18n.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/i18n.ts).
+8. When you have finished, commit the changes. Use the prefix `i18n:` on the commit message.
+9. Create a pull request.
 
-    ```bash
-    yarn extract-i18n
-    ```
+## Getting help
 
-    For example, if adding `de`, this file would be created: `src/i18n/locales/de.json`
-
-4. Add the language to `import` and `resources` in  [src/i18n/i18n.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/i18n.ts)
-
-## Add translations for the new language
-
-1. Optionally, paste `en.json` in to  <https://translate.i18next.com>, to get an initial translation.
-2. Get a human to open `en.json` and the new file, for example `de.json` , side by side, and add the translations to the new file.
-    - See [[Contribute translations]].
-
-## Update the translations discussion
-
-1. Get Clare to add the link to the new translation file in the [relevant GitHub discussion](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/3321#discussion-7942115).
+Use this discussion on GitHub [Contribute to translating the Tasks plugin in to non-English languages](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/3321) to discuss this process and get help.

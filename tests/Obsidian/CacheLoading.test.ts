@@ -106,7 +106,7 @@ describe('Cache loading', () => {
             activeReads++;
             maximumActiveReads = Math.max(maximumActiveReads, activeReads);
             // Keep the fake read pending for one event-loop turn so the worker reads overlap.
-            await new Promise((resolve) => setTimeout(resolve, 0));
+            await new Promise((resolve) => window.setTimeout(resolve, 0));
             activeReads--;
             return taskData.fileContents;
         });

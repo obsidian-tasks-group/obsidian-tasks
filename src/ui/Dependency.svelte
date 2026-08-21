@@ -200,7 +200,15 @@
                     >[{task.status.symbol}] {descriptionAdjustedForDependencySearch(task)}</span
                 >
 
-                <button on:click={() => removeTask(task)} type="button" class="task-dependency-delete">
+                <!-- 'mousedown|preventDefault' keeps focus where it is while this button is
+                     tapped, so that the focus-dependent padding in TaskModal.scss does not
+                     move the modal contents mid-tap. See the longer note in EditTask.svelte. -->
+                <button
+                    on:click={() => removeTask(task)}
+                    on:mousedown|preventDefault
+                    type="button"
+                    class="task-dependency-delete"
+                >
                     <svg
                         style="display: block; margin: auto;"
                         xmlns="http://www.w3.org/2000/svg"

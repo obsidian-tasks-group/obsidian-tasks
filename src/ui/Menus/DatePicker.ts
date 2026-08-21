@@ -44,8 +44,7 @@ export function promptForDate(
         },
         onReady: (_selectedDates, _dateStr, instance) => {
             // Add custom buttons dynamically
-            const buttonContainer = document.createElement('div');
-            buttonContainer.classList.add('tasks-date-picker-buttons');
+            const buttonContainer = instance.calendarContainer.createDiv({ cls: 'tasks-date-picker-buttons' });
 
             // Create "Clear" button
             addButton(buttonContainer, instance, task, taskSaver, 'Clear', () => {
@@ -57,10 +56,6 @@ export function promptForDate(
                 const today = new Date();
                 return new SetTaskDate(dateFieldToEdit, today).apply(task);
             });
-
-            // Append the button container to the Flatpickr calendar container
-            const calendarContainer = instance.calendarContainer;
-            calendarContainer.appendChild(buttonContainer);
         },
     });
 
@@ -76,15 +71,11 @@ function addButton(
     buttonName: string,
     applyDate: () => Task[],
 ) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = buttonName;
-    button.classList.add('flatpickr-button');
+    const button = buttonContainer.createEl('button', { cls: 'flatpickr-button', text: buttonName });
 
     button.addEventListener('click', async () => {
         const newTask = applyDate();
         await taskSaver(task, newTask);
         instance.destroy();
     });
-    buttonContainer.appendChild(button);
 }

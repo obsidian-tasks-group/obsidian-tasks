@@ -40,8 +40,17 @@
 // This has been validated on an iPhone 17 Pro with Obsidian font sizes 10, 16
 // and 24, including iOS text size set to 135%. It is expected to be safe on
 // Android as well, because it only adds temporary scrollable space while editing.
+
+// Declared as a custom property because two things need to agree on it: the padding below, and
+// EditTask.svelte, which waits for the Description field to rise clear of the keyboard before
+// focusing it. Override this one property in a CSS snippet and both stay in step - overriding the
+// padding on its own leaves the plugin working from a number your layout no longer uses.
+.is-mobile .tasks-edit-modal-container {
+    --tasks-keyboard-space-allowance: clamp(220px, 35vh, 360px);
+}
+
 .is-mobile .tasks-edit-modal-container:has(textarea:focus, input[type='text']:focus) {
     .modal-content {
-        padding-bottom: clamp(220px, 35vh, 360px);
+        padding-bottom: var(--tasks-keyboard-space-allowance);
     }
 }
