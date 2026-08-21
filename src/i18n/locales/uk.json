@@ -1,4 +1,12 @@
 {
+  "common": {
+    "cancel": "",
+    "edit": "",
+    "moreInfo": "",
+    "okay": "",
+    "reload": "",
+    "save": ""
+  },
   "main": {
     "loadingPlugin": "Завантаження плагіна: {{name}} v{{version}}",
     "unloadingPlugin": "Вивантаження плагіна: {{name}} v{{version}}"
@@ -25,7 +33,25 @@
         "description": "Керуйте тим, як статус поводиться під час пошуку та перемикання.",
         "name": "Тип статусу задачі"
       },
-      "fixErrorsBeforeSaving": "Виправте помилки перед збереженням."
+      "fixErrorsBeforeSaving": "Виправте помилки перед збереженням.",
+      "title": {
+        "editCoreStatus": "",
+        "editCustomStatus": ""
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "",
+        "name": "",
+        "placeholder": "",
+        "required": ""
+      },
+      "query": {
+        "description": "",
+        "name": "",
+        "placeholder": ""
+      },
+      "title": ""
     }
   },
   "notices": {
@@ -176,6 +202,9 @@
       },
       "name": "Формат задач"
     },
+    "globalDefaults": {
+      "heading": ""
+    },
     "globalFilter": {
       "filter": {
         "description": {
@@ -197,13 +226,15 @@
       "heading": "Глобальний запит",
       "query": {
         "description": "Запит, який автоматично включається на початку кожного блоку Tasks у сховищі. Корисно для додавання фільтрів за замовчуванням або параметрів макета.",
-        "placeholder": "Наприклад...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "Наприклад...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": ""
       },
+      "emptyState": "",
       "line1": "",
       "line2": "",
       "name": ""
@@ -235,6 +266,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "",
+          "enable": ""
+        },
         "description": {
           "line1": "",
           "line2": "",
@@ -247,6 +282,13 @@
     },
     "seeTheDocumentation": "Переглянути документацію",
     "statuses": {
+      "buttons": {
+        "addStatus": "",
+        "importFromTheme": {
+          "description": "",
+          "name": ""
+        }
+      },
       "collections": {
         "anuppuccinTheme": "Тема AnuPpuccin",
         "auraTheme": "Тема Aura",
@@ -254,6 +296,9 @@
         "buttons": {
           "addCollection": {
             "name": "{{themeName}}: Додати {{numberOfStatuses}} підтримуваних статусів"
+          },
+          "importCollection": {
+            "name": ""
           }
         },
         "ebullientworksTheme": "Тема Ebullientworks",
@@ -278,12 +323,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "",
             "name": "Додати всі невідомі типи статусів"
           },
           "addNewStatus": {
             "name": "Додати новий статус задачі"
           },
           "resetCustomStatuses": {
+            "description": "",
             "name": "Скинути користувацькі типи статусів до значень за замовчуванням"
           }
         },
@@ -293,9 +340,27 @@
           "line3": "<b>Примітка</b> Будь-які статуси з тим самим символом, що й попередні статуси, буде проігноровано. Ви можете підтвердити фактично завантажені статуси, виконавши команду «Створити або редагувати задачу» та переглянувши спадне меню «Статус».",
           "line4": "Перегляньте документацію, щоб розпочати!"
         },
+        "emptyState": "",
         "heading": "Користувацькі статуси"
       },
-      "heading": "Статуси задач"
+      "filter": {
+        "placeholder": ""
+      },
+      "heading": "Статуси задач",
+      "reloadRequired": "",
+      "types": {
+        "cancelled": "",
+        "done": "",
+        "empty": "",
+        "inProgress": "",
+        "nonTask": "",
+        "onHold": "",
+        "todo": ""
+      },
+      "unnamed": ""
+    },
+    "taskEntry": {
+      "heading": ""
     }
   }
 }
