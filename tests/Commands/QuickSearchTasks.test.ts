@@ -85,20 +85,25 @@ describe('Finding matching tasks', () => {
 });
 
 describe('Finding matching tasks, honouring the Global Query', () => {
-    it('should honour single-instruction Global Query', () => {
-        const query = 'release';
-        const globalQuerySource = 'description includes Write';
-        const descriptions = ['Write release notes', 'Review RELEASE checklist'];
-        // Should not match task whose description is 'Review RELEASE checklist', and does not match the above Global Query
-        const expectedFoundDescriptions = ['Write release notes'];
+    it.each([
+        [
+            'should honour single-instruction Global Query',
+            'release',
+            'description includes Write',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes'],
+        ],
+    ])(
+        '%s',
+        (_, query: string, globalQuerySource: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
+            GlobalQuery.getInstance().set(globalQuerySource);
 
-        GlobalQuery.getInstance().set(globalQuerySource);
+            const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-        const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
-
-        const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
-        expect(foundDescriptions).toEqual(expectedFoundDescriptions);
-    });
+            const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
+            expect(foundDescriptions).toEqual(expectedFoundDescriptions);
+        },
+    );
 });
 
 describe('Describing matching task', () => {
