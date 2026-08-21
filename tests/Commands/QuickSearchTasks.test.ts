@@ -21,25 +21,25 @@ jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
 
 window.moment = moment;
 
-describe('Quick search', () => {
-    const MockedNotice = jest.mocked(Notice);
-    const tasks = [
-        new TaskBuilder()
-            .description('Write release notes')
-            .path('Projects/Release.md')
-            .lineNumber(12)
-            .precedingHeader('Preparation')
-            .build(),
-        new TaskBuilder()
-            .description('Review RELEASE checklist')
-            .path('Projects/Review.md')
-            .lineNumber(31)
-            .precedingHeader('Quality')
-            .build(),
-        new TaskBuilder().description('Release completed').status(Status.DONE).path('Archive.md').build(),
-        new TaskBuilder().description('Review a document').tags(['#release']).path('Projects/Review.md').build(),
-    ];
+const MockedNotice = jest.mocked(Notice);
+const tasks = [
+    new TaskBuilder()
+        .description('Write release notes')
+        .path('Projects/Release.md')
+        .lineNumber(12)
+        .precedingHeader('Preparation')
+        .build(),
+    new TaskBuilder()
+        .description('Review RELEASE checklist')
+        .path('Projects/Review.md')
+        .lineNumber(31)
+        .precedingHeader('Quality')
+        .build(),
+    new TaskBuilder().description('Release completed').status(Status.DONE).path('Archive.md').build(),
+    new TaskBuilder().description('Review a document').tags(['#release']).path('Projects/Review.md').build(),
+];
 
+describe('Quick search', () => {
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
         expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0], tasks[1]]);
     });
