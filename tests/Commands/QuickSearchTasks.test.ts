@@ -15,6 +15,8 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { fromMarkdown } from '../TestingTools/TestHelpers';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
+import type { PresetsMap } from '../../src/Query/Presets/Presets';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
@@ -47,6 +49,8 @@ afterEach(() => {
     GlobalFilter.getInstance().setRemoveGlobalFilter(false);
 
     GlobalQuery.getInstance().reset();
+
+    resetSettings();
 });
 
 describe('Registering the command', () => {
@@ -91,6 +95,7 @@ describe('Finding matching tasks, honouring the Global Query', () => {
         globalQuerySource: string,
         descriptions: string[],
         expectedFoundDescriptions: string[],
+        presets: PresetsMap,
     ];
 
     it.each<GlobalQueryTestCase>([
@@ -100,6 +105,7 @@ describe('Finding matching tasks, honouring the Global Query', () => {
             'description includes Write',
             ['Write release notes', 'Review RELEASE checklist'],
             ['Write release notes'],
+            {},
         ],
         [
             'should ignore Global Query with invalid parse-time instruction',
@@ -107,6 +113,7 @@ describe('Finding matching tasks, honouring the Global Query', () => {
             'description includes Write\nUNKNOWN INSTRUCTION RENDERS GLOBAL QUERY INVALID',
             ['Write release notes', 'Review RELEASE checklist'],
             ['Write release notes', 'Review RELEASE checklist'],
+            {},
         ],
         [
             'should ignore Global Query with invalid search-time instruction',
@@ -114,10 +121,30 @@ describe('Finding matching tasks, honouring the Global Query', () => {
             'filter by function task.wibble',
             ['Write release notes', 'Review RELEASE checklist'],
             ['Write release notes', 'Review RELEASE checklist'],
+            {},
+        ],
+        [
+            'should honour preset instructions in the Global Query',
+            'release',
+            'preset simple',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes'],
+            { simple: 'description includes Write' },
         ],
     ])(
         '%s',
-        (_, query: string, globalQuerySource: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
+        (
+            _,
+            query: string,
+            globalQuerySource: string,
+            descriptions: string[],
+            expectedFoundDescriptions: string[],
+            presets: PresetsMap,
+        ) => {
+            if (presets !== undefined) {
+                updateSettings({ presets });
+            }
+
             GlobalQuery.getInstance().set(globalQuerySource);
 
             const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
