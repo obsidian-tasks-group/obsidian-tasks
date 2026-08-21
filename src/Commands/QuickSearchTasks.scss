@@ -48,3 +48,21 @@
         white-space: nowrap;
     }
 }
+
+@media (max-width: 499px) {
+    .tasks-quick-search-result {
+        grid-template-columns: auto minmax(0, 1fr);
+
+        .tasks-quick-search-result-checkbox {
+            grid-row: 1 / span 3;
+        }
+
+        .tasks-quick-search-result-metadata {
+            grid-column: 2;
+            grid-row: 3;
+            max-width: none;
+            margin-top: var(--size-2-1);
+            text-align: start;
+        }
+    }
+}
