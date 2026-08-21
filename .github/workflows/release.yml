@@ -44,7 +44,7 @@ jobs:
         zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
 
     - name: Attest build provenance
-      uses: actions/attest@v4
+      uses: actions/attest@v4.2.0
       with:
         subject-path: |
           main.js
