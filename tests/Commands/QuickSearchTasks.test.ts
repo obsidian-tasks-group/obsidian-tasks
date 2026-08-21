@@ -86,7 +86,8 @@ describe('Finding matching tasks', () => {
 
 describe('Finding matching tasks, honouring the Global Query', () => {
     it('should honour single-instruction Global Query', () => {
-        GlobalQuery.getInstance().set('description includes Write');
+        const globalQuerySource = 'description includes Write';
+        GlobalQuery.getInstance().set(globalQuerySource);
 
         const descriptions = ['Write release notes', 'Review RELEASE checklist'];
         // Should not match task whose description is 'Review RELEASE checklist', and does not match the above Global Query
