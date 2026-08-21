@@ -86,6 +86,7 @@ describe('Finding matching tasks', () => {
 
 describe('Finding matching tasks, honouring the Global Query', () => {
     it('should honour single-instruction Global Query', () => {
+        const query = 'release';
         const globalQuerySource = 'description includes Write';
         GlobalQuery.getInstance().set(globalQuerySource);
 
@@ -95,7 +96,7 @@ describe('Finding matching tasks, honouring the Global Query', () => {
 
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-        const foundDescriptions = filterIncompleteTasksByDescription(tasks, 'release').map((task) => task.description);
+        const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
         expect(foundDescriptions).toEqual(expectedFoundDescriptions);
     });
 });
