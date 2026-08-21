@@ -6,7 +6,7 @@
   "modals": {
     "customStatusModal": {
       "editAvailableAsCommand": {
-        "description": "Activer cette option rendra ce statut disponible comme commande pour que vous puissiez y assigner un raccourci clavier et activer le statut avec.",
+        "description": "Activer cette option rendra ce statut disponible comme commande pour que vous puissiez y assigner un raccourci clavier à utiliser pour activer le statut.",
         "name": "Disponible comme commande"
       },
       "editNextStatusSymbol": {
@@ -25,7 +25,7 @@
         "description": "Détermine comment le statut réagit lors de la recherche et du clic.",
         "name": "Type de statut"
       },
-      "fixErrorsBeforeSaving": "Fix errors before saving."
+      "fixErrorsBeforeSaving": "Corrigez les erreurs avant de sauvegarder."
     }
   },
   "notices": {
@@ -61,7 +61,7 @@
       "loadedSettings": {
         "settingsActuallyUsed": "Voici les réglages effectivement utilisés par Tasks.",
         "switchToLivePreview": "Passez en mode Prévisualisation ou Lecture pour afficher le schéma.",
-        "title": "Réglages effectifs"
+        "title": "Réglages chargés"
       },
       "messages": {
         "cannotFindNextStatus": "Le statut suivant est introuvable suite à une erreur inattendue.",
@@ -179,10 +179,10 @@
     "globalFilter": {
       "filter": {
         "description": {
-          "line1": "Recommandé: Laissez vide si vous souhaitez que toutes les cases à cocher dans votre coffre soient des tâches gérées par ce module.",
+          "line1": "Recommandé : Laissez vide si vous souhaitez que toutes les cases à cocher dans votre coffre soient des tâches gérées par ce module.",
           "line2": "Utilisez un filtre global si vous souhaitez que Tasks se limite à un sous-ensemble de vos \"<code>- [ ]</code>\" cases à cocher. La description d'une case à cocher devra contenir l'expression spécifiée pour être considérée comme une tâche.",
           "line3": "Par exemple, si vous saisissez le filtre global <code>#task</code>, le module Tasks  ne gèrera que les cases à cocher avec l'étiquette <code>#task</code>.",
-          "line4": "Les autres cases à cocher resteront des cases à cocher normales et n'apparaîtront pas dans les requêtes et ne recevront pas de date de complétion."
+          "line4": "Les autres cases à cocher resteront des cases à cocher normales, n'apparaîtront pas dans les requêtes et ne recevront pas de date de complétion."
         },
         "name": "Filtre global",
         "placeholder": "ex: #task ou TODO"
@@ -217,7 +217,7 @@
       "removeScheduledDate": {
         "description": {
           "line1": "Activer cette option retirera la Date planifiée (⏳) sur la prochaine occurrence, si au moins une Date de début (🛫) ou une Date d'échéance (📅) est présente.",
-          "line2": "Pratique si vous voulez que la Date de début et la Date de fin soient mises à jour sur la prochaine occurrence, mais que vous comptez attribuer une Date planifiée plus tard."
+          "line2": "Pratique si vous voulez que la Date de début et la Date de fin soient reportées sur la prochaine occurrence, mais que vous comptez attribuer une Date planifiée plus tard."
         },
         "name": "Retirer la Date planifiée sur la prochaine occurrence"
       }
