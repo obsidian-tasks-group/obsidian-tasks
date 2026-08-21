@@ -12,9 +12,17 @@
 // modal content still needs enough extra scrollable space below them for the
 // browser/WebView to scroll the buttons above the keyboard.
 //
-// Apply this only while an element inside the modal has focus, which is when the
-// keyboard is likely to be visible. This avoids adding unnecessary blank space
-// when the modal is merely open.
+// Apply this only while a field that actually summons the keyboard has focus.
+// That is the Description box and the text inputs - the dates, the recurrence
+// rule and the two dependency searches.
+//
+// Matching on ':focus-within' instead would also fire for the controls that take
+// focus without opening a keyboard: the status dropdown, the date pickers, the
+// priority radio buttons and the "Only future dates" checkbox. The buttons would
+// then jump up to make room for a keyboard that never appears.
+//
+// If ':has()' is unavailable the rule simply never matches, leaving the pre-existing
+// behaviour where the keyboard can obscure the bottom of the modal.
 //
 // The extra space compensates for viewport UI, not for text size. Experiments
 // with rem-based values were fragile because changing font-size settings also
@@ -41,7 +49,7 @@
     --tasks-keyboard-space-allowance: clamp(220px, 35vh, 360px);
 }
 
-.is-mobile .tasks-edit-modal-container:focus-within {
+.is-mobile .tasks-edit-modal-container:has(textarea:focus, input[type='text']:focus) {
     .modal-content {
         padding-bottom: var(--tasks-keyboard-space-allowance);
     }
