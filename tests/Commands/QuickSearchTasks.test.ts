@@ -93,6 +93,13 @@ describe('Finding matching tasks, honouring the Global Query', () => {
             ['Write release notes', 'Review RELEASE checklist'],
             ['Write release notes'],
         ],
+        [
+            'should ignore Global Query with invalid parse-time instruction',
+            'release',
+            'description includes Write\nUNKNOWN INSTRUCTION RENDERS GLOBAL QUERY INVALID',
+            ['Write release notes', 'Review RELEASE checklist'],
+            ['Write release notes', 'Review RELEASE checklist'],
+        ],
     ])(
         '%s',
         (_, query: string, globalQuerySource: string, descriptions: string[], expectedFoundDescriptions: string[]) => {

@@ -15,7 +15,12 @@ export interface TaskSearchSuggestionText {
 }
 
 function getGlobalQueryFilters(): Filter[] {
-    return GlobalQuery.getInstance().query().filters;
+    const query = GlobalQuery.getInstance().query();
+    if (query.error !== undefined) {
+        // Silently ignore invalid Global Query
+        return [];
+    }
+    return query.filters;
 }
 
 export function filterIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
