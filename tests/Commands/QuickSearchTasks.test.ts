@@ -275,6 +275,21 @@ describe('Finding matching tasks, sorting results in expected order', () => {
                 ['- [ ] same description 🔺', '- [ ] same description ⏫'],
             );
         });
+
+        it.failing('should sort by path', () => {
+            const paths = ['x/y/z.md', 'a/b/c.md'];
+            const tasks = paths.map((path) => new TaskBuilder().path(path).build());
+
+            const query = tasks[0].description;
+
+            const expectedOrder = ['a/b/c.md', 'x/y/z.md'];
+            const result = filterIncompleteTasksByDescription(tasks, query);
+            expect(result.map((task) => task.path)).toEqual(expectedOrder);
+
+            // Repeat the sort, with the tasks initially in reverse order
+            const reverse = filterIncompleteTasksByDescription(tasks.reverse(), query);
+            expect(reverse.map((task) => task.path)).toEqual(expectedOrder);
+        });
     });
 });
 
