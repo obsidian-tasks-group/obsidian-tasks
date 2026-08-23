@@ -25,7 +25,10 @@ You can assign a hotkey to `Tasks: Quick search` in Obsidian's [Hotkeys settings
 
 Before creating a new bug report or feature request about Quick Search, please check existing items to avoid duplicates.
 
-You do not need to search manually: the links below are already filtered to the label `"scope: quick search"`. Please check both Open and Closed items.
+You do not need to search manually: the links below are already filtered to the label `"scope: quick search"`.
+
+- Please check both Open and Closed items.
+- If you find an existing item, please support it there instead of adding a `+1` comment. See [[About Support and Help#How to support an existing request|How to support an existing request]].
 
 | Type | Open | Closed | Notes |
 | --- | --- | --- | --- |

@@ -298,7 +298,10 @@ We are tracking this in [issue #2503](https://github.com/obsidian-tasks-group/ob
 
 Before creating a new bug report or feature request about Create or edit Task, please check existing items to avoid duplicates.
 
-You do not need to search manually: the links below are already filtered to the label `"scope: edit task"`. Please check both Open and Closed items.
+You do not need to search manually: the links below are already filtered to the label `"scope: edit task"`.
+
+- Please check both Open and Closed items.
+- If you find an existing item, please support it there instead of adding a `+1` comment. See [[About Support and Help#How to support an existing request|How to support an existing request]].
 
 | Type | Open | Closed | Notes |
 | --- | --- | --- | --- |
