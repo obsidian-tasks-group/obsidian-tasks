@@ -64,7 +64,10 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
             applyFiltersToTask(globalQueryFilters, task, searchInfo)
         );
     });
+    return sortResults(results, searchInfo);
+}
 
+function sortResults(results: Task[], searchInfo: SearchInfo): Task[] {
     // Sort the results by description, using same logic as the 'sort by description' instruction.
     const sorter = new DescriptionField().createNormalSorter();
     return results.sort((a, b) => sorter.comparator(a, b, searchInfo));
