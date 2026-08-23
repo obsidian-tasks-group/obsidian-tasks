@@ -54,7 +54,8 @@ const reviewADocument = new TaskBuilder()
     .path('Projects/Review.md')
     .build();
 
-const tasks = [writeReleaseNotes, reviewRELEASEChecklist, releaseCompleted, reviewADocument];
+// These are added in alphabetical order by description
+const tasks = [releaseCompleted, reviewRELEASEChecklist, reviewADocument, writeReleaseNotes];
 
 afterEach(() => {
     GlobalFilter.getInstance().reset();
@@ -63,6 +64,13 @@ afterEach(() => {
     GlobalQuery.getInstance().reset();
 
     resetSettings();
+});
+
+describe('validate test data', () => {
+    it('should have sample tasks be alphabetical by description, so that sorting can be tested separately', () => {
+        const descriptions = tasks.map((task) => task.description);
+        expect(descriptions).toBeSorted();
+    });
 });
 
 describe('Registering the command', () => {
@@ -88,8 +96,8 @@ describe('Registering the command', () => {
 describe('Finding matching tasks', () => {
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
         expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([
-            writeReleaseNotes,
             reviewRELEASEChecklist,
+            writeReleaseNotes,
         ]);
     });
 
