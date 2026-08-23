@@ -87,7 +87,7 @@ describe('Registering the command', () => {
 
 describe('Finding matching tasks', () => {
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
-        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([tasks[0], tasks[1]]);
+        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([writeReleaseNotes, tasks[1]]);
     });
 
     it('should not show results until the user enters a search query', () => {
@@ -174,7 +174,7 @@ describe('Finding matching tasks, honouring the Global Query', () => {
 
 describe('Describing matching task', () => {
     it('should provide the description, source file name, and preceding heading for each suggestion', () => {
-        expect(taskSearchSuggestionText(tasks[0])).toEqual({
+        expect(taskSearchSuggestionText(writeReleaseNotes)).toEqual({
             description: 'Write release notes',
             source: 'Release.md',
             heading: 'Preparation',
@@ -229,7 +229,7 @@ describe('Rendering matching tasks', () => {
         const modal = new QuickSearchTasksModal({} as any, () => tasks);
         const element = document.createElement('div');
 
-        modal.renderSuggestion(tasks[0], element);
+        modal.renderSuggestion(writeReleaseNotes, element);
 
         expect(getCheckbox(element)).not.toBeNull();
         expect(getDescriptionTextContent(element)).toEqual('Write release notes');
@@ -280,7 +280,7 @@ describe('Opening a selected task', () => {
         const warning = jest.spyOn(console, 'warn').mockImplementation();
         jest.mocked(getTaskLineAndFile).mockResolvedValue(undefined);
 
-        await openTaskAtSourceLocation(tasks[0], app);
+        await openTaskAtSourceLocation(writeReleaseNotes, app);
 
         expect(app.workspace.getLeaf).not.toHaveBeenCalled();
         expect(warning).toHaveBeenCalledWith(
@@ -298,7 +298,7 @@ describe('Opening a selected task', () => {
             vault: {},
             workspace: { getLeaf: jest.fn(() => ({ openFile })) },
         } as any;
-        const task = tasks[0];
+        const task = writeReleaseNotes;
         const file = { path: 'Projects/Release.md' } as any;
         jest.mocked(getTaskLineAndFile).mockResolvedValue([12, file]);
 
@@ -317,7 +317,7 @@ describe('Opening a selected task', () => {
         const error = jest.spyOn(console, 'error').mockImplementation();
         jest.mocked(getTaskLineAndFile).mockResolvedValue([12, { path: 'Projects/Release.md' } as any]);
 
-        await expect(openTaskAtSourceLocation(tasks[0], app)).resolves.toBeUndefined();
+        await expect(openTaskAtSourceLocation(writeReleaseNotes, app)).resolves.toBeUndefined();
 
         expect(error).toHaveBeenCalledWith('Tasks: Could not open task source.', expect.any(Error));
         error.mockRestore();
