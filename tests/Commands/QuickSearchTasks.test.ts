@@ -184,14 +184,14 @@ describe('Finding matching tasks, honouring the Global Query', () => {
 });
 
 describe('Finding matching tasks, sorting results in expected order', () => {
-    type SortingTestCase = [
+    type DescriptionSortingTestCase = [
         testName: string,
         query: string,
         descriptions: string[],
         expectedFoundDescriptions: string[],
     ];
 
-    it.each<SortingTestCase>([
+    it.each<DescriptionSortingTestCase>([
         [
             // Force line break
             'should preserve original order, if already sorted',
