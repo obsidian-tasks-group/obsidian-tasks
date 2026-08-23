@@ -220,6 +220,13 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             ['x 9', 'x 11'],
             ['x 9', 'x 11'],
         ],
+        [
+            // Force line break
+            'should ignore markdown formatting',
+            'z',
+            ['**Bz**', 'Az'],
+            ['Az', '**Bz**'],
+        ],
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
