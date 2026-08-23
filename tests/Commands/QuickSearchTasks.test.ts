@@ -237,6 +237,17 @@ describe('Finding matching tasks, sorting results in expected order', () => {
     describe('handling identical descriptions', () => {
         const query = 'same description';
 
+        function expectSortsInExpectedOrder(lines: string[], expectedOrder: string[]): void {
+            const tasks = fromLines({ lines });
+
+            const result = filterIncompleteTasksByDescription(tasks, query);
+            expect(result.map((task) => task.originalMarkdown)).toEqual(expectedOrder);
+
+            // Repeat the sort, with the tasks initially in reverse order
+            const reverse = filterIncompleteTasksByDescription(tasks.reverse(), query);
+            expect(reverse.map((task) => task.originalMarkdown)).toEqual(expectedOrder);
+        }
+
         it.failing('should sort IN_PROGRESS before TODO', () => {
             const lines = [
                 // force line break
@@ -249,15 +260,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
                 '- [/] same description',
                 '- [ ] same description',
             ];
-
-            const tasks = fromLines({ lines });
-
-            const result = filterIncompleteTasksByDescription(tasks, query);
-            expect(result.map((task) => task.originalMarkdown)).toEqual(expectedOrder);
-
-            // Repeat the sort, with the tasks initially in reverse order
-            const reverse = filterIncompleteTasksByDescription(tasks.reverse(), query);
-            expect(reverse.map((task) => task.originalMarkdown)).toEqual(expectedOrder);
+            expectSortsInExpectedOrder(lines, expectedOrder);
         });
     });
 });
