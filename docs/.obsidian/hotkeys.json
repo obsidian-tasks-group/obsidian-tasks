@@ -13,5 +13,14 @@
       ],
       "key": "/"
     }
+  ],
+  "templater-obsidian:_meta/templates/support and related issues.md": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "S"
+    }
   ]
 }
