@@ -29,10 +29,11 @@ Please follow the steps in this page **fully** when reporting a bug, to save you
 
 - Is it the intended behaviour - or a documented limitation?
   - Read the [User Guide](https://publish.obsidian.md/tasks/Introduction) for the problem feature.
-  - We take care to record known limitations, often with a link to an existing issue that you can up-vote with a 👍.
+  - We take care to record known limitations, often with a link to an existing issue that you can support.
 - Is it already known?
-  - Review the [existing bug reports](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+bug%22), to see if yours is listed.
-  - If it is, up-vote it with a 👍.
+  - If the documentation page for the feature has a **Support** section, use its links first. They are the quickest way to find existing requests for that feature.
+  - Otherwise, review the [existing bug reports](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+bug%22), to see if yours is listed.
+  - If you find an existing report, please support it instead of adding a `+1` comment. See [[About Support and Help#How to support an existing request]].
 - Check your tasks for broken data
   - Understand why the [order of items in a task matters](https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest#What+do+I+need+to+know+about+the+order+of+items+in+a+task%3F).
   - If a task is not found by a query, [check the task is formatted correctly](https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest#How+can+I+check+that+my+Task+is+formatted+correctly%3F).

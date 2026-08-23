@@ -12,7 +12,13 @@
   "file_templates": [],
   "syntax_highlighting": true,
   "syntax_highlighting_mobile": false,
-  "enabled_templates_hotkeys": [],
+  "enabled_templates_hotkeys": [
+    {
+      "template": "_meta/templates/support and related issues.md",
+      "insert_enabled": true,
+      "create_enabled": false
+    }
+  ],
   "startup_templates": [],
   "intellisense_render": "1",
   "ignore_folders_on_creation": [],
