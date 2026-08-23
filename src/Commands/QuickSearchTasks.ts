@@ -56,13 +56,14 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
     const globalQueryFilters = getGlobalQueryFilters();
     const searchInfo = SearchInfo.fromAllTasks([...tasks]);
 
-    return tasks.filter((task) => {
+    const results = tasks.filter((task) => {
         return (
             !task.isDone &&
             task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery) &&
             applyFiltersToTask(globalQueryFilters, task, searchInfo)
         );
     });
+    return results.sort((a, b) => a.description.localeCompare(b.description));
 }
 
 export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {

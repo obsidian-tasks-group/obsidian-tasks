@@ -199,6 +199,13 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             ['Aaaa', 'Zaaa'],
             ['Aaaa', 'Zaaa'],
         ],
+        [
+            // Force line break
+            'should sort alphabetically',
+            'aaa',
+            ['Zaaa', 'Aaaa'],
+            ['Aaaa', 'Zaaa'],
+        ],
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
