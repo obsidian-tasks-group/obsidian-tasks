@@ -58,7 +58,14 @@ const reviewADocument = new TaskBuilder()
 // These are added in alphabetical order by description
 const tasks = [releaseCompleted, reviewRELEASEChecklist, reviewADocument, writeReleaseNotes];
 
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2026-08-23'));
+});
+
 afterEach(() => {
+    jest.useRealTimers();
+
     GlobalFilter.getInstance().reset();
     GlobalFilter.getInstance().setRemoveGlobalFilter(false);
 
