@@ -9,6 +9,7 @@ import { SearchInfo } from '../Query/SearchInfo';
 import type { Filter } from '../Query/Filter/Filter';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DescriptionField } from '../Query/Filter/DescriptionField';
+import { Sort } from '../Query/Sort/Sort';
 
 export interface TaskSearchSuggestionText {
     description: string;
@@ -70,7 +71,9 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
 function sortResults(results: Task[], searchInfo: SearchInfo): Task[] {
     // Sort the results by description, using same logic as the 'sort by description' instruction.
     const sorter = new DescriptionField().createNormalSorter();
-    return results.sort((a, b) => sorter.comparator(a, b, searchInfo));
+    // And if the descriptions are identical, sort the tasks by the
+    // default Tasks order used in Tasks queries.
+    return Sort.by([sorter], results, searchInfo);
 }
 
 export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {

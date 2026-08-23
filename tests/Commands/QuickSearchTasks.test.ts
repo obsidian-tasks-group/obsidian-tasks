@@ -267,7 +267,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             expect(reverse.map(propertyGetter)).toEqual(expectedOrder);
         }
 
-        it.failing('should sort IN_PROGRESS before TODO', () => {
+        it('should sort IN_PROGRESS before TODO', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description', '- [/] same description'],
                 ['- [/] same description', '- [ ] same description'],
@@ -275,7 +275,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             );
         });
 
-        it.failing('should earlier Due date first', () => {
+        it('should earlier Due date first', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description 📅 2026-03-27', '- [ ] same description 📅 2026-01-07'],
                 ['- [ ] same description 📅 2026-01-07', '- [ ] same description 📅 2026-03-27'],
@@ -283,7 +283,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             );
         });
 
-        it.failing('should higher priority first', () => {
+        it('should higher priority first', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description ⏫', '- [ ] same description 🔺'],
                 ['- [ ] same description 🔺', '- [ ] same description ⏫'],
@@ -291,7 +291,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             );
         });
 
-        it.failing('should sort by path', () => {
+        it('should sort by path', () => {
             const paths = ['x/y/z.md', 'a/b/c.md'];
             const tasks = paths.map((path) => new TaskBuilder().path(path).build());
 
