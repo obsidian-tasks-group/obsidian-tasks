@@ -63,7 +63,7 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
             applyFiltersToTask(globalQueryFilters, task, searchInfo)
         );
     });
-    return results.sort((a, b) => a.description.localeCompare(b.description));
+    return results.sort((a, b) => a.description.localeCompare(b.description, undefined, { numeric: true }));
 }
 
 export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {

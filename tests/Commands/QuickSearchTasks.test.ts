@@ -206,6 +206,20 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             ['Zaaa', 'Aaaa'],
             ['Aaaa', 'Zaaa'],
         ],
+        [
+            // Force line break
+            'should sort leading numbers in ascending order',
+            'x',
+            ['9 x', '11 x'],
+            ['9 x', '11 x'],
+        ],
+        [
+            // Force line break
+            'should sort trailing numbers in ascending order',
+            'x',
+            ['x 9', 'x 11'],
+            ['x 9', 'x 11'],
+        ],
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
