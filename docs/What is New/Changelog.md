@@ -19,6 +19,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
   - Add CSS example for [[Styling#Priority as a Background Color, for active tasks|colouring actionable tasks by their priority]].
   - Add Spanish translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
   - The [[Presets#Default Presets|default preset]] `hide_query_elements` now hides the task count. (Pre-existing Tasks settings are not updated, though.)
+  - Add [[About Support and Help#How to support an existing request|How to support an existing request]] to the help on user support.
 - 8.3.0:
   - Add [[Layout#Hide and Show Nested Backlink|'hide nested backlink']] instruction, for when '`show tree`' makes the output just too cluttered.
   - [[Notifications]] page updated to better match the current behaviour of the [Reminder](https://community.obsidian.md/plugins/obsidian-reminder-plugin) plugin.
