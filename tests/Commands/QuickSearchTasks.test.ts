@@ -27,22 +27,34 @@ jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
 window.moment = moment;
 
 const MockedNotice = jest.mocked(Notice);
-const tasks = [
-    new TaskBuilder()
-        .description('Write release notes')
-        .path('Projects/Release.md')
-        .lineNumber(12)
-        .precedingHeader('Preparation')
-        .build(),
-    new TaskBuilder()
-        .description('Review RELEASE checklist')
-        .path('Projects/Review.md')
-        .lineNumber(31)
-        .precedingHeader('Quality')
-        .build(),
-    new TaskBuilder().description('Release completed').status(Status.DONE).path('Archive.md').build(),
-    new TaskBuilder().description('Review a document').tags(['#release']).path('Projects/Review.md').build(),
-];
+
+const writeReleaseNotes = new TaskBuilder()
+    .description('Write release notes')
+    .path('Projects/Release.md')
+    .lineNumber(12)
+    .precedingHeader('Preparation')
+    .build();
+
+const reviewRELEASEChecklist = new TaskBuilder()
+    .description('Review RELEASE checklist')
+    .path('Projects/Review.md')
+    .lineNumber(31)
+    .precedingHeader('Quality')
+    .build();
+
+const releaseCompleted = new TaskBuilder()
+    .description('Release completed')
+    .status(Status.DONE)
+    .path('Archive.md')
+    .build();
+
+const reviewADocument = new TaskBuilder()
+    .description('Review a document')
+    .tags(['#release'])
+    .path('Projects/Review.md')
+    .build();
+
+const tasks = [writeReleaseNotes, reviewRELEASEChecklist, releaseCompleted, reviewADocument];
 
 afterEach(() => {
     GlobalFilter.getInstance().reset();
