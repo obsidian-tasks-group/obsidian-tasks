@@ -242,7 +242,14 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             propertyGetter: (task: Task) => string,
         ): void {
             const tasks = fromLines({ lines });
+            expectSortsTasksInExpectedOrder(tasks, expectedOrder, propertyGetter);
+        }
 
+        function expectSortsTasksInExpectedOrder(
+            tasks: Task[],
+            expectedOrder: string[],
+            propertyGetter: (task: Task) => string,
+        ): void {
             // Ensure we have enough tasks to make the test meaningful:
             expect(tasks.length).toBeGreaterThanOrEqual(2);
 
