@@ -249,18 +249,10 @@ describe('Finding matching tasks, sorting results in expected order', () => {
         }
 
         it.failing('should sort IN_PROGRESS before TODO', () => {
-            const lines = [
-                // force line break
-                '- [ ] same description',
-                '- [/] same description',
-            ];
-
-            const expectedOrder = [
-                // force line break
-                '- [/] same description',
-                '- [ ] same description',
-            ];
-            expectSortsInExpectedOrder(lines, expectedOrder);
+            expectSortsInExpectedOrder(
+                ['- [ ] same description', '- [/] same description'],
+                ['- [/] same description', '- [ ] same description'],
+            );
         });
     });
 });
