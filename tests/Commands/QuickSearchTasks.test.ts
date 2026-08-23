@@ -87,7 +87,10 @@ describe('Registering the command', () => {
 
 describe('Finding matching tasks', () => {
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
-        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([writeReleaseNotes, tasks[1]]);
+        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([
+            writeReleaseNotes,
+            reviewRELEASEChecklist,
+        ]);
     });
 
     it('should not show results until the user enters a search query', () => {
