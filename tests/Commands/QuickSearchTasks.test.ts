@@ -17,6 +17,7 @@ import { fromLines, fromMarkdown } from '../TestingTools/TestHelpers';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import type { PresetsMap } from '../../src/Query/Presets/Presets';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import type { Task } from '../../src/Task/Task';
 
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
@@ -235,7 +236,11 @@ describe('Finding matching tasks, sorting results in expected order', () => {
     });
 
     describe('handling identical descriptions', () => {
-        function expectSortsInExpectedOrder(lines: string[], expectedOrder: string[]): void {
+        function expectSortsInExpectedOrder(
+            lines: string[],
+            expectedOrder: string[],
+            propertyGetter: (task: Task) => string,
+        ): void {
             const tasks = fromLines({ lines });
 
             // Ensure we have enough tasks to make the test meaningful:
@@ -248,17 +253,18 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             const query = tasks[0].description;
 
             const result = filterIncompleteTasksByDescription(tasks, query);
-            expect(result.map((task) => task.originalMarkdown)).toEqual(expectedOrder);
+            expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
             const reverse = filterIncompleteTasksByDescription(tasks.reverse(), query);
-            expect(reverse.map((task) => task.originalMarkdown)).toEqual(expectedOrder);
+            expect(reverse.map(propertyGetter)).toEqual(expectedOrder);
         }
 
         it.failing('should sort IN_PROGRESS before TODO', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description', '- [/] same description'],
                 ['- [/] same description', '- [ ] same description'],
+                (task: Task) => task.originalMarkdown,
             );
         });
 
@@ -266,6 +272,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description 📅 2026-03-27', '- [ ] same description 📅 2026-01-07'],
                 ['- [ ] same description 📅 2026-01-07', '- [ ] same description 📅 2026-03-27'],
+                (task: Task) => task.originalMarkdown,
             );
         });
 
@@ -273,6 +280,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description ⏫', '- [ ] same description 🔺'],
                 ['- [ ] same description 🔺', '- [ ] same description ⏫'],
+                (task: Task) => task.originalMarkdown,
             );
         });
 
