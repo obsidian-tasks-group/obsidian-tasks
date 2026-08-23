@@ -183,6 +183,30 @@ describe('Finding matching tasks, honouring the Global Query', () => {
     );
 });
 
+describe('Finding matching tasks, sorting results in expected order', () => {
+    type SortingTestCase = [
+        testName: string,
+        query: string,
+        descriptions: string[],
+        expectedFoundDescriptions: string[],
+    ];
+
+    it.each<SortingTestCase>([
+        [
+            // Force line break
+            'should preserve original order, if already sorted',
+            'aaa',
+            ['Aaaa', 'Zaaa'],
+            ['Aaaa', 'Zaaa'],
+        ],
+    ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
+        const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
+
+        const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
+        expect(foundDescriptions).toEqual(expectedFoundDescriptions);
+    });
+});
+
 describe('Describing matching task', () => {
     it('should provide the description, source file name, and preceding heading for each suggestion', () => {
         expect(taskSearchSuggestionText(writeReleaseNotes)).toEqual({
