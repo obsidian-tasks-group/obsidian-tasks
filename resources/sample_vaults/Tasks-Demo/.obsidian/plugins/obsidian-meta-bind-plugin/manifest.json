@@ -1,8 +1,8 @@
 {
 	"id": "obsidian-meta-bind-plugin",
 	"name": "Meta Bind",
-	"version": "1.4.6",
-	"minAppVersion": "1.4.0",
+	"version": "1.5.1",
+	"minAppVersion": "1.13.1",
 	"description": "Make your notes interactive with inline input fields, metadata displays, and buttons.",
 	"author": "Moritz Jung",
 	"authorUrl": "https://www.moritzjung.dev/",

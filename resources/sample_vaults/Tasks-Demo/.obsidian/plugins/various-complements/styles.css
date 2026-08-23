@@ -27,16 +27,20 @@
 .various-complements__settings__nested {
   padding-left: 30px;
 }
-
-.various-complements__settings__header {
-  position: relative;
-  padding-left: 25px;
+.setting-group .setting-items .various-complements__settings__nested {
+  padding-left: 30px;
 }
-.various-complements__settings__header::before {
+
+h3.various-complements__settings__header {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-top: var(--size-4-6);
+}
+h3.various-complements__settings__header::before {
   position: absolute;
-  width: 20px;
+  width: 1.25rem;
   margin-top: 3px;
-  margin-left: -25px;
+  margin-left: -1.5rem;
   filter: invert(0.5) hue-rotate(180deg);
 }
 
@@ -75,13 +79,14 @@
 }
 
 .various-complements__settings__popup-hotkey {
-  padding: 1rem 0;
-  /*noinspection CssUnresolvedCustomProperty*/
+  padding: 0.5rem 0;
   border-top: 1px solid var(--background-modifier-border);
 }
 
-.various-complements__settings__popup-hotkey-item {
-  padding-left: 2rem;
+.setting-group
+  .setting-items
+  .various-complements__settings__popup-hotkey-item {
+  padding: 0.2rem;
 }
 
 .various-complements__footer {

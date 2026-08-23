@@ -1,1 +1,11 @@
-{"id":"hot-reload","name":"Hot Reload","author":"PJ Eby","authorUrl":"https://github.com/pjeby","version":"0.1.11","minAppVersion":"0.15.9","description":"Automatically reload in-development plugins when their files are changed","isDesktopOnly":true}
+{
+  "id": "hot-reload",
+  "name": "Hot Reload",
+  "author": "PJ Eby",
+  "authorUrl": "https://github.com/pjeby",
+  "version": "0.3.1",
+  "minAppVersion": "1.6.7",
+  "isDesktopOnly": false,
+  "fundingUrl": "https://dirtsimple.org/tips/hot-reload",
+  "description": "Automatically reload in-development plugins when their files are changed."
+}
