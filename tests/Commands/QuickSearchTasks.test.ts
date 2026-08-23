@@ -259,6 +259,20 @@ describe('Finding matching tasks, sorting results in expected order', () => {
                 ['- [/] same description', '- [ ] same description'],
             );
         });
+
+        it.failing('should earlier Due date first', () => {
+            expectSortsInExpectedOrder(
+                ['- [ ] same description 📅 2026-03-27', '- [ ] same description 📅 2026-01-07'],
+                ['- [ ] same description 📅 2026-01-07', '- [ ] same description 📅 2026-03-27'],
+            );
+        });
+
+        it.failing('should higher priority first', () => {
+            expectSortsInExpectedOrder(
+                ['- [ ] same description ⏫', '- [ ] same description 🔺'],
+                ['- [ ] same description 🔺', '- [ ] same description ⏫'],
+            );
+        });
     });
 });
 
