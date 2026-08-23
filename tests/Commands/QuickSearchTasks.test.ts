@@ -236,8 +236,10 @@ describe('Finding matching tasks, sorting results in expected order', () => {
 
     describe('handling identical descriptions', () => {
         function expectSortsInExpectedOrder(lines: string[], expectedOrder: string[]): void {
-            expect(lines.length).toBeGreaterThanOrEqual(2);
             const tasks = fromLines({ lines });
+
+            // Ensure we have enough tasks to make the test meaningful:
+            expect(tasks.length).toBeGreaterThanOrEqual(2);
 
             // Ensure that all task.description values are identical, so we are definitely testing
             // the effect of other properties on the sort order:
