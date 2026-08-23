@@ -238,7 +238,12 @@ describe('Finding matching tasks, sorting results in expected order', () => {
         const query = 'same description';
 
         function expectSortsInExpectedOrder(lines: string[], expectedOrder: string[]): void {
+            expect(lines.length).toBeGreaterThanOrEqual(2);
             const tasks = fromLines({ lines });
+
+            // Ensure that all task.description values are identical, so we are definitely testing
+            // the effect of other properties on the sort order:
+            expect(new Set(tasks.map((task) => task.description)).size).toBe(1);
 
             const result = filterIncompleteTasksByDescription(tasks, query);
             expect(result.map((task) => task.originalMarkdown)).toEqual(expectedOrder);
