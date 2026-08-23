@@ -267,7 +267,7 @@ describe('Rendering matching tasks', () => {
         const inProgressTask = new TaskBuilder().description('In progress task').status(Status.IN_PROGRESS).build();
 
         modal.renderSuggestion(inProgressTask, incompleteElement);
-        modal.renderSuggestion(tasks[2], completeElement);
+        modal.renderSuggestion(releaseCompleted, completeElement);
 
         expect(incompleteElement.querySelector('input')).toMatchObject({ checked: false });
         expect(incompleteElement.querySelector('input')?.getAttribute('aria-label')).toEqual(
