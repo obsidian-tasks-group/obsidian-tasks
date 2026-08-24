@@ -24,7 +24,7 @@ export class GroupingTreeNode<T> {
      * NOTE: The node itself doesn't get included in the generated paths.
      */
     generateAllPaths(pathSoFar: string[] = []): Map<string[], T[]> {
-        const resultMap = new Map();
+        const resultMap = new Map<string[], T[]>();
         if (this.children.size == 0) {
             // Base case: Leaf node. Populate the results map with the path to
             // this node, and the values that match this path.
