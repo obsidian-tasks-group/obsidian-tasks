@@ -115,7 +115,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         return editor.cm.state.field(editorInfoField);
     }
 
-    private canSaveEdits(markdownFileInfo: unknown) {
+    private canSaveEdits(markdownFileInfo: unknown): markdownFileInfo is MarkdownView {
         return markdownFileInfo instanceof MarkdownView;
     }
 
@@ -210,7 +210,7 @@ file: '${newTask.path}'
 
         const markdownFileInfo = this.getMarkdownFileInfo(value.context.editor);
         if (this.canSaveEdits(markdownFileInfo)) {
-            await (markdownFileInfo as { save: () => Promise<void> }).save();
+            await markdownFileInfo.save();
         }
     }
 }
