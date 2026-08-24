@@ -35,7 +35,7 @@ export class TasksFile {
 
         const rawFrontmatter = cachedMetadata.frontmatter;
         if (rawFrontmatter !== undefined) {
-            this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
+            this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter)) as Frontmatter;
             this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter) ?? [];
         }
         this._outlinksInProperties = this.createLinks(this.cachedMetadata.frontmatterLinks);
