@@ -27,6 +27,15 @@ Each result shows a non-interactive checkbox for the task status, the rendered t
 ![Quick search results](../images/quick-search-results.png)
 <span class="caption">Quick search results</span>
 
+## How Quick Search Works
+
+- Results are sorted by description, ignoring Markdown formatting.
+  - If tasks have the same description, they are then sorted using the [[Sorting#Default sort order|Tasks default sort order]].
+- If you use a [[Global Filter]], Quick Search respects the [[Global Filter#Settings for the Global Filter|Remove global filter from description]] setting.
+- If you use a [[Global Query]], Quick Search only includes tasks that match it.
+  - At the moment, Quick Search cannot ignore the Global Query.
+  - However, if the Global Query causes an error for any matching task, Quick Search ignores the Global Query.
+
 ## Support
 
 Before creating a new bug report or feature request about Quick Search, please check existing items to avoid duplicates.
