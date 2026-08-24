@@ -1,9 +1,6 @@
 yarn run v1.22.19
 $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-check
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/Settings.ts
-  224:5  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/SettingsTab.ts
     47:14  warning  This PluginSettingTab does not implement getSettingDefinitions(); its settings will not appear in Obsidian's settings search for users on 1.13.0 or later. Consider adopting the declarative settings API  obsidianmd/settings-tab/prefer-setting-definitions
     51:37  warning  The `Function` type accepts any function-like value.
@@ -83,11 +80,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   67:17  warning  The `Function` type accepts any function-like value.
 Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/TasksFile.ts
-   36:13  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
-  224:15  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
-  247:15  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusValidator.ts
   31:24  warning  '_name' is assigned a value but never used  @typescript-eslint/no-unused-vars
 
@@ -157,7 +149,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
   76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 97 problems (0 errors, 97 warnings)
+✖ 93 problems (0 errors, 93 warnings)
   0 errors and 13 warnings potentially fixable with the `--fix` option.
 
 
@@ -167,4 +159,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 25.01s.
+Done in 26.02s.
