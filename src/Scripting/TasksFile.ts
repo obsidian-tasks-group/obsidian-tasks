@@ -10,6 +10,8 @@ import { Link } from '../Task/Link';
 
 export type OptionalTasksFile = TasksFile | undefined;
 
+type Frontmatter = Record<string, unknown>;
+
 /**
  * A simple class to provide access to file information via 'task.file' in scripting code.
  */
@@ -19,7 +21,7 @@ export class TasksFile {
 
     private readonly _cachedMetadata: CachedMetadata;
     // Always make TasksFile.frontmatter.tags exist and be empty, even if no frontmatter present:
-    private readonly _frontmatter = { tags: [] } as Record<string, unknown>;
+    private readonly _frontmatter = { tags: [] } as Frontmatter;
     private readonly _tags: string[] = [];
 
     private readonly _outlinksInProperties: Readonly<Link[]> = [];
