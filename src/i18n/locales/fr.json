@@ -36,7 +36,7 @@
       "line3": "Le module Tasks ne peut donc pas ajouter ou retirer une date de complétion, ou créer la prochaine occurrence d'une tâche récurrente.",
       "line4": "Pour compléter la tâche de façon correcte:",
       "line5": "1. Annulez le clic sur la case à cocher.",
-      "line6": "2. Puis cliquez sur la ligne de la tâche et lancez la commande {{commandName}}\", ou passez en mode Lecture et cliquez de nouveau sur la case à cocher."
+      "line6": "2. Puis cliquez sur la ligne de la tâche et lancez la commande \"{{commandName}}\", ou passez en mode Lecture et cliquez de nouveau sur la case à cocher."
     }
   },
   "reports": {
@@ -46,14 +46,14 @@
         "deleteFileAnyTime": "Vous pouvez supprimer ce fichier à tout moment.",
         "title": "À propos de ce fichier",
         "updateReport": {
-          "line1": "Après avoir modifié les réglages des statuts, vous pouvez obtenir une liste à jour :",
+          "line1": "Après avoir modifié les réglages des statuts, vous pouvez obtenir un rapport à jour :",
           "line2": "Rendez-vous dans `Réglages` -> `Tasks`.",
           "line3": "Cliquez sur `Examiner et vérifier les statuts`."
         }
       },
       "columnHeadings": {
         "nextStatusSymbol": "Symbole du statut suivant",
-        "problems": "Problèmes éventuels",
+        "problems": "Problèmes",
         "statusName": "Nom du statut",
         "statusSymbol": "Symbole du statut",
         "statusType": "Type de statut"
@@ -152,7 +152,7 @@
             "line1": "Gagnez du temps pour la saisie des Dates planifiées (⏳).",
             "line2": "Activer cette option ajoutera à chaque tâche sans date une Date planifiée issue du nom du fichier",
             "line3": "Par défaut, le module Tasks reconnaît les formats <code>YYYY-MM-DD</code> et <code>YYYYMMDD</code>.",
-            "line4": "Les tâches sans date n'ont ni Date d'écéhance (📅 ), ni Date planifiée (⏳), ni Date de début (🛫)."
+            "line4": "Les tâches sans date n'ont ni Date d'échéance (📅 ), ni Date planifiée (⏳), ni Date de début (🛫)."
           },
           "name": "Utiliser le nom du fichier comme Date planifiée pour les tâches sans date"
         }
