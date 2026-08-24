@@ -45,7 +45,7 @@ export function parseExpression(paramsArgs: ExpressionParameter[], arg: string):
  * @see parseExpression
  * @see evaluateExpressionOrCatch
  */
-export function evaluateExpression(expression: Function, paramsArgs: ExpressionParameter[]) {
+export function evaluateExpression(expression: Function, paramsArgs: ExpressionParameter[]): unknown {
     if (!EnableJsInTasksQueries.getInstance().get()) {
         throw new JsInTasksQueriesDisabledError();
     }
@@ -63,7 +63,11 @@ export function evaluateExpression(expression: Function, paramsArgs: ExpressionP
  * @see parseExpression
  * @see evaluateExpression
  */
-export function evaluateExpressionOrCatch(expression: Function, paramsArgs: ExpressionParameter[], arg: string) {
+export function evaluateExpressionOrCatch(
+    expression: Function,
+    paramsArgs: ExpressionParameter[],
+    arg: string,
+): unknown {
     try {
         return evaluateExpression(expression, paramsArgs);
     } catch (e) {
