@@ -29,6 +29,10 @@ Each result shows a non-interactive checkbox for the task status, the rendered t
 
 ## How Quick Search Works
 
+- The task description is searched.
+  - The search is case-insensitive and looks for the exact text you type.
+  - It does not search the task tags, file names, or headings.
+  - Be aware of spaces at the start and end of the search string, as they may cause valid matches not to be found.
 - Results are sorted by description, ignoring Markdown formatting.
   - If tasks have the same description, they are then sorted using the [[Sorting#Default sort order|Tasks default sort order]].
 - If you use a [[Global Filter]], Quick Search respects the [[Global Filter#Settings for the Global Filter|Remove global filter from description]] setting.
