@@ -944,6 +944,9 @@ As well as the date-related searches above, these filters search other propertie
 
 ### Description
 
+> [!Tip] Tip: Do you even need to do a Description search?
+> The [[Quick Search|Tasks: Quick Search]] command allows you to **type part of a task's description and jump straight to it**.
+
 - `description (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
   - Disregards the global filter when matching.

@@ -68,6 +68,10 @@ See other pages in 'Getting Started' for more details on due dates and recurrenc
 You cannot toggle a task (un)done in the modal.
 For that, do one of the following.
 
+## Easy finding of tasks
+
+The [[Quick Search|Tasks: Quick Search]] command, added in Tasks X.Y.Z,  allows you to type part of a task's description and jump straight to it.
+
 ## Completing tasks
 
 There are two ways to mark a task done:
