@@ -110,7 +110,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         );
     }
 
-    private getMarkdownFileInfo(editor: Editor) {
+    private getMarkdownFileInfo(editor: Editor): unknown {
         // @ts-expect-error: TS2339: Property cm does not exist on type Editor
         return editor.cm.state.field(editorInfoField);
     }
@@ -210,7 +210,7 @@ file: '${newTask.path}'
 
         const markdownFileInfo = this.getMarkdownFileInfo(value.context.editor);
         if (this.canSaveEdits(markdownFileInfo)) {
-            await markdownFileInfo.save();
+            await (markdownFileInfo as { save: () => Promise<void> }).save();
         }
     }
 }
