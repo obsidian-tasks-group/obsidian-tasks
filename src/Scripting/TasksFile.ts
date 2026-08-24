@@ -10,6 +10,8 @@ import { Link } from '../Task/Link';
 
 export type OptionalTasksFile = TasksFile | undefined;
 
+type Frontmatter = Record<string, unknown>;
+
 /**
  * A simple class to provide access to file information via 'task.file' in scripting code.
  */
@@ -19,7 +21,7 @@ export class TasksFile {
 
     private readonly _cachedMetadata: CachedMetadata;
     // Always make TasksFile.frontmatter.tags exist and be empty, even if no frontmatter present:
-    private readonly _frontmatter = { tags: [] } as Record<string, unknown>;
+    private readonly _frontmatter = { tags: [] } as Frontmatter;
     private readonly _tags: string[] = [];
 
     private readonly _outlinksInProperties: Readonly<Link[]> = [];
@@ -33,7 +35,7 @@ export class TasksFile {
 
         const rawFrontmatter = cachedMetadata.frontmatter;
         if (rawFrontmatter !== undefined) {
-            this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter));
+            this._frontmatter = JSON.parse(JSON.stringify(rawFrontmatter)) as Frontmatter;
             this._frontmatter.tags = parseFrontMatterTags(rawFrontmatter) ?? [];
         }
         this._outlinksInProperties = this.createLinks(this.cachedMetadata.frontmatterLinks);
@@ -221,7 +223,7 @@ export class TasksFile {
             return false;
         }
 
-        const propertyValue = this.frontmatter[foundKey];
+        const propertyValue: unknown = this.frontmatter[foundKey];
         if (propertyValue === null) {
             return false;
         }
@@ -244,7 +246,7 @@ export class TasksFile {
             return null;
         }
 
-        const propertyValue = this.frontmatter[foundKey];
+        const propertyValue: unknown = this.frontmatter[foundKey];
         if (propertyValue === undefined) {
             return null;
         }

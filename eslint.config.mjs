@@ -71,7 +71,7 @@ const typescriptCommonRules = {
     '@typescript-eslint/no-unsafe-call': on_or_off,
     '@typescript-eslint/no-unsafe-function-type': on_or_off,
     '@typescript-eslint/no-unsafe-member-access': on_or_off,
-    '@typescript-eslint/no-unsafe-return': on_or_off,
+    '@typescript-eslint/no-unsafe-return': 1,
     '@typescript-eslint/no-wrapper-object-types': on_or_off,
     '@typescript-eslint/only-throw-error': on_or_off,
     '@typescript-eslint/restrict-plus-operands': on_or_off,

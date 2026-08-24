@@ -34,7 +34,7 @@ export function constructArguments(task: Task | null, queryContext: QueryContext
  *
  * See also {@link FunctionField} which exposes this facility to users.
  */
-export function parseAndEvaluateExpression(task: Task, arg: string, queryContext?: QueryContext) {
+export function parseAndEvaluateExpression(task: Task, arg: string, queryContext?: QueryContext): unknown {
     const paramsArgs = constructArguments(task, queryContext || null);
 
     const functionOrError = parseExpression(paramsArgs, arg);
@@ -72,7 +72,7 @@ export class TaskExpression {
      *
      * @see evaluateOrCatch
      */
-    public evaluate(task: Task, queryContext?: QueryContext) {
+    public evaluate(task: Task, queryContext?: QueryContext): unknown {
         if (!this.isValid()) {
             throw new Error(
                 `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`,
@@ -88,7 +88,7 @@ export class TaskExpression {
      *
      * @see evaluate
      */
-    public evaluateOrCatch(task: Task, queryContext: QueryContext) {
+    public evaluateOrCatch(task: Task, queryContext: QueryContext): unknown {
         if (!this.isValid()) {
             return `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`;
         }

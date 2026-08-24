@@ -56,12 +56,9 @@ export const initializeI18n = async () => {
 };
 
 export const i18n = new Proxy(i18next, {
-    get(target, prop) {
+    get(target, prop): unknown {
         if (!isInitialized && prop === 't') {
-            /* If you get the following error in tests, add this code block before the first
-               test in the file.
-               (Or add the 'await' line to the existing first beforeAll).
-
+            /* This should never be reached in tests, as the following is called in jest.setup.ts:
                     beforeAll(async () => {
                         await initializeI18n();
                     });

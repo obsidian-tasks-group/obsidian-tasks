@@ -221,7 +221,7 @@ export const updateSettings = (newSettings: Partial<Settings>): Settings => {
 };
 
 export const resetSettings = (): Settings => {
-    settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings = JSON.parse(JSON.stringify(defaultSettings)) as Settings;
     return settings;
 };
 

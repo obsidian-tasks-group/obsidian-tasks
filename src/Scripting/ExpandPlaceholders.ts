@@ -27,9 +27,7 @@ import { JsInTasksQueriesDisabledError } from './JsInTasksQueriesDisabledError';
 export function expandPlaceholders(template: string, view: any): string {
     // Turn off HTML escaping of things like '/' in file paths:
     // https://github.com/janl/mustache.js#variables
-    Mustache.escape = function (text) {
-        return text;
-    };
+    Mustache.escape = (text: string) => text;
 
     try {
         // Preprocess the template to evaluate any placeholders that involve function calls

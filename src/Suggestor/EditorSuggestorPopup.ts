@@ -110,12 +110,12 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         );
     }
 
-    private getMarkdownFileInfo(editor: Editor) {
+    private getMarkdownFileInfo(editor: Editor): unknown {
         // @ts-expect-error: TS2339: Property cm does not exist on type Editor
         return editor.cm.state.field(editorInfoField);
     }
 
-    private canSaveEdits(markdownFileInfo: unknown) {
+    private canSaveEdits(markdownFileInfo: unknown): markdownFileInfo is MarkdownView {
         return markdownFileInfo instanceof MarkdownView;
     }
 
