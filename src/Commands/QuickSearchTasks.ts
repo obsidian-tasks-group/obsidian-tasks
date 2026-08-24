@@ -8,6 +8,8 @@ import { GlobalQuery } from '../Config/GlobalQuery';
 import { SearchInfo } from '../Query/SearchInfo';
 import type { Filter } from '../Query/Filter/Filter';
 import { TasksFile } from '../Scripting/TasksFile';
+import { DescriptionField } from '../Query/Filter/DescriptionField';
+import { Sort } from '../Query/Sort/Sort';
 
 export interface TaskSearchSuggestionText {
     description: string;
@@ -56,13 +58,22 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
     const globalQueryFilters = getGlobalQueryFilters();
     const searchInfo = SearchInfo.fromAllTasks([...tasks]);
 
-    return tasks.filter((task) => {
+    const results = tasks.filter((task) => {
         return (
             !task.isDone &&
             task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery) &&
             applyFiltersToTask(globalQueryFilters, task, searchInfo)
         );
     });
+    return sortResults(results, searchInfo);
+}
+
+function sortResults(results: Task[], searchInfo: SearchInfo): Task[] {
+    // Sort the results by description, using same logic as the 'sort by description' instruction.
+    const sorter = new DescriptionField().createNormalSorter();
+    // And if the descriptions are identical, sort the tasks by the
+    // default Tasks order used in Tasks queries.
+    return Sort.by([sorter], results, searchInfo);
 }
 
 export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {
