@@ -221,7 +221,7 @@ export class TasksFile {
             return false;
         }
 
-        const propertyValue = this.frontmatter[foundKey];
+        const propertyValue: unknown = this.frontmatter[foundKey];
         if (propertyValue === null) {
             return false;
         }
@@ -244,7 +244,7 @@ export class TasksFile {
             return null;
         }
 
-        const propertyValue = this.frontmatter[foundKey];
+        const propertyValue: unknown = this.frontmatter[foundKey];
         if (propertyValue === undefined) {
             return null;
         }
