@@ -37,4 +37,6 @@ If either `limit` option prevents any tasks from being displayed in the results,
 ```
 
 > [!released]
-> Display of the total number of tasks was added in Tasks 4.8.0.
+>
+> - Display of the total number of tasks was added in Tasks 4.8.0.
+> - Display of the [[Grouping#Showing the number of tasks in a group|number of tasks in groups]]  was added in Tasks X.Y.Z.
