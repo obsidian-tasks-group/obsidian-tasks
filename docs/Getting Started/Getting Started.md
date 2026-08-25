@@ -70,7 +70,7 @@ For that, do one of the following.
 
 ## Easy finding of tasks
 
-The [[Quick Search|Tasks: Quick Search]] command, added in Tasks X.Y.Z, allows you to type part of a task's description and jump straight to it.
+The [[Quick Search|Tasks: Quick Search]] command, added in Tasks 8.4.0, allows you to type part of a task's description and jump straight to it.
 
 ## Completing tasks
 

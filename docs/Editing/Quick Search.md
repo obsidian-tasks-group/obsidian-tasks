@@ -5,7 +5,7 @@ publish: true
 # Quick Search
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 8.4.0.
 
 ## Introduction
 

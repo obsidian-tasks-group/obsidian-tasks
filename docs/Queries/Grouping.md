@@ -1044,7 +1044,7 @@ For example:
 
 ### Showing the number of tasks in a group
 
-Since Tasks X.Y.Z, you can show or hide the number of tasks in each group heading with these instructions:
+Since Tasks 8.4.0, you can show or hide the number of tasks in each group heading with these instructions:
 
 ```plain text
 show group count

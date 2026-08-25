@@ -83,7 +83,7 @@ The following query elements exist:
 > - `tree` was introduced in Tasks 7.12.0.
 > - `toolbar` was introduced in Tasks 7.23.0.
 > - `nested backlink` was introduced in Tasks 8.3.0.
-> - `group count` was introduced in Tasks X.Y.Z.
+> - `group count` was introduced in Tasks 8.4.0.
 
 All of these query elements except `group count`, `urgency` and `tree` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the group count, urgency score or tree view.

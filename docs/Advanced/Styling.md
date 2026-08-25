@@ -220,7 +220,7 @@ The following additional components have the following classes:
 > - `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
 > - `tasks-postpone` was added in Tasks 5.3.0.
 > - Styling of the Edit and Postpone buttons was changed in Tasks 6.0.0: see [[How to style buttons]].
-> - `tasks-group-count` was added in Tasks X.Y.Z.
+> - `tasks-group-count` was added in Tasks 8.4.0.
 
 ## CSS Examples
 

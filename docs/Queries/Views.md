@@ -7,7 +7,7 @@ publish: true
 <span class="related-pages">#feature/views</span>
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 8.4.0.
 
 By default, the Tasks plugin displays search results as a list of matching tasks.
 
