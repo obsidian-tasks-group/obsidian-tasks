@@ -4,6 +4,7 @@ import {
     QuickSearchTasksModal,
     filterIncompleteTasksByDescription,
     openTaskAtSourceLocation,
+    saveFuzzyMatchingSetting,
     taskSearchMetadataText,
     taskSearchSuggestionText,
 } from '../../src/Commands/QuickSearchTasks';
@@ -16,8 +17,9 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { fromLines, fromMarkdown } from '../TestingTools/TestHelpers';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import type { PresetsMap } from '../../src/Query/Presets/Presets';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import type { Task } from '../../src/Task/Task';
+import { QuickSearchOptionsModal } from '../../src/Obsidian/QuickSearchOptionsModal';
 
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
@@ -103,7 +105,7 @@ describe('Registering the command', () => {
 
 describe('Finding matching tasks', () => {
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
-        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([
+        expect(filterIncompleteTasksByDescription(tasks, 'release', false)).toEqual([
             reviewRELEASEChecklist,
             writeReleaseNotes,
         ]);
@@ -185,10 +187,147 @@ describe('Finding matching tasks, honouring the Global Query', () => {
 
             const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-            const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
+            const foundDescriptions = filterIncompleteTasksByDescription(tasks, query, false).map(
+                (task) => task.description,
+            );
             expect(foundDescriptions).toEqual(expectedFoundDescriptions);
         },
     );
+});
+
+describe('Finding matching tasks with fuzzy search', () => {
+    it('should support non-contiguous description matches', () => {
+        const task = new TaskBuilder().description('Todo task').build();
+
+        expect(filterIncompleteTasksByDescription([task], 'tdo', false)).toEqual([]);
+        expect(filterIncompleteTasksByDescription([task], 'tdo', true)).toEqual([task]);
+    });
+
+    it('should only return incomplete tasks', () => {
+        const incomplete = new TaskBuilder().description('Todo task').build();
+        const completed = new TaskBuilder().description('Todo task').status(Status.DONE).build();
+
+        expect(filterIncompleteTasksByDescription([completed, incomplete], 'tdo', true)).toEqual([incomplete]);
+    });
+
+    it('should honour the Global Query', () => {
+        GlobalQuery.getInstance().set('description includes Write');
+
+        expect(filterIncompleteTasksByDescription(tasks, 'wrl', true)).toEqual([writeReleaseNotes]);
+    });
+
+    it('should rank closer fuzzy matches first', () => {
+        const closeMatch = new TaskBuilder().description('Todo task').build();
+        const distantMatch = new TaskBuilder().description('Take documents out').build();
+
+        expect(filterIncompleteTasksByDescription([distantMatch, closeMatch], 'tdo', true)).toEqual([
+            closeMatch,
+            distantMatch,
+        ]);
+    });
+
+    it('should use the normal Tasks sort order when fuzzy scores are equal', () => {
+        const first = new TaskBuilder().description('A todo').build();
+        const second = new TaskBuilder().description('B todo').build();
+
+        expect(filterIncompleteTasksByDescription([second, first], 'todo', true)).toEqual([first, second]);
+    });
+});
+
+describe('Configuring fuzzy search', () => {
+    function addObsidianElementMethods<T extends HTMLElement>(element: T): T {
+        return Object.assign(element, {
+            addClass: (...classes: string[]) => element.classList.add(...classes),
+            setText: (text: string) => {
+                element.textContent = text;
+            },
+            empty: () => element.replaceChildren(),
+        });
+    }
+
+    it('should enable fuzzy matching by default', () => {
+        expect(getSettings().searchTasks.fuzzyMatching).toBe(true);
+    });
+
+    it('should use the saved fuzzy matching setting in the Quick Search modal', () => {
+        const task = new TaskBuilder().description('Todo task').build();
+        const modal = new QuickSearchTasksModal(
+            {} as any,
+            () => [task],
+            async () => {},
+        );
+
+        expect(modal.getSuggestions('tdo')).toEqual([task]);
+
+        updateSettings({ searchTasks: { fuzzyMatching: false } });
+
+        expect(modal.getSuggestions('tdo')).toEqual([]);
+    });
+
+    it('should save a changed setting and refresh the current search', async () => {
+        const onSaveSettings = jest.fn().mockResolvedValue(undefined);
+        const searchInput = document.createElement('input');
+        const onInput = jest.fn();
+        searchInput.addEventListener('input', onInput);
+
+        await saveFuzzyMatchingSetting(false, onSaveSettings, searchInput);
+
+        expect(getSettings().searchTasks.fuzzyMatching).toBe(false);
+        expect(onSaveSettings).toHaveBeenCalledTimes(1);
+        expect(onInput).toHaveBeenCalledTimes(1);
+    });
+
+    it('should expose Quick Search options from a settings button', () => {
+        const openOptions = jest.spyOn(QuickSearchOptionsModal.prototype, 'open').mockImplementation();
+        const modal = new QuickSearchTasksModal(
+            {} as any,
+            () => tasks,
+            async () => {},
+        );
+        const modalElement = addObsidianElementMethods(document.createElement('div'));
+        const inputContainer = addObsidianElementMethods(document.createElement('div'));
+        const inputElement = document.createElement('input');
+        inputContainer.appendChild(inputElement);
+        modalElement.appendChild(inputContainer);
+        Object.assign(modal, {
+            modalEl: modalElement,
+            inputEl: inputElement,
+        });
+
+        modal.onOpen();
+
+        const optionsButton = modalElement.querySelector<HTMLButtonElement>('[aria-label="Quick search options"]');
+        expect(optionsButton).not.toBeNull();
+        expect(optionsButton?.getAttribute('test-icon')).toBe('settings');
+        optionsButton?.click();
+        expect(openOptions).toHaveBeenCalledTimes(1);
+        openOptions.mockRestore();
+    });
+
+    it('should render the saved value in the Quick Search options modal and report changes', async () => {
+        const onChange = jest.fn().mockResolvedValue(undefined);
+        const modal = new QuickSearchOptionsModal({ app: {} as any, fuzzyMatching: true, onChange });
+        const contentElement = addObsidianElementMethods(document.createElement('div'));
+        Object.assign(modal, {
+            titleEl: addObsidianElementMethods(document.createElement('div')),
+            modalEl: addObsidianElementMethods(document.createElement('div')),
+            contentEl: contentElement,
+        });
+
+        modal.onOpen();
+
+        expect(contentElement.textContent).toContain('Fuzzy search');
+        const toggle = contentElement.querySelector<HTMLInputElement>('input[type="checkbox"]');
+        expect(toggle?.checked).toBe(true);
+
+        if (toggle !== null) {
+            toggle.checked = false;
+            toggle.dispatchEvent(new Event('change'));
+        }
+        await Promise.resolve();
+
+        expect(onChange).toHaveBeenCalledWith(false);
+    });
 });
 
 describe('Finding matching tasks, sorting results in expected order', () => {
@@ -238,7 +377,9 @@ describe('Finding matching tasks, sorting results in expected order', () => {
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-        const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
+        const foundDescriptions = filterIncompleteTasksByDescription(tasks, query, false).map(
+            (task) => task.description,
+        );
         expect(foundDescriptions).toEqual(expectedFoundDescriptions);
     });
 
@@ -266,11 +407,11 @@ describe('Finding matching tasks, sorting results in expected order', () => {
 
             const query = tasks[0].description;
 
-            const result = filterIncompleteTasksByDescription(tasks, query);
+            const result = filterIncompleteTasksByDescription(tasks, query, false);
             expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
-            const reverse = filterIncompleteTasksByDescription(tasks.reverse(), query);
+            const reverse = filterIncompleteTasksByDescription(tasks.reverse(), query, false);
             expect(reverse.map(propertyGetter)).toEqual(expectedOrder);
         }
 
@@ -363,7 +504,11 @@ describe('Rendering matching tasks', () => {
     }
 
     it('should render the checkbox, description, location, and metadata elements', () => {
-        const modal = new QuickSearchTasksModal({} as any, () => tasks);
+        const modal = new QuickSearchTasksModal(
+            {} as any,
+            () => tasks,
+            async () => {},
+        );
         const element = document.createElement('div');
 
         modal.renderSuggestion(writeReleaseNotes, element);
@@ -385,7 +530,11 @@ describe('Rendering matching tasks', () => {
 
             const taskListWithGlobalFilter = fromMarkdown('- [ ] #task Do Stuff');
 
-            const modal = new QuickSearchTasksModal({} as any, () => taskListWithGlobalFilter);
+            const modal = new QuickSearchTasksModal(
+                {} as any,
+                () => taskListWithGlobalFilter,
+                async () => {},
+            );
             const element = document.createElement('div');
 
             modal.renderSuggestion(taskListWithGlobalFilter[0], element);
@@ -395,7 +544,11 @@ describe('Rendering matching tasks', () => {
     );
 
     it('should only check the checkbox for completed tasks', () => {
-        const modal = new QuickSearchTasksModal({} as any, () => tasks);
+        const modal = new QuickSearchTasksModal(
+            {} as any,
+            () => tasks,
+            async () => {},
+        );
         const incompleteElement = document.createElement('div');
         const completeElement = document.createElement('div');
         const inProgressTask = new TaskBuilder().description('In progress task').status(Status.IN_PROGRESS).build();

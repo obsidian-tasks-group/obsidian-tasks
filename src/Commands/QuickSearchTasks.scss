@@ -1,3 +1,21 @@
+.tasks-quick-search-modal-container {
+    .prompt-input-container {
+        position: relative;
+    }
+
+    .prompt-input {
+        // Reserve room for both the settings and close buttons.
+        padding-inline-end: calc(var(--size-4-16) + var(--size-4-4));
+    }
+
+    .tasks-quick-search-options-button {
+        // Centre the button on the search field, independently of the modal's close button.
+        top: 50%;
+        inset-inline-end: var(--size-4-12);
+        transform: translateY(-50%);
+    }
+}
+
 .tasks-quick-search-result {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;

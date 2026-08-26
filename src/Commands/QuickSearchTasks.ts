@@ -1,5 +1,14 @@
-import { type App, Component, MarkdownRenderer, Notice, SuggestModal } from 'obsidian';
-import { TASK_FORMATS } from '../Config/Settings';
+import {
+    type App,
+    Component,
+    MarkdownRenderer,
+    Notice,
+    SuggestModal,
+    prepareFuzzySearch,
+    setIcon,
+    setTooltip,
+} from 'obsidian';
+import { TASK_FORMATS, getSettings, updateSettings } from '../Config/Settings';
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import type { Task } from '../Task/Task';
 import { getTaskLineAndFile } from '../Obsidian/File';
@@ -10,6 +19,7 @@ import type { Filter } from '../Query/Filter/Filter';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DescriptionField } from '../Query/Filter/DescriptionField';
 import { Sort } from '../Query/Sort/Sort';
+import { QuickSearchOptionsModal } from '../Obsidian/QuickSearchOptionsModal';
 
 export interface TaskSearchSuggestionText {
     description: string;
@@ -45,12 +55,14 @@ function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo
     }
 }
 
-export function filterIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
+export function filterIncompleteTasksByDescription(
+    tasks: readonly Task[],
+    query: string,
+    fuzzyMatching = true,
+): Task[] {
     if (query.trim() === '') {
         return [];
     }
-
-    const normalizedQuery = query.toLowerCase();
 
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
@@ -58,14 +70,36 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
     const globalQueryFilters = getGlobalQueryFilters();
     const searchInfo = SearchInfo.fromAllTasks([...tasks]);
 
-    const results = tasks.filter((task) => {
-        return (
-            !task.isDone &&
-            task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery) &&
-            applyFiltersToTask(globalQueryFilters, task, searchInfo)
-        );
+    const candidateTasks = tasks.filter((task) => {
+        return !task.isDone && applyFiltersToTask(globalQueryFilters, task, searchInfo);
     });
-    return sortResults(results, searchInfo);
+
+    if (!fuzzyMatching) {
+        const normalizedQuery = query.toLowerCase();
+        const results = candidateTasks.filter((task) =>
+            task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery),
+        );
+        return sortResults(results, searchInfo);
+    }
+
+    const preparedSearch = prepareFuzzySearch(query);
+    const matches = candidateTasks
+        .map((task) => {
+            const match = preparedSearch(task.descriptionWithoutTags);
+            return match === null ? null : { task, score: match.score };
+        })
+        .filter((match): match is { task: Task; score: number } => match !== null);
+
+    const defaultOrder = new Map(
+        sortResults(
+            matches.map((match) => match.task),
+            searchInfo,
+        ).map((task, index) => [task, index]),
+    );
+
+    return matches
+        .sort((a, b) => b.score - a.score || defaultOrder.get(a.task)! - defaultOrder.get(b.task)!)
+        .map((match) => match.task);
 }
 
 function sortResults(results: Task[], searchInfo: SearchInfo): Task[] {
@@ -117,17 +151,59 @@ export async function openTaskAtSourceLocation(task: Task, app: App): Promise<vo
     }
 }
 
+export async function saveFuzzyMatchingSetting(
+    fuzzyMatching: boolean,
+    onSaveSettings: () => Promise<void>,
+    searchInput: HTMLInputElement,
+): Promise<void> {
+    updateSettings({ searchTasks: { fuzzyMatching } });
+    await onSaveSettings();
+    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
 export class QuickSearchTasksModal extends SuggestModal<Task> {
     private readonly renderComponents: Component[] = [];
 
-    constructor(app: App, private readonly getTasks: () => Task[]) {
+    constructor(
+        app: App,
+        private readonly getTasks: () => Task[],
+        private readonly onSaveSettings: () => Promise<void>,
+    ) {
         super(app);
         this.setPlaceholder('Search incomplete tasks');
         this.emptyStateText = 'Type to search incomplete tasks.';
     }
 
+    public onOpen(): void {
+        super.onOpen();
+        this.modalEl.addClass('tasks-quick-search-modal-container');
+
+        const inputContainer = this.inputEl.parentElement ?? this.modalEl;
+        const optionsButton = inputContainer.createEl('button', {
+            cls: [
+                'modal-close-button',
+                'mod-raised',
+                'clickable-icon',
+                'modal-option-button',
+                'tasks-quick-search-options-button',
+            ],
+        });
+        optionsButton.setAttribute('aria-label', 'Quick search options');
+        setTooltip(optionsButton, 'Quick search options');
+        setIcon(optionsButton, 'settings');
+        optionsButton.onclick = () => {
+            new QuickSearchOptionsModal({
+                app: this.app,
+                fuzzyMatching: getSettings().searchTasks.fuzzyMatching,
+                onChange: async (fuzzyMatching) => {
+                    await saveFuzzyMatchingSetting(fuzzyMatching, this.onSaveSettings, this.inputEl);
+                },
+            }).open();
+        };
+    }
+
     public getSuggestions(query: string): Task[] {
-        return filterIncompleteTasksByDescription(this.getTasks(), query);
+        return filterIncompleteTasksByDescription(this.getTasks(), query, getSettings().searchTasks.fuzzyMatching);
     }
 
     public renderSuggestion(task: Task, el: HTMLElement): void {

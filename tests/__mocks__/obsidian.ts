@@ -241,6 +241,30 @@ export function prepareSimpleSearch(query: string): (text: string) => SearchResu
     };
 }
 
+/**
+ * A fake implementation of Obsidian's prepareFuzzySearch().
+ * It matches query characters in order, allowing intervening characters.
+ */
+export function prepareFuzzySearch(query: string): (text: string) => SearchResult | null {
+    return function (text: string): SearchResult | null {
+        const normalizedQuery = query.toLowerCase();
+        const normalizedText = text.toLowerCase();
+        const matches: number[][] = [];
+        let searchFrom = 0;
+
+        for (const character of normalizedQuery) {
+            const matchIndex = normalizedText.indexOf(character, searchFrom);
+            if (matchIndex === -1) {
+                return null;
+            }
+            matches.push([matchIndex, matchIndex + 1]);
+            searchFrom = matchIndex + 1;
+        }
+
+        return matches.length === 0 ? null : { score: -searchFrom, matches };
+    };
+}
+
 type IconName = string;
 
 export function setIcon(element: HTMLElement, iconId: IconName): void {
@@ -266,6 +290,60 @@ export function debounce<T extends unknown[], V>(
 
 export function getLanguage() {
     return 'en';
+}
+
+export class ToggleComponent {
+    public readonly toggleEl: HTMLInputElement;
+
+    constructor(containerEl: HTMLElement) {
+        this.toggleEl = document.createElement('input');
+        this.toggleEl.type = 'checkbox';
+        containerEl.appendChild(this.toggleEl);
+    }
+
+    public setValue(value: boolean): this {
+        this.toggleEl.checked = value;
+        return this;
+    }
+
+    public onChange(callback: (value: boolean) => any): this {
+        this.toggleEl.addEventListener('change', () => callback(this.toggleEl.checked));
+        return this;
+    }
+}
+
+export class Setting {
+    public readonly settingEl: HTMLDivElement;
+    public readonly nameEl: HTMLDivElement;
+    public readonly descEl: HTMLDivElement;
+    public readonly controlEl: HTMLDivElement;
+
+    constructor(containerEl: HTMLElement) {
+        this.settingEl = document.createElement('div');
+        Object.assign(this.settingEl, {
+            addClass: (...classes: string[]) => this.settingEl.classList.add(...classes),
+        });
+        this.nameEl = document.createElement('div');
+        this.descEl = document.createElement('div');
+        this.controlEl = document.createElement('div');
+        this.settingEl.append(this.nameEl, this.descEl, this.controlEl);
+        containerEl.appendChild(this.settingEl);
+    }
+
+    public setName(name: string): this {
+        this.nameEl.textContent = name;
+        return this;
+    }
+
+    public setDesc(description: string): this {
+        this.descEl.textContent = description;
+        return this;
+    }
+
+    public addToggle(callback: (component: ToggleComponent) => any): this {
+        callback(new ToggleComponent(this.controlEl));
+        return this;
+    }
 }
 
 /**

@@ -18,7 +18,14 @@ You can assign a hotkey to `Tasks: Quick search` in Obsidian's [Hotkeys settings
 
 ## Searching
 
-Start typing in the search dialog to filter tasks by their description. The search is case-insensitive and uses ordinary text matching. It does not search task tags, file names, or headings.
+Start typing in the search dialog to filter tasks by their description. By default, Quick Search uses fuzzy matching, so non-contiguous characters can match a description. For example, `tdo` can match `todo`. The closest matches are shown first.
+
+Select the cog icon in the Quick Search dialog to turn fuzzy matching off or on. With fuzzy matching off, Quick Search uses case-insensitive text matching and only returns descriptions containing the complete search text. Your choice is saved for future searches.
+
+![Quick Search options](../images/quick-search-options.png)
+<span class="caption">The option to enable or disable fuzzy matching</span>
+
+Neither search mode searches task tags, file names, or headings.
 
 ## Results
 

@@ -48,7 +48,12 @@ export class Commands {
             id: 'quick-search',
             name: 'Quick search',
             icon: 'search',
-            callback: () => new QuickSearchTasksModal(this.app, () => this.plugin.getTasks()).open(),
+            callback: () =>
+                new QuickSearchTasksModal(
+                    this.app,
+                    () => this.plugin.getTasks(),
+                    async () => await this.plugin.saveSettings(),
+                ).open(),
         });
 
         plugin.addCommand({

@@ -86,6 +86,10 @@ describe('resetSettings behaviour', () => {
         expect(currentSettings.searchResults.taskCountLocation).toBe('bottom');
     });
 
+    it('should enable fuzzy matching in Quick Search by default', () => {
+        expect(getSettings().searchTasks.fuzzyMatching).toBe(true);
+    });
+
     it('should completely remove properties not in defaultSettings', () => {
         // Arrange: Add an extra property that isn't in defaultSettings
         updateSettings({
@@ -105,6 +109,18 @@ describe('resetSettings behaviour', () => {
 });
 
 describe('settings migration', () => {
+    it('should add Quick Search defaults to settings saved by an earlier version', () => {
+        updateSettings({ searchTasks: undefined } as any);
+
+        expect(getSettings().searchTasks).toEqual({ fuzzyMatching: true });
+    });
+
+    it('should preserve an existing Quick Search preference', () => {
+        updateSettings({ searchTasks: { fuzzyMatching: false } });
+
+        expect(getSettings().searchTasks).toEqual({ fuzzyMatching: false });
+    });
+
     it('should migrate "includes" to "presets" when loading old settings', () => {
         // Arrange: Create settings with old 'includes' property
         const oldSettings = {
