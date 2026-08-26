@@ -27,6 +27,21 @@ export interface TaskSearchSuggestionText {
     heading: string;
 }
 
+interface RankedTask {
+    task: Task;
+    score: number;
+    defaultOrder: number;
+}
+
+interface FuzzySearchResult {
+    results: Task[];
+    matchingCandidates: Task[];
+}
+
+interface FuzzySearchCache extends FuzzySearchResult {
+    query: string;
+}
+
 function getGlobalQueryFilters(): Filter[] {
     // The placeholder presents mechanism results in an exception being thrown
     // if we do not provide a location for the query source file,
@@ -59,11 +74,16 @@ export function filterIncompleteTasksByDescription(
     tasks: readonly Task[],
     query: string,
     fuzzyMatching = true,
+    limit?: number,
 ): Task[] {
     if (query.trim() === '') {
         return [];
     }
 
+    return filterSortedCandidatesByDescription(prepareSortedCandidates(tasks), query, fuzzyMatching, limit);
+}
+
+function prepareSortedCandidates(tasks: readonly Task[]): Task[] {
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
@@ -74,32 +94,90 @@ export function filterIncompleteTasksByDescription(
         return !task.isDone && applyFiltersToTask(globalQueryFilters, task, searchInfo);
     });
 
-    if (!fuzzyMatching) {
-        const normalizedQuery = query.toLowerCase();
-        const results = candidateTasks.filter((task) =>
-            task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery),
-        );
-        return sortResults(results, searchInfo);
+    return sortResults(candidateTasks, searchInfo);
+}
+
+function filterSortedCandidatesByDescription(
+    sortedCandidates: readonly Task[],
+    query: string,
+    fuzzyMatching: boolean,
+    limit?: number,
+): Task[] {
+    if (query.trim() === '') {
+        return [];
     }
 
+    const resultLimit = limit !== undefined && limit > 0 ? limit : undefined;
+
+    if (!fuzzyMatching) {
+        const normalizedQuery = query.toLowerCase();
+        const results = sortedCandidates.filter((task) =>
+            task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery),
+        );
+        return resultLimit === undefined ? results : results.slice(0, resultLimit);
+    }
+
+    return fuzzySearchSortedCandidates(sortedCandidates, query, resultLimit).results;
+}
+
+function fuzzySearchSortedCandidates(
+    sortedCandidates: readonly Task[],
+    query: string,
+    resultLimit?: number,
+): FuzzySearchResult {
     const preparedSearch = prepareFuzzySearch(query);
-    const matches = candidateTasks
-        .map((task) => {
-            const match = preparedSearch(task.descriptionWithoutTags);
-            return match === null ? null : { task, score: match.score };
-        })
-        .filter((match): match is { task: Task; score: number } => match !== null);
+    const matches: RankedTask[] = [];
+    const matchingCandidates: Task[] = [];
 
-    const defaultOrder = new Map(
-        sortResults(
-            matches.map((match) => match.task),
-            searchInfo,
-        ).map((task, index) => [task, index]),
-    );
+    sortedCandidates.forEach((task, defaultOrder) => {
+        const match = preparedSearch(task.descriptionWithoutTags);
+        if (match === null) {
+            return;
+        }
 
-    return matches
-        .sort((a, b) => b.score - a.score || defaultOrder.get(a.task)! - defaultOrder.get(b.task)!)
-        .map((match) => match.task);
+        matchingCandidates.push(task);
+
+        const rankedTask = { task, score: match.score, defaultOrder };
+        if (resultLimit === undefined) {
+            matches.push(rankedTask);
+            return;
+        }
+
+        const insertionIndex = findRankedTaskInsertionIndex(matches, rankedTask);
+        if (insertionIndex < resultLimit) {
+            matches.splice(insertionIndex, 0, rankedTask);
+            if (matches.length > resultLimit) {
+                matches.pop();
+            }
+        }
+    });
+
+    if (resultLimit === undefined) {
+        matches.sort(compareRankedTasks);
+    }
+    return {
+        results: matches.map((match) => match.task),
+        matchingCandidates,
+    };
+}
+
+function findRankedTaskInsertionIndex(matches: readonly RankedTask[], candidate: RankedTask): number {
+    let low = 0;
+    let high = matches.length;
+
+    while (low < high) {
+        const middle = Math.floor((low + high) / 2);
+        if (compareRankedTasks(candidate, matches[middle]) < 0) {
+            high = middle;
+        } else {
+            low = middle + 1;
+        }
+    }
+    return low;
+}
+
+function compareRankedTasks(a: RankedTask, b: RankedTask): number {
+    return b.score - a.score || a.defaultOrder - b.defaultOrder;
 }
 
 function sortResults(results: Task[], searchInfo: SearchInfo): Task[] {
@@ -156,13 +234,24 @@ export async function saveFuzzyMatchingSetting(
     onSaveSettings: () => Promise<void>,
     searchInput: HTMLInputElement,
 ): Promise<void> {
+    const previousValue = getSettings().searchTasks.fuzzyMatching;
     updateSettings({ searchTasks: { fuzzyMatching } });
-    await onSaveSettings();
-    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+    try {
+        await onSaveSettings();
+    } catch (error) {
+        updateSettings({ searchTasks: { fuzzyMatching: previousValue } });
+        throw error;
+    } finally {
+        searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
 }
 
 export class QuickSearchTasksModal extends SuggestModal<Task> {
     private readonly renderComponents: Component[] = [];
+    private sourceTasks: Task[] | undefined;
+    private globalQuerySource: string | undefined;
+    private sortedCandidates: Task[] | undefined;
+    private fuzzySearchCache: FuzzySearchCache | undefined;
 
     constructor(
         app: App,
@@ -176,6 +265,7 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
 
     public onOpen(): void {
         super.onOpen();
+        this.refreshCandidatesIfNeeded();
         this.modalEl.addClass('tasks-quick-search-modal-container');
 
         const inputContainer = this.inputEl.parentElement ?? this.modalEl;
@@ -203,7 +293,30 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
     }
 
     public getSuggestions(query: string): Task[] {
-        return filterIncompleteTasksByDescription(this.getTasks(), query, getSettings().searchTasks.fuzzyMatching);
+        this.refreshCandidatesIfNeeded();
+        const sortedCandidates = this.sortedCandidates ?? [];
+        if (query.trim() === '') {
+            this.fuzzySearchCache = undefined;
+            return [];
+        }
+
+        if (!getSettings().searchTasks.fuzzyMatching) {
+            this.fuzzySearchCache = undefined;
+            return filterSortedCandidatesByDescription(sortedCandidates, query, false, this.limit);
+        }
+
+        const normalizedQuery = query.toLowerCase();
+        if (this.fuzzySearchCache?.query === normalizedQuery) {
+            return this.fuzzySearchCache.results;
+        }
+
+        const candidates =
+            this.fuzzySearchCache !== undefined && normalizedQuery.startsWith(this.fuzzySearchCache.query)
+                ? this.fuzzySearchCache.matchingCandidates
+                : sortedCandidates;
+        const searchResult = fuzzySearchSortedCandidates(candidates, query, this.limit > 0 ? this.limit : undefined);
+        this.fuzzySearchCache = { query: normalizedQuery, ...searchResult };
+        return searchResult.results;
     }
 
     public renderSuggestion(task: Task, el: HTMLElement): void {
@@ -243,8 +356,25 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
     }
 
     public onClose(): void {
+        this.sourceTasks = undefined;
+        this.globalQuerySource = undefined;
+        this.sortedCandidates = undefined;
+        this.fuzzySearchCache = undefined;
         this.renderComponents.forEach((component) => component.unload());
         this.renderComponents.length = 0;
         super.onClose();
+    }
+
+    private refreshCandidatesIfNeeded(): void {
+        const currentTasks = this.getTasks();
+        const currentGlobalQuerySource = getSettings().globalQuery;
+        if (currentTasks === this.sourceTasks && currentGlobalQuerySource === this.globalQuerySource) {
+            return;
+        }
+
+        this.sourceTasks = currentTasks;
+        this.globalQuerySource = currentGlobalQuerySource;
+        this.sortedCandidates = prepareSortedCandidates(currentTasks);
+        this.fuzzySearchCache = undefined;
     }
 }

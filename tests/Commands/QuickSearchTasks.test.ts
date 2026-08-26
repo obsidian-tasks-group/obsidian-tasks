@@ -119,6 +119,10 @@ describe('Finding matching tasks', () => {
     it('should not match task tags', () => {
         expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
     });
+
+    it('should limit ordinary text matches after applying the normal Tasks sort order', () => {
+        expect(filterIncompleteTasksByDescription(tasks, 'release', false, 1)).toEqual([reviewRELEASEChecklist]);
+    });
 });
 
 describe('Finding matching tasks, honouring the Global Query', () => {
@@ -232,6 +236,20 @@ describe('Finding matching tasks with fuzzy search', () => {
 
         expect(filterIncompleteTasksByDescription([second, first], 'todo', true)).toEqual([first, second]);
     });
+
+    it('should retain only the highest-ranked fuzzy matches when a result limit is supplied', () => {
+        const closeMatch = new TaskBuilder().description('Todo task').build();
+        const distantMatch = new TaskBuilder().description('Take documents out').build();
+
+        expect(filterIncompleteTasksByDescription([distantMatch, closeMatch], 'tdo', true, 1)).toEqual([closeMatch]);
+    });
+
+    it('should honour the normal Tasks sort order when limiting equal-scoring fuzzy matches', () => {
+        const first = new TaskBuilder().description('A todo').build();
+        const second = new TaskBuilder().description('B todo').build();
+
+        expect(filterIncompleteTasksByDescription([second, first], 'todo', true, 1)).toEqual([first]);
+    });
 });
 
 describe('Configuring fuzzy search', () => {
@@ -264,6 +282,74 @@ describe('Configuring fuzzy search', () => {
         expect(modal.getSuggestions('tdo')).toEqual([]);
     });
 
+    it('should reuse prepared candidates while the task cache and Global Query remain unchanged', () => {
+        const task = new TaskBuilder().description('Todo task').build();
+        const currentTasks = [task];
+        const getTasks = jest.fn(() => currentTasks);
+        const modal = new QuickSearchTasksModal({} as any, getTasks, async () => {});
+
+        expect(modal.getSuggestions('tdo')).toEqual([task]);
+        expect(modal.getSuggestions('todo')).toEqual([task]);
+        expect(getTasks).toHaveBeenCalledTimes(2);
+
+        modal.onClose();
+        expect(modal.getSuggestions('tdo')).toEqual([task]);
+        expect(getTasks).toHaveBeenCalledTimes(3);
+    });
+
+    it('should refresh prepared candidates when the task cache changes', () => {
+        const originalTask = new TaskBuilder().description('Original task').build();
+        const updatedTask = new TaskBuilder().description('Updated task').build();
+        let currentTasks = [originalTask];
+        const modal = new QuickSearchTasksModal(
+            {} as any,
+            () => currentTasks,
+            async () => {},
+        );
+
+        expect(modal.getSuggestions('original')).toEqual([originalTask]);
+
+        currentTasks = [updatedTask];
+        expect(modal.getSuggestions('updated')).toEqual([updatedTask]);
+        expect(modal.getSuggestions('original')).toEqual([]);
+    });
+
+    it('should refresh prepared candidates when the Global Query changes', () => {
+        const includedTask = new TaskBuilder().description('Included task').build();
+        const excludedTask = new TaskBuilder().description('Excluded task').build();
+        const currentTasks = [includedTask, excludedTask];
+        const modal = new QuickSearchTasksModal(
+            {} as any,
+            () => currentTasks,
+            async () => {},
+        );
+
+        expect(modal.getSuggestions('task')).toEqual([excludedTask, includedTask]);
+
+        updateSettings({ globalQuery: 'description includes Included' });
+        GlobalQuery.getInstance().set('description includes Included');
+        expect(modal.getSuggestions('task')).toEqual([includedTask]);
+    });
+
+    it('should narrow fuzzy-search candidates as the query is extended', () => {
+        const releaseTask = new TaskBuilder().description('Release notes').build();
+        const roadmapTask = new TaskBuilder().description('Road map').build();
+        const currentTasks = [releaseTask, roadmapTask];
+        const modal = new QuickSearchTasksModal(
+            {} as any,
+            () => currentTasks,
+            async () => {},
+        );
+        const roadmapDescription = jest.spyOn(roadmapTask, 'descriptionWithoutTags', 'get');
+
+        modal.getSuggestions('r');
+        modal.getSuggestions('re');
+        const callsAfterRoadmapStoppedMatching = roadmapDescription.mock.calls.length;
+
+        expect(modal.getSuggestions('rel')).toEqual([releaseTask]);
+        expect(roadmapDescription).toHaveBeenCalledTimes(callsAfterRoadmapStoppedMatching);
+    });
+
     it('should save a changed setting and refresh the current search', async () => {
         const onSaveSettings = jest.fn().mockResolvedValue(undefined);
         const searchInput = document.createElement('input');
@@ -274,6 +360,20 @@ describe('Configuring fuzzy search', () => {
 
         expect(getSettings().searchTasks.fuzzyMatching).toBe(false);
         expect(onSaveSettings).toHaveBeenCalledTimes(1);
+        expect(onInput).toHaveBeenCalledTimes(1);
+    });
+
+    it('should restore the previous setting and refresh the search if saving fails', async () => {
+        const error = new Error('Could not save settings');
+        const searchInput = document.createElement('input');
+        const onInput = jest.fn();
+        searchInput.addEventListener('input', onInput);
+
+        await expect(saveFuzzyMatchingSetting(false, async () => Promise.reject(error), searchInput)).rejects.toBe(
+            error,
+        );
+
+        expect(getSettings().searchTasks.fuzzyMatching).toBe(true);
         expect(onInput).toHaveBeenCalledTimes(1);
     });
 
@@ -327,6 +427,44 @@ describe('Configuring fuzzy search', () => {
         await Promise.resolve();
 
         expect(onChange).toHaveBeenCalledWith(false);
+    });
+
+    it('should prevent another fuzzy-search change while the previous change is being saved', async () => {
+        let finishSaving: (() => void) | undefined;
+        const onChange = jest.fn(
+            async () =>
+                new Promise<void>((resolve) => {
+                    finishSaving = resolve;
+                }),
+        );
+        const modal = new QuickSearchOptionsModal({ app: {} as any, fuzzyMatching: true, onChange });
+        const contentElement = addObsidianElementMethods(document.createElement('div'));
+        Object.assign(modal, {
+            titleEl: addObsidianElementMethods(document.createElement('div')),
+            modalEl: addObsidianElementMethods(document.createElement('div')),
+            contentEl: contentElement,
+        });
+        modal.onOpen();
+
+        const toggle = contentElement.querySelector<HTMLInputElement>('input[type="checkbox"]');
+        expect(toggle).not.toBeNull();
+        if (toggle === null) {
+            return;
+        }
+
+        toggle.checked = false;
+        toggle.dispatchEvent(new Event('change'));
+        expect(toggle.disabled).toBe(true);
+
+        toggle.click();
+        expect(onChange).toHaveBeenCalledTimes(1);
+
+        finishSaving?.();
+        await Promise.resolve();
+        await Promise.resolve();
+        await Promise.resolve();
+        await Promise.resolve();
+        expect(toggle.disabled).toBe(false);
     });
 });
 

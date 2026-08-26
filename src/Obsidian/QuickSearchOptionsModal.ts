@@ -1,4 +1,4 @@
-import { type App, Modal, Setting } from 'obsidian';
+import { type App, Modal, Notice, Setting } from 'obsidian';
 
 export interface QuickSearchOptionsModalParams {
     app: App;
@@ -8,7 +8,7 @@ export interface QuickSearchOptionsModalParams {
 
 /** Allows users to change Quick Search behaviour without leaving the search modal. */
 export class QuickSearchOptionsModal extends Modal {
-    private readonly fuzzyMatching: boolean;
+    private fuzzyMatching: boolean;
     private readonly onChange: (fuzzyMatching: boolean) => Promise<void>;
 
     constructor({ app, fuzzyMatching, onChange }: QuickSearchOptionsModalParams) {
@@ -26,7 +26,19 @@ export class QuickSearchOptionsModal extends Modal {
             .setDesc('Allow non-contiguous characters to match task descriptions and rank the closest matches first.')
             .addToggle((toggle) => {
                 toggle.setValue(this.fuzzyMatching).onChange(async (value) => {
-                    await this.onChange(value);
+                    const previousValue = this.fuzzyMatching;
+                    this.fuzzyMatching = value;
+                    toggle.setDisabled(true);
+                    try {
+                        await this.onChange(value);
+                    } catch (error) {
+                        this.fuzzyMatching = previousValue;
+                        toggle.setValue(previousValue);
+                        console.error('Tasks: Could not save Quick Search options.', error);
+                        new Notice('Tasks: Could not save Quick Search options.');
+                    } finally {
+                        toggle.setDisabled(false);
+                    }
                 });
             });
     }
