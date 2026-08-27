@@ -123,7 +123,8 @@ export class TasksDate {
 
     public postpone(unitOfTime: moment.unitOfTime.DurationConstructor = 'days', amount: number = 1) {
         if (!this._date) {
-            throw new Notice('Cannot postpone a null date');
+            new Notice('Cannot postpone a null date');
+            throw new Error('Cannot postpone a null date');
         }
 
         const today = window.moment().startOf('day');
