@@ -10,8 +10,6 @@ Prefer explicitly defining any function parameters and return type              
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/Cache.ts
   240:64  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
-  371:28  warning  Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any
-  379:12  warning  Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/File.ts
   155:27  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
@@ -138,15 +136,12 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   151:17  warning  Unsafe call of a type that could not be resolved                                   @typescript-eslint/no-unsafe-call
   151:37  warning  Unsafe member access .setType on a type that cannot be resolved                    @typescript-eslint/no-unsafe-member-access
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/EditTaskHelpers.ts
-  118:19  warning  Use 'modalEl.ownerDocument.win.createDiv()' instead of 'modalEl.ownerDocument.createElement('div')'  obsidianmd/prefer-create-el
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/Menus/DatePicker.ts
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
   76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 91 problems (0 errors, 91 warnings)
-  0 errors and 12 warnings potentially fixable with the `--fix` option.
+✖ 88 problems (0 errors, 88 warnings)
+  0 errors and 10 warnings potentially fixable with the `--fix` option.
 
 
 ====================================
@@ -155,4 +150,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 26.24s.
+Done in 23.64s.
