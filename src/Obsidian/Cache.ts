@@ -368,7 +368,7 @@ export class Cache {
         tasksFile: TasksFile,
         fileContent: string,
         listItems: ListItemCache[],
-        errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+        errorReporter: (e: unknown, filePath: string, listItem: ListItemCache, line: string) => void,
         logger: Logger,
     ): Task[] {
         const fileParser = new FileParser(tasksFile, fileContent, listItems, logger, errorReporter);
@@ -376,7 +376,7 @@ export class Cache {
     }
 
     private readonly reportTaskParsingErrorToUser = (
-        e: any,
+        e: unknown,
         filePath: string,
         listItem: ListItemCache,
         line: string,
