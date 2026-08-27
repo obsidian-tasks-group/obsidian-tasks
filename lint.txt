@@ -120,7 +120,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   141:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
   147:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
   156:21  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
-  310:33  warning  Prefer using the primitive `object` as a type name, rather than the upper-cased `Object`                                                                  @typescript-eslint/no-wrapper-object-types
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/main.ts
    98:13  warning  Unsafe assignment of an `any` value                                                @typescript-eslint/no-unsafe-assignment
@@ -146,8 +145,8 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
   76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 92 problems (0 errors, 92 warnings)
-  0 errors and 13 warnings potentially fixable with the `--fix` option.
+✖ 91 problems (0 errors, 91 warnings)
+  0 errors and 12 warnings potentially fixable with the `--fix` option.
 
 
 ====================================
