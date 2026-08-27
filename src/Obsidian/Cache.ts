@@ -381,9 +381,10 @@ export class Cache {
         listItem: ListItemCache,
         line: string,
     ) => {
+        const errorMessage = e instanceof Error ? e.message : JSON.stringify(e);
         const msg = `There was an error reading one of the tasks in this vault.
 The following task has been ignored, to prevent Tasks queries getting stuck with 'Loading Tasks ...'
-Error: ${e}
+Error: ${errorMessage}
 File: ${filePath}
 Line number: ${listItem.position.start.line}
 Task line: ${line}
