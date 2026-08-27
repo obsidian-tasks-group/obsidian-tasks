@@ -93,6 +93,20 @@ globalThis.createDiv = function (
 
 /**
  * Provide the minimal Obsidian-style createDiv() behaviour in Jest
+ * for Document instances by delegating to createEl('div').
+ *
+ * Unlike HTMLElement.createDiv(), this does not append the new div anywhere.
+ */
+Document.prototype.createDiv = function (
+    this: Document,
+    o?: string | CreateDivOptions,
+    callback?: (el: HTMLDivElement) => void,
+): HTMLDivElement {
+    return createDiv(o, callback);
+};
+
+/**
+ * Provide the minimal Obsidian-style createDiv() behaviour in Jest
  * by delegating to createEl('div').
  *
  * This is a partial re-implementation of

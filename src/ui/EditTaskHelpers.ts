@@ -115,7 +115,7 @@ async function waitUntilAboveKeyboard(el: HTMLElement, modalEl: HTMLElement) {
  * written in - `vh`, `clamp()`, anything - exactly as the browser will.
  */
 function keyboardSpace(modalEl: HTMLElement) {
-    const probe = modalEl.ownerDocument.createElement('div');
+    const probe = modalEl.ownerDocument.createDiv();
     probe.style.cssText =
         'position:absolute;visibility:hidden;pointer-events:none;width:0;' +
         'height:var(--tasks-keyboard-space-allowance, clamp(220px, 35vh, 360px))';

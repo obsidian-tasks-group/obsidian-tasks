@@ -122,7 +122,11 @@ export class TasksDate {
     }
 
     public postpone(unitOfTime: moment.unitOfTime.DurationConstructor = 'days', amount: number = 1) {
-        if (!this._date) throw new Notice('Cannot postpone a null date');
+        if (!this._date) {
+            const message = 'Cannot postpone a null date';
+            new Notice(message);
+            throw new Error(message);
+        }
 
         const today = window.moment().startOf('day');
         // According to the moment.js docs, isBefore is not stable so we use !isSameOrAfter: https://momentjs.com/docs/#/query/is-before/

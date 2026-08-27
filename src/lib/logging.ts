@@ -307,7 +307,7 @@ const timingMap: TimingMap = {};
  *
  * @return {*}
  */
-export const logCall = (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
+export const logCall = (target: object, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value as (...args: unknown[]) => unknown;
     //const logger = logging.getLogger('taskssql.perf');
     descriptor.value = function (...args: unknown[]) {
