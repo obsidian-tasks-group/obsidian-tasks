@@ -29,3 +29,7 @@ export type HTMLElementWithCreateDiv = HTMLElement & {
 export type HTMLElementWithCreateSpan = HTMLElement & {
     createSpan(o?: string | CreateSpanOptions, callback?: (el: HTMLSpanElement) => void): HTMLSpanElement;
 };
+
+export type DocumentWithCreateDiv = Document & {
+    createDiv(o?: string | CreateDivOptions, callback?: (el: HTMLDivElement) => void): HTMLDivElement;
+};

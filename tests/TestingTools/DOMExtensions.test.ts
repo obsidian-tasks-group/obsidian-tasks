@@ -1,7 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-import type { HTMLElementWithCreateDiv, HTMLElementWithCreateEl, HTMLElementWithCreateSpan } from './DOMExtensions';
+import type {
+    DocumentWithCreateDiv,
+    HTMLElementWithCreateDiv,
+    HTMLElementWithCreateEl,
+    HTMLElementWithCreateSpan,
+} from './DOMExtensions';
 
 /**
  * Create a parent element typed for tests that exercise createEl().
@@ -218,6 +223,33 @@ describe('global createDiv()', () => {
         expect(div.textContent).toBe('example text content');
         expectCallbackToHaveBeenCalledOnceWith(callback, div);
         expect((callback.mock.calls[0][0] as HTMLDivElement).textContent).toBe('example text content');
+    });
+});
+
+describe('Document.createDiv()', () => {
+    let doc: DocumentWithCreateDiv;
+
+    beforeEach(() => {
+        doc = document as DocumentWithCreateDiv;
+    });
+
+    it('createDiv() should create a div and return it without appending it', () => {
+        const div = doc.createDiv();
+
+        expect(div.tagName).toBe('DIV');
+        expect(div.parentElement).toBeNull();
+    });
+
+    it('createDiv() should apply options and callback', () => {
+        const callback = jest.fn();
+
+        const div = doc.createDiv({ cls: 'single-class-value', text: 'example text content' }, callback);
+
+        expect(div.tagName).toBe('DIV');
+        expect(div.parentElement).toBeNull();
+        expectElementToHaveClasses(div, 'single-class-value');
+        expect(div.textContent).toBe('example text content');
+        expectCallbackToHaveBeenCalledOnceWith(callback, div);
     });
 });
 
