@@ -8,9 +8,6 @@ Prefer explicitly defining any function parameters and return type              
    714:17  warning  Unsafe call of a `Function` typed value                                                                                                                                                                    @typescript-eslint/no-unsafe-call
   1009:9   warning  Unsafe call of a type that could not be resolved                                                                                                                                                           @typescript-eslint/no-unsafe-call
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/DateTime/TasksDate.ts
-  125:32  warning  Expected an error object to be thrown  @typescript-eslint/only-throw-error
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/Cache.ts
   240:64  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
   371:28  warning  Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any
@@ -149,7 +146,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
   76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 93 problems (0 errors, 93 warnings)
+✖ 92 problems (0 errors, 92 warnings)
   0 errors and 13 warnings potentially fixable with the `--fix` option.
 
 
@@ -159,4 +156,4 @@ Getting Svelte diagnostics...
 
 ====================================
 svelte-check found 0 errors and 0 warnings
-Done in 26.02s.
+Done in 26.24s.
