@@ -28,8 +28,8 @@ describe('CreateEditingInstructionForGroup', () => {
     });
 });
 
-describe('docs', () => {
-    const allViewInstructionsSupportingEditing = `
+function allViewInstructionsSupportingEditing(): string {
+    return `
 view columns by priority
 
 view columns by cancelled
@@ -39,12 +39,16 @@ view columns by due
 view columns by scheduled
 view columns by start
 `;
+}
 
-    const allInstructions = allViewInstructionsSupportingEditing.split('\n').filter((line) => line.length > 0);
+describe('docs', () => {
+    const allInstructions = allViewInstructionsSupportingEditing()
+        .split('\n')
+        .filter((line) => line.length > 0);
     const taskWithAllFields = TaskBuilder.createFullyPopulatedTask();
 
     it('all view groups that support editing', () => {
-        verify(allViewInstructionsSupportingEditing.trim());
+        verify(allViewInstructionsSupportingEditing().trim());
     });
 
     it.each(allInstructions)('can parse instruction: "%s"', (viewInstruction: string) => {
