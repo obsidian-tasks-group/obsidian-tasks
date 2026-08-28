@@ -42,3 +42,22 @@ export function createEditingInstructionForGroup(groupedBy: string, firstTask: T
 function groupedPropertyForDateField(field: AllTaskDateFields): string {
     return field.replace(/Date$/, '');
 }
+
+/**
+ * Return a string containing all the view instructions that support drag-and-drop editing between columns.
+ *
+ * This generates a file that gets embedded in the docs, so should be updated
+ * when new columns groups are made support editing.
+ */
+export function allViewInstructionsSupportingEditing(): string {
+    return `
+view columns by priority
+
+view columns by cancelled
+view columns by created
+view columns by done
+view columns by due
+view columns by scheduled
+view columns by start
+`;
+}

@@ -5,7 +5,10 @@ import moment from 'moment';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { Priority } from '../../../src/Task/Priority';
-import { createEditingInstructionForGroup } from '../../../src/ui/EditInstructions/CreateEditingInstructionForGroup';
+import {
+    allViewInstructionsSupportingEditing,
+    createEditingInstructionForGroup,
+} from '../../../src/ui/EditInstructions/CreateEditingInstructionForGroup';
 import { Query } from '../../../src/Query/Query';
 
 window.moment = moment;
@@ -27,19 +30,6 @@ describe('CreateEditingInstructionForGroup', () => {
         expect(instruction?.instructionDisplayName()).toBe('Set Date: Fri Mar 14 2025');
     });
 });
-
-function allViewInstructionsSupportingEditing(): string {
-    return `
-view columns by priority
-
-view columns by cancelled
-view columns by created
-view columns by done
-view columns by due
-view columns by scheduled
-view columns by start
-`;
-}
 
 describe('docs', () => {
     const allInstructions = allViewInstructionsSupportingEditing()
