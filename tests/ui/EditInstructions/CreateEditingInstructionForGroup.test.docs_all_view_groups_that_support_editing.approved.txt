@@ -1,0 +1,8 @@
+view columns by priority
+
+view columns by cancelled
+view columns by created
+view columns by done
+view columns by due
+view columns by scheduled
+view columns by starts
