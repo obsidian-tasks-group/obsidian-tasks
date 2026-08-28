@@ -45,13 +45,27 @@ view columns by priority reverse
 
 ### Supported columns
 
-You can use any supported [[Grouping]] option with `view columns by`.
+Every one of the `group by` instructions can be adjusted to define a column view, by replacing `group by` with `view columns by`.
+
+For example, because this instruction works:
+
+```text
+group by root
+```
+
+this one also will:
+
+```text
+view columns by root
+```
+
+See the full list of `group by` instructions in [[Grouping]].
 
 ### Drag and drop between columns
 
-Some [[Grouping]] options support editing via drag-and-drop between columns.
+Some [[Grouping]] options also **support editing via drag-and-drop between columns**.
 
-The following `view columns by` instructions currently support editing:
+Currently, just the following `view columns by` instructions currently support editing:
 
 <!-- snippet: CreateEditingInstructionForGroup.test.docs_all_view_groups_that_support_editing.approved.txt -->
 ```txt
