@@ -6,6 +6,7 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { Priority } from '../../../src/Task/Priority';
 import { createEditingInstructionForGroup } from '../../../src/ui/EditInstructions/CreateEditingInstructionForGroup';
+import { Query } from '../../../src/Query/Query';
 
 window.moment = moment;
 
@@ -36,10 +37,17 @@ view columns by created
 view columns by done
 view columns by due
 view columns by scheduled
-view columns by starts
+view columns by start
 `;
+
+    const allInstructions = allViewInstructionsSupportingEditing.split('\n').filter((line) => line.length > 0);
 
     it('all view groups that support editing', () => {
         verify(allViewInstructionsSupportingEditing.trim());
+    });
+
+    it.each(allInstructions)('can parse instruction: "%s"', (viewInstruction: string) => {
+        const query = new Query(viewInstruction);
+        expect(query.error).toBeUndefined();
     });
 });
