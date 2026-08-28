@@ -62,7 +62,7 @@ view columns by created
 view columns by done
 view columns by due
 view columns by scheduled
-view columns by starts
+view columns by start
 ```
 <!-- endSnippet -->
 
