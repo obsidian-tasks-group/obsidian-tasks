@@ -573,16 +573,43 @@ describe('Task editing', () => {
 
         const line = '- [ ] simple';
 
+        // A Cancelled date is only valid on a Cancelled task, so this starts from one.
+        // Editing it on '- [ ] simple' is now blocked - see the Apply-button tests below.
         it('should edit and save cancelled date', async () => {
-            expect(await editFieldAndSave(line, 'cancelled', '2024-01-01')).toEqual('- [ ] simple ❌ 2024-01-01');
+            expect(await editFieldAndSave('- [-] simple', 'cancelled', '2024-01-01')).toEqual(
+                '- [-] simple ❌ 2024-01-01',
+            );
         });
 
         it('should edit and save created date', async () => {
             expect(await editFieldAndSave(line, 'created', '2024-01-01')).toEqual('- [ ] simple ➕ 2024-01-01');
         });
 
+        // As above: a Done date is only valid on a Done task.
         it('should edit and save done date', async () => {
-            expect(await editFieldAndSave(line, 'done', '2024-01-01')).toEqual('- [ ] simple ✅ 2024-01-01');
+            expect(await editFieldAndSave('- [x] simple', 'done', '2024-01-01')).toEqual('- [x] simple ✅ 2024-01-01');
+        });
+
+        it('should not allow saving a Done date on a task that is not Done', async () => {
+            const task = taskFromLine({ line, path: '' });
+            const { onSubmit } = constructSerialisingOnSubmit(task);
+            const { result, container } = renderAndCheckModal(task, onSubmit);
+
+            const doneDate = getAndCheckRenderedElement<HTMLInputElement>(container, 'done');
+            await fireEvent.input(doneDate, { target: { value: '2024-01-01' } });
+
+            expect(getAndCheckApplyButton(result).disabled).toEqual(true);
+        });
+
+        it('should not allow saving a Cancelled date on a task that is not Cancelled', async () => {
+            const task = taskFromLine({ line, path: '' });
+            const { onSubmit } = constructSerialisingOnSubmit(task);
+            const { result, container } = renderAndCheckModal(task, onSubmit);
+
+            const cancelledDate = getAndCheckRenderedElement<HTMLInputElement>(container, 'cancelled');
+            await fireEvent.input(cancelledDate, { target: { value: '2024-01-01' } });
+
+            expect(getAndCheckApplyButton(result).disabled).toEqual(true);
         });
 
         it('should edit and save due date', async () => {

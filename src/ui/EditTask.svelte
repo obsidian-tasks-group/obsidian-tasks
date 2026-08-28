@@ -45,13 +45,22 @@
 
     let isRecurrenceValid: boolean = true;
 
+    // A Done date is only valid on a Done task, and a Cancelled date only on a
+    // Cancelled one. These are checked against the selected status rather than
+    // against each other - see EditableTask.parseAndValidateDates().
+    let doneDateError: string | null = null;
+    let cancelledDateError: string | null = null;
+    let areDatesValid: boolean = true;
+
     let withAccessKeys: boolean = true;
     let formIsValid: boolean = true;
 
     let mountComplete = false;
 
     $: accesskey = (key: string) => (withAccessKeys ? key : null);
+    $: ({ doneDateError, cancelledDateError, areDatesValid } = editableTask.parseAndValidateDates());
     $: formIsValid =
+        areDatesValid &&
         isDueDateValid &&
         isRecurrenceValid &&
         isScheduledDateValid &&
@@ -316,6 +325,7 @@ Availability of access keys:
                 dateSymbol={doneDateSymbol}
                 bind:date={editableTask.doneDate}
                 bind:isDateValid={isDoneDateValid}
+                statusError={doneDateError}
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('x')}
             />
@@ -330,6 +340,7 @@ Availability of access keys:
                 dateSymbol={cancelledDateSymbol}
                 bind:date={editableTask.cancelledDate}
                 bind:isDateValid={isCancelledDateValid}
+                statusError={cancelledDateError}
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('-')}
             />

@@ -255,6 +255,43 @@ export class EditableTask {
         return window.moment();
     }
 
+    /**
+     * Check the Done and Cancelled dates against the selected status type.
+     *
+     * These are two independent constraints, not one rule about the pair:
+     *
+     * 1. a Done date is only meaningful when the status type is DONE
+     * 2. a Cancelled date is only meaningful when the status type is CANCELLED
+     *
+     * So a TODO task carrying either date is already inconsistent, whether or not
+     * it also carries the other one.
+     *
+     * This deliberately takes precedence over the "invalid date" message from
+     * {@link DateEditor}: if a TODO task has an unparseable Done date, asking the
+     * user to correct the date points them at the wrong problem, because the task
+     * should have no Done date at all.
+     */
+    public parseAndValidateDates() {
+        // NEW_TASK_FIELD_EDIT_REQUIRED
+        const statusType = this.status.type;
+
+        const doneDateError =
+            this.doneDate.trim() !== '' && statusType !== StatusType.DONE
+                ? `<i>a Done date requires a Done status (this task is ${statusType})</i>`
+                : null;
+
+        const cancelledDateError =
+            this.cancelledDate.trim() !== '' && statusType !== StatusType.CANCELLED
+                ? `<i>a Cancelled date requires a Cancelled status (this task is ${statusType})</i>`
+                : null;
+
+        return {
+            doneDateError,
+            cancelledDateError,
+            areDatesValid: doneDateError === null && cancelledDateError === null,
+        };
+    }
+
     public parseAndValidateRecurrence() {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         if (!this.recurrenceRule) {

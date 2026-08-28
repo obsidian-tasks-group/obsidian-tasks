@@ -10,6 +10,12 @@
     export let forwardOnly: boolean;
     export let accesskey: string | null;
 
+    // Set when this date is inconsistent with the selected status type - for example a
+    // Done date on a task that is not Done. It takes precedence over the parse result:
+    // if the date should not be here at all, telling the user it is unparseable points
+    // them at the wrong problem.
+    export let statusError: string | null = null;
+
     // Use this for testing purposes only
     export let parsedDate: string = '';
 
@@ -41,13 +47,15 @@
     bind:value={date}
     {id}
     type="text"
-    class:tasks-modal-error={!isDateValid}
+    class:tasks-modal-error={!isDateValid || statusError !== null}
     class="tasks-modal-date-input"
     placeholder={datePlaceholder}
     {accesskey}
 />
 
-{#if isDateValid}
+{#if statusError !== null}
+    <code class="tasks-modal-parsed-date">{dateSymbol} {@html statusError}</code>
+{:else if isDateValid}
     <div class="tasks-modal-parsed-date">
         {dateSymbol}<input
             class="tasks-modal-date-editor-picker"

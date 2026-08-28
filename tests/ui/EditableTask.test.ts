@@ -254,6 +254,117 @@ describe('EditableTask tests', () => {
     });
 });
 
+describe('parseAndValidateDates() tests', () => {
+    // Per the discussion on #2986: "a task can have both a Cancelled and a Done date"
+    // is not the fundamental error. There are two independent constraints:
+    //   1. a Done date is only valid when status.type is DONE
+    //   2. a Cancelled date is only valid when status.type is CANCELLED
+    function editableTaskWith({
+        status,
+        doneDate = '',
+        cancelledDate = '',
+    }: {
+        status: Status;
+        doneDate?: string;
+        cancelledDate?: string;
+    }) {
+        const task = new TaskBuilder().build();
+        const editableTask = EditableTask.fromTask(task, [task]);
+        editableTask.status = status;
+        editableTask.doneDate = doneDate;
+        editableTask.cancelledDate = cancelledDate;
+        return editableTask;
+    }
+
+    it('should accept a Done date when the status type is DONE', () => {
+        const { doneDateError, areDatesValid } = editableTaskWith({
+            status: Status.DONE,
+            doneDate: '2024-04-20',
+        }).parseAndValidateDates();
+
+        expect(doneDateError).toBeNull();
+        expect(areDatesValid).toEqual(true);
+    });
+
+    it('should accept a Cancelled date when the status type is CANCELLED', () => {
+        const { cancelledDateError, areDatesValid } = editableTaskWith({
+            status: Status.CANCELLED,
+            cancelledDate: '2024-04-21',
+        }).parseAndValidateDates();
+
+        expect(cancelledDateError).toBeNull();
+        expect(areDatesValid).toEqual(true);
+    });
+
+    it.each([
+        ['TODO', Status.TODO],
+        ['IN_PROGRESS', Status.IN_PROGRESS],
+        ['ON_HOLD', Status.ON_HOLD],
+        ['NON_TASK', Status.NON_TASK],
+        ['CANCELLED', Status.CANCELLED],
+    ])('should reject a Done date when the status type is %s', (_name, status) => {
+        const { doneDateError, areDatesValid } = editableTaskWith({
+            status,
+            doneDate: '2024-04-20',
+        }).parseAndValidateDates();
+
+        expect(doneDateError).not.toBeNull();
+        expect(areDatesValid).toEqual(false);
+    });
+
+    it.each([
+        ['TODO', Status.TODO],
+        ['IN_PROGRESS', Status.IN_PROGRESS],
+        ['ON_HOLD', Status.ON_HOLD],
+        ['NON_TASK', Status.NON_TASK],
+        ['DONE', Status.DONE],
+    ])('should reject a Cancelled date when the status type is %s', (_name, status) => {
+        const { cancelledDateError, areDatesValid } = editableTaskWith({
+            status,
+            cancelledDate: '2024-04-21',
+        }).parseAndValidateDates();
+
+        expect(cancelledDateError).not.toBeNull();
+        expect(areDatesValid).toEqual(false);
+    });
+
+    it('should reject both dates on a task that is neither done nor cancelled', () => {
+        // The original report: a task saved as not-started, cancelled and done at once.
+        const { doneDateError, cancelledDateError, areDatesValid } = editableTaskWith({
+            status: Status.TODO,
+            doneDate: '2024-04-20',
+            cancelledDate: '2024-04-21',
+        }).parseAndValidateDates();
+
+        expect(doneDateError).not.toBeNull();
+        expect(cancelledDateError).not.toBeNull();
+        expect(areDatesValid).toEqual(false);
+    });
+
+    it('should report the status mismatch, not the parse error, for an unparseable date on the wrong status', () => {
+        // Raised in review: with a TODO status and an unparseable Done date, telling the
+        // user to fix the date is the wrong advice — there should be no Done date at all
+        // for this status, so that error has to take precedence.
+        const { doneDateError } = editableTaskWith({
+            status: Status.TODO,
+            doneDate: 'not a date',
+        }).parseAndValidateDates();
+
+        expect(doneDateError).not.toBeNull();
+        expect(doneDateError).not.toMatch(/invalid/i);
+    });
+
+    it('should accept a task with no Done or Cancelled date at all', () => {
+        const { doneDateError, cancelledDateError, areDatesValid } = editableTaskWith({
+            status: Status.TODO,
+        }).parseAndValidateDates();
+
+        expect(doneDateError).toBeNull();
+        expect(cancelledDateError).toBeNull();
+        expect(areDatesValid).toEqual(true);
+    });
+});
+
 describe('parseAndValidateRecurrence() tests', () => {
     const emptyTask = new TaskBuilder().description('').build();
 
