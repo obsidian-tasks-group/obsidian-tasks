@@ -61,7 +61,7 @@ view columns by created
 view columns by done
 view columns by due
 view columns by scheduled
-view columns by starts
+view columns by status
 ```
 
 ![Some columns views, including priority, enable drag-and-drop to edit property values](../images/view-columns-by-priority-drag-and-drop.png)
