@@ -53,7 +53,8 @@ Some [[Grouping]] options support editing via drag-and-drop between columns.
 
 The following `view columns by` instructions currently support editing:
 
-```text
+<!-- snippet: CreateEditingInstructionForGroup.test.docs_all_view_groups_that_support_editing.approved.txt -->
+```txt
 view columns by priority
 
 view columns by cancelled
@@ -63,6 +64,7 @@ view columns by due
 view columns by scheduled
 view columns by starts
 ```
+<!-- endSnippet -->
 
 ![Some columns views, including priority, enable drag-and-drop to edit property values](../images/view-columns-by-priority-drag-and-drop.png)
 <span class="caption">Some columns views, including priority, enable drag-and-drop to edit property values</span>
