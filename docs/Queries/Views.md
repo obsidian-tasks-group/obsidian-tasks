@@ -65,7 +65,7 @@ See the full list of `group by` instructions in [[Grouping]].
 
 Some [[Grouping]] options also **support editing via drag-and-drop between columns**.
 
-Currently, just the following `view columns by` instructions currently support editing:
+Currently, just the following `view columns by` instructions support editing:
 
 <!-- snippet: CreateEditingInstructionForGroup.test.docs_all_view_groups_that_support_editing.approved.txt -->
 ```txt
