@@ -41,6 +41,7 @@ view columns by start
 `;
 
     const allInstructions = allViewInstructionsSupportingEditing.split('\n').filter((line) => line.length > 0);
+    const taskWithAllFields = TaskBuilder.createFullyPopulatedTask();
 
     it('all view groups that support editing', () => {
         verify(allViewInstructionsSupportingEditing.trim());
@@ -49,5 +50,16 @@ view columns by start
     it.each(allInstructions)('can parse instruction: "%s"', (viewInstruction: string) => {
         const query = new Query(viewInstruction);
         expect(query.error).toBeUndefined();
+    });
+
+    it.each(allInstructions)('can create editing instruction: "%s"', (viewInstruction: string) => {
+        const query = new Query(viewInstruction);
+
+        const grouper = query.viewLayoutOptions.grouper;
+        expect(grouper).not.toBeNull();
+        expect(grouper?.property).toBeDefined();
+
+        const instruction = createEditingInstructionForGroup(grouper!.property, taskWithAllFields);
+        expect(instruction).not.toBeNull();
     });
 });
