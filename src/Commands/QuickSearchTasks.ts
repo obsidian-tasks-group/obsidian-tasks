@@ -1,5 +1,5 @@
-import { type App, Component, MarkdownRenderer, Notice, SuggestModal, prepareFuzzySearch } from 'obsidian';
-import { TASK_FORMATS, getSettings } from '../Config/Settings';
+import { type App, Component, MarkdownRenderer, Notice, SuggestModal, prepareFuzzySearch, setIcon } from 'obsidian';
+import { TASK_FORMATS, getSettings, updateSettings } from '../Config/Settings';
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import type { Task } from '../Task/Task';
 import { getTaskLineAndFile } from '../Obsidian/File';
@@ -10,6 +10,7 @@ import type { Filter } from '../Query/Filter/Filter';
 import { TasksFile } from '../Scripting/TasksFile';
 import { DescriptionField } from '../Query/Filter/DescriptionField';
 import { Sort } from '../Query/Sort/Sort';
+import { QuickSearchOptionsModal } from '../Obsidian/QuickSearchOptionsModal';
 
 export interface TaskSearchSuggestionText {
     description: string;
@@ -150,13 +151,54 @@ export async function openTaskAtSourceLocation(task: Task, app: App): Promise<vo
     }
 }
 
+export async function saveFuzzyMatchingSetting(
+    fuzzyMatching: boolean,
+    onSaveSettings: () => Promise<void>,
+    onChange: () => void,
+): Promise<void> {
+    updateSettings({ searchTasks: { fuzzyMatching } });
+    onChange();
+    await onSaveSettings();
+}
+
 export class QuickSearchTasksModal extends SuggestModal<Task> {
     private readonly renderComponents: Component[] = [];
 
-    constructor(app: App, private readonly getTasks: () => Task[]) {
+    constructor(
+        app: App,
+        private readonly getTasks: () => Task[],
+        private readonly onSaveSettings: () => Promise<void>,
+    ) {
         super(app);
         this.setPlaceholder('Search incomplete tasks');
         this.emptyStateText = 'Type to search incomplete tasks.';
+    }
+
+    public onOpen(): void {
+        super.onOpen();
+        this.modalEl.addClass('tasks-quick-search-modal-container');
+
+        const optionsButton = this.modalEl.createEl('button', {
+            cls: [
+                'modal-close-button',
+                'mod-raised',
+                'clickable-icon',
+                'modal-option-button',
+                'tasks-quick-search-options-button',
+            ],
+            attr: { 'aria-label': 'Quick search options' },
+        });
+        setIcon(optionsButton, 'settings');
+        optionsButton.onclick = () => {
+            new QuickSearchOptionsModal({
+                app: this.app,
+                fuzzyMatching: getSettings().searchTasks.fuzzyMatching,
+                onChange: async (fuzzyMatching) =>
+                    await saveFuzzyMatchingSetting(fuzzyMatching, this.onSaveSettings, () =>
+                        this.inputEl.dispatchEvent(new Event('input', { bubbles: true })),
+                    ),
+            }).open();
+        };
     }
 
     public getSuggestions(query: string): Task[] {

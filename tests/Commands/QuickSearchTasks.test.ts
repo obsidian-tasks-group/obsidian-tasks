@@ -4,6 +4,7 @@ import {
     QuickSearchTasksModal,
     filterIncompleteTasksByDescription,
     openTaskAtSourceLocation,
+    saveFuzzyMatchingSetting,
     searchIncompleteTasksByDescription,
     taskSearchMetadataText,
     taskSearchSuggestionText,
@@ -17,7 +18,7 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { fromLines, fromMarkdown } from '../TestingTools/TestHelpers';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import type { PresetsMap } from '../../src/Query/Presets/Presets';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import type { Task } from '../../src/Task/Task';
 
 jest.mock('obsidian', () => ({
@@ -124,13 +125,24 @@ describe('Finding matching tasks', () => {
 describe('Choosing the Quick Search matching mode', () => {
     it('should use the configured fuzzy matching setting', () => {
         const task = new TaskBuilder().description('Todo task').build();
-        const modal = new QuickSearchTasksModal({} as any, () => [task]);
+        const modal = new QuickSearchTasksModal({} as any, () => [task], jest.fn());
 
         expect(modal.getSuggestions('tdo')).toEqual([task]);
 
         updateSettings({ searchTasks: { fuzzyMatching: false } });
 
         expect(modal.getSuggestions('tdo')).toEqual([]);
+    });
+
+    it('should save a changed matching mode and refresh the current search', async () => {
+        const saveSettings = jest.fn().mockResolvedValue(undefined);
+        const refreshSearch = jest.fn();
+
+        await saveFuzzyMatchingSetting(false, saveSettings, refreshSearch);
+
+        expect(getSettings().searchTasks.fuzzyMatching).toBe(false);
+        expect(refreshSearch).toHaveBeenCalledTimes(1);
+        expect(saveSettings).toHaveBeenCalledTimes(1);
     });
 });
 
@@ -410,7 +422,7 @@ describe('Rendering matching tasks', () => {
     }
 
     it('should render the checkbox, description, location, and metadata elements', () => {
-        const modal = new QuickSearchTasksModal({} as any, () => tasks);
+        const modal = new QuickSearchTasksModal({} as any, () => tasks, jest.fn());
         const element = document.createElement('div');
 
         modal.renderSuggestion(writeReleaseNotes, element);
@@ -432,7 +444,7 @@ describe('Rendering matching tasks', () => {
 
             const taskListWithGlobalFilter = fromMarkdown('- [ ] #task Do Stuff');
 
-            const modal = new QuickSearchTasksModal({} as any, () => taskListWithGlobalFilter);
+            const modal = new QuickSearchTasksModal({} as any, () => taskListWithGlobalFilter, jest.fn());
             const element = document.createElement('div');
 
             modal.renderSuggestion(taskListWithGlobalFilter[0], element);
@@ -442,7 +454,7 @@ describe('Rendering matching tasks', () => {
     );
 
     it('should only check the checkbox for completed tasks', () => {
-        const modal = new QuickSearchTasksModal({} as any, () => tasks);
+        const modal = new QuickSearchTasksModal({} as any, () => tasks, jest.fn());
         const incompleteElement = document.createElement('div');
         const completeElement = document.createElement('div');
         const inProgressTask = new TaskBuilder().description('In progress task').status(Status.IN_PROGRESS).build();
