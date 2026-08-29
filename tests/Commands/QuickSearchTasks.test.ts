@@ -123,6 +123,22 @@ describe('Finding matching tasks', () => {
 });
 
 describe('Choosing the Quick Search matching mode', () => {
+    function addObsidianElementMethods<T extends HTMLElement>(element: T): T {
+        return Object.assign(element, {
+            addClass: (...classes: string[]) => element.classList.add(...classes),
+            createEl: (
+                tag: keyof HTMLElementTagNameMap,
+                options: { cls?: string[]; attr?: Record<string, string> } = {},
+            ) => {
+                const child = document.createElement(tag);
+                child.classList.add(...(options.cls ?? []));
+                Object.entries(options.attr ?? {}).forEach(([name, value]) => child.setAttribute(name, value));
+                element.appendChild(child);
+                return child;
+            },
+        });
+    }
+
     it('should use the configured fuzzy matching setting', () => {
         const task = new TaskBuilder().description('Todo task').build();
         const modal = new QuickSearchTasksModal({} as any, () => [task], jest.fn());
@@ -143,6 +159,21 @@ describe('Choosing the Quick Search matching mode', () => {
         expect(getSettings().searchTasks.fuzzyMatching).toBe(false);
         expect(refreshSearch).toHaveBeenCalledTimes(1);
         expect(saveSettings).toHaveBeenCalledTimes(1);
+    });
+
+    it('should anchor the options button to the search input container', () => {
+        const modal = new QuickSearchTasksModal({} as any, () => tasks, jest.fn());
+        const modalElement = addObsidianElementMethods(document.createElement('div'));
+        const inputContainer = addObsidianElementMethods(document.createElement('div'));
+        const inputElement = document.createElement('input');
+        inputContainer.appendChild(inputElement);
+        modalElement.appendChild(inputContainer);
+        Object.assign(modal, { modalEl: modalElement, inputEl: inputElement });
+
+        modal.onOpen();
+
+        const optionsButton = modalElement.querySelector('[aria-label="Quick search options"]');
+        expect(optionsButton?.parentElement).toBe(inputContainer);
     });
 });
 

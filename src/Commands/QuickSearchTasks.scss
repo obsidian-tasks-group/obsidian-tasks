@@ -1,10 +1,16 @@
 .tasks-quick-search-modal-container {
+    .prompt-input-container {
+        position: relative;
+    }
+
     .prompt-input {
         padding-inline-end: calc(var(--size-4-16) + var(--size-4-4));
     }
 
     .tasks-quick-search-options-button {
+        top: 50%;
         inset-inline-end: var(--size-4-12);
+        transform: translateY(-50%);
     }
 }
 

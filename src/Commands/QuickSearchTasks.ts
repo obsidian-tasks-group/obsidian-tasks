@@ -178,7 +178,8 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
         super.onOpen();
         this.modalEl.addClass('tasks-quick-search-modal-container');
 
-        const optionsButton = this.modalEl.createEl('button', {
+        const inputContainer = this.inputEl.parentElement ?? this.modalEl;
+        const optionsButton = inputContainer.createEl('button', {
             cls: [
                 'modal-close-button',
                 'mod-raised',
