@@ -23,6 +23,7 @@ import type { Task } from '../../src/Task/Task';
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
     Notice: jest.fn(),
+    prepareFuzzySearch: jest.fn(() => () => ({ score: 0 })),
 }));
 jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
 
@@ -117,6 +118,19 @@ describe('Finding matching tasks', () => {
 
     it('should not match task tags', () => {
         expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
+    });
+});
+
+describe('Choosing the Quick Search matching mode', () => {
+    it('should use the configured fuzzy matching setting', () => {
+        const task = new TaskBuilder().description('Todo task').build();
+        const modal = new QuickSearchTasksModal({} as any, () => [task]);
+
+        expect(modal.getSuggestions('tdo')).toEqual([task]);
+
+        updateSettings({ searchTasks: { fuzzyMatching: false } });
+
+        expect(modal.getSuggestions('tdo')).toEqual([]);
     });
 });
 

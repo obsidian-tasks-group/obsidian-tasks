@@ -86,6 +86,14 @@ describe('resetSettings behaviour', () => {
         expect(currentSettings.searchResults.taskCountLocation).toBe('bottom');
     });
 
+    it('should enable fuzzy Quick Search by default and retain a loaded value', () => {
+        expect(getSettings().searchTasks.fuzzyMatching).toBe(true);
+
+        updateSettings({ searchTasks: { fuzzyMatching: false } });
+
+        expect(getSettings().searchTasks.fuzzyMatching).toBe(false);
+    });
+
     it('should completely remove properties not in defaultSettings', () => {
         // Arrange: Add an extra property that isn't in defaultSettings
         updateSettings({

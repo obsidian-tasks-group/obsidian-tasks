@@ -1,5 +1,5 @@
 import { type App, Component, MarkdownRenderer, Notice, SuggestModal, prepareFuzzySearch } from 'obsidian';
-import { TASK_FORMATS } from '../Config/Settings';
+import { TASK_FORMATS, getSettings } from '../Config/Settings';
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import type { Task } from '../Task/Task';
 import { getTaskLineAndFile } from '../Obsidian/File';
@@ -160,7 +160,10 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
     }
 
     public getSuggestions(query: string): Task[] {
-        return fuzzySearchIncompleteTasksByDescription(this.getTasks(), query);
+        const tasks = this.getTasks();
+        return getSettings().searchTasks.fuzzyMatching
+            ? fuzzySearchIncompleteTasksByDescription(tasks, query)
+            : filterIncompleteTasksByDescription(tasks, query);
     }
 
     public renderSuggestion(task: Task, el: HTMLElement): void {
