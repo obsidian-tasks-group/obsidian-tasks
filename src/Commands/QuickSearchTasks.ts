@@ -1,4 +1,4 @@
-import { type App, Component, MarkdownRenderer, Notice, SuggestModal } from 'obsidian';
+import { type App, Component, MarkdownRenderer, Notice, SuggestModal, prepareFuzzySearch } from 'obsidian';
 import { TASK_FORMATS } from '../Config/Settings';
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import type { Task } from '../Task/Task';
@@ -16,6 +16,12 @@ export interface TaskSearchSuggestionText {
     source: string;
     heading: string;
 }
+
+interface TaskDescriptionMatch {
+    score: number;
+}
+
+type TaskDescriptionMatcher = (description: string) => TaskDescriptionMatch | null;
 
 function getGlobalQueryFilters(): Filter[] {
     // The placeholder presents mechanism results in an exception being thrown
@@ -52,20 +58,47 @@ export function filterIncompleteTasksByDescription(tasks: readonly Task[], query
 
     const normalizedQuery = query.toLowerCase();
 
+    return searchIncompleteTasksByDescription(tasks, (description) =>
+        description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null,
+    );
+}
+
+export function fuzzySearchIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
+    if (query.trim() === '') {
+        return [];
+    }
+
+    return searchIncompleteTasksByDescription(tasks, prepareFuzzySearch(query));
+}
+
+export function searchIncompleteTasksByDescription(
+    tasks: readonly Task[],
+    matchDescription: TaskDescriptionMatcher,
+): Task[] {
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
     const globalQueryFilters = getGlobalQueryFilters();
     const searchInfo = SearchInfo.fromAllTasks([...tasks]);
 
-    const results = tasks.filter((task) => {
-        return (
-            !task.isDone &&
-            task.descriptionWithoutTags.toLowerCase().includes(normalizedQuery) &&
-            applyFiltersToTask(globalQueryFilters, task, searchInfo)
-        );
-    });
-    return sortResults(results, searchInfo);
+    const matches = tasks
+        .filter((task) => !task.isDone && applyFiltersToTask(globalQueryFilters, task, searchInfo))
+        .map((task) => {
+            const match = matchDescription(task.descriptionWithoutTags);
+            return match === null ? null : { task, score: match.score };
+        })
+        .filter((match): match is { task: Task; score: number } => match !== null);
+
+    const defaultOrder = new Map(
+        sortResults(
+            matches.map((match) => match.task),
+            searchInfo,
+        ).map((task, index) => [task, index]),
+    );
+
+    return matches
+        .sort((a, b) => b.score - a.score || defaultOrder.get(a.task)! - defaultOrder.get(b.task)!)
+        .map((match) => match.task);
 }
 
 function sortResults(results: Task[], searchInfo: SearchInfo): Task[] {
@@ -127,7 +160,7 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
     }
 
     public getSuggestions(query: string): Task[] {
-        return filterIncompleteTasksByDescription(this.getTasks(), query);
+        return fuzzySearchIncompleteTasksByDescription(this.getTasks(), query);
     }
 
     public renderSuggestion(task: Task, el: HTMLElement): void {

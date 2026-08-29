@@ -4,6 +4,7 @@ import {
     QuickSearchTasksModal,
     filterIncompleteTasksByDescription,
     openTaskAtSourceLocation,
+    searchIncompleteTasksByDescription,
     taskSearchMetadataText,
     taskSearchSuggestionText,
 } from '../../src/Commands/QuickSearchTasks';
@@ -116,6 +117,38 @@ describe('Finding matching tasks', () => {
 
     it('should not match task tags', () => {
         expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
+    });
+});
+
+describe('Ranking description search matches', () => {
+    it('should rank matched incomplete tasks by score', () => {
+        const closeMatch = new TaskBuilder().description('Todo task').build();
+        const distantMatch = new TaskBuilder().description('Take documents out').build();
+        const completedMatch = new TaskBuilder().description('Done task').status(Status.DONE).build();
+        const scores = new Map([
+            [closeMatch.descriptionWithoutTags, 2],
+            [distantMatch.descriptionWithoutTags, 1],
+            [completedMatch.descriptionWithoutTags, 3],
+        ]);
+
+        const results = searchIncompleteTasksByDescription(
+            [distantMatch, completedMatch, closeMatch],
+            (description) => {
+                const score = scores.get(description);
+                return score === undefined ? null : { score };
+            },
+        );
+
+        expect(results).toEqual([closeMatch, distantMatch]);
+    });
+
+    it('should use the normal Tasks order when scores are equal', () => {
+        const first = new TaskBuilder().description('A todo').build();
+        const second = new TaskBuilder().description('B todo').build();
+
+        const results = searchIncompleteTasksByDescription([second, first], () => ({ score: 1 }));
+
+        expect(results).toEqual([first, second]);
     });
 });
 
