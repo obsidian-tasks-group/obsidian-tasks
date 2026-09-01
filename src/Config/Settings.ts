@@ -84,7 +84,7 @@ export interface Settings {
     searchResults: {
         taskCountLocation: 'top' | 'bottom';
     };
-    searchTasks: {
+    quickSearch: {
         fuzzyMatching: boolean;
     };
 
@@ -133,7 +133,7 @@ const defaultSettings: Readonly<Settings> = {
     searchResults: {
         taskCountLocation: 'bottom',
     },
-    searchTasks: {
+    quickSearch: {
         fuzzyMatching: true,
     },
     statusSettings: new StatusSettings(),

@@ -52,27 +52,27 @@ function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo
     }
 }
 
-export function filterIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
+export function findIncompleteTasksByDescriptionSubstring(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
     }
 
     const normalizedQuery = query.toLowerCase();
 
-    return searchIncompleteTasksByDescription(tasks, (description) =>
+    return rankMatchingIncompleteTasksByDescription(tasks, (description) =>
         description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null,
     );
 }
 
-export function fuzzySearchIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
+export function findIncompleteTasksByFuzzyDescription(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
     }
 
-    return searchIncompleteTasksByDescription(tasks, prepareFuzzySearch(query));
+    return rankMatchingIncompleteTasksByDescription(tasks, prepareFuzzySearch(query));
 }
 
-export function searchIncompleteTasksByDescription(
+export function rankMatchingIncompleteTasksByDescription(
     tasks: readonly Task[],
     matchDescription: TaskDescriptionMatcher,
 ): Task[] {
@@ -156,7 +156,7 @@ export async function saveFuzzyMatchingSetting(
     onSaveSettings: () => Promise<void>,
     onChange: () => void,
 ): Promise<void> {
-    updateSettings({ searchTasks: { fuzzyMatching } });
+    updateSettings({ quickSearch: { fuzzyMatching } });
     onChange();
     await onSaveSettings();
 }
@@ -193,7 +193,7 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
         optionsButton.onclick = () => {
             new QuickSearchOptionsModal({
                 app: this.app,
-                fuzzyMatching: getSettings().searchTasks.fuzzyMatching,
+                fuzzyMatching: getSettings().quickSearch.fuzzyMatching,
                 onChange: async (fuzzyMatching) =>
                     await saveFuzzyMatchingSetting(fuzzyMatching, this.onSaveSettings, () =>
                         this.inputEl.dispatchEvent(new Event('input', { bubbles: true })),
@@ -204,9 +204,9 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
 
     public getSuggestions(query: string): Task[] {
         const tasks = this.getTasks();
-        return getSettings().searchTasks.fuzzyMatching
-            ? fuzzySearchIncompleteTasksByDescription(tasks, query)
-            : filterIncompleteTasksByDescription(tasks, query);
+        return getSettings().quickSearch.fuzzyMatching
+            ? findIncompleteTasksByFuzzyDescription(tasks, query)
+            : findIncompleteTasksByDescriptionSubstring(tasks, query);
     }
 
     public renderSuggestion(task: Task, el: HTMLElement): void {

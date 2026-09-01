@@ -18,7 +18,14 @@ You can assign a hotkey to `Tasks: Quick search` in Obsidian's [Hotkeys settings
 
 ## Searching
 
-Start typing in the search dialog to filter tasks by their description. The search is case-insensitive and uses ordinary text matching. It does not search task tags, file names, or headings.
+Start typing in the search dialog to filter tasks by their description. By default, Quick Search uses case-insensitive fuzzy matching. The characters in your search must appear in the same order, but they do not need to be next to each other.
+
+Select the settings icon to open the Quick search options. Turn off `Fuzzy matching` to use case-insensitive substring matching, where the text you type must appear as one continuous sequence. The setting remains in effect after you reload Obsidian.
+
+![Quick search options with Fuzzy matching enabled](../images/quick-search-options.png)
+<span class="caption">Quick search options with Fuzzy matching enabled</span>
+
+Quick Search does not search task tags, file names, or headings.
 
 ## Results
 
@@ -30,10 +37,12 @@ Each result shows a non-interactive checkbox for the task status, the rendered t
 ## How Quick Search Works
 
 - The task description is searched.
-  - The search is case-insensitive and looks for the exact text you type.
+  - With `Fuzzy matching` enabled, closer matches are shown first.
+  - With `Fuzzy matching` disabled, the search looks for the exact, continuous text you type.
+  - Both matching modes are case-insensitive.
   - It does not search the task tags, file names, or headings.
   - Be aware of spaces at the start and end of the search string, as they may cause valid matches not to be found.
-- Results are sorted by description, ignoring Markdown formatting.
+- Results with equal match quality, or all results when `Fuzzy matching` is disabled, are sorted by description, ignoring Markdown formatting.
   - If tasks have the same description, they are then sorted using the [[Sorting#Default sort order|Tasks default sort order]].
 - If you use a [[Global Filter]], Quick Search respects the [[Global Filter#Settings for the Global Filter|Remove global filter from description]] setting.
 - If you use a [[Global Query]], Quick Search only includes tasks that match it.

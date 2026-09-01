@@ -2,10 +2,10 @@ import moment from 'moment';
 import { Notice } from 'obsidian';
 import {
     QuickSearchTasksModal,
-    filterIncompleteTasksByDescription,
+    findIncompleteTasksByDescriptionSubstring,
     openTaskAtSourceLocation,
+    rankMatchingIncompleteTasksByDescription,
     saveFuzzyMatchingSetting,
-    searchIncompleteTasksByDescription,
     taskSearchMetadataText,
     taskSearchSuggestionText,
 } from '../../src/Commands/QuickSearchTasks';
@@ -106,19 +106,19 @@ describe('Registering the command', () => {
 
 describe('Finding matching tasks', () => {
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
-        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([
+        expect(findIncompleteTasksByDescriptionSubstring(tasks, 'release')).toEqual([
             reviewRELEASEChecklist,
             writeReleaseNotes,
         ]);
     });
 
     it('should not show results until the user enters a search query', () => {
-        expect(filterIncompleteTasksByDescription(tasks, '')).toHaveLength(0);
-        expect(filterIncompleteTasksByDescription(tasks, '   ')).toHaveLength(0);
+        expect(findIncompleteTasksByDescriptionSubstring(tasks, '')).toHaveLength(0);
+        expect(findIncompleteTasksByDescriptionSubstring(tasks, '   ')).toHaveLength(0);
     });
 
     it('should not match task tags', () => {
-        expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
+        expect(findIncompleteTasksByDescriptionSubstring(tasks, '#release')).toEqual([]);
     });
 });
 
@@ -145,7 +145,7 @@ describe('Choosing the Quick Search matching mode', () => {
 
         expect(modal.getSuggestions('tdo')).toEqual([task]);
 
-        updateSettings({ searchTasks: { fuzzyMatching: false } });
+        updateSettings({ quickSearch: { fuzzyMatching: false } });
 
         expect(modal.getSuggestions('tdo')).toEqual([]);
     });
@@ -156,12 +156,12 @@ describe('Choosing the Quick Search matching mode', () => {
 
         await saveFuzzyMatchingSetting(false, saveSettings, refreshSearch);
 
-        expect(getSettings().searchTasks.fuzzyMatching).toBe(false);
+        expect(getSettings().quickSearch.fuzzyMatching).toBe(false);
         expect(refreshSearch).toHaveBeenCalledTimes(1);
         expect(saveSettings).toHaveBeenCalledTimes(1);
     });
 
-    it('should anchor the options button to the search input container', () => {
+    it('should keep the options button aligned by placing it inside the search input container', () => {
         const modal = new QuickSearchTasksModal({} as any, () => tasks, jest.fn());
         const modalElement = addObsidianElementMethods(document.createElement('div'));
         const inputContainer = addObsidianElementMethods(document.createElement('div'));
@@ -172,6 +172,8 @@ describe('Choosing the Quick Search matching mode', () => {
 
         modal.onOpen();
 
+        // The input container is the button's CSS positioning context. Appending
+        // the button to the modal instead would move it above the search field.
         const optionsButton = modalElement.querySelector('[aria-label="Quick search options"]');
         expect(optionsButton?.parentElement).toBe(inputContainer);
     });
@@ -188,7 +190,7 @@ describe('Ranking description search matches', () => {
             [completedMatch.descriptionWithoutTags, 3],
         ]);
 
-        const results = searchIncompleteTasksByDescription(
+        const results = rankMatchingIncompleteTasksByDescription(
             [distantMatch, completedMatch, closeMatch],
             (description) => {
                 const score = scores.get(description);
@@ -203,7 +205,7 @@ describe('Ranking description search matches', () => {
         const first = new TaskBuilder().description('A todo').build();
         const second = new TaskBuilder().description('B todo').build();
 
-        const results = searchIncompleteTasksByDescription([second, first], () => ({ score: 1 }));
+        const results = rankMatchingIncompleteTasksByDescription([second, first], () => ({ score: 1 }));
 
         expect(results).toEqual([first, second]);
     });
@@ -275,7 +277,9 @@ describe('Finding matching tasks, honouring the Global Query', () => {
 
             const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-            const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
+            const foundDescriptions = findIncompleteTasksByDescriptionSubstring(tasks, query).map(
+                (task) => task.description,
+            );
             expect(foundDescriptions).toEqual(expectedFoundDescriptions);
         },
     );
@@ -328,7 +332,9 @@ describe('Finding matching tasks, sorting results in expected order', () => {
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-        const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
+        const foundDescriptions = findIncompleteTasksByDescriptionSubstring(tasks, query).map(
+            (task) => task.description,
+        );
         expect(foundDescriptions).toEqual(expectedFoundDescriptions);
     });
 
@@ -356,11 +362,11 @@ describe('Finding matching tasks, sorting results in expected order', () => {
 
             const query = tasks[0].description;
 
-            const result = filterIncompleteTasksByDescription(tasks, query);
+            const result = findIncompleteTasksByDescriptionSubstring(tasks, query);
             expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
-            const reverse = filterIncompleteTasksByDescription(tasks.reverse(), query);
+            const reverse = findIncompleteTasksByDescriptionSubstring(tasks.reverse(), query);
             expect(reverse.map(propertyGetter)).toEqual(expectedOrder);
         }
 
