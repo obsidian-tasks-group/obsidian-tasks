@@ -12,6 +12,9 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
+- X.Y.Z:
+  - **Documentation**
+    - Add [[How to read the user guide off-line]].
 - 8.4.0:
   - Add [[Quick search]] command, to find an incomplete task recognised by Tasks anywhere in your vault.
   - Add [[Views|columns view]], supporting **drag-and-drop edit** for a growing number of properties.
