@@ -262,14 +262,10 @@ export class SettingsTab extends PluginSettingTab {
     private globalDefaultsGroup(): SettingDefinitionItem {
         return {
             type: 'group',
-            heading: i18n.t('settings.globalDefaults.heading'),
             items: [
                 this.taskFormatDefinition(),
                 {
                     name: i18n.t('settings.globalFilter.filter.name'),
-                    // Group headings are not searchable, so the first row in
-                    // the group carries the heading as a search alias.
-                    aliases: [i18n.t('settings.globalDefaults.heading')],
                     desc: SettingsTab.createFragmentWithHTML(
                         `<p><b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
                             `<p>${i18n.t('settings.globalFilter.filter.description.line2')}</p>` +
