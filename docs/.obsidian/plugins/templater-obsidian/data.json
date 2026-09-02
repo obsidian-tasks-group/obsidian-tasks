@@ -8,7 +8,12 @@
   "jump_to_cursor_after_file_name": false,
   "shell_path": "",
   "user_scripts_folder": "",
-  "folder_templates": [],
+  "folder_templates": [
+    {
+      "folder": "/",
+      "template": "_meta/templates/new documentation file.md"
+    }
+  ],
   "file_templates": [],
   "syntax_highlighting": true,
   "syntax_highlighting_mobile": false,
