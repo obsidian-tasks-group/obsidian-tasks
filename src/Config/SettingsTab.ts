@@ -221,7 +221,6 @@ export class SettingsTab extends PluginSettingTab {
 
     public getSettingDefinitions(): SettingDefinitionItem[] {
         return [
-            this.taskFormatDefinition(),
             this.globalDefaultsGroup(),
             this.searchesGroup(),
             this.datesGroup(),
@@ -233,7 +232,7 @@ export class SettingsTab extends PluginSettingTab {
 
     // ---- Task format (general, no heading) --------------------------------
 
-    private taskFormatDefinition(): SettingDefinitionItem {
+    private taskFormatDefinition(): SettingGroupItem {
         return {
             name: i18n.t('settings.format.name'),
             desc: SettingsTab.createFragmentWithHTML(
@@ -265,6 +264,7 @@ export class SettingsTab extends PluginSettingTab {
             type: 'group',
             heading: i18n.t('settings.globalDefaults.heading'),
             items: [
+                this.taskFormatDefinition(),
                 {
                     name: i18n.t('settings.globalFilter.filter.name'),
                     // Group headings are not searchable, so the first row in
