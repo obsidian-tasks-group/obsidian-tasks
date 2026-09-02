@@ -224,7 +224,6 @@ export class SettingsTab extends PluginSettingTab {
             this.taskFormatDefinition(),
             this.globalDefaultsGroup(),
             this.searchesGroup(),
-            this.statusesPage(),
             this.datesGroup(),
             this.datesFromFilenamesGroup(),
             this.recurringTasksGroup(),
@@ -315,6 +314,7 @@ export class SettingsTab extends PluginSettingTab {
                         });
                     }),
                 },
+                this.statusesPage(),
             ],
         };
     }
@@ -499,7 +499,7 @@ export class SettingsTab extends PluginSettingTab {
 
     // ---- Statuses (sub-page) ---------------------------------------------
 
-    private statusesPage(): SettingDefinitionItem {
+    private statusesPage(): SettingGroupItem {
         const { statusSettings } = getSettings();
 
         // Lets the custom-statuses search filter on the status symbol, name and type.
