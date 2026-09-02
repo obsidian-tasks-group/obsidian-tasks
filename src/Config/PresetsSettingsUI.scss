@@ -2,6 +2,34 @@
 /* Presets section                               */
 /* ---------------------------------------------- */
 
+// Edit-preset modal: a wide form sheet, with each field's control
+// below its label and filling the modal's width.
+.modal.tasks-edit-preset-modal {
+    --dialog-width: 700px;
+    --dialog-max-width: 90vw;
+
+    .form-field input,
+    .form-field textarea {
+        width: 100%;
+    }
+
+    .form-field textarea {
+        font-family: var(--font-monospace);
+        resize: vertical;
+    }
+}
+
+// Declarative settings (Obsidian 1.13.0+): the preset row shows a short
+// preview of the query — whitespace preserved, clamped to 3 lines.
+.tasks-presets-value-preview {
+    white-space: pre-wrap;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+}
+
 .tasks-settings {
     // Main wrapper for presets section
     .tasks-presets-wrapper {
