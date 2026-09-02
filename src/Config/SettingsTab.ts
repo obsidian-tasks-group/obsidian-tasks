@@ -315,18 +315,6 @@ export class SettingsTab extends PluginSettingTab {
                         });
                     }),
                 },
-                {
-                    name: i18n.t('settings.globalQuery.heading'),
-                    desc: i18n.t('settings.globalQuery.query.shortDescription'),
-                    render: this.withDocs((setting) => {
-                        setting.addExtraButton((btn) =>
-                            btn
-                                .setIcon('pencil')
-                                .setTooltip(i18n.t('common.edit'))
-                                .onClick(() => this.openGlobalQueryModal()),
-                        );
-                    }, 'https://publish.obsidian.md/tasks/Queries/Global+Query'),
-                },
             ],
         };
     }
@@ -347,6 +335,18 @@ export class SettingsTab extends PluginSettingTab {
             type: 'group',
             heading: i18n.t('settings.searches.heading'),
             items: [
+                {
+                    name: i18n.t('settings.globalQuery.heading'),
+                    desc: i18n.t('settings.globalQuery.query.shortDescription'),
+                    render: this.withDocs((setting) => {
+                        setting.addExtraButton((btn) =>
+                            btn
+                                .setIcon('pencil')
+                                .setTooltip(i18n.t('common.edit'))
+                                .onClick(() => this.openGlobalQueryModal()),
+                        );
+                    }, 'https://publish.obsidian.md/tasks/Queries/Global+Query'),
+                },
                 {
                     name: i18n.t('settings.searches.enableCustomSearches.name'),
                     desc: SettingsTab.createFragmentWithHTML(
