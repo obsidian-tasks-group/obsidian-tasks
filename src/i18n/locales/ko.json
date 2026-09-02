@@ -202,9 +202,6 @@
       },
       "name": "작업 형식"
     },
-    "globalDefaults": {
-      "heading": ""
-    },
     "globalFilter": {
       "filter": {
         "description": {

@@ -202,9 +202,6 @@
       },
       "name": "Formato de tarea"
     },
-    "globalDefaults": {
-      "heading": ""
-    },
     "globalFilter": {
       "filter": {
         "description": {

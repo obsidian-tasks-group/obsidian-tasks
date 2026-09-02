@@ -202,9 +202,6 @@
       },
       "name": "Фармат задачы"
     },
-    "globalDefaults": {
-      "heading": ""
-    },
     "globalFilter": {
       "filter": {
         "description": {

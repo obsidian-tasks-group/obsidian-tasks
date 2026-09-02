@@ -202,9 +202,6 @@
       },
       "name": "Task format"
     },
-    "globalDefaults": {
-      "heading": "Global defaults"
-    },
     "globalFilter": {
       "filter": {
         "description": {

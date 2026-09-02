@@ -9,6 +9,7 @@ import {
     Setting,
     type SettingDefinition,
     type SettingDefinitionItem,
+    type SettingGroupItem,
     type ToggleComponent,
     debounce,
     requireApiVersion,
@@ -220,11 +221,8 @@ export class SettingsTab extends PluginSettingTab {
 
     public getSettingDefinitions(): SettingDefinitionItem[] {
         return [
-            this.taskFormatDefinition(),
             this.globalDefaultsGroup(),
             this.searchesGroup(),
-            this.presetsPage(),
-            this.statusesPage(),
             this.datesGroup(),
             this.datesFromFilenamesGroup(),
             this.recurringTasksGroup(),
@@ -234,7 +232,7 @@ export class SettingsTab extends PluginSettingTab {
 
     // ---- Task format (general, no heading) --------------------------------
 
-    private taskFormatDefinition(): SettingDefinitionItem {
+    private taskFormatDefinition(): SettingGroupItem {
         return {
             name: i18n.t('settings.format.name'),
             desc: SettingsTab.createFragmentWithHTML(
@@ -264,13 +262,10 @@ export class SettingsTab extends PluginSettingTab {
     private globalDefaultsGroup(): SettingDefinitionItem {
         return {
             type: 'group',
-            heading: i18n.t('settings.globalDefaults.heading'),
             items: [
+                this.taskFormatDefinition(),
                 {
                     name: i18n.t('settings.globalFilter.filter.name'),
-                    // Group headings are not searchable, so the first row in
-                    // the group carries the heading as a search alias.
-                    aliases: [i18n.t('settings.globalDefaults.heading')],
                     desc: SettingsTab.createFragmentWithHTML(
                         `<p><b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
                             `<p>${i18n.t('settings.globalFilter.filter.description.line2')}</p>` +
@@ -315,18 +310,7 @@ export class SettingsTab extends PluginSettingTab {
                         });
                     }),
                 },
-                {
-                    name: i18n.t('settings.globalQuery.heading'),
-                    desc: i18n.t('settings.globalQuery.query.shortDescription'),
-                    render: this.withDocs((setting) => {
-                        setting.addExtraButton((btn) =>
-                            btn
-                                .setIcon('pencil')
-                                .setTooltip(i18n.t('common.edit'))
-                                .onClick(() => this.openGlobalQueryModal()),
-                        );
-                    }, 'https://publish.obsidian.md/tasks/Queries/Global+Query'),
-                },
+                this.statusesPage(),
             ],
         };
     }
@@ -347,6 +331,19 @@ export class SettingsTab extends PluginSettingTab {
             type: 'group',
             heading: i18n.t('settings.searches.heading'),
             items: [
+                this.presetsPage(),
+                {
+                    name: i18n.t('settings.globalQuery.heading'),
+                    desc: i18n.t('settings.globalQuery.query.shortDescription'),
+                    render: this.withDocs((setting) => {
+                        setting.addExtraButton((btn) =>
+                            btn
+                                .setIcon('pencil')
+                                .setTooltip(i18n.t('common.edit'))
+                                .onClick(() => this.openGlobalQueryModal()),
+                        );
+                    }, 'https://publish.obsidian.md/tasks/Queries/Global+Query'),
+                },
                 {
                     name: i18n.t('settings.searches.enableCustomSearches.name'),
                     desc: SettingsTab.createFragmentWithHTML(
@@ -476,7 +473,7 @@ export class SettingsTab extends PluginSettingTab {
 
     // ---- Presets (sub-page) ----------------------------------------------
 
-    private presetsPage(): SettingDefinitionItem {
+    private presetsPage(): SettingGroupItem {
         return {
             type: 'page',
             name: i18n.t('settings.presets.name'),
@@ -498,7 +495,7 @@ export class SettingsTab extends PluginSettingTab {
 
     // ---- Statuses (sub-page) ---------------------------------------------
 
-    private statusesPage(): SettingDefinitionItem {
+    private statusesPage(): SettingGroupItem {
         const { statusSettings } = getSettings();
 
         // Lets the custom-statuses search filter on the status symbol, name and type.

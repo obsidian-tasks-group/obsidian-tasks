@@ -202,9 +202,6 @@
       },
       "name": "任务格式"
     },
-    "globalDefaults": {
-      "heading": ""
-    },
     "globalFilter": {
       "filter": {
         "description": {

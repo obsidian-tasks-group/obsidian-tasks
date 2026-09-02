@@ -202,9 +202,6 @@
       },
       "name": "Format de tâche"
     },
-    "globalDefaults": {
-      "heading": ""
-    },
     "globalFilter": {
       "filter": {
         "description": {
