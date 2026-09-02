@@ -1,4 +1,12 @@
 {
+  "common": {
+    "cancel": "",
+    "edit": "",
+    "moreInfo": "",
+    "okay": "",
+    "reload": "",
+    "save": ""
+  },
   "main": {
     "loadingPlugin": "Chargement du module : {{name}} v{{version}}",
     "unloadingPlugin": "Déchargement du module : {{name}} v{{version}}"
@@ -25,7 +33,25 @@
         "description": "Détermine comment le statut réagit lors de la recherche et du clic.",
         "name": "Type de statut"
       },
-      "fixErrorsBeforeSaving": "Corrigez les erreurs avant de sauvegarder."
+      "fixErrorsBeforeSaving": "Corrigez les erreurs avant de sauvegarder.",
+      "title": {
+        "editCoreStatus": "",
+        "editCustomStatus": ""
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "",
+        "name": "",
+        "placeholder": "",
+        "required": ""
+      },
+      "query": {
+        "description": "",
+        "name": "",
+        "placeholder": ""
+      },
+      "title": ""
     }
   },
   "notices": {
@@ -176,6 +202,9 @@
       },
       "name": "Format de tâche"
     },
+    "globalDefaults": {
+      "heading": ""
+    },
     "globalFilter": {
       "filter": {
         "description": {
@@ -197,13 +226,15 @@
       "heading": "Requête globale",
       "query": {
         "description": "Une requête automatiquement incluse au début de chaque bloc Tasks au sein du coffre. Pratique pour ajouter des filtres ou des réglages d'affichage par défaut.",
-        "placeholder": "Par exemple...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "Par exemple...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Ajouter un préréglage"
       },
+      "emptyState": "",
       "line1": "Vous pouvez définir ici des instructions à réutiliser dans plusieurs requêtes. Un préréglage appelé '{{name}}' pourra être appliqué dans les requêtes Tasks avec '{{instruction1}}' ou '{{instruction2}}'.",
       "line2": "Toutes les requêtes Tasks ouvertes sont rechargées automatiquement quand les préréglages sont modifiés.",
       "name": "Préréglages"
@@ -235,6 +266,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "",
+          "enable": ""
+        },
         "description": {
           "line1": "Active '{{filterByFunction}}', '{{sortByFunction}}', et '{{groupByFunction}}', qui éxécutent JavaScript dans les requêtes Tasks.",
           "line2": "Du code JavaScript malveillant dans une requête Tasks ou un fichier Markdown peut s'exécuter à l'intérieur d'Obsidian et lire ou modifier le contenu de votre coffre, vos fichiers locaux, ou autres ressources du système.",
@@ -247,6 +282,13 @@
     },
     "seeTheDocumentation": "Voir la documentation",
     "statuses": {
+      "buttons": {
+        "addStatus": "",
+        "importFromTheme": {
+          "description": "",
+          "name": ""
+        }
+      },
       "collections": {
         "anuppuccinTheme": "Thème AnuPpuccin",
         "auraTheme": "Thème Aura",
@@ -254,6 +296,9 @@
         "buttons": {
           "addCollection": {
             "name": "{{themeName}}: Ajouter {{numberOfStatuses}} Statuts pris en charge"
+          },
+          "importCollection": {
+            "name": ""
           }
         },
         "ebullientworksTheme": "Thème Ebullientworks",
@@ -278,12 +323,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "",
             "name": "Ajouter tous les types de Statuts inconnus."
           },
           "addNewStatus": {
             "name": "Nouveau Statut"
           },
           "resetCustomStatuses": {
+            "description": "",
             "name": "Réinitialiser les types de Statuts personnalisés"
           }
         },
@@ -293,9 +340,27 @@
           "line3": "<b>Note</b> Tout statut avec un symbole déjà utilisé sera ignoré. Vous pouvez vérifier les Statuts effectivement utilisés en lançant la commande 'Créer ou modifier une tâche' et en ouvrant le menu d'attribution du statut.",
           "line4": "Voir la documentation pour commencer !"
         },
+        "emptyState": "",
         "heading": "Statuts personnalisés"
       },
-      "heading": "Statuts des tâches"
+      "filter": {
+        "placeholder": ""
+      },
+      "heading": "Statuts des tâches",
+      "reloadRequired": "",
+      "types": {
+        "cancelled": "",
+        "done": "",
+        "empty": "",
+        "inProgress": "",
+        "nonTask": "",
+        "onHold": "",
+        "todo": ""
+      },
+      "unnamed": ""
+    },
+    "taskEntry": {
+      "heading": ""
     }
   }
 }
