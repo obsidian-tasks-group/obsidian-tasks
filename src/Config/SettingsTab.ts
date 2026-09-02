@@ -9,6 +9,7 @@ import {
     Setting,
     type SettingDefinition,
     type SettingDefinitionItem,
+    type SettingGroupItem,
     type ToggleComponent,
     debounce,
     requireApiVersion,
@@ -223,7 +224,6 @@ export class SettingsTab extends PluginSettingTab {
             this.taskFormatDefinition(),
             this.globalDefaultsGroup(),
             this.searchesGroup(),
-            this.presetsPage(),
             this.statusesPage(),
             this.datesGroup(),
             this.datesFromFilenamesGroup(),
@@ -335,6 +335,7 @@ export class SettingsTab extends PluginSettingTab {
             type: 'group',
             heading: i18n.t('settings.searches.heading'),
             items: [
+                this.presetsPage(),
                 {
                     name: i18n.t('settings.globalQuery.heading'),
                     desc: i18n.t('settings.globalQuery.query.shortDescription'),
@@ -476,7 +477,7 @@ export class SettingsTab extends PluginSettingTab {
 
     // ---- Presets (sub-page) ----------------------------------------------
 
-    private presetsPage(): SettingDefinitionItem {
+    private presetsPage(): SettingGroupItem {
         return {
             type: 'page',
             name: i18n.t('settings.presets.name'),
