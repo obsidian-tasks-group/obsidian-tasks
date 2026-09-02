@@ -202,9 +202,6 @@
       },
       "name": "Định dạng nhiệm vụ"
     },
-    "globalDefaults": {
-      "heading": ""
-    },
     "globalFilter": {
       "filter": {
         "description": {

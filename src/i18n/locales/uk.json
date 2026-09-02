@@ -202,9 +202,6 @@
       },
       "name": "Формат задач"
     },
-    "globalDefaults": {
-      "heading": ""
-    },
     "globalFilter": {
       "filter": {
         "description": {

@@ -202,9 +202,6 @@
       },
       "name": "Formato da Tarefa"
     },
-    "globalDefaults": {
-      "heading": ""
-    },
     "globalFilter": {
       "filter": {
         "description": {
