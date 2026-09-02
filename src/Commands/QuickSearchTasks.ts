@@ -72,6 +72,12 @@ export function findIncompleteTasksByFuzzyDescription(tasks: readonly Task[], qu
     return rankMatchingIncompleteTasksByDescription(tasks, prepareFuzzySearch(query));
 }
 
+export function findIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
+    return getSettings().quickSearch.fuzzyMatching
+        ? findIncompleteTasksByFuzzyDescription(tasks, query)
+        : findIncompleteTasksByDescriptionSubstring(tasks, query);
+}
+
 export function rankMatchingIncompleteTasksByDescription(
     tasks: readonly Task[],
     matchDescription: TaskDescriptionMatcher,
@@ -203,10 +209,7 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
     }
 
     public getSuggestions(query: string): Task[] {
-        const tasks = this.getTasks();
-        return getSettings().quickSearch.fuzzyMatching
-            ? findIncompleteTasksByFuzzyDescription(tasks, query)
-            : findIncompleteTasksByDescriptionSubstring(tasks, query);
+        return findIncompleteTasksByDescription(this.getTasks(), query);
     }
 
     public renderSuggestion(task: Task, el: HTMLElement): void {

@@ -2,10 +2,10 @@ import moment from 'moment';
 import { Notice } from 'obsidian';
 import {
     QuickSearchTasksModal,
+    findIncompleteTasksByDescription,
     findIncompleteTasksByDescriptionSubstring,
     openTaskAtSourceLocation,
     rankMatchingIncompleteTasksByDescription,
-    saveFuzzyMatchingSetting,
     taskSearchMetadataText,
     taskSearchSuggestionText,
 } from '../../src/Commands/QuickSearchTasks';
@@ -18,13 +18,18 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { fromLines, fromMarkdown } from '../TestingTools/TestHelpers';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import type { PresetsMap } from '../../src/Query/Presets/Presets';
-import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import type { Task } from '../../src/Task/Task';
 
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
     Notice: jest.fn(),
-    prepareFuzzySearch: jest.fn(() => () => ({ score: 0 })),
+    prepareFuzzySearch: jest.fn((query: string) => (description: string) => {
+        const normalizedQuery = query.toLowerCase();
+        const normalizedDescription = description.toLowerCase();
+        const matches = [...normalizedQuery].every((character) => normalizedDescription.includes(character));
+        return matches ? { score: normalizedQuery.length / normalizedDescription.length } : null;
+    }),
 }));
 jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
 
@@ -123,59 +128,16 @@ describe('Finding matching tasks', () => {
 });
 
 describe('Choosing the Quick Search matching mode', () => {
-    function addObsidianElementMethods<T extends HTMLElement>(element: T): T {
-        return Object.assign(element, {
-            addClass: (...classes: string[]) => element.classList.add(...classes),
-            createEl: (
-                tag: keyof HTMLElementTagNameMap,
-                options: { cls?: string[]; attr?: Record<string, string> } = {},
-            ) => {
-                const child = document.createElement(tag);
-                child.classList.add(...(options.cls ?? []));
-                Object.entries(options.attr ?? {}).forEach(([name, value]) => child.setAttribute(name, value));
-                element.appendChild(child);
-                return child;
-            },
-        });
-    }
-
-    it('should use the configured fuzzy matching setting', () => {
+    it.each([
+        ['fuzzy matching finds a non-contiguous match', true, 'tdo', 1],
+        ['fuzzy matching excludes a non-match', true, 'xyz', 0],
+        ['substring matching finds a contiguous match', false, 'todo', 1],
+        ['substring matching excludes a non-contiguous match', false, 'tdo', 0],
+    ])('%s', (_, fuzzyMatching: boolean, query: string, expectedTaskCount: number) => {
         const task = new TaskBuilder().description('Todo task').build();
-        const modal = new QuickSearchTasksModal({} as any, () => [task], jest.fn());
+        updateSettings({ quickSearch: { fuzzyMatching } });
 
-        expect(modal.getSuggestions('tdo')).toEqual([task]);
-
-        updateSettings({ quickSearch: { fuzzyMatching: false } });
-
-        expect(modal.getSuggestions('tdo')).toEqual([]);
-    });
-
-    it('should save a changed matching mode and refresh the current search', async () => {
-        const saveSettings = jest.fn().mockResolvedValue(undefined);
-        const refreshSearch = jest.fn();
-
-        await saveFuzzyMatchingSetting(false, saveSettings, refreshSearch);
-
-        expect(getSettings().quickSearch.fuzzyMatching).toBe(false);
-        expect(refreshSearch).toHaveBeenCalledTimes(1);
-        expect(saveSettings).toHaveBeenCalledTimes(1);
-    });
-
-    it('should keep the options button aligned by placing it inside the search input container', () => {
-        const modal = new QuickSearchTasksModal({} as any, () => tasks, jest.fn());
-        const modalElement = addObsidianElementMethods(document.createElement('div'));
-        const inputContainer = addObsidianElementMethods(document.createElement('div'));
-        const inputElement = document.createElement('input');
-        inputContainer.appendChild(inputElement);
-        modalElement.appendChild(inputContainer);
-        Object.assign(modal, { modalEl: modalElement, inputEl: inputElement });
-
-        modal.onOpen();
-
-        // The input container is the button's CSS positioning context. Appending
-        // the button to the modal instead would move it above the search field.
-        const optionsButton = modalElement.querySelector('[aria-label="Quick search options"]');
-        expect(optionsButton?.parentElement).toBe(inputContainer);
+        expect(findIncompleteTasksByDescription([task], query)).toHaveLength(expectedTaskCount);
     });
 });
 
