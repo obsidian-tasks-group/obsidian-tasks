@@ -17,6 +17,7 @@ If you want an off-line copy of the Tasks user guide, the safest (and easiest) a
     - **Source code (tar.gz)**
 4. Expand the downloaded file.
 5. In Obsidian, open the extracted `docs` folder as a vault.
+6. Start reading from **Introduction**.
 
 You can then read the user guide locally in Obsidian.
 
