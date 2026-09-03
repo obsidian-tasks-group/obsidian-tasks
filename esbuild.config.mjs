@@ -211,6 +211,11 @@ const buildOptions = {
     plugins: [
         esbuildSvelte({
             preprocess: sveltePreprocess(),
+            // esbuild-svelte@0.9's default is to emit component CSS as an external file for
+            // esbuild to bundle, which - since none of our components carry real <style>
+            // content - produces an empty main.css alongside main.js.
+            // This avoids that empty main.css file creation.
+            compilerOptions: { css: 'injected' },
         }),
         sassPlugin({
             syntax: 'scss',
