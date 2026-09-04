@@ -1,13 +1,10 @@
 import moment from 'moment';
-import { Notice } from 'obsidian';
 import {
     findIncompleteTasksByDescription,
     findIncompleteTasksByDescriptionSubstring,
-    openTaskAtSourceLocation,
     rankMatchingIncompleteTasksByDescription,
 } from '../../src/Commands/QuickSearchTasks';
 import { Commands } from '../../src/Commands';
-import { getTaskLineAndFile } from '../../src/Obsidian/File';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
@@ -17,15 +14,7 @@ import type { PresetsMap } from '../../src/Query/Presets/Presets';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import type { Task } from '../../src/Task/Task';
 
-jest.mock('obsidian', () => ({
-    ...jest.requireActual('../__mocks__/obsidian'),
-    Notice: jest.fn(),
-}));
-jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
-
 window.moment = moment;
-
-const MockedNotice = jest.mocked(Notice);
 
 const writeReleaseNotes = new TaskBuilder()
     .description('Write release notes')
@@ -354,55 +343,5 @@ describe('Finding matching tasks, sorting results in expected order', () => {
 
             expectSortsTasksInExpectedOrder(tasks, expectedOrder, (task: Task) => task.path);
         });
-    });
-});
-
-describe('Opening a selected task', () => {
-    it('should inform the user when the selected task can no longer be found', async () => {
-        const app = { vault: {}, workspace: { getLeaf: jest.fn() } } as any;
-        const warning = jest.spyOn(console, 'warn').mockImplementation();
-        jest.mocked(getTaskLineAndFile).mockResolvedValue(undefined);
-
-        await openTaskAtSourceLocation(writeReleaseNotes, app);
-
-        expect(app.workspace.getLeaf).not.toHaveBeenCalled();
-        expect(warning).toHaveBeenCalledWith(
-            'Tasks: Could not open the selected task.\nIt may have changed. Try searching again.',
-        );
-        expect(MockedNotice).toHaveBeenCalledWith(
-            'Tasks: Could not open the selected task.\nIt may have changed. Try searching again.',
-        );
-        warning.mockRestore();
-    });
-
-    it('should open the selected task at its current source line', async () => {
-        const openFile = jest.fn();
-        const app = {
-            vault: {},
-            workspace: { getLeaf: jest.fn(() => ({ openFile })) },
-        } as any;
-        const task = writeReleaseNotes;
-        const file = { path: 'Projects/Release.md' } as any;
-        jest.mocked(getTaskLineAndFile).mockResolvedValue([12, file]);
-
-        await openTaskAtSourceLocation(task, app);
-
-        expect(app.workspace.getLeaf).toHaveBeenCalledWith(false);
-        expect(openFile).toHaveBeenCalledWith(file, { eState: { line: 12 } });
-    });
-
-    it('should handle a failure to open the selected task source', async () => {
-        const openFile = jest.fn().mockRejectedValue(new Error('Unable to open file'));
-        const app = {
-            vault: {},
-            workspace: { getLeaf: jest.fn(() => ({ openFile })) },
-        } as any;
-        const error = jest.spyOn(console, 'error').mockImplementation();
-        jest.mocked(getTaskLineAndFile).mockResolvedValue([12, { path: 'Projects/Release.md' } as any]);
-
-        await expect(openTaskAtSourceLocation(writeReleaseNotes, app)).resolves.toBeUndefined();
-
-        expect(error).toHaveBeenCalledWith('Tasks: Could not open task source.', expect.any(Error));
-        error.mockRestore();
     });
 });
