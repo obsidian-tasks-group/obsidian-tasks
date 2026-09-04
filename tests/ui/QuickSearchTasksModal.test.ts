@@ -57,16 +57,7 @@ const tasks = [releaseCompleted, reviewRELEASEChecklist, reviewADocument, writeR
 
 describe('Describing matching task', () => {
     it('should provide the description, source file name, and preceding heading for each suggestion', () => {
-        expect(
-            taskSearchSuggestionText(
-                new TaskBuilder()
-                    .description('Write release notes')
-                    .path('Projects/Release.md')
-                    .lineNumber(12)
-                    .precedingHeader('Preparation')
-                    .build(),
-            ),
-        ).toEqual({
+        expect(taskSearchSuggestionText(writeReleaseNotes)).toEqual({
             description: 'Write release notes',
             source: 'Release.md',
             heading: 'Preparation',
