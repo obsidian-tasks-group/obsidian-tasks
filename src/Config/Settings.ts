@@ -84,6 +84,9 @@ export interface Settings {
     searchResults: {
         taskCountLocation: 'top' | 'bottom';
     };
+    quickSearch: {
+        fuzzyMatching: boolean;
+    };
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -129,6 +132,9 @@ const defaultSettings: Readonly<Settings> = {
     removeScheduledDateOnRecurrence: false,
     searchResults: {
         taskCountLocation: 'bottom',
+    },
+    quickSearch: {
+        fuzzyMatching: true,
     },
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,

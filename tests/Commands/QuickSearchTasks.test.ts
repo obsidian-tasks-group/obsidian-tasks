@@ -2,8 +2,10 @@ import moment from 'moment';
 import { Notice } from 'obsidian';
 import {
     QuickSearchTasksModal,
-    filterIncompleteTasksByDescription,
+    findIncompleteTasksByDescription,
+    findIncompleteTasksByDescriptionSubstring,
     openTaskAtSourceLocation,
+    rankMatchingIncompleteTasksByDescription,
     taskSearchMetadataText,
     taskSearchSuggestionText,
 } from '../../src/Commands/QuickSearchTasks';
@@ -22,6 +24,12 @@ import type { Task } from '../../src/Task/Task';
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
     Notice: jest.fn(),
+    prepareFuzzySearch: jest.fn((query: string) => (description: string) => {
+        const normalizedQuery = query.toLowerCase();
+        const normalizedDescription = description.toLowerCase();
+        const matches = [...normalizedQuery].every((character) => normalizedDescription.includes(character));
+        return matches ? { score: normalizedQuery.length / normalizedDescription.length } : null;
+    }),
 }));
 jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
 
@@ -103,19 +111,65 @@ describe('Registering the command', () => {
 
 describe('Finding matching tasks', () => {
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
-        expect(filterIncompleteTasksByDescription(tasks, 'release')).toEqual([
+        expect(findIncompleteTasksByDescriptionSubstring(tasks, 'release')).toEqual([
             reviewRELEASEChecklist,
             writeReleaseNotes,
         ]);
     });
 
     it('should not show results until the user enters a search query', () => {
-        expect(filterIncompleteTasksByDescription(tasks, '')).toHaveLength(0);
-        expect(filterIncompleteTasksByDescription(tasks, '   ')).toHaveLength(0);
+        expect(findIncompleteTasksByDescriptionSubstring(tasks, '')).toHaveLength(0);
+        expect(findIncompleteTasksByDescriptionSubstring(tasks, '   ')).toHaveLength(0);
     });
 
     it('should not match task tags', () => {
-        expect(filterIncompleteTasksByDescription(tasks, '#release')).toEqual([]);
+        expect(findIncompleteTasksByDescriptionSubstring(tasks, '#release')).toEqual([]);
+    });
+});
+
+describe('Choosing the Quick Search matching mode', () => {
+    it.each([
+        ['fuzzy matching finds a non-contiguous match', true, 'tdo', 1],
+        ['fuzzy matching excludes a non-match', true, 'xyz', 0],
+        ['substring matching finds a contiguous match', false, 'todo', 1],
+        ['substring matching excludes a non-contiguous match', false, 'tdo', 0],
+    ])('%s', (_, fuzzyMatching: boolean, query: string, expectedTaskCount: number) => {
+        const task = new TaskBuilder().description('Todo task').build();
+        updateSettings({ quickSearch: { fuzzyMatching } });
+
+        expect(findIncompleteTasksByDescription([task], query)).toHaveLength(expectedTaskCount);
+    });
+});
+
+describe('Ranking description search matches', () => {
+    it('should rank matched incomplete tasks by score', () => {
+        const closeMatch = new TaskBuilder().description('Todo task').build();
+        const distantMatch = new TaskBuilder().description('Take documents out').build();
+        const completedMatch = new TaskBuilder().description('Done task').status(Status.DONE).build();
+        const scores = new Map([
+            [closeMatch.descriptionWithoutTags, 2],
+            [distantMatch.descriptionWithoutTags, 1],
+            [completedMatch.descriptionWithoutTags, 3],
+        ]);
+
+        const results = rankMatchingIncompleteTasksByDescription(
+            [distantMatch, completedMatch, closeMatch],
+            (description) => {
+                const score = scores.get(description);
+                return score === undefined ? null : { score };
+            },
+        );
+
+        expect(results).toEqual([closeMatch, distantMatch]);
+    });
+
+    it('should use the normal Tasks order when scores are equal', () => {
+        const first = new TaskBuilder().description('A todo').build();
+        const second = new TaskBuilder().description('B todo').build();
+
+        const results = rankMatchingIncompleteTasksByDescription([second, first], () => ({ score: 1 }));
+
+        expect(results).toEqual([first, second]);
     });
 });
 
@@ -185,7 +239,9 @@ describe('Finding matching tasks, honouring the Global Query', () => {
 
             const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-            const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
+            const foundDescriptions = findIncompleteTasksByDescriptionSubstring(tasks, query).map(
+                (task) => task.description,
+            );
             expect(foundDescriptions).toEqual(expectedFoundDescriptions);
         },
     );
@@ -238,7 +294,9 @@ describe('Finding matching tasks, sorting results in expected order', () => {
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-        const foundDescriptions = filterIncompleteTasksByDescription(tasks, query).map((task) => task.description);
+        const foundDescriptions = findIncompleteTasksByDescriptionSubstring(tasks, query).map(
+            (task) => task.description,
+        );
         expect(foundDescriptions).toEqual(expectedFoundDescriptions);
     });
 
@@ -266,11 +324,11 @@ describe('Finding matching tasks, sorting results in expected order', () => {
 
             const query = tasks[0].description;
 
-            const result = filterIncompleteTasksByDescription(tasks, query);
+            const result = findIncompleteTasksByDescriptionSubstring(tasks, query);
             expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
-            const reverse = filterIncompleteTasksByDescription(tasks.reverse(), query);
+            const reverse = findIncompleteTasksByDescriptionSubstring(tasks.reverse(), query);
             expect(reverse.map(propertyGetter)).toEqual(expectedOrder);
         }
 
@@ -363,7 +421,7 @@ describe('Rendering matching tasks', () => {
     }
 
     it('should render the checkbox, description, location, and metadata elements', () => {
-        const modal = new QuickSearchTasksModal({} as any, () => tasks);
+        const modal = new QuickSearchTasksModal({} as any, () => tasks, jest.fn());
         const element = document.createElement('div');
 
         modal.renderSuggestion(writeReleaseNotes, element);
@@ -385,7 +443,7 @@ describe('Rendering matching tasks', () => {
 
             const taskListWithGlobalFilter = fromMarkdown('- [ ] #task Do Stuff');
 
-            const modal = new QuickSearchTasksModal({} as any, () => taskListWithGlobalFilter);
+            const modal = new QuickSearchTasksModal({} as any, () => taskListWithGlobalFilter, jest.fn());
             const element = document.createElement('div');
 
             modal.renderSuggestion(taskListWithGlobalFilter[0], element);
@@ -395,7 +453,7 @@ describe('Rendering matching tasks', () => {
     );
 
     it('should only check the checkbox for completed tasks', () => {
-        const modal = new QuickSearchTasksModal({} as any, () => tasks);
+        const modal = new QuickSearchTasksModal({} as any, () => tasks, jest.fn());
         const incompleteElement = document.createElement('div');
         const completeElement = document.createElement('div');
         const inProgressTask = new TaskBuilder().description('In progress task').status(Status.IN_PROGRESS).build();

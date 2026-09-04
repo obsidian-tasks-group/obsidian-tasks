@@ -1,3 +1,19 @@
+.tasks-quick-search-modal-container {
+    .prompt-input {
+        // The sum covers the button's inset and width, so search text does not
+        // extend underneath the absolutely positioned button.
+        padding-inline-end: calc(var(--size-4-16) + var(--size-4-4));
+    }
+
+    .tasks-quick-search-options-button {
+        // Vertically centre the button on the search field and position it
+        // using a logical inset so the layout also works right-to-left.
+        top: 50%;
+        inset-inline-end: var(--size-4-12);
+        transform: translateY(-50%);
+    }
+}
+
 .tasks-quick-search-result {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
