@@ -157,7 +157,7 @@ export async function openTaskAtSourceLocation(task: Task, app: App): Promise<vo
     }
 }
 
-export async function saveFuzzyMatchingSetting(
+async function saveFuzzyMatchingSetting(
     fuzzyMatching: boolean,
     onSaveSettings: () => Promise<void>,
     onChange: () => void,
