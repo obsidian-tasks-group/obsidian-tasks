@@ -251,11 +251,11 @@ export function prepareSimpleSearch(query: string): (text: string) => SearchResu
  * @param query - the search term
  */
 export function prepareFuzzySearch(query: string) {
-    return function (description: string) {
+    return function (text: string) {
         const normalizedQuery = query.toLowerCase();
-        const normalizedDescription = description.toLowerCase();
-        const matches = [...normalizedQuery].every((character) => normalizedDescription.includes(character));
-        return matches ? { score: normalizedQuery.length / normalizedDescription.length } : null;
+        const normalizedText = text.toLowerCase();
+        const matches = [...normalizedQuery].every((character) => normalizedText.includes(character));
+        return matches ? { score: normalizedQuery.length / normalizedText.length } : null;
     };
 }
 
