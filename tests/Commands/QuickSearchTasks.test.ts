@@ -20,12 +20,6 @@ import type { Task } from '../../src/Task/Task';
 jest.mock('obsidian', () => ({
     ...jest.requireActual('../__mocks__/obsidian'),
     Notice: jest.fn(),
-    prepareFuzzySearch: jest.fn((query: string) => (description: string) => {
-        const normalizedQuery = query.toLowerCase();
-        const normalizedDescription = description.toLowerCase();
-        const matches = [...normalizedQuery].every((character) => normalizedDescription.includes(character));
-        return matches ? { score: normalizedQuery.length / normalizedDescription.length } : null;
-    }),
 }));
 jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
 
