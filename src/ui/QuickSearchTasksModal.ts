@@ -8,9 +8,9 @@ import type { Task } from '../Task/Task';
 import { TASK_FORMATS, getSettings, updateSettings } from '../Config/Settings';
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { type TaskSearchSuggestionText, findIncompleteTasksByDescription } from '../Commands/QuickSearchTasks';
-import { QuickSearchOptionsModal } from '../Obsidian/QuickSearchOptionsModal';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { getTaskLineAndFile } from '../Obsidian/File';
+import { QuickSearchOptionsModal } from './QuickSearchOptionsModal';
 
 export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {
     return {
