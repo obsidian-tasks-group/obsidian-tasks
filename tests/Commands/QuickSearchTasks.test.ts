@@ -3,7 +3,7 @@ import {
     findIncompleteTasksByDescription,
     findIncompleteTasksByDescriptionSubstring,
     rankMatchingIncompleteTasksByDescription,
-} from '../../src/Commands/QuickSearchTasks';
+} from '../../src/lib/QuickSearchTasks';
 import { Commands } from '../../src/Commands';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';

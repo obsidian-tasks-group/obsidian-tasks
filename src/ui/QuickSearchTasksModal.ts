@@ -7,7 +7,7 @@ import { type App, Component, MarkdownRenderer, Notice, SuggestModal, setIcon } 
 import type { Task } from '../Task/Task';
 import { TASK_FORMATS, getSettings, updateSettings } from '../Config/Settings';
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
-import { type TaskSearchSuggestionText, findIncompleteTasksByDescription } from '../Commands/QuickSearchTasks';
+import { type TaskSearchSuggestionText, findIncompleteTasksByDescription } from '../lib/QuickSearchTasks';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { getTaskLineAndFile } from '../Obsidian/File';
 import { QuickSearchOptionsModal } from './QuickSearchOptionsModal';
