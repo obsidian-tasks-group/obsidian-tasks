@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Non-UI parts of the Quick Search command implementation.
+ * See also `src/ui/QuickSearchTasksModal.ts`.
+ */
+
 import { prepareFuzzySearch } from 'obsidian';
 import { getSettings } from '../Config/Settings';
 import type { Task } from '../Task/Task';

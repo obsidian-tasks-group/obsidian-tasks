@@ -1,3 +1,8 @@
+/**
+ * @fileoverview UI parts of the Quick Search command implementation.
+ * See also `src/Commands/QuickSearchTasks.ts`.
+ */
+
 import { type App, Component, MarkdownRenderer, Notice, SuggestModal, setIcon } from 'obsidian';
 import type { Task } from '../Task/Task';
 import { TASK_FORMATS, getSettings, updateSettings } from '../Config/Settings';
