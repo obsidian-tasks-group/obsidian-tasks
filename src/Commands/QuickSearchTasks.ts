@@ -1,6 +1,5 @@
 import { type App, Component, MarkdownRenderer, Notice, SuggestModal, prepareFuzzySearch, setIcon } from 'obsidian';
-import { TASK_FORMATS, getSettings, updateSettings } from '../Config/Settings';
-import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
+import { getSettings, updateSettings } from '../Config/Settings';
 import type { Task } from '../Task/Task';
 import { getTaskLineAndFile } from '../Obsidian/File';
 import { GlobalFilter } from '../Config/GlobalFilter';
@@ -11,6 +10,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { DescriptionField } from '../Query/Filter/DescriptionField';
 import { Sort } from '../Query/Sort/Sort';
 import { QuickSearchOptionsModal } from '../Obsidian/QuickSearchOptionsModal';
+import { taskSearchMetadataText, taskSearchSuggestionText } from '../ui/QuickSearchTasksModal';
 
 export interface TaskSearchSuggestionText {
     description: string;
@@ -114,28 +114,6 @@ function sortResults(results: Task[], searchInfo: SearchInfo): Task[] {
     // And if the descriptions are identical, sort the tasks by the
     // default Tasks order used in Tasks queries.
     return Sort.by([sorter], results, searchInfo);
-}
-
-export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {
-    return {
-        description: task.descriptionWithoutTags,
-        source: task.path.split('/').pop() ?? task.path,
-        heading: task.precedingHeader ?? 'No heading',
-    };
-}
-
-export function taskSearchMetadataText(task: Task): string[] {
-    const serializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
-    const components = [
-        TaskLayoutComponent.DueDate,
-        TaskLayoutComponent.ScheduledDate,
-        TaskLayoutComponent.StartDate,
-        TaskLayoutComponent.Priority,
-        TaskLayoutComponent.RecurrenceRule,
-    ];
-    return components
-        .map((component) => serializer.componentToString(task, false, component).trim())
-        .filter((text) => text !== '');
 }
 
 export async function openTaskAtSourceLocation(task: Task, app: App): Promise<void> {

@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-import { taskSearchMetadataText, taskSearchSuggestionText } from '../../src/Commands/QuickSearchTasks';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
+import { taskSearchMetadataText, taskSearchSuggestionText } from '../../src/ui/QuickSearchTasksModal';
 
 window.moment = moment;
 
