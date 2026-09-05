@@ -3,8 +3,12 @@ import { Notice } from 'obsidian';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Priority } from '../../src/Task/Priority';
-import { taskSearchMetadataText, taskSearchSuggestionText } from '../../src/ui/QuickSearchTasksModal';
-import { QuickSearchTasksModal, openTaskAtSourceLocation } from '../../src/Commands/QuickSearchTasks';
+import {
+    QuickSearchTasksModal,
+    openTaskAtSourceLocation,
+    taskSearchMetadataText,
+    taskSearchSuggestionText,
+} from '../../src/ui/QuickSearchTasksModal';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { Status } from '../../src/Statuses/Status';
 import { fromMarkdown } from '../TestingTools/TestHelpers';
