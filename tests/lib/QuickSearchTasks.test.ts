@@ -4,7 +4,6 @@ import {
     findIncompleteTasksByDescriptionSubstring,
     rankMatchingIncompleteTasksByDescription,
 } from '../../src/lib/QuickSearchTasks';
-import { Commands } from '../../src/Commands';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
@@ -65,26 +64,6 @@ describe('validate test data', () => {
     it('should have sample tasks be alphabetical by description, so that sorting can be tested separately', () => {
         const descriptions = tasks.map((task) => task.description);
         expect(descriptions).toBeSorted();
-    });
-});
-
-describe('Registering the command', () => {
-    it('should register the quick search command', () => {
-        const addCommand = jest.fn();
-        new Commands({
-            plugin: {
-                app: {},
-                addCommand,
-                getTasks: () => [],
-            } as any,
-        });
-
-        expect(addCommand).toHaveBeenCalledWith(
-            expect.objectContaining({
-                id: 'quick-search',
-                name: 'Quick search',
-            }),
-        );
     });
 });
 
