@@ -241,6 +241,24 @@ export function prepareSimpleSearch(query: string): (text: string) => SearchResu
     };
 }
 
+/**
+ * Fake implementation of Obsidian's prepareFuzzySearch(),
+ * so we can write tests of code that calls that function.
+ *
+ * TODO Augment this to return an actual SearchResult, with the matching character positions.
+ *
+ * See https://docs.obsidian.md/Reference/TypeScript+API/prepareFuzzySearch
+ * @param query - the search term
+ */
+export function prepareFuzzySearch(query: string) {
+    return function (text: string) {
+        const normalizedQuery = query.toLowerCase();
+        const normalizedText = text.toLowerCase();
+        const matches = [...normalizedQuery].every((character) => normalizedText.includes(character));
+        return matches ? { score: normalizedQuery.length / normalizedText.length } : null;
+    };
+}
+
 type IconName = string;
 
 export function setIcon(element: HTMLElement, iconId: IconName): void {
