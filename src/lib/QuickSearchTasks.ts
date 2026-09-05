@@ -13,12 +13,6 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { DescriptionField } from '../Query/Filter/DescriptionField';
 import { Sort } from '../Query/Sort/Sort';
 
-export interface TaskSearchSuggestionText {
-    description: string;
-    source: string;
-    heading: string;
-}
-
 interface TaskDescriptionMatch {
     score: number;
 }
