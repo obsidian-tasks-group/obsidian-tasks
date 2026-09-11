@@ -1,5 +1,20 @@
 <h1 align="center">Obsidian Tasks</h1>
 
+> ## 🔧 This is a personal fork
+>
+> This repository is **[barthelemy-simon/upgraded-tasks](https://github.com/barthelemy-simon/upgraded-tasks)**, a personal fork of
+> **[obsidian-tasks-group/obsidian-tasks](https://github.com/obsidian-tasks-group/obsidian-tasks)** used to develop upgrades that
+> aren't part of the upstream project. Planned/in-progress additions:
+>
+> 1. **Native reminder notifications** — a "Reminder" time field in the task modal, writing the `⏰ HH:MM` syntax already understood by the [Reminder](https://github.com/uphy/obsidian-reminder) plugin.
+> 2. **Business-day postponing** — the ⏩ postpone button skips weekends.
+> 3. **Cross-project tabular view** — a grouped-table rendering mode (bucket × project) for query results.
+>
+> For the original plugin, its documentation, and its own roadmap, see the upstream repo linked above. Everything below this
+> notice is upstream's own README, kept for reference.
+>
+> ---
+
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
 <p align="center"><a href="https://publish.obsidian.md/tasks/">User Guide</a> - <a href="https://publish.obsidian.md/tasks-contributing/">Contributing Guide</a> - <a href="https://github.com/orgs/obsidian-tasks-group/projects/4/views/1">Roadmap</a></p>
