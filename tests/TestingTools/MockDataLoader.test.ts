@@ -1,3 +1,4 @@
+import { join } from 'path';
 import one_task from '../Obsidian/__test_data__/one_task.json';
 import { MockDataLoader } from './MockDataLoader';
 
@@ -17,7 +18,10 @@ describe('MockDataLoader', () => {
 
     it('should provide the path to the JSON file', () => {
         const path = MockDataLoader.path('code_block_in_task');
-        const expectedSubPath = 'tests/Obsidian/__test_data__/code_block_in_task.json';
+        // Built with path.join(), not a hardcoded forward-slash string, so this matches whatever separator
+        // path.resolve() (used in MockDataLoader.path()) produces on the current OS - '/' on POSIX,
+        // '\' on Windows.
+        const expectedSubPath = join('tests', 'Obsidian', '__test_data__', 'code_block_in_task.json');
 
         expect(path).toContain(expectedSubPath);
         expect(path.endsWith(expectedSubPath)).toBe(true);
