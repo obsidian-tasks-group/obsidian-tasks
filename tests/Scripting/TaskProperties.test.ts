@@ -133,6 +133,8 @@ describe('task', () => {
             'task.recurrenceRule',
             'task.onCompletion',
             'task.tags',
+            'task.reminderTime',
+            'task.reminderDateTime',
             // 'task.indentation', // Cannot just use length to determine if sub-task, as it many be '> ' due to being in a sub-task
             // 'task.listMarker', // Not a priority to release
             // 'task.blockLink', // Release support for grouping by task.blockLink, after removing the leading space and maybe the carat

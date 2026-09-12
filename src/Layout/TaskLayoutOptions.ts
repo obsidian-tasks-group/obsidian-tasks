@@ -16,6 +16,7 @@ export enum TaskLayoutComponent {
     StartDate = 'startDate',
     ScheduledDate = 'scheduledDate',
     DueDate = 'dueDate',
+    ReminderTime = 'reminderTime',
     CancelledDate = 'cancelledDate',
     DoneDate = 'doneDate',
     BlockLink = 'blockLink',
@@ -115,6 +116,7 @@ export function parseTaskShowHideOptions(taskLayoutOptions: TaskLayoutOptions, o
         ['on completion', TaskLayoutComponent.OnCompletion],
         ['priority', TaskLayoutComponent.Priority],
         ['recurrence rule', TaskLayoutComponent.RecurrenceRule],
+        ['reminder time', TaskLayoutComponent.ReminderTime],
         ['scheduled date', TaskLayoutComponent.ScheduledDate],
         ['start date', TaskLayoutComponent.StartDate],
     ]);

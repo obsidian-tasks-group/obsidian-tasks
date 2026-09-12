@@ -72,6 +72,7 @@ describe('TaskSerializer Example', () => {
                 scheduledDate: null,
                 doneDate: null,
                 cancelledDate: null,
+                reminderTime: null,
                 recurrence: null,
                 onCompletion: OnCompletion.Ignore,
                 dependsOn: [],
