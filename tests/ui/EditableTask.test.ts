@@ -59,6 +59,7 @@ describe('EditableTask tests', () => {
               "originalBlocking": [],
               "priority": "medium",
               "recurrenceRule": "every day when done",
+              "reminderTime": "09:00",
               "scheduledDate": "2023-07-03",
               "startDate": "2023-07-02",
               "status": Status {
@@ -150,6 +151,7 @@ describe('EditableTask tests', () => {
         editableTask.dueDate = '';
         editableTask.doneDate = '';
         editableTask.cancelledDate = '';
+        editableTask.reminderTime = '';
         editableTask.forwardOnly = true;
         editableTask.blockedBy = [];
         editableTask.blocking = [];
@@ -163,7 +165,7 @@ describe('EditableTask tests', () => {
               "_createdDate": null,
               "_doneDate": null,
               "_dueDate": null,
-              "_reminderTime": "09:00",
+              "_reminderTime": null,
               "_scheduledDate": null,
               "_startDate": null,
               "_urgency": null,

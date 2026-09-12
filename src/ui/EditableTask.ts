@@ -32,6 +32,7 @@ export class EditableTask {
     dueDate: string;
     doneDate: string;
     cancelledDate: string;
+    reminderTime: string;
     forwardOnly: boolean;
     blockedBy: Task[];
     blocking: Task[];
@@ -52,6 +53,7 @@ export class EditableTask {
         dueDate: string;
         doneDate: string;
         cancelledDate: string;
+        reminderTime: string;
         forwardOnly: boolean;
         blockedBy: Task[];
         blocking: Task[];
@@ -70,6 +72,7 @@ export class EditableTask {
         this.dueDate = editableTask.dueDate;
         this.doneDate = editableTask.doneDate;
         this.cancelledDate = editableTask.cancelledDate;
+        this.reminderTime = editableTask.reminderTime;
         this.forwardOnly = editableTask.forwardOnly;
         this.blockedBy = editableTask.blockedBy;
         this.blocking = editableTask.blocking;
@@ -130,6 +133,7 @@ export class EditableTask {
             dueDate: task.due.formatAsDate(),
             doneDate: task.done.formatAsDate(),
             cancelledDate: task.cancelled.formatAsDate(),
+            reminderTime: task.reminderTime ?? '',
             forwardOnly: true,
             blockedBy: blockedBy,
             blocking: originalBlocking,
@@ -158,6 +162,9 @@ export class EditableTask {
         const cancelledDate = parseTypedDateForSaving(this.cancelledDate, this.forwardOnly);
         const createdDate = parseTypedDateForSaving(this.createdDate, this.forwardOnly);
         const doneDate = parseTypedDateForSaving(this.doneDate, this.forwardOnly);
+
+        const trimmedReminderTime = this.reminderTime.trim();
+        const reminderTime = trimmedReminderTime === '' ? null : trimmedReminderTime;
 
         let recurrence: Recurrence | null = null;
         if (this.recurrenceRule) {
@@ -205,6 +212,7 @@ export class EditableTask {
             doneDate,
             createdDate,
             cancelledDate,
+            reminderTime,
             dependsOn: blockedByWithIds.map((task) => task.id),
             id,
         });
