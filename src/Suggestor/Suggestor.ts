@@ -143,6 +143,7 @@ function addTaskPropertySuggestions(
     addField(genericSuggestions, line, symbols.dueDateSymbol, 'due date');
     addField(genericSuggestions, line, symbols.startDateSymbol, 'start date');
     addField(genericSuggestions, line, symbols.scheduledDateSymbol, 'scheduled date');
+    addField(genericSuggestions, line, symbols.reminderTimeSymbol, 'reminder time');
 
     addPrioritySuggestions(genericSuggestions, symbols, parameters);
     addField(genericSuggestions, line, symbols.recurrenceSymbol, 'recurring (repeat)');

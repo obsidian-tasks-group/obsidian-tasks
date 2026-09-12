@@ -12,6 +12,10 @@
     "appendText": "scheduled:: "
   },
   {
+    "displayText": "reminder:: reminder time",
+    "appendText": "reminder:: "
+  },
+  {
     "displayText": "priority:: high priority",
     "appendText": "priority:: high] ",
     "insertSkip": 0
