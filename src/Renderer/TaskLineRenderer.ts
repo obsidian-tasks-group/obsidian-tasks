@@ -12,6 +12,8 @@ import { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { DateMenu } from '../ui/Menus/DateMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
+import { ReminderMenu } from '../ui/Menus/ReminderMenu';
+import { promptForReminderTime } from '../ui/Menus/ReminderPicker';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
 import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
@@ -254,6 +256,20 @@ export class TaskLineRenderer {
                         'title',
                         `Click to edit ${splitDateText(componentDateField)}, Right-click for more options`,
                     );
+                } else if (component === TaskLayoutComponent.ReminderTime) {
+                    // Not gated on Task.allDateFields(): a reminder is a time, not a date, so it gets
+                    // its own click/right-click handlers (a time-only picker and a preset-times menu)
+                    // rather than the generic calendar-date ones above.
+                    span.addEventListener('click', (ev: MouseEvent) => {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        promptForReminderTime(span, task, defaultTaskSaver);
+                    });
+
+                    span.addEventListener('contextmenu', (ev: MouseEvent) => {
+                        showMenu(ev, new ReminderMenu(task, defaultTaskSaver));
+                    });
+                    span.setAttribute('title', 'Click to edit reminder, Right-click for more options');
                 }
             }
         }
@@ -407,6 +423,7 @@ export class TaskLineRenderer {
             dueDateSymbol,
             cancelledDateSymbol,
             doneDateSymbol,
+            reminderTimeSymbol,
         } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
         element.addEventListener('mouseenter', () => {
@@ -443,6 +460,11 @@ export class TaskLineRenderer {
             addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
             addDateToTooltip(tooltip, task.cancelledDate, cancelledDateSymbol);
             addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
+
+            if (task.reminderTime) {
+                const reminderDiv = tooltip.createDiv();
+                reminderDiv.setText(`${reminderTimeSymbol} ${task.reminderTime}`);
+            }
 
             const linkText = task.getLinkText({ isFilenameUnique });
             if (linkText) {
