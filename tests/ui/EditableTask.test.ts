@@ -255,6 +255,45 @@ describe('EditableTask tests', () => {
         const tasksClosestDay = await editableTask.applyEdits(task, allTasks);
         expect(tasksClosestDay[0].dueDate).toEqualMoment(tuesdayAfter);
     });
+
+    it('should save an absolute typed reminder time, without touching the anchor date', async () => {
+        const task = new TaskBuilder().dueDate('2024-05-01').build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = '09:00';
+
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).toEqual('09:00');
+        expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-01');
+    });
+
+    it('should resolve a relative typed reminder time, shifting the anchor date if it crosses midnight', async () => {
+        jest.setSystemTime(new Date('2024-05-01T23:45:00'));
+        const task = new TaskBuilder().dueDate('2024-05-01').build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = 'in 30 minutes';
+
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).toEqual('00:15');
+        expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
+    });
+
+    it('should not create an anchor date for a relative reminder when the task has none', async () => {
+        const task = new TaskBuilder().build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = 'in 30 minutes';
+
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).not.toBeNull();
+        expect(edited.dueDate).toBeNull();
+        expect(edited.scheduledDate).toBeNull();
+        expect(edited.startDate).toBeNull();
+    });
 });
 
 describe('parseAndValidateRecurrence() tests', () => {

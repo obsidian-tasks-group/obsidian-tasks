@@ -1,5 +1,6 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { parseTypedDateForSaving } from '../DateTime/DateTools';
+import { parseReminderTimeInput } from '../DateTime/ReminderTimeParser';
 import { PriorityTools } from '../lib/PriorityTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
@@ -10,6 +11,7 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 import { StatusType } from '../Statuses/StatusConfiguration';
+import { SetReminderDateTime } from './EditInstructions/ReminderInstructions';
 
 /**
  * {@link Task} objects are immutable. This class allows to create a mutable object from a {@link Task}, apply the edits,
@@ -164,7 +166,11 @@ export class EditableTask {
         const doneDate = parseTypedDateForSaving(this.doneDate, this.forwardOnly);
 
         const trimmedReminderTime = this.reminderTime.trim();
-        const reminderTime = trimmedReminderTime === '' ? null : trimmedReminderTime;
+        const parsedReminderTime =
+            trimmedReminderTime === '' ? null : parseReminderTimeInput(trimmedReminderTime, window.moment());
+        // If parsing fails, EditTask.svelte's own validation should already have disabled Apply - but
+        // fall back to no reminder rather than throwing, if this is somehow reached anyway.
+        const reminderTime = parsedReminderTime?.time ?? null;
 
         let recurrence: Recurrence | null = null;
         if (this.recurrenceRule) {
@@ -198,7 +204,7 @@ export class EditableTask {
         }
 
         // First create an updated task, with all edits except Status:
-        const updatedTask = new Task({
+        let updatedTask = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             ...task,
             description,
@@ -216,6 +222,13 @@ export class EditableTask {
             dependsOn: blockedByWithIds.map((task) => task.id),
             id,
         });
+
+        if (parsedReminderTime?.isRelative) {
+            // A relative reminder ('in 30 minutes') may resolve to a different calendar day than the
+            // due/scheduled/start date just set above - reuse the same anchor-shifting logic the
+            // reminder menu uses, rather than duplicating it here.
+            [updatedTask] = new SetReminderDateTime(parsedReminderTime.date).apply(updatedTask);
+        }
 
         for (const blocking of removedBlocking) {
             const newParent = removeDependency(blocking, updatedTask);

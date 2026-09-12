@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { parseReminderTimeInput } from '../DateTime/ReminderTimeParser';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     export let reminderSymbol: string;
@@ -6,10 +7,38 @@
     export let isReminderTimeValid: boolean;
     export let accesskey: string | null;
 
-    // A plain 'HH:mm' string, or empty for no reminder. The native time input itself only ever
-    // produces one of those two shapes, but this still guards against anything else being poked
-    // in directly (for example scripted test input, or a future non-native editor).
-    $: isReminderTimeValid = reminderTime === '' || /^([01]\d|2[0-3]):[0-5]\d$/.test(reminderTime);
+    // Use this for testing purposes only
+    export let parsedReminderTime: string = '';
+
+    let pickedTime = '';
+
+    $: {
+        const trimmed = reminderTime.trim();
+        if (trimmed === '') {
+            parsedReminderTime = '<i>no reminder</i>';
+            isReminderTimeValid = true;
+            pickedTime = '';
+        } else {
+            const parsed = parseReminderTimeInput(trimmed, window.moment());
+            if (parsed === null) {
+                parsedReminderTime = '<i>invalid reminder time</i>';
+                isReminderTimeValid = false;
+            } else {
+                parsedReminderTime = parsed.time;
+                isReminderTimeValid = true;
+                pickedTime = parsed.time;
+            }
+        }
+    }
+
+    function onTimePicked(e: Event) {
+        if (e.target === null) {
+            return;
+        }
+        reminderTime = pickedTime;
+    }
+
+    const reminderPlaceholder = "Try '09:00' or 'in 30 minutes'";
 </script>
 
 <label for="reminder">{@html labelContentWithAccessKey('reminder', accesskey)}</label>
@@ -17,15 +46,27 @@
 <input
     bind:value={reminderTime}
     id="reminder"
-    type="time"
+    type="text"
     class:tasks-modal-error={!isReminderTimeValid}
     class="tasks-modal-date-input"
+    placeholder={reminderPlaceholder}
     {accesskey}
 />
 
-<div class="tasks-modal-parsed-date">
-    {reminderSymbol}
-</div>
+{#if isReminderTimeValid}
+    <div class="tasks-modal-parsed-date">
+        {reminderSymbol}<input
+            class="tasks-modal-date-editor-picker"
+            type="time"
+            bind:value={pickedTime}
+            id="reminder-editor-picker"
+            on:input={onTimePicked}
+            tabindex="-1"
+        />
+    </div>
+{:else}
+    <code class="tasks-modal-parsed-date">{reminderSymbol} {@html parsedReminderTime}</code>
+{/if}
 
 <style>
 </style>

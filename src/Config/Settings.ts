@@ -82,6 +82,9 @@ export interface Settings {
     recurrenceOnNextLine: boolean;
     removeScheduledDateOnRecurrence: boolean;
     postponeSkipWeekends: boolean;
+    reminderPresetTimes: string[];
+    reminderRelativeOffsetsMinutes: number[];
+    reminderRoundingIncrementMinutes: number;
     searchResults: {
         taskCountLocation: 'top' | 'bottom';
     };
@@ -132,6 +135,9 @@ const defaultSettings: Readonly<Settings> = {
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
     postponeSkipWeekends: false,
+    reminderPresetTimes: ['09:00', '12:00', '15:00', '18:00'],
+    reminderRelativeOffsetsMinutes: [30, 60, 120, 240],
+    reminderRoundingIncrementMinutes: 30,
     searchResults: {
         taskCountLocation: 'bottom',
     },

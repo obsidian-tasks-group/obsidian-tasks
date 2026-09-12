@@ -132,8 +132,16 @@
         <span class="accesskey">k</span>
         )
       </label>
-      <input id="reminder" type="time" class="tasks-modal-date-input" accesskey="k" />
-      <div class="tasks-modal-parsed-date">⏰</div>
+      <input
+        id="reminder"
+        type="text"
+        class="tasks-modal-date-input"
+        placeholder="Try '09:00' or 'in 30 minutes'"
+        accesskey="k" />
+      <div class="tasks-modal-parsed-date">
+        ⏰
+        <input class="tasks-modal-date-editor-picker" type="time" id="reminder-editor-picker" tabindex="-1" />
+      </div>
       <div class="future-dates-only" id="only-future-dates">
         <label for="forwardOnly">
           Only

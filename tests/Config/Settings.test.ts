@@ -94,6 +94,22 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().quickSearch.fuzzyMatching).toBe(false);
     });
 
+    it('should default the reminder settings, and retain a loaded value', () => {
+        expect(getSettings().reminderPresetTimes).toEqual(['09:00', '12:00', '15:00', '18:00']);
+        expect(getSettings().reminderRelativeOffsetsMinutes).toEqual([30, 60, 120, 240]);
+        expect(getSettings().reminderRoundingIncrementMinutes).toBe(30);
+
+        updateSettings({
+            reminderPresetTimes: ['07:00'],
+            reminderRelativeOffsetsMinutes: [15],
+            reminderRoundingIncrementMinutes: 15,
+        });
+
+        expect(getSettings().reminderPresetTimes).toEqual(['07:00']);
+        expect(getSettings().reminderRelativeOffsetsMinutes).toEqual([15]);
+        expect(getSettings().reminderRoundingIncrementMinutes).toBe(15);
+    });
+
     it('should completely remove properties not in defaultSettings', () => {
         // Arrange: Add an extra property that isn't in defaultSettings
         updateSettings({
