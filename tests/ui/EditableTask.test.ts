@@ -180,7 +180,7 @@ describe('EditableTask tests', () => {
               "listMarker": "-",
               "markdownHardBreak": "",
               "onCompletion": "",
-              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ⏰ 09:00 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
+              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ⏰ 2023-07-04 09:00 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
               "parent": null,
               "priority": "3",
               "recurrence": null,
@@ -299,7 +299,10 @@ describe('EditableTask tests', () => {
         expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
     });
 
-    it('should not create an anchor date for a relative reminder when the task has none', async () => {
+    it("should create today's scheduled date as the anchor for a relative reminder when the task has none", async () => {
+        // A reminder time with no anchor date isn't just useless within this codebase (see
+        // Task.reminderDateTime) - it's silently ignored by the Reminder plugin too, which needs a full
+        // date under the same symbol to recognise the line as a reminder at all.
         const task = new TaskBuilder().build();
         const allTasks: Task[] = [task];
         const editableTask = EditableTask.fromTask(task, allTasks);
@@ -308,8 +311,22 @@ describe('EditableTask tests', () => {
 
         const [edited] = await editableTask.applyEdits(task, allTasks);
         expect(edited.reminderTime).not.toBeNull();
+        expect(edited.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-05-01');
         expect(edited.dueDate).toBeNull();
-        expect(edited.scheduledDate).toBeNull();
+        expect(edited.startDate).toBeNull();
+    });
+
+    it("should create today's scheduled date as the anchor for an absolute reminder time when the task has none", async () => {
+        const task = new TaskBuilder().build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = '09:00';
+
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).toEqual('09:00');
+        expect(edited.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-05-01');
+        expect(edited.dueDate).toBeNull();
         expect(edited.startDate).toBeNull();
     });
 });

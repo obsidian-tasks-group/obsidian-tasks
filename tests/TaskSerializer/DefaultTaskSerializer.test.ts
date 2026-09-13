@@ -72,7 +72,7 @@ describe('validate emoji regular expressions', () => {
             dueDateRegex: /(?:📅|📆|🗓)\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
             doneDateRegex: /✅\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
             cancelledDateRegex: /❌\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
-            reminderTimeRegex: /⏰\\ufe0f? *(\\d{2}:\\d{2})$/
+            reminderTimeRegex: /⏰\\ufe0f? *(?:\\d{4}-\\d{2}-\\d{2} )?(\\d{2}:\\d{2})$/
             recurrenceRegex: /🔁\\ufe0f? *([a-zA-Z0-9, !]+)$/
             onCompletionRegex: /🏁\\ufe0f? *([a-zA-Z]+)$/
             dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/
@@ -145,8 +145,15 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         describe('should parse reminderTime', () => {
-            it('should parse a reminderTime', () => {
+            it('should parse a bare-time reminderTime (legacy - written by earlier fork versions)', () => {
                 const taskDetails = deserialize(`${reminderTimeSymbol} 09:00`);
+                expect(taskDetails).toMatchTaskDetails({ reminderTime: '09:00' });
+            });
+
+            it('should parse a full date-and-time reminderTime (canonical form), keeping only the time', () => {
+                // The date is discarded on read - it's redundant with the task's own due/scheduled/start
+                // date, which is what Task.reminderDateTime combines reminderTime with (see Task.ts).
+                const taskDetails = deserialize(`${reminderTimeSymbol} 2024-01-15 09:00`);
                 expect(taskDetails).toMatchTaskDetails({ reminderTime: '09:00' });
             });
 
@@ -302,7 +309,20 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             expect(serialized).toEqual(` ${symbol} 2021-06-20`);
         });
 
-        it('should serialize a reminderTime', () => {
+        it('should serialize a reminderTime with an anchor date as a full date and time (the canonical form)', () => {
+            // A full date under this symbol is what the Reminder plugin's own 'Tasks plugin format' reader
+            // needs to recognise the line as a reminder at all - see Task.reminderDateTime and
+            // symbolAndReminderTimeValue in DefaultTaskSerializer.ts.
+            const serialized = serialize(
+                new TaskBuilder().reminderTime('09:00').dueDate('2024-01-15').description('').build(),
+            );
+            expect(serialized).toEqual(` ${dueDateSymbol} 2024-01-15 ${reminderTimeSymbol} 2024-01-15 09:00`);
+        });
+
+        it('should serialize a reminderTime with no anchor date as a bare time (legacy fallback)', () => {
+            // This state shouldn't normally arise any more (every path that sets a reminder time now
+            // ensures an anchor date exists too - see SetReminderTime), but a task saved by an earlier fork
+            // version could still be in it; round-trip the value rather than silently dropping it.
             const serialized = serialize(new TaskBuilder().reminderTime('09:00').description('').build());
             expect(serialized).toEqual(` ${reminderTimeSymbol} 09:00`);
         });

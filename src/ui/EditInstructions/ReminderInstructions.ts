@@ -5,7 +5,13 @@ import type { TaskEditingInstruction } from './TaskEditingInstruction';
 /**
  * An instruction to set the task's {@link Task.reminderTime} to a fixed 'HH:mm' value.
  *
- * See also {@link RemoveReminderTime}.
+ * If the task has no anchor date at all (due, scheduled or start - see {@link getDateFieldToPostpone}), one
+ * is created as today's {@link Task.scheduledDate}. A reminder time with nowhere to attach it isn't just
+ * useless within this codebase (see {@link Task.reminderDateTime}) - it's silently ignored entirely by the
+ * Reminder plugin, which needs a full date under the same symbol to recognise the line as a reminder at
+ * all (see `reminderTimeFieldRegex` in `DefaultTaskSerializer.ts`).
+ *
+ * See also {@link SetReminderDateTime}, {@link RemoveReminderTime}.
  */
 export class SetReminderTime implements TaskEditingInstruction {
     private readonly newReminderTime: string;
@@ -20,6 +26,15 @@ export class SetReminderTime implements TaskEditingInstruction {
         if (this.isCheckedForTask(task)) {
             return [task];
         }
+        if (getDateFieldToPostpone(task) === null) {
+            return [
+                new Task({
+                    ...task,
+                    reminderTime: this.newReminderTime,
+                    scheduledDate: window.moment().startOf('day'),
+                }),
+            ];
+        }
         return [
             new Task({
                 ...task,
@@ -33,18 +48,24 @@ export class SetReminderTime implements TaskEditingInstruction {
     }
 
     public isCheckedForTask(task: Task): boolean {
-        return task.reminderTime === this.newReminderTime;
+        if (task.reminderTime !== this.newReminderTime) {
+            return false;
+        }
+        // If there's no anchor date yet, applying would still add one (see apply()), so this isn't a no-op.
+        return getDateFieldToPostpone(task) !== null;
     }
 }
 
 /**
  * An instruction to set a task's reminder to a specific date and time, shifting the task's anchor date
  * (due, else scheduled, else start - the same priority {@link getDateFieldToPostpone} already uses) if
- * {@link target} falls on a different calendar day than it, and leaving the anchor untouched otherwise.
+ * {@link target} falls on a different calendar day than it, and leaving the anchor untouched otherwise. If
+ * the task has no anchor date at all, one is created - as {@link Task.scheduledDate}, dated to
+ * {@link target} - rather than left with a reminder time and no day to attach it to (see
+ * {@link SetReminderTime}'s own doc comment for why that matters beyond this codebase).
  *
- * Used for relative-offset picks ('in 30 minutes'), which carry a full date and time, unlike
- * {@link SetReminderTime}'s fixed clock time. If the task has no anchor date at all, only the reminder
- * time is set - a relative pick never creates a due date from nothing.
+ * Used for relative-offset picks ('in 30 minutes') and the "Custom time…" prompt, which carry a full date
+ * and time, unlike {@link SetReminderTime}'s fixed clock time.
  *
  * See also {@link SetReminderTime}, {@link RemoveReminderTime}.
  */
@@ -65,7 +86,13 @@ export class SetReminderDateTime implements TaskEditingInstruction {
         const newReminderTime = this.target.format('HH:mm');
         const anchorField = getDateFieldToPostpone(task);
         if (anchorField === null) {
-            return [new Task({ ...task, reminderTime: newReminderTime })];
+            return [
+                new Task({
+                    ...task,
+                    reminderTime: newReminderTime,
+                    scheduledDate: this.target.clone().startOf('day'),
+                }),
+            ];
         }
 
         const anchorDate = task[anchorField]!;
@@ -91,7 +118,8 @@ export class SetReminderDateTime implements TaskEditingInstruction {
         }
         const anchorField = getDateFieldToPostpone(task);
         if (anchorField === null) {
-            return true;
+            // No anchor yet - applying would still create one (see apply()), so this isn't a no-op.
+            return false;
         }
         return task[anchorField]?.isSame(this.target, 'day') ?? false;
     }

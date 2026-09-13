@@ -34,8 +34,13 @@ describe('DataviewTaskSerializer', () => {
             expect(taskDetails).toMatchTaskDetails({ [field]: moment('2021-06-20', 'YYYY-MM-DD') });
         });
 
-        it('should parse a reminderTime', () => {
+        it('should parse a bare-time reminderTime (legacy - written by earlier fork versions)', () => {
             const taskDetails = deserialize(`[${DATAVIEW_SYMBOLS.reminderTimeSymbol} 09:00]`);
+            expect(taskDetails).toMatchTaskDetails({ reminderTime: '09:00' });
+        });
+
+        it('should parse a full date-and-time reminderTime (canonical form), keeping only the time', () => {
+            const taskDetails = deserialize(`[${DATAVIEW_SYMBOLS.reminderTimeSymbol} 2024-01-15 09:00]`);
             expect(taskDetails).toMatchTaskDetails({ reminderTime: '09:00' });
         });
 
@@ -307,7 +312,16 @@ describe('DataviewTaskSerializer', () => {
             expect(serialized).toEqual(`  [${symbol} 2021-06-20]`);
         });
 
-        it('should serialize a reminderTime', () => {
+        it('should serialize a reminderTime with an anchor date as a full date and time (the canonical form)', () => {
+            const serialized = serialize(
+                new TaskBuilder().reminderTime('09:00').dueDate('2024-01-15').description('').build(),
+            );
+            expect(serialized).toEqual(
+                `  [${DATAVIEW_SYMBOLS.dueDateSymbol} 2024-01-15]  [${DATAVIEW_SYMBOLS.reminderTimeSymbol} 2024-01-15 09:00]`,
+            );
+        });
+
+        it('should serialize a reminderTime with no anchor date as a bare time (legacy fallback)', () => {
             const serialized = serialize(new TaskBuilder().reminderTime('09:00').description('').build());
             expect(serialized).toEqual(`  [${DATAVIEW_SYMBOLS.reminderTimeSymbol} 09:00]`);
         });
@@ -364,7 +378,7 @@ describe('DataviewTaskSerializer', () => {
             const task = TaskBuilder.createFullyPopulatedTask();
             const serialized = serialize(task);
             expect(serialized).toMatchInlineSnapshot(
-                '"Do exercises #todo #health  [id:: abcdef]  [dependsOn:: 123456,abc123]  [priority:: medium]  [repeat:: every day when done]  [onCompletion:: delete]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [due:: 2023-07-04]  [reminder:: 09:00]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
+                '"Do exercises #todo #health  [id:: abcdef]  [dependsOn:: 123456,abc123]  [priority:: medium]  [repeat:: every day when done]  [onCompletion:: delete]  [created:: 2023-07-01]  [start:: 2023-07-02]  [scheduled:: 2023-07-03]  [due:: 2023-07-04]  [reminder:: 2023-07-04 09:00]  [cancelled:: 2023-07-06]  [completion:: 2023-07-05] ^dcf64c"',
             );
         });
     });

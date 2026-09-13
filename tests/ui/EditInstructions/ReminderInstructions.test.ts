@@ -14,6 +14,15 @@ window.moment = moment;
 const taskWithNoReminder = new TaskBuilder().dueDate('2024-10-01').build();
 const taskWithReminder = new TaskBuilder().dueDate('2024-10-01').reminderTime('09:00').build();
 
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2024-10-02T08:00:00'));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
+
 describe('SetReminderTime', () => {
     it('should provide a default display name', () => {
         const instruction = new SetReminderTime('09:00');
@@ -41,6 +50,26 @@ describe('SetReminderTime', () => {
         const instruction = new SetReminderTime('09:00');
         const [applied] = instruction.apply(taskWithReminder);
         expect(applied).toBe(taskWithReminder);
+    });
+
+    it("should create today's scheduled date as the anchor, if the task has none", () => {
+        const task = new TaskBuilder().build();
+        const instruction = new SetReminderTime('09:00');
+
+        const [applied] = instruction.apply(task);
+
+        expect(applied.reminderTime).toEqual('09:00');
+        expect(applied.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-10-02');
+        expect(applied.dueDate).toBeNull();
+        expect(applied.startDate).toBeNull();
+    });
+
+    it('should report a task with no anchor date as unchecked, even if its reminder time already matches', () => {
+        // Applying would still add an anchor date - see apply() above - so this isn't a no-op.
+        const task = new TaskBuilder().reminderTime('09:00').build();
+        const instruction = new SetReminderTime('09:00');
+
+        expect(instruction.isCheckedForTask(task)).toEqual(false);
     });
 });
 
@@ -80,16 +109,24 @@ describe('SetReminderDateTime', () => {
         expect(applied.startDate!.format('YYYY-MM-DD')).toEqual('2024-09-01');
     });
 
-    it('should only set the reminder time, and not create an anchor date, if there is none', () => {
+    it("should create the target's own date as the scheduled-date anchor, if the task has none", () => {
         const task = new TaskBuilder().build();
         const instruction = new SetReminderDateTime(moment('2024-10-02T00:30'));
 
         const [applied] = instruction.apply(task);
 
         expect(applied.reminderTime).toEqual('00:30');
+        expect(applied.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-10-02');
         expect(applied.dueDate).toBeNull();
-        expect(applied.scheduledDate).toBeNull();
         expect(applied.startDate).toBeNull();
+    });
+
+    it('should report a task with no anchor date as unchecked, even if its reminder time already matches', () => {
+        // Applying would still add an anchor date - see apply() above - so this isn't a no-op.
+        const task = new TaskBuilder().reminderTime('00:30').build();
+        const instruction = new SetReminderDateTime(moment('2024-10-02T00:30'));
+
+        expect(instruction.isCheckedForTask(task)).toEqual(false);
     });
 
     it('should not change identity when applied to a task already matching the target', () => {

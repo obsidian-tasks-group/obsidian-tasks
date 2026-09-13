@@ -12,7 +12,7 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 import { StatusType } from '../Statuses/StatusConfiguration';
-import { SetReminderDateTime } from './EditInstructions/ReminderInstructions';
+import { SetReminderDateTime, SetReminderTime } from './EditInstructions/ReminderInstructions';
 
 /**
  * {@link Task} objects are immutable. This class allows to create a mutable object from a {@link Task}, apply the edits,
@@ -230,11 +230,18 @@ export class EditableTask {
             id,
         });
 
-        if (parsedReminderTime?.isRelative) {
-            // A relative reminder ('in 30 minutes') may resolve to a different calendar day than the
-            // due/scheduled/start date just set above - reuse the same anchor-shifting logic the
-            // reminder menu uses, rather than duplicating it here.
-            [updatedTask] = new SetReminderDateTime(parsedReminderTime.date).apply(updatedTask);
+        if (parsedReminderTime !== null) {
+            if (parsedReminderTime.isRelative) {
+                // A relative reminder ('in 30 minutes') may resolve to a different calendar day than the
+                // due/scheduled/start date just set above - reuse the same anchor-shifting/creating logic
+                // the reminder menu uses, rather than duplicating it here.
+                [updatedTask] = new SetReminderDateTime(parsedReminderTime.date).apply(updatedTask);
+            } else {
+                // An absolute reminder time ('09:00') still needs *some* anchor date for the Reminder
+                // plugin to know which day it's for (see SetReminderTime's own doc comment) - reuse the
+                // same instruction the menu's preset items use, rather than duplicating its logic here.
+                [updatedTask] = new SetReminderTime(parsedReminderTime.time).apply(updatedTask);
+            }
         }
 
         for (const blocking of removedBlocking) {

@@ -14,7 +14,7 @@
 | `task.tags` | `string[]` | `['#todo', '#health']` | `any[]` | `[]` |
 | `task.reminderTime` | `string` | `'09:00'` | `null` | `null` |
 | `task.reminderDateTime` | `Moment` | `moment('2023-07-04 09:00')` | `null` | `null` |
-| `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ⏰ 09:00 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [/] minimal task'` |
+| `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ⏰ 2023-07-04 09:00 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [/] minimal task'` |
 | `task.lineNumber` | `number` | `17` | `number` | `0` |
 | `task.listMarker` | `string` | `'-'` | `string` | `'-'` |
 

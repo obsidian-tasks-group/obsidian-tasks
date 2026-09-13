@@ -67,8 +67,16 @@ function dateFieldRegex(symbols: string) {
     return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2})');
 }
 
-function timeFieldRegex(symbols: string) {
-    return fieldRegex(symbols, '(\\d{2}:\\d{2})');
+/**
+ * Matches the reminder time field's value as either a bare time ('14:30' - the legacy form this fork wrote
+ * before it was found not to be understood by the Reminder plugin at all) or a full date and time
+ * ('2024-01-15 14:30' - the current, canonical form: see {@link symbolAndReminderTimeValue}). Only the time
+ * is captured; the date, when present, is discarded on read - it's redundant with the task's own
+ * due/scheduled/start date, which remains the source of truth within this codebase's own {@link Task}
+ * model (see {@link Task.reminderDateTime}).
+ */
+function reminderTimeFieldRegex(symbols: string) {
+    return fieldRegex(symbols, '(?:\\d{4}-\\d{2}-\\d{2} )?(\\d{2}:\\d{2})');
 }
 
 function fieldRegex(symbols: string, valueRegexString: string) {
@@ -116,7 +124,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: dateFieldRegex('(?:📅|📆|🗓)'),
         doneDateRegex: dateFieldRegex('✅'),
         cancelledDateRegex: dateFieldRegex('❌'),
-        reminderTimeRegex: timeFieldRegex('⏰'),
+        reminderTimeRegex: reminderTimeFieldRegex('⏰'),
         recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)'),
         onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)'),
         dependsOnRegex: fieldRegex('⛔', '(' + taskIdSequenceRegex.source + ')'),
@@ -135,6 +143,28 @@ function symbolAndDateValue(shortMode: boolean, symbol: string, date: moment.Mom
     // but doing so would do some wasted date-formatting when in 'short mode',
     // so instead we repeat the check on shortMode value.
     return shortMode ? ' ' + symbol : ` ${symbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
+}
+
+/**
+ * Renders the reminder time field, preferring a full date and time ('2024-01-15 14:30') over a bare time
+ * ('14:30') whenever a date is available - see {@link reminderTimeFieldRegex} for why: a bare time is not
+ * understood at all by the Reminder plugin's own Tasks-plugin-format reader, which needs a full date (with
+ * or without a time) under this symbol, same as it does for the due/scheduled/start date fields it also
+ * reads. {@link Task.reminderDateTime} already combines the reminder time with the task's anchor date (due,
+ * else scheduled, else start) for exactly this purpose.
+ *
+ * A bare time is still written as a fallback on the rare occasion a task has a reminder time but no anchor
+ * date at all (only possible for a task saved before this fork started guaranteeing one - see
+ * {@link SetReminderTime}) - so the value round-trips through this codebase's own read/write rather than
+ * being silently dropped, even though the Reminder plugin still can't use it in that state either way.
+ */
+function symbolAndReminderTimeValue(shortMode: boolean, symbol: string, task: Task) {
+    if (!task.reminderTime) return '';
+    if (shortMode) return ' ' + symbol;
+    const value = task.reminderDateTime
+        ? task.reminderDateTime.format(`${TaskRegularExpressions.dateFormat} HH:mm`)
+        : task.reminderTime;
+    return ` ${symbol} ${value}`;
 }
 
 export function allTaskPluginEmojis() {
@@ -229,7 +259,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             case TaskLayoutComponent.DueDate:
                 return symbolAndDateValue(shortMode, dueDateSymbol, task.dueDate);
             case TaskLayoutComponent.ReminderTime:
-                return symbolAndStringValue(shortMode, reminderTimeSymbol, task.reminderTime ?? '');
+                return symbolAndReminderTimeValue(shortMode, reminderTimeSymbol, task);
             case TaskLayoutComponent.RecurrenceRule:
                 if (!task.recurrence) return '';
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());

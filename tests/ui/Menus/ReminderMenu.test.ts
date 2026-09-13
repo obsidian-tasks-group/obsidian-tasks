@@ -89,8 +89,23 @@ describe('ReminderMenu', () => {
 
         expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);
         expect(TestableTaskSaver.tasksBeingSaved![0].reminderTime).toEqual('12:00');
-        // A plain preset time never touches the anchor date.
+        // A plain preset time never changes an anchor date that's already present (it would only create
+        // one - see SetReminderTime's own tests - if this task had none at all).
         expect(TestableTaskSaver.tasksBeingSaved![0].dueDate!.format('YYYY-MM-DD')).toEqual('2023-12-03');
+    });
+
+    it("should create today's scheduled date as the anchor when a preset time is clicked on a task with none", () => {
+        const task = new TaskBuilder().build();
+        const menu = new ReminderMenu(mockApp, task, TestableTaskSaver.testableTaskSaver);
+
+        // @ts-expect-error TS2339: Property 'items' does not exist on type 'ReminderMenu'.
+        const setNoonItem = menu.items[1];
+        expect(setNoonItem.title).toEqual('Set reminder: 12:00');
+        setNoonItem.callback();
+
+        expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);
+        expect(TestableTaskSaver.tasksBeingSaved![0].reminderTime).toEqual('12:00');
+        expect(TestableTaskSaver.tasksBeingSaved![0].scheduledDate!.format('YYYY-MM-DD')).toEqual('2023-12-03');
     });
 
     it('should shift the anchor date when a relative offset crosses midnight', () => {
