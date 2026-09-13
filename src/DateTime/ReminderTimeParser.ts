@@ -13,14 +13,24 @@ export interface ParsedReminderTime {
 }
 
 /**
- * A relative duration, such as 'in 30 minutes', 'in 2 hours' or 'in 2h'. Chrono's own '+30m'/'+1h' shorthand
- * is inconsistent (the latter parses, the former doesn't), so this is deliberately narrower than whatever
- * chrono itself accepts: only the worded form is treated - and documented in the UI - as relative. This
- * does include the bare 'h' hour abbreviation (chrono itself parses 'in 2 h' as a duration, same as 'in 2
- * hours'), but not a bare 'm' for minutes - chrono itself doesn't understand that one ('in 30 m' fails to
- * parse at all), so there's nothing to flag as relative here either.
+ * A single '<number> <unit>' duration term, such as '30 minutes', '2 hours' or '2h'. Chrono's own
+ * '+30m'/'+1h' shorthand is inconsistent (the latter parses, the former doesn't), so this is deliberately
+ * narrower than whatever chrono itself accepts: only the worded form is treated - and documented in the UI
+ * - as relative. This does include the bare 'h' hour abbreviation (chrono itself parses '2 h' as a
+ * duration, same as '2 hours'), but not a bare 'm'/'d'/'w' for minutes/days/weeks - chrono itself doesn't
+ * understand those ('in 30 m', 'in 3 d' and 'in 2 w' all fail to parse), so there's nothing to flag as
+ * relative here either.
  */
-const relativeDurationPattern = /^(?:in\s+)?\d+\s*(?:minutes?|mins?|hours?|hrs?|h)\b/i;
+const durationTermPattern = /\d+\s*(?:minutes?|mins?|hours?|hrs?|h|days?|weeks?|months?|years?)\b/i;
+
+/**
+ * A relative duration, such as 'in 30 minutes', 'in 2 hours', 'in 2h' or a compound one like 'in 3 days 12
+ * min' - one or more {@link durationTermPattern} terms in a row (chrono itself accepts them run together
+ * like that, or comma-separated; an 'and' between terms is its own separate chrono quirk - it silently
+ * drops every term after the first - so isn't specially handled here, that input just resolves to less of
+ * an offset than typed, same as chrono resolves it).
+ */
+const relativeDurationPattern = new RegExp(`^(?:in\\s+)?(?:${durationTermPattern.source}[\\s,]*)+$`, 'i');
 
 /**
  * Parses a typed reminder-time string - either a clock time ('09:00', '9am') or a relative offset from

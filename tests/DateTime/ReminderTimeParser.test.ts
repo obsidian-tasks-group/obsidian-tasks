@@ -66,6 +66,22 @@ describe('parseReminderTimeInput', () => {
         expect(result!.date.format('YYYY-MM-DD HH:mm')).toEqual('2024-01-16 01:30');
         expect(result!.date.isSame(lateReference, 'day')).toEqual(false);
     });
+
+    it.each([
+        ['in 3 days', '2024-01-18 10:07'],
+        ['in 2 weeks', '2024-01-29 10:07'],
+        ['in 3 days 12 min', '2024-01-18 10:19'],
+        ['in 3 days, 12 minutes', '2024-01-18 10:19'],
+        ['in 1 day 2 hours', '2024-01-16 12:07'],
+    ])(
+        'should parse the compound relative offset "%s" as relative too, shifting the date',
+        (input, expectedDateTime) => {
+            const result = parseReminderTimeInput(input, reference);
+            expect(result).not.toBeNull();
+            expect(result!.isRelative).toEqual(true);
+            expect(result!.date.format('YYYY-MM-DD HH:mm')).toEqual(expectedDateTime);
+        },
+    );
 });
 
 describe('roundUpToIncrement', () => {
