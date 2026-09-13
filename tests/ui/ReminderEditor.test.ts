@@ -61,10 +61,10 @@ describe('reminder editor wrapper tests', () => {
             '12:00 | 12:00',
             '15:00 | 15:00',
             '18:00 | 18:00',
-            'in 30 minutes | In 30 minutes (10:30)',
-            'in 1 hour | In 1 hour (11:00)',
-            'in 2 hours | In 2 hours (12:00)',
-            'in 4 hours | In 4 hours (14:00)',
+            'in 30 minutes | In 30 minutes (~10:30)',
+            'in 1 hour | In 1 hour (~11:00)',
+            'in 2 hours | In 2 hours (~12:00)',
+            'in 4 hours | In 4 hours (~14:00)',
         ]);
     });
 
@@ -73,6 +73,20 @@ describe('reminder editor wrapper tests', () => {
             reminderPresetTimes: ['07:30'],
             reminderRelativeOffsetsMinutes: [15],
             reminderRoundingIncrementMinutes: 15,
+        });
+        const container = renderReminderEditorWrapper();
+        const reminderInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'reminder');
+
+        await fireEvent.focus(reminderInput);
+
+        expect(suggestionOptionsAsText(container)).toEqual(['07:30 | 07:30', 'in 15 minutes | In 15 minutes (~10:15)']);
+    });
+
+    it('should NOT flag suggestions with "~" when rounding is disabled ("no rounding")', async () => {
+        updateSettings({
+            reminderPresetTimes: ['07:30'],
+            reminderRelativeOffsetsMinutes: [15],
+            reminderRoundingIncrementMinutes: 0,
         });
         const container = renderReminderEditorWrapper();
         const reminderInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'reminder');

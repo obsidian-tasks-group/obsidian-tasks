@@ -36,10 +36,10 @@ describe('ReminderMenu', () => {
               Set reminder: 15:00
               Set reminder: 18:00
               ---
-              In 30 minutes (11:00)
-              In 1 hour (11:30)
-              In 2 hours (12:30)
-              In 4 hours (14:30)
+              In 30 minutes (~11:00)
+              In 1 hour (~11:30)
+              In 2 hours (~12:30)
+              In 4 hours (~14:30)
               ---
               Custom time…
             x Remove reminder"
@@ -71,7 +71,7 @@ describe('ReminderMenu', () => {
               Set reminder: 07:30
               Set reminder: 20:00
               ---
-              In 15 minutes (10:30)
+              In 15 minutes (~10:30)
               ---
               Custom time…
             x Remove reminder"
@@ -113,16 +113,16 @@ describe('ReminderMenu', () => {
 
     it('should apply the ROUNDED time from a relative offset, not the raw unrounded offset (regression)', () => {
         // now = 10:07. "In 30 minutes" -> raw 10:37, rounded up to the next 30-minute mark -> 11:00 (as
-        // the item's own label, "In 30 minutes (11:00)", already promises). A prior bug re-parsed the
-        // item's raw value at click-time instead of reusing the pre-rounded date, silently applying the
-        // unrounded 10:37 while still showing "11:00" in the menu.
+        // the item's own label, "In 30 minutes (~11:00)", already promises - the '~' flags it as rounded).
+        // A prior bug re-parsed the item's raw value at click-time instead of reusing the pre-rounded date,
+        // silently applying the unrounded 10:37 while still showing "~11:00" in the menu.
         const task = new TaskBuilder().dueDate('2023-12-03').build();
         const menu = new ReminderMenu(mockApp, task, TestableTaskSaver.testableTaskSaver);
 
         // presets (4) + separator (1) = index 5 is the first relative item ('in 30 minutes').
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'ReminderMenu'.
         const relativeItem = menu.items[5];
-        expect(relativeItem.title).toEqual('In 30 minutes (11:00)');
+        expect(relativeItem.title).toEqual('In 30 minutes (~11:00)');
         relativeItem.callback();
 
         expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);

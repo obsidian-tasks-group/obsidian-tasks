@@ -18,13 +18,13 @@ describe('buildReminderSuggestions', () => {
         ]);
     });
 
-    it('should describe relative offsets in both minutes and hours, rounded to the increment', () => {
+    it('should describe relative offsets in both minutes and hours, rounded to the increment, flagged with a "~"', () => {
         const { relativeOffsets } = buildReminderSuggestions([], [30, 60, 90], 30, now);
 
         expect(relativeOffsets.map((s) => ({ value: s.value, label: s.label }))).toEqual([
-            { value: 'in 30 minutes', label: 'In 30 minutes (11:00)' },
-            { value: 'in 1 hour', label: 'In 1 hour (11:30)' },
-            { value: 'in 90 minutes', label: 'In 90 minutes (12:00)' },
+            { value: 'in 30 minutes', label: 'In 30 minutes (~11:00)' },
+            { value: 'in 1 hour', label: 'In 1 hour (~11:30)' },
+            { value: 'in 90 minutes', label: 'In 90 minutes (~12:00)' },
         ]);
     });
 
@@ -51,5 +51,17 @@ describe('buildReminderSuggestions', () => {
 
         expect(suggestion.label).toContain('10:52');
         expect(suggestion.resolvedDate!.format('YYYY-MM-DD HH:mm')).toEqual('2023-12-03 10:52');
+    });
+
+    it('should flag a relative offset\'s label with "~" when rounding is enabled', () => {
+        const { relativeOffsets } = buildReminderSuggestions([], [45], 30, now);
+
+        expect(relativeOffsets[0].label).toEqual('In 45 minutes (~11:00)');
+    });
+
+    it('should NOT flag a relative offset\'s label with "~" when rounding is disabled ("no rounding")', () => {
+        const { relativeOffsets } = buildReminderSuggestions([], [45], 0, now);
+
+        expect(relativeOffsets[0].label).toEqual('In 45 minutes (10:52)');
     });
 });
