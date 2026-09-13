@@ -237,9 +237,9 @@ export class EditableTask {
                 // the reminder menu uses, rather than duplicating it here.
                 [updatedTask] = new SetReminderDateTime(parsedReminderTime.date).apply(updatedTask);
             } else {
-                // An absolute reminder time ('09:00') still needs *some* anchor date for the Reminder
-                // plugin to know which day it's for (see SetReminderTime's own doc comment) - reuse the
-                // same instruction the menu's preset items use, rather than duplicating its logic here.
+                // An absolute reminder time ('09:00') still needs *some* anchor date (see SetReminderTime's
+                // own doc comment) - reuse the same instruction the menu's preset items use, rather than
+                // duplicating its logic here.
                 [updatedTask] = new SetReminderTime(parsedReminderTime.time).apply(updatedTask);
             }
         }

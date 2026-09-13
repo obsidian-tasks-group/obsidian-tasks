@@ -214,18 +214,11 @@ export class TaskLineRenderer {
         const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
         // Render and build classes for all the task's visible components
         for (const component of this.taskLayoutOptions.shownComponents) {
-            let componentString = emojiSerializer.componentToString(task, this.queryLayoutOptions.shortMode, component);
-            if (component === TaskLayoutComponent.ReminderTime && !this.queryLayoutOptions.shortMode) {
-                // componentString embeds the anchor date (e.g. '⏰ 2023-07-04 09:00') - that's needed in the
-                // raw markdown (see DefaultTaskSerializer.ts's symbolAndReminderTimeValue) so the Reminder
-                // plugin can recognise the line as a reminder, but rendering it here would just duplicate
-                // the date already shown by the due/scheduled/start field right beside it. Show only the
-                // time, same as before the anchor date started being written into this field at all.
-                componentString =
-                    componentString && task.reminderTime
-                        ? ` ${emojiSerializer.symbols.reminderTimeSymbol} ${task.reminderTime}`
-                        : componentString;
-            }
+            const componentString = emojiSerializer.componentToString(
+                task,
+                this.queryLayoutOptions.shortMode,
+                component,
+            );
             if (componentString) {
                 // Create the text span that will hold the rendered component
                 const span = parentElement.createSpan();

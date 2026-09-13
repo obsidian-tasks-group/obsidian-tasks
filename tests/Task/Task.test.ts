@@ -1387,8 +1387,8 @@ describe('toggle done', () => {
             const tasks = task.toggle();
 
             expect(toMarkdown(tasks)).toMatchInlineSnapshot(`
-                "- [ ] task with reminder 🔁 every day 📅 2024-02-14 ⏰ 2024-02-14 09:00
-                - [x] task with reminder 🔁 every day 📅 2024-02-13 ⏰ 2024-02-13 09:00"
+                "- [ ] task with reminder 🔁 every day 📅 2024-02-14 ⏰ 09:00
+                - [x] task with reminder 🔁 every day 📅 2024-02-13 ⏰ 09:00"
             `);
         });
     });

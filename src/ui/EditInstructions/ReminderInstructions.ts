@@ -6,10 +6,9 @@ import type { TaskEditingInstruction } from './TaskEditingInstruction';
  * An instruction to set the task's {@link Task.reminderTime} to a fixed 'HH:mm' value.
  *
  * If the task has no anchor date at all (due, scheduled or start - see {@link getDateFieldToPostpone}), one
- * is created as today's {@link Task.scheduledDate}. A reminder time with nowhere to attach it isn't just
- * useless within this codebase (see {@link Task.reminderDateTime}) - it's silently ignored entirely by the
- * Reminder plugin, which needs a full date under the same symbol to recognise the line as a reminder at
- * all (see `reminderTimeFieldRegex` in `DefaultTaskSerializer.ts`).
+ * is created as today's {@link Task.scheduledDate}: a reminder time is meaningless without a day to attach
+ * it to (see {@link Task.reminderDateTime}), and this fork's UX is built around "set a time, get a day for
+ * free" rather than asking the user to separately pick both.
  *
  * See also {@link SetReminderDateTime}, {@link RemoveReminderTime}.
  */
@@ -62,7 +61,7 @@ export class SetReminderTime implements TaskEditingInstruction {
  * {@link target} falls on a different calendar day than it, and leaving the anchor untouched otherwise. If
  * the task has no anchor date at all, one is created - as {@link Task.scheduledDate}, dated to
  * {@link target} - rather than left with a reminder time and no day to attach it to (see
- * {@link SetReminderTime}'s own doc comment for why that matters beyond this codebase).
+ * {@link SetReminderTime}'s own doc comment for why).
  *
  * Used for relative-offset picks ('in 30 minutes') and the "Custom time…" prompt, which carry a full date
  * and time, unlike {@link SetReminderTime}'s fixed clock time.

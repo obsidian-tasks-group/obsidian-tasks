@@ -88,9 +88,7 @@ export const DATAVIEW_SYMBOLS = {
         dueDateRegex: toInlineFieldRegex(/due:: *(\d{4}-\d{2}-\d{2})/),
         doneDateRegex: toInlineFieldRegex(/completion:: *(\d{4}-\d{2}-\d{2})/),
         cancelledDateRegex: toInlineFieldRegex(/cancelled:: *(\d{4}-\d{2}-\d{2})/),
-        // Accepts a bare time (legacy) or a full date and time (canonical) - see
-        // DefaultTaskSerializer.ts's reminderTimeFieldRegex for why. Only the time is captured.
-        reminderTimeRegex: toInlineFieldRegex(/reminder:: *(?:\d{4}-\d{2}-\d{2} )?(\d{2}:\d{2})/),
+        reminderTimeRegex: toInlineFieldRegex(/reminder:: *(\d{2}:\d{2})/),
         recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
         onCompletionRegex: toInlineFieldRegex(/onCompletion:: *([a-zA-Z]+)/),
         dependsOnRegex: toInlineFieldRegex(new RegExp('dependsOn:: *(' + taskIdSequenceRegex.source + ')')),

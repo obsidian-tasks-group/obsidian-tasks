@@ -180,7 +180,7 @@ describe('EditableTask tests', () => {
               "listMarker": "-",
               "markdownHardBreak": "",
               "onCompletion": "",
-              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ⏰ 2023-07-04 09:00 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
+              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ⏰ 09:00 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
               "parent": null,
               "priority": "3",
               "recurrence": null,
@@ -300,9 +300,7 @@ describe('EditableTask tests', () => {
     });
 
     it("should create today's scheduled date as the anchor for a relative reminder when the task has none", async () => {
-        // A reminder time with no anchor date isn't just useless within this codebase (see
-        // Task.reminderDateTime) - it's silently ignored by the Reminder plugin too, which needs a full
-        // date under the same symbol to recognise the line as a reminder at all.
+        // A reminder time with no anchor date is meaningless within this codebase (see Task.reminderDateTime).
         const task = new TaskBuilder().build();
         const allTasks: Task[] = [task];
         const editableTask = EditableTask.fromTask(task, allTasks);
