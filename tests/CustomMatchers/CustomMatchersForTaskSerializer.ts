@@ -57,6 +57,10 @@ function isTaskDetails(val: any): val is TaskDetails {
         return false;
     }
 
+    if (!(typeof val.reminderTime === 'string' || val.reminderTime === null)) {
+        return false;
+    }
+
     if (!Object.values(Priority).includes(val.priority)) {
         return false;
     }
@@ -109,6 +113,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         dueDate: null,
         doneDate: null,
         cancelledDate: null,
+        reminderTime: null,
         recurrence: null,
         onCompletion: '',
         dependsOn: [],

@@ -582,6 +582,16 @@ describe('properties for scripting', () => {
         expect(task.happens.moment).toEqualMoment(moment(dueDate)!); // the earliest
     });
 
+    it('should include reminderDateTime as a 4th happensDates entry', () => {
+        const dueDate = '2023-06-19';
+        const task = new TaskBuilder().dueDate(dueDate).reminderTime('09:00').build();
+
+        expect(task.happensDates).toHaveLength(4);
+        expect(task.happensDates[3]).toEqualMoment(moment(`${dueDate} 09:00`, 'YYYY-MM-DD HH:mm'));
+        // The reminder shares its anchor's day, so it doesn't change which day 'happens' picks:
+        expect(task.happens.moment).toEqualMoment(moment(dueDate));
+    });
+
     it('happens should ignore non-contributing date fields', () => {
         // other fields, that are ignored by happens:
         const sampleDate = '2023-06-19';
@@ -593,6 +603,50 @@ describe('properties for scripting', () => {
         const invalidDate = '2023-02-31';
         const task = new TaskBuilder().startDate(invalidDate).scheduledDate(invalidDate).dueDate(invalidDate).build();
         expect(task.happens.moment).toBeNull();
+    });
+
+    describe('reminderDateTime', () => {
+        it('should combine reminderTime with the due date, if present', () => {
+            const task = new TaskBuilder().dueDate('2023-06-19').reminderTime('09:00').build();
+            expect(task.reminderDateTime).toEqualMoment(moment('2023-06-19 09:00', 'YYYY-MM-DD HH:mm'));
+        });
+
+        it('should prefer due, then scheduled, then start, as the anchor date', () => {
+            // Same priority order as Postponer.getDateFieldToPostpone().
+            const dueOnly = new TaskBuilder().dueDate('2023-06-19').reminderTime('09:00').build();
+            expect(dueOnly.reminderDateTime).toEqualMoment(moment('2023-06-19 09:00', 'YYYY-MM-DD HH:mm'));
+
+            const dueAndScheduled = new TaskBuilder()
+                .dueDate('2023-06-19')
+                .scheduledDate('2023-06-01')
+                .reminderTime('09:00')
+                .build();
+            expect(dueAndScheduled.reminderDateTime).toEqualMoment(moment('2023-06-19 09:00', 'YYYY-MM-DD HH:mm'));
+
+            const scheduledOnly = new TaskBuilder().scheduledDate('2023-06-01').reminderTime('09:00').build();
+            expect(scheduledOnly.reminderDateTime).toEqualMoment(moment('2023-06-01 09:00', 'YYYY-MM-DD HH:mm'));
+
+            const startOnly = new TaskBuilder().startDate('2023-05-01').reminderTime('09:00').build();
+            expect(startOnly.reminderDateTime).toEqualMoment(moment('2023-05-01 09:00', 'YYYY-MM-DD HH:mm'));
+        });
+
+        it('should be null if there is no reminder time', () => {
+            const task = new TaskBuilder().dueDate('2023-06-19').build();
+            expect(task.reminderDateTime).toBeNull();
+        });
+
+        it('should be null if there is a reminder time but no anchor date', () => {
+            const task = new TaskBuilder().reminderTime('09:00').build();
+            expect(task.reminderDateTime).toBeNull();
+        });
+
+        it('should be null if the reminder time is not a valid HH:mm string', () => {
+            // Task's own constructor/model doesn't itself validate the format at construction time -
+            // that's the serializer's/editor's job - but reminderDateTime must not crash or return a
+            // nonsensical value if it's ever handed something malformed.
+            const task = new TaskBuilder().dueDate('2023-06-19').reminderTime('not-a-time').build();
+            expect(task.reminderDateTime).toBeNull();
+        });
     });
 
     it('should provide access to recurring-related properties', () => {
@@ -1323,6 +1377,20 @@ describe('toggle done', () => {
                 - [x] should remove *id* and *dependsOn* in next recurrence 🆔 id2 ⛔ id1 🔁 every day 📅 2024-02-13"
             `);
         });
+
+        it('should retain reminderTime on both the next occurrence and the completed task', () => {
+            // This is the exact bug the old draft PR's reviewer flagged: reminder time getting lost
+            // on completion or recurrence. Unlike id/dependsOn, reminderTime is not reset either time.
+            const task = fromLine({
+                line: '- [ ] task with reminder 🔁 every day 📅 2024-02-13 ⏰ 09:00',
+            });
+            const tasks = task.toggle();
+
+            expect(toMarkdown(tasks)).toMatchInlineSnapshot(`
+                "- [ ] task with reminder 🔁 every day 📅 2024-02-14 ⏰ 09:00
+                - [x] task with reminder 🔁 every day 📅 2024-02-13 ⏰ 09:00"
+            `);
+        });
     });
 });
 
@@ -1712,6 +1780,13 @@ describe('identicalTo', () => {
         expect(lhs).toBeIdenticalTo(new TaskBuilder().cancelledDate('2012-12-27'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().cancelledDate(null));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().cancelledDate('2012-12-26'));
+    });
+
+    it('should check reminderTime', () => {
+        const lhs = new TaskBuilder().reminderTime('09:00');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().reminderTime('09:00'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().reminderTime(null));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().reminderTime('09:30'));
     });
 
     it('should check recurrence', () => {

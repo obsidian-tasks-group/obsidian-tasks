@@ -54,6 +54,17 @@ export class Task extends ListItem {
     private readonly _doneDate: Moment | null;
     private readonly _cancelledDate: Moment | null;
 
+    /**
+     * The reminder time, as a plain 'HH:mm' string (e.g. '09:00'), or null if none is set.
+     *
+     * Unlike the other date fields, this is not itself a {@link Moment}: it has no date of its own,
+     * and is only meaningful when paired with one of {@link dueDate}, {@link scheduledDate} or
+     * {@link startDate} - see {@link reminderDateTime}. For that reason it is deliberately NOT
+     * included in {@link allDateFields}: that list drives the generic calendar-date UI (click/right-click
+     * editing, day-based grouping/filtering), which does not apply to a time-only value.
+     */
+    private readonly _reminderTime: string | null;
+
     public readonly recurrence: Recurrence | null;
     public readonly onCompletion: OnCompletion;
 
@@ -92,6 +103,7 @@ export class Task extends ListItem {
         dueDate?: moment.Moment | null;
         doneDate?: moment.Moment | null;
         cancelledDate?: moment.Moment | null;
+        reminderTime?: string | null;
         recurrence: Recurrence | null;
         onCompletion: OnCompletion;
         dependsOn: string[] | [];
@@ -116,6 +128,7 @@ export class Task extends ListItem {
             dueDate,
             doneDate,
             cancelledDate,
+            reminderTime,
             recurrence,
             onCompletion,
             dependsOn,
@@ -142,12 +155,13 @@ export class Task extends ListItem {
 
         this.priority = priority;
 
-        this._createdDate = this.resolveDate(createdDate, args._createdDate);
-        this._startDate = this.resolveDate(startDate, args._startDate);
-        this._scheduledDate = this.resolveDate(scheduledDate, args._scheduledDate);
-        this._dueDate = this.resolveDate(dueDate, args._dueDate);
-        this._doneDate = this.resolveDate(doneDate, args._doneDate);
-        this._cancelledDate = this.resolveDate(cancelledDate, args._cancelledDate);
+        this._createdDate = this.resolveField(createdDate, args._createdDate);
+        this._startDate = this.resolveField(startDate, args._startDate);
+        this._scheduledDate = this.resolveField(scheduledDate, args._scheduledDate);
+        this._dueDate = this.resolveField(dueDate, args._dueDate);
+        this._doneDate = this.resolveField(doneDate, args._doneDate);
+        this._cancelledDate = this.resolveField(cancelledDate, args._cancelledDate);
+        this._reminderTime = this.resolveField(reminderTime, args._reminderTime);
 
         this.recurrence = recurrence;
         this.onCompletion = onCompletion;
@@ -161,9 +175,9 @@ export class Task extends ListItem {
     }
 
     /**
-     * Resolve a date field when spreading a Task object.
+     * Resolve a date (or other simple) field when spreading a Task object.
      *
-     * When a Task is spread (`new Task({ ...task, ... })`), date field getters are not copied
+     * When a Task is spread (`new Task({ ...task, ... })`), field getters are not copied
      * (getters aren't own properties), but the private field values are included in the spread object.
      *
      * This helper prioritizes explicitly passed parameters over recovered private field values:
@@ -171,16 +185,16 @@ export class Task extends ListItem {
      * - Otherwise, use the recovered private field value
      * - If both are undefined, default to null
      *
-     * @param paramValue - The date parameter explicitly passed to the constructor
+     * @param paramValue - The value explicitly passed to the constructor
      * @param recoveredValue - The private field value recovered from the spread object
-     * @returns The resolved date value, or null if neither value exists
+     * @returns The resolved value, or null if neither value exists
      */
-    private resolveDate(paramValue: moment.Moment | null | undefined, recoveredValue: any): any {
+    private resolveField<T>(paramValue: T | null | undefined, recoveredValue: any): T | null {
         const parameterSupplied = paramValue !== undefined;
         if (parameterSupplied) {
             return paramValue;
         } else {
-            return recoveredValue ?? null;
+            return (recoveredValue as T | null | undefined) ?? null;
         }
     }
 
@@ -726,13 +740,53 @@ export class Task extends ListItem {
     }
 
     /**
+     * The reminder time, as a plain 'HH:mm' string (e.g. '09:00'), or null if none is set.
+     *
+     * @see reminderDateTime
+     */
+    public get reminderTime(): string | null {
+        return this._reminderTime;
+    }
+
+    /**
+     * Return {@link reminderTime} combined with the task's anchor date, as a single {@link Moment}.
+     *
+     * The anchor date is whichever of {@link dueDate}, {@link scheduledDate} or {@link startDate} is
+     * present, in that priority order (the same order used when postponing - see
+     * {@link getDateFieldToPostpone}). Returns null if there is no reminder time, the reminder time
+     * isn't a valid 'HH:mm' string, or there is no anchor date to attach it to.
+     */
+    public get reminderDateTime(): Moment | null {
+        if (!this._reminderTime) {
+            return null;
+        }
+
+        const match = this._reminderTime.match(/^([0-9]{2}):([0-9]{2})$/);
+        if (!match) {
+            return null;
+        }
+
+        const anchorDate = this.dueDate ?? this.scheduledDate ?? this.startDate;
+        if (!anchorDate) {
+            return null;
+        }
+
+        const [, hour, minute] = match;
+        return anchorDate.clone().set({ hour: Number(hour), minute: Number(minute), second: 0, millisecond: 0 });
+    }
+
+    /**
      * Return the date fields that contribute to 'happens' searches.
      *
      * @see happens
      * @see {@link HappensDateField}
      */
     public get happensDates(): (Moment | null)[] {
-        return Array.of(this.startDate, this.scheduledDate, this.dueDate);
+        // reminderDateTime always shares its calendar day with one of the other three dates (it has
+        // no date of its own - see reminderDateTime), so this doesn't change *which days* 'happens'
+        // matches. It's included anyway so a reminder is explicitly treated as a first-class
+        // 'happens' contributor, not an oversight.
+        return Array.of(this.startDate, this.scheduledDate, this.dueDate, this.reminderDateTime);
     }
 
     /**
@@ -850,6 +904,7 @@ export class Task extends ListItem {
             'id',
             'dependsOn',
             'onCompletion',
+            'reminderTime',
         ];
         for (const el of args) {
             if (this[el]?.toString() !== other[el]?.toString()) return false;

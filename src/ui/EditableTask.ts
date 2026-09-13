@@ -1,5 +1,7 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
+import { getSettings } from '../Config/Settings';
 import { parseTypedDateForSaving } from '../DateTime/DateTools';
+import { resolveTypedReminderTime } from '../DateTime/ReminderTimeParser';
 import { PriorityTools } from '../lib/PriorityTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
@@ -10,6 +12,7 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
 import { StatusType } from '../Statuses/StatusConfiguration';
+import { SetReminderDateTime, SetReminderTime } from './EditInstructions/ReminderInstructions';
 
 /**
  * {@link Task} objects are immutable. This class allows to create a mutable object from a {@link Task}, apply the edits,
@@ -32,6 +35,7 @@ export class EditableTask {
     dueDate: string;
     doneDate: string;
     cancelledDate: string;
+    reminderTime: string;
     forwardOnly: boolean;
     blockedBy: Task[];
     blocking: Task[];
@@ -52,6 +56,7 @@ export class EditableTask {
         dueDate: string;
         doneDate: string;
         cancelledDate: string;
+        reminderTime: string;
         forwardOnly: boolean;
         blockedBy: Task[];
         blocking: Task[];
@@ -70,6 +75,7 @@ export class EditableTask {
         this.dueDate = editableTask.dueDate;
         this.doneDate = editableTask.doneDate;
         this.cancelledDate = editableTask.cancelledDate;
+        this.reminderTime = editableTask.reminderTime;
         this.forwardOnly = editableTask.forwardOnly;
         this.blockedBy = editableTask.blockedBy;
         this.blocking = editableTask.blocking;
@@ -130,6 +136,7 @@ export class EditableTask {
             dueDate: task.due.formatAsDate(),
             doneDate: task.done.formatAsDate(),
             cancelledDate: task.cancelled.formatAsDate(),
+            reminderTime: task.reminderTime ?? '',
             forwardOnly: true,
             blockedBy: blockedBy,
             blocking: originalBlocking,
@@ -158,6 +165,19 @@ export class EditableTask {
         const cancelledDate = parseTypedDateForSaving(this.cancelledDate, this.forwardOnly);
         const createdDate = parseTypedDateForSaving(this.createdDate, this.forwardOnly);
         const doneDate = parseTypedDateForSaving(this.doneDate, this.forwardOnly);
+
+        const trimmedReminderTime = this.reminderTime.trim();
+        const parsedReminderTime =
+            trimmedReminderTime === ''
+                ? null
+                : resolveTypedReminderTime(
+                      trimmedReminderTime,
+                      window.moment(),
+                      getSettings().reminderRoundingIncrementMinutes,
+                  );
+        // If parsing fails, EditTask.svelte's own validation should already have disabled Apply - but
+        // fall back to no reminder rather than throwing, if this is somehow reached anyway.
+        const reminderTime = parsedReminderTime?.time ?? null;
 
         let recurrence: Recurrence | null = null;
         if (this.recurrenceRule) {
@@ -191,7 +211,7 @@ export class EditableTask {
         }
 
         // First create an updated task, with all edits except Status:
-        const updatedTask = new Task({
+        let updatedTask = new Task({
             // NEW_TASK_FIELD_EDIT_REQUIRED
             ...task,
             description,
@@ -205,9 +225,24 @@ export class EditableTask {
             doneDate,
             createdDate,
             cancelledDate,
+            reminderTime,
             dependsOn: blockedByWithIds.map((task) => task.id),
             id,
         });
+
+        if (parsedReminderTime !== null) {
+            if (parsedReminderTime.isRelative) {
+                // A relative reminder ('in 30 minutes') may resolve to a different calendar day than the
+                // due/scheduled/start date just set above - reuse the same anchor-shifting/creating logic
+                // the reminder menu uses, rather than duplicating it here.
+                [updatedTask] = new SetReminderDateTime(parsedReminderTime.date).apply(updatedTask);
+            } else {
+                // An absolute reminder time ('09:00') still needs *some* anchor date (see SetReminderTime's
+                // own doc comment) - reuse the same instruction the menu's preset items use, rather than
+                // duplicating its logic here.
+                [updatedTask] = new SetReminderTime(parsedReminderTime.time).apply(updatedTask);
+            }
+        }
 
         for (const blocking of removedBlocking) {
             const newParent = removeDependency(blocking, updatedTask);

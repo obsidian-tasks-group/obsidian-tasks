@@ -257,6 +257,24 @@
         "name": "Remove scheduled date on recurrence"
       }
     },
+    "reminder": {
+      "heading": "Reminder",
+      "presetTimes": {
+        "description": "A short, comma-separated list of times shown as quick options when clicking or right-clicking a task's reminder, e.g. '09:00, 12:00, 15:00, 18:00'.",
+        "name": "Preset reminder times"
+      },
+      "relativeOffsets": {
+        "description": "A comma-separated list of durations (e.g. '30m, 1h, 2h, 4h') shown as 'in ...' quick options, computed from the current time and rounded to the increment below. If one crosses into the next day, the task's due/scheduled/start date moves forward with it.",
+        "name": "Relative reminder offsets"
+      },
+      "roundingIncrement": {
+        "description": "Round the relative options above up to the nearest multiple of this many minutes, so a quick pick lands on a clean time. Choose 'No rounding' to apply the exact offset from now instead.",
+        "name": "Round relative offsets to",
+        "options": {
+          "none": "No rounding (exact time)"
+        }
+      }
+    },
     "searchResults": {
       "heading": "Search results",
       "taskCountLocation": {

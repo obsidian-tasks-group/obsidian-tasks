@@ -12,6 +12,7 @@
     import { focusOnceClearOfKeyboard, labelContentWithAccessKey } from './EditTaskHelpers';
     import PriorityEditor from './PriorityEditor.svelte';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
+    import ReminderEditor from './ReminderEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -28,6 +29,7 @@
         cancelledDateSymbol,
         createdDateSymbol,
         doneDateSymbol,
+        reminderTimeSymbol,
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
@@ -42,6 +44,7 @@
     let isDueDateValid: boolean = true;
     let isScheduledDateValid: boolean = true;
     let isStartDateValid: boolean = true;
+    let isReminderTimeValid: boolean = true;
 
     let isRecurrenceValid: boolean = true;
 
@@ -56,6 +59,7 @@
         isRecurrenceValid &&
         isScheduledDateValid &&
         isStartDateValid &&
+        isReminderTimeValid &&
         isDescriptionValid &&
         isCancelledDateValid &&
         isCreatedDateValid &&
@@ -115,7 +119,7 @@ Availability of access keys:
 - H: High
 - I: Highest
 - J:
-- K:
+- K: Reminder
 - L: Low
 - M: Medium
 - N: Normal
@@ -215,6 +219,18 @@ Availability of access keys:
                 bind:isDateValid={isStartDateValid}
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('a')}
+            />
+        {/if}
+
+        <!-- --------------------------------------------------------------------------- -->
+        <!--  Reminder  -->
+        <!-- --------------------------------------------------------------------------- -->
+        {#if isShownInEditModal.reminder}
+            <ReminderEditor
+                reminderSymbol={reminderTimeSymbol}
+                bind:reminderTime={editableTask.reminderTime}
+                bind:isReminderTimeValid
+                accesskey={accesskey('k')}
             />
         {/if}
 

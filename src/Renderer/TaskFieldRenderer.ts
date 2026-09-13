@@ -176,6 +176,9 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     scheduledDate: createDateField('task-scheduled', 'taskScheduled'),
     doneDate: createDateField('task-done', 'taskDone'),
     cancelledDate: createDateField('task-cancelled', 'taskCancelled'),
+    // Not a createDateField(): reminderTime is a plain 'HH:mm' string, not a Moment, so the generic
+    // day-diff data attribute calculator doesn't apply to it.
+    reminderTime: createFieldWithoutDataAttributes('task-reminder'),
 
     priority: new TaskFieldHTMLData('task-priority', 'taskPriority', (_component, task) => {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();

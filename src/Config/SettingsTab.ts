@@ -227,6 +227,7 @@ export class SettingsTab extends PluginSettingTab {
             this.datesFromFilenamesGroup(),
             this.recurringTasksGroup(),
             this.postponingGroup(),
+            this.reminderGroup(),
             this.taskEntryGroup(),
         ];
     }
@@ -964,6 +965,70 @@ export class SettingsTab extends PluginSettingTab {
         };
     }
 
+    // ---- Reminder -----------------------------------------------------------
+
+    private reminderGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.reminder.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.reminder.presetTimes.name'),
+                    aliases: [i18n.t('settings.reminder.heading')],
+                    desc: i18n.t('settings.reminder.presetTimes.description'),
+                    render: (setting) => {
+                        setting.addText((text) => {
+                            text.setValue(SettingsTab.renderCommaSeparatedList(getSettings().reminderPresetTimes))
+                                .setPlaceholder('09:00, 12:00, 15:00, 18:00')
+                                .onChange(async (value) => {
+                                    updateSettings({
+                                        reminderPresetTimes: SettingsTab.parseCommaSeparatedList(value),
+                                    });
+                                    await this.plugin.saveSettings();
+                                });
+                        });
+                    },
+                },
+                {
+                    name: i18n.t('settings.reminder.relativeOffsets.name'),
+                    desc: i18n.t('settings.reminder.relativeOffsets.description'),
+                    render: (setting) => {
+                        setting.addText((text) => {
+                            text.setValue(
+                                SettingsTab.renderRelativeOffsets(getSettings().reminderRelativeOffsetsMinutes),
+                            )
+                                .setPlaceholder('30m, 1h, 2h, 4h')
+                                .onChange(async (value) => {
+                                    updateSettings({
+                                        reminderRelativeOffsetsMinutes: SettingsTab.parseRelativeOffsets(value),
+                                    });
+                                    await this.plugin.saveSettings();
+                                });
+                        });
+                    },
+                },
+                {
+                    name: i18n.t('settings.reminder.roundingIncrement.name'),
+                    desc: i18n.t('settings.reminder.roundingIncrement.description'),
+                    render: (setting) => {
+                        setting.addDropdown((dropdown) => {
+                            dropdown.addOption('0', i18n.t('settings.reminder.roundingIncrement.options.none'));
+                            dropdown.addOption('15', '15 minutes');
+                            dropdown.addOption('30', '30 minutes');
+                            dropdown.addOption('60', '60 minutes');
+                            dropdown
+                                .setValue(String(getSettings().reminderRoundingIncrementMinutes))
+                                .onChange(async (value) => {
+                                    updateSettings({ reminderRoundingIncrementMinutes: Number(value) });
+                                    await this.plugin.saveSettings();
+                                });
+                        });
+                    },
+                },
+            ],
+        };
+    }
+
     // ---- Task entry (auto-suggest + dialog access keys) -------------------
 
     private taskEntryGroup(): SettingDefinitionItem {
@@ -1493,6 +1558,48 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('settings.reminder.heading')).setHeading();
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.reminder.presetTimes.name'))
+            .setDesc(i18n.t('settings.reminder.presetTimes.description'))
+            .addText((text) => {
+                text.setValue(SettingsTab.renderCommaSeparatedList(getSettings().reminderPresetTimes))
+                    .setPlaceholder('09:00, 12:00, 15:00, 18:00')
+                    .onChange(async (value) => {
+                        updateSettings({ reminderPresetTimes: SettingsTab.parseCommaSeparatedList(value) });
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.reminder.relativeOffsets.name'))
+            .setDesc(i18n.t('settings.reminder.relativeOffsets.description'))
+            .addText((text) => {
+                text.setValue(SettingsTab.renderRelativeOffsets(getSettings().reminderRelativeOffsetsMinutes))
+                    .setPlaceholder('30m, 1h, 2h, 4h')
+                    .onChange(async (value) => {
+                        updateSettings({ reminderRelativeOffsetsMinutes: SettingsTab.parseRelativeOffsets(value) });
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.reminder.roundingIncrement.name'))
+            .setDesc(i18n.t('settings.reminder.roundingIncrement.description'))
+            .addDropdown((dropdown) => {
+                dropdown.addOption('0', i18n.t('settings.reminder.roundingIncrement.options.none'));
+                dropdown.addOption('15', '15 minutes');
+                dropdown.addOption('30', '30 minutes');
+                dropdown.addOption('60', '60 minutes');
+                dropdown.setValue(String(getSettings().reminderRoundingIncrementMinutes)).onChange(async (value) => {
+                    updateSettings({ reminderRoundingIncrementMinutes: Number(value) });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.autoSuggest.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let autoSuggestMinimumMatchLength: Setting | null = null;
@@ -1714,6 +1821,40 @@ export class SettingsTab extends PluginSettingTab {
     }
     private static renderFolderArray(folders: string[]): string {
         return folders.join(',');
+    }
+
+    private static parseCommaSeparatedList(input: string): string[] {
+        return input
+            .split(',')
+            .map((item) => item.trim())
+            .filter((item) => item !== '');
+    }
+
+    private static renderCommaSeparatedList(items: string[]): string {
+        return items.join(', ');
+    }
+
+    /**
+     * Parse a duration like '30m' or '2 hours' into a number of minutes, or null if unrecognised.
+     */
+    private static parseOffsetToMinutes(input: string): number | null {
+        const match = input.match(/^(\d+)\s*(m|min|mins|minutes?|h|hr|hrs|hours?)$/i);
+        if (!match) {
+            return null;
+        }
+        const value = Number(match[1]);
+        const isHours = match[2].toLowerCase().startsWith('h');
+        return isHours ? value * 60 : value;
+    }
+
+    private static parseRelativeOffsets(input: string): number[] {
+        return SettingsTab.parseCommaSeparatedList(input)
+            .map((item) => SettingsTab.parseOffsetToMinutes(item))
+            .filter((minutes): minutes is number => minutes !== null);
+    }
+
+    private static renderRelativeOffsets(offsetsMinutes: number[]): string {
+        return offsetsMinutes.map((minutes) => (minutes % 60 === 0 ? `${minutes / 60}h` : `${minutes}m`)).join(', ');
     }
 
     /**

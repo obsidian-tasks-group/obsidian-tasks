@@ -16,6 +16,7 @@ describe('TaskLayoutOptions', () => {
             startDate
             scheduledDate
             dueDate
+            reminderTime
             cancelledDate
             doneDate
             blockLink"
@@ -72,6 +73,7 @@ describe('TaskLayoutOptions', () => {
             startDate
             scheduledDate
             dueDate
+            reminderTime
             cancelledDate
             doneDate
             blockLink"
@@ -90,6 +92,7 @@ describe('TaskLayoutOptions', () => {
             createdDate
             startDate
             scheduledDate
+            reminderTime
             cancelledDate
             doneDate"
         `);
@@ -146,6 +149,7 @@ describe('TaskLayoutOptions', () => {
             startDate
             scheduledDate
             dueDate
+            reminderTime
             cancelledDate
             doneDate"
         `);

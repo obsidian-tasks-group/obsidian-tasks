@@ -28,6 +28,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly dueDateSymbol: string;
     readonly doneDateSymbol: string;
     readonly cancelledDateSymbol: string;
+    readonly reminderTimeSymbol: string;
     readonly recurrenceSymbol: string;
     readonly onCompletionSymbol: string;
     readonly idSymbol: string;
@@ -40,6 +41,7 @@ export interface DefaultTaskSerializerSymbols {
         dueDateRegex: RegExp;
         doneDateRegex: RegExp;
         cancelledDateRegex: RegExp;
+        reminderTimeRegex: RegExp;
         recurrenceRegex: RegExp;
         onCompletionRegex: RegExp;
         idRegex: RegExp;
@@ -63,6 +65,10 @@ export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + ta
 
 function dateFieldRegex(symbols: string) {
     return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2})');
+}
+
+function timeFieldRegex(symbols: string) {
+    return fieldRegex(symbols, '(\\d{2}:\\d{2})');
 }
 
 function fieldRegex(symbols: string, valueRegexString: string) {
@@ -97,6 +103,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
     cancelledDateSymbol: '❌',
+    reminderTimeSymbol: '⏰',
     recurrenceSymbol: '🔁',
     onCompletionSymbol: '🏁',
     dependsOnSymbol: '⛔',
@@ -109,6 +116,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: dateFieldRegex('(?:📅|📆|🗓)'),
         doneDateRegex: dateFieldRegex('✅'),
         cancelledDateRegex: dateFieldRegex('❌'),
+        reminderTimeRegex: timeFieldRegex('⏰'),
         recurrenceRegex: fieldRegex('🔁', '([a-zA-Z0-9, !]+)'),
         onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)'),
         dependsOnRegex: fieldRegex('⛔', '(' + taskIdSequenceRegex.source + ')'),
@@ -179,6 +187,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             scheduledDateSymbol,
             doneDateSymbol,
             cancelledDateSymbol,
+            reminderTimeSymbol,
             recurrenceSymbol,
             onCompletionSymbol,
             dueDateSymbol,
@@ -219,6 +228,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return symbolAndDateValue(shortMode, cancelledDateSymbol, task.cancelledDate);
             case TaskLayoutComponent.DueDate:
                 return symbolAndDateValue(shortMode, dueDateSymbol, task.dueDate);
+            case TaskLayoutComponent.ReminderTime:
+                return symbolAndStringValue(shortMode, reminderTimeSymbol, task.reminderTime ?? '');
             case TaskLayoutComponent.RecurrenceRule:
                 if (!task.recurrence) return '';
                 return symbolAndStringValue(shortMode, recurrenceSymbol, task.recurrence.toText());
@@ -311,6 +322,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let doneDate: Moment | null = null;
         let cancelledDate: Moment | null = null;
         let createdDate: Moment | null = null;
+        let reminderTime: string | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
         let onCompletion: OnCompletion = OnCompletion.Ignore;
@@ -338,6 +350,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
             this.extractDateField(state, TaskFormatRegularExpressions.scheduledDateRegex, (d) => (scheduledDate = d));
             this.extractDateField(state, TaskFormatRegularExpressions.startDateRegex, (d) => (startDate = d));
             this.extractDateField(state, TaskFormatRegularExpressions.createdDateRegex, (d) => (createdDate = d));
+
+            this.extractField(state, TaskFormatRegularExpressions.reminderTimeRegex, (match) => {
+                reminderTime = match[1];
+            });
 
             this.extractField(state, TaskFormatRegularExpressions.recurrenceRegex, (match) => {
                 // Save the recurrence rule, but *do not parse it yet*.
@@ -398,6 +414,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             dueDate,
             doneDate,
             cancelledDate,
+            reminderTime,
             recurrence,
             onCompletion,
             id,

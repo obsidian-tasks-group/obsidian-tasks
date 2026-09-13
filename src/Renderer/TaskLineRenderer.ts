@@ -12,6 +12,7 @@ import { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { DateMenu } from '../ui/Menus/DateMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
+import { ReminderMenu } from '../ui/Menus/ReminderMenu';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
 import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
@@ -254,6 +255,16 @@ export class TaskLineRenderer {
                         'title',
                         `Click to edit ${splitDateText(componentDateField)}, Right-click for more options`,
                     );
+                } else if (component === TaskLayoutComponent.ReminderTime) {
+                    // Not gated on Task.allDateFields(): a reminder is a time, not a date, so it gets its
+                    // own handlers, rather than the generic calendar-date ones above. Click and right-click
+                    // both open the same menu - unlike a date, there's no calendar-grid equivalent for a
+                    // time that would justify two different interactions.
+                    const openReminderMenu = (ev: MouseEvent) =>
+                        showMenu(ev, new ReminderMenu(this.obsidianApp, task, defaultTaskSaver));
+                    span.addEventListener('click', openReminderMenu);
+                    span.addEventListener('contextmenu', openReminderMenu);
+                    span.setAttribute('title', 'Click to edit reminder');
                 }
             }
         }
@@ -407,6 +418,7 @@ export class TaskLineRenderer {
             dueDateSymbol,
             cancelledDateSymbol,
             doneDateSymbol,
+            reminderTimeSymbol,
         } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
         element.addEventListener('mouseenter', () => {
@@ -443,6 +455,11 @@ export class TaskLineRenderer {
             addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
             addDateToTooltip(tooltip, task.cancelledDate, cancelledDateSymbol);
             addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
+
+            if (task.reminderTime) {
+                const reminderDiv = tooltip.createDiv();
+                reminderDiv.setText(`${reminderTimeSymbol} ${task.reminderTime}`);
+            }
 
             const linkText = task.getLinkText({ isFilenameUnique });
             if (linkText) {

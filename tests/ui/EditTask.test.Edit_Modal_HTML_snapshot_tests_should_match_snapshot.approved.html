@@ -127,6 +127,23 @@
         🛫
         <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
       </div>
+      <label for="reminder">
+        Reminder (
+        <span class="accesskey">k</span>
+        )
+      </label>
+      <input
+        id="reminder"
+        type="text"
+        list="reminder-suggestions"
+        class="tasks-modal-date-input"
+        placeholder="Try '09:00' or 'in 30 minutes'"
+        accesskey="k" />
+      <datalist id="reminder-suggestions"></datalist>
+      <div class="tasks-modal-parsed-date">
+        ⏰
+        <input class="tasks-modal-date-editor-picker" type="time" id="reminder-editor-picker" tabindex="-1" />
+      </div>
       <div class="future-dates-only" id="only-future-dates">
         <label for="forwardOnly">
           Only

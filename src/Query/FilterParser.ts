@@ -21,6 +21,7 @@ import { StatusNameField } from './Filter/StatusNameField';
 import { StatusTypeField } from './Filter/StatusTypeField';
 
 import { RecurrenceField } from './Filter/RecurrenceField';
+import { ReminderTimeField } from './Filter/ReminderTimeField';
 import type { FilterOrErrorMessage } from './Filter/FilterOrErrorMessage';
 import type { Sorter } from './Sort/Sorter';
 import type { Grouper } from './Group/Grouper';
@@ -52,6 +53,7 @@ export const fieldCreators: EndsWith<BooleanField> = [
     () => new ScheduledDateField(),
     () => new DueDateField(),
     () => new DoneDateField(),
+    () => new ReminderTimeField(),
     () => new PathField(),
     () => new FolderField(),
     () => new RootField(),

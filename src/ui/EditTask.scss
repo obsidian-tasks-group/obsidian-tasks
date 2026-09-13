@@ -90,8 +90,38 @@
         min-width: 15em;
     }
 
+    // Native <input type="date">/<input type="time">, side by side (the date/scheduled/start pickers vs
+    // the reminder picker). Without explicit styling here, these two input types render quite differently
+    // in Obsidian: only "date" picks up border/font/icon-placement polish from Obsidian's own CSS (it's
+    // used elsewhere in the app, e.g. periodic notes settings), while "time" is never themed by Obsidian
+    // and falls back to the browser's raw, unstyled look - a mismatch a user would notice sitting right
+    // next to each other in this same grid. Styling both explicitly here, by tag rather than by type, is
+    // what guarantees they end up looking like one consistent picker regardless of type.
     .tasks-modal-date-editor-picker {
         margin-left: .5em;
+        font: inherit;
+        font-size: var(--font-ui-small);
+        color: var(--text-normal);
+        background-color: var(--background-modifier-form-field);
+        border: 1px solid var(--background-modifier-border);
+        border-radius: var(--input-radius);
+        padding: 1px 4px;
+        height: var(--input-height);
+
+        // Chromium's UA shadow tree lays these two parts out as a flexbox, so `order` genuinely
+        // repositions them (a common, documented trick) - pinned explicitly, and !important, so it can't
+        // end up on opposite sides for "date" vs "time" depending on what Obsidian's own CSS does to either.
+        // Icon-before-digits (left) is the side chosen, to match Obsidian's own look for "date" elsewhere.
+        &::-webkit-calendar-picker-indicator {
+            order: -1 !important;
+            margin-inline-end: 4px !important;
+            margin-inline-start: 0 !important;
+            cursor: pointer;
+        }
+
+        &::-webkit-datetime-edit {
+            order: 1 !important;
+        }
     }
 
     .tasks-modal-parsed-date {

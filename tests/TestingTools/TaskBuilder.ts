@@ -52,6 +52,7 @@ export class TaskBuilder {
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
     private _cancelledDate: Moment | null = null;
+    private _reminderTime: string | null = null;
 
     private _recurrence: Recurrence | null = null;
     private _onCompletion: OnCompletion = OnCompletion.Ignore;
@@ -101,6 +102,7 @@ export class TaskBuilder {
             dueDate: this._dueDate,
             doneDate: this._doneDate,
             cancelledDate: this._cancelledDate,
+            reminderTime: this._reminderTime,
             recurrence: this._recurrence,
             onCompletion: this._onCompletion,
             dependsOn: this._dependsOn,
@@ -133,6 +135,7 @@ export class TaskBuilder {
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
             .cancelledDate('2023-07-06')
+            .reminderTime('09:00')
             .onCompletion(OnCompletion.Delete)
             .dependsOn(['123456', 'abc123'])
             .id('abcdef')
@@ -294,6 +297,14 @@ export class TaskBuilder {
 
     public cancelledDate(cancelledDate: string | null): this {
         this._cancelledDate = TaskBuilder.parseDate(cancelledDate);
+        return this;
+    }
+
+    /**
+     * Set the reminder time, as a plain 'HH:mm' string (e.g. '09:00'), or null for no reminder.
+     */
+    public reminderTime(reminderTime: string | null): this {
+        this._reminderTime = reminderTime;
         return this;
     }
 

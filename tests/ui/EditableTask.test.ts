@@ -4,6 +4,7 @@
 import moment from 'moment';
 import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Status } from '../../src/Statuses/Status';
 import { OnCompletion } from '../../src/Task/OnCompletion';
 import { EditableTask } from '../../src/ui/EditableTask';
@@ -37,6 +38,7 @@ describe('EditableTask tests', () => {
 
     afterEach(() => {
         jest.useRealTimers();
+        resetSettings();
     });
 
     it('should create an editable task without dependencies', () => {
@@ -59,6 +61,7 @@ describe('EditableTask tests', () => {
               "originalBlocking": [],
               "priority": "medium",
               "recurrenceRule": "every day when done",
+              "reminderTime": "09:00",
               "scheduledDate": "2023-07-03",
               "startDate": "2023-07-02",
               "status": Status {
@@ -150,6 +153,7 @@ describe('EditableTask tests', () => {
         editableTask.dueDate = '';
         editableTask.doneDate = '';
         editableTask.cancelledDate = '';
+        editableTask.reminderTime = '';
         editableTask.forwardOnly = true;
         editableTask.blockedBy = [];
         editableTask.blocking = [];
@@ -163,6 +167,7 @@ describe('EditableTask tests', () => {
               "_createdDate": null,
               "_doneDate": null,
               "_dueDate": null,
+              "_reminderTime": null,
               "_scheduledDate": null,
               "_startDate": null,
               "_urgency": null,
@@ -175,7 +180,7 @@ describe('EditableTask tests', () => {
               "listMarker": "-",
               "markdownHardBreak": "",
               "onCompletion": "",
-              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
+              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ⏰ 09:00 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
               "parent": null,
               "priority": "3",
               "recurrence": null,
@@ -251,6 +256,76 @@ describe('EditableTask tests', () => {
         editableTask.forwardOnly = false;
         const tasksClosestDay = await editableTask.applyEdits(task, allTasks);
         expect(tasksClosestDay[0].dueDate).toEqualMoment(tuesdayAfter);
+    });
+
+    it('should save an absolute typed reminder time, without touching the anchor date', async () => {
+        const task = new TaskBuilder().dueDate('2024-05-01').build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = '09:00';
+
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).toEqual('09:00');
+        expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-01');
+    });
+
+    it('should resolve a relative typed reminder time, rounded the same way the quick-pick menu is, shifting the anchor date if it crosses midnight', async () => {
+        jest.setSystemTime(new Date('2024-05-01T23:45:00'));
+        const task = new TaskBuilder().dueDate('2024-05-01').build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = 'in 30 minutes';
+
+        // 23:45 + 30 minutes = 00:15, rounded up to the next 30-minute mark (the default
+        // reminderRoundingIncrementMinutes) = 00:30.
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).toEqual('00:30');
+        expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
+    });
+
+    it('should resolve a relative typed reminder time exactly, unrounded, when rounding is disabled ("no rounding")', async () => {
+        updateSettings({ reminderRoundingIncrementMinutes: 0 });
+        jest.setSystemTime(new Date('2024-05-01T23:45:00'));
+        const task = new TaskBuilder().dueDate('2024-05-01').build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = 'in 30 minutes';
+
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).toEqual('00:15');
+        expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
+    });
+
+    it("should create today's scheduled date as the anchor for a relative reminder when the task has none", async () => {
+        // A reminder time with no anchor date is meaningless within this codebase (see Task.reminderDateTime).
+        const task = new TaskBuilder().build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = 'in 30 minutes';
+
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).not.toBeNull();
+        expect(edited.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-05-01');
+        expect(edited.dueDate).toBeNull();
+        expect(edited.startDate).toBeNull();
+    });
+
+    it("should create today's scheduled date as the anchor for an absolute reminder time when the task has none", async () => {
+        const task = new TaskBuilder().build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = '09:00';
+
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).toEqual('09:00');
+        expect(edited.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-05-01');
+        expect(edited.dueDate).toBeNull();
+        expect(edited.startDate).toBeNull();
     });
 });
 

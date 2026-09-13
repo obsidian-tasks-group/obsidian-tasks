@@ -72,6 +72,7 @@ describe('validate emoji regular expressions', () => {
             dueDateRegex: /(?:📅|📆|🗓)\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
             doneDateRegex: /✅\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
             cancelledDateRegex: /❌\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
+            reminderTimeRegex: /⏰\\ufe0f? *(\\d{2}:\\d{2})$/
             recurrenceRegex: /🔁\\ufe0f? *([a-zA-Z0-9, !]+)$/
             onCompletionRegex: /🏁\\ufe0f? *([a-zA-Z]+)$/
             dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/
@@ -95,6 +96,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         scheduledDateSymbol,
         dueDateSymbol,
         doneDateSymbol,
+        reminderTimeSymbol,
         idSymbol,
         dependsOnSymbol,
     } = symbols;
@@ -139,6 +141,19 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             it('should parse a dueDate - with non-standard emoji 2', () => {
                 const taskDetails = deserialize('🗓 2021-06-20');
                 expect(taskDetails).toMatchTaskDetails({ ['dueDate']: moment('2021-06-20', 'YYYY-MM-DD') });
+            });
+        });
+
+        describe('should parse reminderTime', () => {
+            it('should parse a reminderTime', () => {
+                const taskDetails = deserialize(`${reminderTimeSymbol} 09:00`);
+                expect(taskDetails).toMatchTaskDetails({ reminderTime: '09:00' });
+            });
+
+            it('should not parse a malformed reminderTime, leaving it in the description', () => {
+                const line = `${reminderTimeSymbol} 9am`;
+                const taskDetails = deserialize(line);
+                expect(taskDetails).toMatchTaskDetails({ description: line, reminderTime: null });
             });
         });
 
@@ -285,6 +300,11 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         ] as const)('should serialize a $what', ({ what, symbol }) => {
             const serialized = serialize(new TaskBuilder()[what]('2021-06-20').description('').build());
             expect(serialized).toEqual(` ${symbol} 2021-06-20`);
+        });
+
+        it('should serialize a reminderTime', () => {
+            const serialized = serialize(new TaskBuilder().reminderTime('09:00').description('').build());
+            expect(serialized).toEqual(` ${reminderTimeSymbol} 09:00`);
         });
 
         it('should serialize a Highest, High, Medium, Low and Lowest priority', () => {
