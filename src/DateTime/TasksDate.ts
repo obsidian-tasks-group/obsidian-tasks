@@ -135,19 +135,48 @@ export class TasksDate {
         const today = window.moment().startOf('day');
         // According to the moment.js docs, isBefore is not stable so we use !isSameOrAfter: https://momentjs.com/docs/#/query/is-before/
         const isDateBeforeToday = !this._date.isSameOrAfter(today, 'day');
+        const base = isDateBeforeToday ? today : this._date.clone();
 
-        const postponedDate = isDateBeforeToday
-            ? today.add(amount, unitOfTime)
-            : this._date.clone().add(amount, unitOfTime);
-
-        // Only roll dates that are genuinely being postponed forward (amount > 0).
-        // The fixed "today" menu item (amount === 0) means "set to today", so it must
-        // never be moved, even if today itself happens to be a Saturday or Sunday.
+        // Only postpone-forward increments (amount > 0) are affected. The fixed "today" menu
+        // item (amount === 0) means "set to today", so it must never be moved, even if today
+        // itself happens to be a Saturday or Sunday.
         if (skipWeekends && amount > 0) {
-            return TasksDate.rollForwardOverWeekend(postponedDate);
+            if (TasksDate.isDayUnit(unitOfTime)) {
+                // For day-based increments, count only business days, so consecutive amounts
+                // (1, 2, 3, ...) each land on their own following business day, instead of all
+                // collapsing onto the same Monday once a weekend has been skipped over.
+                return TasksDate.addBusinessDays(base, amount);
+            }
+            // Week/month increments keep their normal meaning; only the single final result
+            // is rolled off a weekend, if it happens to land on one.
+            return TasksDate.rollForwardOverWeekend(base.add(amount, unitOfTime));
         }
 
-        return postponedDate;
+        return base.add(amount, unitOfTime);
+    }
+
+    /**
+     * True if {@link unitOfTime} is a day-based increment ('day' or 'days'), as opposed to a
+     * week- or month-based one. Used to decide whether skipping weekends should count business
+     * days (for day-based increments) or just roll the single final result (for coarser ones).
+     */
+    public static isDayUnit(unitOfTime: moment.unitOfTime.DurationConstructor): boolean {
+        return unitOfTime === 'day' || unitOfTime === 'days';
+    }
+
+    /**
+     * Add {@link amount} business days (i.e. skipping Saturdays and Sundays) to {@link date}.
+     */
+    private static addBusinessDays(date: Moment, amount: number): Moment {
+        const result = date.clone();
+        let remainingBusinessDays = amount;
+        while (remainingBusinessDays > 0) {
+            result.add(1, 'day');
+            if (result.day() !== 0 && result.day() !== 6) {
+                remainingBusinessDays--;
+            }
+        }
+        return result;
     }
 
     /**

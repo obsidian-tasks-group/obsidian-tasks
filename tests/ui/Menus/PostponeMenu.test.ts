@@ -18,6 +18,7 @@ const yesterday = '2023-12-02';
 const today = '2023-12-03';
 const tomorrow = '2023-12-04';
 const farFuture = '2024-03-25';
+const nextFriday = '2023-12-08'; // a Friday
 
 // const invalidDate = '2023-12-36';
 
@@ -171,11 +172,11 @@ describe('PostponeMenu', () => {
                   Scheduled today, on Sun 3rd Dec
                   Scheduled tomorrow, on Mon 4th Dec
                   ---
-                  Scheduled in 2 days, on Tue 5th Dec
-                  Scheduled in 3 days, on Wed 6th Dec
-                  Scheduled in 4 days, on Thu 7th Dec
-                  Scheduled in 5 days, on Fri 8th Dec
-                  Scheduled in 6 days, on Mon 11th Dec
+                  Scheduled in 2 business days, on Tue 5th Dec
+                  Scheduled in 3 business days, on Wed 6th Dec
+                  Scheduled in 4 business days, on Thu 7th Dec
+                  Scheduled in 5 business days, on Fri 8th Dec
+                  Scheduled in 6 business days, on Mon 11th Dec
                   ---
                   Scheduled in a week, on Mon 11th Dec
                   Scheduled in 2 weeks, on Mon 18th Dec
@@ -187,9 +188,43 @@ describe('PostponeMenu', () => {
             // Notes on the above, vs. the "setting off" version of this same case:
             // - "today" (Sun 3rd Dec) is unaffected: it means "set to today", not a postponement, so it's
             //   never rolled forward even when today itself is a weekend day.
-            // - "in 6 days" would otherwise land on Saturday 9th Dec, so it rolls to Monday 11th Dec.
-            // - "in a week" would otherwise land on Sunday 10th Dec, so it also rolls to Monday 11th Dec,
-            //   coincidentally landing on the same day as the "in 6 days" item above.
+            // - "tomorrow" (Mon 4th Dec) stays worded as "tomorrow", not "next business day": today (Sun 3rd)
+            //   + 1 calendar day already lands on Monday, so no weekend was actually skipped.
+            // - Day-based increments are worded "business days" and count only business days, so 2..6 each
+            //   land on their own distinct following business day (Tue 5th .. Mon 11th) - none of them
+            //   collapse onto the same date the way naively adding calendar days and rolling the final
+            //   result would (that would put "in 2 days" and "in 3 days" both on Monday 4th/11th).
+            // - "in a week" would otherwise land on Sunday 10th Dec, so it rolls to Monday 11th Dec -
+            //   week/month increments only roll their single final result, they don't count business days,
+            //   so it coincidentally lands on the same day as "in 6 business days" above.
+        });
+
+        it('should never land two different day-based amounts on the same date, for a task scheduled on a Friday', () => {
+            // This is the exact shape of the bug reported against the first version of this
+            // setting: a task scheduled on a Friday (so the weekend falls right after it) had
+            // "by 1/2/3 days" all rolling forward onto the same following Monday.
+            updateSettings({ postponeSkipWeekends: true });
+
+            const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(nextFriday));
+            expect(itemsAsText).toMatchInlineSnapshot(`
+                "
+                  Scheduled today, on Sun 3rd Dec
+                  Scheduled tomorrow, on Mon 4th Dec
+                  ---
+                  Postpone scheduled date by a business day, to Mon 11th Dec
+                  Postpone scheduled date by 2 business days, to Tue 12th Dec
+                  Postpone scheduled date by 3 business days, to Wed 13th Dec
+                  Postpone scheduled date by 4 business days, to Thu 14th Dec
+                  Postpone scheduled date by 5 business days, to Fri 15th Dec
+                  Postpone scheduled date by 6 business days, to Mon 18th Dec
+                  ---
+                  Postpone scheduled date by a week, to Fri 15th Dec
+                  Postpone scheduled date by 2 weeks, to Fri 22nd Dec
+                  Postpone scheduled date by 3 weeks, to Fri 29th Dec
+                  Postpone scheduled date by a month, to Mon 8th Jan
+                  ---
+                  Remove scheduled date"
+            `);
         });
     });
 

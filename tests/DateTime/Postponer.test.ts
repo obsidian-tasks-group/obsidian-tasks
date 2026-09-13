@@ -310,6 +310,42 @@ describe('postpone - skip weekends setting', () => {
         const { postponedDate } = createFixedDateTask(task, 'startDate', 'day', 1); // "tomorrow" would be Saturday
         expect(postponedDate!.format('YYYY-MM-DD')).toEqual('2023-12-11');
     });
+
+    it('should give each day-based amount its own following business day, never collapsing two amounts onto the same date', () => {
+        updateSettings({ postponeSkipWeekends: true });
+        // 2023-12-08 is a Friday.
+        const task = new TaskBuilder().dueDate('2023-12-08').build();
+        const dates = [1, 2, 3].map((amount) =>
+            createPostponedTask(task, 'dueDate', 'day', amount).postponedDate!.format('YYYY-MM-DD'),
+        );
+        expect(dates).toEqual(['2023-12-11', '2023-12-12', '2023-12-13']);
+    });
+
+    it('should say "business days" instead of "days" once the setting is on', () => {
+        updateSettings({ postponeSkipWeekends: true });
+        // 2023-12-08 is a Friday, in the future relative to 'today' (2023-12-03).
+        const task = new TaskBuilder().startDate('2023-12-08').build();
+
+        expect(postponeMenuItemTitle(task, 1, 'day')).toEqual('Postpone start date by a business day, to Mon 11th Dec');
+        expect(postponeMenuItemTitle(task, 2, 'days')).toEqual(
+            'Postpone start date by 2 business days, to Tue 12th Dec',
+        );
+    });
+
+    it('should say "next business day" instead of "tomorrow" only when the weekend was actually skipped', () => {
+        updateSettings({ postponeSkipWeekends: true });
+
+        // 'today' (2023-12-03) is a Sunday, so the fixed "tomorrow" item lands on Monday
+        // regardless - nothing was actually skipped, so it should still just say "tomorrow".
+        const taskDueToday = new TaskBuilder().dueDate(today).build();
+        expect(fixedDateMenuItemTitle(taskDueToday, 1, 'day')).toEqual('Due tomorrow, on Mon 4th Dec');
+
+        // Move "today" to a Friday, so literal "tomorrow" would be a Saturday, and confirm the
+        // wording changes to say so, instead of silently showing Monday's date as "tomorrow".
+        jest.setSystemTime(new Date('2023-12-08')); // Friday
+        const taskDueFriday = new TaskBuilder().dueDate('2023-12-08').build();
+        expect(fixedDateMenuItemTitle(taskDueFriday, 1, 'day')).toEqual('Due next business day, on Mon 11th Dec');
+    });
 });
 
 describe('postpone - postponement success message', () => {

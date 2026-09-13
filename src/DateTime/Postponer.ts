@@ -219,21 +219,38 @@ export function postponeMenuItemTitleFromDate(
     const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount, skipWeekends);
     const formattedNewDate = postponedDate.format('ddd Do MMM');
 
+    // When skipping weekends changes what a day-based increment actually means (counting only
+    // business days, rather than adding calendar days and rolling the result), say so
+    // explicitly - otherwise consecutive amounts (e.g. "2 days" and "3 days") can silently
+    // produce the same date, which reads as a bug rather than a feature.
+    const countsBusinessDays = skipWeekends && amount > 0 && TasksDate.isDayUnit(timeUnit);
+    const unitLabel = countsBusinessDays ? `business ${timeUnit}` : timeUnit;
+
     const amountOrArticle = amount != 1 ? Math.abs(amount) : 'a';
     if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
         const updatedDateDisplayText = prettyPrintDateFieldName(updatedDateType);
         const title =
             amount >= 0
-                ? `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`
+                ? `${updatedDateDisplayText} in ${amountOrArticle} ${unitLabel}, on ${formattedNewDate}`
                 : `${updatedDateDisplayText} ${amountOrArticle} ${timeUnit} ago, on ${formattedNewDate}`;
-        return title
-            .replace(' 1 day ago', ' yesterday')
-            .replace(' in 0 days', ' today')
-            .replace('in a day', 'tomorrow');
+        const withCommonReplacements = title.replace(' 1 day ago', ' yesterday').replace(' in 0 days', ' today');
+
+        // Only say "next business day" when skipping the weekend actually moved the date;
+        // otherwise plain "tomorrow" is simpler, and just as accurate. Mirror TasksDate.postpone()'s
+        // own choice of base date here: an overdue date is postponed from today, not from itself,
+        // so "tomorrow" must be compared against today+1 in that case, not dateToUpdate+1.
+        const today = window.moment().startOf('day');
+        const effectiveBase = dateToUpdate.isSameOrAfter(today, 'day') ? dateToUpdate : today;
+        const tomorrowSkippedAWeekend =
+            countsBusinessDays && amount === 1 && !effectiveBase.clone().add(1, 'day').isSame(postponedDate, 'day');
+        if (tomorrowSkippedAWeekend) {
+            return withCommonReplacements.replace('in a business day', 'next business day');
+        }
+        return withCommonReplacements.replace('in a day', 'tomorrow').replace('in a business day', 'tomorrow');
     }
     const updatedDateDisplayText = splitDateText(updatedDateType);
     if (amount >= 0) {
-        return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
+        return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${unitLabel}, to ${formattedNewDate}`;
     } else {
         return `Backdate ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
     }
