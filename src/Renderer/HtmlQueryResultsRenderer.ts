@@ -217,7 +217,11 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private addUrgency(listItem: HTMLElement, task: Task) {
-        const text = new Intl.NumberFormat().format(task.urgency);
+        // Pin the locale explicitly: without it, Intl.NumberFormat() uses the OS's default locale, so on a
+        // machine set to e.g. French, urgency would render "10,75" (comma decimal) instead of "10.75",
+        // silently diverging from the approval-test fixtures (and from how the rest of Tasks' UI is locale-
+        // independent, e.g. dates are formatted via a fixed moment.js format, not toLocaleDateString()).
+        const text = new Intl.NumberFormat('en-US').format(task.urgency);
         const span = listItem.createSpan();
         span.textContent = text;
         span.classList.add('tasks-urgency');
