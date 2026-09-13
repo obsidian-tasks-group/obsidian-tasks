@@ -1,7 +1,8 @@
 {
   "id": "upgraded-tasks",
   "name": "Tasks (Upgraded Fork)",
-  "version": "8.4.0",
+  "version": "1.0.0",
+  "upstreamVersion": "8.4.0",
   "minAppVersion": "1.8.7",
   "description": "Personal fork of the Tasks plugin, extended with reminder notifications, business-day postponing, and a cross-project tabular view. Based on obsidian-tasks-group/obsidian-tasks.",
   "helpUrl": "https://github.com/barthelemy-simon/upgraded-tasks",
