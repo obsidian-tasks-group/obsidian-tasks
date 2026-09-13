@@ -91,12 +91,13 @@ Rules:
 - `upstreamVersion` moves independently, whenever a sync happens (see above) — it does not drive `version`.
 - Keep `CHANGELOG.md` mapping each fork version to its upstream base and its fork-specific changes — the
   version number alone doesn't carry the "what changed" detail.
-- `versions.json` (Obsidian's own version→`minAppVersion` compatibility map) inherited upstream's entire
-  historical version list when this repo was forked, which used the same low integers this scheme now
-  reuses (their `1.0.0`/`2.0.0`/`3.0.0` etc. are unrelated releases of the *original* plugin). Since this
-  fork ships under its own manifest `id` (`upgraded-tasks`, never the upstream `obsidian-tasks-plugin`),
-  nothing will ever resolve this repo's `versions.json` looking for upstream's actual old releases, so this
-  fork's own entries simply overwrite those keys with this fork's real `minAppVersion` at that point.
+- `versions.json` (Obsidian's own version→`minAppVersion` compatibility map) holds only this fork's own
+  entries, one per fork version, each mapped to the `minAppVersion` that version actually required. It
+  originally inherited upstream's entire historical version list when this repo was forked - a mix of
+  irrelevant *original*-plugin releases (this fork ships under its own manifest `id`, `upgraded-tasks`,
+  never the upstream `obsidian-tasks-plugin`, so nothing will ever resolve this repo's `versions.json`
+  looking for upstream's old releases) and, worse, entries under the same low integers this scheme reuses
+  (their own `1.0.0`/`2.0.0`/`3.0.0` etc.) - all since removed rather than kept alongside.
 
 ## Roadmap (see conversation history for full research)
 
