@@ -11,6 +11,12 @@ test vault's plugin directory (`.obsidian/plugins/upgraded-tasks`), so a build i
   confused with, or conflict with, a real Tasks install. It's enabled in this vault's
   `.obsidian/community-plugins.json` under that id.
 - Test vault: `Test Task upgraded` (the folder two levels up from here).
+- **`src/Config/SettingsTab.ts` has two parallel settings UIs that must both be updated for every setting**:
+  `getSettingDefinitions()` (declarative, Obsidian 1.13.0+ — what virtually every real install actually
+  renders) and `display()` (imperative, only used as a fallback on very old Obsidian). It's easy to edit only
+  `display()`, see it build/lint/test cleanly, and still have the setting be completely invisible in a normal
+  install — there's no error, the setting simply never renders. Always add/change the same setting in both
+  places (there's a doc comment on the `SettingsTab` class saying so).
 
 ## Staying in sync with upstream
 

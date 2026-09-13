@@ -226,6 +226,7 @@ export class SettingsTab extends PluginSettingTab {
             this.datesGroup(),
             this.datesFromFilenamesGroup(),
             this.recurringTasksGroup(),
+            this.postponingGroup(),
             this.taskEntryGroup(),
         ];
     }
@@ -939,6 +940,30 @@ export class SettingsTab extends PluginSettingTab {
         };
     }
 
+    // ---- Postponing ---------------------------------------------------------
+
+    private postponingGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.postponing.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.postponing.skipWeekends.name'),
+                    aliases: [i18n.t('settings.postponing.heading')],
+                    desc: SettingsTab.createFragmentWithHTML(i18n.t('settings.postponing.skipWeekends.description')),
+                    render: (setting) => {
+                        setting.addToggle((toggle) => {
+                            toggle.setValue(getSettings().postponeSkipWeekends).onChange(async (value) => {
+                                updateSettings({ postponeSkipWeekends: value });
+                                await this.plugin.saveSettings();
+                            });
+                        });
+                    },
+                },
+            ],
+        };
+    }
+
     // ---- Task entry (auto-suggest + dialog access keys) -------------------
 
     private taskEntryGroup(): SettingDefinitionItem {
@@ -1448,6 +1473,21 @@ export class SettingsTab extends PluginSettingTab {
                 const { removeScheduledDateOnRecurrence } = getSettings();
                 toggle.setValue(removeScheduledDateOnRecurrence).onChange(async (value) => {
                     updateSettings({ removeScheduledDateOnRecurrence: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('settings.postponing.heading')).setHeading();
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.postponing.skipWeekends.name'))
+            .setDesc(SettingsTab.createFragmentWithHTML(i18n.t('settings.postponing.skipWeekends.description')))
+            .addToggle((toggle) => {
+                const { postponeSkipWeekends } = getSettings();
+                toggle.setValue(postponeSkipWeekends).onChange(async (value) => {
+                    updateSettings({ postponeSkipWeekends: value });
                     await this.plugin.saveSettings();
                 });
             });

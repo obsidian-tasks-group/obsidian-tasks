@@ -1,5 +1,6 @@
 import { capitalizeFirstLetter } from '../lib/StringHelpers';
 import { Task } from '../Task/Task';
+import { getSettings } from '../Config/Settings';
 import { DateFallback } from './DateFallback';
 import { TasksDate } from './TasksDate';
 import type { AllTaskDateFields, HappensDate } from './DateFieldTypes';
@@ -110,7 +111,7 @@ function createPostponedTaskFromDate(
     timeUnit: moment.unitOfTime.DurationConstructor,
     amount: number,
 ): { postponedDate: moment.Moment | null; postponedTask: Task } {
-    const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
+    const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount, getSettings().postponeSkipWeekends);
     return createTaskFromDate(task, dateFieldToPostpone, postponedDate);
 }
 
@@ -150,7 +151,13 @@ export function postponeButtonTitle(task: Task, amount: number, timeUnit: moment
 export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = task[updatedDateType] as Moment;
-    return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
+    return postponeMenuItemTitleFromDate(
+        updatedDateType,
+        dateToUpdate,
+        amount,
+        timeUnit,
+        getSettings().postponeSkipWeekends,
+    );
 }
 
 /**
@@ -164,7 +171,13 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: mome
 export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = window.moment().startOf('day');
-    return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
+    return postponeMenuItemTitleFromDate(
+        updatedDateType,
+        dateToUpdate,
+        amount,
+        timeUnit,
+        getSettings().postponeSkipWeekends,
+    );
 }
 
 /**
@@ -201,25 +214,43 @@ export function postponeMenuItemTitleFromDate(
     dateToUpdate: moment.Moment,
     amount: number,
     timeUnit: moment.unitOfTime.DurationConstructor,
+    skipWeekends: boolean = false,
 ) {
-    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount, skipWeekends);
     const formattedNewDate = postponedDate.format('ddd Do MMM');
+
+    // When skipping weekends changes what a day-based increment actually means (counting only
+    // business days, rather than adding calendar days and rolling the result), say so
+    // explicitly - otherwise consecutive amounts (e.g. "2 days" and "3 days") can silently
+    // produce the same date, which reads as a bug rather than a feature.
+    const countsBusinessDays = skipWeekends && amount > 0 && TasksDate.isDayUnit(timeUnit);
+    const unitLabel = countsBusinessDays ? `business ${timeUnit}` : timeUnit;
 
     const amountOrArticle = amount != 1 ? Math.abs(amount) : 'a';
     if (dateToUpdate.isSameOrBefore(window.moment(), 'day')) {
         const updatedDateDisplayText = prettyPrintDateFieldName(updatedDateType);
         const title =
             amount >= 0
-                ? `${updatedDateDisplayText} in ${amountOrArticle} ${timeUnit}, on ${formattedNewDate}`
+                ? `${updatedDateDisplayText} in ${amountOrArticle} ${unitLabel}, on ${formattedNewDate}`
                 : `${updatedDateDisplayText} ${amountOrArticle} ${timeUnit} ago, on ${formattedNewDate}`;
-        return title
-            .replace(' 1 day ago', ' yesterday')
-            .replace(' in 0 days', ' today')
-            .replace('in a day', 'tomorrow');
+        const withCommonReplacements = title.replace(' 1 day ago', ' yesterday').replace(' in 0 days', ' today');
+
+        // Only say "next business day" when skipping the weekend actually moved the date;
+        // otherwise plain "tomorrow" is simpler, and just as accurate. Mirror TasksDate.postpone()'s
+        // own choice of base date here: an overdue date is postponed from today, not from itself,
+        // so "tomorrow" must be compared against today+1 in that case, not dateToUpdate+1.
+        const today = window.moment().startOf('day');
+        const effectiveBase = dateToUpdate.isSameOrAfter(today, 'day') ? dateToUpdate : today;
+        const tomorrowSkippedAWeekend =
+            countsBusinessDays && amount === 1 && !effectiveBase.clone().add(1, 'day').isSame(postponedDate, 'day');
+        if (tomorrowSkippedAWeekend) {
+            return withCommonReplacements.replace('in a business day', 'next business day');
+        }
+        return withCommonReplacements.replace('in a day', 'tomorrow').replace('in a business day', 'tomorrow');
     }
     const updatedDateDisplayText = splitDateText(updatedDateType);
     if (amount >= 0) {
-        return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
+        return `Postpone ${updatedDateDisplayText} by ${amountOrArticle} ${unitLabel}, to ${formattedNewDate}`;
     } else {
         return `Backdate ${updatedDateDisplayText} by ${amountOrArticle} ${timeUnit}, to ${formattedNewDate}`;
     }
