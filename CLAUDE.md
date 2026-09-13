@@ -100,17 +100,34 @@ Rules:
 
 ## Roadmap (see conversation history for full research)
 
-1. **Reminder field in the task modal.** Reminder (obsidian-reminder) already understands a distinct
-   `⏰ HH:MM` signifier alongside Tasks' own date fields — no changes needed on the Reminder side. The gap is
-   purely that Tasks' modal has no field to enter it. There's stale prior art for this:
-   [PR #2750](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/2750) (draft, last synced May 2024,
-   ~6,000 commits behind current upstream `main` — do not try to rebase it). Its actual `src/` diff was small
-   (~214 lines across 20 files: `Task.ts`, `DefaultTaskSerializer.ts`/`DataviewTaskSerializer.ts`,
-   `Recurrence.ts`, `EditTask.svelte` + `EditTaskHelpers.ts`, `TaskLineRenderer.ts`/`TaskFieldRenderer.ts`,
-   `Sort.ts`/`FilterParser.ts`/`Query.ts`, new `Query/Filter/ReminderDateField.ts`) — use it as a design
-   reference and reimplement against current `main`, not as a branch to merge. Known edge cases the PR's
-   reviewer flagged: reminder time gets lost when a task is completed or recurs, the `happens` filter doesn't
-   see reminder dates, and a keyboard access-key clash (`C` is taken by Created Date).
+1. ~~**Reminder field in the task modal.**~~ **Done**, full scope (merged as `3.0.0` — see CHANGELOG.md's
+   `3.0.0` entry for the exact feature list). Reimplemented from scratch against current `main`, not from the
+   stale prior-art PR #2750 the roadmap used to point to (draft, last synced May 2024, ~6,000 commits behind
+   `main` at the time — still worth reading as design reference if this area is revisited, but do not try to
+   rebase it). Its reviewer's two flagged edge cases are both explicitly fixed/covered: reminder time now
+   survives completion/recurrence (Task.ts's generic spread-recovery mechanism carries it forward
+   automatically, the same way priority/tags already are, so there was no special-case code needed — it just
+   had to not be reset), and `happens` now includes it. The access-key clash is avoided too: `K`, not `C`
+   (Created Date's).
+
+   **Important correction, found by testing against the actual Reminder plugin, then reverted (both still
+   within `3.0.0`):** the original roadmap research's assumption that Reminder "already understands a
+   distinct `⏰ HH:MM` signifier ... no changes needed on the Reminder side" was **wrong** in two separate
+   ways, neither fixable from this fork's side alone. First: Reminder's "Tasks plugin format" reader needs a
+   *full date* under `⏰` (like it does for `📅`/`⏳`/`🛫`) — a bare `HH:mm` isn't understood, and since `⏰`
+   is checked before falling back to the other three (per Reminder's own "Fall back to due, scheduled, or
+   start date" setting), that silently made the *entire line* not a reminder, no matter what date fields it
+   had. Fixed by writing `⏰ YYYY-MM-DD HH:mm` instead. Second, found after that fix, with the fallback
+   setting turned off as Reminder's own docs suggest for "only some tasks ring": Reminder's validity check in
+   that mode is hardcoded to require a literal `📅` due date — regardless of whether `⏰` itself is present
+   and valid, and regardless of using `⏳`/`🛫` — so it's fundamentally incompatible with a
+   one-scheduled-date-per-task workflow. There is no configuration of Reminder that gives "one date field,
+   opt-in per-task alarm." Decided: stop targeting Reminder-plugin compatibility entirely; reverted the `⏰
+   YYYY-MM-DD HH:mm` format back to plain `⏰ HH:mm`. The one part that *stayed* is independently useful
+   regardless of Reminder: every reminder-setting path still guarantees an anchor date exists (creating
+   today's `scheduledDate` if the task has none at all) — see `SetReminderTime`'s doc comment in
+   `ReminderInstructions.ts` — since a reminder time is meaningless without a day to attach it to, and the
+   native notification system below will need to know "which day" exactly as much as Reminder would have.
 2. ~~**Postpone (⏩) to next business day.**~~ **Done** (merged into `main`). Behind a setting
    (`postponeSkipWeekends`, default off) in `src/Config/Settings.ts`/`SettingsTab.ts` — remember this file has
    **two** parallel settings UIs that both need updating (see the note above). The actual date math is
@@ -160,6 +177,20 @@ Rules:
    │           │ Task C.3                        │
    └───────────┴─────────────────────────────────┘
    ```
+
+4. **Native notification delivery** (planned next, not yet started). Fire notifications directly from this
+   plugin for tasks with a `reminderTime` set, instead of depending on the separate Reminder plugin (see the
+   correction under item 1 for why that path is a dead end for this fork's workflow). Key constraint already
+   surfaced: Obsidian mobile gives a pure JS/TS community plugin no way to fire a notification once the app
+   is closed/backgrounded — this is a platform limitation, not something more code can fix. Reminder itself
+   works around it via an external push relay (`ntfy.sh`, visible in its own settings as
+   `ntfyEnabled`/`ntfyServerUrl`/`ntfyTopic`/`ntfyAccessToken`) plus ntfy's own separate mobile app
+   subscribed to a topic — the user has confirmed they want true background delivery on mobile, so this
+   feature's design will need the same shape. Desktop notifications and foreground-only mobile notifications
+   are the easy part (Obsidian's `Notice`, or Electron's `Notification` API on desktop); no existing
+   scheduling loop, networking code, or `Platform` usage exists anywhere in this codebase yet, so the
+   check-and-fire loop and the relay client are both new subsystems. Full design deferred to when this work
+   actually starts.
 
 ## Build
 
