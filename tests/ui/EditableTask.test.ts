@@ -4,6 +4,7 @@
 import moment from 'moment';
 import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { Status } from '../../src/Statuses/Status';
 import { OnCompletion } from '../../src/Task/OnCompletion';
 import { EditableTask } from '../../src/ui/EditableTask';
@@ -37,6 +38,7 @@ describe('EditableTask tests', () => {
 
     afterEach(() => {
         jest.useRealTimers();
+        resetSettings();
     });
 
     it('should create an editable task without dependencies', () => {
@@ -268,7 +270,23 @@ describe('EditableTask tests', () => {
         expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-01');
     });
 
-    it('should resolve a relative typed reminder time, shifting the anchor date if it crosses midnight', async () => {
+    it('should resolve a relative typed reminder time, rounded the same way the quick-pick menu is, shifting the anchor date if it crosses midnight', async () => {
+        jest.setSystemTime(new Date('2024-05-01T23:45:00'));
+        const task = new TaskBuilder().dueDate('2024-05-01').build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = 'in 30 minutes';
+
+        // 23:45 + 30 minutes = 00:15, rounded up to the next 30-minute mark (the default
+        // reminderRoundingIncrementMinutes) = 00:30.
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).toEqual('00:30');
+        expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
+    });
+
+    it('should resolve a relative typed reminder time exactly, unrounded, when rounding is disabled ("no rounding")', async () => {
+        updateSettings({ reminderRoundingIncrementMinutes: 0 });
         jest.setSystemTime(new Date('2024-05-01T23:45:00'));
         const task = new TaskBuilder().dueDate('2024-05-01').build();
         const allTasks: Task[] = [task];

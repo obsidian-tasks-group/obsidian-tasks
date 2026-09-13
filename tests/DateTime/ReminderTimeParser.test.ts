@@ -2,7 +2,11 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { parseReminderTimeInput, roundUpToIncrement } from '../../src/DateTime/ReminderTimeParser';
+import {
+    parseReminderTimeInput,
+    resolveTypedReminderTime,
+    roundUpToIncrement,
+} from '../../src/DateTime/ReminderTimeParser';
 
 window.moment = moment;
 
@@ -85,5 +89,35 @@ describe('roundUpToIncrement', () => {
         expect(roundUpToIncrement(moment('2024-01-15T14:07:23'), -30).format('YYYY-MM-DD HH:mm')).toEqual(
             '2024-01-15 14:07',
         );
+    });
+});
+
+describe('resolveTypedReminderTime', () => {
+    it('should round a relative offset up to the given increment, unlike parseReminderTimeInput', () => {
+        // reference is 10:07, so "in 30 minutes" is 10:37 exactly.
+        const result = resolveTypedReminderTime('in 30 minutes', reference, 30);
+
+        expect(result).not.toBeNull();
+        expect(result!.isRelative).toEqual(true);
+        expect(result!.time).toEqual('11:00');
+        expect(result!.date.format('YYYY-MM-DD HH:mm')).toEqual('2024-01-15 11:00');
+    });
+
+    it('should leave a relative offset exact when the increment is 0 ("no rounding")', () => {
+        const result = resolveTypedReminderTime('in 30 minutes', reference, 0);
+
+        expect(result!.time).toEqual('10:37');
+    });
+
+    it('should never round an absolute clock time, regardless of the increment', () => {
+        const result = resolveTypedReminderTime('09:00', reference, 30);
+
+        expect(result).not.toBeNull();
+        expect(result!.isRelative).toEqual(false);
+        expect(result!.time).toEqual('09:00');
+    });
+
+    it('should return null for unparseable input, same as parseReminderTimeInput', () => {
+        expect(resolveTypedReminderTime('wibble', reference, 30)).toBeNull();
     });
 });

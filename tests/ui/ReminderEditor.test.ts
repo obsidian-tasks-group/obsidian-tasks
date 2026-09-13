@@ -108,17 +108,30 @@ describe('reminder editor wrapper tests', () => {
         testInputValue(container, 'isReminderTimeValidFromEditor', 'true');
     });
 
-    it('should resolve a relative suggestion value to its current preview time', async () => {
+    it('should resolve a relative suggestion value to its current preview time, rounded like the menu', async () => {
         const container = renderReminderEditorWrapper();
         const reminderInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'reminder');
 
-        await fireEvent.input(reminderInput, { target: { value: 'in 30 minutes' } });
+        // now = 10:00, so "in 37 minutes" is 10:37 exactly - rounded up to the next 30-minute mark (the
+        // default reminderRoundingIncrementMinutes) makes it 11:00, the same as clicking the equivalent
+        // relative-offset item in the menu would (see ReminderMenu's own tests).
+        await fireEvent.input(reminderInput, { target: { value: 'in 37 minutes' } });
 
-        // Unlike the menu's rounded quick-pick, typed free text (even picked from the suggestion list,
-        // which is indistinguishable from typing once entered) is resolved exactly, not rounded.
-        testInputValue(container, 'reminder', 'in 30 minutes');
-        testInputValue(container, 'parsedReminderTimeFromEditor', '10:30');
-        testInputValue(container, 'reminderTimeFromEditor', 'in 30 minutes');
+        testInputValue(container, 'reminder', 'in 37 minutes');
+        testInputValue(container, 'parsedReminderTimeFromEditor', '11:00');
+        testInputValue(container, 'reminderTimeFromEditor', 'in 37 minutes');
+        testInputValue(container, 'isReminderTimeValidFromEditor', 'true');
+    });
+
+    it('should resolve a relative suggestion value exactly, unrounded, when rounding is disabled ("no rounding")', async () => {
+        updateSettings({ reminderRoundingIncrementMinutes: 0 });
+        const container = renderReminderEditorWrapper();
+        const reminderInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'reminder');
+
+        await fireEvent.input(reminderInput, { target: { value: 'in 37 minutes' } });
+
+        testInputValue(container, 'parsedReminderTimeFromEditor', '10:37');
+        testInputValue(container, 'reminderTimeFromEditor', 'in 37 minutes');
         testInputValue(container, 'isReminderTimeValidFromEditor', 'true');
     });
 

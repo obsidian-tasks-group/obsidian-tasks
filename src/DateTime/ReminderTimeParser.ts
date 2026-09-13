@@ -53,9 +53,6 @@ export function parseReminderTimeInput(input: string, reference: Moment): Parsed
  * Round {@link date} forward to the next multiple of {@link incrementMinutes} past the hour (for example,
  * with a 30-minute increment, 14:07 becomes 14:30 and 14:31 becomes 15:00). An {@link incrementMinutes} of
  * 0 or less means "no rounding" - {@link date} is returned as-is (seconds/milliseconds still cleared).
- *
- * Used only for the dynamically-computed relative menu items - free-text input (the modal field, or the
- * "Custom time…" prompt) is never rounded, since a typed value is already a deliberate choice.
  */
 export function roundUpToIncrement(date: Moment, incrementMinutes: number): Moment {
     const rounded = date.clone().seconds(0).milliseconds(0);
@@ -67,4 +64,36 @@ export function roundUpToIncrement(date: Moment, incrementMinutes: number): Mome
         rounded.add(incrementMinutes - remainder, 'minutes');
     }
     return rounded;
+}
+
+/**
+ * Parses a typed reminder-time string exactly like {@link parseReminderTimeInput}, but additionally rounds
+ * a *relative* result (see {@link ParsedReminderTime.isRelative}) up to {@link roundingIncrementMinutes} -
+ * the same rounding {@link buildReminderSuggestions} applies to the quick-pick menu/autocomplete items, so
+ * that typing (or picking, then submitting) "in 30 minutes" in the edit modal behaves the same way as
+ * clicking the equivalent menu item, rather than resolving to the exact, unrounded offset.
+ *
+ * A plain clock time ('09:00') is never rounded either way - rounding only ever applies to relative
+ * offsets, matching {@link roundUpToIncrement}'s own scope.
+ *
+ * Deliberately not used by {@link ReminderPromptModal} ("Custom time…"): that escape hatch always resolves
+ * exactly, since typing into it is already a deliberate choice to bypass the quick-pick options.
+ *
+ * @param input - the text the user typed.
+ * @param reference - the moment relative-duration inputs are resolved against (typically 'now').
+ * @param roundingIncrementMinutes - see {@link roundUpToIncrement}.
+ * @returns the parsed (and, if relative, rounded) result, or null if {@link input} could not be understood.
+ */
+export function resolveTypedReminderTime(
+    input: string,
+    reference: Moment,
+    roundingIncrementMinutes: number,
+): ParsedReminderTime | null {
+    const parsed = parseReminderTimeInput(input, reference);
+    if (parsed === null || !parsed.isRelative) {
+        return parsed;
+    }
+
+    const date = roundUpToIncrement(parsed.date, roundingIncrementMinutes);
+    return { time: date.format('HH:mm'), date, isRelative: true };
 }

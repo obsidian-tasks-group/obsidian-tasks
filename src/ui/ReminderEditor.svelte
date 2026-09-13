@@ -1,7 +1,7 @@
 <script lang="ts">
     import { getSettings } from '../Config/Settings';
     import { type ReminderSuggestion, buildReminderSuggestions } from '../DateTime/ReminderSuggestions';
-    import { parseReminderTimeInput } from '../DateTime/ReminderTimeParser';
+    import { resolveTypedReminderTime } from '../DateTime/ReminderTimeParser';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
     export let reminderSymbol: string;
@@ -41,7 +41,11 @@
             isReminderTimeValid = true;
             pickedTime = '';
         } else {
-            const parsed = parseReminderTimeInput(trimmed, window.moment());
+            // Rounds a relative offset ('in 30 minutes') the same way the quick-pick suggestions above do,
+            // so typing (or picking one, then submitting) behaves the same as clicking the equivalent menu
+            // item - not the exact, unrounded offset. A plain clock time ('09:00') is unaffected either way.
+            const { reminderRoundingIncrementMinutes } = getSettings();
+            const parsed = resolveTypedReminderTime(trimmed, window.moment(), reminderRoundingIncrementMinutes);
             if (parsed === null) {
                 parsedReminderTime = '<i>invalid reminder time</i>';
                 isReminderTimeValid = false;

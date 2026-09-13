@@ -1,6 +1,7 @@
 import { GlobalFilter } from '../Config/GlobalFilter';
+import { getSettings } from '../Config/Settings';
 import { parseTypedDateForSaving } from '../DateTime/DateTools';
-import { parseReminderTimeInput } from '../DateTime/ReminderTimeParser';
+import { resolveTypedReminderTime } from '../DateTime/ReminderTimeParser';
 import { PriorityTools } from '../lib/PriorityTools';
 import { replaceTaskWithTasks } from '../Obsidian/File';
 import type { Status } from '../Statuses/Status';
@@ -167,7 +168,13 @@ export class EditableTask {
 
         const trimmedReminderTime = this.reminderTime.trim();
         const parsedReminderTime =
-            trimmedReminderTime === '' ? null : parseReminderTimeInput(trimmedReminderTime, window.moment());
+            trimmedReminderTime === ''
+                ? null
+                : resolveTypedReminderTime(
+                      trimmedReminderTime,
+                      window.moment(),
+                      getSettings().reminderRoundingIncrementMinutes,
+                  );
         // If parsing fails, EditTask.svelte's own validation should already have disabled Apply - but
         // fall back to no reminder rather than throwing, if this is somehow reached anyway.
         const reminderTime = parsedReminderTime?.time ?? null;

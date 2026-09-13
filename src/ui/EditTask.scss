@@ -111,15 +111,16 @@
         // Chromium's UA shadow tree lays these two parts out as a flexbox, so `order` genuinely
         // repositions them (a common, documented trick) - pinned explicitly, and !important, so it can't
         // end up on opposite sides for "date" vs "time" depending on what Obsidian's own CSS does to either.
-        &::-webkit-datetime-edit {
-            order: 0 !important;
+        // Icon-before-digits (left) is the side chosen, to match Obsidian's own look for "date" elsewhere.
+        &::-webkit-calendar-picker-indicator {
+            order: -1 !important;
+            margin-inline-end: 4px !important;
+            margin-inline-start: 0 !important;
+            cursor: pointer;
         }
 
-        &::-webkit-calendar-picker-indicator {
+        &::-webkit-datetime-edit {
             order: 1 !important;
-            margin-inline-start: 4px !important;
-            margin-inline-end: 0 !important;
-            cursor: pointer;
         }
     }
 
