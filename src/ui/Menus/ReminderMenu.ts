@@ -2,7 +2,6 @@ import type { App } from 'obsidian';
 import type { Task } from '../../Task/Task';
 import { getSettings } from '../../Config/Settings';
 import { type ReminderSuggestion, buildReminderSuggestions } from '../../DateTime/ReminderSuggestions';
-import { parseReminderTimeInput } from '../../DateTime/ReminderTimeParser';
 import { MenuDividerInstruction } from '../EditInstructions/MenuDividerInstruction';
 import { RemoveReminderTime, SetReminderDateTime, SetReminderTime } from '../EditInstructions/ReminderInstructions';
 import type { TaskEditingInstruction } from '../EditInstructions/TaskEditingInstruction';
@@ -31,17 +30,17 @@ export class ReminderMenu extends TaskEditingMenu {
         );
 
         const toInstruction = (suggestion: ReminderSuggestion): TaskEditingInstruction => {
-            // Suggestions are always parseable by construction - they're built from the same settings
-            // parseReminderTimeInput() itself understands.
-            const parsed = parseReminderTimeInput(suggestion.value, now)!;
-            if (parsed.isRelative) {
+            if (suggestion.resolvedDate) {
+                // Apply the already-rounded date directly - re-parsing suggestion.value ('in 30 minutes')
+                // here instead would resolve the exact, unrounded offset from 'now', silently ignoring the
+                // rounding the label promised.
                 // suggestion.label ('In 30 minutes (11:00)') already reads fine as a menu action.
-                return new SetReminderDateTime(parsed.date, suggestion.label);
+                return new SetReminderDateTime(suggestion.resolvedDate, suggestion.label);
             }
             // For a plain preset, use SetReminderTime's own default title ('Set reminder: 09:00') rather
             // than suggestion.label (just '09:00') - that bare form is for the modal's autocomplete list,
             // where the field it's filling already makes "set reminder" implicit.
-            return new SetReminderTime(parsed.time);
+            return new SetReminderTime(suggestion.value);
         };
 
         this.addItemsForInstructions(

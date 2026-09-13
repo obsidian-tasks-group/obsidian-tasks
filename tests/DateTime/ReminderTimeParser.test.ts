@@ -74,4 +74,16 @@ describe('roundUpToIncrement', () => {
             '2024-01-16 00:00',
         );
     });
+
+    it('should not round at all when incrementMinutes is 0 ("no rounding")', () => {
+        expect(roundUpToIncrement(moment('2024-01-15T14:07:23'), 0).format('YYYY-MM-DD HH:mm')).toEqual(
+            '2024-01-15 14:07',
+        );
+    });
+
+    it('should not round at all when incrementMinutes is negative', () => {
+        expect(roundUpToIncrement(moment('2024-01-15T14:07:23'), -30).format('YYYY-MM-DD HH:mm')).toEqual(
+            '2024-01-15 14:07',
+        );
+    });
 });

@@ -51,13 +51,17 @@ export function parseReminderTimeInput(input: string, reference: Moment): Parsed
 
 /**
  * Round {@link date} forward to the next multiple of {@link incrementMinutes} past the hour (for example,
- * with a 30-minute increment, 14:07 becomes 14:30 and 14:31 becomes 15:00).
+ * with a 30-minute increment, 14:07 becomes 14:30 and 14:31 becomes 15:00). An {@link incrementMinutes} of
+ * 0 or less means "no rounding" - {@link date} is returned as-is (seconds/milliseconds still cleared).
  *
  * Used only for the dynamically-computed relative menu items - free-text input (the modal field, or the
  * "Custom time…" prompt) is never rounded, since a typed value is already a deliberate choice.
  */
 export function roundUpToIncrement(date: Moment, incrementMinutes: number): Moment {
     const rounded = date.clone().seconds(0).milliseconds(0);
+    if (incrementMinutes <= 0) {
+        return rounded;
+    }
     const remainder = rounded.minutes() % incrementMinutes;
     if (remainder !== 0) {
         rounded.add(incrementMinutes - remainder, 'minutes');

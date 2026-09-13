@@ -1012,6 +1012,7 @@ export class SettingsTab extends PluginSettingTab {
                     desc: i18n.t('settings.reminder.roundingIncrement.description'),
                     render: (setting) => {
                         setting.addDropdown((dropdown) => {
+                            dropdown.addOption('0', i18n.t('settings.reminder.roundingIncrement.options.none'));
                             dropdown.addOption('15', '15 minutes');
                             dropdown.addOption('30', '30 minutes');
                             dropdown.addOption('60', '60 minutes');
@@ -1588,6 +1589,7 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.reminder.roundingIncrement.name'))
             .setDesc(i18n.t('settings.reminder.roundingIncrement.description'))
             .addDropdown((dropdown) => {
+                dropdown.addOption('0', i18n.t('settings.reminder.roundingIncrement.options.none'));
                 dropdown.addOption('15', '15 minutes');
                 dropdown.addOption('30', '30 minutes');
                 dropdown.addOption('60', '60 minutes');

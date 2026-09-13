@@ -268,8 +268,11 @@
         "name": "Relative reminder offsets"
       },
       "roundingIncrement": {
-        "description": "Round the relative options above to the nearest multiple of this many minutes, so a quick pick lands on a clean time.",
-        "name": "Round relative offsets to"
+        "description": "Round the relative options above up to the nearest multiple of this many minutes, so a quick pick lands on a clean time. Choose 'No rounding' to apply the exact offset from now instead.",
+        "name": "Round relative offsets to",
+        "options": {
+          "none": "No rounding (exact time)"
+        }
       }
     },
     "searchResults": {

@@ -106,6 +106,42 @@ describe('ReminderMenu', () => {
 
         expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);
         expect(TestableTaskSaver.tasksBeingSaved![0].dueDate!.format('YYYY-MM-DD')).toEqual('2023-12-04');
+        // 23:45 + 30 minutes = 00:15, rounded up to the next 30-minute mark = 00:30 (the "In 30 minutes"
+        // item's own label). Regression check for a bug where the raw, unrounded offset was applied instead.
+        expect(TestableTaskSaver.tasksBeingSaved![0].reminderTime).toEqual('00:30');
+    });
+
+    it('should apply the ROUNDED time from a relative offset, not the raw unrounded offset (regression)', () => {
+        // now = 10:07. "In 30 minutes" -> raw 10:37, rounded up to the next 30-minute mark -> 11:00 (as
+        // the item's own label, "In 30 minutes (11:00)", already promises). A prior bug re-parsed the
+        // item's raw value at click-time instead of reusing the pre-rounded date, silently applying the
+        // unrounded 10:37 while still showing "11:00" in the menu.
+        const task = new TaskBuilder().dueDate('2023-12-03').build();
+        const menu = new ReminderMenu(mockApp, task, TestableTaskSaver.testableTaskSaver);
+
+        // presets (4) + separator (1) = index 5 is the first relative item ('in 30 minutes').
+        // @ts-expect-error TS2339: Property 'items' does not exist on type 'ReminderMenu'.
+        const relativeItem = menu.items[5];
+        expect(relativeItem.title).toEqual('In 30 minutes (11:00)');
+        relativeItem.callback();
+
+        expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);
+        expect(TestableTaskSaver.tasksBeingSaved![0].reminderTime).toEqual('11:00');
+    });
+
+    it('should apply the exact, unrounded relative offset when rounding is disabled ("no rounding")', () => {
+        updateSettings({ reminderRoundingIncrementMinutes: 0 });
+        const task = new TaskBuilder().dueDate('2023-12-03').build();
+        const menu = new ReminderMenu(mockApp, task, TestableTaskSaver.testableTaskSaver);
+
+        // presets (4) + separator (1) = index 5 is the first relative item ('in 30 minutes').
+        // @ts-expect-error TS2339: Property 'items' does not exist on type 'ReminderMenu'.
+        const relativeItem = menu.items[5];
+        expect(relativeItem.title).toEqual('In 30 minutes (10:37)');
+        relativeItem.callback();
+
+        expect(TestableTaskSaver.tasksBeingSaved!.length).toEqual(1);
+        expect(TestableTaskSaver.tasksBeingSaved![0].reminderTime).toEqual('10:37');
     });
 
     it('should remove the reminder when "Remove reminder" is clicked', () => {

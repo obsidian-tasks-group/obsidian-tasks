@@ -1,13 +1,22 @@
 import { roundUpToIncrement } from './ReminderTimeParser';
 
 /**
- * One quick reminder-time option: {@link value} is what {@link parseReminderTimeInput} should be fed (to
- * fill the modal's text field with, or to resolve into a {@link TaskEditingInstruction}); {@link label} is
- * what's shown to the user.
+ * One quick reminder-time option:
+ * - {@link value} is what fills the modal's text field if this suggestion is picked there (and is what
+ *   {@link parseReminderTimeInput} would make of it, if typed) - a plain time for a preset, or the
+ *   relative phrase itself ('in 30 minutes') for a relative offset.
+ * - {@link label} is what's shown to the user, in both the menu and the modal's autocomplete list.
+ * - {@link resolvedDate}, present only for relative offsets, is the already-rounded target moment. The
+ *   menu must apply *this*, not re-parse {@link value}: re-parsing 'in 30 minutes' at click time would
+ *   resolve to the exact, unrounded offset from 'now', silently discarding the rounding {@link label}
+ *   promised. The modal has no equivalent need - it only ever fills the field with {@link value}, and
+ *   resolves it (deliberately unrounded - see {@link buildReminderSuggestions}) whenever Apply is
+ *   eventually pressed.
  */
 export interface ReminderSuggestion {
     value: string;
     label: string;
+    resolvedDate?: Moment;
 }
 
 export interface ReminderSuggestions {
@@ -42,6 +51,7 @@ export function buildReminderSuggestions(
             return {
                 value: `in ${offsetPhrase(offsetMinutes)}`,
                 label: `In ${offsetPhrase(offsetMinutes)} (${target.format('HH:mm')})`,
+                resolvedDate: target,
             };
         }),
     };

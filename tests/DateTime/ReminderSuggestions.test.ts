@@ -3,14 +3,13 @@
  */
 import moment from 'moment';
 import { buildReminderSuggestions } from '../../src/DateTime/ReminderSuggestions';
-import { parseReminderTimeInput } from '../../src/DateTime/ReminderTimeParser';
 
 window.moment = moment;
 
 const now = moment('2023-12-03T10:07:00');
 
 describe('buildReminderSuggestions', () => {
-    it('should return one suggestion per preset time, value and label both the bare time', () => {
+    it('should return one suggestion per preset time, value and label both the bare time, and no resolvedDate', () => {
         const { presetTimes } = buildReminderSuggestions(['09:00', '18:00'], [], 30, now);
 
         expect(presetTimes).toEqual([
@@ -22,7 +21,7 @@ describe('buildReminderSuggestions', () => {
     it('should describe relative offsets in both minutes and hours, rounded to the increment', () => {
         const { relativeOffsets } = buildReminderSuggestions([], [30, 60, 90], 30, now);
 
-        expect(relativeOffsets).toEqual([
+        expect(relativeOffsets.map((s) => ({ value: s.value, label: s.label }))).toEqual([
             { value: 'in 30 minutes', label: 'In 30 minutes (11:00)' },
             { value: 'in 1 hour', label: 'In 1 hour (11:30)' },
             { value: 'in 90 minutes', label: 'In 90 minutes (12:00)' },
@@ -36,15 +35,21 @@ describe('buildReminderSuggestions', () => {
         expect(relativeOffsets[1].label).toContain('In 2 hours ');
     });
 
-    it('should produce a relative value that parseReminderTimeInput resolves back to the same rounded time', () => {
+    it("should give each relative offset a resolvedDate matching its label's rounded time - not the exact, unrounded offset", () => {
+        // 10:07 + 45 minutes = 10:52, rounded up to the next 30-minute mark = 11:00.
         const { relativeOffsets } = buildReminderSuggestions([], [45], 30, now);
         const suggestion = relativeOffsets[0];
 
-        const parsed = parseReminderTimeInput(suggestion.value, now);
-
-        expect(parsed).not.toBeNull();
-        expect(parsed!.isRelative).toEqual(true);
-        // 10:07 + 45 minutes = 10:52, rounded up to the next 30-minute mark = 11:00.
         expect(suggestion.label).toContain('11:00');
+        expect(suggestion.resolvedDate).toBeDefined();
+        expect(suggestion.resolvedDate!.format('YYYY-MM-DD HH:mm')).toEqual('2023-12-03 11:00');
+    });
+
+    it('should not round resolvedDate at all when the rounding increment is 0 ("no rounding")', () => {
+        const { relativeOffsets } = buildReminderSuggestions([], [45], 0, now);
+        const suggestion = relativeOffsets[0];
+
+        expect(suggestion.label).toContain('10:52');
+        expect(suggestion.resolvedDate!.format('YYYY-MM-DD HH:mm')).toEqual('2023-12-03 10:52');
     });
 });
