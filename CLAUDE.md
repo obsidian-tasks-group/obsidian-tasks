@@ -111,9 +111,15 @@ Rules:
    reference and reimplement against current `main`, not as a branch to merge. Known edge cases the PR's
    reviewer flagged: reminder time gets lost when a task is completed or recurs, the `happens` filter doesn't
    see reminder dates, and a keyboard access-key clash (`C` is taken by Created Date).
-2. **Postpone (⏩) to next business day.** Lives in `src/Renderer/TaskLineRenderer.ts` (button) plus whatever
-   date-math helper it calls — small, isolated change, ideally behind a setting. Related upstream issues:
-   #3379, #3818, #2674, #3502.
+2. ~~**Postpone (⏩) to next business day.**~~ **Done** (merged into `main`). Behind a setting
+   (`postponeSkipWeekends`, default off) in `src/Config/Settings.ts`/`SettingsTab.ts` — remember this file has
+   **two** parallel settings UIs that both need updating (see the note above). The actual date math is
+   `TasksDate.postpone()`/`src/DateTime/Postponer.ts`, not `TaskLineRenderer.ts` (that file only displays
+   dates; the button/menu logic lives in `HtmlQueryResultsRenderer.ts` and `ui/Menus/PostponeMenu.ts`). Once
+   enabled, day-based increments (button and "N days" menu items) count **business days**, not calendar days
+   rolled off a weekend at the end — otherwise different amounts collapse onto the same following Monday.
+   Week/month increments just roll their single final result. Related upstream issues: #3379, #3818, #2674,
+   #3502.
 3. **Cross-project tabular view.** A new renderer mode that lays out the *already-computed* nested
    `TaskGroups` tree (bucket → project → tasks) as a table instead of nested lists — purely additive, doesn't
    touch filtering/sorting/grouping, so low conflict risk against upstream. (Do not confuse with
