@@ -226,6 +226,7 @@ export class SettingsTab extends PluginSettingTab {
             this.datesGroup(),
             this.datesFromFilenamesGroup(),
             this.recurringTasksGroup(),
+            this.postponingGroup(),
             this.taskEntryGroup(),
         ];
     }
@@ -934,6 +935,30 @@ export class SettingsTab extends PluginSettingTab {
                         'removeScheduledDateOnRecurrence',
                         'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
                     ),
+                },
+            ],
+        };
+    }
+
+    // ---- Postponing ---------------------------------------------------------
+
+    private postponingGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.postponing.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.postponing.skipWeekends.name'),
+                    aliases: [i18n.t('settings.postponing.heading')],
+                    desc: SettingsTab.createFragmentWithHTML(i18n.t('settings.postponing.skipWeekends.description')),
+                    render: (setting) => {
+                        setting.addToggle((toggle) => {
+                            toggle.setValue(getSettings().postponeSkipWeekends).onChange(async (value) => {
+                                updateSettings({ postponeSkipWeekends: value });
+                                await this.plugin.saveSettings();
+                            });
+                        });
+                    },
                 },
             ],
         };
