@@ -49,6 +49,16 @@ describe('parseReminderTimeInput', () => {
         expect(result!.date.format('YYYY-MM-DD HH:mm')).toEqual('2024-01-15 12:07');
     });
 
+    it.each(['in 2 h', 'in 2h', 'in 2 hr', 'in 2 hrs'])(
+        'should parse the abbreviated duration "%s" as a relative offset too, same as "in 2 hours"',
+        (input) => {
+            const result = parseReminderTimeInput(input, reference);
+            expect(result).not.toBeNull();
+            expect(result!.isRelative).toEqual(true);
+            expect(result!.date.format('YYYY-MM-DD HH:mm')).toEqual('2024-01-15 12:07');
+        },
+    );
+
     it('should detect a relative offset crossing midnight into the next day', () => {
         const lateReference = moment('2024-01-15T23:30:00');
         const result = parseReminderTimeInput('in 2 hours', lateReference);
@@ -107,6 +117,15 @@ describe('resolveTypedReminderTime', () => {
         const result = resolveTypedReminderTime('in 30 minutes', reference, 0);
 
         expect(result!.time).toEqual('10:37');
+    });
+
+    it('should round an abbreviated relative offset ("in 2 h") the same as its spelled-out form ("in 2 hours")', () => {
+        // reference is 10:07, so "in 2 h" is 12:07 exactly, rounded up to 12:30.
+        const result = resolveTypedReminderTime('in 2 h', reference, 30);
+
+        expect(result).not.toBeNull();
+        expect(result!.isRelative).toEqual(true);
+        expect(result!.time).toEqual('12:30');
     });
 
     it('should never round an absolute clock time, regardless of the increment', () => {

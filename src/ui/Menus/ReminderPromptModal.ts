@@ -1,14 +1,17 @@
 import { type App, ButtonComponent, Modal, Setting } from 'obsidian';
 import type { Task } from '../../Task/Task';
-import { parseReminderTimeInput } from '../../DateTime/ReminderTimeParser';
+import { getSettings } from '../../Config/Settings';
+import { resolveTypedReminderTime } from '../../DateTime/ReminderTimeParser';
 import { SetReminderDateTime } from '../EditInstructions/ReminderInstructions';
 import type { TaskSaver } from './TaskEditingMenu';
 
 /**
  * The "Custom time…" escape hatch from {@link ReminderMenu}: a single text field accepting anything
- * {@link parseReminderTimeInput} understands (a clock time or a relative offset), for a value not covered
- * by the configured presets/relative offsets. Input here is never rounded - a typed value is already a
- * deliberate, exact choice.
+ * {@link resolveTypedReminderTime} understands (a clock time or a relative offset), for a value not covered
+ * by the configured presets/relative offsets. A relative offset ('in 30 minutes') is rounded to the
+ * configured `reminderRoundingIncrementMinutes`, same as everywhere else a typed reminder time is resolved
+ * - this prompt is for reaching an offset that isn't in the quick-pick list, not for bypassing rounding. A
+ * plain clock time ('09:00') is always exact regardless.
  *
  * A plain `Modal` with one `Setting`, rather than a calendar/time-picker widget: every other affordance
  * used for editing a task (this plugin's own modal fields, the right-click `Menu`) is a native
@@ -30,7 +33,10 @@ export class ReminderPromptModal extends Modal {
         let inputEl: HTMLInputElement;
         new Setting(contentEl)
             .setName('Time')
-            .setDesc("A clock time ('09:00', '9am') or a relative offset ('in 30 minutes', 'in 2 hours').")
+            .setDesc(
+                "A clock time ('09:00', '9am') or a relative offset ('in 30 minutes', 'in 2 hours') - " +
+                    'a relative offset is rounded per the "Round relative offsets to" setting.',
+            )
             .addText((text) => {
                 inputEl = text.inputEl;
                 text.setPlaceholder("Try '09:00' or 'in 30 minutes'").onChange((value) => {
@@ -53,7 +59,8 @@ export class ReminderPromptModal extends Modal {
     }
 
     private async apply(): Promise<void> {
-        const parsed = parseReminderTimeInput(this.value, window.moment());
+        const { reminderRoundingIncrementMinutes } = getSettings();
+        const parsed = resolveTypedReminderTime(this.value, window.moment(), reminderRoundingIncrementMinutes);
         if (parsed === null) {
             this.errorEl.setText(`Could not understand '${this.value}' as a time.`);
             return;

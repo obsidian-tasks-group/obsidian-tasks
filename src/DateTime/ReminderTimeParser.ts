@@ -13,11 +13,14 @@ export interface ParsedReminderTime {
 }
 
 /**
- * A relative duration, such as 'in 30 minutes' or 'in 2 hours'. Chrono's own '+30m'/'+1h' shorthand is
- * inconsistent (the latter parses, the former doesn't), so this is deliberately narrower than whatever
- * chrono itself accepts: only the worded form is treated - and documented in the UI - as relative.
+ * A relative duration, such as 'in 30 minutes', 'in 2 hours' or 'in 2h'. Chrono's own '+30m'/'+1h' shorthand
+ * is inconsistent (the latter parses, the former doesn't), so this is deliberately narrower than whatever
+ * chrono itself accepts: only the worded form is treated - and documented in the UI - as relative. This
+ * does include the bare 'h' hour abbreviation (chrono itself parses 'in 2 h' as a duration, same as 'in 2
+ * hours'), but not a bare 'm' for minutes - chrono itself doesn't understand that one ('in 30 m' fails to
+ * parse at all), so there's nothing to flag as relative here either.
  */
-const relativeDurationPattern = /^(?:in\s+)?\d+\s*(?:minutes?|mins?|hours?|hrs?)\b/i;
+const relativeDurationPattern = /^(?:in\s+)?\d+\s*(?:minutes?|mins?|hours?|hrs?|h)\b/i;
 
 /**
  * Parses a typed reminder-time string - either a clock time ('09:00', '9am') or a relative offset from
@@ -69,15 +72,13 @@ export function roundUpToIncrement(date: Moment, incrementMinutes: number): Mome
 /**
  * Parses a typed reminder-time string exactly like {@link parseReminderTimeInput}, but additionally rounds
  * a *relative* result (see {@link ParsedReminderTime.isRelative}) up to {@link roundingIncrementMinutes} -
- * the same rounding {@link buildReminderSuggestions} applies to the quick-pick menu/autocomplete items, so
- * that typing (or picking, then submitting) "in 30 minutes" in the edit modal behaves the same way as
- * clicking the equivalent menu item, rather than resolving to the exact, unrounded offset.
+ * the same rounding {@link buildReminderSuggestions} applies to the quick-pick menu/autocomplete items. This
+ * is what every place that resolves typed reminder text uses (the edit modal's field, and the "Custom
+ * time…" prompt alike), so "in 30 minutes" always means the same rounded time everywhere it's typed - not
+ * just when clicking the equivalent menu item.
  *
  * A plain clock time ('09:00') is never rounded either way - rounding only ever applies to relative
  * offsets, matching {@link roundUpToIncrement}'s own scope.
- *
- * Deliberately not used by {@link ReminderPromptModal} ("Custom time…"): that escape hatch always resolves
- * exactly, since typing into it is already a deliberate choice to bypass the quick-pick options.
  *
  * @param input - the text the user typed.
  * @param reference - the moment relative-duration inputs are resolved against (typically 'now').
