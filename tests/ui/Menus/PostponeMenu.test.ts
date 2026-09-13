@@ -5,6 +5,7 @@
 import moment from 'moment/moment';
 
 import { PostponeMenu } from '../../../src/ui/Menus/PostponeMenu';
+import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { TestableTaskSaver, menuToString } from './MenuTestingHelpers';
 
@@ -154,6 +155,42 @@ describe('PostponeMenu', () => {
               ---
               Remove due date"
         `);
+    });
+
+    describe('with "postpone to next business day" setting on', () => {
+        afterEach(() => {
+            resetSettings();
+        });
+
+        it('should roll any menu item landing on a weekend forward to Monday, but leave the "today" item alone', () => {
+            updateSettings({ postponeSkipWeekends: true });
+
+            const itemsAsText = contentsOfPostponeMenuForTask(new TaskBuilder().scheduledDate(farPast));
+            expect(itemsAsText).toMatchInlineSnapshot(`
+                "
+                  Scheduled today, on Sun 3rd Dec
+                  Scheduled tomorrow, on Mon 4th Dec
+                  ---
+                  Scheduled in 2 days, on Tue 5th Dec
+                  Scheduled in 3 days, on Wed 6th Dec
+                  Scheduled in 4 days, on Thu 7th Dec
+                  Scheduled in 5 days, on Fri 8th Dec
+                  Scheduled in 6 days, on Mon 11th Dec
+                  ---
+                  Scheduled in a week, on Mon 11th Dec
+                  Scheduled in 2 weeks, on Mon 18th Dec
+                  Scheduled in 3 weeks, on Mon 25th Dec
+                  Scheduled in a month, on Wed 3rd Jan
+                  ---
+                  Remove scheduled date"
+            `);
+            // Notes on the above, vs. the "setting off" version of this same case:
+            // - "today" (Sun 3rd Dec) is unaffected: it means "set to today", not a postponement, so it's
+            //   never rolled forward even when today itself is a weekend day.
+            // - "in 6 days" would otherwise land on Saturday 9th Dec, so it rolls to Monday 11th Dec.
+            // - "in a week" would otherwise land on Sunday 10th Dec, so it also rolls to Monday 11th Dec,
+            //   coincidentally landing on the same day as the "in 6 days" item above.
+        });
     });
 
     it('should modify task, if different date selected', () => {

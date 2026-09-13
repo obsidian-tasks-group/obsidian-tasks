@@ -227,6 +227,13 @@
         "shortDescription": "Instructions automatically included at the start of every Tasks block."
       }
     },
+    "postponing": {
+      "heading": "Postponing",
+      "skipWeekends": {
+        "description": "Enabling this will make the postpone button (⏩) and its right-click menu skip Saturday and Sunday: whenever postponing would land a date on a weekend, it rolls forward to the next Monday instead.",
+        "name": "Postpone to next business day"
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "Add new preset"

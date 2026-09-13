@@ -20,6 +20,7 @@ import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfig
 import type { PostponingFunction } from '../../src/ui/Menus/PostponeMenu';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import type { HappensDate } from '../../src/DateTime/DateFieldTypes';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
 
@@ -280,6 +281,34 @@ describe('postpone - new task creation', () => {
     it('should remove a date', () => {
         const task = new TaskBuilder().startDate('2024-03-05').build();
         testPostponedTaskAndDate(task, 'startDate', '', createTaskWithDateRemoved);
+    });
+});
+
+describe('postpone - skip weekends setting', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
+    it('should postpone onto a Saturday unchanged when the setting is off (default)', () => {
+        // 2023-12-08 is a Friday; +1 day lands on Saturday 2023-12-09.
+        const task = new TaskBuilder().dueDate('2023-12-08').build();
+        const { postponedDate } = createPostponedTask(task, 'dueDate', 'day', 1);
+        expect(postponedDate!.format('YYYY-MM-DD')).toEqual('2023-12-09');
+    });
+
+    it('should roll a button/menu postpone that lands on a weekend forward to Monday when the setting is on', () => {
+        updateSettings({ postponeSkipWeekends: true });
+        const task = new TaskBuilder().dueDate('2023-12-08').build();
+        const { postponedDate } = createPostponedTask(task, 'dueDate', 'day', 1);
+        expect(postponedDate!.format('YYYY-MM-DD')).toEqual('2023-12-11');
+    });
+
+    it('should also roll a fixed-date postpone (e.g. the "tomorrow" menu item) forward off a weekend', () => {
+        jest.setSystemTime(new Date('2023-12-08')); // Friday
+        updateSettings({ postponeSkipWeekends: true });
+        const task = new TaskBuilder().startDate('2024-03-05').build();
+        const { postponedDate } = createFixedDateTask(task, 'startDate', 'day', 1); // "tomorrow" would be Saturday
+        expect(postponedDate!.format('YYYY-MM-DD')).toEqual('2023-12-11');
     });
 });
 

@@ -1453,6 +1453,21 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('settings.postponing.heading')).setHeading();
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.postponing.skipWeekends.name'))
+            .setDesc(SettingsTab.createFragmentWithHTML(i18n.t('settings.postponing.skipWeekends.description')))
+            .addToggle((toggle) => {
+                const { postponeSkipWeekends } = getSettings();
+                toggle.setValue(postponeSkipWeekends).onChange(async (value) => {
+                    updateSettings({ postponeSkipWeekends: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.autoSuggest.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let autoSuggestMinimumMatchLength: Setting | null = null;

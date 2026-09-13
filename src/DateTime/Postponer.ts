@@ -1,5 +1,6 @@
 import { capitalizeFirstLetter } from '../lib/StringHelpers';
 import { Task } from '../Task/Task';
+import { getSettings } from '../Config/Settings';
 import { DateFallback } from './DateFallback';
 import { TasksDate } from './TasksDate';
 import type { AllTaskDateFields, HappensDate } from './DateFieldTypes';
@@ -110,7 +111,7 @@ function createPostponedTaskFromDate(
     timeUnit: moment.unitOfTime.DurationConstructor,
     amount: number,
 ): { postponedDate: moment.Moment | null; postponedTask: Task } {
-    const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount);
+    const postponedDate = new TasksDate(dateToPostpone).postpone(timeUnit, amount, getSettings().postponeSkipWeekends);
     return createTaskFromDate(task, dateFieldToPostpone, postponedDate);
 }
 
@@ -150,7 +151,13 @@ export function postponeButtonTitle(task: Task, amount: number, timeUnit: moment
 export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = task[updatedDateType] as Moment;
-    return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
+    return postponeMenuItemTitleFromDate(
+        updatedDateType,
+        dateToUpdate,
+        amount,
+        timeUnit,
+        getSettings().postponeSkipWeekends,
+    );
 }
 
 /**
@@ -164,7 +171,13 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: mome
 export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
     const dateToUpdate = window.moment().startOf('day');
-    return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
+    return postponeMenuItemTitleFromDate(
+        updatedDateType,
+        dateToUpdate,
+        amount,
+        timeUnit,
+        getSettings().postponeSkipWeekends,
+    );
 }
 
 /**
@@ -201,8 +214,9 @@ export function postponeMenuItemTitleFromDate(
     dateToUpdate: moment.Moment,
     amount: number,
     timeUnit: moment.unitOfTime.DurationConstructor,
+    skipWeekends: boolean = false,
 ) {
-    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount);
+    const postponedDate = new TasksDate(dateToUpdate).postpone(timeUnit, amount, skipWeekends);
     const formattedNewDate = postponedDate.format('ddd Do MMM');
 
     const amountOrArticle = amount != 1 ? Math.abs(amount) : 'a';

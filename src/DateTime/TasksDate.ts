@@ -121,7 +121,11 @@ export class TasksDate {
         return earlier ? now.subtract(multiplier, unit) : now.add(multiplier, unit);
     }
 
-    public postpone(unitOfTime: moment.unitOfTime.DurationConstructor = 'days', amount: number = 1) {
+    public postpone(
+        unitOfTime: moment.unitOfTime.DurationConstructor = 'days',
+        amount: number = 1,
+        skipWeekends: boolean = false,
+    ) {
         if (!this._date) {
             const message = 'Cannot postpone a null date';
             new Notice(message);
@@ -132,10 +136,32 @@ export class TasksDate {
         // According to the moment.js docs, isBefore is not stable so we use !isSameOrAfter: https://momentjs.com/docs/#/query/is-before/
         const isDateBeforeToday = !this._date.isSameOrAfter(today, 'day');
 
-        if (isDateBeforeToday) {
-            return today.add(amount, unitOfTime);
+        const postponedDate = isDateBeforeToday
+            ? today.add(amount, unitOfTime)
+            : this._date.clone().add(amount, unitOfTime);
+
+        // Only roll dates that are genuinely being postponed forward (amount > 0).
+        // The fixed "today" menu item (amount === 0) means "set to today", so it must
+        // never be moved, even if today itself happens to be a Saturday or Sunday.
+        if (skipWeekends && amount > 0) {
+            return TasksDate.rollForwardOverWeekend(postponedDate);
         }
 
-        return this._date.clone().add(amount, unitOfTime);
+        return postponedDate;
+    }
+
+    /**
+     * If {@link date} falls on a Saturday or Sunday, move it forward to the following Monday.
+     * Otherwise, return it unchanged.
+     */
+    private static rollForwardOverWeekend(date: Moment): Moment {
+        const dayOfWeek = date.day(); // 0 = Sunday, 6 = Saturday
+        if (dayOfWeek === 6) {
+            return date.add(2, 'days');
+        }
+        if (dayOfWeek === 0) {
+            return date.add(1, 'days');
+        }
+        return date;
     }
 }

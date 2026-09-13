@@ -81,6 +81,7 @@ export interface Settings {
     filenameAsDateFolders: string[];
     recurrenceOnNextLine: boolean;
     removeScheduledDateOnRecurrence: boolean;
+    postponeSkipWeekends: boolean;
     searchResults: {
         taskCountLocation: 'top' | 'bottom';
     };
@@ -130,6 +131,7 @@ const defaultSettings: Readonly<Settings> = {
     filenameAsDateFolders: [],
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
+    postponeSkipWeekends: false,
     searchResults: {
         taskCountLocation: 'bottom',
     },

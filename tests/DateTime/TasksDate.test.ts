@@ -252,6 +252,43 @@ describe('TasksDate - postpone', () => {
 
     // TODO Add more tests for increments other than 1 day
 
+    describe('postpone - skip weekends', () => {
+        function checkDatePostponesToWithSkipWeekends(
+            initialDate: string,
+            amount: number,
+            unitOfTime: unitOfTime.DurationConstructor,
+            skipWeekends: boolean,
+            expectedDate: string,
+        ) {
+            const tasksDate = new TasksDate(moment(initialDate));
+            const postponedDate = new TasksDate(tasksDate.postpone(unitOfTime, amount, skipWeekends));
+            expect(postponedDate.formatAsDate()).toEqual(expectedDate);
+        }
+
+        it('should postpone onto a Saturday unchanged when skipWeekends is false', () => {
+            // 2023-12-01 is a Friday.
+            checkDatePostponesToWithSkipWeekends('2023-12-01', 1, 'day', false, '2023-12-02');
+        });
+
+        it('should roll a result landing on Saturday forward to Monday when skipWeekends is true', () => {
+            checkDatePostponesToWithSkipWeekends('2023-12-01', 1, 'day', true, '2023-12-04');
+        });
+
+        it('should roll a result landing on Sunday forward to Monday when skipWeekends is true', () => {
+            checkDatePostponesToWithSkipWeekends('2023-12-01', 2, 'day', true, '2023-12-04');
+        });
+
+        it('should leave a result that does not land on a weekend unchanged when skipWeekends is true', () => {
+            // 2023-11-28 is a Tuesday; +1 day is Wednesday.
+            checkDatePostponesToWithSkipWeekends('2023-11-28', 1, 'day', true, '2023-11-29');
+        });
+
+        it('should never roll the "amount = 0" (fixed "today") case, even if today is a weekend', () => {
+            // 2023-12-02 is a Saturday.
+            checkDatePostponesToWithSkipWeekends('2023-12-02', 0, 'days', true, '2023-12-02');
+        });
+    });
+
     describe('visualise postpone behaviour', () => {
         function postponeMultipleDatesBy(amount: number, unitOfTime: unitOfTime.DurationConstructor) {
             // Set a date that is easy to decrement and increment
