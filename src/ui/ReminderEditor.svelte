@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { getSettings } from '../Config/Settings';
+    import { type ReminderSuggestion, buildReminderSuggestions } from '../DateTime/ReminderSuggestions';
     import { parseReminderTimeInput } from '../DateTime/ReminderTimeParser';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
 
@@ -11,6 +13,26 @@
     export let parsedReminderTime: string = '';
 
     let pickedTime = '';
+    let suggestions: ReminderSuggestion[] = [];
+
+    // The same options offered in the rendered line's click/right-click menu (see ReminderMenu) - built
+    // fresh on each focus, since the relative ones ('in 30 minutes') are computed against 'now'.
+    function refreshSuggestions() {
+        const { reminderPresetTimes, reminderRelativeOffsetsMinutes, reminderRoundingIncrementMinutes } =
+            getSettings();
+        const { presetTimes, relativeOffsets } = buildReminderSuggestions(
+            reminderPresetTimes,
+            reminderRelativeOffsetsMinutes,
+            reminderRoundingIncrementMinutes,
+            window.moment(),
+        );
+        suggestions = [...presetTimes, ...relativeOffsets];
+    }
+
+    // Deliberately not populated eagerly at mount: the relative offsets depend on the current time, and a
+    // native datalist popup only ever appears in response to the input gaining focus (or being typed in)
+    // anyway, so there is nothing to show before then. This also keeps a freshly-rendered modal's HTML
+    // independent of wall-clock time, which matters for the deterministic HTML-snapshot tests of this form.
 
     $: {
         const trimmed = reminderTime.trim();
@@ -47,11 +69,18 @@
     bind:value={reminderTime}
     id="reminder"
     type="text"
+    list="reminder-suggestions"
     class:tasks-modal-error={!isReminderTimeValid}
     class="tasks-modal-date-input"
     placeholder={reminderPlaceholder}
     {accesskey}
+    on:focus={refreshSuggestions}
 />
+<datalist id="reminder-suggestions">
+    {#each suggestions as suggestion (suggestion.value)}
+        <option value={suggestion.value}>{suggestion.label}</option>
+    {/each}
+</datalist>
 
 {#if isReminderTimeValid}
     <div class="tasks-modal-parsed-date">
