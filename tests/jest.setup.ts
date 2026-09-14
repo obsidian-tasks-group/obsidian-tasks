@@ -48,8 +48,7 @@ globalThis.createEl = function <K extends keyof HTMLElementTagNameMap>(
         el.classList.add(...classes);
     }
 
-    callback?.(el);
-    return el;
+    return applyTextAndInvokeCallback(el, options, callback);
 };
 
 /**
@@ -87,7 +86,10 @@ globalThis.createDiv = function (
     callback?: (el: HTMLDivElement) => void,
 ): HTMLDivElement {
     const options: CreateDivOptions | undefined = typeof o === 'string' ? { cls: o } : o;
-    const div = createEl('div', options);
+    // Pass only cls through to createEl(), not text: createEl() now applies text itself (see below), and
+    // applying it twice would be wrong for DocumentFragment text specifically - its children are moved,
+    // not copied, on first use, so a second application would find it already empty.
+    const div = createEl('div', options && { cls: options.cls });
     return applyTextAndInvokeCallback(div, options, callback);
 };
 
@@ -139,7 +141,9 @@ globalThis.createSpan = function (
     callback?: (el: HTMLSpanElement) => void,
 ): HTMLSpanElement {
     const options: CreateDivOptions | undefined = typeof o === 'string' ? { cls: o } : o;
-    const span = createEl('span', options);
+    // See the equivalent comment in createDiv() above - only cls goes to createEl(), text is applied once,
+    // here.
+    const span = createEl('span', options && { cls: options.cls });
     return applyTextAndInvokeCallback(span, options, callback);
 };
 
@@ -159,6 +163,22 @@ HTMLElement.prototype.createSpan = function (
 
     this.appendChild(span);
     return span;
+};
+
+// ------------------------------------------------------------------
+// Mimics of Obsidian's createFragment() implementation
+// ------------------------------------------------------------------
+
+/**
+ * Provide the minimal Obsidian-style createFragment() behaviour in Jest.
+ *
+ * This is a partial re-implementation of:
+ * https://obsidian-typings.github.io/obsidian-typings/public/api/globals/augmentations/functions/createFragment/
+ */
+globalThis.createFragment = function (callback?: (el: DocumentFragment) => void): DocumentFragment {
+    const fragment = document.createDocumentFragment();
+    callback?.(fragment);
+    return fragment;
 };
 
 // ------------------------------------------------------------------

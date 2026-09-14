@@ -1,6 +1,7 @@
 export type CreateElOptions = {
     type?: string;
     cls?: string[] | string;
+    text?: string | DocumentFragment;
 };
 
 export type CreateDivOptions = {

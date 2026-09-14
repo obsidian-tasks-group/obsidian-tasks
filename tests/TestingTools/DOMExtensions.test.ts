@@ -92,6 +92,38 @@ describe('global createEl()', () => {
         expect(child.tagName).toBe('BUTTON');
         expectCallbackToHaveBeenCalledOnceWith(callback, child);
     });
+
+    it('createEl() should apply text from the text option', () => {
+        const child = createEl('strong', { text: 'example text content' });
+
+        expect(child.textContent).toBe('example text content');
+    });
+
+    it('createEl() should apply DocumentFragment text content', () => {
+        const fragment = createDocumentFragment();
+
+        const child = createEl('strong', { text: fragment });
+
+        expect(child.tagName).toBe('STRONG');
+        expectDocumentFragmentToHaveBeenUsed(child);
+    });
+
+    it('createEl() should apply both cls and text options', () => {
+        const child = createEl('strong', { cls: 'single-class-value', text: 'example text content' });
+
+        expectElementToHaveClasses(child, 'single-class-value');
+        expect(child.textContent).toBe('example text content');
+    });
+
+    it('createEl() should apply text before calling the callback', () => {
+        const callback = jest.fn();
+
+        const child = createEl('strong', { text: 'example text content' }, callback);
+
+        expect(child.textContent).toBe('example text content');
+        expectCallbackToHaveBeenCalledOnceWith(callback, child);
+        expect((callback.mock.calls[0][0] as HTMLElement).textContent).toBe('example text content');
+    });
 });
 
 describe('HTMLElement.createEl()', () => {
@@ -144,6 +176,21 @@ describe('HTMLElement.createEl()', () => {
 
         expect(child.tagName).toBe('BUTTON');
         expectCallbackToHaveBeenCalledOnceWith(callback, child);
+    });
+
+    it('createEl() should apply text from the text option', () => {
+        const child = parent.createEl('strong', { text: 'example text content' });
+
+        expect(child.textContent).toBe('example text content');
+    });
+
+    it('createEl() should apply DocumentFragment text content', () => {
+        const fragment = createDocumentFragment();
+
+        const child = parent.createEl('strong', { text: fragment });
+
+        expectCorrectTagNameAndParentChildStructure(parent, child, 'STRONG');
+        expectDocumentFragmentToHaveBeenUsed(child);
     });
 });
 
@@ -396,5 +443,31 @@ describe('HTMLElement.createSpan()', () => {
 
         expectCorrectTagNameAndParentChildStructure(parent, child, 'SPAN');
         expectDocumentFragmentToHaveBeenUsed(child);
+    });
+});
+
+describe('global createFragment()', () => {
+    it('createFragment() should create an empty DocumentFragment', () => {
+        const fragment = createFragment();
+
+        expect(fragment).toBeInstanceOf(DocumentFragment);
+        expect(fragment.childNodes).toHaveLength(0);
+    });
+
+    it('createFragment() should call the callback with the created fragment', () => {
+        const callback = jest.fn();
+
+        const fragment = createFragment(callback);
+
+        expectCallbackToHaveBeenCalledOnceWith(callback, fragment as unknown as HTMLElement);
+    });
+
+    it('createFragment() should allow the callback to populate the fragment', () => {
+        const fragment = createFragment((f) => {
+            f.appendChild(document.createElement('span'));
+        });
+
+        expect(fragment.childElementCount).toBe(1);
+        expect(fragment.firstElementChild?.tagName).toBe('SPAN');
     });
 });

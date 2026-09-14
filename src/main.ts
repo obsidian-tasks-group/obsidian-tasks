@@ -24,6 +24,8 @@ import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvi
 import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 import { ReminderCheckLoop } from './Notifications/NotificationScheduler';
 import { notifyRemindersDue } from './Notifications/ReminderNotifier';
+import { appendHistoryEntries } from './Notifications/NotificationHistory';
+import { NOTIFICATIONS_VIEW_TYPE, NotificationsItemView } from './Obsidian/NotificationsItemView';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -78,6 +80,9 @@ export default class TasksPlugin extends Plugin {
         this.inlineRenderer = new InlineRenderer({ plugin: this, app: this.app });
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
 
+        this.registerView(NOTIFICATIONS_VIEW_TYPE, (leaf) => new NotificationsItemView(leaf, this, events));
+        this.addRibbonIcon('bell', 'Open reminder notifications', () => void this.openNotificationsView());
+
         // Update types.json.
         this.setObsidianPropertiesTypes();
 
@@ -86,6 +91,21 @@ export default class TasksPlugin extends Plugin {
         new Commands({ plugin: this });
 
         this.registerReminderNotifications();
+    }
+
+    /**
+     * Reveals the notifications view (see `Obsidian/NotificationsItemView.ts`), reusing an existing tab if
+     * one is already open rather than creating a duplicate. Called from the ribbon icon, the "Open
+     * reminder notifications" command (`Commands/index.ts`), and a due notification's click handler below
+     * - all funnel through this one method so they can never end up creating separate tabs.
+     */
+    public async openNotificationsView(): Promise<void> {
+        const existing = this.app.workspace.getLeavesOfType(NOTIFICATIONS_VIEW_TYPE);
+        const leaf = existing[0] ?? this.app.workspace.getLeaf(true);
+        if (existing.length === 0) {
+            await leaf.setViewState({ type: NOTIFICATIONS_VIEW_TYPE, active: true });
+        }
+        await this.app.workspace.revealLeaf(leaf);
     }
 
     /**
@@ -103,11 +123,20 @@ export default class TasksPlugin extends Plugin {
                 if (!getSettings().notificationsEnabled) {
                     return;
                 }
-                const due = checkLoop.tick(this.getTasks(), window.moment());
+                const now = window.moment();
+                const due = checkLoop.tick(this.getTasks(), now);
                 if (due.length > 0) {
+                    updateSettings({
+                        notificationHistory: appendHistoryEntries(getSettings().notificationHistory, due, now),
+                    });
+                    void this.saveSettings();
+
                     // One combined notification per check, even if several reminders came due in the same
                     // window - never one notification per task.
-                    notifyRemindersDue(due);
+                    notifyRemindersDue(due, () => {
+                        window.focus(); // bring the Obsidian window itself to the foreground - revealLeaf
+                        void this.openNotificationsView(); // alone only changes the active tab inside the app
+                    });
                 }
             }, getSettings().notificationCheckIntervalSeconds * 1000),
         );

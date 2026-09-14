@@ -13,6 +13,7 @@ import type { LogOptions } from '../lib/logging';
 import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
 import { i18n } from '../i18n/i18n';
 import { type PresetsMap, defaultPresets } from '../Query/Presets/Presets';
+import type { NotificationHistoryEntry } from '../Notifications/NotificationHistory';
 import { DebugSettings } from './DebugSettings';
 import { type EditModalShowSettings, defaultEditModalShowSettings } from './EditModalShowSettings';
 import { StatusSettings } from './StatusSettings';
@@ -104,6 +105,11 @@ export interface Settings {
     // Keys are stable notice IDs.
     dismissedNotices: DismissedNotices;
 
+    // Log of past fired reminder notifications, for the "History" section of the notifications view
+    // (src/Obsidian/NotificationsItemView.ts). Internal app state, not a user preference - like
+    // dismissedNotices, deliberately has no SettingsTab.ts entry.
+    notificationHistory: NotificationHistoryEntry[];
+
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
 
@@ -155,6 +161,7 @@ const defaultSettings: Readonly<Settings> = {
         // to add the new values to pre-existing user settings.
         'live-preview-callout-warning': false,
     },
+    notificationHistory: [],
 
     features: Feature.settingsFlags,
     generalSettings: {

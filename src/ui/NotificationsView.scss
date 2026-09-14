@@ -1,0 +1,50 @@
+.tasks-notifications-view {
+    padding: var(--size-4-4);
+
+    section + section {
+        margin-top: var(--size-4-6);
+    }
+
+    .tasks-notifications-history-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tasks-notifications-row {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--size-4-2);
+        width: 100%;
+        padding: var(--size-4-1) 0;
+        background: none;
+        border: none;
+        text-align: left;
+        box-shadow: none;
+    }
+
+    button.tasks-notifications-row {
+        cursor: pointer;
+    }
+
+    .tasks-notifications-description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .tasks-notifications-time {
+        flex-shrink: 0;
+        color: var(--text-muted);
+    }
+
+    .tasks-notifications-empty {
+        color: var(--text-muted);
+    }
+}

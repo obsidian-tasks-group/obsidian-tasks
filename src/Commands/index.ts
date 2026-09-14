@@ -57,6 +57,13 @@ export class Commands {
         });
 
         plugin.addCommand({
+            id: 'open-notifications-view',
+            name: 'Open reminder notifications',
+            icon: 'bell',
+            callback: () => void this.plugin.openNotificationsView(),
+        });
+
+        plugin.addCommand({
             id: 'add-query-file-defaults-properties',
             name: 'Add all Query File Defaults properties',
             icon: 'settings',

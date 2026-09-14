@@ -5,6 +5,34 @@ Tracks this fork's own changes on top of each upstream base. See `CLAUDE.md` for
 in `manifest.json`/`package.json`) and the upstream-sync process. Upstream's own changelog is not duplicated
 here — see <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>.
 
+## 3.2.0 — upstream base `8.4.0`
+
+Roadmap feature: **notifications view** — an in-Obsidian page listing upcoming and past-fired reminders,
+opened from a ribbon icon, a command, or by clicking a due notification. First `ItemView` (dedicated
+workspace pane) in this codebase; everything else so far has been code-block renderers and `Modal`s.
+
+- `src/Obsidian/NotificationsItemView.ts` + `src/ui/NotificationsView.svelte`: two sections. "Upcoming" is
+  live - computed from current tasks' `reminderDateTime`, kept fresh via `TasksEvents.onCacheUpdate`
+  (`$set`, not a destroy/remount, so the tab doesn't flicker while it happens to be open in the background)
+  - and clicking a row opens that task (reusing `QuickSearchTasksModal.ts`'s `openTaskAtSourceLocation`,
+    which re-resolves the file+line by content match rather than a stale line number). "History" is
+  read-only, from a new persisted log (see below) - deliberately not clickable, since a task may have moved
+  or been deleted by the time old history is reviewed, unlike a still-live "Upcoming" task. A "Clear
+  history" button empties it.
+- New persisted state, `notificationHistory` (`src/Config/Settings.ts`, alongside `dismissedNotices` -
+  internal app state, not a user preference, so no `SettingsTab.ts` entry, matching that field's own
+  precedent). `src/Notifications/NotificationHistory.ts`'s `appendHistoryEntries` is a pure function (one
+  entry per task, not per batch; pruned to the most recent 500) recording each fired reminder's
+  description, source path, and fired time (as an ISO string - a `Moment` doesn't survive the settings
+  file's JSON round-trip).
+- `notifyRemindersDue` (`src/Notifications/ReminderNotifier.ts`) now takes an optional click callback,
+  wired on both delivery channels - the native `Notification`'s `.onclick`, and a newly-clickable `Notice`
+  fragment (built with `createEl`/`createDiv`, not raw `document.createElement`, so it stays testable - see
+  `tests/jest.setup.ts`'s mimics, extended this release to also support `createEl`'s `text` option, which
+  they were previously missing). Clicking either focuses the Obsidian window (`window.focus()`) and opens
+  the notifications view - `revealLeaf` alone only changes the active tab *inside* the app, so both are
+  needed for a notification click to actually surface the app.
+
 ## 3.1.0 — upstream base `8.4.0`
 
 Roadmap feature: **native notification delivery, Phase 1 (foreground/desktop; not yet tested on mobile)**.

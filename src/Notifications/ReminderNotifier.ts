@@ -49,16 +49,39 @@ export function chooseNotificationChannel(): 'native' | 'notice' {
  * - notice: duration `0`, same as other important Notices in this codebase (e.g.
  *   `settings.statuses.reloadRequired`).
  *
+ * If given, {@link onClick} fires when the user clicks/activates the notification, on either channel (e.g.
+ * to focus Obsidian and open the notifications view - see `main.ts`). Deliberately just a plain callback,
+ * not an `App`/`Plugin` reference: this module stays fully decoupled from Obsidian's workspace and
+ * unit-testable without it. The notice-channel fragment is built with `createFragment`/`createEl`/
+ * `createDiv` (Obsidian's own DOM sugar, mimicked for tests in `tests/jest.setup.ts`), not raw
+ * `document.createElement`/`createDocumentFragment` - both are fully mimicked now, so there's no
+ * testability reason left to avoid the idiomatic Obsidian API.
+ *
  * Never writes anything back to any task or its file - a background timer should never be able to mutate
  * vault content. `reminderTime` is left exactly as the user set it.
  */
-export function notifyRemindersDue(tasks: Task[]): void {
+export function notifyRemindersDue(tasks: Task[], onClick?: () => void): void {
     const { title, body } = buildReminderNotificationContent(tasks);
 
     if (chooseNotificationChannel() === 'native') {
-        new Notification(title, { body, requireInteraction: true });
+        const notification = new Notification(title, { body, requireInteraction: true });
+        if (onClick) {
+            notification.onclick = () => onClick();
+        }
         return;
     }
 
-    new Notice(`${title}: ${body}`, 0);
+    // The click listener must go on a real Element, not the DocumentFragment itself: once Notice inserts
+    // the fragment into the DOM, its children are moved out and the (now-empty) fragment stops receiving
+    // bubbled events - but a listener already attached to an actual element travels with it.
+    const container = createDiv(onClick ? { cls: 'tasks-notification-clickable' } : undefined);
+    container.createEl('strong', { text: title });
+    container.createDiv({ text: body });
+    if (onClick) {
+        container.addEventListener('click', () => onClick());
+    }
+
+    const fragment = createFragment();
+    fragment.appendChild(container);
+    new Notice(fragment, 0);
 }

@@ -220,13 +220,15 @@ Rules:
    limitation: on startup (or otherwise), surface a single summary ("N reminders came due while you were
    away") rather than firing each one - not designed or built yet, just logged here as a want.
 
-   **Also planned, a separate minor version, not started**: an in-Obsidian "Notifications" view/page
-   listing both upcoming (computed live from current tasks' `reminderDateTime`, same as the scheduler
-   already does) and past-fired reminders. Past ones need a new persisted history log - this is genuinely
-   new state, unlike Phase 1's own window-based dedup, which deliberately avoids persisting anything.
-   Clicking the OS notification (`Notification.onclick`, not yet wired) should focus Obsidian and open this
-   view. Needs its own design pass (view type/registration, history log shape and pruning, what "upcoming"
-   should show and how far ahead) when this is actually started.
+   **Notifications view: done** (merged as `3.2.0`). `src/Obsidian/NotificationsItemView.ts` (the first
+   `ItemView` in this codebase) + `src/ui/NotificationsView.svelte`: "Upcoming" (live, from current tasks'
+   `reminderDateTime`, kept fresh via `TasksEvents.onCacheUpdate` using Svelte's `$set` rather than a
+   destroy/remount) and "History" (read-only, from the new persisted `notificationHistory` setting -
+   `src/Notifications/NotificationHistory.ts`'s `appendHistoryEntries`, one entry per task, pruned to 500).
+   Opened via `TasksPlugin.openNotificationsView()` (ribbon icon, command, and `notifyRemindersDue`'s new
+   optional click callback all funnel through it, so they can't create duplicate tabs) - clicking either
+   notification channel calls `window.focus()` *and* opens the view, since `revealLeaf` alone only changes
+   the active tab inside the app, not the OS-level window focus.
 
    **Phase 2, not started**: true background delivery on mobile still needs an external push relay, the
    same way the separate Reminder plugin does it via `ntfy.sh` (`ntfyEnabled`/`ntfyServerUrl`/`ntfyTopic`/

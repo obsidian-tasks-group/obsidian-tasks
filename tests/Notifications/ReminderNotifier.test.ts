@@ -108,7 +108,10 @@ describe('notifyRemindersDue', () => {
         const task = new TaskBuilder().description('Buy milk').build();
         notifyRemindersDue([task]);
 
-        expect(MockedNotice).toHaveBeenCalledWith('Reminder: Buy milk', 0);
+        expect(MockedNotice).toHaveBeenCalledTimes(1);
+        const [fragment, duration] = MockedNotice.mock.calls[0];
+        expect((fragment as DocumentFragment).textContent).toEqual('ReminderBuy milk');
+        expect(duration).toEqual(0);
     });
 
     it('should fire exactly one Notice for several simultaneously-due tasks, not one each', () => {
@@ -119,6 +122,51 @@ describe('notifyRemindersDue', () => {
         notifyRemindersDue([task1, task2]);
 
         expect(MockedNotice).toHaveBeenCalledTimes(1);
-        expect(MockedNotice).toHaveBeenCalledWith('2 reminders due: Buy milk\nCall John', 0);
+        const [fragment] = MockedNotice.mock.calls[0];
+        expect((fragment as DocumentFragment).textContent).toEqual('2 reminders dueBuy milk\nCall John');
+    });
+
+    it('should wire the native notification click to the given callback', () => {
+        Platform.isDesktopApp = true;
+        const MockedNotification = jest.fn();
+        (global as any).Notification = MockedNotification;
+        const onClick = jest.fn();
+
+        const task = new TaskBuilder().description('Buy milk').build();
+        notifyRemindersDue([task], onClick);
+
+        const instance = MockedNotification.mock.instances[0];
+        expect(onClick).not.toHaveBeenCalled();
+        instance.onclick();
+        expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not throw when no onClick is given for the native channel', () => {
+        Platform.isDesktopApp = true;
+        (global as any).Notification = jest.fn();
+
+        const task = new TaskBuilder().description('Buy milk').build();
+        expect(() => notifyRemindersDue([task])).not.toThrow();
+    });
+
+    it('should wire the Notice fragment click to the given callback', () => {
+        Platform.isDesktopApp = false;
+        const onClick = jest.fn();
+
+        const task = new TaskBuilder().description('Buy milk').build();
+        notifyRemindersDue([task], onClick);
+
+        const [fragment] = MockedNotice.mock.calls[0];
+        const clickable = (fragment as DocumentFragment).firstElementChild as HTMLElement;
+        expect(onClick).not.toHaveBeenCalled();
+        clickable.click();
+        expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not throw when no onClick is given for the notice channel', () => {
+        Platform.isDesktopApp = false;
+
+        const task = new TaskBuilder().description('Buy milk').build();
+        expect(() => notifyRemindersDue([task])).not.toThrow();
     });
 });
