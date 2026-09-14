@@ -1,6 +1,20 @@
 import { Notice, Platform } from 'obsidian';
 import type { Task } from '../Task/Task';
 
+/** The default title for a "these just came due" notification - see {@link missedReminderTitle} for the
+ *  other title this module builds. */
+function dueReminderTitle(tasks: Task[]): string {
+    return tasks.length === 1 ? 'Reminder' : `${tasks.length} reminders due`;
+}
+
+/** The title for a "these were already overdue when Obsidian started" summary - see
+ *  {@link notifyMissedReminders}. */
+function missedReminderTitle(tasks: Task[]): string {
+    return tasks.length === 1
+        ? 'A reminder came due while you were away'
+        : `${tasks.length} reminders came due while you were away`;
+}
+
 /**
  * The title/body text for a notification covering every task in {@link tasks} that came due in the same
  * check (see {@link findDueReminders}/{@link ReminderCheckLoop} in `NotificationScheduler.ts`) - always
@@ -8,12 +22,19 @@ import type { Task } from '../Task/Task';
  * Body lines are built from {@link Task.descriptionWithoutTags} - the same 'clean-ish' rendering already
  * used for quick-search result display (see `src/lib/QuickSearchTasks.ts`).
  *
+ * {@link title}, if given, overrides the default "N reminders due" wording - used by
+ * {@link notifyMissedReminders} to say "came due while you were away" instead, for the same tasks/body
+ * shape.
+ *
  * Deliberately a pure function, separate from {@link notifyRemindersDue}'s side effect, so the content
  * itself is testable without touching `Notice`/`Notification`. {@link tasks} must be non-empty.
  */
-export function buildReminderNotificationContent(tasks: Task[]): { title: string; body: string } {
+export function buildReminderNotificationContent(
+    tasks: Task[],
+    title: string = dueReminderTitle(tasks),
+): { title: string; body: string } {
     return {
-        title: tasks.length === 1 ? 'Reminder' : `${tasks.length} reminders due`,
+        title,
         body: tasks.map((task) => task.descriptionWithoutTags).join('\n'),
     };
 }
@@ -59,9 +80,12 @@ export function chooseNotificationChannel(): 'native' | 'notice' {
  *
  * Never writes anything back to any task or its file - a background timer should never be able to mutate
  * vault content. `reminderTime` is left exactly as the user set it.
+ *
+ * {@link titleOverride}, if given, is passed straight through to {@link buildReminderNotificationContent}
+ * - see {@link notifyMissedReminders} for the other caller that uses this.
  */
-export function notifyRemindersDue(tasks: Task[], onClick?: () => void): void {
-    const { title, body } = buildReminderNotificationContent(tasks);
+export function notifyRemindersDue(tasks: Task[], onClick?: () => void, titleOverride?: string): void {
+    const { title, body } = buildReminderNotificationContent(tasks, titleOverride);
 
     if (chooseNotificationChannel() === 'native') {
         const notification = new Notification(title, { body, requireInteraction: true });
@@ -84,4 +108,20 @@ export function notifyRemindersDue(tasks: Task[], onClick?: () => void): void {
     const fragment = createFragment();
     fragment.appendChild(container);
     new Notice(fragment, 0);
+}
+
+/**
+ * Fires the one-time startup summary for reminders that were already overdue before this session began -
+ * "N reminders came due while you were away" - rather than "N reminders due" (which would misleadingly
+ * suggest they just became due now). Otherwise identical to {@link notifyRemindersDue}: same combined
+ * single-notification shape, same persistence, same optional click callback.
+ *
+ * This exists because `ReminderCheckLoop` (`NotificationScheduler.ts`) deliberately never fires
+ * individually for anything already overdue when it's constructed (its window starts at construction time,
+ * so a task that was already overdue can never fall inside a later window) - a reminder that comes due
+ * while Obsidian is fully closed would otherwise be silently skipped forever, not just delayed. See
+ * `main.ts`'s `checkForMissedRemindersOnStartup` for where this is actually called from, once, at startup.
+ */
+export function notifyMissedReminders(tasks: Task[], onClick?: () => void): void {
+    notifyRemindersDue(tasks, onClick, missedReminderTitle(tasks));
 }

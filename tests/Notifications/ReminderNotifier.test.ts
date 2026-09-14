@@ -6,6 +6,7 @@ import moment from 'moment';
 import {
     buildReminderNotificationContent,
     chooseNotificationChannel,
+    notifyMissedReminders,
     notifyRemindersDue,
 } from '../../src/Notifications/ReminderNotifier';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -43,6 +44,15 @@ describe('buildReminderNotificationContent', () => {
         expect(buildReminderNotificationContent([task1, task2, task3])).toEqual({
             title: '3 reminders due',
             body: 'Buy milk\nCall John\nWater plants',
+        });
+    });
+
+    it('should use a given title override instead of the default wording', () => {
+        const task = new TaskBuilder().description('Buy milk').build();
+
+        expect(buildReminderNotificationContent([task], 'Custom title')).toEqual({
+            title: 'Custom title',
+            body: 'Buy milk',
         });
     });
 });
@@ -168,5 +178,43 @@ describe('notifyRemindersDue', () => {
 
         const task = new TaskBuilder().description('Buy milk').build();
         expect(() => notifyRemindersDue([task])).not.toThrow();
+    });
+});
+
+describe('notifyMissedReminders', () => {
+    it('should use "came due while you were away" wording, singular, for one task', () => {
+        Platform.isDesktopApp = false;
+
+        const task = new TaskBuilder().description('Buy milk').build();
+        notifyMissedReminders([task]);
+
+        const [fragment] = MockedNotice.mock.calls[0];
+        expect((fragment as DocumentFragment).textContent).toEqual('A reminder came due while you were awayBuy milk');
+    });
+
+    it('should use "came due while you were away" wording, plural, for several tasks', () => {
+        Platform.isDesktopApp = false;
+
+        const task1 = new TaskBuilder().description('Buy milk').build();
+        const task2 = new TaskBuilder().description('Call John').build();
+        notifyMissedReminders([task1, task2]);
+
+        const [fragment] = MockedNotice.mock.calls[0];
+        expect((fragment as DocumentFragment).textContent).toEqual(
+            '2 reminders came due while you were awayBuy milk\nCall John',
+        );
+    });
+
+    it('should still wire the click callback, same as notifyRemindersDue', () => {
+        Platform.isDesktopApp = false;
+        const onClick = jest.fn();
+
+        const task = new TaskBuilder().description('Buy milk').build();
+        notifyMissedReminders([task], onClick);
+
+        const [fragment] = MockedNotice.mock.calls[0];
+        const clickable = (fragment as DocumentFragment).firstElementChild as HTMLElement;
+        clickable.click();
+        expect(onClick).toHaveBeenCalledTimes(1);
     });
 });

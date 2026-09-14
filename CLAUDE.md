@@ -216,9 +216,16 @@ Rules:
    *not* fired retroactively on reopen - `ReminderCheckLoop`'s window starts at construction time (plugin
    startup), so anything before that is silently skipped rather than causing a notification burst. This is
    intentionally honest about Phase 1 being foreground/session-scoped only; true "fires even while closed"
-   delivery is Phase 2 below. The user has asked for a *separate* future feature building on this
-   limitation: on startup (or otherwise), surface a single summary ("N reminders came due while you were
-   away") rather than firing each one - not designed or built yet, just logged here as a want.
+   delivery is Phase 2 below.
+
+   **Startup summary: done** (`3.4.0`). `TasksPlugin.checkForMissedRemindersOnStartup()` (`main.ts`) fires
+   one `notifyMissedReminders()` call ("N reminders came due while you were away") for anything already
+   overdue at the exact instant `ReminderCheckLoop` is constructed - the same `startupMoment` is passed to
+   both, so they partition time with no gap and no overlap (nothing is both reported as missed *and* fired
+   individually, and nothing silently falls between the two). Runs once: asks the cache for its current
+   state via `TasksEvents.triggerRequestCacheUpdate` (covers the plugin-reload-while-already-running case,
+   where the cache may already be `Warm`), falling back to a one-time `onCacheUpdate` wait for `Warm`
+   otherwise (a fresh Obsidian launch, where indexing is still in progress).
 
    **Notifications view: done** (merged as `3.2.0`, redesigned in `3.3.0`). `src/Obsidian/NotificationsItemView.ts`
    (the first `ItemView` in this codebase) + `src/ui/NotificationsView.svelte`: every non-completed task with
@@ -235,10 +242,10 @@ Rules:
    entirely in `3.3.0` in favour of "Overdue" itself serving that purpose, live: since `reminderTime` is
    never cleared automatically, a task whose reminder already fired (or was missed entirely because
    Obsidian was closed when it came due) simply keeps showing under "Overdue" until the task is completed
-   or its reminder changes - no separate persisted log needed. This partly overlaps with the separate "N
-   reminders came due while you were away" want noted below (a missed reminder is now at least *visible* if
-   you open the view) but doesn't replace it - that idea was specifically about a proactive startup nudge,
-   not just being discoverable if you go looking, so it's still logged as its own want, unbuilt.
+   or its reminder changes - no separate persisted log needed. This overlaps with, but doesn't replace, the
+   startup summary noted above: "Overdue" makes a missed reminder *visible* if you go open the view; the
+   startup summary is the proactive nudge that tells you it's there in the first place. Both exist because
+   they solve different halves of "don't silently lose a reminder that fired while nobody was watching."
 
    **Phase 2, not started**: true background delivery on mobile still needs an external push relay, the
    same way the separate Reminder plugin does it via `ntfy.sh` (`ntfyEnabled`/`ntfyServerUrl`/`ntfyTopic`/

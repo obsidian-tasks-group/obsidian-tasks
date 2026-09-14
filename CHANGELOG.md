@@ -5,6 +5,25 @@ Tracks this fork's own changes on top of each upstream base. See `CLAUDE.md` for
 in `manifest.json`/`package.json`) and the upstream-sync process. Upstream's own changelog is not duplicated
 here — see <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>.
 
+## 3.4.0 — upstream base `8.4.0`
+
+Roadmap feature: **startup summary for missed reminders** - the "N reminders came due while you were away"
+want logged (but not built) alongside `3.1.0`'s Phase 1.
+
+- `src/Notifications/ReminderNotifier.ts`: `notifyMissedReminders(tasks, onClick?)` - same combined,
+  persistent, clickable single-notification shape as `notifyRemindersDue`, with "N reminders came due while
+  you were away" wording instead of "N reminders due" (misleading here, since these didn't just become due -
+  `notifyRemindersDue`/`buildReminderNotificationContent` both gained an optional title-override parameter
+  to share the delivery logic rather than duplicate it).
+- `src/main.ts`'s new `checkForMissedRemindersOnStartup()`: fires once, for anything already overdue (via
+  `NotificationBuckets.groupTasksByBucket(...).overdue`) at the exact instant `ReminderCheckLoop` is
+  constructed - the same `startupMoment` is passed to both, so they partition time with no gap and no
+  overlap between "reported as missed" and "fired individually from here on". Waits for the task cache's
+  first `Warm` state before checking (via `TasksEvents.triggerRequestCacheUpdate` for the case where it's
+  already warm - e.g. reloading the plugin while Obsidian is already running - falling back to a one-time
+  `onCacheUpdate` wait otherwise, for a fresh launch where indexing is still in progress), so a vault that
+  takes a moment to index doesn't get checked against an empty task list.
+
 ## 3.3.1 — upstream base `8.4.0`
 
 Two bug fixes.

@@ -23,7 +23,8 @@ import { LinkResolver } from './Task/LinkResolver';
 import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
 import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 import { ReminderCheckLoop } from './Notifications/NotificationScheduler';
-import { notifyRemindersDue } from './Notifications/ReminderNotifier';
+import { notifyMissedReminders, notifyRemindersDue } from './Notifications/ReminderNotifier';
+import { groupTasksByBucket } from './Notifications/NotificationBuckets';
 import { NOTIFICATIONS_VIEW_TYPE, NotificationsItemView } from './Obsidian/NotificationsItemView';
 
 export default class TasksPlugin extends Plugin {
@@ -89,7 +90,11 @@ export default class TasksPlugin extends Plugin {
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
         new Commands({ plugin: this });
 
-        this.registerReminderNotifications();
+        // Both use the same instant as the boundary between "missed before this session" and "due from now
+        // on" - see checkForMissedRemindersOnStartup's own doc comment for why that must line up exactly.
+        const startupMoment = window.moment();
+        this.registerReminderNotifications(startupMoment);
+        this.checkForMissedRemindersOnStartup(events, startupMoment);
     }
 
     /**
@@ -114,9 +119,13 @@ export default class TasksPlugin extends Plugin {
      * that turning the setting on later takes effect immediately, with no reload needed - only the check
      * *interval* itself (`notificationCheckIntervalSeconds`) is fixed for the plugin's lifetime and needs a
      * reload to change, per the "Reload" button shown next to that setting.
+     *
+     * @param startupMoment - the `ReminderCheckLoop`'s initial window start. Passed in (rather than
+     *   defaulted to `window.moment()` here) so it's the exact same instant `checkForMissedRemindersOnStartup`
+     *   uses as its cutoff - together they partition time with no gap and no overlap.
      */
-    private registerReminderNotifications() {
-        const checkLoop = new ReminderCheckLoop();
+    private registerReminderNotifications(startupMoment: Moment) {
+        const checkLoop = new ReminderCheckLoop(startupMoment);
         this.registerInterval(
             window.setInterval(() => {
                 if (!getSettings().notificationsEnabled) {
@@ -133,6 +142,51 @@ export default class TasksPlugin extends Plugin {
                 }
             }, getSettings().notificationCheckIntervalSeconds * 1000),
         );
+    }
+
+    /**
+     * Fires a one-time startup summary ("N reminders came due while you were away") for any reminder that
+     * was already overdue *before* this session began - i.e. `reminderDateTime.isSameOrBefore(startupMoment)`.
+     * `ReminderCheckLoop`'s own window (see `registerReminderNotifications` above) starts at that same
+     * instant, so anything already overdue at that point can never fall inside a later window and would
+     * otherwise be silently skipped forever, not just delayed - this is what covers that gap, without
+     * turning it into a notification burst (one combined notification here too, via
+     * {@link notifyMissedReminders}, same as a normal check).
+     *
+     * Runs exactly once. The cache may already be warm by the time this runs (e.g. reloading the plugin
+     * while Obsidian is already open) or may still be loading (a fresh launch) - `triggerRequestCacheUpdate`
+     * asks for its *current* state synchronously; if that's not yet `Warm`, this falls back to waiting for
+     * the first `onCacheUpdate` that reports `Warm`, then unsubscribes.
+     */
+    private checkForMissedRemindersOnStartup(events: TasksEvents, startupMoment: Moment) {
+        if (!getSettings().notificationsEnabled) {
+            return;
+        }
+
+        const reportIfAny = (tasks: Task[]) => {
+            const missed = groupTasksByBucket(tasks, startupMoment).overdue;
+            if (missed.length > 0) {
+                notifyMissedReminders(missed, () => {
+                    window.focus();
+                    void this.openNotificationsView();
+                });
+            }
+        };
+
+        events.triggerRequestCacheUpdate(({ tasks, state }) => {
+            if (state === State.Warm) {
+                reportIfAny(tasks);
+                return;
+            }
+            const ref = events.onCacheUpdate((cacheData) => {
+                if (cacheData.state !== State.Warm) {
+                    return;
+                }
+                events.off(ref);
+                reportIfAny(cacheData.tasks);
+            });
+            this.registerEvent(ref);
+        });
     }
 
     async loadTaskStatuses() {
