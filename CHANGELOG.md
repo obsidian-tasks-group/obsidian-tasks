@@ -5,6 +5,22 @@ Tracks this fork's own changes on top of each upstream base. See `CLAUDE.md` for
 in `manifest.json`/`package.json`) and the upstream-sync process. Upstream's own changelog is not duplicated
 here — see <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>.
 
+## 3.3.1 — upstream base `8.4.0`
+
+Two bug fixes.
+
+- `src/DateTime/ReminderTimeParser.ts`: `relativeDurationPattern` only recognised a numeral quantifier
+  ('3 days'), silently misclassifying chrono-understood word-quantified durations ('a week', 'an hour') and
+  ones with a trailing clock-time clause ('in a week at 5pm') as an absolute clock time instead - which,
+  in the edit modal's save path (`EditableTask.applyEdits`), only sets `reminderTime` and never shifts the
+  anchor date. Extended the pattern to accept `a`/`an` as equivalent to `1`, and an optional trailing
+  `at <time>` clause (leaving validation of whatever follows `at` to chrono itself).
+- `src/Obsidian/NotificationsItemView.ts`: the view only refreshed on `TasksEvents.onCacheUpdate` (an
+  actual file edit) - but which bucket a task falls into, and its displayed relative time ("in 2 minutes"),
+  is a function of the current moment, which moves forward with no file ever changing. A task showing "in 2
+  minutes" would keep reading exactly that, unmoved, until something unrelated happened to touch any task's
+  file. Added the view's own 30-second `registerInterval` refresh, independent of file changes.
+
 ## 3.3.0 — upstream base `8.4.0`
 
 Redesign of the `3.2.0` notifications view, after feedback: four live-computed groups (Overdue, Today,

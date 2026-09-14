@@ -285,6 +285,22 @@ describe('EditableTask tests', () => {
         expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
     });
 
+    it('should resolve a word-quantified relative reminder time ("in a week at 5pm"), shifting the anchor (regression)', async () => {
+        // relativeDurationPattern originally only recognised a numeral quantifier ('3 days'), not chrono's
+        // word quantifiers 'a'/'an' ('a week' == '1 week') or a trailing clock-time clause ('at 5pm') -
+        // silently misclassifying this as an absolute clock time, which only sets reminderTime and never
+        // touches the anchor date (see EditableTask.applyEdits' isRelative branch below).
+        const task = new TaskBuilder().scheduledDate('2024-05-15').build();
+        const allTasks: Task[] = [task];
+        const editableTask = EditableTask.fromTask(task, allTasks);
+
+        editableTask.reminderTime = 'in a week at 5pm';
+
+        const [edited] = await editableTask.applyEdits(task, allTasks);
+        expect(edited.reminderTime).toEqual('17:00');
+        expect(edited.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-05-08');
+    });
+
     it('should resolve a relative typed reminder time exactly, unrounded, when rounding is disabled ("no rounding")', async () => {
         updateSettings({ reminderRoundingIncrementMinutes: 0 });
         jest.setSystemTime(new Date('2024-05-01T23:45:00'));

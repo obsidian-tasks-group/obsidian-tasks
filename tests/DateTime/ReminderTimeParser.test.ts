@@ -82,6 +82,45 @@ describe('parseReminderTimeInput', () => {
             expect(result!.date.format('YYYY-MM-DD HH:mm')).toEqual(expectedDateTime);
         },
     );
+
+    it.each([
+        ['in a week', '2024-01-22 10:07'],
+        ['an hour', '2024-01-15 11:07'],
+        ['a day', '2024-01-16 10:07'],
+        ['a month', '2024-02-15 10:07'],
+        ['a year', '2025-01-15 10:07'],
+    ])(
+        'should parse the word-quantified relative offset "%s" as relative too, shifting the date',
+        (input, expectedDateTime) => {
+            // Chrono treats 'a'/'an' as equivalent to '1' ('a week' == '1 week') - the duration-term regex
+            // originally only recognised a numeral quantifier, silently misclassifying these as an absolute
+            // clock time instead (and, in EditableTask.ts's modal-save path, silently skipping the anchor
+            // date shift - it only shifts the anchor for a relative result).
+            const result = parseReminderTimeInput(input, reference);
+            expect(result).not.toBeNull();
+            expect(result!.isRelative).toEqual(true);
+            expect(result!.date.format('YYYY-MM-DD HH:mm')).toEqual(expectedDateTime);
+        },
+    );
+
+    it.each([
+        ['in a week at 5pm', '2024-01-22 17:00'],
+        ['in 3 days at 5pm', '2024-01-18 17:00'],
+    ])(
+        'should parse a relative offset with a trailing clock-time clause "%s", using that time instead of now\'s',
+        (input, expectedDateTime) => {
+            const result = parseReminderTimeInput(input, reference);
+            expect(result).not.toBeNull();
+            expect(result!.isRelative).toEqual(true);
+            expect(result!.date.format('YYYY-MM-DD HH:mm')).toEqual(expectedDateTime);
+        },
+    );
+
+    it('should not misclassify a bare clock-time-only "at" phrase as relative', () => {
+        const result = parseReminderTimeInput('at 5pm', reference);
+        expect(result).not.toBeNull();
+        expect(result!.isRelative).toEqual(false);
+    });
 });
 
 describe('roundUpToIncrement', () => {

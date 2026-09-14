@@ -8,6 +8,10 @@ import type { TasksEvents } from './TasksEvents';
 
 export const NOTIFICATIONS_VIEW_TYPE = 'upgraded-tasks-notifications';
 
+/** How often the view re-computes its buckets purely because time has passed, independent of any file
+ *  edit (see the doc comment on the `registerInterval` call in `onOpen()` below for why this exists). */
+const REFRESH_INTERVAL_MILLISECONDS = 30 * 1000;
+
 /**
  * The first `ItemView` (dedicated workspace pane) in this codebase - Tasks otherwise renders entirely via
  * markdown code-block processors and `Modal`s. Shows every non-completed task with a reminder, grouped
@@ -58,6 +62,16 @@ export class NotificationsItemView extends ItemView {
             this.events.onCacheUpdate(() => {
                 this.view?.$set({ groups: this.computeGroups() });
             }),
+        );
+
+        // onCacheUpdate only fires on an actual file edit - but which bucket a task falls into (and its
+        // displayed relative time, e.g. "in 2 minutes") is a function of the current moment, which moves
+        // forward with no file ever changing. Without this, a task shown as "in 2 minutes" would keep
+        // reading exactly that, unmoved, until something unrelated happened to touch any task's file.
+        this.registerInterval(
+            window.setInterval(() => {
+                this.view?.$set({ groups: this.computeGroups() });
+            }, REFRESH_INTERVAL_MILLISECONDS),
         );
     }
 
