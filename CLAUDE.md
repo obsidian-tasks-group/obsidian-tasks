@@ -220,15 +220,25 @@ Rules:
    limitation: on startup (or otherwise), surface a single summary ("N reminders came due while you were
    away") rather than firing each one - not designed or built yet, just logged here as a want.
 
-   **Notifications view: done** (merged as `3.2.0`). `src/Obsidian/NotificationsItemView.ts` (the first
-   `ItemView` in this codebase) + `src/ui/NotificationsView.svelte`: "Upcoming" (live, from current tasks'
-   `reminderDateTime`, kept fresh via `TasksEvents.onCacheUpdate` using Svelte's `$set` rather than a
-   destroy/remount) and "History" (read-only, from the new persisted `notificationHistory` setting -
-   `src/Notifications/NotificationHistory.ts`'s `appendHistoryEntries`, one entry per task, pruned to 500).
-   Opened via `TasksPlugin.openNotificationsView()` (ribbon icon, command, and `notifyRemindersDue`'s new
-   optional click callback all funnel through it, so they can't create duplicate tabs) - clicking either
-   notification channel calls `window.focus()` *and* opens the view, since `revealLeaf` alone only changes
-   the active tab inside the app, not the OS-level window focus.
+   **Notifications view: done** (merged as `3.2.0`, redesigned in `3.3.0`). `src/Obsidian/NotificationsItemView.ts`
+   (the first `ItemView` in this codebase) + `src/ui/NotificationsView.svelte`: every non-completed task with
+   a reminder, grouped live into four buckets (`src/Notifications/NotificationBuckets.ts`) - Overdue, Today,
+   This week, Later - kept fresh via `TasksEvents.onCacheUpdate` using Svelte's `$set` rather than a
+   destroy/remount. Opened via `TasksPlugin.openNotificationsView()` (ribbon icon, command, and
+   `notifyRemindersDue`'s optional click callback all funnel through it, so they can't create duplicate
+   tabs) - clicking either notification channel calls `window.focus()` *and* opens the view, since
+   `revealLeaf` alone only changes the active tab inside the app, not the OS-level window focus.
+
+   **`3.2.0`'s original "Upcoming"/"History" split was replaced, not kept alongside the buckets**: the
+   `3.2.0` design had a persisted `notificationHistory` log (`src/Config/Settings.ts`) recording every fired
+   reminder, shown as a read-only "History" section separate from a future-only "Upcoming" list. Removed
+   entirely in `3.3.0` in favour of "Overdue" itself serving that purpose, live: since `reminderTime` is
+   never cleared automatically, a task whose reminder already fired (or was missed entirely because
+   Obsidian was closed when it came due) simply keeps showing under "Overdue" until the task is completed
+   or its reminder changes - no separate persisted log needed. This partly overlaps with the separate "N
+   reminders came due while you were away" want noted below (a missed reminder is now at least *visible* if
+   you open the view) but doesn't replace it - that idea was specifically about a proactive startup nudge,
+   not just being discoverable if you go looking, so it's still logged as its own want, unbuilt.
 
    **Phase 2, not started**: true background delivery on mobile still needs an external push relay, the
    same way the separate Reminder plugin does it via `ntfy.sh` (`ntfyEnabled`/`ntfyServerUrl`/`ntfyTopic`/

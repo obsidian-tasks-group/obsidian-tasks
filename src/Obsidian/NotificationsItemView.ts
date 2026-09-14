@@ -1,7 +1,7 @@
 import { ItemView, type WorkspaceLeaf } from 'obsidian';
 import type TasksPlugin from '../main';
 import type { Task } from '../Task/Task';
-import { getSettings, updateSettings } from '../Config/Settings';
+import { groupTasksByBucket } from '../Notifications/NotificationBuckets';
 import { openTaskAtSourceLocation } from '../ui/QuickSearchTasksModal';
 import NotificationsView from '../ui/NotificationsView.svelte';
 import type { TasksEvents } from './TasksEvents';
@@ -10,12 +10,13 @@ export const NOTIFICATIONS_VIEW_TYPE = 'upgraded-tasks-notifications';
 
 /**
  * The first `ItemView` (dedicated workspace pane) in this codebase - Tasks otherwise renders entirely via
- * markdown code-block processors and `Modal`s. Shows two sections: "Upcoming" (live, computed from
- * {@link TasksPlugin.getTasks} and kept fresh via {@link TasksEvents.onCacheUpdate} - clicking a row opens
- * that task, via the same {@link openTaskAtSourceLocation} the Quick Search modal uses) and "History"
- * (from {@link getSettings}'s `notificationHistory`, populated by `main.ts`'s check loop whenever a
- * reminder fires - read-only, since a stored path doesn't guarantee the task still exists there by the
- * time old history is reviewed).
+ * markdown code-block processors and `Modal`s. Shows every non-completed task with a reminder, grouped
+ * live into four buckets (see `Notifications/NotificationBuckets.ts`): Overdue, Today, This week, Later.
+ *
+ * "Overdue" doubles as what would otherwise need a separate fired-notification history: since a task's
+ * `reminderTime` is never cleared automatically, anything whose reminder has already passed just keeps
+ * showing there - including one missed entirely because Obsidian was closed when it came due - until the
+ * task is completed or its reminder is changed. No persisted log needed.
  *
  * Opened via `TasksPlugin.openNotificationsView()` (ribbon icon, command, and the notification click
  * handler in `main.ts` all funnel through that one method, so repeated triggers reveal the same tab rather
@@ -48,20 +49,14 @@ export class NotificationsItemView extends ItemView {
         this.view = new NotificationsView({
             target: this.contentEl,
             props: {
-                upcomingTasks: this.computeUpcoming(),
-                history: getSettings().notificationHistory,
+                groups: this.computeGroups(),
                 onOpenTask: (task: Task) => void openTaskAtSourceLocation(task, this.app),
-                onClearHistory: () => {
-                    updateSettings({ notificationHistory: [] });
-                    void this.plugin.saveSettings();
-                    this.view?.$set({ history: [] });
-                },
             },
         });
 
         this.registerEvent(
             this.events.onCacheUpdate(() => {
-                this.view?.$set({ upcomingTasks: this.computeUpcoming() });
+                this.view?.$set({ groups: this.computeGroups() });
             }),
         );
     }
@@ -71,11 +66,7 @@ export class NotificationsItemView extends ItemView {
         this.view = undefined;
     }
 
-    private computeUpcoming() {
-        const now = window.moment();
-        return this.plugin
-            .getTasks()
-            .filter((task) => !task.isDone && task.reminderDateTime !== null && task.reminderDateTime.isAfter(now))
-            .sort((a, b) => a.reminderDateTime!.valueOf() - b.reminderDateTime!.valueOf());
+    private computeGroups() {
+        return groupTasksByBucket(this.plugin.getTasks(), window.moment());
     }
 }

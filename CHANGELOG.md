@@ -5,6 +5,24 @@ Tracks this fork's own changes on top of each upstream base. See `CLAUDE.md` for
 in `manifest.json`/`package.json`) and the upstream-sync process. Upstream's own changelog is not duplicated
 here — see <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>.
 
+## 3.3.0 — upstream base `8.4.0`
+
+Redesign of the `3.2.0` notifications view, after feedback: four live-computed groups (Overdue, Today,
+This week, Later) replace the previous "Upcoming"/"History" split.
+
+- `src/Notifications/NotificationBuckets.ts`: `groupTasksByBucket` (pure, tested) groups every
+  non-completed task with a resolvable `reminderDateTime` into the four buckets, sorted soonest-first
+  within each. "Overdue" is "reminder instant has passed" (not day-granular), which is what lets it double
+  as `3.2.0`'s removed history log: since `reminderTime` is never cleared automatically, a fired reminder
+  (or one missed entirely because Obsidian was closed when it came due) simply keeps showing there until
+  the task is completed or its reminder changes.
+- Removed: the persisted `notificationHistory` setting, `src/Notifications/NotificationHistory.ts`, and the
+  "record history" step in `main.ts`'s check loop - all superseded by the live "Overdue" bucket. See
+  `CLAUDE.md`'s roadmap item 4 for the fuller story of why this didn't need to stay around as a separate
+  concept.
+- Every row in every bucket is clickable (not just "Upcoming" before) - all four groups are live tasks now,
+  so `openTaskAtSourceLocation` applies uniformly.
+
 ## 3.2.0 — upstream base `8.4.0`
 
 Roadmap feature: **notifications view** — an in-Obsidian page listing upcoming and past-fired reminders,

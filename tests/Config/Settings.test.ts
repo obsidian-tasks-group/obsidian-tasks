@@ -123,15 +123,6 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().notificationCheckIntervalSeconds).toBe(30);
     });
 
-    it('should default notificationHistory to empty, and retain a loaded value', () => {
-        expect(getSettings().notificationHistory).toEqual([]);
-
-        const entry = { description: 'Buy milk', path: 'groceries.md', firedAt: '2024-01-15T10:00:00.000Z' };
-        updateSettings({ notificationHistory: [entry] });
-
-        expect(getSettings().notificationHistory).toEqual([entry]);
-    });
-
     it('should completely remove properties not in defaultSettings', () => {
         // Arrange: Add an extra property that isn't in defaultSettings
         updateSettings({

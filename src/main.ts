@@ -24,7 +24,6 @@ import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvi
 import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 import { ReminderCheckLoop } from './Notifications/NotificationScheduler';
 import { notifyRemindersDue } from './Notifications/ReminderNotifier';
-import { appendHistoryEntries } from './Notifications/NotificationHistory';
 import { NOTIFICATIONS_VIEW_TYPE, NotificationsItemView } from './Obsidian/NotificationsItemView';
 
 export default class TasksPlugin extends Plugin {
@@ -123,14 +122,8 @@ export default class TasksPlugin extends Plugin {
                 if (!getSettings().notificationsEnabled) {
                     return;
                 }
-                const now = window.moment();
-                const due = checkLoop.tick(this.getTasks(), now);
+                const due = checkLoop.tick(this.getTasks(), window.moment());
                 if (due.length > 0) {
-                    updateSettings({
-                        notificationHistory: appendHistoryEntries(getSettings().notificationHistory, due, now),
-                    });
-                    void this.saveSettings();
-
                     // One combined notification per check, even if several reminders came due in the same
                     // window - never one notification per task.
                     notifyRemindersDue(due, () => {
