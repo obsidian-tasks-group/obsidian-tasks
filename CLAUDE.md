@@ -179,19 +179,70 @@ Rules:
    └───────────┴─────────────────────────────────┘
    ```
 
-4. **Native notification delivery** (planned next, not yet started). Fire notifications directly from this
-   plugin for tasks with a `reminderTime` set, instead of depending on the separate Reminder plugin (see the
-   correction under item 1 for why that path is a dead end for this fork's workflow). Key constraint already
-   surfaced: Obsidian mobile gives a pure JS/TS community plugin no way to fire a notification once the app
-   is closed/backgrounded — this is a platform limitation, not something more code can fix. Reminder itself
-   works around it via an external push relay (`ntfy.sh`, visible in its own settings as
-   `ntfyEnabled`/`ntfyServerUrl`/`ntfyTopic`/`ntfyAccessToken`) plus ntfy's own separate mobile app
-   subscribed to a topic — the user has confirmed they want true background delivery on mobile, so this
-   feature's design will need the same shape. Desktop notifications and foreground-only mobile notifications
-   are the easy part (Obsidian's `Notice`, or Electron's `Notification` API on desktop); no existing
-   scheduling loop, networking code, or `Platform` usage exists anywhere in this codebase yet, so the
-   check-and-fire loop and the relay client are both new subsystems. Full design deferred to when this work
-   actually starts.
+4. ~~**Native notification delivery.**~~ **Phase 1 done** (foreground/desktop, merged as `3.1.0`; not yet
+   tested on mobile): fire notifications directly from this plugin for tasks with a `reminderTime` set,
+   instead of depending on the separate Reminder plugin (see the correction under item 1 for why that path
+   is a dead end for this fork's workflow). `src/Notifications/NotificationScheduler.ts`'s
+   `findDueReminders`/`ReminderCheckLoop` is a pure, half-open sliding-window check (`(lastCheckTime,
+   now]`) driven by a single `registerInterval` in `main.ts` - the window itself is the dedup mechanism, no
+   persisted "already fired" state needed. `src/Notifications/ReminderNotifier.ts::notifyRemindersDue`
+   fires **one combined notification per check**, never one per task, even when several reminders land in
+   the same window - via a real OS notification (the renderer's global `Notification`, which Electron
+   implements on desktop - no `electron` package import needed) on desktop, falling back to a persistent
+   `Notice` on mobile/wherever `Notification` isn't available. Both channels are **persistent**: the native
+   one via `requireInteraction: true`, the `Notice` via duration `0` - neither auto-dismisses on its own
+   timer, only when the user dismisses it. Behind two settings, `notificationsEnabled` (default off) and
+   `notificationCheckIntervalSeconds` (needs a plugin reload to change, unlike the enabled toggle - see the
+   "Reload" button `withReload` gives it).
+
+   **Investigated and abandoned: the Windows toast's "electron.app.Obsidian" banner.** On Windows, the
+   native notification's header shows "electron.app.Obsidian" instead of a clean "Obsidian" name/icon.
+   Verified against Electron's own docs and issue tracker: that header (app name *and* the icon next to it)
+   is resolved entirely from the process's registered Application User Model ID (AUMID) - set via
+   `app.setAppUserModelId()`, a **main-process-only** API, or via how the app's Start Menu shortcut was
+   registered at install time. An Electron maintainer-adjacent issue states outright that this title "is
+   not modifiable using the Toast XML" - i.e. no option on the `Notification` constructor (`icon`, `tag`,
+   `toastXml`, anything) touches it. A community plugin runs only in the renderer/plugin sandbox, with no
+   path to `app.setAppUserModelId()` and no ability to change how Obsidian itself is installed/registered
+   with Windows - this is a hard platform boundary, not a gap in this code. (The `icon` option *does* still
+   render, but only as a secondary inline image inside the toast body, not a replacement for the header
+   icon - a 2021 Electron issue asking for exactly that was closed as not-planned. Decided not to add it:
+   it wouldn't address the actual complaint, just add a picture elsewhere in the toast.) Since AUMID is
+   per-*process*, not per-caller, this would affect any OS notification from this Obsidian install equally,
+   including Obsidian's own - if that's also true here, it confirms this is how this specific install is
+   registered with Windows (common for portable/unpackaged-style installs), unrelated to this plugin.
+
+   **Known, accepted limitation of Phase 1**: a reminder that comes due while Obsidian is fully closed is
+   *not* fired retroactively on reopen - `ReminderCheckLoop`'s window starts at construction time (plugin
+   startup), so anything before that is silently skipped rather than causing a notification burst. This is
+   intentionally honest about Phase 1 being foreground/session-scoped only; true "fires even while closed"
+   delivery is Phase 2 below. The user has asked for a *separate* future feature building on this
+   limitation: on startup (or otherwise), surface a single summary ("N reminders came due while you were
+   away") rather than firing each one - not designed or built yet, just logged here as a want.
+
+   **Also planned, a separate minor version, not started**: an in-Obsidian "Notifications" view/page
+   listing both upcoming (computed live from current tasks' `reminderDateTime`, same as the scheduler
+   already does) and past-fired reminders. Past ones need a new persisted history log - this is genuinely
+   new state, unlike Phase 1's own window-based dedup, which deliberately avoids persisting anything.
+   Clicking the OS notification (`Notification.onclick`, not yet wired) should focus Obsidian and open this
+   view. Needs its own design pass (view type/registration, history log shape and pruning, what "upcoming"
+   should show and how far ahead) when this is actually started.
+
+   **Phase 2, not started**: true background delivery on mobile still needs an external push relay, the
+   same way the separate Reminder plugin does it via `ntfy.sh` (`ntfyEnabled`/`ntfyServerUrl`/`ntfyTopic`/
+   `ntfyAccessToken` in its own settings, plus ntfy's own separate mobile app subscribed to a topic) - this
+   is a platform limitation (Obsidian mobile gives a pure JS/TS plugin no way to run once the app is
+   closed/backgrounded), not something Phase 1's approach can ever close the gap on. The mechanism that
+   would make this actually work while Obsidian itself isn't running: ntfy's scheduled/delayed delivery (a
+   `Delay`/`X-Delay` header ntfy's own always-on server honours, so the *sending* client doesn't need to
+   still be running when the message fires) - **must be verified against ntfy's current docs before
+   implementing**, since it's the load-bearing assumption Phase 2 depends on. Calls should go through
+   Obsidian's `requestUrl` (explicitly documented as bypassing the renderer's CORS restrictions), not the
+   global `fetch`. Needs its own persisted idempotency state (which task+instant has already been scheduled
+   with ntfy, so re-scans don't push duplicate scheduled messages) - unlike Phase 1's window trick, this
+   can't avoid persistence, since "don't double-schedule" has to survive a restart. Known hard limitation to
+   document for users once built: ntfy's hosted/free tier has no cancel-a-scheduled-message API, so removing
+   or postponing a reminder shortly before it fires may still result in one stale push arriving.
 
 ## Build
 

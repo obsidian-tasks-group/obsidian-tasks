@@ -227,6 +227,17 @@
         "shortDescription": "Instructions automatically included at the start of every Tasks block."
       }
     },
+    "notifications": {
+      "heading": "Notifications",
+      "enabled": {
+        "description": "Periodically checks for tasks whose reminder has come due, and shows a notification for each one - a real OS notification on desktop, or an in-app one on mobile while Obsidian is open. Reminders that come due while Obsidian is fully closed are not fired retroactively when it's reopened.",
+        "name": "Enable reminder notifications"
+      },
+      "checkIntervalSeconds": {
+        "description": "How often, in seconds, to check for due reminders.",
+        "name": "Check every (seconds)"
+      }
+    },
     "postponing": {
       "heading": "Postponing",
       "skipWeekends": {

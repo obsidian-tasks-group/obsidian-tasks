@@ -228,6 +228,7 @@ export class SettingsTab extends PluginSettingTab {
             this.recurringTasksGroup(),
             this.postponingGroup(),
             this.reminderGroup(),
+            this.notificationsGroup(),
             this.taskEntryGroup(),
         ];
     }
@@ -1029,6 +1030,49 @@ export class SettingsTab extends PluginSettingTab {
         };
     }
 
+    // ---- Notifications --------------------------------------------------------
+
+    private notificationsGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.notifications.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.notifications.enabled.name'),
+                    aliases: [i18n.t('settings.notifications.heading')],
+                    desc: i18n.t('settings.notifications.enabled.description'),
+                    render: (setting) => {
+                        setting.addToggle((toggle) => {
+                            toggle.setValue(getSettings().notificationsEnabled).onChange(async (value) => {
+                                updateSettings({ notificationsEnabled: value });
+                                await this.plugin.saveSettings();
+                            });
+                        });
+                    },
+                },
+                {
+                    name: i18n.t('settings.notifications.checkIntervalSeconds.name'),
+                    desc: i18n.t('settings.notifications.checkIntervalSeconds.description'),
+                    render: this.withReload('notificationCheckIntervalSeconds', (setting, refreshReloadButton) => {
+                        setting.addText((text) => {
+                            text.setValue(String(getSettings().notificationCheckIntervalSeconds)).onChange(
+                                async (value) => {
+                                    const seconds = Number(value);
+                                    if (!Number.isFinite(seconds) || seconds <= 0) {
+                                        return;
+                                    }
+                                    updateSettings({ notificationCheckIntervalSeconds: seconds });
+                                    await this.plugin.saveSettings();
+                                    refreshReloadButton();
+                                },
+                            );
+                        });
+                    }),
+                },
+            ],
+        };
+    }
+
     // ---- Task entry (auto-suggest + dialog access keys) -------------------
 
     private taskEntryGroup(): SettingDefinitionItem {
@@ -1595,6 +1639,34 @@ export class SettingsTab extends PluginSettingTab {
                 dropdown.addOption('60', '60 minutes');
                 dropdown.setValue(String(getSettings().reminderRoundingIncrementMinutes)).onChange(async (value) => {
                     updateSettings({ reminderRoundingIncrementMinutes: Number(value) });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('settings.notifications.heading')).setHeading();
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.notifications.enabled.name'))
+            .setDesc(i18n.t('settings.notifications.enabled.description'))
+            .addToggle((toggle) => {
+                toggle.setValue(getSettings().notificationsEnabled).onChange(async (value) => {
+                    updateSettings({ notificationsEnabled: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.notifications.checkIntervalSeconds.name'))
+            .setDesc(i18n.t('settings.notifications.checkIntervalSeconds.description'))
+            .addText((text) => {
+                text.setValue(String(getSettings().notificationCheckIntervalSeconds)).onChange(async (value) => {
+                    const seconds = Number(value);
+                    if (!Number.isFinite(seconds) || seconds <= 0) {
+                        return;
+                    }
+                    updateSettings({ notificationCheckIntervalSeconds: seconds });
                     await this.plugin.saveSettings();
                 });
             });

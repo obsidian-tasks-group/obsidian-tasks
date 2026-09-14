@@ -12,6 +12,26 @@ export {};
 export const mockApp = {} as unknown as App;
 
 /**
+ * Mutable mock of Obsidian's `Platform` const. Real Obsidian never changes these at runtime, but tests
+ * that need to exercise both desktop and mobile code paths (e.g. notification delivery) can reassign
+ * fields on this object directly - reset it in `afterEach`/`beforeEach` if a test changes it.
+ */
+export const Platform = {
+    isDesktop: true,
+    isMobile: false,
+    isDesktopApp: true,
+    isMobileApp: false,
+    isIosApp: false,
+    isAndroidApp: false,
+    isPhone: false,
+    isTablet: false,
+    isMacOS: false,
+    isWin: false,
+    isLinux: false,
+    isSafari: false,
+};
+
+/**
  * Creates a minimal Obsidian TFile for tests that only need file metadata.
  *
  * @param path - Vault-relative path to the file.

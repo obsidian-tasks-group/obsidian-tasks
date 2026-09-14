@@ -5,6 +5,34 @@ Tracks this fork's own changes on top of each upstream base. See `CLAUDE.md` for
 in `manifest.json`/`package.json`) and the upstream-sync process. Upstream's own changelog is not duplicated
 here — see <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>.
 
+## 3.1.0 — upstream base `8.4.0`
+
+Roadmap feature: **native notification delivery, Phase 1 (foreground/desktop; not yet tested on mobile)**.
+Fires a notification for a task whose reminder has come due, without depending on the separate Reminder
+plugin.
+
+- New settings, "Notifications" section: "Enable reminder notifications" (off by default) and "Check every
+  (seconds)" (default 60, needs a plugin reload to change - a "Reload" button appears when it's edited).
+- `src/Notifications/NotificationScheduler.ts`: `findDueReminders` is a pure half-open sliding-window check
+  `(windowStart, windowEnd]` over `Task.reminderDateTime`, excluding completed/cancelled tasks;
+  `ReminderCheckLoop` drives it once per check via a single `registerInterval` in `main.ts`. The window
+  itself is the entire dedup mechanism - no persisted "already fired" state, and no risk of double-firing
+  across ticks, recurrence, or a mid-flight edit to the reminder time.
+- `src/Notifications/ReminderNotifier.ts::notifyRemindersDue`: **one combined notification per check**,
+  never one per task - several reminders landing in the same window surface as a single alert listing all
+  of them, not a burst. Delivers via the renderer's global `Notification` API on desktop (which Electron
+  implements natively - no `electron` package import needed, no permission prompt), giving a real OS-level
+  notification, not just an in-app toast; falls back to `Notice` on mobile or wherever `Notification` isn't
+  available. Both channels are **persistent** - the native one via `requireInteraction: true`, the `Notice`
+  via duration `0` - staying visible until the user dismisses them rather than auto-disappearing. Never
+  writes back to any task or its file - firing a notification cannot mutate vault content.
+- **Known, accepted limitation**: a reminder that comes due while Obsidian is fully closed is not fired
+  retroactively on reopen - this phase is honestly foreground/session-scoped. True "fires even while
+  closed" delivery needs an external push relay (ntfy.sh, mirroring the separate Reminder plugin's own
+  approach) and is planned as Phase 2 - see `CLAUDE.md`'s roadmap item 4 for the sketch, not built yet.
+  Also logged there, also not built yet: a separate minor version adding an in-Obsidian view listing
+  upcoming and past-fired reminders, opened by clicking the OS notification.
+
 ## 3.0.0 — upstream base `8.4.0`
 
 Roadmap feature: **reminder field** — partly working: the field, storage, rendering and querying are all

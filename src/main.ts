@@ -22,6 +22,8 @@ import { QueryFileDefaults } from './Query/QueryFileDefaults';
 import { LinkResolver } from './Task/LinkResolver';
 import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
 import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
+import { ReminderCheckLoop } from './Notifications/NotificationScheduler';
+import { notifyRemindersDue } from './Notifications/ReminderNotifier';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -82,6 +84,33 @@ export default class TasksPlugin extends Plugin {
         this.registerEditorExtension(newLivePreviewExtension(this));
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
         new Commands({ plugin: this });
+
+        this.registerReminderNotifications();
+    }
+
+    /**
+     * Registers a single periodic check for due reminders (see `Notifications/NotificationScheduler.ts`),
+     * for the lifetime of the plugin. Registered unconditionally (via `registerInterval`, so Obsidian
+     * auto-clears it on unload/disable) rather than only when `notificationsEnabled` is currently true, so
+     * that turning the setting on later takes effect immediately, with no reload needed - only the check
+     * *interval* itself (`notificationCheckIntervalSeconds`) is fixed for the plugin's lifetime and needs a
+     * reload to change, per the "Reload" button shown next to that setting.
+     */
+    private registerReminderNotifications() {
+        const checkLoop = new ReminderCheckLoop();
+        this.registerInterval(
+            window.setInterval(() => {
+                if (!getSettings().notificationsEnabled) {
+                    return;
+                }
+                const due = checkLoop.tick(this.getTasks(), window.moment());
+                if (due.length > 0) {
+                    // One combined notification per check, even if several reminders came due in the same
+                    // window - never one notification per task.
+                    notifyRemindersDue(due);
+                }
+            }, getSettings().notificationCheckIntervalSeconds * 1000),
+        );
     }
 
     async loadTaskStatuses() {

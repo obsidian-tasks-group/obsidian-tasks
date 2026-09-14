@@ -110,6 +110,19 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().reminderRoundingIncrementMinutes).toBe(15);
     });
 
+    it('should default the notification settings, and retain a loaded value', () => {
+        expect(getSettings().notificationsEnabled).toBe(false);
+        expect(getSettings().notificationCheckIntervalSeconds).toBe(60);
+
+        updateSettings({
+            notificationsEnabled: true,
+            notificationCheckIntervalSeconds: 30,
+        });
+
+        expect(getSettings().notificationsEnabled).toBe(true);
+        expect(getSettings().notificationCheckIntervalSeconds).toBe(30);
+    });
+
     it('should completely remove properties not in defaultSettings', () => {
         // Arrange: Add an extra property that isn't in defaultSettings
         updateSettings({
