@@ -1026,6 +1026,21 @@ export class SettingsTab extends PluginSettingTab {
                         });
                     },
                 },
+                {
+                    name: i18n.t('settings.reminder.roundingMode.name'),
+                    desc: i18n.t('settings.reminder.roundingMode.description'),
+                    render: (setting) => {
+                        setting.addDropdown((dropdown) => {
+                            dropdown.addOption('floor', i18n.t('settings.reminder.roundingMode.options.floor'));
+                            dropdown.addOption('round', i18n.t('settings.reminder.roundingMode.options.round'));
+                            dropdown.addOption('ceil', i18n.t('settings.reminder.roundingMode.options.ceil'));
+                            dropdown.setValue(getSettings().reminderRoundingMode).onChange(async (value) => {
+                                updateSettings({ reminderRoundingMode: value as 'floor' | 'round' | 'ceil' });
+                                await this.plugin.saveSettings();
+                            });
+                        });
+                    },
+                },
             ],
         };
     }
@@ -1639,6 +1654,19 @@ export class SettingsTab extends PluginSettingTab {
                 dropdown.addOption('60', '60 minutes');
                 dropdown.setValue(String(getSettings().reminderRoundingIncrementMinutes)).onChange(async (value) => {
                     updateSettings({ reminderRoundingIncrementMinutes: Number(value) });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.reminder.roundingMode.name'))
+            .setDesc(i18n.t('settings.reminder.roundingMode.description'))
+            .addDropdown((dropdown) => {
+                dropdown.addOption('floor', i18n.t('settings.reminder.roundingMode.options.floor'));
+                dropdown.addOption('round', i18n.t('settings.reminder.roundingMode.options.round'));
+                dropdown.addOption('ceil', i18n.t('settings.reminder.roundingMode.options.ceil'));
+                dropdown.setValue(getSettings().reminderRoundingMode).onChange(async (value) => {
+                    updateSettings({ reminderRoundingMode: value as 'floor' | 'round' | 'ceil' });
                     await this.plugin.saveSettings();
                 });
             });

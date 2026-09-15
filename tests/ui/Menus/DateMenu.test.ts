@@ -99,12 +99,18 @@ describe('DateMenu', () => {
         expect(menuToString(menu)).toContain('Add a reminder…');
     });
 
-    it('should hide "Add a reminder…" for the Scheduled date field once the task already has a reminder', () => {
+    it('should grey out (disable) "Add a reminder…" for the Scheduled date field once the task already has a reminder, rather than hiding it', () => {
         const task = new TaskBuilder().scheduledDate(today).reminderTime('09:00').build();
 
         const menu = new DateMenu(mockApp, TaskLayoutComponent.ScheduledDate, task);
 
-        expect(menuToString(menu)).not.toContain('Add a reminder…');
+        expect(menuToString(menu)).toContain('(disabled) Add a reminder…');
+
+        // @ts-expect-error TS2339: Property 'items' does not exist on type 'DateMenu'.
+        const items = menu.items;
+        const addReminderItem = items[0];
+        expect(addReminderItem.title).toEqual('Add a reminder…');
+        expect(addReminderItem.disabled).toEqual(true);
     });
 
     it('should never show "Add a reminder…" for a non-Scheduled date field', () => {

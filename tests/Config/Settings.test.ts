@@ -98,16 +98,19 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().reminderPresetTimes).toEqual(['09:00', '12:00', '15:00', '18:00']);
         expect(getSettings().reminderRelativeOffsetsMinutes).toEqual([30, 60, 120, 240]);
         expect(getSettings().reminderRoundingIncrementMinutes).toBe(30);
+        expect(getSettings().reminderRoundingMode).toBe('ceil');
 
         updateSettings({
             reminderPresetTimes: ['07:00'],
             reminderRelativeOffsetsMinutes: [15],
             reminderRoundingIncrementMinutes: 15,
+            reminderRoundingMode: 'floor',
         });
 
         expect(getSettings().reminderPresetTimes).toEqual(['07:00']);
         expect(getSettings().reminderRelativeOffsetsMinutes).toEqual([15]);
         expect(getSettings().reminderRoundingIncrementMinutes).toBe(15);
+        expect(getSettings().reminderRoundingMode).toBe('floor');
     });
 
     it('should default the notification settings, and retain a loaded value', () => {

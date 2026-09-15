@@ -106,7 +106,7 @@
         id="schedule"
         type="text"
         list="schedule-suggestions"
-        class="tasks-modal-date-input tasks-modal-error"
+        class="tasks-modal-date-input"
         placeholder="Try 'tomorrow at 4pm' or '16:00'"
         accesskey="s" />
       <datalist id="schedule-suggestions"></datalist>
@@ -116,7 +116,7 @@
         ⏰
         <input class="tasks-modal-date-editor-picker" type="time" id="schedule-editor-time-picker" tabindex="-1" />
       </div>
-      <code class="tasks-modal-parsed-date">Could not understand 'Invalid date' as a schedule.</code>
+      <code class="tasks-modal-parsed-date"><i>no reminder</i></code>
       <div class="tasks-modal-schedule-buttons">
         <button type="button">Remove scheduled date</button>
         <button type="button">Remove reminder</button>
@@ -266,7 +266,7 @@
       </div>
     </section>
     <section class="tasks-modal-button-section">
-      <button type="submit" class="mod-cta" disabled="">Apply</button>
+      <button type="submit" class="mod-cta">Apply</button>
       <button type="button">Cancel</button>
     </section>
   </form>

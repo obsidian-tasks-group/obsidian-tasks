@@ -11,7 +11,10 @@ pre-push:
       run: yarn test
 
 pre-commit:
-  parallel: true
+  # Not parallel: `test` and `test-svelte` both invoke Jest, and concurrent Jest runs race on the
+  # `approvals`-library's shared `*.received.*` temp files, causing intermittent ENOENT failures
+  # unrelated to any actual code/test regression. Sequential is slower but reliable.
+  parallel: false
   commands:
     lint:
       glob: '*.ts'

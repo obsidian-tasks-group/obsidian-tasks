@@ -16,12 +16,16 @@ export class DateMenu extends TaskEditingMenu {
     constructor(app: App, field: AllTaskDateFields, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
-        // Only for the Scheduled date field, and only while there is no reminder yet - see DatePicker.ts's
-        // matching guard for why this is hidden, not merely disabled, once a reminder exists.
-        if (field === 'scheduledDate' && task.reminderTime === null) {
-            this.addItem((item) =>
-                item.setTitle('Add a reminder…').onClick(() => new ScheduleDialog(app, task, taskSaver).open()),
-            );
+        // Only for the Scheduled date field. Once a reminder already exists, greyed out and inert (see
+        // DatePicker.ts's matching button) rather than removed outright.
+        if (field === 'scheduledDate') {
+            const alreadyHasReminder = task.reminderTime !== null;
+            this.addItem((item) => {
+                item.setTitle('Add a reminder…').setDisabled(alreadyHasReminder);
+                if (!alreadyHasReminder) {
+                    item.onClick(() => new ScheduleDialog(app, task, taskSaver).open());
+                }
+            });
         }
 
         const instructions = isAHappensDate(field)

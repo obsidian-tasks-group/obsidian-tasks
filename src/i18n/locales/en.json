@@ -279,10 +279,19 @@
         "name": "Relative reminder offsets"
       },
       "roundingIncrement": {
-        "description": "Round the relative options above up to the nearest multiple of this many minutes, so a quick pick lands on a clean time. Choose 'No rounding' to apply the exact offset from now instead.",
+        "description": "Round the relative options above to the nearest multiple of this many minutes (which way is controlled by the rounding mode below), so a quick pick lands on a clean time. Choose 'No rounding' to apply the exact offset from now instead.",
         "name": "Round relative offsets to",
         "options": {
           "none": "No rounding (exact time)"
+        }
+      },
+      "roundingMode": {
+        "description": "How the relative options above round to the increment set above. A suggestion is never rounded to a time that's already passed, regardless of this setting.",
+        "name": "Rounding mode",
+        "options": {
+          "ceil": "Round up (always rounds forward)",
+          "floor": "Round down (always rounds back)",
+          "round": "Round to nearest (ties round forward)"
         }
       }
     },

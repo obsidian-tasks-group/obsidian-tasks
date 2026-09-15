@@ -70,48 +70,62 @@ export function parseReminderTimeInput(input: string, reference: Moment): Parsed
 }
 
 /**
- * Round {@link date} forward to the next multiple of {@link incrementMinutes} past the hour (for example,
- * with a 30-minute increment, 14:07 becomes 14:30 and 14:31 becomes 15:00). An {@link incrementMinutes} of
- * 0 or less means "no rounding" - {@link date} is returned as-is (seconds/milliseconds still cleared).
+ * How {@link roundToIncrement} snaps a date to the nearest multiple of its increment - matching the
+ * `reminderRoundingMode` setting (see {@link Settings}):
+ * - `'floor'` - always rounds down/back, to the multiple at or before {@link date}.
+ * - `'ceil'` - always rounds up/forward, to the multiple at or after {@link date} (the only behaviour this
+ *   ever had before the mode became configurable).
+ * - `'round'` - to whichever of the two is closest, ties (exactly halfway) rounding forward like `'ceil'`.
  */
-export function roundUpToIncrement(date: Moment, incrementMinutes: number): Moment {
+export type RoundingMode = 'floor' | 'round' | 'ceil';
+
+/**
+ * Round {@link date} to a multiple of {@link incrementMinutes} past the hour, per {@link mode} (for
+ * example, with a 30-minute increment and `'ceil'`, 14:07 becomes 14:30 and 14:31 becomes 15:00). An
+ * {@link incrementMinutes} of 0 or less means "no rounding" - {@link date} is returned as-is
+ * (seconds/milliseconds still cleared), regardless of {@link mode}.
+ */
+export function roundToIncrement(date: Moment, incrementMinutes: number, mode: RoundingMode): Moment {
     const rounded = date.clone().seconds(0).milliseconds(0);
     if (incrementMinutes <= 0) {
         return rounded;
     }
     const remainder = rounded.minutes() % incrementMinutes;
-    if (remainder !== 0) {
-        rounded.add(incrementMinutes - remainder, 'minutes');
+    if (remainder === 0) {
+        return rounded;
     }
-    return rounded;
+    const roundForward = mode === 'ceil' || (mode === 'round' && remainder * 2 >= incrementMinutes);
+    return roundForward ? rounded.add(incrementMinutes - remainder, 'minutes') : rounded.subtract(remainder, 'minutes');
 }
 
 /**
  * Parses a typed reminder-time string exactly like {@link parseReminderTimeInput}, but additionally rounds
- * a *relative* result (see {@link ParsedReminderTime.isRelative}) up to {@link roundingIncrementMinutes} -
- * the same rounding {@link buildReminderSuggestions} applies to the quick-pick menu/autocomplete items. This
- * is what every place that resolves typed reminder text uses (the edit modal's field, and the "Custom
- * time…" prompt alike), so "in 30 minutes" always means the same rounded time everywhere it's typed - not
- * just when clicking the equivalent menu item.
+ * a *relative* result (see {@link ParsedReminderTime.isRelative}) to {@link roundingIncrementMinutes}/
+ * {@link roundingMode} - the same rounding {@link buildReminderSuggestions} applies to the quick-pick
+ * menu/autocomplete items. This is what every place that resolves typed reminder text uses (the edit
+ * modal's field, and the "Custom time…" prompt alike), so "in 30 minutes" always means the same rounded
+ * time everywhere it's typed - not just when clicking the equivalent menu item.
  *
  * A plain clock time ('09:00') is never rounded either way - rounding only ever applies to relative
- * offsets, matching {@link roundUpToIncrement}'s own scope.
+ * offsets, matching {@link roundToIncrement}'s own scope.
  *
  * @param input - the text the user typed.
  * @param reference - the moment relative-duration inputs are resolved against (typically 'now').
- * @param roundingIncrementMinutes - see {@link roundUpToIncrement}.
+ * @param roundingIncrementMinutes - see {@link roundToIncrement}.
+ * @param roundingMode - see {@link RoundingMode}.
  * @returns the parsed (and, if relative, rounded) result, or null if {@link input} could not be understood.
  */
 export function resolveTypedReminderTime(
     input: string,
     reference: Moment,
     roundingIncrementMinutes: number,
+    roundingMode: RoundingMode,
 ): ParsedReminderTime | null {
     const parsed = parseReminderTimeInput(input, reference);
     if (parsed === null || !parsed.isRelative) {
         return parsed;
     }
 
-    const date = roundUpToIncrement(parsed.date, roundingIncrementMinutes);
+    const date = roundToIncrement(parsed.date, roundingIncrementMinutes, roundingMode);
     return { time: date.format('HH:mm'), date, isRelative: true };
 }

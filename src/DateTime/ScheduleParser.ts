@@ -1,5 +1,5 @@
 import * as chrono from 'chrono-node';
-import { relativeDurationPattern, roundUpToIncrement } from './ReminderTimeParser';
+import { type RoundingMode, relativeDurationPattern, roundToIncrement } from './ReminderTimeParser';
 
 /**
  * The result of successfully parsing a typed 'Schedule' string - the single unified text field that drives
@@ -16,7 +16,7 @@ export interface ParsedSchedule {
      */
     reminderTime: string | null;
     /** True if the resolved time came from a relative/duration expression ('in 30 minutes'), for callers
-     *  that want to know whether rounding was already applied (see {@link roundUpToIncrement}). */
+     *  that want to know whether rounding was already applied (see {@link roundToIncrement}). */
     isRelative: boolean;
 }
 
@@ -73,8 +73,9 @@ function hasExplicitDatePart(start: chrono.ParsedComponents, trimmedInput: strin
  *   (today if the time is still to come, else tomorrow - chrono's own `forwardDate` option does not roll a
  *   bare time-of-day forward by itself, only day/month/weekday-only expressions, so this is done by hand).
  * @param forwardDate - mirrors the modal's existing "Only future dates" checkbox.
- * @param roundingIncrementMinutes - see {@link roundUpToIncrement}. Only ever applied to a relative offset's
+ * @param roundingIncrementMinutes - see {@link roundToIncrement}. Only ever applied to a relative offset's
  *   time, never to an absolute clock time, and never to a date-only relative phrase.
+ * @param roundingMode - see {@link RoundingMode}.
  * @returns the parsed result, or `null` if {@link input} is empty or could not be understood.
  */
 export function resolveTypedSchedule(
@@ -83,6 +84,7 @@ export function resolveTypedSchedule(
     existingScheduledDate: Moment | null,
     forwardDate: boolean,
     roundingIncrementMinutes: number,
+    roundingMode: RoundingMode,
 ): ParsedSchedule | null {
     const trimmed = input.trim();
     if (trimmed === '') {
@@ -118,7 +120,7 @@ export function resolveTypedSchedule(
         }
     }
 
-    const final = isRelative && hasTime ? roundUpToIncrement(resolved, roundingIncrementMinutes) : resolved;
+    const final = isRelative && hasTime ? roundToIncrement(resolved, roundingIncrementMinutes, roundingMode) : resolved;
 
     return {
         scheduledDate: final.clone().startOf('day'),

@@ -268,8 +268,10 @@ describe('Task rendering', () => {
     });
 
     it('should display valid scheduled date', () => {
-        // 'scheduled' and 'reminder' now share one merged 'schedule' element - see ScheduleEditor.svelte.
-        testElementRender(fullyPopulatedLine, 'schedule', '2023-07-03');
+        // 'scheduled' and 'reminder' now share one merged 'schedule' element (ScheduleEditor.svelte). Its
+        // text field always starts blank (the pickers show the real values) - see ScheduleEditor.test.ts
+        // for dedicated coverage of what the date/time pickers themselves show.
+        testElementRender(fullyPopulatedLine, 'schedule', '');
     });
 
     it('should display valid due date', () => {
@@ -303,7 +305,9 @@ describe('Task rendering', () => {
     });
 
     it('should display invalid scheduled date', () => {
-        testElementRender('- [ ] ⏳ 2024-02-31', 'schedule', invalidDateText);
+        // The schedule text field always starts blank regardless of the underlying value's validity - an
+        // invalid pre-existing scheduled date shows up in the date picker being empty, not in this field.
+        testElementRender('- [ ] ⏳ 2024-02-31', 'schedule', '');
     });
 
     it('should display invalid start date', () => {

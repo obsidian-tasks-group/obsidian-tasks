@@ -61,17 +61,22 @@ export function promptForDate(
                 return new SetTaskDate(dateFieldToEdit, today).apply(task);
             });
 
-            // "Add a reminder…" - only for the Scheduled date field, and only while there is no reminder
-            // yet (once set, the Reminder Time pill itself becomes the dedicated edit affordance - a second
-            // "add" entry here would be redundant and could read as creating a second reminder). Can't
-            // reuse addButton()'s applyDate()-returns-Task[]-synchronously shape below, since opening a
-            // dialog is inherently async/user-driven rather than an immediate apply-and-save.
-            if (dateFieldToEdit === 'scheduledDate' && task.reminderTime === null) {
+            // "Add a reminder…" - only for the Scheduled date field. Once a reminder already exists, the
+            // Reminder Time pill itself becomes the dedicated edit affordance, so this is greyed out and
+            // inert rather than removed outright - still visible for discoverability, just not a second
+            // "add" path that could read as creating a second reminder. Can't reuse addButton()'s
+            // applyDate()-returns-Task[]-synchronously shape below, since opening a dialog is inherently
+            // async/user-driven rather than an immediate apply-and-save.
+            if (dateFieldToEdit === 'scheduledDate') {
+                const alreadyHasReminder = task.reminderTime !== null;
                 const button = buttonContainer.createEl('button', { cls: 'flatpickr-button', text: 'Add a reminder…' });
-                button.addEventListener('click', () => {
-                    instance.destroy();
-                    new ScheduleDialog(app, task, taskSaver).open();
-                });
+                button.disabled = alreadyHasReminder;
+                if (!alreadyHasReminder) {
+                    button.addEventListener('click', () => {
+                        instance.destroy();
+                        new ScheduleDialog(app, task, taskSaver).open();
+                    });
+                }
             }
         },
     });

@@ -4,7 +4,10 @@ import type { Task } from '../../../src/Task/Task';
 export function menuToString<MenuType>(menu: MenuType) {
     // @ts-expect-error TS2339: Property 'items' does not exist on type 'MenuType'.
     const items: MenuItem[] = menu.items;
-    return '\n' + items.map((item) => `${item.checked ? 'x' : ' '} ${item.title}`).join('\n');
+    return (
+        '\n' +
+        items.map((item) => `${item.checked ? 'x' : ' '} ${item.disabled ? '(disabled) ' : ''}${item.title}`).join('\n')
+    );
 }
 
 export class TestableTaskSaver {

@@ -5,6 +5,29 @@ Tracks this fork's own changes on top of each upstream base. See `CLAUDE.md` for
 in `manifest.json`/`package.json`) and the upstream-sync process. Upstream's own changelog is not duplicated
 here — see <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>.
 
+## 4.1.0 — upstream base `8.4.0`
+
+**Configurable rounding mode for reminder suggestions, and exact-time labels.** The relative-offset quick
+options (right-click `ReminderMenu`, and the Schedule field's own autocomplete) always rounded a suggestion
+*up* to the configured increment - now configurable via a new `reminderRoundingMode` setting (`floor`/
+`round`/`ceil`, default `ceil` to match the previous behaviour exactly).
+
+- `src/DateTime/ReminderTimeParser.ts`: `roundUpToIncrement` renamed to `roundToIncrement` and given a
+  `RoundingMode` parameter (`'floor' | 'round' | 'ceil'`). `'round'` ties round forward, matching `'ceil'`.
+- `src/Config/Settings.ts`/`SettingsTab.ts`: new `reminderRoundingMode` setting, in both the declarative and
+  imperative settings UIs (see `CLAUDE.md`'s note on why both need updating for every setting).
+- A relative-offset suggestion's label now states the *exact* time remaining until the rounded target, not
+  the nominal configured duration - e.g. a configured "in 30 minutes" that rounds forward to a clean 19:00
+  now reads "In 53 minutes (19:00)", not "In 30 minutes (19:00)" - so the label is always literally true
+  rather than an approximation that needed a "~" to flag it (removed). The suggestion's underlying value
+  (what actually gets typed/applied) is unaffected - still the nominal configured duration, so re-parsing it
+  later resolves fresh from whatever "now" is by then.
+- `src/DateTime/ReminderSuggestions.ts`: a suggestion is now never rounded to a time at or before "now" -
+  `'floor'`/`'round'` can otherwise land there (unlike `'ceil'`, which never can), which would have quietly
+  suggested an already-past reminder.
+- Deleted `src/ui/ReminderEditor.svelte` (and its tests) - dead code since `4.0.0` replaced it with
+  `ScheduleEditor.svelte` in the edit modal; nothing else referenced it.
+
 ## 4.0.0 — upstream base `8.4.0`
 
 **Unified "Schedule" field, replacing separate Scheduled date / Reminder time editing.** MAJOR, not MINOR,

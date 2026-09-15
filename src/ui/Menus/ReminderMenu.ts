@@ -12,19 +12,25 @@ import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditing
  *
  * Built from {@link buildReminderSuggestions} - the same options {@link ScheduleEditor} offers as
  * autocomplete in the edit modal - so the list of quick options is user-configurable (via
- * `reminderPresetTimes`/`reminderRelativeOffsetsMinutes`/`reminderRoundingIncrementMinutes`, see
- * {@link Settings}) rather than a fixed set that may not suit everyone.
+ * `reminderPresetTimes`/`reminderRelativeOffsetsMinutes`/`reminderRoundingIncrementMinutes`/
+ * `reminderRoundingMode`, see {@link Settings}) rather than a fixed set that may not suit everyone.
  */
 export class ReminderMenu extends TaskEditingMenu {
     constructor(task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
-        const { reminderPresetTimes, reminderRelativeOffsetsMinutes, reminderRoundingIncrementMinutes } = getSettings();
+        const {
+            reminderPresetTimes,
+            reminderRelativeOffsetsMinutes,
+            reminderRoundingIncrementMinutes,
+            reminderRoundingMode,
+        } = getSettings();
         const now = window.moment();
         const { presetTimes, relativeOffsets } = buildReminderSuggestions(
             reminderPresetTimes,
             reminderRelativeOffsetsMinutes,
             reminderRoundingIncrementMinutes,
+            reminderRoundingMode,
             now,
         );
 
@@ -43,7 +49,7 @@ export class ReminderMenu extends TaskEditingMenu {
         };
 
         this.addItemsForInstructions(
-            [...presetTimes.map(toInstruction), new MenuDividerInstruction(), ...relativeOffsets.map(toInstruction)],
+            [...relativeOffsets.map(toInstruction), new MenuDividerInstruction(), ...presetTimes.map(toInstruction)],
             task,
         );
 

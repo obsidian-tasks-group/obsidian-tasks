@@ -2,4 +2,12 @@
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+
+    // "Add a reminder…" once the task already has one - visible but inert (see DatePicker.ts), rather than
+    // removed outright.
+    .flatpickr-button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 }

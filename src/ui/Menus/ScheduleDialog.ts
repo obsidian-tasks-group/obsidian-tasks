@@ -67,6 +67,8 @@ export class ScheduleDialog extends Modal {
             .setButtonText('Apply')
             .setCta()
             .onClick(() => this.apply());
+
+        this.scope.register([], 'Enter', () => this.apply());
     }
 
     private async apply(): Promise<void> {
