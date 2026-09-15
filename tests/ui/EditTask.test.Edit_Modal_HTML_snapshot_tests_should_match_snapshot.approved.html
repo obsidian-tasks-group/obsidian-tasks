@@ -98,20 +98,29 @@
         📅
         <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
       </div>
-      <label for="scheduled">
+      <label for="schedule">
         <span class="accesskey">S</span>
-        cheduled
+        chedule
       </label>
       <input
-        id="scheduled"
+        id="schedule"
         type="text"
+        list="schedule-suggestions"
         class="tasks-modal-date-input tasks-modal-error"
-        placeholder="Try 'Mon' or 'tm' then space"
+        placeholder="Try 'tomorrow at 4pm' or '16:00'"
         accesskey="s" />
-      <code class="tasks-modal-parsed-date">
+      <datalist id="schedule-suggestions"></datalist>
+      <div class="tasks-modal-parsed-date">
         ⏳
-        <i>invalid scheduled date</i>
-      </code>
+        <input class="tasks-modal-date-editor-picker" type="date" id="schedule-editor-date-picker" tabindex="-1" />
+        ⏰
+        <input class="tasks-modal-date-editor-picker" type="time" id="schedule-editor-time-picker" tabindex="-1" />
+      </div>
+      <code class="tasks-modal-parsed-date">Could not understand 'Invalid date' as a schedule.</code>
+      <div class="tasks-modal-schedule-buttons">
+        <button type="button">Remove scheduled date</button>
+        <button type="button">Remove reminder</button>
+      </div>
       <label for="start">
         St
         <span class="accesskey">a</span>
@@ -126,23 +135,6 @@
       <div class="tasks-modal-parsed-date">
         🛫
         <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
-      </div>
-      <label for="reminder">
-        Reminder (
-        <span class="accesskey">k</span>
-        )
-      </label>
-      <input
-        id="reminder"
-        type="text"
-        list="reminder-suggestions"
-        class="tasks-modal-date-input"
-        placeholder="Try '09:00' or 'in 30 minutes'"
-        accesskey="k" />
-      <datalist id="reminder-suggestions"></datalist>
-      <div class="tasks-modal-parsed-date">
-        ⏰
-        <input class="tasks-modal-date-editor-picker" type="time" id="reminder-editor-picker" tabindex="-1" />
       </div>
       <div class="future-dates-only" id="only-future-dates">
         <label for="forwardOnly">

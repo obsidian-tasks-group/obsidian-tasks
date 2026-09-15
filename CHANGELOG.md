@@ -5,6 +5,49 @@ Tracks this fork's own changes on top of each upstream base. See `CLAUDE.md` for
 in `manifest.json`/`package.json`) and the upstream-sync process. Upstream's own changelog is not duplicated
 here — see <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>.
 
+## 4.0.0 — upstream base `8.4.0`
+
+**Unified "Schedule" field, replacing separate Scheduled date / Reminder time editing.** MAJOR, not MINOR,
+because of the anchor-behavior change below: a task whose reminder was working via a due/start-date anchor
+will silently stop firing after this upgrade until fixed (via the new error pill) - not an on-disk syntax
+break, but the same "a broken vault is a much bigger deal than any UI change" reasoning the syntax-break
+exception exists for. The edit modal's
+"Scheduled date" and "Reminder time" text fields accepted the same free-text parsing but with inconsistent
+results (a duration-with-time phrase like "in 1 day 19 hours" silently overwrote the scheduled date when
+typed into the reminder field, but silently dropped its own time component when typed into the scheduled
+field). Replaced with one field, "Schedule": typing something with an explicit time-of-day (`chrono`
+certain about `hour`/`minute`) updates both the scheduled date and the reminder time; a date-only phrase
+("tomorrow", "in a week") updates only the date, leaving any existing reminder completely untouched. A bare
+clock time with no date wording ("16:00") never moves an existing scheduled date - only when there is none
+does it derive one (today if the time is still to come, else tomorrow).
+
+- `src/DateTime/ScheduleParser.ts` (new): `resolveTypedSchedule()` - the parser above, including workarounds
+  for two chrono-node quirks (week-based durations don't mark `day` certain; `noon`/`midnight` don't mark
+  `hour`/`minute` certain, in opposite ways for `isCertain('day')`, so both are forced to behave as bare
+  clock times explicitly).
+- **Reminders now anchor to `Task.scheduledDate` only, everywhere** - not due or start any more.
+  `Task.reminderDateTime`, and `SetReminderTime`/`SetReminderDateTime`
+  (`src/ui/EditInstructions/ReminderInstructions.ts`) no longer consult `Postponer.getDateFieldToPostpone`'s
+  due>scheduled>start priority (that function is untouched and still used solely by the unrelated Postpone
+  feature). A reminder that ends up with no scheduled date to anchor to (from emptying the Schedule text
+  without clicking a Remove button, or a pre-existing due/start-anchored reminder from before this change)
+  is not auto-fixed - it renders as a visibly broken "error pill" in the rendered view
+  (`.tasks-reminder-orphaned`, `TaskLineRenderer.ts`), which doubles as the migration path for any such
+  pre-existing reminders: click it to add a scheduled date or remove the reminder.
+- `src/ui/EditInstructions/ScheduleInstructions.ts` (new): `SetSchedule` (sets both fields from an
+  already-resolved pair) and `RemoveScheduledDateAndReminder` (composes `RemoveTaskDate`/`RemoveReminderTime`
+  - removing the scheduled date also removes the reminder, since one is meaningless without the other).
+- `src/ui/ScheduleEditor.svelte` (new): the shared text input + native date/time pickers + "Remove scheduled
+  date"/"Remove reminder" buttons, used both embedded in the edit modal (`EditTask.svelte`, access key
+  `Alt+S`, replacing the old separate `DateEditor`/`ReminderEditor` instances there) and inside the new
+  standalone `src/ui/Menus/ScheduleDialog.ts` popup (explicit Apply/Cancel, since typed text can be
+  transiently invalid mid-edit).
+- Rendered-view entry points: left-clicking an existing Reminder Time pill now opens `ScheduleDialog`
+  (previously the same quick-pick menu as right-click); right-clicking it still shows that quick-pick menu,
+  minus the "Custom time…" item it used to have (`ReminderPromptModal.ts` is retired - `ScheduleDialog`
+  replaces its role). The Scheduled Date field's picker/menu gained an "Add a reminder…" entry (hidden once
+  a reminder already exists, since the Reminder Time pill itself becomes the edit affordance at that point).
+
 ## 3.4.0 — upstream base `8.4.0`
 
 Roadmap feature: **startup summary for missed reminders** - the "N reminders came due while you were away"

@@ -11,8 +11,11 @@ import {
 
 window.moment = moment;
 
-const taskWithNoReminder = new TaskBuilder().dueDate('2024-10-01').build();
-const taskWithReminder = new TaskBuilder().dueDate('2024-10-01').reminderTime('09:00').build();
+// A reminder anchors to Task.scheduledDate only - not due or start - so these fixtures use scheduledDate
+// throughout. See the dedicated 'reminders anchor to scheduled date only' tests below for what happens
+// when a task has due/start dates instead.
+const taskWithNoReminder = new TaskBuilder().scheduledDate('2024-10-01').build();
+const taskWithReminder = new TaskBuilder().scheduledDate('2024-10-01').reminderTime('09:00').build();
 
 beforeEach(() => {
     jest.useFakeTimers();
@@ -71,6 +74,18 @@ describe('SetReminderTime', () => {
 
         expect(instruction.isCheckedForTask(task)).toEqual(false);
     });
+
+    it("should create today's scheduled date even when the task already has a due date (reminders only ever anchor to scheduled date)", () => {
+        const task = new TaskBuilder().dueDate('2024-10-10').build();
+        const instruction = new SetReminderTime('09:00');
+
+        const [applied] = instruction.apply(task);
+
+        expect(applied.reminderTime).toEqual('09:00');
+        expect(applied.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-10-02');
+        // The due date is untouched - it was never the anchor.
+        expect(applied.dueDate!.format('YYYY-MM-DD')).toEqual('2024-10-10');
+    });
 });
 
 describe('SetReminderDateTime', () => {
@@ -79,33 +94,36 @@ describe('SetReminderDateTime', () => {
         expect(instruction.instructionDisplayName()).toEqual('Set reminder: 09:00');
     });
 
-    it('should only set the time when the target date matches the existing anchor date', () => {
-        const task = new TaskBuilder().dueDate('2024-10-01').build();
+    it('should only set the time when the target date matches the existing scheduled date', () => {
+        const task = new TaskBuilder().scheduledDate('2024-10-01').build();
         const instruction = new SetReminderDateTime(moment('2024-10-01T14:30'));
 
         const [applied] = instruction.apply(task);
 
         expect(applied.reminderTime).toEqual('14:30');
-        expect(applied.dueDate!.format('YYYY-MM-DD')).toEqual('2024-10-01');
+        expect(applied.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-10-01');
     });
 
-    it('should shift the anchor date forward when the target date crosses into the next day', () => {
-        const task = new TaskBuilder().dueDate('2024-10-01').build();
+    it('should shift the scheduled date forward when the target date crosses into the next day', () => {
+        const task = new TaskBuilder().scheduledDate('2024-10-01').build();
         const instruction = new SetReminderDateTime(moment('2024-10-02T00:30'));
 
         const [applied] = instruction.apply(task);
 
         expect(applied.reminderTime).toEqual('00:30');
-        expect(applied.dueDate!.format('YYYY-MM-DD')).toEqual('2024-10-02');
+        expect(applied.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-10-02');
     });
 
-    it('should prefer due, then scheduled, then start, as the anchor to shift', () => {
-        const task = new TaskBuilder().scheduledDate('2024-10-01').startDate('2024-09-01').build();
+    it('should ignore due and start dates entirely, and never shift or create anything but scheduled date', () => {
+        const task = new TaskBuilder().dueDate('2024-10-01').startDate('2024-09-01').build();
         const instruction = new SetReminderDateTime(moment('2024-10-02T00:30'));
 
         const [applied] = instruction.apply(task);
 
+        expect(applied.reminderTime).toEqual('00:30');
         expect(applied.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-10-02');
+        // Neither pre-existing date is touched - they were never candidates for the anchor.
+        expect(applied.dueDate!.format('YYYY-MM-DD')).toEqual('2024-10-01');
         expect(applied.startDate!.format('YYYY-MM-DD')).toEqual('2024-09-01');
     });
 
@@ -130,7 +148,7 @@ describe('SetReminderDateTime', () => {
     });
 
     it('should not change identity when applied to a task already matching the target', () => {
-        const task = new TaskBuilder().dueDate('2024-10-01').reminderTime('14:30').build();
+        const task = new TaskBuilder().scheduledDate('2024-10-01').reminderTime('14:30').build();
         const instruction = new SetReminderDateTime(moment('2024-10-01T14:30'));
 
         const [applied] = instruction.apply(task);

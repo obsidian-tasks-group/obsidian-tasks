@@ -584,11 +584,14 @@ describe('properties for scripting', () => {
 
     it('should include reminderDateTime as a 4th happensDates entry', () => {
         const dueDate = '2023-06-19';
-        const task = new TaskBuilder().dueDate(dueDate).reminderTime('09:00').build();
+        const scheduledDate = '2023-06-20';
+        const task = new TaskBuilder().dueDate(dueDate).scheduledDate(scheduledDate).reminderTime('09:00').build();
 
         expect(task.happensDates).toHaveLength(4);
-        expect(task.happensDates[3]).toEqualMoment(moment(`${dueDate} 09:00`, 'YYYY-MM-DD HH:mm'));
-        // The reminder shares its anchor's day, so it doesn't change which day 'happens' picks:
+        // A reminder anchors to scheduledDate only, not due - see the reminderDateTime tests below.
+        expect(task.happensDates[3]).toEqualMoment(moment(`${scheduledDate} 09:00`, 'YYYY-MM-DD HH:mm'));
+        // The reminder shares its anchor's day, so it doesn't change which day 'happens' picks - due is
+        // still the earliest-priority 'happens' date here regardless.
         expect(task.happens.moment).toEqualMoment(moment(dueDate));
     });
 
@@ -606,45 +609,43 @@ describe('properties for scripting', () => {
     });
 
     describe('reminderDateTime', () => {
-        it('should combine reminderTime with the due date, if present', () => {
-            const task = new TaskBuilder().dueDate('2023-06-19').reminderTime('09:00').build();
+        it('should combine reminderTime with the scheduled date, if present', () => {
+            const task = new TaskBuilder().scheduledDate('2023-06-19').reminderTime('09:00').build();
             expect(task.reminderDateTime).toEqualMoment(moment('2023-06-19 09:00', 'YYYY-MM-DD HH:mm'));
         });
 
-        it('should prefer due, then scheduled, then start, as the anchor date', () => {
-            // Same priority order as Postponer.getDateFieldToPostpone().
-            const dueOnly = new TaskBuilder().dueDate('2023-06-19').reminderTime('09:00').build();
-            expect(dueOnly.reminderDateTime).toEqualMoment(moment('2023-06-19 09:00', 'YYYY-MM-DD HH:mm'));
-
+        it('should ignore due and start dates entirely - only scheduled date is ever the anchor', () => {
             const dueAndScheduled = new TaskBuilder()
                 .dueDate('2023-06-19')
                 .scheduledDate('2023-06-01')
                 .reminderTime('09:00')
                 .build();
-            expect(dueAndScheduled.reminderDateTime).toEqualMoment(moment('2023-06-19 09:00', 'YYYY-MM-DD HH:mm'));
+            expect(dueAndScheduled.reminderDateTime).toEqualMoment(moment('2023-06-01 09:00', 'YYYY-MM-DD HH:mm'));
 
-            const scheduledOnly = new TaskBuilder().scheduledDate('2023-06-01').reminderTime('09:00').build();
-            expect(scheduledOnly.reminderDateTime).toEqualMoment(moment('2023-06-01 09:00', 'YYYY-MM-DD HH:mm'));
+            const dueOnly = new TaskBuilder().dueDate('2023-06-19').reminderTime('09:00').build();
+            expect(dueOnly.reminderDateTime).toBeNull();
 
             const startOnly = new TaskBuilder().startDate('2023-05-01').reminderTime('09:00').build();
-            expect(startOnly.reminderDateTime).toEqualMoment(moment('2023-05-01 09:00', 'YYYY-MM-DD HH:mm'));
+            expect(startOnly.reminderDateTime).toBeNull();
         });
 
         it('should be null if there is no reminder time', () => {
-            const task = new TaskBuilder().dueDate('2023-06-19').build();
+            const task = new TaskBuilder().scheduledDate('2023-06-19').build();
             expect(task.reminderDateTime).toBeNull();
         });
 
-        it('should be null if there is a reminder time but no anchor date', () => {
-            const task = new TaskBuilder().reminderTime('09:00').build();
-            expect(task.reminderDateTime).toBeNull();
+        it('should be null if there is a reminder time but no scheduled date, even if due/start dates are present', () => {
+            // An "orphaned" reminder - see TaskLineRenderer's error-pill rendering for this state.
+            expect(new TaskBuilder().reminderTime('09:00').build().reminderDateTime).toBeNull();
+            expect(new TaskBuilder().dueDate('2023-06-19').reminderTime('09:00').build().reminderDateTime).toBeNull();
+            expect(new TaskBuilder().startDate('2023-05-01').reminderTime('09:00').build().reminderDateTime).toBeNull();
         });
 
         it('should be null if the reminder time is not a valid HH:mm string', () => {
             // Task's own constructor/model doesn't itself validate the format at construction time -
             // that's the serializer's/editor's job - but reminderDateTime must not crash or return a
             // nonsensical value if it's ever handed something malformed.
-            const task = new TaskBuilder().dueDate('2023-06-19').reminderTime('not-a-time').build();
+            const task = new TaskBuilder().scheduledDate('2023-06-19').reminderTime('not-a-time').build();
             expect(task.reminderDateTime).toBeNull();
         });
     });

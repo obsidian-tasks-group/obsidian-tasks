@@ -1,6 +1,6 @@
 {
   "name": "upgraded-tasks",
-  "version": "3.4.0",
+  "version": "4.0.0",
   "upstreamVersion": "8.4.0",
   "description": "Personal fork of obsidian-tasks-group/obsidian-tasks, developed to add reminder notifications, business-day postponing, and a cross-project tabular view.",
   "main": "main.js",

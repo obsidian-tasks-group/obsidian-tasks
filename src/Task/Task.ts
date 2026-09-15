@@ -749,12 +749,12 @@ export class Task extends ListItem {
     }
 
     /**
-     * Return {@link reminderTime} combined with the task's anchor date, as a single {@link Moment}.
-     *
-     * The anchor date is whichever of {@link dueDate}, {@link scheduledDate} or {@link startDate} is
-     * present, in that priority order (the same order used when postponing - see
-     * {@link getDateFieldToPostpone}). Returns null if there is no reminder time, the reminder time
-     * isn't a valid 'HH:mm' string, or there is no anchor date to attach it to.
+     * Return {@link reminderTime} combined with the task's {@link scheduledDate}, as a single
+     * {@link Moment}. A reminder anchors to the scheduled date only - not due or start - so that the new
+     * unified 'Schedule' field/dialog (see `ScheduleParser.ts`/`ScheduleEditor.svelte`) never has to reason
+     * about which of several date fields a reminder happens to be attached to. Returns null if there is no
+     * reminder time, the reminder time isn't a valid 'HH:mm' string, or there is no scheduled date to attach
+     * it to (an "orphaned" reminder - see `TaskLineRenderer.ts`'s error-pill rendering for that state).
      */
     public get reminderDateTime(): Moment | null {
         if (!this._reminderTime) {
@@ -766,7 +766,7 @@ export class Task extends ListItem {
             return null;
         }
 
-        const anchorDate = this.dueDate ?? this.scheduledDate ?? this.startDate;
+        const anchorDate = this.scheduledDate;
         if (!anchorDate) {
             return null;
         }

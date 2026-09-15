@@ -1,23 +1,22 @@
-import type { App } from 'obsidian';
 import type { Task } from '../../Task/Task';
 import { getSettings } from '../../Config/Settings';
 import { type ReminderSuggestion, buildReminderSuggestions } from '../../DateTime/ReminderSuggestions';
 import { MenuDividerInstruction } from '../EditInstructions/MenuDividerInstruction';
 import { RemoveReminderTime, SetReminderDateTime, SetReminderTime } from '../EditInstructions/ReminderInstructions';
 import type { TaskEditingInstruction } from '../EditInstructions/TaskEditingInstruction';
-import { ReminderPromptModal } from './ReminderPromptModal';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 /**
- * The right-click (and click - see {@link TaskLineRenderer}) menu for a task's reminder time.
+ * The right-click menu for a task's reminder time (see {@link TaskLineRenderer} - left-click instead opens
+ * {@link ScheduleDialog}, the same dialog the edit modal's own "Schedule" section is built from).
  *
- * Built from {@link buildReminderSuggestions} - the same options {@link ReminderEditor} offers as
+ * Built from {@link buildReminderSuggestions} - the same options {@link ScheduleEditor} offers as
  * autocomplete in the edit modal - so the list of quick options is user-configurable (via
  * `reminderPresetTimes`/`reminderRelativeOffsetsMinutes`/`reminderRoundingIncrementMinutes`, see
  * {@link Settings}) rather than a fixed set that may not suit everyone.
  */
 export class ReminderMenu extends TaskEditingMenu {
-    constructor(app: App, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
+    constructor(task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
         const { reminderPresetTimes, reminderRelativeOffsetsMinutes, reminderRoundingIncrementMinutes } = getSettings();
@@ -49,10 +48,6 @@ export class ReminderMenu extends TaskEditingMenu {
         );
 
         this.addSeparator();
-        this.addItem((item) =>
-            item.setTitle('Custom time…').onClick(() => new ReminderPromptModal(app, task, taskSaver).open()),
-        );
-
         this.addItemsForInstructions([new RemoveReminderTime()], task);
     }
 }

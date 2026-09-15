@@ -12,7 +12,7 @@
     import { focusOnceClearOfKeyboard, labelContentWithAccessKey } from './EditTaskHelpers';
     import PriorityEditor from './PriorityEditor.svelte';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
-    import ReminderEditor from './ReminderEditor.svelte';
+    import ScheduleEditor from './ScheduleEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -42,9 +42,8 @@
     let isCreatedDateValid: boolean = true;
     let isDoneDateValid: boolean = true;
     let isDueDateValid: boolean = true;
-    let isScheduledDateValid: boolean = true;
+    let isScheduleValid: boolean = true;
     let isStartDateValid: boolean = true;
-    let isReminderTimeValid: boolean = true;
 
     let isRecurrenceValid: boolean = true;
 
@@ -57,9 +56,8 @@
     $: formIsValid =
         isDueDateValid &&
         isRecurrenceValid &&
-        isScheduledDateValid &&
+        isScheduleValid &&
         isStartDateValid &&
-        isReminderTimeValid &&
         isDescriptionValid &&
         isCancelledDateValid &&
         isCreatedDateValid &&
@@ -119,7 +117,7 @@ Availability of access keys:
 - H: High
 - I: Highest
 - J:
-- K: Reminder
+- K:
 - L: Low
 - M: Medium
 - N: Normal
@@ -127,7 +125,7 @@ Availability of access keys:
 - P:
 - Q:
 - R: Recurs
-- S: Scheduled
+- S: Schedule
 - T: Description
 - U: Status
 - V:
@@ -195,15 +193,17 @@ Availability of access keys:
         {/if}
 
         <!-- --------------------------------------------------------------------------- -->
-        <!--  Scheduled Date  -->
+        <!--  Schedule (scheduled date + reminder time)  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.scheduled}
-            <DateEditor
-                id="scheduled"
-                dateSymbol={scheduledDateSymbol}
-                bind:date={editableTask.scheduledDate}
-                bind:isDateValid={isScheduledDateValid}
+        {#if isShownInEditModal.scheduled || isShownInEditModal.reminder}
+            <ScheduleEditor
+                scheduledDateSymbol={scheduledDateSymbol}
+                reminderTimeSymbol={reminderTimeSymbol}
+                bind:scheduledDate={editableTask.scheduledDate}
+                bind:reminderTime={editableTask.reminderTime}
+                bind:isScheduleValid
                 forwardOnly={editableTask.forwardOnly}
+                originalScheduledDate={task.scheduledDate}
                 accesskey={accesskey('s')}
             />
         {/if}
@@ -219,18 +219,6 @@ Availability of access keys:
                 bind:isDateValid={isStartDateValid}
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('a')}
-            />
-        {/if}
-
-        <!-- --------------------------------------------------------------------------- -->
-        <!--  Reminder  -->
-        <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.reminder}
-            <ReminderEditor
-                reminderSymbol={reminderTimeSymbol}
-                bind:reminderTime={editableTask.reminderTime}
-                bind:isReminderTimeValid
-                accesskey={accesskey('k')}
             />
         {/if}
 

@@ -34,7 +34,10 @@ const durationTermPattern = /(?:\d+|an?\b)\s*(?:minutes?|mins?|hours?|hrs?|h|day
  * supports many time formats there, so this only checks for the 'at' keyword and leaves validating
  * whatever follows it to chrono itself.
  */
-const relativeDurationPattern = new RegExp(`^(?:in\\s+)?(?:${durationTermPattern.source}[\\s,]*)+(?:at\\s+.+)?$`, 'i');
+export const relativeDurationPattern = new RegExp(
+    `^(?:in\\s+)?(?:${durationTermPattern.source}[\\s,]*)+(?:at\\s+.+)?$`,
+    'i',
+);
 
 /**
  * Parses a typed reminder-time string - either a clock time ('09:00', '9am') or a relative offset from
