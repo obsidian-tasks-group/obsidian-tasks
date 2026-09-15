@@ -31,9 +31,9 @@ describe('ReminderMenu', () => {
         expect(menuToString(menu)).toMatchInlineSnapshot(`
             "
               In 53 minutes (11:00)
-              In 83 minutes (11:30)
-              In 143 minutes (12:30)
-              In 263 minutes (14:30)
+              In 1 hour 23 minutes (11:30)
+              In 2 hours 23 minutes (12:30)
+              In 4 hours 23 minutes (14:30)
               ---
               Set reminder: 09:00
               Set reminder: 12:00

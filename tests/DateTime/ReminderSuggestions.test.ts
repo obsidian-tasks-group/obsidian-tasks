@@ -25,9 +25,26 @@ describe('buildReminderSuggestions', () => {
 
         expect(relativeOffsets.map((s) => ({ value: s.value, label: s.label }))).toEqual([
             { value: 'in 30 minutes', label: 'In 53 minutes (11:00)' },
-            { value: 'in 1 hour', label: 'In 83 minutes (11:30)' },
-            { value: 'in 90 minutes', label: 'In 113 minutes (12:00)' },
+            { value: 'in 1 hour', label: 'In 1 hour 23 minutes (11:30)' },
+            { value: 'in 1 hour 30 minutes', label: 'In 1 hour 53 minutes (12:00)' },
         ]);
+    });
+
+    it('should express an exact time over 60 minutes as hours and minutes, not a large minutes count', () => {
+        const { relativeOffsets } = buildReminderSuggestions([], [240], 30, 'ceil', now);
+
+        // 10:07 + 240 minutes = 14:07, rounded up to 14:30 - 4 hours 23 minutes away from 'now'.
+        expect(relativeOffsets[0].label).toEqual('In 4 hours 23 minutes (14:30)');
+    });
+
+    it("should not let 'now' having seconds already elapsed steal a minute off the exact-time label", () => {
+        // Regression: 'now' at 19:23:45 and a target rounded to 19:30:00 are only 6.25 real minutes apart,
+        // which used to round down to 6 - one less than the 7 minutes a clock reading "23" to "30" actually
+        // promises. 'now' must be floored to the minute before diffing against the target.
+        const nowWithSeconds = moment('2023-12-03T19:23:45');
+        const { relativeOffsets } = buildReminderSuggestions([], [5], 30, 'ceil', nowWithSeconds);
+
+        expect(relativeOffsets[0].label).toEqual('In 7 minutes (19:30)');
     });
 
     it("should keep the nominal offset as the suggestion's value even though the label shows the exact time", () => {
