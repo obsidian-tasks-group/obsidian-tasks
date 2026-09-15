@@ -22,6 +22,12 @@ options (right-click `ReminderMenu`, and the Schedule field's own autocomplete) 
   rather than an approximation that needed a "~" to flag it (removed). The suggestion's underlying value
   (what actually gets typed/applied) is unaffected - still the nominal configured duration, so re-parsing it
   later resolves fresh from whatever "now" is by then.
+- That exact time is now phrased in hours once it passes 60 minutes (e.g. "In 1 hour 23 minutes (11:30)",
+  not "In 83 minutes (11:30)") rather than as a large, harder-to-read minute count.
+- Fixed the exact-time computation itself undercounting by a minute whenever "now" had already ticked a few
+  seconds into its current minute (e.g. at 19:23:45, a target rounded to 19:30:00 used to read "In 6 minutes"
+  instead of the "In 7 minutes" a clock reading "23" to "30" actually promises) - "now" is floored to the
+  minute before diffing against the already second-aligned rounded target.
 - `src/DateTime/ReminderSuggestions.ts`: a suggestion is now never rounded to a time at or before "now" -
   `'floor'`/`'round'` can otherwise land there (unlike `'ceil'`, which never can), which would have quietly
   suggested an already-past reminder.

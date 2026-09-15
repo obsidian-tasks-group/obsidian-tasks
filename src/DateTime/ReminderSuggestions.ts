@@ -71,7 +71,12 @@ export function buildReminderSuggestions(
             }
             // The exact gap from 'now' to the rounded target - not offsetMinutes itself, which is only
             // what the target was rounded *from*. With rounding disabled the two are the same value.
-            const exactMinutes = Math.round(target.diff(now, 'minutes', true));
+            // Diffed against 'now' floored to the minute (matching what a clock displays, and what
+            // roundToIncrement already floors its own result to) rather than the real, sub-minute-precise
+            // 'now' - otherwise a few seconds already elapsed in the current minute silently steals a
+            // whole minute off the result (e.g. at 19:23:45, a target of 19:30:00 is only 6.25 real minutes
+            // away, rounding down to 6 - one less than the 7 minutes '23' to '30' actually reads as).
+            const exactMinutes = target.diff(now.clone().seconds(0).milliseconds(0), 'minutes');
             return {
                 value: `in ${offsetPhrase(offsetMinutes)}`,
                 label: `In ${offsetPhrase(exactMinutes)} (${target.format('HH:mm')})`,
@@ -82,9 +87,14 @@ export function buildReminderSuggestions(
 }
 
 function offsetPhrase(offsetMinutes: number): string {
-    if (offsetMinutes % 60 === 0) {
-        const hours = offsetMinutes / 60;
-        return `${hours} hour${hours === 1 ? '' : 's'}`;
+    if (offsetMinutes < 60) {
+        return `${offsetMinutes} minute${offsetMinutes === 1 ? '' : 's'}`;
     }
-    return `${offsetMinutes} minutes`;
+    const hours = Math.floor(offsetMinutes / 60);
+    const minutes = offsetMinutes % 60;
+    const hoursPhrase = `${hours} hour${hours === 1 ? '' : 's'}`;
+    if (minutes === 0) {
+        return hoursPhrase;
+    }
+    return `${hoursPhrase} ${minutes} minute${minutes === 1 ? '' : 's'}`;
 }
