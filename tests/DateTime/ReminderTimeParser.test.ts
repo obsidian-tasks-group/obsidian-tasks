@@ -5,7 +5,7 @@ import moment from 'moment';
 import {
     parseReminderTimeInput,
     resolveTypedReminderTime,
-    roundUpToIncrement,
+    roundToIncrement,
 } from '../../src/DateTime/ReminderTimeParser';
 
 window.moment = moment;
@@ -123,44 +123,79 @@ describe('parseReminderTimeInput', () => {
     });
 });
 
-describe('roundUpToIncrement', () => {
-    it('should round up to the next 30-minute mark', () => {
-        expect(roundUpToIncrement(moment('2024-01-15T14:07:00'), 30).format('HH:mm')).toEqual('14:30');
-        expect(roundUpToIncrement(moment('2024-01-15T14:31:00'), 30).format('HH:mm')).toEqual('15:00');
+describe('roundToIncrement', () => {
+    describe("'ceil' mode - the only behaviour this ever had before rounding mode became configurable", () => {
+        it('should round up to the next 30-minute mark', () => {
+            expect(roundToIncrement(moment('2024-01-15T14:07:00'), 30, 'ceil').format('HH:mm')).toEqual('14:30');
+            expect(roundToIncrement(moment('2024-01-15T14:31:00'), 30, 'ceil').format('HH:mm')).toEqual('15:00');
+        });
+
+        it('should round up to the next 15-minute mark', () => {
+            expect(roundToIncrement(moment('2024-01-15T14:07:00'), 15, 'ceil').format('HH:mm')).toEqual('14:15');
+            expect(roundToIncrement(moment('2024-01-15T14:16:00'), 15, 'ceil').format('HH:mm')).toEqual('14:30');
+        });
+
+        it('should carry over into the next hour and day when needed', () => {
+            expect(roundToIncrement(moment('2024-01-15T23:45:01'), 30, 'ceil').format('YYYY-MM-DD HH:mm')).toEqual(
+                '2024-01-16 00:00',
+            );
+        });
     });
 
-    it('should leave an already-round time unchanged', () => {
-        expect(roundUpToIncrement(moment('2024-01-15T14:30:00'), 30).format('HH:mm')).toEqual('14:30');
+    describe("'floor' mode", () => {
+        it('should round down to the previous 30-minute mark', () => {
+            expect(roundToIncrement(moment('2024-01-15T14:07:00'), 30, 'floor').format('HH:mm')).toEqual('14:00');
+            expect(roundToIncrement(moment('2024-01-15T14:31:00'), 30, 'floor').format('HH:mm')).toEqual('14:30');
+        });
+
+        it('should carry back into the previous hour and day when needed', () => {
+            expect(roundToIncrement(moment('2024-01-15T00:05:00'), 30, 'floor').format('YYYY-MM-DD HH:mm')).toEqual(
+                '2024-01-15 00:00',
+            );
+        });
     });
 
-    it('should round up to the next 15-minute mark', () => {
-        expect(roundUpToIncrement(moment('2024-01-15T14:07:00'), 15).format('HH:mm')).toEqual('14:15');
-        expect(roundUpToIncrement(moment('2024-01-15T14:16:00'), 15).format('HH:mm')).toEqual('14:30');
+    describe("'round' mode - to the nearer mark, ties rounding forward like 'ceil'", () => {
+        it('should round down when closer to the previous mark', () => {
+            expect(roundToIncrement(moment('2024-01-15T14:07:00'), 30, 'round').format('HH:mm')).toEqual('14:00');
+        });
+
+        it('should round up when closer to the next mark', () => {
+            expect(roundToIncrement(moment('2024-01-15T14:23:00'), 30, 'round').format('HH:mm')).toEqual('14:30');
+        });
+
+        it('should round forward on an exact tie', () => {
+            expect(roundToIncrement(moment('2024-01-15T14:15:00'), 30, 'round').format('HH:mm')).toEqual('14:30');
+        });
     });
 
-    it('should carry over into the next hour and day when needed', () => {
-        expect(roundUpToIncrement(moment('2024-01-15T23:45:01'), 30).format('YYYY-MM-DD HH:mm')).toEqual(
-            '2024-01-16 00:00',
-        );
+    it('should leave an already-round time unchanged, regardless of mode', () => {
+        for (const mode of ['floor', 'round', 'ceil'] as const) {
+            expect(roundToIncrement(moment('2024-01-15T14:30:00'), 30, mode).format('HH:mm')).toEqual('14:30');
+        }
     });
 
-    it('should not round at all when incrementMinutes is 0 ("no rounding")', () => {
-        expect(roundUpToIncrement(moment('2024-01-15T14:07:23'), 0).format('YYYY-MM-DD HH:mm')).toEqual(
-            '2024-01-15 14:07',
-        );
+    it('should not round at all when incrementMinutes is 0 ("no rounding"), regardless of mode', () => {
+        for (const mode of ['floor', 'round', 'ceil'] as const) {
+            expect(roundToIncrement(moment('2024-01-15T14:07:23'), 0, mode).format('YYYY-MM-DD HH:mm')).toEqual(
+                '2024-01-15 14:07',
+            );
+        }
     });
 
-    it('should not round at all when incrementMinutes is negative', () => {
-        expect(roundUpToIncrement(moment('2024-01-15T14:07:23'), -30).format('YYYY-MM-DD HH:mm')).toEqual(
-            '2024-01-15 14:07',
-        );
+    it('should not round at all when incrementMinutes is negative, regardless of mode', () => {
+        for (const mode of ['floor', 'round', 'ceil'] as const) {
+            expect(roundToIncrement(moment('2024-01-15T14:07:23'), -30, mode).format('YYYY-MM-DD HH:mm')).toEqual(
+                '2024-01-15 14:07',
+            );
+        }
     });
 });
 
 describe('resolveTypedReminderTime', () => {
     it('should round a relative offset up to the given increment, unlike parseReminderTimeInput', () => {
         // reference is 10:07, so "in 30 minutes" is 10:37 exactly.
-        const result = resolveTypedReminderTime('in 30 minutes', reference, 30);
+        const result = resolveTypedReminderTime('in 30 minutes', reference, 30, 'ceil');
 
         expect(result).not.toBeNull();
         expect(result!.isRelative).toEqual(true);
@@ -169,22 +204,29 @@ describe('resolveTypedReminderTime', () => {
     });
 
     it('should leave a relative offset exact when the increment is 0 ("no rounding")', () => {
-        const result = resolveTypedReminderTime('in 30 minutes', reference, 0);
+        const result = resolveTypedReminderTime('in 30 minutes', reference, 0, 'ceil');
 
         expect(result!.time).toEqual('10:37');
     });
 
     it('should round an abbreviated relative offset ("in 2 h") the same as its spelled-out form ("in 2 hours")', () => {
         // reference is 10:07, so "in 2 h" is 12:07 exactly, rounded up to 12:30.
-        const result = resolveTypedReminderTime('in 2 h', reference, 30);
+        const result = resolveTypedReminderTime('in 2 h', reference, 30, 'ceil');
 
         expect(result).not.toBeNull();
         expect(result!.isRelative).toEqual(true);
         expect(result!.time).toEqual('12:30');
     });
 
-    it('should never round an absolute clock time, regardless of the increment', () => {
-        const result = resolveTypedReminderTime('09:00', reference, 30);
+    it('should respect the rounding mode - "floor" rounds a relative offset down, not up', () => {
+        // reference is 10:07, so "in 30 minutes" is 10:37 exactly, floored to 10:30.
+        const result = resolveTypedReminderTime('in 30 minutes', reference, 30, 'floor');
+
+        expect(result!.time).toEqual('10:30');
+    });
+
+    it('should never round an absolute clock time, regardless of the increment or mode', () => {
+        const result = resolveTypedReminderTime('09:00', reference, 30, 'floor');
 
         expect(result).not.toBeNull();
         expect(result!.isRelative).toEqual(false);
@@ -192,6 +234,6 @@ describe('resolveTypedReminderTime', () => {
     });
 
     it('should return null for unparseable input, same as parseReminderTimeInput', () => {
-        expect(resolveTypedReminderTime('wibble', reference, 30)).toBeNull();
+        expect(resolveTypedReminderTime('wibble', reference, 30, 'ceil')).toBeNull();
     });
 });

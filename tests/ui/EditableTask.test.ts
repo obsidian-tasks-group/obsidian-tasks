@@ -259,7 +259,7 @@ describe('EditableTask tests', () => {
     });
 
     it('should save an absolute typed reminder time, without touching the anchor date', async () => {
-        const task = new TaskBuilder().dueDate('2024-05-01').build();
+        const task = new TaskBuilder().scheduledDate('2024-05-01').build();
         const allTasks: Task[] = [task];
         const editableTask = EditableTask.fromTask(task, allTasks);
 
@@ -267,12 +267,12 @@ describe('EditableTask tests', () => {
 
         const [edited] = await editableTask.applyEdits(task, allTasks);
         expect(edited.reminderTime).toEqual('09:00');
-        expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-01');
+        expect(edited.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-05-01');
     });
 
     it('should resolve a relative typed reminder time, rounded the same way the quick-pick menu is, shifting the anchor date if it crosses midnight', async () => {
         jest.setSystemTime(new Date('2024-05-01T23:45:00'));
-        const task = new TaskBuilder().dueDate('2024-05-01').build();
+        const task = new TaskBuilder().scheduledDate('2024-05-01').build();
         const allTasks: Task[] = [task];
         const editableTask = EditableTask.fromTask(task, allTasks);
 
@@ -282,7 +282,7 @@ describe('EditableTask tests', () => {
         // reminderRoundingIncrementMinutes) = 00:30.
         const [edited] = await editableTask.applyEdits(task, allTasks);
         expect(edited.reminderTime).toEqual('00:30');
-        expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
+        expect(edited.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
     });
 
     it('should resolve a word-quantified relative reminder time ("in a week at 5pm"), shifting the anchor (regression)', async () => {
@@ -304,7 +304,7 @@ describe('EditableTask tests', () => {
     it('should resolve a relative typed reminder time exactly, unrounded, when rounding is disabled ("no rounding")', async () => {
         updateSettings({ reminderRoundingIncrementMinutes: 0 });
         jest.setSystemTime(new Date('2024-05-01T23:45:00'));
-        const task = new TaskBuilder().dueDate('2024-05-01').build();
+        const task = new TaskBuilder().scheduledDate('2024-05-01').build();
         const allTasks: Task[] = [task];
         const editableTask = EditableTask.fromTask(task, allTasks);
 
@@ -312,7 +312,7 @@ describe('EditableTask tests', () => {
 
         const [edited] = await editableTask.applyEdits(task, allTasks);
         expect(edited.reminderTime).toEqual('00:15');
-        expect(edited.dueDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
+        expect(edited.scheduledDate!.format('YYYY-MM-DD')).toEqual('2024-05-02');
     });
 
     it("should create today's scheduled date as the anchor for a relative reminder when the task has none", async () => {

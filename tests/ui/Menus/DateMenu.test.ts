@@ -7,6 +7,7 @@ import moment from 'moment/moment';
 import { DateMenu } from '../../../src/ui/Menus/DateMenu';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { TaskLayoutComponent } from '../../../src/Layout/TaskLayoutOptions';
+import { mockApp } from '../../__mocks__/obsidian';
 import { TestableTaskSaver, menuToString } from './MenuTestingHelpers';
 
 window.moment = moment;
@@ -35,12 +36,13 @@ describe('DateMenu', () => {
 
         // Act
         const field = TaskLayoutComponent.ScheduledDate;
-        const menu = new DateMenu(field, task);
+        const menu = new DateMenu(mockApp, field, task);
 
         // Assert
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
+              Add a reminder…
               Scheduled today, on Sun 3rd Dec
               Scheduled tomorrow, on Mon 4th Dec
               ---
@@ -65,7 +67,7 @@ describe('DateMenu', () => {
 
         // Act
         const field = TaskLayoutComponent.CancelledDate;
-        const menu = new DateMenu(field, task);
+        const menu = new DateMenu(mockApp, field, task);
 
         // Assert
         const itemsAsText = menuToString(menu);
@@ -87,5 +89,35 @@ describe('DateMenu', () => {
               ---
               Remove cancelled date"
         `);
+    });
+
+    it('should show "Add a reminder…" for the Scheduled date field when the task has no reminder yet', () => {
+        const task = new TaskBuilder().scheduledDate(today).build();
+
+        const menu = new DateMenu(mockApp, TaskLayoutComponent.ScheduledDate, task);
+
+        expect(menuToString(menu)).toContain('Add a reminder…');
+    });
+
+    it('should grey out (disable) "Add a reminder…" for the Scheduled date field once the task already has a reminder, rather than hiding it', () => {
+        const task = new TaskBuilder().scheduledDate(today).reminderTime('09:00').build();
+
+        const menu = new DateMenu(mockApp, TaskLayoutComponent.ScheduledDate, task);
+
+        expect(menuToString(menu)).toContain('(disabled) Add a reminder…');
+
+        // @ts-expect-error TS2339: Property 'items' does not exist on type 'DateMenu'.
+        const items = menu.items;
+        const addReminderItem = items[0];
+        expect(addReminderItem.title).toEqual('Add a reminder…');
+        expect(addReminderItem.disabled).toEqual(true);
+    });
+
+    it('should never show "Add a reminder…" for a non-Scheduled date field', () => {
+        const task = new TaskBuilder().dueDate(today).build();
+
+        const menu = new DateMenu(mockApp, TaskLayoutComponent.DueDate, task);
+
+        expect(menuToString(menu)).not.toContain('Add a reminder…');
     });
 });

@@ -1,14 +1,13 @@
 import { Task } from '../../Task/Task';
-import { getDateFieldToPostpone } from '../../DateTime/Postponer';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
 /**
  * An instruction to set the task's {@link Task.reminderTime} to a fixed 'HH:mm' value.
  *
- * If the task has no anchor date at all (due, scheduled or start - see {@link getDateFieldToPostpone}), one
- * is created as today's {@link Task.scheduledDate}: a reminder time is meaningless without a day to attach
- * it to (see {@link Task.reminderDateTime}), and this fork's UX is built around "set a time, get a day for
- * free" rather than asking the user to separately pick both.
+ * A reminder always anchors to {@link Task.scheduledDate}, and only that field - if the task has none, one
+ * is created as today: a reminder time is meaningless without a day to attach it to (see
+ * {@link Task.reminderDateTime}), and this fork's UX is built around "set a time, get a day for free" rather
+ * than asking the user to separately pick both.
  *
  * See also {@link SetReminderDateTime}, {@link RemoveReminderTime}.
  */
@@ -25,7 +24,7 @@ export class SetReminderTime implements TaskEditingInstruction {
         if (this.isCheckedForTask(task)) {
             return [task];
         }
-        if (getDateFieldToPostpone(task) === null) {
+        if (task.scheduledDate === null) {
             return [
                 new Task({
                     ...task,
@@ -50,20 +49,19 @@ export class SetReminderTime implements TaskEditingInstruction {
         if (task.reminderTime !== this.newReminderTime) {
             return false;
         }
-        // If there's no anchor date yet, applying would still add one (see apply()), so this isn't a no-op.
-        return getDateFieldToPostpone(task) !== null;
+        // If there's no scheduled date yet, applying would still add one (see apply()), so this isn't a no-op.
+        return task.scheduledDate !== null;
     }
 }
 
 /**
- * An instruction to set a task's reminder to a specific date and time, shifting the task's anchor date
- * (due, else scheduled, else start - the same priority {@link getDateFieldToPostpone} already uses) if
- * {@link target} falls on a different calendar day than it, and leaving the anchor untouched otherwise. If
- * the task has no anchor date at all, one is created - as {@link Task.scheduledDate}, dated to
- * {@link target} - rather than left with a reminder time and no day to attach it to (see
- * {@link SetReminderTime}'s own doc comment for why).
+ * An instruction to set a task's reminder to a specific date and time, shifting the task's
+ * {@link Task.scheduledDate} if {@link target} falls on a different calendar day than it, and leaving it
+ * untouched otherwise. If the task has no scheduled date at all, one is created, dated to {@link target} -
+ * rather than left with a reminder time and no day to attach it to (see {@link SetReminderTime}'s own doc
+ * comment for why).
  *
- * Used for relative-offset picks ('in 30 minutes') and the "Custom time…" prompt, which carry a full date
+ * Used for relative-offset picks ('in 30 minutes') in the right-click reminder menu, which carry a full date
  * and time, unlike {@link SetReminderTime}'s fixed clock time.
  *
  * See also {@link SetReminderTime}, {@link RemoveReminderTime}.
@@ -83,8 +81,7 @@ export class SetReminderDateTime implements TaskEditingInstruction {
         }
 
         const newReminderTime = this.target.format('HH:mm');
-        const anchorField = getDateFieldToPostpone(task);
-        if (anchorField === null) {
+        if (task.scheduledDate === null) {
             return [
                 new Task({
                     ...task,
@@ -94,15 +91,14 @@ export class SetReminderDateTime implements TaskEditingInstruction {
             ];
         }
 
-        const anchorDate = task[anchorField]!;
-        const dayDelta = this.target.clone().startOf('day').diff(anchorDate.clone().startOf('day'), 'days');
-        const newAnchorDate = dayDelta === 0 ? anchorDate : anchorDate.clone().add(dayDelta, 'days');
+        const dayDelta = this.target.clone().startOf('day').diff(task.scheduledDate.clone().startOf('day'), 'days');
+        const newScheduledDate = dayDelta === 0 ? task.scheduledDate : task.scheduledDate.clone().add(dayDelta, 'days');
 
         return [
             new Task({
                 ...task,
                 reminderTime: newReminderTime,
-                [anchorField]: newAnchorDate,
+                scheduledDate: newScheduledDate,
             }),
         ];
     }
@@ -115,12 +111,11 @@ export class SetReminderDateTime implements TaskEditingInstruction {
         if (task.reminderTime !== this.target.format('HH:mm')) {
             return false;
         }
-        const anchorField = getDateFieldToPostpone(task);
-        if (anchorField === null) {
-            // No anchor yet - applying would still create one (see apply()), so this isn't a no-op.
+        if (task.scheduledDate === null) {
+            // No scheduled date yet - applying would still create one (see apply()), so this isn't a no-op.
             return false;
         }
-        return task[anchorField]?.isSame(this.target, 'day') ?? false;
+        return task.scheduledDate.isSame(this.target, 'day');
     }
 }
 

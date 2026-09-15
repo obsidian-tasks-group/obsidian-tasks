@@ -85,6 +85,7 @@ export interface Settings {
     reminderPresetTimes: string[];
     reminderRelativeOffsetsMinutes: number[];
     reminderRoundingIncrementMinutes: number;
+    reminderRoundingMode: 'floor' | 'round' | 'ceil';
     notificationsEnabled: boolean;
     notificationCheckIntervalSeconds: number;
     searchResults: {
@@ -140,6 +141,7 @@ const defaultSettings: Readonly<Settings> = {
     reminderPresetTimes: ['09:00', '12:00', '15:00', '18:00'],
     reminderRelativeOffsetsMinutes: [30, 60, 120, 240],
     reminderRoundingIncrementMinutes: 30,
+    reminderRoundingMode: 'ceil',
     notificationsEnabled: false,
     notificationCheckIntervalSeconds: 60,
     searchResults: {

@@ -1,0 +1,30 @@
+// ScheduleEditor.svelte reuses .tasks-modal-date-input/.tasks-modal-date-editor-picker/.tasks-modal-error/
+// .tasks-modal-parsed-date from EditTask.scss (all scoped under .tasks-modal-dates-section) - both the
+// embedded modal usage and ScheduleDialog.ts's standalone popup wrap their content in that same section
+// class, so the two pickers and the error/status text stay visually consistent (same small size) with
+// every other date/reminder field in the modal - only their *position* differs, per below.
+
+.tasks-modal-dates-section {
+    // The pickers, and the status/warning text below them, sit on their own row under the text input
+    // (rather than beside it in column 3, like every other date field's single small picker) - there just
+    // isn't room next to the input for two pickers plus a status line. `#schedule-suggestions` (the
+    // Schedule field's own <datalist>, invisible but always present right after the text input) is what
+    // lets this target only the Schedule field's own elements, not every other field's identical classes.
+    #schedule-suggestions ~ .tasks-modal-parsed-date,
+    #schedule-suggestions ~ .tasks-modal-error {
+        grid-column: 2 / -1;
+    }
+
+    // The two pickers (date, then time) sharing one .tasks-modal-parsed-date - give the second a little
+    // breathing room rather than butting up against the first.
+    .tasks-modal-parsed-date .tasks-modal-date-editor-picker + .tasks-modal-date-editor-picker {
+        margin-left: 1em;
+    }
+
+    .tasks-modal-schedule-buttons {
+        grid-column: 1 / -1;
+        display: flex;
+        gap: 0.5em;
+        margin-top: 4px;
+    }
+}

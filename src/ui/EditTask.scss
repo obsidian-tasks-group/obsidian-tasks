@@ -77,7 +77,10 @@
 
 .tasks-modal-dates-section {
     display: grid;
-    grid-template-columns: 6.0em 13em auto;
+    // Column 2 widened from 13em to fit the Schedule field's text input (it can hold a full combined
+    // phrase like 'tomorrow at 4pm' or '2026-09-15 at 15:17', not just a short date) - a shared track, so
+    // this widens every field's text input/selector in this grid a little, not just Schedule's.
+    grid-template-columns: 6.0em 20em auto;
     column-gap: .5em;
     row-gap: 5px;
     align-items: center;

@@ -268,7 +268,10 @@ describe('Task rendering', () => {
     });
 
     it('should display valid scheduled date', () => {
-        testElementRender(fullyPopulatedLine, 'scheduled', '2023-07-03');
+        // 'scheduled' and 'reminder' now share one merged 'schedule' element (ScheduleEditor.svelte). Its
+        // text field always starts blank (the pickers show the real values) - see ScheduleEditor.test.ts
+        // for dedicated coverage of what the date/time pickers themselves show.
+        testElementRender(fullyPopulatedLine, 'schedule', '');
     });
 
     it('should display valid due date', () => {
@@ -302,7 +305,9 @@ describe('Task rendering', () => {
     });
 
     it('should display invalid scheduled date', () => {
-        testElementRender('- [ ] ⏳ 2024-02-31', 'scheduled', invalidDateText);
+        // The schedule text field always starts blank regardless of the underlying value's validity - an
+        // invalid pre-existing scheduled date shows up in the date picker being empty, not in this field.
+        testElementRender('- [ ] ⏳ 2024-02-31', 'schedule', '');
     });
 
     it('should display invalid start date', () => {
@@ -590,7 +595,7 @@ describe('Task editing', () => {
         });
 
         it('should edit and save scheduled date', async () => {
-            expect(await editFieldAndSave(line, 'scheduled', '2024-01-01')).toEqual('- [ ] simple ⏳ 2024-01-01');
+            expect(await editFieldAndSave(line, 'schedule', '2024-01-01')).toEqual('- [ ] simple ⏳ 2024-01-01');
         });
 
         it('should edit and save start date', async () => {
@@ -752,14 +757,25 @@ describe('Hiding modal fields', () => {
 
     const fields = Object.keys(getSettings().isShownInEditModal) as (keyof EditModalShowSettings)[];
 
+    // 'scheduled' and 'reminder' no longer each have their own element - they share one merged 'schedule'
+    // element (see ScheduleEditor.svelte), shown whenever *either* setting is true. That breaks the
+    // otherwise-generic 1:1 "setting key === element id" assumption these tests rely on, so those two keys
+    // get their own dedicated cases below instead of going through the generic loops.
+    function elementIdForField(field: keyof EditModalShowSettings): string {
+        return field === 'scheduled' || field === 'reminder' ? 'schedule' : field;
+    }
+    const fieldsWithIndividuallyHideableElements = fields.filter(
+        (field) => field !== 'scheduled' && field !== 'reminder',
+    );
+
     it.each(fields)('should show %s field by default', (field) => {
-        testElementRendered(field);
+        testElementRendered(elementIdForField(field));
     });
 
     it.each(fields)('should show %s field even if it is absent in the settings', (field) => {
         updateSettings({ isShownInEditModal: optionsWithoutARandomField() });
 
-        testElementRendered(field);
+        testElementRendered(elementIdForField(field));
     });
 
     function hideFields(...fields: (keyof EditModalShowSettings)[]) {
@@ -770,10 +786,28 @@ describe('Hiding modal fields', () => {
         return withHiddenField;
     }
 
-    it.each(fields)('should hide %s field', (field) => {
+    it.each(fieldsWithIndividuallyHideableElements)('should hide %s field', (field) => {
         updateSettings({ isShownInEditModal: hideFields(field) });
 
-        testElementNotRendered(field);
+        testElementNotRendered(elementIdForField(field));
+    });
+
+    it('should keep the schedule field visible when only "scheduled" is hidden (reminder still shown)', () => {
+        updateSettings({ isShownInEditModal: hideFields('scheduled') });
+
+        testElementRendered('schedule');
+    });
+
+    it('should keep the schedule field visible when only "reminder" is hidden (scheduled still shown)', () => {
+        updateSettings({ isShownInEditModal: hideFields('reminder') });
+
+        testElementRendered('schedule');
+    });
+
+    it('should hide the schedule field only when both "scheduled" and "reminder" are hidden', () => {
+        updateSettings({ isShownInEditModal: hideFields('scheduled', 'reminder') });
+
+        testElementNotRendered('schedule');
     });
 
     it('should hide line after priority', () => {

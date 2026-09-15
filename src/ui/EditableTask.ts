@@ -174,6 +174,7 @@ export class EditableTask {
                       trimmedReminderTime,
                       window.moment(),
                       getSettings().reminderRoundingIncrementMinutes,
+                      getSettings().reminderRoundingMode,
                   );
         // If parsing fails, EditTask.svelte's own validation should already have disabled Apply - but
         // fall back to no reminder rather than throwing, if this is somehow reached anyway.

@@ -13,6 +13,7 @@ import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { DateMenu } from '../ui/Menus/DateMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
 import { ReminderMenu } from '../ui/Menus/ReminderMenu';
+import { ScheduleDialog } from '../ui/Menus/ScheduleDialog';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
 import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
@@ -245,11 +246,11 @@ export class TaskLineRenderer {
                     span.addEventListener('click', (ev: MouseEvent) => {
                         ev.preventDefault(); // suppress the default click behavior
                         ev.stopPropagation(); // suppress further event propagation
-                        promptForDate(span, task, componentDateField, defaultTaskSaver);
+                        promptForDate(span, task, componentDateField, defaultTaskSaver, this.obsidianApp);
                     });
 
                     span.addEventListener('contextmenu', (ev: MouseEvent) => {
-                        showMenu(ev, new DateMenu(componentDateField, task, defaultTaskSaver));
+                        showMenu(ev, new DateMenu(this.obsidianApp, componentDateField, task, defaultTaskSaver));
                     });
                     span.setAttribute(
                         'title',
@@ -257,14 +258,33 @@ export class TaskLineRenderer {
                     );
                 } else if (component === TaskLayoutComponent.ReminderTime) {
                     // Not gated on Task.allDateFields(): a reminder is a time, not a date, so it gets its
-                    // own handlers, rather than the generic calendar-date ones above. Click and right-click
-                    // both open the same menu - unlike a date, there's no calendar-grid equivalent for a
-                    // time that would justify two different interactions.
-                    const openReminderMenu = (ev: MouseEvent) =>
-                        showMenu(ev, new ReminderMenu(this.obsidianApp, task, defaultTaskSaver));
-                    span.addEventListener('click', openReminderMenu);
-                    span.addEventListener('contextmenu', openReminderMenu);
-                    span.setAttribute('title', 'Click to edit reminder');
+                    // own handlers, rather than the generic calendar-date ones above. Click opens the
+                    // ScheduleDialog (the same text+pickers+remove-buttons dialog the edit modal's own
+                    // "Schedule" section is built from); right-click keeps the quick-pick ReminderMenu -
+                    // unlike a date, there's no calendar-grid equivalent for a time, but the two clicks now
+                    // serve genuinely different purposes (free-editing vs quick presets), so they diverge.
+                    const isOrphaned = task.reminderTime !== null && task.scheduledDate === null;
+                    if (isOrphaned) {
+                        // A reminder with no scheduled date to anchor to (see Task.reminderDateTime) can
+                        // never fire - flagged visibly rather than silently ignored, e.g. after emptying the
+                        // Schedule text without clicking "Remove reminder", or on a task carried over from
+                        // before reminders were anchored to scheduledDate only.
+                        span.addClass('tasks-reminder-orphaned');
+                    }
+                    span.setAttribute(
+                        'title',
+                        isOrphaned
+                            ? 'This reminder has no scheduled date and will not fire — click to fix'
+                            : 'Click to edit reminder, Right-click for more options',
+                    );
+                    span.addEventListener('click', (ev: MouseEvent) => {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        new ScheduleDialog(this.obsidianApp, task, defaultTaskSaver).open();
+                    });
+                    span.addEventListener('contextmenu', (ev: MouseEvent) => {
+                        showMenu(ev, new ReminderMenu(task, defaultTaskSaver));
+                    });
                 }
             }
         }

@@ -3,6 +3,13 @@
 
 }
 
+// A reminder with no scheduled date to anchor to (see Task.reminderDateTime) can never fire - flagged
+// visibly rather than silently ignored (see TaskLineRenderer.ts's ReminderTime branch).
+.tasks-reminder-orphaned {
+    color: var(--text-error);
+    text-decoration: underline wavy var(--text-error);
+}
+
 .plugin-tasks-query-explanation{
     /* Prevent long explanation lines wrapping, so they are more readable,
        especially on small screens.
