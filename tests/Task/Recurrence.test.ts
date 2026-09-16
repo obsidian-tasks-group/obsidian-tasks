@@ -180,6 +180,32 @@ describe('Recurrence - with invalid dates in tasks', () => {
     });
 });
 
+describe('Recurrence - with until dates', () => {
+    it.failing('preserves the until date in a positive timezone', () => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day until March 29, 2023',
+            occurrence: new Occurrence({
+                dueDate: moment('2023-03-24').startOf('day'),
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.toText()).toBe('every day until March 29, 2023');
+    });
+
+    it.failing('keeps the final occurrence available in a positive timezone', () => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day until March 29, 2023',
+            occurrence: new Occurrence({
+                dueDate: moment('2023-03-28').startOf('day'),
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.next()!.dueDate).toEqualMoment(moment('2023-03-29'));
+    });
+});
+
 describe('identicalTo', () => {
     it('differing only in rule text', () => {
         const weekly = new RecurrenceBuilder().rule('every week').build();
