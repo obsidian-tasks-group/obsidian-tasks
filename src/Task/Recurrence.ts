@@ -30,6 +30,10 @@ export class Recurrence {
 
             const options = RRule.parseText(isolatedRuleText);
             if (options !== null) {
+                if (options.until !== undefined) {
+                    options.until = window.moment(options.until).startOf('day').utc(true).toDate();
+                }
+
                 const referenceDate = occurrence.referenceDate;
 
                 if (!baseOnToday && referenceDate !== null) {

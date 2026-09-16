@@ -181,7 +181,7 @@ describe('Recurrence - with invalid dates in tasks', () => {
 });
 
 describe('Recurrence - with until dates', () => {
-    it.failing('preserves the until date in a positive timezone', () => {
+    it('preserves the until date in a positive timezone', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day until March 29, 2023',
             occurrence: new Occurrence({
@@ -193,7 +193,7 @@ describe('Recurrence - with until dates', () => {
         expect(recurrence!.toText()).toBe('every day until March 29, 2023');
     });
 
-    it.failing('keeps the final occurrence available in a positive timezone', () => {
+    it('keeps the final occurrence available in a positive timezone', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day until March 29, 2023',
             occurrence: new Occurrence({
