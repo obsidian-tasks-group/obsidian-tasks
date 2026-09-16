@@ -288,10 +288,12 @@ describe('ScheduleEditor', () => {
         expect(suggestionOptionsAsText(container)).toEqual([
             // 'now' (10:00) is already exactly on a 30-minute mark, so the exact time remaining happens to
             // equal the nominal offset here - see ReminderSuggestions.test.ts for cases where they differ.
-            'in 30 minutes | In 30 minutes (10:30)',
-            'in 1 hour | In 1 hour (11:00)',
-            'in 2 hours | In 2 hours (12:00)',
-            'in 4 hours | In 4 hours (14:00)',
+            // The datalist's own text column is deliberately a continuation of 'value' ('in 30 minutes'),
+            // not the standalone label the menu shows - see ReminderSuggestion.datalistHint's doc comment.
+            'in 30 minutes | (rounded to 10:30, in 30 minutes)',
+            'in 1 hour | (rounded to 11:00, in 1 hour)',
+            'in 2 hours | (rounded to 12:00, in 2 hours)',
+            'in 4 hours | (rounded to 14:00, in 4 hours)',
             '09:00 | 09:00',
             '12:00 | 12:00',
             '15:00 | 15:00',
@@ -332,17 +334,17 @@ describe('ScheduleEditor', () => {
     });
 });
 
-// ScheduleDialog.ts (a plain TS Modal, not a Svelte component) can't use `bind:` - it mounts ScheduleEditor
+// SchedulePopover.ts (a plain TS class, not a Svelte component) can't use `bind:` - it mounts ScheduleEditor
 // imperatively via `new ScheduleEditor({ props: { onScheduledDateChange, onReminderTimeChange,
 // onValidityChange, ... } })` instead, relying entirely on those three callback props to learn about
 // changes. Every test above exercises the component only through ScheduleEditorWrapper.svelte's `bind:`,
 // which never touches that callback-prop path at all - it was a real, separate bug (found via manual
-// testing of the dialog, then confirmed here): a set of `$: onXChange?.(value)` reactive statements each
+// testing of the popover, then confirmed here): a set of `$: onXChange?.(value)` reactive statements each
 // fired exactly once, at mount, and never again after `value` was reassigned from inside a plain function
 // (reparseScheduleText) rather than directly within the `$:` statement's own body. Fixed by having the one
 // reactive block that already re-runs on every relevant change call the callbacks itself, instead of
 // leaving them to re-derive their own (broken) dependency tracking - see that block's own comment.
-describe('ScheduleEditor mounted via callback props only (ScheduleDialog.ts style, no bind:)', () => {
+describe('ScheduleEditor mounted via callback props only (SchedulePopover.ts style, no bind:)', () => {
     function mountViaProps(props: {
         scheduledDate?: string;
         reminderTime?: string;

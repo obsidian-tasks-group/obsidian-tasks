@@ -1,6 +1,6 @@
 // ScheduleEditor.svelte reuses .tasks-modal-date-input/.tasks-modal-date-editor-picker/.tasks-modal-error/
 // .tasks-modal-parsed-date from EditTask.scss (all scoped under .tasks-modal-dates-section) - both the
-// embedded modal usage and ScheduleDialog.ts's standalone popup wrap their content in that same section
+// embedded modal usage and SchedulePopover.ts's standalone popup wrap their content in that same section
 // class, so the two pickers and the error/status text stay visually consistent (same small size) with
 // every other date/reminder field in the modal - only their *position* differs, per below.
 

@@ -13,7 +13,7 @@ import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { DateMenu } from '../ui/Menus/DateMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
 import { ReminderMenu } from '../ui/Menus/ReminderMenu';
-import { ScheduleDialog } from '../ui/Menus/ScheduleDialog';
+import { SchedulePopover } from '../ui/Menus/SchedulePopover';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
 import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
@@ -246,11 +246,11 @@ export class TaskLineRenderer {
                     span.addEventListener('click', (ev: MouseEvent) => {
                         ev.preventDefault(); // suppress the default click behavior
                         ev.stopPropagation(); // suppress further event propagation
-                        promptForDate(span, task, componentDateField, defaultTaskSaver, this.obsidianApp);
+                        promptForDate(span, task, componentDateField, defaultTaskSaver);
                     });
 
                     span.addEventListener('contextmenu', (ev: MouseEvent) => {
-                        showMenu(ev, new DateMenu(this.obsidianApp, componentDateField, task, defaultTaskSaver));
+                        showMenu(ev, new DateMenu(componentDateField, task, defaultTaskSaver));
                     });
                     span.setAttribute(
                         'title',
@@ -259,10 +259,11 @@ export class TaskLineRenderer {
                 } else if (component === TaskLayoutComponent.ReminderTime) {
                     // Not gated on Task.allDateFields(): a reminder is a time, not a date, so it gets its
                     // own handlers, rather than the generic calendar-date ones above. Click opens the
-                    // ScheduleDialog (the same text+pickers+remove-buttons dialog the edit modal's own
-                    // "Schedule" section is built from); right-click keeps the quick-pick ReminderMenu -
-                    // unlike a date, there's no calendar-grid equivalent for a time, but the two clicks now
-                    // serve genuinely different purposes (free-editing vs quick presets), so they diverge.
+                    // SchedulePopover (the same text+pickers+remove-buttons form the edit modal's own
+                    // "Schedule" section is built from, positioned next to this pill rather than as a
+                    // centred modal); right-click keeps the quick-pick ReminderMenu - unlike a date, there's
+                    // no calendar-grid equivalent for a time, but the two clicks now serve genuinely
+                    // different purposes (free-editing vs quick presets), so they diverge.
                     const isOrphaned = task.reminderTime !== null && task.scheduledDate === null;
                     if (isOrphaned) {
                         // A reminder with no scheduled date to anchor to (see Task.reminderDateTime) can
@@ -280,7 +281,7 @@ export class TaskLineRenderer {
                     span.addEventListener('click', (ev: MouseEvent) => {
                         ev.preventDefault();
                         ev.stopPropagation();
-                        new ScheduleDialog(this.obsidianApp, task, defaultTaskSaver).open();
+                        new SchedulePopover(span, task, defaultTaskSaver);
                     });
                     span.addEventListener('contextmenu', (ev: MouseEvent) => {
                         showMenu(ev, new ReminderMenu(task, defaultTaskSaver));

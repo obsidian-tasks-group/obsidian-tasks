@@ -1,4 +1,9 @@
 .tasks-notifications-view {
+    // Capped and centred rather than stretching full-width - a row's description/time/pill are laid out
+    // with space between them (see .tasks-notifications-open below), so on a very wide window/pane an
+    // uncapped width would spread them uncomfortably far apart. Blank space on the sides instead.
+    max-width: 40em;
+    margin: 0 auto;
     padding: var(--size-4-4);
 
     section + section {
@@ -13,26 +18,48 @@
 
     .tasks-notifications-row {
         display: flex;
-        justify-content: space-between;
+        align-items: flex-start;
         gap: var(--size-4-2);
         width: 100%;
         padding: var(--size-4-1) 0;
+    }
+
+    .tasks-notifications-open {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--size-4-2);
+        flex: 1;
+        min-width: 0;
         background: none;
         border: none;
         text-align: left;
         box-shadow: none;
         cursor: pointer;
+        padding: 0;
     }
 
+    // Wraps across lines rather than truncating with an ellipsis - the full task text stays readable
+    // instead of being cut off, at the cost of a row sometimes taking up more than one line.
     .tasks-notifications-description {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        min-width: 0;
+        white-space: normal;
+        overflow-wrap: break-word;
     }
 
     .tasks-notifications-time {
         flex-shrink: 0;
         color: var(--text-muted);
+    }
+
+    .tasks-notifications-schedule-pill {
+        flex-shrink: 0;
+        border-radius: var(--radius-s);
+        border: none;
+        background: var(--background-modifier-hover);
+        padding: 2px 6px;
+        line-height: 1;
+        cursor: pointer;
     }
 
     .tasks-notifications-empty {

@@ -1,0 +1,21 @@
+// The lightweight, non-modal counterpart to the former ScheduleDialog Modal (see SchedulePopover.ts) -
+// styled like Obsidian's own floating popovers (suggestion lists, etc.) rather than a modal dialog: no
+// backdrop, a border/shadow instead of a full page overlay to read as "attached to" whatever opened it.
+.tasks-schedule-popover {
+    // top/left are set inline (SchedulePopover.ts) - genuinely per-instance, unlike position/z-index below.
+    position: fixed;
+    z-index: var(--layer-popover);
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-m);
+    box-shadow: var(--shadow-s);
+    padding: var(--size-4-3);
+    max-width: min(90vw, 28em);
+}
+
+.tasks-schedule-popover-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--size-4-2);
+    margin-top: var(--size-4-3);
+}

@@ -5,6 +5,41 @@ Tracks this fork's own changes on top of each upstream base. See `CLAUDE.md` for
 in `manifest.json`/`package.json`) and the upstream-sync process. Upstream's own changelog is not duplicated
 here — see <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>.
 
+## 4.3.0 — upstream base `8.4.0`
+
+**Schedule popover, Notifications view options, and a datalist text fix.** MINOR: three small additive UI
+improvements, none of them a roadmap milestone or an on-disk syntax change.
+
+- Replaced `ScheduleDialog` (an Obsidian `Modal` - centred, dimmed background, focus-trapped) with the new
+  `SchedulePopover` (`src/ui/Menus/SchedulePopover.ts`): the same Schedule form, positioned next to whatever
+  pill/menu-item opened it instead, with no backdrop and no focus trap - much closer to the Scheduled Date
+  pill's own flatpickr popover. Closing via Escape/Cancel discards; closing via Apply or a click outside
+  applies whatever was pending (if valid), the same auto-apply-on-close behaviour the flatpickr calendar
+  already had. All four opening points (the Reminder Time pill, the Scheduled Date picker's "Add a
+  reminder…" button, the Scheduled Date right-click menu's "Add a reminder…" item, and the new Notifications
+  view pill below) now go through this popover; `DateMenu`/`promptForDate` no longer need an `app` parameter
+  as a result.
+- Reminder Notifications view (`src/ui/NotificationsView.svelte`): each row now has a right-click context
+  menu (the same `ReminderMenu` quick-pick the rendered reminder pill offers) and an alarm-clock pill that
+  opens the `SchedulePopover` - previously the view had no interactivity beyond left-click-to-open-task.
+- Fixed the Schedule field's native `<datalist>` autocomplete showing a confusing two-column row for each
+  relative-offset suggestion (e.g. "In 30 minutes" next to "In 17 minutes (11:30)" - a browser shows an
+  `<option>`'s `value` and its child text as separate columns whenever they differ). The second column now
+  reads as a continuation of the first instead of a second restatement, e.g. "in 30 minutes  (rounded to
+  11:30, in 17 minutes)". New `ReminderSuggestion.datalistHint` field (`src/DateTime/ReminderSuggestions.ts`)
+  carries this text; `ReminderMenu`'s own standalone menu-item labels are unaffected.
+- Fixed the Notifications view's per-task time (e.g. "in 31 minutes") sometimes reading a minute short of
+  what a clock actually promises - same root cause as the reminder-suggestion label fix in `4.2.0`: diffing
+  against the exact current instant (seconds included) rather than "now" floored to the whole minute. A
+  reminder at 13:00 checked at 12:28:35 used to read "in 31 minutes" (31.4, rounded down) instead of the 32
+  a clock reading "28" to "60" promises. `NotificationsView.svelte` now computes it via
+  `task.reminderDateTime.from(window.moment().startOf('minute'))` instead of the plain `.fromNow()`.
+- Capped the Notifications view's width (`max-width: 40em`, centred) instead of stretching full-width - each
+  row lays its description and time/pill out with space between them, so on a very wide pane/window they
+  used to spread uncomfortably far apart; blank space on the sides now instead.
+- The task text in that same view now wraps across lines instead of being truncated with an ellipsis, so a
+  long description is fully readable rather than cut off.
+
 ## 4.2.0 — upstream base `8.4.0`
 
 **Reminder-suggestion label improvements**, on top of `4.1.0`'s exact-time labels. MINOR, not PATCH: the
