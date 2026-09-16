@@ -34,24 +34,25 @@ improvements, none of them a roadmap milestone or an on-disk syntax change.
 - The task text in that same view now wraps across lines instead of being truncated with an ellipsis, so a
   long description is fully readable rather than cut off - and is rendered a bit larger (`font-size: 1.1em`),
   with the bucket headings tightened up above the list to compensate for the taller rows that follow.
-- Each row's description/time/pill now share a `--notif-row-height` (the pill's own 30px), and each is
-  vertically centred within its own box at that height - so a normal single-line row reads as one balanced
-  line instead of the text sitting noticeably higher than the pill. A description that wraps onto several
-  lines only grows downward past that shared height (the row itself uses `align-items: flex-start`, not
-  `center`) rather than dragging the time/pill down to recentre against the extra lines, which looked
-  lopsided. The description/time boxes use `flex-direction: column` + `justify-content: center` for this
-  (not `row` + `align-items`), so each box's own width is its cross axis - stretching to its real resolved
-  width by default, rather than being sized along its own main axis the way a row-direction item's width
-  would be.
-- Fixed a real instance of that same description box visually overflowing into the *next bucket's heading*
-  below it, for a description that's one long unbroken run with no spaces (a mistyped task with no spaces
-  between words is the case that surfaced this, but a tag or URL could trigger it too). Root cause:
+- Each row's description/time/pill are approximately vertically centred against each other via a small,
+  fixed `padding-top` (computed from `--notif-row-height`, the pill's own 30px, minus each field's own
+  line-height) - so a normal single-line row reads as one balanced line instead of the text sitting
+  noticeably higher than the pill. A description that wraps onto several lines just grows downward from
+  that same fixed offset, in ordinary block flow (the row itself uses `align-items: flex-start`, not
+  `center`, so a taller wrapped description never drags the time/pill down to recentre against it either).
+  Deliberately NOT a nested flex container centring its own content (`flex-direction: column` +
+  `justify-content: center` was tried first, and reverted) - see the next entry for why.
+- Fixed the description box visually overflowing into the *next bucket's heading* below it, for a
+  description that's one long unbroken run with no spaces (a mistyped task with no spaces between words is
+  the case that surfaced this, but a tag or URL could trigger it too). Two contributing causes, both fixed:
   `overflow-wrap: break-word` only breaks a word as a last resort once overflow would otherwise occur, but
-  does NOT feed into the flex box's own *intrinsic* (min-content) size - so the shrink algorithm still sized
-  the box as if the whole unbroken run had to fit on one line, then broke it late, during paint, into more
-  lines than the box's computed height accounted for, spilling the extra lines into whatever came after.
-  Switched to `overflow-wrap: anywhere`, which does count as breakable for intrinsic sizing (MDN's own
-  documented fix for exactly this mismatch) - ordinary space-separated text wraps identically either way.
+  doesn't feed into a flex item's own *intrinsic* (min-content) size - switched to `overflow-wrap: anywhere`,
+  which does count as breakable for intrinsic sizing (MDN's own documented fix for this class of mismatch).
+  Independently, wrapping the description itself in a nested flex container (to centre its content
+  vertically) meant that container's *own* reported height, for a long wrapped block, could disagree with
+  what actually got painted - a second way the same "reserved space doesn't match the drawn result" failure
+  could happen, one level removed from the first. Removed that nesting entirely (see the previous entry) so
+  there's no longer a flex box anywhere whose height depends on how many lines wrapped text takes.
 - Reworked the per-task time text (`formatReminderTime` in `NotificationsView.svelte`) to always show two
   lines: a day/clock line, then the relative duration underneath (previously only shown for today's
   reminders, and a bare day/clock elsewhere with no duration at all). The relative duration used to also
