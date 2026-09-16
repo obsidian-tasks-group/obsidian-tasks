@@ -68,6 +68,15 @@
     // to match. Column-direction makes width the CROSS axis instead, which defaults to align-items: stretch
     // - the text reliably fills the description's real resolved width, so it wraps exactly where the layout
     // says it has room to, and the box's reported height always matches what's actually drawn.
+    // overflow-wrap: anywhere, not break-word: break-word only ever breaks a word as a last resort once
+    // overflow would otherwise occur, but does NOT feed into the box's own INTRINSIC (min-content) size -
+    // so for a description that's one long unbroken run with no spaces (a real case: a tag, a URL, or - what
+    // actually surfaced this - a task typo'd as one giant word), the flex shrink algorithm above still sizes
+    // this box as if that whole run had to fit on one line, then breaks it late, during paint, into more
+    // lines than the box's own computed height accounted for - so the extra lines visually spill into
+    // whatever comes after this row (confirmed: switching to anywhere, which DOES count as breakable for
+    // intrinsic sizing, is MDN's own documented fix for this exact mismatch). Ordinary space-separated text
+    // wraps identically either way; this only changes the unbreakable-run case.
     .tasks-notifications-description {
         display: flex;
         flex-direction: column;
@@ -76,7 +85,7 @@
         min-width: 0;
         font-size: 1.1em;
         white-space: normal;
-        overflow-wrap: break-word;
+        overflow-wrap: anywhere;
     }
 
     // Always two lines (day/clock, then the relative duration underneath - see formatReminderTime), sized

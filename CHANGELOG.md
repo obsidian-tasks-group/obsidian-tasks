@@ -40,11 +40,18 @@ improvements, none of them a roadmap milestone or an on-disk syntax change.
   lines only grows downward past that shared height (the row itself uses `align-items: flex-start`, not
   `center`) rather than dragging the time/pill down to recentre against the extra lines, which looked
   lopsided. The description/time boxes use `flex-direction: column` + `justify-content: center` for this
-  (not `row` + `align-items`), since row-direction sizes an item's width along its own main axis - risking
-  the text laying out at its unwrapped preferred width instead of the width actually available to it, and
-  then silently overflowing into the row below instead of the box growing to match. Column-direction makes
-  width the cross axis, which stretches to the real resolved width by default, so wrapping (and the box's
-  reported height) is always correct.
+  (not `row` + `align-items`), so each box's own width is its cross axis - stretching to its real resolved
+  width by default, rather than being sized along its own main axis the way a row-direction item's width
+  would be.
+- Fixed a real instance of that same description box visually overflowing into the *next bucket's heading*
+  below it, for a description that's one long unbroken run with no spaces (a mistyped task with no spaces
+  between words is the case that surfaced this, but a tag or URL could trigger it too). Root cause:
+  `overflow-wrap: break-word` only breaks a word as a last resort once overflow would otherwise occur, but
+  does NOT feed into the flex box's own *intrinsic* (min-content) size - so the shrink algorithm still sized
+  the box as if the whole unbroken run had to fit on one line, then broke it late, during paint, into more
+  lines than the box's computed height accounted for, spilling the extra lines into whatever came after.
+  Switched to `overflow-wrap: anywhere`, which does count as breakable for intrinsic sizing (MDN's own
+  documented fix for exactly this mismatch) - ordinary space-separated text wraps identically either way.
 - Reworked the per-task time text (`formatReminderTime` in `NotificationsView.svelte`) to always show two
   lines: a day/clock line, then the relative duration underneath (previously only shown for today's
   reminders, and a bare day/clock elsewhere with no duration at all). The relative duration used to also
