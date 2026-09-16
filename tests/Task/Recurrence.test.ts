@@ -204,6 +204,19 @@ describe('Recurrence - with until dates', () => {
         expect(recurrence).not.toBeNull();
         expect(recurrence!.next()!.dueDate).toEqualMoment(moment('2023-03-29'));
     });
+
+    it('preserves the until date when based on completion date', () => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day until March 29, 2023 when done',
+            occurrence: new Occurrence({
+                dueDate: moment('2023-03-24').startOf('day'),
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.toText()).toBe('every day until March 29, 2023 when done');
+        expect(recurrence!.next(moment('2023-03-28'))!.dueDate).toEqualMoment(moment('2023-03-29'));
+    });
 });
 
 describe('identicalTo', () => {
