@@ -40,6 +40,12 @@
         padding: var(--size-4-1) 0;
     }
 
+    // height: auto - overriding Obsidian's own base `button` styling, which sets buttons to a fixed height
+    // app-wide. Without this override that fixed height wins (this rule never otherwise declares `height`,
+    // so there's nothing here to take precedence over it), clamping this button - which holds the wrapped,
+    // potentially multi-line description - to a single line's worth of height regardless of how many lines
+    // its content actually needs, and the excess overflows past that fixed box instead of it growing to fit.
+    // This is what a plain browser sandbox (no Obsidian theme CSS loaded) could never reproduce.
     .tasks-notifications-open {
         display: flex;
         justify-content: space-between;
@@ -47,6 +53,7 @@
         gap: var(--size-4-2);
         flex: 1;
         min-width: 0;
+        height: auto;
         background: none;
         border: none;
         text-align: left;
@@ -98,15 +105,16 @@
         padding-top: calc((var(--notif-row-height) - 2 * 1.15em) / 2);
     }
 
-    // min-height, not height: a hard height clamps the box regardless of what its content (the emoji glyph)
-    // actually needs to render - if that ever needs more vertical space than exactly --notif-row-height (font
-    // metrics for emoji rendering aren't something this stylesheet controls), the excess would silently
-    // overflow past a rigid box instead of the box growing to fit, the same "reserved space doesn't match
-    // what's painted" failure as the description/time fixes above, just for the pill instead.
+    // height: auto (Obsidian's own base `button` styling otherwise imposes a fixed height here too - see
+    // .tasks-notifications-open above), plus min-height rather than height so the box still normally looks
+    // like a properly-sized pill without hard-clamping it: if the emoji glyph ever needed more vertical
+    // space than exactly --notif-row-height, the excess would otherwise silently overflow past a rigid box
+    // instead of it growing to fit, the same failure as the description/time fixes above, just for the pill.
     .tasks-notifications-schedule-pill {
         display: flex;
         align-items: center;
         justify-content: center;
+        height: auto;
         min-height: var(--notif-row-height);
         flex-shrink: 0;
         border-radius: var(--radius-s);

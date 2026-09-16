@@ -53,10 +53,18 @@ improvements, none of them a roadmap milestone or an on-disk syntax change.
   what actually got painted - a second way the same "reserved space doesn't match the drawn result" failure
   could happen, one level removed from the first. Removed that nesting entirely (see the previous entry) so
   there's no longer a flex box anywhere whose height depends on how many lines wrapped text takes.
-- The pill's own `height: --notif-row-height` was a third instance of the same failure class, still present
-  after the previous two fixes: a hard `height` clamps the box regardless of what its content (the emoji
-  glyph) actually needs to render, so if that ever needed more vertical space than exactly 30px, the excess
-  would silently overflow past a rigid box rather than the box growing to fit. Changed to `min-height`.
+- Found the actual remaining cause, after the previous three fixes still didn't clear a real repro:
+  `.tasks-notifications-open` (the button wrapping the description/time) never declared its own `height` at
+  all - so Obsidian's own base `button` styling, which sets every button to a fixed height app-wide, was
+  winning by default and clamping this button (which holds the wrapped, potentially multi-line description)
+  to a single line's worth of height regardless of how many lines its content actually needed. This is
+  exactly the class of bug a plain browser sandbox with no Obsidian theme CSS loaded could never surface -
+  every dump-dom/screenshot repro built to investigate this looked fine, because none of them had Obsidian's
+  own button styling in play to begin with. Fixed with an explicit `height: auto` override. Applied the same
+  fix to the pill (`.tasks-notifications-schedule-pill`): its `min-height` from the previous attempt was a
+  real improvement but incomplete on its own, since `min-height` and `height` are separate properties -
+  Obsidian's fixed `height` still applied on top of it. Now both `height: auto` and `min-height:
+  --notif-row-height` together, so it still normally looks like a properly-sized pill without hard-clamping.
 - Reworked the per-task time text (`formatReminderTime` in `NotificationsView.svelte`) to always show two
   lines: a day/clock line, then the relative duration underneath (previously only shown for today's
   reminders, and a bare day/clock elsewhere with no duration at all). The relative duration used to also
