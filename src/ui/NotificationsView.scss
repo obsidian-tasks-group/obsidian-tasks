@@ -6,6 +6,10 @@
     margin: 0 auto;
     padding: var(--size-4-4);
 
+    // The pill's own natural size (see .tasks-notifications-schedule-pill) - shared so the time and
+    // description boxes below can match it exactly rather than guessing at the same number twice.
+    --notif-row-height: 30px;
+
     section + section {
         margin-top: var(--size-4-6);
     }
@@ -23,9 +27,14 @@
         padding: 0;
     }
 
+    // flex-start, not center: a description that wraps onto several lines must grow downward only, keeping
+    // its first line (and the time/pill next to it) pinned to the row's top - centering the whole row
+    // against the tallest child would instead drag the time/pill down to recentre on the extra lines, which
+    // looks lopsided once a description is more than one line. Single-line rows are unaffected either way,
+    // since every element below is given the same height in that case (see --notif-row-height).
     .tasks-notifications-row {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: var(--size-4-2);
         width: 100%;
         padding: var(--size-4-1) 0;
@@ -34,7 +43,7 @@
     .tasks-notifications-open {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         gap: var(--size-4-2);
         flex: 1;
         min-width: 0;
@@ -47,8 +56,14 @@
     }
 
     // Wraps across lines rather than truncating with an ellipsis - the full task text stays readable
-    // instead of being cut off, at the cost of a row sometimes taking up more than one line.
+    // instead of being cut off. Its own min-height matches the pill's, and its content is centred within
+    // that - so a single-line description sits centred exactly like the pill/time do; once text wraps past
+    // that height the box just grows to fit it (centring becomes a no-op, since the wrapped text then fills
+    // the box exactly), so extra lines overflow downward rather than being centred as a block.
     .tasks-notifications-description {
+        display: flex;
+        align-items: center;
+        min-height: var(--notif-row-height);
         min-width: 0;
         font-size: 1.1em;
         white-space: normal;
@@ -56,21 +71,29 @@
     }
 
     // Two lines for today's reminders (clock time, then the relative phrase underneath - see
-    // formatReminderTime) - right-aligned so both lines sit flush against the pill next to them.
+    // formatReminderTime), sized to fit within --notif-row-height and centred inside it exactly like the
+    // pill - text-align right-aligns the shorter of the two lines under/above the longer one.
     .tasks-notifications-time {
+        display: flex;
+        align-items: center;
+        height: var(--notif-row-height);
         flex-shrink: 0;
         color: var(--text-muted);
         text-align: right;
-        line-height: 1.3;
+        font-size: 0.8em;
+        line-height: 1.15;
     }
 
     .tasks-notifications-schedule-pill {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--notif-row-height);
         flex-shrink: 0;
         border-radius: var(--radius-s);
         border: none;
         background: var(--background-modifier-hover);
-        padding: 2px 6px;
-        line-height: 1;
+        padding: 0 6px;
         cursor: pointer;
     }
 

@@ -34,8 +34,12 @@ improvements, none of them a roadmap milestone or an on-disk syntax change.
 - The task text in that same view now wraps across lines instead of being truncated with an ellipsis, so a
   long description is fully readable rather than cut off - and is rendered a bit larger (`font-size: 1.1em`),
   with the bucket headings tightened up above the list to compensate for the taller rows that follow.
-- Each row's description/time/pill are now vertically centred against each other (was top-aligned), so they
-  read as one balanced line instead of the text sitting noticeably higher than the pill.
+- Each row's description/time/pill now share a `--notif-row-height` (the pill's own 30px), and each is
+  vertically centred within its own box at that height - so a normal single-line row reads as one balanced
+  line instead of the text sitting noticeably higher than the pill. A description that wraps onto several
+  lines only grows downward past that shared height (the row itself uses `align-items: flex-start`, not
+  `center`) rather than dragging the time/pill down to recentre against the extra lines, which looked
+  lopsided.
 - Reworked the per-task time text (`formatReminderTime` in `NotificationsView.svelte`). A bare relative
   phrase ("in 31 minutes"/"2 days ago") doesn't say *which* day, and used to also read a minute short of what
   a clock actually promises - same root cause as the reminder-suggestion label fix in `4.2.0`: diffing
