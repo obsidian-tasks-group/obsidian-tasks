@@ -236,7 +236,7 @@ The new task will have the due date advanced by two weeks and a scheduled date t
 
 Examples of possible recurrence rules (mix and match as desired; these should be considered inspirational):
 
-In monthly rules, `2nd last` means the second occurrence counting backwards from the end of the month — in other words, the second-to-last occurrence.
+In monthly rules, `2nd last` means the second occurrence counting backwards from the end of the month — in other words, the second-to-last occurrence. For example, the `2nd last Friday` is the Friday immediately after the penultimate Thursday.
 
 - `🔁 every 3 days`
 - `🔁 every 15 days`
