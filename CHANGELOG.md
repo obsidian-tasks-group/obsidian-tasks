@@ -28,17 +28,22 @@ improvements, none of them a roadmap milestone or an on-disk syntax change.
   reads as a continuation of the first instead of a second restatement, e.g. "in 30 minutes  (rounded to
   11:30, in 17 minutes)". New `ReminderSuggestion.datalistHint` field (`src/DateTime/ReminderSuggestions.ts`)
   carries this text; `ReminderMenu`'s own standalone menu-item labels are unaffected.
-- Fixed the Notifications view's per-task time (e.g. "in 31 minutes") sometimes reading a minute short of
-  what a clock actually promises - same root cause as the reminder-suggestion label fix in `4.2.0`: diffing
-  against the exact current instant (seconds included) rather than "now" floored to the whole minute. A
-  reminder at 13:00 checked at 12:28:35 used to read "in 31 minutes" (31.4, rounded down) instead of the 32
-  a clock reading "28" to "60" promises. `NotificationsView.svelte` now computes it via
-  `task.reminderDateTime.from(window.moment().startOf('minute'))` instead of the plain `.fromNow()`.
 - Capped the Notifications view's width (`max-width: 40em`, centred) instead of stretching full-width - each
   row lays its description and time/pill out with space between them, so on a very wide pane/window they
   used to spread uncomfortably far apart; blank space on the sides now instead.
 - The task text in that same view now wraps across lines instead of being truncated with an ellipsis, so a
-  long description is fully readable rather than cut off.
+  long description is fully readable rather than cut off - and is rendered a bit larger (`font-size: 1.1em`),
+  with the bucket headings tightened up above the list to compensate for the taller rows that follow.
+- Each row's description/time/pill are now vertically centred against each other (was top-aligned), so they
+  read as one balanced line instead of the text sitting noticeably higher than the pill.
+- Reworked the per-task time text (`formatReminderTime` in `NotificationsView.svelte`). A bare relative
+  phrase ("in 31 minutes"/"2 days ago") doesn't say *which* day, and used to also read a minute short of what
+  a clock actually promises - same root cause as the reminder-suggestion label fix in `4.2.0`: diffing
+  against the exact current instant (seconds included) rather than "now" floored to the whole minute (e.g. a
+  13:00 reminder checked at 12:28:35 used to read "in 31 minutes" instead of the 32 a clock reading "28" to
+  "60" promises). Now: a reminder due today shows the clock time with the (correctly-floored) relative
+  phrase underneath it, e.g. "16:00 / in 32 minutes"; any other day shows a short day prefix instead -
+  "tomorrow, 16:00", "yesterday, 16:00", or "26/10, 16:00" beyond that.
 
 ## 4.2.0 — upstream base `8.4.0`
 

@@ -29,13 +29,34 @@
         new SchedulePopover(ev.currentTarget as HTMLElement, task, taskSaver);
     }
 
-    // Not task.reminderDateTime?.fromNow() - moment diffs against the actual current instant, seconds and
-    // all, so a reminder at 13:00 checked at 12:28:35 reads as "31 minutes" (31.4, rounded down) instead of
-    // the 32 a clock reading "28" to "60" actually promises. Flooring 'now' to the minute first removes that
-    // elapsed-seconds fraction - the same fix already applied to the reminder-suggestion labels, see
-    // ReminderSuggestions.ts's own doc comment on 'now' being floored before diffing.
-    function formatTimeUntil(task: Task): string {
-        return task.reminderDateTime?.from(window.moment().startOf('minute')) ?? '';
+    // A bare "in 32 minutes"/"2 days ago" doesn't say which day, and a full date on a reminder that's today
+    // is redundant (the "Today" bucket heading already says so) - so today's reminders get the clock time
+    // plus the relative phrase underneath it (rendered with {@html} below for the <br/>), and every other
+    // day gets a short day prefix instead: "tomorrow"/"yesterday", or "DD/MM" beyond that.
+    //
+    // Not task.reminderDateTime?.fromNow() for the relative phrase - moment diffs against the actual current
+    // instant, seconds and all, so a reminder at 13:00 checked at 12:28:35 reads as "31 minutes" (31.4,
+    // rounded down) instead of the 32 a clock reading "28" to "60" actually promises. Flooring 'now' to the
+    // minute first removes that elapsed-seconds fraction - the same fix already applied to the
+    // reminder-suggestion labels, see ReminderSuggestions.ts's own doc comment on 'now' being floored before
+    // diffing.
+    function formatReminderTime(task: Task): string {
+        const target = task.reminderDateTime;
+        if (!target) {
+            return '';
+        }
+        const now = window.moment();
+        const clock = target.format('HH:mm');
+        if (target.isSame(now, 'day')) {
+            return `${clock}<br />${target.from(now.clone().startOf('minute'))}`;
+        }
+        if (target.isSame(now.clone().add(1, 'day'), 'day')) {
+            return `tomorrow, ${clock}`;
+        }
+        if (target.isSame(now.clone().subtract(1, 'day'), 'day')) {
+            return `yesterday, ${clock}`;
+        }
+        return `${target.format('DD/MM')}, ${clock}`;
     }
 </script>
 
@@ -63,7 +84,7 @@
                                         <span class="tasks-notifications-description">
                                             {task.descriptionWithoutTags}
                                         </span>
-                                        <span class="tasks-notifications-time">{formatTimeUntil(task)}</span>
+                                        <span class="tasks-notifications-time">{@html formatReminderTime(task)}</span>
                                     </button>
                                     <button
                                         type="button"

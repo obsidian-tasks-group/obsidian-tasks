@@ -10,6 +10,13 @@
         margin-top: var(--size-4-6);
     }
 
+    // Tightened rather than the browser/theme default h3 margin - the row text below is now bigger (see
+    // .tasks-notifications-description) and the time can be two lines tall, so the default gap read as too
+    // loose once those grew.
+    h3 {
+        margin: 0 0 var(--size-4-1) 0;
+    }
+
     ul {
         list-style: none;
         margin: 0;
@@ -18,7 +25,7 @@
 
     .tasks-notifications-row {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         gap: var(--size-4-2);
         width: 100%;
         padding: var(--size-4-1) 0;
@@ -27,7 +34,7 @@
     .tasks-notifications-open {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
         gap: var(--size-4-2);
         flex: 1;
         min-width: 0;
@@ -43,13 +50,18 @@
     // instead of being cut off, at the cost of a row sometimes taking up more than one line.
     .tasks-notifications-description {
         min-width: 0;
+        font-size: 1.1em;
         white-space: normal;
         overflow-wrap: break-word;
     }
 
+    // Two lines for today's reminders (clock time, then the relative phrase underneath - see
+    // formatReminderTime) - right-aligned so both lines sit flush against the pill next to them.
     .tasks-notifications-time {
         flex-shrink: 0;
         color: var(--text-muted);
+        text-align: right;
+        line-height: 1.3;
     }
 
     .tasks-notifications-schedule-pill {
