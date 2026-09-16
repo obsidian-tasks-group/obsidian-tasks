@@ -263,6 +263,11 @@ Rules:
    document for users once built: ntfy's hosted/free tier has no cancel-a-scheduled-message API, so removing
    or postponing a reminder shortly before it fires may still result in one stale push arriving.
 
+5. **Custom fields.** Not started. User-definable fields beyond the built-in ones, e.g. a "Project" field
+   that links to another note, defaulting to the *current* note's own project when adding it to a task (so
+   it doesn't have to be picked by hand every time) — the note's project presumably comes from its own
+   frontmatter or folder location.
+
 ## Build
 
 Uses **Yarn** (there's a `yarn.lock`, no `package-lock.json` — `npm install` will fail with an ERESOLVE error
