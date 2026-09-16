@@ -29,10 +29,10 @@
         new SchedulePopover(ev.currentTarget as HTMLElement, task, taskSaver);
     }
 
-    // A bare "in 32 minutes"/"2 days ago" doesn't say which day, and a full date on a reminder that's today
-    // is redundant (the "Today" bucket heading already says so) - so today's reminders get the clock time
-    // plus the relative phrase underneath it (rendered with {@html} below for the <br/>), and every other
-    // day gets a short day prefix instead: "tomorrow"/"yesterday", or "DD/MM" beyond that.
+    // Always two lines: a day/clock line ("today, 16:00" / "tomorrow, 16:00" / "yesterday, 16:00" / "26/10,
+    // 16:00"), then the relative duration underneath (rendered with {@html} below for the <br/>) - a bare
+    // "in 32 minutes"/"2 days ago" alone doesn't say which day, and a bare day/clock alone doesn't say how
+    // soon, so both are always shown together rather than one or the other depending on the bucket.
     //
     // Not task.reminderDateTime?.fromNow() for the relative phrase - moment diffs against the actual current
     // instant, seconds and all, so a reminder at 13:00 checked at 12:28:35 reads as "31 minutes" (31.4,
@@ -47,16 +47,18 @@
         }
         const now = window.moment();
         const clock = target.format('HH:mm');
+        const relative = target.from(now.clone().startOf('minute'));
+        let dayPrefix: string;
         if (target.isSame(now, 'day')) {
-            return `${clock}<br />${target.from(now.clone().startOf('minute'))}`;
+            dayPrefix = 'today';
+        } else if (target.isSame(now.clone().add(1, 'day'), 'day')) {
+            dayPrefix = 'tomorrow';
+        } else if (target.isSame(now.clone().subtract(1, 'day'), 'day')) {
+            dayPrefix = 'yesterday';
+        } else {
+            dayPrefix = target.format('DD/MM');
         }
-        if (target.isSame(now.clone().add(1, 'day'), 'day')) {
-            return `tomorrow, ${clock}`;
-        }
-        if (target.isSame(now.clone().subtract(1, 'day'), 'day')) {
-            return `yesterday, ${clock}`;
-        }
-        return `${target.format('DD/MM')}, ${clock}`;
+        return `${dayPrefix}, ${clock}<br />${relative}`;
     }
 </script>
 

@@ -60,9 +60,18 @@
     // that - so a single-line description sits centred exactly like the pill/time do; once text wraps past
     // that height the box just grows to fit it (centring becomes a no-op, since the wrapped text then fills
     // the box exactly), so extra lines overflow downward rather than being centred as a block.
+    //
+    // flex-direction: column (not row) + justify-content (not align-items) is deliberate, not just a style
+    // choice: in row-direction, an item's width is itself flex-sized (main axis), so the text could end up
+    // laid out at its own preferred single-line width rather than the width actually available to it -
+    // wrapping too late or not at all, and spilling into the row below since height:auto then never grows
+    // to match. Column-direction makes width the CROSS axis instead, which defaults to align-items: stretch
+    // - the text reliably fills the description's real resolved width, so it wraps exactly where the layout
+    // says it has room to, and the box's reported height always matches what's actually drawn.
     .tasks-notifications-description {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        justify-content: center;
         min-height: var(--notif-row-height);
         min-width: 0;
         font-size: 1.1em;
@@ -70,13 +79,16 @@
         overflow-wrap: break-word;
     }
 
-    // Two lines for today's reminders (clock time, then the relative phrase underneath - see
-    // formatReminderTime), sized to fit within --notif-row-height and centred inside it exactly like the
-    // pill - text-align right-aligns the shorter of the two lines under/above the longer one.
+    // Always two lines (day/clock, then the relative duration underneath - see formatReminderTime), sized
+    // to fit within --notif-row-height and centred inside it exactly like the pill - text-align right-aligns
+    // the shorter of the two lines under/above the longer one. min-height, not height, for the same reason
+    // as the description above: content that ends up needing more than --notif-row-height (an unusually long
+    // relative phrase) grows the box instead of silently overflowing past a hard-clipped one.
     .tasks-notifications-time {
         display: flex;
-        align-items: center;
-        height: var(--notif-row-height);
+        flex-direction: column;
+        justify-content: center;
+        min-height: var(--notif-row-height);
         flex-shrink: 0;
         color: var(--text-muted);
         text-align: right;
