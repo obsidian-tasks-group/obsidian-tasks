@@ -347,9 +347,17 @@ You can validate that tasks understands your rule by using the `Tasks: Create or
 
 You can _not_ use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and does not know how often it occurred.
 
-### No way to recur until a specific date
+### Recurring until a specific date
 
-You can _not_ use rules where recurrence ends on a specific date (`until "date"`). There is a bug in [`rrule`](https://github.com/jakubroztocil/rrule) where `until "date"` rules are not converted to the correct text. As a consequence, every subsequent task's "until" date will be one day earlier than the one before. We are tracking this in [issue #1818](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1818).
+You can use `until "date"` to stop a recurrence on a specific date. The final occurrence is included when it falls on the `until` date.
+
+For example:
+
+```markdown
+- [ ] Do stuff 🔁 every day until 2026-09-29 📅 2026-09-16
+```
+
+The `until` date is preserved when the next occurrence is created, including when using `when done`.
 
 ### Recurrence rule lost if highest priority date is invalid
 
