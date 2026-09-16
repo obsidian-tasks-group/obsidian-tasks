@@ -1,19 +1,17 @@
-import type { App } from 'obsidian';
 import type { Task } from '../../Task/Task';
 import { type AllTaskDateFields, isAHappensDate } from '../../DateTime/DateFieldTypes';
 import { allHappensDateInstructions, allLifeCycleDateInstructions } from '../EditInstructions/DateInstructions';
-import { ScheduleDialog } from './ScheduleDialog';
+import { SchedulePopover } from './SchedulePopover';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 export class DateMenu extends TaskEditingMenu {
     /**
      * Constructor, which sets up the menu items.
-     * @param app - needed to open {@link ScheduleDialog} from the "Add a reminder…" item (see below).
      * @param field - the Date field to edit
      * @param task - the Task to be edited.
      * @param taskSaver - an optional {@link TaskSaver} function. For details, see {@link TaskEditingMenu}.
      */
-    constructor(app: App, field: AllTaskDateFields, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
+    constructor(field: AllTaskDateFields, task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
         // Only for the Scheduled date field. Once a reminder already exists, greyed out and inert (see
@@ -23,7 +21,17 @@ export class DateMenu extends TaskEditingMenu {
             this.addItem((item) => {
                 item.setTitle('Add a reminder…').setDisabled(alreadyHasReminder);
                 if (!alreadyHasReminder) {
-                    item.onClick(() => new ScheduleDialog(app, task, taskSaver).open());
+                    // No single persistent element to anchor to for a menu item (unlike the pill itself) -
+                    // position at the click that fired this item, the same point-anchor SchedulePopover
+                    // supports for exactly this case. A keyboard-activated item has no meaningful click
+                    // point, so fall back to the menu item's own element.
+                    item.onClick((evt: MouseEvent | KeyboardEvent) => {
+                        const anchor =
+                            evt instanceof MouseEvent
+                                ? { x: evt.clientX, y: evt.clientY }
+                                : (evt.target as HTMLElement);
+                        new SchedulePopover(anchor, task, taskSaver);
+                    });
                 }
             });
         }

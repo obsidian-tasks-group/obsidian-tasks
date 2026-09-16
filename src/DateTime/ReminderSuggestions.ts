@@ -18,10 +18,19 @@ import { type RoundingMode, roundToIncrement } from './ReminderTimeParser';
  *   promised. The modal has no equivalent need - it only ever fills the field with {@link value}, and
  *   resolves it (deliberately unrounded - see {@link buildReminderSuggestions}) whenever Apply is
  *   eventually pressed.
+ * - {@link datalistHint}, present only for relative offsets, is what the modal's native `<datalist>` shows
+ *   as the second column alongside {@link value} (see {@link ScheduleEditor}) - a browser renders an
+ *   `<option value>` and its child text as two adjacent columns whenever they differ, so unlike {@link
+ *   label} (a standalone description, used by the menu, where there's no separate "value" column to read
+ *   alongside it) this is deliberately a continuation of {@link value} rather than self-contained - e.g.
+ *   'in 30 minutes' + '(rounded to 11:30, in 17 minutes)', not another full restatement of "in 30 minutes".
+ *   Absent for presets, where {@link value} and {@link label} already coincide and a browser shows only one
+ *   column.
  */
 export interface ReminderSuggestion {
     value: string;
     label: string;
+    datalistHint?: string;
     resolvedDate?: Moment;
 }
 
@@ -80,6 +89,7 @@ export function buildReminderSuggestions(
             return {
                 value: `in ${offsetPhrase(offsetMinutes)}`,
                 label: `In ${offsetPhrase(exactMinutes)} (${target.format('HH:mm')})`,
+                datalistHint: `(rounded to ${target.format('HH:mm')}, in ${offsetPhrase(exactMinutes)})`,
                 resolvedDate: target,
             };
         }),

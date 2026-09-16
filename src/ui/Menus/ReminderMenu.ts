@@ -8,7 +8,7 @@ import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditing
 
 /**
  * The right-click menu for a task's reminder time (see {@link TaskLineRenderer} - left-click instead opens
- * {@link ScheduleDialog}, the same dialog the edit modal's own "Schedule" section is built from).
+ * {@link SchedulePopover}, the same form the edit modal's own "Schedule" section is built from).
  *
  * Built from {@link buildReminderSuggestions} - the same options {@link ScheduleEditor} offers as
  * autocomplete in the edit modal - so the list of quick options is user-configurable (via

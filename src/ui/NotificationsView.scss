@@ -1,8 +1,24 @@
 .tasks-notifications-view {
+    // Capped and centred rather than stretching full-width - a row's description/time/pill are laid out
+    // with space between them (see .tasks-notifications-open below), so on a very wide window/pane an
+    // uncapped width would spread them uncomfortably far apart. Blank space on the sides instead.
+    max-width: 40em;
+    margin: 0 auto;
     padding: var(--size-4-4);
+
+    // The pill's own natural size (see .tasks-notifications-schedule-pill) - shared so the time and
+    // description boxes below can match it exactly rather than guessing at the same number twice.
+    --notif-row-height: 30px;
 
     section + section {
         margin-top: var(--size-4-6);
+    }
+
+    // Tightened rather than the browser/theme default h3 margin - the row text below is now bigger (see
+    // .tasks-notifications-description) and the time can be two lines tall, so the default gap read as too
+    // loose once those grew.
+    h3 {
+        margin: 0 0 var(--size-4-1) 0;
     }
 
     ul {
@@ -11,28 +27,101 @@
         padding: 0;
     }
 
+    // flex-start, not center: a description that wraps onto several lines must grow downward only, keeping
+    // its first line (and the time/pill next to it) pinned to the row's top - centering the whole row
+    // against the tallest child would instead drag the time/pill down to recentre on the extra lines, which
+    // looks lopsided once a description is more than one line. Single-line rows are unaffected either way,
+    // since every element below is given the same height in that case (see --notif-row-height).
     .tasks-notifications-row {
         display: flex;
-        justify-content: space-between;
+        align-items: flex-start;
         gap: var(--size-4-2);
         width: 100%;
         padding: var(--size-4-1) 0;
+    }
+
+    // height: auto - overriding Obsidian's own base `button` styling, which sets buttons to a fixed height
+    // app-wide. Without this override that fixed height wins (this rule never otherwise declares `height`,
+    // so there's nothing here to take precedence over it), clamping this button - which holds the wrapped,
+    // potentially multi-line description - to a single line's worth of height regardless of how many lines
+    // its content actually needs, and the excess overflows past that fixed box instead of it growing to fit.
+    // This is what a plain browser sandbox (no Obsidian theme CSS loaded) could never reproduce.
+    .tasks-notifications-open {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--size-4-2);
+        flex: 1;
+        min-width: 0;
+        height: auto;
         background: none;
         border: none;
         text-align: left;
         box-shadow: none;
         cursor: pointer;
+        padding: 0;
     }
 
+    // Wraps across lines rather than truncating with an ellipsis - the full task text stays readable
+    // instead of being cut off.
+    //
+    // Deliberately a PLAIN block-level flex item (the blockification every direct flex child gets
+    // automatically - no display:flex here), not a nested flex container centring its own content: that was
+    // tried (flex-direction:column + justify-content:center) and reverted after a real repro showed the
+    // wrapped text visually spilling into the FOLLOWING bucket's <h3> - a flex container's reported height
+    // for wrapped text isn't always what ends up painted (see the overflow-wrap note below for one confirmed
+    // way that happens), and stacking a second, nested flex layout on top of that risk for a cosmetic centring
+    // nicety wasn't worth it. padding-top instead nudges a short (single-line) description down to
+    // approximately match the pill's centre - a small, FIXED, content-independent offset - so a wrapped
+    // multi-line description just grows downward from that same starting offset in ordinary block flow, with
+    // no height computation involved that could ever disagree with what's actually drawn.
+    //
+    // overflow-wrap: anywhere, not break-word: break-word only ever breaks a word as a last resort once
+    // overflow would otherwise occur, but does NOT feed into this flex item's own INTRINSIC (min-content)
+    // size - so a description that's one long unbroken run with no spaces (a real case: a tag, a URL, or -
+    // what actually surfaced this - a task typo'd as one giant word) could still get sized as if that whole
+    // run had to fit on one line, then break late, during paint, into more lines than the reserved space
+    // accounted for. anywhere counts as breakable for intrinsic sizing too (MDN's own documented fix for
+    // this exact mismatch). Ordinary space-separated text wraps identically either way.
     .tasks-notifications-description {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        min-width: 0;
+        font-size: 1.1em;
+        line-height: 1.3;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        padding-top: calc((var(--notif-row-height) - 1.3em) / 2);
     }
 
+    // Always two lines (day/clock, then the relative duration underneath - see formatReminderTime) -
+    // text-align right-aligns the shorter of the two lines under/above the longer one. padding-top
+    // approximates centring against the pill the same way, and for the same reason, as the description
+    // above - see its own doc comment for why this isn't a nested flex container.
     .tasks-notifications-time {
         flex-shrink: 0;
         color: var(--text-muted);
+        text-align: right;
+        font-size: 0.8em;
+        line-height: 1.15;
+        padding-top: calc((var(--notif-row-height) - 2 * 1.15em) / 2);
+    }
+
+    // height: auto (Obsidian's own base `button` styling otherwise imposes a fixed height here too - see
+    // .tasks-notifications-open above), plus min-height rather than height so the box still normally looks
+    // like a properly-sized pill without hard-clamping it: if the emoji glyph ever needed more vertical
+    // space than exactly --notif-row-height, the excess would otherwise silently overflow past a rigid box
+    // instead of it growing to fit, the same failure as the description/time fixes above, just for the pill.
+    .tasks-notifications-schedule-pill {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        min-height: var(--notif-row-height);
+        flex-shrink: 0;
+        border-radius: var(--radius-s);
+        border: none;
+        background: var(--background-modifier-hover);
+        padding: 0 6px;
+        cursor: pointer;
     }
 
     .tasks-notifications-empty {

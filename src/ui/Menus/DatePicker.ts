@@ -1,9 +1,8 @@
 import flatpickr from 'flatpickr';
-import type { App } from 'obsidian';
 import type { Task } from '../../Task/Task';
 import { RemoveTaskDate, SetTaskDate } from '../EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
-import { ScheduleDialog } from './ScheduleDialog';
+import { SchedulePopover } from './SchedulePopover';
 import type { TaskSaver } from './TaskEditingMenu';
 
 interface LocaleWithWeekInfo extends Intl.Locale {
@@ -16,14 +15,12 @@ interface LocaleWithWeekInfo extends Intl.Locale {
  * @param task
  * @param dateFieldToEdit
  * @param taskSaver
- * @param app - needed to open {@link ScheduleDialog} from the "Add a reminder…" button (see below).
  */
 export function promptForDate(
     parentElement: HTMLElement,
     task: Task,
     dateFieldToEdit: AllTaskDateFields,
     taskSaver: TaskSaver,
-    app: App,
 ) {
     const currentValue = task[dateFieldToEdit];
     // TODO figure out how Today's date is determined: if Obsidian is left
@@ -65,7 +62,7 @@ export function promptForDate(
             // Reminder Time pill itself becomes the dedicated edit affordance, so this is greyed out and
             // inert rather than removed outright - still visible for discoverability, just not a second
             // "add" path that could read as creating a second reminder. Can't reuse addButton()'s
-            // applyDate()-returns-Task[]-synchronously shape below, since opening a dialog is inherently
+            // applyDate()-returns-Task[]-synchronously shape below, since opening a popover is inherently
             // async/user-driven rather than an immediate apply-and-save.
             if (dateFieldToEdit === 'scheduledDate') {
                 const alreadyHasReminder = task.reminderTime !== null;
@@ -73,8 +70,10 @@ export function promptForDate(
                 button.disabled = alreadyHasReminder;
                 if (!alreadyHasReminder) {
                     button.addEventListener('click', () => {
+                        // Anchor to parentElement (the date pill itself), not the button - it's about to be
+                        // removed from the DOM by instance.destroy(), but the pill it's attached to isn't.
                         instance.destroy();
-                        new ScheduleDialog(app, task, taskSaver).open();
+                        new SchedulePopover(parentElement, task, taskSaver);
                     });
                 }
             }

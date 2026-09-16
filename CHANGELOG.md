@@ -5,6 +5,75 @@ Tracks this fork's own changes on top of each upstream base. See `CLAUDE.md` for
 in `manifest.json`/`package.json`) and the upstream-sync process. Upstream's own changelog is not duplicated
 here — see <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>.
 
+## 4.3.0 — upstream base `8.4.0`
+
+**Schedule popover, Notifications view options, and a datalist text fix.** MINOR: three small additive UI
+improvements, none of them a roadmap milestone or an on-disk syntax change.
+
+- Replaced `ScheduleDialog` (an Obsidian `Modal` - centred, dimmed background, focus-trapped) with the new
+  `SchedulePopover` (`src/ui/Menus/SchedulePopover.ts`): the same Schedule form, positioned next to whatever
+  pill/menu-item opened it instead, with no backdrop and no focus trap - much closer to the Scheduled Date
+  pill's own flatpickr popover. Closing via Escape/Cancel discards; closing via Apply or a click outside
+  applies whatever was pending (if valid), the same auto-apply-on-close behaviour the flatpickr calendar
+  already had. All four opening points (the Reminder Time pill, the Scheduled Date picker's "Add a
+  reminder…" button, the Scheduled Date right-click menu's "Add a reminder…" item, and the new Notifications
+  view pill below) now go through this popover; `DateMenu`/`promptForDate` no longer need an `app` parameter
+  as a result.
+- Reminder Notifications view (`src/ui/NotificationsView.svelte`): each row now has a right-click context
+  menu (the same `ReminderMenu` quick-pick the rendered reminder pill offers) and an alarm-clock pill that
+  opens the `SchedulePopover` - previously the view had no interactivity beyond left-click-to-open-task.
+- Fixed the Schedule field's native `<datalist>` autocomplete showing a confusing two-column row for each
+  relative-offset suggestion (e.g. "In 30 minutes" next to "In 17 minutes (11:30)" - a browser shows an
+  `<option>`'s `value` and its child text as separate columns whenever they differ). The second column now
+  reads as a continuation of the first instead of a second restatement, e.g. "in 30 minutes  (rounded to
+  11:30, in 17 minutes)". New `ReminderSuggestion.datalistHint` field (`src/DateTime/ReminderSuggestions.ts`)
+  carries this text; `ReminderMenu`'s own standalone menu-item labels are unaffected.
+- Capped the Notifications view's width (`max-width: 40em`, centred) instead of stretching full-width - each
+  row lays its description and time/pill out with space between them, so on a very wide pane/window they
+  used to spread uncomfortably far apart; blank space on the sides now instead.
+- The task text in that same view now wraps across lines instead of being truncated with an ellipsis, so a
+  long description is fully readable rather than cut off - and is rendered a bit larger (`font-size: 1.1em`),
+  with the bucket headings tightened up above the list to compensate for the taller rows that follow.
+- Each row's description/time/pill are approximately vertically centred against each other via a small,
+  fixed `padding-top` (computed from `--notif-row-height`, the pill's own 30px, minus each field's own
+  line-height) - so a normal single-line row reads as one balanced line instead of the text sitting
+  noticeably higher than the pill. A description that wraps onto several lines just grows downward from
+  that same fixed offset, in ordinary block flow (the row itself uses `align-items: flex-start`, not
+  `center`, so a taller wrapped description never drags the time/pill down to recentre against it either).
+  Deliberately NOT a nested flex container centring its own content (`flex-direction: column` +
+  `justify-content: center` was tried first, and reverted) - see the next entry for why.
+- Fixed the description box visually overflowing into the *next bucket's heading* below it, for a
+  description that's one long unbroken run with no spaces (a mistyped task with no spaces between words is
+  the case that surfaced this, but a tag or URL could trigger it too). Two contributing causes, both fixed:
+  `overflow-wrap: break-word` only breaks a word as a last resort once overflow would otherwise occur, but
+  doesn't feed into a flex item's own *intrinsic* (min-content) size - switched to `overflow-wrap: anywhere`,
+  which does count as breakable for intrinsic sizing (MDN's own documented fix for this class of mismatch).
+  Independently, wrapping the description itself in a nested flex container (to centre its content
+  vertically) meant that container's *own* reported height, for a long wrapped block, could disagree with
+  what actually got painted - a second way the same "reserved space doesn't match the drawn result" failure
+  could happen, one level removed from the first. Removed that nesting entirely (see the previous entry) so
+  there's no longer a flex box anywhere whose height depends on how many lines wrapped text takes.
+- Found the actual remaining cause, after the previous three fixes still didn't clear a real repro:
+  `.tasks-notifications-open` (the button wrapping the description/time) never declared its own `height` at
+  all - so Obsidian's own base `button` styling, which sets every button to a fixed height app-wide, was
+  winning by default and clamping this button (which holds the wrapped, potentially multi-line description)
+  to a single line's worth of height regardless of how many lines its content actually needed. This is
+  exactly the class of bug a plain browser sandbox with no Obsidian theme CSS loaded could never surface -
+  every dump-dom/screenshot repro built to investigate this looked fine, because none of them had Obsidian's
+  own button styling in play to begin with. Fixed with an explicit `height: auto` override. Applied the same
+  fix to the pill (`.tasks-notifications-schedule-pill`): its `min-height` from the previous attempt was a
+  real improvement but incomplete on its own, since `min-height` and `height` are separate properties -
+  Obsidian's fixed `height` still applied on top of it. Now both `height: auto` and `min-height:
+  --notif-row-height` together, so it still normally looks like a properly-sized pill without hard-clamping.
+- Reworked the per-task time text (`formatReminderTime` in `NotificationsView.svelte`) to always show two
+  lines: a day/clock line, then the relative duration underneath (previously only shown for today's
+  reminders, and a bare day/clock elsewhere with no duration at all). The relative duration used to also
+  read a minute short of what a clock actually promises - same root cause as the reminder-suggestion label
+  fix in `4.2.0`: diffing against the exact current instant (seconds included) rather than "now" floored to
+  the whole minute (e.g. a 13:00 reminder checked at 12:28:35 used to read "in 31 minutes" instead of the 32
+  a clock reading "28" to "60" promises). Now: "today, 16:00" / "in 32 minutes", "tomorrow, 16:00" / "in 18
+  hours", "yesterday, 16:00" / "3 hours ago", or "26/10, 16:00" / "in 3 days" beyond that.
+
 ## 4.2.0 — upstream base `8.4.0`
 
 **Reminder-suggestion label improvements**, on top of `4.1.0`'s exact-time labels. MINOR, not PATCH: the

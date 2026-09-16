@@ -7,7 +7,7 @@ import type { TaskEditingInstruction } from './TaskEditingInstruction';
 /**
  * An instruction to set both {@link Task.scheduledDate} and {@link Task.reminderTime} at once, from an
  * already-resolved pair of values (see `ScheduleParser.resolveTypedSchedule`). Used only by the standalone
- * `ScheduleDialog` - the main edit modal's own Apply flow keeps going through `EditableTask.applyEdits`
+ * `SchedulePopover` - the main edit modal's own Apply flow keeps going through `EditableTask.applyEdits`
  * unchanged, since by the time Apply is clicked its two bound fields are already clean, resolved strings.
  *
  * See also {@link RemoveScheduledDateAndReminder}.
