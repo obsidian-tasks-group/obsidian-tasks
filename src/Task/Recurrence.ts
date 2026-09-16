@@ -20,7 +20,7 @@ export class Recurrence {
         occurrence: Occurrence;
     }): Recurrence | null {
         try {
-            const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
+            const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !-]+?)( when done)?$/i);
             if (match == null) {
                 return null;
             }
