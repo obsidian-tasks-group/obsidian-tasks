@@ -98,11 +98,16 @@
         padding-top: calc((var(--notif-row-height) - 2 * 1.15em) / 2);
     }
 
+    // min-height, not height: a hard height clamps the box regardless of what its content (the emoji glyph)
+    // actually needs to render - if that ever needs more vertical space than exactly --notif-row-height (font
+    // metrics for emoji rendering aren't something this stylesheet controls), the excess would silently
+    // overflow past a rigid box instead of the box growing to fit, the same "reserved space doesn't match
+    // what's painted" failure as the description/time fixes above, just for the pill instead.
     .tasks-notifications-schedule-pill {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: var(--notif-row-height);
+        min-height: var(--notif-row-height);
         flex-shrink: 0;
         border-radius: var(--radius-s);
         border: none;
