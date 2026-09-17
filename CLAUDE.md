@@ -292,3 +292,30 @@ needed for this setup, but useful if you ever want a separate side-by-side vault
 
 Reload the plugin in Obsidian after building: Settings → Community plugins → toggle "Tasks (Upgraded Fork)"
 off/on (or restart Obsidian) to pick up a fresh `main.js`.
+
+## Release (beta / UAT distribution)
+
+`.github/workflows/release.yml` builds the plugin and publishes a GitHub Release carrying just the loose
+files a beta tester needs (`main.js`, `manifest.json`, `styles.css`, plus a zip of the same) — no clone, no
+`yarn build`, no full repo access required on their end. Not used for the Obsidian community plugin store;
+this repo isn't submitted there yet.
+
+**It only triggers on a pushed git tag** (`on.push.tags: '*'`) — it does **not** trigger on a push to `main`,
+and merging a PR into `main` does not trigger it either, since a PR merge is a push to a branch ref
+(`refs/heads/main`), never a tag ref. Bumping `version` in `manifest.json`/`package.json` and merging that
+change to `main` is *not* by itself a release — the tag is a separate, deliberate step that must always
+follow:
+
+```bash
+git tag <version>          # must match manifest.json/package.json's version
+git push origin <version>
+```
+
+That's what actually fires the workflow. The resulting release is created as a **draft** — check GitHub's
+Releases page afterward; either publish it there, or just download the three files yourself from the draft
+and hand them to testers directly without publishing anything.
+
+## Other notes
+
+- Bugfix : In reminder notifications view, the wikilinks are not rendered...
+- Bugfix : When scheduled date gets added automatically (file name format), the reminder shows an error
