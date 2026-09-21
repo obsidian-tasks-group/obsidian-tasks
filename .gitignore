@@ -36,6 +36,7 @@ yarn-error.log
 
 # approval test files
 *.received.*
+.approval_tests_temp/
 
 # osx
 .DS_Store
