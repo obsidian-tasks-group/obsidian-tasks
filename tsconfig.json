@@ -12,6 +12,8 @@
     "noUnusedParameters": true,
     "module": "ESNext",
     "target": "es6",
+    // Prefer declarations (.d) because approvals v7 publishes TypeScript sources alongside its compiled files.
+    "moduleSuffixes": [".d", ""],
     "allowJs": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
