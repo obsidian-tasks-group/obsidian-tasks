@@ -2,7 +2,6 @@ import { type ConfigModifier, Options } from 'approvals/lib/Core/Options';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
 import { JestReporter } from 'approvals/lib/Providers/Jest/JestReporter';
-// import { AutoApprovingReporter } from './AutoApprovingReporter';
 
 export function verifyMarkdown(output: string) {
     let options = new Options();
@@ -13,11 +12,11 @@ export function verifyMarkdown(output: string) {
     const configModifier: ConfigModifier = (c) => {
         c.reporters = [
             /*
-                Uncomment AutoApprovingReporter() if you want to auto-fix
-                any failing ApprovalTest tests.
+                To auto-fix any failing ApprovalTest tests, set
+                `forceApproveAll: true` in the `~/.approvalsConfig` file.
                 YOU MUST THEN REVIEW THE DIFFERENCES CAREFULLY, before committing.
+                You probably should set `forceApproveAll: false` afterwards.
             */
-            // new AutoApprovingReporter(),
             //-----------------
             // Built-in reporters listed at:
             // https://github.com/approvals/Approvals.NodeJS#built-in-reporters
