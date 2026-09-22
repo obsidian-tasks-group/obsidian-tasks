@@ -10,7 +10,11 @@ import { i18n } from '../i18n/i18n';
 export class GlobalQueryModal extends Modal {
     private readonly textarea: TextAreaComponent;
 
-    constructor(app: App, initial: string, private readonly onSave: (value: string) => void) {
+    constructor(
+        app: App,
+        initial: string,
+        private readonly onSave: (value: string) => void,
+    ) {
         super(app);
         this.modalEl.addClass('mod-lg', 'tasks-global-query-modal');
         this.setTitle(i18n.t('settings.globalQuery.heading'));

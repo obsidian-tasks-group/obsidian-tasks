@@ -464,13 +464,14 @@ describe('HtmlQueryResultsRenderer - internal heading links', () => {
     beforeAll(() => {
         const allTasks = readTasksFromSimulatedFile('internal_heading_links');
 
-        tasksByHeading = allTasks.reduce((acc, task) => {
-            const heading = task.taskLocation.precedingHeader ?? '';
+        tasksByHeading = allTasks.reduce(
+            (acc, task) => {
+                const heading = task.taskLocation.precedingHeader ?? '';
 
-            // For now, the test design only supports one task per heading, so make it an error
-            // if there are multiple tasks in this heading:
-            if (acc[heading]) {
-                throw new Error(`Multiple tasks found under the heading: "${heading}".
+                // For now, the test design only supports one task per heading, so make it an error
+                // if there are multiple tasks in this heading:
+                if (acc[heading]) {
+                    throw new Error(`Multiple tasks found under the heading: "${heading}".
 The test design only supports one task per heading currently, so this is an error.
 
 Edit "${task.path}" to move one of these lines to a separate heading:
@@ -481,11 +482,13 @@ And then rerun the command "Templater: Insert _meta/templates/convert_test_data_
 
 For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests
 `);
-            }
+                }
 
-            acc[heading] = task;
-            return acc;
-        }, {} as Record<string, Task>);
+                acc[heading] = task;
+                return acc;
+            },
+            {} as Record<string, Task>,
+        );
     });
 
     async function renderTask(task: Task, queryFilePath: string = 'query.md') {

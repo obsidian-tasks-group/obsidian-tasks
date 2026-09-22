@@ -18,7 +18,7 @@ export const mockApp = {} as unknown as App;
  */
 export function createTFile(path: string): TFile {
     const name = path.split('/').pop() ?? path;
-    const extension = name.includes('.') ? name.split('.').pop() ?? '' : '';
+    const extension = name.includes('.') ? (name.split('.').pop() ?? '') : '';
     const basename = extension === '' ? name : name.slice(0, -(extension.length + 1));
 
     return {
