@@ -397,10 +397,10 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
         const { renderer, query } = makeHtmlRenderer(source, tasksFile, allTasks);
 
         const container = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(container, allTasks);
+        await verifyRenderedTasks(container, allTasks);
 
         const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(rerenderedContainer, allTasks);
+        await verifyRenderedTasks(rerenderedContainer, allTasks);
     });
 
     it('should render the same thing twice - flat', async () => {
@@ -411,10 +411,10 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
         const { renderer, query } = makeHtmlRenderer(source, tasksFile, allTasks);
 
         const container = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(container, allTasks);
+        await verifyRenderedTasks(container, allTasks);
 
         const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(rerenderedContainer, allTasks);
+        await verifyRenderedTasks(rerenderedContainer, allTasks);
     });
 });
 

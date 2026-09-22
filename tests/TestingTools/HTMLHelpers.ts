@@ -1,6 +1,6 @@
 import * as prettier from 'prettier';
 
-export function prettifyHTML(modalHTML: string) {
+export async function prettifyHTML(modalHTML: string): Promise<string> {
     return prettier.format(modalHTML, {
         parser: 'html',
         bracketSameLine: true,

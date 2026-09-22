@@ -525,7 +525,7 @@ describe('Visualise HTML', () => {
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
 -->\n\n`;
-        const prettyHTML = prettifyHTML(listItem.outerHTML);
+        const prettyHTML = await prettifyHTML(listItem.outerHTML);
 
         verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
     }
