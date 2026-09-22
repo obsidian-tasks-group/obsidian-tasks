@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 
 import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';

@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { type RenderResult, fireEvent, render, waitFor } from '@testing-library/svelte';
 import moment from 'moment';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';

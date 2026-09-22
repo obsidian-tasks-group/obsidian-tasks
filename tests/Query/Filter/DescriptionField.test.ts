@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';

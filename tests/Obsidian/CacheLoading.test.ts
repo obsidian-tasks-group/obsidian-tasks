@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment/moment';
 import type { CachedMetadata, EventRef, MetadataCache, TFile, Vault, Workspace } from 'obsidian';
 import { Cache, State } from '../../src/Obsidian/Cache';

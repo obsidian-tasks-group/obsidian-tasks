@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import type { Moment } from 'moment';
 import moment from 'moment';
 import { Task } from '../../src/Task/Task';

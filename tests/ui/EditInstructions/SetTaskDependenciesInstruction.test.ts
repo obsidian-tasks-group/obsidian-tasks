@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment/moment';
 import { Task } from '../../../src/Task/Task';
 import { createTasksFromMarkdown } from '../../TestingTools/TestHelpers';

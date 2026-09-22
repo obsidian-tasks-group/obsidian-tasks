@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { FilenameField } from '../../../src/Query/Filter/FilenameField';
 import { Grouper, type GrouperFunction } from '../../../src/Query/Group/Grouper';

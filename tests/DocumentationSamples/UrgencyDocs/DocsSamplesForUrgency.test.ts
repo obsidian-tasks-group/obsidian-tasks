@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';

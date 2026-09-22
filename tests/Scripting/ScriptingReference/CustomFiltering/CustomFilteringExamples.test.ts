@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 import type { Task } from '../../../../src/Task/Task';
 import { readAllTasksFromAllSimulatedFiles } from '../../../Obsidian/SimulatedFile';

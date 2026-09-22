@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';

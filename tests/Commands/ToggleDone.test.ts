@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 import type { EditorPosition } from 'obsidian';
 import { getNewCursorPosition, toggleLine } from '../../src/Commands/ToggleDone';

@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 
 import type { unitOfTime } from 'moment/moment';

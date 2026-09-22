@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Urgency } from '../../src/Task/Urgency';

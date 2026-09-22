@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';

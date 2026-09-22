@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { GroupingTreeNode } from '../../../src/Query/Group/GroupingTreeNode';
 
 describe('Grouping Tree', () => {

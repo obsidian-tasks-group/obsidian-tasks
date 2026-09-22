@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment/moment';
 import type { CachedMetadata } from 'obsidian';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';

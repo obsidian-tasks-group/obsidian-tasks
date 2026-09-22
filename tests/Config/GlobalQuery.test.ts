@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 
 describe('GlobalQuery tests', () => {

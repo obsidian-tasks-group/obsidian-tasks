@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment/moment';
 
 import { DateMenu } from '../../../src/ui/Menus/DateMenu';

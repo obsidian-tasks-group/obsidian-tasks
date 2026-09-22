@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { QueryLayout } from '../../src/Layout/QueryLayout';
 import { TaskLayoutOptions } from '../../src/Layout/TaskLayoutOptions';
 import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';

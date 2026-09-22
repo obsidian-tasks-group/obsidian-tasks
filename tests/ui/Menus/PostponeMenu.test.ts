@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment/moment';
 
 import { PostponeMenu } from '../../../src/ui/Menus/PostponeMenu';

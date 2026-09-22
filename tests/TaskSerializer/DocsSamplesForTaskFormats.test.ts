@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 
 import { TASK_FORMATS, resetSettings, updateSettings } from '../../src/Config/Settings';

@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
