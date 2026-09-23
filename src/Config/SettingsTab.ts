@@ -508,7 +508,7 @@ export class SettingsTab extends PluginSettingTab {
                         instruction2: '<code>{{preset.name}}</code>',
                     }),
                     i18n.t('settings.presets.line2'),
-                ]) + this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+                ]) + this.seeTheDocumentationPara('https://publish.obsidian.md/tasks/Queries/Presets'),
             ),
             items: this.presetsSettingsUI.getPresetsDefinitions(() => this.rebuildSettingsTab()),
         };
@@ -1061,7 +1061,7 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.format.description.line2'),
                         i18n.t('settings.changeRequiresRestart'),
                     ]) +
-                        this.seeTheDocumentation(
+                        this.seeTheDocumentationPara(
                             'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
                         ),
                 ),
@@ -1093,7 +1093,8 @@ export class SettingsTab extends PluginSettingTab {
                             i18n.t('settings.globalFilter.filter.description.line3'),
                             i18n.t('settings.globalFilter.filter.description.line4'),
                         ].join('</br>'),
-                    ]) + this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
+                    ]) +
+                        this.seeTheDocumentationPara('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
                 ),
             )
             .addText((text) => {
@@ -1148,7 +1149,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setDesc(
                     SettingsTab.createFragmentWithHTML(
                         para(i18n.t('settings.globalQuery.query.description')) +
-                            this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Global+Query'),
+                            this.seeTheDocumentationPara('https://publish.obsidian.md/tasks/Queries/Global+Query'),
                     ),
                 )
                 .addTextArea((text) => {
@@ -1226,7 +1227,7 @@ export class SettingsTab extends PluginSettingTab {
                             instruction2: '<code>{{preset.name}}</code>',
                         }),
                         i18n.t('settings.presets.line2'),
-                    ]) + this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+                    ]) + this.seeTheDocumentationPara('https://publish.obsidian.md/tasks/Queries/Presets'),
                 ),
             );
         // ---------------------------------------------------------------------------
@@ -1319,7 +1320,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.createdDate.description') +
                         '</br>' +
-                        this.seeTheDocumentation(
+                        this.seeTheDocumentationPara(
                             'https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date',
                         ),
                 ),
@@ -1338,7 +1339,9 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.doneDate.description') +
                         '</br>' +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date'),
+                        this.seeTheDocumentationPara(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -1355,7 +1358,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.cancelledDate.description') +
                         '</br>' +
-                        this.seeTheDocumentation(
+                        this.seeTheDocumentationPara(
                             'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
                         ),
                 ),
@@ -1385,7 +1388,7 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4'),
                         para(i18n.t('settings.changeRequiresRestart')),
                     ].join('</br>') +
-                        this.seeTheDocumentation(
+                        this.seeTheDocumentationPara(
                             'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
                         ),
                 ),
@@ -1460,7 +1463,9 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.recurringTasks.nextLine.description') +
                         '</br>' +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
+                        this.seeTheDocumentationPara(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -1479,7 +1484,9 @@ export class SettingsTab extends PluginSettingTab {
                         '</br>' +
                         i18n.t('settings.recurringTasks.removeScheduledDate.description.line2') +
                         '</br>' +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
+                        this.seeTheDocumentationPara(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
+                        ),
                 ),
             )
             .addToggle((toggle) => {
@@ -1503,7 +1510,7 @@ export class SettingsTab extends PluginSettingTab {
                     i18n.t('settings.autoSuggest.toggle.description') +
                         '</br>' +
                         para(i18n.t('settings.changeRequiresRestart')) +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
+                        this.seeTheDocumentationPara('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1572,7 +1579,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dialogs.accessKeys.description') +
                         '</br>' +
-                        this.seeTheDocumentation(
+                        this.seeTheDocumentationPara(
                             'https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts',
                         ),
                 ),
@@ -1586,7 +1593,7 @@ export class SettingsTab extends PluginSettingTab {
             });
     }
 
-    private seeTheDocumentation(url: string) {
+    private seeTheDocumentationPara(url: string) {
         const anchor = i18n.t('settings.seeTheDocumentation');
         return para(link(url, anchor) + '.');
     }
