@@ -29,21 +29,21 @@ function serializeForApproval(value: unknown): unknown {
 }
 
 describe('SettingsTab post-1.13', () => {
+    const plugin = {
+        app: {} as any,
+        manifest: { version: 'test-version' },
+        saveSettings: jest.fn(async () => {}),
+        getTasks: jest.fn(() => []),
+    } as any;
+
+    const events = {
+        triggerReloadVault: jest.fn(),
+        triggerReloadOpenSearchResults: jest.fn(),
+    } as any;
+
+    const settingsTab = new SettingsTab({ plugin, events });
+
     it('renders the task format description as two paragraphs in order', () => {
-        const plugin = {
-            app: {} as any,
-            manifest: { version: 'test-version' },
-            saveSettings: jest.fn(async () => {}),
-            getTasks: jest.fn(() => []),
-        } as any;
-
-        const events = {
-            triggerReloadVault: jest.fn(),
-            triggerReloadOpenSearchResults: jest.fn(),
-        } as any;
-
-        const settingsTab = new SettingsTab({ plugin, events });
-
         const definitions = settingsTab.getSettingDefinitions();
         const globalDefaultsGroup = definitions[0] as any;
         const taskFormatSetting = globalDefaultsGroup.items[0];
@@ -57,20 +57,6 @@ describe('SettingsTab post-1.13', () => {
     });
 
     it('all settings', () => {
-        const plugin = {
-            app: {} as any,
-            manifest: { version: 'test-version' },
-            saveSettings: jest.fn(async () => {}),
-            getTasks: jest.fn(() => []),
-        } as any;
-
-        const events = {
-            triggerReloadVault: jest.fn(),
-            triggerReloadOpenSearchResults: jest.fn(),
-        } as any;
-
-        const settingsTab = new SettingsTab({ plugin, events });
-
         verifyAsJson(serializeForApproval(settingsTab.getSettingDefinitions()));
     });
 });
