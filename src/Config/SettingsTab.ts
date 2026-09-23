@@ -280,9 +280,11 @@ export class SettingsTab extends PluginSettingTab {
                     desc: SettingsTab.createFragmentWithHTML(
                         paras([
                             `<b>${i18n.t('settings.globalFilter.filter.description.line1')}</b>`,
-                            `${i18n.t('settings.globalFilter.filter.description.line2')}`,
-                            `${i18n.t('settings.globalFilter.filter.description.line3')} ` +
-                                `${i18n.t('settings.globalFilter.filter.description.line4')}`,
+                            i18n.t('settings.globalFilter.filter.description.line2'),
+                            [
+                                i18n.t('settings.globalFilter.filter.description.line3'),
+                                i18n.t('settings.globalFilter.filter.description.line4'),
+                            ].join(' '),
                         ]),
                     ),
                     render: this.withDocs((setting) => {
