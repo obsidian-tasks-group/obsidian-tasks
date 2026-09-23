@@ -1,5 +1,11 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { lastModalState, resetLastModalState } from '../__mocks__/obsidian';
+import {
+    lastModalState,
+    recordedLegacySettings,
+    resetLastModalState,
+    resetRecordedLegacySettings,
+} from '../__mocks__/obsidian';
+
 import { SettingsTab } from '../../src/Config/SettingsTab';
 
 // Convert the declarative settings tree into approval-friendly JSON.
@@ -100,5 +106,30 @@ describe('SettingsTab post-1.13', () => {
 
     it('all settings', () => {
         verifyAsJson(serializeForApproval(settingsTab.getSettingDefinitions()));
+    });
+});
+
+describe('SettingsTab pre-1.13', () => {
+    const plugin = {
+        app: {} as any,
+        manifest: { version: 'test-version' },
+        saveSettings: jest.fn(async () => {}),
+        getTasks: jest.fn(() => []),
+    } as any;
+
+    const events = {
+        triggerReloadVault: jest.fn(),
+        triggerReloadOpenSearchResults: jest.fn(),
+    } as any;
+
+    const settingsTab = new SettingsTab({ plugin, events });
+
+    it('all settings', () => {
+        resetRecordedLegacySettings();
+        resetLastModalState();
+
+        settingsTab.display();
+
+        verifyAsJson(recordedLegacySettings);
     });
 });

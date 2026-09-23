@@ -407,3 +407,79 @@ export class ButtonComponent {
         return this;
     }
 }
+
+export const recordedLegacySettings: Array<Record<string, unknown>> = [];
+
+export function resetRecordedLegacySettings(): void {
+    recordedLegacySettings.length = 0;
+}
+
+export class Setting {
+    public settingEl = document.createElement('div');
+    public infoEl = document.createElement('div');
+    public controlEl = document.createElement('div');
+
+    private readonly record: Record<string, unknown>;
+
+    constructor(containerEl: HTMLElement) {
+        this.settingEl.appendChild(this.infoEl);
+        this.settingEl.appendChild(this.controlEl);
+        containerEl.appendChild(this.settingEl);
+
+        this.record = {};
+        recordedLegacySettings.push(this.record);
+    }
+
+    public setName(name: string): this {
+        this.record.name = name;
+        return this;
+    }
+
+    public setDesc(desc: string | DocumentFragment): this {
+        if (desc instanceof DocumentFragment) {
+            const div = document.createElement('div');
+            div.appendChild(desc.cloneNode(true));
+            this.record.desc = div.innerHTML;
+        } else {
+            this.record.desc = desc;
+        }
+        return this;
+    }
+
+    public setHeading(): this {
+        this.record.heading = true;
+        return this;
+    }
+
+    public addText(_callback: (text: unknown) => void): this {
+        return this;
+    }
+
+    public addTextArea(_callback: (text: unknown) => void): this {
+        return this;
+    }
+
+    public addToggle(_callback: (toggle: unknown) => void): this {
+        return this;
+    }
+
+    public addDropdown(_callback: (dropdown: unknown) => void): this {
+        return this;
+    }
+
+    public setVisibility(_visible: boolean): this {
+        return this;
+    }
+
+    public addButton(_callback: (button: unknown) => void): this {
+        return this;
+    }
+
+    public addExtraButton(_callback: (extra: unknown) => void): this {
+        return this;
+    }
+
+    public addSlider(_callback: (slider: unknown) => void): this {
+        return this;
+    }
+}
