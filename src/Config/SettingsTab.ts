@@ -1576,7 +1576,7 @@ export class SettingsTab extends PluginSettingTab {
 
     private seeTheDocumentation(url: string) {
         const link = `<a href="${url}">${i18n.t('settings.seeTheDocumentation')}</a>.`;
-        return `<p>${link}</p>`;
+        return para(link);
     }
 
     private addOneSettingsBlock(
