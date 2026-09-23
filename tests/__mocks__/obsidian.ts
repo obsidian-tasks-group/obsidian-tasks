@@ -426,7 +426,7 @@ export class Setting {
         this.settingEl.appendChild(this.controlEl);
         containerEl.appendChild(this.settingEl);
 
-        this.record = {};
+        this.record = { controls: [] };
         recordedLegacySettings.push(this.record);
     }
 
@@ -452,18 +452,22 @@ export class Setting {
     }
 
     public addText(_callback: (text: unknown) => void): this {
+        (this.record.controls as string[]).push('text');
         return this;
     }
 
     public addTextArea(_callback: (text: unknown) => void): this {
+        (this.record.controls as string[]).push('textArea');
         return this;
     }
 
     public addToggle(_callback: (toggle: unknown) => void): this {
+        (this.record.controls as string[]).push('toggle');
         return this;
     }
 
     public addDropdown(_callback: (dropdown: unknown) => void): this {
+        (this.record.controls as string[]).push('dropdown');
         return this;
     }
 
@@ -472,14 +476,17 @@ export class Setting {
     }
 
     public addButton(_callback: (button: unknown) => void): this {
+        (this.record.controls as string[]).push('button');
         return this;
     }
 
     public addExtraButton(_callback: (extra: unknown) => void): this {
+        (this.record.controls as string[]).push('extraButton');
         return this;
     }
 
     public addSlider(_callback: (slider: unknown) => void): this {
+        (this.record.controls as string[]).push('slider');
         return this;
     }
 }
