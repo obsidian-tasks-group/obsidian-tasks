@@ -1211,16 +1211,14 @@ export class SettingsTab extends PluginSettingTab {
             .setHeading()
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    '<p>' +
+                    paras([
                         i18n.t('settings.presets.line1', {
                             name: '<code>name</code>',
                             instruction1: '<code>preset name</code>',
                             instruction2: '<code>{{preset.name}}</code>',
-                        }) +
-                        '</p><p>' +
-                        i18n.t('settings.presets.line2') +
-                        '</p>' +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+                        }),
+                        i18n.t('settings.presets.line2'),
+                    ]) + this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
                 ),
             );
         // ---------------------------------------------------------------------------
