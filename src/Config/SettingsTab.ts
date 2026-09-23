@@ -1139,7 +1139,7 @@ export class SettingsTab extends PluginSettingTab {
             new Setting(containerEl)
                 .setDesc(
                     SettingsTab.createFragmentWithHTML(
-                        `<p>${i18n.t('settings.globalQuery.query.description')}</p>` +
+                        paras([i18n.t('settings.globalQuery.query.description')]) +
                             this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Global+Query'),
                     ),
                 )
