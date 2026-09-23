@@ -101,6 +101,31 @@ export class Notice {
     hide(): void {}
 }
 
+export class PluginSettingTab {
+    public containerEl: HTMLElement;
+    public app: App;
+    public plugin: unknown;
+
+    constructor(app: App, plugin: unknown) {
+        this.app = app;
+        this.plugin = plugin;
+        this.containerEl = document.createElement('div');
+    }
+
+    public update(): void {}
+    public refreshDomState(): void {}
+}
+
+export function sanitizeHTMLToDom(html: string): DocumentFragment {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    return template.content.cloneNode(true) as DocumentFragment;
+}
+
+export function requireApiVersion(_version: string): boolean {
+    return true;
+}
+
 interface SearchResult {
     score: number;
     matches: number[][];
@@ -286,17 +311,51 @@ export function getLanguage() {
     return 'en';
 }
 
-/**
- * A mock implementation of the Obsidian Modal class.
- * Without this testing the TaskModal throws an error attempting to extend Modal
- */
+// Records the last modal opened by a test so approval tests can inspect
+// modal title/body text triggered by declarative settings callbacks.
+export const lastModalState: {
+    title: string | null;
+    html: string | null;
+    opened: boolean;
+} = {
+    title: null,
+    html: null,
+    opened: false,
+};
+
+export function resetLastModalState(): void {
+    lastModalState.title = null;
+    lastModalState.html = null;
+    lastModalState.opened = false;
+}
+
+// Minimal Modal mock for tests that inspect modal text produced by UI callbacks.
 export class Modal {
-    public open(): void {
-        // Mocked interface, no-op
+    public contentEl: HTMLDivElement;
+    public modalEl: HTMLDivElement;
+    public titleEl: HTMLDivElement;
+
+    constructor(_app?: App) {
+        this.contentEl = document.createElement('div');
+        this.modalEl = document.createElement('div');
+        this.titleEl = document.createElement('div');
     }
+
+    public setTitle(title: string): this {
+        this.titleEl.textContent = title;
+        lastModalState.title = title;
+        return this;
+    }
+
+    public open(): void {
+        lastModalState.opened = true;
+        lastModalState.html = this.contentEl.innerHTML;
+    }
+
     public close(): void {
         // Mocked interface, no-op
     }
+
     public onOpen(): void {}
     public onClose(): void {}
 }
@@ -323,4 +382,161 @@ export abstract class SuggestModal<T> extends Modal {
     public abstract getSuggestions(query: string): T[] | Promise<T[]>;
     public abstract renderSuggestion(value: T, el: HTMLElement): void;
     public abstract onChooseSuggestion(item: T, evt: MouseEvent | KeyboardEvent): void;
+}
+
+// Minimal ButtonComponent mock: only the methods currently needed by modal-building code.
+export class ButtonComponent {
+    public buttonEl: HTMLButtonElement;
+
+    constructor(containerEl: HTMLElement) {
+        this.buttonEl = document.createElement('button');
+        containerEl.appendChild(this.buttonEl);
+    }
+
+    public setButtonText(text: string): this {
+        this.buttonEl.textContent = text;
+        return this;
+    }
+
+    public setClass(className: string): this {
+        this.buttonEl.classList.add(className);
+        return this;
+    }
+
+    public onClick(_callback: () => void): this {
+        return this;
+    }
+}
+
+export const recordedLegacySettings: Array<Record<string, unknown>> = [];
+
+export function resetRecordedLegacySettings(): void {
+    recordedLegacySettings.length = 0;
+}
+
+export class Setting {
+    public settingEl = document.createElement('div');
+    public infoEl = document.createElement('div');
+    public controlEl = document.createElement('div');
+
+    private readonly record: Record<string, unknown>;
+
+    constructor(containerEl: HTMLElement) {
+        this.settingEl.appendChild(this.infoEl);
+        this.settingEl.appendChild(this.controlEl);
+        containerEl.appendChild(this.settingEl);
+
+        this.record = { controls: [] };
+        recordedLegacySettings.push(this.record);
+    }
+
+    public setName(name: string): this {
+        this.record.name = name;
+        return this;
+    }
+
+    public setDesc(desc: string | DocumentFragment): this {
+        if (desc instanceof DocumentFragment) {
+            const div = document.createElement('div');
+            div.appendChild(desc.cloneNode(true));
+            this.record.desc = div.innerHTML;
+        } else {
+            this.record.desc = desc;
+        }
+        return this;
+    }
+
+    public setHeading(): this {
+        this.record.heading = true;
+        return this;
+    }
+
+    public addText(_callback: (text: unknown) => void): this {
+        (this.record.controls as string[]).push('text');
+        return this;
+    }
+
+    public addTextArea(_callback: (text: unknown) => void): this {
+        (this.record.controls as string[]).push('textArea');
+        return this;
+    }
+
+    public addToggle(_callback: (toggle: unknown) => void): this {
+        (this.record.controls as string[]).push('toggle');
+        return this;
+    }
+
+    public addDropdown(_callback: (dropdown: unknown) => void): this {
+        (this.record.controls as string[]).push('dropdown');
+        return this;
+    }
+
+    public setVisibility(_visible: boolean): this {
+        return this;
+    }
+
+    public addButton(callback: (button: unknown) => void): this {
+        const control: Record<string, unknown> = { type: 'button' };
+
+        if (!this.record.controls) {
+            this.record.controls = [];
+        }
+        (this.record.controls as Array<Record<string, unknown>>).push(control);
+
+        const fakeButton = {
+            setButtonText: (text: string) => {
+                control.text = text;
+                return fakeButton;
+            },
+            onClick: (_callback: () => void) => {
+                control.onClick = '[Function]';
+                return fakeButton;
+            },
+            setCta: () => {
+                control.cta = true;
+                return fakeButton;
+            },
+            setWarning: () => {
+                control.warning = true;
+                return fakeButton;
+            },
+            setTooltip: (tooltip: string) => {
+                control.tooltip = tooltip;
+                return fakeButton;
+            },
+        };
+
+        callback(fakeButton);
+        return this;
+    }
+
+    public addExtraButton(callback: (extra: unknown) => void): this {
+        const control: Record<string, unknown> = { type: 'extraButton' };
+
+        (this.record.controls as Array<Record<string, unknown>>).push(control);
+
+        const fakeExtraButton = {
+            extraSettingsEl: document.createElement('div'),
+            setIcon: (icon: string) => {
+                control.icon = icon;
+                return fakeExtraButton;
+            },
+            setTooltip: (tooltip: string) => {
+                control.tooltip = tooltip;
+                return fakeExtraButton;
+            },
+            onClick: (_callback: () => void) => {
+                control.onClick = '[Function]';
+                return fakeExtraButton;
+            },
+        };
+
+        callback(fakeExtraButton);
+        return this;
+    }
+
+    public addSlider(_callback: (slider: unknown) => void): this {
+        (this.record.controls as string[]).push('slider');
+        return this;
+    }
 }

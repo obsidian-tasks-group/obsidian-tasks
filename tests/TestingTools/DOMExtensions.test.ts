@@ -395,3 +395,35 @@ describe('HTMLElement.createSpan()', () => {
         expectDocumentFragmentToHaveBeenUsed(child);
     });
 });
+
+describe('HTMLElement.empty()', () => {
+    it('removes all child nodes', () => {
+        const parent = document.createElement('div');
+        parent.appendChild(document.createElement('span'));
+        parent.appendChild(document.createTextNode('text'));
+        parent.appendChild(document.createElement('p'));
+
+        parent.empty();
+
+        expect(parent.childNodes).toHaveLength(0);
+    });
+});
+
+describe('HTMLElement.addClass()', () => {
+    it('addClass() should add one class', () => {
+        const element = document.createElement('div');
+
+        element.addClass('single-class-value');
+
+        expect(element.classList).toContain('single-class-value');
+    });
+
+    it('addClass() should add multiple classes', () => {
+        const element = document.createElement('div');
+
+        element.addClass('first-class', 'second-class');
+
+        expect(element.classList).toContain('first-class');
+        expect(element.classList).toContain('second-class');
+    });
+});

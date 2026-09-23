@@ -162,6 +162,22 @@ HTMLElement.prototype.createSpan = function (
 };
 
 // ------------------------------------------------------------------
+// Mimic of Obsidian's empty() implementation
+// ------------------------------------------------------------------
+
+HTMLElement.prototype.empty = function (this: HTMLElement): void {
+    this.replaceChildren();
+};
+
+// ------------------------------------------------------------------
+// Mimic of Obsidian's addClass() implementation
+// ------------------------------------------------------------------
+
+HTMLElement.prototype.addClass = function (this: HTMLElement, ...classNames: string[]): void {
+    this.classList.add(...classNames);
+};
+
+// ------------------------------------------------------------------
 // Other global test code
 // ------------------------------------------------------------------
 

@@ -73,6 +73,22 @@ function getSettingsAtPluginLoad(): Settings {
     return settingsAtPluginLoad as Settings;
 }
 
+function para(text: unknown): string {
+    return `<p>${text}</p>`;
+}
+
+function paras(texts: unknown[]): string {
+    return texts.map((text) => para(text)).join('');
+}
+
+function link(url: string, anchor: string): string {
+    return `<a href="${url}">${anchor}</a>`;
+}
+
+function bold(text: string): string {
+    return `<b>${text}</b>`;
+}
+
 /**
  * The plugin's settings tab, with two implementations of the UI:
  *
@@ -236,8 +252,11 @@ export class SettingsTab extends PluginSettingTab {
         return {
             name: i18n.t('settings.format.name'),
             desc: SettingsTab.createFragmentWithHTML(
-                `<p>${i18n.t('settings.format.description.line1')}</p>` +
-                    `<p>${i18n.t('settings.format.description.line2')}</p>`,
+                paras([
+                    // force line break
+                    i18n.t('settings.format.description.line1'),
+                    i18n.t('settings.format.description.line2'),
+                ]),
             ),
             render: this.withDocs(
                 this.withReload('taskFormat', (setting, refreshReloadButton) => {
@@ -267,10 +286,14 @@ export class SettingsTab extends PluginSettingTab {
                 {
                     name: i18n.t('settings.globalFilter.filter.name'),
                     desc: SettingsTab.createFragmentWithHTML(
-                        `<p><b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
-                            `<p>${i18n.t('settings.globalFilter.filter.description.line2')}</p>` +
-                            `<p>${i18n.t('settings.globalFilter.filter.description.line3')} ` +
-                            `${i18n.t('settings.globalFilter.filter.description.line4')}</p>`,
+                        paras([
+                            bold(i18n.t('settings.globalFilter.filter.description.line1')),
+                            i18n.t('settings.globalFilter.filter.description.line2'),
+                            [
+                                i18n.t('settings.globalFilter.filter.description.line3'),
+                                i18n.t('settings.globalFilter.filter.description.line4'),
+                            ].join(' '),
+                        ]),
                     ),
                     render: this.withDocs((setting) => {
                         setting.addText((text) => {
@@ -478,16 +501,15 @@ export class SettingsTab extends PluginSettingTab {
             type: 'page',
             name: i18n.t('settings.presets.name'),
             desc: SettingsTab.createFragmentWithHTML(
-                '<p>' +
+                paras([
                     i18n.t('settings.presets.line1', {
                         name: '<code>name</code>',
                         instruction1: '<code>preset name</code>',
                         instruction2: '<code>{{preset.name}}</code>',
-                    }) +
-                    '</p><p>' +
-                    i18n.t('settings.presets.line2') +
-                    '</p>' +
-                    this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+                    }),
+                    i18n.t('settings.presets.line2'),
+                    this.seeTheDocs('https://publish.obsidian.md/tasks/Queries/Presets'),
+                ]),
             ),
             items: this.presetsSettingsUI.getPresetsDefinitions(() => this.rebuildSettingsTab()),
         };
@@ -522,8 +544,10 @@ export class SettingsTab extends PluginSettingTab {
                                 .onClick(() =>
                                     this.showInfoModal(
                                         i18n.t('settings.statuses.coreStatuses.heading'),
-                                        `<p>${i18n.t('settings.statuses.coreStatuses.description.line1')}</p>` +
-                                            `<p>${i18n.t('settings.statuses.coreStatuses.description.line2')}</p>`,
+                                        paras([
+                                            i18n.t('settings.statuses.coreStatuses.description.line1'),
+                                            i18n.t('settings.statuses.coreStatuses.description.line2'),
+                                        ]),
                                         'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
                                     ),
                                 ),
@@ -569,9 +593,11 @@ export class SettingsTab extends PluginSettingTab {
                                 .onClick(() =>
                                     this.showInfoModal(
                                         i18n.t('settings.statuses.customStatuses.heading'),
-                                        `<p>${i18n.t('settings.statuses.customStatuses.description.line1')}</p>` +
-                                            `<p>${i18n.t('settings.statuses.customStatuses.description.line2')}</p>` +
-                                            `<p>${i18n.t('settings.statuses.customStatuses.description.line3')}</p>`,
+                                        paras([
+                                            i18n.t('settings.statuses.customStatuses.description.line1'),
+                                            i18n.t('settings.statuses.customStatuses.description.line2'),
+                                            i18n.t('settings.statuses.customStatuses.description.line3'),
+                                        ]),
                                         'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
                                     ),
                                 ),
@@ -844,10 +870,16 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.datesFromFileNames.scheduledDate.toggle.name'),
                     aliases: [i18n.t('settings.datesFromFileNames.heading')],
                     desc: SettingsTab.createFragmentWithHTML(
-                        `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1')} ` +
-                            `${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2')}</p>` +
-                            `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3')} ` +
-                            `${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4')}</p>`,
+                        paras([
+                            [
+                                i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1'),
+                                i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2'),
+                            ].join(' '),
+                            [
+                                i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3'),
+                                i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4'),
+                            ].join(' '),
+                        ]),
                     ),
                     render: this.withDocs(
                         this.withReload('useFilenameAsScheduledDate', (setting, refreshReloadButton) => {
@@ -927,8 +959,10 @@ export class SettingsTab extends PluginSettingTab {
                 {
                     name: i18n.t('settings.recurringTasks.removeScheduledDate.name'),
                     desc: SettingsTab.createFragmentWithHTML(
-                        `<p>${i18n.t('settings.recurringTasks.removeScheduledDate.description.line1')}</p>` +
-                            `<p>${i18n.t('settings.recurringTasks.removeScheduledDate.description.line2')}</p>`,
+                        paras([
+                            i18n.t('settings.recurringTasks.removeScheduledDate.description.line1'),
+                            i18n.t('settings.recurringTasks.removeScheduledDate.description.line2'),
+                        ]),
                     ),
                     render: this.renderToggleWithDocs(
                         'removeScheduledDateOnRecurrence',
@@ -1023,12 +1057,12 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.format.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.format.description.line1')}</p>` +
-                        `<p>${i18n.t('settings.format.description.line2')}</p>` +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
-                        this.seeTheDocumentation(
-                            'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
-                        ),
+                    paras([
+                        i18n.t('settings.format.description.line1'),
+                        i18n.t('settings.format.description.line2'),
+                        i18n.t('settings.changeRequiresRestart'),
+                        this.seeTheDocs('https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats'),
+                    ]),
                 ),
             )
             .addDropdown((dropdown) => {
@@ -1051,11 +1085,15 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.globalFilter.filter.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p><b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
-                        `<p>${i18n.t('settings.globalFilter.filter.description.line2')}<p>` +
-                        `<p>${i18n.t('settings.globalFilter.filter.description.line3')}</br>` +
-                        `${i18n.t('settings.globalFilter.filter.description.line4')}</p>` +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
+                    paras([
+                        bold(i18n.t('settings.globalFilter.filter.description.line1')),
+                        i18n.t('settings.globalFilter.filter.description.line2'),
+                        [
+                            i18n.t('settings.globalFilter.filter.description.line3'),
+                            i18n.t('settings.globalFilter.filter.description.line4'),
+                        ].join('</br>'),
+                        this.seeTheDocs('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
+                    ]),
                 ),
             )
             .addText((text) => {
@@ -1084,8 +1122,10 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.globalFilter.removeFilter.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.globalFilter.removeFilter.description')}</p>` +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                    paras([
+                        i18n.t('settings.globalFilter.removeFilter.description'),
+                        i18n.t('settings.changeRequiresRestart'),
+                    ]),
                 ),
             )
             .addToggle((toggle) => {
@@ -1107,8 +1147,10 @@ export class SettingsTab extends PluginSettingTab {
             new Setting(containerEl)
                 .setDesc(
                     SettingsTab.createFragmentWithHTML(
-                        `<p>${i18n.t('settings.globalQuery.query.description')}</p>` +
-                            this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Global+Query'),
+                        paras([
+                            i18n.t('settings.globalQuery.query.description'),
+                            this.seeTheDocs('https://publish.obsidian.md/tasks/Queries/Global+Query'),
+                        ]),
                     ),
                 )
                 .addTextArea((text) => {
@@ -1135,14 +1177,16 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.searches.enableCustomSearches.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.searches.enableCustomSearches.description.line1', {
-                        filterByFunction: '<code>filter by function</code>',
-                        sortByFunction: '<code>sort by function</code>',
-                        groupByFunction: '<code>group by function</code>',
-                    })}</p>` +
-                        `<p>${i18n.t('settings.searches.enableCustomSearches.description.line2')}</p>` +
-                        `<p><b>${i18n.t('settings.searches.enableCustomSearches.description.line3')}</b></p>` +
-                        `<p>${i18n.t('settings.searches.enableCustomSearches.description.line4')}</p>`,
+                    paras([
+                        i18n.t('settings.searches.enableCustomSearches.description.line1', {
+                            filterByFunction: '<code>filter by function</code>',
+                            sortByFunction: '<code>sort by function</code>',
+                            groupByFunction: '<code>group by function</code>',
+                        }),
+                        i18n.t('settings.searches.enableCustomSearches.description.line2'),
+                        bold(i18n.t('settings.searches.enableCustomSearches.description.line3')),
+                        i18n.t('settings.searches.enableCustomSearches.description.line4'),
+                    ]),
                 ),
             )
             .addToggle((toggle) => {
@@ -1177,16 +1221,15 @@ export class SettingsTab extends PluginSettingTab {
             .setHeading()
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    '<p>' +
+                    paras([
                         i18n.t('settings.presets.line1', {
                             name: '<code>name</code>',
                             instruction1: '<code>preset name</code>',
                             instruction2: '<code>{{preset.name}}</code>',
-                        }) +
-                        '</p><p>' +
-                        i18n.t('settings.presets.line2') +
-                        '</p>' +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+                        }),
+                        i18n.t('settings.presets.line2'),
+                        this.seeTheDocs('https://publish.obsidian.md/tasks/Queries/Presets'),
+                    ]),
                 ),
             );
         // ---------------------------------------------------------------------------
@@ -1208,14 +1251,11 @@ export class SettingsTab extends PluginSettingTab {
                 notice: {
                     class: 'setting-item-description',
                     text: null,
-                    html:
-                        '<p>' +
-                        i18n.t('settings.statuses.coreStatuses.description.line1') +
-                        '</p><p>' +
-                        i18n.t('settings.statuses.coreStatuses.description.line2') +
-                        '</p><p>' +
-                        i18n.t('settings.changeRequiresRestart') +
-                        '</p>',
+                    html: paras([
+                        i18n.t('settings.statuses.coreStatuses.description.line1'),
+                        i18n.t('settings.statuses.coreStatuses.description.line2'),
+                        i18n.t('settings.changeRequiresRestart'),
+                    ]),
                 },
                 settings: [
                     {
@@ -1238,19 +1278,17 @@ export class SettingsTab extends PluginSettingTab {
                 notice: {
                     class: 'setting-item-description',
                     text: null,
-                    html:
-                        '<p>' +
-                        i18n.t('settings.statuses.customStatuses.description.line1') +
-                        '</p><p>' +
-                        i18n.t('settings.statuses.customStatuses.description.line2') +
-                        '</p><p>' +
-                        i18n.t('settings.statuses.customStatuses.description.line3') +
-                        '</p><p>' +
-                        i18n.t('settings.changeRequiresRestart') +
-                        '</p><p></p><p>' +
-                        `<a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">${i18n.t(
-                            'settings.statuses.customStatuses.description.line4',
-                        )}</a></p>`,
+                    html: paras([
+                        i18n.t('settings.statuses.customStatuses.description.line1'),
+                        i18n.t('settings.statuses.customStatuses.description.line2'),
+                        i18n.t('settings.statuses.customStatuses.description.line3'),
+                        i18n.t('settings.changeRequiresRestart'),
+                        '',
+                        link(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
+                            i18n.t('settings.statuses.customStatuses.description.line4'),
+                        ),
+                    ]),
                 },
                 settings: [
                     {
@@ -1284,9 +1322,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.createdDate.description') +
                         '</br>' +
-                        this.seeTheDocumentation(
-                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date',
-                        ),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1303,7 +1339,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.doneDate.description') +
                         '</br>' +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date'),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1320,9 +1356,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.cancelledDate.description') +
                         '</br>' +
-                        this.seeTheDocumentation(
-                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
-                        ),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1343,16 +1377,14 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.datesFromFileNames.scheduledDate.toggle.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1') +
-                        '</br>' +
-                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2') +
-                        '</br>' +
-                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3') +
-                        '</br>' +
-                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4') +
-                        '</br>' +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
-                        this.seeTheDocumentation(
+                    [
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1'),
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2'),
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3'),
+                        i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4'),
+                        para(i18n.t('settings.changeRequiresRestart')),
+                    ].join('</br>') +
+                        this.seeTheDocsPara(
                             'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
                         ),
                 ),
@@ -1373,10 +1405,13 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.description.line1') +
                         '</br>' +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
-                        `<p><a href="https://momentjs.com/docs/#/displaying/format/">${i18n.t(
-                            'settings.datesFromFileNames.scheduledDate.extraFormat.description.line2',
-                        )}</a></p>`,
+                        paras([
+                            i18n.t('settings.changeRequiresRestart'),
+                            link(
+                                'https://momentjs.com/docs/#/displaying/format/',
+                                i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.description.line2'),
+                            ),
+                        ]),
                 ),
             )
             .addText((text) => {
@@ -1394,8 +1429,10 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.datesFromFileNames.scheduledDate.folders.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.folders.description')}</p>` +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                    paras([
+                        i18n.t('settings.datesFromFileNames.scheduledDate.folders.description'),
+                        i18n.t('settings.changeRequiresRestart'),
+                    ]),
                 ),
             )
             .addText(async (input) => {
@@ -1422,7 +1459,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.recurringTasks.nextLine.description') +
                         '</br>' +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1441,7 +1478,7 @@ export class SettingsTab extends PluginSettingTab {
                         '</br>' +
                         i18n.t('settings.recurringTasks.removeScheduledDate.description.line2') +
                         '</br>' +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1464,8 +1501,10 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.autoSuggest.toggle.description') +
                         '</br>' +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
+                        paras([
+                            i18n.t('settings.changeRequiresRestart'),
+                            this.seeTheDocs('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
+                        ]),
                 ),
             )
             .addToggle((toggle) => {
@@ -1482,8 +1521,10 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.autoSuggest.minLength.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.autoSuggest.minLength.description')}</p>` +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                    paras([
+                        i18n.t('settings.autoSuggest.minLength.description'),
+                        i18n.t('settings.changeRequiresRestart'),
+                    ]),
                 ),
             )
             .addSlider((slider) => {
@@ -1502,8 +1543,10 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.autoSuggest.maxSuggestions.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.autoSuggest.maxSuggestions.description')}</p>` +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                    paras([
+                        i18n.t('settings.autoSuggest.maxSuggestions.description'),
+                        i18n.t('settings.changeRequiresRestart'),
+                    ]),
                 ),
             )
             .addSlider((slider) => {
@@ -1530,7 +1573,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dialogs.accessKeys.description') +
                         '</br>' +
-                        this.seeTheDocumentation(
+                        this.seeTheDocsPara(
                             'https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts',
                         ),
                 ),
@@ -1544,8 +1587,14 @@ export class SettingsTab extends PluginSettingTab {
             });
     }
 
-    private seeTheDocumentation(url: string) {
-        return `<p><a href="${url}">${i18n.t('settings.seeTheDocumentation')}</a>.</p>`;
+    private seeTheDocsPara(url: string) {
+        const linkPlusDot = this.seeTheDocs(url);
+        return para(linkPlusDot);
+    }
+
+    private seeTheDocs(url: string): string {
+        const anchor = i18n.t('settings.seeTheDocumentation');
+        return link(url, anchor) + '.';
     }
 
     private addOneSettingsBlock(
