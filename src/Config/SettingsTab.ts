@@ -950,8 +950,10 @@ export class SettingsTab extends PluginSettingTab {
                 {
                     name: i18n.t('settings.recurringTasks.removeScheduledDate.name'),
                     desc: SettingsTab.createFragmentWithHTML(
-                        `<p>${i18n.t('settings.recurringTasks.removeScheduledDate.description.line1')}</p>` +
-                            `<p>${i18n.t('settings.recurringTasks.removeScheduledDate.description.line2')}</p>`,
+                        paras([
+                            i18n.t('settings.recurringTasks.removeScheduledDate.description.line1'),
+                            i18n.t('settings.recurringTasks.removeScheduledDate.description.line2'),
+                        ]),
                     ),
                     render: this.renderToggleWithDocs(
                         'removeScheduledDateOnRecurrence',
