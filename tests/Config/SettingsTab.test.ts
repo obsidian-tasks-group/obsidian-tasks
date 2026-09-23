@@ -146,6 +146,6 @@ describe('SettingsTab pre-1.13', () => {
 
         settingsTab.display();
 
-        verifyAsJson(recordedLegacySettings);
+        verifyAsJson(serializeForApproval(recordedLegacySettings));
     });
 });
