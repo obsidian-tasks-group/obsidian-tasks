@@ -81,6 +81,10 @@ function paras(texts: unknown[]): string {
     return texts.map((text) => para(text)).join('');
 }
 
+function link(url: string, anchor: string): string {
+    return `<a href="${url}">${anchor}</a>.`;
+}
+
 /**
  * The plugin's settings tab, with two implementations of the UI:
  *
@@ -1578,8 +1582,7 @@ export class SettingsTab extends PluginSettingTab {
 
     private seeTheDocumentation(url: string) {
         const anchor = i18n.t('settings.seeTheDocumentation');
-        const link = `<a href="${url}">${anchor}</a>.`;
-        return para(link);
+        return para(link(url, anchor));
     }
 
     private addOneSettingsBlock(
