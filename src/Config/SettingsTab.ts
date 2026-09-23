@@ -493,16 +493,15 @@ export class SettingsTab extends PluginSettingTab {
             type: 'page',
             name: i18n.t('settings.presets.name'),
             desc: SettingsTab.createFragmentWithHTML(
-                '<p>' +
+                paras([
                     i18n.t('settings.presets.line1', {
                         name: '<code>name</code>',
                         instruction1: '<code>preset name</code>',
                         instruction2: '<code>{{preset.name}}</code>',
                     }) +
-                    '</p><p>' +
-                    i18n.t('settings.presets.line2') +
-                    '</p>' +
-                    this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+                        '</p><p>' +
+                        i18n.t('settings.presets.line2'),
+                ]) + this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
             ),
             items: this.presetsSettingsUI.getPresetsDefinitions(() => this.rebuildSettingsTab()),
         };
