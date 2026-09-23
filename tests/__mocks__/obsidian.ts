@@ -311,17 +311,51 @@ export function getLanguage() {
     return 'en';
 }
 
-/**
- * A mock implementation of the Obsidian Modal class.
- * Without this testing the TaskModal throws an error attempting to extend Modal
- */
+// Records the last modal opened by a test so approval tests can inspect
+// modal title/body text triggered by declarative settings callbacks.
+export const lastModalState: {
+    title: string | null;
+    html: string | null;
+    opened: boolean;
+} = {
+    title: null,
+    html: null,
+    opened: false,
+};
+
+export function resetLastModalState(): void {
+    lastModalState.title = null;
+    lastModalState.html = null;
+    lastModalState.opened = false;
+}
+
+// Minimal Modal mock for tests that inspect modal text produced by UI callbacks.
 export class Modal {
-    public open(): void {
-        // Mocked interface, no-op
+    public contentEl: HTMLDivElement;
+    public modalEl: HTMLDivElement;
+    public titleEl: HTMLDivElement;
+
+    constructor(_app?: App) {
+        this.contentEl = document.createElement('div');
+        this.modalEl = document.createElement('div');
+        this.titleEl = document.createElement('div');
     }
+
+    public setTitle(title: string): this {
+        this.titleEl.textContent = title;
+        lastModalState.title = title;
+        return this;
+    }
+
+    public open(): void {
+        lastModalState.opened = true;
+        lastModalState.html = this.contentEl.innerHTML;
+    }
+
     public close(): void {
         // Mocked interface, no-op
     }
+
     public onOpen(): void {}
     public onClose(): void {}
 }
@@ -348,4 +382,28 @@ export abstract class SuggestModal<T> extends Modal {
     public abstract getSuggestions(query: string): T[] | Promise<T[]>;
     public abstract renderSuggestion(value: T, el: HTMLElement): void;
     public abstract onChooseSuggestion(item: T, evt: MouseEvent | KeyboardEvent): void;
+}
+
+// Minimal ButtonComponent mock: only the methods currently needed by modal-building code.
+export class ButtonComponent {
+    public buttonEl: HTMLButtonElement;
+
+    constructor(containerEl: HTMLElement) {
+        this.buttonEl = document.createElement('button');
+        containerEl.appendChild(this.buttonEl);
+    }
+
+    public setButtonText(text: string): this {
+        this.buttonEl.textContent = text;
+        return this;
+    }
+
+    public setClass(className: string): this {
+        this.buttonEl.classList.add(className);
+        return this;
+    }
+
+    public onClick(_callback: () => void): this {
+        return this;
+    }
 }
