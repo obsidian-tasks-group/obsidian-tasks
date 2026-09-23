@@ -27,10 +27,6 @@ code in `src/` that uses `moment` or `Moment` just need a normal import:
 
 <!-- snippet: declare-moment-in-tests -->
 ```ts
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 ```
 <!-- endSnippet -->
