@@ -132,7 +132,12 @@
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Add new preset",
+        "cta": true,
+        "onClick": "[Function]"
+      }
     ]
   },
   {
@@ -161,7 +166,13 @@
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Review and check your statuses",
+        "cta": true,
+        "onClick": "[Function]",
+        "tooltip": "Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings."
+      }
     ]
   },
   {
@@ -187,57 +198,104 @@
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Add new task status",
+        "cta": true,
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "AnuPpuccin: add 28 supported statuses",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Aura: add 19 supported statuses",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Border: add 20 supported statuses",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Ebullientworks: add 8 supported statuses",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "ITS & SlRvb Checkboxes: add 38 supported statuses",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Minimal: add 22 supported statuses",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Things: add 22 supported statuses",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "LYT Mode (dark mode only): add 22 supported statuses",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Add all unknown status types",
+        "cta": true,
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "button"
+      {
+        "type": "button",
+        "text": "Reset custom status types to defaults",
+        "warning": true,
+        "onClick": "[Function]"
+      }
     ]
   },
   {

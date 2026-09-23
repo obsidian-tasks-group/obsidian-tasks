@@ -475,8 +475,38 @@ export class Setting {
         return this;
     }
 
-    public addButton(_callback: (button: unknown) => void): this {
-        (this.record.controls as string[]).push('button');
+    public addButton(callback: (button: unknown) => void): this {
+        const control: Record<string, unknown> = { type: 'button' };
+
+        if (!this.record.controls) {
+            this.record.controls = [];
+        }
+        (this.record.controls as Array<Record<string, unknown>>).push(control);
+
+        const fakeButton = {
+            setButtonText: (text: string) => {
+                control.text = text;
+                return fakeButton;
+            },
+            onClick: (_callback: () => void) => {
+                control.onClick = '[Function]';
+                return fakeButton;
+            },
+            setCta: () => {
+                control.cta = true;
+                return fakeButton;
+            },
+            setWarning: () => {
+                control.warning = true;
+                return fakeButton;
+            },
+            setTooltip: (tooltip: string) => {
+                control.tooltip = tooltip;
+                return fakeButton;
+            },
+        };
+
+        callback(fakeButton);
         return this;
     }
 
