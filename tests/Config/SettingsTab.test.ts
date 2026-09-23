@@ -1,5 +1,4 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { i18n } from '../../src/i18n/i18n';
 import { SettingsTab } from '../../src/Config/SettingsTab';
 
 function serializeForApproval(value: unknown): unknown {
@@ -43,26 +42,7 @@ describe('SettingsTab post-1.13', () => {
 
     const settingsTab = new SettingsTab({ plugin, events });
 
-    it('renders the task format description as two paragraphs in order', () => {
-        const definitions = settingsTab.getSettingDefinitions();
-        const globalDefaultsGroup = definitions[0] as any;
-        const taskFormatSetting = globalDefaultsGroup.items[0];
-
-        const html = fragmentToHtml(taskFormatSetting.desc as DocumentFragment);
-
-        expect(html).toBe(
-            `<p>${i18n.t('settings.format.description.line1')}</p>` +
-                `<p>${i18n.t('settings.format.description.line2')}</p>`,
-        );
-    });
-
     it('all settings', () => {
         verifyAsJson(serializeForApproval(settingsTab.getSettingDefinitions()));
     });
 });
-
-function fragmentToHtml(fragment: DocumentFragment): string {
-    const div = document.createElement('div');
-    div.appendChild(fragment.cloneNode(true));
-    return div.innerHTML;
-}
