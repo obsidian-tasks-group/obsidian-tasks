@@ -1048,9 +1048,11 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.format.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.format.description.line1')}</p>` +
-                        `<p>${i18n.t('settings.format.description.line2')}</p>` +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
+                    paras([
+                        i18n.t('settings.format.description.line1'),
+                        i18n.t('settings.format.description.line2'),
+                        i18n.t('settings.changeRequiresRestart'),
+                    ]) +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
                         ),
