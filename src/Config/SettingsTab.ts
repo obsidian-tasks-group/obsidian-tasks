@@ -1532,8 +1532,10 @@ export class SettingsTab extends PluginSettingTab {
             .setName(i18n.t('settings.autoSuggest.maxSuggestions.name'))
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    `<p>${i18n.t('settings.autoSuggest.maxSuggestions.description')}</p>` +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                    paras([
+                        i18n.t('settings.autoSuggest.maxSuggestions.description'),
+                        i18n.t('settings.changeRequiresRestart'),
+                    ]),
                 ),
             )
             .addSlider((slider) => {
