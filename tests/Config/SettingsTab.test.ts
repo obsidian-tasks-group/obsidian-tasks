@@ -10,6 +10,34 @@ import { SettingsTab } from '../../src/Config/SettingsTab';
 
 // Convert the declarative settings tree into approval-friendly JSON.
 // This preserves visible text/HTML and replaces callbacks with stable markers.
+
+// The promoted keys will be saved first, in that order.
+// All other keys will be sorted alphabetically.
+const promotedKeys = ['name', 'heading', 'desc'] as const;
+const promotedKeySet = new Set<string>(promotedKeys);
+
+function compareApprovalKeys(a: string, b: string): number {
+    const aPromoted = promotedKeySet.has(a);
+    const bPromoted = promotedKeySet.has(b);
+
+    if (aPromoted && bPromoted) {
+        return (
+            promotedKeys.indexOf(a as (typeof promotedKeys)[number]) -
+            promotedKeys.indexOf(b as (typeof promotedKeys)[number])
+        );
+    }
+
+    if (aPromoted) {
+        return -1;
+    }
+
+    if (bPromoted) {
+        return 1;
+    }
+
+    return a.localeCompare(b);
+}
+
 function serializeForApproval(value: unknown): unknown {
     if (value instanceof DocumentFragment) {
         const div = document.createElement('div');
@@ -28,7 +56,7 @@ function serializeForApproval(value: unknown): unknown {
     if (value !== null && typeof value === 'object') {
         const record = Object.fromEntries(
             Object.entries(value)
-                .sort(([a], [b]) => a.localeCompare(b))
+                .sort(([a], [b]) => compareApprovalKeys(a, b))
                 .map(([key, entryValue]) => {
                     // Extra buttons can hide user-visible modal text behind onClick handlers,
                     // so capture a little more than just "[Function]" for these.
