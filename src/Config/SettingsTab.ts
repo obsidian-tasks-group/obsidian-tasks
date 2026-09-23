@@ -535,8 +535,10 @@ export class SettingsTab extends PluginSettingTab {
                                 .onClick(() =>
                                     this.showInfoModal(
                                         i18n.t('settings.statuses.coreStatuses.heading'),
-                                        `<p>${i18n.t('settings.statuses.coreStatuses.description.line1')}</p>` +
-                                            `<p>${i18n.t('settings.statuses.coreStatuses.description.line2')}</p>`,
+                                        paras([
+                                            i18n.t('settings.statuses.coreStatuses.description.line1'),
+                                            i18n.t('settings.statuses.coreStatuses.description.line2'),
+                                        ]),
                                         'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
                                     ),
                                 ),
