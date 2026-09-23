@@ -397,7 +397,7 @@ describe('HTMLElement.createSpan()', () => {
 });
 
 describe('HTMLElement.empty()', () => {
-    it.failing('removes all child nodes', () => {
+    it('removes all child nodes', () => {
         const parent = document.createElement('div');
         parent.appendChild(document.createElement('span'));
         parent.appendChild(document.createTextNode('text'));
