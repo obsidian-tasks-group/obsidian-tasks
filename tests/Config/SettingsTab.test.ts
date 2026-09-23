@@ -89,19 +89,19 @@ function serializeExtraButton(buttonFactory: Function): unknown {
     return buttonRecord;
 }
 
+const plugin = {
+    app: {} as any,
+    manifest: { version: 'test-version' },
+    saveSettings: jest.fn(async () => {}),
+    getTasks: jest.fn(() => []),
+} as any;
+
+const events = {
+    triggerReloadVault: jest.fn(),
+    triggerReloadOpenSearchResults: jest.fn(),
+} as any;
+
 describe('SettingsTab post-1.13', () => {
-    const plugin = {
-        app: {} as any,
-        manifest: { version: 'test-version' },
-        saveSettings: jest.fn(async () => {}),
-        getTasks: jest.fn(() => []),
-    } as any;
-
-    const events = {
-        triggerReloadVault: jest.fn(),
-        triggerReloadOpenSearchResults: jest.fn(),
-    } as any;
-
     const settingsTab = new SettingsTab({ plugin, events });
 
     it('all settings', () => {
@@ -110,18 +110,6 @@ describe('SettingsTab post-1.13', () => {
 });
 
 describe('SettingsTab pre-1.13', () => {
-    const plugin = {
-        app: {} as any,
-        manifest: { version: 'test-version' },
-        saveSettings: jest.fn(async () => {}),
-        getTasks: jest.fn(() => []),
-    } as any;
-
-    const events = {
-        triggerReloadVault: jest.fn(),
-        triggerReloadOpenSearchResults: jest.fn(),
-    } as any;
-
     const settingsTab = new SettingsTab({ plugin, events });
 
     it('all settings', () => {
