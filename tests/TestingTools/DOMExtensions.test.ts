@@ -410,7 +410,7 @@ describe('HTMLElement.empty()', () => {
 });
 
 describe('HTMLElement.addClass()', () => {
-    it.failing('addClass() should add one class', () => {
+    it('addClass() should add one class', () => {
         const element = document.createElement('div');
 
         element.addClass('single-class-value');
@@ -418,7 +418,7 @@ describe('HTMLElement.addClass()', () => {
         expect(element.classList).toContain('single-class-value');
     });
 
-    it.failing('addClass() should add multiple classes', () => {
+    it('addClass() should add multiple classes', () => {
         const element = document.createElement('div');
 
         element.addClass('first-class', 'second-class');
