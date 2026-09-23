@@ -1094,8 +1094,8 @@ export class SettingsTab extends PluginSettingTab {
                             i18n.t('settings.globalFilter.filter.description.line3'),
                             i18n.t('settings.globalFilter.filter.description.line4'),
                         ].join('</br>'),
-                    ]) +
-                        this.seeTheDocumentationPara('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
+                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
+                    ]),
                 ),
             )
             .addText((text) => {
