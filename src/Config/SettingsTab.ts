@@ -1267,19 +1267,16 @@ export class SettingsTab extends PluginSettingTab {
                 notice: {
                     class: 'setting-item-description',
                     text: null,
-                    html:
-                        '<p>' +
-                        i18n.t('settings.statuses.customStatuses.description.line1') +
-                        '</p><p>' +
-                        i18n.t('settings.statuses.customStatuses.description.line2') +
-                        '</p><p>' +
-                        i18n.t('settings.statuses.customStatuses.description.line3') +
-                        '</p><p>' +
-                        i18n.t('settings.changeRequiresRestart') +
-                        '</p><p></p><p>' +
+                    html: paras([
+                        i18n.t('settings.statuses.customStatuses.description.line1'),
+                        i18n.t('settings.statuses.customStatuses.description.line2'),
+                        i18n.t('settings.statuses.customStatuses.description.line3'),
+                        i18n.t('settings.changeRequiresRestart'),
+                        '',
                         `<a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">${i18n.t(
                             'settings.statuses.customStatuses.description.line4',
-                        )}</a></p>`,
+                        )}</a>`,
+                    ]),
                 },
                 settings: [
                     {
