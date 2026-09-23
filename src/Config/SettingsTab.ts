@@ -1374,7 +1374,7 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2'),
                         i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3'),
                         i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4'),
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>`,
+                        para(i18n.t('settings.changeRequiresRestart')),
                     ].join('</br>') +
                         this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
