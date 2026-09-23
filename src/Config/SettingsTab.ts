@@ -1322,9 +1322,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.createdDate.description') +
                         '</br>' +
-                        this.seeTheDocumentationPara(
-                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date',
-                        ),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1341,9 +1339,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.doneDate.description') +
                         '</br>' +
-                        this.seeTheDocumentationPara(
-                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date',
-                        ),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1360,9 +1356,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dates.cancelledDate.description') +
                         '</br>' +
-                        this.seeTheDocumentationPara(
-                            'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
-                        ),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1390,7 +1384,7 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4'),
                         para(i18n.t('settings.changeRequiresRestart')),
                     ].join('</br>') +
-                        this.seeTheDocumentationPara(
+                        this.seeTheDocsPara(
                             'https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date',
                         ),
                 ),
@@ -1465,9 +1459,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.recurringTasks.nextLine.description') +
                         '</br>' +
-                        this.seeTheDocumentationPara(
-                            'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
-                        ),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1486,9 +1478,7 @@ export class SettingsTab extends PluginSettingTab {
                         '</br>' +
                         i18n.t('settings.recurringTasks.removeScheduledDate.description.line2') +
                         '</br>' +
-                        this.seeTheDocumentationPara(
-                            'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
-                        ),
+                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks'),
                 ),
             )
             .addToggle((toggle) => {
@@ -1583,7 +1573,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.dialogs.accessKeys.description') +
                         '</br>' +
-                        this.seeTheDocumentationPara(
+                        this.seeTheDocsPara(
                             'https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts',
                         ),
                 ),
@@ -1597,7 +1587,7 @@ export class SettingsTab extends PluginSettingTab {
             });
     }
 
-    private seeTheDocumentationPara(url: string) {
+    private seeTheDocsPara(url: string) {
         const linkPlusDot = this.seeTheDocs(url);
         return para(linkPlusDot);
     }
