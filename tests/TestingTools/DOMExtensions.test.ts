@@ -395,3 +395,16 @@ describe('HTMLElement.createSpan()', () => {
         expectDocumentFragmentToHaveBeenUsed(child);
     });
 });
+
+describe('HTMLElement.empty()', () => {
+    it.failing('removes all child nodes', () => {
+        const parent = document.createElement('div');
+        parent.appendChild(document.createElement('span'));
+        parent.appendChild(document.createTextNode('text'));
+        parent.appendChild(document.createElement('p'));
+
+        parent.empty();
+
+        expect(parent.childNodes).toHaveLength(0);
+    });
+});
