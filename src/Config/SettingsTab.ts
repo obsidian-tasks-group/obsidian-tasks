@@ -1172,10 +1172,10 @@ export class SettingsTab extends PluginSettingTab {
                             filterByFunction: '<code>filter by function</code>',
                             sortByFunction: '<code>sort by function</code>',
                             groupByFunction: '<code>group by function</code>',
-                        })}</p>` +
-                            `<p>${i18n.t('settings.searches.enableCustomSearches.description.line2')}</p>` +
-                            `<p><b>${i18n.t('settings.searches.enableCustomSearches.description.line3')}</b></p>` +
-                            `<p>${i18n.t('settings.searches.enableCustomSearches.description.line4')}`,
+                        })}`,
+                        `${i18n.t('settings.searches.enableCustomSearches.description.line2')}`,
+                        `<b>${i18n.t('settings.searches.enableCustomSearches.description.line3')}</b>`,
+                        `${i18n.t('settings.searches.enableCustomSearches.description.line4')}`,
                     ]),
                 ),
             )
