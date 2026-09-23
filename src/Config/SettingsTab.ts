@@ -85,6 +85,10 @@ function link(url: string, anchor: string): string {
     return `<a href="${url}">${anchor}</a>`;
 }
 
+function bold(text: string): string {
+    return `<b>${text}</b>`;
+}
+
 /**
  * The plugin's settings tab, with two implementations of the UI:
  *
@@ -283,7 +287,7 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.globalFilter.filter.name'),
                     desc: SettingsTab.createFragmentWithHTML(
                         paras([
-                            `<b>${i18n.t('settings.globalFilter.filter.description.line1')}</b>`,
+                            bold(i18n.t('settings.globalFilter.filter.description.line1')),
                             i18n.t('settings.globalFilter.filter.description.line2'),
                             [
                                 i18n.t('settings.globalFilter.filter.description.line3'),
