@@ -1240,14 +1240,11 @@ export class SettingsTab extends PluginSettingTab {
                 notice: {
                     class: 'setting-item-description',
                     text: null,
-                    html:
-                        '<p>' +
-                        i18n.t('settings.statuses.coreStatuses.description.line1') +
-                        '</p><p>' +
-                        i18n.t('settings.statuses.coreStatuses.description.line2') +
-                        '</p><p>' +
-                        i18n.t('settings.changeRequiresRestart') +
-                        '</p>',
+                    html: paras([
+                        i18n.t('settings.statuses.coreStatuses.description.line1'),
+                        i18n.t('settings.statuses.coreStatuses.description.line2'),
+                        i18n.t('settings.changeRequiresRestart'),
+                    ]),
                 },
                 settings: [
                     {
