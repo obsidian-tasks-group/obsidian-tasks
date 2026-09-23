@@ -1168,14 +1168,14 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     paras([
-                        `${i18n.t('settings.searches.enableCustomSearches.description.line1', {
+                        i18n.t('settings.searches.enableCustomSearches.description.line1', {
                             filterByFunction: '<code>filter by function</code>',
                             sortByFunction: '<code>sort by function</code>',
                             groupByFunction: '<code>group by function</code>',
-                        })}`,
-                        `${i18n.t('settings.searches.enableCustomSearches.description.line2')}`,
+                        }),
+                        i18n.t('settings.searches.enableCustomSearches.description.line2'),
                         `<b>${i18n.t('settings.searches.enableCustomSearches.description.line3')}</b>`,
-                        `${i18n.t('settings.searches.enableCustomSearches.description.line4')}`,
+                        i18n.t('settings.searches.enableCustomSearches.description.line4'),
                     ]),
                 ),
             )
