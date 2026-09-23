@@ -1061,10 +1061,10 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.format.description.line1'),
                         i18n.t('settings.format.description.line2'),
                         i18n.t('settings.changeRequiresRestart'),
-                    ]) +
-                        this.seeTheDocumentationPara(
+                        this.seeTheDocumentation(
                             'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
                         ),
+                    ]),
                 ),
             )
             .addDropdown((dropdown) => {
