@@ -1397,10 +1397,12 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.description.line1') +
                         '</br>' +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
-                        `<p><a href="https://momentjs.com/docs/#/displaying/format/">${i18n.t(
-                            'settings.datesFromFileNames.scheduledDate.extraFormat.description.line2',
-                        )}</a></p>`,
+                        paras([
+                            i18n.t('settings.changeRequiresRestart'),
+                            `<a href="https://momentjs.com/docs/#/displaying/format/">${i18n.t(
+                                'settings.datesFromFileNames.scheduledDate.extraFormat.description.line2',
+                            )}</a>`,
+                        ]),
                 ),
             )
             .addText((text) => {
