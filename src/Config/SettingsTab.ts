@@ -508,7 +508,7 @@ export class SettingsTab extends PluginSettingTab {
                         instruction2: '<code>{{preset.name}}</code>',
                     }),
                     i18n.t('settings.presets.line2'),
-                    this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+                    this.seeTheDocs('https://publish.obsidian.md/tasks/Queries/Presets'),
                 ]),
             ),
             items: this.presetsSettingsUI.getPresetsDefinitions(() => this.rebuildSettingsTab()),
@@ -1061,9 +1061,7 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.format.description.line1'),
                         i18n.t('settings.format.description.line2'),
                         i18n.t('settings.changeRequiresRestart'),
-                        this.seeTheDocumentation(
-                            'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
-                        ),
+                        this.seeTheDocs('https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats'),
                     ]),
                 ),
             )
@@ -1094,7 +1092,7 @@ export class SettingsTab extends PluginSettingTab {
                             i18n.t('settings.globalFilter.filter.description.line3'),
                             i18n.t('settings.globalFilter.filter.description.line4'),
                         ].join('</br>'),
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
+                        this.seeTheDocs('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
                     ]),
                 ),
             )
@@ -1151,7 +1149,7 @@ export class SettingsTab extends PluginSettingTab {
                     SettingsTab.createFragmentWithHTML(
                         paras([
                             i18n.t('settings.globalQuery.query.description'),
-                            this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Global+Query'),
+                            this.seeTheDocs('https://publish.obsidian.md/tasks/Queries/Global+Query'),
                         ]),
                     ),
                 )
@@ -1230,7 +1228,7 @@ export class SettingsTab extends PluginSettingTab {
                             instruction2: '<code>{{preset.name}}</code>',
                         }),
                         i18n.t('settings.presets.line2'),
-                        this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Presets'),
+                        this.seeTheDocs('https://publish.obsidian.md/tasks/Queries/Presets'),
                     ]),
                 ),
             );
@@ -1515,7 +1513,7 @@ export class SettingsTab extends PluginSettingTab {
                         '</br>' +
                         paras([
                             i18n.t('settings.changeRequiresRestart'),
-                            this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
+                            this.seeTheDocs('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
                         ]),
                 ),
             )
@@ -1600,11 +1598,11 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     private seeTheDocumentationPara(url: string) {
-        const linkPlusDot = this.seeTheDocumentation(url);
+        const linkPlusDot = this.seeTheDocs(url);
         return para(linkPlusDot);
     }
 
-    private seeTheDocumentation(url: string): string {
+    private seeTheDocs(url: string): string {
         const anchor = i18n.t('settings.seeTheDocumentation');
         return link(url, anchor) + '.';
     }
