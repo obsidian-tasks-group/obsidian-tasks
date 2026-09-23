@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 
 import { RecurrenceField } from '../../../src/Query/Filter/RecurrenceField';

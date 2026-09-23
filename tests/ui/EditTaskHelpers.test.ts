@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { focusOnceClearOfKeyboard, labelContentWithAccessKey } from '../../src/ui/EditTaskHelpers';
 
 describe('labelContentWithAccessKey() tests', () => {

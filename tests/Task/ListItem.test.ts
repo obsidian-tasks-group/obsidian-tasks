@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment/moment';
 
 import type { Reference } from 'obsidian';

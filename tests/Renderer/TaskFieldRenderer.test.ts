@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
 import { TaskFieldHTMLData, TaskFieldRenderer } from '../../src/Renderer/TaskFieldRenderer';

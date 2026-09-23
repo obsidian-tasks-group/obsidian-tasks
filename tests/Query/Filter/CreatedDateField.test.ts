@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { CreatedDateField } from '../../../src/Query/Filter/CreatedDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';

@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { Feature } from '../../src/Config/Feature';
 
 describe('feature-usage', () => {

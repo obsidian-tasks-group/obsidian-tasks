@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import type { Task } from 'Task/Task';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';

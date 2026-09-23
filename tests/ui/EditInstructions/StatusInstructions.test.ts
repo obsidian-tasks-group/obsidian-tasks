@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment/moment';
 
 import { Status } from '../../../src/Statuses/Status';

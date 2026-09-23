@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { DateParser } from '../../src/DateTime/DateParser';
 

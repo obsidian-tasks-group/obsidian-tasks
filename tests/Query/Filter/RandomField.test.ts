@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 
 import { RandomField } from '../../../src/Query/Filter/RandomField';

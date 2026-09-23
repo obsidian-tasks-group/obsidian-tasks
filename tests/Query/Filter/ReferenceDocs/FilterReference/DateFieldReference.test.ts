@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { readFileSync } from 'fs';
 import moment from 'moment';
 import { verifyQueryExplanation } from '../../../../TestingTools/ApprovalTestHelpers';

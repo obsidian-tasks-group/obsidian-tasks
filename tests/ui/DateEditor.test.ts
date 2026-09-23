@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { fireEvent, render } from '@testing-library/svelte';
 import moment from 'moment/moment';
 import DateEditorWrapper from './DateEditorWrapper.svelte';

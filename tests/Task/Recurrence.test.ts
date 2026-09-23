@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { Occurrence } from '../../src/Task/Occurrence';
 import { Recurrence } from '../../src/Task/Recurrence';

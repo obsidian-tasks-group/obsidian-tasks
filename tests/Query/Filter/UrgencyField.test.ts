@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { UrgencyField } from '../../../src/Query/Filter/UrgencyField';

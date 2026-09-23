@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { CancelledDateField } from '../../../src/Query/Filter/CancelledDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';

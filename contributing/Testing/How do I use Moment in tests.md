@@ -19,9 +19,11 @@ See also the equivalent [[How do I use Moment in src]].
 
 This is how to declare `moment` and `Moment` in files that **test** code in the Tasks plugin.
 
-### Use the "jsdom" test environment
+### The "jsdom" test environment is global
 
-Any test files that call any code in `src/` that uses `moment` or `Moment` need to start with this boilerplate code:
+`jest.config.js` sets `testEnvironment: 'jsdom'` for the whole project, so every test file already
+runs in a DOM environment. There is no per-file environment boilerplate. Any test files that call
+code in `src/` that uses `moment` or `Moment` just need a normal import:
 
 <!-- snippet: declare-moment-in-tests -->
 ```ts
@@ -73,17 +75,6 @@ expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
 ## Fixing common errors
 
 These are common error messages you may see when testing moment-related code.
-
-### Consider using the "jsdom" test environment
-
-If you see this:
-
-```text
-The error below may be caused by using the wrong test environment, see https://jestjs.io/docs/configuration#testenvironment-string.
-Consider using the "jsdom" test environment.
-```
-
-... you probably need to [[#Use the "jsdom" test environment]].
 
 ### window.moment is not a function
 

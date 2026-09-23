@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';

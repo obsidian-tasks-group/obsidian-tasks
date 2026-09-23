@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 import type TasksPlugin from '../../src/main';
 import { tasksApiV1 } from '../../src/Api';

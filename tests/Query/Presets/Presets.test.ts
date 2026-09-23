@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 import { getSettings, resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { Query } from '../../../src/Query/Query';

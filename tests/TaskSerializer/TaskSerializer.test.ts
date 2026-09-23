@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 import { Task } from '../../src/Task/Task';
 import type { TaskDetails, TaskSerializer } from '../../src/TaskSerializer';

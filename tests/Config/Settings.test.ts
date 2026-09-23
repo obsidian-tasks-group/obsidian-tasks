@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { getSettings, isFeatureEnabled, resetSettings, toggleFeature, updateSettings } from '../../src/Config/Settings';
 import { defaultPresets } from '../../src/Query/Presets/Presets';
 
