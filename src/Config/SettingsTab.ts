@@ -861,10 +861,16 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.datesFromFileNames.scheduledDate.toggle.name'),
                     aliases: [i18n.t('settings.datesFromFileNames.heading')],
                     desc: SettingsTab.createFragmentWithHTML(
-                        `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1')} ` +
-                            `${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2')}</p>` +
-                            `<p>${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3')} ` +
-                            `${i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4')}</p>`,
+                        paras([
+                            [
+                                i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line1'),
+                                i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line2'),
+                            ].join(' '),
+                            [
+                                i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line3'),
+                                i18n.t('settings.datesFromFileNames.scheduledDate.toggle.description.line4'),
+                            ].join(' '),
+                        ]),
                     ),
                     render: this.withDocs(
                         this.withReload('useFilenameAsScheduledDate', (setting, refreshReloadButton) => {
