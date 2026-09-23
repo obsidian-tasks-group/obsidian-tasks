@@ -133,6 +133,9 @@ describe('SettingsTab post-1.13', () => {
     const settingsTab = new SettingsTab({ plugin, events });
 
     it('all settings', () => {
+        // TODO Show the 'Global Query' modal
+        // TODO Show the 'Enable custom searches' modal.
+        // TODO Show options in the 'Task count location' dropdown.
         verifyAsJson(serializeForApproval(settingsTab.getSettingDefinitions()));
     });
 });
