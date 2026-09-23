@@ -73,6 +73,14 @@ function getSettingsAtPluginLoad(): Settings {
     return settingsAtPluginLoad as Settings;
 }
 
+function para(text: unknown): string {
+    return `<p>${text}</p>`;
+}
+
+function paras(texts: unknown[]): string {
+    return texts.map((text) => para(text)).join('');
+}
+
 /**
  * The plugin's settings tab, with two implementations of the UI:
  *
@@ -236,8 +244,11 @@ export class SettingsTab extends PluginSettingTab {
         return {
             name: i18n.t('settings.format.name'),
             desc: SettingsTab.createFragmentWithHTML(
-                `<p>${i18n.t('settings.format.description.line1')}</p>` +
-                    `<p>${i18n.t('settings.format.description.line2')}</p>`,
+                paras([
+                    // force line break
+                    i18n.t('settings.format.description.line1'),
+                    i18n.t('settings.format.description.line2'),
+                ]),
             ),
             render: this.withDocs(
                 this.withReload('taskFormat', (setting, refreshReloadButton) => {
