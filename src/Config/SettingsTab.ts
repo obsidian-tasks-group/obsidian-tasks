@@ -1182,7 +1182,7 @@ export class SettingsTab extends PluginSettingTab {
                             groupByFunction: '<code>group by function</code>',
                         }),
                         i18n.t('settings.searches.enableCustomSearches.description.line2'),
-                        `<b>${i18n.t('settings.searches.enableCustomSearches.description.line3')}</b>`,
+                        bold(i18n.t('settings.searches.enableCustomSearches.description.line3')),
                         i18n.t('settings.searches.enableCustomSearches.description.line4'),
                     ]),
                 ),
