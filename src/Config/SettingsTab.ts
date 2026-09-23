@@ -1594,8 +1594,13 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     private seeTheDocumentationPara(url: string) {
+        const linkPlusDot = this.seeTheDocumentation(url);
+        return para(linkPlusDot);
+    }
+
+    private seeTheDocumentation(url: string): string {
         const anchor = i18n.t('settings.seeTheDocumentation');
-        return para(link(url, anchor) + '.');
+        return link(url, anchor) + '.';
     }
 
     private addOneSettingsBlock(
