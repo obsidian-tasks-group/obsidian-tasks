@@ -13,14 +13,14 @@ afterEach(() => {
 });
 
 describe('ModalOptionsEditor snapshot tests', () => {
-    it('should match snapshot', () => {
-        verifyModalHTML();
+    it('should match snapshot', async () => {
+        await verifyModalHTML();
     });
 
-    it('should match snapshot - all options present even when a random option is absent', () => {
+    it('should match snapshot - all options present even when a random option is absent', async () => {
         updateSettings({ isShownInEditModal: optionsWithoutARandomField() });
 
-        verifyModalHTML();
+        await verifyModalHTML();
     });
 });
 

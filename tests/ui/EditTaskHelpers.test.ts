@@ -93,7 +93,7 @@ describe('focusOnceClearOfKeyboard() tests', () => {
     }
 
     function putFieldAt(bottom: number) {
-        fieldEl.getBoundingClientRect = () => ({ bottom } as DOMRect);
+        fieldEl.getBoundingClientRect = () => ({ bottom }) as DOMRect;
     }
 
     /** Pretend the keyboard needs this much room, by giving the element that measures it a height. */

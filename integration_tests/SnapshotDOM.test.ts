@@ -57,7 +57,7 @@ describe('DOM snapshots', () => {
 
         // Save the HTML
         const html = executeCommand(`obsidian dev:dom selector='${DOM_SELECTOR}'`).toString();
-        const prettyHTML = prettifyHTML(html);
+        const prettyHTML = await prettifyHTML(html);
 
         // The following output is dependent on Obsidian window size
         //  <div class="markdown-preview-sizer markdown-preview-section" style="padding-bottom: 355px; min-height: 362px">

@@ -248,11 +248,11 @@ class RendererStoryboard {
         return this.addFrame(description, container);
     }
 
-    public addFrame(description: string, container: HTMLDivElement) {
+    public async addFrame(description: string, container: HTMLDivElement) {
         this.output += `<h2>${description}:</h2>\n\n`;
         this.output += `<p>Results filter: '${this.renderer.filterString}'</p>\n`;
 
-        const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
+        const { tasksAsMarkdown, prettyHTML } = await tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;
 
         return { prettyHTML, container };
@@ -318,7 +318,7 @@ describe('QueryResultsRenderer - sequences', () => {
         const { container } = await storyboard.renderAndAddFrame('Initial results - expect 2 tasks');
 
         await storyboard.renderer.applySearchBoxFilterAndRerender('parent', container);
-        storyboard.addFrame('Filtered results (parent) - expect 1 task', container);
+        await storyboard.addFrame('Filtered results (parent) - expect 1 task', container);
 
         GlobalQuery.getInstance().set('sort by function reverse task.description.length');
         storyboard.renderer.rereadQueryFromFile();
