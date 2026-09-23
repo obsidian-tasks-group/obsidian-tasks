@@ -1492,7 +1492,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.autoSuggest.toggle.description') +
                         '</br>' +
-                        `<p>${i18n.t('settings.changeRequiresRestart')}</p>` +
+                        para(i18n.t('settings.changeRequiresRestart')) +
                         this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
                 ),
             )
