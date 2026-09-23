@@ -101,6 +101,31 @@ export class Notice {
     hide(): void {}
 }
 
+export class PluginSettingTab {
+    public containerEl: HTMLElement;
+    public app: App;
+    public plugin: unknown;
+
+    constructor(app: App, plugin: unknown) {
+        this.app = app;
+        this.plugin = plugin;
+        this.containerEl = document.createElement('div');
+    }
+
+    public update(): void {}
+    public refreshDomState(): void {}
+}
+
+export function sanitizeHTMLToDom(html: string): DocumentFragment {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    return template.content.cloneNode(true) as DocumentFragment;
+}
+
+export function requireApiVersion(_version: string): boolean {
+    return true;
+}
+
 interface SearchResult {
     score: number;
     matches: number[][];
