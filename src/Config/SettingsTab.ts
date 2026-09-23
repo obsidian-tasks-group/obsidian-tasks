@@ -1404,9 +1404,10 @@ export class SettingsTab extends PluginSettingTab {
                         '</br>' +
                         paras([
                             i18n.t('settings.changeRequiresRestart'),
-                            `<a href="https://momentjs.com/docs/#/displaying/format/">${i18n.t(
-                                'settings.datesFromFileNames.scheduledDate.extraFormat.description.line2',
-                            )}</a>`,
+                            link(
+                                'https://momentjs.com/docs/#/displaying/format/',
+                                i18n.t('settings.datesFromFileNames.scheduledDate.extraFormat.description.line2'),
+                            ),
                         ]),
                 ),
             )
