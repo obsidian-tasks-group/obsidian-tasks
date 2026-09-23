@@ -1277,9 +1277,10 @@ export class SettingsTab extends PluginSettingTab {
                         i18n.t('settings.statuses.customStatuses.description.line3'),
                         i18n.t('settings.changeRequiresRestart'),
                         '',
-                        `<a href="https://publish.obsidian.md/tasks/Getting+Started/Statuses">${i18n.t(
-                            'settings.statuses.customStatuses.description.line4',
-                        )}</a>`,
+                        link(
+                            'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
+                            i18n.t('settings.statuses.customStatuses.description.line4'),
+                        ),
                     ]),
                 },
                 settings: [
