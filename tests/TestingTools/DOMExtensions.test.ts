@@ -408,3 +408,22 @@ describe('HTMLElement.empty()', () => {
         expect(parent.childNodes).toHaveLength(0);
     });
 });
+
+describe('HTMLElement.addClass()', () => {
+    it.failing('addClass() should add one class', () => {
+        const element = document.createElement('div');
+
+        element.addClass('single-class-value');
+
+        expect(element.classList).toContain('single-class-value');
+    });
+
+    it.failing('addClass() should add multiple classes', () => {
+        const element = document.createElement('div');
+
+        element.addClass('first-class', 'second-class');
+
+        expect(element.classList).toContain('first-class');
+        expect(element.classList).toContain('second-class');
+    });
+});
