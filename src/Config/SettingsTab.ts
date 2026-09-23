@@ -1080,7 +1080,7 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     paras([
                         `<b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
-                            `<p>${i18n.t('settings.globalFilter.filter.description.line2')}<p>` +
+                            `<p>${i18n.t('settings.globalFilter.filter.description.line2')}</p>` +
                             `<p>${i18n.t('settings.globalFilter.filter.description.line3')}</br>` +
                             `${i18n.t('settings.globalFilter.filter.description.line4')}`,
                     ]) + this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
