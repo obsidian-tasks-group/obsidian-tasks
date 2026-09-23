@@ -1513,8 +1513,10 @@ export class SettingsTab extends PluginSettingTab {
                 SettingsTab.createFragmentWithHTML(
                     i18n.t('settings.autoSuggest.toggle.description') +
                         '</br>' +
-                        para(i18n.t('settings.changeRequiresRestart')) +
-                        this.seeTheDocumentationPara('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
+                        paras([
+                            i18n.t('settings.changeRequiresRestart'),
+                            this.seeTheDocumentation('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
+                        ]),
                 ),
             )
             .addToggle((toggle) => {
