@@ -82,7 +82,7 @@ function paras(texts: unknown[]): string {
 }
 
 function link(url: string, anchor: string): string {
-    return `<a href="${url}">${anchor}</a>.`;
+    return `<a href="${url}">${anchor}</a>`;
 }
 
 /**
@@ -1582,7 +1582,7 @@ export class SettingsTab extends PluginSettingTab {
 
     private seeTheDocumentation(url: string) {
         const anchor = i18n.t('settings.seeTheDocumentation');
-        return para(link(url, anchor));
+        return para(link(url, anchor) + '.');
     }
 
     private addOneSettingsBlock(
