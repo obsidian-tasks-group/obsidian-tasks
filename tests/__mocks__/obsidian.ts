@@ -510,8 +510,28 @@ export class Setting {
         return this;
     }
 
-    public addExtraButton(_callback: (extra: unknown) => void): this {
-        (this.record.controls as string[]).push('extraButton');
+    public addExtraButton(callback: (extra: unknown) => void): this {
+        const control: Record<string, unknown> = { type: 'extraButton' };
+
+        (this.record.controls as Array<Record<string, unknown>>).push(control);
+
+        const fakeExtraButton = {
+            extraSettingsEl: document.createElement('div'),
+            setIcon: (icon: string) => {
+                control.icon = icon;
+                return fakeExtraButton;
+            },
+            setTooltip: (tooltip: string) => {
+                control.tooltip = tooltip;
+                return fakeExtraButton;
+            },
+            onClick: (_callback: () => void) => {
+                control.onClick = '[Function]';
+                return fakeExtraButton;
+            },
+        };
+
+        callback(fakeExtraButton);
         return this;
     }
 

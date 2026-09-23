@@ -70,64 +70,136 @@
     "controls": [
       "text",
       "textArea",
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder"
+      },
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
       "text",
       "textArea",
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder"
+      },
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
       "text",
       "textArea",
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder"
+      },
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
       "text",
       "textArea",
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder"
+      },
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
       "text",
       "textArea",
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder"
+      },
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
       "text",
       "textArea",
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder"
+      },
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
       "text",
       "textArea",
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder"
+      },
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
       "text",
       "textArea",
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder"
+      },
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
@@ -156,12 +228,22 @@
   },
   {
     "controls": [
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "pencil",
+        "tooltip": "Edit",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "pencil",
+        "tooltip": "Edit",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
@@ -186,14 +268,34 @@
   },
   {
     "controls": [
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      },
+      {
+        "type": "extraButton",
+        "icon": "pencil",
+        "tooltip": "Edit",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
     "controls": [
-      "extraButton",
-      "extraButton"
+      {
+        "type": "extraButton",
+        "icon": "cross",
+        "tooltip": "Delete",
+        "onClick": "[Function]"
+      },
+      {
+        "type": "extraButton",
+        "icon": "pencil",
+        "tooltip": "Edit",
+        "onClick": "[Function]"
+      }
     ]
   },
   {
