@@ -1149,8 +1149,10 @@ export class SettingsTab extends PluginSettingTab {
             new Setting(containerEl)
                 .setDesc(
                     SettingsTab.createFragmentWithHTML(
-                        para(i18n.t('settings.globalQuery.query.description')) +
-                            this.seeTheDocumentationPara('https://publish.obsidian.md/tasks/Queries/Global+Query'),
+                        paras([
+                            i18n.t('settings.globalQuery.query.description'),
+                            this.seeTheDocumentation('https://publish.obsidian.md/tasks/Queries/Global+Query'),
+                        ]),
                     ),
                 )
                 .addTextArea((text) => {
