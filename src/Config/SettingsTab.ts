@@ -279,9 +279,9 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.globalFilter.filter.name'),
                     desc: SettingsTab.createFragmentWithHTML(
                         paras([
-                            `<b>${i18n.t('settings.globalFilter.filter.description.line1')}</b></p>` +
-                                `<p>${i18n.t('settings.globalFilter.filter.description.line2')}</p>` +
-                                `<p>${i18n.t('settings.globalFilter.filter.description.line3')} ` +
+                            `<b>${i18n.t('settings.globalFilter.filter.description.line1')}</b>`,
+                            `${i18n.t('settings.globalFilter.filter.description.line2')}`,
+                            `${i18n.t('settings.globalFilter.filter.description.line3')} ` +
                                 `${i18n.t('settings.globalFilter.filter.description.line4')}`,
                         ]),
                     ),
