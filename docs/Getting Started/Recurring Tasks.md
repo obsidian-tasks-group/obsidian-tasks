@@ -349,7 +349,7 @@ You can _not_ use rules where recurrence happens a certain number of times (`for
 
 ### Recurring until a specific date
 
-You can use `until "date"` to stop a recurrence on a specific date. The final occurrence is included when it falls on the `until` date.
+You can use `until YYYY-MM-DD` to stop a recurrence on a specific date. The final occurrence is included when it falls on the `until` date.
 
 For example:
 
@@ -357,7 +357,7 @@ For example:
 - [ ] Do stuff 🔁 every day until 2026-09-29 📅 2026-09-16
 ```
 
-The `until` date is preserved when the next occurrence is created, including when using `when done`.
+The `until` date is preserved when the next occurrence is created, including when using `when done`. Dates must use the `YYYY-MM-DD` format.
 
 ### Recurrence rule lost if highest priority date is invalid
 
