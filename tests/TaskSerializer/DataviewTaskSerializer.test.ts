@@ -53,7 +53,7 @@ describe('DataviewTaskSerializer', () => {
             });
         });
 
-        it.failing('should parse an ISO-formatted until date in a recurrence', () => {
+        it('should parse an ISO-formatted until date in a recurrence', () => {
             const taskDetails = deserialize('[repeat:: every day until 2026-09-29] [due:: 2026-09-28]');
             expect(taskDetails.recurrence).not.toBeNull();
             expect(taskDetails.recurrence!.toText()).toBe('every day until 2026-09-29');

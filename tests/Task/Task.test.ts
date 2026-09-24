@@ -1438,7 +1438,7 @@ describe('handle new status', () => {
         expect(toMarkdown(newTasks)).not.toContain('Invalid date');
     });
 
-    it.failing('does not create a next task when completed on the until date', () => {
+    it('does not create a next task when completed on the until date', () => {
         const originalTask = fromLine({
             line: '- [ ] Daily task 🔁 every day until 2026-09-29 when done 📅 2026-09-28',
         });
@@ -1449,7 +1449,7 @@ describe('handle new status', () => {
         expect(toMarkdown(newTasks)).not.toContain('Invalid date');
     });
 
-    it.failing('does not create a next task when completed after the until date', () => {
+    it('does not create a next task when completed after the until date', () => {
         const originalTask = fromLine({
             line: '- [ ] Daily task 🔁 every day until 2026-09-29 when done 📅 2026-09-28',
         });
@@ -1460,7 +1460,7 @@ describe('handle new status', () => {
         expect(toMarkdown(newTasks)).not.toContain('Invalid date');
     });
 
-    it.failing('preserves the canonical until date on the next task', () => {
+    it('preserves the canonical until date on the next task', () => {
         const originalTask = fromLine({
             line: '- [ ] Daily task 🔁 every day until 2026-09-29 when done 📅 2026-09-28',
         });

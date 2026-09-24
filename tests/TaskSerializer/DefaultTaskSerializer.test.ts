@@ -180,7 +180,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             });
         });
 
-        it.failing('should parse an ISO-formatted until date in a recurrence', () => {
+        it('should parse an ISO-formatted until date in a recurrence', () => {
             const taskDetails = deserialize(
                 `${recurrenceSymbol} every day until 2026-09-29 ${dueDateSymbol} 2026-09-28`,
             );

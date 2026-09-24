@@ -181,7 +181,7 @@ describe('Recurrence - with invalid dates in tasks', () => {
 });
 
 describe('Recurrence - with until dates', () => {
-    it.failing('preserves the until date in a positive timezone', () => {
+    it('preserves the until date in a positive timezone', () => {
         const positiveTimezoneDate = moment.parseZone('2023-03-24T00:00:00+13:00');
         expect(positiveTimezoneDate.utcOffset()).toBe(13 * 60);
 
@@ -208,7 +208,7 @@ describe('Recurrence - with until dates', () => {
         expect(recurrence!.next()!.dueDate).toEqualMoment(moment('2023-03-29'));
     });
 
-    it.failing('preserves the until date when based on completion date', () => {
+    it('preserves the until date when based on completion date', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day until 2023-03-29 when done',
             occurrence: new Occurrence({
@@ -221,7 +221,7 @@ describe('Recurrence - with until dates', () => {
         expect(recurrence!.next(moment('2023-03-28'))!.dueDate).toEqualMoment(moment('2023-03-29'));
     });
 
-    it.failing('returns no next occurrence after the until date', () => {
+    it('returns no next occurrence after the until date', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day until 2026-09-29',
             occurrence: new Occurrence({
@@ -233,7 +233,7 @@ describe('Recurrence - with until dates', () => {
         expect(recurrence!.next()).toBeNull();
     });
 
-    it.failing('rejects locale-formatted until dates', () => {
+    it('rejects locale-formatted until dates', () => {
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every day until September 29, 2026',
             occurrence: new Occurrence({
