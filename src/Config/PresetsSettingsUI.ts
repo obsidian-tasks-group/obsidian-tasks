@@ -88,6 +88,7 @@ export class PresetsSettingsUI {
         return {
             name: key,
             desc: value,
+            searchable: false, // not searchable in global search. Later I will add a filter box in the Presets page.
             render: (setting) => {
                 setting.descEl.addClass('tasks-presets-value-preview');
                 setting.addExtraButton((btn) =>
