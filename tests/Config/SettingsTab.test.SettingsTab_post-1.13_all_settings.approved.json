@@ -19,6 +19,7 @@
       },
       {
         "name": "Task statuses",
+        "desc": "<p><b>Core statuses</b></p><p>These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.</p><p><b>Custom statuses</b></p><p>You can add and edit your own custom statuses in the Custom statuses section.</p><p>You should first <b>select and install a CSS snippet or theme</b> to style custom checkboxes. Then, set up your custom statuses to match your chosen CSS checkboxes.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Statuses\">See the documentation to get started!</a></p>",
         "items": [
           {
             "heading": "Core statuses",

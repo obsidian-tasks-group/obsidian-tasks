@@ -531,6 +531,24 @@ export class SettingsTab extends PluginSettingTab {
         return {
             type: 'page',
             name: i18n.t('settings.statuses.heading'),
+            desc: SettingsTab.createFragmentWithHTML(
+                paras([
+                    // Core statuses description
+                    bold(i18n.t('settings.statuses.coreStatuses.heading')),
+                    [i18n.t('settings.statuses.coreStatuses.description.line1')].join(' '),
+                    // Custom statuses description
+                    bold(i18n.t('settings.statuses.customStatuses.heading')),
+                    i18n.t('settings.statuses.coreStatuses.description.line2'),
+                    [
+                        i18n.t('settings.statuses.customStatuses.description.line1'),
+                        i18n.t('settings.statuses.customStatuses.description.line2'),
+                    ].join(' '),
+                    link(
+                        'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
+                        i18n.t('settings.statuses.customStatuses.description.line4'),
+                    ),
+                ]),
+            ),
             status: () => (this.statusesChangedSinceLoad() ? 'warning' : null),
             items: [
                 {
