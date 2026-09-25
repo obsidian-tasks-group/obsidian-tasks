@@ -1,4 +1,4 @@
-import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAll } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
 import { errorMessageForException } from '../../../src/lib/ExceptionTools';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { BooleanDelimiters } from '../../../src/Query/Filter/BooleanDelimiters';

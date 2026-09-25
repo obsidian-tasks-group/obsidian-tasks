@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verify } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { Priority } from '../../../src/Task/Priority';
 import {
