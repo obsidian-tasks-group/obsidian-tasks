@@ -1424,6 +1424,52 @@ describe('handle new status', () => {
         `);
     });
 
+    it('continues a when-done recurrence when completion is before the until date', () => {
+        const originalTask = fromLine({
+            line: '- [ ] Daily task 🔁 every day until 2026-09-29 when done 📅 2026-09-28',
+        });
+
+        const newTasks = originalTask.handleNewStatus(Status.DONE, moment('2026-09-28'));
+
+        expect(newTasks).toHaveLength(2);
+        expect(toMarkdown(newTasks)).not.toContain('Invalid date');
+    });
+
+    it('does not create a next task when completed on the until date', () => {
+        const originalTask = fromLine({
+            line: '- [ ] Daily task 🔁 every day until 2026-09-29 when done 📅 2026-09-28',
+        });
+
+        const newTasks = originalTask.handleNewStatus(Status.DONE, moment('2026-09-29'));
+
+        expect(newTasks).toHaveLength(1);
+        expect(toMarkdown(newTasks)).not.toContain('Invalid date');
+    });
+
+    it('does not create a next task when completed after the until date', () => {
+        const originalTask = fromLine({
+            line: '- [ ] Daily task 🔁 every day until 2026-09-29 when done 📅 2026-09-28',
+        });
+
+        const newTasks = originalTask.handleNewStatus(Status.DONE, moment('2026-09-30'));
+
+        expect(newTasks).toHaveLength(1);
+        expect(toMarkdown(newTasks)).not.toContain('Invalid date');
+    });
+
+    it('preserves the canonical until date on the next task', () => {
+        const originalTask = fromLine({
+            line: '- [ ] Daily task 🔁 every day until 2026-09-29 when done 📅 2026-09-28',
+        });
+
+        const newTasks = originalTask.handleNewStatus(Status.DONE, moment('2026-09-28'));
+
+        expect(toMarkdown(newTasks)).toBe(
+            '- [ ] Daily task 🔁 every day until 2026-09-29 when done 📅 2026-09-29\n' +
+                '- [x] Daily task 🔁 every day until 2026-09-29 when done 📅 2026-09-28 ✅ 2026-09-28',
+        );
+    });
+
     describe('cancelled dates and new status', () => {
         it('should add cancelled date and remove done date, if changing from DONE to CANCELLED', () => {
             // Arrange

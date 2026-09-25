@@ -69,7 +69,7 @@ describe('validate emoji regular expressions', () => {
             dueDateRegex: /(?:📅|📆|🗓)\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
             doneDateRegex: /✅\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
             cancelledDateRegex: /❌\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
-            recurrenceRegex: /🔁\\ufe0f? *([a-zA-Z0-9, !]+)$/
+            recurrenceRegex: /🔁\\ufe0f? *([a-zA-Z0-9, !-]+)$/
             onCompletionRegex: /🏁\\ufe0f? *([a-zA-Z]+)$/
             dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/
             idRegex: /🆔\\ufe0f? *([a-zA-Z0-9-_]+)$/
@@ -175,6 +175,14 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             expect(taskDetails).toMatchTaskDetails({
                 recurrence: new RecurrenceBuilder().rule('every day').build(),
             });
+        });
+
+        it('should parse an ISO-formatted until date in a recurrence', () => {
+            const taskDetails = deserialize(
+                `${recurrenceSymbol} every day until 2026-09-29 ${dueDateSymbol} 2026-09-28`,
+            );
+            expect(taskDetails.recurrence).not.toBeNull();
+            expect(taskDetails.recurrence!.toText()).toBe('every day until 2026-09-29');
         });
 
         describe('should parse onCompletion', () => {
