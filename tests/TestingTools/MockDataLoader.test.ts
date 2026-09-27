@@ -1,3 +1,4 @@
+import { join } from 'path';
 import one_task from '../Obsidian/__test_data__/one_task.json';
 import { MockDataLoader } from './MockDataLoader';
 
@@ -17,7 +18,8 @@ describe('MockDataLoader', () => {
 
     it('should provide the path to the JSON file', () => {
         const path = MockDataLoader.path('code_block_in_task');
-        const expectedSubPath = 'tests/Obsidian/__test_data__/code_block_in_task.json';
+        // Use the platform's path separator, so that the test also passes on Windows.
+        const expectedSubPath = join('tests', 'Obsidian', '__test_data__', 'code_block_in_task.json');
 
         expect(path).toContain(expectedSubPath);
         expect(path.endsWith(expectedSubPath)).toBe(true);

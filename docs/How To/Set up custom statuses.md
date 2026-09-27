@@ -58,7 +58,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 ### The Steps
 
 1. Open the Tasks settings pane
-1. Scroll down and click on 'Add New Task Status'
+1. Scroll down and click on 'Add status'
     - This will create a new, empty status:
     - ![Settings after adding a new empty status](../images/settings-custom-statuses-added-1.png)
 1. Click on the pencil icon

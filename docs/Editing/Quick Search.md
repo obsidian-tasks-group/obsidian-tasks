@@ -44,7 +44,7 @@ Each result shows a non-interactive checkbox for the task status, the rendered t
   - Be aware of spaces at the start and end of the search string, as they may cause valid matches not to be found.
 - Results with equal match quality, or all results when `Fuzzy matching` is disabled, are sorted by description, ignoring Markdown formatting.
   - If tasks have the same description, they are then sorted using the [[Sorting#Default sort order|Tasks default sort order]].
-- If you use a [[Global Filter]], Quick Search respects the [[Global Filter#Settings for the Global Filter|Remove global filter from description]] setting.
+- If you use a [[Global Filter]], Quick Search respects the [[Global Filter#Settings for the Global Filter|Hide global filter]] setting.
 - If you use a [[Global Query]], Quick Search only includes tasks that match it.
   - At the moment, Quick Search cannot ignore the Global Query.
   - However, if the Global Query causes an error for any matching task, Quick Search ignores the Global Query.

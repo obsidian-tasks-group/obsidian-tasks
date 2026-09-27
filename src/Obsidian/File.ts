@@ -130,22 +130,11 @@ const tryRepetitive = async ({
     logger.debug(`tryRepetitive after ${previousTries} previous tries`);
     const retry = async () => {
         if (previousTries > 10) {
-            const message = `Tasks: Could not find the correct task line to update.
+            const message = `Tasks: Could not update this task, because its line in "${originalTask.taskLocation.path}" was not found:
 
-The task line not updated is:
 ${originalTask.originalMarkdown}
 
-In this markdown file:
-"${originalTask.taskLocation.path}"
-
-Note: further clicks on this checkbox will usually now be ignored until the file is opened (or certain, specific edits are made - it's complicated).
-
-Recommendations:
-
-1. Close all panes that have the above file open, and then re-open the file.
-
-2. Check for exactly identical copies of the task line, in this file, and see if you can make them different.
-`;
+Close and reopen the file, then try again. If the file contains identical copies of this line, make them different.`;
             errorAndNotice(message);
             return;
         }
@@ -176,7 +165,8 @@ Recommendations:
         await vault.modify(file, updatedFileLines.join('\n'));
     } catch (e) {
         if (e instanceof WarningWorthRetrying) {
-            if (e.message) warnAndNotice(e.message);
+            // These problems are usually temporary, so only log them, rather than interrupt the user.
+            if (e.message) console.warn(e.message);
             await retry();
             return;
         } else if (e instanceof RetryWithoutWarning) {

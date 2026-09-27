@@ -70,11 +70,6 @@
     border-bottom: 1px solid var(--background-modifier-border);
 }
 
-.tasks-settings .row-for-status {
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
 .tasks-settings .tasks-setting-multiline-text {
     display: block;
 }
@@ -99,7 +94,23 @@
     border: var(--code-border-width) solid var(--code-border-color);
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
-    margin-inline-end: 0.5em;
+}
+
+.tasks-status-row .setting-item-name {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-3);
+}
+
+.tasks-status-next {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-2-3);
+}
+
+.tasks-status-label {
+    color: var(--text-faint);
+    font-size: var(--font-ui-small);
 }
 
 /* Global Query modal: wider than the default dialog, to give the query room. */

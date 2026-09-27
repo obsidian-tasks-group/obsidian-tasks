@@ -1,10 +1,11 @@
-import { type App, setIcon } from 'obsidian';
+import { type App, setIcon, setTooltip } from 'obsidian';
 import { Modal } from 'obsidian';
 
 import EditTask from '../ui/EditTask.svelte';
 import type { Task } from '../Task/Task';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import { Status } from '../Statuses/Status';
+import { placeBesideCloseButton } from '../ui/ModalHeaderButton';
 import { OptionsModal } from './OptionsModal';
 
 export interface TaskModalParams {
@@ -40,7 +41,7 @@ export class TaskModal extends Modal {
     }
 
     public onOpen(): void {
-        this.titleEl.setText('Create or edit Task');
+        this.titleEl.setText('Create or edit task');
         this.modalEl.addClass('tasks-edit-modal-container');
 
         const optionsButton = this.modalEl.createEl('button', {
@@ -53,7 +54,10 @@ export class TaskModal extends Modal {
                 'modal-option-button',
             ],
         });
-        setIcon(optionsButton, 'settings');
+        setIcon(optionsButton, 'sliders-horizontal');
+        optionsButton.setAttribute('aria-label', 'Choose fields to show');
+        setTooltip(optionsButton, 'Choose fields to show');
+        placeBesideCloseButton(this.modalEl, optionsButton);
         optionsButton.onclick = () => {
             const optionsModal = new OptionsModal({
                 app: this.app,

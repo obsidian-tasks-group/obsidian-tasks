@@ -41,7 +41,7 @@ export const createSetStatusLineTransformer = (newStatus: Status): LineTransform
     return (line: string, path: string) => {
         const result = setStatusOnLine(line, path, newStatus);
         if (result === undefined) {
-            new Notice('Cannot set status: line is not a task or does not match global filter');
+            new Notice('Tasks: Cannot set status - this line is not a task.');
         }
         return result;
     };
@@ -64,6 +64,7 @@ export function createSetStatusCommands(statusRegistry: StatusRegistry): Command
         const command = {
             id: `set-status-symbol-to-${symbolSlug}`,
             name: instruction.instructionDisplayName(),
+            icon: instruction.instructionIcon(),
             editorCheckCallback: createEditorCallback(createSetStatusLineTransformer(status)),
         };
         setStatusCommands.push(command);

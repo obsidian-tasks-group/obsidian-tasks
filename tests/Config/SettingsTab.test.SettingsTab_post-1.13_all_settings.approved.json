@@ -1,25 +1,30 @@
 [
   {
+    "heading": "General",
     "items": [
       {
         "name": "Task format",
-        "desc": "<p>The format that Tasks uses to read and write tasks.</p><p><b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>.</p>",
+        "desc": "<p>How task properties are written in your notes.</p><p>Tasks reads one format at a time: with Dataview selected, emoji properties are ignored.</p>",
+        "aliases": [
+          "General"
+        ],
         "render": "[Function]"
       },
       {
         "name": "Global filter",
-        "desc": "<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p><p>Use a global filter if you want Tasks to only act on a subset of your \"<code>- [ ]</code>\" checklist items, so that a checklist item must include the specified string in its description in order to be considered a task.</p><p>For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>. Other checklist items will remain normal checklist items and not appear in queries or get a done date set.</p>",
+        "desc": "<p>Only checklist items containing this text are tasks. Leave empty to treat every checklist item as a task.</p><p>For example, with <code>#task</code>, other checklist items are ignored by Tasks.</p>",
         "render": "[Function]"
       },
       {
-        "name": "Remove global filter from description",
-        "desc": "Enabling this removes the string that you set as global filter from the task description when displaying a task.",
+        "name": "Hide global filter",
+        "desc": "Hide the global filter text when displaying tasks.",
         "render": "[Function]",
         "visible": "[Function]"
       },
       {
         "name": "Task statuses",
-        "desc": "<p><b>Core statuses</b></p><p>These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.</p><p><b>Custom statuses</b></p><p>You can add and edit your own custom statuses in the Custom statuses section.</p><p>You should first <b>select and install a CSS snippet or theme</b> to style custom checkboxes. Then, set up your custom statuses to match your chosen CSS checkboxes.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Statuses\">See the documentation to get started!</a></p>",
+        "desc": "<p>Core statuses work with any theme.</p><p>For custom statuses, first install a theme or CSS snippet that styles them, then add matching statuses here.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Statuses\">Learn about statuses</a></p>",
+        "displayValue": "[Function]",
         "items": [
           {
             "heading": "Core statuses",
@@ -30,7 +35,7 @@
                 "onClick": "[Function]",
                 "modal": {
                   "title": "Core statuses",
-                  "html": "<p>These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.</p><p>You can add and edit your own custom statuses in the Custom statuses section.</p><div class=\"modal-button-container\"><button class=\"mod-secondary\">See the documentation</button><button>Okay</button></div>"
+                  "html": "<p>Built-in statuses that work with any theme. You can rename them and change what they toggle to.</p><div class=\"modal-button-container\"><button class=\"mod-secondary\">See the documentation</button><button>Okay</button></div>"
                 }
               }
             ],
@@ -42,14 +47,6 @@
               {
                 "name": "Done",
                 "render": "[Function]"
-              },
-              {
-                "name": "Review and check your statuses",
-                "desc": "Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings.",
-                "action": "[Function]",
-                "aliases": [
-                  "Core statuses"
-                ]
               }
             ],
             "type": "list"
@@ -68,7 +65,7 @@
                 "onClick": "[Function]",
                 "modal": {
                   "title": "Custom statuses",
-                  "html": "<p>You should first <b>select and install a CSS snippet or theme</b> to style custom checkboxes.</p><p>Then, set up your custom statuses to match your chosen CSS checkboxes.</p><p><b>Note</b> Any statuses with the same symbol as any earlier statuses will be ignored. You can confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down.</p><div class=\"modal-button-container\"><button class=\"mod-secondary\">See the documentation</button><button>Okay</button></div>"
+                  "html": "<p>For custom statuses, first install a theme or CSS snippet that styles them, then add matching statuses here.</p><p>Each symbol can only be used once. Later duplicates are ignored.</p><div class=\"modal-button-container\"><button class=\"mod-secondary\">See the documentation</button><button>Okay</button></div>"
                 }
               }
             ],
@@ -90,6 +87,7 @@
             "type": "list"
           },
           {
+            "heading": "Tools",
             "items": [
               {
                 "name": "Import from theme",
@@ -98,18 +96,24 @@
                 "searchable": false
               },
               {
-                "name": "Add all unknown status types",
-                "desc": "Add any status symbols found in your vault but not yet configured here.",
+                "name": "Add statuses found in vault",
+                "desc": "Add any status symbols used in your notes that are not set up yet.",
                 "action": "[Function]",
                 "searchable": false
               },
               {
-                "name": "Reset custom status types to defaults",
-                "desc": "Discard all custom statuses and restore the defaults.",
+                "name": "Create status report",
+                "desc": "Create a note that lists your statuses, with a diagram of how they toggle.",
                 "action": "[Function]",
                 "aliases": [
-                  "Custom statuses"
+                  "Task statuses"
                 ]
+              },
+              {
+                "name": "Reset custom statuses",
+                "desc": "Replace all custom statuses with the defaults.",
+                "render": "[Function]",
+                "searchable": false
               }
             ],
             "type": "list"
@@ -122,15 +126,24 @@
     "type": "group"
   },
   {
-    "heading": "Searches",
+    "heading": "Queries",
     "items": [
       {
+        "name": "Global query",
+        "desc": "<p>Instructions added to the start of every query.</p><p>Not set.</p>",
+        "aliases": [
+          "Queries"
+        ],
+        "render": "[Function]"
+      },
+      {
         "name": "Presets",
-        "desc": "<p>You can define named instructions here, that you can re-use in multiple queries. A preset called '<code>name</code>' can be used in Tasks queries with either '<code>preset name</code>' or '<code>{{preset.name}}</code>'.</p><p>Any open Tasks queries are reloaded automatically when presets are edited.</p><p><a href=\"https://publish.obsidian.md/tasks/Queries/Presets\">See the documentation</a>.</p>",
+        "desc": "<p>Reusable query snippets. Use <code>preset name</code> or <code>{{preset.name}}</code> in any query.</p><p><a href=\"https://publish.obsidian.md/tasks/Queries/Presets\">See the documentation</a></p>",
+        "displayValue": "[Function]",
         "items": [
           {
             "addItem": {
-              "name": "Add new preset",
+              "name": "Add preset",
               "action": "[Function]"
             },
             "emptyState": "No presets yet.",
@@ -192,18 +205,8 @@
         "type": "page"
       },
       {
-        "name": "Global query",
-        "desc": "Instructions automatically included at the start of every Tasks block.",
-        "render": "[Function]"
-      },
-      {
-        "name": "Enable custom searches",
-        "desc": "Enables '<code>filter by function</code>', '<code>sort by function</code>', and '<code>group by function</code>', which execute JavaScript in Tasks queries.",
-        "render": "[Function]"
-      },
-      {
-        "name": "Task count location",
-        "desc": "Choose whether the task count is shown at the top or bottom of query results.",
+        "name": "Allow JavaScript in queries",
+        "desc": "Enables <code>filter by function</code>, <code>sort by function</code> and <code>group by function</code>. Applies to this device only.",
         "render": "[Function]"
       }
     ],
@@ -213,46 +216,40 @@
     "heading": "Dates",
     "items": [
       {
-        "name": "Set created date on every added task",
-        "desc": "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.",
+        "name": "Add created date",
+        "desc": "Add today's date as the created date to tasks made with 'Create or edit task', and to the next occurrence of recurring tasks.",
         "aliases": [
           "Dates"
         ],
         "render": "[Function]"
       },
       {
-        "name": "Set done date on every completed task",
-        "desc": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
+        "name": "Add done date",
+        "desc": "Add the completion date when a task is marked done.",
         "render": "[Function]"
       },
       {
-        "name": "Set cancelled date on every cancelled task",
-        "desc": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
+        "name": "Add cancelled date",
+        "desc": "Add the date when a task is cancelled.",
         "render": "[Function]"
-      }
-    ],
-    "type": "group"
-  },
-  {
-    "heading": "Dates from file names",
-    "items": [
+      },
       {
-        "name": "Use filename as Scheduled date for undated tasks",
-        "desc": "<p>Save time entering Scheduled (⏳) dates. If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.</p><p>By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats. Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.</p>",
+        "name": "Use file name as scheduled date",
+        "desc": "Tasks with no start, scheduled or due date get a scheduled date from their file name, such as <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code>.",
         "aliases": [
           "Dates from file names"
         ],
         "render": "[Function]"
       },
       {
-        "name": "Additional filename date format as Scheduled date for undated tasks",
-        "desc": "An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.",
+        "name": "Extra date format",
+        "desc": "Another date format to recognise in file names, using Moment.js syntax.",
         "render": "[Function]",
         "visible": "[Function]"
       },
       {
-        "name": "Folders with default Scheduled dates",
-        "desc": "Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.",
+        "name": "Only in folders",
+        "desc": "Comma-separated list of folders. Leave empty to use all folders.",
         "render": "[Function]",
         "visible": "[Function]"
       }
@@ -263,47 +260,72 @@
     "heading": "Recurring tasks",
     "items": [
       {
-        "name": "Next recurrence appears on the line below",
-        "desc": "Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.",
+        "name": "Next occurrence goes below",
+        "desc": "Insert the next occurrence below the completed task, instead of above it.",
         "aliases": [
           "Recurring tasks"
         ],
         "render": "[Function]"
       },
       {
-        "name": "Remove scheduled date on recurrence",
-        "desc": "<p>Enabling this will make the next recurrence of a task have no Scheduled (⏳) date, when at least one of Start (🛫) or Due (📅) dates is present.</p><p>This is for when you want the Start and Due dates to carry forward to the next recurrence, but you will set the Scheduled date in future, once you plan to work on it.</p>",
+        "name": "Drop scheduled date on recurrence",
+        "desc": "If a recurring task has a start or due date, its next occurrence gets no scheduled date.",
         "render": "[Function]"
       }
     ],
     "type": "group"
   },
   {
-    "heading": "Task entry",
+    "heading": "Editing",
     "items": [
       {
-        "name": "Auto-suggest task content",
-        "desc": "Enabling this will open an intelligent suggest menu while typing inside a recognized task line.",
+        "name": "Auto-suggest",
+        "desc": "Suggest dates, priorities and other properties while you type a task.",
         "aliases": [
-          "Task entry"
+          "Editing"
         ],
         "render": "[Function]"
       },
       {
-        "name": "Minimum match length for auto-suggest",
-        "desc": "If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.",
+        "name": "Minimum characters",
+        "desc": "Characters to type before suggestions appear. 0 shows them straight away.",
         "render": "[Function]",
         "visible": "[Function]"
       },
       {
-        "name": "Maximum number of auto-suggestions to show",
-        "desc": "How many suggestions should be shown when an auto-suggest menu pops up (including the \"⏎\" option).",
+        "name": "Maximum suggestions",
+        "desc": "The most suggestions to show at once.",
+        "render": "[Function]",
+        "visible": "[Function]"
+      }
+    ],
+    "type": "group"
+  },
+  {
+    "heading": "Display",
+    "items": [
+      {
+        "name": "Property style",
+        "desc": "How task properties such as dates and priority are shown in results, dialogs and menus. Your notes are not changed.",
+        "aliases": [
+          "Display"
+        ],
+        "render": "[Function]"
+      },
+      {
+        "name": "Render properties in Live Preview",
+        "desc": "Show task properties compactly in Live Preview, in the chosen property style. Put the cursor on a property to see and edit its text.",
         "render": "[Function]",
         "visible": "[Function]"
       },
       {
-        "name": "Provide access keys in dialogs",
-        "desc": "If the access keys (keyboard shortcuts) for various controls in dialog boxes conflict with system keyboard shortcuts or assistive technology functionality that is important for you, you may want to deactivate them here.",
+        "name": "Task count position",
+        "desc": "Where query results show the number of tasks.",
+        "render": "[Function]"
+      },
+      {
+        "name": "Dialog keyboard shortcuts",
+        "desc": "Turn off if the keyboard shortcuts in Tasks dialogs clash with other shortcuts or assistive technology.",
         "render": "[Function]"
       }
     ],

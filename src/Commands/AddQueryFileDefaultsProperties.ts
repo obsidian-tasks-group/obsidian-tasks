@@ -13,9 +13,9 @@ export async function ensureQueryFileDefaultsInFrontmatter(app: App, file: TFile
         });
 
         if (!updated) {
-            new Notice('All supported properties are already present.');
+            new Notice('Tasks: This file already has all the query file default properties.');
         } else {
-            new Notice('Properties updated successfully.');
+            new Notice('Tasks: Added query file default properties.');
         }
     });
 }

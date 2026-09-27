@@ -11,13 +11,13 @@ publish: true
 
 ## Overview
 
-At any time you can **validate** and **visualise** your custom statuses, using the **'Review and check your Statuses' button** in Tasks' [[Status Settings]].
+At any time you can **validate** and **visualise** your custom statuses, using **Create status report** in Tasks' [[Status Settings]].
 
 ## The output file
 
 - A Markdown report is written to the root of the vault.
 - Example file name:
-  - `Tasks Plugin - Review and check your Statuses 2023-11-08 21-30-15`
+  - `Tasks Plugin - Status report 2023-11-08 21-30-15`
 - By adding the date and time to the end of the file name, you can create a series of reports, and review the differences.
 - You can of course delete the files at any time.
 

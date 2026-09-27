@@ -1,6 +1,7 @@
 {
   "common": {
     "cancel": "",
+    "delete": "",
     "edit": "",
     "moreInfo": "",
     "okay": "",
@@ -13,6 +14,7 @@
   },
   "modals": {
     "customStatusModal": {
+      "duplicateSymbol": "",
       "editAvailableAsCommand": {
         "description": "Activer cette option rendra ce statut disponible comme commande pour que vous puissiez y assigner un raccourci clavier à utiliser pour activer le statut.",
         "name": "Disponible comme commande"
@@ -26,6 +28,7 @@
         "name": "Nom du statut"
       },
       "editStatusSymbol": {
+        "coreDescription": "",
         "description": "Le caractère utilisé entre les crochets. (Peut uniquement être modifié pour les statuts personnalisés, pas pour les statuts principaux.)",
         "name": "Symbole du statut"
       },
@@ -35,11 +38,13 @@
       },
       "fixErrorsBeforeSaving": "Corrigez les erreurs avant de sauvegarder.",
       "title": {
+        "addStatus": "",
         "editCoreStatus": "",
         "editCustomStatus": ""
       }
     },
     "editPresetModal": {
+      "addTitle": "",
       "name": {
         "duplicate": "",
         "name": "",
@@ -47,9 +52,9 @@
         "required": ""
       },
       "query": {
-        "description": "",
         "name": "",
-        "placeholder": ""
+        "placeholder": "",
+        "required": ""
       },
       "title": ""
     }
@@ -74,7 +79,7 @@
         "updateReport": {
           "line1": "Après avoir modifié les réglages des statuts, vous pouvez obtenir un rapport à jour :",
           "line2": "Rendez-vous dans `Réglages` -> `Tasks`.",
-          "line3": "Cliquez sur `Examiner et vérifier les statuts`."
+          "line3": ""
         }
       },
       "columnHeadings": {
@@ -128,7 +133,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Suggestion automatique",
       "maxSuggestions": {
         "description": "Le nombre de suggestions affichées lorsque le menu de suggestion automatique apparaît (y compris l'option \"⏎\").",
         "name": "Nombre maximum de suggestions à afficher"
@@ -142,7 +146,6 @@
         "name": "Auto-suggestion du contenu des tâches"
       }
     },
-    "changeRequiresRestart": "NÉCESSITE UN REDÉMARRAGE.",
     "dates": {
       "cancelledDate": {
         "description": "Activer cette option ajoute un horodatage ❌ YYYY-MM-DD à la fin d'une tâche marquée comme annulée.",
@@ -162,79 +165,111 @@
       "heading": "Dates à partir du nom de fichier",
       "scheduledDate": {
         "extraFormat": {
-          "description": {
-            "line1": "Un format de date supplémentaire que le module Tasks reconnaîtra comme Date planifiée lors de l'utilisation du nom de fichier comme Date planifiée pour les tâches sans date.",
-            "line2": "Documentation de la syntaxe"
-          },
+          "description": "",
           "name": "Format supplémentaire de Date planifiée à reconnaître dans les noms de fichier pour les tâches sans date",
           "placeholder": "exemple : MMM DD YYYY"
         },
         "folders": {
           "description": "Laissez vide si vous souhaitez utiliser le nom de fichier comme Date planifiée partout, ou entrez une liste de dossiers séparés par des virgules.",
-          "name": "Dossiers utilisant le nom de fichier comme Date planifiée"
+          "name": "Dossiers utilisant le nom de fichier comme Date planifiée",
+          "placeholder": ""
         },
         "toggle": {
-          "description": {
-            "line1": "Gagnez du temps pour la saisie des Dates planifiées (⏳).",
-            "line2": "Activer cette option ajoutera à chaque tâche sans date une Date planifiée issue du nom du fichier",
-            "line3": "Par défaut, le module Tasks reconnaît les formats <code>YYYY-MM-DD</code> et <code>YYYYMMDD</code>.",
-            "line4": "Les tâches sans date n'ont ni Date d'échéance (📅 ), ni Date planifiée (⏳), ni Date de début (🛫)."
-          },
+          "description": "",
           "name": "Utiliser le nom du fichier comme Date planifiée pour les tâches sans date"
         }
       }
     },
-    "dialogs": {
+    "display": {
       "accessKeys": {
-        "description": "Si les raccourcis clavier pour diverses fonctionnalités dans les boîtes de dialogue interfèrent avec des raccourcis système ou des technologies d'assistance importantes pour vous, vous pouvez les désactiver ici.",
-        "name": "Autoriser les raccourcis claviers dans les boîtes de dialogue"
+        "description": "",
+        "name": ""
       },
-      "heading": "Boîtes de dialogue"
+      "editorIcons": {
+        "description": "",
+        "name": ""
+      },
+      "heading": "",
+      "signifiers": {
+        "description": "",
+        "name": "",
+        "options": {
+          "emoji": "",
+          "icons": ""
+        }
+      },
+      "taskCountLocation": {
+        "description": "",
+        "name": "",
+        "options": {
+          "bottom": "",
+          "top": ""
+        }
+      }
+    },
+    "editing": {
+      "heading": ""
     },
     "format": {
-      "description": {
-        "line1": "Le format utilisé par Tasks pour lire et écrire les tâches",
-        "line2": "<b>Important :</b> Tasks ne prend en charge qu'un format à la fois. Sélectionner Dataview <b>empêchera Tasks de lire ses indices emojis.</b>."
-      },
+      "description": "",
       "displayName": {
         "dataview": "Dataview",
         "tasksEmojiFormat": "Format emoji de Tasks"
       },
-      "name": "Format de tâche"
+      "name": "Format de tâche",
+      "oneFormatOnly": ""
+    },
+    "general": {
+      "heading": ""
     },
     "globalFilter": {
       "filter": {
-        "description": {
-          "line1": "Recommandé : Laissez vide si vous souhaitez que toutes les cases à cocher dans votre coffre soient des tâches gérées par ce module.",
-          "line2": "Utilisez un filtre global si vous souhaitez que Tasks se limite à un sous-ensemble de vos \"<code>- [ ]</code>\" cases à cocher. La description d'une case à cocher devra contenir l'expression spécifiée pour être considérée comme une tâche.",
-          "line3": "Par exemple, si vous saisissez le filtre global <code>#task</code>, le module Tasks  ne gèrera que les cases à cocher avec l'étiquette <code>#task</code>.",
-          "line4": "Les autres cases à cocher resteront des cases à cocher normales, n'apparaîtront pas dans les requêtes et ne recevront pas de date de complétion."
-        },
+        "description": "",
+        "example": "",
         "name": "Filtre global",
         "placeholder": "ex: #task ou TODO"
       },
-      "heading": "Filtre global",
       "removeFilter": {
         "description": "Activer cette option masquera l'expression choisie comme filtre global de la description d'une tâche lors de son affichage.",
         "name": "Masquer le filtre global dans les descriptions"
-      }
-    },
-    "globalQuery": {
-      "heading": "Requête globale",
-      "query": {
-        "description": "Une requête automatiquement incluse au début de chaque bloc Tasks au sein du coffre. Pratique pour ajouter des filtres ou des réglages d'affichage par défaut.",
-        "placeholder": "Par exemple...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Ajouter un préréglage"
       },
+      "deleteConfirm": {
+        "message": "",
+        "title": ""
+      },
+      "description": "",
+      "dragToReorder": "",
       "emptyState": "",
-      "line1": "Vous pouvez définir ici des instructions à réutiliser dans plusieurs requêtes. Un préréglage appelé '{{name}}' pourra être appliqué dans les requêtes Tasks avec '{{instruction1}}' ou '{{instruction2}}'.",
-      "line2": "Toutes les requêtes Tasks ouvertes sont rechargées automatiquement quand les préréglages sont modifiés.",
       "name": "Préréglages"
+    },
+    "queries": {
+      "globalQuery": {
+        "description": "",
+        "modalDescription": "",
+        "name": "",
+        "notSet": "",
+        "placeholder": "",
+        "summary": "",
+        "summaryMultiline_many": "",
+        "summaryMultiline_one": "",
+        "summaryMultiline_other": ""
+      },
+      "heading": "",
+      "javaScript": {
+        "confirm": {
+          "acknowledge": "",
+          "allow": "",
+          "risk": "",
+          "trust": ""
+        },
+        "description": "",
+        "name": ""
+      }
     },
     "recurringTasks": {
       "heading": "Tâches récurrentes",
@@ -243,57 +278,21 @@
         "name": "Prochaine occurrence en-dessous"
       },
       "removeScheduledDate": {
-        "description": {
-          "line1": "Activer cette option retirera la Date planifiée (⏳) sur la prochaine occurrence, si au moins une Date de début (🛫) ou une Date d'échéance (📅) est présente.",
-          "line2": "Pratique si vous voulez que la Date de début et la Date de fin soient reportées sur la prochaine occurrence, mais que vous comptez attribuer une Date planifiée plus tard."
-        },
+        "description": "",
         "name": "Retirer la Date planifiée sur la prochaine occurrence"
       }
     },
-    "searchResults": {
-      "heading": "Résultats de recherche",
-      "taskCountLocation": {
-        "description": "Afficher le nombre de tâches en haut ou en bas des résultats d'une requête.",
-        "name": "Emplacement du nombre de tâches",
-        "options": {
-          "bottom": "En bas",
-          "top": "En haut"
-        }
-      }
-    },
-    "searches": {
-      "enableCustomSearches": {
-        "confirm": {
-          "acknowledge": "",
-          "enable": ""
-        },
-        "description": {
-          "line1": "Active '{{filterByFunction}}', '{{sortByFunction}}', et '{{groupByFunction}}', qui éxécutent JavaScript dans les requêtes Tasks.",
-          "line2": "Du code JavaScript malveillant dans une requête Tasks ou un fichier Markdown peut s'exécuter à l'intérieur d'Obsidian et lire ou modifier le contenu de votre coffre, vos fichiers locaux, ou autres ressources du système.",
-          "line3": "Activez uniquement si vous avez confiance dans le contenu actuel et futur de ce coffre, y compris les fichiers d'autres personnes que vous pourriez télécharger, copier, ou synchroniser.",
-          "line4": "Ce réglage est stocké seulement sur cet appareil; activez-le séparément sur chaque appareil sur lequel vous utilisez ce coffre."
-        },
-        "name": "Activer les requêtes personnalisées"
-      },
-      "heading": "Requêtes"
-    },
+    "reloadToApply": "",
     "seeTheDocumentation": "Voir la documentation",
     "statuses": {
       "buttons": {
-        "addStatus": "",
-        "importFromTheme": {
-          "description": "",
-          "name": ""
-        }
+        "addStatus": ""
       },
       "collections": {
         "anuppuccinTheme": "Thème AnuPpuccin",
         "auraTheme": "Thème Aura",
         "borderTheme": "Thème Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Ajouter {{numberOfStatuses}} Statuts pris en charge"
-          },
           "importCollection": {
             "name": ""
           }
@@ -305,46 +304,59 @@
         "thingsTheme": "Thème Things"
       },
       "coreStatuses": {
-        "buttons": {
-          "checkStatuses": {
-            "name": "Examiner et vérifier vos Statuts",
-            "tooltip": "Crée un nouveau fichier à la racine du coffre, contenant un schéma Mermaid des réglages actuels des Statuts."
-          }
-        },
-        "description": {
-          "line1": "Voici les statuts principaux pris en charge nativement par Tasks, sans nécessité de styles CSS ou de thème personnalisés.",
-          "line2": "Vous pouvez ajouter ou modifier vos propres statuts personnalisés dans la section ci-dessous."
-        },
+        "description": "",
         "heading": "Statuts principaux"
       },
       "customStatuses": {
-        "buttons": {
-          "addAllUnknown": {
-            "description": "",
-            "name": "Ajouter tous les types de Statuts inconnus."
-          },
-          "addNewStatus": {
-            "name": "Nouveau Statut"
-          },
-          "resetCustomStatuses": {
-            "description": "",
-            "name": "Réinitialiser les types de Statuts personnalisés"
-          }
-        },
-        "description": {
-          "line1": "Vous devriez d'abord <b>sélectionner et installer un fragment CSS ou un Thème</b> pour appliquer un style aux cases à cocher personnalisées.",
-          "line2": "Ensuite, utilisez les boutons ci-dessous pour régler vos statuts personnalisés en correspondance avec vos cases à cocher CSS.",
-          "line3": "<b>Note</b> Tout statut avec un symbole déjà utilisé sera ignoré. Vous pouvez vérifier les Statuts effectivement utilisés en lançant la commande 'Créer ou modifier une tâche' et en ouvrant le menu d'attribution du statut.",
-          "line4": "Voir la documentation pour commencer !"
-        },
+        "description": "",
         "emptyState": "",
         "heading": "Statuts personnalisés"
+      },
+      "description": {
+        "core": "",
+        "custom": "",
+        "docsLink": ""
       },
       "filter": {
         "placeholder": ""
       },
       "heading": "Statuts des tâches",
       "reloadRequired": "",
+      "row": {
+        "next": ""
+      },
+      "tools": {
+        "addUnknown": {
+          "added_many": "",
+          "added_one": "",
+          "added_other": "",
+          "button": "",
+          "description": "",
+          "name": "",
+          "noneFound": ""
+        },
+        "heading": "",
+        "importFromTheme": {
+          "button": "",
+          "description": "",
+          "name": ""
+        },
+        "report": {
+          "button": "",
+          "description": "",
+          "name": "",
+          "noteTitle": ""
+        },
+        "reset": {
+          "confirm": {
+            "button": "",
+            "message": "",
+            "title": ""
+          },
+          "description": "",
+          "name": ""
+        }
+      },
       "types": {
         "cancelled": "",
         "done": "",
@@ -355,9 +367,6 @@
         "todo": ""
       },
       "unnamed": ""
-    },
-    "taskEntry": {
-      "heading": ""
     }
   }
 }

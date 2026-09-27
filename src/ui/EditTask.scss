@@ -48,9 +48,18 @@
     }
 
     .task-modal-priority-option-container {
+        display: flex;
+        align-items: center;
         white-space: nowrap;
 
+        input {
+            margin: 0 var(--size-2-2) 0 0;
+        }
+
         input + label {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--size-2-2);
             font-size: var(--font-ui-small);
             border-radius: var(--input-radius);
             padding: 2px 3px;
@@ -69,7 +78,8 @@
             font-weight: bold;
         }
 
-        input:not(:checked) + label > span:nth-child(4) {
+        input:not(:checked) + label .tasks-priority-icon,
+        input:not(:checked) + label .tasks-priority-emoji {
             filter: grayscale(100%) opacity(60%);
         }
     }
@@ -77,7 +87,7 @@
 
 .tasks-modal-dates-section {
     display: grid;
-    grid-template-columns: 6.0em 13em auto;
+    grid-template-columns: 6.0em minmax(10em, 14em) auto;
     column-gap: .5em;
     row-gap: 5px;
     align-items: center;
@@ -87,16 +97,27 @@
     }
 
     .tasks-modal-date-input {
-        min-width: 15em;
-    }
-
-    .tasks-modal-date-editor-picker {
-        margin-left: .5em;
+        width: 100%;
+        min-width: 0;
     }
 
     .tasks-modal-parsed-date {
         grid-column: 3;
         font-size: var(--font-ui-small);
+    }
+
+    // Leave space after the emoji, when emojis are shown instead of icons
+    .tasks-modal-parsed-date.tasks-show-emoji .tasks-modal-date-editor-picker {
+        margin-left: .5em;
+    }
+
+    // Parsed values and messages, such as 'every week' or 'no due date'
+    .tasks-modal-parsed-message {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--size-2-2);
+        color: var(--text-muted);
+        font-family: var(--font-interface);
     }
 
     .future-dates-only {

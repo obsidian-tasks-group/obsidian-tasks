@@ -11,6 +11,7 @@ import { findIncompleteTasksByDescription } from '../lib/QuickSearchTasks';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { getTaskLineAndFile } from '../Obsidian/File';
 import { QuickSearchOptionsModal } from './QuickSearchOptionsModal';
+import { appendIcon, iconForComponent, labelForComponent, useIconsForDisplay } from './Icons';
 
 interface TaskSearchSuggestionText {
     description: string;
@@ -26,18 +27,45 @@ export function taskSearchSuggestionText(task: Task): TaskSearchSuggestionText {
     };
 }
 
+const metadataComponents = [
+    TaskLayoutComponent.DueDate,
+    TaskLayoutComponent.ScheduledDate,
+    TaskLayoutComponent.StartDate,
+    TaskLayoutComponent.Priority,
+    TaskLayoutComponent.RecurrenceRule,
+];
+
 export function taskSearchMetadataText(task: Task): string[] {
     const serializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
-    const components = [
-        TaskLayoutComponent.DueDate,
-        TaskLayoutComponent.ScheduledDate,
-        TaskLayoutComponent.StartDate,
-        TaskLayoutComponent.Priority,
-        TaskLayoutComponent.RecurrenceRule,
-    ];
-    return components
+    return metadataComponents
         .map((component) => serializer.componentToString(task, false, component).trim())
         .filter((text) => text !== '');
+}
+
+/**
+ * Show the task's dates, priority and recurrence, each with its icon - or as emoji text if the user prefers.
+ */
+function renderTaskSearchMetadata(task: Task, el: HTMLElement) {
+    if (!useIconsForDisplay()) {
+        el.textContent = taskSearchMetadataText(task).join(' ');
+        return;
+    }
+
+    const serializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
+    for (const component of metadataComponents) {
+        if (serializer.componentToString(task, false, component) === '') {
+            continue;
+        }
+        const iconId = iconForComponent(component, task.priority);
+        const item = el.createSpan({ cls: 'tasks-quick-search-result-metadata-item' });
+        if (iconId) {
+            appendIcon(item, iconId, labelForComponent(component, task.priority));
+        }
+        const value = serializer.componentValueToString(task, component);
+        if (value) {
+            item.append(' ' + value);
+        }
+    }
 }
 
 export async function openTaskAtSourceLocation(task: Task, app: App): Promise<void> {
@@ -140,10 +168,8 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
             text: `${suggestion.source} · ${suggestion.heading}`,
         });
 
-        el.createDiv({
-            cls: 'tasks-quick-search-result-metadata',
-            text: taskSearchMetadataText(task).join(' '),
-        });
+        const metadata = el.createDiv({ cls: 'tasks-quick-search-result-metadata' });
+        renderTaskSearchMetadata(task, metadata);
     }
 
     public onChooseSuggestion(task: Task, _evt: MouseEvent | KeyboardEvent): void {

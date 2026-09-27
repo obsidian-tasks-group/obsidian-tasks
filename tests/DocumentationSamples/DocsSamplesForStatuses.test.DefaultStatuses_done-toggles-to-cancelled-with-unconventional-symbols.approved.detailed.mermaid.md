@@ -14,7 +14,7 @@ classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 3["'Cancelled'<br>[x] -> [ ]<br>(CANCELLED)"]:::CANCELLED
 1 --> 2
 2 --> 3
-2-. "🔁" .-> 1
+2-. "recurs" .-> 1
 3 --> 1
 
 linkStyle default stroke:gray

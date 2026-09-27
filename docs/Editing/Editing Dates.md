@@ -20,6 +20,7 @@ There is a [[#Date-picker on task dates]] and a [[#Context menu on task dates]],
 > Introduced in Tasks 7.14.0.
 
 **Left-click on any task date field** in **Reading mode** and **Tasks query search results** to use a date-picker and calendar to edit or remove a date.
+In **Live Preview**, click the date's emoji or icon.
 
 ![Hover over a date in Read mode or Tasks query search results](../images/date-picker-1.png)
 <span class="caption">Hover over a date in Read mode or Tasks query search results</span>

@@ -1,5 +1,9 @@
-.tasks-date-picker-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+/* A popover with a date input, shown where the user clicked a task's date */
+.tasks-date-picker-popover {
+    z-index: var(--layer-menu);
+    padding: var(--size-2-2);
+    background-color: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-m);
+    box-shadow: var(--shadow-s);
 }

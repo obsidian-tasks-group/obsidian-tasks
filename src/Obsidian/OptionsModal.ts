@@ -25,7 +25,7 @@ export class OptionsModal extends Modal {
     }
 
     public onOpen(): void {
-        this.titleEl.setText('Hide unused fields');
+        this.titleEl.setText('Fields to show');
 
         this.modalEl.addClass('tasks-options-modal-container');
 
@@ -39,7 +39,6 @@ export class OptionsModal extends Modal {
                     this.close();
                 },
                 onClose: () => {
-                    this.onClose();
                     this.close();
                 },
             },

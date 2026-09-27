@@ -111,6 +111,56 @@ a.tasks-edit, a.tasks-postpone {
     content: '⏩';
 }
 
+/* Edit and postpone buttons, when showing icons instead of emojis */
+a.tasks-edit.clickable-icon, a.tasks-postpone.clickable-icon {
+    display: inline-flex;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+    padding: 2px;
+    color: var(--icon-color);
+}
+
+a.tasks-edit.clickable-icon::after, a.tasks-postpone.clickable-icon::after {
+    content: none;
+}
+
+a.tasks-edit.clickable-icon:hover, a.tasks-postpone.clickable-icon:hover {
+    color: var(--icon-color-hover);
+}
+
+a.tasks-edit svg, a.tasks-postpone svg {
+    width: var(--icon-xs);
+    height: var(--icon-xs);
+}
+
+/* Icons that replace the emoji signifiers of task fields */
+/* An icon the size of the text, sitting on the text's baseline */
+/* Icons take the colour of the task's text, so they look the same in Live Preview and rendered tasks */
+.tasks-icon {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: -0.15em;
+    color: inherit;
+}
+
+.tasks-icon svg {
+    display: block;
+    width: 1em;
+    height: 1em;
+    color: inherit;
+}
+
+.tasks-priority-icon[data-priority="highest"] { color: var(--color-red); }
+.tasks-priority-icon[data-priority="high"] { color: var(--color-orange); }
+.tasks-priority-icon[data-priority="medium"] { color: var(--color-yellow); }
+.tasks-priority-icon[data-priority="low"] { color: var(--text-muted); }
+.tasks-priority-icon[data-priority="lowest"] { color: var(--text-faint); }
+
+.tasks-icon[data-field="due"] { color: var(--text-accent); }
+.tasks-icon[data-field="done"] { color: var(--color-green); }
+.tasks-icon[data-field="cancelled"] { color: var(--color-red); }
+
 /* Urgency score */
 .tasks-urgency {
     font-size: var(--font-ui-smaller);
@@ -151,4 +201,27 @@ a.tasks-edit, a.tasks-postpone {
    https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2073 */
 .task-list-item .task-block-link{
     display: none;
+}
+
+/* Auto-suggest menu items with icons */
+.tasks-suggestion {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+}
+
+/* Task properties shown compactly in Live Preview */
+.tasks-editor-property {
+    cursor: text;
+}
+
+/* Date signifiers in Live Preview, which open the date picker when clicked */
+.tasks-editor-date-trigger,
+.tasks-editor-property.tasks-editor-date-trigger {
+    cursor: pointer;
+}
+
+.tasks-editor-property > .tasks-icon + .tasks-editor-property-value,
+.tasks-editor-property > .tasks-editor-property-emoji + .tasks-editor-property-value {
+    margin-inline-start: 0.25em;
 }

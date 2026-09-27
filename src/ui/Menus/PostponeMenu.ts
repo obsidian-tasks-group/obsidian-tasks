@@ -102,7 +102,7 @@ export class PostponeMenu extends TaskEditingMenu {
     ) {
         const dateFieldToPostpone = getDateFieldToPostpone(task);
         if (dateFieldToPostpone === null) {
-            const errorMessage = '⚠️ Postponement requires a date: due, scheduled or start.';
+            const errorMessage = 'Tasks: To postpone, the task needs a due, scheduled or start date.';
             return new Notice(errorMessage, 10000);
         }
 

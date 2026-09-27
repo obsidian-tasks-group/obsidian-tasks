@@ -9,6 +9,7 @@ import { TasksEvents } from './Obsidian/TasksEvents';
 import { initializeFile } from './Obsidian/File';
 import { InlineRenderer } from './Obsidian/InlineRenderer';
 import { newLivePreviewExtension } from './Obsidian/LivePreviewExtension';
+import { newSignifierIconsExtension } from './Obsidian/SignifierIconsExtension';
 import { QueryRenderer } from './Renderer/QueryRenderer';
 import { getSettings, updateSettings } from './Config/Settings';
 import { SettingsTab } from './Config/SettingsTab';
@@ -22,6 +23,7 @@ import { QueryFileDefaults } from './Query/QueryFileDefaults';
 import { LinkResolver } from './Task/LinkResolver';
 import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
 import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
+import { registerTasksIcons } from './ui/Icons';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -34,6 +36,7 @@ export default class TasksPlugin extends Plugin {
 
     async onload() {
         await initializeI18n();
+        registerTasksIcons();
 
         logging.registerConsoleLogger();
         log('info', i18n.t('main.loadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
@@ -80,6 +83,7 @@ export default class TasksPlugin extends Plugin {
         this.setObsidianPropertiesTypes();
 
         this.registerEditorExtension(newLivePreviewExtension(this));
+        this.registerEditorExtension(newSignifierIconsExtension());
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
         new Commands({ plugin: this });
     }

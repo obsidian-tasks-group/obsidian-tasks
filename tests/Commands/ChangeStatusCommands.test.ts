@@ -102,9 +102,7 @@ describe('createSetStatusLineTransformer', () => {
     it('should notify the user when the line is not a task', () => {
         const transformer = createSetStatusLineTransformer(Status.DONE);
         transformer('This is not a task', 'file.md');
-        expect(MockedNotice).toHaveBeenCalledWith(
-            'Cannot set status: line is not a task or does not match global filter',
-        );
+        expect(MockedNotice).toHaveBeenCalledWith('Tasks: Cannot set status - this line is not a task.');
     });
 
     it('should not notify the user when changing a valid task', () => {
@@ -130,10 +128,10 @@ describe('Change status commands', () => {
         expect(commands.length).toBe(2);
 
         expect(commands[0].id).toBe('set-status-symbol-to-space');
-        expect(commands[0].name).toBe('Change status to: [ ] Todo');
+        expect(commands[0].name).toBe('Set status to Todo [ ]');
 
         expect(commands[1].id).toBe('set-status-symbol-to-/');
-        expect(commands[1].name).toBe('Change status to: [/] In Progress');
+        expect(commands[1].name).toBe('Set status to In Progress [/]');
     });
 
     it('should only create commands for the first of any statuses with duplicate symbols', () => {
@@ -142,7 +140,7 @@ describe('Change status commands', () => {
 
         const commands = createSetStatusCommands(registry);
         expect(commands.length).toBe(1);
-        expect(commands[0].name).toBe('Change status to: [A] Status 1');
+        expect(commands[0].name).toBe('Set status to Status 1 [A]');
     });
 
     it('should not create commands for Empty statuses', () => {

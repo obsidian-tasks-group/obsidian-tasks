@@ -1,220 +1,34 @@
 [
   {
+    "name": "General",
+    "heading": true,
+    "controls": []
+  },
+  {
     "name": "Task format",
-    "desc": "<p>The format that Tasks uses to read and write tasks.</p><p><b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>.</p><p>REQUIRES RESTART.</p><p><a href=\"https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats\">See the documentation</a>.</p>",
+    "desc": "<p>How task properties are written in your notes.</p><p>Tasks reads one format at a time: with Dataview selected, emoji properties are ignored.</p><p>Reload Obsidian to apply this change.</p><p><a href=\"https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats\">See the documentation</a></p>",
     "controls": [
       "dropdown"
     ]
   },
   {
-    "name": "Global task filter",
-    "heading": true,
-    "controls": []
-  },
-  {
     "name": "Global filter",
-    "desc": "<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p><p>Use a global filter if you want Tasks to only act on a subset of your \"<code>- [ ]</code>\" checklist items, so that a checklist item must include the specified string in its description in order to be considered a task.</p><p>For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.<br>Other checklist items will remain normal checklist items and not appear in queries or get a done date set.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Global+Filter\">See the documentation</a>.</p>",
+    "desc": "<p>Only checklist items containing this text are tasks. Leave empty to treat every checklist item as a task.</p><p>For example, with <code>#task</code>, other checklist items are ignored by Tasks.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Global+Filter\">See the documentation</a></p>",
     "controls": [
       "text"
     ]
   },
   {
-    "name": "Remove global filter from description",
-    "desc": "<p>Enabling this removes the string that you set as global filter from the task description when displaying a task.</p><p>REQUIRES RESTART.</p>",
+    "name": "Hide global filter",
+    "desc": "<p>Hide the global filter text when displaying tasks.</p><p>Reload Obsidian to apply this change.</p>",
     "controls": [
       "toggle"
-    ]
-  },
-  {
-    "name": "Global query",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "desc": "<p>A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.</p><p><a href=\"https://publish.obsidian.md/tasks/Queries/Global+Query\">See the documentation</a>.</p>",
-    "controls": [
-      "textArea"
-    ]
-  },
-  {
-    "name": "Searches",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "name": "Enable custom searches",
-    "desc": "<p>Enables '<code>filter by function</code>', '<code>sort by function</code>', and '<code>group by function</code>', which execute JavaScript in Tasks queries.</p><p>Malicious JavaScript in a Tasks query or Markdown file could run inside Obsidian and access or modify your vault contents, local files, or other system resources.</p><p><b>Only enable this if you trust the current and future contents of this vault, including files you may later download, copy, or sync from other people.</b></p><p>This setting is stored on this device only; enable it separately on each device where you use this vault.</p>",
-    "controls": [
-      "toggle"
-    ]
-  },
-  {
-    "name": "Search results",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "name": "Task count location",
-    "desc": "Choose whether the task count is shown at the top or bottom of query results.",
-    "controls": [
-      "dropdown"
-    ]
-  },
-  {
-    "name": "Presets",
-    "heading": true,
-    "desc": "<p>You can define named instructions here, that you can re-use in multiple queries. A preset called '<code>name</code>' can be used in Tasks queries with either '<code>preset name</code>' or '<code>{{preset.name}}</code>'.</p><p>Any open Tasks queries are reloaded automatically when presets are edited.</p><p><a href=\"https://publish.obsidian.md/tasks/Queries/Presets\">See the documentation</a>.</p>",
-    "controls": []
-  },
-  {
-    "controls": [
-      "text",
-      "textArea",
-      {
-        "icon": "grip-vertical",
-        "tooltip": "Drag to reorder",
-        "type": "extraButton"
-      },
-      {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
-        "type": "extraButton"
-      }
-    ]
-  },
-  {
-    "controls": [
-      "text",
-      "textArea",
-      {
-        "icon": "grip-vertical",
-        "tooltip": "Drag to reorder",
-        "type": "extraButton"
-      },
-      {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
-        "type": "extraButton"
-      }
-    ]
-  },
-  {
-    "controls": [
-      "text",
-      "textArea",
-      {
-        "icon": "grip-vertical",
-        "tooltip": "Drag to reorder",
-        "type": "extraButton"
-      },
-      {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
-        "type": "extraButton"
-      }
-    ]
-  },
-  {
-    "controls": [
-      "text",
-      "textArea",
-      {
-        "icon": "grip-vertical",
-        "tooltip": "Drag to reorder",
-        "type": "extraButton"
-      },
-      {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
-        "type": "extraButton"
-      }
-    ]
-  },
-  {
-    "controls": [
-      "text",
-      "textArea",
-      {
-        "icon": "grip-vertical",
-        "tooltip": "Drag to reorder",
-        "type": "extraButton"
-      },
-      {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
-        "type": "extraButton"
-      }
-    ]
-  },
-  {
-    "controls": [
-      "text",
-      "textArea",
-      {
-        "icon": "grip-vertical",
-        "tooltip": "Drag to reorder",
-        "type": "extraButton"
-      },
-      {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
-        "type": "extraButton"
-      }
-    ]
-  },
-  {
-    "controls": [
-      "text",
-      "textArea",
-      {
-        "icon": "grip-vertical",
-        "tooltip": "Drag to reorder",
-        "type": "extraButton"
-      },
-      {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
-        "type": "extraButton"
-      }
-    ]
-  },
-  {
-    "controls": [
-      "text",
-      "textArea",
-      {
-        "icon": "grip-vertical",
-        "tooltip": "Drag to reorder",
-        "type": "extraButton"
-      },
-      {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
-        "type": "extraButton"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "cta": true,
-        "onClick": "[Function]",
-        "text": "Add new preset",
-        "type": "button"
-      }
     ]
   },
   {
     "name": "Task statuses",
     "heading": true,
+    "desc": "<p>Core statuses work with any theme.</p><p>For custom statuses, first install a theme or CSS snippet that styles them, then add matching statuses here.</p><p>Reload Obsidian to apply this change.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Statuses\">See the documentation</a></p>",
     "controls": []
   },
   {
@@ -223,10 +37,11 @@
     "controls": []
   },
   {
-    "desc": "<p>These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.</p><p>You can add and edit your own custom statuses in the Custom statuses section.</p><p>REQUIRES RESTART.</p>",
+    "desc": "Built-in statuses that work with any theme. You can rename them and change what they toggle to.",
     "controls": []
   },
   {
+    "name": "Todo",
     "controls": [
       {
         "icon": "pencil",
@@ -237,23 +52,13 @@
     ]
   },
   {
+    "name": "Done",
     "controls": [
       {
         "icon": "pencil",
         "onClick": "[Function]",
         "tooltip": "Edit",
         "type": "extraButton"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "cta": true,
-        "onClick": "[Function]",
-        "text": "Review and check your statuses",
-        "tooltip": "Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings.",
-        "type": "button"
       }
     ]
   },
@@ -263,37 +68,260 @@
     "controls": []
   },
   {
-    "desc": "<p>You should first <b>select and install a CSS snippet or theme</b> to style custom checkboxes.</p><p>Then, set up your custom statuses to match your chosen CSS checkboxes.</p><p><b>Note</b> Any statuses with the same symbol as any earlier statuses will be ignored. You can confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down.</p><p>REQUIRES RESTART.</p><p></p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Statuses\">See the documentation to get started!</a></p>",
+    "desc": "Each symbol can only be used once. Later duplicates are ignored.",
+    "controls": []
+  },
+  {
+    "name": "In Progress",
+    "controls": [
+      {
+        "icon": "pencil",
+        "onClick": "[Function]",
+        "tooltip": "Edit",
+        "type": "extraButton"
+      },
+      {
+        "icon": "trash-2",
+        "onClick": "[Function]",
+        "tooltip": "Delete",
+        "type": "extraButton"
+      }
+    ]
+  },
+  {
+    "name": "Cancelled",
+    "controls": [
+      {
+        "icon": "pencil",
+        "onClick": "[Function]",
+        "tooltip": "Edit",
+        "type": "extraButton"
+      },
+      {
+        "icon": "trash-2",
+        "onClick": "[Function]",
+        "tooltip": "Delete",
+        "type": "extraButton"
+      }
+    ]
+  },
+  {
+    "controls": [
+      {
+        "cta": true,
+        "onClick": "[Function]",
+        "text": "Add status",
+        "type": "button"
+      }
+    ]
+  },
+  {
+    "name": "Tools",
+    "heading": true,
+    "controls": []
+  },
+  {
+    "name": "Import from theme",
+    "desc": "Add the statuses supported by a theme or CSS snippet.",
+    "controls": [
+      {
+        "onClick": "[Function]",
+        "text": "Choose theme…",
+        "type": "button"
+      }
+    ]
+  },
+  {
+    "name": "Add statuses found in vault",
+    "desc": "Add any status symbols used in your notes that are not set up yet.",
+    "controls": [
+      {
+        "onClick": "[Function]",
+        "text": "Add",
+        "type": "button"
+      }
+    ]
+  },
+  {
+    "name": "Create status report",
+    "desc": "Create a note that lists your statuses, with a diagram of how they toggle.",
+    "controls": [
+      {
+        "onClick": "[Function]",
+        "text": "Create",
+        "type": "button"
+      }
+    ]
+  },
+  {
+    "name": "Reset custom statuses",
+    "desc": "Replace all custom statuses with the defaults.",
+    "controls": [
+      {
+        "onClick": "[Function]",
+        "text": "Reset",
+        "type": "button",
+        "warning": true
+      }
+    ]
+  },
+  {
+    "name": "Queries",
+    "heading": true,
+    "controls": []
+  },
+  {
+    "name": "Global query",
+    "desc": "<p>Instructions added to the start of every query.</p><p><a href=\"https://publish.obsidian.md/tasks/Queries/Global+Query\">See the documentation</a></p>",
+    "controls": [
+      "textArea"
+    ]
+  },
+  {
+    "name": "Allow JavaScript in queries",
+    "desc": "<p>Enables <code>filter by function</code>, <code>sort by function</code> and <code>group by function</code>. Applies to this device only.</p><p><a href=\"https://publish.obsidian.md/tasks/Scripting/JavaScript+in+Tasks+Queries\">See the documentation</a></p>",
+    "controls": [
+      "toggle"
+    ]
+  },
+  {
+    "name": "Presets",
+    "heading": true,
+    "desc": "<p>Reusable query snippets. Use <code>preset name</code> or <code>{{preset.name}}</code> in any query.</p><p><a href=\"https://publish.obsidian.md/tasks/Queries/Presets\">See the documentation</a></p>",
     "controls": []
   },
   {
     "controls": [
+      "text",
+      "textArea",
       {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder",
         "type": "extraButton"
       },
       {
-        "icon": "pencil",
+        "icon": "trash-2",
         "onClick": "[Function]",
-        "tooltip": "Edit",
+        "tooltip": "Delete",
         "type": "extraButton"
       }
     ]
   },
   {
     "controls": [
+      "text",
+      "textArea",
       {
-        "icon": "cross",
-        "onClick": "[Function]",
-        "tooltip": "Delete",
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder",
         "type": "extraButton"
       },
       {
-        "icon": "pencil",
+        "icon": "trash-2",
         "onClick": "[Function]",
-        "tooltip": "Edit",
+        "tooltip": "Delete",
+        "type": "extraButton"
+      }
+    ]
+  },
+  {
+    "controls": [
+      "text",
+      "textArea",
+      {
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder",
+        "type": "extraButton"
+      },
+      {
+        "icon": "trash-2",
+        "onClick": "[Function]",
+        "tooltip": "Delete",
+        "type": "extraButton"
+      }
+    ]
+  },
+  {
+    "controls": [
+      "text",
+      "textArea",
+      {
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder",
+        "type": "extraButton"
+      },
+      {
+        "icon": "trash-2",
+        "onClick": "[Function]",
+        "tooltip": "Delete",
+        "type": "extraButton"
+      }
+    ]
+  },
+  {
+    "controls": [
+      "text",
+      "textArea",
+      {
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder",
+        "type": "extraButton"
+      },
+      {
+        "icon": "trash-2",
+        "onClick": "[Function]",
+        "tooltip": "Delete",
+        "type": "extraButton"
+      }
+    ]
+  },
+  {
+    "controls": [
+      "text",
+      "textArea",
+      {
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder",
+        "type": "extraButton"
+      },
+      {
+        "icon": "trash-2",
+        "onClick": "[Function]",
+        "tooltip": "Delete",
+        "type": "extraButton"
+      }
+    ]
+  },
+  {
+    "controls": [
+      "text",
+      "textArea",
+      {
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder",
+        "type": "extraButton"
+      },
+      {
+        "icon": "trash-2",
+        "onClick": "[Function]",
+        "tooltip": "Delete",
+        "type": "extraButton"
+      }
+    ]
+  },
+  {
+    "controls": [
+      "text",
+      "textArea",
+      {
+        "icon": "grip-vertical",
+        "tooltip": "Drag to reorder",
+        "type": "extraButton"
+      },
+      {
+        "icon": "trash-2",
+        "onClick": "[Function]",
+        "tooltip": "Delete",
         "type": "extraButton"
       }
     ]
@@ -303,100 +331,8 @@
       {
         "cta": true,
         "onClick": "[Function]",
-        "text": "Add new task status",
+        "text": "Add preset",
         "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "onClick": "[Function]",
-        "text": "AnuPpuccin: add 28 supported statuses",
-        "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "onClick": "[Function]",
-        "text": "Aura: add 19 supported statuses",
-        "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "onClick": "[Function]",
-        "text": "Border: add 20 supported statuses",
-        "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "onClick": "[Function]",
-        "text": "Ebullientworks: add 8 supported statuses",
-        "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "onClick": "[Function]",
-        "text": "ITS & SlRvb Checkboxes: add 38 supported statuses",
-        "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "onClick": "[Function]",
-        "text": "Minimal: add 22 supported statuses",
-        "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "onClick": "[Function]",
-        "text": "Things: add 22 supported statuses",
-        "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "onClick": "[Function]",
-        "text": "LYT Mode (dark mode only): add 22 supported statuses",
-        "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "cta": true,
-        "onClick": "[Function]",
-        "text": "Add all unknown status types",
-        "type": "button"
-      }
-    ]
-  },
-  {
-    "controls": [
-      {
-        "onClick": "[Function]",
-        "text": "Reset custom status types to defaults",
-        "type": "button",
-        "warning": true
       }
     ]
   },
@@ -406,48 +342,43 @@
     "controls": []
   },
   {
-    "name": "Set created date on every added task",
-    "desc": "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date\">See the documentation</a>.</p>",
+    "name": "Add created date",
+    "desc": "<p>Add today's date as the created date to tasks made with 'Create or edit task', and to the next occurrence of recurring tasks.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date\">See the documentation</a></p>",
     "controls": [
       "toggle"
     ]
   },
   {
-    "name": "Set done date on every completed task",
-    "desc": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date\">See the documentation</a>.</p>",
+    "name": "Add done date",
+    "desc": "<p>Add the completion date when a task is marked done.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date\">See the documentation</a></p>",
     "controls": [
       "toggle"
     ]
   },
   {
-    "name": "Set cancelled date on every cancelled task",
-    "desc": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date\">See the documentation</a>.</p>",
+    "name": "Add cancelled date",
+    "desc": "<p>Add the date when a task is cancelled.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date\">See the documentation</a></p>",
     "controls": [
       "toggle"
     ]
   },
   {
-    "name": "Dates from file names",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "name": "Use filename as Scheduled date for undated tasks",
-    "desc": "Save time entering Scheduled (⏳) dates.If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats.<br>Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.<br><p>REQUIRES RESTART.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date\">See the documentation</a>.</p>",
+    "name": "Use file name as scheduled date",
+    "desc": "<p>Tasks with no start, scheduled or due date get a scheduled date from their file name, such as <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code>.</p><p>Reload Obsidian to apply this change.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date\">See the documentation</a></p>",
     "controls": [
       "toggle"
     ]
   },
   {
-    "name": "Additional filename date format as Scheduled date for undated tasks",
-    "desc": "An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.<p>REQUIRES RESTART.</p><p><a href=\"https://momentjs.com/docs/#/displaying/format/\">Syntax Reference</a></p>",
+    "name": "Extra date format",
+    "desc": "<p>Another date format to recognise in file names, using Moment.js syntax.</p><p>Reload Obsidian to apply this change.</p><p><a href=\"https://momentjs.com/docs/#/displaying/format/\">See the documentation</a></p>",
     "controls": [
       "text"
     ]
   },
   {
-    "name": "Folders with default Scheduled dates",
-    "desc": "<p>Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.</p><p>REQUIRES RESTART.</p>",
+    "name": "Only in folders",
+    "desc": "<p>Comma-separated list of folders. Leave empty to use all folders.</p><p>Reload Obsidian to apply this change.</p>",
     "controls": [
       "text"
     ]
@@ -458,53 +389,74 @@
     "controls": []
   },
   {
-    "name": "Next recurrence appears on the line below",
-    "desc": "Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks\">See the documentation</a>.</p>",
+    "name": "Next occurrence goes below",
+    "desc": "<p>Insert the next occurrence below the completed task, instead of above it.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks\">See the documentation</a></p>",
     "controls": [
       "toggle"
     ]
   },
   {
-    "name": "Remove scheduled date on recurrence",
-    "desc": "Enabling this will make the next recurrence of a task have no Scheduled (⏳) date, when at least one of Start (🛫) or Due (📅) dates is present.This is for when you want the Start and Due dates to carry forward to the next recurrence, but you will set the Scheduled date in future, once you plan to work on it.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks\">See the documentation</a>.</p>",
+    "name": "Drop scheduled date on recurrence",
+    "desc": "<p>If a recurring task has a start or due date, its next occurrence gets no scheduled date.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks\">See the documentation</a></p>",
     "controls": [
       "toggle"
     ]
+  },
+  {
+    "name": "Editing",
+    "heading": true,
+    "controls": []
   },
   {
     "name": "Auto-suggest",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "name": "Auto-suggest task content",
-    "desc": "Enabling this will open an intelligent suggest menu while typing inside a recognized task line.<p>REQUIRES RESTART.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest\">See the documentation</a>.</p>",
+    "desc": "<p>Suggest dates, priorities and other properties while you type a task.</p><p>Reload Obsidian to apply this change.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest\">See the documentation</a></p>",
     "controls": [
       "toggle"
     ]
   },
   {
-    "name": "Minimum match length for auto-suggest",
-    "desc": "<p>If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.</p><p>REQUIRES RESTART.</p>",
+    "name": "Minimum characters",
+    "desc": "<p>Characters to type before suggestions appear. 0 shows them straight away.</p><p>Reload Obsidian to apply this change.</p>",
     "controls": [
       "slider"
     ]
   },
   {
-    "name": "Maximum number of auto-suggestions to show",
-    "desc": "<p>How many suggestions should be shown when an auto-suggest menu pops up (including the \"⏎\" option).</p><p>REQUIRES RESTART.</p>",
+    "name": "Maximum suggestions",
+    "desc": "<p>The most suggestions to show at once.</p><p>Reload Obsidian to apply this change.</p>",
     "controls": [
       "slider"
     ]
   },
   {
-    "name": "Dialogs",
+    "name": "Display",
     "heading": true,
     "controls": []
   },
   {
-    "name": "Provide access keys in dialogs",
-    "desc": "If the access keys (keyboard shortcuts) for various controls in dialog boxes conflict with system keyboard shortcuts or assistive technology functionality that is important for you, you may want to deactivate them here.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts\">See the documentation</a>.</p>",
+    "name": "Property style",
+    "desc": "How task properties such as dates and priority are shown in results, dialogs and menus. Your notes are not changed.",
+    "controls": [
+      "dropdown"
+    ]
+  },
+  {
+    "name": "Render properties in Live Preview",
+    "desc": "Show task properties compactly in Live Preview, in the chosen property style. Put the cursor on a property to see and edit its text.",
+    "controls": [
+      "toggle"
+    ]
+  },
+  {
+    "name": "Task count position",
+    "desc": "Where query results show the number of tasks.",
+    "controls": [
+      "dropdown"
+    ]
+  },
+  {
+    "name": "Dialog keyboard shortcuts",
+    "desc": "<p>Turn off if the keyboard shortcuts in Tasks dialogs clash with other shortcuts or assistive technology.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts\">See the documentation</a></p>",
     "controls": [
       "toggle"
     ]

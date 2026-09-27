@@ -14,6 +14,7 @@ import { DateMenu } from '../ui/Menus/DateMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
 import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
+import { appendIcon, iconForComponent, labelForComponent, useIconsForDisplay } from '../ui/Icons';
 import { TaskFieldRenderer } from './TaskFieldRenderer';
 
 /**
@@ -125,7 +126,7 @@ export class TaskLineRenderer {
      * checkbox on the left with its event handling of completing the task, and the button for editing the task.
      *
      * @returns an HTML rendered List Item element (LI) for a task.
-     * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
+     * @note Output is based on the {@link DefaultTaskSerializer}'s format, with emojis or icons.
      * @param li HTML element for the rendered task.
      * @param task The task to be rendered.
      * @param taskIndex Task's index in the list. This affects `data-line` data attributes of the list item.
@@ -186,7 +187,7 @@ export class TaskLineRenderer {
             checkbox.addEventListener('contextmenu', (ev: MouseEvent) => {
                 showMenu(ev, new StatusMenu(StatusRegistry.getInstance(), task));
             });
-            checkbox.setAttribute('title', 'Right-click for options');
+            checkbox.setAttribute('title', 'Right-click to change status');
         }
 
         li.prepend(checkbox);
@@ -252,7 +253,7 @@ export class TaskLineRenderer {
                     });
                     span.setAttribute(
                         'title',
-                        `Click to edit ${splitDateText(componentDateField)}, Right-click for more options`,
+                        `Click to change ${splitDateText(componentDateField)} · right-click for more`,
                     );
                 }
             }
@@ -286,7 +287,21 @@ export class TaskLineRenderer {
         if (component === TaskLayoutComponent.Description) {
             return await this.renderDescription(task, span, isTaskInQueryFile);
         }
-        span.textContent = componentString;
+
+        const iconId = useIconsForDisplay() ? iconForComponent(component, task.priority) : null;
+        if (iconId === null) {
+            span.textContent = componentString;
+            return;
+        }
+
+        span.append(' ');
+        appendIcon(span, iconId, labelForComponent(component, task.priority));
+        if (!this.queryLayoutOptions.shortMode) {
+            const value = TASK_FORMATS.tasksPluginEmoji.taskSerializer.componentValueToString(task, component);
+            if (value) {
+                span.append(' ' + value);
+            }
+        }
     }
 
     private async renderDescription(task: Task, span: HTMLSpanElement, isTaskInQueryFile: boolean) {
@@ -296,7 +311,7 @@ export class TaskLineRenderer {
         const { debugSettings } = getSettings();
         if (debugSettings.showTaskHiddenData) {
             // Add some debug output to enable hidden information in the task to be inspected.
-            description += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
+            description += `<br>Debug: <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
         }
         await this.textRenderer(this.obsidianApp, description, span, task.path, this.obsidianComponent);
 
@@ -399,15 +414,19 @@ export class TaskLineRenderer {
 
     private addTooltip(task: Task, element: HTMLSpanElement, isFilenameUnique: boolean | undefined) {
         // NEW_TASK_FIELD_EDIT_REQUIRED
-        const {
-            recurrenceSymbol,
-            startDateSymbol,
-            createdDateSymbol,
-            scheduledDateSymbol,
-            dueDateSymbol,
-            cancelledDateSymbol,
-            doneDateSymbol,
-        } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
+        const useIcons = useIconsForDisplay();
+        const symbols = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
+        // Tooltips are plain text, so when showing icons, label each line with a word instead.
+        const signifier = (component: TaskLayoutComponent, emoji: string) =>
+            useIcons ? labelForComponent(component) + ':' : emoji;
+        const recurrenceSymbol = signifier(TaskLayoutComponent.RecurrenceRule, symbols.recurrenceSymbol);
+        const startDateSymbol = signifier(TaskLayoutComponent.StartDate, symbols.startDateSymbol);
+        const createdDateSymbol = signifier(TaskLayoutComponent.CreatedDate, symbols.createdDateSymbol);
+        const scheduledDateSymbol = signifier(TaskLayoutComponent.ScheduledDate, symbols.scheduledDateSymbol);
+        const dueDateSymbol = signifier(TaskLayoutComponent.DueDate, symbols.dueDateSymbol);
+        const cancelledDateSymbol = signifier(TaskLayoutComponent.CancelledDate, symbols.cancelledDateSymbol);
+        const doneDateSymbol = signifier(TaskLayoutComponent.DoneDate, symbols.doneDateSymbol);
+        const linkSymbol = useIcons ? 'In:' : '🔗';
 
         element.addEventListener('mouseenter', () => {
             function addDateToTooltip(tooltip: HTMLDivElement, date: Moment | null, signifier: string) {
@@ -447,7 +466,7 @@ export class TaskLineRenderer {
             const linkText = task.getLinkText({ isFilenameUnique });
             if (linkText) {
                 const backlinkDiv = tooltip.createDiv();
-                backlinkDiv.setText(`🔗 ${linkText}`);
+                backlinkDiv.setText(`${linkSymbol} ${linkText}`);
             }
 
             element.addEventListener('mouseleave', () => {

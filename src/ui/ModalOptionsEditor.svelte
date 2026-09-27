@@ -19,20 +19,35 @@
         onSave();
     };
 
-    // Helper to format field names for display
-    const formatFieldName = (fieldName: string): string => {
-        return fieldName.charAt(0).toUpperCase() + fieldName.slice(1).replace('_', ' ');
+    // The fields in the order they appear in the edit dialog, with their display names.
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+    const fieldLabels: Record<string, string> = {
+        priority: 'Priority',
+        due: 'Due date',
+        scheduled: 'Scheduled date',
+        start: 'Start date',
+        recurrence: 'Recurs',
+        before_this: 'Blocked by',
+        after_this: 'Blocks',
+        status: 'Status',
+        created: 'Created date',
+        done: 'Done date',
+        cancelled: 'Cancelled date',
     };
+    const fieldNames = [
+        ...Object.keys(fieldLabels),
+        ...Object.keys(options).filter((fieldName) => !(fieldName in fieldLabels)),
+    ];
 
-    const withLinesAfterFields = ['priority', 'start', 'after_this'];
+    const withLinesAfterFields = ['priority', 'recurrence', 'after_this'];
 </script>
 
 <div class="tasks-options-modal">
     <div class="tasks-options-modal-checkboxes">
-        {#each Object.keys(options) as fieldName}
+        {#each fieldNames as fieldName}
             <label>
                 <input type="checkbox" checked={options[fieldName]} id={fieldName} on:change={onChange(fieldName)} />
-                <span>{formatFieldName(fieldName)}</span>
+                <span>{fieldLabels[fieldName] ?? fieldName}</span>
             </label>
 
             {#if withLinesAfterFields.includes(fieldName)}

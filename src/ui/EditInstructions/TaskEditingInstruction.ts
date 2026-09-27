@@ -28,4 +28,15 @@ export interface TaskEditingInstruction {
      * @param task
      */
     isCheckedForTask(task: Task): boolean;
+
+    /**
+     * Optional: the name of the icon to show next to this instruction in menus.
+     */
+    instructionIcon?(): string | null;
+
+    /**
+     * Optional: whether this instruction can be applied to the given task. Defaults to true.
+     * Instructions that cannot be applied are shown disabled in menus.
+     */
+    isEnabledForTask?(task: Task): boolean;
 }

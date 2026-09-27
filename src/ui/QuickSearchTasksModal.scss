@@ -63,6 +63,10 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
+    .tasks-quick-search-result-metadata-item + .tasks-quick-search-result-metadata-item {
+        margin-inline-start: var(--size-4-2);
+    }
 }
 
 @media (max-width: 799px) {

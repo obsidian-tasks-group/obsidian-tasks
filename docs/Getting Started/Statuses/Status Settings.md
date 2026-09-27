@@ -35,14 +35,11 @@ We also see that each status consists of:
 
 ## Add New Task Status
 
-This adds a new, empty row to the Custom Statuses section.
-
-![An empty Status, which can be edited and deleted](../../images/settings-custom-statuses-new-empty-status.png)<br>
-*An empty Status, which can be edited and deleted*
-
-You can then click its Pencil icon and fill in the details for your new Status.
+Click **Add status** in the Custom Statuses section, and fill in the details for your new Status.
 
 ## Bulk-adding Statuses
+
+These options are in the **Tools** section. Themes are added with **Import from theme**.
 
 ### Minimal Theme
 
@@ -75,7 +72,7 @@ You can find a full list, with screenshots and complete details of the supported
 
 ### Add All Unknown Status Types
 
-This searches all the tasks in your vault for any with status symbols that are not already in Tasks settings.
+This option, **Add statuses found in vault**, searches all the tasks in your vault for any with status symbols that are not already in Tasks settings.
 It then creates a new custom status for each unknown status symbol.
 
 The new statuses are sorted by their symbols.
@@ -88,7 +85,7 @@ For example, in a vault that has already used a few custom statuses, we might se
 
 ## Reset Custom Status Types to Defaults
 
-This resets the entire Custom Statuses section back to its default list.
+This option, **Reset custom statuses**, resets the entire Custom Statuses section back to its default list.
 
 This allows you to try out each of the buttons above, and if you don't like them, you can quickly undo their changes.
 
@@ -99,7 +96,6 @@ This allows you to try out each of the buttons above, and if you don't like them
   - You have to confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down.
 - The Core and Custom Status sections in the settings are collapsible, but they keep expanding.
   - The mechanism to remember which sections were collapsed is not yet working.
-- Usability wise, it would be good if the 'Add New Task Status' button opened the modal to immediately edit the new status.
 - Ideally, the lists of statuses, with their delete and edit buttons, would be a table instead, with the ability to edit the properties directly in the table, instead of having to open up a modal.
 
 > [!Tip]

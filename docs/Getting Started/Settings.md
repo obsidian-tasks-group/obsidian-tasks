@@ -8,7 +8,7 @@ publish: true
 
 Changes to most of the Tasks settings take immediate effect.
 
-Regrettably, a few require the vault to be reloaded. These settings are marked with `REQUIRES RESTART`.
+Regrettably, a few require Obsidian to be reloaded. These settings show a **Reload** button, or say "Reload Obsidian to apply this change".
 
 ## Available settings
 
@@ -18,14 +18,25 @@ For convenience, here is a list of all those documentation pages (in the order t
 
 - [[About Task Formats#Selecting the task format|Task Formats]]
 - [[Global Filter#Settings for the Global Filter|Global Filter]]
-- [[Global Query#Settings|Global Query]]
 - [[Status Settings#Overview|Status Settings]]
+- [[Global Query#Settings|Global Query]]
+- [[Presets]]
+- [[JavaScript in Tasks Queries]]
 - [[Dates#Date-tracking settings|Dates]]
 - [[Use Filename as Default Date#Settings|Use Filename as Default Date]]
 - [[Recurring Tasks#Recurrence Settings|Recurring Tasks]]
 - [[Auto-Suggest#Settings|Auto-Suggest]]
-- [[Create or edit Task#Turning off keyboard shortcuts|Create or edit Task modal]]
+- [[#Display settings]]
 - [[Layout#Task count location|Search results]]
+- [[Create or edit Task#Turning off keyboard shortcuts|Create or edit Task modal]]
+
+## Display settings
+
+- **Property style**: show task properties as **Emoji** (the default) or **Icons**, in search results, Reading mode, dialogs and menus. Your notes are not changed.
+- **Render properties in Live Preview**: show task properties compactly in Live Preview, in the chosen property style, including [[Dataview Format]] fields such as `[priority:: highest]`. Put the cursor on a property to edit its text.
+
+> [!released]
+> Display settings were introduced in Tasks X.Y.Z.
 
 ## Support
 

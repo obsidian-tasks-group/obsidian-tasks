@@ -1,6 +1,6 @@
-import type { App, Component, TFile } from 'obsidian';
+import { type App, type Component, type TFile, setIcon } from 'obsidian';
 import { getSettings } from '../Config/Settings';
-import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
+import { getDateFieldToPostpone, postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
@@ -11,6 +11,7 @@ import type { ListItem } from '../Task/ListItem';
 import type { Task } from '../Task/Task';
 import { PostponeMenu } from '../ui/Menus/PostponeMenu';
 import { showMenu } from '../ui/Menus/TaskEditingMenu';
+import { TasksIcon, appendIcon, useIconsForDisplay } from '../ui/Icons';
 import type { BacklinksEventHandler, EditButtonClickHandler } from './QueryResultsRenderer';
 import { QueryResultsRendererBase } from './QueryResultsRendererBase';
 import { TaskLineRenderer, type TextRenderer } from './TaskLineRenderer';
@@ -104,11 +105,11 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     protected renderErrorMessage(errorMessage: string): void {
         const container = this.content.createDiv();
         const pre = container.createEl('pre');
-        pre.textContent = `Tasks query: ${errorMessage}`;
+        pre.textContent = `Tasks query error: ${errorMessage}`;
     }
 
     protected renderLoadingMessage(): void {
-        this.content.textContent = 'Loading Tasks ...';
+        this.content.textContent = 'Loading tasks…';
     }
 
     protected renderExplanation(explanation: string | null) {
@@ -188,12 +189,13 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
         }
 
-        if (!this.query.queryLayoutOptions.hideEditButton) {
-            this.addEditButton(extrasSpan, task);
+        if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
+            const postponeButton = this.addPostponeButton(extrasSpan, task, shortMode);
+            HtmlQueryResultsRenderer.placeNextToPostponedDate(listItem, task, postponeButton);
         }
 
-        if (!this.query.queryLayoutOptions.hidePostponeButton && shouldShowPostponeButton(task)) {
-            this.addPostponeButton(extrasSpan, task, shortMode);
+        if (!this.query.queryLayoutOptions.hideEditButton) {
+            this.addEditButton(extrasSpan, task);
         }
 
         this.currentULElement().appendChild(listItem);
@@ -206,6 +208,7 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         editTaskPencil.classList.add('tasks-edit');
         editTaskPencil.title = 'Edit task';
         editTaskPencil.href = '#';
+        HtmlQueryResultsRenderer.decorateButton(editTaskPencil, TasksIcon.edit, 'Edit task');
 
         editTaskPencil.addEventListener('click', (event: MouseEvent) =>
             this.htmlQueryRendererParameters.editTaskPencilClickHandler(
@@ -294,14 +297,17 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             link.classList.add('internal-link-short-mode');
         }
 
-        let linkText: string;
         if (shortMode) {
-            linkText = ' 🔗';
+            const linkText = task.getLinkText({ isFilenameUnique }) ?? '';
+            if (useIconsForDisplay()) {
+                link.append(' ');
+                appendIcon(link, TasksIcon.link, linkText);
+            } else {
+                link.text = ' 🔗';
+            }
         } else {
-            linkText = task.getLinkText({ isFilenameUnique }) ?? '';
+            link.text = task.getLinkText({ isFilenameUnique }) ?? '';
         }
-
-        link.text = linkText;
 
         // Go to the line the task is defined at
         link.addEventListener('click', async (ev: MouseEvent) => {
@@ -317,6 +323,16 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         }
     }
 
+    /**
+     * Move the postpone button next to the date that it postpones, if that date is shown.
+     */
+    private static placeNextToPostponedDate(listItem: HTMLElement, task: Task, button: HTMLElement) {
+        const dateClasses = { dueDate: 'task-due', scheduledDate: 'task-scheduled', startDate: 'task-start' };
+        const dateField = getDateFieldToPostpone(task);
+        const dateSpan = dateField && listItem.querySelector(`:scope > .tasks-list-text > .${dateClasses[dateField]}`);
+        dateSpan?.after(button);
+    }
+
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
         const amount = 1;
         const timeUnit = 'day';
@@ -328,6 +344,8 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
             button.classList.add('tasks-postpone-short-mode');
         }
         button.title = buttonTooltipText;
+        button.href = '#'; // Make the button reachable with the keyboard
+        HtmlQueryResultsRenderer.decorateButton(button, TasksIcon.postpone, buttonTooltipText);
 
         button.addEventListener('click', async (ev: MouseEvent) => {
             ev.preventDefault(); // suppress the default click behavior
@@ -340,6 +358,19 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
         button.addEventListener('contextmenu', async (ev: MouseEvent) => {
             showMenu(ev, new PostponeMenu(button, task));
         });
+        return button;
+    }
+
+    /**
+     * Show an icon in the button, if icons are chosen. Otherwise, CSS shows an emoji.
+     */
+    private static decorateButton(button: HTMLAnchorElement, iconId: string, label: string) {
+        button.setAttribute('role', 'button');
+        button.setAttribute('aria-label', label);
+        if (useIconsForDisplay()) {
+            button.classList.add('clickable-icon');
+            setIcon(button, iconId);
+        }
     }
 
     private addTaskCount(queryResult: QueryResult) {

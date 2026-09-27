@@ -36,6 +36,8 @@ export class MenuItem {
     public title: string | DocumentFragment = '';
     public callback: (evt: MouseEvent | KeyboardEvent) => any;
     public checked = false;
+    public icon: string | null = null;
+    public disabled = false;
 
     constructor() {
         this.callback = (_evt: MouseEvent | KeyboardEvent) => console.log('callback not defined');
@@ -50,6 +52,16 @@ export class MenuItem {
         this.callback = callback;
         return this;
     }
+    public setIcon(icon: string | null): this {
+        this.icon = icon;
+        return this;
+    }
+
+    public setDisabled(disabled: boolean): this {
+        this.disabled = disabled;
+        return this;
+    }
+
     public setChecked(checked: boolean | null): this {
         this.checked = checked ? checked : false;
         return this;
@@ -290,6 +302,12 @@ export function setIcon(element: HTMLElement, iconId: IconName): void {
     element.setAttribute('test-icon', iconId);
 }
 
+export const registeredIcons: Record<string, string> = {};
+
+export function addIcon(iconId: string, svgContent: string): void {
+    registeredIcons[iconId] = svgContent;
+}
+
 export function setTooltip(element: HTMLElement, text: string): void {
     element.setAttribute('test-tooltip', text);
 }
@@ -403,6 +421,21 @@ export class ButtonComponent {
         return this;
     }
 
+    public setCta(): this {
+        this.buttonEl.classList.add('mod-cta');
+        return this;
+    }
+
+    public setWarning(): this {
+        this.buttonEl.classList.add('mod-warning');
+        return this;
+    }
+
+    public setDisabled(disabled: boolean): this {
+        this.buttonEl.disabled = disabled;
+        return this;
+    }
+
     public onClick(_callback: () => void): this {
         return this;
     }
@@ -418,10 +451,12 @@ export class Setting {
     public settingEl = document.createElement('div');
     public infoEl = document.createElement('div');
     public controlEl = document.createElement('div');
+    public nameEl = document.createElement('div');
 
     private readonly record: Record<string, unknown>;
 
     constructor(containerEl: HTMLElement) {
+        this.infoEl.appendChild(this.nameEl);
         this.settingEl.appendChild(this.infoEl);
         this.settingEl.appendChild(this.controlEl);
         containerEl.appendChild(this.settingEl);

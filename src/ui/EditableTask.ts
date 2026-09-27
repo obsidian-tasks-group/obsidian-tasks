@@ -258,7 +258,7 @@ export class EditableTask {
     public parseAndValidateRecurrence() {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         if (!this.recurrenceRule) {
-            return { parsedRecurrence: '<i>not recurring</>', isRecurrenceValid: true };
+            return { parsedRecurrence: '<i>not recurring</i>', isRecurrenceValid: true };
         }
 
         const recurrenceFromText = Recurrence.fromText({
@@ -275,7 +275,7 @@ export class EditableTask {
             return { parsedRecurrence: recurrenceFromText, isRecurrenceValid: true };
         }
 
-        return { parsedRecurrence: '<i>due, scheduled or start date required</i>', isRecurrenceValid: false };
+        return { parsedRecurrence: '<i>needs a due, scheduled or start date</i>', isRecurrenceValid: false };
     }
 }
 

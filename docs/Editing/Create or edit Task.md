@@ -106,7 +106,7 @@ There is a lot of flexibility here. For example:
 Note that relative dates will be always interpreted as being in the future, because that is usually what you want. You can change this behavior by unchecking "Only future dates" if you want to enter an overdue task or experiment with the way how relative dates in the past would be interpreted in queries.
 
 > [!Info]
-> If you have enabled ‘Set created date on every added task’ in Tasks settings (and restarted Obsidian), when you create a new Task via this modal, today's date will be added automatically.
+> If you have enabled ‘Add created date’ in Tasks settings (and restarted Obsidian), when you create a new Task via this modal, today's date will be added automatically.
 
 > [!released]
 >
@@ -171,13 +171,13 @@ Use the "Dependencies" area of the modal to specify relationships between tasks,
 
 #### Before this
 
-Use the "Before this" region to find and link to any tasks that **must be finished before the task being edited can be started**.
+Use the **Blocked by** field to find and link to any tasks that **must be finished before the task being edited can be started**.
 
 This is marked **1** and **2** in the image above.
 
 #### After this
 
-Use the "After this" region to find and link to any tasks that **can only be started after the task being edited is finished**.
+Use the **Blocks** field to find and link to any tasks that **can only be started after the task being edited is finished**.
 
 This is areas **3** and **4** in the image above.
 
@@ -185,7 +185,7 @@ This is areas **3** and **4** in the image above.
 
 Understanding the search query:
 
-- In either "Before this" or "After this", start typing any text from the description of a required task.
+- In either **Blocked by** or **Blocks**, start typing any text from the description of a required task.
 - Currently only task descriptions are searched, and not file paths.
 - You can type bits of words, in any order, and capitalisation does not matter.
 - For example, you could quickly find `Invite the guests` with `inv gu`, or `gu inv`.
@@ -230,10 +230,10 @@ For more information, including adding your own customised statuses, see [[Statu
 When you change the Status Symbol for a Task, the [[Dates#Date-tracking settings|Date-tracking settings]] are used to determine whether to update any date fields:
 
 - **If** the status is changed **to** a [[Status Types#DONE|DONE status type]] **from** any other status type,
-  - **and** the "Set done date on every completed task" option is enabled,
+  - **and** the "Add done date" option is enabled,
   - **then** the **Done date** is changed to today's date.
 - **If** the status is changed **to** a [[Status Types#CANCELLED|CANCELLED status type]] **from** any other status type,
-  - **and** the "Set cancelled date on every completed task" option is enabled,
+  - **and** the "Add cancelled date" option is enabled,
   - **then** the **Cancelled date** is changed to today's date.
 
 #### Overriding dates on status change

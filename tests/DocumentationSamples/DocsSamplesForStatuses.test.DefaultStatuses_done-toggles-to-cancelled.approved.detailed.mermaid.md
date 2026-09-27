@@ -15,7 +15,7 @@ classDef ON_HOLD     stroke:#00f,stroke-width:3px;
 4["'Cancelled'<br>[-] -> [ ]<br>(CANCELLED)"]:::CANCELLED
 1 --> 3
 2 --> 4
-2-. "🔁" .-> 1
+2-. "recurs" .-> 1
 3 --> 2
 4 --> 1
 

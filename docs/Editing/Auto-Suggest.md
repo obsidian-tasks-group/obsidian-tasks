@@ -129,7 +129,7 @@ There are some Auto-Suggest behaviours that might be improved in future releases
 
 - The following are not yet supported:
   - It does not yet support Done and Cancelled dates.
-    - Done Date can be added either with the 'Tasks: Toggle task done' command or by clicking the task's checkbox when in Live Preview or Reading views.
+    - Done Date can be added either with the 'Tasks: Toggle statuses' command or by clicking the task's checkbox when in Live Preview or Reading views.
     - Both Done and Cancelled dates can be edited in the [[Create or edit Task]] modal.
     - We are tracking this in [issue #2863](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2863).
   - It does not yet offer `when done`.
@@ -192,7 +192,7 @@ In Obsidian plugins that load first have suggestions prioritized. Given that, it
 **Tasks Plugin:**
 
 - Go to Settings → Tasks → Auto-suggest
-- Set "Minimum match length for auto suggest" to **1**
+- Set "Minimum characters" to **1**
 - Why: This allows other plugins to show suggestions when Tasks has no matches
 
 **Natural Language Dates:**
@@ -343,7 +343,7 @@ For more on filtering, and some examples, see [[#What keywords may I type to mak
 
 Increase the [[#Minimum match length for auto-suggest]] value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
 
-For example, if you set the `Minimum match length for auto-suggest` to 3, you would need to type in your task "pri" or "hig" or "med" or "low" to get auto-suggest for the priority emoji(s).
+For example, if you set the `Minimum characters` to 3, you would need to type in your task "pri" or "hig" or "med" or "low" to get auto-suggest for the priority emoji(s).
 
 ### What keywords may I type to make auto-suggest write the emoji for me?
 

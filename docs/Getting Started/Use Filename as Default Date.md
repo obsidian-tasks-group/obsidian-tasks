@@ -12,7 +12,7 @@ publish: true
 > - Support for filenames exactly matching a custom format added in 7.6.0.
 
 You can automatically set a scheduled date for tasks based on the name of their files. This feature can be enabled in the
-settings, via the option `Use filename as Scheduled date for undated tasks`. Changing this requires a restart of Obsidian.
+settings, via the option `Use file name as scheduled date`. Changing this requires a restart of Obsidian.
 
 This allows you, for instance, to make all the tasks in your daily notes be considered as scheduled. You can then
 query them using the `scheduled` and `happens` [[Filters|filters]].
@@ -37,7 +37,7 @@ not done
 
 For the scheduled date to be automatically set from the file name, the following rules apply :
 
-- the setting 'Use filename as Scheduled date for undated tasks' must be enabled, and Obsidian restarted,
+- the setting 'Use file name as scheduled date' must be enabled, and Obsidian reloaded,
 - the task must have no existing scheduled date, due date or start date,
 - one of these must be true:
   1. either the file name must **contain** a date in the format `YYYY-MM-DD` or `YYYYMMDD`,
@@ -102,7 +102,7 @@ See the [syntax reference](https://momentjs.com/docs/#/displaying/format/) for s
 
 ### Folders setting
 
-If the `Folders with default Scheduled dates` field is left empty in the settings dialog, default dates are applied to un-dated tasks all the
+If the `Only in folders` field is left empty in the settings dialog, default dates are applied to un-dated tasks all the
 files in the vault.
 
 A comma-separated list of folders can be entered to limit the scope. Default dates will then only be applied to undated tasks in all files in the specified folders and their subfolders.

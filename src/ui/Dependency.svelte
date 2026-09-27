@@ -4,6 +4,7 @@
     import type { EditableTask } from './EditableTask';
     import { descriptionAdjustedForDependencySearch, searchForCandidateTasksForDependency } from './DependencyHelpers';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
+    import { TasksIcon, icon } from './Icons';
 
     export let task: Task;
     export let editableTask: EditableTask;
@@ -13,7 +14,7 @@
     export let type: 'blocking' | 'blockedBy';
     export let labelText: string;
     export let accesskey: string | null;
-    export let placeholder: string = 'Type to search...';
+    export let placeholder: string = 'Type to search…';
 
     let search: string = '';
     let searchResults: Task[] | null = null;
@@ -145,7 +146,7 @@
     }
 </script>
 
-<label for={type}>{@html labelContentWithAccessKey(labelText, accesskey)}</label>
+<label for={id}>{@html labelContentWithAccessKey(labelText, accesskey)}</label>
 <!-- svelte-ignore a11y-accesskey -->
 <span bind:clientWidth={inputWidth}>
     <input
@@ -208,21 +209,9 @@
                     on:mousedown|preventDefault
                     type="button"
                     class="task-dependency-delete"
+                    aria-label="Remove"
                 >
-                    <svg
-                        style="display: block; margin: auto;"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="4"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-x"
-                    >
-                        <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-                    </svg>
+                    <span use:icon={{ id: TasksIcon.remove, label: '' }} />
                 </button>
             </div>
         {/each}

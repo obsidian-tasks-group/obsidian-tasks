@@ -242,6 +242,47 @@ export class DefaultTaskSerializer implements TaskSerializer {
     }
 
     /**
+     * The value of a component without its signifier, such as '2023-07-04' for a due date, for display only.
+     * Empty if there is no value, and for priority, which is conveyed by its symbol.
+     */
+    public componentValueToString(task: Task, component: TaskLayoutComponent): string {
+        const formatDate = (date: moment.Moment | null) => (date ? date.format(TaskRegularExpressions.dateFormat) : '');
+
+        switch (component) {
+            // NEW_TASK_FIELD_EDIT_REQUIRED
+            case TaskLayoutComponent.Description:
+                return task.description;
+            case TaskLayoutComponent.Priority:
+                return '';
+            case TaskLayoutComponent.StartDate:
+                return formatDate(task.startDate);
+            case TaskLayoutComponent.CreatedDate:
+                return formatDate(task.createdDate);
+            case TaskLayoutComponent.ScheduledDate:
+                if (task.scheduledDateIsInferred) return '';
+                return formatDate(task.scheduledDate);
+            case TaskLayoutComponent.DoneDate:
+                return formatDate(task.doneDate);
+            case TaskLayoutComponent.CancelledDate:
+                return formatDate(task.cancelledDate);
+            case TaskLayoutComponent.DueDate:
+                return formatDate(task.dueDate);
+            case TaskLayoutComponent.RecurrenceRule:
+                return task.recurrence ? task.recurrence.toText() : '';
+            case TaskLayoutComponent.OnCompletion:
+                return task.onCompletion === OnCompletion.Ignore ? '' : task.onCompletion;
+            case TaskLayoutComponent.DependsOn:
+                return task.dependsOn.join(',');
+            case TaskLayoutComponent.Id:
+                return task.id;
+            case TaskLayoutComponent.BlockLink:
+                return task.blockLink ?? '';
+            default:
+                throw new Error(`Don't know how to render task component of type '${component as string}'`);
+        }
+    }
+
+    /**
      * Given the string captured in the first capture group of
      *    {@link DefaultTaskSerializerSymbols.TaskFormatRegularExpressions.priorityRegex},
      *    returns the corresponding Priority level.

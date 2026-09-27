@@ -30,7 +30,7 @@ describe('SetStatus', () => {
         const instruction = new SetStatus(status);
 
         // Assert
-        expect(instruction.instructionDisplayName()).toEqual('Change status to: [ ] Todo');
+        expect(instruction.instructionDisplayName()).toEqual('Set status to Todo [ ]');
         expect(instruction.isCheckedForTask(todoTask)).toEqual(true);
         expect(instruction.isCheckedForTask(doneTask)).toEqual(false);
     });

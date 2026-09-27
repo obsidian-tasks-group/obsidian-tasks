@@ -126,10 +126,10 @@ Using the [[Create or edit Task]] modal, you can:
 
 1. **Either:**
     - open the **'Build a first draft'** task in the Edit Task Modal
-    - and specify **'Test with users'** in **After this**.
+    - and specify **'Test with users'** in **Blocks**.
 1. **Or:**
     - open the **'Test with users'** task in the Edit Task Modal
-    - and add **'Build a first draft'** in **Before this**.
+    - and add **'Build a first draft'** in **Blocked by**.
 
 ![Making the 'Test with users' task depend on the 'Build a first draft'](../images/task-dependencies-blocked-by-example.png)
 <span class="caption">Making the **'Test with users'** task depend on the **'Build a first draft'** task.</span>

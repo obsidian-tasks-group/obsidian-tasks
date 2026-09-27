@@ -41,7 +41,7 @@ To enable JavaScript in Tasks queries:
 1. Open Obsidian **Settings**.
 2. Go to **Tasks**.
 3. Find **Searches**.
-4. Enable **Enable custom searches**.
+4. Enable **Allow JavaScript in queries**.
 
 Only enable this if you trust the current and future contents of this vault, including files you may later download, copy, or sync from other people.
 
@@ -77,7 +77,7 @@ This means the query uses JavaScript, usually through one of these instructions:
 - `sort by function`
 - `group by function`
 
-To allow the query to run, enable **Settings** → **Tasks** → **Searches** → **Enable custom searches**.
+To allow the query to run, enable **Settings** → **Tasks** → **Queries** → **Allow JavaScript in queries**.
 
 Only do this if you trust the contents of the vault.
 
@@ -85,11 +85,11 @@ Only do this if you trust the contents of the vault.
 
 The setting is stored separately on each device.
 
-If you sync your vault between devices, enable **Enable custom searches** on each device where you want JavaScript in Tasks queries to run.
+If you sync your vault between devices, enable **Allow JavaScript in queries** on each device where you want JavaScript in Tasks queries to run.
 
 ### Do I need to rewrite my existing queries?
 
-No. Existing `filter by function`, `sort by function`, and `group by function` queries can continue to work unchanged once you enable **Enable custom searches**, if you feel it is safe to do so.
+No. Existing `filter by function`, `sort by function`, and `group by function` queries can continue to work unchanged once you enable **Allow JavaScript in queries**, if you feel it is safe to do so.
 
 ## See also
 

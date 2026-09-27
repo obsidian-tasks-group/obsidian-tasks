@@ -91,6 +91,20 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().quickSearch.fuzzyMatching).toBe(false);
     });
 
+    it('should default to emojis, and keep saved choices', () => {
+        expect(getSettings().signifierDisplay).toEqual('emoji');
+        expect(getSettings().showIconsInEditor).toEqual(true);
+
+        // Settings saved by an older version of Tasks have neither option:
+        updateSettings({ setDoneDate: false });
+        expect(getSettings().signifierDisplay).toEqual('emoji');
+        expect(getSettings().showIconsInEditor).toEqual(true);
+
+        updateSettings({ signifierDisplay: 'icons', showIconsInEditor: false });
+        expect(getSettings().signifierDisplay).toEqual('icons');
+        expect(getSettings().showIconsInEditor).toEqual(false);
+    });
+
     it('should completely remove properties not in defaultSettings', () => {
         // Arrange: Add an extra property that isn't in defaultSettings
         updateSettings({

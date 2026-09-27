@@ -24,7 +24,7 @@ describe('CreateEditingInstructionForGroup', () => {
         const instruction = createEditingInstructionForGroup('due', task);
 
         expect(instruction).not.toBeNull();
-        expect(instruction?.instructionDisplayName()).toBe('Set Date: Fri Mar 14 2025');
+        expect(instruction?.instructionDisplayName()).toBe('Set due date to Fri 14th Mar 2025');
     });
 });
 

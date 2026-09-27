@@ -1,6 +1,7 @@
 {
   "common": {
     "cancel": "Cancel",
+    "delete": "Delete",
     "edit": "Edit",
     "moreInfo": "More info",
     "okay": "Okay",
@@ -13,33 +14,37 @@
   },
   "modals": {
     "customStatusModal": {
+      "duplicateSymbol": "The symbol '{{symbol}}' is already used by another status.",
       "editAvailableAsCommand": {
-        "description": "If enabled this status will be available as a command so you can assign a hotkey and toggle the status using it.",
+        "description": "Make this status available as a command, so you can give it a hotkey.",
         "name": "Available as command"
       },
       "editNextStatusSymbol": {
-        "description": "When clicked on this is the symbol that should be used next.",
-        "name": "Next status symbol"
+        "description": "The symbol this status changes to when toggled.",
+        "name": "Next symbol"
       },
       "editStatusName": {
-        "description": "This is the friendly name of the task status.",
+        "description": "The name shown in menus and searches.",
         "name": "Name"
       },
       "editStatusSymbol": {
-        "description": "This is the character between the square braces. (It can only be edited for custom statuses, and not core statuses.)",
+        "coreDescription": "The character between the square brackets. Core status symbols cannot be changed.",
+        "description": "The character between the square brackets.",
         "name": "Symbol"
       },
       "editStatusType": {
-        "description": "Control how the status behaves for searching and toggling.",
+        "description": "How the status behaves when searching and toggling.",
         "name": "Type"
       },
       "fixErrorsBeforeSaving": "Fix errors before saving.",
       "title": {
+        "addStatus": "Add status",
         "editCoreStatus": "Edit core status",
         "editCustomStatus": "Edit custom status"
       }
     },
     "editPresetModal": {
+      "addTitle": "Add preset",
       "name": {
         "duplicate": "A preset with this name already exists",
         "name": "Name",
@@ -47,9 +52,9 @@
         "required": "Required"
       },
       "query": {
-        "description": "Optional. You can fill this in later.",
         "name": "Query",
-        "placeholder": "not done\npath includes Work"
+        "placeholder": "not done\npath includes Work",
+        "required": "Required"
       },
       "title": "Edit preset"
     }
@@ -74,7 +79,7 @@
         "updateReport": {
           "line1": "If you change the Tasks status settings, you can get an updated report by:",
           "line2": "Going to `Settings` -> `Tasks`.",
-          "line3": "Clicking on `Review and check your statuses`."
+          "line3": "Clicking `Create status report` on the `Statuses` page."
         }
       },
       "columnHeadings": {
@@ -128,33 +133,31 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Auto-suggest",
       "maxSuggestions": {
-        "description": "How many suggestions should be shown when an auto-suggest menu pops up (including the \"⏎\" option).",
-        "name": "Maximum number of auto-suggestions to show"
+        "description": "The most suggestions to show at once.",
+        "name": "Maximum suggestions"
       },
       "minLength": {
-        "description": "If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.",
-        "name": "Minimum match length for auto-suggest"
+        "description": "Characters to type before suggestions appear. 0 shows them straight away.",
+        "name": "Minimum characters"
       },
       "toggle": {
-        "description": "Enabling this will open an intelligent suggest menu while typing inside a recognized task line.",
-        "name": "Auto-suggest task content"
+        "description": "Suggest dates, priorities and other properties while you type a task.",
+        "name": "Auto-suggest"
       }
     },
-    "changeRequiresRestart": "REQUIRES RESTART.",
     "dates": {
       "cancelledDate": {
-        "description": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
-        "name": "Set cancelled date on every cancelled task"
+        "description": "Add the date when a task is cancelled.",
+        "name": "Add cancelled date"
       },
       "createdDate": {
-        "description": "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.",
-        "name": "Set created date on every added task"
+        "description": "Add today's date as the created date to tasks made with 'Create or edit task', and to the next occurrence of recurring tasks.",
+        "name": "Add created date"
       },
       "doneDate": {
-        "description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
-        "name": "Set done date on every completed task"
+        "description": "Add the completion date when a task is marked done.",
+        "name": "Add done date"
       },
       "heading": "Dates"
     },
@@ -162,138 +165,133 @@
       "heading": "Dates from file names",
       "scheduledDate": {
         "extraFormat": {
-          "description": {
-            "line1": "An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.",
-            "line2": "Syntax Reference"
-          },
-          "name": "Additional filename date format as Scheduled date for undated tasks",
-          "placeholder": "example: MMM DD YYYY"
+          "description": "Another date format to recognise in file names, using Moment.js syntax.",
+          "name": "Extra date format",
+          "placeholder": "e.g. MMM DD YYYY"
         },
         "folders": {
-          "description": "Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.",
-          "name": "Folders with default Scheduled dates"
+          "description": "Comma-separated list of folders. Leave empty to use all folders.",
+          "name": "Only in folders",
+          "placeholder": "e.g. Daily, Journal"
         },
         "toggle": {
-          "description": {
-            "line1": "Save time entering Scheduled (⏳) dates.",
-            "line2": "If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.",
-            "line3": "By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats.",
-            "line4": "Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates."
-          },
-          "name": "Use filename as Scheduled date for undated tasks"
+          "description": "Tasks with no start, scheduled or due date get a scheduled date from their file name, such as {{format1}} or {{format2}}.",
+          "name": "Use file name as scheduled date"
         }
       }
     },
-    "dialogs": {
+    "display": {
       "accessKeys": {
-        "description": "If the access keys (keyboard shortcuts) for various controls in dialog boxes conflict with system keyboard shortcuts or assistive technology functionality that is important for you, you may want to deactivate them here.",
-        "name": "Provide access keys in dialogs"
+        "description": "Turn off if the keyboard shortcuts in Tasks dialogs clash with other shortcuts or assistive technology.",
+        "name": "Dialog keyboard shortcuts"
       },
-      "heading": "Dialogs"
-    },
-    "format": {
-      "description": {
-        "line1": "The format that Tasks uses to read and write tasks.",
-        "line2": "<b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>."
+      "editorIcons": {
+        "description": "Show task properties compactly in Live Preview, in the chosen property style. Put the cursor on a property to see and edit its text.",
+        "name": "Render properties in Live Preview"
       },
-      "displayName": {
-        "dataview": "Dataview",
-        "tasksEmojiFormat": "Tasks emoji format"
+      "heading": "Display",
+      "signifiers": {
+        "description": "How task properties such as dates and priority are shown in results, dialogs and menus. Your notes are not changed.",
+        "name": "Property style",
+        "options": {
+          "emoji": "Emoji",
+          "icons": "Icons"
+        }
       },
-      "name": "Task format"
-    },
-    "globalFilter": {
-      "filter": {
-        "description": {
-          "line1": "Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.",
-          "line2": "Use a global filter if you want Tasks to only act on a subset of your \"<code>- [ ]</code>\" checklist items, so that a checklist item must include the specified string in its description in order to be considered a task.",
-          "line3": "For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.",
-          "line4": "Other checklist items will remain normal checklist items and not appear in queries or get a done date set."
-        },
-        "name": "Global filter",
-        "placeholder": "e.g. #task or TODO"
-      },
-      "heading": "Global task filter",
-      "removeFilter": {
-        "description": "Enabling this removes the string that you set as global filter from the task description when displaying a task.",
-        "name": "Remove global filter from description"
-      }
-    },
-    "globalQuery": {
-      "heading": "Global query",
-      "query": {
-        "description": "A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.",
-        "placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": "Instructions automatically included at the start of every Tasks block."
-      }
-    },
-    "presets": {
-      "buttons": {
-        "addNewPreset": "Add new preset"
-      },
-      "emptyState": "No presets yet.",
-      "line1": "You can define named instructions here, that you can re-use in multiple queries. A preset called '{{name}}' can be used in Tasks queries with either '{{instruction1}}' or '{{instruction2}}'.",
-      "line2": "Any open Tasks queries are reloaded automatically when presets are edited.",
-      "name": "Presets"
-    },
-    "recurringTasks": {
-      "heading": "Recurring tasks",
-      "nextLine": {
-        "description": "Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.",
-        "name": "Next recurrence appears on the line below"
-      },
-      "removeScheduledDate": {
-        "description": {
-          "line1": "Enabling this will make the next recurrence of a task have no Scheduled (⏳) date, when at least one of Start (🛫) or Due (📅) dates is present.",
-          "line2": "This is for when you want the Start and Due dates to carry forward to the next recurrence, but you will set the Scheduled date in future, once you plan to work on it."
-        },
-        "name": "Remove scheduled date on recurrence"
-      }
-    },
-    "searchResults": {
-      "heading": "Search results",
       "taskCountLocation": {
-        "description": "Choose whether the task count is shown at the top or bottom of query results.",
-        "name": "Task count location",
+        "description": "Where query results show the number of tasks.",
+        "name": "Task count position",
         "options": {
           "bottom": "Bottom",
           "top": "Top"
         }
       }
     },
-    "searches": {
-      "enableCustomSearches": {
+    "editing": {
+      "heading": "Editing"
+    },
+    "format": {
+      "description": "How task properties are written in your notes.",
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Tasks emoji format"
+      },
+      "name": "Task format",
+      "oneFormatOnly": "Tasks reads one format at a time: with Dataview selected, emoji properties are ignored."
+    },
+    "general": {
+      "heading": "General"
+    },
+    "globalFilter": {
+      "filter": {
+        "description": "Only checklist items containing this text are tasks. Leave empty to treat every checklist item as a task.",
+        "example": "For example, with {{example}}, other checklist items are ignored by Tasks.",
+        "name": "Global filter",
+        "placeholder": "e.g. #task"
+      },
+      "removeFilter": {
+        "description": "Hide the global filter text when displaying tasks.",
+        "name": "Hide global filter"
+      }
+    },
+    "presets": {
+      "buttons": {
+        "addNewPreset": "Add preset"
+      },
+      "deleteConfirm": {
+        "message": "Queries that use this preset will show an error.",
+        "title": "Delete preset '{{name}}'?"
+      },
+      "description": "Reusable query snippets. Use {{instruction1}} or {{instruction2}} in any query.",
+      "dragToReorder": "Drag to reorder",
+      "emptyState": "No presets yet.",
+      "name": "Presets"
+    },
+    "queries": {
+      "globalQuery": {
+        "description": "Instructions added to the start of every query.",
+        "modalDescription": "These instructions are added to the start of every Tasks query in this vault.",
+        "name": "Global query",
+        "notSet": "Not set.",
+        "placeholder": "path does not include _templates/\nlimit 300\nshow urgency",
+        "summary": "Current: {{firstLine}}",
+        "summaryMultiline_one": "Current: {{firstLine}} (and {{count}} more line)",
+        "summaryMultiline_other": "Current: {{firstLine}} (and {{count}} more lines)"
+      },
+      "heading": "Queries",
+      "javaScript": {
         "confirm": {
           "acknowledge": "I understand the risks",
-          "enable": "Enable"
+          "allow": "Allow",
+          "risk": "JavaScript in a query or note could read or change your vault and other files on this device.",
+          "trust": "Only allow this if you trust everything in this vault, including notes you may later download, copy or sync."
         },
-        "description": {
-          "line1": "Enables '{{filterByFunction}}', '{{sortByFunction}}', and '{{groupByFunction}}', which execute JavaScript in Tasks queries.",
-          "line2": "Malicious JavaScript in a Tasks query or Markdown file could run inside Obsidian and access or modify your vault contents, local files, or other system resources.",
-          "line3": "Only enable this if you trust the current and future contents of this vault, including files you may later download, copy, or sync from other people.",
-          "line4": "This setting is stored on this device only; enable it separately on each device where you use this vault."
-        },
-        "name": "Enable custom searches"
-      },
-      "heading": "Searches"
+        "description": "Enables {{filterByFunction}}, {{sortByFunction}} and {{groupByFunction}}. Applies to this device only.",
+        "name": "Allow JavaScript in queries"
+      }
     },
+    "recurringTasks": {
+      "heading": "Recurring tasks",
+      "nextLine": {
+        "description": "Insert the next occurrence below the completed task, instead of above it.",
+        "name": "Next occurrence goes below"
+      },
+      "removeScheduledDate": {
+        "description": "If a recurring task has a start or due date, its next occurrence gets no scheduled date.",
+        "name": "Drop scheduled date on recurrence"
+      }
+    },
+    "reloadToApply": "Reload Obsidian to apply this change.",
     "seeTheDocumentation": "See the documentation",
     "statuses": {
       "buttons": {
-        "addStatus": "Add status",
-        "importFromTheme": {
-          "description": "Add the statuses supported by a theme or CSS snippet.",
-          "name": "Import from theme"
-        }
+        "addStatus": "Add status"
       },
       "collections": {
         "anuppuccinTheme": "AnuPpuccin",
         "auraTheme": "Aura",
         "borderTheme": "Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: add {{numberOfStatuses}} supported statuses"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} statuses)"
           }
@@ -305,46 +303,58 @@
         "thingsTheme": "Things"
       },
       "coreStatuses": {
-        "buttons": {
-          "checkStatuses": {
-            "name": "Review and check your statuses",
-            "tooltip": "Create a new file in the root of the vault, containing a Mermaid diagram of the current status settings."
-          }
-        },
-        "description": {
-          "line1": "These are the core statuses that Tasks supports natively, with no need for custom CSS styling or theming.",
-          "line2": "You can add and edit your own custom statuses in the Custom statuses section."
-        },
+        "description": "Built-in statuses that work with any theme. You can rename them and change what they toggle to.",
         "heading": "Core statuses"
       },
       "customStatuses": {
-        "buttons": {
-          "addAllUnknown": {
-            "description": "Add any status symbols found in your vault but not yet configured here.",
-            "name": "Add all unknown status types"
-          },
-          "addNewStatus": {
-            "name": "Add new task status"
-          },
-          "resetCustomStatuses": {
-            "description": "Discard all custom statuses and restore the defaults.",
-            "name": "Reset custom status types to defaults"
-          }
-        },
-        "description": {
-          "line1": "You should first <b>select and install a CSS snippet or theme</b> to style custom checkboxes.",
-          "line2": "Then, set up your custom statuses to match your chosen CSS checkboxes.",
-          "line3": "<b>Note</b> Any statuses with the same symbol as any earlier statuses will be ignored. You can confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down.",
-          "line4": "See the documentation to get started!"
-        },
+        "description": "Each symbol can only be used once. Later duplicates are ignored.",
         "emptyState": "No custom statuses yet.",
         "heading": "Custom statuses"
+      },
+      "description": {
+        "core": "Core statuses work with any theme.",
+        "custom": "For custom statuses, first install a theme or CSS snippet that styles them, then add matching statuses here.",
+        "docsLink": "Learn about statuses"
       },
       "filter": {
         "placeholder": "Filter statuses…"
       },
       "heading": "Task statuses",
-      "reloadRequired": "Changes take effect after reload.",
+      "reloadRequired": "Reload Obsidian to finish applying your status changes.",
+      "row": {
+        "next": "Next"
+      },
+      "tools": {
+        "addUnknown": {
+          "added_one": "Tasks: Added {{count}} status.",
+          "added_other": "Tasks: Added {{count}} statuses.",
+          "button": "Add",
+          "description": "Add any status symbols used in your notes that are not set up yet.",
+          "name": "Add statuses found in vault",
+          "noneFound": "Tasks: No unknown statuses found."
+        },
+        "heading": "Tools",
+        "importFromTheme": {
+          "button": "Choose theme…",
+          "description": "Add the statuses supported by a theme or CSS snippet.",
+          "name": "Import from theme"
+        },
+        "report": {
+          "button": "Create",
+          "description": "Create a note that lists your statuses, with a diagram of how they toggle.",
+          "name": "Create status report",
+          "noteTitle": "Status report"
+        },
+        "reset": {
+          "confirm": {
+            "button": "Reset",
+            "message": "All your custom statuses will be replaced with the defaults. This cannot be undone.",
+            "title": "Reset custom statuses?"
+          },
+          "description": "Replace all custom statuses with the defaults.",
+          "name": "Reset custom statuses"
+        }
+      },
       "types": {
         "cancelled": "Cancelled",
         "done": "Done",
@@ -355,9 +365,6 @@
         "todo": "To do"
       },
       "unnamed": "(unnamed)"
-    },
-    "taskEntry": {
-      "heading": "Task entry"
     }
   }
 }

@@ -273,7 +273,7 @@ describe('QueryResultsRenderer - sequences', () => {
         // see issue #3702
         const source = 'explain';
         const storyboard = new RendererStoryboard(source, parentAndChild);
-        const dueDate = '📅 2025-12-01';
+        const dueDate = 'class="task-due"';
 
         {
             const { prettyHTML } = await storyboard.renderAndAddFrame('Initial results');

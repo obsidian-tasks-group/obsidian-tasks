@@ -123,7 +123,7 @@ export class TasksDate {
 
     public postpone(unitOfTime: moment.unitOfTime.DurationConstructor = 'days', amount: number = 1) {
         if (!this._date) {
-            const message = 'Cannot postpone a null date';
+            const message = 'Tasks: Cannot postpone a task without a date';
             new Notice(message);
             throw new Error(message);
         }

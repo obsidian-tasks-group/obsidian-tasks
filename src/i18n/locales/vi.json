@@ -1,6 +1,7 @@
 {
   "common": {
     "cancel": "",
+    "delete": "",
     "edit": "",
     "moreInfo": "",
     "okay": "",
@@ -13,6 +14,7 @@
   },
   "modals": {
     "customStatusModal": {
+      "duplicateSymbol": "",
       "editAvailableAsCommand": {
         "description": "Nếu bật, trạng thái này sẽ khả dụng dưới dạng lệnh để bạn có thể gán phím tắt và chuyển đổi trạng thái bằng lệnh đó.",
         "name": "Khả dụng dưới dạng lệnh"
@@ -26,6 +28,7 @@
         "name": "Tên trạng thái nhiệm vụ"
       },
       "editStatusSymbol": {
+        "coreDescription": "",
         "description": "Đây là ký tự nằm giữa dấu ngoặc vuông. (Chỉ có thể chỉnh sửa cho trạng thái Tùy chỉnh, không phải trạng thái Cốt lõi.)",
         "name": "Ký hiệu trạng thái nhiệm vụ"
       },
@@ -35,11 +38,13 @@
       },
       "fixErrorsBeforeSaving": "Vui lòng sửa lỗi trước khi lưu.",
       "title": {
+        "addStatus": "",
         "editCoreStatus": "",
         "editCustomStatus": ""
       }
     },
     "editPresetModal": {
+      "addTitle": "",
       "name": {
         "duplicate": "",
         "name": "",
@@ -47,9 +52,9 @@
         "required": ""
       },
       "query": {
-        "description": "",
         "name": "",
-        "placeholder": ""
+        "placeholder": "",
+        "required": ""
       },
       "title": ""
     }
@@ -74,7 +79,7 @@
         "updateReport": {
           "line1": "Nếu bạn thay đổi cài đặt trạng thái Tasks, bạn có thể nhận báo cáo cập nhật bằng cách:",
           "line2": "Vào `Cài đặt` -> `Tasks`.",
-          "line3": "Nhấp vào `Xem xét và kiểm tra Trạng thái của bạn`."
+          "line3": ""
         }
       },
       "columnHeadings": {
@@ -128,7 +133,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Gợi ý tự động",
       "maxSuggestions": {
         "description": "Số lượng gợi ý sẽ được hiển thị khi menu gợi ý tự động xuất hiện (bao gồm tùy chọn \"⏎\").",
         "name": "Số lượng gợi ý tự động tối đa để hiển thị"
@@ -142,7 +146,6 @@
         "name": "Gợi ý tự động nội dung nhiệm vụ"
       }
     },
-    "changeRequiresRestart": "YÊU CẦU KHỞI ĐỘNG LẠI.",
     "dates": {
       "cancelledDate": {
         "description": "Bật tính năng này sẽ thêm dấu thời gian ❌ YYYY-MM-DD vào cuối khi nhiệm vụ được chuyển sang bị hủy.",
@@ -162,96 +165,39 @@
       "heading": "Ngày từ tên file",
       "scheduledDate": {
         "extraFormat": {
-          "description": {
-            "line1": "Định dạng ngày bổ sung mà plugin Tasks sẽ nhận dạng khi sử dụng tên file làm ngày Đã lên lịch cho các nhiệm vụ chưa có ngày.",
-            "line2": "Tham khảo cú pháp"
-          },
+          "description": "",
           "name": "Định dạng ngày tên file bổ sung làm ngày Đã lên lịch cho nhiệm vụ chưa có ngày",
           "placeholder": "ví dụ: MMM DD YYYY"
         },
         "folders": {
           "description": "Để trống nếu bạn muốn sử dụng ngày Đã lên lịch mặc định ở mọi nơi, hoặc nhập danh sách các thư mục được phân tách bằng dấu phẩy.",
-          "name": "Thư mục có ngày Đã lên lịch mặc định"
+          "name": "Thư mục có ngày Đã lên lịch mặc định",
+          "placeholder": ""
         },
         "toggle": {
-          "description": {
-            "line1": "Tiết kiệm thời gian nhập ngày Đã lên lịch (⏳).",
-            "line2": "Nếu tùy chọn này được bật, bất kỳ nhiệm vụ nào chưa có ngày sẽ được cung cấp ngày Đã lên lịch mặc định được trích xuất từ tên file của chúng.",
-            "line3": "Theo mặc định, plugin Tasks sẽ khớp cả định dạng ngày <code>YYYY-MM-DD</code> và <code>YYYYMMDD</code>.",
-            "line4": "Nhiệm vụ chưa có ngày không có bất kỳ ngày nào trong số Đến hạn (📅), Đã lên lịch (⏳) và Bắt đầu (🛫)."
-          },
+          "description": "",
           "name": "Sử dụng tên file làm ngày Đã lên lịch cho nhiệm vụ chưa có ngày"
         }
       }
     },
-    "dialogs": {
+    "display": {
       "accessKeys": {
-        "description": "Nếu các phím truy cập (phím tắt) cho các điều khiển khác nhau trong hộp thoại xung đột với phím tắt hệ thống hoặc chức năng công nghệ hỗ trợ quan trọng đối với bạn, bạn có thể vô hiệu hóa chúng tại đây.",
-        "name": "Cung cấp phím truy cập trong hộp thoại"
+        "description": "",
+        "name": ""
       },
-      "heading": "Hộp thoại"
-    },
-    "format": {
-      "description": {
-        "line1": "Định dạng mà Tasks sử dụng để đọc và viết nhiệm vụ.",
-        "line2": "<b>Quan trọng:</b> Tasks hiện chỉ hỗ trợ một định dạng tại một thời điểm. Chọn Dataview hiện sẽ <b>ngừng Tasks đọc các ký hiệu emoji riêng của nó</b>."
+      "editorIcons": {
+        "description": "",
+        "name": ""
       },
-      "displayName": {
-        "dataview": "Dataview",
-        "tasksEmojiFormat": "Định dạng Emoji của Tasks"
-      },
-      "name": "Định dạng nhiệm vụ"
-    },
-    "globalFilter": {
-      "filter": {
-        "description": {
-          "line1": "Khuyến nghị: Để trống nếu bạn muốn tất cả các mục danh sách kiểm tra trong vault của bạn là nhiệm vụ được quản lý bởi plugin này.",
-          "line2": "Sử dụng bộ lọc toàn cục nếu bạn muốn Tasks chỉ hoạt động trên một tập hợp con các mục danh sách kiểm tra \"<code>- [ ]</code>\" của bạn, để một mục danh sách kiểm tra phải bao gồm chuỗi được chỉ định trong mô tả của nó để được coi là một nhiệm vụ.",
-          "line3": "Ví dụ: nếu bạn đặt bộ lọc toàn cục thành <code>#task</code>, plugin Tasks sẽ chỉ xử lý các mục danh sách kiểm tra được gắn thẻ <code>#task</code>.",
-          "line4": "Các mục danh sách kiểm tra khác sẽ vẫn là mục danh sách kiểm tra bình thường và không xuất hiện trong truy vấn hoặc được đặt ngày hoàn thành."
-        },
-        "name": "Bộ lọc toàn cục",
-        "placeholder": "ví dụ: #task hoặc TODO"
-      },
-      "heading": "Bộ lọc nhiệm vụ toàn cục",
-      "removeFilter": {
-        "description": "Bật tính năng này sẽ xóa chuỗi mà bạn đặt làm bộ lọc toàn cục khỏi mô tả nhiệm vụ khi hiển thị nhiệm vụ.",
-        "name": "Xóa bộ lọc toàn cục khỏi mô tả"
-      }
-    },
-    "globalQuery": {
-      "heading": "Truy vấn toàn cục",
-      "query": {
-        "description": "Một truy vấn được tự động bao gồm ở đầu mỗi khối Tasks trong vault. Hữu ích để thêm bộ lọc mặc định hoặc tùy chọn bố cục.",
-        "placeholder": "Ví dụ...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
-      }
-    },
-    "presets": {
-      "buttons": {
-        "addNewPreset": "Thêm preset mới"
-      },
-      "emptyState": "",
-      "line1": "Bạn có thể định nghĩa các hướng dẫn được đặt tên ở đây, mà bạn có thể sử dụng lại trong nhiều truy vấn. Một preset có tên '{{name}}' có thể được sử dụng trong truy vấn Tasks với '{{instruction1}}' hoặc '{{instruction2}}'.",
-      "line2": "Bất kỳ truy vấn Tasks nào đang mở sẽ được tải lại tự động khi các preset được chỉnh sửa.",
-      "name": "Preset"
-    },
-    "recurringTasks": {
-      "heading": "Nhiệm vụ định kỳ",
-      "nextLine": {
-        "description": "Bật tính năng này sẽ làm cho lần lặp lại tiếp theo của nhiệm vụ xuất hiện trên dòng bên dưới nhiệm vụ đã hoàn thành. Nếu không, lần lặp lại tiếp theo sẽ xuất hiện trước lần đã hoàn thành.",
-        "name": "Lần lặp lại tiếp theo xuất hiện trên dòng bên dưới"
-      },
-      "removeScheduledDate": {
-        "description": {
-          "line1": "Bật tính năng này sẽ làm cho lần lặp lại tiếp theo của nhiệm vụ không có ngày Đã lên lịch (⏳), khi ít nhất một trong các ngày Bắt đầu (🛫) hoặc Đến hạn (📅) có mặt.",
-          "line2": "Điều này dành cho khi bạn muốn ngày Bắt đầu và Đến hạn được chuyển tiếp sang lần lặp lại tiếp theo, nhưng bạn sẽ đặt ngày Đã lên lịch trong tương lai, một khi bạn dự định làm việc với nó."
-        },
-        "name": "Xóa ngày đã lên lịch khi lặp lại"
-      }
-    },
-    "searchResults": {
       "heading": "",
+      "signifiers": {
+        "description": "",
+        "name": "",
+        "options": {
+          "emoji": "",
+          "icons": ""
+        }
+      },
       "taskCountLocation": {
         "description": "",
         "name": "",
@@ -261,39 +207,91 @@
         }
       }
     },
-    "searches": {
-      "enableCustomSearches": {
-        "confirm": {
-          "acknowledge": "",
-          "enable": ""
-        },
-        "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
-        },
-        "name": ""
-      },
+    "editing": {
       "heading": ""
     },
+    "format": {
+      "description": "",
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Định dạng Emoji của Tasks"
+      },
+      "name": "Định dạng nhiệm vụ",
+      "oneFormatOnly": ""
+    },
+    "general": {
+      "heading": ""
+    },
+    "globalFilter": {
+      "filter": {
+        "description": "",
+        "example": "",
+        "name": "Bộ lọc toàn cục",
+        "placeholder": "ví dụ: #task hoặc TODO"
+      },
+      "removeFilter": {
+        "description": "Bật tính năng này sẽ xóa chuỗi mà bạn đặt làm bộ lọc toàn cục khỏi mô tả nhiệm vụ khi hiển thị nhiệm vụ.",
+        "name": "Xóa bộ lọc toàn cục khỏi mô tả"
+      }
+    },
+    "presets": {
+      "buttons": {
+        "addNewPreset": "Thêm preset mới"
+      },
+      "deleteConfirm": {
+        "message": "",
+        "title": ""
+      },
+      "description": "",
+      "dragToReorder": "",
+      "emptyState": "",
+      "name": "Preset"
+    },
+    "queries": {
+      "globalQuery": {
+        "description": "",
+        "modalDescription": "",
+        "name": "",
+        "notSet": "",
+        "placeholder": "",
+        "summary": "",
+        "summaryMultiline_one": "",
+        "summaryMultiline_other": ""
+      },
+      "heading": "",
+      "javaScript": {
+        "confirm": {
+          "acknowledge": "",
+          "allow": "",
+          "risk": "",
+          "trust": ""
+        },
+        "description": "",
+        "name": ""
+      }
+    },
+    "recurringTasks": {
+      "heading": "Nhiệm vụ định kỳ",
+      "nextLine": {
+        "description": "Bật tính năng này sẽ làm cho lần lặp lại tiếp theo của nhiệm vụ xuất hiện trên dòng bên dưới nhiệm vụ đã hoàn thành. Nếu không, lần lặp lại tiếp theo sẽ xuất hiện trước lần đã hoàn thành.",
+        "name": "Lần lặp lại tiếp theo xuất hiện trên dòng bên dưới"
+      },
+      "removeScheduledDate": {
+        "description": "",
+        "name": "Xóa ngày đã lên lịch khi lặp lại"
+      }
+    },
+    "reloadToApply": "",
     "seeTheDocumentation": "Xem tài liệu",
     "statuses": {
       "buttons": {
-        "addStatus": "",
-        "importFromTheme": {
-          "description": "",
-          "name": ""
-        }
+        "addStatus": ""
       },
       "collections": {
         "anuppuccinTheme": "Theme AnuPpuccin",
         "auraTheme": "Theme Aura",
         "borderTheme": "Theme Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Thêm {{numberOfStatuses}} Trạng thái được hỗ trợ"
-          },
           "importCollection": {
             "name": ""
           }
@@ -305,46 +303,58 @@
         "thingsTheme": "Theme Things"
       },
       "coreStatuses": {
-        "buttons": {
-          "checkStatuses": {
-            "name": "Xem xét và kiểm tra Trạng thái của bạn",
-            "tooltip": "Tạo file mới trong thư mục gốc của vault, chứa sơ đồ Mermaid của các cài đặt trạng thái hiện tại."
-          }
-        },
-        "description": {
-          "line1": "Đây là các trạng thái cốt lõi mà Tasks hỗ trợ nguyên bản, không cần CSS tùy chỉnh hoặc theme.",
-          "line2": "Bạn có thể thêm chỉnh sửa và thêm các trạng thái tùy chỉnh của riêng bạn trong phần bên dưới."
-        },
+        "description": "",
         "heading": "Trạng thái cốt lõi"
       },
       "customStatuses": {
-        "buttons": {
-          "addAllUnknown": {
-            "description": "",
-            "name": "Thêm tất cả loại trạng thái không xác định"
-          },
-          "addNewStatus": {
-            "name": "Thêm trạng thái nhiệm vụ mới"
-          },
-          "resetCustomStatuses": {
-            "description": "",
-            "name": "Đặt lại loại trạng thái tùy chỉnh về mặc định"
-          }
-        },
-        "description": {
-          "line1": "Trước tiên, bạn nên <b>chọn và cài đặt CSS Snippet hoặc Theme</b> để tạo kiểu cho các ô đánh dấu tùy chỉnh.",
-          "line2": "Sau đó, sử dụng các nút bên dưới để thiết lập trạng thái tùy chỉnh của bạn, để khớp với các ô đánh dấu CSS bạn đã chọn.",
-          "line3": "<b>Lưu ý</b> Bất kỳ trạng thái nào có cùng ký hiệu với bất kỳ trạng thái trước đó nào sẽ bị bỏ qua. Bạn có thể xác nhận các trạng thái thực sự được tải bằng cách chạy lệnh 'Tạo hoặc chỉnh sửa nhiệm vụ' và xem menu thả xuống Trạng thái.",
-          "line4": "Xem tài liệu để bắt đầu!"
-        },
+        "description": "",
         "emptyState": "",
         "heading": "Trạng thái tùy chỉnh"
+      },
+      "description": {
+        "core": "",
+        "custom": "",
+        "docsLink": ""
       },
       "filter": {
         "placeholder": ""
       },
       "heading": "Trạng thái nhiệm vụ",
       "reloadRequired": "",
+      "row": {
+        "next": ""
+      },
+      "tools": {
+        "addUnknown": {
+          "added_one": "",
+          "added_other": "",
+          "button": "",
+          "description": "",
+          "name": "",
+          "noneFound": ""
+        },
+        "heading": "",
+        "importFromTheme": {
+          "button": "",
+          "description": "",
+          "name": ""
+        },
+        "report": {
+          "button": "",
+          "description": "",
+          "name": "",
+          "noteTitle": ""
+        },
+        "reset": {
+          "confirm": {
+            "button": "",
+            "message": "",
+            "title": ""
+          },
+          "description": "",
+          "name": ""
+        }
+      },
       "types": {
         "cancelled": "",
         "done": "",
@@ -355,9 +365,6 @@
         "todo": ""
       },
       "unnamed": ""
-    },
-    "taskEntry": {
-      "heading": ""
     }
   }
 }

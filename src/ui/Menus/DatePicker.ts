@@ -1,81 +1,80 @@
-import flatpickr from 'flatpickr';
 import type { Task } from '../../Task/Task';
 import { RemoveTaskDate, SetTaskDate } from '../EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import type { TaskSaver } from './TaskEditingMenu';
 
-interface LocaleWithWeekInfo extends Intl.Locale {
-    weekInfo?: { firstDay: number };
-}
-
 /**
  * A calendar date picker which edits a date value in a {@link Task} object.
- * @param parentElement
+ *
+ * Shows a small popover under the element, with the same date input as the 'Create or edit task' dialog,
+ * and opens its calendar.
+ * @param anchorElement - the element to show the picker under.
  * @param task
  * @param dateFieldToEdit
  * @param taskSaver
  */
 export function promptForDate(
-    parentElement: HTMLElement,
+    anchorElement: HTMLElement,
     task: Task,
     dateFieldToEdit: AllTaskDateFields,
     taskSaver: TaskSaver,
 ) {
+    const doc = anchorElement.ownerDocument;
+    doc.querySelectorAll('.tasks-date-picker-popover').forEach((popover) => popover.remove());
+
+    // Outside the element, so that editors do not see it as content. Positioned here, so it never depends on CSS.
+    const popover = doc.body.createDiv({ cls: 'tasks-date-picker-popover' });
+    const rect = anchorElement.getBoundingClientRect();
+    popover.setCssProps({ position: 'fixed', left: `${rect.left}px`, top: `${rect.bottom + 4}px` });
+
+    const input = popover.createEl('input', { cls: 'tasks-date-picker-input', type: 'date' });
     const currentValue = task[dateFieldToEdit];
-    // TODO figure out how Today's date is determined: if Obsidian is left
-    //      running overnight, the flatpickr modal shows the previous day as Today.
-    const fp = flatpickr(parentElement, {
-        defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
-        disableMobile: true,
-        enableTime: false, // Optional: Enable time picker
-        dateFormat: 'Y-m-d', // Adjust the date and time format as needed
-        locale: {
-            // Try to determine the first day of the week based on the locale, or use Monday
-            // if unavailable
-            firstDayOfWeek: (new Intl.Locale(navigator.language) as LocaleWithWeekInfo).weekInfo?.firstDay ?? 1,
-        },
-        onClose: async (selectedDates, _dateStr, instance) => {
-            if (selectedDates.length > 0) {
-                const date = selectedDates[0];
-                const newTask = new SetTaskDate(dateFieldToEdit, date).apply(task);
-                await taskSaver(task, newTask);
-            }
-            instance.destroy();
-        },
-        onReady: (_selectedDates, _dateStr, instance) => {
-            // Add custom buttons dynamically
-            const buttonContainer = instance.calendarContainer.createDiv({ cls: 'tasks-date-picker-buttons' });
+    input.value = currentValue ? currentValue.format('YYYY-MM-DD') : '';
 
-            // Create "Clear" button
-            addButton(buttonContainer, instance, task, taskSaver, 'Clear', () => {
-                return new RemoveTaskDate(dateFieldToEdit, task).apply(task);
-            });
+    // Keep the popover on screen.
+    const popoverRect = popover.getBoundingClientRect();
+    const view = doc.defaultView ?? window;
+    if (popoverRect.bottom > view.innerHeight) {
+        popover.setCssProps({ top: `${Math.max(0, rect.top - popoverRect.height - 4)}px` });
+    }
+    if (popoverRect.right > view.innerWidth) {
+        popover.setCssProps({ left: `${Math.max(0, view.innerWidth - popoverRect.width - 4)}px` });
+    }
 
-            // Create "Today" button
-            addButton(buttonContainer, instance, task, taskSaver, 'Today', () => {
-                const today = new Date();
-                return new SetTaskDate(dateFieldToEdit, today).apply(task);
-            });
-        },
-    });
+    const close = () => {
+        popover.remove();
+        doc.removeEventListener('mousedown', onMouseDown, true);
+        doc.removeEventListener('keydown', onKeyDown, true);
+    };
+    const onMouseDown = (event: MouseEvent) => {
+        if (!popover.contains(event.target as Node)) {
+            close();
+        }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+            close();
+        }
+    };
+    // Wait until the click that opened the picker has finished, so that it does not close it again.
+    view.setTimeout(() => {
+        doc.addEventListener('mousedown', onMouseDown, true);
+        doc.addEventListener('keydown', onKeyDown, true);
+    }, 0);
 
-    // Open the calendar programmatically
-    fp.open();
-}
-
-function addButton(
-    buttonContainer: HTMLDivElement,
-    instance: flatpickr.Instance,
-    task: Task,
-    taskSaver: TaskSaver,
-    buttonName: string,
-    applyDate: () => Task[],
-) {
-    const button = buttonContainer.createEl('button', { cls: 'flatpickr-button', text: buttonName });
-
-    button.addEventListener('click', async () => {
-        const newTask = applyDate();
+    input.addEventListener('change', async () => {
+        const newTask =
+            input.value === ''
+                ? new RemoveTaskDate(dateFieldToEdit, task).apply(task)
+                : new SetTaskDate(dateFieldToEdit, window.moment(input.value, 'YYYY-MM-DD').toDate()).apply(task);
+        close();
         await taskSaver(task, newTask);
-        instance.destroy();
     });
+
+    input.focus();
+    try {
+        input.showPicker();
+    } catch {
+        // showPicker() is not available on some platforms: the user can click the input instead.
+    }
 }

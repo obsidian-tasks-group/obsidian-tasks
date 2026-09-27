@@ -66,11 +66,21 @@ function renderedTaskNestingLevel(li: Element) {
     return nestingLevel;
 }
 
+/**
+ * The visible text of a backlink, with a short-mode icon written as '[icon-name]'.
+ */
+function backlinkText(backlink: Element | null): string | null {
+    if (!backlink) return null;
+    const text = backlink.textContent?.trim() ?? '';
+    const icon = backlink.querySelector('.tasks-icon');
+    return text || (icon ? `[${icon.getAttribute('test-icon')}]` : '');
+}
+
 function renderedTaskBacklinks(container: HTMLElement) {
     return Array.from(container.querySelectorAll('li.task-list-item')).map((li) => ({
         description: li.querySelector(':scope > .tasks-list-text .task-description')?.textContent?.trim() ?? '',
         nestingLevel: renderedTaskNestingLevel(li),
-        backlinkText: li.querySelector(':scope > .task-extras > .tasks-backlink')?.textContent?.trim() ?? null,
+        backlinkText: backlinkText(li.querySelector(':scope > .task-extras > .tasks-backlink')),
     }));
 }
 

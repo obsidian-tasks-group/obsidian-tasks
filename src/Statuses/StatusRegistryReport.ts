@@ -6,7 +6,7 @@ import { sampleTaskLinesForValidStatuses, tabulateStatusSettings } from './Statu
 export function createStatusRegistryReport(
     statusSettings: StatusSettings,
     statusRegistry: StatusRegistry,
-    buttonName: string,
+    title: string,
     versionString: string,
 ) {
     // Ideas for further improvement
@@ -18,7 +18,7 @@ export function createStatusRegistryReport(
     const settingsTable = tabulateStatusSettings(statusSettings);
     const mermaidText = statusRegistry.mermaidDiagram(detailed);
     const sampleTasksText = sampleTaskLinesForValidStatuses(statusSettings);
-    return `# ${buttonName}
+    return `# ${title}
 
 ## ${i18n.t('reports.statusRegistry.about.title')}
 

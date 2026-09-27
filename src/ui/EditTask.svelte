@@ -106,16 +106,16 @@
 <!--
 Availability of access keys:
 - A: Start
-- B: Before this
+- B: Blocked by
 - C: Created
 - D: Due
-- E: After this
+- E:
 - F: Only future dates
 - G:
 - H: High
 - I: Highest
 - J:
-- K:
+- K: Blocks
 - L: Low
 - M: Medium
 - N: Normal
@@ -171,12 +171,6 @@ Availability of access keys:
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-dates-section">
         <!-- --------------------------------------------------------------------------- -->
-        <!--  Recurrence  -->
-        <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.recurrence}
-            <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
-        {/if}
-        <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
         {#if isShownInEditModal.due}
@@ -219,11 +213,18 @@ Availability of access keys:
         {/if}
 
         <!-- --------------------------------------------------------------------------- -->
+        <!--  Recurrence  -->
+        <!-- --------------------------------------------------------------------------- -->
+        {#if isShownInEditModal.recurrence}
+            <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
+        {/if}
+
+        <!-- --------------------------------------------------------------------------- -->
         <!--  Only future dates  -->
         <!-- --------------------------------------------------------------------------- -->
         {#if isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start}
             <div class="future-dates-only" id="only-future-dates">
-                <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates:', accesskey('f'))}</label>
+                <label for="forwardOnly">{@html labelContentWithAccessKey('Only future dates', accesskey('f'))}</label>
                 <!-- svelte-ignore a11y-accesskey -->
                 <input
                     bind:checked={editableTask.forwardOnly}
@@ -251,13 +252,13 @@ Availability of access keys:
                 <Dependency
                     id="before_this"
                     type="blockedBy"
-                    labelText="Before this"
+                    labelText="Blocked by"
                     {task}
                     {editableTask}
                     {allTasks}
                     {_onDescriptionKeyDown}
                     accesskey={accesskey('b')}
-                    placeholder="Search for tasks that the task being edited depends on..."
+                    placeholder="Search tasks that must be done first…"
                 />
             {/if}
 
@@ -268,17 +269,17 @@ Availability of access keys:
                 <Dependency
                     id="after_this"
                     type="blocking"
-                    labelText="After this"
+                    labelText="Blocks"
                     {task}
                     {editableTask}
                     {allTasks}
                     {_onDescriptionKeyDown}
-                    accesskey={accesskey('e')}
-                    placeholder="Search for tasks that depend on this task being done..."
+                    accesskey={accesskey('k')}
+                    placeholder="Search tasks waiting on this one…"
                 />
             {/if}
         {:else}
-            <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
+            <div><i>No other tasks in the vault to link to.</i></div>
         {/if}
     </section>
     {#if isShownInEditModal.before_this || isShownInEditModal.after_this}
@@ -353,7 +354,7 @@ Availability of access keys:
     not affect the click itself, nor keyboard activation.
     -->
     <section class="tasks-modal-button-section">
-        <button disabled={!formIsValid} type="submit" class="mod-cta" on:mousedown|preventDefault>Apply </button>
+        <button disabled={!formIsValid} type="submit" class="mod-cta" on:mousedown|preventDefault>Apply</button>
         <button type="button" on:click={_onClose} on:mousedown|preventDefault>Cancel</button>
     </section>
 </form>

@@ -406,7 +406,12 @@ session.
             this.logger.error(e.stack ? e.stack : 'Cannot determine stack');
         }
         if (this.state === State.Initializing) {
-            new Notice(msg, 10000);
+            // The full details are in the console, so keep the popup short.
+            new Notice(
+                `Tasks: A task in "${filePath}" (line ${listItem.position.start.line + 1}) could not be read, so it was skipped.\n\n` +
+                    'Details are in the developer console. Please report this at https://github.com/obsidian-tasks-group/obsidian-tasks/issues',
+                10000,
+            );
         }
     };
 

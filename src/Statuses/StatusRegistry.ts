@@ -395,7 +395,7 @@ linkStyle default stroke:gray
         if (nextStatusIsKnown && nextStatusIsNotInternal) {
             let joiner;
             if (isForReccurenceOverride) {
-                joiner = '-. "🔁" .-> ';
+                joiner = '-. "recurs" .-> ';
             } else {
                 joiner = ' --> ';
             }

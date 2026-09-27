@@ -13,7 +13,6 @@
     <label test-icon="lucide-filter">
       <input placeholder="Filter by description..." test-tooltip="Filter results" />
     </label>
-    <button test-icon="lucide-copy" test-tooltip="Copy results"></button>
   </div>
   <pre class="plugin-tasks-query-explanation">
 Explanation of this Tasks code block query:
@@ -32,9 +31,15 @@ Explanation of this Tasks code block query:
       <input class="task-list-item-checkbox" type="checkbox" data-line="0" />
       <span class="tasks-list-text">
         <span class="task-description"><span>parent</span></span>
-        <span class="task-due" data-task-due="today" title="Click to edit due date, Right-click for more options">
+        <span class="task-due" data-task-due="today" title="Click to change due date · right-click for more">
           <span>📅 2025-12-01</span>
         </span>
+        <a
+          class="tasks-postpone"
+          title="Due tomorrow, on Tue 2nd Dec · right-click for more"
+          href="#"
+          role="button"
+          aria-label="Due tomorrow, on Tue 2nd Dec · right-click for more"></a>
       </span>
       <span class="task-extras">
         <span class="tasks-backlink">
@@ -42,8 +47,7 @@ Explanation of this Tasks code block query:
           <a rel="noopener" target="_blank" class="internal-link">/</a>
           )
         </span>
-        <a class="tasks-edit" title="Edit task" href="#"></a>
-        <a class="tasks-postpone" title="ℹ️ Due tomorrow, on Tue 2nd Dec (right-click for more options)"></a>
+        <a class="tasks-edit" title="Edit task" href="#" role="button" aria-label="Edit task"></a>
       </span>
     </li>
     <li
@@ -64,7 +68,7 @@ Explanation of this Tasks code block query:
           <a rel="noopener" target="_blank" class="internal-link">/</a>
           )
         </span>
-        <a class="tasks-edit" title="Edit task" href="#"></a>
+        <a class="tasks-edit" title="Edit task" href="#" role="button" aria-label="Edit task"></a>
       </span>
     </li>
   </ul>
@@ -83,7 +87,6 @@ Explanation of this Tasks code block query:
     <label test-icon="lucide-filter">
       <input placeholder="Filter by description..." test-tooltip="Filter results" />
     </label>
-    <button test-icon="lucide-copy" test-tooltip="Copy results"></button>
   </div>
   <pre class="plugin-tasks-query-explanation">
 Explanation of the global query:
@@ -108,9 +111,15 @@ Explanation of this Tasks code block query:
       <input class="task-list-item-checkbox" type="checkbox" data-line="0" />
       <span class="tasks-list-text">
         <span class="task-description"><span>parent</span></span>
-        <span class="task-due" data-task-due="today" title="Click to edit due date, Right-click for more options">
+        <span class="task-due" data-task-due="today" title="Click to change due date · right-click for more">
           <span>📅 2025-12-01</span>
         </span>
+        <a
+          class="tasks-postpone"
+          title="Due tomorrow, on Tue 2nd Dec · right-click for more"
+          href="#"
+          role="button"
+          aria-label="Due tomorrow, on Tue 2nd Dec · right-click for more"></a>
       </span>
       <span class="task-extras">
         <span class="tasks-urgency">10.75</span>
@@ -119,8 +128,7 @@ Explanation of this Tasks code block query:
           <a rel="noopener" target="_blank" class="internal-link">/</a>
           )
         </span>
-        <a class="tasks-edit" title="Edit task" href="#"></a>
-        <a class="tasks-postpone" title="ℹ️ Due tomorrow, on Tue 2nd Dec (right-click for more options)"></a>
+        <a class="tasks-edit" title="Edit task" href="#" role="button" aria-label="Edit task"></a>
       </span>
     </li>
     <li
@@ -142,7 +150,7 @@ Explanation of this Tasks code block query:
           <a rel="noopener" target="_blank" class="internal-link">/</a>
           )
         </span>
-        <a class="tasks-edit" title="Edit task" href="#"></a>
+        <a class="tasks-edit" title="Edit task" href="#" role="button" aria-label="Edit task"></a>
       </span>
     </li>
   </ul>

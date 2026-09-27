@@ -20,7 +20,7 @@ function testInputValue(container: HTMLElement, inputId: string, expectedText: s
 }
 
 function testDatePickerValue(container: HTMLElement, expectedValue: string) {
-    const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
+    const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker-due');
     expect(datePicker.value).toEqual(expectedValue);
 }
 
@@ -53,7 +53,7 @@ async function testTypingInput(
     if (expectedReturnedDateValidity === 'true') {
         testDatePickerValue(container, expectedRightText);
     } else {
-        const datePicker = container.ownerDocument.getElementById('date-editor-picker') as HTMLInputElement;
+        const datePicker = container.ownerDocument.getElementById('date-editor-picker-due') as HTMLInputElement;
         expect(datePicker).toBeNull();
     }
 }
@@ -132,7 +132,7 @@ describe('date editor wrapper tests', () => {
 
     it('should pick a date', async () => {
         const container = renderDateEditorWrapper({ forwardOnly: false });
-        const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
+        const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker-due');
 
         await fireEvent.input(datePicker, { target: { value: '2024-11-03' } });
 

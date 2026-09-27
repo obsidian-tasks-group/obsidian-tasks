@@ -16,7 +16,7 @@ describe('StatusRegistryReport', function () {
         ];
         const { statusSettings, statusRegistry } = createStatuses(coreStatusesData, customStatusesData);
 
-        const reportName = 'Review and check your statuses';
+        const reportName = 'Status report';
 
         // Act
         const version = 'x.y.z'; // lower-case, as the capitalised version would get edited at the next release.

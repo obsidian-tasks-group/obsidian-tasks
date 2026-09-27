@@ -124,7 +124,7 @@ describe('PostponeMenu', () => {
               Postpone scheduled date by 3 weeks, to Mon 25th Dec
               Postpone scheduled date by a month, to Thu 4th Jan
               ---
-              Cannot remove inferred scheduled date"
+              Remove scheduled date (set from file name)"
         `);
     });
     it('should populate the menu for task due far ahead', () => {

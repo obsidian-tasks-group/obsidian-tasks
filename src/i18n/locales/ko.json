@@ -1,6 +1,7 @@
 {
   "common": {
     "cancel": "",
+    "delete": "",
     "edit": "",
     "moreInfo": "",
     "okay": "",
@@ -13,6 +14,7 @@
   },
   "modals": {
     "customStatusModal": {
+      "duplicateSymbol": "",
       "editAvailableAsCommand": {
         "description": "활성화하면 이 상태를 명령어(command)로 사용할 수 있어 단축키를 지정하고 상태를 전환할 수 있습니다.",
         "name": "명령어로 사용"
@@ -26,6 +28,7 @@
         "name": "상태 이름"
       },
       "editStatusSymbol": {
+        "coreDescription": "",
         "description": "대괄호 '[]' 사이에 들어가는 문자입니다. (코어 상태가 아닌 사용자 정의 상태만 편집할 수 있습니다.)",
         "name": "상태 기호"
       },
@@ -35,11 +38,13 @@
       },
       "fixErrorsBeforeSaving": "저장하기 전에 오류를 수정하세요.",
       "title": {
+        "addStatus": "",
         "editCoreStatus": "",
         "editCustomStatus": ""
       }
     },
     "editPresetModal": {
+      "addTitle": "",
       "name": {
         "duplicate": "",
         "name": "",
@@ -47,9 +52,9 @@
         "required": ""
       },
       "query": {
-        "description": "",
         "name": "",
-        "placeholder": ""
+        "placeholder": "",
+        "required": ""
       },
       "title": ""
     }
@@ -74,7 +79,7 @@
         "updateReport": {
           "line1": "Tasks 상태 설정을 변경했다면, 다음 방법으로 보고서를 업데이트할 수 있습니다:",
           "line2": "`설정(Settings)` → `Tasks`로 이동합니다.",
-          "line3": "`상태 검토 및 확인(Review and check your Statuses)`을 클릭합니다."
+          "line3": ""
         }
       },
       "columnHeadings": {
@@ -128,7 +133,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "자동 제안",
       "maxSuggestions": {
         "description": "자동 제안 메뉴가 나타날 때 표시할 제안의 개수입니다 ('⏎' 옵션 포함).",
         "name": "자동 제안 최대 표시 개수"
@@ -142,7 +146,6 @@
         "name": "작업 내용 자동 제안"
       }
     },
-    "changeRequiresRestart": "재시작이 필요합니다.",
     "dates": {
       "cancelledDate": {
         "description": "활성화하면 작업을 '취소'로 전환할 때 마지막에 ❌ YYYY-MM-DD 타임스탬프가 추가됩니다.",
@@ -162,96 +165,39 @@
       "heading": "파일명에서 날짜 사용",
       "scheduledDate": {
         "extraFormat": {
-          "description": {
-            "line1": "날짜 없는 작업에 파일명을 예정일(Scheduled)로 사용할 때 Tasks가 인식할 추가 날짜 형식입니다.",
-            "line2": "구문 참조(Syntax Reference)"
-          },
+          "description": "",
           "name": "날짜 없는 작업의 예정일로 사용할 추가 파일명 날짜 형식",
           "placeholder": "예: MMM DD YYYY"
         },
         "folders": {
           "description": "모든 곳에서 기본 예정일을 사용하려면 비워 두고, 특정 폴더만 지정하려면 쉼표로 구분된 폴더 목록을 입력하세요.",
-          "name": "기본 예정일을 사용할 폴더"
+          "name": "기본 예정일을 사용할 폴더",
+          "placeholder": ""
         },
         "toggle": {
-          "description": {
-            "line1": "예정일(Scheduled, ⏳) 입력 시간을 절약하세요.",
-            "line2": "이 옵션을 활성화하면 날짜 없는 모든 작업에 파일명에서 추출한 기본 예정일이 설정됩니다.",
-            "line3": "기본적으로 Tasks는 <code>YYYY-MM-DD</code>와 <code>YYYYMMDD</code> 날짜 형식을 모두 인식합니다.",
-            "line4": "날짜 없는 작업은 마감일(Due, 📅), 예정일(Scheduled, ⏳), 시작일(Start, 🛫)이 모두 없는 작업을 의미합니다."
-          },
+          "description": "",
           "name": "날짜 없는 작업에 파일명을 예정일로 사용"
         }
       }
     },
-    "dialogs": {
+    "display": {
       "accessKeys": {
-        "description": "대화상자의 단축키(접근 키)가 시스템 단축키나 보조 기술 기능과 충돌한다면, 여기서 비활성화할 수 있습니다.",
-        "name": "대화상자에서 접근 키 제공"
+        "description": "",
+        "name": ""
       },
-      "heading": "대화상자"
-    },
-    "format": {
-      "description": {
-        "line1": "Tasks가 작업을 읽고 쓰는 데 사용할 형식입니다.",
-        "line2": "<b>중요</b>: 현재 Tasks는 한 번에 하나의 형식만 지원합니다. Dataview를 선택하면 <b>Tasks의 이모지 표식을 읽지 못합니다</b>."
+      "editorIcons": {
+        "description": "",
+        "name": ""
       },
-      "displayName": {
-        "dataview": "Dataview",
-        "tasksEmojiFormat": "Tasks 이모지 형식"
-      },
-      "name": "작업 형식"
-    },
-    "globalFilter": {
-      "filter": {
-        "description": {
-          "line1": "권장: 보관소의 모든 체크리스트 항목을 작업으로 관리하려면 비워 두세요.",
-          "line2": "일부 \"<code>- [ ]</code>\" 체크리스트만 Tasks가 처리하도록 하려면 전역 필터를 사용하세요. 지정한 문자열이 설명에 포함된 항목만 작업으로 간주됩니다.",
-          "line3": "예: 전역 필터를 <code>#task</code>로 설정하면 Tasks는 <code>#task</code>가 태그된 항목만 처리합니다.",
-          "line4": "그 외 항목은 일반 체크리스트로 유지되며, 쿼리에 표시되지 않고 완료 날짜도 설정되지 않습니다."
-        },
-        "name": "전역 필터",
-        "placeholder": "예: #task 또는 TODO"
-      },
-      "heading": "전역 작업 필터",
-      "removeFilter": {
-        "description": "활성화하면 작업 표시 시 설명에서 전역 필터 문자열을 제거합니다.",
-        "name": "설명에서 전역 필터 제거"
-      }
-    },
-    "globalQuery": {
-      "heading": "전역 쿼리",
-      "query": {
-        "description": "보관소의 모든 Tasks 블록 시작에 자동으로 포함되는 쿼리입니다. 기본 필터나 레이아웃 옵션을 추가할 때 유용합니다.",
-        "placeholder": "예시...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
-      }
-    },
-    "presets": {
-      "buttons": {
-        "addNewPreset": "새 프리셋 추가"
-      },
-      "emptyState": "",
-      "line1": "여기서 이름 있는 지침을 정의해 여러 쿼리에서 재사용할 수 있습니다. '{{name}}' 프리셋은 Tasks 쿼리에서 '{{instruction1}}' 또는 '{{instruction2}}'로 사용할 수 있습니다.",
-      "line2": "프리셋을 수정하면 열려 있는 모든 Tasks 쿼리가 자동으로 새로고침됩니다.",
-      "name": "프리셋"
-    },
-    "recurringTasks": {
-      "heading": "반복 작업",
-      "nextLine": {
-        "description": "활성화하면 완료된 작업의 바로 아래 줄에 다음 반복이 나타납니다. 비활성화 시 다음 반복은 완료된 작업 앞에 나타납니다.",
-        "name": "다음 반복을 아래 줄에 표시"
-      },
-      "removeScheduledDate": {
-        "description": {
-          "line1": "활성화하면 시작일(🛫)또는 마감일(📅) 중 하나라도 있을 때, 다음 반복 작업에는 예정일(⏳)을 설정하지 않습니다.",
-          "line2": "시작일과 마감일은 다음 반복으로 넘기되, 예정일은 추후 작업 계획 시점에 설정하려는 경우에 유용합니다."
-        },
-        "name": "반복 시 예정일 제거"
-      }
-    },
-    "searchResults": {
       "heading": "",
+      "signifiers": {
+        "description": "",
+        "name": "",
+        "options": {
+          "emoji": "",
+          "icons": ""
+        }
+      },
       "taskCountLocation": {
         "description": "",
         "name": "",
@@ -261,39 +207,91 @@
         }
       }
     },
-    "searches": {
-      "enableCustomSearches": {
-        "confirm": {
-          "acknowledge": "",
-          "enable": ""
-        },
-        "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
-        },
-        "name": ""
-      },
+    "editing": {
       "heading": ""
     },
+    "format": {
+      "description": "",
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Tasks 이모지 형식"
+      },
+      "name": "작업 형식",
+      "oneFormatOnly": ""
+    },
+    "general": {
+      "heading": ""
+    },
+    "globalFilter": {
+      "filter": {
+        "description": "",
+        "example": "",
+        "name": "전역 필터",
+        "placeholder": "예: #task 또는 TODO"
+      },
+      "removeFilter": {
+        "description": "활성화하면 작업 표시 시 설명에서 전역 필터 문자열을 제거합니다.",
+        "name": "설명에서 전역 필터 제거"
+      }
+    },
+    "presets": {
+      "buttons": {
+        "addNewPreset": "새 프리셋 추가"
+      },
+      "deleteConfirm": {
+        "message": "",
+        "title": ""
+      },
+      "description": "",
+      "dragToReorder": "",
+      "emptyState": "",
+      "name": "프리셋"
+    },
+    "queries": {
+      "globalQuery": {
+        "description": "",
+        "modalDescription": "",
+        "name": "",
+        "notSet": "",
+        "placeholder": "",
+        "summary": "",
+        "summaryMultiline_one": "",
+        "summaryMultiline_other": ""
+      },
+      "heading": "",
+      "javaScript": {
+        "confirm": {
+          "acknowledge": "",
+          "allow": "",
+          "risk": "",
+          "trust": ""
+        },
+        "description": "",
+        "name": ""
+      }
+    },
+    "recurringTasks": {
+      "heading": "반복 작업",
+      "nextLine": {
+        "description": "활성화하면 완료된 작업의 바로 아래 줄에 다음 반복이 나타납니다. 비활성화 시 다음 반복은 완료된 작업 앞에 나타납니다.",
+        "name": "다음 반복을 아래 줄에 표시"
+      },
+      "removeScheduledDate": {
+        "description": "",
+        "name": "반복 시 예정일 제거"
+      }
+    },
+    "reloadToApply": "",
     "seeTheDocumentation": "문서 보기",
     "statuses": {
       "buttons": {
-        "addStatus": "",
-        "importFromTheme": {
-          "description": "",
-          "name": ""
-        }
+        "addStatus": ""
       },
       "collections": {
         "anuppuccinTheme": "AnuPpuccin 테마",
         "auraTheme": "Aura 테마",
         "borderTheme": "Border 테마",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: 지원되는 상태 {{numberOfStatuses}}개 추가"
-          },
           "importCollection": {
             "name": ""
           }
@@ -305,46 +303,58 @@
         "thingsTheme": "Things 테마"
       },
       "coreStatuses": {
-        "buttons": {
-          "checkStatuses": {
-            "name": "상태 검토 및 확인",
-            "tooltip": "보관소 루트에 현재 상태 설정의 Mermaid 다이어그램을 포함한 새 파일을 생성합니다."
-          }
-        },
-        "description": {
-          "line1": "이것들은 사용자 정의 CSS나 테마 없이도 Tasks가 자체적으로 지원하는 코어 상태입니다.",
-          "line2": "아래 섹션에서 사용자 정의 상태를 직접 편집하고 추가할 수 있습니다."
-        },
+        "description": "",
         "heading": "코어 상태"
       },
       "customStatuses": {
-        "buttons": {
-          "addAllUnknown": {
-            "description": "",
-            "name": "알 수 없는 모든 상태 유형 추가"
-          },
-          "addNewStatus": {
-            "name": "새 작업 상태 추가"
-          },
-          "resetCustomStatuses": {
-            "description": "",
-            "name": "사용자 정의 상태를 기본값으로 재설정"
-          }
-        },
-        "description": {
-          "line1": "먼저 <b>CSS 스니펫 또는 테마를 설치하여 사용자 정의 체크박스에 스타일을 적용</b>하세요.",
-          "line2": "그 다음, 아래 버튼을 사용하여 선택한 체크박스 스타일에 맞춰 사용자 정의 상태를 설정하세요.",
-          "line3": "<b>참고:</b> 이전에 정의된 상태와 기호가 동일한 상태는 무시됩니다. '작업 생성/편집' 명령어의 상태 드롭다운 메뉴에서 실제로 로드된 상태를 확인할 수 있습니다.",
-          "line4": "시작하려면 문서를 참고하세요!"
-        },
+        "description": "",
         "emptyState": "",
         "heading": "사용자 정의 상태"
+      },
+      "description": {
+        "core": "",
+        "custom": "",
+        "docsLink": ""
       },
       "filter": {
         "placeholder": ""
       },
       "heading": "작업 상태",
       "reloadRequired": "",
+      "row": {
+        "next": ""
+      },
+      "tools": {
+        "addUnknown": {
+          "added_one": "",
+          "added_other": "",
+          "button": "",
+          "description": "",
+          "name": "",
+          "noneFound": ""
+        },
+        "heading": "",
+        "importFromTheme": {
+          "button": "",
+          "description": "",
+          "name": ""
+        },
+        "report": {
+          "button": "",
+          "description": "",
+          "name": "",
+          "noteTitle": ""
+        },
+        "reset": {
+          "confirm": {
+            "button": "",
+            "message": "",
+            "title": ""
+          },
+          "description": "",
+          "name": ""
+        }
+      },
       "types": {
         "cancelled": "",
         "done": "",
@@ -355,9 +365,6 @@
         "todo": ""
       },
       "unnamed": ""
-    },
-    "taskEntry": {
-      "heading": ""
     }
   }
 }

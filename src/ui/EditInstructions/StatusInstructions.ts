@@ -3,6 +3,7 @@ import { Status } from '../../Statuses/Status';
 import type { Task } from '../../Task/Task';
 import type { StatusRegistry } from '../../Statuses/StatusRegistry';
 import { StatusSettings } from '../../Config/StatusSettings';
+import { iconForStatusType } from '../Icons';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
 /**
@@ -25,8 +26,11 @@ export class SetStatus implements TaskEditingInstruction {
     }
 
     public instructionDisplayName(): string {
-        const commonTitle = 'Change status to:';
-        return `${commonTitle} [${this.newStatus.symbol}] ${this.newStatus.name}`;
+        return `Set status to ${this.newStatus.name} [${this.newStatus.symbol}]`;
+    }
+
+    public instructionIcon(): string {
+        return iconForStatusType(this.newStatus.type);
     }
 
     public isCheckedForTask(task: Task): boolean {

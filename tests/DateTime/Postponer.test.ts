@@ -174,12 +174,8 @@ describe('postpone - whether to show button', () => {
 describe('postpone - UI text', () => {
     it('should include date type and new date in button tooltip', () => {
         const task = new TaskBuilder().dueDate(today).build();
-        expect(postponeButtonTitle(task, 1, 'day')).toEqual(
-            'ℹ️ Due tomorrow, on Mon 4th Dec (right-click for more options)',
-        );
-        expect(postponeButtonTitle(task, 2, 'days')).toEqual(
-            'ℹ️ Due in 2 days, on Tue 5th Dec (right-click for more options)',
-        );
+        expect(postponeButtonTitle(task, 1, 'day')).toEqual('Due tomorrow, on Mon 4th Dec · right-click for more');
+        expect(postponeButtonTitle(task, 2, 'days')).toEqual('Due in 2 days, on Tue 5th Dec · right-click for more');
     });
 
     it('should include date type and new date in context menu labels when due today', () => {
@@ -219,7 +215,7 @@ describe('postpone - UI text', () => {
 
     it('should not offer to remove an inferred scheduled date', () => {
         const task = new TaskBuilder().scheduledDate(today).scheduledDateIsInferred(true).build();
-        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Cannot remove inferred scheduled date');
+        expect(removeDateMenuItemTitle(task, 1, 'day')).toEqual('Remove scheduled date (set from file name)');
     });
 });
 
@@ -283,16 +279,16 @@ describe('postpone - new task creation', () => {
 describe('postpone - postponement success message', () => {
     it('should generate a message for a valid date', () => {
         const message = postponementSuccessMessage(moment('2023-11-30'), 'scheduledDate');
-        expect(message).toEqual("Task's scheduledDate changed to 30 Nov 2023");
+        expect(message).toEqual('Tasks: Scheduled date set to Thu 30 Nov 2023');
     });
 
     it('should generate a message for an invalid date', () => {
         const message = postponementSuccessMessage(moment(invalidDate), 'dueDate');
-        expect(message).toEqual("Task's dueDate changed to Invalid date");
+        expect(message).toEqual('Tasks: Due date set to Invalid date');
     });
 
     it('should generate a message for a removed date', () => {
         const message = postponementSuccessMessage(null, 'dueDate');
-        expect(message).toEqual("Task's dueDate removed");
+        expect(message).toEqual('Tasks: Due date removed');
     });
 });

@@ -17,11 +17,11 @@ export class GlobalQueryModal extends Modal {
     ) {
         super(app);
         this.modalEl.addClass('mod-lg', 'tasks-global-query-modal');
-        this.setTitle(i18n.t('settings.globalQuery.heading'));
+        this.setTitle(i18n.t('settings.queries.globalQuery.name'));
 
         this.contentEl.createEl('p', {
             cls: 'setting-item-description',
-            text: i18n.t('settings.globalQuery.query.description'),
+            text: i18n.t('settings.queries.globalQuery.modalDescription'),
         });
         const docsParaEl = this.contentEl.createEl('p', { cls: 'setting-item-description' });
         docsParaEl.createEl('a', {
@@ -31,7 +31,7 @@ export class GlobalQueryModal extends Modal {
         docsParaEl.appendText('.');
 
         this.textarea = new TextAreaComponent(this.contentEl)
-            .setPlaceholder('# ' + i18n.t('settings.globalQuery.query.placeholder'))
+            .setPlaceholder(i18n.t('settings.queries.globalQuery.placeholder'))
             .setValue(initial);
         this.textarea.inputEl.addClass('tasks-global-query-textarea');
 

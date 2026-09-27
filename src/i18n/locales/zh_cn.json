@@ -1,6 +1,7 @@
 {
   "common": {
     "cancel": "",
+    "delete": "",
     "edit": "",
     "moreInfo": "",
     "okay": "",
@@ -13,6 +14,7 @@
   },
   "modals": {
     "customStatusModal": {
+      "duplicateSymbol": "",
       "editAvailableAsCommand": {
         "description": "如果启用，此状态将作为命令可用,因此您可以指定快捷键并使用它切换状态。",
         "name": "可用作命令"
@@ -26,6 +28,7 @@
         "name": "任务状态名称"
       },
       "editStatusSymbol": {
+        "coreDescription": "",
         "description": "这是方括号中的字符。（仅可编辑自定义状态,不可编辑核心状态。）",
         "name": "任务状态符号"
       },
@@ -35,11 +38,13 @@
       },
       "fixErrorsBeforeSaving": "在保存前修复错误。",
       "title": {
+        "addStatus": "",
         "editCoreStatus": "",
         "editCustomStatus": ""
       }
     },
     "editPresetModal": {
+      "addTitle": "",
       "name": {
         "duplicate": "",
         "name": "",
@@ -47,9 +52,9 @@
         "required": ""
       },
       "query": {
-        "description": "",
         "name": "",
-        "placeholder": ""
+        "placeholder": "",
+        "required": ""
       },
       "title": ""
     }
@@ -74,7 +79,7 @@
         "updateReport": {
           "line1": "如果更改 Tasks 状态设置,则可以通过以下方式获取更新后的报告:",
           "line2": "前往 `设置` -> `Tasks`。",
-          "line3": "点击 `查看并检查您的状态`。"
+          "line3": ""
         }
       },
       "columnHeadings": {
@@ -128,7 +133,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "自动建议",
       "maxSuggestions": {
         "description": "当自动建议菜单弹出时，应显示多少条建议 (包含 \"⏎\" 选项)。",
         "name": "要显示的最大自动建议数"
@@ -142,7 +146,6 @@
         "name": "自动建议任务内容"
       }
     },
-    "changeRequiresRestart": "需要重启。",
     "dates": {
       "cancelledDate": {
         "description": "启用此功能将在任务设置为取消时，在其末尾添加时间戳 ❌ YYYY-MM-DD。",
@@ -162,96 +165,39 @@
       "heading": "从文件名中提取日期",
       "scheduledDate": {
         "extraFormat": {
-          "description": {
-            "line1": "任务插件在将文件名用作未注明日期任务的计划日期时，将识别的附加日期格式。",
-            "line2": "语法参考"
-          },
+          "description": "",
           "name": "为无日期任务添加文件名日期格式作为计划日期",
           "placeholder": "示例：MMM DD YYYY"
         },
         "folders": {
           "description": "如果要在全局使用默认的计划日期，请保留为空,或者输入以逗号分隔的文件夹列表。",
-          "name": "具有默认计划日期的文件夹"
+          "name": "具有默认计划日期的文件夹",
+          "placeholder": ""
         },
         "toggle": {
-          "description": {
-            "line1": "用于节省输入计划日期 (⏳) 的时间。",
-            "line2": "如果启用此选项，则任何未注明日期的任务都将被赋予从其文件名中提取的默认“计划日期”。",
-            "line3": "默认情况下，Tasks 插件将匹配 <code>YYYY-MM-DD</code> 和 <code>YYYYMMDD</code> 两种日期格式。",
-            "line4": "未注明日期的任务指没有截止日期 (📅 ), 计划日期 (⏳) 和开始日期(🛫) 的任务。"
-          },
+          "description": "",
           "name": "将文件名用作未注明日期的任务的计划日期"
         }
       }
     },
-    "dialogs": {
+    "display": {
       "accessKeys": {
-        "description": "如果对话框中各种控件的快捷键与系统快捷键发生冲突，您可以在这里停用它们。",
-        "name": "在对话框中使用快捷键"
+        "description": "",
+        "name": ""
       },
-      "heading": "对话框"
-    },
-    "format": {
-      "description": {
-        "line1": "Tasks 用于读取和写入任务的格式.",
-        "line2": "<b>重点:</b> 目前 Tasks 只支持同时使用一种格式。选择 dataview 将 <b>使 Tasks 停止读取自有的表情符号格式</b>"
+      "editorIcons": {
+        "description": "",
+        "name": ""
       },
-      "displayName": {
-        "dataview": "Dataview 格式",
-        "tasksEmojiFormat": "Tasks 表情格式"
-      },
-      "name": "任务格式"
-    },
-    "globalFilter": {
-      "filter": {
-        "description": {
-          "line1": "建议：如果您希望仓库中的所有任务列表项都由此插件管理，请留空。",
-          "line2": "如果您希望 Tasks 仅作用于 \"<code>- [ ]</code>\" 任务列表项的子集，请使用全局筛选器,以便只有在其描述中包含指定的字符串的任务列表项才被视为任务。",
-          "line3": "例如，如果将全局筛选器设置为 <code>#task</code>，则 Tasks 插件将仅处理标记为 <code>#task</code> 的任务列表项。",
-          "line4": "其他任务列表项将保持正常,不会出现在查询中或设置完成日期。"
-        },
-        "name": "全局筛选器",
-        "placeholder": "例如:#task 或 TODO"
-      },
-      "heading": "全局任务筛选器",
-      "removeFilter": {
-        "description": "启用此选项将在显示任务时从任务描述中删除设置为全局筛选器的字符串.",
-        "name": "从描述中删除全局筛选器"
-      }
-    },
-    "globalQuery": {
-      "heading": "全局查询",
-      "query": {
-        "description": "自动包含在库中每个 Tasks 块开头的查询语句.用于添加默认过滤器或布局选项。",
-        "placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
-      }
-    },
-    "presets": {
-      "buttons": {
-        "addNewPreset": ""
-      },
-      "emptyState": "",
-      "line1": "您可以在这里定义命名指令，可以在多个查询中重复使用。一个名为 '{{name}}' 的预设可以在任务查询中使用 '{{instruction1}}' 或 '{{instruction2}}'。",
-      "line2": "任何打开的任务查询在预设被编辑时都会自动重新加载。",
-      "name": "预设"
-    },
-    "recurringTasks": {
-      "heading": "重复性任务",
-      "nextLine": {
-        "description": "启用此功能后，任务的下一次重复将显示在已完成任务的下一行。若关闭此功能，则下一次重复将出现在已完成任务的上一行。",
-        "name": "把任务的下一次重复放在下一行"
-      },
-      "removeScheduledDate": {
-        "description": {
-          "line1": "开启此选项后，当任务至少设置了开始日期(🛫)或计划日期(📅)中的一个时，该任务的下一次重复周期将不再包含计划日期(⏳)。",
-          "line2": "此功能适用于你希望将开始和截止日期延续到下一个周期，但计划日期暂不设置，等实际开始处理时再确定的情况。"
-        },
-        "name": "在重复性任务中移除计划日期"
-      }
-    },
-    "searchResults": {
       "heading": "",
+      "signifiers": {
+        "description": "",
+        "name": "",
+        "options": {
+          "emoji": "",
+          "icons": ""
+        }
+      },
       "taskCountLocation": {
         "description": "",
         "name": "",
@@ -261,39 +207,91 @@
         }
       }
     },
-    "searches": {
-      "enableCustomSearches": {
-        "confirm": {
-          "acknowledge": "",
-          "enable": ""
-        },
-        "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
-        },
-        "name": ""
-      },
+    "editing": {
       "heading": ""
     },
+    "format": {
+      "description": "",
+      "displayName": {
+        "dataview": "Dataview 格式",
+        "tasksEmojiFormat": "Tasks 表情格式"
+      },
+      "name": "任务格式",
+      "oneFormatOnly": ""
+    },
+    "general": {
+      "heading": ""
+    },
+    "globalFilter": {
+      "filter": {
+        "description": "",
+        "example": "",
+        "name": "全局筛选器",
+        "placeholder": "例如:#task 或 TODO"
+      },
+      "removeFilter": {
+        "description": "启用此选项将在显示任务时从任务描述中删除设置为全局筛选器的字符串.",
+        "name": "从描述中删除全局筛选器"
+      }
+    },
+    "presets": {
+      "buttons": {
+        "addNewPreset": ""
+      },
+      "deleteConfirm": {
+        "message": "",
+        "title": ""
+      },
+      "description": "",
+      "dragToReorder": "",
+      "emptyState": "",
+      "name": "预设"
+    },
+    "queries": {
+      "globalQuery": {
+        "description": "",
+        "modalDescription": "",
+        "name": "",
+        "notSet": "",
+        "placeholder": "",
+        "summary": "",
+        "summaryMultiline_one": "",
+        "summaryMultiline_other": ""
+      },
+      "heading": "",
+      "javaScript": {
+        "confirm": {
+          "acknowledge": "",
+          "allow": "",
+          "risk": "",
+          "trust": ""
+        },
+        "description": "",
+        "name": ""
+      }
+    },
+    "recurringTasks": {
+      "heading": "重复性任务",
+      "nextLine": {
+        "description": "启用此功能后，任务的下一次重复将显示在已完成任务的下一行。若关闭此功能，则下一次重复将出现在已完成任务的上一行。",
+        "name": "把任务的下一次重复放在下一行"
+      },
+      "removeScheduledDate": {
+        "description": "",
+        "name": "在重复性任务中移除计划日期"
+      }
+    },
+    "reloadToApply": "",
     "seeTheDocumentation": "参阅文档",
     "statuses": {
       "buttons": {
-        "addStatus": "",
-        "importFromTheme": {
-          "description": "",
-          "name": ""
-        }
+        "addStatus": ""
       },
       "collections": {
         "anuppuccinTheme": "AnuPpuccin 主题",
         "auraTheme": "Aura 主题",
         "borderTheme": "Border 主题",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: 添加 {{numberOfStatuses}} 种支持状态"
-          },
           "importCollection": {
             "name": ""
           }
@@ -305,46 +303,58 @@
         "thingsTheme": "Things 主题"
       },
       "coreStatuses": {
-        "buttons": {
-          "checkStatuses": {
-            "name": "查看并检查您的状态",
-            "tooltip": "在库的根目录下创建一个新文件,包含当前状态设置的 Mermaid 图表."
-          }
-        },
-        "description": {
-          "line1": "这些是 Tasks 原生支持的核心状态，不需要自定义CSS样式或主题。",
-          "line2": "您可以在下面编辑和添加自定义状态。"
-        },
+        "description": "",
         "heading": "核心状态"
       },
       "customStatuses": {
-        "buttons": {
-          "addAllUnknown": {
-            "description": "",
-            "name": "添加所有未知状态类型"
-          },
-          "addNewStatus": {
-            "name": "添加新任务状态"
-          },
-          "resetCustomStatuses": {
-            "description": "",
-            "name": "重置自定义状态类型为默认值"
-          }
-        },
-        "description": {
-          "line1": "您应该首先<b>选择并安装 CSS代码段或主题<b>以设置自定义复选框的样式",
-          "line2": "然后，使用下面的按钮设置您的自定义状态,以匹配您选择的CSS复选框.",
-          "line3": "<b>注意</b>任何与更早的状态具有相同符号的状态都将被忽略.您可以通过运行“Create or edit task”命令并查看“Status”下拉列表来确认实际加载的状态。",
-          "line4": "参阅文档！"
-        },
+        "description": "",
         "emptyState": "",
         "heading": "自定义状态"
+      },
+      "description": {
+        "core": "",
+        "custom": "",
+        "docsLink": ""
       },
       "filter": {
         "placeholder": ""
       },
       "heading": "任务状态",
       "reloadRequired": "",
+      "row": {
+        "next": ""
+      },
+      "tools": {
+        "addUnknown": {
+          "added_one": "",
+          "added_other": "",
+          "button": "",
+          "description": "",
+          "name": "",
+          "noneFound": ""
+        },
+        "heading": "",
+        "importFromTheme": {
+          "button": "",
+          "description": "",
+          "name": ""
+        },
+        "report": {
+          "button": "",
+          "description": "",
+          "name": "",
+          "noteTitle": ""
+        },
+        "reset": {
+          "confirm": {
+            "button": "",
+            "message": "",
+            "title": ""
+          },
+          "description": "",
+          "name": ""
+        }
+      },
       "types": {
         "cancelled": "",
         "done": "",
@@ -355,9 +365,6 @@
         "todo": ""
       },
       "unnamed": ""
-    },
-    "taskEntry": {
-      "heading": ""
     }
   }
 }

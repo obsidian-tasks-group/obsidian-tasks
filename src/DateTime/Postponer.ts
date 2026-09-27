@@ -127,16 +127,16 @@ function createTaskFromDate(task: Task, dateFieldToPostpone: HappensDate, postpo
 export function postponementSuccessMessage(postponedDate: Moment | null, dateFieldToPostpone: HappensDate) {
     // TODO all logic for invalid dates
     if (postponedDate) {
-        const postponedDateString = postponedDate?.format('DD MMM YYYY');
-        return `Task's ${dateFieldToPostpone} changed to ${postponedDateString}`;
+        const postponedDateString = postponedDate?.format('ddd D MMM YYYY');
+        return `Tasks: ${capitalizeFirstLetter(splitDateText(dateFieldToPostpone))} set to ${postponedDateString}`;
     } else {
-        return `Task's ${dateFieldToPostpone} removed`;
+        return `Tasks: ${capitalizeFirstLetter(splitDateText(dateFieldToPostpone))} removed`;
     }
 }
 
 export function postponeButtonTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const buttonText = postponeMenuItemTitle(task, amount, timeUnit);
-    return `ℹ️ ${buttonText} (right-click for more options)`;
+    return `${buttonText} · right-click for more`;
 }
 
 /**
@@ -182,7 +182,7 @@ export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: 
 
 export function removeDateMenuItemTitleForField(updatedDateType: AllTaskDateFields, task: Task) {
     if (updatedDateType === 'scheduledDate' && task.scheduledDateIsInferred) {
-        return 'Cannot remove inferred scheduled date';
+        return 'Remove scheduled date (set from file name)';
     } else {
         return `Remove ${splitDateText(updatedDateType)}`;
     }

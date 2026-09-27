@@ -70,14 +70,24 @@ export class TaskEditingMenu extends Menu {
     }
 
     private getMenuItemCallback(task: Task, item: MenuItem, instruction: TaskEditingInstruction) {
-        item.setTitle(instruction.instructionDisplayName())
-            .setChecked(instruction.isCheckedForTask(task))
-            .onClick(async () => {
-                const newTask = instruction.apply(task);
-                const hasEdits = newTask.length !== 1 || !Object.is(newTask[0], task);
-                if (hasEdits) {
-                    await this.taskSaver(task, newTask);
-                }
-            });
+        item.setTitle(instruction.instructionDisplayName()).setChecked(instruction.isCheckedForTask(task));
+
+        const iconId = instruction.instructionIcon?.();
+        if (iconId) {
+            item.setIcon(iconId);
+        }
+
+        if (instruction.isEnabledForTask?.(task) === false) {
+            item.setDisabled(true);
+            return;
+        }
+
+        item.onClick(async () => {
+            const newTask = instruction.apply(task);
+            const hasEdits = newTask.length !== 1 || !Object.is(newTask[0], task);
+            if (hasEdits) {
+                await this.taskSaver(task, newTask);
+            }
+        });
     }
 }

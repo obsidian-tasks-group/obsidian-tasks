@@ -1,6 +1,7 @@
 {
   "common": {
     "cancel": "",
+    "delete": "",
     "edit": "",
     "moreInfo": "",
     "okay": "",
@@ -13,6 +14,7 @@
   },
   "modals": {
     "customStatusModal": {
+      "duplicateSymbol": "",
       "editAvailableAsCommand": {
         "description": "Если включено, этот статус будет доступен как команда, поэтому вы можете назначить горячую клавишу и переключать статус с ее помощью.",
         "name": "Доступно как команда"
@@ -26,6 +28,7 @@
         "name": "Имя статуса задачи"
       },
       "editStatusSymbol": {
+        "coreDescription": "",
         "description": "Это символ между квадратными скобками. (Его можно редактировать только для пользовательских статусов, но не для основных.)",
         "name": "Символ статуса задачи"
       },
@@ -35,11 +38,13 @@
       },
       "fixErrorsBeforeSaving": "Исправьте ошибки перед сохранением.",
       "title": {
+        "addStatus": "",
         "editCoreStatus": "",
         "editCustomStatus": ""
       }
     },
     "editPresetModal": {
+      "addTitle": "",
       "name": {
         "duplicate": "",
         "name": "",
@@ -47,9 +52,9 @@
         "required": ""
       },
       "query": {
-        "description": "",
         "name": "",
-        "placeholder": ""
+        "placeholder": "",
+        "required": ""
       },
       "title": ""
     }
@@ -74,7 +79,7 @@
         "updateReport": {
           "line1": "Если вы измените настройки статусов Tasks, вы можете получить обновленный отчет, выполнив следующие действия:",
           "line2": "Перейдите в `Settings` -> `Tasks`.",
-          "line3": "Нажмите на `Review and check your Statuses`."
+          "line3": ""
         }
       },
       "columnHeadings": {
@@ -128,7 +133,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Автоподсказки",
       "maxSuggestions": {
         "description": "Сколько предложений следует показывать при появлении меню автоподсказок (включая опцию \"⏎\").",
         "name": "Максимальное количество отображаемых автоподсказок"
@@ -142,7 +146,6 @@
         "name": "Автоматически предлагать содержимое задачи"
       }
     },
-    "changeRequiresRestart": "НЕОБХОДИМА ПЕРЕЗАГРУЗКА.",
     "dates": {
       "cancelledDate": {
         "description": "Включение этой опции добавит отметку времени ❌ YYYY-MM-DD в конце, когда задача переключается в отмененную.",
@@ -162,96 +165,39 @@
       "heading": "Даты из имен файлов",
       "scheduledDate": {
         "extraFormat": {
-          "description": {
-            "line1": "Дополнительный формат даты, который плагин Tasks будет распознавать при использовании имени файла в качестве запланированной даты для задач без указанной даты.",
-            "line2": "Справка по синтаксису"
-          },
+          "description": "",
           "name": "Дополнительный формат даты из имени файла в качестве запланированной даты для задач без указанной даты",
           "placeholder": "пример: MMM DD YYYY"
         },
         "folders": {
           "description": "Оставьте пустым, если вы хотите использовать запланированные даты по умолчанию везде, или введите список папок через запятую.",
-          "name": "Папки с запланированными датами по умолчанию"
+          "name": "Папки с запланированными датами по умолчанию",
+          "placeholder": ""
         },
         "toggle": {
-          "description": {
-            "line1": "Экономьте время на вводе запланированных (⏳) дат.",
-            "line2": "Если эта опция включена, то для всех задач без указанной даты будет установлена запланированная дата, извлеченная из имени файла.",
-            "line3": "По умолчанию плагин Tasks будет сопоставлять форматы дат <code>YYYY-MM-DD</code> и <code>YYYYMMDD</code>.",
-            "line4": "Задачи без указанной даты не имеют дат Due (📅 ), Scheduled (⏳) и Start (🛫)."
-          },
+          "description": "",
           "name": "Использовать имя файла как запланированную дату для задач без указанной даты"
         }
       }
     },
-    "dialogs": {
+    "display": {
       "accessKeys": {
-        "description": "Если клавиши доступа (сочетания клавиш) для различных элементов управления в диалоговых окнах конфликтуют с системными сочетаниями клавиш или функциями вспомогательных технологий, которые важны для вас, вы можете деактивировать их здесь.",
-        "name": "Предоставлять клавиши доступа в диалоговых окнах"
-      },
-      "heading": "Диалоги"
-    },
-    "format": {
-      "description": {
-        "line1": "Формат, который Tasks использует для чтения и записи задач.",
-        "line2": "<b>Важно:</b> Tasks в настоящее время поддерживает только один формат одновременно. Выбор Dataview в настоящее время <b>приведет к тому, что Tasks перестанет читать свои собственные символы эмодзи</b>."
-      },
-      "displayName": {
-        "dataview": "Dataview",
-        "tasksEmojiFormat": "Формат эмодзи Tasks"
-      },
-      "name": "Формат задач"
-    },
-    "globalFilter": {
-      "filter": {
-        "description": {
-          "line1": "Рекомендуется: Оставьте пустым, если вы хотите, чтобы все элементы списка в вашем хранилище были задачами, управляемыми этим плагином.",
-          "line2": "Используйте глобальный фильтр, если вы хотите, чтобы Tasks действовал только на подмножество ваших элементов списка \"<code>- [ ]</code>\", так что элемент списка должен включать указанную строку в своем описании, чтобы считаться задачей.",
-          "line3": "Например, если вы установите глобальный фильтр на <code>#task</code>, плагин Tasks будет обрабатывать только элементы списка, помеченные тегом <code>#task</code>.",
-          "line4": "Другие элементы списка останутся обычными элементами списка и не будут отображаться в запросах или получать установленную дату выполнения."
-        },
-        "name": "Глобальный фильтр",
-        "placeholder": "например, #task или TODO"
-      },
-      "heading": "Глобальный фильтр задач",
-      "removeFilter": {
-        "description": "Включение этой опции удаляет строку, которую вы установили в качестве глобального фильтра, из описания задачи при отображении задачи.",
-        "name": "Удалять глобальный фильтр из описания"
-      }
-    },
-    "globalQuery": {
-      "heading": "Глобальный запрос",
-      "query": {
-        "description": "Запрос, который автоматически включается в начало каждого блока Tasks в хранилище. Полезно для добавления фильтров по умолчанию или параметров макета.",
-        "placeholder": "Например...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
-      }
-    },
-    "presets": {
-      "buttons": {
-        "addNewPreset": ""
-      },
-      "emptyState": "",
-      "line1": "",
-      "line2": "",
-      "name": ""
-    },
-    "recurringTasks": {
-      "heading": "Повторяющиеся задачи",
-      "nextLine": {
-        "description": "Включение этой опции приведет к тому, что следующее повторение задачи появится на строке ниже завершенной задачи. В противном случае следующее повторение появится перед завершенной.",
-        "name": "Следующее повторение появляется на строке ниже"
-      },
-      "removeScheduledDate": {
-        "description": {
-          "line1": "",
-          "line2": ""
-        },
+        "description": "",
         "name": ""
-      }
-    },
-    "searchResults": {
+      },
+      "editorIcons": {
+        "description": "",
+        "name": ""
+      },
       "heading": "",
+      "signifiers": {
+        "description": "",
+        "name": "",
+        "options": {
+          "emoji": "",
+          "icons": ""
+        }
+      },
       "taskCountLocation": {
         "description": "",
         "name": "",
@@ -261,39 +207,93 @@
         }
       }
     },
-    "searches": {
-      "enableCustomSearches": {
-        "confirm": {
-          "acknowledge": "",
-          "enable": ""
-        },
-        "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
-        },
-        "name": ""
-      },
+    "editing": {
       "heading": ""
     },
+    "format": {
+      "description": "",
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Формат эмодзи Tasks"
+      },
+      "name": "Формат задач",
+      "oneFormatOnly": ""
+    },
+    "general": {
+      "heading": ""
+    },
+    "globalFilter": {
+      "filter": {
+        "description": "",
+        "example": "",
+        "name": "Глобальный фильтр",
+        "placeholder": "например, #task или TODO"
+      },
+      "removeFilter": {
+        "description": "Включение этой опции удаляет строку, которую вы установили в качестве глобального фильтра, из описания задачи при отображении задачи.",
+        "name": "Удалять глобальный фильтр из описания"
+      }
+    },
+    "presets": {
+      "buttons": {
+        "addNewPreset": ""
+      },
+      "deleteConfirm": {
+        "message": "",
+        "title": ""
+      },
+      "description": "",
+      "dragToReorder": "",
+      "emptyState": "",
+      "name": ""
+    },
+    "queries": {
+      "globalQuery": {
+        "description": "",
+        "modalDescription": "",
+        "name": "",
+        "notSet": "",
+        "placeholder": "",
+        "summary": "",
+        "summaryMultiline_few": "",
+        "summaryMultiline_many": "",
+        "summaryMultiline_one": "",
+        "summaryMultiline_other": ""
+      },
+      "heading": "",
+      "javaScript": {
+        "confirm": {
+          "acknowledge": "",
+          "allow": "",
+          "risk": "",
+          "trust": ""
+        },
+        "description": "",
+        "name": ""
+      }
+    },
+    "recurringTasks": {
+      "heading": "Повторяющиеся задачи",
+      "nextLine": {
+        "description": "Включение этой опции приведет к тому, что следующее повторение задачи появится на строке ниже завершенной задачи. В противном случае следующее повторение появится перед завершенной.",
+        "name": "Следующее повторение появляется на строке ниже"
+      },
+      "removeScheduledDate": {
+        "description": "",
+        "name": ""
+      }
+    },
+    "reloadToApply": "",
     "seeTheDocumentation": "Смотрите документацию",
     "statuses": {
       "buttons": {
-        "addStatus": "",
-        "importFromTheme": {
-          "description": "",
-          "name": ""
-        }
+        "addStatus": ""
       },
       "collections": {
         "anuppuccinTheme": "Тема AnuPpuccin",
         "auraTheme": "Тема Aura",
         "borderTheme": "Тема Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Добавить {{numberOfStatuses}} поддерживаемых статусов"
-          },
           "importCollection": {
             "name": ""
           }
@@ -305,46 +305,60 @@
         "thingsTheme": "Тема Things"
       },
       "coreStatuses": {
-        "buttons": {
-          "checkStatuses": {
-            "name": "Просмотреть и проверить свои статусы",
-            "tooltip": "Создать новый файл в корне хранилища, содержащий Mermaid диаграмму текущих настроек статусов."
-          }
-        },
-        "description": {
-          "line1": "Это основные статусы, которые Tasks поддерживает изначально, без необходимости использования пользовательских CSS стилей или тем.",
-          "line2": "Вы можете редактировать и добавлять свои собственные пользовательские статусы в разделе ниже."
-        },
+        "description": "",
         "heading": "Основные статусы"
       },
       "customStatuses": {
-        "buttons": {
-          "addAllUnknown": {
-            "description": "",
-            "name": "Добавить все неизвестные типы статусов"
-          },
-          "addNewStatus": {
-            "name": "Добавить новый статус задачи"
-          },
-          "resetCustomStatuses": {
-            "description": "",
-            "name": "Сбросить пользовательские типы статусов к значениям по умолчанию"
-          }
-        },
-        "description": {
-          "line1": "Сначала следует <b>выбрать и установить CSS сниппет или тему</b> для стилизации пользовательских флажков.",
-          "line2": "Затем используйте кнопки ниже, чтобы настроить свои пользовательские статусы в соответствии с выбранными CSS флажками.",
-          "line3": "<b>Примечание.</b> Любые статусы с тем же символом, что и у более ранних статусов, будут игнорироваться. Вы можете подтвердить фактически загруженные статусы, запустив команду 'Создать или редактировать задачу' и посмотрев на раскрывающийся список статусов.",
-          "line4": "Смотрите документацию, чтобы начать!"
-        },
+        "description": "",
         "emptyState": "",
         "heading": "Пользовательские статусы"
+      },
+      "description": {
+        "core": "",
+        "custom": "",
+        "docsLink": ""
       },
       "filter": {
         "placeholder": ""
       },
       "heading": "Статусы задач",
       "reloadRequired": "",
+      "row": {
+        "next": ""
+      },
+      "tools": {
+        "addUnknown": {
+          "added_few": "",
+          "added_many": "",
+          "added_one": "",
+          "added_other": "",
+          "button": "",
+          "description": "",
+          "name": "",
+          "noneFound": ""
+        },
+        "heading": "",
+        "importFromTheme": {
+          "button": "",
+          "description": "",
+          "name": ""
+        },
+        "report": {
+          "button": "",
+          "description": "",
+          "name": "",
+          "noteTitle": ""
+        },
+        "reset": {
+          "confirm": {
+            "button": "",
+            "message": "",
+            "title": ""
+          },
+          "description": "",
+          "name": ""
+        }
+      },
       "types": {
         "cancelled": "",
         "done": "",
@@ -355,9 +369,6 @@
         "todo": ""
       },
       "unnamed": ""
-    },
-    "taskEntry": {
-      "heading": ""
     }
   }
 }

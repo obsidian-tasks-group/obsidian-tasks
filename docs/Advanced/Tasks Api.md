@@ -45,7 +45,7 @@ export interface TasksApiV1 {
     editTaskLineModal(taskLine: string): Promise<string>;
 
     /**
-     * Executes the 'Tasks: Toggle task done' command on the supplied line string
+     * Executes the 'Tasks: Toggle statuses' command on the supplied line string
      *
      * @param line The markdown string of the task line being toggled
      * @param path The path to the file containing line
@@ -115,7 +115,7 @@ console.log(editedTaskLine);
 > [!released]
 > This method was introduced in Tasks 7.2.0.
 
-Executes the 'Tasks: Toggle task done' command on the supplied line string. It toggles and updates a task line according to a user's preferences, accounting for recurrence rules and completed status. It returns a string representing the toggled task.
+Executes the 'Tasks: Toggle statuses' command on the supplied line string. It toggles and updates a task line according to a user's preferences, accounting for recurrence rules and completed status. It returns a string representing the toggled task.
 
 ```typescript
 const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;

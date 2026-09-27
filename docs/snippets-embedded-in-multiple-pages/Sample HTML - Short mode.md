@@ -9,7 +9,6 @@
     <label test-icon="lucide-filter">
       <input placeholder="Filter by description..." test-tooltip="Filter results" />
     </label>
-    <button test-icon="lucide-copy" test-tooltip="Copy results"></button>
   </div>
   <ul class="contains-task-list plugin-tasks-query-result tasks-layout-short-mode">
     <li
@@ -25,7 +24,7 @@
       data-line="0"
       data-task-status-name="Todo"
       data-task-status-type="TODO">
-      <input class="task-list-item-checkbox" type="checkbox" title="Right-click for options" data-line="0" />
+      <input class="task-list-item-checkbox" type="checkbox" title="Right-click to change status" data-line="0" />
       <span class="tasks-list-text">
         <span class="task-description"><span>Do exercises #todo #health</span></span>
         <span class="task-id"><span>🆔</span></span>
@@ -36,31 +35,34 @@
         <span
           class="task-created"
           data-task-created="past-4d"
-          title="Click to edit created date, Right-click for more options">
+          title="Click to change created date · right-click for more">
           <span>➕</span>
         </span>
-        <span
-          class="task-start"
-          data-task-start="past-3d"
-          title="Click to edit start date, Right-click for more options">
+        <span class="task-start" data-task-start="past-3d" title="Click to change start date · right-click for more">
           <span>🛫</span>
         </span>
         <span
           class="task-scheduled"
           data-task-scheduled="past-2d"
-          title="Click to edit scheduled date, Right-click for more options">
+          title="Click to change scheduled date · right-click for more">
           <span>⏳</span>
         </span>
-        <span class="task-due" data-task-due="past-1d" title="Click to edit due date, Right-click for more options">
+        <span class="task-due" data-task-due="past-1d" title="Click to change due date · right-click for more">
           <span>📅</span>
         </span>
+        <a
+          class="tasks-postpone tasks-postpone-short-mode"
+          title="Due tomorrow, on Thu 6th Jul · right-click for more"
+          href="#"
+          role="button"
+          aria-label="Due tomorrow, on Thu 6th Jul · right-click for more"></a>
         <span
           class="task-cancelled"
           data-task-cancelled="future-1d"
-          title="Click to edit cancelled date, Right-click for more options">
+          title="Click to change cancelled date · right-click for more">
           <span>❌</span>
         </span>
-        <span class="task-done" data-task-done="today" title="Click to edit done date, Right-click for more options">
+        <span class="task-done" data-task-done="today" title="Click to change done date · right-click for more">
           <span>✅</span>
         </span>
         <span class="task-block-link"><span>^dcf64c</span></span>
@@ -70,10 +72,7 @@
         <span class="tasks-backlink">
           <a rel="noopener" target="_blank" class="internal-link internal-link-short-mode">🔗</a>
         </span>
-        <a class="tasks-edit" title="Edit task" href="#"></a>
-        <a
-          class="tasks-postpone tasks-postpone-short-mode"
-          title="ℹ️ Due tomorrow, on Thu 6th Jul (right-click for more options)"></a>
+        <a class="tasks-edit" title="Edit task" href="#" role="button" aria-label="Edit task"></a>
       </span>
     </li>
   </ul>

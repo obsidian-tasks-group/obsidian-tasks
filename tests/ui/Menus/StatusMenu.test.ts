@@ -34,10 +34,10 @@ describe('StatusMenu', () => {
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-              Change status to: [ ] Todo
-              Change status to: [x] Done
-            x Change status to: [/] In Progress
-              Change status to: [-] Cancelled"
+              Set status to Todo [ ]
+              Set status to Done [x]
+            x Set status to In Progress [/]
+              Set status to Cancelled [-]"
         `);
     });
 
@@ -62,11 +62,11 @@ describe('StatusMenu', () => {
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-            x Change status to: [ ] Todo
-              Change status to: [x] Done
-              Change status to: [/] In Progress
-              Change status to: [-] Cancelled
-              Change status to: [%] % 1"
+            x Set status to Todo [ ]
+              Set status to Done [x]
+              Set status to In Progress [/]
+              Set status to Cancelled [-]
+              Set status to % 1 [%]"
         `);
     });
 
@@ -103,7 +103,7 @@ describe('StatusMenu', () => {
         // Act
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'StatusMenu'.
         const todoItem = menu.items[0];
-        expect(todoItem.title).toEqual('Change status to: [ ] Todo');
+        expect(todoItem.title).toEqual('Set status to Todo [ ]');
         todoItem.callback();
 
         // Assert

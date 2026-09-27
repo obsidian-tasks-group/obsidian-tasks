@@ -7,58 +7,57 @@
     <section class="tasks-modal-priority-section">
       <label for="priority-none" id="priority">Priority</label>
       <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-lowest" value="lowest" />
-        <label for="priority-lowest">
-          <span>Lowest</span>
-          <span>⏬</span>
-        </label>
-      </div>
-      <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-low" value="low" />
-        <label for="priority-low">
-          <span>Low</span>
-          <span>🔽</span>
-        </label>
-      </div>
-      <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-none" value="none" />
-        <label for="priority-none"><span>Normal</span></label>
-      </div>
-      <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-medium" value="medium" />
-        <label for="priority-medium">
-          <span>Medium</span>
-          <span>🔼</span>
+        <input type="radio" id="priority-highest" value="highest" />
+        <label for="priority-highest">
+          <span class="tasks-priority-label">Highest</span>
+          <span class="tasks-priority-emoji">🔺</span>
         </label>
       </div>
       <div class="task-modal-priority-option-container">
         <input type="radio" id="priority-high" value="high" />
         <label for="priority-high">
-          <span>High</span>
-          <span>⏫</span>
+          <span class="tasks-priority-label">High</span>
+          <span class="tasks-priority-emoji">⏫</span>
         </label>
       </div>
       <div class="task-modal-priority-option-container">
-        <input type="radio" id="priority-highest" value="highest" />
-        <label for="priority-highest">
-          <span>Highest</span>
-          <span>🔺</span>
+        <input type="radio" id="priority-medium" value="medium" />
+        <label for="priority-medium">
+          <span class="tasks-priority-label">Medium</span>
+          <span class="tasks-priority-emoji">🔼</span>
+        </label>
+      </div>
+      <div class="task-modal-priority-option-container">
+        <input type="radio" id="priority-none" value="none" />
+        <label for="priority-none"><span class="tasks-priority-label">Normal</span></label>
+      </div>
+      <div class="task-modal-priority-option-container">
+        <input type="radio" id="priority-low" value="low" />
+        <label for="priority-low">
+          <span class="tasks-priority-label">Low</span>
+          <span class="tasks-priority-emoji">🔽</span>
+        </label>
+      </div>
+      <div class="task-modal-priority-option-container">
+        <input type="radio" id="priority-lowest" value="lowest" />
+        <label for="priority-lowest">
+          <span class="tasks-priority-label">Lowest</span>
+          <span class="tasks-priority-emoji">⏬</span>
         </label>
       </div>
     </section>
     <hr id="line-after-priority" />
     <section class="tasks-modal-dates-section">
-      <label for="recurrence">Recurs</label>
-      <input id="recurrence" type="text" class="tasks-modal-date-input" placeholder="Try 'every day when done'" />
-      <code class="tasks-modal-parsed-date">
-        🔁
-        <i>not recurring</i>
-      </code>
       <label for="due">Due</label>
       <input id="due" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <div class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date tasks-show-emoji">
         📅
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+        <input
+          class="tasks-modal-date-editor-picker"
+          type="date"
+          id="date-editor-picker-due"
+          aria-label="Pick Due date"
+          tabindex="-1" />
       </div>
       <label for="scheduled">Scheduled</label>
       <input
@@ -66,43 +65,54 @@
         type="text"
         class="tasks-modal-date-input tasks-modal-error"
         placeholder="Try 'Mon' or 'tm' then space" />
-      <code class="tasks-modal-parsed-date">
+      <span class="tasks-modal-parsed-date tasks-modal-parsed-message">
         ⏳
         <i>invalid scheduled date</i>
-      </code>
+      </span>
       <label for="start">Start</label>
       <input id="start" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <div class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date tasks-show-emoji">
         🛫
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+        <input
+          class="tasks-modal-date-editor-picker"
+          type="date"
+          id="date-editor-picker-start"
+          aria-label="Pick Start date"
+          tabindex="-1" />
       </div>
+      <label for="recurrence">Recurs</label>
+      <input id="recurrence" type="text" class="tasks-modal-date-input" placeholder="e.g. every week" />
+      <span class="tasks-modal-parsed-date tasks-modal-parsed-message">
+        🔁
+        <i>not recurring</i>
+      </span>
       <div class="future-dates-only" id="only-future-dates">
-        <label for="forwardOnly">Only future dates:</label>
+        <label for="forwardOnly">Only future dates</label>
         <input id="forwardOnly" type="checkbox" class="task-list-item-checkbox tasks-modal-checkbox" />
       </div>
     </section>
     <hr id="line-after-happens-dates" />
     <section class="tasks-modal-dependencies-section">
-      <label for="blockedBy">Before this</label>
+      <label for="before_this">Blocked by</label>
       <span>
         <input
           id="before_this"
           class="tasks-modal-dependency-input"
           type="text"
-          placeholder="Search for tasks that the task being edited depends on..." />
+          placeholder="Search tasks that must be done first…" />
         <iframe
           style="display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; border: 0; opacity: 0; pointer-events: none; z-index: -1;"
           aria-hidden="true"
           tabindex="-1"
           src="about:blank"></iframe>
       </span>
-      <label for="blocking">After this</label>
+      <label for="after_this">Blocks</label>
       <span>
         <input
           id="after_this"
           class="tasks-modal-dependency-input"
           type="text"
-          placeholder="Search for tasks that depend on this task being done..." />
+          placeholder="Search tasks waiting on this one…" />
         <iframe
           style="display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; border: 0; opacity: 0; pointer-events: none; z-index: -1;"
           aria-hidden="true"
@@ -112,7 +122,7 @@
     </section>
     <hr id="line-after-dependencies" />
     <section class="tasks-modal-dates-section">
-      <label for="status" id="status">Status</label>
+      <label for="status-type" id="status">Status</label>
       <select id="status-type" class="status-editor-status-selector">
         <option value=" ">Todo [ ]</option>
         <option value="/">In Progress [/]</option>
@@ -121,21 +131,36 @@
       </select>
       <label for="created">Created</label>
       <input id="created" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <div class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date tasks-show-emoji">
         ➕
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+        <input
+          class="tasks-modal-date-editor-picker"
+          type="date"
+          id="date-editor-picker-created"
+          aria-label="Pick Created date"
+          tabindex="-1" />
       </div>
       <label for="done">Done</label>
       <input id="done" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <div class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date tasks-show-emoji">
         ✅
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+        <input
+          class="tasks-modal-date-editor-picker"
+          type="date"
+          id="date-editor-picker-done"
+          aria-label="Pick Done date"
+          tabindex="-1" />
       </div>
       <label for="cancelled">Cancelled</label>
       <input id="cancelled" type="text" class="tasks-modal-date-input" placeholder="Try 'Mon' or 'tm' then space" />
-      <div class="tasks-modal-parsed-date">
+      <div class="tasks-modal-parsed-date tasks-show-emoji">
         ❌
-        <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
+        <input
+          class="tasks-modal-date-editor-picker"
+          type="date"
+          id="date-editor-picker-cancelled"
+          aria-label="Pick Cancelled date"
+          tabindex="-1" />
       </div>
     </section>
     <section class="tasks-modal-button-section">

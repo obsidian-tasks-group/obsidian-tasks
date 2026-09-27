@@ -4,6 +4,7 @@ import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration
 import { StatusValidator } from '../Statuses/StatusValidator';
 import { Status } from '../Statuses/Status';
 import { i18n } from '../i18n/i18n';
+import { humanizeStatusType } from './StatusTypeLabels';
 
 const validator = new StatusValidator();
 
@@ -17,18 +18,28 @@ export class CustomStatusModal extends Modal {
     saved: boolean = false;
     error: boolean = false;
     private isCoreStatus: boolean;
+    private readonly originalSymbol: string;
+
+    /**
+     * @param otherSymbols - the symbols of all other statuses, so that duplicates can be rejected
+     */
     constructor(
         public plugin: Plugin,
         statusType: StatusConfiguration,
         isCoreStatus: boolean,
+        private readonly otherSymbols: string[] = [],
+        isNewStatus: boolean = false,
     ) {
         super(plugin.app);
         this.setTitle(
-            isCoreStatus
-                ? i18n.t('modals.customStatusModal.title.editCoreStatus')
-                : i18n.t('modals.customStatusModal.title.editCustomStatus'),
+            isNewStatus
+                ? i18n.t('modals.customStatusModal.title.addStatus')
+                : isCoreStatus
+                  ? i18n.t('modals.customStatusModal.title.editCoreStatus')
+                  : i18n.t('modals.customStatusModal.title.editCustomStatus'),
         );
         this.statusSymbol = statusType.symbol;
+        this.originalSymbol = statusType.symbol;
         this.statusName = statusType.name;
         this.statusNextSymbol = statusType.nextStatusSymbol;
         this.statusAvailableAsCommand = statusType.availableAsCommand;
@@ -60,18 +71,22 @@ export class CustomStatusModal extends Modal {
         let statusSymbolText: TextComponent;
         new Setting(settingDiv)
             .setName(i18n.t('modals.customStatusModal.editStatusSymbol.name'))
-            .setDesc(i18n.t('modals.customStatusModal.editStatusSymbol.description'))
+            .setDesc(
+                this.isCoreStatus
+                    ? i18n.t('modals.customStatusModal.editStatusSymbol.coreDescription')
+                    : i18n.t('modals.customStatusModal.editStatusSymbol.description'),
+            )
             .addText((text) => {
                 statusSymbolText = text;
                 text.setValue(this.statusSymbol).onChange((v) => {
                     this.statusSymbol = v;
-                    CustomStatusModal.setValid(text, validator.validateSymbol(this.statusConfiguration()));
+                    CustomStatusModal.setValid(text, this.validateSymbol());
                 });
             })
             .setDisabled(this.isCoreStatus)
             .then((_setting) => {
                 // Show any error if the initial value loaded is incorrect.
-                CustomStatusModal.setValid(statusSymbolText, validator.validateSymbol(this.statusConfiguration()));
+                CustomStatusModal.setValid(statusSymbolText, this.validateSymbol());
             });
 
         let statusNameText: TextComponent;
@@ -87,6 +102,26 @@ export class CustomStatusModal extends Modal {
             })
             .then((_setting) => {
                 CustomStatusModal.setValid(statusNameText, validator.validateName(this.statusConfiguration()));
+            });
+
+        new Setting(settingDiv)
+            .setName(i18n.t('modals.customStatusModal.editStatusType.name'))
+            .setDesc(i18n.t('modals.customStatusModal.editStatusType.description'))
+            .addDropdown((dropdown) => {
+                const types = [
+                    StatusType.TODO,
+                    StatusType.IN_PROGRESS,
+                    StatusType.ON_HOLD,
+                    StatusType.DONE,
+                    StatusType.CANCELLED,
+                    StatusType.NON_TASK,
+                ];
+                types.forEach((s) => {
+                    dropdown.addOption(s, humanizeStatusType(s));
+                });
+                dropdown.setValue(this.type).onChange((v) => {
+                    this.type = Status.getTypeFromStatusTypeString(v);
+                });
             });
 
         let statusNextSymbolText: TextComponent;
@@ -105,26 +140,6 @@ export class CustomStatusModal extends Modal {
                     statusNextSymbolText,
                     validator.validateNextSymbol(this.statusConfiguration()),
                 );
-            });
-
-        new Setting(settingDiv)
-            .setName(i18n.t('modals.customStatusModal.editStatusType.name'))
-            .setDesc(i18n.t('modals.customStatusModal.editStatusType.description'))
-            .addDropdown((dropdown) => {
-                const types = [
-                    StatusType.TODO,
-                    StatusType.IN_PROGRESS,
-                    StatusType.ON_HOLD,
-                    StatusType.DONE,
-                    StatusType.CANCELLED,
-                    StatusType.NON_TASK,
-                ];
-                types.forEach((s) => {
-                    dropdown.addOption(s, s);
-                });
-                dropdown.setValue(this.type).onChange((v) => {
-                    this.type = Status.getTypeFromStatusTypeString(v);
-                });
             });
 
         if (Status.tasksPluginCanCreateCommandsForStatuses()) {
@@ -149,7 +164,7 @@ export class CustomStatusModal extends Modal {
             .setButtonText(i18n.t('common.save'))
             .setCta()
             .onClick(() => {
-                const errors = validator.validate(this.statusConfiguration());
+                const errors = [...validator.validate(this.statusConfiguration()), ...this.duplicateSymbolErrors()];
                 if (errors.length > 0) {
                     const message =
                         errors.join('\n') + '\n\n' + i18n.t('modals.customStatusModal.fixErrorsBeforeSaving');
@@ -169,6 +184,19 @@ export class CustomStatusModal extends Modal {
     // }
     onOpen() {
         this.display();
+    }
+
+    private duplicateSymbolErrors(): string[] {
+        // Only check a changed symbol, so that statuses that are already duplicates can still be edited.
+        const symbolChanged = this.statusSymbol !== this.originalSymbol;
+        if (this.isCoreStatus || !symbolChanged || !this.otherSymbols.includes(this.statusSymbol)) {
+            return [];
+        }
+        return [i18n.t('modals.customStatusModal.duplicateSymbol', { symbol: this.statusSymbol })];
+    }
+
+    private validateSymbol(): string[] {
+        return [...validator.validateSymbol(this.statusConfiguration()), ...this.duplicateSymbolErrors()];
     }
 
     static setValidationError(textInput: TextComponent) {
