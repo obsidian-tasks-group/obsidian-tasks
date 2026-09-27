@@ -74,6 +74,7 @@ The following query elements exist:
 | `backlink`        | Shown   | Task backlink for tasks         | [[Backlinks]]                                       |
 | `nested backlink` | Shown   | Backlink on nested tasks        | [[#Hide and Show Nested Backlink\|Nested Backlink]] |
 | `urgency`         | Hidden  | Task urgency score              | [[Urgency]]                                         |
+| `progress`        | Shown   | Progress of a task's subtasks   | [[Settings#Display settings\|Display settings]] |
 | `task count`      | Shown   | Total number of tasks           | [[#Task count location]]                            |
 | `group count`     | Hidden  | Number of tasks in leaf groups  | [[Grouping#Showing the number of tasks in a group\|Number of tasks in a group]] |
 
@@ -84,6 +85,7 @@ The following query elements exist:
 > - `toolbar` was introduced in Tasks 7.23.0.
 > - `nested backlink` was introduced in Tasks 8.3.0.
 > - `group count` was introduced in Tasks 8.4.0.
+> - `progress` was introduced in Tasks X.Y.Z.
 
 All of these query elements except `group count`, `urgency` and `tree` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the group count, urgency score or tree view.

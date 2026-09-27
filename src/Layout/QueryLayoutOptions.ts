@@ -6,6 +6,7 @@
 export class QueryLayoutOptions {
     hideToolbar: boolean = false;
     hidePostponeButton: boolean = false;
+    hideProgress: boolean = false;
     hideTaskCount: boolean = false;
     hideGroupCount: boolean = true;
     hideBacklinks: boolean = false;
@@ -32,6 +33,7 @@ export function parseQueryShowHideOptions(queryLayoutOptions: QueryLayoutOptions
         ['edit button', 'hideEditButton'],
         ['nested backlink', 'hideNestedBacklinks'],
         ['postpone button', 'hidePostponeButton'],
+        ['progress', 'hideProgress'],
         ['task count', 'hideTaskCount'],
         ['group count', 'hideGroupCount'],
         ['toolbar', 'hideToolbar'],

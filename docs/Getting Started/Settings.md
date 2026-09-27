@@ -34,6 +34,7 @@ For convenience, here is a list of all those documentation pages (in the order t
 
 - **Property style**: show task properties as **Emoji** (the default) or **Icons**, in search results, Reading mode, dialogs and menus. Your notes are not changed.
 - **Render properties in Live Preview**: show task properties compactly in Live Preview, in the chosen property style, including [[Dataview Format]] fields such as `[priority:: highest]`. Put the cursor on a property to edit its text.
+- **Subtask progress** (off by default): show a progress bar and count, such as `2/5`, after tasks that have subtasks, in search results and Live Preview. Cancelled subtasks are not counted. Add `hide progress` to a query to hide it there.
 
 > [!released]
 > Display settings were introduced in Tasks X.Y.Z.

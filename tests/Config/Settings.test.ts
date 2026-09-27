@@ -91,9 +91,10 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().quickSearch.fuzzyMatching).toBe(false);
     });
 
-    it('should default to emojis, and keep saved choices', () => {
+    it('should default to emojis and no subtask progress, and keep saved choices', () => {
         expect(getSettings().signifierDisplay).toEqual('emoji');
         expect(getSettings().showIconsInEditor).toEqual(true);
+        expect(getSettings().showSubtaskProgress).toEqual(false);
 
         // Settings saved by an older version of Tasks have neither option:
         updateSettings({ setDoneDate: false });

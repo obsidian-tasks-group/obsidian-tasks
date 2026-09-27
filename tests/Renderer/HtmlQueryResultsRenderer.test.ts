@@ -396,6 +396,41 @@ sort by function reverse task.lineNumber
     });
 });
 
+describe('HtmlQueryResultsRenderer - subtask progress', () => {
+    beforeEach(() => {
+        updateSettings({ showSubtaskProgress: true });
+    });
+
+    afterEach(() => {
+        resetSettings();
+    });
+
+    async function renderedProgressCounts(source: string) {
+        const allTasks = readTasksFromSimulatedFile('inheritance_1parent2children2grandchildren1sibling');
+        const tasksFile = createTestTasksFile('query.md');
+        const { query, renderer } = makeHtmlRenderer(source, tasksFile, allTasks);
+        const container = document.createElement('div');
+        renderer.content = container;
+        await renderer.renderQuery(State.Warm, query.applyQueryToTasks(allTasks));
+        return Array.from(container.querySelectorAll('.tasks-progress-count')).map((span) => span.textContent);
+    }
+
+    it('should show the progress of tasks that have subtasks', async () => {
+        // The parent has 2 children and 2 grandchildren; each child has 1 grandchild.
+        expect(await renderedProgressCounts('description includes parent')).toEqual(['0/4']);
+        expect(await renderedProgressCounts('description includes child')).toEqual(['0/1', '0/1']);
+    });
+
+    it('should not show progress with "hide progress"', async () => {
+        expect(await renderedProgressCounts('description includes parent\nhide progress')).toEqual([]);
+    });
+
+    it('should not show progress when turned off in settings', async () => {
+        updateSettings({ showSubtaskProgress: false });
+        expect(await renderedProgressCounts('description includes parent')).toEqual([]);
+    });
+});
+
 describe('Reusing HtmlQueryResultsRenderer', () => {
     const tasksFile = createTestTasksFile('anywhere.md');
 

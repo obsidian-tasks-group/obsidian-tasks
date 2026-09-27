@@ -448,6 +448,13 @@
     ]
   },
   {
+    "name": "Subtask progress",
+    "desc": "Show a progress bar after tasks that have subtasks, in query results and Live Preview. Use 'hide progress' to hide it in a query.",
+    "controls": [
+      "toggle"
+    ]
+  },
+  {
     "name": "Task count position",
     "desc": "Where query results show the number of tasks.",
     "controls": [

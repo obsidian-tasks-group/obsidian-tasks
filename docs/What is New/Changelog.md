@@ -13,7 +13,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 ## 8.x releases
 
 - X.Y.Z:
-  - Add [[Settings#Display settings|display settings]]: optional icons instead of emojis, and compact task properties in Live Preview (including [[Dataview Format]] fields).
+  - Add [[Settings#Display settings|display settings]]: optional icons instead of emojis, compact task properties in Live Preview (including [[Dataview Format]] fields), and optional subtask progress bars.
   - Reorganise and simplify the [[Settings]], and rename some commands and labels.
   - In Live Preview, click a date's emoji or icon to pick a date, as in search results.
   - Remove the copy button from the search results toolbar.

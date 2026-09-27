@@ -198,6 +198,10 @@
           "icons": ""
         }
       },
+      "subtaskProgress": {
+        "description": "",
+        "name": ""
+      },
       "taskCountLocation": {
         "description": "",
         "name": "",

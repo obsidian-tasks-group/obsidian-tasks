@@ -210,6 +210,54 @@ a.tasks-edit svg, a.tasks-postpone svg {
     gap: var(--size-4-2);
 }
 
+/* Subtask progress: a slim bar and a 'done/total' count, after tasks that have subtasks */
+.tasks-progress {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-2-2);
+    margin-inline-start: var(--size-4-2);
+    vertical-align: middle;
+    line-height: 1;
+    font-family: var(--font-interface);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.tasks-progress-track {
+    position: relative;
+    display: inline-block;
+    width: 3em;
+    height: 4px;
+    border-radius: var(--radius-s);
+    background-color: var(--background-modifier-border);
+    overflow: hidden;
+}
+
+.tasks-progress-fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    border-radius: inherit;
+    background-color: var(--interactive-accent);
+    transition: width 150ms ease-out;
+}
+
+.tasks-progress[data-complete] .tasks-progress-fill {
+    background-color: var(--color-green);
+}
+
+.tasks-progress-count {
+    font-size: var(--font-ui-smaller);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tasks-progress-fill {
+        transition: none;
+    }
+}
+
 /* Task properties shown compactly in Live Preview */
 .tasks-editor-property {
     cursor: text;

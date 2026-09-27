@@ -1027,6 +1027,13 @@ export class SettingsTab extends PluginSettingTab {
         refreshEditorDecorations(this.app);
     }
 
+    private async setShowSubtaskProgress(value: boolean) {
+        updateSettings({ showSubtaskProgress: value });
+        await this.plugin.saveSettings();
+        this.events.triggerReloadOpenSearchResults();
+        refreshEditorDecorations(this.app);
+    }
+
     private async setTaskCountLocation(value: 'top' | 'bottom') {
         updateSettings({ searchResults: { taskCountLocation: value } });
         await this.plugin.saveSettings();
@@ -1061,6 +1068,17 @@ export class SettingsTab extends PluginSettingTab {
                             toggle
                                 .setValue(getSettings().showIconsInEditor)
                                 .onChange(async (value) => await this.setShowIconsInEditor(value));
+                        });
+                    },
+                },
+                {
+                    name: i18n.t('settings.display.subtaskProgress.name'),
+                    desc: i18n.t('settings.display.subtaskProgress.description'),
+                    render: (setting) => {
+                        setting.addToggle((toggle) => {
+                            toggle
+                                .setValue(getSettings().showSubtaskProgress)
+                                .onChange(async (value) => await this.setShowSubtaskProgress(value));
                         });
                     },
                 },
@@ -1527,6 +1545,15 @@ export class SettingsTab extends PluginSettingTab {
                     .onChange(async (value) => await this.setShowIconsInEditor(value));
             });
         setSettingVisibility(editorIconsSetting, SettingsTab.editorPropertiesSettingApplies());
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.display.subtaskProgress.name'))
+            .setDesc(i18n.t('settings.display.subtaskProgress.description'))
+            .addToggle((toggle) => {
+                toggle
+                    .setValue(getSettings().showSubtaskProgress)
+                    .onChange(async (value) => await this.setShowSubtaskProgress(value));
+            });
 
         new Setting(containerEl)
             .setName(i18n.t('settings.display.taskCountLocation.name'))

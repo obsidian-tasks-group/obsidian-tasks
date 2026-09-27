@@ -78,6 +78,7 @@ export interface Settings {
     provideAccessKeys: boolean;
     signifierDisplay: 'icons' | 'emoji';
     showIconsInEditor: boolean;
+    showSubtaskProgress: boolean;
     useFilenameAsScheduledDate: boolean;
     filenameAsScheduledDateFormat: string;
     filenameAsDateFolders: string[];
@@ -129,6 +130,7 @@ const defaultSettings: Readonly<Settings> = {
     provideAccessKeys: true,
     signifierDisplay: 'emoji',
     showIconsInEditor: true,
+    showSubtaskProgress: false,
     useFilenameAsScheduledDate: false,
     filenameAsScheduledDateFormat: '',
     filenameAsDateFolders: [],
