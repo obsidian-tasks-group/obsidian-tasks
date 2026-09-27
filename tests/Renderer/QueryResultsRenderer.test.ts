@@ -92,6 +92,49 @@ describe('QueryResultsRenderer - accessing results', () => {
     });
 });
 
+describe('QueryResultsRenderer - overlapping search box re-renders', () => {
+    it('should show only the results of the latest search, even if an earlier one finishes later', async () => {
+        const tasks = [
+            new TaskBuilder().description('task one').build(),
+            new TaskBuilder().description('another task').build(),
+        ];
+
+        // A text renderer that waits until the test releases it, to simulate slow Markdown rendering.
+        let releaseRendering!: () => void;
+        const renderingReleased = new Promise<void>((resolve) => (releaseRendering = resolve));
+        const slowTextRenderer = async (_app: unknown, text: string, element: HTMLSpanElement) => {
+            await renderingReleased;
+            element.textContent = text;
+        };
+
+        const renderer = new QueryResultsRenderer(
+            'block-language-tasks',
+            '',
+            createTestTasksFile('file.md'),
+            () => Promise.resolve(),
+            null,
+            mockApp,
+            slowTextRenderer,
+            makeHtmlQueryRendererParameters(tasks),
+        );
+        const content = document.createElement('div');
+        releaseRendering();
+        await renderer.render(State.Warm, tasks, content);
+
+        // Start two filter re-renders, the second before the first has finished:
+        const firstSearch = renderer.applySearchBoxFilterAndRerender('task', content);
+        const secondSearch = renderer.applySearchBoxFilterAndRerender('another', content);
+        await Promise.all([firstSearch, secondSearch]);
+
+        const descriptions = Array.from(content.querySelectorAll('li .task-description')).map(
+            (span) => span.textContent,
+        );
+        expect(descriptions).toEqual(['another task']);
+        expect(content.querySelectorAll('.plugin-tasks-toolbar')).toHaveLength(1);
+        expect(content.querySelectorAll('.task-count')).toHaveLength(1);
+    });
+});
+
 describe('QueryResultsRenderer - rendering queries', () => {
     beforeEach(() => {
         jest.useFakeTimers();

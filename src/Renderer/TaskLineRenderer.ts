@@ -150,10 +150,6 @@ export class TaskLineRenderer {
     }): Promise<void> {
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-        const textSpan = li.createSpan();
-        textSpan.classList.add('tasks-list-text');
-        await this.taskToHtml(task, textSpan, li, isTaskInQueryFile);
-
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
         // moving the code, remember to update that reference too.
         const checkbox = li.createEl('input');
@@ -191,6 +187,11 @@ export class TaskLineRenderer {
         }
 
         li.prepend(checkbox);
+
+        // Added after the checkbox, so a task is never shown without its checkbox while this renders.
+        const textSpan = li.createSpan();
+        textSpan.classList.add('tasks-list-text');
+        await this.taskToHtml(task, textSpan, li, isTaskInQueryFile);
 
         // Set these to be compatible with stock obsidian lists:
         li.setAttribute('data-task', task.status.symbol.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.

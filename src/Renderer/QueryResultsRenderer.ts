@@ -47,6 +47,9 @@ export class QueryResultsRenderer {
     public filteredQueryResult: QueryResult;
     private _filterString: string = '';
 
+    /** Used to discard a search box re-render that finishes after a newer one. */
+    private filterGeneration = 0;
+
     private readonly renderMarkdown: (
         app: App,
         markdown: string,
@@ -143,10 +146,18 @@ export class QueryResultsRenderer {
         return this.tasksFile.path;
     }
 
-    public async render(state: State, tasks: Task[], content: HTMLDivElement) {
+    /**
+     * @param obsidianComponent - owns any Markdown rendered for these results.
+     */
+    public async render(
+        state: State,
+        tasks: Task[],
+        content: HTMLDivElement,
+        obsidianComponent: Component | null = this.obsidianComponent,
+    ) {
         this.performSearch(tasks);
-        this.addToolbar(content);
-        await this.renderQueryResult(state, this.filteredQueryResult, content);
+        this.addToolbar(content, obsidianComponent);
+        await this.renderQueryResult(state, this.filteredQueryResult, content, obsidianComponent);
     }
 
     private performSearch(tasks: Task[]) {
@@ -157,7 +168,12 @@ export class QueryResultsRenderer {
         measureSearch.finish();
     }
 
-    private async renderQueryResult(state: State, queryResult: QueryResult, content: HTMLDivElement) {
+    private async renderQueryResult(
+        state: State,
+        queryResult: QueryResult,
+        content: HTMLDivElement,
+        obsidianComponent: Component | null,
+    ) {
         const measureRender = new PerformanceTracker(`Render: ${this.query.queryId} - ${this.filePath}`);
         measureRender.start();
 
@@ -165,7 +181,7 @@ export class QueryResultsRenderer {
             this.query.viewLayoutOptions.viewMode === 'columns'
                 ? new HtmlColumnQueryResultsRenderer(
                       this.renderMarkdown,
-                      this.obsidianComponent,
+                      obsidianComponent,
                       this.obsidianApp,
                       this.textRenderer,
                       this.htmlQueryRendererParameters,
@@ -175,7 +191,7 @@ export class QueryResultsRenderer {
                   )
                 : new HtmlQueryResultsRenderer(
                       this.renderMarkdown,
-                      this.obsidianComponent,
+                      obsidianComponent,
                       this.obsidianApp,
                       this.textRenderer,
                       this.htmlQueryRendererParameters,
@@ -188,17 +204,17 @@ export class QueryResultsRenderer {
         measureRender.finish();
     }
 
-    private addToolbar(content: HTMLDivElement) {
+    private addToolbar(content: HTMLDivElement, obsidianComponent: Component | null) {
         if (this.query.queryLayoutOptions.hideToolbar) {
             return;
         }
 
         const toolbar = content.createDiv();
         toolbar.classList.add('plugin-tasks-toolbar');
-        this.addSearchBox(toolbar, content);
+        this.addSearchBox(toolbar, content, obsidianComponent);
     }
 
-    private addSearchBox(toolbar: HTMLDivElement, content: HTMLDivElement) {
+    private addSearchBox(toolbar: HTMLDivElement, content: HTMLDivElement, obsidianComponent: Component | null) {
         const label = toolbar.createEl('label');
         setIcon(label, 'lucide-filter');
         const searchBox = label.createEl('input');
@@ -207,15 +223,26 @@ export class QueryResultsRenderer {
         setTooltip(searchBox, 'Filter results');
         const doSearch = async () => {
             const filterString = searchBox.value;
-            await this.applySearchBoxFilterAndRerender(filterString, content);
+            await this.applySearchBoxFilterAndRerender(filterString, content, obsidianComponent);
         };
         searchBox.addEventListener('input', debounce(doSearch, 500, true));
     }
 
-    public async applySearchBoxFilterAndRerender(filterString: string, content: HTMLDivElement) {
+    public async applySearchBoxFilterAndRerender(
+        filterString: string,
+        content: HTMLDivElement,
+        obsidianComponent: Component | null = this.obsidianComponent,
+    ) {
         this._filterString = filterString;
+        const generation = ++this.filterGeneration;
 
         this.filterResults();
+
+        const newResults = createDiv();
+        await this.renderQueryResult(State.Warm, this.filteredQueryResult, newResults, obsidianComponent);
+        if (generation !== this.filterGeneration) {
+            return;
+        }
 
         // We want to retain the Toolbar, to not lose the cursor position in the search string.
         // But we need to delete any pre-existing headings, tasks and task count.
@@ -228,8 +255,7 @@ export class QueryResultsRenderer {
 
             lastChild.remove();
         }
-
-        await this.renderQueryResult(State.Warm, this.filteredQueryResult, content);
+        content.append(...Array.from(newResults.childNodes));
     }
 
     private filterResults() {

@@ -1,5 +1,6 @@
 import {
     type CachedMetadata,
+    Component,
     type Debouncer,
     type EventRef,
     type MarkdownPostProcessorContext,
@@ -22,6 +23,7 @@ import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
 import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { TaskLineRenderer } from './TaskLineRenderer';
+import { LatestRenderCoordinator } from './LatestRenderCoordinator';
 
 type RenderParams = { tasks: Task[]; state: State };
 
@@ -106,7 +108,11 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private readonly queryResultsRenderer: QueryResultsRenderer;
     private readonly debouncedRenderFn: Debouncer<[RenderParams], void>;
-    private isRendering: boolean = false;
+
+    private readonly renderCoordinator: LatestRenderCoordinator<RenderParams>;
+
+    /** Owns the child components, such as embedded Markdown, of the results currently shown. */
+    private shownResultsComponent: Component | null = null;
 
     constructor({
         app,
@@ -153,6 +159,9 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.queryResultsRenderer.query.debug('[render] QueryRenderChild.constructor() entered');
 
         this.debouncedRenderFn = debounce((params: RenderParams) => this.render(params), 300, true);
+        this.renderCoordinator = new LatestRenderCoordinator<RenderParams>((params, isCurrent) =>
+            this.renderIfVisible(params, isCurrent),
+        );
     }
 
     onload() {
@@ -257,8 +266,9 @@ class QueryRenderChild extends MarkdownRenderChild {
             window.clearTimeout(this.queryReloadTimeout);
         }
 
-        // Cancel any pending debounced renders
+        // Cancel any pending debounced renders, and discard any render in progress
         this.debouncedRenderFn.cancel();
+        this.renderCoordinator.cancel();
 
         this.observer?.disconnect();
         this.observer = null;
@@ -295,55 +305,76 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.debouncedRenderFn(params);
     }
 
-    private async render({ tasks, state }: RenderParams) {
+    private async render(params: RenderParams) {
         // We got here because the Cache reported a change in at least one task in the vault.
         // So note that any results we have already drawn are now out-of-date:
         this.isCacheChangedSinceLastRedraw = true;
 
-        window.requestAnimationFrame(async () => {
-            if (this.isRendering) {
-                return;
-            }
-            this.isRendering = true;
-
-            // We have to wrap the rendering inside requestAnimationFrame() to ensure
-            // that we get correct values for isConnected and isShown().
-            if (!this.containerEl.isConnected) {
-                // Example reasons why we might not be "connected":
-                // - This Tasks query block is contained within another plugin's code block,
-                //   such as a Tabs plugin. The file is closed and that plugin has not correctly
-                //   tidied up, so we have not been deleted.
-                this.queryResultsRenderer.query.debug(
-                    '[render] Ignoring redraw request, as code block is not connected.',
-                );
-                this.isRendering = false;
-                return;
-            }
-
-            if (!this.containerEl.isShown()) {
-                // Example reasons why we might not be "shown":
-                // - We are in a collapsed callout.
-                // - We are in a note which is obscured by another note.
-                // - We are in a Tabs plugin, in a tab which is not at the front.
-                // - The user has not yet scrolled to this code block's position in the file.
-                this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not shown.');
-                this.isRendering = false;
-                return;
-            }
-
-            await this.renderResults(state, tasks);
-
-            // Our results are now up-to-date:
-            this.isCacheChangedSinceLastRedraw = false;
-            this.isRendering = false;
-        });
+        await this.renderCoordinator.request(params);
     }
 
-    private async renderResults(state: State, tasks: Task[]) {
-        const content = this.containerEl.createDiv();
-        await this.queryResultsRenderer.render(state, tasks, content);
+    private async renderIfVisible({ tasks, state }: RenderParams, isCurrent: () => boolean) {
+        // We have to wait for an animation frame to ensure
+        // that we get correct values for isConnected and isShown().
+        await new Promise<void>((resolve) => window.requestAnimationFrame(() => resolve()));
+        if (!isCurrent()) {
+            return;
+        }
 
-        this.containerEl.firstChild?.replaceWith(content);
+        if (!this.containerEl.isConnected) {
+            // Example reasons why we might not be "connected":
+            // - This Tasks query block is contained within another plugin's code block,
+            //   such as a Tabs plugin. The file is closed and that plugin has not correctly
+            //   tidied up, so we have not been deleted.
+            this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not connected.');
+            return;
+        }
+
+        if (!this.containerEl.isShown()) {
+            // Example reasons why we might not be "shown":
+            // - We are in a collapsed callout.
+            // - We are in a note which is obscured by another note.
+            // - We are in a Tabs plugin, in a tab which is not at the front.
+            // - The user has not yet scrolled to this code block's position in the file.
+            this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not shown.');
+            return;
+        }
+
+        const shown = await this.renderResults(state, tasks, isCurrent);
+
+        // Unless another change arrived while rendering, our results are now up-to-date.
+        if (shown && !this.renderCoordinator.hasQueuedRequest) {
+            this.isCacheChangedSinceLastRedraw = false;
+        }
+    }
+
+    /**
+     * Build the new results off-screen, then swap them in, so partial or duplicate results are never shown.
+     * @returns true if the new results were shown.
+     */
+    private async renderResults(state: State, tasks: Task[], isCurrent: () => boolean): Promise<boolean> {
+        const component = new Component();
+        this.addChild(component);
+
+        const content = createDiv();
+        try {
+            await this.queryResultsRenderer.render(state, tasks, content, component);
+        } catch (error) {
+            this.removeChild(component);
+            throw error;
+        }
+
+        if (!isCurrent()) {
+            this.removeChild(component);
+            return false;
+        }
+
+        this.containerEl.replaceChildren(content);
+        if (this.shownResultsComponent !== null) {
+            this.removeChild(this.shownResultsComponent);
+        }
+        this.shownResultsComponent = component;
+        return true;
     }
 
     private rereadQueryFromFile() {
