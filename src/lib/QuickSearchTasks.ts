@@ -54,7 +54,7 @@ export function findTasksByDescriptionSubstring(tasks: readonly Task[], query: s
 
     const normalizedQuery = query.toLowerCase();
 
-    return rankMatchingIncompleteTasksByDescription(tasks, (description) =>
+    return rankMatchingTasksByDescription(tasks, (description) =>
         description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null,
     );
 }
@@ -64,7 +64,7 @@ export function findTasksByFuzzyDescription(tasks: readonly Task[], query: strin
         return [];
     }
 
-    return rankMatchingIncompleteTasksByDescription(tasks, prepareFuzzySearch(query));
+    return rankMatchingTasksByDescription(tasks, prepareFuzzySearch(query));
 }
 
 export function findTasksByDescription(tasks: readonly Task[], query: string): Task[] {
@@ -73,7 +73,7 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
         : findTasksByDescriptionSubstring(tasks, query);
 }
 
-export function rankMatchingIncompleteTasksByDescription(
+export function rankMatchingTasksByDescription(
     tasks: readonly Task[],
     matchDescription: TaskDescriptionMatcher,
 ): Task[] {

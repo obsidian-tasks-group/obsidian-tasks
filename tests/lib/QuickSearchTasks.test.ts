@@ -2,7 +2,7 @@ import moment from 'moment';
 import {
     findTasksByDescription,
     findTasksByDescriptionSubstring,
-    rankMatchingIncompleteTasksByDescription,
+    rankMatchingTasksByDescription,
 } from '../../src/lib/QuickSearchTasks';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -107,13 +107,10 @@ describe('Ranking description search matches', () => {
             [completedMatch.descriptionWithoutTags, 3],
         ]);
 
-        const results = rankMatchingIncompleteTasksByDescription(
-            [distantMatch, completedMatch, closeMatch],
-            (description) => {
-                const score = scores.get(description);
-                return score === undefined ? null : { score };
-            },
-        );
+        const results = rankMatchingTasksByDescription([distantMatch, completedMatch, closeMatch], (description) => {
+            const score = scores.get(description);
+            return score === undefined ? null : { score };
+        });
 
         expect(results).toEqual([closeMatch, distantMatch]);
     });
@@ -122,7 +119,7 @@ describe('Ranking description search matches', () => {
         const first = new TaskBuilder().description('A todo').build();
         const second = new TaskBuilder().description('B todo').build();
 
-        const results = rankMatchingIncompleteTasksByDescription([second, first], () => ({ score: 1 }));
+        const results = rankMatchingTasksByDescription([second, first], () => ({ score: 1 }));
 
         expect(results).toEqual([first, second]);
     });
