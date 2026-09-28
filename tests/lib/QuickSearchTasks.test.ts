@@ -1,7 +1,7 @@
 import moment from 'moment';
 import {
     findIncompleteTasksByDescription,
-    findIncompleteTasksByDescriptionSubstring,
+    findTasksByDescriptionSubstring,
     rankMatchingIncompleteTasksByDescription,
 } from '../../src/lib/QuickSearchTasks';
 import { Status } from '../../src/Statuses/Status';
@@ -69,19 +69,16 @@ describe('validate test data', () => {
 
 describe('Finding matching tasks', () => {
     it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
-        expect(findIncompleteTasksByDescriptionSubstring(tasks, 'release')).toEqual([
-            reviewRELEASEChecklist,
-            writeReleaseNotes,
-        ]);
+        expect(findTasksByDescriptionSubstring(tasks, 'release')).toEqual([reviewRELEASEChecklist, writeReleaseNotes]);
     });
 
     it('should not show results until the user enters a search query', () => {
-        expect(findIncompleteTasksByDescriptionSubstring(tasks, '')).toHaveLength(0);
-        expect(findIncompleteTasksByDescriptionSubstring(tasks, '   ')).toHaveLength(0);
+        expect(findTasksByDescriptionSubstring(tasks, '')).toHaveLength(0);
+        expect(findTasksByDescriptionSubstring(tasks, '   ')).toHaveLength(0);
     });
 
     it('should not match task tags', () => {
-        expect(findIncompleteTasksByDescriptionSubstring(tasks, '#release')).toEqual([]);
+        expect(findTasksByDescriptionSubstring(tasks, '#release')).toEqual([]);
     });
 });
 
@@ -197,9 +194,7 @@ describe('Finding matching tasks, honouring the Global Query', () => {
 
             const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-            const foundDescriptions = findIncompleteTasksByDescriptionSubstring(tasks, query).map(
-                (task) => task.description,
-            );
+            const foundDescriptions = findTasksByDescriptionSubstring(tasks, query).map((task) => task.description);
             expect(foundDescriptions).toEqual(expectedFoundDescriptions);
         },
     );
@@ -252,9 +247,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-        const foundDescriptions = findIncompleteTasksByDescriptionSubstring(tasks, query).map(
-            (task) => task.description,
-        );
+        const foundDescriptions = findTasksByDescriptionSubstring(tasks, query).map((task) => task.description);
         expect(foundDescriptions).toEqual(expectedFoundDescriptions);
     });
 
@@ -282,11 +275,11 @@ describe('Finding matching tasks, sorting results in expected order', () => {
 
             const query = tasks[0].description;
 
-            const result = findIncompleteTasksByDescriptionSubstring(tasks, query);
+            const result = findTasksByDescriptionSubstring(tasks, query);
             expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
-            const reverse = findIncompleteTasksByDescriptionSubstring(tasks.reverse(), query);
+            const reverse = findTasksByDescriptionSubstring(tasks.reverse(), query);
             expect(reverse.map(propertyGetter)).toEqual(expectedOrder);
         }
 

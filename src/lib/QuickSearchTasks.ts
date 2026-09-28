@@ -47,7 +47,7 @@ function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo
     }
 }
 
-export function findIncompleteTasksByDescriptionSubstring(tasks: readonly Task[], query: string): Task[] {
+export function findTasksByDescriptionSubstring(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
     }
@@ -70,7 +70,7 @@ export function findIncompleteTasksByFuzzyDescription(tasks: readonly Task[], qu
 export function findIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
     return getSettings().quickSearch.fuzzyMatching
         ? findIncompleteTasksByFuzzyDescription(tasks, query)
-        : findIncompleteTasksByDescriptionSubstring(tasks, query);
+        : findTasksByDescriptionSubstring(tasks, query);
 }
 
 export function rankMatchingIncompleteTasksByDescription(
