@@ -59,7 +59,7 @@ export function findTasksByDescriptionSubstring(tasks: readonly Task[], query: s
     );
 }
 
-export function findIncompleteTasksByFuzzyDescription(tasks: readonly Task[], query: string): Task[] {
+export function findTasksByFuzzyDescription(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
     }
@@ -69,7 +69,7 @@ export function findIncompleteTasksByFuzzyDescription(tasks: readonly Task[], qu
 
 export function findIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
     return getSettings().quickSearch.fuzzyMatching
-        ? findIncompleteTasksByFuzzyDescription(tasks, query)
+        ? findTasksByFuzzyDescription(tasks, query)
         : findTasksByDescriptionSubstring(tasks, query);
 }
 
