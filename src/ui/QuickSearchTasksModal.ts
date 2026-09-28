@@ -7,7 +7,7 @@ import { type App, Component, MarkdownRenderer, Notice, SuggestModal, setIcon } 
 import type { Task } from '../Task/Task';
 import { TASK_FORMATS, getSettings, updateSettings } from '../Config/Settings';
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
-import { findIncompleteTasksByDescription } from '../lib/QuickSearchTasks';
+import { findTasksByDescription } from '../lib/QuickSearchTasks';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { getTaskLineAndFile } from '../Obsidian/File';
 import { QuickSearchOptionsModal } from './QuickSearchOptionsModal';
@@ -111,7 +111,7 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
     }
 
     public getSuggestions(query: string): Task[] {
-        return findIncompleteTasksByDescription(this.getTasks(), query);
+        return findTasksByDescription(this.getTasks(), query);
     }
 
     public renderSuggestion(task: Task, el: HTMLElement): void {

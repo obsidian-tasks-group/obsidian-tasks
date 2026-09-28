@@ -67,7 +67,7 @@ export function findTasksByFuzzyDescription(tasks: readonly Task[], query: strin
     return rankMatchingIncompleteTasksByDescription(tasks, prepareFuzzySearch(query));
 }
 
-export function findIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
+export function findTasksByDescription(tasks: readonly Task[], query: string): Task[] {
     return getSettings().quickSearch.fuzzyMatching
         ? findTasksByFuzzyDescription(tasks, query)
         : findTasksByDescriptionSubstring(tasks, query);

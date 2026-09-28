@@ -1,6 +1,6 @@
 import moment from 'moment';
 import {
-    findIncompleteTasksByDescription,
+    findTasksByDescription,
     findTasksByDescriptionSubstring,
     rankMatchingIncompleteTasksByDescription,
 } from '../../src/lib/QuickSearchTasks';
@@ -92,7 +92,7 @@ describe('Choosing the Quick Search matching mode', () => {
         const task = new TaskBuilder().description('Todo task').build();
         updateSettings({ quickSearch: { fuzzyMatching } });
 
-        expect(findIncompleteTasksByDescription([task], query)).toHaveLength(expectedTaskCount);
+        expect(findTasksByDescription([task], query)).toHaveLength(expectedTaskCount);
     });
 });
 
