@@ -250,7 +250,7 @@ describe('sorting matched tasks', () => {
         }
 
         function expectSortsTasksInExpectedOrder(
-            tasks: Task[],
+            tasks: readonly Task[],
             expectedOrder: string[],
             propertyGetter: (task: Task) => string,
         ): void {
@@ -267,7 +267,7 @@ describe('sorting matched tasks', () => {
             expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
-            const reversedTasks = tasks.reverse();
+            const reversedTasks = [...tasks].reverse();
             const reversedResult = findTasksByDescriptionSubstring(reversedTasks, query);
             expect(reversedResult.map(propertyGetter)).toEqual(expectedOrder);
         }
