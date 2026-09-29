@@ -59,7 +59,7 @@ function findTasksByDescriptionSubstring(tasks: readonly Task[], query: string):
     );
 }
 
-export function findTasksByFuzzyDescription(tasks: readonly Task[], query: string): Task[] {
+function findTasksByFuzzyDescription(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
     }
