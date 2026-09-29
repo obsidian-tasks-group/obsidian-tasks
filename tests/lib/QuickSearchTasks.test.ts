@@ -41,7 +41,7 @@ const reviewADocument = new TaskBuilder()
     .build();
 
 // These are added in alphabetical order by description
-const tasks = [releaseCompleted, reviewRELEASEChecklist, reviewADocument, writeReleaseNotes];
+const tasks: readonly Task[] = [releaseCompleted, reviewRELEASEChecklist, reviewADocument, writeReleaseNotes];
 
 beforeEach(() => {
     jest.useFakeTimers();
