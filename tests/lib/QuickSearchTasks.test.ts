@@ -267,7 +267,8 @@ describe('sorting matched tasks', () => {
             expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
-            const reverse = findTasksByDescriptionSubstring(tasks.reverse(), query);
+            const reversedTasks = tasks.reverse();
+            const reverse = findTasksByDescriptionSubstring(reversedTasks, query);
             expect(reverse.map(propertyGetter)).toEqual(expectedOrder);
         }
 
