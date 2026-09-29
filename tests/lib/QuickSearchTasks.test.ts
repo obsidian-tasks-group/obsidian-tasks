@@ -268,8 +268,8 @@ describe('sorting matched tasks', () => {
 
             // Repeat the sort, with the tasks initially in reverse order
             const reversedTasks = tasks.reverse();
-            const reverse = findTasksByDescriptionSubstring(reversedTasks, query);
-            expect(reverse.map(propertyGetter)).toEqual(expectedOrder);
+            const reversedResult = findTasksByDescriptionSubstring(reversedTasks, query);
+            expect(reversedResult.map(propertyGetter)).toEqual(expectedOrder);
         }
 
         it('should sort IN_PROGRESS before TODO', () => {
