@@ -99,9 +99,8 @@ describe('description matching', () => {
         ['substring matching excludes a non-contiguous match', false, 'tdo', false],
     ])('%s', (_, fuzzyMatching: boolean, query: string, shouldMatch: boolean) => {
         const task = new TaskBuilder().description('Todo task').build();
-        updateSettings({ quickSearch: { fuzzyMatching } });
 
-        const result = findTasksByDescription([task], query);
+        const result = searchTasks([task], query, { fuzzyMatching });
 
         expect(result).toEqual(shouldMatch ? [task] : []);
     });
