@@ -1,16 +1,11 @@
 import moment from 'moment';
-import {
-    findIncompleteTasksByDescription,
-    findIncompleteTasksByDescriptionSubstring,
-    rankMatchingIncompleteTasksByDescription,
-} from '../../src/lib/QuickSearchTasks';
+import { findTasksByDescription } from '../../src/lib/QuickSearchTasks';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { fromLines } from '../TestingTools/TestHelpers';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import type { PresetsMap } from '../../src/Query/Presets/Presets';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { type QuickSearchSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import type { Task } from '../../src/Task/Task';
 
 window.moment = moment;
@@ -42,7 +37,7 @@ const reviewADocument = new TaskBuilder()
     .build();
 
 // These are added in alphabetical order by description
-const tasks = [releaseCompleted, reviewRELEASEChecklist, reviewADocument, writeReleaseNotes];
+const tasks: readonly Task[] = [releaseCompleted, reviewRELEASEChecklist, reviewADocument, writeReleaseNotes];
 
 beforeEach(() => {
     jest.useFakeTimers();
@@ -52,86 +47,66 @@ beforeEach(() => {
 afterEach(() => {
     jest.useRealTimers();
 
-    GlobalFilter.getInstance().reset();
-    GlobalFilter.getInstance().setRemoveGlobalFilter(false);
-
     GlobalQuery.getInstance().reset();
 
     resetSettings();
 });
 
-describe('validate test data', () => {
-    it('should have sample tasks be alphabetical by description, so that sorting can be tested separately', () => {
+function searchTasks(tasks: readonly Task[], query: string, quickSearch: QuickSearchSettings): Task[] {
+    updateSettings({
+        quickSearch,
+    });
+    return findTasksByDescription(tasks, query);
+}
+
+describe('test data', () => {
+    it('should keep the shared sample tasks alphabetical by description', () => {
         const descriptions = tasks.map((task) => task.description);
         expect(descriptions).toBeSorted();
     });
 });
 
-describe('Finding matching tasks', () => {
-    it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
-        expect(findIncompleteTasksByDescriptionSubstring(tasks, 'release')).toEqual([
+describe('search eligibility', () => {
+    it('should return only incomplete tasks', () => {
+        expect(searchTasks(tasks, 'release', { fuzzyMatching: false })).toEqual([
             reviewRELEASEChecklist,
             writeReleaseNotes,
         ]);
     });
 
     it('should not show results until the user enters a search query', () => {
-        expect(findIncompleteTasksByDescriptionSubstring(tasks, '')).toHaveLength(0);
-        expect(findIncompleteTasksByDescriptionSubstring(tasks, '   ')).toHaveLength(0);
+        expect(searchTasks(tasks, '', { fuzzyMatching: false })).toHaveLength(0);
+        expect(searchTasks(tasks, '   ', { fuzzyMatching: false })).toHaveLength(0);
+    });
+});
+
+describe('description matching', () => {
+    it('should match descriptions ignoring case', () => {
+        expect(searchTasks(tasks, 'release', { fuzzyMatching: false })).toEqual([
+            reviewRELEASEChecklist,
+            writeReleaseNotes,
+        ]);
     });
 
     it('should not match task tags', () => {
-        expect(findIncompleteTasksByDescriptionSubstring(tasks, '#release')).toEqual([]);
+        expect(searchTasks(tasks, '#release', { fuzzyMatching: false })).toEqual([]);
     });
-});
 
-describe('Choosing the Quick Search matching mode', () => {
     it.each([
-        ['fuzzy matching finds a non-contiguous match', true, 'tdo', 1],
-        ['fuzzy matching excludes a non-match', true, 'xyz', 0],
-        ['substring matching finds a contiguous match', false, 'todo', 1],
-        ['substring matching excludes a non-contiguous match', false, 'tdo', 0],
-    ])('%s', (_, fuzzyMatching: boolean, query: string, expectedTaskCount: number) => {
+        ['fuzzy matching finds a non-contiguous match', true, 'tdo', true],
+        ['fuzzy matching excludes a non-match', true, 'xyz', false],
+        ['substring matching finds a contiguous match', false, 'todo', true],
+        ['substring matching excludes a non-contiguous match', false, 'tdo', false],
+    ])('%s', (_, fuzzyMatching: boolean, query: string, shouldMatch: boolean) => {
         const task = new TaskBuilder().description('Todo task').build();
-        updateSettings({ quickSearch: { fuzzyMatching } });
 
-        expect(findIncompleteTasksByDescription([task], query)).toHaveLength(expectedTaskCount);
+        const result = searchTasks([task], query, { fuzzyMatching });
+
+        expect(result).toEqual(shouldMatch ? [task] : []);
     });
 });
 
-describe('Ranking description search matches', () => {
-    it('should rank matched incomplete tasks by score', () => {
-        const closeMatch = new TaskBuilder().description('Todo task').build();
-        const distantMatch = new TaskBuilder().description('Take documents out').build();
-        const completedMatch = new TaskBuilder().description('Done task').status(Status.DONE).build();
-        const scores = new Map([
-            [closeMatch.descriptionWithoutTags, 2],
-            [distantMatch.descriptionWithoutTags, 1],
-            [completedMatch.descriptionWithoutTags, 3],
-        ]);
-
-        const results = rankMatchingIncompleteTasksByDescription(
-            [distantMatch, completedMatch, closeMatch],
-            (description) => {
-                const score = scores.get(description);
-                return score === undefined ? null : { score };
-            },
-        );
-
-        expect(results).toEqual([closeMatch, distantMatch]);
-    });
-
-    it('should use the normal Tasks order when scores are equal', () => {
-        const first = new TaskBuilder().description('A todo').build();
-        const second = new TaskBuilder().description('B todo').build();
-
-        const results = rankMatchingIncompleteTasksByDescription([second, first], () => ({ score: 1 }));
-
-        expect(results).toEqual([first, second]);
-    });
-});
-
-describe('Finding matching tasks, honouring the Global Query', () => {
+describe('Global Query integration', () => {
     type GlobalQueryTestCase = [
         testName: string,
         query: string,
@@ -197,7 +172,7 @@ describe('Finding matching tasks, honouring the Global Query', () => {
 
             const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-            const foundDescriptions = findIncompleteTasksByDescriptionSubstring(tasks, query).map(
+            const foundDescriptions = searchTasks(tasks, query, { fuzzyMatching: false }).map(
                 (task) => task.description,
             );
             expect(foundDescriptions).toEqual(expectedFoundDescriptions);
@@ -205,15 +180,26 @@ describe('Finding matching tasks, honouring the Global Query', () => {
     );
 });
 
-describe('Finding matching tasks, sorting results in expected order', () => {
-    type DescriptionSortingTestCase = [
-        testName: string,
-        query: string,
-        descriptions: string[],
-        expectedFoundDescriptions: string[],
-    ];
+describe('sorting matched tasks', () => {
+    it('should rank fuzzy matches by score', () => {
+        const closeMatch = new TaskBuilder().description('Todo task').build();
+        const distantMatch = new TaskBuilder().description('Take documents out').build();
 
-    it.each<DescriptionSortingTestCase>([
+        const results = searchTasks([distantMatch, closeMatch], 'tdo', { fuzzyMatching: true });
+
+        expect(results).toEqual([closeMatch, distantMatch]);
+    });
+
+    it('should use the normal Tasks order when matches compare equally', () => {
+        const first = new TaskBuilder().description('A todo').build();
+        const second = new TaskBuilder().description('B todo').build();
+
+        const results = searchTasks([second, first], 'todo', { fuzzyMatching: false });
+
+        expect(results).toEqual([first, second]);
+    });
+
+    it.each([
         [
             // Force line break
             'should preserve original order, if already sorted',
@@ -252,9 +238,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-        const foundDescriptions = findIncompleteTasksByDescriptionSubstring(tasks, query).map(
-            (task) => task.description,
-        );
+        const foundDescriptions = searchTasks(tasks, query, { fuzzyMatching: false }).map((task) => task.description);
         expect(foundDescriptions).toEqual(expectedFoundDescriptions);
     });
 
@@ -269,7 +253,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
         }
 
         function expectSortsTasksInExpectedOrder(
-            tasks: Task[],
+            tasks: readonly Task[],
             expectedOrder: string[],
             propertyGetter: (task: Task) => string,
         ): void {
@@ -282,12 +266,13 @@ describe('Finding matching tasks, sorting results in expected order', () => {
 
             const query = tasks[0].description;
 
-            const result = findIncompleteTasksByDescriptionSubstring(tasks, query);
+            const result = searchTasks(tasks, query, { fuzzyMatching: false });
             expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
-            const reverse = findIncompleteTasksByDescriptionSubstring(tasks.reverse(), query);
-            expect(reverse.map(propertyGetter)).toEqual(expectedOrder);
+            const reversedTasks = [...tasks].reverse();
+            const reversedResult = searchTasks(reversedTasks, query, { fuzzyMatching: false });
+            expect(reversedResult.map(propertyGetter)).toEqual(expectedOrder);
         }
 
         it('should sort IN_PROGRESS before TODO', () => {
@@ -298,7 +283,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             );
         });
 
-        it('should earlier Due date first', () => {
+        it('should sort earlier due date first', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description 📅 2026-03-27', '- [ ] same description 📅 2026-01-07'],
                 ['- [ ] same description 📅 2026-01-07', '- [ ] same description 📅 2026-03-27'],
@@ -306,7 +291,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             );
         });
 
-        it('should higher priority first', () => {
+        it('should sort higher priority first', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description ⏫', '- [ ] same description 🔺'],
                 ['- [ ] same description 🔺', '- [ ] same description ⏫'],

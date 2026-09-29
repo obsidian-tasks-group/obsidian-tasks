@@ -19,6 +19,28 @@ interface TaskDescriptionMatch {
 
 type TaskDescriptionMatcher = (description: string) => TaskDescriptionMatch | null;
 
+/**
+ * Finds and returns tasks that match a given description query.
+ *
+ * The actual search behaviour depends on the global values of these settings:
+ * - Settings.quickSearch
+ * - Settings.globalQuery
+ * - Settings.presets
+ *
+ * @param {readonly Task[]} tasks - A list of tasks to be searched.
+ * @param {string} query - The description query to search for within the tasks.
+ * @return {Task[]} An array of tasks that match the given query, sorted accordingly.
+ */
+export function findTasksByDescription(tasks: readonly Task[], query: string): Task[] {
+    return getSettings().quickSearch.fuzzyMatching
+        ? findTasksByFuzzyDescription(tasks, query)
+        : findTasksByDescriptionSubstring(tasks, query);
+}
+
+// -----------------------------------------------------------------------
+// Helper functions for filtering on the user's GlobalQuery setting.
+// -----------------------------------------------------------------------
+
 function getGlobalQueryFilters(): Filter[] {
     // The placeholder presents mechanism results in an exception being thrown
     // if we do not provide a location for the query source file,
@@ -47,36 +69,35 @@ function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo
     }
 }
 
-export function findIncompleteTasksByDescriptionSubstring(tasks: readonly Task[], query: string): Task[] {
+// -----------------------------------------------------------------------
+// Helper functions for filtering on the query string.
+// -----------------------------------------------------------------------
+
+function findTasksByDescriptionSubstring(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
     }
 
     const normalizedQuery = query.toLowerCase();
 
-    return rankMatchingIncompleteTasksByDescription(tasks, (description) =>
+    return rankMatchingTasksByDescription(tasks, (description) =>
         description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null,
     );
 }
 
-export function findIncompleteTasksByFuzzyDescription(tasks: readonly Task[], query: string): Task[] {
+function findTasksByFuzzyDescription(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
     }
 
-    return rankMatchingIncompleteTasksByDescription(tasks, prepareFuzzySearch(query));
+    return rankMatchingTasksByDescription(tasks, prepareFuzzySearch(query));
 }
 
-export function findIncompleteTasksByDescription(tasks: readonly Task[], query: string): Task[] {
-    return getSettings().quickSearch.fuzzyMatching
-        ? findIncompleteTasksByFuzzyDescription(tasks, query)
-        : findIncompleteTasksByDescriptionSubstring(tasks, query);
-}
+// -----------------------------------------------------------------------
+// Helper functions for sorting the candidate tasks.
+// -----------------------------------------------------------------------
 
-export function rankMatchingIncompleteTasksByDescription(
-    tasks: readonly Task[],
-    matchDescription: TaskDescriptionMatcher,
-): Task[] {
+function rankMatchingTasksByDescription(tasks: readonly Task[], matchDescription: TaskDescriptionMatcher): Task[] {
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
