@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { findTasksByDescription, rankMatchingTasksByDescription } from '../../src/lib/QuickSearchTasks';
+import { findTasksByDescription } from '../../src/lib/QuickSearchTasks';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLines } from '../TestingTools/TestHelpers';
@@ -183,17 +183,8 @@ describe('sorting matched tasks', () => {
     it('should rank fuzzy matches by score', () => {
         const closeMatch = new TaskBuilder().description('Todo task').build();
         const distantMatch = new TaskBuilder().description('Take documents out').build();
-        const completedMatch = new TaskBuilder().description('Done task').status(Status.DONE).build();
-        const scores = new Map([
-            [closeMatch.descriptionWithoutTags, 2],
-            [distantMatch.descriptionWithoutTags, 1],
-            [completedMatch.descriptionWithoutTags, 3],
-        ]);
 
-        const results = rankMatchingTasksByDescription([distantMatch, completedMatch, closeMatch], (description) => {
-            const score = scores.get(description);
-            return score === undefined ? null : { score };
-        });
+        const results = searchTasks([distantMatch, closeMatch], 'tdo', { fuzzyMatching: true });
 
         expect(results).toEqual([closeMatch, distantMatch]);
     });
@@ -202,7 +193,7 @@ describe('sorting matched tasks', () => {
         const first = new TaskBuilder().description('A todo').build();
         const second = new TaskBuilder().description('B todo').build();
 
-        const results = rankMatchingTasksByDescription([second, first], () => ({ score: 1 }));
+        const results = searchTasks([second, first], 'todo', { fuzzyMatching: false });
 
         expect(results).toEqual([first, second]);
     });
