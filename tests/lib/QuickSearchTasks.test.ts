@@ -72,13 +72,17 @@ describe('search eligibility', () => {
         expect(findTasksByDescriptionSubstring(tasks, '')).toHaveLength(0);
         expect(findTasksByDescriptionSubstring(tasks, '   ')).toHaveLength(0);
     });
+});
+
+describe('description matching', () => {
+    it('should match descriptions ignoring case', () => {
+        expect(findTasksByDescriptionSubstring(tasks, 'release')).toEqual([reviewRELEASEChecklist, writeReleaseNotes]);
+    });
 
     it('should not match task tags', () => {
         expect(findTasksByDescriptionSubstring(tasks, '#release')).toEqual([]);
     });
-});
 
-describe('Choosing the Quick Search matching mode', () => {
     it.each([
         ['fuzzy matching finds a non-contiguous match', true, 'tdo', 1],
         ['fuzzy matching excludes a non-match', true, 'xyz', 0],
