@@ -54,7 +54,7 @@ afterEach(() => {
 
 function searchTasks(tasks: readonly Task[], query: string, quickSearch: QuickSearchSettings): Task[] {
     updateSettings({
-        quickSearch: quickSearch,
+        quickSearch,
     });
     return findTasksByDescription(tasks, query);
 }
