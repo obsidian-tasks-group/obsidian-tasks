@@ -19,6 +19,16 @@ interface TaskDescriptionMatch {
 
 type TaskDescriptionMatcher = (description: string) => TaskDescriptionMatch | null;
 
+export function findTasksByDescription(tasks: readonly Task[], query: string): Task[] {
+    return getSettings().quickSearch.fuzzyMatching
+        ? findTasksByFuzzyDescription(tasks, query)
+        : findTasksByDescriptionSubstring(tasks, query);
+}
+
+// -----------------------------------------------------------------------
+// Helper functions for filtering on the user's GlobalQuery setting.
+// -----------------------------------------------------------------------
+
 function getGlobalQueryFilters(): Filter[] {
     // The placeholder presents mechanism results in an exception being thrown
     // if we do not provide a location for the query source file,
@@ -47,6 +57,10 @@ function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo
     }
 }
 
+// -----------------------------------------------------------------------
+// Helper functions for filtering on the query string.
+// -----------------------------------------------------------------------
+
 function findTasksByDescriptionSubstring(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
@@ -67,11 +81,9 @@ function findTasksByFuzzyDescription(tasks: readonly Task[], query: string): Tas
     return rankMatchingTasksByDescription(tasks, prepareFuzzySearch(query));
 }
 
-export function findTasksByDescription(tasks: readonly Task[], query: string): Task[] {
-    return getSettings().quickSearch.fuzzyMatching
-        ? findTasksByFuzzyDescription(tasks, query)
-        : findTasksByDescriptionSubstring(tasks, query);
-}
+// -----------------------------------------------------------------------
+// Helper functions for sorting the candidate tasks.
+// -----------------------------------------------------------------------
 
 function rankMatchingTasksByDescription(tasks: readonly Task[], matchDescription: TaskDescriptionMatcher): Task[] {
     // Many users will have defined a Global Query in their Tasks settings,
