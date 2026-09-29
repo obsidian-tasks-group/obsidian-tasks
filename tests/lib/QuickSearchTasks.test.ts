@@ -56,6 +56,10 @@ afterEach(() => {
     resetSettings();
 });
 
+function searchTasks(tasks: readonly Task[], query: string): Task[] {
+    return findTasksByDescriptionSubstring(tasks, query);
+}
+
 describe('test data', () => {
     it('should keep the shared sample tasks alphabetical by description', () => {
         const descriptions = tasks.map((task) => task.description);
@@ -69,7 +73,7 @@ describe('search eligibility', () => {
     });
 
     it('should not show results until the user enters a search query', () => {
-        expect(findTasksByDescriptionSubstring(tasks, '')).toHaveLength(0);
+        expect(searchTasks(tasks, '')).toHaveLength(0);
         expect(findTasksByDescriptionSubstring(tasks, '   ')).toHaveLength(0);
     });
 });
