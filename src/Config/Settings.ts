@@ -63,6 +63,10 @@ export const TASK_FORMATS = {
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
+export type QuickSearchSettings = {
+    fuzzyMatching: boolean;
+};
+
 export interface Settings {
     presets: PresetsMap;
     globalQuery: string;
@@ -84,9 +88,7 @@ export interface Settings {
     searchResults: {
         taskCountLocation: 'top' | 'bottom';
     };
-    quickSearch: {
-        fuzzyMatching: boolean;
-    };
+    quickSearch: QuickSearchSettings;
 
     // The custom status states.
     statusSettings: StatusSettings;
