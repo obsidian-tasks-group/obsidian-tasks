@@ -73,10 +73,7 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
         : findTasksByDescriptionSubstring(tasks, query);
 }
 
-export function rankMatchingTasksByDescription(
-    tasks: readonly Task[],
-    matchDescription: TaskDescriptionMatcher,
-): Task[] {
+function rankMatchingTasksByDescription(tasks: readonly Task[], matchDescription: TaskDescriptionMatcher): Task[] {
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
