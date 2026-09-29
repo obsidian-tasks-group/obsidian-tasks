@@ -169,7 +169,7 @@ describe('Global Query integration', () => {
 });
 
 describe('sorting matched tasks', () => {
-    it('should rank matched incomplete tasks by score', () => {
+    it('should rank fuzzy matches by score', () => {
         const closeMatch = new TaskBuilder().description('Todo task').build();
         const distantMatch = new TaskBuilder().description('Take documents out').build();
         const completedMatch = new TaskBuilder().description('Done task').status(Status.DONE).build();
@@ -187,7 +187,7 @@ describe('sorting matched tasks', () => {
         expect(results).toEqual([closeMatch, distantMatch]);
     });
 
-    it('should use the normal Tasks order when scores are equal', () => {
+    it('should use the normal Tasks order when matches compare equally', () => {
         const first = new TaskBuilder().description('A todo').build();
         const second = new TaskBuilder().description('B todo').build();
 
@@ -196,14 +196,7 @@ describe('sorting matched tasks', () => {
         expect(results).toEqual([first, second]);
     });
 
-    type DescriptionSortingTestCase = [
-        testName: string,
-        query: string,
-        descriptions: string[],
-        expectedFoundDescriptions: string[],
-    ];
-
-    it.each<DescriptionSortingTestCase>([
+    it.each([
         [
             // Force line break
             'should preserve original order, if already sorted',
