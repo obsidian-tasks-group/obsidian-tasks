@@ -5,7 +5,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLines } from '../TestingTools/TestHelpers';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import type { PresetsMap } from '../../src/Query/Presets/Presets';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { type QuickSearchSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import type { Task } from '../../src/Task/Task';
 
 window.moment = moment;
@@ -52,9 +52,9 @@ afterEach(() => {
     resetSettings();
 });
 
-function searchTasks(tasks: readonly Task[], query: string): Task[] {
+function searchTasks(tasks: readonly Task[], query: string, quickSearch: QuickSearchSettings): Task[] {
     updateSettings({
-        quickSearch: { fuzzyMatching: false },
+        quickSearch: quickSearch,
     });
     return findTasksByDescription(tasks, query);
 }
@@ -68,22 +68,28 @@ describe('test data', () => {
 
 describe('search eligibility', () => {
     it('should return only incomplete tasks', () => {
-        expect(searchTasks(tasks, 'release')).toEqual([reviewRELEASEChecklist, writeReleaseNotes]);
+        expect(searchTasks(tasks, 'release', { fuzzyMatching: false })).toEqual([
+            reviewRELEASEChecklist,
+            writeReleaseNotes,
+        ]);
     });
 
     it('should not show results until the user enters a search query', () => {
-        expect(searchTasks(tasks, '')).toHaveLength(0);
-        expect(searchTasks(tasks, '   ')).toHaveLength(0);
+        expect(searchTasks(tasks, '', { fuzzyMatching: false })).toHaveLength(0);
+        expect(searchTasks(tasks, '   ', { fuzzyMatching: false })).toHaveLength(0);
     });
 });
 
 describe('description matching', () => {
     it('should match descriptions ignoring case', () => {
-        expect(searchTasks(tasks, 'release')).toEqual([reviewRELEASEChecklist, writeReleaseNotes]);
+        expect(searchTasks(tasks, 'release', { fuzzyMatching: false })).toEqual([
+            reviewRELEASEChecklist,
+            writeReleaseNotes,
+        ]);
     });
 
     it('should not match task tags', () => {
-        expect(searchTasks(tasks, '#release')).toEqual([]);
+        expect(searchTasks(tasks, '#release', { fuzzyMatching: false })).toEqual([]);
     });
 
     it.each([
@@ -165,7 +171,9 @@ describe('Global Query integration', () => {
 
             const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-            const foundDescriptions = searchTasks(tasks, query).map((task) => task.description);
+            const foundDescriptions = searchTasks(tasks, query, { fuzzyMatching: false }).map(
+                (task) => task.description,
+            );
             expect(foundDescriptions).toEqual(expectedFoundDescriptions);
         },
     );
@@ -238,7 +246,7 @@ describe('sorting matched tasks', () => {
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-        const foundDescriptions = searchTasks(tasks, query).map((task) => task.description);
+        const foundDescriptions = searchTasks(tasks, query, { fuzzyMatching: false }).map((task) => task.description);
         expect(foundDescriptions).toEqual(expectedFoundDescriptions);
     });
 
@@ -266,12 +274,12 @@ describe('sorting matched tasks', () => {
 
             const query = tasks[0].description;
 
-            const result = searchTasks(tasks, query);
+            const result = searchTasks(tasks, query, { fuzzyMatching: false });
             expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
             const reversedTasks = [...tasks].reverse();
-            const reversedResult = searchTasks(reversedTasks, query);
+            const reversedResult = searchTasks(reversedTasks, query, { fuzzyMatching: false });
             expect(reversedResult.map(propertyGetter)).toEqual(expectedOrder);
         }
 
