@@ -69,22 +69,22 @@ describe('test data', () => {
 
 describe('search eligibility', () => {
     it('should return only incomplete tasks', () => {
-        expect(findTasksByDescriptionSubstring(tasks, 'release')).toEqual([reviewRELEASEChecklist, writeReleaseNotes]);
+        expect(searchTasks(tasks, 'release')).toEqual([reviewRELEASEChecklist, writeReleaseNotes]);
     });
 
     it('should not show results until the user enters a search query', () => {
         expect(searchTasks(tasks, '')).toHaveLength(0);
-        expect(findTasksByDescriptionSubstring(tasks, '   ')).toHaveLength(0);
+        expect(searchTasks(tasks, '   ')).toHaveLength(0);
     });
 });
 
 describe('description matching', () => {
     it('should match descriptions ignoring case', () => {
-        expect(findTasksByDescriptionSubstring(tasks, 'release')).toEqual([reviewRELEASEChecklist, writeReleaseNotes]);
+        expect(searchTasks(tasks, 'release')).toEqual([reviewRELEASEChecklist, writeReleaseNotes]);
     });
 
     it('should not match task tags', () => {
-        expect(findTasksByDescriptionSubstring(tasks, '#release')).toEqual([]);
+        expect(searchTasks(tasks, '#release')).toEqual([]);
     });
 
     it.each([
@@ -166,7 +166,7 @@ describe('Global Query integration', () => {
 
             const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-            const foundDescriptions = findTasksByDescriptionSubstring(tasks, query).map((task) => task.description);
+            const foundDescriptions = searchTasks(tasks, query).map((task) => task.description);
             expect(foundDescriptions).toEqual(expectedFoundDescriptions);
         },
     );
@@ -239,7 +239,7 @@ describe('sorting matched tasks', () => {
     ])('%s', (_, query: string, descriptions: string[], expectedFoundDescriptions: string[]) => {
         const tasks = descriptions.map((description) => new TaskBuilder().description(description).build());
 
-        const foundDescriptions = findTasksByDescriptionSubstring(tasks, query).map((task) => task.description);
+        const foundDescriptions = searchTasks(tasks, query).map((task) => task.description);
         expect(foundDescriptions).toEqual(expectedFoundDescriptions);
     });
 
@@ -267,12 +267,12 @@ describe('sorting matched tasks', () => {
 
             const query = tasks[0].description;
 
-            const result = findTasksByDescriptionSubstring(tasks, query);
+            const result = searchTasks(tasks, query);
             expect(result.map(propertyGetter)).toEqual(expectedOrder);
 
             // Repeat the sort, with the tasks initially in reverse order
             const reversedTasks = [...tasks].reverse();
-            const reversedResult = findTasksByDescriptionSubstring(reversedTasks, query);
+            const reversedResult = searchTasks(reversedTasks, query);
             expect(reversedResult.map(propertyGetter)).toEqual(expectedOrder);
         }
 
