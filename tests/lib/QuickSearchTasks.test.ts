@@ -1,9 +1,5 @@
 import moment from 'moment';
-import {
-    findTasksByDescription,
-    findTasksByDescriptionSubstring,
-    rankMatchingTasksByDescription,
-} from '../../src/lib/QuickSearchTasks';
+import { findTasksByDescription, rankMatchingTasksByDescription } from '../../src/lib/QuickSearchTasks';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLines } from '../TestingTools/TestHelpers';
@@ -57,7 +53,10 @@ afterEach(() => {
 });
 
 function searchTasks(tasks: readonly Task[], query: string): Task[] {
-    return findTasksByDescriptionSubstring(tasks, query);
+    updateSettings({
+        quickSearch: { fuzzyMatching: false },
+    });
+    return findTasksByDescription(tasks, query);
 }
 
 describe('test data', () => {
