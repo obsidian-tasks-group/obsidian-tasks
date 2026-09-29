@@ -96,35 +96,6 @@ describe('description matching', () => {
     });
 });
 
-describe('Ranking description search matches', () => {
-    it('should rank matched incomplete tasks by score', () => {
-        const closeMatch = new TaskBuilder().description('Todo task').build();
-        const distantMatch = new TaskBuilder().description('Take documents out').build();
-        const completedMatch = new TaskBuilder().description('Done task').status(Status.DONE).build();
-        const scores = new Map([
-            [closeMatch.descriptionWithoutTags, 2],
-            [distantMatch.descriptionWithoutTags, 1],
-            [completedMatch.descriptionWithoutTags, 3],
-        ]);
-
-        const results = rankMatchingTasksByDescription([distantMatch, completedMatch, closeMatch], (description) => {
-            const score = scores.get(description);
-            return score === undefined ? null : { score };
-        });
-
-        expect(results).toEqual([closeMatch, distantMatch]);
-    });
-
-    it('should use the normal Tasks order when scores are equal', () => {
-        const first = new TaskBuilder().description('A todo').build();
-        const second = new TaskBuilder().description('B todo').build();
-
-        const results = rankMatchingTasksByDescription([second, first], () => ({ score: 1 }));
-
-        expect(results).toEqual([first, second]);
-    });
-});
-
 describe('Global Query integration', () => {
     type GlobalQueryTestCase = [
         testName: string,
@@ -198,6 +169,33 @@ describe('Global Query integration', () => {
 });
 
 describe('sorting matched tasks', () => {
+    it('should rank matched incomplete tasks by score', () => {
+        const closeMatch = new TaskBuilder().description('Todo task').build();
+        const distantMatch = new TaskBuilder().description('Take documents out').build();
+        const completedMatch = new TaskBuilder().description('Done task').status(Status.DONE).build();
+        const scores = new Map([
+            [closeMatch.descriptionWithoutTags, 2],
+            [distantMatch.descriptionWithoutTags, 1],
+            [completedMatch.descriptionWithoutTags, 3],
+        ]);
+
+        const results = rankMatchingTasksByDescription([distantMatch, completedMatch, closeMatch], (description) => {
+            const score = scores.get(description);
+            return score === undefined ? null : { score };
+        });
+
+        expect(results).toEqual([closeMatch, distantMatch]);
+    });
+
+    it('should use the normal Tasks order when scores are equal', () => {
+        const first = new TaskBuilder().description('A todo').build();
+        const second = new TaskBuilder().description('B todo').build();
+
+        const results = rankMatchingTasksByDescription([second, first], () => ({ score: 1 }));
+
+        expect(results).toEqual([first, second]);
+    });
+
     type DescriptionSortingTestCase = [
         testName: string,
         query: string,
