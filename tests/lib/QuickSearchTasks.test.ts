@@ -56,15 +56,15 @@ afterEach(() => {
     resetSettings();
 });
 
-describe('validate test data', () => {
-    it('should have sample tasks be alphabetical by description, so that sorting can be tested separately', () => {
+describe('test data', () => {
+    it('should keep the shared sample tasks alphabetical by description', () => {
         const descriptions = tasks.map((task) => task.description);
         expect(descriptions).toBeSorted();
     });
 });
 
-describe('Finding matching tasks', () => {
-    it('should return only incomplete tasks whose descriptions contain the query, ignoring case', () => {
+describe('search eligibility', () => {
+    it('should return only incomplete tasks', () => {
         expect(findTasksByDescriptionSubstring(tasks, 'release')).toEqual([reviewRELEASEChecklist, writeReleaseNotes]);
     });
 
@@ -121,7 +121,7 @@ describe('Ranking description search matches', () => {
     });
 });
 
-describe('Finding matching tasks, honouring the Global Query', () => {
+describe('Global Query integration', () => {
     type GlobalQueryTestCase = [
         testName: string,
         query: string,
@@ -193,7 +193,7 @@ describe('Finding matching tasks, honouring the Global Query', () => {
     );
 });
 
-describe('Finding matching tasks, sorting results in expected order', () => {
+describe('sorting matched tasks', () => {
     type DescriptionSortingTestCase = [
         testName: string,
         query: string,
@@ -284,7 +284,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             );
         });
 
-        it('should earlier Due date first', () => {
+        it('should sort earlier due date first', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description 📅 2026-03-27', '- [ ] same description 📅 2026-01-07'],
                 ['- [ ] same description 📅 2026-01-07', '- [ ] same description 📅 2026-03-27'],
@@ -292,7 +292,7 @@ describe('Finding matching tasks, sorting results in expected order', () => {
             );
         });
 
-        it('should higher priority first', () => {
+        it('should sort higher priority first', () => {
             expectSortsInExpectedOrder(
                 ['- [ ] same description ⏫', '- [ ] same description 🔺'],
                 ['- [ ] same description 🔺', '- [ ] same description ⏫'],
