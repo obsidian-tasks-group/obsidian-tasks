@@ -101,7 +101,9 @@ describe('description matching', () => {
         const task = new TaskBuilder().description('Todo task').build();
         updateSettings({ quickSearch: { fuzzyMatching } });
 
-        expect(findTasksByDescription([task], query)).toEqual(shouldMatch ? [task] : []);
+        const result = findTasksByDescription([task], query);
+
+        expect(result).toEqual(shouldMatch ? [task] : []);
     });
 });
 
