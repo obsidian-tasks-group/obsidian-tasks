@@ -47,7 +47,7 @@ function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo
     }
 }
 
-export function findTasksByDescriptionSubstring(tasks: readonly Task[], query: string): Task[] {
+function findTasksByDescriptionSubstring(tasks: readonly Task[], query: string): Task[] {
     if (query.trim() === '') {
         return [];
     }
