@@ -6,7 +6,6 @@ import {
 } from '../../src/lib/QuickSearchTasks';
 import { Status } from '../../src/Statuses/Status';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { fromLines } from '../TestingTools/TestHelpers';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import type { PresetsMap } from '../../src/Query/Presets/Presets';
@@ -51,9 +50,6 @@ beforeEach(() => {
 
 afterEach(() => {
     jest.useRealTimers();
-
-    GlobalFilter.getInstance().reset();
-    GlobalFilter.getInstance().setRemoveGlobalFilter(false);
 
     GlobalQuery.getInstance().reset();
 
