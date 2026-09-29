@@ -19,6 +19,18 @@ interface TaskDescriptionMatch {
 
 type TaskDescriptionMatcher = (description: string) => TaskDescriptionMatch | null;
 
+/**
+ * Finds and returns tasks that match a given description query.
+ *
+ * The actual search behaviour depends on the global values of these settings:
+ * - Settings.quickSearch
+ * - Settings.globalQuery
+ * - Settings.presets
+ *
+ * @param {readonly Task[]} tasks - A list of tasks to be searched.
+ * @param {string} query - The description query to search for within the tasks.
+ * @return {Task[]} An array of tasks that match the given query, sorted accordingly.
+ */
 export function findTasksByDescription(tasks: readonly Task[], query: string): Task[] {
     return getSettings().quickSearch.fuzzyMatching
         ? findTasksByFuzzyDescription(tasks, query)
