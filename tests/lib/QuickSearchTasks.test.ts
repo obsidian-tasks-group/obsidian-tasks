@@ -84,15 +84,15 @@ describe('description matching', () => {
     });
 
     it.each([
-        ['fuzzy matching finds a non-contiguous match', true, 'tdo', 1],
-        ['fuzzy matching excludes a non-match', true, 'xyz', 0],
-        ['substring matching finds a contiguous match', false, 'todo', 1],
-        ['substring matching excludes a non-contiguous match', false, 'tdo', 0],
-    ])('%s', (_, fuzzyMatching: boolean, query: string, expectedTaskCount: number) => {
+        ['fuzzy matching finds a non-contiguous match', true, 'tdo', true],
+        ['fuzzy matching excludes a non-match', true, 'xyz', false],
+        ['substring matching finds a contiguous match', false, 'todo', true],
+        ['substring matching excludes a non-contiguous match', false, 'tdo', false],
+    ])('%s', (_, fuzzyMatching: boolean, query: string, shouldMatch: boolean) => {
         const task = new TaskBuilder().description('Todo task').build();
         updateSettings({ quickSearch: { fuzzyMatching } });
 
-        expect(findTasksByDescription([task], query)).toHaveLength(expectedTaskCount);
+        expect(findTasksByDescription([task], query)).toEqual(shouldMatch ? [task] : []);
     });
 });
 
