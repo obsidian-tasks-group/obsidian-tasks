@@ -35,12 +35,12 @@ describe('done date', () => {
 
 describe('explain done date queries', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2022-01-15'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2022-01-15'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it('should explain date before', () => {

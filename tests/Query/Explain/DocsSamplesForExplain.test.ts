@@ -17,12 +17,12 @@ function checkExplainPresentAndVerify(blockQuery: string) {
 
 describe('explain', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2022-10-21'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2022-10-21'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     afterEach(resetSettings);

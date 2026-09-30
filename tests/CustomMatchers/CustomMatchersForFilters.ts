@@ -61,46 +61,18 @@ import { SearchInfo } from '../../src/Query/SearchInfo';
         to write imports, and complex 'expect.extend(...)' lines.
         Thank you.
  */
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toBeValid(): R;
-            toHaveExplanation(expectedExplanation: string): R;
-            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): R;
-            toMatchTaskInTaskList(task: Task, allTasks: Task[]): R;
-            toMatchTask(task: Task): R;
-            toMatchTaskFromLine(line: string): R;
-            toMatchTaskWithDescription(description: string): R;
-            toMatchTaskWithHeading(heading: string | null): R;
-            toMatchTaskWithPath(path: string): R;
-            toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): R;
-        }
-
-        interface Expect {
-            toBeValid(): any;
-            toHaveExplanation(expectedExplanation: string): any;
-            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
-            toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
-            toMatchTask(task: Task): any;
-            toMatchTaskFromLine(line: string): any;
-            toMatchTaskWithDescription(description: string): any;
-            toMatchTaskWithHeading(heading: string | null): any;
-            toMatchTaskWithPath(path: string): any;
-            toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): any;
-        }
-
-        interface InverseAsymmetricMatchers {
-            toBeValid(): any;
-            toHaveExplanation(expectedExplanation: string): any;
-            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
-            toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
-            toMatchTask(task: Task): any;
-            toMatchTaskFromLine(line: string): any;
-            toMatchTaskWithDescription(description: string): any;
-            toMatchTaskWithHeading(heading: string | null): any;
-            toMatchTaskWithPath(path: string): any;
-            toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): any;
-        }
+declare module 'vitest' {
+    interface Matchers<R> {
+        toBeValid(): R;
+        toHaveExplanation(expectedExplanation: string): R;
+        toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): R;
+        toMatchTaskInTaskList(task: Task, allTasks: Task[]): R;
+        toMatchTask(task: Task): R;
+        toMatchTaskFromLine(line: string): R;
+        toMatchTaskWithDescription(description: string): R;
+        toMatchTaskWithHeading(heading: string | null): R;
+        toMatchTaskWithPath(path: string): R;
+        toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): R;
     }
 }
 
@@ -198,7 +170,7 @@ export function toMatchTaskWithDescription(filter: FilterOrErrorMessage, descrip
     return toMatchTask(filter, task);
 }
 
-export function toMatchTaskWithHeading(filter: FilterOrErrorMessage, heading: string) {
+export function toMatchTaskWithHeading(filter: FilterOrErrorMessage, heading: string | null) {
     const builder = new TaskBuilder();
     const task = builder.precedingHeader(heading).build();
     return toMatchTask(filter, task);

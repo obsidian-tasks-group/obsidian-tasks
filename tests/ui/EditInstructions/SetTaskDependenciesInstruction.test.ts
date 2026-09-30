@@ -89,7 +89,7 @@ describe('Edit dependencies', () => {
         // @ts-expect-error Unused variable
         const allTasks = createTasks(markdown);
 
-        it.failing('should remove invalid ID when editing a dependency', () => {
+        it.fails('should remove invalid ID when editing a dependency', () => {
             expect(2).toEqual(1);
         });
     });

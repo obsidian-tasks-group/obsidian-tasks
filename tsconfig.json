@@ -27,7 +27,7 @@
       ]
     },
     "types": [
-      "jest",
+      "vitest/globals",
       "node",
       "svelte"
     ],

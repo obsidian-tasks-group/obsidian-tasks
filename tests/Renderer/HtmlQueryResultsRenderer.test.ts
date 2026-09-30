@@ -79,12 +79,12 @@ function expectRenderedTaskBacklinks(container: HTMLElement, expected: RenderedT
 }
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2023-07-05'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2023-07-05'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     GlobalFilter.getInstance().reset();
     GlobalQuery.getInstance().reset();
     resetSettings();

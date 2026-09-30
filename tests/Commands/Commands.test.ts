@@ -2,7 +2,7 @@ import { Commands } from '../../src/Commands';
 
 describe('Registering commands', () => {
     it('should register the quick search command', () => {
-        const addCommand = jest.fn();
+        const addCommand = vi.fn();
         new Commands({
             plugin: {
                 app: {},

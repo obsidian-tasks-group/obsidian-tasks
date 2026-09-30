@@ -1,5 +1,5 @@
 import { Options } from '@approval-tests/approvals/lib/Core/Options';
-import { verify } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import type { GlobalFilter } from '../../src/Config/GlobalFilter';
 import type { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { Query } from '../../src/Query/Query';

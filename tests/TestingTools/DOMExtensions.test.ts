@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import type {
     DocumentWithCreateDiv,
     HTMLElementWithCreateDiv,
@@ -62,7 +63,7 @@ function expectElementToHaveClasses(element: Element, expectedClasses: string[] 
     }
 }
 
-function expectCallbackToHaveBeenCalledOnceWith(callback: jest.Mock<any, any, any>, child: HTMLElement): void {
+function expectCallbackToHaveBeenCalledOnceWith(callback: Mock, child: HTMLElement): void {
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(child);
 }
@@ -82,7 +83,7 @@ describe('global createEl()', () => {
     });
 
     it('createEl() should call the callback with the created element', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         const child = createEl('button', undefined, callback);
 
@@ -135,7 +136,7 @@ describe('HTMLElement.createEl()', () => {
     });
 
     it('createEl() should call the callback with the created element', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         const child = parent.createEl('button', undefined, callback);
 
@@ -204,7 +205,7 @@ describe('global createDiv()', () => {
     });
 
     it('createDiv() should call the callback with the created div', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         const div = createDiv(undefined, callback);
 
@@ -213,7 +214,7 @@ describe('global createDiv()', () => {
     });
 
     it('createDiv() should apply text before calling the callback', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         const div = createDiv({ text: 'example text content' }, callback);
 
@@ -238,7 +239,7 @@ describe('Document.createDiv()', () => {
     });
 
     it('createDiv() should apply options and callback', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         const div = doc.createDiv({ cls: 'single-class-value', text: 'example text content' }, callback);
 
@@ -305,7 +306,7 @@ describe('HTMLElement.createDiv()', () => {
     });
 
     it('createDiv() should call the callback with the created div', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         const div = parent.createDiv(undefined, callback);
 
@@ -329,7 +330,7 @@ describe('global createSpan()', () => {
     });
 
     it('createSpan() should call the callback with the created span', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         const span = createSpan(undefined, callback);
 
@@ -367,7 +368,7 @@ describe('HTMLElement.createSpan()', () => {
     });
 
     it('createSpan() should call the callback with the created span', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         const span = parent.createSpan(undefined, callback);
 

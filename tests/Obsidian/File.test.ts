@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { verify } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import { findLineNumberOfTaskToToggle } from '../../src/Obsidian/File';
 import type { MockTogglingDataForTesting } from '../../src/lib/MockDataCreator';
 

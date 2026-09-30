@@ -47,7 +47,7 @@ describe('validateRegExpSafety', () => {
         expect(result).toContain('catastrophic backtracking');
     });
 
-    it.failing('should reject unsafe pattern, but safe-regex2 does not detect it ', () => {
+    it.fails('should reject unsafe pattern, but safe-regex2 does not detect it ', () => {
         // If this starts passing after a future update to safe-regex2:
         // 1. Activate this pattern in the 'known false negative' comment above
         // 2. Delete this test.

@@ -19,12 +19,12 @@ import {
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2025-12-01'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2025-12-01'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     resetSettings();
     GlobalQuery.getInstance().reset();
 });
@@ -94,8 +94,8 @@ describe('QueryResultsRenderer - accessing results', () => {
 
 describe('QueryResultsRenderer - rendering queries', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-07-05'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-07-05'));
     });
 
     it('should render the toolbar', async () => {

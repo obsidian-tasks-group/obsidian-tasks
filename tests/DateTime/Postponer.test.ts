@@ -27,12 +27,12 @@ const tomorrow = '2023-12-04';
 const invalidDate = '2023-12-36';
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date(today));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(today));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 describe('postpone - date field choice', () => {

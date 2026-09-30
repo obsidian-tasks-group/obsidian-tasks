@@ -23,7 +23,7 @@ function testTaskFilterForTaskWithDueDate(filter: FilterOrErrorMessage, dueDate:
 
 describe('due date', () => {
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it('by due date (before)', () => {
@@ -144,8 +144,8 @@ describe('due date', () => {
     });
 
     it('due in two weeks', () => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-03-06'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-03-06'));
 
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in two weeks');
         expect(filterOrMessage).toHaveExplanation('due date is on 2023-03-20 (Monday 20th March 2023)');
@@ -290,12 +290,12 @@ describe('due date (error & corner cases)', () => {
 
 describe('due date before relative date range (Today is 2022-05-25)', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2022-05-25'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2022-05-25'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it.each([
@@ -346,12 +346,12 @@ describe('due date before relative date range (Today is 2022-05-25)', () => {
 
 describe('due date in relative date range (Today is 2023-02-28)', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-02-28'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-02-28'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it.each([
@@ -425,12 +425,12 @@ describe('due date in relative date range (Today is 2023-02-28)', () => {
 
 describe('due date after relative date range (Today is 2021-11-01)', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2021-11-01'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2021-11-01'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it.each([
@@ -552,12 +552,12 @@ describe('sorting by due', () => {
 
 describe('due date', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-02-10'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-02-10'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it('approval tests', () => {

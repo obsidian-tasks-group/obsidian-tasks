@@ -7,7 +7,6 @@ import type { TaskDetails } from '../../src/TaskSerializer';
 import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -277,7 +276,7 @@ describe('DataviewTaskSerializer', () => {
         // This is one major behavior difference between Dataview and Tasks
         // This task is marked as skipped until tasks has support for parsing fields arbitrarily
         // within a task line
-        it.failing('should recognize inline fields arbitrarily positioned in the string', () => {
+        it.fails('should recognize inline fields arbitrarily positioned in the string', () => {
             const taskDetails = deserialize('Some task that is [due::2021-08-02] and is [priority::high]');
             expect(taskDetails).toMatchTaskDetails({
                 description: 'Some task that is [due::2021-08-02] and is [priority::high]',

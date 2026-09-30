@@ -1,4 +1,4 @@
-import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import { StatusSettings } from '../../src/Config/StatusSettings';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';

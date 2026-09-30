@@ -1,4 +1,4 @@
-import { verifyAll } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAll } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
 import type { Task } from '../../../src/Task/Task';
 import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrouping';

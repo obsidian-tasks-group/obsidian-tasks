@@ -12,7 +12,6 @@ import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
 import { escapeInvisibleCharacters } from '../../src/lib/StringHelpers';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 type DefaultTaskSerializeSymbolMap = readonly {

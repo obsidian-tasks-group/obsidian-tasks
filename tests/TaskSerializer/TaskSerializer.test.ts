@@ -6,7 +6,6 @@ import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 /**

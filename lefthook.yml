@@ -24,7 +24,7 @@ pre-commit:
       run: yarn lint:markdown && git add "{staged_files}"
     test:
       glob: '*.ts'
-      run: yarn test "{staged_files}" --findRelatedTests --passWithNoTests
+      run: yarn vitest related --run "{staged_files}" --passWithNoTests
     test-json:
       glob: 'tests/Obsidian/__test_data__/*.json'
       run: yarn test

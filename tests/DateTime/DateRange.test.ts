@@ -25,12 +25,12 @@ describe('DateRange - absolute date ranges', () => {
 
 describe('DateRange - relative date ranges', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2021-10-06'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2021-10-06'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it.each([
@@ -46,12 +46,12 @@ describe('DateRange - relative date ranges', () => {
 
 describe('Date Parser - correct delta for next & last month & quarter (Today is 2021-04-03)', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2021-04-03'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2021-04-03'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it('should have correct date range after going to next or previous range', () => {

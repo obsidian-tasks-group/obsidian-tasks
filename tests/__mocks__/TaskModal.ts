@@ -35,7 +35,7 @@ export class TaskModal {
                 onCancel();
             }
         };
-        this.open = jest.fn();
+        this.open = vi.fn();
         this.allTasks = allTasks || [];
 
         TaskModal.instance = this;

@@ -6,13 +6,11 @@ import { compareByDate } from '../../src/DateTime/DateTools';
 import { SearchInfo } from '../../src/Query/SearchInfo';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toBeSorted(): R; // see https://www.npmjs.com/package/jest-sorted
-            toGiveCompareToResult(expected: number): R;
-            toCompareTasksWithResult(expected: number): R;
-        }
+declare module 'vitest' {
+    interface Matchers<R> {
+        toBeSorted(): R; // see https://www.npmjs.com/package/jest-sorted
+        toGiveCompareToResult(expected: -1 | 0 | 1): R;
+        toCompareTasksWithResult(expected: -1 | 0 | 1): R;
     }
 }
 
@@ -92,7 +90,7 @@ export function expectDateComparesAfter(dateA: string | null, dateB: string | nu
 function testCompareByDateBothWays(dateA: string | null, dateB: string | null, expected: -1 | 0 | 1) {
     expect([dateA, dateB]).toGiveCompareToResult(expected);
 
-    const reverseExpected = expected === equal ? equal : -expected;
+    const reverseExpected = expected === equal ? equal : expected === before ? after : before;
     expect([dateB, dateA]).toGiveCompareToResult(reverseExpected);
 }
 
@@ -115,6 +113,6 @@ export function expectTaskComparesAfter(sorter: Sorter, taskA: Task, taskB: Task
 function testCompareTasksBothWays(sorter: Sorter, taskA: Task, taskB: Task, expected: -1 | 0 | 1) {
     expect({ sorting: sorter, tasks: [taskA, taskB] }).toCompareTasksWithResult(expected);
 
-    const reverseExpected = expected === equal ? equal : -expected;
+    const reverseExpected = expected === equal ? equal : expected === before ? after : before;
     expect({ sorting: sorter, tasks: [taskB, taskA] }).toCompareTasksWithResult(reverseExpected);
 }

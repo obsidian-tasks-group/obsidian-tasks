@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { verifyAll } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAll } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { fromLine, toMarkdown } from '../TestingTools/TestHelpers';
@@ -9,12 +9,12 @@ import { OnCompletion, handleOnCompletion, parseOnCompletionValue } from '../../
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2024-02-11'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2024-02-11'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     // resetSettings();
 });
 

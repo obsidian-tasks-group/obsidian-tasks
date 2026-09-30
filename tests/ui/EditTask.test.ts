@@ -349,12 +349,12 @@ describe('Task editing', () => {
     describe('Status editing', () => {
         const today = '2024-02-29';
         beforeAll(() => {
-            jest.useFakeTimers();
-            jest.setSystemTime(new Date(today));
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date(today));
         });
 
         afterAll(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
         afterEach(() => {
@@ -560,12 +560,12 @@ describe('Task editing', () => {
 
     describe('Date editing', () => {
         beforeEach(() => {
-            jest.useFakeTimers();
-            jest.setSystemTime(new Date('2024-11-27'));
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date('2024-11-27'));
         });
 
         afterEach(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
         const line = '- [ ] simple';
@@ -629,14 +629,14 @@ describe('Task editing', () => {
  */
 describe('Exhaustive editing', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-07-18'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-07-18'));
     });
 
     afterEach(() => {
         GlobalFilter.getInstance().reset();
         resetSettings();
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     /**

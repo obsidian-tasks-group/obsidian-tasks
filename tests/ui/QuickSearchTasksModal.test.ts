@@ -14,15 +14,15 @@ import { Status } from '../../src/Statuses/Status';
 import { fromMarkdown } from '../TestingTools/TestHelpers';
 import { getTaskLineAndFile } from '../../src/Obsidian/File';
 
-jest.mock('obsidian', () => ({
-    ...jest.requireActual('../__mocks__/obsidian'),
-    Notice: jest.fn(),
+vi.mock('obsidian', async () => ({
+    ...(await vi.importActual('../__mocks__/obsidian')),
+    Notice: vi.fn(),
 }));
-jest.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: jest.fn() }));
+vi.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: vi.fn() }));
 
 window.moment = moment;
 
-const MockedNotice = jest.mocked(Notice);
+const MockedNotice = vi.mocked(Notice);
 
 // This test data is duplicated from QuickSearchTasks.test.ts,
 // because we prefer reliability of tests over DRY in test code.
@@ -109,7 +109,7 @@ describe('Rendering matching tasks', () => {
     }
 
     it('should render the checkbox, description, location, and metadata elements', () => {
-        const modal = new QuickSearchTasksModal({} as any, () => tasks, jest.fn());
+        const modal = new QuickSearchTasksModal({} as any, () => tasks, vi.fn());
         const element = document.createElement('div');
 
         modal.renderSuggestion(writeReleaseNotes, element);
@@ -131,7 +131,7 @@ describe('Rendering matching tasks', () => {
 
             const taskListWithGlobalFilter = fromMarkdown('- [ ] #task Do Stuff');
 
-            const modal = new QuickSearchTasksModal({} as any, () => taskListWithGlobalFilter, jest.fn());
+            const modal = new QuickSearchTasksModal({} as any, () => taskListWithGlobalFilter, vi.fn());
             const element = document.createElement('div');
 
             modal.renderSuggestion(taskListWithGlobalFilter[0], element);
@@ -141,7 +141,7 @@ describe('Rendering matching tasks', () => {
     );
 
     it('should only check the checkbox for completed tasks', () => {
-        const modal = new QuickSearchTasksModal({} as any, () => tasks, jest.fn());
+        const modal = new QuickSearchTasksModal({} as any, () => tasks, vi.fn());
         const incompleteElement = document.createElement('div');
         const completeElement = document.createElement('div');
         const inProgressTask = new TaskBuilder().description('In progress task').status(Status.IN_PROGRESS).build();
@@ -159,9 +159,9 @@ describe('Rendering matching tasks', () => {
 
 describe('Opening a selected task', () => {
     it('should inform the user when the selected task can no longer be found', async () => {
-        const app = { vault: {}, workspace: { getLeaf: jest.fn() } } as any;
-        const warning = jest.spyOn(console, 'warn').mockImplementation();
-        jest.mocked(getTaskLineAndFile).mockResolvedValue(undefined);
+        const app = { vault: {}, workspace: { getLeaf: vi.fn() } } as any;
+        const warning = vi.spyOn(console, 'warn').mockImplementation(() => {});
+        vi.mocked(getTaskLineAndFile).mockResolvedValue(undefined);
 
         await openTaskAtSourceLocation(writeReleaseNotes, app);
 
@@ -176,14 +176,14 @@ describe('Opening a selected task', () => {
     });
 
     it('should open the selected task at its current source line', async () => {
-        const openFile = jest.fn();
+        const openFile = vi.fn();
         const app = {
             vault: {},
-            workspace: { getLeaf: jest.fn(() => ({ openFile })) },
+            workspace: { getLeaf: vi.fn(() => ({ openFile })) },
         } as any;
         const task = writeReleaseNotes;
         const file = { path: 'Projects/Release.md' } as any;
-        jest.mocked(getTaskLineAndFile).mockResolvedValue([12, file]);
+        vi.mocked(getTaskLineAndFile).mockResolvedValue([12, file]);
 
         await openTaskAtSourceLocation(task, app);
 
@@ -192,13 +192,13 @@ describe('Opening a selected task', () => {
     });
 
     it('should handle a failure to open the selected task source', async () => {
-        const openFile = jest.fn().mockRejectedValue(new Error('Unable to open file'));
+        const openFile = vi.fn().mockRejectedValue(new Error('Unable to open file'));
         const app = {
             vault: {},
-            workspace: { getLeaf: jest.fn(() => ({ openFile })) },
+            workspace: { getLeaf: vi.fn(() => ({ openFile })) },
         } as any;
-        const error = jest.spyOn(console, 'error').mockImplementation();
-        jest.mocked(getTaskLineAndFile).mockResolvedValue([12, { path: 'Projects/Release.md' } as any]);
+        const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+        vi.mocked(getTaskLineAndFile).mockResolvedValue([12, { path: 'Projects/Release.md' } as any]);
 
         await expect(openTaskAtSourceLocation(writeReleaseNotes, app)).resolves.toBeUndefined();
 

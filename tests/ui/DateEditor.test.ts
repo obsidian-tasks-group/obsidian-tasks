@@ -59,12 +59,12 @@ async function testTypingInput(
 }
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2024-04-20'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2024-04-20'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 describe('date editor wrapper tests', () => {

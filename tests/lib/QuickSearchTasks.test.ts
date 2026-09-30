@@ -40,12 +40,12 @@ const reviewADocument = new TaskBuilder()
 const tasks: readonly Task[] = [releaseCompleted, reviewRELEASEChecklist, reviewADocument, writeReleaseNotes];
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2026-08-23'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-08-23'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 
     GlobalQuery.getInstance().reset();
 
