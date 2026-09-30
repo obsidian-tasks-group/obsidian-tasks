@@ -19,7 +19,7 @@ function testUrgency(builder: TaskBuilder, expectedScore: number) {
  * @param expectedScore
  */
 function testUrgencyOnDate(today: string, builder: TaskBuilder, expectedScore: number) {
-    jest.setSystemTime(new Date(today));
+    vi.setSystemTime(new Date(today));
 
     testUrgency(builder, expectedScore);
 }
@@ -41,11 +41,11 @@ function lowPriorityBuilder() {
 describe('urgency - test time-of-day impact on due-date score', () => {
     // Test to reproduce https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2068
     beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     const task = fromLine({ line: '- [ ] #task 🔽 📅 2023-06-26', path: 'a/b/c.md', precedingHeader: null });
@@ -62,7 +62,7 @@ describe('urgency - test time-of-day impact on due-date score', () => {
         ['19:00'],
         ['23:59'],
     ])('with time  "%s"', (time: string) => {
-        jest.setSystemTime(new Date('2023-06-26 ' + time));
+        vi.setSystemTime(new Date('2023-06-26 ' + time));
         expect(Urgency.calculate(task)).toEqual(8.8);
     });
 });
@@ -94,11 +94,11 @@ function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
 }
 
 beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 describe('urgency - due date component', () => {

@@ -28,12 +28,12 @@ function testEditableTaskDescriptionAndGlobalFilterOnSave({
 describe('EditableTask tests', () => {
     beforeEach(() => {
         GlobalFilter.getInstance().reset();
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2024-05-01'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2024-05-01'));
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it('should create an editable task without dependencies', () => {
@@ -120,7 +120,7 @@ describe('EditableTask tests', () => {
         expect(appliedEdits).toEqual([task]);
     });
 
-    it.failing('should apply no edits to a fully populated task', async () => {
+    it.fails('should apply no edits to a fully populated task', async () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const allTasks = [task];
 
@@ -235,7 +235,7 @@ describe('EditableTask tests', () => {
         const allTasks: Task[] = [];
         const editableTask = EditableTask.fromTask(task, allTasks);
 
-        jest.setSystemTime(new Date('2024-05-22')); // Wednesday 22nd May
+        vi.setSystemTime(new Date('2024-05-22')); // Wednesday 22nd May
 
         editableTask.dueDate = 'tuesday';
         const tuesdayBefore = moment('2024-05-28T12:00:00.000Z');

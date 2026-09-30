@@ -3,7 +3,6 @@ import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import type { StatusCollectionEntry } from '../../src/Statuses/StatusCollection';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 describe('Status', () => {

@@ -17,13 +17,13 @@ const farFuture = '2024-03-25';
 // const invalidDate = '2023-12-36';
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date(today));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(today));
     TestableTaskSaver.reset();
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 describe('PostponeMenu', () => {

@@ -1,4 +1,4 @@
-import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import {
     lastModalState,
     recordedLegacySettings,
@@ -120,13 +120,13 @@ function serializeExtraButton(buttonFactory: Function): unknown {
 const plugin = {
     app: {} as any,
     manifest: { version: 'test-version' },
-    saveSettings: jest.fn(async () => {}),
-    getTasks: jest.fn(() => []),
+    saveSettings: vi.fn(async () => {}),
+    getTasks: vi.fn(() => []),
 } as any;
 
 const events = {
-    triggerReloadVault: jest.fn(),
-    triggerReloadOpenSearchResults: jest.fn(),
+    triggerReloadVault: vi.fn(),
+    triggerReloadOpenSearchResults: vi.fn(),
 } as any;
 
 describe('SettingsTab post-1.13', () => {

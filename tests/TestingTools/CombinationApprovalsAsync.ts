@@ -1,4 +1,4 @@
-import { verify } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import { formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { runCombinations9 } from './RunCombinations';
 

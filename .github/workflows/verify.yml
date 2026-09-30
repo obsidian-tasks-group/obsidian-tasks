@@ -24,7 +24,7 @@ jobs:
       - name: Run Markdown Lint
         run: yarn run lint:markdown
 
-      - name: Run Jest
+      - name: Run tests
         run: yarn run test
 
       - name: Archive verified build

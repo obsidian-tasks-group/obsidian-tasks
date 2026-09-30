@@ -1,12 +1,11 @@
 import moment from 'moment/moment';
+import type { Mock } from 'vitest';
 import type { CachedMetadata, EventRef, MetadataCache, TFile, Vault, Workspace } from 'obsidian';
 import { Cache, State } from '../../src/Obsidian/Cache';
 import type { TasksEvents } from '../../src/Obsidian/TasksEvents';
 import type { Logger } from '../../src/lib/logging';
 import { createTFile } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
-
-jest.mock('obsidian');
 
 window.moment = moment;
 
@@ -31,16 +30,16 @@ function createCacheEnvironment({
     getFileCache = () => taskData.cachedMetadata,
 }: {
     files: TFile[];
-    cachedRead: jest.Mock<Promise<string>, [TFile]>;
+    cachedRead: Mock<(file: TFile) => Promise<string>>;
     getFileCache?: (file: TFile) => CachedMetadata | null;
 }) {
     let layoutReadyCallback: (() => Promise<void>) | undefined;
     let reloadVaultCallback: (() => Promise<void>) | undefined;
     let changedCallback: ((file: TFile) => Promise<void>) | undefined;
     const metadataCache = {
-        getFileCache: jest.fn(getFileCache),
-        offref: jest.fn(),
-        on: jest.fn((event: string, callback: (file: TFile) => Promise<void>) => {
+        getFileCache: vi.fn(getFileCache),
+        offref: vi.fn(),
+        on: vi.fn((event: string, callback: (file: TFile) => Promise<void>) => {
             if (event === 'changed') {
                 changedCallback = callback;
             }
@@ -49,30 +48,30 @@ function createCacheEnvironment({
     } as unknown as MetadataCache;
     const vault = {
         cachedRead,
-        getMarkdownFiles: jest.fn(() => files),
-        offref: jest.fn(),
-        on: jest.fn(() => eventReference),
+        getMarkdownFiles: vi.fn(() => files),
+        offref: vi.fn(),
+        on: vi.fn(() => eventReference),
     } as unknown as Vault;
     const workspace = {
-        onLayoutReady: jest.fn((callback: () => Promise<void>) => {
+        onLayoutReady: vi.fn((callback: () => Promise<void>) => {
             layoutReadyCallback = callback;
         }),
     } as unknown as Workspace;
     const events = {
-        off: jest.fn(),
-        onReloadVault: jest.fn((callback: () => Promise<void>) => {
+        off: vi.fn(),
+        onReloadVault: vi.fn((callback: () => Promise<void>) => {
             reloadVaultCallback = callback;
             return eventReference;
         }),
-        onRequestCacheUpdate: jest.fn(() => eventReference),
-        triggerCacheUpdate: jest.fn(),
+        onRequestCacheUpdate: vi.fn(() => eventReference),
+        triggerCacheUpdate: vi.fn(),
     } as unknown as TasksEvents;
 
     const cache = new Cache({ metadataCache, vault, workspace, events });
     const logger = {
-        debug: jest.fn(),
-        error: jest.fn(),
-        info: jest.fn(),
+        debug: vi.fn(),
+        error: vi.fn(),
+        info: vi.fn(),
     };
     cache.logger = logger as unknown as Logger;
 
@@ -99,7 +98,7 @@ describe('Cache loading', () => {
         const files = Array.from({ length: 12 }, (_value, index) => createTFile(`${index}.md`));
         let activeReads = 0;
         let maximumActiveReads = 0;
-        const cachedRead = jest.fn<Promise<string>, [TFile]>(async () => {
+        const cachedRead = vi.fn<(file: TFile) => Promise<string>>(async () => {
             activeReads++;
             maximumActiveReads = Math.max(maximumActiveReads, activeReads);
             // Keep the fake read pending for one event-loop turn so the worker reads overlap.
@@ -117,7 +116,7 @@ describe('Cache loading', () => {
 
     it('should notify subscribers once after the bulk load completes', async () => {
         const files = [createTFile('one.md'), createTFile('two.md'), createTFile('three.md')];
-        const cachedRead = jest.fn<Promise<string>, [TFile]>(async () => taskData.fileContents);
+        const cachedRead = vi.fn<(file: TFile) => Promise<string>>(async () => taskData.fileContents);
         const { cache, logger, runLayoutReady } = createCacheEnvironment({ files, cachedRead });
         const statesWhenSubscribersWereNotified: State[] = [];
         logger.debug.mockImplementation((message) => {
@@ -135,8 +134,8 @@ describe('Cache loading', () => {
     it('should continue notifying subscribers when an individual file changes', async () => {
         const file = createTFile('changed.md');
         const changedFileContents = taskData.fileContents.replace('the only task', 'the next task');
-        const cachedRead = jest
-            .fn<Promise<string>, [TFile]>()
+        const cachedRead = vi
+            .fn<(file: TFile) => Promise<string>>()
             .mockResolvedValueOnce(taskData.fileContents)
             .mockResolvedValue(changedFileContents);
         const { logger, runFileChanged, runLayoutReady } = createCacheEnvironment({ files: [file], cachedRead });
@@ -153,7 +152,7 @@ describe('Cache loading', () => {
 
     it('should not read a file whose metadata contains only plain list items', async () => {
         const file = createTFile('plain-list.md');
-        const cachedRead = jest.fn<Promise<string>, [TFile]>(async () => '- a plain list item');
+        const cachedRead = vi.fn<(file: TFile) => Promise<string>>(async () => '- a plain list item');
         // Keep the Markdown fixture unchanged, but make its cached metadata describe plain list items instead of
         // checkbox items. cachedRead() must not be called, so the intentional mismatch cannot affect the result.
         const plainListMetadata: CachedMetadata = {
@@ -174,7 +173,7 @@ describe('Cache loading', () => {
         const unavailableFile = createTFile('unavailable.md');
         const readableFile = createTFile('readable.md');
         const readError = new Error('ETIMEDOUT: connection timed out, read');
-        const cachedRead = jest.fn<Promise<string>, [TFile]>(async (file) => {
+        const cachedRead = vi.fn<(file: TFile) => Promise<string>>(async (file) => {
             if (file === unavailableFile) {
                 throw readError;
             }
@@ -197,7 +196,7 @@ describe('Cache loading', () => {
         const file = createTFile('temporarily-unavailable.md');
         const readError = new Error('EIO: input/output error, read');
         let shouldReadFail = false;
-        const cachedRead = jest.fn<Promise<string>, [TFile]>(async () => {
+        const cachedRead = vi.fn<(file: TFile) => Promise<string>>(async () => {
             if (shouldReadFail) {
                 throw readError;
             }

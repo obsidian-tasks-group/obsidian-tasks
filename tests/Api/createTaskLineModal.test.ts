@@ -11,31 +11,29 @@ const createNewTask = (line = ''): Task => {
     return taskFromLine({ line, path: '' });
 };
 
-jest.mock('../../src/Obsidian/TaskModal', () => {
+vi.mock('../../src/Obsidian/TaskModal', () => {
     return {
-        TaskModal: jest.fn(
-            ({
-                app,
-                task,
-                onSubmit,
-                onCancel,
-                allTasks,
-            }: {
-                app: App;
-                task: Task;
-                onSubmit: (updatedTasks: Task[]) => void;
-                onCancel?: () => void;
-                allTasks: Task[];
-            }) => {
-                return new TaskModal({ app, task, onSubmit, onCancel, allTasks });
-            },
-        ),
+        TaskModal: vi.fn(function ({
+            app,
+            task,
+            onSubmit,
+            onCancel,
+            allTasks,
+        }: {
+            app: App;
+            task: Task;
+            onSubmit: (updatedTasks: Task[]) => void;
+            onCancel?: () => void;
+            allTasks: Task[];
+        }) {
+            return new TaskModal({ app, task, onSubmit, onCancel, allTasks });
+        }),
     };
 });
 
 describe('APIv1 - createTaskLineModal', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     /**

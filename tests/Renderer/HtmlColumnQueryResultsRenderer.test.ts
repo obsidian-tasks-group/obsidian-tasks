@@ -13,12 +13,12 @@ import { makeHtmlQueryRendererParameters, mockHTMLRenderer, verifyHtmlFromRender
 window.moment = moment;
 
 beforeAll(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2026-07-13'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-07-13'));
 });
 
 afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 function makeColumnRenderer(source: string, allTasks: Task[]) {

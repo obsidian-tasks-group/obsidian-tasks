@@ -274,11 +274,11 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
 
     describe('dropScheduledDate and when done', () => {
         beforeEach(() => {
-            jest.useFakeTimers();
-            jest.setSystemTime(new Date('2022-01-10'));
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date('2022-01-10'));
         });
         afterEach(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
         it('calculates correct start date with "dropScheduledDate" and "when done", with no due date', () => {

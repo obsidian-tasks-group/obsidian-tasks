@@ -1,7 +1,6 @@
 import { type ConfigModifier, Options } from '@approval-tests/approvals/lib/Core/Options';
-import { verify } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
-
-import { JestReporter } from '@approval-tests/approvals/lib/Providers/Jest/JestReporter';
+import { VitestReporter } from '@approval-tests/approvals/lib/Providers/Vitest/VitestReporter';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 
 export function verifyMarkdown(output: string) {
     let options = new Options();
@@ -22,10 +21,10 @@ export function verifyMarkdown(output: string) {
             // https://github.com/approvals/Approvals.NodeJS#built-in-reporters
             'vscode', // VS Code diff works well with files containing emojis
             //-----------------
-            // Last one is jest reporter, that writes diffs to console in
+            // Last one is the Vitest reporter, that writes diffs to console in
             // Continuous Integration builds, such as GitHub Actions,
             // or when the development environment has no supported diff tools.
-            new JestReporter(),
+            new VitestReporter(),
         ];
         return c;
     };

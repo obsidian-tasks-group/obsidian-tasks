@@ -25,7 +25,7 @@ function makeTasksGroups(grouping: Grouper[], inputs: Task[]): TaskGroups {
 beforeEach(() => {});
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 describe('Grouping tasks', () => {
     it('groups correctly by path', () => {
@@ -196,8 +196,8 @@ describe('Grouping tasks', () => {
     });
 
     it('sorts raw urgency value groups correctly', () => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2025-03-07'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2025-03-07'));
 
         const lines = [
             '- [ ] 0 📅 2025-02-28 🔺           ', // urgency: 21

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import type { Moment } from 'moment';
 
-import { verifyAll } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAll } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import { Status } from '../../src/Statuses/Status';
 import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
@@ -24,7 +24,7 @@ import { createChildListItem } from './ListItemHelpers';
 window.moment = moment;
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     resetSettings();
     GlobalFilter.getInstance().reset();
 });
@@ -1194,8 +1194,8 @@ describe('toggle done', () => {
             nextInterval,
         } = recurrenceCase;
         if (today) {
-            jest.useFakeTimers();
-            jest.setSystemTime(new Date(today));
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date(today));
         }
 
         // If this test fails, the RecurrenceCase had no expected new dates set, and so
@@ -1335,8 +1335,8 @@ describe('handle new status', () => {
     });
 
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-06-26'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-06-26'));
         resetSettings();
     });
 
@@ -1486,8 +1486,8 @@ describe('handle new status', () => {
 
 describe('created dates on recurring task', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-03-08'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-03-08'));
     });
 
     it('should not set created date with disabled setting', () => {
@@ -1541,8 +1541,8 @@ describe('created dates on recurring task', () => {
 
 describe('order of recurring tasks', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-05-16'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-05-16'));
     });
 
     function expectLineToApplyDoneStatusInUsersOrder(line: string, expectedLines: string[]) {

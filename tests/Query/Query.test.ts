@@ -391,6 +391,7 @@ description includes \
 
         describe.each(namedFields)('has sufficient sample "sort by" lines for field "%s"', ({ field }) => {
             if (!field.supportsSorting()) {
+                it.skip('does not support sorting', () => {});
                 return;
             }
 
@@ -473,6 +474,7 @@ description includes \
 
         describe.each(namedFields)('has sufficient sample "group by" lines for field "%s"', ({ field }) => {
             if (!field.supportsGrouping()) {
+                it.skip('does not support grouping', () => {});
                 return;
             }
 

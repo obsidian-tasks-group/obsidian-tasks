@@ -52,12 +52,12 @@ describe('task', () => {
     }
 
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-06-12'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-06-12'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     // NEW_TASK_FIELD_EDIT_REQUIRED

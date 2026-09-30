@@ -2,7 +2,7 @@ import moment from 'moment';
 
 window.moment = moment;
 
-import { verify } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import type { Comparator } from '../../../src/Query/Sort/Sorter';
 import { Sorter } from '../../../src/Query/Sort/Sorter';
 import type { Task } from '../../../src/Task/Task';
@@ -27,12 +27,12 @@ const farFuture = '2022-01-31';
 const invalid = '2022-13-33';
 
 beforeAll(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date(today));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(today));
 });
 
 afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 afterEach(() => {

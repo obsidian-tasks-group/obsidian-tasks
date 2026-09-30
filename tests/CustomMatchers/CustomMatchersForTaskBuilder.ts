@@ -1,18 +1,8 @@
 import type { TaskBuilder } from '../TestingTools/TaskBuilder';
 
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toBeIdenticalTo(builder2: TaskBuilder): R;
-        }
-
-        interface Expect {
-            toBeIdenticalTo(builder2: TaskBuilder): any;
-        }
-
-        interface InverseAsymmetricMatchers {
-            toBeIdenticalTo(builder2: TaskBuilder): any;
-        }
+declare module 'vitest' {
+    interface Matchers<R> {
+        toBeIdenticalTo(builder2: TaskBuilder): R;
     }
 }
 

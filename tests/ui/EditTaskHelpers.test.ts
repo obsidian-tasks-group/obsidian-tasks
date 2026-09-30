@@ -65,7 +65,7 @@ describe('focusOnceClearOfKeyboard() tests', () => {
         document.body.appendChild(modalEl);
         putFieldAt(0);
 
-        jest.spyOn(window, 'getComputedStyle').mockImplementation((...args: unknown[]) => {
+        vi.spyOn(window, 'getComputedStyle').mockImplementation((...args: unknown[]) => {
             const [el, pseudoEl] = args as [Element, string | null | undefined];
 
             return el === modalEl
@@ -75,7 +75,7 @@ describe('focusOnceClearOfKeyboard() tests', () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
         if (realOffsetHeight) {
             Object.defineProperty(HTMLElement.prototype, 'offsetHeight', realOffsetHeight);
         }
@@ -172,7 +172,7 @@ describe('focusOnceClearOfKeyboard() tests', () => {
     });
 
     it('should give up waiting, and focus the field anyway, when the modal never stops moving', async () => {
-        const now = jest.spyOn(Date, 'now').mockReturnValue(0);
+        const now = vi.spyOn(Date, 'now').mockReturnValue(0);
         startSlidingIn();
         putFieldAt(viewportHeight * 2);
 
@@ -189,7 +189,7 @@ describe('focusOnceClearOfKeyboard() tests', () => {
 
     it('should not let focusing the field scroll it into view', async () => {
         // Focus does its own scrolling to reveal the field, which would undo the point of the wait.
-        const focus = jest.spyOn(fieldEl, 'focus');
+        const focus = vi.spyOn(fieldEl, 'focus');
 
         await focusOnceClearOfKeyboard(fieldEl);
 

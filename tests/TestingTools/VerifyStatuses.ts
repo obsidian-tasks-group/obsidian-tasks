@@ -1,4 +1,4 @@
-import { verify } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import type { Status } from '../../src/Statuses/Status';
 import { MarkdownTable } from '../../src/lib/MarkdownTable';
 import type { Task } from '../../src/Task/Task';

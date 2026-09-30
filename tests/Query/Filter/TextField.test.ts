@@ -1,4 +1,4 @@
-import { verify } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { Query } from '../../../src/Query/Query';
 

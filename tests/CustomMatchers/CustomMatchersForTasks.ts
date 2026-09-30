@@ -2,25 +2,11 @@ import { diff } from 'jest-diff';
 import { fromLine } from '../TestingTools/TestHelpers';
 import type { Task } from '../../src/Task/Task';
 
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toToggleTo(expectedLines: string[]): R;
-            toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): R;
-            toMatchMarkdownLines(expectedLines: string[]): R;
-        }
-
-        interface Expect {
-            toToggleTo(expectedLines: string[]): any;
-            toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): any;
-            toMatchMarkdownLines(expectedLines: string[]): any;
-        }
-
-        interface InverseAsymmetricMatchers {
-            toToggleTo(expectedLines: string[]): any;
-            toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): any;
-            toMatchMarkdownLines(expectedLines: string[]): any;
-        }
+declare module 'vitest' {
+    interface Matchers<R> {
+        toToggleTo(expectedLines: string[]): R;
+        toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): R;
+        toMatchMarkdownLines(expectedLines: string[]): R;
     }
 }
 
