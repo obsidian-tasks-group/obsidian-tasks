@@ -61,7 +61,7 @@
     "jest-sorted": "^1.0.15",
     "madge": "^8.0.0",
     "markdownlint-cli2": "^0.22.1",
-    "moment": "^2.29.4",
+    "moment": "^2.31.0",
     "obsidian": "1.13.1",
     "obsidian-typings": "^2.11.1",
     "prettier": "^3.9.8",
