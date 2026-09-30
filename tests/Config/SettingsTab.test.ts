@@ -1,4 +1,4 @@
-import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
 import {
     lastModalState,
     recordedLegacySettings,

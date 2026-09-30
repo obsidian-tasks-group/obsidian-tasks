@@ -1,7 +1,7 @@
 import moment from 'moment';
 import type { Moment } from 'moment';
 
-import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAll } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
 import { Status } from '../../src/Statuses/Status';
 import { Task } from '../../src/Task/Task';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';

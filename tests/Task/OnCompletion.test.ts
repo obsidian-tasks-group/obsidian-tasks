@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAll } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { fromLine, toMarkdown } from '../TestingTools/TestHelpers';

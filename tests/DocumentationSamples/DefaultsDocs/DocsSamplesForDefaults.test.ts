@@ -1,6 +1,6 @@
 import type { Pos } from 'obsidian';
 
-import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verify, verifyAsJson } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
 import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';

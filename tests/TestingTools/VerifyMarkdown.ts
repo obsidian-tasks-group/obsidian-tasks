@@ -1,7 +1,7 @@
-import { type ConfigModifier, Options } from 'approvals/lib/Core/Options';
-import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { type ConfigModifier, Options } from '@approval-tests/approvals/lib/Core/Options';
+import { verify } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
 
-import { JestReporter } from 'approvals/lib/Providers/Jest/JestReporter';
+import { JestReporter } from '@approval-tests/approvals/lib/Providers/Jest/JestReporter';
 
 export function verifyMarkdown(output: string) {
     let options = new Options();

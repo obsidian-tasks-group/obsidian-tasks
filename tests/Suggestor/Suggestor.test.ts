@@ -1,4 +1,4 @@
-import { verifyAll, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAll, verifyAsJson } from '@approval-tests/approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
