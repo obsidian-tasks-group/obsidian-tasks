@@ -82,7 +82,7 @@ function findTasksByDescriptionSubstring(tasks: readonly Task[], query: string):
 
     const normalizedQuery = query.toLowerCase();
 
-    return rankMatchingTasksByDescription(tasks, (description) =>
+    return sortTaskMatches(tasks, (description) =>
         description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null,
     );
 }
@@ -92,14 +92,14 @@ function findTasksByFuzzyDescription(tasks: readonly Task[], query: string): Tas
         return [];
     }
 
-    return rankMatchingTasksByDescription(tasks, prepareFuzzySearch(query));
+    return sortTaskMatches(tasks, prepareFuzzySearch(query));
 }
 
 // -----------------------------------------------------------------------
 // Helper functions for sorting the candidate tasks.
 // -----------------------------------------------------------------------
 
-function rankMatchingTasksByDescription(tasks: readonly Task[], matchDescription: TaskDescriptionMatcher): Task[] {
+function sortTaskMatches(tasks: readonly Task[], matchDescription: TaskDescriptionMatcher): Task[] {
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
