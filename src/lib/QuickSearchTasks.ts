@@ -35,16 +35,7 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
     if (query.trim() === '') {
         return [];
     }
-
-    let matchDescription: TaskDescriptionMatcher;
-    if (getSettings().quickSearch.fuzzyMatching) {
-        matchDescription = prepareFuzzySearch(query);
-    } else {
-        const normalizedQuery = query.toLowerCase();
-
-        matchDescription = (description: string) =>
-            description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null;
-    }
+    const matchDescription = createDescriptionMatcher(query);
     return findTaskMatches(tasks, matchDescription);
 }
 
@@ -83,6 +74,15 @@ function taskMatchesGlobalQuery(globalQueryFilters: Filter[], task: Task, search
 // -----------------------------------------------------------------------
 // Helper functions for filtering on the query string.
 // -----------------------------------------------------------------------
+
+function createDescriptionMatcher(query: string): TaskDescriptionMatcher {
+    if (getSettings().quickSearch.fuzzyMatching) {
+        return prepareFuzzySearch(query);
+    } else {
+        const normalizedQuery = query.toLowerCase();
+        return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
+    }
+}
 
 // -----------------------------------------------------------------------
 // Helper functions for sorting the candidate tasks.
