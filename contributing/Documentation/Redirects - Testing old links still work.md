@@ -36,6 +36,8 @@ All these links should still work:
 - <https://publish.obsidian.md/tasks-contributing/Documentation/Dependency+Management+and+Updates+for+the+Docs>
 - <https://publish.obsidian.md/tasks-contributing/Documentation/Overview+of+Jekyll-based+docs>
 - <https://publish.obsidian.md/tasks-contributing/Documentation/Test+documentation+locally+with+Jekyll>
+- <https://publish.obsidian.md/tasks-contributing/Testing/Jest+Test+Framework>
+- <https://publish.obsidian.md/tasks-contributing/Testing/Jest+and+the+WebStorm+IDE>
 
 ## Archive - selection of links from the old GitHub pages site
 
