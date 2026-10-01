@@ -44,7 +44,9 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
 
     const searchInfo = SearchInfo.fromAllTasks([...tasks]);
 
-    return findTaskMatches(tasks, searchInfo, matchDescription);
+    const matches = findMatchingTasksTemp(tasks, searchInfo, matchDescription);
+
+    return sortTaskMatches(matches, searchInfo);
 }
 
 // -----------------------------------------------------------------------
@@ -113,15 +115,6 @@ function findMatchingTasksTemp(
         })
         .filter((match): match is ScoredTaskMatch => match !== null);
     return matches;
-}
-
-function findTaskMatches(
-    tasks: readonly Task[],
-    searchInfo: SearchInfo,
-    matchDescription: TaskDescriptionMatcher,
-): Task[] {
-    const matches = findMatchingTasksTemp(tasks, searchInfo, matchDescription);
-    return sortTaskMatches(matches, searchInfo);
 }
 
 // -----------------------------------------------------------------------
