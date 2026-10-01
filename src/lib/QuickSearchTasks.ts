@@ -98,8 +98,8 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
     return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
 }
 
-function shouldNotIncludeTaskInSearch(task: Task): boolean {
-    return task.isDone;
+function shouldIncludeTaskInSearch(task: Task): boolean {
+    return !task.isDone;
 }
 
 function getQuickSearchMatch(
@@ -108,7 +108,7 @@ function getQuickSearchMatch(
     searchInfo: SearchInfo,
     matchDescription: TaskDescriptionMatcher,
 ): ScoredTaskMatch | null {
-    if (shouldNotIncludeTaskInSearch(task)) {
+    if (!shouldIncludeTaskInSearch(task)) {
         return null;
     }
 
