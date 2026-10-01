@@ -23,11 +23,11 @@ There are some sub-folders there, to try and keep the number of files manageable
 
 ## Getting started writing tests
 
-### Introduction to Jest
+### Introduction to Vitest
 
-We use the [[Vitest Test Framework]] for writing our tests.
+We use the [[Vitest Test Framework|Vitest test framework]] for writing our tests.
 
-This looks like a good introduction to writing tests using Jest: [Jest Tutorial for Beginners: Getting Started With JavaScript Testing](https://www.valentinog.com/blog/jest/#test-structure-and-a-first-failing-test).
+See Vitest's own [Getting Started guide](https://vitest.dev/guide/) for a good introduction to writing tests: it covers the same `describe`/`it`/`expect` structure used throughout this project.
 
 ### First find the test file to modify
 

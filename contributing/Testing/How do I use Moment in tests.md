@@ -21,7 +21,7 @@ This is how to declare `moment` and `Moment` in files that **test** code in the 
 
 ### The "jsdom" test environment is global
 
-`jest.config.js` sets `testEnvironment: 'jsdom'` for the whole project, so every test file already
+`vitest.config.ts` sets `environment: 'jsdom'` for the whole project, so every test file already
 runs in a DOM environment. There is no per-file environment boilerplate. Any test files that call
 code in `src/` that uses `moment` or `Moment` just need a normal import:
 
