@@ -62,7 +62,7 @@ function getGlobalQueryFilters(): Filter[] {
     return query.filters;
 }
 
-function applyFiltersToTask(globalQueryFilters: Filter[], task: Task, searchInfo: SearchInfo): boolean {
+function taskMatchesGlobalQuery(globalQueryFilters: Filter[], task: Task, searchInfo: SearchInfo): boolean {
     try {
         return globalQueryFilters.every((filter) => filter.filterFunction(task, searchInfo));
     } catch {
@@ -107,7 +107,7 @@ function sortTaskMatches(tasks: readonly Task[], matchDescription: TaskDescripti
     const searchInfo = SearchInfo.fromAllTasks([...tasks]);
 
     const matches = tasks
-        .filter((task) => !task.isDone && applyFiltersToTask(globalQueryFilters, task, searchInfo))
+        .filter((task) => !task.isDone && taskMatchesGlobalQuery(globalQueryFilters, task, searchInfo))
         .map((task) => {
             const match = matchDescription(task.descriptionWithoutTags);
             return match === null ? null : { task, score: match.score };
