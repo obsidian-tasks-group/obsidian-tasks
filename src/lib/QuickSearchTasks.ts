@@ -98,6 +98,11 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
     return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
 }
 
+function getQuickSearchMatch(task: Task, matchDescription: TaskDescriptionMatcher): ScoredTaskMatch | null {
+    const match = matchDescription(task.descriptionWithoutTags);
+    return match === null ? null : { task, score: match.score };
+}
+
 function findMatchingTasks(
     tasks: readonly Task[],
     searchInfo: SearchInfo,
@@ -110,9 +115,7 @@ function findMatchingTasks(
     const matches = tasks
         .filter((task) => !task.isDone && taskMatchesGlobalQuery(globalQueryFilters, task, searchInfo))
         .map((task: Task) => {
-            const match = matchDescription(task.descriptionWithoutTags);
-            const result: ScoredTaskMatch | null = match === null ? null : { task, score: match.score };
-            return result;
+            return getQuickSearchMatch(task, matchDescription);
         })
         .filter((match): match is ScoredTaskMatch => match !== null);
     return matches;
