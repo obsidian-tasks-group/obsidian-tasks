@@ -109,9 +109,10 @@ function findMatchingTasks(
     const globalQueryFilters = getGlobalQueryFilters();
     const matches = tasks
         .filter((task) => !task.isDone && taskMatchesGlobalQuery(globalQueryFilters, task, searchInfo))
-        .map((task) => {
+        .map((task: Task) => {
             const match = matchDescription(task.descriptionWithoutTags);
-            return match === null ? null : { task, score: match.score };
+            const result: ScoredTaskMatch | null = match === null ? null : { task, score: match.score };
+            return result;
         })
         .filter((match): match is ScoredTaskMatch => match !== null);
     return matches;
