@@ -1,10 +1,10 @@
 # Dependency Groups
 
-Several dependencies come in groups (for example, `@typescript/eslint*` or ones containing the word `jest`) that may need to be updated together.
+Several dependencies come in groups (for example, `@typescript/eslint*` or ones containing the word `vitest`) that may need to be updated together.
 
-For example, `ts-jest` relies on having a matching major version with `jest` and its types (`@types/jest`).
+For example, `vitest` uses matching versions of its own sub-packages, such as `@vitest/expect`. Optional packages such as `@vitest/coverage-v8` must also match the installed Vitest version.
 
-Every jest-related package that shares a major version number with `ts-jest`, `jest` etc must have an available upgrade to the new major version before any of them can be upgraded.
+Update `vitest` and any directly installed `@vitest/*` packages together, keeping their versions aligned.
 
 Otherwise, automated testing may fail due to version mismatch.
 
