@@ -116,12 +116,12 @@ function findTaskMatches(tasks: readonly Task[], matchDescription: TaskDescripti
 // -----------------------------------------------------------------------
 
 function sortTaskMatches(matches: ScoredTaskMatch[], searchInfo: SearchInfo): Task[] {
-    const defaultOrder = new Map(
-        sortTasksByDescription(
-            matches.map((match) => match.task),
-            searchInfo,
-        ).map((task, index) => [task, index]),
+    const tasksInDefaultOrder = sortTasksByDescription(
+        matches.map((match) => match.task),
+        searchInfo,
     );
+
+    const defaultOrder = new Map(tasksInDefaultOrder.map((task, index) => [task, index]));
 
     return matches
         .sort((a, b) => b.score - a.score || defaultOrder.get(a.task)! - defaultOrder.get(b.task)!)
