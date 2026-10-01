@@ -13,7 +13,7 @@ export type CreateSpanOptions = {
     text?: string | DocumentFragment;
 };
 
-// See jest.setup.ts for the test implementations of these functions.
+// See vitest.setup.ts for the test implementations of these functions.
 export type HTMLElementWithCreateEl = HTMLElement & {
     createEl<K extends keyof HTMLElementTagNameMap>(
         tag: K,
