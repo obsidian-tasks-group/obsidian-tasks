@@ -9,12 +9,12 @@ import { SearchInfo } from '../../src/Query/SearchInfo';
 
 /**
  @summary
- This file contains Jest custom matchers, for idiomatic testing of filtering
+ This file contains Vitest custom matchers, for idiomatic testing of filtering
  via Field classes.
 
  @description
  These matchers are a more idiomatic way of testing custom objects via
- the Jest test framework than the helper functions in tests/TestingTools/
+ the Vitest test framework than the helper functions in tests/TestingTools/
  and various testing helpers in individual x.test.ts files.
  <br>
 
@@ -34,7 +34,7 @@ import { SearchInfo } from '../../src/Query/SearchInfo';
 
  // Setup:
 
- Imports are done automatically in tests/CustomMatchers/jest.custom_matchers.setup.ts
+ Imports are done automatically in tests/CustomMatchers/vitest.custom_matchers.setup.ts
 
  // Inside it() and describe() blocks:
  it('works negating regexes', () => {
@@ -56,7 +56,7 @@ import { SearchInfo } from '../../src/Query/SearchInfo';
 
 /* MAINTENANCE NOTE:
         Please add any newly added matchers to this file:
-            tests/CustomMatchers/jest.custom_matchers.setup.ts
+            tests/CustomMatchers/vitest.custom_matchers.setup.ts
         so that tests can find them automatically, without needing
         to write imports, and complex 'expect.extend(...)' lines.
         Thank you.
