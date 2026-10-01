@@ -50,8 +50,12 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
 }
 
 // -----------------------------------------------------------------------
-// Helper functions for filtering on the user's GlobalQuery setting.
+// Helper functions for checking eligibility, independent of query string.
 // -----------------------------------------------------------------------
+
+function shouldIncludeTaskInSearch(task: Task): boolean {
+    return !task.isDone;
+}
 
 function getGlobalQueryFilters(): Filter[] {
     // The placeholder presents mechanism results in an exception being thrown
@@ -96,10 +100,6 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
 
     const normalizedQuery = query.toLowerCase();
     return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
-}
-
-function shouldIncludeTaskInSearch(task: Task): boolean {
-    return !task.isDone;
 }
 
 function getQuickSearchMatch(
