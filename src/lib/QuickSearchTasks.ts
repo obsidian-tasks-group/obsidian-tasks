@@ -37,7 +37,8 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
     }
 
     if (getSettings().quickSearch.fuzzyMatching) {
-        return findTaskMatches(tasks, prepareFuzzySearch(query));
+        const descriptionMatcher = prepareFuzzySearch(query);
+        return findTaskMatches(tasks, descriptionMatcher);
     } else {
         const normalizedQuery = query.toLowerCase();
 
