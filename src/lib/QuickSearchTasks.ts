@@ -44,7 +44,7 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
 
     const searchInfo = SearchInfo.fromAllTasks([...tasks]);
 
-    const matches = findMatchingTasksTemp(tasks, searchInfo, matchDescription);
+    const matches = findMatchingTasks(tasks, searchInfo, matchDescription);
 
     return sortTaskMatches(matches, searchInfo);
 }
@@ -98,7 +98,7 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
     return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
 }
 
-function findMatchingTasksTemp(
+function findMatchingTasks(
     tasks: readonly Task[],
     searchInfo: SearchInfo,
     matchDescription: (description: string) => TaskDescriptionMatch | null,
