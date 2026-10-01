@@ -113,7 +113,7 @@ function rankMatchingTasksByDescription(tasks: readonly Task[], matchDescription
         .filter((match): match is { task: Task; score: number } => match !== null);
 
     const defaultOrder = new Map(
-        sortResults(
+        sortTasksByDescription(
             matches.map((match) => match.task),
             searchInfo,
         ).map((task, index) => [task, index]),
@@ -124,7 +124,7 @@ function rankMatchingTasksByDescription(tasks: readonly Task[], matchDescription
         .map((match) => match.task);
 }
 
-function sortResults(results: Task[], searchInfo: SearchInfo): Task[] {
+function sortTasksByDescription(results: Task[], searchInfo: SearchInfo): Task[] {
     // Sort the results by description, using same logic as the 'sort by description' instruction.
     const sorter = new DescriptionField().createNormalSorter();
     // And if the descriptions are identical, sort the tasks by the
