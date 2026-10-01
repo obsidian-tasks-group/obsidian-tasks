@@ -100,7 +100,11 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
 
 function getQuickSearchMatch(task: Task, matchDescription: TaskDescriptionMatcher): ScoredTaskMatch | null {
     const match = matchDescription(task.descriptionWithoutTags);
-    return match === null ? null : { task, score: match.score };
+    if (match === null) {
+        return null;
+    } else {
+        return { task, score: match.score };
+    }
 }
 
 function findMatchingTasks(
