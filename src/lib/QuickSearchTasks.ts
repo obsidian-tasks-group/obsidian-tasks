@@ -107,7 +107,7 @@ function findMatchingTasks(
     tasks: readonly Task[],
     searchInfo: SearchInfo,
     matchDescription: TaskDescriptionMatcher,
-): any {
+): ScoredTaskMatch[] {
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
