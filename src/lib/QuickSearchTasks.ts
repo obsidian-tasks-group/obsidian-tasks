@@ -112,7 +112,10 @@ function findTaskMatches(tasks: readonly Task[], matchDescription: TaskDescripti
             return match === null ? null : { task, score: match.score };
         })
         .filter((match): match is ScoredTaskMatch => match !== null);
+    return sortTaskMatches(matches, searchInfo);
+}
 
+function sortTaskMatches(matches: ScoredTaskMatch[], searchInfo: SearchInfo): Task[] {
     const defaultOrder = new Map(
         sortTasksByDescription(
             matches.map((match) => match.task),
