@@ -42,7 +42,9 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
         return [];
     }
 
-    return findTaskMatches(tasks, SearchInfo.fromAllTasks([...tasks]), matchDescription);
+    const searchInfo = SearchInfo.fromAllTasks([...tasks]);
+
+    return findTaskMatches(tasks, searchInfo, matchDescription);
 }
 
 // -----------------------------------------------------------------------
