@@ -32,10 +32,11 @@ type TaskDescriptionMatcher = (description: string) => TaskDescriptionMatch | nu
  * @return {Task[]} An array of tasks that match the given query, sorted accordingly.
  */
 export function findTasksByDescription(tasks: readonly Task[], query: string): Task[] {
-    if (query.trim() === '') {
+    const matchDescription = createDescriptionMatcher(query);
+    if (matchDescription === null) {
         return [];
     }
-    const matchDescription = createDescriptionMatcher(query);
+
     return findTaskMatches(tasks, matchDescription);
 }
 
@@ -75,7 +76,11 @@ function taskMatchesGlobalQuery(globalQueryFilters: Filter[], task: Task, search
 // Helper functions for filtering on the query string.
 // -----------------------------------------------------------------------
 
-function createDescriptionMatcher(query: string): TaskDescriptionMatcher {
+function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null {
+    if (query.trim() === '') {
+        return null;
+    }
+
     if (getSettings().quickSearch.fuzzyMatching) {
         return prepareFuzzySearch(query);
     }
