@@ -98,7 +98,12 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
     return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
 }
 
-function getQuickSearchMatch(task: Task, matchDescription: TaskDescriptionMatcher): ScoredTaskMatch | null {
+function getQuickSearchMatch(
+    task: Task,
+    _globalQueryFilters: Filter[],
+    _searchInfo: SearchInfo,
+    matchDescription: TaskDescriptionMatcher,
+): ScoredTaskMatch | null {
     if (task.isDone) {
         return null;
     }
@@ -123,7 +128,7 @@ function findMatchingTasks(
     const matches = tasks
         .filter((task) => taskMatchesGlobalQuery(globalQueryFilters, task, searchInfo))
         .map((task: Task) => {
-            return getQuickSearchMatch(task, matchDescription);
+            return getQuickSearchMatch(task, globalQueryFilters, searchInfo, matchDescription);
         })
         .filter((match): match is ScoredTaskMatch => match !== null);
     return matches;
