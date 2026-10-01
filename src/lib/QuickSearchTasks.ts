@@ -101,7 +101,7 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
 function findMatchingTasks(
     tasks: readonly Task[],
     searchInfo: SearchInfo,
-    matchDescription: (description: string) => TaskDescriptionMatch | null,
+    matchDescription: TaskDescriptionMatcher,
 ): any {
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
