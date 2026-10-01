@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Testing/Jest Test Framework
 ---
 
 # Jest Test Framework

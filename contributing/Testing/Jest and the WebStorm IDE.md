@@ -1,3 +1,9 @@
+---
+publish: true
+aliases:
+  - Testing/Jest and the WebStorm IDE
+---
+
 # Jest and the WebStorm IDE
 
 <span class="related-pages">#testing/automated-testing #tools/webstorm</span>
