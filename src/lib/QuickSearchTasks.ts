@@ -44,7 +44,7 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
 
     const searchInfo = SearchInfo.fromAllTasks([...tasks]);
 
-    const matches = findMatchingTasks(tasks, searchInfo, matchDescription);
+    const matches = findTaskMatches(tasks, searchInfo, matchDescription);
 
     return sortTaskMatches(matches, searchInfo);
 }
@@ -124,7 +124,7 @@ function getQuickSearchMatch(
     return { task, score: match.score };
 }
 
-function findMatchingTasks(
+function findTaskMatches(
     tasks: readonly Task[],
     searchInfo: SearchInfo,
     matchDescription: TaskDescriptionMatcher,
