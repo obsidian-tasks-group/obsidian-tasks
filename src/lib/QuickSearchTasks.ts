@@ -78,10 +78,10 @@ function taskMatchesGlobalQuery(globalQueryFilters: Filter[], task: Task, search
 function createDescriptionMatcher(query: string): TaskDescriptionMatcher {
     if (getSettings().quickSearch.fuzzyMatching) {
         return prepareFuzzySearch(query);
-    } else {
-        const normalizedQuery = query.toLowerCase();
-        return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
     }
+
+    const normalizedQuery = query.toLowerCase();
+    return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
 }
 
 // -----------------------------------------------------------------------
