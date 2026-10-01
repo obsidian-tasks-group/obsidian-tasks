@@ -102,9 +102,9 @@ function getQuickSearchMatch(task: Task, matchDescription: TaskDescriptionMatche
     const match = matchDescription(task.descriptionWithoutTags);
     if (match === null) {
         return null;
-    } else {
-        return { task, score: match.score };
     }
+
+    return { task, score: match.score };
 }
 
 function findMatchingTasks(
