@@ -19,7 +19,7 @@ All good IDEs will allow you to:
 - Execute the tests inside a [debugger](https://code.visualstudio.com/docs/editor/debugging), which is really valuable to understand failing tests.
 - Jump straight to the location of the test failure
 
-Users of JetBrains WebStorm should review [[Jest and the WebStorm IDE]].
+Users of JetBrains WebStorm should review [[Vitest and the WebStorm IDE]].
 
 ## Running tests in a terminal window
 
