@@ -42,7 +42,7 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
         return [];
     }
 
-    return findTaskMatches(tasks, matchDescription);
+    return findTaskMatches(tasks, SearchInfo.fromAllTasks([...tasks]), matchDescription);
 }
 
 // -----------------------------------------------------------------------
@@ -94,13 +94,15 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
     return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
 }
 
-function findTaskMatches(tasks: readonly Task[], matchDescription: TaskDescriptionMatcher): Task[] {
+function findTaskMatches(
+    tasks: readonly Task[],
+    searchInfo: SearchInfo,
+    matchDescription: TaskDescriptionMatcher,
+): Task[] {
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
     const globalQueryFilters = getGlobalQueryFilters();
-    const searchInfo = SearchInfo.fromAllTasks([...tasks]);
-
     const matches = tasks
         .filter((task) => !task.isDone && taskMatchesGlobalQuery(globalQueryFilters, task, searchInfo))
         .map((task) => {
