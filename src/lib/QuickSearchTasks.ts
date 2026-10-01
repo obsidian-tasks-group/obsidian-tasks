@@ -100,11 +100,15 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
 
 function getQuickSearchMatch(
     task: Task,
-    _globalQueryFilters: Filter[],
-    _searchInfo: SearchInfo,
+    globalQueryFilters: Filter[],
+    searchInfo: SearchInfo,
     matchDescription: TaskDescriptionMatcher,
 ): ScoredTaskMatch | null {
     if (task.isDone) {
+        return null;
+    }
+
+    if (!taskMatchesGlobalQuery(globalQueryFilters, task, searchInfo)) {
         return null;
     }
 
@@ -126,7 +130,6 @@ function findMatchingTasks(
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
     const globalQueryFilters = getGlobalQueryFilters();
     const matches = tasks
-        .filter((task) => taskMatchesGlobalQuery(globalQueryFilters, task, searchInfo))
         .map((task: Task) => {
             return getQuickSearchMatch(task, globalQueryFilters, searchInfo, matchDescription);
         })
