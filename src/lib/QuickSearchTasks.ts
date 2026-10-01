@@ -19,6 +19,11 @@ interface TaskDescriptionMatch {
 
 type TaskDescriptionMatcher = (description: string) => TaskDescriptionMatch | null;
 
+interface ScoredTaskMatch {
+    task: Task;
+    score: number;
+}
+
 /**
  * Finds and returns tasks that match a given description query.
  *
@@ -106,7 +111,7 @@ function findTaskMatches(tasks: readonly Task[], matchDescription: TaskDescripti
             const match = matchDescription(task.descriptionWithoutTags);
             return match === null ? null : { task, score: match.score };
         })
-        .filter((match): match is { task: Task; score: number } => match !== null);
+        .filter((match): match is ScoredTaskMatch => match !== null);
 
     const defaultOrder = new Map(
         sortTasksByDescription(
