@@ -11,7 +11,7 @@ publish: true
 ### All changes
 
 - The incoming code is on a branch, and not on `main`.
-- There is at least a first attempt at Jest tests for the changes in behaviour.
+- There is at least a first attempt at Vitest tests for the changes in behaviour.
 - There is at least a first version of edits to the user documentation.
 
 ### Any changes in `src/`

@@ -14,9 +14,9 @@ It's not perfect, but it is valuable and we try to continually improve the tests
 ## Writing automated tests
 
 - [[Introduction to Writing Unit Tests]] - start here if you haven't written tests before, or are new to testing in TypeScript
-- [[Jest Test Framework]] - useful links on our chosen test framework
+- [[Vitest Test Framework]] - useful links on our chosen test framework
 - [[Example Tests]] - this shows a selection of existing tests, to give ideas on writing new tests
-- [[Jest and the WebStorm IDE]] - tips if you use WebStorm
+- [[Vitest and the WebStorm IDE]] - tips if you use WebStorm
 - [[Writing Tests for New or Refactored Code]] - tips if you're stuck writing tests
 
 Testing dates and times:

@@ -20,4 +20,4 @@ For more about refactoring safely and easily, see the talk [Refactoring Superpow
 
 ## Then start writing tests
 
-If you struggle to name a Jest `it` test, think in terms of _should_: for example, _should convert a line with no bullet to ..._
+If you struggle to name a Vitest `it` test, think in terms of _should_: for example, _should convert a line with no bullet to ..._

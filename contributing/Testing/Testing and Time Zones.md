@@ -6,9 +6,9 @@ publish: true
 
 <span class="related-pages">#testing/automated-testing #testing/manual-testing</span>
 
-## Fixing the time zone to UTC in Jest
+## Fixing the time zone to UTC in Vitest
 
-Currently, our Jest tests fix the time zone at run-time to `UTC` in [tests/global-setup.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/global-setup.js).
+Currently, our Vitest tests fix the time zone at run-time to `UTC` in [tests/global-setup.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/global-setup.js).
 
 This was done to ensure that the tests pass for contributors all around the world, regardless of their own time zone.
 

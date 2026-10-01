@@ -33,18 +33,18 @@ Do not combine bug fixes with refactoring. Do not add multiple unrelated feature
 
 ### For bug fixes
 
-1. [ ] Add a test using `it.failing()` that demonstrates the current incorrect behaviour (if one doesn't already exist).
-    - `it.failing()` is a Jest feature: the test documents what's broken, and will error if the bug is already fixed.
+1. [ ] Add a test using `it.fails()` that demonstrates the current incorrect behaviour (if one doesn't already exist).
+    - Vitest's [`it.fails()`](https://vitest.dev/api/test#test-fails) expects the test to fail: the test documents what's broken, and will error if the bug is already fixed.
     - **Commit the change** with a prefix `test:`, so that there is evidence in the history that the failing test actually failed, when run against the current implementation.
 2. [ ] Fix the bug.
-    - Change `it.failing()` to `it()` so the test now passes with your fix.
+    - Change `it.fails()` to `it()` so the test now passes with your fix.
     - **Commit the changes** with a prefix `fix:`, so that there is evidence in the history that fix really did fix the failing test.
 3. [ ] Update [[About Documentation|user documentation]]: remove any references to this bug from "known limitations" or similar sections.
     - **Commit any changes** with a prefix `docs:`.
 
 ### For new features
 
-1. [ ] Write Jest [[About Testing|tests]] covering the new behaviour.
+1. [ ] Write Vitest [[About Testing|tests]] covering the new behaviour.
 2. [ ] Write [[About Documentation|user documentation]] explaining how to use the feature. See our docs directory structure for where to place it.
 
 ## Code quality checks
