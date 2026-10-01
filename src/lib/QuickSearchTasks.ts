@@ -36,16 +36,16 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
         return [];
     }
 
+    let matchDescription: TaskDescriptionMatcher;
     if (getSettings().quickSearch.fuzzyMatching) {
-        const descriptionMatcher = prepareFuzzySearch(query);
-        return findTaskMatches(tasks, descriptionMatcher);
+        matchDescription = prepareFuzzySearch(query);
     } else {
         const normalizedQuery = query.toLowerCase();
 
-        const descriptionMatcher = (description: string) =>
+        matchDescription = (description: string) =>
             description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null;
-        return findTaskMatches(tasks, descriptionMatcher);
     }
+    return findTaskMatches(tasks, matchDescription);
 }
 
 // -----------------------------------------------------------------------
