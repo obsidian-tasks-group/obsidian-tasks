@@ -94,11 +94,11 @@ function createDescriptionMatcher(query: string): TaskDescriptionMatcher | null 
     return (description: string) => (description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null);
 }
 
-function findTaskMatches(
+function findMatchingTasksTemp(
     tasks: readonly Task[],
     searchInfo: SearchInfo,
-    matchDescription: TaskDescriptionMatcher,
-): Task[] {
+    matchDescription: (description: string) => TaskDescriptionMatch | null,
+): any {
     // Many users will have defined a Global Query in their Tasks settings,
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
@@ -110,6 +110,15 @@ function findTaskMatches(
             return match === null ? null : { task, score: match.score };
         })
         .filter((match): match is ScoredTaskMatch => match !== null);
+    return matches;
+}
+
+function findTaskMatches(
+    tasks: readonly Task[],
+    searchInfo: SearchInfo,
+    matchDescription: TaskDescriptionMatcher,
+): Task[] {
+    const matches = findMatchingTasksTemp(tasks, searchInfo, matchDescription);
     return sortTaskMatches(matches, searchInfo);
 }
 
