@@ -133,11 +133,15 @@ function findMatchingTasks(
     // such as to tell Tasks to ignore tasks that are in their Template folder.
     // So we want Quick Search to only return tasks that match the filters in the Global Query.
     const globalQueryFilters = getGlobalQueryFilters();
-    const matches = tasks
-        .map((task: Task) => {
-            return getQuickSearchMatch(task, globalQueryFilters, searchInfo, matchDescription);
-        })
-        .filter((match): match is ScoredTaskMatch => match !== null);
+
+    const matches: ScoredTaskMatch[] = [];
+    for (const task of tasks) {
+        const match = getQuickSearchMatch(task, globalQueryFilters, searchInfo, matchDescription);
+        if (match !== null) {
+            matches.push(match);
+        }
+    }
+
     return matches;
 }
 
