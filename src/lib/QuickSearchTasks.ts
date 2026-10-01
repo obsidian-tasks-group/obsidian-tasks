@@ -46,7 +46,7 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
 
     const matches = findTaskMatches(tasks, searchInfo, matchDescription);
 
-    return sortTaskMatches(matches, searchInfo);
+    return sortTaskMatches(matches, searchInfo).map((match) => match.task);
 }
 
 // -----------------------------------------------------------------------
@@ -149,7 +149,7 @@ function findTaskMatches(
 // Helper functions for sorting the candidate tasks.
 // -----------------------------------------------------------------------
 
-function sortTaskMatches(matches: ScoredTaskMatch[], searchInfo: SearchInfo): Task[] {
+function sortTaskMatches(matches: ScoredTaskMatch[], searchInfo: SearchInfo): ScoredTaskMatch[] {
     const tasksInDefaultOrder = sortTasksByDescription(
         matches.map((match) => match.task),
         searchInfo,
@@ -157,9 +157,7 @@ function sortTaskMatches(matches: ScoredTaskMatch[], searchInfo: SearchInfo): Ta
 
     const defaultOrder = new Map(tasksInDefaultOrder.map((task, index) => [task, index]));
 
-    return matches
-        .sort((a, b) => b.score - a.score || defaultOrder.get(a.task)! - defaultOrder.get(b.task)!)
-        .map((match) => match.task);
+    return matches.sort((a, b) => b.score - a.score || defaultOrder.get(a.task)! - defaultOrder.get(b.task)!);
 }
 
 function sortTasksByDescription(results: Task[], searchInfo: SearchInfo): Task[] {
