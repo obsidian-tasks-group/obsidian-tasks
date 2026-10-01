@@ -19,7 +19,7 @@ export default defineConfig({
         globals: true,
         environment: 'jsdom',
         include: ['tests/**/*.test.ts'],
-        setupFiles: ['./tests/jest.setup.ts', './tests/CustomMatchers/vitest.custom_matchers.setup.ts', 'jest-sorted'],
+        setupFiles: ['./tests/vitest.setup.ts', './tests/CustomMatchers/vitest.custom_matchers.setup.ts', 'jest-sorted'],
         globalSetup: './tests/global-setup.js',
     },
 });
