@@ -32,9 +32,11 @@ type TaskDescriptionMatcher = (description: string) => TaskDescriptionMatch | nu
  * @return {Task[]} An array of tasks that match the given query, sorted accordingly.
  */
 export function findTasksByDescription(tasks: readonly Task[], query: string): Task[] {
-    return getSettings().quickSearch.fuzzyMatching
-        ? findTasksByFuzzyDescription(tasks, query)
-        : findTasksByDescriptionSubstring(tasks, query);
+    if (getSettings().quickSearch.fuzzyMatching) {
+        return findTasksByFuzzyDescription(tasks, query);
+    } else {
+        return findTasksByDescriptionSubstring(tasks, query);
+    }
 }
 
 // -----------------------------------------------------------------------
