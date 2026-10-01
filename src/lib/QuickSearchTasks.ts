@@ -33,7 +33,11 @@ type TaskDescriptionMatcher = (description: string) => TaskDescriptionMatch | nu
  */
 export function findTasksByDescription(tasks: readonly Task[], query: string): Task[] {
     if (getSettings().quickSearch.fuzzyMatching) {
-        return findTasksByFuzzyDescription(tasks, query);
+        if (query.trim() === '') {
+            return [];
+        }
+
+        return findTaskMatches(tasks, prepareFuzzySearch(query));
     } else {
         return findTasksByDescriptionSubstring(tasks, query);
     }
@@ -85,14 +89,6 @@ function findTasksByDescriptionSubstring(tasks: readonly Task[], query: string):
     return findTaskMatches(tasks, (description) =>
         description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null,
     );
-}
-
-function findTasksByFuzzyDescription(tasks: readonly Task[], query: string): Task[] {
-    if (query.trim() === '') {
-        return [];
-    }
-
-    return findTaskMatches(tasks, prepareFuzzySearch(query));
 }
 
 // -----------------------------------------------------------------------
