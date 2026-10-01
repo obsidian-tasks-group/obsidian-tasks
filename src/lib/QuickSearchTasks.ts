@@ -42,9 +42,9 @@ export function findTasksByDescription(tasks: readonly Task[], query: string): T
     } else {
         const normalizedQuery = query.toLowerCase();
 
-        return findTaskMatches(tasks, (description) =>
-            description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null,
-        );
+        const descriptionMatcher = (description: string) =>
+            description.toLowerCase().includes(normalizedQuery) ? { score: 0 } : null;
+        return findTaskMatches(tasks, descriptionMatcher);
     }
 }
 
