@@ -143,7 +143,6 @@ Availability of access keys:
     <section class="tasks-modal-description-section">
         <label for="description">{@html labelContentWithAccessKey('Description', accesskey('t'))}</label>
         <!-- svelte-ignore a11y-accesskey -->
-        <!-- prettier-ignore -->
         <textarea
             bind:value={editableTask.description}
             bind:this={descriptionInput}
