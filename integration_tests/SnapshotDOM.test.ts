@@ -59,11 +59,14 @@ describe('DOM snapshots', () => {
         const html = executeCommand(`obsidian dev:dom selector='${DOM_SELECTOR}'`).toString();
         const prettyHTML = await prettifyHTML(html);
 
+        console.warn(prettyHTML);
+
         // The following output is dependent on Obsidian window size
         //  <div class="markdown-preview-sizer markdown-preview-section" style="padding-bottom: 355px; min-height: 362px">
+        //  <div class="markdown-preview-sizer markdown-preview-section" style="padding-bottom: 448px; min-height: 400px;">
         const normalizedHTML = prettyHTML.replace(
-            /(<div class="markdown-preview-sizer markdown-preview-section" style="padding-bottom: )\d+px(; min-height: )\d+px(")/g,
-            '$1444px$2555px$3',
+            /(<div class="markdown-preview-sizer markdown-preview-section" style="padding-bottom: )\d+px(; min-height: )\d+px;*(")/g,
+            '$1444px$2555px;$3',
         );
         verifyHtml(normalizedHTML);
     });
