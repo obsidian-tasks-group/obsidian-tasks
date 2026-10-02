@@ -181,6 +181,23 @@ HTMLElement.prototype.addClass = function (this: HTMLElement, ...classNames: str
 // Other global test code
 // ------------------------------------------------------------------
 
+// jsdom does not implement ResizeObserver, which Svelte 5 uses for bind:clientWidth.
+if (!globalThis.ResizeObserver) {
+    class ResizeObserverStub {
+        observe() {
+            // stub to silence SonarQube
+        }
+        unobserve() {
+            // stub to silence SonarQube
+        }
+        disconnect() {
+            // stub to silence SonarQube
+        }
+    }
+
+    globalThis.ResizeObserver = ResizeObserverStub;
+}
+
 // Tests should default to allowing JavaScript in Tasks queries.
 // Production code initialises this singleton separately in main.ts, using Obsidian local storage.
 EnableJsInTasksQueries.initialise(new InMemoryLocalStorageProvider());

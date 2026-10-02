@@ -11,7 +11,7 @@ pre-push:
       run: yarn test
 
 pre-commit:
-  parallel: true
+  parallel: false
   commands:
     lint:
       glob: '*.ts'

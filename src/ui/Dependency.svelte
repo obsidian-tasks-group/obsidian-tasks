@@ -166,11 +166,13 @@
         {#each searchResults as searchTask, index}
             {@const filepath = displayPath(searchTask.taskLocation.path)}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
             <li
                 on:mousedown={() => addTask(searchTask)}
                 class:selected={search !== null && index === searchIndex}
                 on:mouseenter={() => (searchIndex = index)}
             >
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <div
                     class={filepath ? 'dependency-name-shared' : 'dependency-name'}
                     on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(searchTask))}
@@ -178,6 +180,7 @@
                     [{searchTask.status.symbol}] {descriptionAdjustedForDependencySearch(searchTask)}
                 </div>
                 {#if filepath}
+                    <!-- svelte-ignore a11y_no_static_element_interactions -->
                     <div
                         class="dependency-path"
                         on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, filepath)}
@@ -192,6 +195,7 @@
 {#if editableTask[type].length !== 0}
     <div class="task-dependencies-container results-dependency">
         {#each editableTask[type] as task}
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
             <div
                 class="task-dependency"
                 on:mouseenter={(e) => showDescriptionTooltip(e.currentTarget, descriptionTooltipText(task))}
@@ -203,6 +207,7 @@
                 <!-- 'mousedown|preventDefault' keeps focus where it is while this button is
                      tapped, so that the focus-dependent padding in TaskModal.scss does not
                      move the modal contents mid-tap. See the longer note in EditTask.svelte. -->
+                <!-- svelte-ignore a11y_consider_explicit_label -->
                 <button
                     on:click={() => removeTask(task)}
                     on:mousedown|preventDefault

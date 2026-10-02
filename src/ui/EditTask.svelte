@@ -153,7 +153,7 @@ Availability of access keys:
             on:keydown={_onDescriptionKeyDown}
             on:paste={_removeLinebreaksFromDescription}
             on:drop={_removeLinebreaksFromDescription}
-        />
+        ></textarea>
     </section>
 
     <!-- --------------------------------------------------------------------------- -->
