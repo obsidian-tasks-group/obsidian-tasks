@@ -44,6 +44,7 @@
     "@types/mustache": "^4.2.5",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "@vitest/coverage-v8": "^5.0.3",
     "async-mutex": "^0.5.0",
     "esbuild": "0.28.1",
     "esbuild-sass-plugin": "^3.2.0",
@@ -56,6 +57,7 @@
     "globals": "^13.0.0",
     "i18next-parser": "^9.1.0",
     "jest-sorted": "^1.0.15",
+    "jsdom": "^30.0.1",
     "madge": "^8.0.0",
     "markdownlint-cli2": "^0.22.1",
     "moment": "^2.31.0",
@@ -73,8 +75,7 @@
     "typescript": "^5.0.4",
     "typescript-eslint": "^8.59.1",
     "vite": "^8.2.2",
-    "vitest": "^5.0.3",
-    "jsdom": "^30.0.1"
+    "vitest": "^5.0.3"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
