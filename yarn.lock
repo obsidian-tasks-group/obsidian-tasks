@@ -9010,11 +9010,6 @@ svelte-eslint-parser@^1.8.1:
     postcss-selector-parser "^7.0.0"
     semver "^7.7.2"
 
-svelte-preprocess@^6.0.5:
-  version "6.0.5"
-  resolved "https://registry.yarnpkg.com/svelte-preprocess/-/svelte-preprocess-6.0.5.tgz#2b8eb20c4ec85aa6ea4c0b193765f4c511054685"
-  integrity sha512-sgwew5yV/2eMeQobIWgAxCNarKwiTUDIc3siAUbq3sp0G6ONtzk0W+wJihMdqjbYb3iGU3ubpGv0usnnuXT3qg==
-
 svelte@^5.57.0:
   version "5.57.1"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-5.57.1.tgz#57f287fa7872652ae762dba70599d662a549af15"

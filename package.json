@@ -66,7 +66,6 @@
     "svelte": "^5.57.0",
     "svelte-check": "^4.7.6",
     "svelte-eslint-parser": "^1.8.1",
-    "svelte-preprocess": "^6.0.5",
     "tslib": "^2.8.1",
     "typedoc": "^0.27.9",
     "typedoc-plugin-mdn-links": "^4.0.4",
