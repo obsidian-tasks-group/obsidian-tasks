@@ -182,11 +182,17 @@ HTMLElement.prototype.addClass = function (this: HTMLElement, ...classNames: str
 // ------------------------------------------------------------------
 
 // jsdom does not implement ResizeObserver, which Svelte 5 uses for bind:clientWidth.
-if (typeof globalThis.ResizeObserver === 'undefined') {
+if (!globalThis.ResizeObserver) {
     class ResizeObserverStub {
-        observe() {}
-        unobserve() {}
-        disconnect() {}
+        observe() {
+            // stub to silence SonarQube
+        }
+        unobserve() {
+            // stub to silence SonarQube
+        }
+        disconnect() {
+            // stub to silence SonarQube
+        }
     }
 
     globalThis.ResizeObserver = ResizeObserverStub;
