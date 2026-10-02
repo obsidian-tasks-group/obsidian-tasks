@@ -18,7 +18,7 @@ export interface OptionsModalParams {
  */
 export class OptionsModal extends Modal {
     private readonly onSave: () => void;
-    private modalOptionsEditorComponent: ReturnType<typeof mount> | undefined;
+    private _modalOptionsEditorComponent: ReturnType<typeof mount> | undefined;
 
     constructor({ app, onSave }: OptionsModalParams) {
         super(app);
@@ -32,7 +32,7 @@ export class OptionsModal extends Modal {
 
         const { contentEl } = this;
 
-        this.modalOptionsEditorComponent = mount(ModalOptionsEditor, {
+        this._modalOptionsEditorComponent = mount(ModalOptionsEditor, {
             target: contentEl,
             props: {
                 onSave: () => {
@@ -48,9 +48,9 @@ export class OptionsModal extends Modal {
     }
 
     public onClose(): void {
-        if (this.modalOptionsEditorComponent) {
-            void unmount(this.modalOptionsEditorComponent);
-            this.modalOptionsEditorComponent = undefined;
+        if (this._modalOptionsEditorComponent) {
+            void unmount(this._modalOptionsEditorComponent);
+            this._modalOptionsEditorComponent = undefined;
         }
         const { contentEl } = this;
         contentEl.empty();

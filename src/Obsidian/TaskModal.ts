@@ -22,7 +22,7 @@ export class TaskModal extends Modal {
     public readonly onSaveSettings: () => Promise<void>;
     public readonly onSubmit: (updatedTasks: Task[]) => void;
     public readonly allTasks: Task[];
-    private editTaskComponent: ReturnType<typeof mount> | undefined;
+    private _editTaskComponent: ReturnType<typeof mount> | undefined;
 
     constructor({ app, task, onSaveSettings, onSubmit, onCancel, allTasks }: TaskModalParams) {
         super(app);
@@ -67,7 +67,7 @@ export class TaskModal extends Modal {
 
         const statusOptions = this.getKnownStatusesAndCurrentTaskStatusIfNotKnown();
 
-        this.editTaskComponent = mount(EditTask, {
+        this._editTaskComponent = mount(EditTask, {
             target: contentEl,
             props: {
                 task: this.task,
@@ -93,9 +93,9 @@ export class TaskModal extends Modal {
     }
 
     public onClose(): void {
-        if (this.editTaskComponent) {
-            void unmount(this.editTaskComponent);
-            this.editTaskComponent = undefined;
+        if (this._editTaskComponent) {
+            void unmount(this._editTaskComponent);
+            this._editTaskComponent = undefined;
         }
         const { contentEl } = this;
         contentEl.empty();
