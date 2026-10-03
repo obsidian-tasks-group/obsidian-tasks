@@ -411,10 +411,8 @@ export class Task extends ListItem {
 
         const newStatusIsNotDone = !newStatus.isCompleted();
         const oldStatusWasDone = this.status.isCompleted();
-        const noRecurrenceRule = this.recurrence === null;
 
-        const noNewRecurrence = newStatusIsNotDone || oldStatusWasDone || noRecurrenceRule;
-        if (noNewRecurrence) {
+        if (newStatusIsNotDone || oldStatusWasDone || this.recurrence === null) {
             return [toggledTask];
         }
 
