@@ -1,11 +1,11 @@
 {
   "common": {
-    "cancel": "",
-    "edit": "",
-    "moreInfo": "",
-    "okay": "",
-    "reload": "",
-    "save": ""
+    "cancel": "Hủy",
+    "edit": "Chỉnh sửa",
+    "moreInfo": "Thông tin thêm",
+    "okay": "OK",
+    "reload": "Tải lại",
+    "save": "Lưu"
   },
   "main": {
     "loadingPlugin": "Đang tải plugin: {{name}} v{{version}}",
@@ -35,23 +35,23 @@
       },
       "fixErrorsBeforeSaving": "Vui lòng sửa lỗi trước khi lưu.",
       "title": {
-        "editCoreStatus": "",
-        "editCustomStatus": ""
+        "editCoreStatus": "Chỉnh sửa trạng thái cốt lõi",
+        "editCustomStatus": "Chỉnh sửa trạng thái tùy chỉnh"
       }
     },
     "editPresetModal": {
       "name": {
-        "duplicate": "",
-        "name": "",
-        "placeholder": "",
-        "required": ""
+        "duplicate": "Đã có preset với tên này",
+        "name": "Tên",
+        "placeholder": "vd: nhiệm vụ đang mở",
+        "required": "Bắt buộc"
       },
       "query": {
-        "description": "",
-        "name": "",
-        "placeholder": ""
+        "description": "Tùy chọn. Bạn có thể điền sau.",
+        "name": "Truy vấn",
+        "placeholder": "not done\npath includes Work"
       },
-      "title": ""
+      "title": "Chỉnh sửa preset"
     }
   },
   "notices": {
@@ -224,14 +224,14 @@
       "query": {
         "description": "Một truy vấn được tự động bao gồm ở đầu mỗi khối Tasks trong vault. Hữu ích để thêm bộ lọc mặc định hoặc tùy chọn bố cục.",
         "placeholder": "Ví dụ...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
+        "shortDescription": "Các hướng dẫn được tự động đưa vào đầu mỗi khối Tasks."
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Thêm preset mới"
       },
-      "emptyState": "",
+      "emptyState": "Chưa có preset nào.",
       "line1": "Bạn có thể định nghĩa các hướng dẫn được đặt tên ở đây, mà bạn có thể sử dụng lại trong nhiều truy vấn. Một preset có tên '{{name}}' có thể được sử dụng trong truy vấn Tasks với '{{instruction1}}' hoặc '{{instruction2}}'.",
       "line2": "Bất kỳ truy vấn Tasks nào đang mở sẽ được tải lại tự động khi các preset được chỉnh sửa.",
       "name": "Preset"
@@ -251,39 +251,39 @@
       }
     },
     "searchResults": {
-      "heading": "",
+      "heading": "Kết quả tìm kiếm",
       "taskCountLocation": {
-        "description": "",
-        "name": "",
+        "description": "Chọn hiển thị số lượng nhiệm vụ ở đầu hay cuối kết quả truy vấn.",
+        "name": "Vị trí số lượng nhiệm vụ",
         "options": {
-          "bottom": "",
-          "top": ""
+          "bottom": "Cuối",
+          "top": "Đầu"
         }
       }
     },
     "searches": {
       "enableCustomSearches": {
         "confirm": {
-          "acknowledge": "",
-          "enable": ""
+          "acknowledge": "Tôi hiểu các rủi ro",
+          "enable": "Bật"
         },
         "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
+          "line1": "Bật '{{filterByFunction}}', '{{sortByFunction}}' và '{{groupByFunction}}', các hàm thực thi JavaScript trong truy vấn Tasks.",
+          "line2": "JavaScript độc hại trong truy vấn Tasks hoặc file Markdown có thể chạy bên trong Obsidian và truy cập hoặc sửa đổi nội dung vault, file cục bộ hoặc các tài nguyên hệ thống khác của bạn.",
+          "line3": "Chỉ bật tùy chọn này nếu bạn tin tưởng nội dung hiện tại và tương lai của vault này, bao gồm các file bạn có thể tải xuống, sao chép hoặc đồng bộ từ người khác sau này.",
+          "line4": "Cài đặt này chỉ được lưu trên thiết bị này; hãy bật riêng trên từng thiết bị bạn dùng vault này."
         },
-        "name": ""
+        "name": "Bật tìm kiếm tùy chỉnh"
       },
-      "heading": ""
+      "heading": "Tìm kiếm"
     },
     "seeTheDocumentation": "Xem tài liệu",
     "statuses": {
       "buttons": {
-        "addStatus": "",
+        "addStatus": "Thêm trạng thái",
         "importFromTheme": {
-          "description": "",
-          "name": ""
+          "description": "Thêm các trạng thái được hỗ trợ bởi một theme hoặc CSS snippet.",
+          "name": "Nhập từ theme"
         }
       },
       "collections": {
@@ -295,7 +295,7 @@
             "name": "{{themeName}}: Thêm {{numberOfStatuses}} Trạng thái được hỗ trợ"
           },
           "importCollection": {
-            "name": ""
+            "name": "{{themeName}} ({{numberOfStatuses}} trạng thái)"
           }
         },
         "ebullientworksTheme": "Theme Ebullientworks",
@@ -320,14 +320,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "description": "",
+            "description": "Thêm mọi ký hiệu trạng thái có trong vault của bạn nhưng chưa được cấu hình ở đây.",
             "name": "Thêm tất cả loại trạng thái không xác định"
           },
           "addNewStatus": {
             "name": "Thêm trạng thái nhiệm vụ mới"
           },
           "resetCustomStatuses": {
-            "description": "",
+            "description": "Loại bỏ tất cả trạng thái tùy chỉnh và khôi phục mặc định.",
             "name": "Đặt lại loại trạng thái tùy chỉnh về mặc định"
           }
         },
@@ -337,27 +337,27 @@
           "line3": "<b>Lưu ý</b> Bất kỳ trạng thái nào có cùng ký hiệu với bất kỳ trạng thái trước đó nào sẽ bị bỏ qua. Bạn có thể xác nhận các trạng thái thực sự được tải bằng cách chạy lệnh 'Tạo hoặc chỉnh sửa nhiệm vụ' và xem menu thả xuống Trạng thái.",
           "line4": "Xem tài liệu để bắt đầu!"
         },
-        "emptyState": "",
+        "emptyState": "Chưa có trạng thái tùy chỉnh nào.",
         "heading": "Trạng thái tùy chỉnh"
       },
       "filter": {
-        "placeholder": ""
+        "placeholder": "Lọc trạng thái…"
       },
       "heading": "Trạng thái nhiệm vụ",
-      "reloadRequired": "",
+      "reloadRequired": "Thay đổi có hiệu lực sau khi tải lại.",
       "types": {
-        "cancelled": "",
-        "done": "",
-        "empty": "",
-        "inProgress": "",
-        "nonTask": "",
-        "onHold": "",
-        "todo": ""
+        "cancelled": "Đã hủy",
+        "done": "Đã hoàn thành",
+        "empty": "Trống",
+        "inProgress": "Đang thực hiện",
+        "nonTask": "Không phải nhiệm vụ",
+        "onHold": "Tạm dừng",
+        "todo": "Cần làm"
       },
-      "unnamed": ""
+      "unnamed": "(chưa đặt tên)"
     },
     "taskEntry": {
-      "heading": ""
+      "heading": "Nhập nhiệm vụ"
     }
   }
 }

@@ -1,11 +1,11 @@
 {
   "common": {
-    "cancel": "",
-    "edit": "",
-    "moreInfo": "",
-    "okay": "",
-    "reload": "",
-    "save": ""
+    "cancel": "Отмена",
+    "edit": "Редактировать",
+    "moreInfo": "Подробнее",
+    "okay": "ОК",
+    "reload": "Перезагрузить",
+    "save": "Сохранить"
   },
   "main": {
     "loadingPlugin": "Загрузка плагина: {{name}} v{{version}}",
@@ -35,23 +35,23 @@
       },
       "fixErrorsBeforeSaving": "Исправьте ошибки перед сохранением.",
       "title": {
-        "editCoreStatus": "",
-        "editCustomStatus": ""
+        "editCoreStatus": "Редактировать основной статус",
+        "editCustomStatus": "Редактировать пользовательский статус"
       }
     },
     "editPresetModal": {
       "name": {
-        "duplicate": "",
-        "name": "",
-        "placeholder": "",
-        "required": ""
+        "duplicate": "Пресет с таким именем уже существует",
+        "name": "Имя",
+        "placeholder": "напр., открытые задачи",
+        "required": "Обязательно"
       },
       "query": {
-        "description": "",
-        "name": "",
-        "placeholder": ""
+        "description": "Необязательно. Вы можете заполнить это позже.",
+        "name": "Запрос",
+        "placeholder": "not done\npath includes Work"
       },
-      "title": ""
+      "title": "Редактировать пресет"
     }
   },
   "notices": {
@@ -224,17 +224,17 @@
       "query": {
         "description": "Запрос, который автоматически включается в начало каждого блока Tasks в хранилище. Полезно для добавления фильтров по умолчанию или параметров макета.",
         "placeholder": "Например...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
+        "shortDescription": "Инструкции, автоматически включаемые в начало каждого блока Tasks."
       }
     },
     "presets": {
       "buttons": {
-        "addNewPreset": ""
+        "addNewPreset": "Добавить новый пресет"
       },
-      "emptyState": "",
-      "line1": "",
-      "line2": "",
-      "name": ""
+      "emptyState": "Пресетов пока нет.",
+      "line1": "Здесь вы можете определять именованные инструкции, которые можно повторно использовать в нескольких запросах. Пресет с именем '{{name}}' можно использовать в запросах Tasks с помощью '{{instruction1}}' или '{{instruction2}}'.",
+      "line2": "Все открытые запросы Tasks автоматически перезагружаются при редактировании пресетов.",
+      "name": "Пресеты"
     },
     "recurringTasks": {
       "heading": "Повторяющиеся задачи",
@@ -244,46 +244,46 @@
       },
       "removeScheduledDate": {
         "description": {
-          "line1": "",
-          "line2": ""
+          "line1": "Если включить эту опцию, у следующего повторения задачи не будет даты Scheduled (⏳), если указана хотя бы одна из дат Start (🛫) или Due (📅).",
+          "line2": "Это нужно, когда вы хотите, чтобы даты Start и Due переносились на следующее повторение, а дату Scheduled вы установите позже, когда соберётесь работать над задачей."
         },
-        "name": ""
+        "name": "Удалять дату Scheduled при повторении"
       }
     },
     "searchResults": {
-      "heading": "",
+      "heading": "Результаты поиска",
       "taskCountLocation": {
-        "description": "",
-        "name": "",
+        "description": "Выберите, где отображать количество задач: вверху или внизу результатов запроса.",
+        "name": "Расположение количества задач",
         "options": {
-          "bottom": "",
-          "top": ""
+          "bottom": "Внизу",
+          "top": "Вверху"
         }
       }
     },
     "searches": {
       "enableCustomSearches": {
         "confirm": {
-          "acknowledge": "",
-          "enable": ""
+          "acknowledge": "Я понимаю риски",
+          "enable": "Включить"
         },
         "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
+          "line1": "Включает '{{filterByFunction}}', '{{sortByFunction}}' и '{{groupByFunction}}', которые выполняют JavaScript в запросах Tasks.",
+          "line2": "Вредоносный JavaScript в запросе Tasks или файле Markdown может выполниться внутри Obsidian и получить доступ к содержимому вашего хранилища, локальным файлам или другим системным ресурсам либо изменить их.",
+          "line3": "Включайте только если вы доверяете текущему и будущему содержимому этого хранилища, включая файлы, которые вы можете позже скачать, скопировать или синхронизировать от других людей.",
+          "line4": "Этот параметр хранится только на этом устройстве; включайте его отдельно на каждом устройстве, где вы используете это хранилище."
         },
-        "name": ""
+        "name": "Включить пользовательские поиски"
       },
-      "heading": ""
+      "heading": "Поиск"
     },
     "seeTheDocumentation": "Смотрите документацию",
     "statuses": {
       "buttons": {
-        "addStatus": "",
+        "addStatus": "Добавить статус",
         "importFromTheme": {
-          "description": "",
-          "name": ""
+          "description": "Добавить статусы, поддерживаемые темой или CSS-сниппетом.",
+          "name": "Импортировать из темы"
         }
       },
       "collections": {
@@ -295,7 +295,7 @@
             "name": "{{themeName}}: Добавить {{numberOfStatuses}} поддерживаемых статусов"
           },
           "importCollection": {
-            "name": ""
+            "name": "{{themeName}} (статусов: {{numberOfStatuses}})"
           }
         },
         "ebullientworksTheme": "Тема Ebullientworks",
@@ -320,14 +320,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "description": "",
+            "description": "Добавить все символы статусов, найденные в вашем хранилище, но ещё не настроенные здесь.",
             "name": "Добавить все неизвестные типы статусов"
           },
           "addNewStatus": {
             "name": "Добавить новый статус задачи"
           },
           "resetCustomStatuses": {
-            "description": "",
+            "description": "Удалить все пользовательские статусы и восстановить значения по умолчанию.",
             "name": "Сбросить пользовательские типы статусов к значениям по умолчанию"
           }
         },
@@ -337,27 +337,27 @@
           "line3": "<b>Примечание.</b> Любые статусы с тем же символом, что и у более ранних статусов, будут игнорироваться. Вы можете подтвердить фактически загруженные статусы, запустив команду 'Создать или редактировать задачу' и посмотрев на раскрывающийся список статусов.",
           "line4": "Смотрите документацию, чтобы начать!"
         },
-        "emptyState": "",
+        "emptyState": "Пользовательских статусов пока нет.",
         "heading": "Пользовательские статусы"
       },
       "filter": {
-        "placeholder": ""
+        "placeholder": "Фильтр статусов…"
       },
       "heading": "Статусы задач",
-      "reloadRequired": "",
+      "reloadRequired": "Изменения вступят в силу после перезагрузки.",
       "types": {
-        "cancelled": "",
-        "done": "",
-        "empty": "",
-        "inProgress": "",
-        "nonTask": "",
-        "onHold": "",
-        "todo": ""
+        "cancelled": "Отменено",
+        "done": "Выполнено",
+        "empty": "Пусто",
+        "inProgress": "В процессе",
+        "nonTask": "Не задача",
+        "onHold": "Приостановлено",
+        "todo": "К выполнению"
       },
-      "unnamed": ""
+      "unnamed": "(без названия)"
     },
     "taskEntry": {
-      "heading": ""
+      "heading": "Ввод задачи"
     }
   }
 }

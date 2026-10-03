@@ -1,11 +1,11 @@
 {
   "common": {
-    "cancel": "",
-    "edit": "",
-    "moreInfo": "",
-    "okay": "",
-    "reload": "",
-    "save": ""
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "moreInfo": "Mais informações",
+    "okay": "OK",
+    "reload": "Recarregar",
+    "save": "Salvar"
   },
   "main": {
     "loadingPlugin": "Carregando plugin: {{name}} v{{version}}",
@@ -35,23 +35,23 @@
       },
       "fixErrorsBeforeSaving": "Corrija os erros antes de salvar.",
       "title": {
-        "editCoreStatus": "",
-        "editCustomStatus": ""
+        "editCoreStatus": "Editar status principal",
+        "editCustomStatus": "Editar status personalizado"
       }
     },
     "editPresetModal": {
       "name": {
-        "duplicate": "",
-        "name": "",
-        "placeholder": "",
-        "required": ""
+        "duplicate": "Já existe uma predefinição com este nome",
+        "name": "Nome",
+        "placeholder": "ex.: tarefas abertas",
+        "required": "Obrigatório"
       },
       "query": {
-        "description": "",
-        "name": "",
-        "placeholder": ""
+        "description": "Opcional. Você pode preencher isso depois.",
+        "name": "Consulta",
+        "placeholder": "not done\npath includes Work"
       },
-      "title": ""
+      "title": "Editar predefinição"
     }
   },
   "notices": {
@@ -224,14 +224,14 @@
       "query": {
         "description": "Uma consulta que é incluída automaticamente no início de cada bloco do Tasks no cofre. Útil para adicionar filtros padrão ou opções de layout.",
         "placeholder": "Por exemplo...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
+        "shortDescription": "Instruções incluídas automaticamente no início de cada bloco do Tasks."
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Adicionar nova predefinição"
       },
-      "emptyState": "",
+      "emptyState": "Nenhuma predefinição ainda.",
       "line1": "Você pode definir instruções nomeadas aqui, que podem ser reutilizadas em várias consultas. Uma predefinição chamada '{{name}}' pode ser usada em consultas do Tasks com '{{instruction1}}' ou '{{instruction2}}'.",
       "line2": "Quaisquer consultas do Tasks abertas são recarregadas automaticamente quando as predefinições são editadas.",
       "name": "Predefinições (Presets)"
@@ -264,26 +264,26 @@
     "searches": {
       "enableCustomSearches": {
         "confirm": {
-          "acknowledge": "",
-          "enable": ""
+          "acknowledge": "Eu entendo os riscos",
+          "enable": "Ativar"
         },
         "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
+          "line1": "Ativa '{{filterByFunction}}', '{{sortByFunction}}' e '{{groupByFunction}}', que executam JavaScript em consultas do Tasks.",
+          "line2": "JavaScript malicioso em uma consulta do Tasks ou em um arquivo Markdown pode ser executado dentro do Obsidian e acessar ou modificar o conteúdo do seu cofre, arquivos locais ou outros recursos do sistema.",
+          "line3": "Ative somente se você confia no conteúdo atual e futuro deste cofre, incluindo arquivos que você possa baixar, copiar ou sincronizar de outras pessoas mais tarde.",
+          "line4": "Esta configuração é armazenada apenas neste dispositivo; ative-a separadamente em cada dispositivo em que você usa este cofre."
         },
-        "name": ""
+        "name": "Ativar pesquisas personalizadas"
       },
-      "heading": ""
+      "heading": "Pesquisas"
     },
     "seeTheDocumentation": "Veja a documentação",
     "statuses": {
       "buttons": {
-        "addStatus": "",
+        "addStatus": "Adicionar status",
         "importFromTheme": {
-          "description": "",
-          "name": ""
+          "description": "Adicione os status suportados por um tema ou snippet de CSS.",
+          "name": "Importar de um tema"
         }
       },
       "collections": {
@@ -295,7 +295,7 @@
             "name": "{{themeName}}: Adicionar {{numberOfStatuses}} Status suportados"
           },
           "importCollection": {
-            "name": ""
+            "name": "{{themeName}} ({{numberOfStatuses}} status)"
           }
         },
         "ebullientworksTheme": "Tema Ebullientworks",
@@ -320,14 +320,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "description": "",
+            "description": "Adicione quaisquer símbolos de status encontrados no seu cofre, mas ainda não configurados aqui.",
             "name": "Adicionar Todos os Tipos de Status Desconhecidos"
           },
           "addNewStatus": {
             "name": "Adicionar Novo Status de Tarefa"
           },
           "resetCustomStatuses": {
-            "description": "",
+            "description": "Descarte todos os status personalizados e restaure os padrões.",
             "name": "Redefinir Tipos de Status Personalizados para os Padrões"
           }
         },
@@ -337,27 +337,27 @@
           "line3": "<b>Nota:</b> Qualquer status com o mesmo símbolo de um status anterior será ignorado. Você pode confirmar os status que foram realmente carregados executando o comando 'Criar ou editar tarefa' e olhando a lista suspensa de Status.",
           "line4": "Veja a documentação para começar!"
         },
-        "emptyState": "",
+        "emptyState": "Nenhum status personalizado ainda.",
         "heading": "Status Personalizados"
       },
       "filter": {
-        "placeholder": ""
+        "placeholder": "Filtrar status…"
       },
       "heading": "Status das Tarefas",
-      "reloadRequired": "",
+      "reloadRequired": "As alterações entram em vigor após recarregar.",
       "types": {
-        "cancelled": "",
-        "done": "",
-        "empty": "",
-        "inProgress": "",
-        "nonTask": "",
-        "onHold": "",
-        "todo": ""
+        "cancelled": "Cancelado",
+        "done": "Concluído",
+        "empty": "Vazio",
+        "inProgress": "Em andamento",
+        "nonTask": "Não é tarefa",
+        "onHold": "Em espera",
+        "todo": "A fazer"
       },
-      "unnamed": ""
+      "unnamed": "(sem nome)"
     },
     "taskEntry": {
-      "heading": ""
+      "heading": "Entrada de tarefa"
     }
   }
 }

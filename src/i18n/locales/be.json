@@ -1,11 +1,11 @@
 {
   "common": {
-    "cancel": "",
-    "edit": "",
-    "moreInfo": "",
-    "okay": "",
-    "reload": "",
-    "save": ""
+    "cancel": "Скасаваць",
+    "edit": "Рэдагаваць",
+    "moreInfo": "Падрабязней",
+    "okay": "ОК",
+    "reload": "Перазагрузіць",
+    "save": "Захаваць"
   },
   "main": {
     "loadingPlugin": "Загрузка плагіна: {{name}} v{{version}}",
@@ -35,23 +35,23 @@
       },
       "fixErrorsBeforeSaving": "Выпраўце памылкі перад захаваннем.",
       "title": {
-        "editCoreStatus": "",
-        "editCustomStatus": ""
+        "editCoreStatus": "Рэдагаваць асноўны статус",
+        "editCustomStatus": "Рэдагаваць карыстальніцкі статус"
       }
     },
     "editPresetModal": {
       "name": {
-        "duplicate": "",
-        "name": "",
-        "placeholder": "",
-        "required": ""
+        "duplicate": "Прэсет з такой назвай ужо існуе",
+        "name": "Назва",
+        "placeholder": "напр., адкрытыя задачы",
+        "required": "Абавязкова"
       },
       "query": {
-        "description": "",
-        "name": "",
-        "placeholder": ""
+        "description": "Неабавязкова. Вы можаце запоўніць гэта пазней.",
+        "name": "Запыт",
+        "placeholder": "not done\npath includes Work"
       },
-      "title": ""
+      "title": "Рэдагаваць прэсет"
     }
   },
   "notices": {
@@ -224,17 +224,17 @@
       "query": {
         "description": "Запыт, які аўтаматычна ўключаецца ў пачатку кожнага блока Tasks у сховішчы. Карысны для дадання фільтраў па змаўчанні або параметраў макета.",
         "placeholder": "Напрыклад...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
+        "shortDescription": "Інструкцыі, якія аўтаматычна ўключаюцца ў пачатак кожнага блока Tasks."
       }
     },
     "presets": {
       "buttons": {
-        "addNewPreset": ""
+        "addNewPreset": "Дадаць новы прэсет"
       },
-      "emptyState": "",
-      "line1": "",
-      "line2": "",
-      "name": ""
+      "emptyState": "Прэсетаў пакуль няма.",
+      "line1": "Тут вы можаце вызначаць іменаваныя інструкцыі, якія можна паўторна выкарыстоўваць у некалькіх запытах. Прэсет з назвай '{{name}}' можна выкарыстоўваць у запытах Tasks з дапамогай '{{instruction1}}' або '{{instruction2}}'.",
+      "line2": "Усе адкрытыя запыты Tasks аўтаматычна перазагружаюцца пры рэдагаванні прэсетаў.",
+      "name": "Прэсеты"
     },
     "recurringTasks": {
       "heading": "Перыядычныя задачы",
@@ -244,46 +244,46 @@
       },
       "removeScheduledDate": {
         "description": {
-          "line1": "",
-          "line2": ""
+          "line1": "Калі ўключыць, у наступнага паўтарэння задачы не будзе даты Scheduled (⏳), калі зададзена хаця б адна з дат Start (🛫) або Due (📅).",
+          "line2": "Гэта для выпадкаў, калі вы хочаце, каб даты Start і Due пераносіліся на наступнае паўтарэнне, а дату Scheduled вы ўсталюеце пазней, калі будзеце гатовы працаваць над задачай."
         },
-        "name": ""
+        "name": "Выдаляць дату Scheduled пры паўтарэнні"
       }
     },
     "searchResults": {
-      "heading": "",
+      "heading": "Вынікі пошуку",
       "taskCountLocation": {
-        "description": "",
-        "name": "",
+        "description": "Выберыце, дзе паказваць колькасць задач: уверсе або ўнізе вынікаў запыту.",
+        "name": "Размяшчэнне колькасці задач",
         "options": {
-          "bottom": "",
-          "top": ""
+          "bottom": "Унізе",
+          "top": "Уверсе"
         }
       }
     },
     "searches": {
       "enableCustomSearches": {
         "confirm": {
-          "acknowledge": "",
-          "enable": ""
+          "acknowledge": "Я разумею рызыкі",
+          "enable": "Уключыць"
         },
         "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
+          "line1": "Уключае '{{filterByFunction}}', '{{sortByFunction}}' і '{{groupByFunction}}', якія выконваюць JavaScript у запытах Tasks.",
+          "line2": "Шкодны JavaScript у запыце Tasks або файле Markdown можа выканацца ўнутры Obsidian і атрымаць доступ да змесціва вашага сховішча, лакальных файлаў ці іншых сістэмных рэсурсаў або змяніць іх.",
+          "line3": "Уключайце толькі калі вы давяраеце бягучаму і будучаму змесціву гэтага сховішча, уключаючы файлы, якія вы можаце пазней спампаваць, скапіяваць ці сінхранізаваць ад іншых людзей.",
+          "line4": "Гэты параметр захоўваецца толькі на гэтай прыладзе; уключайце яго асобна на кожнай прыладзе, дзе вы выкарыстоўваеце гэтае сховішча."
         },
-        "name": ""
+        "name": "Уключыць карыстальніцкія пошукі"
       },
-      "heading": ""
+      "heading": "Пошук"
     },
     "seeTheDocumentation": "Глядзіце дакументацыю",
     "statuses": {
       "buttons": {
-        "addStatus": "",
+        "addStatus": "Дадаць статус",
         "importFromTheme": {
-          "description": "",
-          "name": ""
+          "description": "Дадаць статусы, якія падтрымліваюцца тэмай або CSS-фрагментам.",
+          "name": "Імпартаваць з тэмы"
         }
       },
       "collections": {
@@ -295,7 +295,7 @@
             "name": "{{themeName}}: Дадаць {{numberOfStatuses}} падтрымоўваныя статусы"
           },
           "importCollection": {
-            "name": ""
+            "name": "{{themeName}} (статусаў: {{numberOfStatuses}})"
           }
         },
         "ebullientworksTheme": "Тэма Ebullientworks",
@@ -320,14 +320,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "description": "",
+            "description": "Дадаць усе сімвалы статусаў, знойдзеныя ў вашым сховішчы, але яшчэ не настроеныя тут.",
             "name": "Дадаць усе невядомыя тыпы статусаў"
           },
           "addNewStatus": {
             "name": "Дадаць новы статус задачы"
           },
           "resetCustomStatuses": {
-            "description": "",
+            "description": "Выдаліць усе карыстальніцкія статусы і аднавіць значэнні па змаўчанні.",
             "name": "Скінуць карыстальніцкія тыпы статусаў да значэнняў па змаўчанні"
           }
         },
@@ -337,27 +337,27 @@
           "line3": "<b>Заўвага</b> Любыя статусы з тым жа сімвалам, што і ў папярэдніх статусаў, будуць праігнараваныя. Вы можаце пацвердзіць фактычна загружаныя статусы, запусціўшы каманду «Стварыць або рэдагаваць задачу» і паглядзеўшы на выпадальны спіс Статус.",
           "line4": "Глядзіце дакументацыю, каб пачаць!"
         },
-        "emptyState": "",
+        "emptyState": "Карыстальніцкіх статусаў пакуль няма.",
         "heading": "Карыстальніцкія статусы"
       },
       "filter": {
-        "placeholder": ""
+        "placeholder": "Фільтр статусаў…"
       },
       "heading": "Статусы задач",
-      "reloadRequired": "",
+      "reloadRequired": "Змены ўступяць у сілу пасля перазагрузкі.",
       "types": {
-        "cancelled": "",
-        "done": "",
-        "empty": "",
-        "inProgress": "",
-        "nonTask": "",
-        "onHold": "",
-        "todo": ""
+        "cancelled": "Адменена",
+        "done": "Выканана",
+        "empty": "Пуста",
+        "inProgress": "У працэсе",
+        "nonTask": "Не задача",
+        "onHold": "Прыпынена",
+        "todo": "Да выканання"
       },
-      "unnamed": ""
+      "unnamed": "(без назвы)"
     },
     "taskEntry": {
-      "heading": ""
+      "heading": "Увод задачы"
     }
   }
 }

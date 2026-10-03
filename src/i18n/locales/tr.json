@@ -1,11 +1,11 @@
 {
   "common": {
-    "cancel": "",
-    "edit": "",
-    "moreInfo": "",
-    "okay": "",
-    "reload": "",
-    "save": ""
+    "cancel": "İptal",
+    "edit": "Düzenle",
+    "moreInfo": "Daha fazla bilgi",
+    "okay": "Tamam",
+    "reload": "Yeniden yükle",
+    "save": "Kaydet"
   },
   "main": {
     "loadingPlugin": "Eklenti yükleniyor: {{name}} v{{version}}",
@@ -35,23 +35,23 @@
       },
       "fixErrorsBeforeSaving": "Kaydetmeden önce hataları düzeltin.",
       "title": {
-        "editCoreStatus": "",
-        "editCustomStatus": ""
+        "editCoreStatus": "Temel durumu düzenle",
+        "editCustomStatus": "Özel durumu düzenle"
       }
     },
     "editPresetModal": {
       "name": {
-        "duplicate": "",
-        "name": "",
-        "placeholder": "",
-        "required": ""
+        "duplicate": "Bu ada sahip bir ön ayar zaten var",
+        "name": "Ad",
+        "placeholder": "örn. açık görevler",
+        "required": "Gerekli"
       },
       "query": {
-        "description": "",
-        "name": "",
-        "placeholder": ""
+        "description": "İsteğe bağlı. Bunu daha sonra doldurabilirsiniz.",
+        "name": "Sorgu",
+        "placeholder": "not done\npath includes Work"
       },
-      "title": ""
+      "title": "Ön ayarı düzenle"
     }
   },
   "notices": {
@@ -224,14 +224,14 @@
       "query": {
         "description": "Kasadaki her Tasks bloğunun başına otomatik olarak eklenen sorgu. Varsayılan filtreler veya düzen seçenekleri eklemek için kullanışlıdır.",
         "placeholder": "Örneğin...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
+        "shortDescription": "Her Tasks bloğunun başına otomatik olarak eklenen talimatlar."
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Yeni ön ayar ekle"
       },
-      "emptyState": "",
+      "emptyState": "Henüz ön ayar yok.",
       "line1": "Burada birden fazla sorguda yeniden kullanabileceğiniz adlandırılmış talimatlar tanımlayabilirsiniz. '{{name}}' adlı bir ön ayar, Tasks sorgularında '{{instruction1}}' veya '{{instruction2}}' ile kullanılabilir.",
       "line2": "Ön ayarlar düzenlendiğinde açık Tasks sorguları otomatik olarak yeniden yüklenir.",
       "name": "Ön Ayarlar"
@@ -264,8 +264,8 @@
     "searches": {
       "enableCustomSearches": {
         "confirm": {
-          "acknowledge": "",
-          "enable": ""
+          "acknowledge": "Riskleri anlıyorum",
+          "enable": "Etkinleştir"
         },
         "description": {
           "line1": "Tasks sorgularında JavaScript çalıştıran '{{filterByFunction}}', '{{sortByFunction}}' ve '{{groupByFunction}}' özelliklerini etkinleştirir.",
@@ -280,10 +280,10 @@
     "seeTheDocumentation": "Belgelere bakın",
     "statuses": {
       "buttons": {
-        "addStatus": "",
+        "addStatus": "Durum ekle",
         "importFromTheme": {
-          "description": "",
-          "name": ""
+          "description": "Bir tema veya CSS parçacığının desteklediği durumları ekleyin.",
+          "name": "Temadan içe aktar"
         }
       },
       "collections": {
@@ -295,7 +295,7 @@
             "name": "{{themeName}}: {{numberOfStatuses}} desteklenen Durumu ekle"
           },
           "importCollection": {
-            "name": ""
+            "name": "{{themeName}} ({{numberOfStatuses}} durum)"
           }
         },
         "ebullientworksTheme": "Ebullientworks Teması",
@@ -320,14 +320,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "description": "",
+            "description": "Kasanızda bulunan ancak burada henüz yapılandırılmamış tüm durum sembollerini ekleyin.",
             "name": "Tüm Bilinmeyen Durum Türlerini Ekle"
           },
           "addNewStatus": {
             "name": "Yeni Görev Durumu Ekle"
           },
           "resetCustomStatuses": {
-            "description": "",
+            "description": "Tüm özel durumları silin ve varsayılanları geri yükleyin.",
             "name": "Özel Durum Türlerini Varsayılanlara Sıfırla"
           }
         },
@@ -337,27 +337,27 @@
           "line3": "<b>Not:</b> Daha önce yer alan durumlarla aynı simgeye sahip durumlar yok sayılır. Gerçekte yüklenen durumları 'Görev oluştur veya düzenle' komutunu çalıştırıp Durum açılır menüsüne bakarak doğrulayabilirsiniz.",
           "line4": "Başlamak için belgelere bakın!"
         },
-        "emptyState": "",
+        "emptyState": "Henüz özel durum yok.",
         "heading": "Özel Durumlar"
       },
       "filter": {
-        "placeholder": ""
+        "placeholder": "Durumları filtrele…"
       },
       "heading": "Görev Durumları",
-      "reloadRequired": "",
+      "reloadRequired": "Değişiklikler yeniden yüklemeden sonra geçerli olur.",
       "types": {
-        "cancelled": "",
-        "done": "",
-        "empty": "",
-        "inProgress": "",
-        "nonTask": "",
-        "onHold": "",
-        "todo": ""
+        "cancelled": "İptal edildi",
+        "done": "Tamamlandı",
+        "empty": "Boş",
+        "inProgress": "Devam ediyor",
+        "nonTask": "Görev değil",
+        "onHold": "Beklemede",
+        "todo": "Yapılacak"
       },
-      "unnamed": ""
+      "unnamed": "(adsız)"
     },
     "taskEntry": {
-      "heading": ""
+      "heading": "Görev girişi"
     }
   }
 }

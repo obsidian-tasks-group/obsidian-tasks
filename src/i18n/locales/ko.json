@@ -1,11 +1,11 @@
 {
   "common": {
-    "cancel": "",
-    "edit": "",
-    "moreInfo": "",
-    "okay": "",
-    "reload": "",
-    "save": ""
+    "cancel": "취소",
+    "edit": "편집",
+    "moreInfo": "자세히 보기",
+    "okay": "확인",
+    "reload": "새로고침",
+    "save": "저장"
   },
   "main": {
     "loadingPlugin": "플러그인 로드 중: {{name}} v{{version}}",
@@ -35,23 +35,23 @@
       },
       "fixErrorsBeforeSaving": "저장하기 전에 오류를 수정하세요.",
       "title": {
-        "editCoreStatus": "",
-        "editCustomStatus": ""
+        "editCoreStatus": "코어 상태 편집",
+        "editCustomStatus": "사용자 정의 상태 편집"
       }
     },
     "editPresetModal": {
       "name": {
-        "duplicate": "",
-        "name": "",
-        "placeholder": "",
-        "required": ""
+        "duplicate": "이 이름의 프리셋이 이미 있습니다",
+        "name": "이름",
+        "placeholder": "예: 열린 작업",
+        "required": "필수"
       },
       "query": {
-        "description": "",
-        "name": "",
-        "placeholder": ""
+        "description": "선택 사항입니다. 나중에 입력할 수 있습니다.",
+        "name": "쿼리",
+        "placeholder": "not done\npath includes Work"
       },
-      "title": ""
+      "title": "프리셋 편집"
     }
   },
   "notices": {
@@ -224,14 +224,14 @@
       "query": {
         "description": "보관소의 모든 Tasks 블록 시작에 자동으로 포함되는 쿼리입니다. 기본 필터나 레이아웃 옵션을 추가할 때 유용합니다.",
         "placeholder": "예시...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
+        "shortDescription": "모든 Tasks 블록의 시작 부분에 자동으로 포함되는 지침입니다."
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "새 프리셋 추가"
       },
-      "emptyState": "",
+      "emptyState": "아직 프리셋이 없습니다.",
       "line1": "여기서 이름 있는 지침을 정의해 여러 쿼리에서 재사용할 수 있습니다. '{{name}}' 프리셋은 Tasks 쿼리에서 '{{instruction1}}' 또는 '{{instruction2}}'로 사용할 수 있습니다.",
       "line2": "프리셋을 수정하면 열려 있는 모든 Tasks 쿼리가 자동으로 새로고침됩니다.",
       "name": "프리셋"
@@ -251,39 +251,39 @@
       }
     },
     "searchResults": {
-      "heading": "",
+      "heading": "검색 결과",
       "taskCountLocation": {
-        "description": "",
-        "name": "",
+        "description": "작업 개수를 쿼리 결과의 상단 또는 하단 중 어디에 표시할지 선택합니다.",
+        "name": "작업 개수 위치",
         "options": {
-          "bottom": "",
-          "top": ""
+          "bottom": "하단",
+          "top": "상단"
         }
       }
     },
     "searches": {
       "enableCustomSearches": {
         "confirm": {
-          "acknowledge": "",
-          "enable": ""
+          "acknowledge": "위험을 이해했습니다",
+          "enable": "활성화"
         },
         "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
+          "line1": "Tasks 쿼리에서 JavaScript를 실행하는 '{{filterByFunction}}', '{{sortByFunction}}', '{{groupByFunction}}'을(를) 활성화합니다.",
+          "line2": "Tasks 쿼리나 Markdown 파일에 악성 JavaScript가 있으면 Obsidian 내에서 실행되어 보관소 내용, 로컬 파일 또는 기타 시스템 리소스에 접근하거나 수정할 수 있습니다.",
+          "line3": "이 보관소의 현재 및 향후 내용(나중에 다른 사람으로부터 다운로드, 복사 또는 동기화하는 파일 포함)을 신뢰하는 경우에만 활성화하세요.",
+          "line4": "이 설정은 이 기기에만 저장됩니다. 이 보관소를 사용하는 각 기기에서 별도로 활성화하세요."
         },
-        "name": ""
+        "name": "사용자 정의 검색 활성화"
       },
-      "heading": ""
+      "heading": "검색"
     },
     "seeTheDocumentation": "문서 보기",
     "statuses": {
       "buttons": {
-        "addStatus": "",
+        "addStatus": "상태 추가",
         "importFromTheme": {
-          "description": "",
-          "name": ""
+          "description": "테마 또는 CSS 스니펫에서 지원하는 상태를 추가합니다.",
+          "name": "테마에서 가져오기"
         }
       },
       "collections": {
@@ -295,7 +295,7 @@
             "name": "{{themeName}}: 지원되는 상태 {{numberOfStatuses}}개 추가"
           },
           "importCollection": {
-            "name": ""
+            "name": "{{themeName}} (상태 {{numberOfStatuses}}개)"
           }
         },
         "ebullientworksTheme": "Ebullientworks 테마",
@@ -320,14 +320,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "description": "",
+            "description": "보관소에서 발견되었지만 아직 여기에 설정되지 않은 모든 상태 기호를 추가합니다.",
             "name": "알 수 없는 모든 상태 유형 추가"
           },
           "addNewStatus": {
             "name": "새 작업 상태 추가"
           },
           "resetCustomStatuses": {
-            "description": "",
+            "description": "모든 사용자 정의 상태를 삭제하고 기본값을 복원합니다.",
             "name": "사용자 정의 상태를 기본값으로 재설정"
           }
         },
@@ -337,27 +337,27 @@
           "line3": "<b>참고:</b> 이전에 정의된 상태와 기호가 동일한 상태는 무시됩니다. '작업 생성/편집' 명령어의 상태 드롭다운 메뉴에서 실제로 로드된 상태를 확인할 수 있습니다.",
           "line4": "시작하려면 문서를 참고하세요!"
         },
-        "emptyState": "",
+        "emptyState": "아직 사용자 정의 상태가 없습니다.",
         "heading": "사용자 정의 상태"
       },
       "filter": {
-        "placeholder": ""
+        "placeholder": "상태 필터…"
       },
       "heading": "작업 상태",
-      "reloadRequired": "",
+      "reloadRequired": "변경 사항은 다시 로드한 후 적용됩니다.",
       "types": {
-        "cancelled": "",
-        "done": "",
-        "empty": "",
-        "inProgress": "",
-        "nonTask": "",
-        "onHold": "",
-        "todo": ""
+        "cancelled": "취소됨",
+        "done": "완료됨",
+        "empty": "비어 있음",
+        "inProgress": "진행 중",
+        "nonTask": "작업 아님",
+        "onHold": "보류 중",
+        "todo": "할 일"
       },
-      "unnamed": ""
+      "unnamed": "(이름 없음)"
     },
     "taskEntry": {
-      "heading": ""
+      "heading": "작업 입력"
     }
   }
 }
