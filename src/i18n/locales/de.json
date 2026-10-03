@@ -1,11 +1,11 @@
 {
   "common": {
-    "cancel": "",
-    "edit": "",
-    "moreInfo": "",
-    "okay": "",
-    "reload": "",
-    "save": ""
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "moreInfo": "Mehr Infos",
+    "okay": "OK",
+    "reload": "Neu laden",
+    "save": "Speichern"
   },
   "main": {
     "loadingPlugin": "Lade Plugin: {{name}} v{{version}}",
@@ -35,23 +35,23 @@
       },
       "fixErrorsBeforeSaving": "Fehler vor dem Speichern beheben.",
       "title": {
-        "editCoreStatus": "",
-        "editCustomStatus": ""
+        "editCoreStatus": "Kern-Status bearbeiten",
+        "editCustomStatus": "Benutzerdefinierten Status bearbeiten"
       }
     },
     "editPresetModal": {
       "name": {
-        "duplicate": "",
-        "name": "",
-        "placeholder": "",
-        "required": ""
+        "duplicate": "Eine Voreinstellung mit diesem Namen existiert bereits",
+        "name": "Name",
+        "placeholder": "z. B. offene Aufgaben",
+        "required": "Erforderlich"
       },
       "query": {
-        "description": "",
-        "name": "",
-        "placeholder": ""
+        "description": "Optional. Sie können dies später ausfüllen.",
+        "name": "Abfrage",
+        "placeholder": "not done\npath includes Work"
       },
-      "title": ""
+      "title": "Voreinstellung bearbeiten"
     }
   },
   "notices": {
@@ -224,17 +224,17 @@
       "query": {
         "description": "Fügen Sie automatisch eine Abfrage am Anfang jedes Tasks-Blocks im Tresor hinzu. Nützlich für Standardfilter oder Layout-Optionen.",
         "placeholder": "Zum Beispiel...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
+        "shortDescription": "Anweisungen, die automatisch am Anfang jedes Tasks-Blocks eingefügt werden."
       }
     },
     "presets": {
       "buttons": {
-        "addNewPreset": ""
+        "addNewPreset": "Neue Voreinstellung hinzufügen"
       },
-      "emptyState": "",
-      "line1": "",
-      "line2": "",
-      "name": ""
+      "emptyState": "Noch keine Voreinstellungen.",
+      "line1": "Hier können Sie benannte Anweisungen definieren, die Sie in mehreren Abfragen wiederverwenden können. Eine Voreinstellung namens '{{name}}' kann in Tasks-Abfragen entweder mit '{{instruction1}}' oder '{{instruction2}}' verwendet werden.",
+      "line2": "Alle geöffneten Tasks-Abfragen werden automatisch neu geladen, wenn Voreinstellungen bearbeitet werden.",
+      "name": "Voreinstellungen"
     },
     "recurringTasks": {
       "heading": "Wiederkehrende Aufgaben",
@@ -251,39 +251,39 @@
       }
     },
     "searchResults": {
-      "heading": "",
+      "heading": "Suchergebnisse",
       "taskCountLocation": {
-        "description": "",
-        "name": "",
+        "description": "Legen Sie fest, ob die Aufgabenanzahl oben oder unten in den Abfrageergebnissen angezeigt wird.",
+        "name": "Position der Aufgabenanzahl",
         "options": {
-          "bottom": "",
-          "top": ""
+          "bottom": "Unten",
+          "top": "Oben"
         }
       }
     },
     "searches": {
       "enableCustomSearches": {
         "confirm": {
-          "acknowledge": "",
-          "enable": ""
+          "acknowledge": "Ich verstehe die Risiken",
+          "enable": "Aktivieren"
         },
         "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
+          "line1": "Aktiviert '{{filterByFunction}}', '{{sortByFunction}}' und '{{groupByFunction}}', die JavaScript in Tasks-Abfragen ausführen.",
+          "line2": "Schädliches JavaScript in einer Tasks-Abfrage oder Markdown-Datei könnte innerhalb von Obsidian ausgeführt werden und auf den Inhalt Ihres Tresors, lokale Dateien oder andere Systemressourcen zugreifen oder diese verändern.",
+          "line3": "Aktivieren Sie dies nur, wenn Sie dem aktuellen und zukünftigen Inhalt dieses Tresors vertrauen, einschließlich Dateien, die Sie später von anderen herunterladen, kopieren oder synchronisieren.",
+          "line4": "Diese Einstellung wird nur auf diesem Gerät gespeichert; aktivieren Sie sie separat auf jedem Gerät, auf dem Sie diesen Tresor verwenden."
         },
-        "name": ""
+        "name": "Benutzerdefinierte Suchen aktivieren"
       },
-      "heading": ""
+      "heading": "Suchen"
     },
     "seeTheDocumentation": "Vgl. die Dokumentation",
     "statuses": {
       "buttons": {
-        "addStatus": "",
+        "addStatus": "Status hinzufügen",
         "importFromTheme": {
-          "description": "",
-          "name": ""
+          "description": "Status hinzufügen, die von einem Theme oder CSS-Snippet unterstützt werden.",
+          "name": "Aus Theme importieren"
         }
       },
       "collections": {
@@ -295,7 +295,7 @@
             "name": "{{themeName}}: Füge {{numberOfStatuses}} unterstützte Status hinzu"
           },
           "importCollection": {
-            "name": ""
+            "name": "{{themeName}} ({{numberOfStatuses}} Status)"
           }
         },
         "ebullientworksTheme": "Ebullientworks Theme",
@@ -320,14 +320,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "description": "",
+            "description": "Alle Statussymbole hinzufügen, die in Ihrem Tresor vorkommen, hier aber noch nicht konfiguriert sind.",
             "name": "Alle unbekannten Statustypen hinzufügen"
           },
           "addNewStatus": {
             "name": "Neuen Aufgabenstatus hinzufügen"
           },
           "resetCustomStatuses": {
-            "description": "",
+            "description": "Alle benutzerdefinierten Status verwerfen und die Standardwerte wiederherstellen.",
             "name": "Benutzerdefinierte Statustypen auf Standard zurücksetzen"
           }
         },
@@ -337,27 +337,27 @@
           "line3": "Hinweis: Status mit dem gleichen Symbol wie ein früherer Status ignorieren wir. Bestätigen Sie die tatsächlich geladenen Status, indem Sie den 'Aufgabe erstellen oder bearbeiten'-Befehl ausführen und das Status-Dropdown anschauen.",
           "line4": "Nutzen Sie die Dokumentation, um loszulegen!"
         },
-        "emptyState": "",
+        "emptyState": "Noch keine benutzerdefinierten Status.",
         "heading": "Benutzerdefinierte Status"
       },
       "filter": {
-        "placeholder": ""
+        "placeholder": "Status filtern…"
       },
       "heading": "Aufgabenstatus",
-      "reloadRequired": "",
+      "reloadRequired": "Änderungen werden nach dem Neuladen wirksam.",
       "types": {
-        "cancelled": "",
-        "done": "",
-        "empty": "",
-        "inProgress": "",
-        "nonTask": "",
-        "onHold": "",
-        "todo": ""
+        "cancelled": "Abgebrochen",
+        "done": "Erledigt",
+        "empty": "Leer",
+        "inProgress": "In Bearbeitung",
+        "nonTask": "Keine Aufgabe",
+        "onHold": "Pausiert",
+        "todo": "Zu erledigen"
       },
-      "unnamed": ""
+      "unnamed": "(unbenannt)"
     },
     "taskEntry": {
-      "heading": ""
+      "heading": "Aufgabeneingabe"
     }
   }
 }

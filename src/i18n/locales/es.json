@@ -1,11 +1,11 @@
 {
   "common": {
-    "cancel": "",
-    "edit": "",
-    "moreInfo": "",
-    "okay": "",
-    "reload": "",
-    "save": ""
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "moreInfo": "Más información",
+    "okay": "Aceptar",
+    "reload": "Recargar",
+    "save": "Guardar"
   },
   "main": {
     "loadingPlugin": "Cargando el complemento: {{name}} v{{version}}",
@@ -35,23 +35,23 @@
       },
       "fixErrorsBeforeSaving": "Corrige los errores antes de guardar.",
       "title": {
-        "editCoreStatus": "",
-        "editCustomStatus": ""
+        "editCoreStatus": "Editar estado principal",
+        "editCustomStatus": "Editar estado personalizado"
       }
     },
     "editPresetModal": {
       "name": {
-        "duplicate": "",
-        "name": "",
-        "placeholder": "",
-        "required": ""
+        "duplicate": "Ya existe un preajuste con este nombre",
+        "name": "Nombre",
+        "placeholder": "p. ej., tareas abiertas",
+        "required": "Obligatorio"
       },
       "query": {
-        "description": "",
-        "name": "",
-        "placeholder": ""
+        "description": "Opcional. Puedes rellenarlo más tarde.",
+        "name": "Consulta",
+        "placeholder": "not done\npath includes Work"
       },
-      "title": ""
+      "title": "Editar preajuste"
     }
   },
   "notices": {
@@ -224,14 +224,14 @@
       "query": {
         "description": "Una consulta que se incluye automáticamente al principio de cada bloque de Tasks en la bóveda. Útil para añadir filtros predeterminados u opciones de diseño.",
         "placeholder": "Por ejemplo...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
+        "shortDescription": "Instrucciones incluidas automáticamente al principio de cada bloque de Tasks."
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Añadir nuevo preajuste"
       },
-      "emptyState": "",
+      "emptyState": "Aún no hay preajustes.",
       "line1": "Aquí puedes definir instrucciones con nombre que puedes reutilizar en varias consultas. Un preajuste llamado '{{name}}' se puede usar en consultas de Tasks con '{{instruction1}}' o '{{instruction2}}'.",
       "line2": "Las consultas de Tasks que estén abiertas se recargan automáticamente al editar los preajustes.",
       "name": "Preajustes"
@@ -264,8 +264,8 @@
     "searches": {
       "enableCustomSearches": {
         "confirm": {
-          "acknowledge": "",
-          "enable": ""
+          "acknowledge": "Entiendo los riesgos",
+          "enable": "Activar"
         },
         "description": {
           "line1": "Habilita '{{filterByFunction}}', '{{sortByFunction}}' y '{{groupByFunction}}', que ejecutan JavaScript en las consultas de Tasks.",
@@ -280,10 +280,10 @@
     "seeTheDocumentation": "Consulta la documentación",
     "statuses": {
       "buttons": {
-        "addStatus": "",
+        "addStatus": "Añadir estado",
         "importFromTheme": {
-          "description": "",
-          "name": ""
+          "description": "Añade los estados admitidos por un tema o fragmento CSS.",
+          "name": "Importar desde un tema"
         }
       },
       "collections": {
@@ -295,7 +295,7 @@
             "name": "{{themeName}}: Añadir {{numberOfStatuses}} estados admitidos"
           },
           "importCollection": {
-            "name": ""
+            "name": "{{themeName}} ({{numberOfStatuses}} estados)"
           }
         },
         "ebullientworksTheme": "Tema Ebullientworks",
@@ -320,14 +320,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "description": "",
+            "description": "Añade los símbolos de estado encontrados en tu bóveda pero que aún no están configurados aquí.",
             "name": "Añadir todos los tipos de estado desconocidos"
           },
           "addNewStatus": {
             "name": "Añadir nuevo estado de tarea"
           },
           "resetCustomStatuses": {
-            "description": "",
+            "description": "Descarta todos los estados personalizados y restaura los valores predeterminados.",
             "name": "Restablecer los tipos de estado personalizados a los valores predeterminados"
           }
         },
@@ -337,27 +337,27 @@
           "line3": "<b>Nota:</b> cualquier estado con el mismo símbolo que un estado anterior se ignorará. Puedes confirmar los estados realmente cargados ejecutando el comando 'Crear o editar tarea' y consultando el menú desplegable de Estado.",
           "line4": "¡Consulta la documentación para empezar!"
         },
-        "emptyState": "",
+        "emptyState": "Aún no hay estados personalizados.",
         "heading": "Estados personalizados"
       },
       "filter": {
-        "placeholder": ""
+        "placeholder": "Filtrar estados…"
       },
       "heading": "Estados de la tarea",
-      "reloadRequired": "",
+      "reloadRequired": "Los cambios surten efecto tras recargar.",
       "types": {
-        "cancelled": "",
-        "done": "",
-        "empty": "",
-        "inProgress": "",
-        "nonTask": "",
-        "onHold": "",
-        "todo": ""
+        "cancelled": "Cancelado",
+        "done": "Completado",
+        "empty": "Vacío",
+        "inProgress": "En curso",
+        "nonTask": "No es una tarea",
+        "onHold": "En espera",
+        "todo": "Por hacer"
       },
-      "unnamed": ""
+      "unnamed": "(sin nombre)"
     },
     "taskEntry": {
-      "heading": ""
+      "heading": "Entrada de tareas"
     }
   }
 }

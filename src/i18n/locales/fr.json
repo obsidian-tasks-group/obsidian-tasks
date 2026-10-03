@@ -1,11 +1,11 @@
 {
   "common": {
-    "cancel": "",
-    "edit": "",
-    "moreInfo": "",
-    "okay": "",
-    "reload": "",
-    "save": ""
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "moreInfo": "Plus d'infos",
+    "okay": "OK",
+    "reload": "Recharger",
+    "save": "Sauvegarder"
   },
   "main": {
     "loadingPlugin": "Chargement du module : {{name}} v{{version}}",
@@ -35,23 +35,23 @@
       },
       "fixErrorsBeforeSaving": "Corrigez les erreurs avant de sauvegarder.",
       "title": {
-        "editCoreStatus": "",
-        "editCustomStatus": ""
+        "editCoreStatus": "Modifier le statut principal",
+        "editCustomStatus": "Modifier le statut personnalisé"
       }
     },
     "editPresetModal": {
       "name": {
-        "duplicate": "",
-        "name": "",
-        "placeholder": "",
-        "required": ""
+        "duplicate": "Un préréglage portant ce nom existe déjà",
+        "name": "Nom",
+        "placeholder": "ex: tâches ouvertes",
+        "required": "Obligatoire"
       },
       "query": {
-        "description": "",
-        "name": "",
-        "placeholder": ""
+        "description": "Facultatif. Vous pouvez le renseigner plus tard.",
+        "name": "Requête",
+        "placeholder": "not done\npath includes Work"
       },
-      "title": ""
+      "title": "Modifier le préréglage"
     }
   },
   "notices": {
@@ -224,14 +224,14 @@
       "query": {
         "description": "Une requête automatiquement incluse au début de chaque bloc Tasks au sein du coffre. Pratique pour ajouter des filtres ou des réglages d'affichage par défaut.",
         "placeholder": "Par exemple...\npath does not include _templates/\nlimit 300\nshow urgency",
-        "shortDescription": ""
+        "shortDescription": "Instructions automatiquement incluses au début de chaque bloc Tasks."
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Ajouter un préréglage"
       },
-      "emptyState": "",
+      "emptyState": "Aucun préréglage pour l'instant.",
       "line1": "Vous pouvez définir ici des instructions à réutiliser dans plusieurs requêtes. Un préréglage appelé '{{name}}' pourra être appliqué dans les requêtes Tasks avec '{{instruction1}}' ou '{{instruction2}}'.",
       "line2": "Toutes les requêtes Tasks ouvertes sont rechargées automatiquement quand les préréglages sont modifiés.",
       "name": "Préréglages"
@@ -264,8 +264,8 @@
     "searches": {
       "enableCustomSearches": {
         "confirm": {
-          "acknowledge": "",
-          "enable": ""
+          "acknowledge": "Je comprends les risques",
+          "enable": "Activer"
         },
         "description": {
           "line1": "Active '{{filterByFunction}}', '{{sortByFunction}}', et '{{groupByFunction}}', qui éxécutent JavaScript dans les requêtes Tasks.",
@@ -280,10 +280,10 @@
     "seeTheDocumentation": "Voir la documentation",
     "statuses": {
       "buttons": {
-        "addStatus": "",
+        "addStatus": "Ajouter un statut",
         "importFromTheme": {
-          "description": "",
-          "name": ""
+          "description": "Ajouter les statuts pris en charge par un thème ou un fragment CSS.",
+          "name": "Importer depuis un thème"
         }
       },
       "collections": {
@@ -295,7 +295,7 @@
             "name": "{{themeName}}: Ajouter {{numberOfStatuses}} Statuts pris en charge"
           },
           "importCollection": {
-            "name": ""
+            "name": "{{themeName}} ({{numberOfStatuses}} statuts)"
           }
         },
         "ebullientworksTheme": "Thème Ebullientworks",
@@ -320,14 +320,14 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
-            "description": "",
+            "description": "Ajouter les symboles de statut présents dans votre coffre mais pas encore configurés ici.",
             "name": "Ajouter tous les types de Statuts inconnus."
           },
           "addNewStatus": {
             "name": "Nouveau Statut"
           },
           "resetCustomStatuses": {
-            "description": "",
+            "description": "Supprimer tous les statuts personnalisés et restaurer les valeurs par défaut.",
             "name": "Réinitialiser les types de Statuts personnalisés"
           }
         },
@@ -337,27 +337,27 @@
           "line3": "<b>Note</b> Tout statut avec un symbole déjà utilisé sera ignoré. Vous pouvez vérifier les Statuts effectivement utilisés en lançant la commande 'Créer ou modifier une tâche' et en ouvrant le menu d'attribution du statut.",
           "line4": "Voir la documentation pour commencer !"
         },
-        "emptyState": "",
+        "emptyState": "Aucun statut personnalisé pour l'instant.",
         "heading": "Statuts personnalisés"
       },
       "filter": {
-        "placeholder": ""
+        "placeholder": "Filtrer les statuts…"
       },
       "heading": "Statuts des tâches",
-      "reloadRequired": "",
+      "reloadRequired": "Les changements prennent effet après le rechargement.",
       "types": {
-        "cancelled": "",
-        "done": "",
-        "empty": "",
-        "inProgress": "",
-        "nonTask": "",
-        "onHold": "",
-        "todo": ""
+        "cancelled": "Annulé",
+        "done": "Complété",
+        "empty": "Vide",
+        "inProgress": "En cours",
+        "nonTask": "Non-tâche",
+        "onHold": "En attente",
+        "todo": "À faire"
       },
-      "unnamed": ""
+      "unnamed": "(sans nom)"
     },
     "taskEntry": {
-      "heading": ""
+      "heading": "Saisie des tâches"
     }
   }
 }
