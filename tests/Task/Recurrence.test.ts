@@ -7,6 +7,51 @@ import { updateSettings } from '../../src/Config/Settings';
 window.moment = moment;
 
 describe('Recurrence', () => {
+    it.each([
+        ['2026-09-01', '2026-09-16'],
+        ['2026-02-15', '2026-03-02'],
+    ])('supports recurrence every 15 days from %s', (referenceDate, expectedDate) => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every 15 days',
+            occurrence: new Occurrence({
+                dueDate: moment(referenceDate).startOf('day'),
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.next()!.dueDate).toEqualMoment(moment(expectedDate));
+    });
+
+    it.each([
+        ['2026-07-31', '2026-08-21'], // August has four Fridays.
+        ['2026-09-30', '2026-10-23'], // October has five Fridays.
+    ])('supports a second-to-last Friday from %s', (referenceDate, expectedDate) => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every month on the 2nd last Friday',
+            occurrence: new Occurrence({
+                dueDate: moment(referenceDate).startOf('day'),
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.next()!.dueDate).toEqualMoment(moment(expectedDate));
+    });
+
+    it.each([
+        ['2026-07-31', '2026-08-13'], // August has four Thursdays.
+        ['2026-09-30', '2026-10-15'], // October has five Thursdays.
+    ])('supports a third-to-last Thursday from %s', (referenceDate, expectedDate) => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every month on the 3rd last Thursday',
+            occurrence: new Occurrence({
+                dueDate: moment(referenceDate).startOf('day'),
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.next()!.dueDate).toEqualMoment(moment(expectedDate));
+    });
+
     it('creates a recurring instance even if no date is given', () => {
         // Arrange
         const recurrence = Recurrence.fromText({
