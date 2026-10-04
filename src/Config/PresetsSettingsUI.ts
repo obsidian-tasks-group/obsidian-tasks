@@ -28,6 +28,7 @@ export class PresetsSettingsUI {
     private readonly events: TasksEvents;
     private readonly presetsSettingsService = new PresetsSettingsService();
     private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
+    private readonly rowKeys = new WeakMap<SettingDefinition, string>();
 
     /**
      * Creates a new instance of PresetsSettingsUI
@@ -54,6 +55,13 @@ export class PresetsSettingsUI {
             {
                 type: 'list',
                 emptyState: i18n.t('settings.presets.emptyState'),
+                search: {
+                    placeholder: i18n.t('settings.presets.filter.placeholder'),
+                    match: (def, query) => {
+                        const key = this.rowKeys.get(def);
+                        return key === undefined || key.toLowerCase().includes(query.toLowerCase());
+                    },
+                },
                 addItem: {
                     name: i18n.t('settings.presets.buttons.addNewPreset'),
                     action: () => this.openEditPresetForm(null, refresh),
@@ -67,7 +75,9 @@ export class PresetsSettingsUI {
                     const updated = this.presetsSettingsService.reorderPreset(getSettings().presets, key, newIndex);
                     if (updated) {
                         // The list has already moved the row, so no refresh is needed.
-                        this.savePresetsSettings(updated, getSettings(), null);
+                        // But we need to update the rowKeys lookup to ensure that a later
+                        // delete operation deletes the correct row.
+                        this.savePresetsSettings(updated, getSettings(), refresh);
                     }
                 },
                 onDelete: (index) => {
@@ -85,10 +95,10 @@ export class PresetsSettingsUI {
     }
 
     private presetRow(key: string, value: string, refresh: () => void): SettingDefinition {
-        return {
+        const row: SettingDefinition = {
             name: key,
             desc: value,
-            searchable: false, // not searchable in global search. Later I will add a filter box in the Presets page.
+            searchable: true,
             render: (setting) => {
                 setting.descEl.addClass('tasks-presets-value-preview');
                 setting.addExtraButton((btn) =>
@@ -99,6 +109,8 @@ export class PresetsSettingsUI {
                 );
             },
         };
+        this.rowKeys.set(row, key);
+        return row;
     }
 
     /**
