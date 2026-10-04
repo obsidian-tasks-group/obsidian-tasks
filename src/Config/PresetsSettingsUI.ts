@@ -28,7 +28,7 @@ export class PresetsSettingsUI {
     private readonly events: TasksEvents;
     private readonly presetsSettingsService = new PresetsSettingsService();
     private readonly nameFields: Map<string, { inputEl: HTMLInputElement; originalKey: string }> = new Map();
-    private readonly rowKeys = new WeakMap<SettingDefinition, string>();
+    private readonly rowSearchText = new WeakMap<SettingDefinition, string>();
 
     /**
      * Creates a new instance of PresetsSettingsUI
@@ -58,8 +58,8 @@ export class PresetsSettingsUI {
                 search: {
                     placeholder: i18n.t('settings.presets.filter.placeholder'),
                     match: (def, query) => {
-                        const key = this.rowKeys.get(def);
-                        return key === undefined || key.toLowerCase().includes(query.toLowerCase());
+                        const text = this.rowSearchText.get(def);
+                        return text === undefined || text.includes(query.toLowerCase());
                     },
                 },
                 addItem: {
@@ -75,7 +75,7 @@ export class PresetsSettingsUI {
                     const updated = this.presetsSettingsService.reorderPreset(getSettings().presets, key, newIndex);
                     if (updated) {
                         // The list has already moved the row, so no refresh is needed.
-                        // But we need to update the rowKeys lookup to ensure that a later
+                        // But we need to update the rowSearchText lookup to ensure that a later
                         // delete operation deletes the correct row.
                         this.savePresetsSettings(updated, getSettings(), refresh);
                     }
@@ -109,7 +109,9 @@ export class PresetsSettingsUI {
                 );
             },
         };
-        this.rowKeys.set(row, key);
+        // Search both the name and the value.
+        // The \n separator stops a query from matching across the end of the name and the start of the value.
+        this.rowSearchText.set(row, `${key}\n${value}`.toLowerCase());
         return row;
     }
 
