@@ -232,6 +232,9 @@
         "addNewPreset": "Neue Voreinstellung hinzufügen"
       },
       "emptyState": "Noch keine Voreinstellungen.",
+      "filter": {
+        "placeholder": "Voreinstellungen filtern…"
+      },
       "line1": "Hier können Sie benannte Anweisungen definieren, die Sie in mehreren Abfragen wiederverwenden können. Eine Voreinstellung namens '{{name}}' kann in Tasks-Abfragen entweder mit '{{instruction1}}' oder '{{instruction2}}' verwendet werden.",
       "line2": "Alle geöffneten Tasks-Abfragen werden automatisch neu geladen, wenn Voreinstellungen bearbeitet werden.",
       "name": "Voreinstellungen"

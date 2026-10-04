@@ -232,6 +232,9 @@
         "addNewPreset": "Ajouter un préréglage"
       },
       "emptyState": "Aucun préréglage pour l'instant.",
+      "filter": {
+        "placeholder": "Filtrer les préréglages…"
+      },
       "line1": "Vous pouvez définir ici des instructions à réutiliser dans plusieurs requêtes. Un préréglage appelé '{{name}}' pourra être appliqué dans les requêtes Tasks avec '{{instruction1}}' ou '{{instruction2}}'.",
       "line2": "Toutes les requêtes Tasks ouvertes sont rechargées automatiquement quand les préréglages sont modifiés.",
       "name": "Préréglages"

@@ -232,6 +232,9 @@
         "addNewPreset": "Yeni ön ayar ekle"
       },
       "emptyState": "Henüz ön ayar yok.",
+      "filter": {
+        "placeholder": "Ön ayarları filtrele…"
+      },
       "line1": "Burada birden fazla sorguda yeniden kullanabileceğiniz adlandırılmış talimatlar tanımlayabilirsiniz. '{{name}}' adlı bir ön ayar, Tasks sorgularında '{{instruction1}}' veya '{{instruction2}}' ile kullanılabilir.",
       "line2": "Ön ayarlar düzenlendiğinde açık Tasks sorguları otomatik olarak yeniden yüklenir.",
       "name": "Ön Ayarlar"
