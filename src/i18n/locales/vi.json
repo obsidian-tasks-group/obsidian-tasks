@@ -232,6 +232,9 @@
         "addNewPreset": "Thêm preset mới"
       },
       "emptyState": "Chưa có preset nào.",
+      "filter": {
+        "placeholder": "Lọc preset…"
+      },
       "line1": "Bạn có thể định nghĩa các hướng dẫn được đặt tên ở đây, mà bạn có thể sử dụng lại trong nhiều truy vấn. Một preset có tên '{{name}}' có thể được sử dụng trong truy vấn Tasks với '{{instruction1}}' hoặc '{{instruction2}}'.",
       "line2": "Bất kỳ truy vấn Tasks nào đang mở sẽ được tải lại tự động khi các preset được chỉnh sửa.",
       "name": "Preset"
