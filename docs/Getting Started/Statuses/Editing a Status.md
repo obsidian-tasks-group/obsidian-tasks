@@ -12,8 +12,8 @@ This page describes features of the modal used for editing a Status.
 
 You open the modal by clicking Pencil icon to the right of any of your statuses, in the Tasks Settings:
 
-![Sample new status](../../images/settings-custom-statuses-new-empty-status.png)<br>
-*Above: Sample empty status row in Settings, with Pencil icon at the right.*
+![Click the Pencil Pencil icon to edit a status](../../images/settings-custom-statuses-add-unknown-statuses.png)<br>
+*Above: Click the Pencil Pencil icon to edit a status.*
 
 <!--
 ![Sample populated status](../../images/settings-custom-statuses-added.png)<br>
@@ -27,7 +27,7 @@ When you edit a new task status, the modal looks like this:
 
 Notice the red colouring, to indicate values which are not yet valid.
 
-If you aren't sure why something is invalid, click on the Checkmark button and an explanatory notice will pop up for a few seconds. Or see [[#Validation]] below.
+If you aren't sure why something is invalid, click on the Save button and an explanatory notice will pop up for a few seconds. Or see [[#Validation]] below.
 
 ## Saving the Status
 
