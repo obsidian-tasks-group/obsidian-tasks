@@ -440,7 +440,7 @@ and re-start Obsidian.
 
 ## Settings
 
-Note that like all Tasks settings, after any changes, Obsidian needs to be restarted for the new settings to take effect.
+Note that like several of the Tasks settings, after any changes, Obsidian needs to be restarted for the new settings to take effect.
 
 These are the settings currently available for this feature:
 

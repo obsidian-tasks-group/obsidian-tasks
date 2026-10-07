@@ -210,7 +210,7 @@
           "line3": "Par exemple, si vous saisissez le filtre global <code>#task</code>, le module Tasks  ne gèrera que les cases à cocher avec l'étiquette <code>#task</code>.",
           "line4": "Les autres cases à cocher resteront des cases à cocher normales, n'apparaîtront pas dans les requêtes et ne recevront pas de date de complétion."
         },
-        "name": "Filtre global",
+        "name": "Filtre global des tâches",
         "placeholder": "ex: #task ou TODO"
       },
       "heading": "Filtre global",

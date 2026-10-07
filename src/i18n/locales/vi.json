@@ -210,7 +210,7 @@
           "line3": "Ví dụ: nếu bạn đặt bộ lọc toàn cục thành <code>#task</code>, plugin Tasks sẽ chỉ xử lý các mục danh sách kiểm tra được gắn thẻ <code>#task</code>.",
           "line4": "Các mục danh sách kiểm tra khác sẽ vẫn là mục danh sách kiểm tra bình thường và không xuất hiện trong truy vấn hoặc được đặt ngày hoàn thành."
         },
-        "name": "Bộ lọc toàn cục",
+        "name": "Bộ lọc nhiệm vụ toàn cục",
         "placeholder": "ví dụ: #task hoặc TODO"
       },
       "heading": "Bộ lọc nhiệm vụ toàn cục",

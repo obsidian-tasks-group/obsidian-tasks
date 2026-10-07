@@ -8,19 +8,24 @@ publish: true
 
 ## Overview
 
-This is what you see in the Tasks settings when you first look at the Task Statuses section:
+1. First click on the "Task Statuses" section in the Tasks settings:
 
-![Initial Task Statuses Settings](../../images/settings-statuses-initial.png)<br>
-*Initial Task Statuses Settings*
+    ![Entry to Tasks Statuses Settings](../../images/settings-statuses-entry.png)
+    <span class="caption">Entry to Tasks Statuses Settings</span>
+
+2. You will then see:
+
+    ![Initial Task Statuses Settings](../../images/settings-statuses-initial.png)<br>
+    *Initial Task Statuses Settings*
 
 There are two sections:
 
-1. **Core Statuses**
+1. **Core statuses**
     - These are statuses that are built in to Tasks, and cannot be deleted.
     - They are the two task types that are built in to Obsidian and Tasks natively: `[ ]` and `[x]`.
     - Their status symbols cannot be changed.
     - All their other properties can be edited.
-2. **Custom Statuses**
+2. **Custom statuses**
     - These statuses are what many themes call 'custom checkboxes'.
     - You will need to choose and install a Theme or CSS Snippet that supports 'custom checkboxes'
     - Tasks automatically adds `[/]` and `[-]`
@@ -35,16 +40,21 @@ We also see that each status consists of:
 
 ## Add New Task Status
 
-This adds a new, empty row to the Custom Statuses section.
+Click the **+** button to add a new custom status.
 
 ![An empty Status, which can be edited and deleted](../../images/settings-custom-statuses-new-empty-status.png)<br>
 *An empty Status, which can be edited and deleted*
 
-You can then click its Pencil icon and fill in the details for your new Status.
+You can then fill in the details for your new Status: see [[Editing a Status]].
 
 ## Bulk-adding Statuses
 
-### Minimal Theme
+You can click on **Import from theme** to show a menu that allows you to add all the custom statuses that are supported by a theme or CSS snippet.
+
+![The "Import from theme" menu](../../images/settings-custom-statuses-import.png)
+<span class="caption">The "Import from theme" menu</span>
+
+### Minimal
 
 This button populates the Custom Statuses list with all the statuses supported by the Minimal Theme.
 
@@ -86,7 +96,7 @@ For example, in a vault that has already used a few custom statuses, we might se
 ![Example result from adding all Unknown statuses](../../images/settings-custom-statuses-add-unknown-statuses.png)<br>
 *Example result from adding all Unknown statuses*
 
-## Reset Custom Status Types to Defaults
+## Reset custom status types to defaults
 
 This resets the entire Custom Statuses section back to its default list.
 

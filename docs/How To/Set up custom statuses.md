@@ -58,17 +58,15 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 ### The Steps
 
 1. Open the Tasks settings pane
-1. Scroll down and click on 'Add New Task Status'
-    - This will create a new, empty status:
-    - ![Settings after adding a new empty status](../images/settings-custom-statuses-added-1.png)
-1. Click on the pencil icon
-    - This will open the [[Editing a Status|status edit modal]].
+1. Scroll down and click the **+** button to add a new custom status.
+    - ![An empty Status, which can be edited and deleted](../../images/settings-custom-statuses-new-empty-status.png)
+1. This will open the [[Editing a Status|status edit modal]].
     - Notice the red colouring, to indicate values which are not yet valid.
-    - If you aren't sure why something is invalid, click on the Checkmark button and an explanatory notice will pop up for a few seconds.
+    - If you aren't sure why something is invalid, click on the **Save** button and an explanatory notice will pop up for a few seconds.
     - ![The modal for editing statuses](../images/settings-custom-statuses-dialog-1.png)
 1. Enter the desired values (see the table in Goal above):
     - ![Enter the values for our new status](../images/settings-custom-statuses-dialog-2.png)
-1. Click on the Checkmark button to save the new status, and view the result:
+1. Click on the Save button to store the new status, and view the result:
     - ![After saving the values for the new status](../images/settings-custom-statuses-added.png)
 1. Repeat for the other two statuses in Goal above and you should see a clear reflection of the flow of your new statuses
     - `[!]` -> `[D]` -> `[X]` -> `[!]`:

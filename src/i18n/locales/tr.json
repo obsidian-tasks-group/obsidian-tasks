@@ -210,7 +210,7 @@
           "line3": "Örneğin, genel filtreyi <code>#task</code> olarak ayarlarsanız, Tasks eklentisi yalnızca <code>#task</code> etiketiyle işaretlenmiş kontrol listesi öğelerini işler.",
           "line4": "Diğer kontrol listesi öğeleri normal kontrol listesi öğeleri olarak kalır ve sorgularda görünmez ya da tamamlanma tarihi almaz."
         },
-        "name": "Genel filtre",
+        "name": "Genel görev filtresi",
         "placeholder": "örn. #task veya TODO"
       },
       "heading": "Genel görev filtresi",

@@ -210,7 +210,7 @@
           "line3": "Setzen Sie den globalen Filter z. B. auf <code>#task</code>, verwaltet Tasks nur die mit <code>#task</code> gekennzeichneten Kontrollkästchenitems.",
           "line4": "Andere Kontrollkästchenitems bleiben normale Kontrollkästchen und erscheinen nicht in Abfragen und erhalten kein Erledigungsdatum."
         },
-        "name": "Globaler Filter",
+        "name": "Globaler Aufgabenfilter",
         "placeholder": "z.B. #task oder TODO"
       },
       "heading": "Globaler Aufgabenfilter",
