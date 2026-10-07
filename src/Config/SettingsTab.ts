@@ -534,11 +534,15 @@ export class SettingsTab extends PluginSettingTab {
             desc: SettingsTab.createFragmentWithHTML(
                 paras([
                     // Core statuses description
-                    bold(i18n.t('settings.statuses.coreStatuses.heading')),
-                    [i18n.t('settings.statuses.coreStatuses.description.line1')].join(' '),
+                    [
+                        bold(i18n.t('settings.statuses.coreStatuses.heading')) + ':',
+                        i18n.t('settings.statuses.coreStatuses.description.line1'),
+                    ].join(' '),
                     // Custom statuses description
-                    bold(i18n.t('settings.statuses.customStatuses.heading')),
-                    i18n.t('settings.statuses.coreStatuses.description.line2'),
+                    [
+                        bold(i18n.t('settings.statuses.customStatuses.heading')) + ':',
+                        i18n.t('settings.statuses.coreStatuses.description.line2'),
+                    ].join(' '),
                     [
                         i18n.t('settings.statuses.customStatuses.description.line1'),
                         i18n.t('settings.statuses.customStatuses.description.line2'),
