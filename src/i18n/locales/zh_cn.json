@@ -210,7 +210,7 @@
           "line3": "例如，如果将全局筛选器设置为 <code>#task</code>，则 Tasks 插件将仅处理标记为 <code>#task</code> 的任务列表项。",
           "line4": "其他任务列表项将保持正常,不会出现在查询中或设置完成日期。"
         },
-        "name": "全局筛选器",
+        "name": "全局任务筛选器",
         "placeholder": "例如:#task 或 TODO"
       },
       "heading": "全局任务筛选器",

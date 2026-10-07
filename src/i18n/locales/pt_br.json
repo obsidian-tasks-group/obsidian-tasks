@@ -210,7 +210,7 @@
           "line3": "Por exemplo, se você definir o filtro global como <code>#task</code>, o plugin Tasks só manipulará os itens de checklist com a tag <code>#task</code>.",
           "line4": "Outros itens continuarão sendo itens normais de checklist e não aparecerão nas consultas nem receberão data de conclusão."
         },
-        "name": "Filtro global",
+        "name": "Filtro global de tarefas",
         "placeholder": "ex. #task ou TODO"
       },
       "heading": "Filtro global de tarefas",

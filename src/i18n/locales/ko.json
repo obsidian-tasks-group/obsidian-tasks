@@ -210,7 +210,7 @@
           "line3": "예: 전역 필터를 <code>#task</code>로 설정하면 Tasks는 <code>#task</code>가 태그된 항목만 처리합니다.",
           "line4": "그 외 항목은 일반 체크리스트로 유지되며, 쿼리에 표시되지 않고 완료 날짜도 설정되지 않습니다."
         },
-        "name": "전역 필터",
+        "name": "전역 작업 필터",
         "placeholder": "예: #task 또는 TODO"
       },
       "heading": "전역 작업 필터",

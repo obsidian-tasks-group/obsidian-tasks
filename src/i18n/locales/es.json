@@ -210,7 +210,7 @@
           "line3": "Por ejemplo, si estableces el filtro global en <code>#task</code>, el complemento Tasks solo gestionará los elementos de lista de verificación etiquetados con <code>#task</code>.",
           "line4": "El resto de elementos de lista de verificación seguirán siendo elementos normales y no aparecerán en las consultas ni recibirán una fecha de finalización."
         },
-        "name": "Filtro global",
+        "name": "Filtro global de tareas",
         "placeholder": "p. ej. #task o TODO"
       },
       "heading": "Filtro global de tareas",
