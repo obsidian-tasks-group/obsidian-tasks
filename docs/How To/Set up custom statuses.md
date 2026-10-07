@@ -66,7 +66,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
     - ![The modal for editing statuses](../images/settings-custom-statuses-dialog-1.png)
 4. Enter the desired values (see the table in Goal above):
     - ![Enter the values for our new status](../images/settings-custom-statuses-dialog-2.png)
-5. Click on the Checkmark button to save the new status, and view the result:
+5. Click on the Save button to store the new status, and view the result:
     - ![After saving the values for the new status](../images/settings-custom-statuses-added.png)
 6. Repeat for the other two statuses in Goal above and you should see a clear reflection of the flow of your new statuses
     - `[!]` -> `[D]` -> `[X]` -> `[!]`:

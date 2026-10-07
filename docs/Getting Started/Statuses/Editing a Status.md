@@ -31,7 +31,7 @@ If you aren't sure why something is invalid, click on the Save button and an exp
 
 ## Saving the Status
 
-Once you have added or edited the desired information, and none of the fields are red, you can click on the Checkmark to save the Status.
+Once you have added or edited the desired information, and none of the fields are red, you can click on the Save button.
 
 ![Enter the values for our new status](../../images/settings-custom-statuses-dialog-2.png)
 
@@ -44,4 +44,4 @@ Red warnings will be shown if any of the following checks are not satisfied:
 
 ## Limitations and Issues
 
-- Currently hitting Return to save changes and close the modal only works if you Tab through all the values until the Checkmark button has focus.
+- Currently hitting Return to save changes and close the modal only works if you Tab through all the values until the Save button has focus.
