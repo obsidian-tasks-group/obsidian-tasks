@@ -12,8 +12,8 @@ This page describes features of the modal used for editing a Status.
 
 You open the modal by clicking Pencil icon to the right of any of your statuses, in the Tasks Settings:
 
-![Click the Pencil Pencil icon to edit a status](../../images/settings-custom-statuses-add-unknown-statuses.png)<br>
-*Above: Click the Pencil Pencil icon to edit a status.*
+![Click the Pencil icon to edit a status](../../images/settings-custom-statuses-add-unknown-statuses.png)<br>
+*Above: Click the Pencil icon to edit a status.*
 
 <!--
 ![Sample populated status](../../images/settings-custom-statuses-added.png)<br>
