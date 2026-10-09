@@ -207,6 +207,85 @@ show tree
 
 ---
 
+### Query toolbar
+
+Obsidian's **Edit this block** control sits at the top inline end of a Live Preview code block. **Copy results** must stay clear of it. Use the default theme.
+
+In **Live Preview**, hover the block below and move the pointer between **Copy results** and **Edit this block**.
+
+```tasks
+path includes Smoke Testing the Tasks Plugin
+heading includes Query toolbar
+description includes sample toolbar result
+hide backlink
+```
+
+- [ ] #task sample toolbar result
+- [ ] #task **check**: **Copy results** and **Edit this block** stay apart while hovering and moving between them, and each click hits only that control
+
+Type a filter into the toolbar so only some of the results remain.
+
+- [ ] #task **check**: **Copy results** copies the filtered Markdown, and **Edit this block** opens the query for editing without copying
+
+Leave the block's source editor, then change the query so the results rerender, and repeat both actions.
+
+- [ ] #task **check**: Both actions still work after leaving source editing and after a query rerender
+
+Repeat with the filter still usable and with no horizontal overflow or collision from the reserved end space:
+
+- **Reading view**
+- list results and columns view (the next block)
+- a narrow pane and increased interface zoom
+- the query inside the callout
+
+```tasks
+path includes Smoke Testing the Tasks Plugin
+heading includes Query toolbar
+description includes sample toolbar result
+view columns by status
+hide backlink
+```
+
+> [!info] Query inside a callout
+>
+> ```tasks
+> path includes Smoke Testing the Tasks Plugin
+> heading includes Query toolbar
+> description includes sample toolbar result
+> hide backlink
+> ```
+
+- [ ] #task **check**: Checked **Reading view**, list results, columns view, a narrow pane, increased interface zoom, and a callout. The filter stays usable, with no overflow or collision from the end gutter
+
+**show toolbar** with nothing to list, and with an invalid query. Each still shows a usable toolbar.
+
+```tasks
+description includes xyzzy-toolbar-no-such-task
+show toolbar
+```
+
+```tasks
+not-a-tasks-instruction
+```
+
+**hide toolbar** on a normal result, and an ordinary code block. Hiding the toolbar adds no extra gap, and the ordinary block is unchanged.
+
+```tasks
+path includes Smoke Testing the Tasks Plugin
+heading includes Query toolbar
+description includes sample toolbar result
+hide toolbar
+hide backlink
+```
+
+```text
+ordinary code block, not a tasks query
+```
+
+- [ ] #task **check**: **show toolbar** with empty results and an invalid query still shows a usable toolbar; **hide toolbar** adds no extra spacing; an ordinary code block is unchanged
+
+---
+
 ## Check the plugin starts OK with no `data.json` settings file
 
 - Preparation
