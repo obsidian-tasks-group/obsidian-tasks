@@ -1,6 +1,7 @@
 {
     "globs": [
         "!contributing/_meta",
+        "!contributing/snippets-embedded-in-multiple-contrib-pages",
         "!docs/_meta",
         "!docs/snippets-embedded-in-multiple-pages",
         "!docs-snippets",

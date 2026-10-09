@@ -6,6 +6,18 @@ This project really cares about automated testing of its source code.
 
 It's not perfect, but it is valuable and we try to continually improve the tests.
 
+## vitest migration
+
+> [!warning] **vitest** test framework - adopted October 2026<!-- include: vitest-migration-snippet.md -->
+> This project changed test frameworks from jest to vitest on 2026-10-01.  
+> Useful links:
+>
+> - [[Vitest Test Framework]]
+> - [[Vitest and the WebStorm IDE]]
+> - The main [pull request](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/4056/changes), which shows the kinds of edits required if updating any pre-existing branches.
+>
+> There's no need to update any open pull requests: the Tasks team will take care of this when the tests are merged.<!-- endInclude -->
+
 ## Running automated tests
 
 - [[Introduction to Running the tests]] - start here if you haven't run the tests before
