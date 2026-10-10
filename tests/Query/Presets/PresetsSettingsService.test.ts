@@ -1,15 +1,5 @@
-import { PresetsSettingsService, RenameResult } from '../../../src/Query/Presets/PresetsSettingsService';
+import { PresetsSettingsService } from '../../../src/Query/Presets/PresetsSettingsService';
 import type { PresetsMap } from '../../../src/Query/Presets/Presets';
-
-function expectToBeValid(result: RenameResult) {
-    expect(result.isValid).toBe(true);
-    expect(result.errorMessage).toBe(null);
-}
-
-function expectToGiveError(result: RenameResult, errorMessage: string) {
-    expect(result.isValid).toBe(false);
-    expect(result.errorMessage).toBe(errorMessage);
-}
 
 describe('PresetsSettingsService', () => {
     let service: PresetsSettingsService;
@@ -21,46 +11,6 @@ describe('PresetsSettingsService', () => {
             key1: 'value1',
             key2: 'value2',
         };
-    });
-
-    describe('PresetsSettingsService - validateRename', () => {
-        it('should recognise valid new name', () => {
-            expectToBeValid(service.validateRename(testPresets, 'key1', 'new-name'));
-        });
-
-        it('should reject an empty new name', () => {
-            const result = service.validateRename(testPresets, 'key1', '');
-            expectToGiveError(result, 'Preset name cannot be empty or all whitespace');
-        });
-
-        it('should reject an new name with only whitespaces', () => {
-            const result = service.validateRename(testPresets, 'key1', ' \t');
-            expectToGiveError(result, 'Preset name cannot be empty or all whitespace');
-        });
-
-        it('should reject a new name if it already exists', () => {
-            const result = service.validateRename(testPresets, 'key1', 'key2');
-            expectToGiveError(result, 'A preset with this name already exists');
-        });
-
-        it('should reject a new name if it already exists, without ending spaces', () => {
-            const result = service.validateRename(testPresets, 'key1', 'key2  ');
-            expectToGiveError(result, 'A preset with this name already exists');
-        });
-
-        it('should reject a new name if it already exists, with surrounding spaces', () => {
-            testPresets = {
-                key1: 'value1',
-                ' key2 ': 'value2',
-            };
-
-            const result = service.validateRename(testPresets, 'key1', 'key2');
-            expectToGiveError(result, 'A preset with this name already exists');
-        });
-
-        it('should treat renaming to self as valid', () => {
-            expectToBeValid(service.validateRename(testPresets, 'key1', 'key1'));
-        });
     });
 
     describe('PresetsSettingsService - addPreset', () => {

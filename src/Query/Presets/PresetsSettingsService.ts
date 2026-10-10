@@ -1,53 +1,7 @@
 import { renameKeyInRecordPreservingOrder } from '../../lib/RecordHelpers';
 import type { PresetsMap } from './Presets';
 
-export class RenameResult {
-    public readonly originalName: string;
-    public readonly isValid: boolean;
-    public readonly errorMessage: string | null;
-
-    constructor(originalName: string, isValid: boolean, errorMessage: string | null) {
-        this.originalName = originalName;
-        this.isValid = isValid;
-        this.errorMessage = errorMessage;
-    }
-}
-
-/**
- * Result of validating multiple preset values at once
- */
-export interface RenameResults {
-    [originalName: string]: RenameResult;
-}
-
 export class PresetsSettingsService {
-    /**
-     * Validates if a preset name is valid
-     * @param presets The current presets map
-     * @param keyBeingRenamed The key being renamed
-     * @param newName The proposed name to validate
-     * @returns An object with validation result and error message if any
-     */
-    public validateRename(presets: Readonly<PresetsMap>, keyBeingRenamed: string, newName: string): RenameResult {
-        // Check for empty name
-        if (!newName || newName.trim() === '') {
-            return new RenameResult(keyBeingRenamed, false, 'Preset name cannot be empty or all whitespace');
-        }
-
-        for (const existingKey of Object.keys(presets)) {
-            // Skip the key being renamed
-            if (existingKey === keyBeingRenamed) {
-                continue;
-            }
-
-            if (existingKey.trim() === newName.trim()) {
-                return new RenameResult(keyBeingRenamed, false, 'A preset with this name already exists');
-            }
-        }
-
-        return new RenameResult(keyBeingRenamed, true, null);
-    }
-
     /**
      * Adds a new preset to the map with a unique key
      * @param presets The current presets map (will not be modified)
