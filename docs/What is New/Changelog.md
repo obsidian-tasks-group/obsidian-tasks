@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
-- X.Y.Z:
+- 8.5.0:
   - Add [[Settings]] complete redesign, and now searchable, in Obsidian 1.13.0 and above.
   - Filter bar added to [[Presets]] settings, in Obsidian 1.13.0 and above.
   - [[Quick Search]] now uses Fuzzy search by default, for more matches and better sorting.

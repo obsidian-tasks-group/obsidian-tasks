@@ -37,7 +37,7 @@ Each result shows a non-interactive checkbox for the task status, the rendered t
 ## How Quick Search Works
 
 > [!released]
-> Fuzzy matching was introduced in Tasks X.Y.Z.
+> Fuzzy matching was introduced in Tasks 8.5.0.
 
 - The task description is searched.
   - With `Fuzzy matching` enabled, closer matches are shown first.
