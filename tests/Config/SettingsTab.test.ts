@@ -1,5 +1,10 @@
 import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { lastModalState, resetLastModalState } from '../__mocks__/obsidian';
+import {
+    lastModalState,
+    recordedLegacySettings,
+    resetLastModalState,
+    resetRecordedLegacySettings,
+} from '../__mocks__/obsidian';
 
 import { SettingsTab } from '../../src/Config/SettingsTab';
 
@@ -132,5 +137,18 @@ describe('SettingsTab post-1.13', () => {
         // TODO Show the 'Enable custom searches' modal.
         // TODO Show options in the 'Task count location' dropdown.
         verifyAsJson(serializeForApproval(settingsTab.getSettingDefinitions()));
+    });
+});
+
+describe('SettingsTab pre-1.13', () => {
+    const settingsTab = new SettingsTab({ plugin, events });
+
+    it('all settings', () => {
+        resetRecordedLegacySettings();
+        resetLastModalState();
+
+        settingsTab.display();
+
+        verifyAsJson(serializeForApproval(recordedLegacySettings));
     });
 });
