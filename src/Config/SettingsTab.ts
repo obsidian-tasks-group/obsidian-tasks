@@ -115,6 +115,9 @@ export class SettingsTab extends PluginSettingTab {
         super(plugin.app, plugin);
 
         this.plugin = plugin;
+        if (requireApiVersion('1.11.0')) {
+            this.icon = 'list-checks';
+        }
         this.presetsSettingsUI = new PresetsSettingsUI(plugin, events);
         this.events = events;
 
