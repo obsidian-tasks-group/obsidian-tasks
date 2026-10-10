@@ -1,16 +1,5 @@
 [
   {
-    "name": "Global query",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "desc": "<p>A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.</p><p><a href=\"https://publish.obsidian.md/tasks/Queries/Global+Query\">See the documentation</a>.</p>",
-    "controls": [
-      "textArea"
-    ]
-  },
-  {
     "name": "Searches",
     "heading": true,
     "controls": []

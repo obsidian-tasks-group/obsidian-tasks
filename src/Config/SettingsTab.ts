@@ -1079,36 +1079,6 @@ export class SettingsTab extends PluginSettingTab {
         this.containerEl.addClass('tasks-settings');
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName(i18n.t('settings.globalQuery.heading')).setHeading();
-        // ---------------------------------------------------------------------------
-
-        makeMultilineTextSetting(
-            new Setting(containerEl)
-                .setDesc(
-                    SettingsTab.createFragmentWithHTML(
-                        paras([
-                            i18n.t('settings.globalQuery.query.description'),
-                            this.seeTheDocs('https://publish.obsidian.md/tasks/Queries/Global+Query'),
-                        ]),
-                    ),
-                )
-                .addTextArea((text) => {
-                    const settings = getSettings();
-
-                    text.inputEl.rows = 4;
-                    text.setPlaceholder('# ' + i18n.t('settings.globalQuery.query.placeholder'))
-                        .setValue(settings.globalQuery)
-                        .onChange(async (value) => {
-                            updateSettings({ globalQuery: value });
-                            GlobalQuery.getInstance().set(value);
-                            await this.plugin.saveSettings();
-
-                            this.events.triggerReloadOpenSearchResults();
-                        });
-                }),
-        );
-
-        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.searches.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
@@ -1947,20 +1917,6 @@ function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: Sett
 
     settings.saveSettingsAndRebuildSettingsTab();
     settings.refreshStatusesReloadNotice();
-}
-
-function makeMultilineTextSetting(setting: Setting) {
-    const { settingEl, infoEl, controlEl } = setting;
-    const textEl: HTMLElement | null = controlEl.querySelector('textarea');
-
-    // Not a setting with a text field
-    if (textEl === null) {
-        return;
-    }
-
-    settingEl.addClass('tasks-setting-multiline-text');
-    infoEl.addClass('tasks-setting-multiline-text-info');
-    textEl.addClass('tasks-setting-multiline-text-textarea');
 }
 
 function setSettingVisibility(setting: Setting | null, visible: boolean) {
