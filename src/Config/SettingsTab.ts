@@ -18,21 +18,12 @@ import {
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
-import { Status } from '../Statuses/Status';
 import type { StatusCollection } from '../Statuses/StatusCollection';
 import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import * as Themes from './Themes';
-import {
-    type HeadingState,
-    type Settings,
-    TASK_FORMATS,
-    getSettings,
-    isFeatureEnabled,
-    updateGeneralSetting,
-    updateSettings,
-} from './Settings';
+import { type Settings, TASK_FORMATS, getSettings, updateSettings } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
 
@@ -41,26 +32,6 @@ import { GlobalQuery } from './GlobalQuery';
 import { GlobalQueryModal } from './GlobalQueryModal';
 import { PresetsSettingsUI } from './PresetsSettingsUI';
 import { EnableJsInTasksQueries } from './EnableJsInTasksQueries';
-
-interface SettingConfiguration {
-    name: string;
-    description: string;
-    type: string;
-    initialValue: string;
-    placeholder: string;
-    settingName: string;
-    featureFlag: string;
-    notice: { class: string; text: string | null; html: string | null } | null;
-}
-
-interface HeadingConfiguration {
-    text: string;
-    level: string;
-    class: string;
-    open: boolean;
-    notice: { class: string; text: string | null; html: string | null } | null;
-    settings: SettingConfiguration[];
-}
 
 /**
  * A snapshot of the settings when the plugin loaded.
@@ -99,13 +70,6 @@ function bold(text: string): string {
  * updated whenever a setting is added, removed or changed.
  */
 export class SettingsTab extends PluginSettingTab {
-    // If the UI needs a more complex setting you can create a
-    // custom function and specify it from the json file. It will
-    // then be rendered instead of a normal checkbox or text box.
-    customFunctions: { [K: string]: Function } = {
-        insertTaskCoreStatusSettings: this.insertTaskCoreStatusSettings.bind(this),
-    };
-
     private readonly plugin: TasksPlugin;
     private readonly presetsSettingsUI;
     private readonly events: TasksEvents;
@@ -1081,46 +1045,6 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
-        const { headingOpened } = getSettings();
-
-        // Directly define the JSON data as a constant object
-        const settingsJson = [
-            {
-                text: i18n.t('settings.statuses.coreStatuses.heading'),
-                level: 'h3',
-                class: '',
-                open: true,
-                notice: {
-                    class: 'setting-item-description',
-                    text: null,
-                    html: paras([
-                        i18n.t('settings.statuses.coreStatuses.description.line1'),
-                        i18n.t('settings.statuses.coreStatuses.description.line2'),
-                        i18n.t('settings.changeRequiresRestart'),
-                    ]),
-                },
-                settings: [
-                    {
-                        name: '',
-                        description: '',
-                        type: 'function',
-                        initialValue: '',
-                        placeholder: '',
-                        settingName: 'insertTaskCoreStatusSettings',
-                        featureFlag: '',
-                        notice: null,
-                    },
-                ],
-            },
-        ];
-
-        // Original usage remains unchanged
-        settingsJson.forEach((heading: HeadingConfiguration) => {
-            const initiallyOpen = headingOpened[heading.text] ?? true;
-            const detailsContainer = this.addOneSettingsBlock(containerEl, heading, headingOpened);
-            detailsContainer.open = initiallyOpen;
-        });
-
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.dates.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -1406,119 +1330,6 @@ export class SettingsTab extends PluginSettingTab {
         return link(url, anchor) + '.';
     }
 
-    private addOneSettingsBlock(
-        containerEl: HTMLElement,
-        heading: HeadingConfiguration,
-        headingOpened: HeadingState,
-    ): HTMLDetailsElement {
-        const detailsContainer = containerEl.createEl('details', {
-            cls: 'tasks-nested-settings',
-            attr: {
-                ...(heading.open || headingOpened[heading.text] ? { open: true } : {}),
-            },
-        });
-        detailsContainer.empty();
-        detailsContainer.ontoggle = () => {
-            headingOpened[heading.text] = detailsContainer.open;
-            updateSettings({ headingOpened: headingOpened });
-            void this.plugin.saveSettings();
-        };
-        const summary = detailsContainer.createEl('summary');
-        new Setting(summary).setHeading().setName(heading.text);
-        summary.createDiv('collapser').createDiv('handle');
-
-        // detailsContainer.createEl(heading.level as keyof HTMLElementTagNameMap, { text: heading.text });
-
-        if (heading.notice !== null) {
-            if (heading.notice.html !== null) {
-                new Setting(detailsContainer).setDesc(SettingsTab.createFragmentWithHTML(heading.notice.html));
-            }
-        }
-
-        // This will process all the settings from settingsConfiguration.json and render
-        // them out reducing the duplication of the code in this file. This will become
-        // more important as features are being added over time.
-        heading.settings.forEach((setting: SettingConfiguration) => {
-            if (setting.featureFlag !== '' && !isFeatureEnabled(setting.featureFlag)) {
-                // The settings configuration has a featureFlag set and the user has not
-                // enabled it. Skip adding the settings option.
-                return;
-            }
-            if (setting.type === 'checkbox') {
-                new Setting(detailsContainer)
-                    .setName(setting.name)
-                    .setDesc(setting.description)
-                    .addToggle((toggle) => {
-                        const settings = getSettings();
-                        if (!settings.generalSettings[setting.settingName]) {
-                            updateGeneralSetting(setting.settingName, setting.initialValue);
-                        }
-                        toggle
-                            .setValue(<boolean>settings.generalSettings[setting.settingName])
-                            .onChange(async (value) => {
-                                updateGeneralSetting(setting.settingName, value);
-                                await this.plugin.saveSettings();
-                            });
-                    });
-            } else if (setting.type === 'text') {
-                new Setting(detailsContainer)
-                    .setName(setting.name)
-                    .setDesc(setting.description)
-                    .addText((text) => {
-                        const settings = getSettings();
-                        if (!settings.generalSettings[setting.settingName]) {
-                            updateGeneralSetting(setting.settingName, setting.initialValue);
-                        }
-
-                        const onChange = async (value: string) => {
-                            updateGeneralSetting(setting.settingName, value);
-                            await this.plugin.saveSettings();
-                        };
-
-                        text.setPlaceholder(setting.placeholder.toString())
-                            .setValue(settings.generalSettings[setting.settingName].toString())
-                            .onChange(debounce(onChange, 500, true));
-                    });
-            } else if (setting.type === 'textarea') {
-                new Setting(detailsContainer)
-                    .setName(setting.name)
-                    .setDesc(setting.description)
-                    .addTextArea((text) => {
-                        const settings = getSettings();
-                        if (!settings.generalSettings[setting.settingName]) {
-                            updateGeneralSetting(setting.settingName, setting.initialValue);
-                        }
-
-                        const onChange = async (value: string) => {
-                            updateGeneralSetting(setting.settingName, value);
-                            await this.plugin.saveSettings();
-                        };
-
-                        text.setPlaceholder(setting.placeholder.toString())
-                            .setValue(settings.generalSettings[setting.settingName].toString())
-                            .onChange(debounce(onChange, 500, true));
-
-                        text.inputEl.rows = 8;
-                        text.inputEl.cols = 40;
-                    });
-            } else if (setting.type === 'function') {
-                this.customFunctions[setting.settingName](detailsContainer, this);
-            }
-
-            if (setting.notice !== null) {
-                const notice = detailsContainer.createEl('p', {
-                    cls: setting.notice.class,
-                    text: setting.notice.text ?? '',
-                });
-                if (setting.notice.html !== null) {
-                    notice.append(sanitizeHTMLToDom(setting.notice.html));
-                }
-            }
-        });
-
-        return detailsContainer;
-    }
-
     private static parseCommaSeparatedFolders(input: string): string[] {
         return (
             input
@@ -1532,59 +1343,6 @@ export class SettingsTab extends PluginSettingTab {
     }
     private static renderFolderArray(folders: string[]): string {
         return folders.join(',');
-    }
-
-    /**
-     * Settings for Core Task Status
-     * These are built-in statuses that can have minimal edits made,
-     * but are not allowed to be deleted or added to.
-     *
-     * @param {HTMLElement} containerEl
-     * @param {SettingsTab} settings
-     */
-    insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
-        const { statusSettings } = getSettings();
-
-        /* -------------------- One row per core status in the settings -------------------- */
-        statusSettings.coreStatuses.forEach((status_type) => {
-            createRowForTaskStatus(
-                containerEl,
-                status_type,
-                statusSettings.coreStatuses,
-                statusSettings,
-                settings,
-                settings.plugin,
-                true, // isCoreStatus
-            );
-        });
-
-        /* -------------------- 'Review and check your Statuses' button -------------------- */
-        const createMermaidDiagram = new Setting(containerEl).addButton((button) => {
-            const buttonName = i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.name');
-            button
-                .setButtonText(buttonName)
-                .setCta()
-                .onClick(async () => {
-                    // Generate a new file unique file name, in the root of the vault
-                    const now = window.moment();
-                    const formattedDateTime = now.format('YYYY-MM-DD HH-mm-ss');
-                    const filename = `Tasks Plugin - ${buttonName} ${formattedDateTime}.md`;
-
-                    // Create the report
-                    const version = this.plugin.manifest.version;
-                    const statusRegistry = StatusRegistry.getInstance();
-                    const fileContent = createStatusRegistryReport(statusSettings, statusRegistry, buttonName, version);
-
-                    // Save the file
-                    const file = await this.app.vault.create(filename, fileContent);
-
-                    // And open the new file
-                    const leaf = this.app.workspace.getLeaf(true);
-                    await leaf.openFile(file);
-                });
-            button.setTooltip(i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.tooltip'));
-        });
-        createMermaidDiagram.infoEl.remove();
     }
 }
 
@@ -1638,70 +1396,6 @@ function getThemeCollections(): { name: string; collection: StatusCollection }[]
         // Dark only themes - alphabetical order
         { name: i18n.t('settings.statuses.collections.lytModeTheme'), collection: Themes.lytModeSupportedStatuses() },
     ];
-}
-
-/**
- * Create the row to see and modify settings for a single task status type.
- * @param containerEl
- * @param statusType - The status type to be edited.
- * @param statuses - The list of statuses that statusType is stored in.
- * @param statusSettings - All the status types already in the user's settings, EXCEPT the standard ones.
- * @param settings
- * @param plugin
- * @param isCoreStatus - whether the status is a core status
- */
-function createRowForTaskStatus(
-    containerEl: HTMLElement,
-    statusType: StatusConfiguration,
-    statuses: StatusConfiguration[],
-    statusSettings: StatusSettings,
-    settings: SettingsTab,
-    plugin: TasksPlugin,
-    isCoreStatus: boolean,
-) {
-    //const taskStatusDiv = containerEl.createEl('div');
-
-    const taskStatusPreview = containerEl.createEl('pre');
-    taskStatusPreview.addClass('row-for-status');
-    taskStatusPreview.textContent = new Status(statusType).previewText();
-
-    const setting = new Setting(containerEl);
-
-    setting.infoEl.replaceWith(taskStatusPreview);
-
-    if (!isCoreStatus) {
-        setting.addExtraButton((extra) => {
-            extra
-                .setIcon('cross')
-                .setTooltip('Delete')
-                .onClick(() => {
-                    if (StatusSettings.deleteStatus(statuses, statusType)) {
-                        updateAndSaveStatusSettings(statusSettings, settings);
-                    }
-                });
-        });
-    }
-
-    setting.addExtraButton((extra) => {
-        extra
-            .setIcon('pencil')
-            .setTooltip('Edit')
-            .onClick(() => {
-                const modal = new CustomStatusModal(plugin, statusType, isCoreStatus);
-
-                modal.onClose = () => {
-                    if (modal.saved) {
-                        if (StatusSettings.replaceStatus(statuses, statusType, modal.statusConfiguration())) {
-                            updateAndSaveStatusSettings(statusSettings, settings);
-                        }
-                    }
-                };
-
-                modal.open();
-            });
-    });
-
-    setting.infoEl.remove();
 }
 
 function addCustomStatesToSettings(
