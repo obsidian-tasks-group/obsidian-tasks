@@ -253,7 +253,6 @@
       }
     },
     "searchResults": {
-      "heading": "Suchergebnisse",
       "taskCountLocation": {
         "description": "Legen Sie fest, ob die Aufgabenanzahl oben oder unten in den Abfrageergebnissen angezeigt wird.",
         "name": "Position der Aufgabenanzahl",

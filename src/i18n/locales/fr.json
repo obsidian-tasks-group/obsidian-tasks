@@ -253,7 +253,6 @@
       }
     },
     "searchResults": {
-      "heading": "Résultats de recherche",
       "taskCountLocation": {
         "description": "Afficher le nombre de tâches en haut ou en bas des résultats d'une requête.",
         "name": "Emplacement du nombre de tâches",

@@ -253,7 +253,6 @@
       }
     },
     "searchResults": {
-      "heading": "검색 결과",
       "taskCountLocation": {
         "description": "작업 개수를 쿼리 결과의 상단 또는 하단 중 어디에 표시할지 선택합니다.",
         "name": "작업 개수 위치",

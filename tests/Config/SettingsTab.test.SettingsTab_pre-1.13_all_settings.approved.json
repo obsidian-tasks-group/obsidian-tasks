@@ -1,10 +1,5 @@
 [
   {
-    "name": "Search results",
-    "heading": true,
-    "controls": []
-  },
-  {
     "name": "Task statuses",
     "heading": true,
     "controls": []

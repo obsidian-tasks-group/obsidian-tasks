@@ -253,7 +253,6 @@
       }
     },
     "searchResults": {
-      "heading": "搜索结果",
       "taskCountLocation": {
         "description": "选择任务数量显示在查询结果的顶部还是底部。",
         "name": "任务数量位置",

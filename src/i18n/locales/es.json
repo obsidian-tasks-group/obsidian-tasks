@@ -253,7 +253,6 @@
       }
     },
     "searchResults": {
-      "heading": "Resultados de la búsqueda",
       "taskCountLocation": {
         "description": "Elige si el recuento de tareas se muestra en la parte superior o inferior de los resultados de la consulta.",
         "name": "Ubicación del recuento de tareas",

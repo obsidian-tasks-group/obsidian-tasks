@@ -253,7 +253,6 @@
       }
     },
     "searchResults": {
-      "heading": "Kết quả tìm kiếm",
       "taskCountLocation": {
         "description": "Chọn hiển thị số lượng nhiệm vụ ở đầu hay cuối kết quả truy vấn.",
         "name": "Vị trí số lượng nhiệm vụ",
