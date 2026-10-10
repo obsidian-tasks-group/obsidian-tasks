@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Autosuggest",
       "maxSuggestions": {
         "description": "Wie viele Vorschläge möchten Sie anzeigen, wenn ein Autosuggest-Menü aufgeht (einschließlich der \"⏎\"-Option).",
         "name": "Maximale Anzahl von Autosuggest-Vorschlägen anzeigen"
@@ -142,7 +141,6 @@
         "name": "Aufgabentext automatisch vorschlagen"
       }
     },
-    "changeRequiresRestart": "NEUSTART ERFORDERLICH.",
     "dates": {
       "cancelledDate": {
         "description": "Wenn aktiviert, füge beim Umschalten auf 'abgebrochen' automatisch ein Datum ❌ YYYY-MM-DD am Ende hinzu.",

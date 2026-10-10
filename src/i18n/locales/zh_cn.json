@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "自动建议",
       "maxSuggestions": {
         "description": "当自动建议菜单弹出时，应显示多少条建议 (包含 \"⏎\" 选项)。",
         "name": "要显示的最大自动建议数"
@@ -142,7 +141,6 @@
         "name": "自动建议任务内容"
       }
     },
-    "changeRequiresRestart": "需要重启。",
     "dates": {
       "cancelledDate": {
         "description": "启用此功能将在任务设置为取消时，在其末尾添加时间戳 ❌ YYYY-MM-DD。",

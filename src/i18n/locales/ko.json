@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "자동 제안",
       "maxSuggestions": {
         "description": "자동 제안 메뉴가 나타날 때 표시할 제안의 개수입니다 ('⏎' 옵션 포함).",
         "name": "자동 제안 최대 표시 개수"
@@ -142,7 +141,6 @@
         "name": "작업 내용 자동 제안"
       }
     },
-    "changeRequiresRestart": "재시작이 필요합니다.",
     "dates": {
       "cancelledDate": {
         "description": "활성화하면 작업을 '취소'로 전환할 때 마지막에 ❌ YYYY-MM-DD 타임스탬프가 추가됩니다.",

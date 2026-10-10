@@ -1042,80 +1042,6 @@ export class SettingsTab extends PluginSettingTab {
         this.containerEl.addClass('tasks-settings');
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName(i18n.t('settings.autoSuggest.heading')).setHeading();
-        // ---------------------------------------------------------------------------
-        let autoSuggestMinimumMatchLength: Setting | null = null;
-        let autoSuggestMaximumSuggestions: Setting | null = null;
-
-        new Setting(containerEl)
-            .setName(i18n.t('settings.autoSuggest.toggle.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.autoSuggest.toggle.description') +
-                        '</br>' +
-                        paras([
-                            i18n.t('settings.changeRequiresRestart'),
-                            this.seeTheDocs('https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
-                        ]),
-                ),
-            )
-            .addToggle((toggle) => {
-                const settings = getSettings();
-                toggle.setValue(settings.autoSuggestInEditor).onChange(async (value) => {
-                    updateSettings({ autoSuggestInEditor: value });
-                    await this.plugin.saveSettings();
-                    setSettingVisibility(autoSuggestMinimumMatchLength, value);
-                    setSettingVisibility(autoSuggestMaximumSuggestions, value);
-                });
-            });
-
-        autoSuggestMinimumMatchLength = new Setting(containerEl)
-            .setName(i18n.t('settings.autoSuggest.minLength.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    paras([
-                        i18n.t('settings.autoSuggest.minLength.description'),
-                        i18n.t('settings.changeRequiresRestart'),
-                    ]),
-                ),
-            )
-            .addSlider((slider) => {
-                const settings = getSettings();
-                slider
-                    .setLimits(0, 3, 1)
-                    .setValue(settings.autoSuggestMinMatch)
-                    .setDynamicTooltip()
-                    .onChange(async (value) => {
-                        updateSettings({ autoSuggestMinMatch: value });
-                        await this.plugin.saveSettings();
-                    });
-            });
-
-        autoSuggestMaximumSuggestions = new Setting(containerEl)
-            .setName(i18n.t('settings.autoSuggest.maxSuggestions.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    paras([
-                        i18n.t('settings.autoSuggest.maxSuggestions.description'),
-                        i18n.t('settings.changeRequiresRestart'),
-                    ]),
-                ),
-            )
-            .addSlider((slider) => {
-                const settings = getSettings();
-                slider
-                    .setLimits(3, 20, 1)
-                    .setValue(settings.autoSuggestMaxItems)
-                    .setDynamicTooltip()
-                    .onChange(async (value) => {
-                        updateSettings({ autoSuggestMaxItems: value });
-                        await this.plugin.saveSettings();
-                    });
-            });
-        setSettingVisibility(autoSuggestMinimumMatchLength, getSettings().autoSuggestInEditor);
-        setSettingVisibility(autoSuggestMaximumSuggestions, getSettings().autoSuggestInEditor);
-
-        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.dialogs.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
@@ -1242,14 +1168,4 @@ function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: Sett
 
     settings.saveSettingsAndRebuildSettingsTab();
     settings.refreshStatusesReloadNotice();
-}
-
-function setSettingVisibility(setting: Setting | null, visible: boolean) {
-    if (setting) {
-        // @ts-expect-error Setting.setVisibility() is not exposed in the API.
-        // Source: https://discord.com/channels/686053708261228577/840286264964022302/1293725986042544139
-        setting.setVisibility(visible);
-    } else {
-        console.warn('Setting has not be initialised. Can update visibility of setting UI - in setSettingVisibility');
-    }
 }

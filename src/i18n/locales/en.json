@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Auto-suggest",
       "maxSuggestions": {
         "description": "How many suggestions should be shown when an auto-suggest menu pops up (including the \"⏎\" option).",
         "name": "Maximum number of auto-suggestions to show"
@@ -142,7 +141,6 @@
         "name": "Auto-suggest task content"
       }
     },
-    "changeRequiresRestart": "REQUIRES RESTART.",
     "dates": {
       "cancelledDate": {
         "description": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",

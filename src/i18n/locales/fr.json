@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Suggestion automatique",
       "maxSuggestions": {
         "description": "Le nombre de suggestions affichées lorsque le menu de suggestion automatique apparaît (y compris l'option \"⏎\").",
         "name": "Nombre maximum de suggestions à afficher"
@@ -142,7 +141,6 @@
         "name": "Auto-suggestion du contenu des tâches"
       }
     },
-    "changeRequiresRestart": "NÉCESSITE UN REDÉMARRAGE.",
     "dates": {
       "cancelledDate": {
         "description": "Activer cette option ajoute un horodatage ❌ YYYY-MM-DD à la fin d'une tâche marquée comme annulée.",

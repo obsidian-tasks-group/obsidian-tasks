@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Autosugerencia",
       "maxSuggestions": {
         "description": "Cuántas sugerencias se deben mostrar cuando aparece un menú de autosugerencia (incluyendo la opción \"⏎\").",
         "name": "Número máximo de autosugerencias a mostrar"
@@ -142,7 +141,6 @@
         "name": "Autosugerir contenido de la tarea"
       }
     },
-    "changeRequiresRestart": "REQUIERE REINICIO.",
     "dates": {
       "cancelledDate": {
         "description": "Al activar esta opción se añadirá una marca de tiempo ❌ AAAA-MM-DD al final cuando una tarea se marque como cancelada.",

@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Otomatik öneri",
       "maxSuggestions": {
         "description": "Otomatik öneri menüsü açıldığında kaç öneri gösterilmeli (\"⏎\" seçeneği dahil).",
         "name": "Gösterilecek maksimum otomatik öneri sayısı"
@@ -142,7 +141,6 @@
         "name": "Görev içeriği için otomatik öneri"
       }
     },
-    "changeRequiresRestart": "YENİDEN BAŞLATMA GEREKTİRİR.",
     "dates": {
       "cancelledDate": {
         "description": "Bu seçeneği etkinleştirirseniz, bir görev iptal durumuna geçirildiğinde sonuna ❌ YYYY-AA-GG zaman damgası eklenir.",

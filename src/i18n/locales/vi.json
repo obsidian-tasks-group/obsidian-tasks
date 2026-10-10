@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Gợi ý tự động",
       "maxSuggestions": {
         "description": "Số lượng gợi ý sẽ được hiển thị khi menu gợi ý tự động xuất hiện (bao gồm tùy chọn \"⏎\").",
         "name": "Số lượng gợi ý tự động tối đa để hiển thị"
@@ -142,7 +141,6 @@
         "name": "Gợi ý tự động nội dung nhiệm vụ"
       }
     },
-    "changeRequiresRestart": "YÊU CẦU KHỞI ĐỘNG LẠI.",
     "dates": {
       "cancelledDate": {
         "description": "Bật tính năng này sẽ thêm dấu thời gian ❌ YYYY-MM-DD vào cuối khi nhiệm vụ được chuyển sang bị hủy.",

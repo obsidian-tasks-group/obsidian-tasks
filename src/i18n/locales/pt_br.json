@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Autocompletar",
       "maxSuggestions": {
         "description": "Quantas sugestões devem ser mostradas quando o menu de autocompletar aparecer (incluindo a opção \"⏎\").",
         "name": "Número máximo de sugestões automáticas para exibir"
@@ -142,7 +141,6 @@
         "name": "Autocompletar o conteúdo da tarefa"
       }
     },
-    "changeRequiresRestart": "REQUER REINICIALIZAÇÃO.",
     "dates": {
       "cancelledDate": {
         "description": "A ativação desta opção adicionará um carimbo de data/hora ❌ YYYY-MM-DD no final quando uma tarefa for alternada para cancelada.",

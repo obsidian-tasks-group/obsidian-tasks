@@ -1,31 +1,5 @@
 [
   {
-    "name": "Auto-suggest",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "name": "Auto-suggest task content",
-    "desc": "Enabling this will open an intelligent suggest menu while typing inside a recognized task line.<p>REQUIRES RESTART.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest\">See the documentation</a>.</p>",
-    "controls": [
-      "toggle"
-    ]
-  },
-  {
-    "name": "Minimum match length for auto-suggest",
-    "desc": "<p>If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.</p><p>REQUIRES RESTART.</p>",
-    "controls": [
-      "slider"
-    ]
-  },
-  {
-    "name": "Maximum number of auto-suggestions to show",
-    "desc": "<p>How many suggestions should be shown when an auto-suggest menu pops up (including the \"⏎\" option).</p><p>REQUIRES RESTART.</p>",
-    "controls": [
-      "slider"
-    ]
-  },
-  {
     "name": "Dialogs",
     "heading": true,
     "controls": []
