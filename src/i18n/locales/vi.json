@@ -185,8 +185,7 @@
       "accessKeys": {
         "description": "Nếu các phím truy cập (phím tắt) cho các điều khiển khác nhau trong hộp thoại xung đột với phím tắt hệ thống hoặc chức năng công nghệ hỗ trợ quan trọng đối với bạn, bạn có thể vô hiệu hóa chúng tại đây.",
         "name": "Cung cấp phím truy cập trong hộp thoại"
-      },
-      "heading": "Hộp thoại"
+      }
     },
     "format": {
       "description": {

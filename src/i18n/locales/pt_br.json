@@ -185,8 +185,7 @@
       "accessKeys": {
         "description": "Se as teclas de acesso (atalhos de teclado) de vários controles nas caixas de diálogo entrarem em conflito com os atalhos de teclado do sistema ou com recursos de tecnologia assistiva importantes para você, é possível desativá-los aqui.",
         "name": "Fornecer teclas de acesso nas caixas de diálogo"
-      },
-      "heading": "Diálogos"
+      }
     },
     "format": {
       "description": {

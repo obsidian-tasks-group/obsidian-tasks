@@ -185,8 +185,7 @@
       "accessKeys": {
         "description": "如果对话框中各种控件的快捷键与系统快捷键发生冲突，您可以在这里停用它们。",
         "name": "在对话框中使用快捷键"
-      },
-      "heading": "对话框"
+      }
     },
     "format": {
       "description": {

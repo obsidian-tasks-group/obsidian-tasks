@@ -1040,34 +1040,6 @@ export class SettingsTab extends PluginSettingTab {
 
         containerEl.empty();
         this.containerEl.addClass('tasks-settings');
-
-        // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName(i18n.t('settings.dialogs.heading')).setHeading();
-        // ---------------------------------------------------------------------------
-
-        new Setting(containerEl)
-            .setName(i18n.t('settings.dialogs.accessKeys.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.dialogs.accessKeys.description') +
-                        '</br>' +
-                        this.seeTheDocsPara(
-                            'https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts',
-                        ),
-                ),
-            )
-            .addToggle((toggle) => {
-                const settings = getSettings();
-                toggle.setValue(settings.provideAccessKeys).onChange(async (value) => {
-                    updateSettings({ provideAccessKeys: value });
-                    await this.plugin.saveSettings();
-                });
-            });
-    }
-
-    private seeTheDocsPara(url: string) {
-        const linkPlusDot = this.seeTheDocs(url);
-        return para(linkPlusDot);
     }
 
     private seeTheDocs(url: string): string {

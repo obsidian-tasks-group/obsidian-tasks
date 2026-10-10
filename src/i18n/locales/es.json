@@ -185,8 +185,7 @@
       "accessKeys": {
         "description": "Si las teclas de acceso (atajos de teclado) de los distintos controles en los cuadros de diálogo entran en conflicto con atajos de teclado del sistema o con alguna función de tecnología de asistencia importante para ti, puede que quieras desactivarlas aquí.",
         "name": "Proporcionar teclas de acceso en los cuadros de diálogo"
-      },
-      "heading": "Cuadros de diálogo"
+      }
     },
     "format": {
       "description": {

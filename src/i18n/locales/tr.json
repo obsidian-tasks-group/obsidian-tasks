@@ -185,8 +185,7 @@
       "accessKeys": {
         "description": "İletişim kutularındaki çeşitli denetimler için erişim tuşları (klavye kısayolları), sistem klavye kısayollarıyla veya sizin için önemli olan yardımcı teknoloji işlevleriyle çakışıyorsa, bunları burada devre dışı bırakmak isteyebilirsiniz.",
         "name": "İletişim kutularında erişim tuşları sağla"
-      },
-      "heading": "İletişim Kutuları"
+      }
     },
     "format": {
       "description": {

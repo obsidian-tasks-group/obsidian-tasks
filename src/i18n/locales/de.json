@@ -185,8 +185,7 @@
       "accessKeys": {
         "description": "Wenn die Zugriffsschlüssel (Tastenkombinationen) für verschiedene Steuerelemente in Dialogfeldern in Konflikt mit System-Tastenkombinationen oder wichtigen assistiven Funktionen stehen, deaktivieren Sie sie hier.",
         "name": "Zugriffsschlüssel in Dialogen bereitstellen"
-      },
-      "heading": "Dialoge"
+      }
     },
     "format": {
       "description": {

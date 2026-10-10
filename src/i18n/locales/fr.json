@@ -185,8 +185,7 @@
       "accessKeys": {
         "description": "Si les raccourcis clavier pour diverses fonctionnalités dans les boîtes de dialogue interfèrent avec des raccourcis système ou des technologies d'assistance importantes pour vous, vous pouvez les désactiver ici.",
         "name": "Autoriser les raccourcis claviers dans les boîtes de dialogue"
-      },
-      "heading": "Boîtes de dialogue"
+      }
     },
     "format": {
       "description": {
