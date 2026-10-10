@@ -1083,21 +1083,6 @@ export class SettingsTab extends PluginSettingTab {
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName(i18n.t('settings.searchResults.taskCountLocation.name'))
-            .setDesc(i18n.t('settings.searchResults.taskCountLocation.description'))
-            .addDropdown((dropdown) => {
-                dropdown.addOption('top', i18n.t('settings.searchResults.taskCountLocation.options.top'));
-                dropdown.addOption('bottom', i18n.t('settings.searchResults.taskCountLocation.options.bottom'));
-                dropdown.setValue(getSettings().searchResults.taskCountLocation).onChange(async (value) => {
-                    updateSettings({ searchResults: { taskCountLocation: value as 'top' | 'bottom' } });
-                    await this.plugin.saveSettings();
-
-                    this.events.triggerReloadOpenSearchResults();
-                });
-            });
-
-        // ---------------------------------------------------------------------------
-        new Setting(containerEl)
             .setName(i18n.t('settings.presets.name'))
             .setHeading()
             .setDesc(
