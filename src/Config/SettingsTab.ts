@@ -1078,29 +1078,6 @@ export class SettingsTab extends PluginSettingTab {
         containerEl.empty();
         this.containerEl.addClass('tasks-settings');
 
-        new Setting(containerEl)
-            .setName(i18n.t('settings.format.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    paras([
-                        i18n.t('settings.format.description.line1'),
-                        i18n.t('settings.format.description.line2'),
-                        i18n.t('settings.changeRequiresRestart'),
-                        this.seeTheDocs('https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats'),
-                    ]),
-                ),
-            )
-            .addDropdown((dropdown) => {
-                for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
-                    dropdown.addOption(key, TASK_FORMATS[key].getDisplayName());
-                }
-
-                dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
-                    updateSettings({ taskFormat: value as keyof TASK_FORMATS });
-                    await this.plugin.saveSettings();
-                });
-            });
-
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.globalFilter.heading')).setHeading();
         // ---------------------------------------------------------------------------
