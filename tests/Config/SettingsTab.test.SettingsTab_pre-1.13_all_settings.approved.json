@@ -1,24 +1,5 @@
 [
   {
-    "name": "Recurring tasks",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "name": "Next recurrence appears on the line below",
-    "desc": "Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks\">See the documentation</a>.</p>",
-    "controls": [
-      "toggle"
-    ]
-  },
-  {
-    "name": "Remove scheduled date on recurrence",
-    "desc": "Enabling this will make the next recurrence of a task have no Scheduled (⏳) date, when at least one of Start (🛫) or Due (📅) dates is present.This is for when you want the Start and Due dates to carry forward to the next recurrence, but you will set the Scheduled date in future, once you plan to work on it.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks\">See the documentation</a>.</p>",
-    "controls": [
-      "toggle"
-    ]
-  },
-  {
     "name": "Auto-suggest",
     "heading": true,
     "controls": []
