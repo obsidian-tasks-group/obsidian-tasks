@@ -1042,10 +1042,6 @@ export class SettingsTab extends PluginSettingTab {
         this.containerEl.addClass('tasks-settings');
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
-        // ---------------------------------------------------------------------------
-
-        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.dates.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
