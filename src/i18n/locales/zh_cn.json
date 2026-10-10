@@ -163,8 +163,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "任务插件在将文件名用作未注明日期任务的计划日期时，将识别的附加日期格式。",
-            "line2": "语法参考"
+            "line1": "任务插件在将文件名用作未注明日期任务的计划日期时，将识别的附加日期格式。"
           },
           "name": "为无日期任务添加文件名日期格式作为计划日期",
           "placeholder": "示例：MMM DD YYYY"

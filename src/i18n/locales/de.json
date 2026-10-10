@@ -163,8 +163,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Ein zusätzliches Datumsformat, das das Tasks-Plugin beim Verwenden des Dateinamens als geplantes Datum für undatierte Aufgaben erkennt.",
-            "line2": "Syntax-Referenz"
+            "line1": "Ein zusätzliches Datumsformat, das das Tasks-Plugin beim Verwenden des Dateinamens als geplantes Datum für undatierte Aufgaben erkennt."
           },
           "name": "Zusätzliches Datumsformat für Dateinamen als geplantes Datum für undatierte Aufgaben",
           "placeholder": "Beispiel: MMM DD YYYY"

@@ -163,8 +163,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Tasks eklentisinin, tarihlenmemiş görevler için dosya adını Zamanlanmış tarih olarak kullanırken tanıyacağı ek bir tarih biçimi.",
-            "line2": "Söz dizimi Başvurusu"
+            "line1": "Tasks eklentisinin, tarihlenmemiş görevler için dosya adını Zamanlanmış tarih olarak kullanırken tanıyacağı ek bir tarih biçimi."
           },
           "name": "Tarihlenmemiş görevler için Zamanlanmış tarih olarak ek dosya adı tarih biçimi",
           "placeholder": "örnek: MMM GG YYYY"

@@ -163,8 +163,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Un formato de fecha adicional que el complemento Tasks reconocerá al usar el nombre del archivo como fecha Programada para tareas sin fecha.",
-            "line2": "Referencia de sintaxis"
+            "line1": "Un formato de fecha adicional que el complemento Tasks reconocerá al usar el nombre del archivo como fecha Programada para tareas sin fecha."
           },
           "name": "Formato adicional de fecha de nombre de archivo como fecha Programada para tareas sin fecha",
           "placeholder": "ejemplo: MMM DD YYYY"

@@ -163,8 +163,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Um formato de data adicional que o plugin Tasks reconhecerá ao usar o nome do arquivo como a data Agendada para tarefas sem data.",
-            "line2": "Referência de Sintaxe"
+            "line1": "Um formato de data adicional que o plugin Tasks reconhecerá ao usar o nome do arquivo como a data Agendada para tarefas sem data."
           },
           "name": "Formato adicional de data do nome do arquivo como data Agendada para tarefas sem data",
           "placeholder": "exemplo: MMM DD YYYY"

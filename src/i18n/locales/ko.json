@@ -163,8 +163,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "날짜 없는 작업에 파일명을 예정일(Scheduled)로 사용할 때 Tasks가 인식할 추가 날짜 형식입니다.",
-            "line2": "구문 참조(Syntax Reference)"
+            "line1": "날짜 없는 작업에 파일명을 예정일(Scheduled)로 사용할 때 Tasks가 인식할 추가 날짜 형식입니다."
           },
           "name": "날짜 없는 작업의 예정일로 사용할 추가 파일명 날짜 형식",
           "placeholder": "예: MMM DD YYYY"

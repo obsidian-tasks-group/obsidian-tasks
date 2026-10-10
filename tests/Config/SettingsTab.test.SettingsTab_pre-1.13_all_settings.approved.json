@@ -1,31 +1,5 @@
 [
   {
-    "name": "Dates from file names",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "name": "Use filename as Scheduled date for undated tasks",
-    "desc": "Save time entering Scheduled (⏳) dates.If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.By default, Tasks plugin will match both <code>YYYY-MM-DD</code> and <code>YYYYMMDD</code> date formats.<br>Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.<br><p>REQUIRES RESTART.</p><p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date\">See the documentation</a>.</p>",
-    "controls": [
-      "toggle"
-    ]
-  },
-  {
-    "name": "Additional filename date format as Scheduled date for undated tasks",
-    "desc": "An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.<p>REQUIRES RESTART.</p><p><a href=\"https://momentjs.com/docs/#/displaying/format/\">Syntax Reference</a></p>",
-    "controls": [
-      "text"
-    ]
-  },
-  {
-    "name": "Folders with default Scheduled dates",
-    "desc": "<p>Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.</p><p>REQUIRES RESTART.</p>",
-    "controls": [
-      "text"
-    ]
-  },
-  {
     "name": "Recurring tasks",
     "heading": true,
     "controls": []

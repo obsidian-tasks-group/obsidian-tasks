@@ -163,8 +163,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks.",
-            "line2": "Syntax Reference"
+            "line1": "An additional date format that Tasks plugin will recogize when using the file name as the Scheduled date for undated tasks."
           },
           "name": "Additional filename date format as Scheduled date for undated tasks",
           "placeholder": "example: MMM DD YYYY"

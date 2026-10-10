@@ -163,8 +163,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Un format de date supplémentaire que le module Tasks reconnaîtra comme Date planifiée lors de l'utilisation du nom de fichier comme Date planifiée pour les tâches sans date.",
-            "line2": "Documentation de la syntaxe"
+            "line1": "Un format de date supplémentaire que le module Tasks reconnaîtra comme Date planifiée lors de l'utilisation du nom de fichier comme Date planifiée pour les tâches sans date."
           },
           "name": "Format supplémentaire de Date planifiée à reconnaître dans les noms de fichier pour les tâches sans date",
           "placeholder": "exemple : MMM DD YYYY"

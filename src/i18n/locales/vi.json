@@ -163,8 +163,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Định dạng ngày bổ sung mà plugin Tasks sẽ nhận dạng khi sử dụng tên file làm ngày Đã lên lịch cho các nhiệm vụ chưa có ngày.",
-            "line2": "Tham khảo cú pháp"
+            "line1": "Định dạng ngày bổ sung mà plugin Tasks sẽ nhận dạng khi sử dụng tên file làm ngày Đã lên lịch cho các nhiệm vụ chưa có ngày."
           },
           "name": "Định dạng ngày tên file bổ sung làm ngày Đã lên lịch cho nhiệm vụ chưa có ngày",
           "placeholder": "ví dụ: MMM DD YYYY"
