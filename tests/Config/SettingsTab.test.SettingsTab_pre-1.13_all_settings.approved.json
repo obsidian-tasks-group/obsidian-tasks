@@ -1,31 +1,5 @@
 [
   {
-    "name": "Dates",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "name": "Set created date on every added task",
-    "desc": "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date\">See the documentation</a>.</p>",
-    "controls": [
-      "toggle"
-    ]
-  },
-  {
-    "name": "Set done date on every completed task",
-    "desc": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date\">See the documentation</a>.</p>",
-    "controls": [
-      "toggle"
-    ]
-  },
-  {
-    "name": "Set cancelled date on every cancelled task",
-    "desc": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.<p><a href=\"https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date\">See the documentation</a>.</p>",
-    "controls": [
-      "toggle"
-    ]
-  },
-  {
     "name": "Dates from file names",
     "heading": true,
     "controls": []

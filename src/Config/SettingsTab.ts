@@ -1042,61 +1042,6 @@ export class SettingsTab extends PluginSettingTab {
         this.containerEl.addClass('tasks-settings');
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName(i18n.t('settings.dates.heading')).setHeading();
-        // ---------------------------------------------------------------------------
-
-        new Setting(containerEl)
-            .setName(i18n.t('settings.dates.createdDate.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.dates.createdDate.description') +
-                        '</br>' +
-                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date'),
-                ),
-            )
-            .addToggle((toggle) => {
-                const settings = getSettings();
-                toggle.setValue(settings.setCreatedDate).onChange(async (value) => {
-                    updateSettings({ setCreatedDate: value });
-                    await this.plugin.saveSettings();
-                });
-            });
-
-        new Setting(containerEl)
-            .setName(i18n.t('settings.dates.doneDate.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.dates.doneDate.description') +
-                        '</br>' +
-                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date'),
-                ),
-            )
-            .addToggle((toggle) => {
-                const settings = getSettings();
-                toggle.setValue(settings.setDoneDate).onChange(async (value) => {
-                    updateSettings({ setDoneDate: value });
-                    await this.plugin.saveSettings();
-                });
-            });
-
-        new Setting(containerEl)
-            .setName(i18n.t('settings.dates.cancelledDate.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    i18n.t('settings.dates.cancelledDate.description') +
-                        '</br>' +
-                        this.seeTheDocsPara('https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date'),
-                ),
-            )
-            .addToggle((toggle) => {
-                const settings = getSettings();
-                toggle.setValue(settings.setCancelledDate).onChange(async (value) => {
-                    updateSettings({ setCancelledDate: value });
-                    await this.plugin.saveSettings();
-                });
-            });
-
-        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.datesFromFileNames.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let scheduledDateExtraFormat: Setting | null = null;
