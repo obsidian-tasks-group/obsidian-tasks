@@ -1039,7 +1039,6 @@ export class SettingsTab extends PluginSettingTab {
         const { containerEl } = this;
 
         containerEl.empty();
-        this.containerEl.addClass('tasks-settings');
 
         // TODO When `minAppVersion` is updated to 1.13.1 on `main`, delete this display() method
         //      and revert ff6192ac35197f8c2e47debb7c600d8676e4534a.
