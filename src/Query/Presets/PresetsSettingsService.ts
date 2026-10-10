@@ -3,21 +3,6 @@ import type { PresetsMap } from './Presets';
 
 export class PresetsSettingsService {
     /**
-     * Adds a new preset to the map with a unique key
-     * @param presets The current presets map (will not be modified)
-     * @returns An object with the updated presets map and the new key
-     */
-    public addPreset(presets: Readonly<PresetsMap>): { presets: PresetsMap; newKey: string } {
-        const newKey = this.generateUniqueKey(presets);
-        const newPresets = { ...presets };
-        newPresets[newKey] = '';
-        return {
-            presets: newPresets,
-            newKey,
-        };
-    }
-
-    /**
      * Renames a key in the presets map, preserving order
      * @param presets The current presets map (will not be modified)
      * @param keyBeingRenamed The existing key that would be renamed
@@ -98,20 +83,6 @@ export class PresetsSettingsService {
         }
 
         return false;
-    }
-
-    /**
-     * Generates a unique key for a new preset
-     * @param presets The current presets map
-     * @returns A unique key string
-     */
-    private generateUniqueKey(presets: Readonly<PresetsMap>): string {
-        const baseKey = 'new_key';
-        let suffix = 1;
-        while (Object.prototype.hasOwnProperty.call(presets, `${baseKey}_${suffix}`)) {
-            suffix++;
-        }
-        return `${baseKey}_${suffix}`;
     }
 
     /**

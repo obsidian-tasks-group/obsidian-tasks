@@ -13,16 +13,6 @@ describe('PresetsSettingsService', () => {
         };
     });
 
-    describe('PresetsSettingsService - addPreset', () => {
-        it('should add a new include with a unique key', () => {
-            const result = service.addPreset(testPresets);
-
-            expect(result.newKey).toBe('new_key_1');
-            expect(result.presets['new_key_1']).toBe('');
-            expect(Object.keys(result.presets).length).toBe(3);
-        });
-    });
-
     describe('PresetsSettingsService - renamePreset', () => {
         it('should rename a key and preserve order', () => {
             const result = service.renamePreset(testPresets, 'key1', 'newName');
