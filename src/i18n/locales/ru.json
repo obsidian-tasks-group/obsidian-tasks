@@ -292,9 +292,6 @@
         "auraTheme": "Тема Aura",
         "borderTheme": "Тема Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Добавить {{numberOfStatuses}} поддерживаемых статусов"
-          },
           "importCollection": {
             "name": "{{themeName}} (статусов: {{numberOfStatuses}})"
           }
@@ -323,9 +320,6 @@
           "addAllUnknown": {
             "description": "Добавить все символы статусов, найденные в вашем хранилище, но ещё не настроенные здесь.",
             "name": "Добавить все неизвестные типы статусов"
-          },
-          "addNewStatus": {
-            "name": "Добавить новый статус задачи"
           },
           "resetCustomStatuses": {
             "description": "Удалить все пользовательские статусы и восстановить значения по умолчанию.",

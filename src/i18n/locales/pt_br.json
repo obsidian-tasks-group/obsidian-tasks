@@ -292,9 +292,6 @@
         "auraTheme": "Tema Aura",
         "borderTheme": "Tema Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Adicionar {{numberOfStatuses}} Status suportados"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} status)"
           }
@@ -323,9 +320,6 @@
           "addAllUnknown": {
             "description": "Adicione quaisquer símbolos de status encontrados no seu cofre, mas ainda não configurados aqui.",
             "name": "Adicionar Todos os Tipos de Status Desconhecidos"
-          },
-          "addNewStatus": {
-            "name": "Adicionar Novo Status de Tarefa"
           },
           "resetCustomStatuses": {
             "description": "Descarte todos os status personalizados e restaure os padrões.",

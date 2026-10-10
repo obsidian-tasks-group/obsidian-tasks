@@ -292,9 +292,6 @@
         "auraTheme": "Aura",
         "borderTheme": "Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: add {{numberOfStatuses}} supported statuses"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} statuses)"
           }
@@ -323,9 +320,6 @@
           "addAllUnknown": {
             "description": "Add any status symbols found in your vault but not yet configured here.",
             "name": "Add all unknown status types"
-          },
-          "addNewStatus": {
-            "name": "Add new task status"
           },
           "resetCustomStatuses": {
             "description": "Discard all custom statuses and restore the defaults.",

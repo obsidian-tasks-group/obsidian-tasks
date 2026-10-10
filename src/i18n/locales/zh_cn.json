@@ -292,9 +292,6 @@
         "auraTheme": "Aura 主题",
         "borderTheme": "Border 主题",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: 添加 {{numberOfStatuses}} 种支持状态"
-          },
           "importCollection": {
             "name": "{{themeName}}（{{numberOfStatuses}} 种状态）"
           }
@@ -323,9 +320,6 @@
           "addAllUnknown": {
             "description": "添加在您的仓库中发现但尚未在此配置的所有状态符号。",
             "name": "添加所有未知状态类型"
-          },
-          "addNewStatus": {
-            "name": "添加新任务状态"
           },
           "resetCustomStatuses": {
             "description": "丢弃所有自定义状态并恢复默认值。",

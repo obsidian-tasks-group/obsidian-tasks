@@ -292,9 +292,6 @@
         "auraTheme": "Thème Aura",
         "borderTheme": "Thème Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Ajouter {{numberOfStatuses}} Statuts pris en charge"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} statuts)"
           }
@@ -323,9 +320,6 @@
           "addAllUnknown": {
             "description": "Ajouter les symboles de statut présents dans votre coffre mais pas encore configurés ici.",
             "name": "Ajouter tous les types de Statuts inconnus."
-          },
-          "addNewStatus": {
-            "name": "Nouveau Statut"
           },
           "resetCustomStatuses": {
             "description": "Supprimer tous les statuts personnalisés et restaurer les valeurs par défaut.",

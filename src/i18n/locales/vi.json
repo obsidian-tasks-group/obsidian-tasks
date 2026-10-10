@@ -292,9 +292,6 @@
         "auraTheme": "Theme Aura",
         "borderTheme": "Theme Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Thêm {{numberOfStatuses}} Trạng thái được hỗ trợ"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} trạng thái)"
           }
@@ -323,9 +320,6 @@
           "addAllUnknown": {
             "description": "Thêm mọi ký hiệu trạng thái có trong vault của bạn nhưng chưa được cấu hình ở đây.",
             "name": "Thêm tất cả loại trạng thái không xác định"
-          },
-          "addNewStatus": {
-            "name": "Thêm trạng thái nhiệm vụ mới"
           },
           "resetCustomStatuses": {
             "description": "Loại bỏ tất cả trạng thái tùy chỉnh và khôi phục mặc định.",

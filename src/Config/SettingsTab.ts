@@ -104,7 +104,6 @@ export class SettingsTab extends PluginSettingTab {
     // then be rendered instead of a normal checkbox or text box.
     customFunctions: { [K: string]: Function } = {
         insertTaskCoreStatusSettings: this.insertTaskCoreStatusSettings.bind(this),
-        insertCustomTaskStatusSettings: this.insertCustomTaskStatusSettings.bind(this),
     };
 
     private readonly plugin: TasksPlugin;
@@ -1113,39 +1112,6 @@ export class SettingsTab extends PluginSettingTab {
                     },
                 ],
             },
-            {
-                text: i18n.t('settings.statuses.customStatuses.heading'),
-                level: 'h3',
-                class: '',
-                open: true,
-                notice: {
-                    class: 'setting-item-description',
-                    text: null,
-                    html: paras([
-                        i18n.t('settings.statuses.customStatuses.description.line1'),
-                        i18n.t('settings.statuses.customStatuses.description.line2'),
-                        i18n.t('settings.statuses.customStatuses.description.line3'),
-                        i18n.t('settings.changeRequiresRestart'),
-                        '',
-                        link(
-                            'https://publish.obsidian.md/tasks/Getting+Started/Statuses',
-                            i18n.t('settings.statuses.customStatuses.description.line4'),
-                        ),
-                    ]),
-                },
-                settings: [
-                    {
-                        name: '',
-                        description: '',
-                        type: 'function',
-                        initialValue: '',
-                        placeholder: '',
-                        settingName: 'insertCustomTaskStatusSettings',
-                        featureFlag: '',
-                        notice: null,
-                    },
-                ],
-            },
         ];
 
         // Original usage remains unchanged
@@ -1619,94 +1585,6 @@ export class SettingsTab extends PluginSettingTab {
             button.setTooltip(i18n.t('settings.statuses.coreStatuses.buttons.checkStatuses.tooltip'));
         });
         createMermaidDiagram.infoEl.remove();
-    }
-
-    /**
-     * Settings for Custom Task Status
-     *
-     * @param {HTMLElement} containerEl
-     * @param {SettingsTab} settings
-     */
-    insertCustomTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
-        const { statusSettings } = getSettings();
-
-        /* -------------------- One row per custom status in the settings -------------------- */
-        statusSettings.customStatuses.forEach((status_type) => {
-            createRowForTaskStatus(
-                containerEl,
-                status_type,
-                statusSettings.customStatuses,
-                statusSettings,
-                settings,
-                settings.plugin,
-                false, // isCoreStatus
-            );
-        });
-
-        containerEl.createDiv();
-
-        /* -------------------- 'Add New Task Status' button -------------------- */
-        const setting = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addNewStatus.name'))
-                .setCta()
-                .onClick(() => {
-                    StatusSettings.addStatus(
-                        statusSettings.customStatuses,
-                        new StatusConfiguration('', '', '', false, StatusType.TODO),
-                    );
-                    updateAndSaveStatusSettings(statusSettings, settings);
-                });
-        });
-        setting.infoEl.remove();
-
-        /* -------------------- Add all Status types supported by ... buttons -------------------- */
-        for (const { name, collection } of getThemeCollections()) {
-            const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
-                const label = i18n.t('settings.statuses.collections.buttons.addCollection.name', {
-                    themeName: name,
-                    numberOfStatuses: collection.length,
-                });
-                button.setButtonText(label).onClick(() => {
-                    addCustomStatesToSettings(collection, statusSettings, settings);
-                });
-            });
-            addStatusesSupportedByThisTheme.infoEl.remove();
-        }
-
-        /* -------------------- 'Add All Unknown Status Types' button -------------------- */
-        const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.addAllUnknown.name'))
-                .setCta()
-                .onClick(() => {
-                    const tasks = this.plugin.getTasks();
-                    const allStatuses = tasks.map((task) => {
-                        return task.status;
-                    });
-                    const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(allStatuses);
-                    if (unknownStatuses.length === 0) {
-                        return;
-                    }
-                    unknownStatuses.forEach((s) => {
-                        StatusSettings.addStatus(statusSettings.customStatuses, s);
-                    });
-                    updateAndSaveStatusSettings(statusSettings, settings);
-                });
-        });
-        addAllUnknownStatuses.infoEl.remove();
-
-        /* -------------------- 'Reset Custom Status Types to Defaults' button -------------------- */
-        const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText(i18n.t('settings.statuses.customStatuses.buttons.resetCustomStatuses.name'))
-                .setWarning()
-                .onClick(async () => {
-                    StatusSettings.resetAllCustomStatuses(statusSettings);
-                    updateAndSaveStatusSettings(statusSettings, settings);
-                });
-        });
-        clearCustomStatuses.infoEl.remove();
     }
 }
 

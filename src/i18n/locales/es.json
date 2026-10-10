@@ -292,9 +292,6 @@
         "auraTheme": "Tema Aura",
         "borderTheme": "Tema Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Añadir {{numberOfStatuses}} estados admitidos"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} estados)"
           }
@@ -323,9 +320,6 @@
           "addAllUnknown": {
             "description": "Añade los símbolos de estado encontrados en tu bóveda pero que aún no están configurados aquí.",
             "name": "Añadir todos los tipos de estado desconocidos"
-          },
-          "addNewStatus": {
-            "name": "Añadir nuevo estado de tarea"
           },
           "resetCustomStatuses": {
             "description": "Descarta todos los estados personalizados y restaura los valores predeterminados.",

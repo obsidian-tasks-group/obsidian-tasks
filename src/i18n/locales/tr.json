@@ -292,9 +292,6 @@
         "auraTheme": "Aura Teması",
         "borderTheme": "Border Teması",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: {{numberOfStatuses}} desteklenen Durumu ekle"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} durum)"
           }
@@ -323,9 +320,6 @@
           "addAllUnknown": {
             "description": "Kasanızda bulunan ancak burada henüz yapılandırılmamış tüm durum sembollerini ekleyin.",
             "name": "Tüm Bilinmeyen Durum Türlerini Ekle"
-          },
-          "addNewStatus": {
-            "name": "Yeni Görev Durumu Ekle"
           },
           "resetCustomStatuses": {
             "description": "Tüm özel durumları silin ve varsayılanları geri yükleyin.",

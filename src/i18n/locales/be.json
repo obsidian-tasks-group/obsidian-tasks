@@ -292,9 +292,6 @@
         "auraTheme": "Тэма Aura",
         "borderTheme": "Тэма Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Дадаць {{numberOfStatuses}} падтрымоўваныя статусы"
-          },
           "importCollection": {
             "name": "{{themeName}} (статусаў: {{numberOfStatuses}})"
           }
@@ -323,9 +320,6 @@
           "addAllUnknown": {
             "description": "Дадаць усе сімвалы статусаў, знойдзеныя ў вашым сховішчы, але яшчэ не настроеныя тут.",
             "name": "Дадаць усе невядомыя тыпы статусаў"
-          },
-          "addNewStatus": {
-            "name": "Дадаць новы статус задачы"
           },
           "resetCustomStatuses": {
             "description": "Выдаліць усе карыстальніцкія статусы і аднавіць значэнні па змаўчанні.",
