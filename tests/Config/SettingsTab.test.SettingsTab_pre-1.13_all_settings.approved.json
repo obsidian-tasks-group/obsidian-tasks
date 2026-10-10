@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "name": "The Tasks plugin no longer supports editing settings in Obsidian older than 1.13.1",
+    "heading": true,
+    "controls": []
+  }
+]
