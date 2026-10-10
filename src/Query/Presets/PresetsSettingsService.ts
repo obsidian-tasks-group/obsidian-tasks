@@ -1,15 +1,6 @@
 import { renameKeyInRecordPreservingOrder } from '../../lib/RecordHelpers';
 import type { PresetsMap } from './Presets';
 
-/**
- * Represents a map of preset keys and their current values
- * used during validation
- * TODO Remove this
- */
-export interface RenamesInProgress {
-    [originalName: string]: string;
-}
-
 export class RenameResult {
     public readonly originalName: string;
     public readonly isValid: boolean;
@@ -30,32 +21,6 @@ export interface RenameResults {
 }
 
 export class PresetsSettingsService {
-    /**
-     * Validates multiple preset names against each other
-     * @param renames Map of original keys to their current values in UI
-     * @returns Object mapping each key to its validation result
-     */
-    public validateRenames(renames: RenamesInProgress): RenameResults {
-        const results: RenameResults = {};
-
-        // Check each key against all others
-        for (const [originalName, newName] of Object.entries(renames)) {
-            const presetsWithOtherPendingRenames: PresetsMap = {};
-
-            for (const [otherOriginalName, otherNewName] of Object.entries(renames)) {
-                // Skip the name being validated to avoid false duplicate matches.
-                if (otherOriginalName !== originalName) {
-                    presetsWithOtherPendingRenames[otherNewName] = '';
-                }
-            }
-
-            // Pass empty string as keyBeingRenamed since we're not excluding any key from duplicate check
-            results[originalName] = this.validateRename(presetsWithOtherPendingRenames, '', newName);
-        }
-
-        return results;
-    }
-
     /**
      * Validates if a preset name is valid
      * @param presets The current presets map

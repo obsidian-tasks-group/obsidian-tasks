@@ -1,8 +1,4 @@
-import {
-    PresetsSettingsService,
-    RenameResult,
-    type RenamesInProgress,
-} from '../../../src/Query/Presets/PresetsSettingsService';
+import { PresetsSettingsService, RenameResult } from '../../../src/Query/Presets/PresetsSettingsService';
 import type { PresetsMap } from '../../../src/Query/Presets/Presets';
 
 function expectToBeValid(result: RenameResult) {
@@ -25,84 +21,6 @@ describe('PresetsSettingsService', () => {
             key1: 'value1',
             key2: 'value2',
         };
-    });
-
-    describe('PresetsSettingsService - validateMultipleIncludeNames', () => {
-        let service: PresetsSettingsService;
-
-        beforeEach(() => {
-            service = new PresetsSettingsService();
-        });
-
-        it('should validate all keys as valid when there are no duplicates', () => {
-            const keyMap: RenamesInProgress = {
-                original_key_1: 'unique_value_1',
-                original_key_2: 'unique_value_2',
-                original_key_3: 'unique_value_3',
-            };
-
-            const result = service.validateRenames(keyMap);
-
-            expectToBeValid(result['original_key_1']);
-            expectToBeValid(result['original_key_2']);
-            expectToBeValid(result['original_key_3']);
-        });
-
-        it('should mark duplicate keys as invalid', () => {
-            const keyMap: RenamesInProgress = {
-                original_key_1: 'duplicate_value',
-                original_key_2: 'duplicate_value', // Duplicate
-                original_key_3: 'unique_value',
-            };
-
-            const result = service.validateRenames(keyMap);
-
-            expectToGiveError(result['original_key_1'], 'A preset with this name already exists');
-            expectToGiveError(result['original_key_2'], 'A preset with this name already exists');
-            expectToBeValid(result['original_key_3']);
-        });
-
-        it('should mark names differing only in whitespace as identical', () => {
-            const keyMap: RenamesInProgress = {
-                original_key_1: 'duplicate_value',
-                original_key_2: 'duplicate_value  ', // Duplicate
-                original_key_3: 'unique_value',
-            };
-
-            const result = service.validateRenames(keyMap);
-
-            expectToGiveError(result['original_key_1'], 'A preset with this name already exists');
-            expectToGiveError(result['original_key_2'], 'A preset with this name already exists');
-            expectToBeValid(result['original_key_3']);
-        });
-
-        it('should mark empty keys as invalid', () => {
-            const keyMap: RenamesInProgress = {
-                original_key_1: '',
-                original_key_2: '  ', // Whitespace only
-                original_key_3: 'valid_key',
-            };
-
-            const result = service.validateRenames(keyMap);
-
-            expectToGiveError(result['original_key_1'], 'Preset name cannot be empty or all whitespace');
-            expectToGiveError(result['original_key_2'], 'Preset name cannot be empty or all whitespace');
-            expectToBeValid(result['original_key_3']);
-        });
-
-        it('should handle the case when all keys are identical', () => {
-            const keyMap: RenamesInProgress = {
-                original_key_1: 'same_value',
-                original_key_2: 'same_value',
-                original_key_3: 'same_value',
-            };
-
-            const result = service.validateRenames(keyMap);
-
-            // None should be valid
-            const validCount = Object.values(result).filter((r) => r.isValid).length;
-            expect(validCount).toBe(0);
-        });
     });
 
     describe('PresetsSettingsService - validateRename', () => {
