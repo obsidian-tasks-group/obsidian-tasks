@@ -213,7 +213,6 @@
         "name": "Filtro global de tareas",
         "placeholder": "p. ej. #task o TODO"
       },
-      "heading": "Filtro global de tareas",
       "removeFilter": {
         "description": "Al activar esta opción se elimina de la descripción de la tarea, al mostrarla, la cadena que hayas establecido como filtro global.",
         "name": "Eliminar el filtro global de la descripción"

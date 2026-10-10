@@ -213,7 +213,6 @@
         "name": "Genel görev filtresi",
         "placeholder": "örn. #task veya TODO"
       },
-      "heading": "Genel görev filtresi",
       "removeFilter": {
         "description": "Bu seçeneği etkinleştirirseniz, bir görev görüntülenirken açıklamasından genel filtre olarak ayarladığınız dize kaldırılır.",
         "name": "Açıklamadan genel filtreyi kaldır"

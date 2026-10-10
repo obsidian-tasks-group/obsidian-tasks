@@ -213,7 +213,6 @@
         "name": "Globaler Aufgabenfilter",
         "placeholder": "z.B. #task oder TODO"
       },
-      "heading": "Globaler Aufgabenfilter",
       "removeFilter": {
         "description": "Aktiviert entfernt die Zeichenfolge, die Sie als globalen Filter gesetzt haben, aus der Aufgabenbeschreibung, wenn die Aufgabe angezeigt wird.",
         "name": "Globalen Filter aus Beschreibung entfernen"

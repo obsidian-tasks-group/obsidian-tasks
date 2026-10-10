@@ -213,7 +213,6 @@
         "name": "Global task filter",
         "placeholder": "e.g. #task or TODO"
       },
-      "heading": "Global task filter",
       "removeFilter": {
         "description": "Enabling this removes the string that you set as global filter from the task description when displaying a task.",
         "name": "Remove global filter from description"

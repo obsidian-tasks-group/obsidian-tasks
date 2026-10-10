@@ -213,7 +213,6 @@
         "name": "Filtre global des tâches",
         "placeholder": "ex: #task ou TODO"
       },
-      "heading": "Filtre global",
       "removeFilter": {
         "description": "Activer cette option masquera l'expression choisie comme filtre global de la description d'une tâche lors de son affichage.",
         "name": "Masquer le filtre global dans les descriptions"

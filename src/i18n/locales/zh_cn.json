@@ -213,7 +213,6 @@
         "name": "全局任务筛选器",
         "placeholder": "例如:#task 或 TODO"
       },
-      "heading": "全局任务筛选器",
       "removeFilter": {
         "description": "启用此选项将在显示任务时从任务描述中删除设置为全局筛选器的字符串.",
         "name": "从描述中删除全局筛选器"

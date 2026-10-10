@@ -213,7 +213,6 @@
         "name": "Bộ lọc nhiệm vụ toàn cục",
         "placeholder": "ví dụ: #task hoặc TODO"
       },
-      "heading": "Bộ lọc nhiệm vụ toàn cục",
       "removeFilter": {
         "description": "Bật tính năng này sẽ xóa chuỗi mà bạn đặt làm bộ lọc toàn cục khỏi mô tả nhiệm vụ khi hiển thị nhiệm vụ.",
         "name": "Xóa bộ lọc toàn cục khỏi mô tả"

@@ -213,7 +213,6 @@
         "name": "전역 작업 필터",
         "placeholder": "예: #task 또는 TODO"
       },
-      "heading": "전역 작업 필터",
       "removeFilter": {
         "description": "활성화하면 작업 표시 시 설명에서 전역 필터 문자열을 제거합니다.",
         "name": "설명에서 전역 필터 제거"

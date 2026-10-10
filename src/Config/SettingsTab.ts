@@ -1079,69 +1079,6 @@ export class SettingsTab extends PluginSettingTab {
         this.containerEl.addClass('tasks-settings');
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName(i18n.t('settings.globalFilter.heading')).setHeading();
-        // ---------------------------------------------------------------------------
-        let globalFilterHidden: Setting | null = null;
-
-        new Setting(containerEl)
-            .setName(i18n.t('settings.globalFilter.filter.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    paras([
-                        bold(i18n.t('settings.globalFilter.filter.description.line1')),
-                        i18n.t('settings.globalFilter.filter.description.line2'),
-                        [
-                            i18n.t('settings.globalFilter.filter.description.line3'),
-                            i18n.t('settings.globalFilter.filter.description.line4'),
-                        ].join('</br>'),
-                        this.seeTheDocs('https://publish.obsidian.md/tasks/Getting+Started/Global+Filter'),
-                    ]),
-                ),
-            )
-            .addText((text) => {
-                // I wanted to make this say 'for example, #task or TODO'
-                // but wasn't able to figure out how to make the text box
-                // wide enough for the whole string to be visible.
-                text.setPlaceholder(i18n.t('settings.globalFilter.filter.placeholder'))
-                    .setValue(GlobalFilter.getInstance().get())
-                    .onChange(
-                        debounce(
-                            async (value) => {
-                                updateSettings({ globalFilter: value });
-                                GlobalFilter.getInstance().set(value);
-                                await this.plugin.saveSettings();
-                                setSettingVisibility(globalFilterHidden, value.length > 0);
-
-                                this.events.triggerReloadVault();
-                            },
-                            500,
-                            true,
-                        ),
-                    );
-            });
-
-        globalFilterHidden = new Setting(containerEl)
-            .setName(i18n.t('settings.globalFilter.removeFilter.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    paras([
-                        i18n.t('settings.globalFilter.removeFilter.description'),
-                        i18n.t('settings.changeRequiresRestart'),
-                    ]),
-                ),
-            )
-            .addToggle((toggle) => {
-                const settings = getSettings();
-
-                toggle.setValue(settings.removeGlobalFilter).onChange(async (value) => {
-                    updateSettings({ removeGlobalFilter: value });
-                    GlobalFilter.getInstance().setRemoveGlobalFilter(value);
-                    await this.plugin.saveSettings();
-                });
-            });
-        setSettingVisibility(globalFilterHidden, getSettings().globalFilter.length > 0);
-
-        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.globalQuery.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
