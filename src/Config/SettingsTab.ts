@@ -1079,34 +1079,6 @@ export class SettingsTab extends PluginSettingTab {
         this.containerEl.addClass('tasks-settings');
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName(i18n.t('settings.searches.heading')).setHeading();
-        // ---------------------------------------------------------------------------
-
-        new Setting(containerEl)
-            .setName(i18n.t('settings.searches.enableCustomSearches.name'))
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    paras([
-                        i18n.t('settings.searches.enableCustomSearches.description.line1', {
-                            filterByFunction: '<code>filter by function</code>',
-                            sortByFunction: '<code>sort by function</code>',
-                            groupByFunction: '<code>group by function</code>',
-                        }),
-                        i18n.t('settings.searches.enableCustomSearches.description.line2'),
-                        bold(i18n.t('settings.searches.enableCustomSearches.description.line3')),
-                        i18n.t('settings.searches.enableCustomSearches.description.line4'),
-                    ]),
-                ),
-            )
-            .addToggle((toggle) => {
-                toggle.setValue(EnableJsInTasksQueries.getInstance().get()).onChange(async (value) => {
-                    EnableJsInTasksQueries.getInstance().set(value);
-
-                    this.events.triggerReloadOpenSearchResults();
-                });
-            });
-
-        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.searchResults.heading')).setHeading();
         // ---------------------------------------------------------------------------
 

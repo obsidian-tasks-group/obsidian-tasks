@@ -1,17 +1,5 @@
 [
   {
-    "name": "Searches",
-    "heading": true,
-    "controls": []
-  },
-  {
-    "name": "Enable custom searches",
-    "desc": "<p>Enables '<code>filter by function</code>', '<code>sort by function</code>', and '<code>group by function</code>', which execute JavaScript in Tasks queries.</p><p>Malicious JavaScript in a Tasks query or Markdown file could run inside Obsidian and access or modify your vault contents, local files, or other system resources.</p><p><b>Only enable this if you trust the current and future contents of this vault, including files you may later download, copy, or sync from other people.</b></p><p>This setting is stored on this device only; enable it separately on each device where you use this vault.</p>",
-    "controls": [
-      "toggle"
-    ]
-  },
-  {
     "name": "Search results",
     "heading": true,
     "controls": []
