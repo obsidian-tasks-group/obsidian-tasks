@@ -36,6 +36,9 @@ Each result shows a non-interactive checkbox for the task status, the rendered t
 
 ## How Quick Search Works
 
+> [!released]
+> Fuzzy matching was introduced in Tasks X.Y.Z.
+
 - The task description is searched.
   - With `Fuzzy matching` enabled, closer matches are shown first.
   - With `Fuzzy matching` disabled, the search looks for the exact, continuous text you type.
