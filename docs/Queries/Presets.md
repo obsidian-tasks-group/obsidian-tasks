@@ -31,6 +31,9 @@ Presets are particularly useful when you:
 > [!Tip]
 > Any open Tasks queries are reloaded automatically when presets are edited.
 
+![The Presets settings page. Note the "Filter presets" box, which is present in Obsidian 1.13 and newer.](../images/settings-default-presets.png)
+<span class="caption">The Presets settings page. Note the "Filter presets" box, which is present in Obsidian 1.13 and newer.</span>
+
 ## How to Use Presets
 
 There are two ways to use presets in your task queries:
