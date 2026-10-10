@@ -1082,25 +1082,6 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl).setName(i18n.t('settings.searchResults.heading')).setHeading();
         // ---------------------------------------------------------------------------
 
-        new Setting(containerEl)
-            .setName(i18n.t('settings.presets.name'))
-            .setHeading()
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    paras([
-                        i18n.t('settings.presets.line1', {
-                            name: '<code>name</code>',
-                            instruction1: '<code>preset name</code>',
-                            instruction2: '<code>{{preset.name}}</code>',
-                        }),
-                        i18n.t('settings.presets.line2'),
-                        this.seeTheDocs('https://publish.obsidian.md/tasks/Queries/Presets'),
-                    ]),
-                ),
-            );
-        // ---------------------------------------------------------------------------
-        this.presetsSettingsUI.renderPresetsSettings(containerEl);
-
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.statuses.heading')).setHeading();
         // ---------------------------------------------------------------------------

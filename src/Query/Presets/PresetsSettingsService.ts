@@ -4,6 +4,7 @@ import type { PresetsMap } from './Presets';
 /**
  * Represents a map of preset keys and their current values
  * used during validation
+ * TODO Remove this
  */
 export interface RenamesInProgress {
     [originalName: string]: string;
