@@ -1,3 +1,5 @@
+Using non-Obsidian-like nested indentation:
+
 1. 1. [ ] A - 4081 task 1
     1. [ ] B - 4081 task 1.1
 
