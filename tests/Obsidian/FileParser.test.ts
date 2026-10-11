@@ -1,5 +1,7 @@
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
-import { readTasksFromSimulatedFile } from './SimulatedFile';
+import type { Task } from '../../src/Task/Task';
+import { type SimulatedFile, getMockDataAndReadTasks, readTasksFromSimulatedFile } from './SimulatedFile';
+import type { MockDataName } from './AllCacheSampleData';
 
 describe('FileParser', () => {
     it('should set all non-TasksFile data in TaskLocation', () => {
@@ -74,4 +76,89 @@ describe('FileParser', () => {
             }
         `);
     });
+});
+
+describe('understand task parsing', () => {
+    function taskCountAccordingToObsidianCache(data: SimulatedFile): number | undefined {
+        return data.cachedMetadata.listItems?.length;
+    }
+
+    function taskCountAccordingToTasks(tasks: Task[]): number {
+        return tasks.length;
+    }
+
+    type ParsingExample = {
+        mockDataName: MockDataName;
+        fileContents: string;
+        actualObsidianCount: number;
+        actualTasksCount: number;
+    };
+
+    const parsingExamples = [
+        {
+            mockDataName: 'list_items_nested_issue_4081_numbered_standard',
+            fileContents: `
+Using Obsidian-like nested indentation:
+
+1. [ ] A - 4081 task 1
+    1. [ ] B - 4081 task 1.1
+
+2. [ ] A - 4081 task 2
+    1. [ ] B - 4081 task 2.1
+`,
+            actualObsidianCount: 4,
+            actualTasksCount: 4,
+        },
+
+        {
+            mockDataName: 'list_items_nested_issue_4081_numbered',
+            fileContents: `
+Using non-Obsidian-like nested indentation:
+
+1. 1. [ ] A - 4081 task 1
+    1. [ ] B - 4081 task 1.1
+
+2. 1. [ ] A - 4081 task 2
+    1. [ ] B - 4081 task 2.1
+`,
+            // file content suggests these should both be 4:
+            actualObsidianCount: 6,
+            actualTasksCount: 2,
+        },
+
+        {
+            mockDataName: 'list_items_nested_issue_4081_unnumbered_standard',
+            fileContents: `
+Using Obsidian-like nested indentation:
+
+* [ ] A - 4081 task 1
+    * [ ] B - 4081 task 1.1
+`,
+            actualObsidianCount: 2,
+            actualTasksCount: 2,
+        },
+
+        {
+            mockDataName: 'list_items_nested_issue_4081_unnumbered',
+            fileContents: `
+Using non-Obsidian-like nested indentation:
+
+* * [ ] A - 4081 task 1
+    * [ ] B - 4081 task 1.1
+`,
+            // file content suggests these should both be 2:
+            actualObsidianCount: 3,
+            actualTasksCount: 1,
+        },
+    ] satisfies readonly ParsingExample[];
+
+    it.each(parsingExamples)(
+        'show how Obsidian parses file - $mockDataName',
+        ({ mockDataName, fileContents, actualObsidianCount, actualTasksCount }) => {
+            const { data, tasks } = getMockDataAndReadTasks(mockDataName);
+            expect('\n' + data.fileContents).toEqual(fileContents);
+            expect(taskCountAccordingToObsidianCache(data)).toEqual(actualObsidianCount);
+            expect(taskCountAccordingToTasks(tasks)).toEqual(actualTasksCount);
+        },
+    );
 });

@@ -1,0 +1,107 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 22,
+            "line": 2,
+            "offset": 63
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 41
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 3,
+            "offset": 92
+          },
+          "start": {
+            "col": 4,
+            "line": 3,
+            "offset": 68
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 22,
+            "line": 5,
+            "offset": 116
+          },
+          "start": {
+            "col": 0,
+            "line": 5,
+            "offset": 94
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 5,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 6,
+            "offset": 145
+          },
+          "start": {
+            "col": 4,
+            "line": 6,
+            "offset": 121
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 39,
+            "line": 0,
+            "offset": 39
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 6,
+            "offset": 145
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 41
+          }
+        },
+        "type": "list"
+      }
+    ]
+  },
+  "fileContents": "Using Obsidian-like nested indentation:\n\n1. [ ] A - 4081 task 1\n    1. [ ] B - 4081 task 1.1\n\n2. [ ] A - 4081 task 2\n    1. [ ] B - 4081 task 2.1\n",
+  "filePath": "Test Data/list_items_nested_issue_4081_numbered_standard.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}
