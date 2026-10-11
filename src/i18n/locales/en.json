@@ -156,15 +156,7 @@
         "description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
         "name": "Set done date on every completed task"
       },
-      "heading": "Dates",
-      "postponeDateField": {
-        "description": "Which date field the postpone button (⏩) updates. For options with multiple dates, the first date in the sequence that is present on the task will be set.",
-        "name": "Postpone button date field",
-        "options": {
-          "due-scheduled-start": "Due → Scheduled → Start",
-          "scheduledDate": "Always Scheduled"
-        }
-      }
+      "heading": "Dates"
     },
     "datesFromFileNames": {
       "heading": "Dates from file names",
@@ -233,6 +225,17 @@
         "description": "A query that is automatically included at the start of every Tasks block in the vault. Useful for adding default filters, or layout options.",
         "placeholder": "For example...\npath does not include _templates/\nlimit 300\nshow urgency",
         "shortDescription": "Instructions automatically included at the start of every Tasks block."
+      }
+    },
+    "postponeButton": {
+      "heading": "Postpone button",
+      "postponeDateField": {
+        "description": "Which date field the postpone button (⏩) updates. For options with multiple dates, the first date in the sequence that is present on the task will be set.",
+        "name": "Postpone button date field",
+        "options": {
+          "due-scheduled-start": "Due → Scheduled → Start",
+          "scheduledDate": "Always Scheduled"
+        }
       }
     },
     "presets": {

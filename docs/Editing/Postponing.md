@@ -56,7 +56,7 @@ By default, the postpone option looks at the first of these Task fields, and wil
 1. **Start** date
     - If no Due or Scheduled date is present.
 
-You can configure **Postpone button date field** in Tasks Settings (under **Dates**) to **Always Scheduled**, so that the postpone button always edits the **Scheduled** date (leaving any **Due** date untouched).
+You can configure **Postpone button date field** in Tasks Settings (under **Postpone button**) to **Always Scheduled**, so that the postpone button always edits the **Scheduled** date (leaving any **Due** date untouched).
 
 ### When is the postpone button shown?
 

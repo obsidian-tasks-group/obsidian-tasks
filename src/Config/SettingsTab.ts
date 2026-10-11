@@ -246,6 +246,7 @@ export class SettingsTab extends PluginSettingTab {
             this.datesGroup(),
             this.datesFromFilenamesGroup(),
             this.recurringTasksGroup(),
+            this.postponeButtonGroup(),
             this.taskEntryGroup(),
         ];
     }
@@ -881,29 +882,6 @@ export class SettingsTab extends PluginSettingTab {
                         'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
                     ),
                 },
-                {
-                    name: i18n.t('settings.dates.postponeDateField.name'),
-                    desc: i18n.t('settings.dates.postponeDateField.description'),
-                    render: (setting) => {
-                        setting.addDropdown((dropdown) => {
-                            dropdown.addOption(
-                                'due-scheduled-start',
-                                i18n.t('settings.dates.postponeDateField.options.due-scheduled-start'),
-                            );
-                            dropdown.addOption(
-                                'scheduledDate',
-                                i18n.t('settings.dates.postponeDateField.options.scheduledDate'),
-                            );
-                            dropdown.setValue(getSettings().postponeDateField).onChange(async (value) => {
-                                updateSettings({
-                                    postponeDateField: value as PostponeDateField,
-                                });
-                                await this.plugin.saveSettings();
-                                this.events.triggerReloadOpenSearchResults();
-                            });
-                        });
-                    },
-                },
             ],
         };
     }
@@ -1017,6 +995,41 @@ export class SettingsTab extends PluginSettingTab {
                         'removeScheduledDateOnRecurrence',
                         'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
                     ),
+                },
+            ],
+        };
+    }
+
+    // ---- Postpone button --------------------------------------------------
+
+    private postponeButtonGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.postponeButton.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.postponeButton.postponeDateField.name'),
+                    aliases: [i18n.t('settings.postponeButton.heading')],
+                    desc: i18n.t('settings.postponeButton.postponeDateField.description'),
+                    render: (setting) => {
+                        setting.addDropdown((dropdown) => {
+                            dropdown.addOption(
+                                'due-scheduled-start',
+                                i18n.t('settings.postponeButton.postponeDateField.options.due-scheduled-start'),
+                            );
+                            dropdown.addOption(
+                                'scheduledDate',
+                                i18n.t('settings.postponeButton.postponeDateField.options.scheduledDate'),
+                            );
+                            dropdown.setValue(getSettings().postponeDateField).onChange(async (value) => {
+                                updateSettings({
+                                    postponeDateField: value as PostponeDateField,
+                                });
+                                await this.plugin.saveSettings();
+                                this.events.triggerReloadOpenSearchResults();
+                            });
+                        });
+                    },
                 },
             ],
         };
@@ -1416,24 +1429,6 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
-        new Setting(containerEl)
-            .setName(i18n.t('settings.dates.postponeDateField.name'))
-            .setDesc(i18n.t('settings.dates.postponeDateField.description'))
-            .addDropdown((dropdown) => {
-                dropdown.addOption(
-                    'due-scheduled-start',
-                    i18n.t('settings.dates.postponeDateField.options.due-scheduled-start'),
-                );
-                dropdown.addOption('scheduledDate', i18n.t('settings.dates.postponeDateField.options.scheduledDate'));
-                dropdown.setValue(getSettings().postponeDateField).onChange(async (value) => {
-                    updateSettings({
-                        postponeDateField: value as PostponeDateField,
-                    });
-                    await this.plugin.saveSettings();
-                    this.events.triggerReloadOpenSearchResults();
-                });
-            });
-
         // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.datesFromFileNames.heading')).setHeading();
         // ---------------------------------------------------------------------------
@@ -1553,6 +1548,31 @@ export class SettingsTab extends PluginSettingTab {
                 toggle.setValue(removeScheduledDateOnRecurrence).onChange(async (value) => {
                     updateSettings({ removeScheduledDateOnRecurrence: value });
                     await this.plugin.saveSettings();
+                });
+            });
+
+        // ---------------------------------------------------------------------------
+        new Setting(containerEl).setName(i18n.t('settings.postponeButton.heading')).setHeading();
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.postponeButton.postponeDateField.name'))
+            .setDesc(i18n.t('settings.postponeButton.postponeDateField.description'))
+            .addDropdown((dropdown) => {
+                dropdown.addOption(
+                    'due-scheduled-start',
+                    i18n.t('settings.postponeButton.postponeDateField.options.due-scheduled-start'),
+                );
+                dropdown.addOption(
+                    'scheduledDate',
+                    i18n.t('settings.postponeButton.postponeDateField.options.scheduledDate'),
+                );
+                dropdown.setValue(getSettings().postponeDateField).onChange(async (value) => {
+                    updateSettings({
+                        postponeDateField: value as PostponeDateField,
+                    });
+                    await this.plugin.saveSettings();
+                    this.events.triggerReloadOpenSearchResults();
                 });
             });
 

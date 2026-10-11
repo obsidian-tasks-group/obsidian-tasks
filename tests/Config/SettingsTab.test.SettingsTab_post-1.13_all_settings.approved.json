@@ -233,11 +233,6 @@
         "name": "Set cancelled date on every cancelled task",
         "desc": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
         "render": "[Function]"
-      },
-      {
-        "name": "Postpone button date field",
-        "desc": "Which date field the postpone button (⏩) updates. For options with multiple dates, the first date in the sequence that is present on the task will be set.",
-        "render": "[Function]"
       }
     ],
     "type": "group"
@@ -282,6 +277,20 @@
       {
         "name": "Remove scheduled date on recurrence",
         "desc": "<p>Enabling this will make the next recurrence of a task have no Scheduled (⏳) date, when at least one of Start (🛫) or Due (📅) dates is present.</p><p>This is for when you want the Start and Due dates to carry forward to the next recurrence, but you will set the Scheduled date in future, once you plan to work on it.</p>",
+        "render": "[Function]"
+      }
+    ],
+    "type": "group"
+  },
+  {
+    "heading": "Postpone button",
+    "items": [
+      {
+        "name": "Postpone button date field",
+        "desc": "Which date field the postpone button (⏩) updates. For options with multiple dates, the first date in the sequence that is present on the task will be set.",
+        "aliases": [
+          "Postpone button"
+        ],
         "render": "[Function]"
       }
     ],
