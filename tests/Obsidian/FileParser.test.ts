@@ -96,6 +96,19 @@ describe('understand task parsing', () => {
 
     const parsingExamples = [
         {
+            mockDataName: 'list_items_nested_issue_4081_numbered_standard',
+            expectedFileContents: `
+1. [ ] A - 4081 task 1
+    1. [ ] B - 4081 task 1.1
+
+2. [ ] A - 4081 task 2
+    1. [ ] B - 4081 task 2.1
+`,
+            expectedObsidianCount: 4,
+            expectedTasksCount: 4,
+        },
+
+        {
             mockDataName: 'list_items_nested_issue_4081_numbered',
             expectedFileContents: `
 1. 1. [ ] A - 4081 task 1
@@ -108,6 +121,17 @@ describe('understand task parsing', () => {
             expectedObsidianCount: 6,
             expectedTasksCount: 2,
         },
+
+        {
+            mockDataName: 'list_items_nested_issue_4081_unnumbered_standard',
+            expectedFileContents: `
+* [ ] A - 4081 task 1
+    * [ ] B - 4081 task 1.1
+`,
+            expectedObsidianCount: 2,
+            expectedTasksCount: 2,
+        },
+
         {
             mockDataName: 'list_items_nested_issue_4081_unnumbered',
             expectedFileContents: `
