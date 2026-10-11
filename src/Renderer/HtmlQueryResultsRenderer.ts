@@ -1,10 +1,6 @@
 import type { App, Component, TFile } from 'obsidian';
 import { getSettings } from '../Config/Settings';
-import {
-    postponeButtonTitle,
-    shouldScheduleForTodayOnPostpone,
-    shouldShowPostponeButton,
-} from '../DateTime/Postponer';
+import { postponeButtonTitle, shouldScheduleForTodayOnPostpone, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';

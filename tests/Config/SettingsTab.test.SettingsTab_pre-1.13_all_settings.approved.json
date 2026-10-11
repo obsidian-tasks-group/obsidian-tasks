@@ -427,6 +427,13 @@
     ]
   },
   {
+    "name": "Postpone button behavior",
+    "desc": "Choose whether the postpone button modifies the highest-priority date (due > scheduled > start) on dated tasks only, or always modifies the scheduled date (and schedules undated tasks for today).",
+    "controls": [
+      "dropdown"
+    ]
+  },
+  {
     "name": "Dates from file names",
     "heading": true,
     "controls": []

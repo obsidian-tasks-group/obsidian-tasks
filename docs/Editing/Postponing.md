@@ -48,7 +48,7 @@ The ⏩ button provides two choices:
 
 ### Which date field is edited?
 
-The postpone option looks at the first of these Task fields, and will edit the first of:
+By default, the postpone option looks at the first of these Task fields, and will edit the first of:
 
 1. **Due** date, if present.
 1. **Scheduled** date
@@ -56,9 +56,11 @@ The postpone option looks at the first of these Task fields, and will edit the f
 1. **Start** date
     - If no Due or Scheduled date is present.
 
+You can configure **Postpone button behavior** in Tasks Settings (under **Dates**) to **Scheduled date**, so that the postpone button always edits the **Scheduled** date (leaving any **Due** date untouched) and schedules undated tasks for today.
+
 ### When is the postpone button shown?
 
-- Tasks with none of Due, Scheduled and Start currently don't show the Postpone button.
+- Tasks with none of Due, Scheduled and Start don't show the Postpone button by default (unless **Postpone button behavior** is set to **Scheduled date**, in which case undated tasks display a ⏳ button to schedule them for today).
 - Tasks with any invalid dates at all (including Created and Done dates) also don't show the Postpone button.
 - You can use the `hide postpone button` [[Layout]] instruction to hide the Postpone button from your Task query results.
 
@@ -82,13 +84,13 @@ This facility is currently only available in Tasks query search results.
 One of these reasons:
 
 - The task status type [[Status Types|status type]] is `DONE`, `CANCELLED` or `NON_TASK`.
-- The task does has no [[Dates#Due date|due]], [[Dates#Scheduled date|scheduled]] or [[Dates#Start date|start]] date.
+- The task has no [[Dates#Due date|due]], [[Dates#Scheduled date|scheduled]] or [[Dates#Start date|start]] date (and **Postpone button behavior** is set to **Default**).
 - The task has at least one date field with an invalid date value.
 - The `hide postpone button` instruction was used.
 
 ### Can I use Postpone to add a date to an undated task?
 
-Currently, no.
+Yes, by setting **Postpone button behavior** to **Scheduled date** in Tasks Settings under **Dates**. Undated tasks will display a ⏳ button that schedules them for today when clicked (or opens the postpone context menu on right-click).
 
 ## Support
 

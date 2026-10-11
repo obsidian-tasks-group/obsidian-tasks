@@ -358,4 +358,3 @@ describe('postpone - scheduled behavior option', () => {
         expect(postponedTask.dueDate?.format('YYYY-MM-DD')).toEqual('2023-12-10');
     });
 });
-

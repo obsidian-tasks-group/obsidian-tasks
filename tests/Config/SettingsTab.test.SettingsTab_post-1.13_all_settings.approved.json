@@ -233,6 +233,11 @@
         "name": "Set cancelled date on every cancelled task",
         "desc": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
         "render": "[Function]"
+      },
+      {
+        "name": "Postpone button behavior",
+        "desc": "Choose whether the postpone button modifies the highest-priority date (due > scheduled > start) on dated tasks only, or always modifies the scheduled date (and schedules undated tasks for today).",
+        "render": "[Function]"
       }
     ],
     "type": "group"
