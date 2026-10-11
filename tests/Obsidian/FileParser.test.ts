@@ -1,6 +1,7 @@
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import type { Task } from '../../src/Task/Task';
 import { type SimulatedFile, getMockDataAndReadTasks, readTasksFromSimulatedFile } from './SimulatedFile';
+import type { MockDataName } from './AllCacheSampleData';
 
 describe('FileParser', () => {
     it('should set all non-TasksFile data in TaskLocation', () => {
@@ -86,36 +87,37 @@ describe('understand task parsing', () => {
         return tasks.length;
     }
 
-    it('show how Obsidian parses multiple list-item markers on one line - numbered', () => {
-        // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/4081
-        const { data, tasks } = getMockDataAndReadTasks('list_items_nested_issue_4081_numbered');
-        expect('\n' + data.fileContents).toEqual(`
+    it.each([
+        {
+            mockDataName: 'list_items_nested_issue_4081_numbered',
+            expectedFileContents: `
 1. 1. [ ] A - 4081 task 1
     1. [ ] B - 4081 task 1.1
 
 2. 1. [ ] A - 4081 task 2
     1. [ ] B - 4081 task 2.1
-`);
-
-        // looking at the file, one might assume the answer is 4
-        expect(taskCountAccordingToObsidianCache(data)).toEqual(6);
-
-        // Looking at the file, one might assume the answer is 4
-        expect(taskCountAccordingToTasks(tasks)).toEqual(2);
-    });
-
-    it('show how Obsidian parses multiple list-item markers on one line - unnumbered', () => {
-        // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/4081
-        const { data, tasks } = getMockDataAndReadTasks('list_items_nested_issue_4081_unnumbered');
-        expect('\n' + data.fileContents).toEqual(`
+`,
+            // file content suggests these should both be 4:
+            expectedObsidianCount: 6,
+            expectedTasksCount: 2,
+        },
+        {
+            mockDataName: 'list_items_nested_issue_4081_unnumbered',
+            expectedFileContents: `
 * * [ ] A - 4081 task 1
     * [ ] B - 4081 task 1.1
-`);
-
-        // looking at the file, one might assume the answer is 2
-        expect(taskCountAccordingToObsidianCache(data)).toEqual(3);
-
-        // Looking at the file, one might assume the answer is 2
-        expect(taskCountAccordingToTasks(tasks)).toEqual(1);
-    });
+`,
+            // file content suggests these should both be 2:
+            expectedObsidianCount: 3,
+            expectedTasksCount: 1,
+        },
+    ])(
+        'show how Obsidian parses file - $mockDataName',
+        ({ mockDataName, expectedFileContents, expectedObsidianCount, expectedTasksCount }) => {
+            const { data, tasks } = getMockDataAndReadTasks(mockDataName as MockDataName);
+            expect('\n' + data.fileContents).toEqual(expectedFileContents);
+            expect(taskCountAccordingToObsidianCache(data)).toEqual(expectedObsidianCount);
+            expect(taskCountAccordingToTasks(tasks)).toEqual(expectedTasksCount);
+        },
+    );
 });
