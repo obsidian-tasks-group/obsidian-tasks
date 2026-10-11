@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Autosugerencia",
       "maxSuggestions": {
         "description": "Cuántas sugerencias se deben mostrar cuando aparece un menú de autosugerencia (incluyendo la opción \"⏎\").",
         "name": "Número máximo de autosugerencias a mostrar"
@@ -142,7 +141,6 @@
         "name": "Autosugerir contenido de la tarea"
       }
     },
-    "changeRequiresRestart": "REQUIERE REINICIO.",
     "dates": {
       "cancelledDate": {
         "description": "Al activar esta opción se añadirá una marca de tiempo ❌ AAAA-MM-DD al final cuando una tarea se marque como cancelada.",
@@ -163,8 +161,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Un formato de fecha adicional que el complemento Tasks reconocerá al usar el nombre del archivo como fecha Programada para tareas sin fecha.",
-            "line2": "Referencia de sintaxis"
+            "line1": "Un formato de fecha adicional que el complemento Tasks reconocerá al usar el nombre del archivo como fecha Programada para tareas sin fecha."
           },
           "name": "Formato adicional de fecha de nombre de archivo como fecha Programada para tareas sin fecha",
           "placeholder": "ejemplo: MMM DD YYYY"
@@ -188,8 +185,7 @@
       "accessKeys": {
         "description": "Si las teclas de acceso (atajos de teclado) de los distintos controles en los cuadros de diálogo entran en conflicto con atajos de teclado del sistema o con alguna función de tecnología de asistencia importante para ti, puede que quieras desactivarlas aquí.",
         "name": "Proporcionar teclas de acceso en los cuadros de diálogo"
-      },
-      "heading": "Cuadros de diálogo"
+      }
     },
     "format": {
       "description": {
@@ -213,7 +209,6 @@
         "name": "Filtro global de tareas",
         "placeholder": "p. ej. #task o TODO"
       },
-      "heading": "Filtro global de tareas",
       "removeFilter": {
         "description": "Al activar esta opción se elimina de la descripción de la tarea, al mostrarla, la cadena que hayas establecido como filtro global.",
         "name": "Eliminar el filtro global de la descripción"
@@ -254,7 +249,6 @@
       }
     },
     "searchResults": {
-      "heading": "Resultados de la búsqueda",
       "taskCountLocation": {
         "description": "Elige si el recuento de tareas se muestra en la parte superior o inferior de los resultados de la consulta.",
         "name": "Ubicación del recuento de tareas",
@@ -294,9 +288,6 @@
         "auraTheme": "Tema Aura",
         "borderTheme": "Tema Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Añadir {{numberOfStatuses}} estados admitidos"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} estados)"
           }
@@ -325,9 +316,6 @@
           "addAllUnknown": {
             "description": "Añade los símbolos de estado encontrados en tu bóveda pero que aún no están configurados aquí.",
             "name": "Añadir todos los tipos de estado desconocidos"
-          },
-          "addNewStatus": {
-            "name": "Añadir nuevo estado de tarea"
           },
           "resetCustomStatuses": {
             "description": "Descarta todos los estados personalizados y restaura los valores predeterminados.",

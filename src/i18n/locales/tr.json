@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Otomatik öneri",
       "maxSuggestions": {
         "description": "Otomatik öneri menüsü açıldığında kaç öneri gösterilmeli (\"⏎\" seçeneği dahil).",
         "name": "Gösterilecek maksimum otomatik öneri sayısı"
@@ -142,7 +141,6 @@
         "name": "Görev içeriği için otomatik öneri"
       }
     },
-    "changeRequiresRestart": "YENİDEN BAŞLATMA GEREKTİRİR.",
     "dates": {
       "cancelledDate": {
         "description": "Bu seçeneği etkinleştirirseniz, bir görev iptal durumuna geçirildiğinde sonuna ❌ YYYY-AA-GG zaman damgası eklenir.",
@@ -163,8 +161,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Tasks eklentisinin, tarihlenmemiş görevler için dosya adını Zamanlanmış tarih olarak kullanırken tanıyacağı ek bir tarih biçimi.",
-            "line2": "Söz dizimi Başvurusu"
+            "line1": "Tasks eklentisinin, tarihlenmemiş görevler için dosya adını Zamanlanmış tarih olarak kullanırken tanıyacağı ek bir tarih biçimi."
           },
           "name": "Tarihlenmemiş görevler için Zamanlanmış tarih olarak ek dosya adı tarih biçimi",
           "placeholder": "örnek: MMM GG YYYY"
@@ -188,8 +185,7 @@
       "accessKeys": {
         "description": "İletişim kutularındaki çeşitli denetimler için erişim tuşları (klavye kısayolları), sistem klavye kısayollarıyla veya sizin için önemli olan yardımcı teknoloji işlevleriyle çakışıyorsa, bunları burada devre dışı bırakmak isteyebilirsiniz.",
         "name": "İletişim kutularında erişim tuşları sağla"
-      },
-      "heading": "İletişim Kutuları"
+      }
     },
     "format": {
       "description": {
@@ -213,7 +209,6 @@
         "name": "Genel görev filtresi",
         "placeholder": "örn. #task veya TODO"
       },
-      "heading": "Genel görev filtresi",
       "removeFilter": {
         "description": "Bu seçeneği etkinleştirirseniz, bir görev görüntülenirken açıklamasından genel filtre olarak ayarladığınız dize kaldırılır.",
         "name": "Açıklamadan genel filtreyi kaldır"
@@ -254,7 +249,6 @@
       }
     },
     "searchResults": {
-      "heading": "Arama sonuçları",
       "taskCountLocation": {
         "description": "Görev sayısının sorgu sonuçlarının üstünde mi yoksa altında mı gösterileceğini seçin.",
         "name": "Görev sayısı konumu",
@@ -294,9 +288,6 @@
         "auraTheme": "Aura Teması",
         "borderTheme": "Border Teması",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: {{numberOfStatuses}} desteklenen Durumu ekle"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} durum)"
           }
@@ -325,9 +316,6 @@
           "addAllUnknown": {
             "description": "Kasanızda bulunan ancak burada henüz yapılandırılmamış tüm durum sembollerini ekleyin.",
             "name": "Tüm Bilinmeyen Durum Türlerini Ekle"
-          },
-          "addNewStatus": {
-            "name": "Yeni Görev Durumu Ekle"
           },
           "resetCustomStatuses": {
             "description": "Tüm özel durumları silin ve varsayılanları geri yükleyin.",
