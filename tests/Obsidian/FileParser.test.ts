@@ -98,6 +98,8 @@ describe('understand task parsing', () => {
         {
             mockDataName: 'list_items_nested_issue_4081_numbered_standard',
             fileContents: `
+Using Obsidian-like nested indentation:
+
 1. [ ] A - 4081 task 1
     1. [ ] B - 4081 task 1.1
 
@@ -111,6 +113,8 @@ describe('understand task parsing', () => {
         {
             mockDataName: 'list_items_nested_issue_4081_numbered',
             fileContents: `
+Using non-Obsidian-like nested indentation:
+
 1. 1. [ ] A - 4081 task 1
     1. [ ] B - 4081 task 1.1
 
@@ -125,6 +129,8 @@ describe('understand task parsing', () => {
         {
             mockDataName: 'list_items_nested_issue_4081_unnumbered_standard',
             fileContents: `
+Using Obsidian-like nested indentation:
+
 * [ ] A - 4081 task 1
     * [ ] B - 4081 task 1.1
 `,
@@ -135,6 +141,8 @@ describe('understand task parsing', () => {
         {
             mockDataName: 'list_items_nested_issue_4081_unnumbered',
             fileContents: `
+Using non-Obsidian-like nested indentation:
+
 * * [ ] A - 4081 task 1
     * [ ] B - 4081 task 1.1
 `,

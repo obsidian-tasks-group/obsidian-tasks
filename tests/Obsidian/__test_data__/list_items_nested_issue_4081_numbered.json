@@ -2,95 +2,95 @@
   "cachedMetadata": {
     "listItems": [
       {
-        "parent": -1,
+        "parent": -2,
         "position": {
           "end": {
             "col": 0,
+            "line": 4,
+            "offset": 100
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 45
+          }
+        }
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 25,
             "line": 2,
-            "offset": 55
+            "offset": 70
+          },
+          "start": {
+            "col": 3,
+            "line": 2,
+            "offset": 48
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 3,
+            "offset": 99
+          },
+          "start": {
+            "col": 4,
+            "line": 3,
+            "offset": 75
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 6,
+            "offset": 155
           },
           "start": {
             "col": 0,
-            "line": 0,
-            "offset": 0
+            "line": 5,
+            "offset": 101
           }
         }
       },
       {
-        "parent": -1,
+        "parent": -5,
         "position": {
           "end": {
             "col": 25,
-            "line": 0,
-            "offset": 25
+            "line": 5,
+            "offset": 126
           },
           "start": {
             "col": 3,
-            "line": 0,
-            "offset": 3
+            "line": 5,
+            "offset": 104
           }
         },
         "task": " "
       },
       {
-        "parent": -1,
+        "parent": -5,
         "position": {
           "end": {
             "col": 28,
-            "line": 1,
-            "offset": 54
+            "line": 6,
+            "offset": 155
           },
           "start": {
             "col": 4,
-            "line": 1,
-            "offset": 30
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -1,
-        "position": {
-          "end": {
-            "col": 28,
-            "line": 4,
-            "offset": 110
-          },
-          "start": {
-            "col": 0,
-            "line": 3,
-            "offset": 56
-          }
-        }
-      },
-      {
-        "parent": -3,
-        "position": {
-          "end": {
-            "col": 25,
-            "line": 3,
-            "offset": 81
-          },
-          "start": {
-            "col": 3,
-            "line": 3,
-            "offset": 59
-          }
-        },
-        "task": " "
-      },
-      {
-        "parent": -3,
-        "position": {
-          "end": {
-            "col": 28,
-            "line": 4,
-            "offset": 110
-          },
-          "start": {
-            "col": 4,
-            "line": 4,
-            "offset": 86
+            "line": 6,
+            "offset": 131
           }
         },
         "task": " "
@@ -100,9 +100,9 @@
       {
         "position": {
           "end": {
-            "col": 28,
-            "line": 4,
-            "offset": 110
+            "col": 43,
+            "line": 0,
+            "offset": 43
           },
           "start": {
             "col": 0,
@@ -110,11 +110,26 @@
             "offset": 0
           }
         },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 28,
+            "line": 6,
+            "offset": 155
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 45
+          }
+        },
         "type": "list"
       }
     ]
   },
-  "fileContents": "1. 1. [ ] A - 4081 task 1\n    1. [ ] B - 4081 task 1.1\n\n2. 1. [ ] A - 4081 task 2\n    1. [ ] B - 4081 task 2.1\n",
+  "fileContents": "Using non-Obsidian-like nested indentation:\n\n1. 1. [ ] A - 4081 task 1\n    1. [ ] B - 4081 task 1.1\n\n2. 1. [ ] A - 4081 task 2\n    1. [ ] B - 4081 task 2.1\n",
   "filePath": "Test Data/list_items_nested_issue_4081_numbered.md",
   "getAllTags": [],
   "parseFrontMatterTags": null,
