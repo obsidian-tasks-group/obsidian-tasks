@@ -65,6 +65,9 @@ function bold(text: string): string {
  *
  * - {@link getSettingDefinitions} — the declarative API, used by Obsidian 1.13.0 and later.
  * - {@link display} — the imperative fallback, used by older Obsidian versions.
+ *                     This now just displays a warning saying settings are no longer supported
+ *                     in older Obsidian versions.
+ *                     Its code should be deleted once the minAppVersion on 'main' is set to 1.13.1.
  *
  * Obsidian picks the right path per host, so BOTH implementations must be
  * updated whenever a setting is added, removed or changed.
