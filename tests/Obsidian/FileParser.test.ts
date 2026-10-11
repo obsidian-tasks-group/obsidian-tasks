@@ -89,14 +89,13 @@ describe('understand task parsing', () => {
     it('show how Obsidian parses multiple list-item markers on one line - numbered', () => {
         // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/4081
         const { data, tasks } = getMockDataAndReadTasks('list_items_nested_issue_4081_numbered');
-        expect(data.fileContents).toMatchInlineSnapshot(`
-          "1. 1. [ ] A - 4081 task 1
-              1. [ ] B - 4081 task 1.1
+        expect('\n' + data.fileContents).toEqual(`
+1. 1. [ ] A - 4081 task 1
+    1. [ ] B - 4081 task 1.1
 
-          2. 1. [ ] A - 4081 task 2
-              1. [ ] B - 4081 task 2.1
-          "
-        `);
+2. 1. [ ] A - 4081 task 2
+    1. [ ] B - 4081 task 2.1
+`);
 
         // looking at the file, one might assume the answer is 4
         expect(taskCountAccordingToObsidianCache(data)).toEqual(6);
@@ -108,11 +107,10 @@ describe('understand task parsing', () => {
     it('show how Obsidian parses multiple list-item markers on one line - unnumbered', () => {
         // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/4081
         const { data, tasks } = getMockDataAndReadTasks('list_items_nested_issue_4081_unnumbered');
-        expect(data.fileContents).toMatchInlineSnapshot(`
-          "* * [ ] A - 4081 task 1
-              * [ ] B - 4081 task 1.1
-          "
-        `);
+        expect('\n' + data.fileContents).toEqual(`
+* * [ ] A - 4081 task 1
+    * [ ] B - 4081 task 1.1
+`);
 
         // looking at the file, one might assume the answer is 2
         expect(taskCountAccordingToObsidianCache(data)).toEqual(3);
