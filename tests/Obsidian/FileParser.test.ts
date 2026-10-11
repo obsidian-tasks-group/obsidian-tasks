@@ -91,10 +91,10 @@ describe('understand task parsing', () => {
         const { data, tasks } = getMockDataAndReadTasks('list_items_nested_issue_4081_numbered');
         expect(data.fileContents).toMatchInlineSnapshot(`
           "1. 1. [ ] A - 4081 task 1
-          	1. [ ] B - 4081 task 1.1
+              1. [ ] B - 4081 task 1.1
 
           2. 1. [ ] A - 4081 task 2
-          	1. [ ] B - 4081 task 2.1
+              1. [ ] B - 4081 task 2.1
           "
         `);
 
@@ -110,7 +110,7 @@ describe('understand task parsing', () => {
         const { data, tasks } = getMockDataAndReadTasks('list_items_nested_issue_4081_unnumbered');
         expect(data.fileContents).toMatchInlineSnapshot(`
           "* * [ ] A - 4081 task 1
-          	* [ ] B - 4081 task 1.1
+              * [ ] B - 4081 task 1.1
           "
         `);
 

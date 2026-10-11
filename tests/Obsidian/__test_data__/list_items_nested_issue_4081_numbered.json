@@ -7,7 +7,7 @@
           "end": {
             "col": 0,
             "line": 2,
-            "offset": 52
+            "offset": 55
           },
           "start": {
             "col": 0,
@@ -36,14 +36,14 @@
         "parent": -1,
         "position": {
           "end": {
-            "col": 25,
+            "col": 28,
             "line": 1,
-            "offset": 51
+            "offset": 54
           },
           "start": {
-            "col": 1,
+            "col": 4,
             "line": 1,
-            "offset": 27
+            "offset": 30
           }
         },
         "task": " "
@@ -52,14 +52,14 @@
         "parent": -1,
         "position": {
           "end": {
-            "col": 25,
+            "col": 28,
             "line": 4,
-            "offset": 104
+            "offset": 110
           },
           "start": {
             "col": 0,
             "line": 3,
-            "offset": 53
+            "offset": 56
           }
         }
       },
@@ -69,12 +69,12 @@
           "end": {
             "col": 25,
             "line": 3,
-            "offset": 78
+            "offset": 81
           },
           "start": {
             "col": 3,
             "line": 3,
-            "offset": 56
+            "offset": 59
           }
         },
         "task": " "
@@ -83,14 +83,14 @@
         "parent": -3,
         "position": {
           "end": {
-            "col": 25,
+            "col": 28,
             "line": 4,
-            "offset": 104
+            "offset": 110
           },
           "start": {
-            "col": 1,
+            "col": 4,
             "line": 4,
-            "offset": 80
+            "offset": 86
           }
         },
         "task": " "
@@ -100,9 +100,9 @@
       {
         "position": {
           "end": {
-            "col": 25,
+            "col": 28,
             "line": 4,
-            "offset": 104
+            "offset": 110
           },
           "start": {
             "col": 0,
@@ -114,7 +114,7 @@
       }
     ]
   },
-  "fileContents": "1. 1. [ ] A - 4081 task 1\n\t1. [ ] B - 4081 task 1.1\n\n2. 1. [ ] A - 4081 task 2\n\t1. [ ] B - 4081 task 2.1\n",
+  "fileContents": "1. 1. [ ] A - 4081 task 1\n    1. [ ] B - 4081 task 1.1\n\n2. 1. [ ] A - 4081 task 2\n    1. [ ] B - 4081 task 2.1\n",
   "filePath": "Test Data/list_items_nested_issue_4081_numbered.md",
   "getAllTags": [],
   "parseFrontMatterTags": null,

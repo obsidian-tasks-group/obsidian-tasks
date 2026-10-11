@@ -21,14 +21,14 @@
         "parent": 0,
         "position": {
           "end": {
-            "col": 25,
+            "col": 28,
             "line": 1,
-            "offset": 48
+            "offset": 51
           },
           "start": {
-            "col": 1,
+            "col": 4,
             "line": 1,
-            "offset": 24
+            "offset": 27
           }
         },
         "task": " "
@@ -39,12 +39,12 @@
           "end": {
             "col": 22,
             "line": 3,
-            "offset": 72
+            "offset": 75
           },
           "start": {
             "col": 0,
             "line": 3,
-            "offset": 50
+            "offset": 53
           }
         },
         "task": " "
@@ -53,14 +53,14 @@
         "parent": 3,
         "position": {
           "end": {
-            "col": 25,
+            "col": 28,
             "line": 4,
-            "offset": 98
+            "offset": 104
           },
           "start": {
-            "col": 1,
+            "col": 4,
             "line": 4,
-            "offset": 74
+            "offset": 80
           }
         },
         "task": " "
@@ -70,9 +70,9 @@
       {
         "position": {
           "end": {
-            "col": 25,
+            "col": 28,
             "line": 4,
-            "offset": 98
+            "offset": 104
           },
           "start": {
             "col": 0,
@@ -84,7 +84,7 @@
       }
     ]
   },
-  "fileContents": "1. [ ] A - 4081 task 1\n\t1. [ ] B - 4081 task 1.1\n\n2. [ ] A - 4081 task 2\n\t1. [ ] B - 4081 task 2.1\n",
+  "fileContents": "1. [ ] A - 4081 task 1\n    1. [ ] B - 4081 task 1.1\n\n2. [ ] A - 4081 task 2\n    1. [ ] B - 4081 task 2.1\n",
   "filePath": "Test Data/list_items_nested_issue_4081_numbered_standard.md",
   "getAllTags": [],
   "parseFrontMatterTags": null,

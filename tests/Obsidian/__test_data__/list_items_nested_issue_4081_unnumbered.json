@@ -5,9 +5,9 @@
         "parent": -1,
         "position": {
           "end": {
-            "col": 24,
+            "col": 27,
             "line": 1,
-            "offset": 48
+            "offset": 51
           },
           "start": {
             "col": 0,
@@ -33,17 +33,17 @@
         "task": " "
       },
       {
-        "parent": -1,
+        "parent": 0,
         "position": {
           "end": {
-            "col": 24,
+            "col": 27,
             "line": 1,
-            "offset": 48
+            "offset": 51
           },
           "start": {
-            "col": 1,
+            "col": 4,
             "line": 1,
-            "offset": 25
+            "offset": 28
           }
         },
         "task": " "
@@ -53,9 +53,9 @@
       {
         "position": {
           "end": {
-            "col": 24,
+            "col": 27,
             "line": 1,
-            "offset": 48
+            "offset": 51
           },
           "start": {
             "col": 0,
@@ -67,7 +67,7 @@
       }
     ]
   },
-  "fileContents": "* * [ ] A - 4081 task 1\n\t* [ ] B - 4081 task 1.1\n",
+  "fileContents": "* * [ ] A - 4081 task 1\n    * [ ] B - 4081 task 1.1\n",
   "filePath": "Test Data/list_items_nested_issue_4081_unnumbered.md",
   "getAllTags": [],
   "parseFrontMatterTags": null,
