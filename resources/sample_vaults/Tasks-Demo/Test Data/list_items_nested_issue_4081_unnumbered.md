@@ -1,8 +1,2 @@
-* * [ ] #task A
-	* [ ] #task B
-
----
-
-```tasks
-preset this_file
-```
+* * [ ] A - 4081 task 1
+	* [ ] B - 4081 task 1.1
