@@ -1,5 +1,6 @@
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
-import { readTasksFromSimulatedFile } from './SimulatedFile';
+import type { Task } from '../../src/Task/Task';
+import { type SimulatedFile, getMockDataAndReadTasks, readTasksFromSimulatedFile } from './SimulatedFile';
 
 describe('FileParser', () => {
     it('should set all non-TasksFile data in TaskLocation', () => {
@@ -73,5 +74,50 @@ describe('FileParser', () => {
               "custom_number_prop": 42,
             }
         `);
+    });
+});
+
+describe('understand task parsing', () => {
+    function taskCountAccordingToObsidianCache(data: SimulatedFile): number | undefined {
+        return data.cachedMetadata.listItems?.length;
+    }
+
+    function taskCountAccordingToTasks(tasks: Task[]): number {
+        return tasks.length;
+    }
+
+    it('show how Obsidian parses multiple list-item markers on one line - numbered', () => {
+        // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/4081
+        const { data, tasks } = getMockDataAndReadTasks('list_items_nested_issue_4081_numbered');
+        expect(data.fileContents).toMatchInlineSnapshot(`
+          "1. 1. [ ] A - 4081 task 1
+          	1. [ ] B - 4081 task 1.1
+
+          2. 1. [ ] A - 4081 task 2
+          	1. [ ] B - 4081 task 2.1
+          "
+        `);
+
+        // looking at the file, one might assume the answer is 4
+        expect(taskCountAccordingToObsidianCache(data)).toEqual(6);
+
+        // Looking at the file, one might assume the answer is 4
+        expect(taskCountAccordingToTasks(tasks)).toEqual(2);
+    });
+
+    it('show how Obsidian parses multiple list-item markers on one line - unnumbered', () => {
+        // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/4081
+        const { data, tasks } = getMockDataAndReadTasks('list_items_nested_issue_4081_unnumbered');
+        expect(data.fileContents).toMatchInlineSnapshot(`
+          "* * [ ] A - 4081 task 1
+          	* [ ] B - 4081 task 1.1
+          "
+        `);
+
+        // looking at the file, one might assume the answer is 2
+        expect(taskCountAccordingToObsidianCache(data)).toEqual(3);
+
+        // Looking at the file, one might assume the answer is 2
+        expect(taskCountAccordingToTasks(tasks)).toEqual(1);
     });
 });
