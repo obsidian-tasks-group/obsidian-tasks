@@ -11,7 +11,6 @@ import {
     postponeMenuItemTitle,
     postponementSuccessMessage,
     removeDateMenuItemTitle,
-    shouldScheduleForTodayOnPostpone,
     shouldShowPostponeButton,
 } from '../../src/DateTime/Postponer';
 import { Status } from '../../src/Statuses/Status';
@@ -300,9 +299,9 @@ describe('postpone - postponement success message', () => {
     });
 });
 
-describe('postpone - scheduled behavior option', () => {
+describe('postpone - Always Scheduled date field option', () => {
     beforeEach(() => {
-        updateSettings({ postponeBehavior: 'scheduled' });
+        updateSettings({ postponeDateField: 'scheduledDate' });
     });
 
     it('should always choose scheduledDate even when dueDate and startDate are present', () => {
@@ -310,43 +309,18 @@ describe('postpone - scheduled behavior option', () => {
         expect(getDateFieldToPostpone(task)).toEqual('scheduledDate');
     });
 
-    it('should choose scheduledDate even for undated tasks', () => {
-        const task = new TaskBuilder().build();
-        expect(getDateFieldToPostpone(task)).toEqual('scheduledDate');
+    it('should choose scheduledDate when only dueDate or startDate is present', () => {
+        const taskWithDue = new TaskBuilder().dueDate(tomorrow).build();
+        expect(getDateFieldToPostpone(taskWithDue)).toEqual('scheduledDate');
+
+        const taskWithStart = new TaskBuilder().startDate(yesterday).build();
+        expect(getDateFieldToPostpone(taskWithStart)).toEqual('scheduledDate');
     });
 
-    it('should show postpone button on undated incomplete tasks, but not done or invalid tasks', () => {
-        const undatedTodo = new TaskBuilder().build();
-        expect(shouldShowPostponeButton(undatedTodo)).toEqual(true);
-
-        const doneStatus = new Status(new StatusConfiguration('x', 'Done', ' ', true, StatusType.DONE));
-        const undatedDone = new TaskBuilder().status(doneStatus).build();
-        expect(shouldShowPostponeButton(undatedDone)).toEqual(false);
-
-        const invalidDated = new TaskBuilder().dueDate(invalidDate).build();
-        expect(shouldShowPostponeButton(invalidDated)).toEqual(false);
-    });
-
-    it('should indicate whether a task should be scheduled for today on postpone', () => {
+    it('should not postpone or show button if no happens dates are on task', () => {
         const undatedTask = new TaskBuilder().build();
-        expect(shouldScheduleForTodayOnPostpone(undatedTask)).toEqual(true);
-
-        const datedTask = new TaskBuilder().dueDate(tomorrow).build();
-        expect(shouldScheduleForTodayOnPostpone(datedTask)).toEqual(false);
-
-        updateSettings({ postponeBehavior: 'default' });
-        expect(shouldScheduleForTodayOnPostpone(undatedTask)).toEqual(false);
-    });
-
-    it('should schedule an undated task for today when amount is 0 days', () => {
-        const undatedTask = new TaskBuilder().build();
-        const { postponedDate, postponedTask } = createPostponedTask(undatedTask, 'scheduledDate', 'days', 0);
-
-        expect(postponedDate?.format('YYYY-MM-DD')).toEqual(today);
-        expect(postponedTask.scheduledDate?.format('YYYY-MM-DD')).toEqual(today);
-        expect(postponeButtonTitle(undatedTask, 0, 'days')).toEqual(
-            'ℹ️ Scheduled today, on Sun 3rd Dec (right-click for more options)',
-        );
+        expect(getDateFieldToPostpone(undatedTask)).toBeNull();
+        expect(shouldShowPostponeButton(undatedTask)).toEqual(false);
     });
 
     it('should postpone scheduledDate while leaving dueDate untouched when task only has a dueDate', () => {

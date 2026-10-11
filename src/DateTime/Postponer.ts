@@ -14,10 +14,6 @@ export function shouldShowPostponeButton(task: Task) {
         }
     }
 
-    if (getSettings().postponeBehavior === 'scheduled') {
-        return !task.isDone;
-    }
-
     // require a valid happens date to postpone
     const hasAValidHappensDate = task.happensDates.some((date) => {
         return !!date?.isValid();
@@ -27,27 +23,20 @@ export function shouldShowPostponeButton(task: Task) {
     return !task.isDone && hasAValidHappensDate;
 }
 
-export function shouldScheduleForTodayOnPostpone(task: Task): boolean {
-    if (getSettings().postponeBehavior !== 'scheduled') {
-        return false;
-    }
-
-    const hasAValidHappensDate = task.happensDates.some((date) => {
-        return !!date?.isValid();
-    });
-
-    return !hasAValidHappensDate;
-}
-
 /**
- * Gets a {@link HappensDate} field from a {@link Task} with the following priority: due > scheduled > start,
- * or always `'scheduledDate'` when `postponeBehavior` is set to `'scheduled'`.
- * If the task has no happens field {@link HappensDate} in default mode, null is returned.
+ * Gets a {@link HappensDate} field from a {@link Task} according to the configured
+ * `postponeDateField` setting (default: due > scheduled > start, or always `scheduledDate`).
+ * If the task has no happens field {@link HappensDate}, null is returned.
  *
  * @param task
  */
 export function getDateFieldToPostpone(task: Task): HappensDate | null {
-    if (getSettings().postponeBehavior === 'scheduled') {
+    const hasHappensDate = Boolean(task.dueDate || task.scheduledDate || task.startDate);
+    if (!hasHappensDate) {
+        return null;
+    }
+
+    if (getSettings().postponeDateField === 'scheduledDate') {
         return 'scheduledDate';
     }
 
@@ -171,7 +160,7 @@ export function postponeButtonTitle(task: Task, amount: number, timeUnit: moment
  */
 export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
-    const dateToUpdate = (task[updatedDateType] as Moment | null) ?? window.moment().startOf('day');
+    const dateToUpdate = task[updatedDateType] ?? window.moment().startOf('day');
     return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
 }
 

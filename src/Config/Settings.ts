@@ -67,7 +67,7 @@ export type QuickSearchSettings = {
     fuzzyMatching: boolean;
 };
 
-export type PostponeBehavior = 'default' | 'scheduled';
+export type PostponeDateField = 'due-scheduled-start' | 'scheduledDate';
 
 export interface Settings {
     presets: PresetsMap;
@@ -78,7 +78,7 @@ export interface Settings {
     setCreatedDate: boolean;
     setDoneDate: boolean;
     setCancelledDate: boolean;
-    postponeBehavior: PostponeBehavior;
+    postponeDateField: PostponeDateField;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
@@ -126,7 +126,7 @@ const defaultSettings: Readonly<Settings> = {
     setCreatedDate: false,
     setDoneDate: true,
     setCancelledDate: true,
-    postponeBehavior: 'default',
+    postponeDateField: 'due-scheduled-start',
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 20,

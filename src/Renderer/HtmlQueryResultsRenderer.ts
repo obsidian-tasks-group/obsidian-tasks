@@ -1,6 +1,6 @@
 import type { App, Component, TFile } from 'obsidian';
 import { getSettings } from '../Config/Settings';
-import { postponeButtonTitle, shouldScheduleForTodayOnPostpone, shouldShowPostponeButton } from '../DateTime/Postponer';
+import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
 import type { IQuery } from '../IQuery';
 import { QueryLayout } from '../Layout/QueryLayout';
 import { TaskLayout } from '../Layout/TaskLayout';
@@ -318,16 +318,12 @@ export class HtmlQueryResultsRenderer extends QueryResultsRendererBase {
     }
 
     private addPostponeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
-        const isUndated = shouldScheduleForTodayOnPostpone(task);
-        const amount = isUndated ? 0 : 1;
-        const timeUnit = isUndated ? 'days' : 'day';
+        const amount = 1;
+        const timeUnit = 'day';
         const buttonTooltipText = postponeButtonTitle(task, amount, timeUnit);
 
         const button = listItem.createEl('a');
         button.classList.add('tasks-postpone');
-        if (isUndated) {
-            button.classList.add('tasks-schedule-today');
-        }
         if (shortMode) {
             button.classList.add('tasks-postpone-short-mode');
         }

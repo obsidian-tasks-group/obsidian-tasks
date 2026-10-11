@@ -26,7 +26,7 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import * as Themes from './Themes';
 import {
     type HeadingState,
-    type PostponeBehavior,
+    type PostponeDateField,
     type Settings,
     TASK_FORMATS,
     getSettings,
@@ -882,18 +882,21 @@ export class SettingsTab extends PluginSettingTab {
                     ),
                 },
                 {
-                    name: i18n.t('settings.dates.postponeBehavior.name'),
-                    desc: i18n.t('settings.dates.postponeBehavior.description'),
+                    name: i18n.t('settings.dates.postponeDateField.name'),
+                    desc: i18n.t('settings.dates.postponeDateField.description'),
                     render: (setting) => {
                         setting.addDropdown((dropdown) => {
-                            dropdown.addOption('default', i18n.t('settings.dates.postponeBehavior.options.default'));
                             dropdown.addOption(
-                                'scheduled',
-                                i18n.t('settings.dates.postponeBehavior.options.scheduled'),
+                                'due-scheduled-start',
+                                i18n.t('settings.dates.postponeDateField.options.due-scheduled-start'),
                             );
-                            dropdown.setValue(getSettings().postponeBehavior).onChange(async (value) => {
+                            dropdown.addOption(
+                                'scheduledDate',
+                                i18n.t('settings.dates.postponeDateField.options.scheduledDate'),
+                            );
+                            dropdown.setValue(getSettings().postponeDateField).onChange(async (value) => {
                                 updateSettings({
-                                    postponeBehavior: value as PostponeBehavior,
+                                    postponeDateField: value as PostponeDateField,
                                 });
                                 await this.plugin.saveSettings();
                                 this.events.triggerReloadOpenSearchResults();
@@ -1414,14 +1417,17 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName(i18n.t('settings.dates.postponeBehavior.name'))
-            .setDesc(i18n.t('settings.dates.postponeBehavior.description'))
+            .setName(i18n.t('settings.dates.postponeDateField.name'))
+            .setDesc(i18n.t('settings.dates.postponeDateField.description'))
             .addDropdown((dropdown) => {
-                dropdown.addOption('default', i18n.t('settings.dates.postponeBehavior.options.default'));
-                dropdown.addOption('scheduled', i18n.t('settings.dates.postponeBehavior.options.scheduled'));
-                dropdown.setValue(getSettings().postponeBehavior).onChange(async (value) => {
+                dropdown.addOption(
+                    'due-scheduled-start',
+                    i18n.t('settings.dates.postponeDateField.options.due-scheduled-start'),
+                );
+                dropdown.addOption('scheduledDate', i18n.t('settings.dates.postponeDateField.options.scheduledDate'));
+                dropdown.setValue(getSettings().postponeDateField).onChange(async (value) => {
                     updateSettings({
-                        postponeBehavior: value as PostponeBehavior,
+                        postponeDateField: value as PostponeDateField,
                     });
                     await this.plugin.saveSettings();
                     this.events.triggerReloadOpenSearchResults();
