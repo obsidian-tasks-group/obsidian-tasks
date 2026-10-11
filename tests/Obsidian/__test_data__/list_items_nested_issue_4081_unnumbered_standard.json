@@ -1,0 +1,60 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 21,
+            "line": 0,
+            "offset": 21
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 24,
+            "line": 1,
+            "offset": 46
+          },
+          "start": {
+            "col": 1,
+            "line": 1,
+            "offset": 23
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 24,
+            "line": 1,
+            "offset": 46
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      }
+    ]
+  },
+  "fileContents": "* [ ] A - 4081 task 1\n\t* [ ] B - 4081 task 1.1\n",
+  "filePath": "Test Data/list_items_nested_issue_4081_unnumbered_standard.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

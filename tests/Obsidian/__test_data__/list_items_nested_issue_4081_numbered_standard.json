@@ -1,0 +1,92 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 22,
+            "line": 0,
+            "offset": 22
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 0,
+        "position": {
+          "end": {
+            "col": 25,
+            "line": 1,
+            "offset": 48
+          },
+          "start": {
+            "col": 1,
+            "line": 1,
+            "offset": 24
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": -1,
+        "position": {
+          "end": {
+            "col": 22,
+            "line": 3,
+            "offset": 72
+          },
+          "start": {
+            "col": 0,
+            "line": 3,
+            "offset": 50
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 3,
+        "position": {
+          "end": {
+            "col": 25,
+            "line": 4,
+            "offset": 98
+          },
+          "start": {
+            "col": 1,
+            "line": 4,
+            "offset": 74
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 25,
+            "line": 4,
+            "offset": 98
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "list"
+      }
+    ]
+  },
+  "fileContents": "1. [ ] A - 4081 task 1\n\t1. [ ] B - 4081 task 1.1\n\n2. [ ] A - 4081 task 2\n\t1. [ ] B - 4081 task 2.1\n",
+  "filePath": "Test Data/list_items_nested_issue_4081_numbered_standard.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

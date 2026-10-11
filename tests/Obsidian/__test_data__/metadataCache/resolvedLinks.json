@@ -245,7 +245,9 @@
     "Test Data/link_in_task_wikilink.md": 1
   },
   "Test Data/list_items_nested_issue_4081_numbered.md": {},
+  "Test Data/list_items_nested_issue_4081_numbered_standard.md": {},
   "Test Data/list_items_nested_issue_4081_unnumbered.md": {},
+  "Test Data/list_items_nested_issue_4081_unnumbered_standard.md": {},
   "Test Data/list_statuses.md": {},
   "Test Data/list_styles.md": {},
   "Test Data/mixed_list_markers.md": {},
