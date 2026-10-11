@@ -26,6 +26,7 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import * as Themes from './Themes';
 import {
     type HeadingState,
+    type PostponeBehavior,
     type Settings,
     TASK_FORMATS,
     getSettings,
@@ -880,6 +881,26 @@ export class SettingsTab extends PluginSettingTab {
                         'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
                     ),
                 },
+                {
+                    name: i18n.t('settings.dates.postponeBehavior.name'),
+                    desc: i18n.t('settings.dates.postponeBehavior.description'),
+                    render: (setting) => {
+                        setting.addDropdown((dropdown) => {
+                            dropdown.addOption('default', i18n.t('settings.dates.postponeBehavior.options.default'));
+                            dropdown.addOption(
+                                'scheduled',
+                                i18n.t('settings.dates.postponeBehavior.options.scheduled'),
+                            );
+                            dropdown.setValue(getSettings().postponeBehavior).onChange(async (value) => {
+                                updateSettings({
+                                    postponeBehavior: value as PostponeBehavior,
+                                });
+                                await this.plugin.saveSettings();
+                                this.events.triggerReloadOpenSearchResults();
+                            });
+                        });
+                    },
+                },
             ],
         };
     }
@@ -1389,6 +1410,21 @@ export class SettingsTab extends PluginSettingTab {
                 toggle.setValue(settings.setCancelledDate).onChange(async (value) => {
                     updateSettings({ setCancelledDate: value });
                     await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName(i18n.t('settings.dates.postponeBehavior.name'))
+            .setDesc(i18n.t('settings.dates.postponeBehavior.description'))
+            .addDropdown((dropdown) => {
+                dropdown.addOption('default', i18n.t('settings.dates.postponeBehavior.options.default'));
+                dropdown.addOption('scheduled', i18n.t('settings.dates.postponeBehavior.options.scheduled'));
+                dropdown.setValue(getSettings().postponeBehavior).onChange(async (value) => {
+                    updateSettings({
+                        postponeBehavior: value as PostponeBehavior,
+                    });
+                    await this.plugin.saveSettings();
+                    this.events.triggerReloadOpenSearchResults();
                 });
             });
 

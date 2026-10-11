@@ -111,6 +111,10 @@ a.tasks-edit, a.tasks-postpone {
     content: '⏩';
 }
 
+.tasks-postpone.tasks-schedule-today::after {
+    content: '⏳';
+}
+
 /* Urgency score */
 .tasks-urgency {
     font-size: var(--font-ui-smaller);

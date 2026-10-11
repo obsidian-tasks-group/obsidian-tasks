@@ -1,3 +1,4 @@
+import { getSettings } from '../Config/Settings';
 import { capitalizeFirstLetter } from '../lib/StringHelpers';
 import { Task } from '../Task/Task';
 import { DateFallback } from './DateFallback';
@@ -13,6 +14,10 @@ export function shouldShowPostponeButton(task: Task) {
         }
     }
 
+    if (getSettings().postponeBehavior === 'scheduled') {
+        return !task.isDone;
+    }
+
     // require a valid happens date to postpone
     const hasAValidHappensDate = task.happensDates.some((date) => {
         return !!date?.isValid();
@@ -22,13 +27,30 @@ export function shouldShowPostponeButton(task: Task) {
     return !task.isDone && hasAValidHappensDate;
 }
 
+export function shouldScheduleForTodayOnPostpone(task: Task): boolean {
+    if (getSettings().postponeBehavior !== 'scheduled') {
+        return false;
+    }
+
+    const hasAValidHappensDate = task.happensDates.some((date) => {
+        return !!date?.isValid();
+    });
+
+    return !hasAValidHappensDate;
+}
+
 /**
- * Gets a {@link HappensDate} field from a {@link Task} with the following priority: due > scheduled > start.
- * If the task has no happens field {@link HappensDate}, null is returned.
+ * Gets a {@link HappensDate} field from a {@link Task} with the following priority: due > scheduled > start,
+ * or always `'scheduledDate'` when `postponeBehavior` is set to `'scheduled'`.
+ * If the task has no happens field {@link HappensDate} in default mode, null is returned.
  *
  * @param task
  */
 export function getDateFieldToPostpone(task: Task): HappensDate | null {
+    if (getSettings().postponeBehavior === 'scheduled') {
+        return 'scheduledDate';
+    }
+
     if (task.dueDate) {
         return 'dueDate';
     }
@@ -60,7 +82,7 @@ export function createPostponedTask(
     timeUnit: moment.unitOfTime.DurationConstructor,
     amount: number,
 ) {
-    const dateToPostpone = task[dateFieldToPostpone];
+    const dateToPostpone = task[dateFieldToPostpone] ?? window.moment().startOf('day');
     return createPostponedTaskFromDate(dateToPostpone, task, dateFieldToPostpone, timeUnit, amount);
 }
 
@@ -149,7 +171,7 @@ export function postponeButtonTitle(task: Task, amount: number, timeUnit: moment
  */
 export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
     const updatedDateType = getDateFieldToPostpone(task)!;
-    const dateToUpdate = task[updatedDateType] as Moment;
+    const dateToUpdate = (task[updatedDateType] as Moment | null) ?? window.moment().startOf('day');
     return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
 }
 

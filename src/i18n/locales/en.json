@@ -156,7 +156,15 @@
         "description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
         "name": "Set done date on every completed task"
       },
-      "heading": "Dates"
+      "heading": "Dates",
+      "postponeBehavior": {
+        "description": "Choose whether the postpone button modifies the highest-priority date (due > scheduled > start) on dated tasks only, or always modifies the scheduled date (and schedules undated tasks for today).",
+        "name": "Postpone button behavior",
+        "options": {
+          "default": "Default (Due > Scheduled > Start, dated tasks only)",
+          "scheduled": "Scheduled date (Always postpone Scheduled date; schedule undated tasks for today)"
+        }
+      }
     },
     "datesFromFileNames": {
       "heading": "Dates from file names",
