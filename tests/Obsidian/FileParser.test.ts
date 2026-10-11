@@ -87,6 +87,13 @@ describe('understand task parsing', () => {
         return tasks.length;
     }
 
+    type ParsingExample = {
+        mockDataName: MockDataName;
+        expectedFileContents: string;
+        expectedObsidianCount: number;
+        expectedTasksCount: number;
+    };
+
     const parsingExamples = [
         {
             mockDataName: 'list_items_nested_issue_4081_numbered',
@@ -111,12 +118,12 @@ describe('understand task parsing', () => {
             expectedObsidianCount: 3,
             expectedTasksCount: 1,
         },
-    ];
+    ] satisfies readonly ParsingExample[];
 
     it.each(parsingExamples)(
         'show how Obsidian parses file - $mockDataName',
         ({ mockDataName, expectedFileContents, expectedObsidianCount, expectedTasksCount }) => {
-            const { data, tasks } = getMockDataAndReadTasks(mockDataName as MockDataName);
+            const { data, tasks } = getMockDataAndReadTasks(mockDataName);
             expect('\n' + data.fileContents).toEqual(expectedFileContents);
             expect(taskCountAccordingToObsidianCache(data)).toEqual(expectedObsidianCount);
             expect(taskCountAccordingToTasks(tasks)).toEqual(expectedTasksCount);
