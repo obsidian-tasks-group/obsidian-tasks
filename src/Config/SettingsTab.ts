@@ -1552,31 +1552,6 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        new Setting(containerEl).setName(i18n.t('settings.postponeButton.heading')).setHeading();
-        // ---------------------------------------------------------------------------
-
-        new Setting(containerEl)
-            .setName(i18n.t('settings.postponeButton.postponeDateField.name'))
-            .setDesc(i18n.t('settings.postponeButton.postponeDateField.description'))
-            .addDropdown((dropdown) => {
-                dropdown.addOption(
-                    'due-scheduled-start',
-                    i18n.t('settings.postponeButton.postponeDateField.options.due-scheduled-start'),
-                );
-                dropdown.addOption(
-                    'scheduledDate',
-                    i18n.t('settings.postponeButton.postponeDateField.options.scheduledDate'),
-                );
-                dropdown.setValue(getSettings().postponeDateField).onChange(async (value) => {
-                    updateSettings({
-                        postponeDateField: value as PostponeDateField,
-                    });
-                    await this.plugin.saveSettings();
-                    this.events.triggerReloadOpenSearchResults();
-                });
-            });
-
-        // ---------------------------------------------------------------------------
         new Setting(containerEl).setName(i18n.t('settings.autoSuggest.heading')).setHeading();
         // ---------------------------------------------------------------------------
         let autoSuggestMinimumMatchLength: Setting | null = null;
