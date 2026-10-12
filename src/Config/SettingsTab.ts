@@ -26,7 +26,6 @@ import type { TasksEvents } from '../Obsidian/TasksEvents';
 import * as Themes from './Themes';
 import {
     type HeadingState,
-    type PostponeDateField,
     type Settings,
     TASK_FORMATS,
     getSettings,
@@ -1023,7 +1022,7 @@ export class SettingsTab extends PluginSettingTab {
                             );
                             dropdown.setValue(getSettings().postponeDateField).onChange(async (value) => {
                                 updateSettings({
-                                    postponeDateField: value as PostponeDateField,
+                                    postponeDateField: value as Settings['postponeDateField'],
                                 });
                                 await this.plugin.saveSettings();
                                 this.events.triggerReloadOpenSearchResults();
