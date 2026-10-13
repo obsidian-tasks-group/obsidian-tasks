@@ -91,7 +91,7 @@ This facility is currently only available in Tasks query search results.
 One of these reasons:
 
 - The task status type [[Status Types|status type]] is `DONE`, `CANCELLED` or `NON_TASK`.
-- The task has no [[Dates#Due date|due]], [[Dates#Scheduled date|scheduled]] or [[Dates#Start date|start]] date.
+- The task has no [[Dates#Due date|due]], [[Dates#Scheduled date|scheduled]] or [[Dates#Start date|start]] date (or lacks the date field configured in [[#Which date field is edited?|Postpone button date field]]).
 - The task has at least one date field with an invalid date value.
 - The `hide postpone button` instruction was used.
 
