@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Gợi ý tự động",
       "maxSuggestions": {
         "description": "Số lượng gợi ý sẽ được hiển thị khi menu gợi ý tự động xuất hiện (bao gồm tùy chọn \"⏎\").",
         "name": "Số lượng gợi ý tự động tối đa để hiển thị"
@@ -142,7 +141,6 @@
         "name": "Gợi ý tự động nội dung nhiệm vụ"
       }
     },
-    "changeRequiresRestart": "YÊU CẦU KHỞI ĐỘNG LẠI.",
     "dates": {
       "cancelledDate": {
         "description": "Bật tính năng này sẽ thêm dấu thời gian ❌ YYYY-MM-DD vào cuối khi nhiệm vụ được chuyển sang bị hủy.",
@@ -163,8 +161,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Định dạng ngày bổ sung mà plugin Tasks sẽ nhận dạng khi sử dụng tên file làm ngày Đã lên lịch cho các nhiệm vụ chưa có ngày.",
-            "line2": "Tham khảo cú pháp"
+            "line1": "Định dạng ngày bổ sung mà plugin Tasks sẽ nhận dạng khi sử dụng tên file làm ngày Đã lên lịch cho các nhiệm vụ chưa có ngày."
           },
           "name": "Định dạng ngày tên file bổ sung làm ngày Đã lên lịch cho nhiệm vụ chưa có ngày",
           "placeholder": "ví dụ: MMM DD YYYY"
@@ -188,8 +185,7 @@
       "accessKeys": {
         "description": "Nếu các phím truy cập (phím tắt) cho các điều khiển khác nhau trong hộp thoại xung đột với phím tắt hệ thống hoặc chức năng công nghệ hỗ trợ quan trọng đối với bạn, bạn có thể vô hiệu hóa chúng tại đây.",
         "name": "Cung cấp phím truy cập trong hộp thoại"
-      },
-      "heading": "Hộp thoại"
+      }
     },
     "format": {
       "description": {
@@ -213,7 +209,6 @@
         "name": "Bộ lọc nhiệm vụ toàn cục",
         "placeholder": "ví dụ: #task hoặc TODO"
       },
-      "heading": "Bộ lọc nhiệm vụ toàn cục",
       "removeFilter": {
         "description": "Bật tính năng này sẽ xóa chuỗi mà bạn đặt làm bộ lọc toàn cục khỏi mô tả nhiệm vụ khi hiển thị nhiệm vụ.",
         "name": "Xóa bộ lọc toàn cục khỏi mô tả"
@@ -254,7 +249,6 @@
       }
     },
     "searchResults": {
-      "heading": "Kết quả tìm kiếm",
       "taskCountLocation": {
         "description": "Chọn hiển thị số lượng nhiệm vụ ở đầu hay cuối kết quả truy vấn.",
         "name": "Vị trí số lượng nhiệm vụ",
@@ -294,9 +288,6 @@
         "auraTheme": "Theme Aura",
         "borderTheme": "Theme Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Thêm {{numberOfStatuses}} Trạng thái được hỗ trợ"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} trạng thái)"
           }
@@ -325,9 +316,6 @@
           "addAllUnknown": {
             "description": "Thêm mọi ký hiệu trạng thái có trong vault của bạn nhưng chưa được cấu hình ở đây.",
             "name": "Thêm tất cả loại trạng thái không xác định"
-          },
-          "addNewStatus": {
-            "name": "Thêm trạng thái nhiệm vụ mới"
           },
           "resetCustomStatuses": {
             "description": "Loại bỏ tất cả trạng thái tùy chỉnh và khôi phục mặc định.",

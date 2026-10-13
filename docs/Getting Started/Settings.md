@@ -8,7 +8,7 @@ publish: true
 
 Changes to most of the Tasks settings take immediate effect.
 
-Regrettably, a few require the vault to be reloaded. These settings are marked with `REQUIRES RESTART`.
+Regrettably, a few require the vault to be reloaded. Tasks will show a 'Reload' button automatically if those settings are changed.
 
 ## Available settings
 

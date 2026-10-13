@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Autosuggest",
       "maxSuggestions": {
         "description": "Wie viele Vorschläge möchten Sie anzeigen, wenn ein Autosuggest-Menü aufgeht (einschließlich der \"⏎\"-Option).",
         "name": "Maximale Anzahl von Autosuggest-Vorschlägen anzeigen"
@@ -142,7 +141,6 @@
         "name": "Aufgabentext automatisch vorschlagen"
       }
     },
-    "changeRequiresRestart": "NEUSTART ERFORDERLICH.",
     "dates": {
       "cancelledDate": {
         "description": "Wenn aktiviert, füge beim Umschalten auf 'abgebrochen' automatisch ein Datum ❌ YYYY-MM-DD am Ende hinzu.",
@@ -163,8 +161,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Ein zusätzliches Datumsformat, das das Tasks-Plugin beim Verwenden des Dateinamens als geplantes Datum für undatierte Aufgaben erkennt.",
-            "line2": "Syntax-Referenz"
+            "line1": "Ein zusätzliches Datumsformat, das das Tasks-Plugin beim Verwenden des Dateinamens als geplantes Datum für undatierte Aufgaben erkennt."
           },
           "name": "Zusätzliches Datumsformat für Dateinamen als geplantes Datum für undatierte Aufgaben",
           "placeholder": "Beispiel: MMM DD YYYY"
@@ -188,8 +185,7 @@
       "accessKeys": {
         "description": "Wenn die Zugriffsschlüssel (Tastenkombinationen) für verschiedene Steuerelemente in Dialogfeldern in Konflikt mit System-Tastenkombinationen oder wichtigen assistiven Funktionen stehen, deaktivieren Sie sie hier.",
         "name": "Zugriffsschlüssel in Dialogen bereitstellen"
-      },
-      "heading": "Dialoge"
+      }
     },
     "format": {
       "description": {
@@ -213,7 +209,6 @@
         "name": "Globaler Aufgabenfilter",
         "placeholder": "z.B. #task oder TODO"
       },
-      "heading": "Globaler Aufgabenfilter",
       "removeFilter": {
         "description": "Aktiviert entfernt die Zeichenfolge, die Sie als globalen Filter gesetzt haben, aus der Aufgabenbeschreibung, wenn die Aufgabe angezeigt wird.",
         "name": "Globalen Filter aus Beschreibung entfernen"
@@ -254,7 +249,6 @@
       }
     },
     "searchResults": {
-      "heading": "Suchergebnisse",
       "taskCountLocation": {
         "description": "Legen Sie fest, ob die Aufgabenanzahl oben oder unten in den Abfrageergebnissen angezeigt wird.",
         "name": "Position der Aufgabenanzahl",
@@ -294,9 +288,6 @@
         "auraTheme": "Aura Theme",
         "borderTheme": "Border Theme",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Füge {{numberOfStatuses}} unterstützte Status hinzu"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} Status)"
           }
@@ -325,9 +316,6 @@
           "addAllUnknown": {
             "description": "Alle Statussymbole hinzufügen, die in Ihrem Tresor vorkommen, hier aber noch nicht konfiguriert sind.",
             "name": "Alle unbekannten Statustypen hinzufügen"
-          },
-          "addNewStatus": {
-            "name": "Neuen Aufgabenstatus hinzufügen"
           },
           "resetCustomStatuses": {
             "description": "Alle benutzerdefinierten Status verwerfen und die Standardwerte wiederherstellen.",

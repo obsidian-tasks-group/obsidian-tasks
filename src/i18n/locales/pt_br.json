@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Autocompletar",
       "maxSuggestions": {
         "description": "Quantas sugestões devem ser mostradas quando o menu de autocompletar aparecer (incluindo a opção \"⏎\").",
         "name": "Número máximo de sugestões automáticas para exibir"
@@ -142,7 +141,6 @@
         "name": "Autocompletar o conteúdo da tarefa"
       }
     },
-    "changeRequiresRestart": "REQUER REINICIALIZAÇÃO.",
     "dates": {
       "cancelledDate": {
         "description": "A ativação desta opção adicionará um carimbo de data/hora ❌ YYYY-MM-DD no final quando uma tarefa for alternada para cancelada.",
@@ -163,8 +161,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Um formato de data adicional que o plugin Tasks reconhecerá ao usar o nome do arquivo como a data Agendada para tarefas sem data.",
-            "line2": "Referência de Sintaxe"
+            "line1": "Um formato de data adicional que o plugin Tasks reconhecerá ao usar o nome do arquivo como a data Agendada para tarefas sem data."
           },
           "name": "Formato adicional de data do nome do arquivo como data Agendada para tarefas sem data",
           "placeholder": "exemplo: MMM DD YYYY"
@@ -188,8 +185,7 @@
       "accessKeys": {
         "description": "Se as teclas de acesso (atalhos de teclado) de vários controles nas caixas de diálogo entrarem em conflito com os atalhos de teclado do sistema ou com recursos de tecnologia assistiva importantes para você, é possível desativá-los aqui.",
         "name": "Fornecer teclas de acesso nas caixas de diálogo"
-      },
-      "heading": "Diálogos"
+      }
     },
     "format": {
       "description": {
@@ -213,7 +209,6 @@
         "name": "Filtro global de tarefas",
         "placeholder": "ex. #task ou TODO"
       },
-      "heading": "Filtro global de tarefas",
       "removeFilter": {
         "description": "A ativação desta opção removerá a string que você definiu como filtro global da descrição da tarefa ao exibi-la.",
         "name": "Remover filtro global da descrição"
@@ -254,7 +249,6 @@
       }
     },
     "searchResults": {
-      "heading": "Resultados da pesquisa",
       "taskCountLocation": {
         "description": "Escolha se a contagem de tarefas deve ser mostrada na parte superior ou inferior dos resultados da consulta.",
         "name": "Localização da contagem de tarefas",
@@ -294,9 +288,6 @@
         "auraTheme": "Tema Aura",
         "borderTheme": "Tema Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Adicionar {{numberOfStatuses}} Status suportados"
-          },
           "importCollection": {
             "name": "{{themeName}} ({{numberOfStatuses}} status)"
           }
@@ -325,9 +316,6 @@
           "addAllUnknown": {
             "description": "Adicione quaisquer símbolos de status encontrados no seu cofre, mas ainda não configurados aqui.",
             "name": "Adicionar Todos os Tipos de Status Desconhecidos"
-          },
-          "addNewStatus": {
-            "name": "Adicionar Novo Status de Tarefa"
           },
           "resetCustomStatuses": {
             "description": "Descarte todos os status personalizados e restaure os padrões.",

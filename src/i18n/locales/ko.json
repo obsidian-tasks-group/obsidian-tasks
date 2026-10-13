@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "자동 제안",
       "maxSuggestions": {
         "description": "자동 제안 메뉴가 나타날 때 표시할 제안의 개수입니다 ('⏎' 옵션 포함).",
         "name": "자동 제안 최대 표시 개수"
@@ -142,7 +141,6 @@
         "name": "작업 내용 자동 제안"
       }
     },
-    "changeRequiresRestart": "재시작이 필요합니다.",
     "dates": {
       "cancelledDate": {
         "description": "활성화하면 작업을 '취소'로 전환할 때 마지막에 ❌ YYYY-MM-DD 타임스탬프가 추가됩니다.",
@@ -163,8 +161,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "날짜 없는 작업에 파일명을 예정일(Scheduled)로 사용할 때 Tasks가 인식할 추가 날짜 형식입니다.",
-            "line2": "구문 참조(Syntax Reference)"
+            "line1": "날짜 없는 작업에 파일명을 예정일(Scheduled)로 사용할 때 Tasks가 인식할 추가 날짜 형식입니다."
           },
           "name": "날짜 없는 작업의 예정일로 사용할 추가 파일명 날짜 형식",
           "placeholder": "예: MMM DD YYYY"
@@ -188,8 +185,7 @@
       "accessKeys": {
         "description": "대화상자의 단축키(접근 키)가 시스템 단축키나 보조 기술 기능과 충돌한다면, 여기서 비활성화할 수 있습니다.",
         "name": "대화상자에서 접근 키 제공"
-      },
-      "heading": "대화상자"
+      }
     },
     "format": {
       "description": {
@@ -213,7 +209,6 @@
         "name": "전역 작업 필터",
         "placeholder": "예: #task 또는 TODO"
       },
-      "heading": "전역 작업 필터",
       "removeFilter": {
         "description": "활성화하면 작업 표시 시 설명에서 전역 필터 문자열을 제거합니다.",
         "name": "설명에서 전역 필터 제거"
@@ -254,7 +249,6 @@
       }
     },
     "searchResults": {
-      "heading": "검색 결과",
       "taskCountLocation": {
         "description": "작업 개수를 쿼리 결과의 상단 또는 하단 중 어디에 표시할지 선택합니다.",
         "name": "작업 개수 위치",
@@ -294,9 +288,6 @@
         "auraTheme": "Aura 테마",
         "borderTheme": "Border 테마",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: 지원되는 상태 {{numberOfStatuses}}개 추가"
-          },
           "importCollection": {
             "name": "{{themeName}} (상태 {{numberOfStatuses}}개)"
           }
@@ -325,9 +316,6 @@
           "addAllUnknown": {
             "description": "보관소에서 발견되었지만 아직 여기에 설정되지 않은 모든 상태 기호를 추가합니다.",
             "name": "알 수 없는 모든 상태 유형 추가"
-          },
-          "addNewStatus": {
-            "name": "새 작업 상태 추가"
           },
           "resetCustomStatuses": {
             "description": "모든 사용자 정의 상태를 삭제하고 기본값을 복원합니다.",

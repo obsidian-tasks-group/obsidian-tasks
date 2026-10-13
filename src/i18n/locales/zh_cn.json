@@ -128,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "自动建议",
       "maxSuggestions": {
         "description": "当自动建议菜单弹出时，应显示多少条建议 (包含 \"⏎\" 选项)。",
         "name": "要显示的最大自动建议数"
@@ -142,7 +141,6 @@
         "name": "自动建议任务内容"
       }
     },
-    "changeRequiresRestart": "需要重启。",
     "dates": {
       "cancelledDate": {
         "description": "启用此功能将在任务设置为取消时，在其末尾添加时间戳 ❌ YYYY-MM-DD。",
@@ -163,8 +161,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "任务插件在将文件名用作未注明日期任务的计划日期时，将识别的附加日期格式。",
-            "line2": "语法参考"
+            "line1": "任务插件在将文件名用作未注明日期任务的计划日期时，将识别的附加日期格式。"
           },
           "name": "为无日期任务添加文件名日期格式作为计划日期",
           "placeholder": "示例：MMM DD YYYY"
@@ -188,8 +185,7 @@
       "accessKeys": {
         "description": "如果对话框中各种控件的快捷键与系统快捷键发生冲突，您可以在这里停用它们。",
         "name": "在对话框中使用快捷键"
-      },
-      "heading": "对话框"
+      }
     },
     "format": {
       "description": {
@@ -213,7 +209,6 @@
         "name": "全局任务筛选器",
         "placeholder": "例如:#task 或 TODO"
       },
-      "heading": "全局任务筛选器",
       "removeFilter": {
         "description": "启用此选项将在显示任务时从任务描述中删除设置为全局筛选器的字符串.",
         "name": "从描述中删除全局筛选器"
@@ -254,7 +249,6 @@
       }
     },
     "searchResults": {
-      "heading": "搜索结果",
       "taskCountLocation": {
         "description": "选择任务数量显示在查询结果的顶部还是底部。",
         "name": "任务数量位置",
@@ -294,9 +288,6 @@
         "auraTheme": "Aura 主题",
         "borderTheme": "Border 主题",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: 添加 {{numberOfStatuses}} 种支持状态"
-          },
           "importCollection": {
             "name": "{{themeName}}（{{numberOfStatuses}} 种状态）"
           }
@@ -325,9 +316,6 @@
           "addAllUnknown": {
             "description": "添加在您的仓库中发现但尚未在此配置的所有状态符号。",
             "name": "添加所有未知状态类型"
-          },
-          "addNewStatus": {
-            "name": "添加新任务状态"
           },
           "resetCustomStatuses": {
             "description": "丢弃所有自定义状态并恢复默认值。",
