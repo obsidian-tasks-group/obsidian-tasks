@@ -67,7 +67,20 @@ export type QuickSearchSettings = {
     fuzzyMatching: boolean;
 };
 
-export type PostponeDateField = 'due-scheduled-start' | 'scheduledDate';
+export const POSTPONE_DATE_FIELD_VALUES = [
+    'dueDate-scheduledDate-startDate',
+    'scheduledDate-dueDate-startDate',
+    'startDate-scheduledDate-dueDate',
+    'dueDate',
+    'scheduledDate',
+    'startDate',
+] as const;
+
+export type PostponeDateField = (typeof POSTPONE_DATE_FIELD_VALUES)[number];
+
+export type PostponeSettings = {
+    dateField: PostponeDateField;
+};
 
 export interface Settings {
     presets: PresetsMap;
@@ -78,7 +91,7 @@ export interface Settings {
     setCreatedDate: boolean;
     setDoneDate: boolean;
     setCancelledDate: boolean;
-    postponeDateField: PostponeDateField;
+    postpone: PostponeSettings;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
@@ -126,7 +139,9 @@ const defaultSettings: Readonly<Settings> = {
     setCreatedDate: false,
     setDoneDate: true,
     setCancelledDate: true,
-    postponeDateField: 'due-scheduled-start',
+    postpone: {
+        dateField: 'dueDate-scheduledDate-startDate',
+    },
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 20,

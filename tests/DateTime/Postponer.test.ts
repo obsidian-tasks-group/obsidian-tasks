@@ -299,36 +299,89 @@ describe('postpone - postponement success message', () => {
     });
 });
 
-describe('postpone - Always Scheduled date field option', () => {
-    beforeEach(() => {
-        updateSettings({ postponeDateField: 'scheduledDate' });
+describe('postpone - postpone.dateField setting options', () => {
+    const taskAll = new TaskBuilder().dueDate(tomorrow).scheduledDate(today).startDate(yesterday).build();
+    const taskDueOnly = new TaskBuilder().dueDate(tomorrow).build();
+    const taskScheduledOnly = new TaskBuilder().scheduledDate(today).build();
+    const taskStartOnly = new TaskBuilder().startDate(yesterday).build();
+    const taskDueAndStart = new TaskBuilder().dueDate(tomorrow).startDate(yesterday).build();
+    const taskScheduledAndStart = new TaskBuilder().scheduledDate(today).startDate(yesterday).build();
+    const taskDueAndScheduled = new TaskBuilder().dueDate(tomorrow).scheduledDate(today).build();
+    const undatedTask = new TaskBuilder().build();
+
+    describe('scheduledDate-dueDate-startDate', () => {
+        beforeEach(() => {
+            updateSettings({ postpone: { dateField: 'scheduledDate-dueDate-startDate' } });
+        });
+
+        it('should prefer scheduledDate over dueDate and startDate', () => {
+            expect(getDateFieldToPostpone(taskAll)).toEqual('scheduledDate');
+            expect(getDateFieldToPostpone(taskDueAndScheduled)).toEqual('scheduledDate');
+            expect(getDateFieldToPostpone(taskDueAndStart)).toEqual('dueDate');
+            expect(getDateFieldToPostpone(taskStartOnly)).toEqual('startDate');
+            expect(getDateFieldToPostpone(undatedTask)).toBeNull();
+        });
     });
 
-    it('should always choose scheduledDate even when dueDate and startDate are present', () => {
-        const task = new TaskBuilder().dueDate(tomorrow).scheduledDate(today).startDate(yesterday).build();
-        expect(getDateFieldToPostpone(task)).toEqual('scheduledDate');
+    describe('startDate-scheduledDate-dueDate', () => {
+        beforeEach(() => {
+            updateSettings({ postpone: { dateField: 'startDate-scheduledDate-dueDate' } });
+        });
+
+        it('should prefer startDate over scheduledDate and dueDate', () => {
+            expect(getDateFieldToPostpone(taskAll)).toEqual('startDate');
+            expect(getDateFieldToPostpone(taskScheduledAndStart)).toEqual('startDate');
+            expect(getDateFieldToPostpone(taskDueAndScheduled)).toEqual('scheduledDate');
+            expect(getDateFieldToPostpone(taskDueOnly)).toEqual('dueDate');
+            expect(getDateFieldToPostpone(undatedTask)).toBeNull();
+        });
     });
 
-    it('should choose scheduledDate when only dueDate or startDate is present', () => {
-        const taskWithDue = new TaskBuilder().dueDate(tomorrow).build();
-        expect(getDateFieldToPostpone(taskWithDue)).toEqual('scheduledDate');
+    describe('Always Due (dueDate)', () => {
+        beforeEach(() => {
+            updateSettings({ postpone: { dateField: 'dueDate' } });
+        });
 
-        const taskWithStart = new TaskBuilder().startDate(yesterday).build();
-        expect(getDateFieldToPostpone(taskWithStart)).toEqual('scheduledDate');
+        it('should only postpone dueDate and hide button when dueDate is missing', () => {
+            expect(getDateFieldToPostpone(taskAll)).toEqual('dueDate');
+            expect(shouldShowPostponeButton(taskAll)).toEqual(true);
+
+            expect(getDateFieldToPostpone(taskScheduledAndStart)).toBeNull();
+            expect(shouldShowPostponeButton(taskScheduledAndStart)).toEqual(false);
+        });
     });
 
-    it('should not postpone or show button if no happens dates are on task', () => {
-        const undatedTask = new TaskBuilder().build();
-        expect(getDateFieldToPostpone(undatedTask)).toBeNull();
-        expect(shouldShowPostponeButton(undatedTask)).toEqual(false);
+    describe('Always Scheduled (scheduledDate)', () => {
+        beforeEach(() => {
+            updateSettings({ postpone: { dateField: 'scheduledDate' } });
+        });
+
+        it('should only postpone scheduledDate and hide button when scheduledDate is missing', () => {
+            expect(getDateFieldToPostpone(taskAll)).toEqual('scheduledDate');
+            expect(shouldShowPostponeButton(taskAll)).toEqual(true);
+
+            expect(getDateFieldToPostpone(taskScheduledOnly)).toEqual('scheduledDate');
+            expect(shouldShowPostponeButton(taskScheduledOnly)).toEqual(true);
+
+            expect(getDateFieldToPostpone(taskDueAndStart)).toBeNull();
+            expect(shouldShowPostponeButton(taskDueAndStart)).toEqual(false);
+
+            expect(getDateFieldToPostpone(undatedTask)).toBeNull();
+            expect(shouldShowPostponeButton(undatedTask)).toEqual(false);
+        });
     });
 
-    it('should postpone scheduledDate while leaving dueDate untouched when task only has a dueDate', () => {
-        const taskWithDueOnly = new TaskBuilder().dueDate('2023-12-10').build();
-        const { postponedDate, postponedTask } = createPostponedTask(taskWithDueOnly, 'scheduledDate', 'day', 1);
+    describe('Always Start (startDate)', () => {
+        beforeEach(() => {
+            updateSettings({ postpone: { dateField: 'startDate' } });
+        });
 
-        expect(postponedDate?.format('YYYY-MM-DD')).toEqual(tomorrow);
-        expect(postponedTask.scheduledDate?.format('YYYY-MM-DD')).toEqual(tomorrow);
-        expect(postponedTask.dueDate?.format('YYYY-MM-DD')).toEqual('2023-12-10');
+        it('should only postpone startDate and hide button when startDate is missing', () => {
+            expect(getDateFieldToPostpone(taskAll)).toEqual('startDate');
+            expect(shouldShowPostponeButton(taskAll)).toEqual(true);
+
+            expect(getDateFieldToPostpone(taskDueAndScheduled)).toBeNull();
+            expect(shouldShowPostponeButton(taskDueAndScheduled)).toEqual(false);
+        });
     });
 });

@@ -91,6 +91,14 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().quickSearch.fuzzyMatching).toBe(false);
     });
 
+    it('should default postpone.dateField to dueDate-scheduledDate-startDate and retain a loaded value', () => {
+        expect(getSettings().postpone.dateField).toBe('dueDate-scheduledDate-startDate');
+
+        updateSettings({ postpone: { dateField: 'scheduledDate' } });
+
+        expect(getSettings().postpone.dateField).toBe('scheduledDate');
+    });
+
     it('should completely remove properties not in defaultSettings', () => {
         // Arrange: Add an extra property that isn't in defaultSettings
         updateSettings({

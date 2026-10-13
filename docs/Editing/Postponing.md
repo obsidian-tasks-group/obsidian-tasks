@@ -48,7 +48,7 @@ The ⏩ button provides two choices:
 
 ### Which date field is edited?
 
-By default, the postpone option looks at the first of these Task fields, and will edit the first of:
+By default (**Due → Scheduled → Start**), the postpone option looks at the first of these Task fields, and will edit the first of:
 
 1. **Due** date, if present.
 1. **Scheduled** date
@@ -56,11 +56,18 @@ By default, the postpone option looks at the first of these Task fields, and wil
 1. **Start** date
     - If no Due or Scheduled date is present.
 
-You can configure **Postpone button date field** in Tasks Settings (under **Postpone button**) to **Always Scheduled**, so that the postpone button always edits the **Scheduled** date (leaving any **Due** date untouched).
+You can configure **Postpone button date field** in Tasks Settings (under **Postpone button**) to choose a different priority order or a single date field:
+
+- **Due → Scheduled → Start** (default)
+- **Scheduled → Due → Start**
+- **Start → Scheduled → Due**
+- **Always Due**
+- **Always Scheduled**
+- **Always Start**
 
 ### When is the postpone button shown?
 
-- Tasks with none of Due, Scheduled and Start don't show the Postpone button.
+- Tasks that do not have any of the date fields selected in **Postpone button date field** don't show the Postpone button.
 - Tasks with any invalid dates at all (including Created and Done dates) also don't show the Postpone button.
 - You can use the `hide postpone button` [[Layout]] instruction to hide the Postpone button from your Task query results.
 

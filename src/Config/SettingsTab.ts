@@ -23,7 +23,14 @@ import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import * as Themes from './Themes';
-import { type Settings, TASK_FORMATS, getSettings, updateSettings } from './Settings';
+import {
+    POSTPONE_DATE_FIELD_VALUES,
+    type PostponeDateField,
+    type Settings,
+    TASK_FORMATS,
+    getSettings,
+    updateSettings,
+} from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
 
@@ -209,9 +216,9 @@ export class SettingsTab extends PluginSettingTab {
             this.globalDefaultsGroup(),
             this.searchesGroup(),
             this.datesGroup(),
+            this.postponeGroup(),
             this.datesFromFilenamesGroup(),
             this.recurringTasksGroup(),
-            this.postponeButtonGroup(),
             this.taskEntryGroup(),
         ];
     }
@@ -851,6 +858,53 @@ export class SettingsTab extends PluginSettingTab {
         };
     }
 
+    // ---- Postpone ---------------------------------------------------------
+
+    private postponeGroup(): SettingDefinitionItem {
+        // prettier-ignore -- keep keys and i18n calls vertically aligned for readability
+        const postponeDateFieldOptionText: Record<(typeof POSTPONE_DATE_FIELD_VALUES)[number], string> = {
+            'dueDate-scheduledDate-startDate': i18n.t(
+                'settings.postponeButton.postponeDateField.options.dueDate-scheduledDate-startDate',
+            ),
+            'scheduledDate-dueDate-startDate': i18n.t(
+                'settings.postponeButton.postponeDateField.options.scheduledDate-dueDate-startDate',
+            ),
+            'startDate-scheduledDate-dueDate': i18n.t(
+                'settings.postponeButton.postponeDateField.options.startDate-scheduledDate-dueDate',
+            ),
+            dueDate: i18n.t('settings.postponeButton.postponeDateField.options.dueDate'),
+            scheduledDate: i18n.t('settings.postponeButton.postponeDateField.options.scheduledDate'),
+            startDate: i18n.t('settings.postponeButton.postponeDateField.options.startDate'),
+        };
+
+        return {
+            type: 'group',
+            heading: i18n.t('settings.postponeButton.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.postponeButton.postponeDateField.name'),
+                    aliases: [i18n.t('settings.postponeButton.heading')],
+                    desc: i18n.t('settings.postponeButton.postponeDateField.description'),
+                    render: (setting) => {
+                        setting.addDropdown((dropdown) => {
+                            for (const value of POSTPONE_DATE_FIELD_VALUES) {
+                                dropdown.addOption(value, postponeDateFieldOptionText[value]);
+                            }
+
+                            dropdown.setValue(getSettings().postpone.dateField).onChange(async (value) => {
+                                updateSettings({
+                                    postpone: { dateField: value as PostponeDateField },
+                                });
+                                await this.plugin.saveSettings();
+                                this.events.triggerReloadOpenSearchResults();
+                            });
+                        });
+                    },
+                },
+            ],
+        };
+    }
+
     // ---- Dates from file names -------------------------------------------
 
     private datesFromFilenamesGroup(): SettingDefinitionItem {
@@ -960,41 +1014,6 @@ export class SettingsTab extends PluginSettingTab {
                         'removeScheduledDateOnRecurrence',
                         'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
                     ),
-                },
-            ],
-        };
-    }
-
-    // ---- Postpone button --------------------------------------------------
-
-    private postponeButtonGroup(): SettingDefinitionItem {
-        return {
-            type: 'group',
-            heading: i18n.t('settings.postponeButton.heading'),
-            items: [
-                {
-                    name: i18n.t('settings.postponeButton.postponeDateField.name'),
-                    aliases: [i18n.t('settings.postponeButton.heading')],
-                    desc: i18n.t('settings.postponeButton.postponeDateField.description'),
-                    render: (setting) => {
-                        setting.addDropdown((dropdown) => {
-                            dropdown.addOption(
-                                'due-scheduled-start',
-                                i18n.t('settings.postponeButton.postponeDateField.options.due-scheduled-start'),
-                            );
-                            dropdown.addOption(
-                                'scheduledDate',
-                                i18n.t('settings.postponeButton.postponeDateField.options.scheduledDate'),
-                            );
-                            dropdown.setValue(getSettings().postponeDateField).onChange(async (value) => {
-                                updateSettings({
-                                    postponeDateField: value as Settings['postponeDateField'],
-                                });
-                                await this.plugin.saveSettings();
-                                this.events.triggerReloadOpenSearchResults();
-                            });
-                        });
-                    },
                 },
             ],
         };
