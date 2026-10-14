@@ -67,16 +67,22 @@ export type QuickSearchSettings = {
     fuzzyMatching: boolean;
 };
 
-export const POSTPONE_DATE_FIELD_VALUES = [
+export const POSTPONE_DATE_FIELD_VALUES: PostponeDateField[] = [
     'dueDate-scheduledDate-startDate',
     'scheduledDate-dueDate-startDate',
     'startDate-scheduledDate-dueDate',
     'dueDate',
     'scheduledDate',
     'startDate',
-] as const;
+];
 
-export type PostponeDateField = (typeof POSTPONE_DATE_FIELD_VALUES)[number];
+export type PostponeDateField =
+    | 'dueDate-scheduledDate-startDate'
+    | 'scheduledDate-dueDate-startDate'
+    | 'startDate-scheduledDate-dueDate'
+    | 'dueDate'
+    | 'scheduledDate'
+    | 'startDate';
 
 export type PostponeSettings = {
     dateField: PostponeDateField;

@@ -863,7 +863,7 @@ export class SettingsTab extends PluginSettingTab {
     private postponeGroup(): SettingDefinitionItem {
         // Keep keys and i18n calls vertically aligned for readability
         // prettier-ignore
-        const postponeDateFieldOptionText: Record<(typeof POSTPONE_DATE_FIELD_VALUES)[number], string> = {
+        const postponeDateFieldOptionText: Record<PostponeDateField, string> = {
             'dueDate-scheduledDate-startDate': i18n.t('settings.postponeButton.postponeDateField.options.dueDate-scheduledDate-startDate'),
             'scheduledDate-dueDate-startDate': i18n.t('settings.postponeButton.postponeDateField.options.scheduledDate-dueDate-startDate'),
             'startDate-scheduledDate-dueDate': i18n.t('settings.postponeButton.postponeDateField.options.startDate-scheduledDate-dueDate'),
