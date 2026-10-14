@@ -13,7 +13,7 @@ describe('settings-usage', () => {
     const oldDefaultFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true };
     const customFeatures = { ...oldDefaultFeatures, FICTIONAL_FEATURE: true };
 
-    it.fails('should delete "features" setting value if it matches the old default value', () => {
+    it('should delete "features" setting value if it matches the old default value', () => {
         // This simulates the plugin's start-up process when reading a user 'data.json' file
         // that contains the old default value for the "features" setting.
         updateSettings({

@@ -292,6 +292,15 @@ function migrateSettings(loadedSettings: Record<string, unknown>): Partial<Setti
         delete migratedSettings.includes;
     }
 
+    // Remove the obsolete default 'features' setting from older data.json files.
+    // (The only reason that the value would differ from our old default is if
+    // the code is running in a Fork of Tasks, whose author decided to use the Features facility.
+    // This is highly unlikely, but a precaution worth taking.)
+    const oldDefaultFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true };
+    if (JSON.stringify(migratedSettings.features) === JSON.stringify(oldDefaultFeatures)) {
+        delete migratedSettings.features;
+    }
+
     // Add future migrations here as needed
 
     return migratedSettings;
