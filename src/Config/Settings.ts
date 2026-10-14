@@ -16,8 +16,6 @@ import { type PresetsMap, defaultPresets } from '../Query/Presets/Presets';
 import { DebugSettings } from './DebugSettings';
 import { type EditModalShowSettings, defaultEditModalShowSettings } from './EditModalShowSettings';
 import { StatusSettings } from './StatusSettings';
-import { Feature } from './Feature';
-import type { FeatureFlag } from './Feature';
 import type { DismissedNotices } from './DismissibleNotices';
 
 interface SettingsMap {
@@ -122,9 +120,6 @@ export interface Settings {
     // Keys are stable notice IDs.
     dismissedNotices: DismissedNotices;
 
-    // Collection of feature flag IDs and their state.
-    features: FeatureFlag;
-
     // Settings are moved to a more general map to allow the settings UI to be
     // dynamically generated.
     generalSettings: SettingsMap;
@@ -171,7 +166,6 @@ const defaultSettings: Readonly<Settings> = {
         'live-preview-callout-warning': false,
     },
 
-    features: Feature.settingsFlags,
     generalSettings: {
         /* Prevent duplicate values in user settings for now,
            at least until I start porting the pre-1.23.0 settings
@@ -224,7 +218,6 @@ function addNewOptionsToUserSettings<KeysAndValues>(defaultValues: KeysAndValues
  */
 export const getSettings = (): Settings => {
     // Check to see if there are any new options that need to be added to the user's settings.
-    addNewOptionsToUserSettings(Feature.settingsFlags, settings.features);
     addNewOptionsToUserSettings(defaultSettings.loggingOptions.minLevels, settings.loggingOptions.minLevels);
     addNewOptionsToUserSettings(defaultSettings.debugSettings, settings.debugSettings);
 
@@ -273,28 +266,6 @@ export const updateGeneralSetting = (name: string, value: string | boolean): Set
     // });
 
     return getSettings();
-};
-
-/**
- * Returns the enabled state of the feature from settings.
- *
- * @param internalName the internal name of the feature.
- * @returns true if the feature is enabled.
- */
-export const isFeatureEnabled = (internalName: string): boolean => {
-    return settings.features[internalName] ?? false;
-};
-
-/**
- * enables toggling the feature and returning the current collection with state.
- *
- * @param internalName the internal name of the feature.
- * @param enabled the expected state of the feature.
- * @returns the features with the specified feature toggled.
- */
-export const toggleFeature = (internalName: string, enabled: boolean): FeatureFlag => {
-    settings.features[internalName] = enabled;
-    return settings.features;
 };
 
 /**

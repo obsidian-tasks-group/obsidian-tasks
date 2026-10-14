@@ -1,11 +1,4 @@
-import {
-    type Settings,
-    getSettings,
-    isFeatureEnabled,
-    resetSettings,
-    toggleFeature,
-    updateSettings,
-} from '../../src/Config/Settings';
+import { type Settings, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { defaultPresets } from '../../src/Query/Presets/Presets';
 
 beforeEach(() => {
@@ -19,27 +12,6 @@ afterEach(() => {
 describe('settings-usage', () => {
     const oldDefaultFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true };
     const customFeatures = { ...oldDefaultFeatures, FICTIONAL_FEATURE: true };
-
-    it('load default settings and validate features', () => {
-        const currentSettings = getSettings();
-
-        expect(Object.entries(currentSettings.features).length).toBeGreaterThan(0);
-        expect(currentSettings.features['INTERNAL_TESTING_ENABLED_BY_DEFAULT']).toBe(true);
-    });
-
-    it('returns true if feature enabled', () => {
-        const currentSettings = isFeatureEnabled('INTERNAL_TESTING_ENABLED_BY_DEFAULT');
-
-        expect(currentSettings).toBe(true);
-    });
-
-    it('toggles a feature', () => {
-        const updatedFeatures = toggleFeature('INTERNAL_TESTING_ENABLED_BY_DEFAULT', false);
-        expect(updatedFeatures['INTERNAL_TESTING_ENABLED_BY_DEFAULT']).toBe(false);
-
-        const currentSettings = getSettings();
-        expect(currentSettings.features['INTERNAL_TESTING_ENABLED_BY_DEFAULT']).toBe(false);
-    });
 
     it.fails('should delete "features" setting value if it matches the old default value', () => {
         // This simulates the plugin's start-up process when reading a user 'data.json' file
