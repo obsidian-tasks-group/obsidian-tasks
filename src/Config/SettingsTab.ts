@@ -880,7 +880,7 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.postponeButton.postponeDateField.name'),
                     aliases: [i18n.t('settings.postponeButton.heading')],
                     desc: i18n.t('settings.postponeButton.postponeDateField.description'),
-                    render: (setting) => {
+                    render: this.withDocs((setting) => {
                         setting.addDropdown((dropdown) => {
                             for (const value of POSTPONE_DATE_FIELD_VALUES) {
                                 dropdown.addOption(value, postponeDateFieldOptionText[value]);
@@ -894,7 +894,7 @@ export class SettingsTab extends PluginSettingTab {
                                 this.events.triggerReloadOpenSearchResults();
                             });
                         });
-                    },
+                    }, 'https://publish.obsidian.md/tasks/Editing/Postponing'),
                 },
             ],
         };
