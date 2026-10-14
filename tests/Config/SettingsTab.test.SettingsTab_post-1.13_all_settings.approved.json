@@ -238,6 +238,20 @@
     "type": "group"
   },
   {
+    "heading": "Postpone button",
+    "items": [
+      {
+        "name": "Postpone button date field",
+        "desc": "Which date field the postpone button (⏩) updates. For options with multiple dates, the first date in the sequence that is present on the task will be set.",
+        "aliases": [
+          "Postpone button"
+        ],
+        "render": "[Function]"
+      }
+    ],
+    "type": "group"
+  },
+  {
     "heading": "Dates from file names",
     "items": [
       {
