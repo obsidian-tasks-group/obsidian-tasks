@@ -53,7 +53,7 @@ describe('settings-usage', () => {
         expect((settings as any).generalSettings).toEqual(remainingValue);
     });
 
-    it.fails('should delete "headingOpened" setting value, regardless of setting value', () => {
+    it('should delete "headingOpened" setting value, regardless of setting value', () => {
         updateSettings({
             headingOpened: { 'Core Statuses': true, 'Custom Statuses': true },
         } as Partial<Settings>);

@@ -265,6 +265,15 @@ function migrateSettings(loadedSettings: Record<string, unknown>): Partial<Setti
         delete migratedSettings.generalSettings;
     }
 
+    // Remove all 'headingOpened' settings from older data.json files.
+    // Since its keys were subject to translation via i18n, it is not possible to determine
+    // whether a particular data.json file has values used by forks of the plugin,
+    // so we just delete them.
+
+    if (migratedSettings.headingOpened !== undefined) {
+        delete migratedSettings.headingOpened;
+    }
+
     // Add future migrations here as needed
 
     return migratedSettings;
