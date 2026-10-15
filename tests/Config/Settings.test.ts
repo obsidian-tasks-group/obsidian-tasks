@@ -1,4 +1,4 @@
-import { getSettings, isFeatureEnabled, resetSettings, toggleFeature, updateSettings } from '../../src/Config/Settings';
+import { type Settings, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
 import { defaultPresets } from '../../src/Query/Presets/Presets';
 
 beforeEach(() => {
@@ -10,25 +10,25 @@ afterEach(() => {
 });
 
 describe('settings-usage', () => {
-    it('load default settings and validate features', () => {
-        const currentSettings = getSettings();
+    it.each([
+        [
+            'should delete old default "features" setting value, as Features facility was unused and deleted',
+            { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true },
+            undefined,
+        ],
+        [
+            'should retain non-standard "features" setting value, in case a fork of this plugin had used the Features facility',
+            { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true },
+            { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true },
+        ],
+    ])('%s', (_testName, initialFeaturesValue, remainingFeaturesValue) => {
+        updateSettings({
+            features: initialFeaturesValue,
+        } as Partial<Settings>);
 
-        expect(Object.entries(currentSettings.features).length).toBeGreaterThan(0);
-        expect(currentSettings.features['INTERNAL_TESTING_ENABLED_BY_DEFAULT']).toBe(true);
-    });
+        const settings = getSettings();
 
-    it('returns true if feature enabled', () => {
-        const currentSettings = isFeatureEnabled('INTERNAL_TESTING_ENABLED_BY_DEFAULT');
-
-        expect(currentSettings).toBe(true);
-    });
-
-    it('toggles a feature', () => {
-        const updatedFeatures = toggleFeature('INTERNAL_TESTING_ENABLED_BY_DEFAULT', false);
-        expect(updatedFeatures['INTERNAL_TESTING_ENABLED_BY_DEFAULT']).toBe(false);
-
-        const currentSettings = getSettings();
-        expect(currentSettings.features['INTERNAL_TESTING_ENABLED_BY_DEFAULT']).toBe(false);
+        expect((settings as any).features).toEqual(remainingFeaturesValue);
     });
 
     it('should add new logging options to settings', () => {
