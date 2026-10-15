@@ -10,12 +10,17 @@ afterEach(() => {
 });
 
 describe('settings-usage', () => {
-    const oldDefaultFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true };
-    const customFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true };
-
     it.each([
-        ['should delete old default "features" setting value', oldDefaultFeatures, undefined],
-        ['should retain non-standard "features" setting value', customFeatures, customFeatures],
+        [
+            'should delete old default "features" setting value',
+            { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true },
+            undefined,
+        ],
+        [
+            'should retain non-standard "features" setting value',
+            { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true },
+            { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true },
+        ],
     ])('%s', (_testName, initialFeaturesValue, remainingFeaturesValue) => {
         updateSettings({
             features: initialFeaturesValue,
