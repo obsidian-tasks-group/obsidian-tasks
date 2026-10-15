@@ -18,10 +18,6 @@ import { type EditModalShowSettings, defaultEditModalShowSettings } from './Edit
 import { StatusSettings } from './StatusSettings';
 import type { DismissedNotices } from './DismissibleNotices';
 
-export type HeadingState = {
-    [id: string]: boolean;
-};
-
 /**
  * Interface encapsulating how a Task is written to and read from text
  *
@@ -116,8 +112,6 @@ export interface Settings {
     // Keys are stable notice IDs.
     dismissedNotices: DismissedNotices;
 
-    // Tracks the stage of the headings in the settings UI.
-    headingOpened: HeadingState;
     debugSettings: DebugSettings;
 
     loggingOptions: LogOptions;
@@ -158,7 +152,6 @@ const defaultSettings: Readonly<Settings> = {
         'live-preview-callout-warning': false,
     },
 
-    headingOpened: {},
     debugSettings: new DebugSettings(),
 
     /*
