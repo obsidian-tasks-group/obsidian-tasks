@@ -1096,9 +1096,7 @@ export class SettingsTab extends PluginSettingTab {
         // TODO When `minAppVersion` is updated to 1.13.1 on `main`, delete this display() method
         //      and revert ff6192ac35197f8c2e47debb7c600d8676e4534a.
         //      Then we can remove all requireApiVersion('1.13.0') (and earlier) checks.
-        new Setting(containerEl)
-            .setName(i18n.t('The Tasks plugin no longer supports editing settings in Obsidian older than 1.13.1'))
-            .setHeading();
+        new Setting(containerEl).setName(i18n.t('settings.obsidianVersionTooOld', { version: '1.13.1' })).setHeading();
     }
 
     private seeTheDocs(url: string): string {
