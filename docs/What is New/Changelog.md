@@ -14,6 +14,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 - X.Y.Z:
   - The minimum supported Obsidian version is now [1.13.1](https://obsidian.md/changelog/2026-06-09-desktop-v1.13.1/).
+  - **Development**
+    - Added [Obsidian Checks](https://publish.obsidian.md/tasks-contributing/Linting/Obsidian+Checks) workflow.
 - 8.5.0:
   - Add [[Settings]] complete redesign, and now searchable, in Obsidian 1.13.0 and above.
   - Filter bar added to [[Presets]] settings, in Obsidian 1.13.0 and above.
