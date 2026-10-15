@@ -17,3 +17,4 @@ jobs:
       - uses: obsidianmd/obsidian-workflows@8167caed39664214d82c86fdfa32e06d8d55f61d
         with:
           scanner-lint: true
+          strict: true
