@@ -31,6 +31,28 @@ describe('settings-usage', () => {
         expect((settings as any).features).toEqual(remainingFeaturesValue);
     });
 
+    it.each([
+        [
+            // force line break
+            'should delete old default "generalSettings" setting value, as setting was unused and deleted',
+            {},
+            {}, // should be undefined after removal is implemented
+        ],
+        [
+            'should retain non-standard "generalSettings" setting value, in case a fork of this plugin had used the setting',
+            { newFeature: true },
+            { newFeature: true },
+        ],
+    ])('%s', (_testName, initialValue, remainingValue) => {
+        updateSettings({
+            generalSettings: initialValue,
+        } as Partial<Settings>);
+
+        const settings = getSettings();
+
+        expect((settings as any).generalSettings).toEqual(remainingValue);
+    });
+
     it('should add new logging options to settings', () => {
         // Arrange:
         // Simulate the user have run an earlier version of Tasks with few logging options:
