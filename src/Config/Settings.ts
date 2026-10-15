@@ -18,14 +18,6 @@ import { type EditModalShowSettings, defaultEditModalShowSettings } from './Edit
 import { StatusSettings } from './StatusSettings';
 import type { DismissedNotices } from './DismissibleNotices';
 
-interface SettingsMap {
-    [key: string]: string | boolean;
-}
-
-export type HeadingState = {
-    [id: string]: boolean;
-};
-
 /**
  * Interface encapsulating how a Task is written to and read from text
  *
@@ -120,12 +112,6 @@ export interface Settings {
     // Keys are stable notice IDs.
     dismissedNotices: DismissedNotices;
 
-    // Settings are moved to a more general map to allow the settings UI to be
-    // dynamically generated.
-    generalSettings: SettingsMap;
-
-    // Tracks the stage of the headings in the settings UI.
-    headingOpened: HeadingState;
     debugSettings: DebugSettings;
 
     loggingOptions: LogOptions;
@@ -166,16 +152,6 @@ const defaultSettings: Readonly<Settings> = {
         'live-preview-callout-warning': false,
     },
 
-    generalSettings: {
-        /* Prevent duplicate values in user settings for now,
-           at least until I start porting the pre-1.23.0 settings
-           code to be generated from settingsConfiguration.json.
-         */
-        // globalFilter: '',
-        // removeGlobalFilter: false,
-        // setDoneDate: true,
-    },
-    headingOpened: {},
     debugSettings: new DebugSettings(),
 
     /*
@@ -251,23 +227,6 @@ export const resetSettings = (): Settings => {
     return settings;
 };
 
-export const updateGeneralSetting = (name: string, value: string | boolean): Settings => {
-    settings.generalSettings[name] = value;
-
-    /* Prevent duplicate values in user settings for now,
-       at least until I start porting the pre-1.23.0 settings
-       code to be generated from settingsConfiguration.json.
-     */
-    // sync the old settings for the moment so a larger change is not needed.
-    // updateSettings({
-    //     globalFilter: <string>settings.generalSettings['globalFilter'],
-    //     removeGlobalFilter: <boolean>settings.generalSettings['removeGlobalFilter'],
-    //     setDoneDate: <boolean>settings.generalSettings['setDoneDate'],
-    // });
-
-    return getSettings();
-};
-
 /**
  * Retrieves the {@link TaskFormat} that corresponds to user's selection ({@link Settings.taskFormat})
  *
@@ -299,6 +258,20 @@ function migrateSettings(loadedSettings: Record<string, unknown>): Partial<Setti
     const oldDefaultFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true };
     if (JSON.stringify(migratedSettings.features) === JSON.stringify(oldDefaultFeatures)) {
         delete migratedSettings.features;
+    }
+
+    const oldDefaultGeneralSettings = {};
+    if (JSON.stringify(migratedSettings.generalSettings) === JSON.stringify(oldDefaultGeneralSettings)) {
+        delete migratedSettings.generalSettings;
+    }
+
+    // Remove all 'headingOpened' settings from older data.json files.
+    // Since its keys were subject to translation via i18n, it is not possible to determine
+    // whether a particular data.json file has values used by forks of the plugin,
+    // so we just delete them.
+
+    if (migratedSettings.headingOpened !== undefined) {
+        delete migratedSettings.headingOpened;
     }
 
     // Add future migrations here as needed
