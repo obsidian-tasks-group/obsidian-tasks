@@ -15,3 +15,4 @@ This section is about tools that we use to check code for quality issues, and to
 - [[Linting Source Code]]
 - [[Linting Markdown]]
 - [[SonarQube]]
+- [[Obsidian Checks]]
