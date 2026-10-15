@@ -53,6 +53,16 @@ describe('settings-usage', () => {
         expect((settings as any).generalSettings).toEqual(remainingValue);
     });
 
+    it.fails('should delete "headingOpened" setting value, regardless of setting value', () => {
+        updateSettings({
+            headingOpened: { 'Core Statuses': true, 'Custom Statuses': true },
+        } as Partial<Settings>);
+
+        const settings = getSettings();
+
+        expect((settings as any).headingOpened).toBeUndefined();
+    });
+
     it('should add new logging options to settings', () => {
         // Arrange:
         // Simulate the user have run an earlier version of Tasks with few logging options:
