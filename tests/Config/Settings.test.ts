@@ -13,26 +13,17 @@ describe('settings-usage', () => {
     const oldDefaultFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true };
     const customFeatures = { ...oldDefaultFeatures, FICTIONAL_FEATURE: true };
 
-    it('should delete "features" setting value if it matches the old default value', () => {
-        // This simulates the plugin's start-up process when reading a user 'data.json' file
-        // that contains the old default value for the "features" setting.
+    it.each([
+        ['should delete old default "features" setting value', oldDefaultFeatures, undefined],
+        ['should retain non-standard "features" setting value', customFeatures, customFeatures],
+    ])('%s', (_testName, initialFeaturesValue, remainingFeaturesValue) => {
         updateSettings({
-            features: oldDefaultFeatures,
+            features: initialFeaturesValue,
         } as Partial<Settings>);
 
         const settings = getSettings();
-        expect((settings as any).features).toEqual(undefined);
-    });
 
-    it('should retain non-standard "features" setting value', () => {
-        // This simulates a setting from a hypothetical fork of the Tasks plugin
-        // that may have used the Features facility.
-        updateSettings({
-            features: customFeatures,
-        } as Partial<Settings>);
-
-        const settings = getSettings();
-        expect((settings as any).features).toEqual(customFeatures);
+        expect((settings as any).features).toEqual(remainingFeaturesValue);
     });
 
     it('should add new logging options to settings', () => {
