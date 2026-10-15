@@ -12,12 +12,12 @@ afterEach(() => {
 describe('settings-usage', () => {
     it.each([
         [
-            'should delete old default "features" setting value',
+            'should delete old default "features" setting value, as Features facility was unused and deleted',
             { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true },
             undefined,
         ],
         [
-            'should retain non-standard "features" setting value',
+            'should retain non-standard "features" setting value, in case a fork of this plugin had used the Features facility',
             { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true },
             { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true },
         ],
