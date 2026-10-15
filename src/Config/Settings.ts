@@ -267,6 +267,11 @@ function migrateSettings(loadedSettings: Record<string, unknown>): Partial<Setti
         delete migratedSettings.features;
     }
 
+    const oldDefaultGeneralSettings = {};
+    if (JSON.stringify(migratedSettings.generalSettings) === JSON.stringify(oldDefaultGeneralSettings)) {
+        delete migratedSettings.generalSettings;
+    }
+
     // Add future migrations here as needed
 
     return migratedSettings;

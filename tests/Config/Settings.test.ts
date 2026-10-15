@@ -36,7 +36,7 @@ describe('settings-usage', () => {
             // force line break
             'should delete old default "generalSettings" setting value, as setting was unused and deleted',
             {},
-            {}, // should be undefined after removal is implemented
+            undefined,
         ],
         [
             'should retain non-standard "generalSettings" setting value, in case a fork of this plugin had used the setting',
