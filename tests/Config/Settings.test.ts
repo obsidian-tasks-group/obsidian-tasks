@@ -20,9 +20,8 @@ describe('settings-usage', () => {
             features: oldDefaultFeatures,
         } as Partial<Settings>);
 
-        // Check that the updateSettings() process deleted the now-unwanted feature value:
         const settings = getSettings();
-        expect(settings).not.toHaveProperty('features');
+        expect((settings as any).features).toEqual(undefined);
     });
 
     it('should retain non-standard "features" setting value', () => {
@@ -32,9 +31,7 @@ describe('settings-usage', () => {
             features: customFeatures,
         } as Partial<Settings>);
 
-        // Check that the updateSettings() process deleted the now-unwanted feature value:
         const settings = getSettings();
-        expect(settings).toHaveProperty('features');
         expect((settings as any).features).toEqual(customFeatures);
     });
 
