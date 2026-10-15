@@ -11,7 +11,7 @@ afterEach(() => {
 
 describe('settings-usage', () => {
     const oldDefaultFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true };
-    const customFeatures = { ...oldDefaultFeatures, FICTIONAL_FEATURE: true };
+    const customFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true };
 
     it.each([
         ['should delete old default "features" setting value', oldDefaultFeatures, undefined],
