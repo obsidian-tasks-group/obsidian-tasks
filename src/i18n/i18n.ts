@@ -23,6 +23,11 @@ const getObsidianLanguage = (): string => {
     return storedLanguage || 'en';
 };
 
+// Force 'yarn extract-i18n' to keep translation strings that are only used indirectly.
+// i18n.t('taskFields.due')
+// i18n.t('taskFields.scheduled')
+// i18n.t('taskFields.start')
+
 // Define a function to initialize i18next
 export const initializeI18n = async () => {
     if (!isInitialized) {
