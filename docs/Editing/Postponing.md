@@ -48,6 +48,9 @@ The ⏩ button provides two choices:
 
 ### Which date field is edited?
 
+> [!released]
+> This setting was introduced in Tasks X.Y.Z.
+
 By default (**Due → Scheduled → Start**), the postpone option looks at the first of these Task fields, and will edit the first of:
 
 1. **Due** date, if present.
