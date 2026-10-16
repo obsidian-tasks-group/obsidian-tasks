@@ -222,6 +222,7 @@
         "shortDescription": "自动包含在每个 Tasks 块开头的指令。"
       }
     },
+    "obsidianVersionTooOld": "Tasks 插件不再支持在低于 {{version}} 的 Obsidian 版本中编辑设置",
     "postponeButton": {
       "heading": "推迟按钮",
       "postponeDateField": {

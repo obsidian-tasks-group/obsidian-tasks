@@ -222,6 +222,7 @@
         "shortDescription": "Instructions automatiquement incluses au début de chaque bloc Tasks."
       }
     },
+    "obsidianVersionTooOld": "Le module Tasks ne permet plus de modifier les paramètres dans les versions d'Obsidian antérieures à {{version}}",
     "postponeButton": {
       "heading": "Bouton de report",
       "postponeDateField": {

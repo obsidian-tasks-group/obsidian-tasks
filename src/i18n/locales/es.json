@@ -222,6 +222,7 @@
         "shortDescription": "Instrucciones incluidas automáticamente al principio de cada bloque de Tasks."
       }
     },
+    "obsidianVersionTooOld": "El complemento Tasks ya no admite la edición de ajustes en versiones de Obsidian anteriores a {{version}}",
     "postponeButton": {
       "heading": "Botón de posponer",
       "postponeDateField": {

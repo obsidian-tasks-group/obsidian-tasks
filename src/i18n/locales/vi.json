@@ -222,6 +222,7 @@
         "shortDescription": "Các hướng dẫn được tự động đưa vào đầu mỗi khối Tasks."
       }
     },
+    "obsidianVersionTooOld": "Plugin Tasks không còn hỗ trợ chỉnh sửa cài đặt trong Obsidian phiên bản cũ hơn {{version}}",
     "postponeButton": {
       "heading": "Nút hoãn",
       "postponeDateField": {
