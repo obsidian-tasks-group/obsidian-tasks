@@ -222,7 +222,6 @@
         "shortDescription": "Instructions automatically included at the start of every Tasks block."
       }
     },
-    "obsidianVersionTooOld": "The Tasks plugin no longer supports editing settings in Obsidian older than {{version}}",
     "postponeButton": {
       "heading": "Postpone button",
       "postponeDateField": {

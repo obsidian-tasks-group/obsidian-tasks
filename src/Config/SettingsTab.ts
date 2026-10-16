@@ -12,7 +12,6 @@ import {
     type SettingGroupItem,
     type ToggleComponent,
     debounce,
-    requireApiVersion,
     sanitizeHTMLToDom,
 } from 'obsidian';
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
@@ -88,9 +87,7 @@ export class SettingsTab extends PluginSettingTab {
         super(plugin.app, plugin);
 
         this.plugin = plugin;
-        if (requireApiVersion('1.11.0')) {
-            this.icon = 'list-checks';
-        }
+        this.icon = 'list-checks';
         this.presetsSettingsUI = new PresetsSettingsUI(plugin, events);
         this.events = events;
 
@@ -109,13 +106,8 @@ export class SettingsTab extends PluginSettingTab {
         // Rebuilding the settings tab resets it to the top, so restore how far down it was.
         const previousDistanceFromTop = this.containerEl.scrollTop;
 
-        if (requireApiVersion('1.13.0')) {
-            // Obsidian 1.13.0+ renders this tab from getSettingDefinitions(),
-            // so rebuild it declaratively. display() would render nothing here.
-            this.update();
-        } else {
-            this.display();
-        }
+        // Obsidian 1.13.0+ renders this tab from getSettingDefinitions().
+        this.update();
 
         window.requestAnimationFrame(() => {
             this.containerEl.scrollTo({ top: previousDistanceFromTop });
@@ -283,9 +275,7 @@ export class SettingsTab extends PluginSettingTab {
                                             GlobalFilter.getInstance().set(value);
                                             await this.plugin.saveSettings();
                                             // Re-evaluate the 'visible' predicate of the remove-filter row.
-                                            if (requireApiVersion('1.13.0')) {
-                                                this.refreshDomState();
-                                            }
+                                            this.refreshDomState();
                                             this.events.triggerReloadVault();
                                         },
                                         500,
@@ -411,64 +401,58 @@ export class SettingsTab extends PluginSettingTab {
      * `true` if the user enabled, `false` if they cancelled or closed.
      */
     private confirmEnableCustomSearches(callback: (confirmed: boolean) => void): void {
-        // The version check is always true in practice: this method is only
-        // called from the declarative settings path, which requires 1.13.0+.
-        if (requireApiVersion('1.13.0')) {
-            const modal = new ConfirmationModal(this.app);
-            modal.setTitle(i18n.t('settings.searches.enableCustomSearches.name'));
+        const modal = new ConfirmationModal(this.app);
+        modal.setTitle(i18n.t('settings.searches.enableCustomSearches.name'));
 
-            modal.contentEl.createEl('p', {
-                cls: 'setting-item-description',
-                text: i18n.t('settings.searches.enableCustomSearches.description.line2'),
-            });
-            const warningEl = modal.contentEl.createEl('p', { cls: 'setting-item-description mod-warning' });
-            warningEl.createEl('b', {
-                text: i18n.t('settings.searches.enableCustomSearches.description.line3'),
-            });
-            modal.contentEl.createEl('p', {
-                cls: 'setting-item-description',
-                text: i18n.t('settings.searches.enableCustomSearches.description.line4'),
-            });
+        modal.contentEl.createEl('p', {
+            cls: 'setting-item-description',
+            text: i18n.t('settings.searches.enableCustomSearches.description.line2'),
+        });
+        const warningEl = modal.contentEl.createEl('p', { cls: 'setting-item-description mod-warning' });
+        warningEl.createEl('b', {
+            text: i18n.t('settings.searches.enableCustomSearches.description.line3'),
+        });
+        modal.contentEl.createEl('p', {
+            cls: 'setting-item-description',
+            text: i18n.t('settings.searches.enableCustomSearches.description.line4'),
+        });
 
-            let acknowledged = false;
-            let enableBtn: ConfirmationButton | null = null;
-            modal.addCheckbox(i18n.t('settings.searches.enableCustomSearches.confirm.acknowledge'), (value) => {
-                acknowledged = value;
-                if (enableBtn) {
-                    enableBtn.setDisabled(!acknowledged);
-                }
-            });
+        let acknowledged = false;
+        let enableBtn: ConfirmationButton | null = null;
+        modal.addCheckbox(i18n.t('settings.searches.enableCustomSearches.confirm.acknowledge'), (value) => {
+            acknowledged = value;
+            if (enableBtn) {
+                enableBtn.setDisabled(!acknowledged);
+            }
+        });
 
-            let decided = false;
-            // Cancel first: on desktop, DOM order decides and the primary action
-            // belongs on the right. Mobile reorders Cancel with CSS regardless.
-            modal.addCancelButton();
-            modal.addButton((btn) => {
-                enableBtn = btn;
-                btn.setButtonText(i18n.t('settings.searches.enableCustomSearches.confirm.enable'))
-                    .setCta()
-                    .setDisabled(true)
-                    .onClick(() => {
-                        if (!acknowledged) {
-                            return true; // keep the modal open
-                        }
-                        decided = true;
-                        callback(true);
-                        return undefined;
-                    });
-            });
+        let decided = false;
+        // Cancel first: on desktop, DOM order decides and the primary action
+        // belongs on the right. Mobile reorders Cancel with CSS regardless.
+        modal.addCancelButton();
+        modal.addButton((btn) => {
+            enableBtn = btn;
+            btn.setButtonText(i18n.t('settings.searches.enableCustomSearches.confirm.enable'))
+                .setCta()
+                .setDisabled(true)
+                .onClick(() => {
+                    if (!acknowledged) {
+                        return true; // keep the modal open
+                    }
+                    decided = true;
+                    callback(true);
+                    return undefined;
+                });
+        });
 
-            const originalOnClose = modal.onClose.bind(modal);
-            modal.onClose = () => {
-                originalOnClose();
-                if (!decided) {
-                    callback(false);
-                }
-            };
-            modal.open();
-        } else {
-            callback(false);
-        }
+        const originalOnClose = modal.onClose.bind(modal);
+        modal.onClose = () => {
+            originalOnClose();
+            if (!decided) {
+                callback(false);
+            }
+        };
+        modal.open();
     }
 
     // ---- Presets (sub-page) ----------------------------------------------
@@ -929,9 +913,7 @@ export class SettingsTab extends PluginSettingTab {
                                     updateSettings({ useFilenameAsScheduledDate: value });
                                     await this.plugin.saveSettings();
                                     // Re-evaluate the 'visible' predicates of the dependent rows.
-                                    if (requireApiVersion('1.13.0')) {
-                                        this.refreshDomState();
-                                    }
+                                    this.refreshDomState();
                                     refreshReloadButton();
                                 });
                             });
@@ -1032,9 +1014,7 @@ export class SettingsTab extends PluginSettingTab {
                                     updateSettings({ autoSuggestInEditor: value });
                                     await this.plugin.saveSettings();
                                     // Re-evaluate the 'visible' predicates of the dependent rows.
-                                    if (requireApiVersion('1.13.0')) {
-                                        this.refreshDomState();
-                                    }
+                                    this.refreshDomState();
                                     refreshReloadButton();
                                 });
                             });
@@ -1086,17 +1066,6 @@ export class SettingsTab extends PluginSettingTab {
                 },
             ],
         };
-    }
-
-    public display(): void {
-        const { containerEl } = this;
-
-        containerEl.empty();
-
-        // TODO When `minAppVersion` is updated to 1.13.1 on `main`, delete this display() method
-        //      and revert ff6192ac35197f8c2e47debb7c600d8676e4534a.
-        //      Then we can remove all requireApiVersion('1.13.0') (and earlier) checks.
-        new Setting(containerEl).setName(i18n.t('settings.obsidianVersionTooOld', { version: '1.13.1' })).setHeading();
     }
 
     private seeTheDocs(url: string): string {

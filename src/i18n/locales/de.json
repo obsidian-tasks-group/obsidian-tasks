@@ -222,7 +222,6 @@
         "shortDescription": "Anweisungen, die automatisch am Anfang jedes Tasks-Blocks eingefügt werden."
       }
     },
-    "obsidianVersionTooOld": "Das Tasks-Plugin unterstützt das Bearbeiten der Einstellungen in Obsidian-Versionen vor {{version}} nicht mehr",
     "postponeButton": {
       "heading": "Verschieben-Schaltfläche",
       "postponeDateField": {

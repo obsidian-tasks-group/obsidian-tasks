@@ -222,7 +222,6 @@
         "shortDescription": "Instruções incluídas automaticamente no início de cada bloco do Tasks."
       }
     },
-    "obsidianVersionTooOld": "O plugin Tasks não oferece mais suporte à edição de configurações em versões do Obsidian anteriores à {{version}}",
     "postponeButton": {
       "heading": "Botão de adiar",
       "postponeDateField": {
