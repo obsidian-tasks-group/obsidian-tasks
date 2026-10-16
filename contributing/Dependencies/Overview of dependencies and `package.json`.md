@@ -1,3 +1,9 @@
+---
+publish: true
+aliases:
+- Dependencies/Overview of dependencies and `package.json`
+---
+
 # Overview of dependencies and `package.json`
 
 ## package.json
