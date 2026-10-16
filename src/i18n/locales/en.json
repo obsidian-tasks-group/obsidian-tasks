@@ -229,12 +229,12 @@
         "description": "Which date field the postpone button (⏩) updates. For options with multiple dates, the first date in the sequence that is present on the task will be set.",
         "name": "Postpone button date field",
         "options": {
-          "due": "Always Due",
-          "due-scheduled-start": "Due → Scheduled → Start",
-          "scheduled": "Always Scheduled",
-          "scheduled-due-start": "Scheduled → Due → Start",
-          "start": "Always Start",
-          "start-scheduled-due": "Start → Scheduled → Due"
+          "due": "Always $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "Always $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "Always $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
         }
       }
     },
@@ -366,5 +366,10 @@
     "taskEntry": {
       "heading": "Task entry"
     }
+  },
+  "taskFields": {
+    "due": "Due",
+    "scheduled": "Scheduled",
+    "start": "Start"
   }
 }
