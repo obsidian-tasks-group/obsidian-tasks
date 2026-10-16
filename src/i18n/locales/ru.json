@@ -222,7 +222,6 @@
         "shortDescription": "Инструкции, автоматически включаемые в начало каждого блока Tasks."
       }
     },
-    "obsidianVersionTooOld": "Плагин Tasks больше не поддерживает редактирование настроек в версиях Obsidian старше {{version}}",
     "postponeButton": {
       "heading": "Кнопка переноса",
       "postponeDateField": {

@@ -222,7 +222,6 @@
         "shortDescription": "모든 Tasks 블록의 시작 부분에 자동으로 포함되는 지침입니다."
       }
     },
-    "obsidianVersionTooOld": "Tasks 플러그인은 더 이상 {{version}} 미만 버전의 Obsidian에서 설정 편집을 지원하지 않습니다",
     "postponeButton": {
       "heading": "미루기 버튼",
       "postponeDateField": {

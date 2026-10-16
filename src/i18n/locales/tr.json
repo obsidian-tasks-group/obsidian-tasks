@@ -222,7 +222,6 @@
         "shortDescription": "Her Tasks bloğunun başına otomatik olarak eklenen talimatlar."
       }
     },
-    "obsidianVersionTooOld": "Tasks eklentisi artık {{version}} sürümünden eski Obsidian'da ayarların düzenlenmesini desteklemiyor",
     "postponeButton": {
       "heading": "Erteleme düğmesi",
       "postponeDateField": {
