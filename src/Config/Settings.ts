@@ -58,21 +58,22 @@ export type QuickSearchSettings = {
 };
 
 export const POSTPONE_DATE_FIELD_VALUES: PostponeDateField[] = [
-    'dueDate-scheduledDate-startDate',
-    'scheduledDate-dueDate-startDate',
-    'startDate-scheduledDate-dueDate',
-    'dueDate',
-    'scheduledDate',
-    'startDate',
+    'due-scheduled-start',
+    'scheduled-due-start',
+    'start-scheduled-due',
+    'due',
+    'scheduled',
+    'start',
 ];
 
+// prettier-ignore
 export type PostponeDateField =
-    | 'dueDate-scheduledDate-startDate'
-    | 'scheduledDate-dueDate-startDate'
-    | 'startDate-scheduledDate-dueDate'
-    | 'dueDate'
-    | 'scheduledDate'
-    | 'startDate';
+    | 'due-scheduled-start'
+    | 'scheduled-due-start'
+    | 'start-scheduled-due'
+    | 'due'
+    | 'scheduled'
+    | 'start';
 
 export type PostponeSettings = {
     dateField: PostponeDateField;
@@ -127,7 +128,7 @@ const defaultSettings: Readonly<Settings> = {
     setDoneDate: true,
     setCancelledDate: true,
     postpone: {
-        dateField: 'dueDate-scheduledDate-startDate',
+        dateField: 'due-scheduled-start',
     },
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,

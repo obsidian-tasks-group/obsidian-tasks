@@ -309,9 +309,9 @@ describe('postpone - postpone.dateField setting options', () => {
     const taskDueAndScheduled = new TaskBuilder().dueDate(tomorrow).scheduledDate(today).build();
     const undatedTask = new TaskBuilder().build();
 
-    describe('scheduledDate-dueDate-startDate', () => {
+    describe('scheduled-due-start', () => {
         beforeEach(() => {
-            updateSettings({ postpone: { dateField: 'scheduledDate-dueDate-startDate' } });
+            updateSettings({ postpone: { dateField: 'scheduled-due-start' } });
         });
 
         it('should prefer scheduledDate over dueDate and startDate', () => {
@@ -323,9 +323,9 @@ describe('postpone - postpone.dateField setting options', () => {
         });
     });
 
-    describe('startDate-scheduledDate-dueDate', () => {
+    describe('start-scheduled-due', () => {
         beforeEach(() => {
-            updateSettings({ postpone: { dateField: 'startDate-scheduledDate-dueDate' } });
+            updateSettings({ postpone: { dateField: 'start-scheduled-due' } });
         });
 
         it('should prefer startDate over scheduledDate and dueDate', () => {
@@ -337,9 +337,9 @@ describe('postpone - postpone.dateField setting options', () => {
         });
     });
 
-    describe('Always Due (dueDate)', () => {
+    describe('Always Due (due)', () => {
         beforeEach(() => {
-            updateSettings({ postpone: { dateField: 'dueDate' } });
+            updateSettings({ postpone: { dateField: 'due' } });
         });
 
         it('should only postpone dueDate and hide button when dueDate is missing', () => {
@@ -351,9 +351,9 @@ describe('postpone - postpone.dateField setting options', () => {
         });
     });
 
-    describe('Always Scheduled (scheduledDate)', () => {
+    describe('Always Scheduled (scheduled)', () => {
         beforeEach(() => {
-            updateSettings({ postpone: { dateField: 'scheduledDate' } });
+            updateSettings({ postpone: { dateField: 'scheduled' } });
         });
 
         it('should only postpone scheduledDate and hide button when scheduledDate is missing', () => {
@@ -371,9 +371,9 @@ describe('postpone - postpone.dateField setting options', () => {
         });
     });
 
-    describe('Always Start (startDate)', () => {
+    describe('Always Start (start)', () => {
         beforeEach(() => {
-            updateSettings({ postpone: { dateField: 'startDate' } });
+            updateSettings({ postpone: { dateField: 'start' } });
         });
 
         it('should only postpone startDate and hide button when startDate is missing', () => {

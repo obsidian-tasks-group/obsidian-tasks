@@ -123,12 +123,12 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().quickSearch.fuzzyMatching).toBe(false);
     });
 
-    it('should default postpone.dateField to dueDate-scheduledDate-startDate and retain a loaded value', () => {
-        expect(getSettings().postpone.dateField).toBe('dueDate-scheduledDate-startDate');
+    it('should default postpone.dateField to due-scheduled-start and retain a loaded value', () => {
+        expect(getSettings().postpone.dateField).toBe('due-scheduled-start');
 
-        updateSettings({ postpone: { dateField: 'scheduledDate' } });
+        updateSettings({ postpone: { dateField: 'scheduled' } });
 
-        expect(getSettings().postpone.dateField).toBe('scheduledDate');
+        expect(getSettings().postpone.dateField).toBe('scheduled');
     });
 
     it('should completely remove properties not in defaultSettings', () => {
