@@ -88,7 +88,7 @@ describe('settings-usage', () => {
         expect(loggingOptions.loggingOptions.minLevels['tasks.Query']).toBeDefined();
     });
 
-    it.fails('should apply default Postpone date field option if the stored setting was invalid', () => {
+    it('should apply default Postpone date field option if the stored setting was invalid', () => {
         updateSettings({
             postpone: {
                 dateField: 'apple-sauce' as PostponeDateField,

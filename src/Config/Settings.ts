@@ -75,6 +75,8 @@ export type PostponeDateField =
     | 'scheduled'
     | 'start';
 
+export const DEFAULT_POSTPONE_DATE_FIELD_OPTION = 'due-scheduled-start';
+
 export type PostponeSettings = {
     dateField: PostponeDateField;
 };
@@ -128,7 +130,7 @@ const defaultSettings: Readonly<Settings> = {
     setDoneDate: true,
     setCancelledDate: true,
     postpone: {
-        dateField: 'due-scheduled-start',
+        dateField: DEFAULT_POSTPONE_DATE_FIELD_OPTION,
     },
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
@@ -245,6 +247,17 @@ export function getUserSelectedTaskFormat(): TaskFormat {
  */
 function migrateSettings(loadedSettings: Record<string, unknown>): Partial<Settings> {
     const migratedSettings: Record<string, unknown> = { ...loadedSettings };
+
+    // Ensure validity of postpone.dateField value.
+    // This is worth doing as otherwise the Postpone button will never be shown
+    // in search results.
+    const postpone = migratedSettings.postpone;
+    if (postpone && typeof postpone === 'object' && 'dateField' in postpone) {
+        const dateField = postpone.dateField;
+        if (typeof dateField !== 'string' || !POSTPONE_DATE_FIELD_VALUES.includes(dateField as PostponeDateField)) {
+            (postpone as PostponeSettings).dateField = DEFAULT_POSTPONE_DATE_FIELD_OPTION;
+        }
+    }
 
     // Migrate 'includes' to 'presets' if present
     if ('includes' in migratedSettings && !('presets' in migratedSettings)) {
