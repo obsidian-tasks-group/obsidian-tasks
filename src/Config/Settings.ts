@@ -58,21 +58,24 @@ export type QuickSearchSettings = {
 };
 
 export const POSTPONE_DATE_FIELD_VALUES: PostponeDateField[] = [
-    'dueDate-scheduledDate-startDate',
-    'scheduledDate-dueDate-startDate',
-    'startDate-scheduledDate-dueDate',
-    'dueDate',
-    'scheduledDate',
-    'startDate',
+    'due-scheduled-start',
+    'scheduled-due-start',
+    'start-scheduled-due',
+    'due',
+    'scheduled',
+    'start',
 ];
 
+// prettier-ignore
 export type PostponeDateField =
-    | 'dueDate-scheduledDate-startDate'
-    | 'scheduledDate-dueDate-startDate'
-    | 'startDate-scheduledDate-dueDate'
-    | 'dueDate'
-    | 'scheduledDate'
-    | 'startDate';
+    | 'due-scheduled-start'
+    | 'scheduled-due-start'
+    | 'start-scheduled-due'
+    | 'due'
+    | 'scheduled'
+    | 'start';
+
+export const DEFAULT_POSTPONE_DATE_FIELD_OPTION = 'due-scheduled-start';
 
 export type PostponeSettings = {
     dateField: PostponeDateField;
@@ -127,7 +130,7 @@ const defaultSettings: Readonly<Settings> = {
     setDoneDate: true,
     setCancelledDate: true,
     postpone: {
-        dateField: 'dueDate-scheduledDate-startDate',
+        dateField: DEFAULT_POSTPONE_DATE_FIELD_OPTION,
     },
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
@@ -244,6 +247,17 @@ export function getUserSelectedTaskFormat(): TaskFormat {
  */
 function migrateSettings(loadedSettings: Record<string, unknown>): Partial<Settings> {
     const migratedSettings: Record<string, unknown> = { ...loadedSettings };
+
+    // Ensure validity of postpone.dateField value.
+    // This is worth doing as otherwise the Postpone button will never be shown
+    // in search results.
+    const postpone = migratedSettings.postpone;
+    if (postpone && typeof postpone === 'object' && 'dateField' in postpone) {
+        const dateField = postpone.dateField;
+        if (typeof dateField !== 'string' || !POSTPONE_DATE_FIELD_VALUES.includes(dateField as PostponeDateField)) {
+            (postpone as PostponeSettings).dateField = DEFAULT_POSTPONE_DATE_FIELD_OPTION;
+        }
+    }
 
     // Migrate 'includes' to 'presets' if present
     if ('includes' in migratedSettings && !('presets' in migratedSettings)) {

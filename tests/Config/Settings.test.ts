@@ -1,4 +1,10 @@
-import { type Settings, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import {
+    type PostponeDateField,
+    type Settings,
+    getSettings,
+    resetSettings,
+    updateSettings,
+} from '../../src/Config/Settings';
 import { defaultPresets } from '../../src/Query/Presets/Presets';
 
 beforeEach(() => {
@@ -81,6 +87,18 @@ describe('settings-usage', () => {
         // Assert:
         expect(loggingOptions.loggingOptions.minLevels['tasks.Query']).toBeDefined();
     });
+
+    it('should apply default Postpone date field option if the stored setting was invalid', () => {
+        updateSettings({
+            postpone: {
+                dateField: 'apple-sauce' as PostponeDateField,
+            },
+        } as Partial<Settings>);
+
+        const settings = getSettings();
+
+        expect((settings as any).postpone.dateField).toEqual('due-scheduled-start');
+    });
 });
 
 describe('dismissible notices', function () {
@@ -123,12 +141,12 @@ describe('resetSettings behaviour', () => {
         expect(getSettings().quickSearch.fuzzyMatching).toBe(false);
     });
 
-    it('should default postpone.dateField to dueDate-scheduledDate-startDate and retain a loaded value', () => {
-        expect(getSettings().postpone.dateField).toBe('dueDate-scheduledDate-startDate');
+    it('should default postpone.dateField to due-scheduled-start and retain a loaded value', () => {
+        expect(getSettings().postpone.dateField).toBe('due-scheduled-start');
 
-        updateSettings({ postpone: { dateField: 'scheduledDate' } });
+        updateSettings({ postpone: { dateField: 'scheduled' } });
 
-        expect(getSettings().postpone.dateField).toBe('scheduledDate');
+        expect(getSettings().postpone.dateField).toBe('scheduled');
     });
 
     it('should completely remove properties not in defaultSettings', () => {

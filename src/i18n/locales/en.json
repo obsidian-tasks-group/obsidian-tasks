@@ -229,12 +229,12 @@
         "description": "Which date field the postpone button (⏩) updates. For options with multiple dates, the first date in the sequence that is present on the task will be set.",
         "name": "Postpone button date field",
         "options": {
-          "dueDate": "Always Due",
-          "dueDate-scheduledDate-startDate": "Due → Scheduled → Start",
-          "scheduledDate": "Always Scheduled",
-          "scheduledDate-dueDate-startDate": "Scheduled → Due → Start",
-          "startDate": "Always Start",
-          "startDate-scheduledDate-dueDate": "Start → Scheduled → Due"
+          "due": "Always Due",
+          "due-scheduled-start": "Due → Scheduled → Start",
+          "scheduled": "Always Scheduled",
+          "scheduled-due-start": "Scheduled → Due → Start",
+          "start": "Always Start",
+          "start-scheduled-due": "Start → Scheduled → Due"
         }
       }
     },

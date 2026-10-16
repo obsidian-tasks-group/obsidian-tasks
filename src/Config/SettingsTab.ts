@@ -864,12 +864,12 @@ export class SettingsTab extends PluginSettingTab {
         // Keep keys and i18n calls vertically aligned for readability
         // prettier-ignore
         const postponeDateFieldOptionText: Record<PostponeDateField, string> = {
-            'dueDate-scheduledDate-startDate': i18n.t('settings.postponeButton.postponeDateField.options.dueDate-scheduledDate-startDate'),
-            'scheduledDate-dueDate-startDate': i18n.t('settings.postponeButton.postponeDateField.options.scheduledDate-dueDate-startDate'),
-            'startDate-scheduledDate-dueDate': i18n.t('settings.postponeButton.postponeDateField.options.startDate-scheduledDate-dueDate'),
-            'dueDate':                         i18n.t('settings.postponeButton.postponeDateField.options.dueDate'),
-            'scheduledDate':                   i18n.t('settings.postponeButton.postponeDateField.options.scheduledDate'),
-            'startDate':                       i18n.t('settings.postponeButton.postponeDateField.options.startDate'),
+            'due-scheduled-start': i18n.t('settings.postponeButton.postponeDateField.options.due-scheduled-start'),
+            'scheduled-due-start': i18n.t('settings.postponeButton.postponeDateField.options.scheduled-due-start'),
+            'start-scheduled-due': i18n.t('settings.postponeButton.postponeDateField.options.start-scheduled-due'),
+            'due':                 i18n.t('settings.postponeButton.postponeDateField.options.due'),
+            'scheduled':           i18n.t('settings.postponeButton.postponeDateField.options.scheduled'),
+            'start':               i18n.t('settings.postponeButton.postponeDateField.options.start'),
         };
 
         return {

@@ -30,7 +30,9 @@ export function shouldShowPostponeButton(task: Task) {
  * @param task
  */
 export function getDateFieldToPostpone(task: Task): HappensDate | null {
-    const candidateFields = getSettings().postpone.dateField.split('-') as HappensDate[];
+    const candidateFields = getSettings()
+        .postpone.dateField.split('-')
+        .map((value) => value + 'Date') as HappensDate[];
     for (const field of candidateFields) {
         if (task[field]) {
             return field;
