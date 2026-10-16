@@ -12,7 +12,6 @@ import {
     type SettingGroupItem,
     type ToggleComponent,
     debounce,
-    requireApiVersion,
     sanitizeHTMLToDom,
 } from 'obsidian';
 import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
@@ -88,9 +87,7 @@ export class SettingsTab extends PluginSettingTab {
         super(plugin.app, plugin);
 
         this.plugin = plugin;
-        if (requireApiVersion('1.11.0')) {
-            this.icon = 'list-checks';
-        }
+        this.icon = 'list-checks';
         this.presetsSettingsUI = new PresetsSettingsUI(plugin, events);
         this.events = events;
 
