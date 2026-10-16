@@ -4,11 +4,27 @@ import type { Occurrence } from './Occurrence';
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly baseOnToday: boolean;
+    private readonly textWithoutUntil: string;
+    private readonly untilDateText: string | null;
     readonly occurrence: Occurrence;
 
-    constructor({ rrule, baseOnToday, occurrence }: { rrule: RRule; baseOnToday: boolean; occurrence: Occurrence }) {
+    constructor({
+        rrule,
+        baseOnToday,
+        occurrence,
+        textWithoutUntil,
+        untilDateText,
+    }: {
+        rrule: RRule;
+        baseOnToday: boolean;
+        occurrence: Occurrence;
+        textWithoutUntil: string;
+        untilDateText: string | null;
+    }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
+        this.textWithoutUntil = textWithoutUntil;
+        this.untilDateText = untilDateText;
         this.occurrence = occurrence;
     }
 
@@ -20,16 +36,31 @@ export class Recurrence {
         occurrence: Occurrence;
     }): Recurrence | null {
         try {
-            const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
+            const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !-]+?)( when done)?$/i);
             if (match == null) {
                 return null;
             }
 
             const isolatedRuleText = match[1].trim();
             const baseOnToday = match[2] !== undefined;
+            const untilMatch = isolatedRuleText.match(/^(.*)\s+until\s+(\d{4}-\d{2}-\d{2})$/i);
+            const hasUntil = /\buntil\b/i.test(isolatedRuleText);
+            if (hasUntil && untilMatch === null) {
+                return null;
+            }
 
-            const options = RRule.parseText(isolatedRuleText);
+            const ruleTextWithoutUntil = untilMatch?.[1].trim() ?? isolatedRuleText;
+            const untilDate = untilMatch ? window.moment(untilMatch[2], 'YYYY-MM-DD', true) : null;
+            if (untilDate !== null && !untilDate.isValid()) {
+                return null;
+            }
+
+            const options = RRule.parseText(ruleTextWithoutUntil);
             if (options !== null) {
+                if (untilDate !== null) {
+                    options.until = untilDate.startOf('day').utc(true).toDate();
+                }
+
                 const referenceDate = occurrence.referenceDate;
 
                 if (!baseOnToday && referenceDate !== null) {
@@ -39,10 +70,13 @@ export class Recurrence {
                 }
 
                 const rrule = new RRule(options);
+                const rruleWithoutUntil = new RRule({ ...options, until: undefined });
                 return new Recurrence({
                     rrule,
                     baseOnToday,
                     occurrence,
+                    textWithoutUntil: rruleWithoutUntil.toText(),
+                    untilDateText: untilMatch?.[2] ?? null,
                 });
             }
         } catch {
@@ -54,7 +88,11 @@ export class Recurrence {
     }
 
     public toText(): string {
-        let text = this.rrule.toText();
+        let text = this.textWithoutUntil;
+        if (this.untilDateText !== null) {
+            text += ` until ${this.untilDateText}`;
+        }
+
         if (this.baseOnToday) {
             text += ' when done';
         }
@@ -74,7 +112,7 @@ export class Recurrence {
             return null;
         }
 
-        return this.occurrence.next(nextReferenceDate);
+        return this.occurrence.next(nextReferenceDate.toDate());
     }
 
     public identicalTo(other: Recurrence) {
@@ -89,16 +127,16 @@ export class Recurrence {
         return this.toText() === other.toText(); // this also checks baseOnToday
     }
 
-    private nextReferenceDate(today: Moment): Date {
+    private nextReferenceDate(today: Moment): Moment | null {
         if (this.baseOnToday) {
             // The next occurrence should happen based off the current date.
-            return this.nextReferenceDateFromToday(today.clone()).toDate();
+            return this.nextReferenceDateFromToday(today.clone());
         } else {
-            return this.nextReferenceDateFromOriginalReferenceDate().toDate();
+            return this.nextReferenceDateFromOriginalReferenceDate();
         }
     }
 
-    private nextReferenceDateFromToday(today: Moment): Moment {
+    private nextReferenceDateFromToday(today: Moment): Moment | null {
         const ruleBasedOnToday = new RRule({
             ...this.rrule.origOptions,
             dtstart: today.startOf('day').utc(true).toDate(),
@@ -107,7 +145,7 @@ export class Recurrence {
         return this.nextAfter(today.endOf('day'), ruleBasedOnToday);
     }
 
-    private nextReferenceDateFromOriginalReferenceDate(): Moment {
+    private nextReferenceDateFromOriginalReferenceDate(): Moment | null {
         // The next occurrence should happen based on the original reference
         // date if possible. Otherwise, base it on today if we do not have a
         // reference date.
@@ -140,12 +178,17 @@ export class Recurrence {
      * eventually calculate the next occurrence based on `2022-01-28`, ending up
      * in February as the user would expect.
      */
-    private nextAfter(after: Moment, rrule: RRule): Moment {
+    private nextAfter(after: Moment, rrule: RRule): Moment | null {
         // We need to remove the timezone, as rrule does not regard timezones and always
         // calculates in UTC.
         // The timezone is added again before returning the next date.
         after.utc(true);
-        let next = window.moment.utc(rrule.after(after.toDate()));
+        const nextDate = rrule.after(after.toDate());
+        if (nextDate === null) {
+            return null;
+        }
+
+        let next = window.moment.utc(nextDate);
 
         // If this is a monthly recurrence, treat it special.
         const asText = this.toText();

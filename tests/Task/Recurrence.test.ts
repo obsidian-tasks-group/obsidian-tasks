@@ -177,6 +177,71 @@ describe('Recurrence - with invalid dates in tasks', () => {
     });
 });
 
+describe('Recurrence - with until dates', () => {
+    it('preserves the until date in a positive timezone', () => {
+        const positiveTimezoneDate = moment.parseZone('2023-03-24T00:00:00+13:00');
+        expect(positiveTimezoneDate.utcOffset()).toBe(13 * 60);
+
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day until 2023-03-29',
+            occurrence: new Occurrence({
+                dueDate: positiveTimezoneDate,
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.toText()).toBe('every day until 2023-03-29');
+    });
+
+    it('keeps the final occurrence available in a positive timezone', () => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day until 2023-03-29',
+            occurrence: new Occurrence({
+                dueDate: moment('2023-03-28').startOf('day'),
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.next()!.dueDate).toEqualMoment(moment('2023-03-29'));
+    });
+
+    it('preserves the until date when based on completion date', () => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day until 2023-03-29 when done',
+            occurrence: new Occurrence({
+                dueDate: moment('2023-03-24').startOf('day'),
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.toText()).toBe('every day until 2023-03-29 when done');
+        expect(recurrence!.next(moment('2023-03-28'))!.dueDate).toEqualMoment(moment('2023-03-29'));
+    });
+
+    it('returns no next occurrence after the until date', () => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day until 2026-09-29',
+            occurrence: new Occurrence({
+                dueDate: moment('2026-09-29').startOf('day'),
+            }),
+        });
+
+        expect(recurrence).not.toBeNull();
+        expect(recurrence!.next()).toBeNull();
+    });
+
+    it('rejects locale-formatted until dates', () => {
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every day until September 29, 2026',
+            occurrence: new Occurrence({
+                dueDate: moment('2026-09-28').startOf('day'),
+            }),
+        });
+
+        expect(recurrence).toBeNull();
+    });
+});
+
 describe('identicalTo', () => {
     it('differing only in rule text', () => {
         const weekly = new RecurrenceBuilder().rule('every week').build();
