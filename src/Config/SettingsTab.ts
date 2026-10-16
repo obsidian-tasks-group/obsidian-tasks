@@ -106,7 +106,7 @@ export class SettingsTab extends PluginSettingTab {
         // Rebuilding the settings tab resets it to the top, so restore how far down it was.
         const previousDistanceFromTop = this.containerEl.scrollTop;
 
-        // Obsidian 1.13.0+ renders this tab from getSettingDefinitions(),
+        // Obsidian 1.13.0+ renders this tab from getSettingDefinitions().
         this.update();
 
         window.requestAnimationFrame(() => {
