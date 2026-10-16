@@ -1,4 +1,10 @@
-import { type Settings, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import {
+    type PostponeDateField,
+    type Settings,
+    getSettings,
+    resetSettings,
+    updateSettings,
+} from '../../src/Config/Settings';
 import { defaultPresets } from '../../src/Query/Presets/Presets';
 
 beforeEach(() => {
@@ -80,6 +86,18 @@ describe('settings-usage', () => {
 
         // Assert:
         expect(loggingOptions.loggingOptions.minLevels['tasks.Query']).toBeDefined();
+    });
+
+    it.fails('should apply default Postpone date field option if the stored setting was invalid', () => {
+        updateSettings({
+            postpone: {
+                dateField: 'apple-sauce' as PostponeDateField,
+            },
+        } as Partial<Settings>);
+
+        const settings = getSettings();
+
+        expect((settings as any).postpone.dateField).toEqual('due-scheduled-start');
     });
 });
 
