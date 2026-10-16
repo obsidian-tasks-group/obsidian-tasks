@@ -278,9 +278,7 @@ export class SettingsTab extends PluginSettingTab {
                                             GlobalFilter.getInstance().set(value);
                                             await this.plugin.saveSettings();
                                             // Re-evaluate the 'visible' predicate of the remove-filter row.
-                                            if (requireApiVersion('1.13.0')) {
-                                                this.refreshDomState();
-                                            }
+                                            this.refreshDomState();
                                             this.events.triggerReloadVault();
                                         },
                                         500,
@@ -918,9 +916,7 @@ export class SettingsTab extends PluginSettingTab {
                                     updateSettings({ useFilenameAsScheduledDate: value });
                                     await this.plugin.saveSettings();
                                     // Re-evaluate the 'visible' predicates of the dependent rows.
-                                    if (requireApiVersion('1.13.0')) {
-                                        this.refreshDomState();
-                                    }
+                                    this.refreshDomState();
                                     refreshReloadButton();
                                 });
                             });
@@ -1021,9 +1017,7 @@ export class SettingsTab extends PluginSettingTab {
                                     updateSettings({ autoSuggestInEditor: value });
                                     await this.plugin.saveSettings();
                                     // Re-evaluate the 'visible' predicates of the dependent rows.
-                                    if (requireApiVersion('1.13.0')) {
-                                        this.refreshDomState();
-                                    }
+                                    this.refreshDomState();
                                     refreshReloadButton();
                                 });
                             });
