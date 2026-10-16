@@ -406,64 +406,58 @@ export class SettingsTab extends PluginSettingTab {
      * `true` if the user enabled, `false` if they cancelled or closed.
      */
     private confirmEnableCustomSearches(callback: (confirmed: boolean) => void): void {
-        // The version check is always true in practice: this method is only
-        // called from the declarative settings path, which requires 1.13.0+.
-        if (requireApiVersion('1.13.0')) {
-            const modal = new ConfirmationModal(this.app);
-            modal.setTitle(i18n.t('settings.searches.enableCustomSearches.name'));
+        const modal = new ConfirmationModal(this.app);
+        modal.setTitle(i18n.t('settings.searches.enableCustomSearches.name'));
 
-            modal.contentEl.createEl('p', {
-                cls: 'setting-item-description',
-                text: i18n.t('settings.searches.enableCustomSearches.description.line2'),
-            });
-            const warningEl = modal.contentEl.createEl('p', { cls: 'setting-item-description mod-warning' });
-            warningEl.createEl('b', {
-                text: i18n.t('settings.searches.enableCustomSearches.description.line3'),
-            });
-            modal.contentEl.createEl('p', {
-                cls: 'setting-item-description',
-                text: i18n.t('settings.searches.enableCustomSearches.description.line4'),
-            });
+        modal.contentEl.createEl('p', {
+            cls: 'setting-item-description',
+            text: i18n.t('settings.searches.enableCustomSearches.description.line2'),
+        });
+        const warningEl = modal.contentEl.createEl('p', { cls: 'setting-item-description mod-warning' });
+        warningEl.createEl('b', {
+            text: i18n.t('settings.searches.enableCustomSearches.description.line3'),
+        });
+        modal.contentEl.createEl('p', {
+            cls: 'setting-item-description',
+            text: i18n.t('settings.searches.enableCustomSearches.description.line4'),
+        });
 
-            let acknowledged = false;
-            let enableBtn: ConfirmationButton | null = null;
-            modal.addCheckbox(i18n.t('settings.searches.enableCustomSearches.confirm.acknowledge'), (value) => {
-                acknowledged = value;
-                if (enableBtn) {
-                    enableBtn.setDisabled(!acknowledged);
-                }
-            });
+        let acknowledged = false;
+        let enableBtn: ConfirmationButton | null = null;
+        modal.addCheckbox(i18n.t('settings.searches.enableCustomSearches.confirm.acknowledge'), (value) => {
+            acknowledged = value;
+            if (enableBtn) {
+                enableBtn.setDisabled(!acknowledged);
+            }
+        });
 
-            let decided = false;
-            // Cancel first: on desktop, DOM order decides and the primary action
-            // belongs on the right. Mobile reorders Cancel with CSS regardless.
-            modal.addCancelButton();
-            modal.addButton((btn) => {
-                enableBtn = btn;
-                btn.setButtonText(i18n.t('settings.searches.enableCustomSearches.confirm.enable'))
-                    .setCta()
-                    .setDisabled(true)
-                    .onClick(() => {
-                        if (!acknowledged) {
-                            return true; // keep the modal open
-                        }
-                        decided = true;
-                        callback(true);
-                        return undefined;
-                    });
-            });
+        let decided = false;
+        // Cancel first: on desktop, DOM order decides and the primary action
+        // belongs on the right. Mobile reorders Cancel with CSS regardless.
+        modal.addCancelButton();
+        modal.addButton((btn) => {
+            enableBtn = btn;
+            btn.setButtonText(i18n.t('settings.searches.enableCustomSearches.confirm.enable'))
+                .setCta()
+                .setDisabled(true)
+                .onClick(() => {
+                    if (!acknowledged) {
+                        return true; // keep the modal open
+                    }
+                    decided = true;
+                    callback(true);
+                    return undefined;
+                });
+        });
 
-            const originalOnClose = modal.onClose.bind(modal);
-            modal.onClose = () => {
-                originalOnClose();
-                if (!decided) {
-                    callback(false);
-                }
-            };
-            modal.open();
-        } else {
-            callback(false);
-        }
+        const originalOnClose = modal.onClose.bind(modal);
+        modal.onClose = () => {
+            originalOnClose();
+            if (!decided) {
+                callback(false);
+            }
+        };
+        modal.open();
     }
 
     // ---- Presets (sub-page) ----------------------------------------------
