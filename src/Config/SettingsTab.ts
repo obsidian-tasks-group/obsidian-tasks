@@ -109,13 +109,8 @@ export class SettingsTab extends PluginSettingTab {
         // Rebuilding the settings tab resets it to the top, so restore how far down it was.
         const previousDistanceFromTop = this.containerEl.scrollTop;
 
-        if (requireApiVersion('1.13.0')) {
-            // Obsidian 1.13.0+ renders this tab from getSettingDefinitions(),
-            // so rebuild it declaratively. display() would render nothing here.
-            this.update();
-        } else {
-            this.display();
-        }
+        // Obsidian 1.13.0+ renders this tab from getSettingDefinitions(),
+        this.update();
 
         window.requestAnimationFrame(() => {
             this.containerEl.scrollTo({ top: previousDistanceFromTop });
@@ -1086,17 +1081,6 @@ export class SettingsTab extends PluginSettingTab {
                 },
             ],
         };
-    }
-
-    public display(): void {
-        const { containerEl } = this;
-
-        containerEl.empty();
-
-        // TODO When `minAppVersion` is updated to 1.13.1 on `main`, delete this display() method
-        //      and revert ff6192ac35197f8c2e47debb7c600d8676e4534a.
-        //      Then we can remove all requireApiVersion('1.13.0') (and earlier) checks.
-        new Setting(containerEl).setName(i18n.t('settings.obsidianVersionTooOld', { version: '1.13.1' })).setHeading();
     }
 
     private seeTheDocs(url: string): string {
