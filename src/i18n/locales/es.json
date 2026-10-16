@@ -222,6 +222,21 @@
         "shortDescription": "Instrucciones incluidas automáticamente al principio de cada bloque de Tasks."
       }
     },
+    "postponeButton": {
+      "heading": "Botón de posponer",
+      "postponeDateField": {
+        "description": "Qué campo de fecha actualiza el botón de posponer (⏩). En las opciones con varias fechas, se establecerá la primera fecha de la secuencia que esté presente en la tarea.",
+        "name": "Campo de fecha del botón de posponer",
+        "options": {
+          "due": "Siempre $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "Siempre $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "Siempre $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "Añadir nuevo preajuste"
@@ -350,5 +365,10 @@
     "taskEntry": {
       "heading": "Entrada de tareas"
     }
+  },
+  "taskFields": {
+    "due": "Vencimiento",
+    "scheduled": "Programada",
+    "start": "Inicio"
   }
 }

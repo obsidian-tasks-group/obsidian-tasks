@@ -222,6 +222,21 @@
         "shortDescription": "自动包含在每个 Tasks 块开头的指令。"
       }
     },
+    "postponeButton": {
+      "heading": "推迟按钮",
+      "postponeDateField": {
+        "description": "推迟按钮(⏩)更新的日期字段。对于包含多个日期的选项，将设置序列中第一个存在于任务上的日期。",
+        "name": "推迟按钮日期字段",
+        "options": {
+          "due": "始终使用$t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "始终使用$t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "始终使用$t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "添加新预设"
@@ -350,5 +365,10 @@
     "taskEntry": {
       "heading": "任务录入"
     }
+  },
+  "taskFields": {
+    "due": "截止日期",
+    "scheduled": "计划日期",
+    "start": "开始日期"
   }
 }

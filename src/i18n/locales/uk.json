@@ -222,6 +222,21 @@
         "shortDescription": "Інструкції, які автоматично включаються на початку кожного блоку Tasks."
       }
     },
+    "postponeButton": {
+      "heading": "Кнопка перенесення",
+      "postponeDateField": {
+        "description": "Яке поле дати оновлює кнопка перенесення (⏩). Для варіантів із кількома датами буде встановлено першу дату з послідовності, що присутня в задачі.",
+        "name": "Поле дати кнопки перенесення",
+        "options": {
+          "due": "Завжди $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "Завжди $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "Завжди $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "Додати новий пресет"
@@ -350,5 +365,10 @@
     "taskEntry": {
       "heading": "Введення задачі"
     }
+  },
+  "taskFields": {
+    "due": "Термін",
+    "scheduled": "Заплановано",
+    "start": "Початок"
   }
 }

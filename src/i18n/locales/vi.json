@@ -222,6 +222,21 @@
         "shortDescription": "Các hướng dẫn được tự động đưa vào đầu mỗi khối Tasks."
       }
     },
+    "postponeButton": {
+      "heading": "Nút hoãn",
+      "postponeDateField": {
+        "description": "Trường ngày mà nút hoãn (⏩) cập nhật. Với các tùy chọn có nhiều ngày, ngày đầu tiên trong chuỗi có mặt trên nhiệm vụ sẽ được đặt.",
+        "name": "Trường ngày của nút hoãn",
+        "options": {
+          "due": "Luôn $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "Luôn $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "Luôn $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "Thêm preset mới"
@@ -350,5 +365,10 @@
     "taskEntry": {
       "heading": "Nhập nhiệm vụ"
     }
+  },
+  "taskFields": {
+    "due": "Đến hạn",
+    "scheduled": "Đã lên lịch",
+    "start": "Bắt đầu"
   }
 }

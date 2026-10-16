@@ -222,6 +222,21 @@
         "shortDescription": "Anweisungen, die automatisch am Anfang jedes Tasks-Blocks eingefügt werden."
       }
     },
+    "postponeButton": {
+      "heading": "Verschieben-Schaltfläche",
+      "postponeDateField": {
+        "description": "Welches Datumsfeld die Verschieben-Schaltfläche (⏩) aktualisiert. Bei Optionen mit mehreren Daten wird das erste Datum der Reihenfolge gesetzt, das in der Aufgabe vorhanden ist.",
+        "name": "Datumsfeld der Verschieben-Schaltfläche",
+        "options": {
+          "due": "Immer $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "Immer $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "Immer $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "Neue Voreinstellung hinzufügen"
@@ -350,5 +365,10 @@
     "taskEntry": {
       "heading": "Aufgabeneingabe"
     }
+  },
+  "taskFields": {
+    "due": "Fälligkeitsdatum",
+    "scheduled": "Geplantes Datum",
+    "start": "Startdatum"
   }
 }

@@ -222,6 +222,21 @@
         "shortDescription": "Instructions automatiquement incluses au début de chaque bloc Tasks."
       }
     },
+    "postponeButton": {
+      "heading": "Bouton de report",
+      "postponeDateField": {
+        "description": "Quel champ de date le bouton de report (⏩) met à jour. Pour les options comportant plusieurs dates, la première date de la séquence présente sur la tâche sera modifiée.",
+        "name": "Champ de date du bouton de report",
+        "options": {
+          "due": "Toujours $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "Toujours $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "Toujours $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "Ajouter un préréglage"
@@ -350,5 +365,10 @@
     "taskEntry": {
       "heading": "Saisie des tâches"
     }
+  },
+  "taskFields": {
+    "due": "Date d'échéance",
+    "scheduled": "Date planifiée",
+    "start": "Date de début"
   }
 }

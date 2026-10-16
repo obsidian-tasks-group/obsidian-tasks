@@ -222,6 +222,21 @@
         "shortDescription": "모든 Tasks 블록의 시작 부분에 자동으로 포함되는 지침입니다."
       }
     },
+    "postponeButton": {
+      "heading": "미루기 버튼",
+      "postponeDateField": {
+        "description": "미루기 버튼(⏩)이 업데이트할 날짜 필드입니다. 여러 날짜가 있는 옵션에서는 작업에 존재하는 날짜 중 순서상 가장 먼저 나오는 날짜가 설정됩니다.",
+        "name": "미루기 버튼 날짜 필드",
+        "options": {
+          "due": "항상 $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "항상 $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "항상 $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "새 프리셋 추가"
@@ -350,5 +365,10 @@
     "taskEntry": {
       "heading": "작업 입력"
     }
+  },
+  "taskFields": {
+    "due": "마감일",
+    "scheduled": "예정일",
+    "start": "시작일"
   }
 }

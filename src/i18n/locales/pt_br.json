@@ -222,6 +222,21 @@
         "shortDescription": "Instruções incluídas automaticamente no início de cada bloco do Tasks."
       }
     },
+    "postponeButton": {
+      "heading": "Botão de adiar",
+      "postponeDateField": {
+        "description": "Qual campo de data o botão de adiar (⏩) atualiza. Para opções com várias datas, será definida a primeira data da sequência que estiver presente na tarefa.",
+        "name": "Campo de data do botão de adiar",
+        "options": {
+          "due": "Sempre $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "Sempre $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "Sempre $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "Adicionar nova predefinição"
@@ -350,5 +365,10 @@
     "taskEntry": {
       "heading": "Entrada de tarefa"
     }
+  },
+  "taskFields": {
+    "due": "Vencimento",
+    "scheduled": "Agendamento",
+    "start": "Início"
   }
 }

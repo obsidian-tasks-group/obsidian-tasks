@@ -222,6 +222,21 @@
         "shortDescription": "Her Tasks bloğunun başına otomatik olarak eklenen talimatlar."
       }
     },
+    "postponeButton": {
+      "heading": "Erteleme düğmesi",
+      "postponeDateField": {
+        "description": "Erteleme düğmesinin (⏩) hangi tarih alanını güncelleyeceği. Birden fazla tarih içeren seçeneklerde, görevde bulunan ve dizide ilk sırada gelen tarih ayarlanır.",
+        "name": "Erteleme düğmesi tarih alanı",
+        "options": {
+          "due": "Her Zaman $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "Her Zaman $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "Her Zaman $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
     "presets": {
       "buttons": {
         "addNewPreset": "Yeni ön ayar ekle"
@@ -350,5 +365,10 @@
     "taskEntry": {
       "heading": "Görev girişi"
     }
+  },
+  "taskFields": {
+    "due": "Son Tarih",
+    "scheduled": "Zamanlanmış",
+    "start": "Başlangıç"
   }
 }
