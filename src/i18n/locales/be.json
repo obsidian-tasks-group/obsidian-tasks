@@ -367,8 +367,8 @@
     }
   },
   "taskFields": {
-    "due": "Due",
-    "scheduled": "Scheduled",
-    "start": "Start"
+    "due": "Тэрмін",
+    "scheduled": "Запланавана",
+    "start": "Пачатак"
   }
 }
