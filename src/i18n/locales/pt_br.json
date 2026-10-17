@@ -154,6 +154,20 @@
         "description": "A ativação desta opção adicionará um carimbo de data/hora ✅ YYYY-MM-DD no final quando uma tarefa for alternada para concluída.",
         "name": "Definir data de conclusão em todas as tarefas concluídas"
       },
+      "firstDayOfWeek": {
+        "description": "Escolha qual dia deve ser exibido como o primeiro dia da semana nos seletores de data.",
+        "name": "Primeiro dia da semana",
+        "options": {
+          "friday": "Sexta-feira",
+          "localeDefault": "Padrão da região",
+          "monday": "Segunda-feira",
+          "saturday": "Sábado",
+          "sunday": "Domingo",
+          "thursday": "Quinta-feira",
+          "tuesday": "Terça-feira",
+          "wednesday": "Quarta-feira"
+        }
+      },
       "heading": "Datas"
     },
     "datesFromFileNames": {

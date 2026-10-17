@@ -233,6 +233,11 @@
         "name": "Set cancelled date on every cancelled task",
         "desc": "Enabling this will add a timestamp ❌ YYYY-MM-DD at the end when a task is toggled to cancelled.",
         "render": "[Function]"
+      },
+      {
+        "name": "First day of week",
+        "desc": "Choose which day should be displayed as the first day of the week in date pickers.",
+        "render": "[Function]"
       }
     ],
     "type": "group"
