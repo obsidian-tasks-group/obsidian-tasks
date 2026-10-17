@@ -25,6 +25,7 @@ import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
+    private events: TasksEvents | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
 
@@ -54,6 +55,7 @@ export default class TasksPlugin extends Plugin {
         });
 
         const events = new TasksEvents({ obsidianEvents: this.app.workspace });
+        this.events = events;
 
         this.addSettingTab(new SettingsTab({ plugin: this, events }));
 
@@ -106,6 +108,21 @@ export default class TasksPlugin extends Plugin {
         GlobalQuery.getInstance().set(newSettings.globalQuery);
 
         await this.loadTaskStatuses();
+    }
+
+    /**
+     * Obsidian calls this when data.json changes on disk while the plugin runs,
+     * for example after Obsidian Sync or a git pull. Without reloading, the next
+     * save would write the old settings back over the change.
+     */
+    async onExternalSettingsChange() {
+        await this.loadSettings();
+        logging.configure(getSettings().loggingOptions);
+
+        // How tasks are read depends on the settings, so re-read the whole vault,
+        // and re-run open queries, which can use the global query and presets.
+        this.events?.triggerReloadVault();
+        this.events?.triggerReloadOpenSearchResults();
     }
 
     async saveSettings() {
