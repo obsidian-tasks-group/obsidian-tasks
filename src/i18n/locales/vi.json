@@ -155,17 +155,17 @@
         "name": "Đặt ngày hoàn thành cho mọi nhiệm vụ đã hoàn thành"
       },
       "firstDayOfWeek": {
-        "name": "Ngày đầu tiên của tuần",
         "description": "Chọn ngày nào nên được hiển thị là ngày đầu tiên của tuần trong bộ chọn ngày.",
+        "name": "Ngày đầu tiên của tuần",
         "options": {
-          "localeDefault": "Hệ thống",
-          "sunday": "Chủ Nhật",
-          "monday": "Thứ Hai",
-          "tuesday": "Thứ Ba",
-          "wednesday": "Thứ Tư",
-          "thursday": "Thứ Năm",
           "friday": "Thứ Sáu",
-          "saturday": "Thứ Bảy"
+          "localeDefault": "Hệ thống",
+          "monday": "Thứ Hai",
+          "saturday": "Thứ Bảy",
+          "sunday": "Chủ Nhật",
+          "thursday": "Thứ Năm",
+          "tuesday": "Thứ Ba",
+          "wednesday": "Thứ Tư"
         }
       },
       "heading": "Ngày tháng"

@@ -154,6 +154,20 @@
         "description": "Bu seçeneği etkinleştirirseniz, bir görev tamamlandı durumuna geçirildiğinde sonuna ✅ YYYY-AA-GG zaman damgası eklenir.",
         "name": "Tamamlanan her göreve tamamlanma tarihi ekle"
       },
+      "firstDayOfWeek": {
+        "description": "Tarih seçicilerde haftanın ilk günü olarak hangi günün gösterileceğini seçin.",
+        "name": "Haftanın ilk günü",
+        "options": {
+          "friday": "Cuma",
+          "localeDefault": "Bölge varsayılanı",
+          "monday": "Pazartesi",
+          "saturday": "Cumartesi",
+          "sunday": "Pazar",
+          "thursday": "Perşembe",
+          "tuesday": "Salı",
+          "wednesday": "Çarşamba"
+        }
+      },
       "heading": "Tarihler"
     },
     "datesFromFileNames": {

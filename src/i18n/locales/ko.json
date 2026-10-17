@@ -155,17 +155,17 @@
         "name": "모든 완료된 작업에 완료 날짜 설정"
       },
       "firstDayOfWeek": {
-        "name": "첫째 요일",
         "description": "날짜 선택기에서 첫째 요일로 표시할 요일을 선택하세요.",
+        "name": "첫째 요일",
         "options": {
-          "localeDefault": "시스템",
-          "sunday": "일요일",
-          "monday": "월요일",
-          "tuesday": "화요일",
-          "wednesday": "수요일",
-          "thursday": "목요일",
           "friday": "금요일",
-          "saturday": "토요일"
+          "localeDefault": "시스템",
+          "monday": "월요일",
+          "saturday": "토요일",
+          "sunday": "일요일",
+          "thursday": "목요일",
+          "tuesday": "화요일",
+          "wednesday": "수요일"
         }
       },
       "heading": "날짜"

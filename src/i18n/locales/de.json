@@ -155,17 +155,17 @@
         "name": "Erledigungsdatum bei jeder abgeschlossenen Aufgabe festlegen"
       },
       "firstDayOfWeek": {
-        "name": "Erster Wochentag",
         "description": "Wählen Sie, welcher Tag als erster Wochentag in Datumsauswahlen angezeigt werden soll.",
+        "name": "Erster Wochentag",
         "options": {
-          "localeDefault": "System",
-          "sunday": "Sonntag",
-          "monday": "Montag",
-          "tuesday": "Dienstag",
-          "wednesday": "Mittwoch",
-          "thursday": "Donnerstag",
           "friday": "Freitag",
-          "saturday": "Samstag"
+          "localeDefault": "System",
+          "monday": "Montag",
+          "saturday": "Samstag",
+          "sunday": "Sonntag",
+          "thursday": "Donnerstag",
+          "tuesday": "Dienstag",
+          "wednesday": "Mittwoch"
         }
       },
       "heading": "Daten"

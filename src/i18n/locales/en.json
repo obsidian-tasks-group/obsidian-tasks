@@ -155,17 +155,17 @@
         "name": "Set done date on every completed task"
       },
       "firstDayOfWeek": {
-        "name": "First day of week",
         "description": "Choose which day should be displayed as the first day of the week in date pickers.",
+        "name": "First day of week",
         "options": {
-          "localeDefault": "Locale default",
-          "sunday": "Sunday",
-          "monday": "Monday",
-          "tuesday": "Tuesday",
-          "wednesday": "Wednesday",
-          "thursday": "Thursday",
           "friday": "Friday",
-          "saturday": "Saturday"
+          "localeDefault": "Locale default",
+          "monday": "Monday",
+          "saturday": "Saturday",
+          "sunday": "Sunday",
+          "thursday": "Thursday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday"
         }
       },
       "heading": "Dates"

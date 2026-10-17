@@ -154,6 +154,20 @@
         "description": "Al activar esta opción se añadirá una marca de tiempo ✅ AAAA-MM-DD al final cuando una tarea se marque como completada.",
         "name": "Establecer fecha de finalización en cada tarea completada"
       },
+      "firstDayOfWeek": {
+        "description": "Elige qué día se muestra como primer día de la semana en los selectores de fecha.",
+        "name": "Primer día de la semana",
+        "options": {
+          "friday": "Viernes",
+          "localeDefault": "Según la región",
+          "monday": "Lunes",
+          "saturday": "Sábado",
+          "sunday": "Domingo",
+          "thursday": "Jueves",
+          "tuesday": "Martes",
+          "wednesday": "Miércoles"
+        }
+      },
       "heading": "Fechas"
     },
     "datesFromFileNames": {
