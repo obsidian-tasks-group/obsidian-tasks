@@ -17,6 +17,10 @@ export const WEEKDAY_ORDER = ['sunday', 'monday', 'tuesday', 'wednesday', 'thurs
  */
 export const LOCALE_DEFAULT = 'locale-default' as const;
 
+interface LocaleWithWeekInfo extends Intl.Locale {
+    weekInfo?: { firstDay: number };
+}
+
 export type FirstDayOfWeekOption = typeof LOCALE_DEFAULT | (typeof WEEKDAY_ORDER)[number];
 
 /**
@@ -48,7 +52,7 @@ export function getFirstDayOfWeekValue(setting: FirstDayOfWeekOption): number {
     // Note: Intl.Locale().weekInfo.firstDay returns 1-7 (Monday=1, Sunday=7)
     // but flatpickr expects 0-6 (Sunday=0, Saturday=6)
     // We need to convert: 7 -> 0, 1 -> 1, 2 -> 2, ... 6 -> 6
-    const localeFirstDay = (new Intl.Locale(navigator.language) as any).weekInfo?.firstDay ?? 1;
+    const localeFirstDay = (new Intl.Locale(navigator.language) as LocaleWithWeekInfo).weekInfo?.firstDay ?? 1;
 
     // Convert from 1-7 (Monday=1, Sunday=7) to 0-6 (Sunday=0, Saturday=6)
     // Sunday (7) becomes 0, Monday (1) stays 1, etc.
