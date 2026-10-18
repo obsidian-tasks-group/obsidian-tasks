@@ -18,6 +18,9 @@ export default defineConfig({
     test: {
         globals: true,
         environment: 'jsdom',
+        // Create jsdom once per worker instead of once per test file, keeping each file isolated.
+        // About 4x faster, see https://vitest.dev/guide/improving-performance#test-environments
+        pool: 'vmThreads',
         include: ['tests/**/*.test.ts'],
         setupFiles: ['./tests/vitest.setup.ts', './tests/CustomMatchers/vitest.custom_matchers.setup.ts', 'jest-sorted'],
         globalSetup: './tests/global-setup.js',
