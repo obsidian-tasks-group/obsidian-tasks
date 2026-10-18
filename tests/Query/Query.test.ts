@@ -389,12 +389,12 @@ description includes \
             return filters.filter((instruction) => field.createSorterFromLine(instruction) !== null);
         }
 
-        describe.each(namedFields)('has sufficient sample "sort by" lines for field "%s"', ({ field }) => {
-            if (!field.supportsSorting()) {
-                it.skip('does not support sorting', () => {});
-                return;
-            }
-
+        describe.each(
+            namedFields.filter((namedField) => {
+                // Braces are intentional to make it clear that a subset of namedFields is being used.
+                return namedField.field.supportsSorting();
+            }),
+        )('has sufficient sample "sort by" lines for field "%s"', ({ field }) => {
             const matchingLines = linesMatchingField(field);
 
             it('has at least one test for normal sorting', () => {
@@ -472,12 +472,12 @@ description includes \
             return filters.filter((instruction) => field.createGrouperFromLine(instruction) !== null);
         }
 
-        describe.each(namedFields)('has sufficient sample "group by" lines for field "%s"', ({ field }) => {
-            if (!field.supportsGrouping()) {
-                it.skip('does not support grouping', () => {});
-                return;
-            }
-
+        describe.each(
+            namedFields.filter((namedField) => {
+                // Braces are intentional to make it clear that a subset of namedFields is being used.
+                return namedField.field.supportsGrouping();
+            }),
+        )('has sufficient sample "group by" lines for field "%s"', ({ field }) => {
             const matchingLines = linesMatchingField(field);
 
             it('has at least one test for normal grouping', () => {
