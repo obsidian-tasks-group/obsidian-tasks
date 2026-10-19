@@ -116,7 +116,14 @@ export default class TasksPlugin extends Plugin {
      * save would write the old settings back over the change.
      */
     async onExternalSettingsChange() {
-        await this.loadSettings();
+        try {
+            await this.loadSettings();
+        } catch (error) {
+            // For example, an external editor saved a partial edit, so data.json is not valid JSON.
+            // Keep the current settings: Obsidian calls this again when the file next changes.
+            log('warn', `Ignoring change to data.json, as it could not be loaded: ${error}`);
+            return;
+        }
         logging.configure(getSettings().loggingOptions);
 
         // How tasks are read depends on the settings, so re-read the whole vault,
