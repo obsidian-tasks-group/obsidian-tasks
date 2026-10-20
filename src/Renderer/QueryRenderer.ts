@@ -105,7 +105,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private observer: IntersectionObserver | null = null;
 
     private readonly queryResultsRenderer: QueryResultsRenderer;
-    private readonly debouncedRenderFn: Debouncer<[RenderParams], void>;
+    private readonly debouncedRenderFn: Debouncer<[], void>;
     private isRendering: boolean = false;
 
     constructor({
@@ -152,7 +152,13 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         this.queryResultsRenderer.query.debug('[render] QueryRenderChild.constructor() entered');
 
-        this.debouncedRenderFn = debounce((params: RenderParams) => this.render(params), 300, true);
+        // Read the tasks when the render actually runs, not when it is requested: a vault reload
+        // may finish during the delay, and rendering the older tasks would overwrite its results.
+        this.debouncedRenderFn = debounce(
+            () => this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() }),
+            300,
+            true,
+        );
     }
 
     onload() {
@@ -291,10 +297,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         }, millisecondsToMidnight + 1000); // Add buffer to be sure to run after midnight.
     }
 
-    private debouncedRender(params: RenderParams): void {
-        this.debouncedRenderFn(params);
-    }
-
     private async render({ tasks, state }: RenderParams) {
         // We got here because the Cache reported a change in at least one task in the vault.
         // So note that any results we have already drawn are now out-of-date:
@@ -349,7 +351,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private rereadQueryFromFile() {
         this.queryResultsRenderer.rereadQueryFromFile();
         this.isCacheChangedSinceLastRedraw = true;
-        this.debouncedRender({ tasks: this.plugin.getTasks(), state: this.plugin.getState() });
+        this.debouncedRenderFn();
     }
 }
 

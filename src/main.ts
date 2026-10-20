@@ -4,20 +4,17 @@ import type { Task } from 'Task/Task';
 import { i18n, initializeI18n } from './i18n/i18n';
 import { Cache, State } from './Obsidian/Cache';
 import { Commands } from './Commands';
-import { GlobalQuery } from './Config/GlobalQuery';
 import { TasksEvents } from './Obsidian/TasksEvents';
 import { initializeFile } from './Obsidian/File';
 import { InlineRenderer } from './Obsidian/InlineRenderer';
 import { newLivePreviewExtension } from './Obsidian/LivePreviewExtension';
 import { QueryRenderer } from './Renderer/QueryRenderer';
-import { getSettings, updateSettings } from './Config/Settings';
+import { getSettings } from './Config/Settings';
+import { applySettingsData, reloadSettingsFromDisk } from './Config/LoadSettings';
 import { SettingsTab } from './Config/SettingsTab';
-import { StatusRegistry } from './Statuses/StatusRegistry';
 import { log, logging } from './lib/logging';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
-import { StatusSettings } from './Config/StatusSettings';
 import { tasksApiV1 } from './Api';
-import { GlobalFilter } from './Config/GlobalFilter';
 import { QueryFileDefaults } from './Query/QueryFileDefaults';
 import { LinkResolver } from './Task/LinkResolver';
 import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
@@ -25,6 +22,7 @@ import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
+    private events: TasksEvents | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
 
@@ -54,6 +52,7 @@ export default class TasksPlugin extends Plugin {
         });
 
         const events = new TasksEvents({ obsidianEvents: this.app.workspace });
+        this.events = events;
 
         this.addSettingTab(new SettingsTab({ plugin: this, events }));
 
@@ -62,9 +61,6 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
             workspace: this.app.workspace,
         });
-
-        // Load configured status types.
-        await this.loadTaskStatuses();
 
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
@@ -80,13 +76,8 @@ export default class TasksPlugin extends Plugin {
         this.setObsidianPropertiesTypes();
 
         this.registerEditorExtension(newLivePreviewExtension(this));
-        this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
+        this.registerEditorSuggest(new EditorSuggestor(this.app, this));
         new Commands({ plugin: this });
-    }
-
-    async loadTaskStatuses() {
-        const { statusSettings } = getSettings();
-        StatusSettings.applyToStatusRegistry(statusSettings, StatusRegistry.getInstance());
     }
 
     onunload() {
@@ -95,17 +86,16 @@ export default class TasksPlugin extends Plugin {
     }
 
     async loadSettings() {
-        let newSettings = await this.loadData();
-        updateSettings(newSettings);
+        applySettingsData(await this.loadData());
+    }
 
-        // Fetch the updated settings, in case the user has not yet edited the settings,
-        // in which case newSettings is currently empty.
-        newSettings = getSettings();
-        GlobalFilter.getInstance().set(newSettings.globalFilter);
-        GlobalFilter.getInstance().setRemoveGlobalFilter(newSettings.removeGlobalFilter);
-        GlobalQuery.getInstance().set(newSettings.globalQuery);
-
-        await this.loadTaskStatuses();
+    /**
+     * Obsidian calls this when data.json changes on disk while the plugin runs,
+     * for example after Obsidian Sync or a git pull. Without reloading, the next
+     * save would write the old settings back over the change.
+     */
+    async onExternalSettingsChange() {
+        await reloadSettingsFromDisk(() => this.loadData(), this.events);
     }
 
     async saveSettings() {
