@@ -33,7 +33,7 @@
   "author": "Clare Macrae and Ilyas Landikov (created by Martin Schenck)",
   "license": "MIT",
   "devDependencies": {
-    "@approval-tests/approvals": "^7.5.8",
+    "@approval-tests/approvals": "^7.5.11",
     "@codemirror/view": "^6.2.0",
     "@eslint/js": "^8.57.0",
     "@eslint/json": "0.14.0",
@@ -56,6 +56,7 @@
     "eslint-plugin-svelte": "^3.23.0",
     "globals": "^13.0.0",
     "i18next-parser": "^9.1.0",
+    "jest-diff": "^30.5.2",
     "jest-sorted": "^1.0.15",
     "jsdom": "^30.0.1",
     "madge": "^8.0.0",
