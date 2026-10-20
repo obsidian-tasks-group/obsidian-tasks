@@ -23,6 +23,8 @@ describe('ReadOnlyTask field values', () => {
         expect(readOnlyTask.precedingHeader).toEqual('My Header');
 
         // Identity and content
+        // If this fails, a new field may have been added to Task and TaskBuilder.
+        // See also the 'detects if ReadOnlyTask may be missing a new Task field' test below.
         expect(readOnlyTask.originalMarkdown).toEqual(task.originalMarkdown);
         expect(readOnlyTask.description).toEqual('Do exercises #todo #health');
 
@@ -100,6 +102,15 @@ describe('ReadOnlyTask field values', () => {
             type: StatusType.IN_PROGRESS,
             nextStatusSymbol: 'x',
         });
+    });
+
+    it('detects if ReadOnlyTask may be missing a new Task field', () => {
+        // If this fails, it probably means that a new field has been added to Task and therefore to TaskBuilder.
+        // And so ReadOnlyTask needs to be reviewed, the new field added and then this test updated.
+        const readOnlyTask = taskToReadOnlyTask(TaskBuilder.createFullyPopulatedTask());
+        expect(readOnlyTask.originalMarkdown).toMatchInlineSnapshot(
+            '"  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c"',
+        );
     });
 });
 
