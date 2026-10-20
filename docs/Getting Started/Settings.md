@@ -10,6 +10,18 @@ Changes to most of the Tasks settings take immediate effect.
 
 Regrettably, a few require the vault to be reloaded. Tasks will show a 'Reload' button automatically if those settings are changed.
 
+## Editing settings outside Obsidian
+
+> [!released]
+> Reloading settings changed outside Obsidian was introduced in Tasks X.Y.Z.
+
+Tasks stores its settings in `.obsidian/plugins/obsidian-tasks-plugin/data.json`.
+
+If that file changes while Obsidian is running, for example through Obsidian Sync, a `git pull`, or a text editor, Tasks reloads its settings. It then re-reads all tasks in the vault and refreshes any open Tasks searches.
+
+- If `data.json` is not valid JSON, for example while an editor is part-way through saving it, Tasks keeps its current settings until the file is valid again.
+- If the Tasks settings pane is already open, it keeps showing the old values until you close and reopen it.
+
 ## Available settings
 
 As the number of options in Tasks has grown, we have documented each setting in the page for the relevant topic.
