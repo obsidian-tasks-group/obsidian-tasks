@@ -441,7 +441,6 @@ then increase the [[#Minimum match length for auto-suggest]] value in the Tasks 
 
 > [!released]
 > Changes to these settings take effect immediately since Tasks X.Y.Z.
-> Previously, Obsidian needed to be restarted after any changes.
 
 These are the settings currently available for this feature:
 
