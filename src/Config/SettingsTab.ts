@@ -1007,26 +1007,22 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.autoSuggest.toggle.name'),
                     aliases: [i18n.t('settings.taskEntry.heading')],
                     desc: i18n.t('settings.autoSuggest.toggle.description'),
-                    render: this.withDocs(
-                        this.withReload('autoSuggestInEditor', (setting, refreshReloadButton) => {
-                            setting.addToggle((toggle) => {
-                                toggle.setValue(getSettings().autoSuggestInEditor).onChange(async (value) => {
-                                    updateSettings({ autoSuggestInEditor: value });
-                                    await this.plugin.saveSettings();
-                                    // Re-evaluate the 'visible' predicates of the dependent rows.
-                                    this.refreshDomState();
-                                    refreshReloadButton();
-                                });
+                    render: this.withDocs((setting) => {
+                        setting.addToggle((toggle) => {
+                            toggle.setValue(getSettings().autoSuggestInEditor).onChange(async (value) => {
+                                updateSettings({ autoSuggestInEditor: value });
+                                await this.plugin.saveSettings();
+                                // Re-evaluate the 'visible' predicates of the dependent rows.
+                                this.refreshDomState();
                             });
-                        }),
-                        'https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest',
-                    ),
+                        });
+                    }, 'https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest'),
                 },
                 {
                     name: i18n.t('settings.autoSuggest.minLength.name'),
                     desc: i18n.t('settings.autoSuggest.minLength.description'),
                     visible: () => getSettings().autoSuggestInEditor,
-                    render: this.withReload('autoSuggestMinMatch', (setting, refreshReloadButton) => {
+                    render: (setting) => {
                         setting.addSlider((slider) => {
                             slider
                                 .setLimits(0, 3, 1)
@@ -1034,16 +1030,15 @@ export class SettingsTab extends PluginSettingTab {
                                 .onChange(async (value) => {
                                     updateSettings({ autoSuggestMinMatch: value });
                                     await this.plugin.saveSettings();
-                                    refreshReloadButton();
                                 });
                         });
-                    }),
+                    },
                 },
                 {
                     name: i18n.t('settings.autoSuggest.maxSuggestions.name'),
                     desc: i18n.t('settings.autoSuggest.maxSuggestions.description'),
                     visible: () => getSettings().autoSuggestInEditor,
-                    render: this.withReload('autoSuggestMaxItems', (setting, refreshReloadButton) => {
+                    render: (setting) => {
                         setting.addSlider((slider) => {
                             slider
                                 .setLimits(3, 20, 1)
@@ -1051,10 +1046,9 @@ export class SettingsTab extends PluginSettingTab {
                                 .onChange(async (value) => {
                                     updateSettings({ autoSuggestMaxItems: value });
                                     await this.plugin.saveSettings();
-                                    refreshReloadButton();
                                 });
                         });
-                    }),
+                    },
                 },
                 {
                     name: i18n.t('settings.dialogs.accessKeys.name'),
