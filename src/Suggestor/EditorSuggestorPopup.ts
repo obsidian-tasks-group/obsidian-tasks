@@ -3,7 +3,7 @@ import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } f
 import type TasksPlugin from 'main';
 import { ensureTaskHasId } from '../Task/TaskDependency';
 import { replaceTaskWithTasks } from '../Obsidian/File';
-import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
+import { type Settings, TASK_FORMATS, getSettings } from '../Config/Settings';
 import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';
 
@@ -21,12 +21,10 @@ function showError(message: string) {
 }
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
-    private settings: Settings;
     private plugin: TasksPlugin;
 
-    constructor(app: App, settings: Settings, plugin: TasksPlugin) {
+    constructor(app: App, plugin: TasksPlugin) {
         super(app);
-        this.settings = settings;
         this.plugin = plugin;
 
         // EditorSuggestor swallows tabs while the suggestor popup is open
@@ -44,7 +42,9 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     }
 
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
-        if (!this.settings.autoSuggestInEditor) return null;
+        // Read the settings on each call, not once at startup, so that changes to them take effect.
+        const settings = getSettings();
+        if (!settings.autoSuggestInEditor) return null;
 
         if (_file === undefined) {
             // We won't be able to save any changes, so tell Obsidian that we cannot make suggestions.
@@ -58,7 +58,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return null;
         }
 
-        if (this.grabSuggestions(editor, _file, line).length === 0) return null;
+        if (this.grabSuggestions(editor, _file, line, settings).length === 0) return null;
 
         return {
             start: { line: cursor.line, ch: 0 },
@@ -78,13 +78,18 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return [] as SuggestInfoWithContext[];
         }
 
-        const suggestions: SuggestInfo[] = this.grabSuggestions(context.editor, context.file, context.query);
+        const suggestions: SuggestInfo[] = this.grabSuggestions(
+            context.editor,
+            context.file,
+            context.query,
+            getSettings(),
+        );
 
         // Add the editor context to all the suggestions
         return suggestions.map((s) => ({ ...s, context }));
     }
 
-    private grabSuggestions(editor: Editor, file: TFile, line: string) {
+    private grabSuggestions(editor: Editor, file: TFile, line: string, settings: Settings) {
         const currentCursor = editor.getCursor();
         const allTasks = this.plugin.getTasks();
 
@@ -99,10 +104,10 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const canSaveEdits = this.canSaveEdits(markdownFileInfo);
 
         return (
-            getUserSelectedTaskFormat().buildSuggestions?.(
+            TASK_FORMATS[settings.taskFormat].buildSuggestions?.(
                 line,
                 currentCursor.ch,
-                this.settings,
+                settings,
                 allTasks,
                 canSaveEdits,
                 taskToSuggestFor,

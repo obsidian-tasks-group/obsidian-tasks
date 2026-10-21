@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { type App, type Editor, type EditorSuggestContext, MarkdownView } from 'obsidian';
 import type TasksPlugin from '../../src/main';
-import { getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { EditorSuggestor } from '../../src/Suggestor/EditorSuggestorPopup';
 import { createTFile } from '../__mocks__/obsidian';
 
@@ -16,7 +16,7 @@ describe('EditorSuggestor responds to changed settings', () => {
     function createSuggestor() {
         const app = { scope: { register: () => {} } } as unknown as App;
         const plugin = { getTasks: () => [] } as unknown as TasksPlugin;
-        return new EditorSuggestor(app, getSettings(), plugin);
+        return new EditorSuggestor(app, plugin);
     }
 
     function createEditor() {
@@ -31,7 +31,7 @@ describe('EditorSuggestor responds to changed settings', () => {
         resetSettings();
     });
 
-    it.fails('should stop suggesting when auto-suggest is turned off', () => {
+    it('should stop suggesting when auto-suggest is turned off', () => {
         updateSettings({ autoSuggestInEditor: true });
         const suggestor = createSuggestor();
         const editor = createEditor();
@@ -42,7 +42,7 @@ describe('EditorSuggestor responds to changed settings', () => {
         expect(suggestor.onTrigger(cursor, editor, file)).toBeNull();
     });
 
-    it.fails('should use the changed maximum number of suggestions', () => {
+    it('should use the changed maximum number of suggestions', () => {
         updateSettings({ autoSuggestMaxItems: 6 });
         const suggestor = createSuggestor();
         const editor = createEditor();
