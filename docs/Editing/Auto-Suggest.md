@@ -325,7 +325,7 @@ Our second task looks like this. Note that the due date is shown in the Descript
 
 ### How do I see fewer or more suggestions?
 
-In the Tasks settings, change the [[#Maximum number of auto-suggestions to show]] slider to the value you want (and re-start Obsidian).
+In the Tasks settings, change the [[#Maximum number of auto-suggestions to show]] slider to the value you want.
 
 Now the auto-suggest menu will show at most the number of options that you have specified.
 
@@ -341,7 +341,7 @@ For more on filtering, and some examples, see [[#What keywords may I type to mak
 
 ### How do I make the menu pop up less?
 
-Increase the [[#Minimum match length for auto-suggest]] value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
+Increase the [[#Minimum match length for auto-suggest]] value in settings so that the menu will only appear when you have typed a few characters from your chosen menu option.
 
 For example, if you set the `Minimum match length for auto-suggest` to 3, you would need to type in your task "pri" or "hig" or "med" or "low" to get auto-suggest for the priority emoji(s).
 
@@ -435,12 +435,12 @@ Therefore it is the user's responsibility to manage conflicts between auto-sugge
 The Tasks auto-suggest will only appear on lines that start `- [ ]` and contain the global filter (if one is set).
 If you want to use auto-suggest features from another plugin on such lines, make sure that plugin's settings for auto-suggest
 appearance do not overlap with the keywords listed above,
-then increase the [[#Minimum match length for auto-suggest]] value in the Tasks settings to more characters than used to activate the other plugin's auto-suggest,
-and re-start Obsidian.
+then increase the [[#Minimum match length for auto-suggest]] value in the Tasks settings to more characters than used to activate the other plugin's auto-suggest.
 
 ## Settings
 
-Note that like several of the Tasks settings, after any changes, Obsidian needs to be restarted for the new settings to take effect.
+> [!released]
+> Changes to these settings take effect immediately since Tasks X.Y.Z.
 
 These are the settings currently available for this feature:
 

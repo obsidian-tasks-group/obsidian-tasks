@@ -80,7 +80,7 @@ export default class TasksPlugin extends Plugin {
         this.setObsidianPropertiesTypes();
 
         this.registerEditorExtension(newLivePreviewExtension(this));
-        this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
+        this.registerEditorSuggest(new EditorSuggestor(this.app, this));
         new Commands({ plugin: this });
     }
 

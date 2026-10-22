@@ -384,6 +384,19 @@ export abstract class SuggestModal<T> extends Modal {
     public abstract onChooseSuggestion(item: T, evt: MouseEvent | KeyboardEvent): void;
 }
 
+// Minimal EditorSuggest mock: just enough to construct EditorSuggestor.
+export abstract class EditorSuggest<_T> {
+    public context: unknown = null;
+
+    constructor(public readonly app: App) {}
+
+    public close(): void {}
+}
+
+export class MarkdownView {}
+
+export const editorInfoField = {};
+
 // Minimal ButtonComponent mock: only the methods currently needed by modal-building code.
 export class ButtonComponent {
     public buttonEl: HTMLButtonElement;
