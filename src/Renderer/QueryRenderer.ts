@@ -218,9 +218,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             );
             if (this.isCacheChangedSinceLastRedraw) {
                 this.queryResultsRenderer.query.debug('[render][observer] ... updating search results');
-                this.render()
-                    .then()
-                    .catch((e) => console.error(e));
+                this.render();
             }
         });
 
@@ -297,7 +295,7 @@ class QueryRenderChild extends MarkdownRenderChild {
      * The tasks are read when the redraw actually happens, not when it is requested,
      * as more tasks may change before then. See {@link renderIfVisible}.
      */
-    private async render() {
+    private render() {
         // We got here because the Cache reported a change in at least one task in the vault.
         // So note that any results we have already drawn are now out-of-date:
         this.isCacheChangedSinceLastRedraw = true;
