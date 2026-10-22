@@ -53,4 +53,16 @@ describe('EditorSuggestor responds to changed settings', () => {
 
         expect(suggestor.getSuggestions(context)).toHaveLength(3);
     });
+
+    it('should use the changed minimum match length', () => {
+        updateSettings({ autoSuggestMinMatch: 0 });
+        const suggestor = createSuggestor();
+        const editor = createEditor();
+        const context = { editor, file, query: line } as unknown as EditorSuggestContext;
+        expect(suggestor.getSuggestions(context)).not.toHaveLength(0);
+
+        updateSettings({ autoSuggestMinMatch: 1 });
+
+        expect(suggestor.getSuggestions(context)).toHaveLength(0);
+    });
 });
