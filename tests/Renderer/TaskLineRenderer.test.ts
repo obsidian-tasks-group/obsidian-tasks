@@ -499,6 +499,16 @@ describe('task line rendering - classes and data attributes', () => {
     });
 });
 
+function layoutOptionsShortMode() {
+    const queryLayoutOptions = new QueryLayoutOptions();
+    queryLayoutOptions.shortMode = true;
+
+    return {
+        taskLayoutOptions: new TaskLayoutOptions(),
+        queryLayoutOptions,
+    };
+}
+
 describe('Visualise HTML', () => {
     beforeAll(() => {
         vi.useFakeTimers();
@@ -536,16 +546,6 @@ ${task.toFileLineString()}
         return {
             taskLayoutOptions: new TaskLayoutOptions(), // makes the assumption that all the field are shown by default
             queryLayoutOptions: new QueryLayoutOptions(),
-        };
-    }
-
-    function layoutOptionsShortMode() {
-        const queryLayoutOptions = new QueryLayoutOptions();
-        queryLayoutOptions.shortMode = true;
-
-        return {
-            taskLayoutOptions: new TaskLayoutOptions(),
-            queryLayoutOptions,
         };
     }
 
@@ -657,5 +657,52 @@ describe('task line rendering - preserving classes and data attributes', () => {
 
         expect(replacement.getAttribute('data-task')).toBe('x');
         expect(replacement.getAttribute('data-line')).toBe('0');
+    });
+});
+
+describe('task line rendering - tooltip and short mode with time', () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2026-10-14 12:00'));
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    const renderShortMode = async (line: string) => {
+        const { taskLayoutOptions, queryLayoutOptions } = layoutOptionsShortMode();
+        return await renderListItem(fromLine({ line }), taskLayoutOptions, queryLayoutOptions);
+    };
+
+    it('should render only signifier emoji in short mode for dates with time', async () => {
+        const listItem = await renderShortMode('- [ ] Test task 📅 2026-10-14 20:20');
+        expect(getListItemComponents(listItem)).toEqual(['Test task', ' 📅']);
+    });
+
+    it('should show date and time in hover tooltip in short mode, comparing with current time', async () => {
+        const listItem = await renderShortMode('- [ ] Test task 📅 2026-10-14 15:00');
+        const textSpan = getTextSpan(listItem);
+
+        textSpan.dispatchEvent(new MouseEvent('mouseenter'));
+
+        const tooltip = textSpan.querySelector('.tooltip');
+        expect(tooltip).not.toBeNull();
+        expect(tooltip?.textContent).toContain('📅 2026-10-14 15:00 (in 3 hours)');
+    });
+
+    it('should show date-only in hover tooltip in short mode with start of day comparison (original behaviour)', async () => {
+        const listItem = await renderShortMode('- [ ] Test task 📅 2026-10-15 🔁 every week');
+        const textSpan = getTextSpan(listItem);
+
+        textSpan.dispatchEvent(new MouseEvent('mouseenter'));
+
+        const tooltip = textSpan.querySelector('.tooltip');
+        expect(tooltip).not.toBeNull();
+        expect(tooltip?.textContent).toContain('🔁 every week');
+        expect(tooltip?.textContent).toContain('📅 2026-10-15 (in a day)');
+
+        textSpan.dispatchEvent(new MouseEvent('mouseleave'));
+        expect(textSpan.querySelector('.tooltip')).toBeNull();
     });
 });

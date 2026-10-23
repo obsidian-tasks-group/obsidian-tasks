@@ -428,3 +428,32 @@ describe('HTMLElement.addClass()', () => {
         expect(element.classList).toContain('second-class');
     });
 });
+
+describe('HTMLElement.addClasses()', () => {
+    it('addClasses() should add an array of classes', () => {
+        const element = document.createElement('div');
+
+        element.addClasses(['first-class', 'second-class']);
+
+        expect(element.classList).toContain('first-class');
+        expect(element.classList).toContain('second-class');
+    });
+});
+
+describe('HTMLElement.setText()', () => {
+    it('setText() should set string textContent', () => {
+        const element = document.createElement('div');
+
+        element.setText('hello');
+
+        expect(element.textContent).toBe('hello');
+    });
+
+    it('setText() should replace children when given a DocumentFragment', () => {
+        const element = document.createElement('div');
+
+        element.setText(createDocumentFragment());
+
+        expectDocumentFragmentToHaveBeenUsed(element);
+    });
+});

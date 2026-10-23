@@ -177,6 +177,18 @@ HTMLElement.prototype.addClass = function (this: HTMLElement, ...classNames: str
     this.classList.add(...classNames);
 };
 
+HTMLElement.prototype.addClasses = function (this: HTMLElement, classes: string[]): void {
+    this.classList.add(...classes);
+};
+
+HTMLElement.prototype.setText = function (this: HTMLElement, val: string | DocumentFragment): void {
+    if (typeof val === 'string') {
+        this.textContent = val;
+    } else {
+        this.replaceChildren(val);
+    }
+};
+
 // ------------------------------------------------------------------
 // Other global test code
 // ------------------------------------------------------------------

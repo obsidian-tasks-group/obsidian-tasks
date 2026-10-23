@@ -182,4 +182,11 @@ describe('urgency - start date component', () => {
     it('not scheduled: 0.0', () => {
         testUrgency(lowPriority.startDate(null), 0.0);
     });
+
+    it('treats due, scheduled, and start dates with afternoon times at day granularity', () => {
+        vi.setSystemTime(new Date('2023-06-26 09:00'));
+        testUrgency(lowPriorityBuilder().dueDate('2023-06-26 14:00'), 8.8);
+        testUrgency(lowPriorityBuilder().scheduledDate('2023-06-26 18:00'), 5.0);
+        testUrgency(lowPriorityBuilder().startDate('2023-06-26 18:00'), 0.0);
+    });
 });

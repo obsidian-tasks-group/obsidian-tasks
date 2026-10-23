@@ -51,7 +51,7 @@ async function testTypingInput(
     testInputValue(container, 'parsedDateValidFromDateEditor', expectedReturnedDateValidity);
 
     if (expectedReturnedDateValidity === 'true') {
-        testDatePickerValue(container, expectedRightText);
+        testDatePickerValue(container, expectedRightText.slice(0, 10));
     } else {
         const datePicker = container.ownerDocument.getElementById('date-editor-picker') as HTMLInputElement;
         expect(datePicker).toBeNull();
@@ -142,5 +142,21 @@ describe('date editor wrapper tests', () => {
         testInputValue(container, 'parsedDateFromDateEditor', '2024-11-03');
         testInputValue(container, 'dueDateFromDateEditor', '2024-11-03');
         testInputValue(container, 'parsedDateValidFromDateEditor', 'true');
+    });
+
+    it('should keep date picker populated with YYYY-MM-DD and preserve time when picking a new date', async () => {
+        const container = renderDateEditorWrapper({ forwardOnly: false });
+        const dueDateInput = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
+        await fireEvent.input(dueDateInput, { target: { value: '2024-10-01T20:20' } });
+
+        testInputValue(container, 'parsedDateFromDateEditor', '2024-10-01T20:20');
+        testDatePickerValue(container, '2024-10-01');
+
+        const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
+        await fireEvent.input(datePicker, { target: { value: '2024-11-03' } });
+
+        testInputValue(container, 'due', '2024-11-03T20:20');
+        testInputValue(container, 'parsedDateFromDateEditor', '2024-11-03T20:20');
+        testInputValue(container, 'dueDateFromDateEditor', '2024-11-03T20:20');
     });
 });

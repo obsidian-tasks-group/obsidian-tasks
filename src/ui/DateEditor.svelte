@@ -23,7 +23,7 @@
         parsedDate = parseTypedDateForDisplayUsingFutureDate(id, date, forwardOnly);
         isDateValid = !parsedDate.includes('invalid');
         if (isDateValid) {
-            pickedDate = parsedDate;
+            pickedDate = parsedDate.slice(0, 10);
         }
     }
 
@@ -31,7 +31,8 @@
         if (e.target === null) {
             return;
         }
-        date = pickedDate;
+        const timeMatch = parsedDate.match(/^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})$/);
+        date = pickedDate && timeMatch ? `${pickedDate}${timeMatch[1]}` : pickedDate;
     }
 
     // 'weekend' abbreviation omitted due to lack of space.

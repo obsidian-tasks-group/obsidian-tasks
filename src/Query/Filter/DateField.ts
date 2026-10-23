@@ -109,17 +109,19 @@ export abstract class DateField extends Field {
         let dateFilter: DateFilterFunction;
         switch (fieldKeyword) {
             case 'before':
-                dateFilter = (date) => (date ? date.isBefore(fieldDates.start) : this.filterResultIfFieldMissing());
+                dateFilter = (date) =>
+                    date ? date.isBefore(fieldDates.start, 'day') : this.filterResultIfFieldMissing();
                 break;
             case 'after':
-                dateFilter = (date) => (date ? date.isAfter(fieldDates.end) : this.filterResultIfFieldMissing());
+                dateFilter = (date) => (date ? date.isAfter(fieldDates.end, 'day') : this.filterResultIfFieldMissing());
                 break;
             case 'on or before':
             case 'in or before':
                 // 'on or before'/'in or before' a date range uses the end of the range
                 // as the search limit, so that it matches every date in the
                 // inclusive date range, and all dates before the range.
-                dateFilter = (date) => (date ? date.isSameOrBefore(fieldDates.end) : this.filterResultIfFieldMissing());
+                dateFilter = (date) =>
+                    date ? date.isSameOrBefore(fieldDates.end, 'day') : this.filterResultIfFieldMissing();
                 break;
             case 'on or after':
             case 'in or after':
@@ -127,12 +129,12 @@ export abstract class DateField extends Field {
                 // as the search limit, so that it matches every date in the
                 // inclusive date range, and all dates after the range.
                 dateFilter = (date) =>
-                    date ? date.isSameOrAfter(fieldDates.start) : this.filterResultIfFieldMissing();
+                    date ? date.isSameOrAfter(fieldDates.start, 'day') : this.filterResultIfFieldMissing();
                 break;
             default:
                 dateFilter = (date) =>
                     date
-                        ? date.isSameOrAfter(fieldDates.start) && date.isSameOrBefore(fieldDates.end)
+                        ? date.isSameOrAfter(fieldDates.start, 'day') && date.isSameOrBefore(fieldDates.end, 'day')
                         : this.filterResultIfFieldMissing();
         }
         return this.getFilter(dateFilter);

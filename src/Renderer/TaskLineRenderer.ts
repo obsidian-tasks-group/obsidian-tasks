@@ -9,7 +9,7 @@ import { replaceTaskWithTasks } from '../Obsidian/File';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import type { ListItem } from '../Task/ListItem';
 import { Task } from '../Task/Task';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { getDateFormat, hasTime } from '../DateTime/DateTools';
 import { DateMenu } from '../ui/Menus/DateMenu';
 import { promptForDate } from '../ui/Menus/DatePicker';
 import { StatusMenu } from '../ui/Menus/StatusMenu';
@@ -423,9 +423,8 @@ export class TaskLineRenderer {
             }
 
             function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-                return `${signifier} ${date.format(TaskRegularExpressions.dateFormat)} (${date.from(
-                    window.moment().startOf('day'),
-                )})`;
+                const referenceDate = hasTime(date) ? window.moment() : window.moment().startOf('day');
+                return `${signifier} ${date.format(getDateFormat(date))} (${date.from(referenceDate)})`;
             }
 
             const tooltip = element.createDiv();

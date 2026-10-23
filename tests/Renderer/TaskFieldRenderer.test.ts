@@ -26,6 +26,15 @@ describe('Field Layouts Container tests', () => {
         expect(span).toHaveDataAttributes('taskDue: future-1d');
     });
 
+    it('should compute date data attribute at calendar-day granularity when date has time', () => {
+        const task = new TaskBuilder().dueDate('2023-11-18 14:00').build();
+        const span = document.createElement('span');
+
+        fieldRenderer.addDataAttribute(span, task, TaskLayoutComponent.DueDate);
+
+        expect(span).toHaveDataAttributes('taskDue: past-1d');
+    });
+
     it('should add a data attribute for an existing component (not date)', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const span = document.createElement('span');

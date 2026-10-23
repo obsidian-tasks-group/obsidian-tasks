@@ -59,6 +59,23 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-02-02', true);
     });
 
+    it('by due date matching tasks with timestamps at calendar-day granularity', () => {
+        const filterOnOrBefore = new DueDateField().createFilterOrErrorMessage('due on or before 2023-08-01');
+        testTaskFilterForTaskWithDueDate(filterOnOrBefore, '2023-08-01 14:30', true);
+
+        const filterOnOrAfter = new DueDateField().createFilterOrErrorMessage('due on or after 2023-08-01');
+        testTaskFilterForTaskWithDueDate(filterOnOrAfter, '2023-08-01 14:30', true);
+
+        const filterOn = new DueDateField().createFilterOrErrorMessage('due 2023-08-01');
+        testTaskFilterForTaskWithDueDate(filterOn, '2023-08-01 14:30', true);
+
+        const filterBefore = new DueDateField().createFilterOrErrorMessage('due before 2023-08-01');
+        testTaskFilterForTaskWithDueDate(filterBefore, '2023-08-01 14:30', false);
+
+        const filterAfter = new DueDateField().createFilterOrErrorMessage('due after 2023-08-01');
+        testTaskFilterForTaskWithDueDate(filterAfter, '2023-08-01 14:30', false);
+    });
+
     it('by due date - before absolute range', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due before 2022-04-20 2022-04-24');
@@ -547,6 +564,16 @@ describe('sorting by due', () => {
         expectTaskComparesAfter(sorter, date1, date2);
         expectTaskComparesBefore(sorter, date2, date1);
         expectTaskComparesEqual(sorter, date2, date2);
+    });
+
+    it('sort by due with times on the same date', () => {
+        const dateOnly = new TaskBuilder().dueDate('2021-01-12').build();
+        const morning = new TaskBuilder().dueDate('2021-01-12 09:00').build();
+        const afternoon = new TaskBuilder().dueDate('2021-01-12T14:30').build();
+        const sorter = new DueDateField().createNormalSorter();
+
+        expectTaskComparesBefore(sorter, dateOnly, morning);
+        expectTaskComparesBefore(sorter, morning, afternoon);
     });
 });
 

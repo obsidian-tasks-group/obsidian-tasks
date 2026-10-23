@@ -15,7 +15,9 @@ export class Urgency {
         if (task.dueDate?.isValid()) {
             // Map a range of 21 days to the value 0.2 - 1.0
             const startOfToday = window.moment().startOf('day');
-            const daysOverdue = Math.round(startOfToday.diff(task.dueDate) / Urgency.milliSecondsPerDay);
+            const daysOverdue = Math.round(
+                startOfToday.diff(task.dueDate.clone().startOf('day')) / Urgency.milliSecondsPerDay,
+            );
 
             let dueMultiplier: number;
             if (daysOverdue >= 7.0) {
@@ -31,13 +33,13 @@ export class Urgency {
         }
 
         if (task.scheduledDate?.isValid()) {
-            if (window.moment().isSameOrAfter(task.scheduledDate)) {
+            if (window.moment().isSameOrAfter(task.scheduledDate, 'day')) {
                 urgency += 1 * Urgency.scheduledCoefficient;
             }
         }
 
         if (task.startDate?.isValid()) {
-            if (window.moment().isBefore(task.startDate)) {
+            if (window.moment().isBefore(task.startDate, 'day')) {
                 urgency += 1 * Urgency.startedCoefficient;
             }
         }
