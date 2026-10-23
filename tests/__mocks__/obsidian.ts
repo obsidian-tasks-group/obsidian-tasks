@@ -365,6 +365,15 @@ export class Component {
     public unload(): void {}
 }
 
+export class MarkdownRenderChild extends Component {
+    public containerEl: HTMLElement;
+
+    constructor(containerEl?: HTMLElement) {
+        super();
+        this.containerEl = containerEl ?? ({} as HTMLElement);
+    }
+}
+
 export class MarkdownRenderer {
     public static render(_app: App, markdown: string, el: HTMLElement): Promise<void> {
         el.textContent = markdown;
