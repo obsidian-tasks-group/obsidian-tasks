@@ -1689,6 +1689,10 @@ describe('identicalTo', () => {
         expect(lhs).toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-27'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate(null));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-26'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-27 00:00'));
+        expect(new TaskBuilder().dueDate('2012-12-27 20:20')).not.toBeIdenticalTo(
+            new TaskBuilder().dueDate('2012-12-27T20:20'),
+        );
     });
 
     it('should check isScheduledDateInferred', () => {

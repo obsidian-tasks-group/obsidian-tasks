@@ -1,16 +1,21 @@
 import * as chrono from 'chrono-node';
+import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 import { DateRange } from './DateRange';
+import { inferDateTimeFormat, momentWithFormat } from './DateTools';
 
 export class DateParser {
     public static parseDate(input: string, forwardDate: boolean = false): Moment {
+        const parsed = chrono.parseDate(input, undefined, {
+            forwardDate: forwardDate,
+        });
+        if (parsed === null) {
+            return window.moment.invalid();
+        }
+        const format = inferDateTimeFormat(input);
         // Using start of day to correctly match on comparison with other dates (like equality).
-        return window
-            .moment(
-                chrono.parseDate(input, undefined, {
-                    forwardDate: forwardDate,
-                }),
-            )
-            .startOf('day');
+        return format === TaskRegularExpressions.dateFormat
+            ? window.moment(parsed).startOf('day')
+            : momentWithFormat(parsed, format);
     }
 
     /**

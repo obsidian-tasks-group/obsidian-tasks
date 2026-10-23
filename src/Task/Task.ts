@@ -2,7 +2,7 @@ import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { StatusRegistry } from '../Statuses/StatusRegistry';
 import type { Status } from '../Statuses/Status';
-import { compareByDate } from '../DateTime/DateTools';
+import { compareByDate, datesAreIdentical } from '../DateTime/DateTools';
 import { TasksDate } from '../DateTime/TasksDate';
 import { StatusType } from '../Statuses/StatusConfiguration';
 import { PriorityTools } from '../lib/PriorityTools';
@@ -877,7 +877,7 @@ export class Task extends ListItem {
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
-            if (compareByDate(date1, date2) !== 0) {
+            if (!datesAreIdentical(date1, date2)) {
                 return false;
             }
         }

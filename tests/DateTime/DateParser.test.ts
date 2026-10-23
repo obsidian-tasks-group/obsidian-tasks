@@ -37,6 +37,26 @@ describe('DateParser - single dates', () => {
         const parsedDate = DateParser.parseDate(dateToParse);
         expect(parsedDate.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
     });
+
+    it('should parse a date with space-separated time', () => {
+        const dateToParse = '2023-07-08 14:30';
+        const parsedDate = DateParser.parseDate(dateToParse);
+        expect(parsedDate.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 14:30');
+    });
+
+    it('should parse a date with ISO time', () => {
+        const dateToParse = '2023-07-08T14:30';
+        const parsedDate = DateParser.parseDate(dateToParse);
+        expect(parsedDate.format('YYYY-MM-DDTHH:mm')).toStrictEqual('2023-07-08T14:30');
+    });
+
+    it('should fall back to default date-only behaviour when time is out of range or malformed', () => {
+        expect(DateParser.parseDate('2023-07-08 25:30').format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
+        expect(DateParser.parseDate('2023-07-08 14:99').format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
+        expect(DateParser.parseDate('2023-07-08 14:300').format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
+        expect(DateParser.parseDate('2023-07-08 at 2pm').format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
+        expect(DateParser.parseDate('2023-07-08 at 2pm').creationData().format).toBeUndefined();
+    });
 });
 
 describe('DateParser - date ranges', () => {

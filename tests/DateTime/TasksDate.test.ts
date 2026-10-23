@@ -34,6 +34,26 @@ describe('TasksDate', () => {
         expect(tasksDate.toISOString()).toEqual('2023-10-13T00:00:00.000Z');
     });
 
+    it('should format dates without time using formatAsDateOrDateAndTime', () => {
+        const tasksDate = new TasksDate(moment('2023-10-13'));
+        expect(tasksDate.hasTime).toBe(false);
+        expect(tasksDate.formatAsDateOrDateAndTime()).toEqual('2023-10-13');
+
+        const fromDateObject = new TasksDate(moment(new Date('2023-10-13T12:00:00')));
+        expect(fromDateObject.hasTime).toBe(false);
+        expect(fromDateObject.formatAsDateOrDateAndTime()).toEqual('2023-10-13');
+    });
+
+    it('should format dates with time using formatAsDateOrDateAndTime', () => {
+        const tasksDate = new TasksDate(moment('2023-10-13 14:30'));
+        expect(tasksDate.hasTime).toBe(true);
+        expect(tasksDate.formatAsDateOrDateAndTime()).toEqual('2023-10-13 14:30');
+
+        const isoTasksDate = new TasksDate(moment('2023-10-13T14:30'));
+        expect(isoTasksDate.hasTime).toBe(true);
+        expect(isoTasksDate.formatAsDateOrDateAndTime()).toEqual('2023-10-13T14:30');
+    });
+
     it('should format null dates as empty string', () => {
         const tasksDate = new TasksDate(null);
         expect(tasksDate.format('dddd')).toEqual('');
