@@ -154,6 +154,20 @@
         "description": "Bật tính năng này sẽ thêm dấu thời gian ✅ YYYY-MM-DD vào cuối khi nhiệm vụ được chuyển sang hoàn thành.",
         "name": "Đặt ngày hoàn thành cho mọi nhiệm vụ đã hoàn thành"
       },
+      "firstDayOfWeek": {
+        "description": "Chọn ngày nào nên được hiển thị là ngày đầu tiên của tuần trong bộ chọn ngày.",
+        "name": "Ngày đầu tiên của tuần",
+        "options": {
+          "friday": "Thứ Sáu",
+          "localeDefault": "Hệ thống",
+          "monday": "Thứ Hai",
+          "saturday": "Thứ Bảy",
+          "sunday": "Chủ Nhật",
+          "thursday": "Thứ Năm",
+          "tuesday": "Thứ Ba",
+          "wednesday": "Thứ Tư"
+        }
+      },
       "heading": "Ngày tháng"
     },
     "datesFromFileNames": {

@@ -32,6 +32,7 @@ import {
 } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
+import type { FirstDayOfWeekOption } from './FirstDayOfWeek';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import { GlobalQuery } from './GlobalQuery';
@@ -837,6 +838,31 @@ export class SettingsTab extends PluginSettingTab {
                         'setCancelledDate',
                         'https://publish.obsidian.md/tasks/Getting+Started/Dates#Cancelled+date',
                     ),
+                },
+                {
+                    name: i18n.t('settings.dates.firstDayOfWeek.name'),
+                    desc: i18n.t('settings.dates.firstDayOfWeek.description'),
+                    render: this.withDocs((setting) => {
+                        setting.addDropdown((dropdown) => {
+                            dropdown
+                                .addOption(
+                                    'locale-default',
+                                    i18n.t('settings.dates.firstDayOfWeek.options.localeDefault'),
+                                )
+                                .addOption('sunday', i18n.t('settings.dates.firstDayOfWeek.options.sunday'))
+                                .addOption('monday', i18n.t('settings.dates.firstDayOfWeek.options.monday'))
+                                .addOption('tuesday', i18n.t('settings.dates.firstDayOfWeek.options.tuesday'))
+                                .addOption('wednesday', i18n.t('settings.dates.firstDayOfWeek.options.wednesday'))
+                                .addOption('thursday', i18n.t('settings.dates.firstDayOfWeek.options.thursday'))
+                                .addOption('friday', i18n.t('settings.dates.firstDayOfWeek.options.friday'))
+                                .addOption('saturday', i18n.t('settings.dates.firstDayOfWeek.options.saturday'))
+                                .setValue(getSettings().firstDayOfWeek)
+                                .onChange(async (value) => {
+                                    updateSettings({ firstDayOfWeek: value as FirstDayOfWeekOption });
+                                    await this.plugin.saveSettings();
+                                });
+                        });
+                    }, 'https://publish.obsidian.md/tasks/Getting+Started/Settings#First+day+of+week'),
                 },
             ],
         };

@@ -17,6 +17,7 @@ import { DebugSettings } from './DebugSettings';
 import { type EditModalShowSettings, defaultEditModalShowSettings } from './EditModalShowSettings';
 import { StatusSettings } from './StatusSettings';
 import type { DismissedNotices } from './DismissibleNotices';
+import type { FirstDayOfWeekOption } from './FirstDayOfWeek';
 
 /**
  * Interface encapsulating how a Task is written to and read from text
@@ -104,6 +105,7 @@ export interface Settings {
         taskCountLocation: 'top' | 'bottom';
     };
     quickSearch: QuickSearchSettings;
+    firstDayOfWeek: FirstDayOfWeekOption;
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -147,6 +149,7 @@ const defaultSettings: Readonly<Settings> = {
     quickSearch: {
         fuzzyMatching: true,
     },
+    firstDayOfWeek: 'locale-default',
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
     dismissedNotices: {
