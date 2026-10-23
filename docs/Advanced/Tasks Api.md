@@ -53,6 +53,22 @@ export interface TasksApiV1 {
      *          if a recurring task was completed.
      */
     executeToggleTaskDoneCommand: (line: string, path: string) => string;
+
+    /**
+     * Executes a Tasks query against the vault's tasks cache synchronously.
+     *
+     * Evaluates `querySource` against cached tasks, honouring user settings (Global Query,
+     * Global Filter, and Presets).
+     *
+     * When the query produces groups, tasks are returned in the order their groups appear
+     * when rendered, sorted within each group, and deduplicated at first occurrence.
+     *
+     * @param querySource The Tasks query string (e.g. "not done\ndue before tomorrow").
+     * @param queryPath Optional vault path of the file containing the query, used to resolve Placeholders (e.g. {{query.file.folder}}) and file properties.
+     * @returns Array of unique matching tasks as frozen ReadOnlyTask objects.
+     * @throws Error if `querySource` is not a string, if `queryPath` is not a string (when provided), if the query syntax is invalid, or if placeholders cannot be resolved.
+     */
+    queryTasks: (querySource: string, queryPath?: string) => ReadOnlyTask[];
 }
 ```
 <!-- endSnippet -->
@@ -136,6 +152,202 @@ console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
 > > - You will need to be logged in to GitHub for this search to work.
 > > - Not all of these plugins have been reviewed by the Obsidian team: you should search for them in `Settings` > `Community plugins` - or review in [Plugins - Obsidian](https://obsidian.md/plugins) - for safety.
 
+## `queryTasks: (querySource: string, queryPath?: string) => Array<ReadOnlyTask>;`
+
+> [!released]
+> This method was introduced in Tasks X.Y.Z.
+
+Executes a Tasks query against the vault's in-memory tasks cache synchronously and returns an array of frozen, immutable `ReadOnlyTask` objects.
+
+```typescript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+
+// Execute a synchronous query against all cached vault tasks
+const tasks = tasksApi.queryTasks('not done\ndue today');
+
+for (const task of tasks) {
+    console.log(task.description, task.due.formatAsDate());
+}
+```
+
+### Parameters
+
+- `querySource` (`string`): The Tasks query instructions (identical to what you write inside a ````tasks```` code block), such as `"not done\ndue before tomorrow"`. Comments, empty lines, line continuations, sorting, grouping, and limits are all supported.
+- `queryPath` (`string`, optional): The vault path of the file containing or executing the query (for example, `dv.current().file.path` in DataviewJS or `tp.file.path(true)` in Templater). When provided, it enables resolving:
+  - File placeholders such as `{{query.file.path}}`, `{{query.file.folder}}`, and `{{query.file.root}}`.
+  - Custom function expressions accessing `query.file` or note frontmatter properties (e.g. `query.file.property('status')`).
+  The path is passed as-is to match query rendering in markdown code blocks.
+
+### Return Value
+
+Returns an array of frozen `ReadOnlyTask` objects representing the matching tasks in group-major order. Each object provides read-only properties for all task fields (such as `description`, `status`, `due`, `tags`, `originalMarkdown`, `dependsOn`, etc.) and cannot be mutated.
+
+### The `ReadOnlyTask` Object
+
+`queryTasks` returns an array of `ReadOnlyTask` objects. These are **frozen snapshots** of tasks at the time the query runs. They are immutable (`Object.isFrozen(task) === true`) and are not live views — subsequent edits in files or in Tasks are not reflected in previously returned objects.
+
+#### Key Properties
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `description` | `string` | The task description, including inline tags. |
+| `originalMarkdown` | `string` | The raw markdown task line as read from the note. |
+| `status` | `ReadOnlyTaskStatus` | Task status object: `status.symbol`, `status.name`, `status.type` (`'TODO'`, `'DONE'`, `'IN_PROGRESS'`, `'CANCELLED'`, `'NON_TASK'`), and `status.nextStatusSymbol`. |
+| `path` | `string` | Vault file path of the containing note. |
+| `lineNumber` | `number` | Zero-based line number in the note. |
+| `sectionStart` | `number` | Line number where the enclosing section begins. |
+| `sectionIndex` | `number` | Index of the task within its section. |
+| `precedingHeader` | `string \| null` | Nearest preceding heading text in the file. |
+| `priority` | `Priority` | Task priority (`'Highest'`, `'High'`, `'Medium'`, `'None'`, `'Low'`, `'Lowest'`). |
+| `tags` | `readonly string[]` | List of tags on the task (e.g. `['#project', '#work']`). |
+| `id` | `string` | Task identifier (e.g. `dcf64c` from `🆔 dcf64c`), or empty string. |
+| `dependsOn` | `readonly string[]` | Array of dependency task IDs (e.g. from `⛔️ dcf64c`). |
+| `recurrenceRule` | `string` | Recurrence rule text (e.g. `'every week'`), or empty string. |
+| `created` | `TasksDate` | Creation date (`➕ YYYY-MM-DD`). |
+| `start` | `TasksDate` | Start date (`🛫 YYYY-MM-DD`). |
+| `scheduled` | `TasksDate` | Scheduled date (`⏳ YYYY-MM-DD`). |
+| `due` | `TasksDate` | Due date (`📅 YYYY-MM-DD`). |
+| `done` | `TasksDate` | Completion date (`✅ YYYY-MM-DD`). |
+| `cancelled` | `TasksDate` | Cancellation date (`❌ YYYY-MM-DD`). |
+
+#### Working with Task Dates
+
+Date properties on `ReadOnlyTask` are `TasksDate` objects (never raw strings or `undefined`). A `TasksDate` provides helper methods for formatting and accessing dates safely:
+
+```typescript
+// Format as YYYY-MM-DD (or '' if no date is set)
+console.log(task.due.formatAsDate()); // e.g. "2026-10-24" or ""
+
+// Format with custom fallback text
+console.log(task.due.formatAsDate('no due date'));
+
+// Format with a custom moment format string
+console.log(task.due.format('ddd, MMM D, YYYY', 'N/A')); // e.g. "Sat, Oct 24, 2026"
+
+// Access the underlying Moment instance (or null)
+const momentDate = task.due.moment;
+if (momentDate && momentDate.isBefore(window.moment())) {
+    console.log('Task is overdue!');
+}
+```
+
+### Code Examples
+
+#### DataviewJS Example
+
+Use `queryTasks` within a `dataviewjs` code block to fetch and display tasks matching a query:
+
+````markdown
+```dataviewjs
+const tasksApi = app.plugins.plugins['obsidian-tasks-plugin']?.apiV1;
+if (!tasksApi) {
+    dv.paragraph("Tasks plugin API is not available.");
+    return;
+}
+
+// Pass dv.current().file.path as queryPath to support file placeholders and properties
+const currentPath = dv.current().file.path;
+const tasks = tasksApi.queryTasks(`
+    not done
+    path includes {{query.file.folder}}
+    sort by due
+    limit 10
+`, currentPath);
+
+dv.header(3, `Tasks in folder (${tasks.length})`);
+dv.taskList(
+    tasks.map(t => ({
+        text: `${t.description} (due: ${t.due.formatAsDate('none')})`,
+        completed: t.status.type === 'DONE'
+    })),
+    false
+);
+```
+````
+
+#### Templater Example
+
+Use `queryTasks` in a Templater template to dynamically insert unfinished high-priority tasks when generating a daily note:
+
+````markdown
+<%*
+const tasksApi = app.plugins.plugins['obsidian-tasks-plugin']?.apiV1;
+if (tasksApi) {
+    const urgentTasks = tasksApi.queryTasks(`
+        not done
+        priority is high
+        due before tomorrow
+    `);
+
+    tR += "### Today's Top Tasks\n\n";
+    if (urgentTasks.length === 0) {
+        tR += "_No high priority tasks for today._\n";
+    } else {
+        for (const task of urgentTasks) {
+            tR += `${task.originalMarkdown}\n`;
+        }
+    }
+}
+%>
+````
+
+### Important Caveats & Behavior
+
+> [!warning] Synchronous In-Memory Execution & Cold Cache
+> `queryTasks` runs synchronously against the in-memory tasks index maintained by the Tasks plugin. If called immediately upon Obsidian startup or before the plugin has finished scanning the vault (a cold cache), it may return an empty array `[]`.
+
+> [!info] Global Filter Pre-Filtering
+> Tasks in the plugin cache have already been filtered by the [[Global Filter]] (if configured in Tasks settings). Any task that does not contain the Global Filter is never indexed by Tasks and will not be returned by `queryTasks`.
+
+> [!info] Grouping, Ordering & Limit Groups Behavior
+>
+> - **Grouping and Deduplication**: When the query produces groups (via `group by`), `queryTasks` flattens the results into a single array:
+>   - Tasks appear in the order their groups appear when rendered.
+>   - Within each group, tasks follow the query's sort instructions.
+>   - If a task belongs to multiple groups (for example, when grouping by tags), it appears only once in the array—in the first group it occurs in. Therefore, the number of returned task objects matches the total rendered task count (for example, 3 tasks if the query displays `3 of 3 tasks`).
+> - **`limit groups to N tasks`**: This instruction caps tasks *per group* rather than total groups across the query, matching the behavior of rendered queries. As a result, the returned array may contain up to $N \times (\text{number of groups})$ tasks minus any duplicates.
+
+#### Grouping and Deduplication Example
+
+Consider three tasks in a vault with different combinations of tags:
+
+- Task 1: `- [ ] Submit expense report #work`
+- Task 2: `- [ ] Plan team offsite #personal #work`
+- Task 3: `- [ ] Buy groceries #personal`
+
+If you execute a query grouped by tags and sorted by description:
+
+```javascript
+const query = `
+    group by tags
+    sort by description
+`;
+const tasks = api.queryTasks(query);
+```
+
+When Tasks renders this query, it creates two groups ordered alphabetically:
+
+1. **Group `#personal`:** contains Task 3 and Task 2 (sorted alphabetically by description: `Buy groceries` then `Plan team offsite`).
+2. **Group `#work`:** contains Task 2 and Task 1 (`Plan team offsite` then `Submit expense report`).
+
+`queryTasks` flattens the groups into a single array while preserving this visual order and deduplicating:
+
+```javascript
+[
+    // From Group #personal:
+    Task 3, // "Buy groceries #personal"
+    Task 2, // "Plan team offsite #personal #work"
+    // From Group #work:
+    Task 1, // "Submit expense report #work"
+]
+```
+
+- Task 2 appears in `#personal` (the earliest group it belongs to) and is omitted from `#work` so it is never duplicated.
+- The returned array has a `length` of 3, exactly matching the rendered task count in Obsidian (`3 of 3 tasks`).
+
+> [!info] Placeholders and `queryPath` Resolution
+> If your query contains file placeholders (such as `{{query.file.folder}}`) or accesses `query.file.*` in script filters, you must supply `queryPath`. If the user has configured a [[Global Query]] that contains file placeholders, calling `queryTasks` without `queryPath` will also throw an error because the global query requires file context to resolve. Passing `queryPath` resolves the file against the vault matching how markdown code blocks are rendered.
+
 ## Auto-Suggest Integration
 
 > [!released]
@@ -179,8 +391,6 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
 
 - Auto Suggest:
   - It is not yet possible for [[auto-suggest]] to add [[Task Dependencies|dependencies]] when Auto-Suggest is used in [[Kanban plugin]] cards - or any other plugins that use the [[Tasks Api#Auto-Suggest Integration|Auto-Suggest Integration]]. We are tracking this in [issue #3274](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3274).
-- Searching tasks:
-  - It is not yet possible to run Tasks searches via the API. We are tracking this in [issue #2459](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2459).
 - Ambiguity when `editTaskLineModal()` returns empty string:
   - `editTaskLineModal()` returns an empty string in both these situations:
         1. the user clicked Cancel
