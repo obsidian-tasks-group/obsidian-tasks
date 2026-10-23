@@ -32,7 +32,7 @@ describe('Expression', () => {
             EnableJsInTasksQueries.getInstance().set(true);
             const functionOrError = parseExpression([], '42');
             expect(functionOrError.queryComponent).toBeDefined();
-            const func: Function = functionOrError.queryComponent!;
+            const func = functionOrError.queryComponent!;
 
             // Turn off JS execution, so we can test evaluation fails.
             EnableJsInTasksQueries.getInstance().set(false);

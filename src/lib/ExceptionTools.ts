@@ -9,7 +9,7 @@ The error message was:
     `;
     let detail: string = '';
     if (exception instanceof Error) {
-        detail += exception;
+        detail += String(exception);
     } else {
         detail += 'Unknown error';
     }

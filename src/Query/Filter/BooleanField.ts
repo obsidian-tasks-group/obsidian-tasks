@@ -190,7 +190,7 @@ export class BooleanField extends Field {
                     throw new Error('Unsupported operator: ' + token.value);
                 }
             } else {
-                throw new Error('Unsupported token type: ' + token);
+                throw new Error('Unsupported token type: ' + String(token));
             }
         }
         // Eventually the result of the expression for this Task is the only item left in the boolean stack

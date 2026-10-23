@@ -83,7 +83,7 @@ export class QuickSearchTasksModal extends SuggestModal<Task> {
     }
 
     public onOpen(): void {
-        super.onOpen();
+        void super.onOpen();
         this.modalEl.addClass('tasks-quick-search-modal-container');
 
         const inputContainer = this.inputEl.parentElement ?? this.modalEl;
