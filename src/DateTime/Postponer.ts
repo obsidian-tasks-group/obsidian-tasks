@@ -3,6 +3,7 @@ import { capitalizeFirstLetter } from '../lib/StringHelpers';
 import { Task } from '../Task/Task';
 import { DateFallback } from './DateFallback';
 import { TasksDate } from './TasksDate';
+import { preserveTime } from './DateTools';
 import type { AllTaskDateFields, HappensDate } from './DateFieldTypes';
 
 export function shouldShowPostponeButton(task: Task) {
@@ -78,7 +79,7 @@ export function createFixedDateTask(
     timeUnit: moment.unitOfTime.DurationConstructor,
     amount: number,
 ) {
-    const dateToPostpone = window.moment();
+    const dateToPostpone = preserveTime(window.moment(), task[dateFieldToPostpone]);
     return createPostponedTaskFromDate(dateToPostpone, task, dateFieldToPostpone, timeUnit, amount);
 }
 

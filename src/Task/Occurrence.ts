@@ -1,5 +1,5 @@
 import type { Moment } from 'moment/moment';
-import { compareByDate } from '../DateTime/DateTools';
+import { datesAreIdentical, preserveTime } from '../DateTime/DateTools';
 import { getSettings } from '../Config/Settings';
 
 /**
@@ -81,13 +81,13 @@ export class Occurrence {
 
     public isIdenticalTo(other: Occurrence): boolean {
         // Compare Date fields
-        if (compareByDate(this.startDate, other.startDate) !== 0) {
+        if (!datesAreIdentical(this.startDate, other.startDate)) {
             return false;
         }
-        if (compareByDate(this.scheduledDate, other.scheduledDate) !== 0) {
+        if (!datesAreIdentical(this.scheduledDate, other.scheduledDate)) {
             return false;
         }
-        if (compareByDate(this.dueDate, other.dueDate) !== 0) {
+        if (!datesAreIdentical(this.dueDate, other.dueDate)) {
             return false;
         }
 
@@ -144,12 +144,15 @@ export class Occurrence {
         if (currentOccurrenceDate === null) {
             return null;
         }
-        const originalDifference = window.moment.duration(currentOccurrenceDate.diff(this.referenceDate));
+        const originalDifference = window.moment.duration(
+            currentOccurrenceDate.clone().startOf('day').diff(this.referenceDate!.clone().startOf('day')),
+        );
 
         // Cloning so that original won't be manipulated:
         const nextOccurrence = window.moment(nextReferenceDate);
         // Rounding days to handle cross daylight-savings-time recurrences.
         nextOccurrence.add(Math.round(originalDifference.asDays()), 'days');
-        return nextOccurrence;
+
+        return preserveTime(nextOccurrence, currentOccurrenceDate);
     }
 }

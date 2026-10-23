@@ -129,6 +129,24 @@ describe('Recurrence', () => {
         expect(next!.scheduledDate).toBeNull();
         expect(next!.dueDate).toEqualMoment(moment('2021-02-28'));
     });
+
+    it('preserves time and format on recurring dates and does not shift relative dates when reference time is after noon', () => {
+        const recurrence = new RecurrenceBuilder()
+            .rule('every week')
+            .startDate('2024-10-01')
+            .scheduledDate('2024-10-01T09:30')
+            .dueDate('2024-10-02 14:00')
+            .build();
+
+        const next = recurrence!.next();
+
+        expect(next!.startDate?.format('YYYY-MM-DD')).toEqual('2024-10-08');
+        expect(next!.startDate?.creationData().format).toBeUndefined();
+        expect(next!.scheduledDate?.format('YYYY-MM-DDTHH:mm')).toEqual('2024-10-08T09:30');
+        expect(next!.scheduledDate?.creationData().format).toEqual('YYYY-MM-DDTHH:mm');
+        expect(next!.dueDate?.format('YYYY-MM-DD HH:mm')).toEqual('2024-10-09 14:00');
+        expect(next!.dueDate?.creationData().format).toEqual('YYYY-MM-DD HH:mm');
+    });
 });
 
 // Test cases where a task has a non-existent due, scheduled or start date.
@@ -224,6 +242,16 @@ describe('identicalTo', () => {
 
         expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
+    });
+
+    it('differing only in time presence at midnight or separator format', () => {
+        const dateOnly = new RecurrenceBuilder().dueDate('2021-10-21').build();
+        const midnightSpace = new RecurrenceBuilder().dueDate('2021-10-21 00:00').build();
+        const midnightIso = new RecurrenceBuilder().dueDate('2021-10-21T00:00').build();
+
+        expect(dateOnly.identicalTo(midnightSpace)).toBe(false);
+        expect(midnightSpace.identicalTo(midnightIso)).toBe(false);
+        expect(midnightIso.identicalTo(new RecurrenceBuilder().dueDate('2021-10-21T00:00').build())).toBe(true);
     });
 });
 

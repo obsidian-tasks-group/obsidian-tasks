@@ -80,6 +80,47 @@ describe('SetTaskDate', () => {
         // Expect it is the same object
         expect(Object.is(newTasks[0], taskDueTomorrow)).toBe(true);
     });
+
+    it('should preserve time when editing date on a task with date and time', () => {
+        // Arrange
+        const taskWithTime = new TaskBuilder().dueDate('2024-10-01 20:20').build();
+        const instruction = new SetTaskDate('dueDate', new Date(tomorrow));
+
+        // Apply
+        const newTasks = instruction.apply(taskWithTime);
+
+        // Assert
+        expect(newTasks.length).toEqual(1);
+        expect(newTasks[0].dueDate).toEqualMoment(moment('2024-10-02 20:20'));
+        expect(newTasks[0].dueDate?.creationData().format).toEqual('YYYY-MM-DD HH:mm');
+    });
+
+    it('should preserve ISO time and format when editing date on a task with ISO date and time', () => {
+        // Arrange
+        const taskWithIsoTime = new TaskBuilder().dueDate('2024-10-01T20:20').build();
+        const instruction = new SetTaskDate('dueDate', new Date(tomorrow));
+
+        // Apply
+        const newTasks = instruction.apply(taskWithIsoTime);
+
+        // Assert
+        expect(newTasks.length).toEqual(1);
+        expect(newTasks[0].dueDate).toEqualMoment(moment('2024-10-02T20:20'));
+        expect(newTasks[0].dueDate?.creationData().format).toEqual('YYYY-MM-DDTHH:mm');
+    });
+
+    it('should not edit task with date and time if already on the chosen date', () => {
+        // Arrange
+        const taskWithTime = new TaskBuilder().dueDate('2024-10-02 20:20').build();
+        const instruction = new SetTaskDate('dueDate', new Date(tomorrow));
+
+        // Apply
+        const newTasks = instruction.apply(taskWithTime);
+
+        // Assert
+        expect(newTasks.length).toEqual(1);
+        expect(Object.is(newTasks[0], taskWithTime)).toBe(true);
+    });
 });
 
 describe('SetRelativeTaskDate', () => {

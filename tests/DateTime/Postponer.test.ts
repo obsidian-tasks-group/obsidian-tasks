@@ -18,6 +18,7 @@ import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfig
 import type { PostponingFunction } from '../../src/ui/Menus/PostponeMenu';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import type { HappensDate } from '../../src/DateTime/DateFieldTypes';
+import { getDateFormat } from '../../src/DateTime/DateTools';
 
 window.moment = moment;
 
@@ -235,8 +236,10 @@ describe('postpone - new task creation', () => {
         const { postponedDate, postponedTask } = postponingFunction(task, expectedDateField, 'day', 1);
         if (expectedPostponedDate.length > 0) {
             expect(postponedDate).not.toBeNull();
-            expect(postponedDate!.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
-            expect(postponedTask[expectedDateField]?.format('YYYY-MM-DD')).toEqual(expectedPostponedDate);
+            expect(postponedDate!.format(getDateFormat(postponedDate))).toEqual(expectedPostponedDate);
+            expect(postponedTask[expectedDateField]?.format(getDateFormat(postponedTask[expectedDateField]))).toEqual(
+                expectedPostponedDate,
+            );
         } else {
             expect(postponedDate).toBeNull();
             expect(postponedTask[expectedDateField]).toBeNull();
@@ -274,6 +277,21 @@ describe('postpone - new task creation', () => {
     it('should postpone a task that starts in the future to tomorrow, if using fixed date', () => {
         const task = new TaskBuilder().startDate('2024-03-05').build();
         testPostponedTaskAndDate(task, 'startDate', '2023-12-04', createFixedDateTask);
+    });
+
+    it('should preserve time and format when using fixed date (e.g. Due tomorrow in dropdown)', () => {
+        const task = new TaskBuilder().dueDate('2023-12-03 15:30').build();
+        testPostponedTaskAndDate(task, 'dueDate', '2023-12-04 15:30', createFixedDateTask);
+    });
+
+    it('should preserve ISO time and format when using fixed date', () => {
+        const task = new TaskBuilder().dueDate('2023-12-03T15:30').build();
+        testPostponedTaskAndDate(task, 'dueDate', '2023-12-04T15:30', createFixedDateTask);
+    });
+
+    it('should preserve time when postponing an overdue task', () => {
+        const task = new TaskBuilder().dueDate('2023-11-01 14:00').build();
+        testPostponedTaskAndDate(task, 'dueDate', '2023-12-04 14:00', createPostponedTask);
     });
 
     it('should remove a date', () => {

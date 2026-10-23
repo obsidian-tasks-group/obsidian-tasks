@@ -1,5 +1,6 @@
 import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
 import { Task } from '../../Task/Task';
+import { preserveTime } from '../../DateTime/DateTools';
 import { postponeMenuItemTitleFromDate, removeDateMenuItemTitleForField } from '../../DateTime/Postponer';
 import { TasksDate } from '../../DateTime/TasksDate';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
@@ -25,10 +26,11 @@ export class SetTaskDate implements TaskEditingInstruction {
         if (this.isCheckedForTask(task)) {
             return [task];
         } else {
+            const newMoment = preserveTime(window.moment(this.newDate), task[this.dateFieldToEdit]);
             return [
                 new Task({
                     ...task,
-                    [this.dateFieldToEdit]: window.moment(this.newDate),
+                    [this.dateFieldToEdit]: newMoment,
                 }),
             ];
         }
@@ -39,7 +41,7 @@ export class SetTaskDate implements TaskEditingInstruction {
     }
 
     public isCheckedForTask(task: Task): boolean {
-        return task[this.dateFieldToEdit]?.isSame(window.moment(this.newDate)) || false;
+        return task[this.dateFieldToEdit]?.isSame(window.moment(this.newDate), 'day') || false;
     }
 }
 
