@@ -30,6 +30,24 @@ describe('DataviewTaskSerializer', () => {
             expect(taskDetails).toMatchTaskDetails({ [field]: moment('2021-06-20', 'YYYY-MM-DD') });
         });
 
+        it.each(dateFields)('should parse a %s with ISO time', (field) => {
+            const symbol = DATAVIEW_SYMBOLS[`${field}Symbol`];
+            const taskDetails = deserialize(`[${symbol} 2021-06-20T20:20]`);
+            expect(taskDetails).toMatchTaskDetails({ [field]: moment('2021-06-20T20:20', 'YYYY-MM-DDTHH:mm') });
+        });
+
+        it.each(dateFields)('should parse a %s with space-separated time', (field) => {
+            const symbol = DATAVIEW_SYMBOLS[`${field}Symbol`];
+            const taskDetails = deserialize(`[${symbol} 2021-06-20 20:20]`);
+            expect(taskDetails).toMatchTaskDetails({ [field]: moment('2021-06-20 20:20', 'YYYY-MM-DD HH:mm') });
+        });
+
+        it('should mark date with invalid time as invalid rather than falling back to date-only', () => {
+            const taskDetails = deserialize(`[${DATAVIEW_SYMBOLS.dueDateSymbol} 2021-06-20 25:99]`);
+            expect(taskDetails.dueDate).not.toBeNull();
+            expect(taskDetails.dueDate!.isValid()).toBe(false);
+        });
+
         it('should parse a priority', () => {
             const priorities = ['Highest', 'High', 'Medium', 'Low', 'Lowest'] as const;
             for (const p of priorities) {
@@ -296,6 +314,18 @@ describe('DataviewTaskSerializer', () => {
             const serialized = serialize(new TaskBuilder()[dateField]('2021-06-20').description('').build());
             const symbol = DATAVIEW_SYMBOLS[`${dateField}Symbol`];
             expect(serialized).toEqual(`  [${symbol} 2021-06-20]`);
+        });
+
+        it.each(dateFields)('should serialize a %s with ISO time', (dateField) => {
+            const serialized = serialize(new TaskBuilder()[dateField]('2021-06-20T20:20').description('').build());
+            const symbol = DATAVIEW_SYMBOLS[`${dateField}Symbol`];
+            expect(serialized).toEqual(`  [${symbol} 2021-06-20T20:20]`);
+        });
+
+        it.each(dateFields)('should serialize a %s with space-separated time', (dateField) => {
+            const serialized = serialize(new TaskBuilder()[dateField]('2021-06-20 20:20').description('').build());
+            const symbol = DATAVIEW_SYMBOLS[`${dateField}Symbol`];
+            expect(serialized).toEqual(`  [${symbol} 2021-06-20 20:20]`);
         });
 
         it('should serialize a Highest, High, Medium, Low and Lowest priority', () => {

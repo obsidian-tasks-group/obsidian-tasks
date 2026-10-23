@@ -4,7 +4,7 @@ import moment from 'moment';
 import type { TaskDetails } from '../../src/TaskSerializer';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { Priority } from '../../src/Task/Priority';
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { datesAreIdentical, getDateFormat } from '../../src/DateTime/DateTools';
 
 declare module 'vitest' {
     interface Matchers<R> {
@@ -24,6 +24,16 @@ const recurrencesAreEqual = function (a: any, b: any) {
         return undefined;
     }
     return a.identicalTo(b);
+};
+
+/** A custom equality {@link Tester} that computes whether two moments represent the same date/time and format,
+ * avoiding fragile deep-object comparison of Moment internal properties.
+ */
+const momentsAreEqual = function (a: any, b: any) {
+    if (!(moment.isMoment(a) && moment.isMoment(b))) {
+        return undefined;
+    }
+    return datesAreIdentical(a, b);
 };
 
 /* A type guard for {@link TaskDetails}
@@ -76,12 +86,12 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
     return {
         // NEW_TASK_FIELD_EDIT_REQUIRED
         ...t,
-        startDate: t.startDate?.format(TaskRegularExpressions.dateFormat) ?? null,
-        createdDate: t.createdDate?.format(TaskRegularExpressions.dateFormat) ?? null,
-        scheduledDate: t.scheduledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
-        dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
-        doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
-        cancelledDate: t.cancelledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
+        startDate: t.startDate?.format(getDateFormat(t.startDate)) ?? null,
+        createdDate: t.createdDate?.format(getDateFormat(t.createdDate)) ?? null,
+        scheduledDate: t.scheduledDate?.format(getDateFormat(t.scheduledDate)) ?? null,
+        dueDate: t.dueDate?.format(getDateFormat(t.dueDate)) ?? null,
+        doneDate: t.doneDate?.format(getDateFormat(t.doneDate)) ?? null,
+        cancelledDate: t.cancelledDate?.format(getDateFormat(t.cancelledDate)) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
         id: t.id?.valueOf().toString() ?? null,
     };
@@ -176,7 +186,7 @@ export const toMatchTaskDetails: Matcher<MatcherState, [partial_expected: unknow
         ? () => diff(expected, received)
         : () => diff(summarizeTaskDetails(expected), summarizeTaskDetails(received));
 
-    const pass = this.equals(expected, received, [recurrencesAreEqual]);
+    const pass = this.equals(expected, received, [recurrencesAreEqual, momentsAreEqual]);
 
     return {
         pass,

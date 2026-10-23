@@ -5,6 +5,7 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { getDateFormat } from '../DateTime/DateTools';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}
@@ -62,7 +63,7 @@ export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
 
 function dateFieldRegex(symbols: string) {
-    return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2})');
+    return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2}(?:[ T]\\d{2}:\\d{2})?)');
 }
 
 function fieldRegex(symbols: string, valueRegexString: string) {
@@ -126,7 +127,7 @@ function symbolAndDateValue(shortMode: boolean, symbol: string, date: moment.Mom
     // We could call symbolAndStringValue() to remove a little code repetition,
     // but doing so would do some wasted date-formatting when in 'short mode',
     // so instead we repeat the check on shortMode value.
-    return shortMode ? ' ' + symbol : ` ${symbol} ${date.format(TaskRegularExpressions.dateFormat)}`;
+    return shortMode ? ' ' + symbol : ` ${symbol} ${date.format(getDateFormat(date))}`;
 }
 
 export function allTaskPluginEmojis() {
@@ -273,7 +274,14 @@ export class DefaultTaskSerializer implements TaskSerializer {
      */
     private extractDateField(state: ParsingState, regex: RegExp, setter: (date: Moment) => void): void {
         this.extractField(state, regex, (match) => {
-            setter(window.moment(match[1], TaskRegularExpressions.dateFormat));
+            const rawDate = match[1];
+            const format =
+                rawDate.length === 10
+                    ? TaskRegularExpressions.dateFormat
+                    : rawDate[10] === 'T'
+                      ? TaskRegularExpressions.dateTimeIsoFormat
+                      : TaskRegularExpressions.dateTimeFormat;
+            setter(window.moment(rawDate, format, true));
         });
     }
 

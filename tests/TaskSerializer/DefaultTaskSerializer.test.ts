@@ -10,6 +10,7 @@ import {
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { OnCompletion } from '../../src/Task/OnCompletion';
 import { Priority } from '../../src/Task/Priority';
+import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
 import { escapeInvisibleCharacters } from '../../src/lib/StringHelpers';
 
 window.moment = moment;
@@ -60,19 +61,19 @@ describe('validate emoji regular expressions', () => {
 
     it('regular expressions should have expected source', () => {
         expect(generateRegexApprovalTest()).toMatchInlineSnapshot(`
-            "
-            priorityRegex: /(🔺|⏫|🔼|🔽|⏬)\\ufe0f?$/
-            startDateRegex: /🛫\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
-            createdDateRegex: /➕\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
-            scheduledDateRegex: /(?:⏳|⌛)\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
-            dueDateRegex: /(?:📅|📆|🗓)\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
-            doneDateRegex: /✅\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
-            cancelledDateRegex: /❌\\ufe0f? *(\\d{4}-\\d{2}-\\d{2})$/
-            recurrenceRegex: /🔁\\ufe0f? *([a-zA-Z0-9, !]+)$/
-            onCompletionRegex: /🏁\\ufe0f? *([a-zA-Z]+)$/
-            dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/
-            idRegex: /🆔\\ufe0f? *([a-zA-Z0-9-_]+)$/
-            "
+          "
+          priorityRegex: /(🔺|⏫|🔼|🔽|⏬)\\ufe0f?$/
+          startDateRegex: /🛫\\ufe0f? *(\\d{4}-\\d{2}-\\d{2}(?:[ T]\\d{2}:\\d{2})?)$/
+          createdDateRegex: /➕\\ufe0f? *(\\d{4}-\\d{2}-\\d{2}(?:[ T]\\d{2}:\\d{2})?)$/
+          scheduledDateRegex: /(?:⏳|⌛)\\ufe0f? *(\\d{4}-\\d{2}-\\d{2}(?:[ T]\\d{2}:\\d{2})?)$/
+          dueDateRegex: /(?:📅|📆|🗓)\\ufe0f? *(\\d{4}-\\d{2}-\\d{2}(?:[ T]\\d{2}:\\d{2})?)$/
+          doneDateRegex: /✅\\ufe0f? *(\\d{4}-\\d{2}-\\d{2}(?:[ T]\\d{2}:\\d{2})?)$/
+          cancelledDateRegex: /❌\\ufe0f? *(\\d{4}-\\d{2}-\\d{2}(?:[ T]\\d{2}:\\d{2})?)$/
+          recurrenceRegex: /🔁\\ufe0f? *([a-zA-Z0-9, !]+)$/
+          onCompletionRegex: /🏁\\ufe0f? *([a-zA-Z]+)$/
+          dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/
+          idRegex: /🆔\\ufe0f? *([a-zA-Z0-9-_]+)$/
+          "
         `);
     });
 });
@@ -91,6 +92,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         scheduledDateSymbol,
         dueDateSymbol,
         doneDateSymbol,
+        cancelledDateSymbol,
         idSymbol,
         dependsOnSymbol,
     } = symbols;
@@ -135,6 +137,47 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             it('should parse a dueDate - with non-standard emoji 2', () => {
                 const taskDetails = deserialize('🗓 2021-06-20');
                 expect(taskDetails).toMatchTaskDetails({ ['dueDate']: moment('2021-06-20', 'YYYY-MM-DD') });
+            });
+
+            it.each([
+                { what: 'startDate', symbol: startDateSymbol },
+                { what: 'createdDate', symbol: createdDateSymbol },
+                { what: 'scheduledDate', symbol: scheduledDateSymbol },
+                { what: 'dueDate', symbol: dueDateSymbol },
+                { what: 'doneDate', symbol: doneDateSymbol },
+                { what: 'cancelledDate', symbol: cancelledDateSymbol },
+            ] as const)('should parse a $what with time', ({ what, symbol }) => {
+                const taskDetails = deserialize(`${symbol} 2021-06-20 20:20`);
+                expect(taskDetails).toMatchTaskDetails({ [what]: moment('2021-06-20 20:20', 'YYYY-MM-DD HH:mm') });
+            });
+
+            it.each([
+                { what: 'startDate', symbol: startDateSymbol },
+                { what: 'createdDate', symbol: createdDateSymbol },
+                { what: 'scheduledDate', symbol: scheduledDateSymbol },
+                { what: 'dueDate', symbol: dueDateSymbol },
+                { what: 'doneDate', symbol: doneDateSymbol },
+                { what: 'cancelledDate', symbol: cancelledDateSymbol },
+            ] as const)('should parse a $what with ISO time', ({ what, symbol }) => {
+                const taskDetails = deserialize(`${symbol} 2021-06-20T20:20`);
+                expect(taskDetails).toMatchTaskDetails({ [what]: moment('2021-06-20T20:20', 'YYYY-MM-DDTHH:mm') });
+            });
+
+            it('should parse due date with time and priority without leaving timestamp in description', () => {
+                const taskDetails = deserialize(
+                    `Test reminder ${dueDateSymbol} 2026-10-14 20:20 ${symbols.prioritySymbols.High}`,
+                );
+                expect(taskDetails).toMatchTaskDetails({
+                    description: 'Test reminder',
+                    dueDate: moment('2026-10-14 20:20', 'YYYY-MM-DD HH:mm'),
+                    priority: Priority.High,
+                });
+            });
+
+            it('should mark date with invalid time as invalid rather than falling back to date-only', () => {
+                const taskDetails = deserialize(`${dueDateSymbol} 2021-06-20 25:99`);
+                expect(taskDetails.dueDate).not.toBeNull();
+                expect(taskDetails.dueDate!.isValid()).toBe(false);
             });
         });
 
@@ -278,9 +321,42 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             { what: 'scheduledDate', symbol: scheduledDateSymbol },
             { what: 'dueDate', symbol: dueDateSymbol },
             { what: 'doneDate', symbol: doneDateSymbol },
+            { what: 'cancelledDate', symbol: cancelledDateSymbol },
         ] as const)('should serialize a $what', ({ what, symbol }) => {
             const serialized = serialize(new TaskBuilder()[what]('2021-06-20').description('').build());
             expect(serialized).toEqual(` ${symbol} 2021-06-20`);
+        });
+
+        it.each([
+            { what: 'startDate', symbol: startDateSymbol },
+            { what: 'createdDate', symbol: createdDateSymbol },
+            { what: 'scheduledDate', symbol: scheduledDateSymbol },
+            { what: 'dueDate', symbol: dueDateSymbol },
+            { what: 'doneDate', symbol: doneDateSymbol },
+            { what: 'cancelledDate', symbol: cancelledDateSymbol },
+        ] as const)('should serialize a $what with time', ({ what, symbol }) => {
+            const task = new TaskBuilder().description('')[what]('2021-06-20 20:20').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(` ${symbol} 2021-06-20 20:20`);
+        });
+
+        it.each([
+            { what: 'startDate', symbol: startDateSymbol },
+            { what: 'createdDate', symbol: createdDateSymbol },
+            { what: 'scheduledDate', symbol: scheduledDateSymbol },
+            { what: 'dueDate', symbol: dueDateSymbol },
+            { what: 'doneDate', symbol: doneDateSymbol },
+            { what: 'cancelledDate', symbol: cancelledDateSymbol },
+        ] as const)('should serialize a $what with ISO time', ({ what, symbol }) => {
+            const task = new TaskBuilder().description('')[what]('2021-06-20T20:20').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(` ${symbol} 2021-06-20T20:20`);
+        });
+
+        it('should serialize dates with time in short mode with only emoji', () => {
+            const task = new TaskBuilder().description('').dueDate('2021-06-20 20:20').build();
+            const shortSerialized = taskSerializer.componentToString(task, true, TaskLayoutComponent.DueDate);
+            expect(shortSerialized).toEqual(` ${dueDateSymbol}`);
         });
 
         it('should serialize a Highest, High, Medium, Low and Lowest priority', () => {
