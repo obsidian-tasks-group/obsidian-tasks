@@ -1,3 +1,5 @@
+import type { ReadOnlyTask } from '../Task/ReadOnlyTask';
+
 /**
  * Tasks API v1 interface
  */
@@ -29,4 +31,20 @@ export interface TasksApiV1 {
      *          if a recurring task was completed.
      */
     executeToggleTaskDoneCommand: (line: string, path: string) => string;
+
+    /**
+     * Executes a Tasks query against the vault's tasks cache synchronously.
+     *
+     * Evaluates `querySource` against cached tasks, honouring user settings (Global Query,
+     * Global Filter, and Presets).
+     *
+     * When the query produces groups, tasks are returned in group-major order (matching
+     * rendered results) and deduplicated.
+     *
+     * @param querySource The Tasks query string (e.g. "not done\ndue before tomorrow").
+     * @param queryPath Optional vault path of the file containing the query, used to resolve Placeholders (e.g. {{query.file.folder}}) and file properties.
+     * @returns Array of unique matching tasks as frozen ReadOnlyTask objects.
+     * @throws Error if `querySource` is not a string, if `queryPath` is not a string (when provided), if the query syntax is invalid, or if placeholders cannot be resolved.
+     */
+    queryTasks: (querySource: string, queryPath?: string) => ReadOnlyTask[];
 }
