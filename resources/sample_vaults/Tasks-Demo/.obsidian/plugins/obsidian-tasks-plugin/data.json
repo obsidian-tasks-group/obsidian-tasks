@@ -24,6 +24,9 @@
   "setCreatedDate": false,
   "setDoneDate": true,
   "setCancelledDate": true,
+  "postpone": {
+    "dateField": "due-scheduled-start"
+  },
   "autoSuggestInEditor": true,
   "autoSuggestMinMatch": 1,
   "autoSuggestMaxItems": 6,
@@ -88,14 +91,6 @@
   },
   "dismissedNotices": {
     "live-preview-callout-warning": false
-  },
-  "features": {
-    "INTERNAL_TESTING_ENABLED_BY_DEFAULT": true
-  },
-  "generalSettings": {},
-  "headingOpened": {
-    "Core Statuses": true,
-    "Custom Statuses": true
   },
   "debugSettings": {
     "ignoreSortInstructions": false,
