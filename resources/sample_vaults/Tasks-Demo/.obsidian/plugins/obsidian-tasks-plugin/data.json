@@ -101,10 +101,10 @@
     "minLevels": {
       "": "info",
       "tasks": "info",
-      "tasks.Query": "info",
       "tasks.Cache": "info",
       "tasks.Events": "info",
       "tasks.File": "info",
+      "tasks.Query": "info",
       "tasks.Task": "info"
     }
   }
