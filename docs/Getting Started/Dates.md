@@ -39,6 +39,20 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 - [ ] take out the trash 📅 2021-04-09
 ```
 
+> [!released]
+> `Optional time in dates` was introduced in Tasks X.Y.Z.
+
+Any task date can also include an optional 24-hour time in `YYYY-MM-DD HH:mm` or `YYYY-MM-DDTHH:mm` format:
+
+```markdown
+- [ ] take out the trash 📅 2021-04-09 14:30
+- [ ] take out the trash 🛫 2021-04-09T14:30
+- [ ] take out the trash [due:: 2021-04-09 14:30]
+- [ ] take out the trash [start:: 2021-04-09T14:30]
+```
+
+See [[#Limitations of time support in dates]] below for how times behave in filters and recurring tasks.
+
 Related instructions for use in Tasks query blocks:
 
 - [[Filters#Due Date]]
@@ -195,7 +209,7 @@ Related instructions for use in Tasks query blocks:
 
 ## Finding mistakes in dates on task lines
 
-Tasks does not automatically report any problem tasks that have invalid dates, such as on the 32nd day of a month. These task will silently not be found by date-based searches.
+Tasks does not automatically report any problem tasks that have invalid dates, such as on the 32nd day of a month or an invalid time like `25:00`. These task will silently not be found by date-based searches.
 
 However, it is possible to search for any tasks with invalid dates in your vault: see
 [[Filters#Finding Tasks with Invalid Dates|Finding Tasks with Invalid Dates]].
@@ -208,16 +222,23 @@ The date values on task lines must be calendar or absolute dates, referring to a
 ### Date format is not configurable
 
 - The date format on task lines is not yet configurable.
-- The only format recognised is `YYYY-MM-DD`, for example `2024-09-17`.
+- The only formats recognised are `YYYY-MM-DD` (for example `2024-09-17`) and, with an optional 24-hour time, `YYYY-MM-DD HH:mm` or `YYYY-MM-DDTHH:mm` (for example `2024-09-17 14:30` or `2024-09-17T14:30`).
 - It is not possible to customise the format of date values on task lines.
 - It is also not possible to format dates as links, such as `[[2024-09-17]]`.
 - We are tracking this in [discussion #69](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/69).
 
-### Dates cannot include times
+### Limitations of time support in dates
 
-- It is not yet possible to include times on task lines to indicate when they *should* be acted on.
-- Nor is it possible to record the time when tasks were created, completed or cancelled.
-- We are tracking this in discussions [#607](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/607) and [#668](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/668).
+> [!released]
+> Optional time in task dates was introduced in Tasks X.Y.Z.
+
+- Task dates can include an optional 24-hour time (`YYYY-MM-DD HH:mm` or `YYYY-MM-DDTHH:mm`) in both [[Tasks Emoji Format]] and [[Dataview Format]].
+- Times are interpreted in local time; seconds (`:ss`) and time zones (such as `Z` or `+02:00`) are not supported.
+- Existing times and their separator (` ` or `T`) are preserved when completing [[Recurring Tasks|recurring tasks]], postponing tasks, or choosing a date from the right-click menu.
+- Date-based [[Filters|filters]] (`due on`, `due before`, `due after`, etc.) and [[Urgency|urgency]] calculations still compare calendar days only and ignore the time component.
+- [[Auto-Suggest]] only suggests dates (`YYYY-MM-DD`) without times.
+- Automatically added dates (`➕` created, `✅` done, `❌` cancelled) are still recorded without a time (`YYYY-MM-DD`), though you can add a time manually or in the [[Create or edit Task|‘Create or edit Task’ Modal]].
+- We are tracking fuller time support in discussions [#607](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/607) and [#668](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/668).
 
 ### Time-tracking, productivity tracking, pomodoros, notifications and similar out-of-scope
 

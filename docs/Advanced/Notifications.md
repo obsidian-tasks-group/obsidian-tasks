@@ -26,6 +26,23 @@ With Reminders' "Distinguish between reminder date and due date" setting enabled
 
 Reminders can also fall back to 📅 (due), then ⏳ (scheduled), then 🛫 (start) as the reminder date when no ⏰ is present, via its "Fall back to due, scheduled, or start date" setting — see [Reminders' docs](https://uphy.github.io/obsidian-reminder/guide/interop-tasks.html#fall-back-to-due-scheduled-or-start-date).
 
+> [!released]
+> `Optional time in dates` was introduced in Tasks X.Y.Z.
+
+Because Tasks now supports an optional time (`YYYY-MM-DD HH:mm` or `YYYY-MM-DDTHH:mm`) directly on [[Dates|task dates]], you can also use Reminders without a separate `⏰` field:
+
+- **[[Tasks Emoji Format]]** (with Reminders' "Distinguish between reminder date and due date" turned off, or using "Fall back to due, scheduled, or start date"):
+
+  ```markdown
+  - [ ] #task task name 📅 2026-10-23 14:30
+  ```
+
+- **[[Dataview Format]]** (with Reminders' Dataview format enabled):
+
+  ```markdown
+  - [ ] #task task name [due:: 2026-10-23T14:30]
+  ```
+
 ## How to complete the reminder
 
 The reminder date doesn't change when completing the task, the date will change only when you complete it from the reminder popup or from the notification.

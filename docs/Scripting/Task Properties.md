@@ -57,7 +57,7 @@ For more information, including adding your own customised statuses, see [[Statu
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 1. Each of these values is a `TasksDate` object. The [[#Values in TasksDate Properties]] section below shows what can be done with them.
-1. Note that currently all stored dates have no time, or rather, their time is midnight at the start of the day, local time.
+1. If a date does not include an optional time on the task line, its time is midnight at the start of the day, local time.
 1. For example uses of date properties, see [[Filters#Due Date]] and [[Grouping#Due Date]].
 1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
 1. `task.cancelled` was added in Tasks 5.5.0.

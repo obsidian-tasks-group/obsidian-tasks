@@ -250,6 +250,10 @@ This is not yet implemented.
 
 We are tracking this in [issue #2655](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2655).
 
+### Urgency score ignores time in dates
+
+When a task's [[Dates|due, scheduled, or start date]] includes an optional time (`YYYY-MM-DD HH:mm` or `YYYY-MM-DDTHH:mm`), the urgency calculation compares calendar days only and ignores the time of day.
+
 ## Support
 
 Before creating a new bug report or feature request about Urgency, please check existing items to avoid duplicates.
