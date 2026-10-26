@@ -18,12 +18,11 @@ import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
+import { SerialRunner } from '../lib/SerialRunner';
 import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
 import { type BacklinksEventHandler, type EditButtonClickHandler, QueryResultsRenderer } from './QueryResultsRenderer';
 import { TaskLineRenderer } from './TaskLineRenderer';
-
-type RenderParams = { tasks: Task[]; state: State };
 
 /**
  * `QueryRenderer` is responsible for rendering queries in Markdown code blocks
@@ -105,8 +104,8 @@ class QueryRenderChild extends MarkdownRenderChild {
     private observer: IntersectionObserver | null = null;
 
     private readonly queryResultsRenderer: QueryResultsRenderer;
-    private readonly debouncedRenderFn: Debouncer<[RenderParams], void>;
-    private isRendering: boolean = false;
+    private readonly debouncedRenderFn: Debouncer<[], void>;
+    private readonly renderRunner: SerialRunner;
 
     constructor({
         app,
@@ -152,7 +151,8 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         this.queryResultsRenderer.query.debug('[render] QueryRenderChild.constructor() entered');
 
-        this.debouncedRenderFn = debounce((params: RenderParams) => this.render(params), 300, true);
+        this.debouncedRenderFn = debounce(() => this.render(), 300, true);
+        this.renderRunner = new SerialRunner(() => this.renderIfVisible());
     }
 
     onload() {
@@ -218,9 +218,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             );
             if (this.isCacheChangedSinceLastRedraw) {
                 this.queryResultsRenderer.query.debug('[render][observer] ... updating search results');
-                this.render({ tasks: this.plugin.getTasks(), state: this.plugin.getState() })
-                    .then()
-                    .catch((e) => console.error(e));
+                this.render();
             }
         });
 
@@ -291,52 +289,52 @@ class QueryRenderChild extends MarkdownRenderChild {
         }, millisecondsToMidnight + 1000); // Add buffer to be sure to run after midnight.
     }
 
-    private debouncedRender(params: RenderParams): void {
-        this.debouncedRenderFn(params);
-    }
-
-    private async render({ tasks, state }: RenderParams) {
+    /**
+     * Redraw the results with the latest tasks.
+     *
+     * The tasks are read when the redraw actually happens, not when it is requested,
+     * as more tasks may change before then. See {@link renderIfVisible}.
+     */
+    private render() {
         // We got here because the Cache reported a change in at least one task in the vault.
         // So note that any results we have already drawn are now out-of-date:
         this.isCacheChangedSinceLastRedraw = true;
 
+        // We have to wrap the rendering inside requestAnimationFrame() to ensure
+        // that we get correct values for isConnected and isShown().
         window.requestAnimationFrame(async () => {
-            if (this.isRendering) {
-                return;
-            }
-            this.isRendering = true;
-
-            // We have to wrap the rendering inside requestAnimationFrame() to ensure
-            // that we get correct values for isConnected and isShown().
-            if (!this.containerEl.isConnected) {
-                // Example reasons why we might not be "connected":
-                // - This Tasks query block is contained within another plugin's code block,
-                //   such as a Tabs plugin. The file is closed and that plugin has not correctly
-                //   tidied up, so we have not been deleted.
-                this.queryResultsRenderer.query.debug(
-                    '[render] Ignoring redraw request, as code block is not connected.',
-                );
-                this.isRendering = false;
-                return;
-            }
-
-            if (!this.containerEl.isShown()) {
-                // Example reasons why we might not be "shown":
-                // - We are in a collapsed callout.
-                // - We are in a note which is obscured by another note.
-                // - We are in a Tabs plugin, in a tab which is not at the front.
-                // - The user has not yet scrolled to this code block's position in the file.
-                this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not shown.');
-                this.isRendering = false;
-                return;
-            }
-
-            await this.renderResults(state, tasks);
-
-            // Our results are now up-to-date:
-            this.isCacheChangedSinceLastRedraw = false;
-            this.isRendering = false;
+            // If a redraw is already in progress, its tasks are now out of date,
+            // so this redraws again when it finishes, instead of ignoring this request.
+            await this.renderRunner.run();
         });
+    }
+
+    private async renderIfVisible() {
+        if (!this.containerEl.isConnected) {
+            // Example reasons why we might not be "connected":
+            // - This Tasks query block is contained within another plugin's code block,
+            //   such as a Tabs plugin. The file is closed and that plugin has not correctly
+            //   tidied up, so we have not been deleted.
+            this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not connected.');
+            this.isCacheChangedSinceLastRedraw = true;
+            return;
+        }
+
+        if (!this.containerEl.isShown()) {
+            // Example reasons why we might not be "shown":
+            // - We are in a collapsed callout.
+            // - We are in a note which is obscured by another note.
+            // - We are in a Tabs plugin, in a tab which is not at the front.
+            // - The user has not yet scrolled to this code block's position in the file.
+            this.queryResultsRenderer.query.debug('[render] Ignoring redraw request, as code block is not shown.');
+            this.isCacheChangedSinceLastRedraw = true;
+            return;
+        }
+
+        await this.renderResults(this.plugin.getState(), this.plugin.getTasks());
+
+        // Our results are now up-to-date:
+        this.isCacheChangedSinceLastRedraw = false;
     }
 
     private async renderResults(state: State, tasks: Task[]) {
@@ -349,7 +347,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private rereadQueryFromFile() {
         this.queryResultsRenderer.rereadQueryFromFile();
         this.isCacheChangedSinceLastRedraw = true;
-        this.debouncedRender({ tasks: this.plugin.getTasks(), state: this.plugin.getState() });
+        this.debouncedRenderFn();
     }
 }
 
