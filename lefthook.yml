@@ -16,6 +16,8 @@ pre-commit:
     lint:
       glob: '{src,tests}/{*,**/*}.{ts,svelte}'
       run: yarn eslint --fix "{staged_files}" && git add "{staged_files}"
+    # svelte-check type-checks every .ts file in tsconfig.json too, not just .svelte files,
+    # so it replaces tsc here and keeps every commit compiling (for git bisect).
     typecheck:
       glob: '*.{ts,svelte}'
       run: yarn svelte-check
