@@ -14,14 +14,11 @@ pre-commit:
   parallel: false
   commands:
     lint:
-      glob: '{src,tests}/{*,**/*}.ts'
+      glob: '{src,tests}/{*,**/*}.{ts,svelte}'
       run: yarn eslint --fix "{staged_files}" && git add "{staged_files}"
     typecheck:
-      glob: '*.ts'
-      run: yarn tsc --noEmit --pretty && yarn svelte-check
-    lint-svelte:
-      glob: '*.svelte'
-      run: yarn lint && git add "{staged_files}"
+      glob: '*.{ts,svelte}'
+      run: yarn svelte-check
     lint-markdown:
       glob: '*.md'
       run: yarn lint:markdown && git add "{staged_files}"
