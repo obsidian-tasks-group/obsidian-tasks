@@ -206,7 +206,7 @@ describe('SettingsTab applies changed settings without reloading', () => {
         return { onChange: (value: boolean) => onChange(value), buttons };
     }
 
-    it.fails('should redraw tasks, not offer a reload, when "Remove global filter" changes', async () => {
+    it('should redraw tasks, not offer a reload, when "Remove global filter" changes', async () => {
         const { onChange, buttons } = renderToggleSetting(i18n.t('settings.globalFilter.removeFilter.name'));
 
         await onChange(true);
