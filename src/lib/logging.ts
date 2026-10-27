@@ -74,23 +74,47 @@ export class LogManager extends EventEmitter2 {
     private consoleLoggerRegistered: boolean = false;
 
     /**
+     * Incremented by each {@link configure} call, so that loggers know when to re-read their level.
+     */
+    private _optionsVersion: number = 0;
+
+    public get optionsVersion(): number {
+        return this._optionsVersion;
+    }
+
+    /**
      * Set the minimum log levels for the module name or global.
+     *
+     * Loggers that already exist use the new levels too.
      *
      * @param {LogOptions} options
      * @return {*}  {LogManager}
      */
     public configure(options: LogOptions): LogManager {
         this.options = Object.assign({}, this.options, options);
+        this._optionsVersion++;
         return this;
     }
 
     /**
      * Returns a logger instance for the given module name.
      *
+     * The logger keeps following later changes to the logging options,
+     * so it can be stored and reused.
+     *
      * @param {string} module
      * @return {*}  {Logger}
      */
     public getLogger(module: string): Logger {
+        return new Logger(this, module);
+    }
+
+    /**
+     * Returns the minimum log level for the given module name, from its longest matching prefix.
+     *
+     * @param {string} module
+     */
+    public minLevelFor(module: string): string {
         let minLevel = 'none';
         let match = '';
 
@@ -100,7 +124,7 @@ export class LogManager extends EventEmitter2 {
                 match = key;
             }
         }
-        return new Logger(this, module, minLevel);
+        return minLevel;
     }
 
     /**
@@ -171,9 +195,11 @@ export const logging = new LogManager();
  * @class Logger
  */
 export class Logger {
-    private logManager: EventEmitter2;
-    private minLevel: number;
+    private logManager: LogManager;
     private module: string;
+    private cachedMinLevel: number = 99;
+    // The LogManager options version that cachedMinLevel was read from.
+    private cachedOptionsVersion: number = -1;
     private readonly levels: { [key: string]: number } = {
         trace: 1,
         debug: 2,
@@ -184,14 +210,25 @@ export class Logger {
 
     /**
      * Creates an instance of Logger.
-     * @param {EventEmitter2} logManager
+     * @param {LogManager} logManager
      * @param {string} module
-     * @param {string} minLevel
      */
-    constructor(logManager: EventEmitter2, module: string, minLevel: string) {
+    constructor(logManager: LogManager, module: string) {
         this.logManager = logManager;
         this.module = module;
-        this.minLevel = this.levelToInt(minLevel);
+    }
+
+    /**
+     * The minimum level to log, re-read from the LogManager only when its options have changed,
+     * as this is called for every log message, including in tight loops.
+     */
+    private get minLevel(): number {
+        const optionsVersion = this.logManager.optionsVersion;
+        if (optionsVersion !== this.cachedOptionsVersion) {
+            this.cachedMinLevel = this.levelToInt(this.logManager.minLevelFor(this.module));
+            this.cachedOptionsVersion = optionsVersion;
+        }
+        return this.cachedMinLevel;
     }
 
     /**

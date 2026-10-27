@@ -15,7 +15,7 @@ describe('Logger responds to changed logging options', () => {
         return { logManager, messages, logger };
     }
 
-    it.fails('should start logging debug messages when the level is lowered', () => {
+    it('should start logging debug messages when the level is lowered', () => {
         const { logManager, messages, logger } = setUp('info');
 
         logger.debug('before');
@@ -25,7 +25,7 @@ describe('Logger responds to changed logging options', () => {
         expect(messages).toEqual(['after']);
     });
 
-    it.fails('should stop logging debug messages when the level is raised', () => {
+    it('should stop logging debug messages when the level is raised', () => {
         const { logManager, messages, logger } = setUp('debug');
 
         logger.debug('before');
