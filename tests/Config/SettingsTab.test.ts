@@ -1,7 +1,10 @@
 import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { lastModalState, resetLastModalState } from '../__mocks__/obsidian';
+import { MarkdownView, lastModalState, resetLastModalState } from '../__mocks__/obsidian';
 
 import { SettingsTab } from '../../src/Config/SettingsTab';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { getSettings, resetSettings } from '../../src/Config/Settings';
+import { i18n } from '../../src/i18n/i18n';
 
 // Convert the declarative settings tree into approval-friendly JSON.
 // This preserves visible text/HTML and replaces callbacks with stable markers.
@@ -132,5 +135,86 @@ describe('SettingsTab post-1.13', () => {
         // TODO Show the 'Enable custom searches' modal.
         // TODO Show options in the 'Task count location' dropdown.
         verifyAsJson(serializeForApproval(settingsTab.getSettingDefinitions()));
+    });
+});
+
+describe('SettingsTab applies changed settings without reloading', () => {
+    const readingView = Object.assign(new MarkdownView(), { previewMode: { rerender: vi.fn() } });
+    const pluginWithWorkspace = {
+        ...plugin,
+        app: { workspace: { getLeavesOfType: vi.fn(() => [{ view: readingView }]) } },
+    } as any;
+
+    afterEach(() => {
+        resetSettings();
+        GlobalFilter.getInstance().reset();
+        vi.clearAllMocks();
+    });
+
+    function findSetting(items: unknown, name: string): any {
+        if (Array.isArray(items)) {
+            for (const item of items) {
+                const found = findSetting(item, name);
+                if (found) return found;
+            }
+        } else if (items !== null && typeof items === 'object') {
+            const record = items as Record<string, unknown>;
+            if (record.name === name) return record;
+            for (const value of Object.values(record)) {
+                const found = findSetting(value, name);
+                if (found) return found;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Render a setting with a minimal fake Setting, and return its toggle's onChange handler
+     * and the buttons it added.
+     */
+    function renderToggleSetting(name: string) {
+        const settingsTab = new SettingsTab({ plugin: pluginWithWorkspace, events });
+        const definition = findSetting(settingsTab.getSettingDefinitions(), name);
+        let onChange: (value: boolean) => Promise<void> = async () => {};
+        const buttons: unknown[] = [];
+        const fakeSetting = {
+            controlEl: { prepend: () => {} },
+            addToggle(callback: (toggle: any) => void) {
+                const toggle = {
+                    setValue: () => toggle,
+                    onChange: (handler: typeof onChange) => {
+                        onChange = handler;
+                        return toggle;
+                    },
+                };
+                callback(toggle);
+                return fakeSetting;
+            },
+            addButton(callback: (button: any) => void) {
+                const button: any = {
+                    buttonEl: { toggle: () => {} },
+                    setButtonText: () => button,
+                    setCta: () => button,
+                    onClick: () => button,
+                };
+                buttons.push(button);
+                callback(button);
+                return fakeSetting;
+            },
+        };
+        definition.render(fakeSetting);
+        return { onChange: (value: boolean) => onChange(value), buttons };
+    }
+
+    it.fails('should redraw tasks, not offer a reload, when "Remove global filter" changes', async () => {
+        const { onChange, buttons } = renderToggleSetting(i18n.t('settings.globalFilter.removeFilter.name'));
+
+        await onChange(true);
+
+        expect(getSettings().removeGlobalFilter).toEqual(true);
+        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(true);
+        expect(buttons).toHaveLength(0);
+        expect(events.triggerReloadOpenSearchResults).toHaveBeenCalled();
+        expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
     });
 });
