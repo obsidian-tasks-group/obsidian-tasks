@@ -197,6 +197,13 @@ export class SettingsTab extends PluginSettingTab {
      */
     private redrawTasks() {
         this.events.triggerReloadOpenSearchResults();
+        this.redrawReadingViews();
+    }
+
+    /**
+     * Redraw notes shown in Reading view, which parse and draw their tasks when they are rendered.
+     */
+    private redrawReadingViews() {
         for (const leaf of this.app.workspace.getLeavesOfType('markdown')) {
             if (leaf.view instanceof MarkdownView) {
                 leaf.view.previewMode.rerender(true);
@@ -241,21 +248,21 @@ export class SettingsTab extends PluginSettingTab {
                     i18n.t('settings.format.description.line2'),
                 ]),
             ),
-            render: this.withDocs(
-                this.withReload('taskFormat', (setting, refreshReloadButton) => {
-                    setting.addDropdown((dropdown) => {
-                        for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
-                            dropdown.addOption(key, TASK_FORMATS[key].getDisplayName());
-                        }
-                        dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
-                            updateSettings({ taskFormat: value as keyof TASK_FORMATS });
-                            await this.plugin.saveSettings();
-                            refreshReloadButton();
-                        });
+            render: this.withDocs((setting) => {
+                setting.addDropdown((dropdown) => {
+                    for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
+                        dropdown.addOption(key, TASK_FORMATS[key].getDisplayName());
+                    }
+                    dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
+                        updateSettings({ taskFormat: value as keyof TASK_FORMATS });
+                        await this.plugin.saveSettings();
+                        // Tasks are parsed using the task format, so re-read them all.
+                        // Open searches are redrawn once that has finished.
+                        this.events.triggerReloadVault();
+                        this.redrawReadingViews();
                     });
-                }),
-                'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
-            ),
+                });
+            }, 'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats'),
         };
     }
 

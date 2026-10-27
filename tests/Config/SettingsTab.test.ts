@@ -222,7 +222,7 @@ describe('SettingsTab applies changed settings without reloading', () => {
         expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
     });
 
-    it.fails('should re-read the vault, not offer a reload, when "Task format" changes', async () => {
+    it('should re-read the vault, not offer a reload, when "Task format" changes', async () => {
         const { onChange, buttons } = renderSetting<string>(i18n.t('settings.format.name'));
 
         await onChange('dataview');
