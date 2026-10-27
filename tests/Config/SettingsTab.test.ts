@@ -169,27 +169,31 @@ describe('SettingsTab applies changed settings without reloading', () => {
     }
 
     /**
-     * Render a setting with a minimal fake Setting, and return its toggle's onChange handler
-     * and the buttons it added.
+     * Render a setting with a minimal fake Setting, and return its toggle's or dropdown's
+     * onChange handler, and the buttons it added.
      */
-    function renderToggleSetting(name: string) {
+    function renderSetting<T>(name: string) {
         const settingsTab = new SettingsTab({ plugin: pluginWithWorkspace, events });
         const definition = findSetting(settingsTab.getSettingDefinitions(), name);
-        let onChange: (value: boolean) => Promise<void> = async () => {};
+        let onChange: (value: T) => Promise<void> = async () => {};
         const buttons: unknown[] = [];
+        const addValueComponent = (callback: (component: any) => void) => {
+            const component = {
+                addOption: () => component,
+                setValue: () => component,
+                onChange: (handler: typeof onChange) => {
+                    onChange = handler;
+                    return component;
+                },
+            };
+            callback(component);
+            return fakeSetting;
+        };
         const fakeSetting = {
             controlEl: { prepend: () => {} },
-            addToggle(callback: (toggle: any) => void) {
-                const toggle = {
-                    setValue: () => toggle,
-                    onChange: (handler: typeof onChange) => {
-                        onChange = handler;
-                        return toggle;
-                    },
-                };
-                callback(toggle);
-                return fakeSetting;
-            },
+            addToggle: addValueComponent,
+            addDropdown: addValueComponent,
+            addExtraButton: () => fakeSetting,
             addButton(callback: (button: any) => void) {
                 const button: any = {
                     buttonEl: { toggle: () => {} },
@@ -203,11 +207,11 @@ describe('SettingsTab applies changed settings without reloading', () => {
             },
         };
         definition.render(fakeSetting);
-        return { onChange: (value: boolean) => onChange(value), buttons };
+        return { onChange: (value: T) => onChange(value), buttons };
     }
 
     it('should redraw tasks, not offer a reload, when "Remove global filter" changes', async () => {
-        const { onChange, buttons } = renderToggleSetting(i18n.t('settings.globalFilter.removeFilter.name'));
+        const { onChange, buttons } = renderSetting<boolean>(i18n.t('settings.globalFilter.removeFilter.name'));
 
         await onChange(true);
 
@@ -215,6 +219,18 @@ describe('SettingsTab applies changed settings without reloading', () => {
         expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(true);
         expect(buttons).toHaveLength(0);
         expect(events.triggerReloadOpenSearchResults).toHaveBeenCalled();
+        expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
+    });
+
+    it.fails('should re-read the vault, not offer a reload, when "Task format" changes', async () => {
+        const { onChange, buttons } = renderSetting<string>(i18n.t('settings.format.name'));
+
+        await onChange('dataview');
+
+        expect(getSettings().taskFormat).toEqual('dataview');
+        expect(buttons).toHaveLength(0);
+        // Tasks are parsed using the task format, so the vault's tasks need re-reading.
+        expect(events.triggerReloadVault).toHaveBeenCalled();
         expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
     });
 });
