@@ -63,7 +63,7 @@ export const taskIdRegex = /[a-zA-Z0-9-_]+/;
 export const taskIdSequenceRegex = new RegExp(taskIdRegex.source + '( *, *' + taskIdRegex.source + ' *)*');
 
 function dateFieldRegex(symbols: string) {
-    return fieldRegex(symbols, '(\\d{4}-\\d{2}-\\d{2}(?:[ T]\\d{2}:\\d{2})?)');
+    return fieldRegex(symbols, String.raw`(\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2})?)`);
 }
 
 function fieldRegex(symbols: string, valueRegexString: string) {
@@ -275,12 +275,13 @@ export class DefaultTaskSerializer implements TaskSerializer {
     private extractDateField(state: ParsingState, regex: RegExp, setter: (date: Moment) => void): void {
         this.extractField(state, regex, (match) => {
             const rawDate = match[1];
-            const format =
-                rawDate.length === 10
-                    ? TaskRegularExpressions.dateFormat
-                    : rawDate[10] === 'T'
-                      ? TaskRegularExpressions.dateTimeIsoFormat
-                      : TaskRegularExpressions.dateTimeFormat;
+            let format = TaskRegularExpressions.dateFormat;
+            if (rawDate.length > 10) {
+                format =
+                    rawDate[10] === 'T'
+                        ? TaskRegularExpressions.dateTimeIsoFormat
+                        : TaskRegularExpressions.dateTimeFormat;
+            }
             setter(window.moment(rawDate, format, true));
         });
     }

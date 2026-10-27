@@ -31,7 +31,7 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
  * Returns true if the date moment object has an explicit time component.
  */
 export function hasTime(date: moment.Moment | null): boolean {
-    if (!date || !date.isValid()) return false;
+    if (!date?.isValid()) return false;
     const format = date.creationData()?.format;
     return format === TaskRegularExpressions.dateTimeFormat || format === TaskRegularExpressions.dateTimeIsoFormat;
 }
@@ -51,7 +51,7 @@ export function getDateFormat(date: moment.Moment | null): string {
  * Infers the appropriate date or date-time format string from raw user input.
  */
 export function inferDateTimeFormat(input: string): string {
-    const match = input.match(/([ T])(\d{2}:\d{2})\b/);
+    const match = /([ T])(\d{2}:\d{2})\b/.exec(input);
     if (!match || !window.moment(match[2], 'HH:mm', true).isValid()) {
         return TaskRegularExpressions.dateFormat;
     }
