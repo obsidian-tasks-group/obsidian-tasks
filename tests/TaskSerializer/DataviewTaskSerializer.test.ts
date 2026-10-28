@@ -48,6 +48,16 @@ describe('DataviewTaskSerializer', () => {
             expect(taskDetails.dueDate!.isValid()).toBe(false);
         });
 
+        it('should mark 24:00 as invalid rather than rolling to 00:00 the next day', () => {
+            const spaceSeparated = deserialize(`[${DATAVIEW_SYMBOLS.dueDateSymbol} 2026-10-23 24:00]`);
+            expect(spaceSeparated.dueDate).not.toBeNull();
+            expect(spaceSeparated.dueDate!.isValid()).toBe(false);
+
+            const isoSeparated = deserialize(`[${DATAVIEW_SYMBOLS.dueDateSymbol} 2026-10-23T24:00]`);
+            expect(isoSeparated.dueDate).not.toBeNull();
+            expect(isoSeparated.dueDate!.isValid()).toBe(false);
+        });
+
         it('should parse a priority', () => {
             const priorities = ['Highest', 'High', 'Medium', 'Low', 'Lowest'] as const;
             for (const p of priorities) {

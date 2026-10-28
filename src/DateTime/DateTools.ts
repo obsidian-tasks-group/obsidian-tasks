@@ -47,15 +47,62 @@ export function getDateFormat(date: moment.Moment | null): string {
     return TaskRegularExpressions.dateFormat;
 }
 
+const ISO_DATE_TIME_REGEXP = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+const VALID_24_HOUR_TIME_REGEXP = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+
 /**
- * Infers the appropriate date or date-time format string from raw user input.
+ * Strictly parses a serialized task date or date-time string ('YYYY-MM-DD', 'YYYY-MM-DD HH:mm', or 'YYYY-MM-DDTHH:mm'),
+ * rejecting any other length/separator as well as out-of-range times including '24:00'
+ * (which Moment strict mode would otherwise roll to 00:00 the next day).
  */
-export function inferDateTimeFormat(input: string): string {
-    const match = /([ T])(\d{2}:\d{2})\b/.exec(input);
-    if (!match || !window.moment(match[2], 'HH:mm', true).isValid()) {
+export function parseFixedDateTime(rawDate: string): moment.Moment {
+    if (rawDate.length === 10) {
+        return window.moment(rawDate, TaskRegularExpressions.dateFormat, true);
+    }
+    const separator = rawDate[10];
+    if (
+        rawDate.length !== 16 ||
+        (separator !== ' ' && separator !== 'T') ||
+        !VALID_24_HOUR_TIME_REGEXP.test(rawDate.slice(11))
+    ) {
+        return window.moment.invalid();
+    }
+    const format = separator === 'T' ? TaskRegularExpressions.dateTimeIsoFormat : TaskRegularExpressions.dateTimeFormat;
+    return window.moment(rawDate, format, true);
+}
+
+/**
+ * Parses user date/time input with chrono, requiring chrono to match the entire input string
+ * (so partial substring matches like '2026-10-23' inside '2026-10-23 25:00' are rejected as invalid).
+ */
+export function parseTypedDateWithChrono(
+    input: string,
+    referenceDate?: Date,
+    forwardDate: boolean = false,
+): { date: Date; format: string } | null {
+    const trimmed = input.trim();
+    const isIsoDateTime = ISO_DATE_TIME_REGEXP.test(trimmed);
+    // Replace 'T' with a space so chrono parses ISO date-times in local time rather than UTC.
+    const normalizedInput = isIsoDateTime ? trimmed.replace('T', ' ') : trimmed;
+
+    const results = chrono.parse(normalizedInput, referenceDate, { forwardDate });
+    if (results.length !== 1 || results[0].text !== normalizedInput) {
+        return null;
+    }
+
+    const parsedResult = results[0];
+    const parsedComponents = parsedResult.start;
+    return {
+        date: parsedResult.date(),
+        format: inferFormatFromParsedComponents(parsedComponents, isIsoDateTime),
+    };
+}
+
+function inferFormatFromParsedComponents(parsedComponents: chrono.ParsedComponents, isIsoDateTime: boolean): string {
+    if (!parsedComponents.isCertain('hour')) {
         return TaskRegularExpressions.dateFormat;
     }
-    return match[1] === 'T' ? TaskRegularExpressions.dateTimeIsoFormat : TaskRegularExpressions.dateTimeFormat;
+    return isIsoDateTime ? TaskRegularExpressions.dateTimeIsoFormat : TaskRegularExpressions.dateTimeFormat;
 }
 
 /**
@@ -109,22 +156,20 @@ export function datesAreIdentical(a: moment.Moment | null, b: moment.Moment | nu
  * Parse and return the entered value for a date field.
  * @param fieldName
  * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
- * @param forwardDate
+ * @param referenceDate - reference date when 'Only future dates' is enabled, or undefined otherwise
  * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
  */
 function parseTypedDateForDisplay(
     fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done' | 'cancelled',
     typedDate: string,
-    forwardDate: Date | undefined = undefined,
+    referenceDate: Date | undefined = undefined,
 ): string {
     if (!typedDate) {
         return `<i>no ${fieldName} date</i>`;
     }
-    const parsed = chrono.parseDate(typedDate, forwardDate, {
-        forwardDate: forwardDate != undefined,
-    });
+    const parsed = parseTypedDateWithChrono(typedDate, referenceDate, referenceDate !== undefined);
     if (parsed !== null) {
-        return window.moment(parsed).format(inferDateTimeFormat(typedDate));
+        return window.moment(parsed.date).format(parsed.format);
     }
     return `<i>invalid ${fieldName} date</i>`;
 }
@@ -150,12 +195,11 @@ export function parseTypedDateForDisplayUsingFutureDate(
  * @param forwardDate
  */
 export function parseTypedDateForSaving(typedDate: string, forwardDate: boolean): moment.Moment | null {
-    const parsedDate = chrono.parseDate(typedDate, new Date(), { forwardDate });
-    if (parsedDate === null) {
+    const parsed = parseTypedDateWithChrono(typedDate, new Date(), forwardDate);
+    if (parsed === null) {
         return null;
     }
-    const format = inferDateTimeFormat(typedDate);
-    return format === TaskRegularExpressions.dateFormat
-        ? window.moment(parsedDate)
-        : momentWithFormat(parsedDate, format);
+    return parsed.format === TaskRegularExpressions.dateFormat
+        ? window.moment(parsed.date)
+        : momentWithFormat(parsed.date, parsed.format);
 }

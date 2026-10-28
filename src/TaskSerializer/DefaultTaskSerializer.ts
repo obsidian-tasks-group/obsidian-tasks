@@ -5,7 +5,7 @@ import { Recurrence } from '../Task/Recurrence';
 import { Task } from '../Task/Task';
 import { Priority } from '../Task/Priority';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import { getDateFormat } from '../DateTime/DateTools';
+import { getDateFormat, parseFixedDateTime } from '../DateTime/DateTools';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}
@@ -274,15 +274,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
      */
     private extractDateField(state: ParsingState, regex: RegExp, setter: (date: Moment) => void): void {
         this.extractField(state, regex, (match) => {
-            const rawDate = match[1];
-            let format = TaskRegularExpressions.dateFormat;
-            if (rawDate.length > 10) {
-                format =
-                    rawDate[10] === 'T'
-                        ? TaskRegularExpressions.dateTimeIsoFormat
-                        : TaskRegularExpressions.dateTimeFormat;
-            }
-            setter(window.moment(rawDate, format, true));
+            setter(parseFixedDateTime(match[1]));
         });
     }
 

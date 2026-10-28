@@ -2,6 +2,7 @@ import moment from 'moment';
 import { DateParser } from '../../src/DateTime/DateParser';
 
 import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { withTimezone } from '../TestingTools/DateTestHelpers';
 
 window.moment = moment;
 
@@ -50,12 +51,79 @@ describe('DateParser - single dates', () => {
         expect(parsedDate.format('YYYY-MM-DDTHH:mm')).toStrictEqual('2023-07-08T14:30');
     });
 
-    it('should fall back to default date-only behaviour when time is out of range or malformed', () => {
-        expect(DateParser.parseDate('2023-07-08 25:30').format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
-        expect(DateParser.parseDate('2023-07-08 14:99').format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
-        expect(DateParser.parseDate('2023-07-08 14:300').format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
-        expect(DateParser.parseDate('2023-07-08 at 2pm').format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
-        expect(DateParser.parseDate('2023-07-08 at 2pm').creationData().format).toBeUndefined();
+    it('should return invalid date when time is out of range or malformed', () => {
+        expect(DateParser.parseDate('2023-07-08 25:30').isValid()).toBe(false);
+        expect(DateParser.parseDate('2023-07-08 24:00').isValid()).toBe(false);
+        expect(DateParser.parseDate('2023-07-08 14:99').isValid()).toBe(false);
+        expect(DateParser.parseDate('2023-07-08 14:300').isValid()).toBe(false);
+        expect(DateParser.parseDate('tomorrow @14:30').isValid()).toBe(false);
+    });
+
+    it('should keep date-only format for expressions where chrono only implies an hour', () => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date(2024, 3, 20, 10, 15));
+        try {
+            for (const input of ['tonight', 'noon', 'this morning']) {
+                const parsed = DateParser.parseDate(input);
+                expect(parsed.format('YYYY-MM-DD HH:mm')).toStrictEqual('2024-04-20 00:00');
+                expect(parsed.creationData().format).toBeUndefined();
+            }
+            const inTwoDays = DateParser.parseDate('in 2 days');
+            expect(inTwoDays.format('YYYY-MM-DD HH:mm')).toStrictEqual('2024-04-22 00:00');
+            expect(inTwoDays.creationData().format).toBeUndefined();
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('should preserve time from natural language date-time expressions', () => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date(2024, 3, 20, 10, 15));
+        try {
+            const cases: [string, string][] = [
+                ['now', '2024-04-20 10:15'],
+                ['in 2 hours', '2024-04-20 12:15'],
+                ['in 30 minutes', '2024-04-20 10:45'],
+                ['14:30 tomorrow', '2024-04-21 14:30'],
+                ['tomorrow 9:30', '2024-04-21 09:30'],
+                ['tomorrow 2pm', '2024-04-21 14:00'],
+                ['tomorrow at 14:30', '2024-04-21 14:30'],
+                ['next friday 09:00', '2024-04-26 09:00'],
+                ['2023-07-08 at 2pm', '2023-07-08 14:00'],
+                ['2023-07-08 14:30:45', '2023-07-08 14:30'],
+                ['2023-07-08T14:30:45', '2023-07-08 14:30'],
+            ];
+            for (const [input, expected] of cases) {
+                const parsed = DateParser.parseDate(input);
+                expect(parsed.format('YYYY-MM-DD HH:mm')).toStrictEqual(expected);
+                expect(parsed.creationData().format).toStrictEqual(TaskRegularExpressions.dateTimeFormat);
+            }
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('should convert explicit timezone offsets to local time and format as YYYY-MM-DD HH:mm', () => {
+        withTimezone('UTC', () => {
+            expect(DateParser.parseDate('2023-07-08T14:30Z').format('YYYY-MM-DD HH:mm')).toStrictEqual(
+                '2023-07-08 14:30',
+            );
+            expect(DateParser.parseDate('2023-07-08T14:30+02:00').format('YYYY-MM-DD HH:mm')).toStrictEqual(
+                '2023-07-08 12:30',
+            );
+        });
+    });
+
+    it('should parse ISO and space-separated date-time as local time in non-UTC timezones', () => {
+        withTimezone('America/New_York', () => {
+            const spaceParsed = DateParser.parseDate('2026-10-23 14:30');
+            expect(spaceParsed.format('YYYY-MM-DD HH:mm')).toStrictEqual('2026-10-23 14:30');
+            expect(spaceParsed.creationData().format).toStrictEqual(TaskRegularExpressions.dateTimeFormat);
+
+            const isoParsed = DateParser.parseDate('2026-10-23T14:30');
+            expect(isoParsed.format('YYYY-MM-DDTHH:mm')).toStrictEqual('2026-10-23T14:30');
+            expect(isoParsed.creationData().format).toStrictEqual(TaskRegularExpressions.dateTimeIsoFormat);
+        });
     });
 });
 

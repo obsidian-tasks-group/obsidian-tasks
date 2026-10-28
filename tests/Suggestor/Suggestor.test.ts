@@ -25,8 +25,8 @@ window.moment = moment;
 const mockDate = new Date(moment('2022-07-11 15:00').valueOf());
 
 const chronoSpy = vi
-    .spyOn(chrono, 'parseDate')
-    .mockImplementation((text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!);
+    .spyOn(chrono, 'parse')
+    .mockImplementation((text, _, options) => chrono.en.casual.parse(text, mockDate, options));
 
 const CAN_SAVE_EDITS = true;
 

@@ -166,6 +166,9 @@ describe('due date', () => {
 
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in two weeks');
         expect(filterOrMessage).toHaveExplanation('due date is on 2023-03-20 (Monday 20th March 2023)');
+
+        const invalidWithTrailingText = new DueDateField().createFilterOrErrorMessage('due in two weeks please');
+        expect(invalidWithTrailingText).not.toBeValid();
     });
 });
 

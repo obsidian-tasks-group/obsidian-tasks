@@ -159,4 +159,70 @@ describe('date editor wrapper tests', () => {
         testInputValue(container, 'parsedDateFromDateEditor', '2024-11-03T20:20');
         testInputValue(container, 'dueDateFromDateEditor', '2024-11-03T20:20');
     });
+
+    it.each(['2026-10-23 25:00', '2026-10-23 24:00', '2026-10-23 14:300'])(
+        'should show an error message for date with invalid time: %s',
+        async (invalidInput) => {
+            await testTypingInput({
+                userTyped: invalidInput,
+                expectedLeftText: invalidInput,
+                expectedRightText: '<i>invalid due date</i>',
+                expectedReturnedDate: invalidInput,
+                expectedReturnedDateValidity: 'false',
+            });
+        },
+    );
+
+    it.each([
+        ['now', '2024-04-20 10:15'],
+        ['tonight', '2024-04-20'],
+        ['noon', '2024-04-20'],
+        ['14:30 tomorrow', '2024-04-21 14:30'],
+        ['tomorrow 9:30', '2024-04-21 09:30'],
+        ['tomorrow 2pm', '2024-04-21 14:00'],
+        ['tomorrow at 14:30', '2024-04-21 14:30'],
+        ['next friday 09:00', '2024-04-26 09:00'],
+        ['2024-10-01 14:30:45', '2024-10-01 14:30'],
+    ])('should preserve typed time for natural language input "%s"', async (typedInput, expectedParsed) => {
+        vi.setSystemTime(new Date(2024, 3, 20, 10, 15));
+        await testTypingInput({
+            userTyped: typedInput,
+            expectedLeftText: typedInput,
+            expectedRightText: expectedParsed,
+            expectedReturnedDate: typedInput,
+        });
+    });
+
+    it.each([
+        ['in 2 hours', '2024-04-20 12:15'],
+        ['in 2 days', '2024-04-22'],
+    ])('should accept "%s" when forwardOnly is false', async (typedInput, expectedParsed) => {
+        vi.setSystemTime(new Date(2024, 3, 20, 10, 15));
+        await testTypingInput(
+            {
+                userTyped: typedInput,
+                expectedLeftText: typedInput,
+                expectedRightText: expectedParsed,
+                expectedReturnedDate: typedInput,
+            },
+            { forwardOnly: false },
+        );
+    });
+
+    it.each(['in 2 hours', 'in 2 days'])(
+        'should reject "%s" when forwardOnly is true (chrono forwardDate prefix quirk)',
+        async (typedInput) => {
+            vi.setSystemTime(new Date(2024, 3, 20, 10, 15));
+            await testTypingInput(
+                {
+                    userTyped: typedInput,
+                    expectedLeftText: typedInput,
+                    expectedRightText: '<i>invalid due date</i>',
+                    expectedReturnedDate: typedInput,
+                    expectedReturnedDateValidity: 'false',
+                },
+                { forwardOnly: true },
+            );
+        },
+    );
 });

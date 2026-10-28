@@ -179,6 +179,24 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 expect(taskDetails.dueDate).not.toBeNull();
                 expect(taskDetails.dueDate!.isValid()).toBe(false);
             });
+
+            it('should mark 24:00 as invalid rather than rolling to 00:00 the next day', () => {
+                const spaceSeparated = deserialize(`${dueDateSymbol} 2026-10-23 24:00`);
+                expect(spaceSeparated.dueDate).not.toBeNull();
+                expect(spaceSeparated.dueDate!.isValid()).toBe(false);
+
+                const isoSeparated = deserialize(`${dueDateSymbol} 2026-10-23T24:00`);
+                expect(isoSeparated.dueDate).not.toBeNull();
+                expect(isoSeparated.dueDate!.isValid()).toBe(false);
+            });
+
+            it('should not parse dates with seconds or timezone offsets on task lines', () => {
+                const withSeconds = deserialize(`Task ${dueDateSymbol} 2026-10-23 14:30:00`);
+                expect(withSeconds.dueDate).toBeNull();
+
+                const withTimezone = deserialize(`Task ${dueDateSymbol} 2026-10-23T14:30Z`);
+                expect(withTimezone.dueDate).toBeNull();
+            });
         });
 
         describe('should parse priorities', () => {
