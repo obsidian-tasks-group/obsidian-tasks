@@ -151,6 +151,10 @@ describe('SettingsTab applies changed settings without reloading', () => {
         vi.clearAllMocks();
     });
 
+    /**
+     * Find the definition of the setting with the given display name, anywhere in the
+     * nested groups and pages returned by {@link SettingsTab.getSettingDefinitions}.
+     */
     function findSetting(items: unknown, name: string): any {
         if (Array.isArray(items)) {
             for (const item of items) {
@@ -169,17 +173,19 @@ describe('SettingsTab applies changed settings without reloading', () => {
     }
 
     /**
-     * Render a setting with a minimal fake Setting, and return its toggle's onChange handler
-     * and the buttons it added.
+     * Render a toggle setting, as the Tasks settings pane would, and return its onChange handler,
+     * so a test can change the setting as if the user clicked the toggle.
+     *
+     * Obsidian's Setting is replaced by a fake with only the methods the setting calls.
      */
     function renderToggleSetting(name: string) {
         const settingsTab = new SettingsTab({ plugin: pluginWithWorkspace, events });
         const definition = findSetting(settingsTab.getSettingDefinitions(), name);
+
         let onChange: (value: boolean) => Promise<void> = async () => {};
-        const buttons: unknown[] = [];
         const fakeSetting = {
-            controlEl: { prepend: () => {} },
             addToggle(callback: (toggle: any) => void) {
+                // Capture the handler the setting registers with toggle.onChange().
                 const toggle = {
                     setValue: () => toggle,
                     onChange: (handler: typeof onChange) => {
@@ -190,30 +196,19 @@ describe('SettingsTab applies changed settings without reloading', () => {
                 callback(toggle);
                 return fakeSetting;
             },
-            addButton(callback: (button: any) => void) {
-                const button: any = {
-                    buttonEl: { toggle: () => {} },
-                    setButtonText: () => button,
-                    setCta: () => button,
-                    onClick: () => button,
-                };
-                buttons.push(button);
-                callback(button);
-                return fakeSetting;
-            },
         };
         definition.render(fakeSetting);
-        return { onChange: (value: boolean) => onChange(value), buttons };
+
+        return (value: boolean) => onChange(value);
     }
 
-    it('should redraw tasks, not offer a reload, when "Remove global filter" changes', async () => {
-        const { onChange, buttons } = renderToggleSetting(i18n.t('settings.globalFilter.removeFilter.name'));
+    it('should redraw tasks when "Remove global filter" changes', async () => {
+        const changeToggle = renderToggleSetting(i18n.t('settings.globalFilter.removeFilter.name'));
 
-        await onChange(true);
+        await changeToggle(true);
 
         expect(getSettings().removeGlobalFilter).toEqual(true);
         expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(true);
-        expect(buttons).toHaveLength(0);
         expect(events.triggerReloadOpenSearchResults).toHaveBeenCalled();
         expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
     });
