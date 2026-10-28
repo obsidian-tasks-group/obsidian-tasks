@@ -33,8 +33,6 @@ If you don't have a global filter set, all regular checklist items will be consi
 
 The following settings in the Tasks Options pane control the vault's global filter.
 
-Note you must restart Tasks after changing the global filter.
-
 > [!released]
 > Changes to 'Remove global filter from description' take effect immediately since Tasks X.Y.Z.
 > Previously, Obsidian needed to be restarted after any changes.
