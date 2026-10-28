@@ -4,9 +4,11 @@ module.exports = async () => {
     /*
      * Below is an example alternative time zone, for experimentation.
      * See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-     * Note: Currently many tests fail if the timezone is changed, due to
+     * Note: Currently many tests fail if the global timezone is changed, due to
      *       the use of `moment.toISOString()` in the `toEqualMoment()`
      *       custom matcher in our tests.
+     *       However, individual tests can override `process.env.TZ` locally
+     *       (because vitest.config.ts uses `pool: 'vmForks'`).
      */
     // process.env.TZ = 'Pacific/Auckland';
 };

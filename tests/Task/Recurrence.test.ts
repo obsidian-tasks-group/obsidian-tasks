@@ -2,6 +2,7 @@ import moment from 'moment';
 import { Occurrence } from '../../src/Task/Occurrence';
 import { Recurrence } from '../../src/Task/Recurrence';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
+import { withTimezone } from '../TestingTools/DateTestHelpers';
 import { updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
@@ -334,6 +335,74 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
             // Assert
             expect(next!.startDate).toEqualMoment(moment('2022-01-13'));
             expect(next!.scheduledDate).toBeNull();
+        });
+    });
+});
+
+describe('Recurrence - daylight saving time transitions (America/New_York)', () => {
+    it('should preserve wall-clock time across DST spring-forward when time exists on both days', () => {
+        withTimezone('America/New_York', () => {
+            // 2026-03-08 is US spring-forward day (02:00 jumps to 03:00 in America/New_York).
+            const recurrence = Recurrence.fromText({
+                recurrenceRuleText: 'every day',
+                occurrence: new Occurrence({
+                    dueDate: moment('2026-03-07 09:00', 'YYYY-MM-DD HH:mm', true),
+                }),
+            })!;
+
+            const firstNext = recurrence.next()!;
+            expect(firstNext.dueDate!.format('YYYY-MM-DD HH:mm')).toBe('2026-03-08 09:00');
+
+            const secondRecurrence = Recurrence.fromText({
+                recurrenceRuleText: 'every day',
+                occurrence: firstNext,
+            })!;
+            const secondNext = secondRecurrence.next()!;
+            expect(secondNext.dueDate!.format('YYYY-MM-DD HH:mm')).toBe('2026-03-09 09:00');
+        });
+    });
+
+    it('shifts a nonexistent DST spring-forward time (02:30 -> 03:30) and subsequent occurrences inherit 03:30', () => {
+        withTimezone('America/New_York', () => {
+            // On 2026-03-08 in America/New_York, 02:30 does not exist (clocks jump from 01:59 to 03:00).
+            const recurrence = Recurrence.fromText({
+                recurrenceRuleText: 'every day',
+                occurrence: new Occurrence({
+                    dueDate: moment('2026-03-07 02:30', 'YYYY-MM-DD HH:mm', true),
+                }),
+            })!;
+
+            const firstNext = recurrence.next()!;
+            expect(firstNext.dueDate!.format('YYYY-MM-DD HH:mm')).toBe('2026-03-08 03:30');
+
+            const secondRecurrence = Recurrence.fromText({
+                recurrenceRuleText: 'every day',
+                occurrence: firstNext,
+            })!;
+            const secondNext = secondRecurrence.next()!;
+            expect(secondNext.dueDate!.format('YYYY-MM-DD HH:mm')).toBe('2026-03-09 03:30');
+        });
+    });
+
+    it('should preserve wall-clock time across DST autumn fall-back even inside the repeated hour (01:30)', () => {
+        withTimezone('America/New_York', () => {
+            // On 2026-11-01 in America/New_York, 01:00-01:59 occurs twice (clocks fall back from 02:00 EDT to 01:00 EST).
+            const recurrence = Recurrence.fromText({
+                recurrenceRuleText: 'every day',
+                occurrence: new Occurrence({
+                    dueDate: moment('2026-10-31 01:30', 'YYYY-MM-DD HH:mm', true),
+                }),
+            })!;
+
+            const firstNext = recurrence.next()!;
+            expect(firstNext.dueDate!.format('YYYY-MM-DD HH:mm')).toBe('2026-11-01 01:30');
+
+            const secondRecurrence = Recurrence.fromText({
+                recurrenceRuleText: 'every day',
+                occurrence: firstNext,
+            })!;
+            const secondNext = secondRecurrence.next()!;
+            expect(secondNext.dueDate!.format('YYYY-MM-DD HH:mm')).toBe('2026-11-02 01:30');
         });
     });
 });
