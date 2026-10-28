@@ -165,7 +165,9 @@ function addTaskPropertySuggestions(
 }
 
 function addField(genericSuggestions: SuggestInfo[], line: string, dateSymbol: string, fieldName: string) {
-    if (!line.includes(dateSymbol))
+    // Strip tags only for this existence check, preserve original line and cursor
+    const lineWithoutTags = line.replace(TaskRegularExpressions.hashTags, '');
+    if (!lineWithoutTags.includes(dateSymbol))
         genericSuggestions.push({
             displayText: `${dateSymbol} ${fieldName}`,
             appendText: `${dateSymbol} `,
