@@ -218,7 +218,7 @@ ${JSON.stringify(suggestions[0], null, 4)}
         verifyAsJson(suggestions);
     });
 
-    it.fails('should suggest scheduled date when task contains a tag with the same emoji (issue #4085)', () => {
+    it('should suggest scheduled date when task contains a tag with the same emoji (issue #4085)', () => {
         const line = `- [ ] Test with a tag containing emojis #${scheduledDateSymbol} conflicts with scheduled dates.`;
         const cursorPos = 6;
         const originalSettings = getSettings();
@@ -230,7 +230,7 @@ ${JSON.stringify(suggestions[0], null, 4)}
         expect(scheduledDateSuggestion).toBeDefined();
     });
 
-    it.fails('should suggest scheduled date when emoji appears inside a word', () => {
+    it('should suggest scheduled date when emoji appears inside a word', () => {
         const line = `- [ ] Hello apple${scheduledDateSymbol}sauce`;
         const cursorPos = 6;
         const originalSettings = getSettings();
@@ -254,7 +254,7 @@ ${JSON.stringify(suggestions[0], null, 4)}
         expect(scheduledDateSuggestion).toBeUndefined();
     });
 
-    it.fails('should suggest scheduled date when emoji appears alone without a date', () => {
+    it('should suggest scheduled date when emoji appears alone without a date', () => {
         const line = `- [ ] Test ${scheduledDateSymbol}`;
         const cursorPos = 6;
         const originalSettings = getSettings();

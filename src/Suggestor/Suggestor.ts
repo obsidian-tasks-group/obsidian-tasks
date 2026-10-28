@@ -165,7 +165,13 @@ function addTaskPropertySuggestions(
 }
 
 function addField(genericSuggestions: SuggestInfo[], line: string, dateSymbol: string, fieldName: string) {
-    if (!line.includes(dateSymbol))
+    // 1. Strip tags to prevent #⏳ conflicts from being treated as a valid field
+    const lineWithoutTags = line.replace(TaskRegularExpressions.hashTags, '');
+    
+    // 2. Check if the emoji is used as a proper field (symbol + whitespace + content)
+    const fieldRegex = new RegExp(`${escapeRegExp(dateSymbol)}\\s+\\S+`, 'u');
+    
+    if (!fieldRegex.test(lineWithoutTags))
         genericSuggestions.push({
             displayText: `${dateSymbol} ${fieldName}`,
             appendText: `${dateSymbol} `,
