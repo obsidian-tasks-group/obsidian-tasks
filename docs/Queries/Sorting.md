@@ -206,7 +206,7 @@ Since Tasks 6.1.0, **[[Custom Sorting|custom sorting]]  by Depends On** is now p
 When sorting tasks by date, such as with `sort by due`, tasks are sorted in this order:
 
 1. Tasks with **invalid** `due` dates come first
-2. Tasks with valid `due` dates, **earliest** to **latest**
+2. Tasks with valid `due` dates, **earliest** to **latest** (including any [[Dates#Optional time in dates|optional time on the date]]: on the same calendar day, a date without a time is treated as `00:00` and comes before `09:00`, which comes before `14:30`)
 3. Tasks with **no due date** come last.
 
 > [!NOTE]

@@ -39,19 +39,7 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 - [ ] take out the trash 📅 2021-04-09
 ```
 
-> [!released]
-> `Optional time in dates` was introduced in Tasks X.Y.Z.
-
-Any task date can also include an optional 24-hour time in `YYYY-MM-DD HH:mm` or `YYYY-MM-DDTHH:mm` format:
-
-```markdown
-- [ ] take out the trash 📅 2021-04-09 14:30
-- [ ] take out the trash 🛫 2021-04-09T14:30
-- [ ] take out the trash [due:: 2021-04-09 14:30]
-- [ ] take out the trash [start:: 2021-04-09T14:30]
-```
-
-See [[#Limitations of time support in dates]] below for how times behave in filters and recurring tasks.
+Any task date can also include an [[#Optional time in dates|optional 24-hour time]] in `YYYY-MM-DD HH:mm` or `YYYY-MM-DDTHH:mm` format, such as `📅 2021-04-09 14:30`.
 
 Related instructions for use in Tasks query blocks:
 
@@ -117,6 +105,27 @@ Related instructions for use in Tasks query blocks:
 - [[Sorting#Start Date]]
 - [[Grouping#Start Date]]
 - Accessible as [[Task Properties#Values for Dates in Tasks|task property]] `task.start`
+
+---
+
+### Optional time in dates
+
+> [!released]
+> `Optional time in dates` was introduced in Tasks X.Y.Z.
+
+Any task date can include an optional 24-hour time in `YYYY-MM-DD HH:mm` or `YYYY-MM-DDTHH:mm` format, in both [[Tasks Emoji Format]] and [[Dataview Format]]:
+
+```markdown
+- [ ] take out the trash 📅 2021-04-09 14:30
+- [ ] take out the trash 🛫 2021-04-09T14:30
+- [ ] take out the trash [due:: 2021-04-09 14:30]
+- [ ] take out the trash [start:: 2021-04-09T14:30]
+```
+
+- Existing times and their separator (` ` or `T`) are preserved when completing [[Recurring Tasks|recurring tasks]], postponing tasks, picking a date in the [[Create or edit Task|‘Create or edit Task’ Modal]], or choosing a date from the right-click menu.
+- In the [[Create or edit Task|‘Create or edit Task’ Modal]], you can also enter times using natural language such as `now`, `2 hours`, `tomorrow 14:30`, `14:30 tomorrow`, or `tomorrow 2pm` (general time-of-day words without an exact hour, such as `tonight` or `noon`, save the date only).
+- [[Sorting#How dates are sorted|Sorting by date]] (`sort by due`, `sort by scheduled`, etc.) is time-aware: on the same day, tasks with a date only (`YYYY-MM-DD`) are treated as `00:00` and ordered before tasks with a later time (`09:00`, `14:30`, etc.).
+- See [[#Limitations of time support in dates]] below for how times behave in filters, urgency, and daylight saving transitions.
 
 ## Track task histories
 
@@ -230,12 +239,12 @@ The date values on task lines must be calendar or absolute dates, referring to a
 ### Limitations of time support in dates
 
 > [!released]
-> Optional time in task dates was introduced in Tasks X.Y.Z.
+> `Optional time in dates` was introduced in Tasks X.Y.Z.
 
-- Task dates can include an optional 24-hour time (`YYYY-MM-DD HH:mm` or `YYYY-MM-DDTHH:mm`) in both [[Tasks Emoji Format]] and [[Dataview Format]].
-- Times are interpreted in local time; seconds (`:ss`) and time zones (such as `Z` or `+02:00`) are not supported.
-- Existing times and their separator (` ` or `T`) are preserved when completing [[Recurring Tasks|recurring tasks]], postponing tasks, or choosing a date from the right-click menu.
-- Date-based [[Filters|filters]] (`due on`, `due before`, `due after`, etc.) and [[Urgency|urgency]] calculations still compare calendar days only and ignore the time component.
+- On task lines, dates with seconds (`:ss`) or time zones (such as `Z` or `+02:00`) are not recognised as dates (for example `📅 2024-09-17 14:30:00` or `📅 2024-09-17T14:30Z` will not be parsed as a due date). In the [[Create or edit Task|‘Create or edit Task’ Modal]], entering a timestamp with seconds or a time zone converts it to local time and saves it as `YYYY-MM-DD HH:mm` (without seconds or time zone).
+- In the [[Create or edit Task|‘Create or edit Task’ Modal]], when `Only future dates` is enabled, relative durations must be entered without a leading `in` (for example `2 hours`, `10 days`, or `2 weeks`, rather than `in 2 hours` or `in 10 days`), because the underlying date parser (`chrono-node`) only includes the `in` prefix in its match when `forwardDate` is disabled.
+- Date-based [[Filters|filters]] (`due on`, `due before`, `due after`, etc.) and [[Urgency|urgency]] calculations still compare calendar days only and ignore the time component (whereas [[Sorting#How dates are sorted|sorting by date]] is time-aware).
+- Because dates and times use the system's local time zone, a time that falls inside a skipped daylight saving spring-forward hour (for example `02:30` on a day when local clocks jump from `02:00` to `03:00`) shifts forward to `03:30`, and for a [[Recurring Tasks|recurring task]], subsequent occurrences keep that shifted time.
 - [[Auto-Suggest]] only suggests dates (`YYYY-MM-DD`) without times.
 - Automatically added dates (`➕` created, `✅` done, `❌` cancelled) are still recorded without a time (`YYYY-MM-DD`), though you can add a time manually or in the [[Create or edit Task|‘Create or edit Task’ Modal]].
 - We are tracking fuller time support in discussions [#607](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/607) and [#668](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/668).
