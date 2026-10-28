@@ -218,6 +218,22 @@ ${JSON.stringify(suggestions[0], null, 4)}
         verifyAsJson(suggestions);
     });
 
+    it('should suggest scheduled date when task contains a tag with the same emoji', () => {
+        // Arrange
+        const line = `- [ ] Test with a tag containing emojis #${scheduledDateSymbol} conflicts with scheduled dates.`;
+        const cursorPos = 6;
+
+        // Act
+        const originalSettings = getSettings();
+        const suggestions = buildSuggestions(line, cursorPos, originalSettings, [], CAN_SAVE_EDITS);
+
+        // Assert
+        const scheduledDateSuggestion = suggestions.find(
+            (s) => s.displayText === `${scheduledDateSymbol} scheduled date`,
+        );
+        expect(scheduledDateSuggestion).toBeDefined();
+    });
+
     it('offers generic due date completions', () => {
         // Arrange
         const line = `- [ ] some task ${dueDateSymbol}`;
