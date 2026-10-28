@@ -218,6 +218,54 @@ ${JSON.stringify(suggestions[0], null, 4)}
         verifyAsJson(suggestions);
     });
 
+    it.fails('should suggest scheduled date when task contains a tag with the same emoji (issue #4085)', () => {
+        const line = `- [ ] Test with a tag containing emojis #${scheduledDateSymbol} conflicts with scheduled dates.`;
+        const cursorPos = 6;
+        const originalSettings = getSettings();
+        const suggestions = buildSuggestions(line, cursorPos, originalSettings, [], CAN_SAVE_EDITS);
+
+        const scheduledDateSuggestion = suggestions.find(
+            (s) => s.displayText === `${scheduledDateSymbol} scheduled date`,
+        );
+        expect(scheduledDateSuggestion).toBeDefined();
+    });
+
+    it.fails('should suggest scheduled date when emoji appears inside a word', () => {
+        const line = `- [ ] Hello apple${scheduledDateSymbol}sauce`;
+        const cursorPos = 6;
+        const originalSettings = getSettings();
+        const suggestions = buildSuggestions(line, cursorPos, originalSettings, [], CAN_SAVE_EDITS);
+
+        const scheduledDateSuggestion = suggestions.find(
+            (s) => s.displayText === `${scheduledDateSymbol} scheduled date`,
+        );
+        expect(scheduledDateSuggestion).toBeDefined();
+    });
+
+    it('should not suggest scheduled date when a valid scheduled date already exists', () => {
+        const line = `- [ ] Task ${scheduledDateSymbol} 2026-10-28`;
+        const cursorPos = 6;
+        const originalSettings = getSettings();
+        const suggestions = buildSuggestions(line, cursorPos, originalSettings, [], CAN_SAVE_EDITS);
+
+        const scheduledDateSuggestion = suggestions.find(
+            (s) => s.displayText === `${scheduledDateSymbol} scheduled date`,
+        );
+        expect(scheduledDateSuggestion).toBeUndefined();
+    });
+
+    it.fails('should suggest scheduled date when emoji appears alone without a date', () => {
+        const line = `- [ ] Test ${scheduledDateSymbol}`;
+        const cursorPos = 6;
+        const originalSettings = getSettings();
+        const suggestions = buildSuggestions(line, cursorPos, originalSettings, [], CAN_SAVE_EDITS);
+        
+        const scheduledDateSuggestion = suggestions.find(
+            (s) => s.displayText === `${scheduledDateSymbol} scheduled date`,
+        );
+        expect(scheduledDateSuggestion).toBeDefined();
+    });
+
     it('offers generic due date completions', () => {
         // Arrange
         const line = `- [ ] some task ${dueDateSymbol}`;
