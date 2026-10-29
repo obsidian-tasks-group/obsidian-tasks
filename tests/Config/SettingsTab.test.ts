@@ -181,6 +181,7 @@ describe('SettingsTab applies changed settings without reloading', () => {
     function renderToggleSetting(name: string) {
         const settingsTab = new SettingsTab({ plugin: pluginWithWorkspace, events });
         const definition = findSetting(settingsTab.getSettingDefinitions(), name);
+        expect(definition).toBeDefined();
 
         let onChange: (value: boolean) => Promise<void> = async () => {};
         const fakeSetting = {
