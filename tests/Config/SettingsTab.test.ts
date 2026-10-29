@@ -205,11 +205,13 @@ describe('SettingsTab applies changed settings without reloading', () => {
 
     it('should redraw tasks when "Remove global filter" changes', async () => {
         const changeToggle = renderToggleSetting(i18n.t('settings.globalFilter.removeFilter.name'));
+        // Toggle to the opposite of the current value, so the test does not depend on the default.
+        const newValue = !getSettings().removeGlobalFilter;
 
-        await changeToggle(true);
+        await changeToggle(newValue);
 
-        expect(getSettings().removeGlobalFilter).toEqual(true);
-        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(true);
+        expect(getSettings().removeGlobalFilter).toEqual(newValue);
+        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(newValue);
         expect(events.triggerReloadOpenSearchResults).toHaveBeenCalled();
         expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
     });
