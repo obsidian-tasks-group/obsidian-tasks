@@ -27,5 +27,7 @@ Our [vitest.config.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/bl
 enables `globals: true`, so tests can use `describe`, `it`, `expect`, the test hooks, and `vi`
 without importing them. It also sets the `jsdom` environment for every unit test.
 
+It uses `pool: 'vmForks'`, which isolates each test file in a VM context for speed, and runs workers in child processes. That is what allows individual tests to change the time zone: see [[Testing and Time Zones]].
+
 See [[Introduction to Running the tests]] for commands and [[Integration Tests]] for the
 separate configuration used by tests in `integration_tests/`.
