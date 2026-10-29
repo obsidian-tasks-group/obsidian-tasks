@@ -209,6 +209,27 @@ describe('queryTasks', () => {
             ]);
         });
 
+        it('should order tasks in depth-first visual document order when multiple group levels are used', () => {
+            const taskPWork = new TaskBuilder().description('Project Work').path('projects/work.md').build();
+            const taskPHome = new TaskBuilder().description('Project Home').path('projects/home.md').build();
+            const taskRWork = new TaskBuilder().description('Routine Work').path('routine/work.md').build();
+
+            const globalQuery = new GlobalQuery();
+            const results = queryTasks(
+                'group by folder\ngroup by filename',
+                [taskRWork, taskPWork, taskPHome],
+                globalQuery,
+            );
+
+            // Level 1: 'projects/' then 'routine/' (alphabetical)
+            // Level 2 within 'projects/': 'home' then 'work' (alphabetical)
+            // Flattened depth-first order:
+            // 1. projects/ -> home.md -> Project Home
+            // 2. projects/ -> work.md -> Project Work
+            // 3. routine/  -> work.md -> Routine Work
+            expect(results.map((t) => t.description)).toEqual(['Project Home', 'Project Work', 'Routine Work']);
+        });
+
         it('should cap tasks per group while returning tasks across all groups with limit groups', () => {
             const taskA1 = new TaskBuilder().description('A1').tags(['#groupA']).build();
             const taskA2 = new TaskBuilder().description('A2').tags(['#groupA']).build();

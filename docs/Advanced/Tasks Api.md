@@ -305,6 +305,7 @@ if (tasksApi) {
 >   - Tasks appear in the order their groups appear when rendered.
 >   - Within each group, tasks follow the query's sort instructions.
 >   - If a task belongs to multiple groups (for example, when grouping by tags), it appears only once in the array—in the first group it occurs in. Therefore, the number of returned task objects matches the total rendered task count (for example, 3 tasks if the query displays `3 of 3 tasks`).
+> - **Multi-Level Grouping**: When multiple `group by` instructions are used (for example, `group by folder` followed by `group by filename`), Tasks organizes tasks into a tree of nested headings sorted at each level. `queryTasks` flattens this tree in visual, top-to-bottom reading order (depth-first: all sub-groups under the first outer group, then all sub-groups under the second, and so on), with sorting applied within each leaf group and deduplication on first encounter.
 > - **`limit groups to N tasks`**: This instruction caps tasks *per group* rather than total groups across the query, matching the behavior of rendered queries. As a result, the returned array may contain up to $N \times (\text{number of groups})$ tasks minus any duplicates.
 
 #### Grouping and Deduplication Example
