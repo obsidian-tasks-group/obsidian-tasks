@@ -302,7 +302,7 @@ ${JSON.stringify(suggestions[0], null, 4)}
         expect(suggestions[0].displayText).not.toContain('created today');
     });
 
-    it.fails('should suggest scheduled date when task contains a tag with the same emoji (issue #4085)', () => {
+    it('should suggest scheduled date when task contains a tag with the same emoji (issue #4085)', () => {
         const line = `- [ ] Test with a tag containing emojis #${scheduledDateSymbol} conflicts with scheduled dates.`;
         // Place cursor at end of line to trigger suggestion popup
         const cursorPos = line.length;

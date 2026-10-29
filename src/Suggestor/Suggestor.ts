@@ -165,7 +165,9 @@ function addTaskPropertySuggestions(
 }
 
 function addField(genericSuggestions: SuggestInfo[], line: string, dateSymbol: string, fieldName: string) {
-    if (!line.includes(dateSymbol))
+    // Strip tags to prevent emojis inside tags from hiding the field suggestions
+    const lineWithoutTags = line.replace(TaskRegularExpressions.hashTags, '');
+    if (!lineWithoutTags.includes(dateSymbol))
         genericSuggestions.push({
             displayText: `${dateSymbol} ${fieldName}`,
             appendText: `${dateSymbol} `,
