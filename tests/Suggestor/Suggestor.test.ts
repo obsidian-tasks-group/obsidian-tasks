@@ -302,6 +302,20 @@ ${JSON.stringify(suggestions[0], null, 4)}
         expect(suggestions[0].displayText).not.toContain('created today');
     });
 
+    it('should suggest scheduled date when task contains a tag with the same emoji (issue #4085)', () => {
+        const line = `- [ ] Test with a tag containing emojis #${scheduledDateSymbol} conflicts with scheduled dates.`;
+        // Place cursor at end of line to trigger suggestion popup
+        const cursorPos = line.length;
+
+        const originalSettings = getSettings();
+        const suggestions = buildSuggestions(line, cursorPos, originalSettings, [], CAN_SAVE_EDITS);
+
+        const scheduledDateSuggestion = suggestions.find(
+            (s) => s.displayText === `${scheduledDateSymbol} scheduled date`,
+        );
+        expect(scheduledDateSuggestion).toBeDefined();
+    });
+
     describe('suggestions for dependency field ID', () => {
         it('should offer "id" then "depends on" if user typed "id"', () => {
             const line = '- [ ] some task id';
