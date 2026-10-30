@@ -1,4 +1,4 @@
-import { Editor, type EditorPosition, type MarkdownFileInfo, MarkdownView } from 'obsidian';
+import { Editor, type EditorChange, type EditorPosition, type MarkdownFileInfo, MarkdownView } from 'obsidian';
 
 /**
  * Represents text to be inserted into the editor
@@ -56,6 +56,21 @@ export const getNewCursorPosition = (startPos: EditorPosition, insertion: Editor
 };
 
 /**
+ * Returns the change that replaces the given line with {@link text}.
+ *
+ * If {@link text} is empty and the line is followed by a new line character,
+ * the change deletes the line and the new-line, to avoid leaving a blank line in the file.
+ */
+export const replaceLineChange = (editor: Editor, lineNumber: number, text: string): EditorChange => {
+    const from = { line: lineNumber, ch: 0 };
+    const lineIsLastLine = lineNumber >= editor.lineCount() - 1;
+    if (text.length > 0 || lineIsLastLine) {
+        return { from, to: { line: lineNumber, ch: editor.getLine(lineNumber).length }, text };
+    }
+    return { from, to: { line: lineNumber + 1, ch: 0 }, text: '' };
+};
+
+/**
  * Creates an editor callback function that applies a line transformation to the current line.
  *
  * @param lineTransformer - A function that takes the current line and file path, and returns the transformed text
@@ -95,17 +110,8 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
             return;
         }
 
-        const replacementTextIsNonEmpty = insertion.text.length > 0;
-        const taskIsOnLastLine = lineNumber >= editor.lineCount() - 1;
-        if (replacementTextIsNonEmpty || taskIsOnLastLine) {
-            editor.setLine(lineNumber, insertion.text);
-        } else {
-            // The replacement text is empty, and our line was followed by a new line character,
-            // so we delete the line and the new-line, to avoid leaving a blank line in the file.
-            const from = { line: lineNumber, ch: 0 };
-            const to = { line: lineNumber + 1, ch: 0 };
-            editor.replaceRange('', from, to);
-        }
+        const change = replaceLineChange(editor, lineNumber, insertion.text);
+        editor.replaceRange(change.text, change.from, change.to);
 
         /* Cursor positions are 0-based for both "line" and "ch" offsets.
          * If "ch" offset bigger than the line length, will just continue to next line(s).
