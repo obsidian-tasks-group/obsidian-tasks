@@ -1,4 +1,4 @@
-import { Plugin, type Reference, getLinkpath } from 'obsidian';
+import { FileView, Plugin, type Reference, getLinkpath } from 'obsidian';
 
 import type { Task } from 'Task/Task';
 import { i18n, initializeI18n } from './i18n/i18n';
@@ -22,6 +22,8 @@ import { QueryFileDefaults } from './Query/QueryFileDefaults';
 import { LinkResolver } from './Task/LinkResolver';
 import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
 import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
+import { ActiveFile } from './Scripting/ActiveFile';
+import { TasksFile } from './Scripting/TasksFile';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -51,6 +53,17 @@ export default class TasksPlugin extends Plugin {
             const linkpath = getLinkpath(link.link);
             const tFile = this.app.metadataCache.getFirstLinkpathDest(linkpath, sourcePath);
             return tFile ? tFile.path : null;
+        });
+
+        // Configure ActiveFile.getInstance().get(), for the query.activeFile placeholders.
+        // getMostRecentLeaf() ignores the sidebars, so a query in a sidebar sees the note being edited.
+        ActiveFile.getInstance().setGetActiveFileFn(() => {
+            const view = this.app.workspace.getMostRecentLeaf()?.view;
+            const tFile = view instanceof FileView ? view.file : null;
+            if (!tFile) {
+                return undefined;
+            }
+            return new TasksFile(tFile.path, this.app.metadataCache.getFileCache(tFile) ?? {}, tFile);
         });
 
         const events = new TasksEvents({ obsidianEvents: this.app.workspace });
@@ -92,6 +105,7 @@ export default class TasksPlugin extends Plugin {
     onunload() {
         log('info', i18n.t('main.unloadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
         this.cache?.unload();
+        ActiveFile.getInstance().resetGetActiveFileFn();
     }
 
     async loadSettings() {

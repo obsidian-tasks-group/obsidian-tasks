@@ -20,6 +20,7 @@ import { Priority } from '../../src/Task/Priority';
 import { TaskLayoutComponent } from '../../src/Layout/TaskLayoutOptions';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
+import { ActiveFile } from '../../src/Scripting/ActiveFile';
 
 window.moment = moment;
 
@@ -778,6 +779,24 @@ Problem statement:
             expect(query.source).toEqual(rawQuery); // Interesting that query.source still has the placeholder text
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0].instruction).toEqual('path includes a/b/path with space.md');
+        });
+
+        it('should expand query.activeFile placeholders to the active file', () => {
+            ActiveFile.getInstance().setGetActiveFileFn(() => createTestTasksFile('notes/open note.md'));
+            try {
+                const query = new Query('path includes {{query.activeFile.path}}', createTestTasksFile('sidebar.md'));
+
+                expect(query.error).toBeUndefined();
+                expect(query.filters[0].instruction).toEqual('path includes notes/open note.md');
+            } finally {
+                ActiveFile.getInstance().resetGetActiveFileFn();
+            }
+        });
+
+        it('should report error if query.activeFile placeholder used with no active file', () => {
+            const query = new Query('path includes {{query.activeFile.path}}', createTestTasksFile('sidebar.md'));
+
+            expect(query.error).toContain('There is no active file, so cannot expand {{query.activeFile.path}}');
         });
 
         it('should report error if placeholders used without query location', () => {

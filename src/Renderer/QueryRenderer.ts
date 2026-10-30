@@ -18,6 +18,8 @@ import { getTaskLineAndFile, replaceTaskWithTasks } from '../Obsidian/File';
 import { TaskModal } from '../Obsidian/TaskModal';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { TasksFile } from '../Scripting/TasksFile';
+import { ActiveFile } from '../Scripting/ActiveFile';
+import { getSettings } from '../Config/Settings';
 import { SerialRunner } from '../lib/SerialRunner';
 import { DateFallback } from '../DateTime/DateFallback';
 import type { Task } from '../Task/Task';
@@ -194,7 +196,39 @@ class QueryRenderChild extends MarkdownRenderChild {
             }),
         );
 
+        // Queries using query.activeFile depend on which note is open, not just on the query's own file:
+        this.registerEvent(this.app.workspace.on('active-leaf-change', () => this.handleActiveFileChange()));
+        this.registerEvent(this.app.workspace.on('file-open', () => this.handleActiveFileChange()));
+        this.registerEvent(this.app.metadataCache.on('changed', () => this.handleActiveFileChange()));
+        this.registerEvent(this.app.vault.on('rename', () => this.handleActiveFileChange()));
+
         this.setupVisibilityObserver();
+    }
+
+    private lastActiveFile: TasksFile | undefined = ActiveFile.getInstance().get();
+
+    private handleActiveFileChange() {
+        if (!this.usesActiveFile()) {
+            return;
+        }
+
+        const oldActiveFile = this.lastActiveFile;
+        const newActiveFile = ActiveFile.getInstance().get();
+        this.lastActiveFile = newActiveFile;
+
+        const unchanged =
+            oldActiveFile && newActiveFile ? oldActiveFile.identicalTo(newActiveFile) : oldActiveFile === newActiveFile;
+        if (unchanged) {
+            return;
+        }
+
+        this.rereadQueryFromFile();
+    }
+
+    private usesActiveFile(): boolean {
+        // ponytail: also true if any preset mentions query.activeFile, even an unused one - costs extra redraws only.
+        const sources = [this.queryResultsRenderer.query.source, ...Object.values(getSettings().presets)];
+        return sources.some((source) => source.includes('query.activeFile'));
     }
 
     private setupVisibilityObserver() {

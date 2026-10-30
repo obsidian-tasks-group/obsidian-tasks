@@ -1,4 +1,5 @@
 import type { QueryContext } from './QueryContext';
+import type { TasksFile } from './TasksFile';
 
 export type KnownPlaceholderResolution =
     | {
@@ -18,37 +19,59 @@ export type KnownPlaceholderResolution =
  */
 export function resolveKnownPlaceholder(reconstructed: string, queryContext: QueryContext): KnownPlaceholderResolution {
     const placeholder = reconstructed.trim();
-    const queryFile = queryContext.query.file;
 
-    switch (placeholder) {
-        case 'query.file.path':
-            return resolved(queryFile.path);
-        case 'query.file.pathWithoutExtension':
-            return resolved(queryFile.pathWithoutExtension);
-        case 'query.file.root':
-            return resolved(queryFile.root);
-        case 'query.file.folder':
-            return resolved(queryFile.folder);
-        case 'query.file.filename':
-            return resolved(queryFile.filename);
-        case 'query.file.filenameWithoutExtension':
-            return resolved(queryFile.filenameWithoutExtension);
-        case 'query.file.outlinksInProperties':
-            return resolved(queryFile.outlinksInProperties);
-        case 'query.file.outlinksInBody':
-            return resolved(queryFile.outlinksInBody);
-        case 'query.file.outlinks':
-            return resolved(queryFile.outlinks);
+    const activeFilePrefix = 'query.activeFile.';
+    if (placeholder.startsWith(activeFilePrefix)) {
+        const fieldExpression = placeholder.slice(activeFilePrefix.length);
+        const activeFile = queryContext.query.activeFile;
+        if (activeFile === undefined) {
+            const resolution = resolveFileField(fieldExpression, queryContext.query.file);
+            if (resolution.resolved) {
+                throw new Error(`There is no active file, so cannot expand {{${placeholder}}}`);
+            }
+            return resolution;
+        }
+        return resolveFileField(fieldExpression, activeFile);
     }
 
-    const propertyName = getSingleStringArgument(placeholder, singleStringArgumentRegex('query.file.property'));
+    const filePrefix = 'query.file.';
+    if (placeholder.startsWith(filePrefix)) {
+        return resolveFileField(placeholder.slice(filePrefix.length), queryContext.query.file);
+    }
+
+    return notResolved();
+}
+
+function resolveFileField(fieldExpression: string, file: TasksFile): KnownPlaceholderResolution {
+    switch (fieldExpression) {
+        case 'path':
+            return resolved(file.path);
+        case 'pathWithoutExtension':
+            return resolved(file.pathWithoutExtension);
+        case 'root':
+            return resolved(file.root);
+        case 'folder':
+            return resolved(file.folder);
+        case 'filename':
+            return resolved(file.filename);
+        case 'filenameWithoutExtension':
+            return resolved(file.filenameWithoutExtension);
+        case 'outlinksInProperties':
+            return resolved(file.outlinksInProperties);
+        case 'outlinksInBody':
+            return resolved(file.outlinksInBody);
+        case 'outlinks':
+            return resolved(file.outlinks);
+    }
+
+    const propertyName = getSingleStringArgument(fieldExpression, singleStringArgumentRegex('property'));
     if (propertyName !== null) {
-        return resolved(queryFile.property(propertyName));
+        return resolved(file.property(propertyName));
     }
 
-    const hasPropertyName = getSingleStringArgument(placeholder, singleStringArgumentRegex('query.file.hasProperty'));
+    const hasPropertyName = getSingleStringArgument(fieldExpression, singleStringArgumentRegex('hasProperty'));
     if (hasPropertyName !== null) {
-        return resolved(queryFile.hasProperty(hasPropertyName));
+        return resolved(file.hasProperty(hasPropertyName));
     }
 
     return notResolved();
