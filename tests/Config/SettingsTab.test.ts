@@ -151,6 +151,10 @@ describe('SettingsTab applies changed settings without reloading', () => {
         vi.clearAllMocks();
     });
 
+    /**
+     * Find the definition of the setting with the given display name, anywhere in the
+     * nested groups and pages returned by {@link SettingsTab.getSettingDefinitions}.
+     */
     function findSetting(items: unknown, name: string): any {
         if (Array.isArray(items)) {
             for (const item of items) {
@@ -169,15 +173,19 @@ describe('SettingsTab applies changed settings without reloading', () => {
     }
 
     /**
-     * Render a setting with a minimal fake Setting, and return its toggle's or dropdown's
-     * onChange handler, and the buttons it added.
+     * Render a toggle or dropdown setting, as the Tasks settings pane would, and return its onChange handler,
+     * so a test can change the setting as if the user changed the control.
+     *
+     * Obsidian's Setting is replaced by a fake with only the methods the setting calls.
      */
     function renderSetting<T>(name: string) {
         const settingsTab = new SettingsTab({ plugin: pluginWithWorkspace, events });
         const definition = findSetting(settingsTab.getSettingDefinitions(), name);
+        expect(definition).toBeDefined();
+
         let onChange: (value: T) => Promise<void> = async () => {};
-        const buttons: unknown[] = [];
         const addValueComponent = (callback: (component: any) => void) => {
+            // Capture the handler the setting registers with component.onChange().
             const component = {
                 addOption: () => component,
                 setValue: () => component,
@@ -190,45 +198,34 @@ describe('SettingsTab applies changed settings without reloading', () => {
             return fakeSetting;
         };
         const fakeSetting = {
-            controlEl: { prepend: () => {} },
             addToggle: addValueComponent,
             addDropdown: addValueComponent,
             addExtraButton: () => fakeSetting,
-            addButton(callback: (button: any) => void) {
-                const button: any = {
-                    buttonEl: { toggle: () => {} },
-                    setButtonText: () => button,
-                    setCta: () => button,
-                    onClick: () => button,
-                };
-                buttons.push(button);
-                callback(button);
-                return fakeSetting;
-            },
         };
         definition.render(fakeSetting);
-        return { onChange: (value: T) => onChange(value), buttons };
+
+        return (value: T) => onChange(value);
     }
 
-    it('should redraw tasks, not offer a reload, when "Remove global filter" changes', async () => {
-        const { onChange, buttons } = renderSetting<boolean>(i18n.t('settings.globalFilter.removeFilter.name'));
+    it('should redraw tasks when "Remove global filter" changes', async () => {
+        const changeToggle = renderSetting<boolean>(i18n.t('settings.globalFilter.removeFilter.name'));
+        // Toggle to the opposite of the current value, so the test does not depend on the default.
+        const newValue = !getSettings().removeGlobalFilter;
 
-        await onChange(true);
+        await changeToggle(newValue);
 
-        expect(getSettings().removeGlobalFilter).toEqual(true);
-        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(true);
-        expect(buttons).toHaveLength(0);
+        expect(getSettings().removeGlobalFilter).toEqual(newValue);
+        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(newValue);
         expect(events.triggerReloadOpenSearchResults).toHaveBeenCalled();
         expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
     });
 
-    it('should re-read the vault, not offer a reload, when "Task format" changes', async () => {
-        const { onChange, buttons } = renderSetting<string>(i18n.t('settings.format.name'));
+    it('should re-read the vault when "Task format" changes', async () => {
+        const changeDropdown = renderSetting<string>(i18n.t('settings.format.name'));
 
-        await onChange('dataview');
+        await changeDropdown('dataview');
 
         expect(getSettings().taskFormat).toEqual('dataview');
-        expect(buttons).toHaveLength(0);
         // Tasks are parsed using the task format, so the vault's tasks need re-reading.
         expect(events.triggerReloadVault).toHaveBeenCalled();
         expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
