@@ -50,10 +50,10 @@ export class PriorityField extends Field {
             let filter;
             switch (priorityMatch[3]?.toLowerCase()) {
                 case 'above':
-                    filter = (task: Task) => task.priority.localeCompare(filterPriority!) < 0;
+                    filter = (task: Task) => task.priority.localeCompare(filterPriority) < 0;
                     break;
                 case 'below':
-                    filter = (task: Task) => task.priority.localeCompare(filterPriority!) > 0;
+                    filter = (task: Task) => task.priority.localeCompare(filterPriority) > 0;
                     break;
                 case 'not':
                     filter = (task: Task) => task.priority !== filterPriority;
