@@ -49,6 +49,22 @@ For more information, see:
 - [[Placeholders]]
 - [[Query Properties]]
 
+## Showing tasks of the active note in a sidebar
+
+> [!released]
+> `query.activeFile` was introduced in Tasks X.Y.Z.
+
+To avoid adding a query to every note, put a single query in a note of its own, and open that note in a sidebar pane:
+
+    ```tasks
+    not done
+    path includes {{query.activeFile.path}}
+    group by heading
+    hide backlinks
+    ```
+
+`{{query.activeFile.path}}` is replaced with the path of the note you are editing, and the results are redrawn whenever you switch notes.
+
 ## Using Dataview to generate Tasks blocks - the old way
 
 <!-- Move this to a separate note - but retain the original heading - and link to it from here... -->
