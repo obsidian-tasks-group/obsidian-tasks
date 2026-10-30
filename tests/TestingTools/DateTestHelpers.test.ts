@@ -85,4 +85,13 @@ describe('withTimezone', () => {
             await Promise.resolve();
         });
     });
+
+    // begin-snippet: withTimezone-example
+    it('should format the same instant differently in New York', () => {
+        withTimezone('America/New_York', () => {
+            // 12:00 UTC is 07:00 in New York in winter:
+            expect(window.moment('2026-01-15T12:00:00Z').format('HH:mm')).toBe('07:00');
+        });
+    });
+    // end-snippet
 });

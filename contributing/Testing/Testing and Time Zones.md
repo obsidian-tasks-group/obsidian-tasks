@@ -18,6 +18,7 @@ Individual tests can temporarily run in a different time zone, using `withTimezo
 
 The time zone is an [IANA time zone name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), such as `America/New_York` or `Pacific/Auckland`.
 
+<!-- snippet: withTimezone-example -->
 ```ts
 it('should format the same instant differently in New York', () => {
     withTimezone('America/New_York', () => {
@@ -26,6 +27,7 @@ it('should format the same instant differently in New York', () => {
     });
 });
 ```
+<!-- endSnippet -->
 
 Things to know:
 
