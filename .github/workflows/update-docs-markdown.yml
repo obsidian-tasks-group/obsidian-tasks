@@ -10,6 +10,7 @@ on:
 
 jobs:
   docs:
+    if: github.repository == 'obsidian-tasks-group/obsidian-tasks'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
