@@ -4,6 +4,8 @@ on:
     branches: ['*']
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '27 0 * * *'  # <https://crontab.guru/#27_0_*_*_*> - "At 00:27."
   workflow_dispatch:
 jobs:
   validate:

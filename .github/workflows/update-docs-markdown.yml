@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '39 0 * * *'  # <https://crontab.guru/#39_0_*_*_*> - "At 00:39."
   workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
 
 jobs:
   docs:
