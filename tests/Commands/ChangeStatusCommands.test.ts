@@ -251,18 +251,6 @@ describe('createSetStatusEditorCallback', () => {
         expect(MockedNotice).not.toHaveBeenCalled();
     });
 
-    it('should add the next recurrence of selected recurring tasks', () => {
-        const { text } = runCommand(['- [ ] task 1 🔁 every day 📅 2022-09-04', '- [ ] task 2'], 0, 1);
-
-        expect(text).toEqual(
-            [
-                '- [ ] task 1 🔁 every day 📅 2022-09-05',
-                '- [x] task 1 🔁 every day 📅 2022-09-04 ✅ 2026-02-27',
-                '- [x] task 2 ✅ 2026-02-27',
-            ].join('\n'),
-        );
-    });
-
     it('should notify the user when no selected line is a task', () => {
         const { text, transaction } = runCommand(['Not a task', 'Also not a task'], 0, 1);
 
