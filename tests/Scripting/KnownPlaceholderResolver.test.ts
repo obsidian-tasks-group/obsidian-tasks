@@ -1,6 +1,8 @@
 import { resolveKnownPlaceholder } from '../../src/Scripting/KnownPlaceholderResolver';
 import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
+import { ActiveFile } from '../../src/Scripting/ActiveFile';
+import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 describe('KnownPlaceholderResolver', () => {
     const tasksFile = getTasksFileFromMockData('yaml_all_property_types_populated');
@@ -102,6 +104,40 @@ describe('KnownPlaceholderResolver', () => {
 
         it('does not resolve non-query placeholders', () => {
             expectPlaceholderNotToBeResolved('preset.this_file');
+        });
+    });
+
+    describe('query.activeFile', () => {
+        afterEach(() => {
+            ActiveFile.getInstance().resetGetActiveFileFn();
+        });
+
+        it('resolves query.activeFile fields from the active file, not the query file', () => {
+            ActiveFile.getInstance().setGetActiveFileFn(() => createTestTasksFile('notes/open note.md'));
+            const context = makeQueryContext(tasksFile);
+
+            expect(resolveKnownPlaceholder('query.activeFile.path', context)).toEqual({
+                resolved: true,
+                value: 'notes/open note.md',
+            });
+            expect(resolveKnownPlaceholder('query.activeFile.filenameWithoutExtension', context)).toEqual({
+                resolved: true,
+                value: 'open note',
+            });
+            expect(resolveKnownPlaceholder("query.activeFile.hasProperty('x')", context)).toEqual({
+                resolved: true,
+                value: false,
+            });
+        });
+
+        it('throws a clear error when there is no active file', () => {
+            expect(() => resolveKnownPlaceholder('query.activeFile.path', queryContext)).toThrow(
+                'There is no active file, so cannot expand {{query.activeFile.path}}',
+            );
+        });
+
+        it('does not resolve unknown query.activeFile properties', () => {
+            expectPlaceholderNotToBeResolved('query.activeFile.noSuchProperty');
         });
     });
 
