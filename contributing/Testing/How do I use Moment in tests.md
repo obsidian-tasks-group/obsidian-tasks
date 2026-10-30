@@ -68,6 +68,12 @@ expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
 ```
 <!-- endSnippet -->
 
+## Moment or Date
+
+Use `moment()` to create and compare dates in tests, as the Tasks code does.
+
+Use a `Date` only where an API needs one. The most common case is faking the current time with `vi.setSystemTime(new Date(...))`: see [[Simulating Dates and Times]].
+
 ## Fixing common errors
 
 These are common error messages you may see when testing moment-related code.
