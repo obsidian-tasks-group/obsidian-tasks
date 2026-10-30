@@ -173,38 +173,42 @@ describe('SettingsTab applies changed settings without reloading', () => {
     }
 
     /**
-     * Render a toggle setting, as the Tasks settings pane would, and return its onChange handler,
-     * so a test can change the setting as if the user clicked the toggle.
+     * Render a toggle or dropdown setting, as the Tasks settings pane would, and return its onChange handler,
+     * so a test can change the setting as if the user changed the control.
      *
      * Obsidian's Setting is replaced by a fake with only the methods the setting calls.
      */
-    function renderToggleSetting(name: string) {
+    function renderSetting<T>(name: string) {
         const settingsTab = new SettingsTab({ plugin: pluginWithWorkspace, events });
         const definition = findSetting(settingsTab.getSettingDefinitions(), name);
         expect(definition).toBeDefined();
 
-        let onChange: (value: boolean) => Promise<void> = async () => {};
+        let onChange: (value: T) => Promise<void> = async () => {};
+        const addValueComponent = (callback: (component: any) => void) => {
+            // Capture the handler the setting registers with component.onChange().
+            const component = {
+                addOption: () => component,
+                setValue: () => component,
+                onChange: (handler: typeof onChange) => {
+                    onChange = handler;
+                    return component;
+                },
+            };
+            callback(component);
+            return fakeSetting;
+        };
         const fakeSetting = {
-            addToggle(callback: (toggle: any) => void) {
-                // Capture the handler the setting registers with toggle.onChange().
-                const toggle = {
-                    setValue: () => toggle,
-                    onChange: (handler: typeof onChange) => {
-                        onChange = handler;
-                        return toggle;
-                    },
-                };
-                callback(toggle);
-                return fakeSetting;
-            },
+            addToggle: addValueComponent,
+            addDropdown: addValueComponent,
+            addExtraButton: () => fakeSetting,
         };
         definition.render(fakeSetting);
 
-        return (value: boolean) => onChange(value);
+        return (value: T) => onChange(value);
     }
 
     it('should redraw tasks when "Remove global filter" changes', async () => {
-        const changeToggle = renderToggleSetting(i18n.t('settings.globalFilter.removeFilter.name'));
+        const changeToggle = renderSetting<boolean>(i18n.t('settings.globalFilter.removeFilter.name'));
         // Toggle to the opposite of the current value, so the test does not depend on the default.
         const newValue = !getSettings().removeGlobalFilter;
 
@@ -213,6 +217,17 @@ describe('SettingsTab applies changed settings without reloading', () => {
         expect(getSettings().removeGlobalFilter).toEqual(newValue);
         expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(newValue);
         expect(events.triggerReloadOpenSearchResults).toHaveBeenCalled();
+        expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
+    });
+
+    it('should re-read the vault when "Task format" changes', async () => {
+        const changeDropdown = renderSetting<string>(i18n.t('settings.format.name'));
+
+        await changeDropdown('dataview');
+
+        expect(getSettings().taskFormat).toEqual('dataview');
+        // Tasks are parsed using the task format, so the vault's tasks need re-reading.
+        expect(events.triggerReloadVault).toHaveBeenCalled();
         expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
     });
 });
