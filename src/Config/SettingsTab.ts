@@ -2,6 +2,7 @@ import {
     ButtonComponent,
     type ConfirmationButton,
     ConfirmationModal,
+    MarkdownView,
     Menu,
     Modal,
     Notice,
@@ -190,6 +191,19 @@ export class SettingsTab extends PluginSettingTab {
         };
     }
 
+    /**
+     * Redraw the tasks already on screen, after a change to how they are displayed:
+     * both open Tasks searches, and tasks in notes shown in Reading view.
+     */
+    private redrawTasks() {
+        this.events.triggerReloadOpenSearchResults();
+        for (const leaf of this.app.workspace.getLeavesOfType('markdown')) {
+            if (leaf.view instanceof MarkdownView) {
+                leaf.view.previewMode.rerender(true);
+            }
+        }
+    }
+
     private addReloadButton(setting: Setting): ButtonComponent {
         let button!: ButtonComponent;
         setting.addButton((btn) => {
@@ -289,16 +303,16 @@ export class SettingsTab extends PluginSettingTab {
                     name: i18n.t('settings.globalFilter.removeFilter.name'),
                     desc: i18n.t('settings.globalFilter.removeFilter.description'),
                     visible: () => getSettings().globalFilter.length > 0,
-                    render: this.withReload('removeGlobalFilter', (setting, refreshReloadButton) => {
+                    render: (setting) => {
                         setting.addToggle((toggle) => {
                             toggle.setValue(getSettings().removeGlobalFilter).onChange(async (value) => {
                                 updateSettings({ removeGlobalFilter: value });
                                 GlobalFilter.getInstance().setRemoveGlobalFilter(value);
                                 await this.plugin.saveSettings();
-                                refreshReloadButton();
+                                this.redrawTasks();
                             });
                         });
-                    }),
+                    },
                 },
                 this.statusesPage(),
             ],
