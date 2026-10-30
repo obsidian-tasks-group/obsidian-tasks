@@ -154,6 +154,20 @@
         "description": "Activer cette option ajoute un horodatage ✅ YYYY-MM-DD à la fin d'une tâche marquée comme complétée.",
         "name": "Ajouter la date de complétion sur chaque tâche complétée"
       },
+      "firstDayOfWeek": {
+        "description": "Choisissez le jour à afficher comme premier jour de la semaine dans les sélecteurs de date.",
+        "name": "Premier jour de la semaine",
+        "options": {
+          "friday": "Vendredi",
+          "localeDefault": "Selon la région",
+          "monday": "Lundi",
+          "saturday": "Samedi",
+          "sunday": "Dimanche",
+          "thursday": "Jeudi",
+          "tuesday": "Mardi",
+          "wednesday": "Mercredi"
+        }
+      },
       "heading": "Dates"
     },
     "datesFromFileNames": {

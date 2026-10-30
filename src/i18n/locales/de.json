@@ -154,6 +154,20 @@
         "description": "Bei Aktivierung wird beim Umschalten auf 'erledigt' automatisch ein Datum ✅ YYYY-MM-DD am Ende hinzugefügt.",
         "name": "Erledigungsdatum bei jeder abgeschlossenen Aufgabe festlegen"
       },
+      "firstDayOfWeek": {
+        "description": "Wählen Sie, welcher Tag als erster Wochentag in Datumsauswahlen angezeigt werden soll.",
+        "name": "Erster Wochentag",
+        "options": {
+          "friday": "Freitag",
+          "localeDefault": "System",
+          "monday": "Montag",
+          "saturday": "Samstag",
+          "sunday": "Sonntag",
+          "thursday": "Donnerstag",
+          "tuesday": "Dienstag",
+          "wednesday": "Mittwoch"
+        }
+      },
       "heading": "Daten"
     },
     "datesFromFileNames": {
