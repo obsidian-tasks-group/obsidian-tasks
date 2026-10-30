@@ -2,6 +2,7 @@ import { getSettings } from '../Config/Settings';
 import type { Task } from '../Task/Task';
 import type { PresetsMap } from '../Query/Presets/Presets';
 import type { TasksFile } from './TasksFile';
+import { ActiveFile } from './ActiveFile';
 
 /**
  * This interface is part of the implementation of placeholders and scripting.
@@ -15,6 +16,8 @@ import type { TasksFile } from './TasksFile';
  * It provides the following:
  * - `queryContext.query.file` - where `query.file` is a {@link TasksFile} object.
  *                               So it supplies `query.file.path`, `query.file.folder`, etc.
+ * - `queryContext.query.activeFile` - the {@link TasksFile} open in the main editing area,
+ *                                     or undefined if there is none. See {@link ActiveFile}.
  * - `queryContext.query.allTasks` - all the {@link Task}s in the vault that match
  *                                   any global filter.
  *
@@ -23,6 +26,7 @@ import type { TasksFile } from './TasksFile';
 export interface QueryContext {
     query: {
         file: TasksFile;
+        activeFile: TasksFile | undefined;
         allTasks: Readonly<Task[]>;
         searchCache: Record<string, unknown>; // Added caching capability
     };
@@ -57,6 +61,7 @@ export function makeQueryContextWithTasks(tasksFile: TasksFile, allTasks: Readon
     return {
         query: {
             file: tasksFile,
+            activeFile: ActiveFile.getInstance().get(),
             allTasks: allTasks,
             searchCache: {}, // Added for caching
         },
