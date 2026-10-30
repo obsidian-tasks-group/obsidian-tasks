@@ -17,8 +17,7 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
   61:17  warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/BooleanField.ts
-  193:62  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Token`  @typescript-eslint/restrict-plus-operands
-  193:62  warning  'token' will use Object's default stringification format ('[object Object]') when stringified                                                                            @typescript-eslint/no-base-to-string
+  193:69  warning  'token' will use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/FunctionField.ts
   176:57  warning  Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any
@@ -61,17 +60,8 @@ $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-
   147:27  warning  Unsafe argument of type `any` assigned to a parameter of type `ArrayLike<unknown> | { [s: string]: unknown; }`  @typescript-eslint/no-unsafe-argument
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Scripting/Expression.ts
-   6:60  warning  The `Function` type accepts any function-like value.
-Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-  29:39  warning  The `Function` type accepts any function-like value.
-Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-  29:57  warning  Implied eval. Do not use the Function constructor to create functions                                                    @typescript-eslint/no-implied-eval
-  29:57  warning  [no-new-func] Using the `Function` constructor is dangerous because it executes arbitrary code, similar to `eval()`      obsidianmd/rule-custom-message
-  48:48  warning  The `Function` type accepts any function-like value.
-Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
-  54:12  warning  Unsafe call of a `Function` typed value                                                                                  @typescript-eslint/no-unsafe-call
-  67:17  warning  The `Function` type accepts any function-like value.
-Prefer explicitly defining any function parameters and return type  @typescript-eslint/no-unsafe-function-type
+  31:36  warning  Implied eval. Do not use the Function constructor to create functions                                                @typescript-eslint/no-implied-eval
+  31:36  warning  [no-new-func] Using the `Function` constructor is dangerous because it executes arbitrary code, similar to `eval()`  obsidianmd/rule-custom-message
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Statuses/StatusValidator.ts
   31:24  warning  '_name' is assigned a value but never used  @typescript-eslint/no-unused-vars
@@ -104,9 +94,6 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   855:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
   855:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/ExceptionTools.ts
-  12:19  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Error`  @typescript-eslint/restrict-plus-operands
-
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/lib/PerformanceTracker.ts
   56:13  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
   58:13  warning  [no-console] Avoid unnecessary logging to console. See https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Avoid+unnecessary+logging+to+console  obsidianmd/rule-custom-message
@@ -137,10 +124,7 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
   76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/QuickSearchTasksModal.ts
-  86:9  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
-
-✖ 87 problems (0 errors, 87 warnings)
+✖ 79 problems (0 errors, 79 warnings)
   0 errors and 10 warnings potentially fixable with the `--fix` option.
 
 
@@ -153,4 +137,4 @@ Loading svelte-check in workspace: /Users/clare/Documents/develop/Obsidian/schem
 Getting Svelte diagnostics...
 
 svelte-check found 0 errors and 0 warnings
-Done in 12.69s.
+Done in 12.67s.

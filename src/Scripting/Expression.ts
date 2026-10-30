@@ -3,7 +3,9 @@ import { errorMessageForException } from '../lib/ExceptionTools';
 import { EnableJsInTasksQueries } from '../Config/EnableJsInTasksQueries';
 import { JsInTasksQueriesDisabledError } from './JsInTasksQueriesDisabledError';
 
-export class FunctionOrError extends QueryComponentOrError<Function> {}
+export type ExpressionFunction = (...args: unknown[]) => unknown;
+
+export class FunctionOrError extends QueryComponentOrError<ExpressionFunction> {}
 
 /**
  * The name and value of a parameter, as a Tuple, for passing in to {@link parseExpression} and related functions.
@@ -26,8 +28,8 @@ export function parseExpression(paramsArgs: ExpressionParameter[], arg: string):
     try {
         const parameterNames = paramsArgs.map(([name]) => name);
         const input = arg.includes('return') ? arg : `return ${arg}`;
-        const expression: '' | null | Function = arg && new Function(...parameterNames, input);
-        if (expression instanceof Function) {
+        const expression = arg && (new Function(...parameterNames, input) as ExpressionFunction);
+        if (expression) {
             return FunctionOrError.fromObject(arg, expression);
         }
         // I have not managed to write a test that reaches here:
@@ -45,7 +47,7 @@ export function parseExpression(paramsArgs: ExpressionParameter[], arg: string):
  * @see parseExpression
  * @see evaluateExpressionOrCatch
  */
-export function evaluateExpression(expression: Function, paramsArgs: ExpressionParameter[]): unknown {
+export function evaluateExpression(expression: ExpressionFunction, paramsArgs: ExpressionParameter[]): unknown {
     if (!EnableJsInTasksQueries.getInstance().get()) {
         throw new JsInTasksQueriesDisabledError();
     }
@@ -64,7 +66,7 @@ export function evaluateExpression(expression: Function, paramsArgs: ExpressionP
  * @see evaluateExpression
  */
 export function evaluateExpressionOrCatch(
-    expression: Function,
+    expression: ExpressionFunction,
     paramsArgs: ExpressionParameter[],
     arg: string,
 ): unknown {
