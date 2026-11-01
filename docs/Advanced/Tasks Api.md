@@ -237,6 +237,11 @@ if (momentDate && momentDate.isBefore(window.moment())) {
 
 Use `queryTasks` within a `dataviewjs` code block to fetch and display tasks matching a query:
 
+<!-- TODO Figure out how to embed the dataviewjs codeblock from 'DataviewJS - tasks in folder.md'.
+          I am currently unable to get mdsnippets to find the snippet, and to nest
+          the code block markers correctly
+-->
+
 ````markdown
 ```dataviewjs
 const tasksApi = app.plugins.plugins['obsidian-tasks-plugin']?.apiV1;
