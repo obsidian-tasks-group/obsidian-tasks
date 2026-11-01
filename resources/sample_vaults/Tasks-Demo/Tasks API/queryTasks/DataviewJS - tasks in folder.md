@@ -28,7 +28,7 @@ dv.taskList(
 );
 ```
 
-<!-- end-comment -->
+<!-- end-snippet -->
 
 <!-- Current output:
 
