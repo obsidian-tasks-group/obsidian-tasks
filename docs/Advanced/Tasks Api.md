@@ -20,10 +20,8 @@ however, this depends on the context of the executing script.
 
 This is the interface the API exposes:
 
-<!-- snippet: TasksApiV1.ts -->
+<!-- snippet: tasks-api-v1-interface -->
 ```ts
-import type { ReadOnlyTask } from '../Task/ReadOnlyTask';
-
 /**
  * Tasks API v1 interface
  */
