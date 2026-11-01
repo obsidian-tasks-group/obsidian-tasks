@@ -1,4 +1,5 @@
 import type { ReadOnlyTask } from '../Task/ReadOnlyTask';
+// begin-snippet: tasks-api-v1-interface
 
 /**
  * Tasks API v1 interface
@@ -48,3 +49,5 @@ export interface TasksApiV1 {
      */
     queryTasks: (querySource: string, queryPath?: string) => ReadOnlyTask[];
 }
+
+// end-snippet
