@@ -1,7 +1,5 @@
 # DataviewJS - tasks in folder
 
-- [ ] #task Sample task in file 'DataviewJS - tasks in folder'
-
 <!-- begin-snippet: queryTasks-dataviewjs -->
 
 ```dataviewjs
