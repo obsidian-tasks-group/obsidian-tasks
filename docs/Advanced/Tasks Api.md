@@ -274,7 +274,8 @@ dv.taskList(
 
 Use `queryTasks` in a Templater template to dynamically insert unfinished high-priority tasks when generating a daily note:
 
-````markdown
+<!-- snippet: daily-notes-insert-high-priority-tasks.md -->
+```md
 <%*
 const tasksApi = app.plugins.plugins['obsidian-tasks-plugin']?.apiV1;
 if (tasksApi) {
@@ -294,7 +295,8 @@ if (tasksApi) {
     }
 }
 %>
-````
+```
+<!-- endSnippet -->
 
 ### Important Caveats & Behavior
 
