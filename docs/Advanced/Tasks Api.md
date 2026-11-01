@@ -22,6 +22,8 @@ This is the interface the API exposes:
 
 <!-- snippet: TasksApiV1.ts -->
 ```ts
+import type { ReadOnlyTask } from '../Task/ReadOnlyTask';
+
 /**
  * Tasks API v1 interface
  */
