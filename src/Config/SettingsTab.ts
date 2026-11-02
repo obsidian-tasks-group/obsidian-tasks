@@ -232,6 +232,7 @@ export class SettingsTab extends PluginSettingTab {
             this.postponeGroup(),
             this.datesFromFilenamesGroup(),
             this.recurringTasksGroup(),
+            this.onCompletionGroup(),
             this.taskEntryGroup(),
         ];
     }
@@ -1012,6 +1013,30 @@ export class SettingsTab extends PluginSettingTab {
                         'removeScheduledDateOnRecurrence',
                         'https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks',
                     ),
+                },
+            ],
+        };
+    }
+
+    // ---- On completion ----------------------------------------------------
+
+    private onCompletionGroup(): SettingDefinitionItem {
+        return {
+            type: 'group',
+            heading: i18n.t('settings.onCompletion.heading'),
+            items: [
+                {
+                    name: i18n.t('settings.onCompletion.archiveFile.name'),
+                    aliases: [i18n.t('settings.onCompletion.heading')],
+                    desc: i18n.t('settings.onCompletion.archiveFile.description'),
+                    render: this.withDocs((setting) => {
+                        setting.addText((text) => {
+                            text.setValue(getSettings().archiveFilePath).onChange(async (value) => {
+                                updateSettings({ archiveFilePath: value });
+                                await this.plugin.saveSettings();
+                            });
+                        });
+                    }, 'https://publish.obsidian.md/tasks/Getting+Started/On+Completion'),
                 },
             ],
         };

@@ -222,6 +222,13 @@
         "shortDescription": "Instructions automatically included at the start of every Tasks block."
       }
     },
+    "onCompletion": {
+      "archiveFile": {
+        "description": "When Tasks completes a task with 🏁 to_file, it moves the task to the end of this file, and creates the file if it doesn't exist.",
+        "name": "Archive file"
+      },
+      "heading": "On completion"
+    },
     "postponeButton": {
       "heading": "Postpone button",
       "postponeDateField": {

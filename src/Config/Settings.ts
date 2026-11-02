@@ -100,6 +100,7 @@ export interface Settings {
     filenameAsDateFolders: string[];
     recurrenceOnNextLine: boolean;
     removeScheduledDateOnRecurrence: boolean;
+    archiveFilePath: string;
     searchResults: {
         taskCountLocation: 'top' | 'bottom';
     };
@@ -141,6 +142,7 @@ const defaultSettings: Readonly<Settings> = {
     filenameAsDateFolders: [],
     recurrenceOnNextLine: false,
     removeScheduledDateOnRecurrence: false,
+    archiveFilePath: 'Completed Tasks.md',
     searchResults: {
         taskCountLocation: 'bottom',
     },

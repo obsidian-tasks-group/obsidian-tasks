@@ -297,6 +297,20 @@
     "type": "group"
   },
   {
+    "heading": "On completion",
+    "items": [
+      {
+        "name": "Archive file",
+        "desc": "When Tasks completes a task with 🏁 to_file, it moves the task to the end of this file, and creates the file if it doesn't exist.",
+        "aliases": [
+          "On completion"
+        ],
+        "render": "[Function]"
+      }
+    ],
+    "type": "group"
+  },
+  {
     "heading": "Task entry",
     "items": [
       {
