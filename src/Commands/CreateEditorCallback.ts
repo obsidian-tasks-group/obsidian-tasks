@@ -1,4 +1,6 @@
 import { Editor, type EditorPosition, type MarkdownFileInfo, MarkdownView } from 'obsidian';
+import { moveLineToArchiveFile } from '../Obsidian/ArchiveFile';
+import type { TaskToArchive } from '../Task/OnCompletion';
 
 /**
  * Represents text to be inserted into the editor
@@ -6,11 +8,13 @@ import { Editor, type EditorPosition, type MarkdownFileInfo, MarkdownView } from
  * @property text The text to insert. May span over multiple lines.
  * @property [moveTo] An {@link EditorPosition} that represents an absolute position within {@link EditorInsertion.text} that is
  *    recommended to move the cursor to.
+ * @property [archive] A completed to_file task in {@link EditorInsertion.text}, to be moved to the archive file
+ *    once the text is written.
  *
  * Any combination of subfields (or the whole {@link EditorPosition}) may be omitted.
  * Missing fields should preserve the corresponding cursor position. That is:
  *     * A {@link EditorInsertion.moveTo} that is `undefined` directs the caller to keep the cursor where it is.
- *     * A {@link EditorInsertion.moveTo} that is `{line: 1}` directs the caller of to jump to {@link EditorInsertion.text}'s
+ *     * A {@link EditorInsertion.moveTo} that is `{line: 1}` directs the caller to jump to {@link EditorInsertion.text}'s
  *       second line but stay in the same column.
  *
  * @interface EditorInsertion
@@ -18,6 +22,7 @@ import { Editor, type EditorPosition, type MarkdownFileInfo, MarkdownView } from
 export interface EditorInsertion {
     text: string;
     moveTo?: Partial<EditorPosition>;
+    archive?: TaskToArchive;
 }
 
 /**
@@ -113,6 +118,8 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
          * ...or move it to the beginning if it is anywhere else. Licat explained this on Discord as "sticking" to one side or another.
          */
         editor.setCursor(getNewCursorPosition(origCursorPos, insertion));
+
+        moveLineToArchiveFile(view.app.vault, editor, path, lineNumber, insertion.archive);
     }
 
     return editorCallback;

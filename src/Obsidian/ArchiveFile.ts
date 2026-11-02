@@ -1,5 +1,6 @@
 import { type Editor, Notice, type TFile, type Vault, normalizePath } from 'obsidian';
 import { getSettings } from '../Config/Settings';
+import type { TaskToArchive } from '../Task/OnCompletion';
 import type { Task } from '../Task/Task';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
 
@@ -93,6 +94,29 @@ export async function moveToArchiveFile(
         warnAndNotice(
             `Tasks: Moved "${task.description}" to the archive file "${path}", but couldn't remove it from "${sourcePath}", so it's now in both files.`,
         );
+    }
+}
+
+/**
+ * Move a completed to_file task, which the caller has just written to an editor, to the archive file,
+ * without waiting for the move, so that the caller's edit stays synchronous.
+ *
+ * @param vault
+ * @param editor
+ * @param sourcePath - the path of the note open in the editor
+ * @param firstLineNumber - the zero-based line number of the first line that the caller wrote
+ * @param toArchive - the task to move, if any, as `findTaskToArchive()` returned it
+ */
+export function moveLineToArchiveFile(
+    vault: Vault,
+    editor: Editor,
+    sourcePath: string,
+    firstLineNumber: number,
+    toArchive: TaskToArchive | undefined,
+) {
+    if (toArchive) {
+        const deleteLine = editorLineDeleter(editor, firstLineNumber + toArchive.lineOffset);
+        void moveToArchiveFile(vault, sourcePath, toArchive.task, deleteLine);
     }
 }
 

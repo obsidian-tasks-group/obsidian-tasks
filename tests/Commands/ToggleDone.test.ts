@@ -1,10 +1,12 @@
 import moment from 'moment';
-import type { EditorPosition } from 'obsidian';
-import { getNewCursorPosition, toggleLine } from '../../src/Commands/ToggleDone';
+import { type EditorPosition, MarkdownView } from 'obsidian';
+import { getNewCursorPosition, toggleDone, toggleLine } from '../../src/Commands/ToggleDone';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { FakeEditor } from '../TestingTools/FakeEditor';
+import { FakeVault } from '../TestingTools/FakeVault';
 
 window.moment = moment;
 
@@ -273,6 +275,39 @@ describe('ToggleDone', () => {
                 '- [ ] #task Delete my completed task 🔁 every day 🏁 delete ⏳ 2024-12-31|',
                 '- [ ] #task Delete my completed task 🔁 every day 🏁 delete ⏳ 2025-01-01|',
             );
+        });
+
+        describe('to_file', () => {
+            it('should keep a completed task, and return it as the task to archive', () => {
+                const result = toggleLine('- [ ] #task Archive me 🏁 to_file', 'x.md');
+
+                expect(result.text).toEqual('- [x] #task Archive me 🏁 to_file ✅ 2022-09-04');
+                expect(result.archive?.lineOffset).toEqual(0);
+                expect(result.archive?.task.toFileLineString()).toEqual(result.text);
+            });
+
+            it('should move the completed instance of a recurring task out of the editor', async () => {
+                const vault = new FakeVault();
+                const editor = new FakeEditor(
+                    '# Plants\n- [ ] #task Water the plants 🔁 every day 🏁 to_file ⏳ 2024-12-31\n- [ ] #task Repot the fern',
+                    { line: 1, ch: 0 },
+                );
+                const view = Object.assign(Object.create(MarkdownView.prototype), {
+                    app: { vault: vault.asVault() },
+                    file: { path: 'Plants.md' },
+                }) as MarkdownView;
+
+                toggleDone(false, editor.asEditor(), view);
+
+                await vi.waitFor(() =>
+                    expect(editor.getValue()).toEqual(
+                        '# Plants\n- [ ] #task Water the plants 🔁 every day 🏁 to_file ⏳ 2025-01-01\n- [ ] #task Repot the fern',
+                    ),
+                );
+                expect(vault.files.get('Completed Tasks.md')).toEqual(
+                    '- [x] #task Water the plants 🔁 every day 🏁 to_file ⏳ 2024-12-31 ✅ 2022-09-04\n',
+                );
+            });
         });
     });
 

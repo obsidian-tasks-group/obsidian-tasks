@@ -1,5 +1,7 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
+import { moveLineToArchiveFile } from '../Obsidian/ArchiveFile';
 import { TaskModal } from '../Obsidian/TaskModal';
+import { findTaskToArchive } from '../Task/OnCompletion';
 import type { Task } from '../Task/Task';
 import { DateFallback } from '../DateTime/DateFallback';
 import { taskFromLine } from './CreateOrEditTaskParser';
@@ -32,10 +34,10 @@ export const createOrEdit = (
     const task = taskFromLine({ line, path });
 
     const onSubmit = (updatedTasks: Task[]): void => {
-        const serialized = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
-            .map((task: Task) => task.toFileLineString())
-            .join('\n');
+        const tasksToWrite = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks);
+        const serialized = tasksToWrite.map((t) => t.toFileLineString()).join('\n');
         editor.setLine(lineNumber, serialized);
+        moveLineToArchiveFile(app.vault, editor, path, lineNumber, findTaskToArchive(task, tasksToWrite));
     };
 
     // Need to create a new instance every time, as cursor/task can change.

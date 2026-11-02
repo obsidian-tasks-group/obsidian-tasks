@@ -1,5 +1,6 @@
 import { TasksFile } from '../Scripting/TasksFile';
 
+import { findTaskToArchive } from '../Task/OnCompletion';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
 import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
@@ -16,9 +17,10 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
         fallbackDate: null, // We don't need this to toggle it here in the editor.
     });
     if (task !== null) {
-        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
+        const newTasks = task.toggleWithRecurrenceInUsersOrder();
+        const lines = newTasks.map((t) => t.toFileLineString());
         const newLineNumber = lines.length > 0 ? lines.length - 1 : 0;
-        return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
+        return { text: lines.join('\n'), moveTo: { line: newLineNumber }, archive: findTaskToArchive(task, newTasks) };
     } else {
         // If the task is null this means that we have one of:
         // 1. a regular checklist item

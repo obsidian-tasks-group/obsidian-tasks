@@ -50,6 +50,13 @@ describe('setStatusOnLine', () => {
         expect(result!.moveTo).toEqual({ line: 0 });
     });
 
+    it('should keep a completed to_file task, and return it as the task to archive', () => {
+        const result = setStatusOnLine('- [ ] A task 🏁 to_file', 'file.md', Status.DONE);
+        expect(result!.text).toEqual('- [x] A task 🏁 to_file ✅ 2026-02-27');
+        expect(result!.archive?.lineOffset).toEqual(0);
+        expect(result!.archive?.task.toFileLineString()).toEqual(result!.text);
+    });
+
     it('should return multiple lines with moveTo.line as last line index for a recurring task', () => {
         const result = setStatusOnLine('- [ ] A recurring task 🔁 every day 📅 2022-09-04', 'file.md', Status.DONE);
         expect(result).toBeDefined();

@@ -1,6 +1,7 @@
 import { type Command, Notice } from 'obsidian';
 import { TasksFile } from '../Scripting/TasksFile';
 import type { Status } from '../Statuses/Status';
+import { findTaskToArchive } from '../Task/OnCompletion';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
 import type { StatusRegistry } from '../Statuses/StatusRegistry';
@@ -23,9 +24,10 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
     });
 
     if (task !== null) {
-        const lines = task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString());
+        const newTasks = task.handleNewStatusWithRecurrenceInUsersOrder(newStatus);
+        const lines = newTasks.map((t) => t.toFileLineString());
         const newLineNumber = lines.length > 0 ? lines.length - 1 : 0;
-        return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
+        return { text: lines.join('\n'), moveTo: { line: newLineNumber }, archive: findTaskToArchive(task, newTasks) };
     }
 
     return undefined;
