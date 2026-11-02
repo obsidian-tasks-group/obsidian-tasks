@@ -24,6 +24,7 @@ For convenience, here is a list of all those documentation pages (in the order t
 - [[Postponing#Which date field is edited?|Postpone]]
 - [[Use Filename as Default Date#Settings|Use Filename as Default Date]]
 - [[Recurring Tasks#Recurrence Settings|Recurring Tasks]]
+- [[On Completion#Settings|On Completion]]
 - [[Auto-Suggest#Settings|Auto-Suggest]]
 - [[Create or edit Task#Turning off keyboard shortcuts|Create or edit Task modal]]
 - [[Layout#Task count location|Search results]]

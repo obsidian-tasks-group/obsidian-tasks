@@ -187,6 +187,8 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
         2. the user completed a task like this, which uses  [[On Completion]]'s `delete` facility:
             - `- [ ] Delete me when done 🏁 delete`
   - Fixing this would require introducing `TasksApiV1` .
+- Tasks with [[On Completion]]'s `to_file` facility stay where they are:
+  - `executeToggleTaskDoneCommand()` and `editTaskLineModal()` return a completed `🏁 to_file` task as they would a `🏁 keep` one, since the calling plugin writes what they return. So Tasks doesn't move the task to the [[On Completion#Settings|archive file]].
 
 ## Support
 

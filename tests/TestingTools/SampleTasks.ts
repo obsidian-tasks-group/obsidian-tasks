@@ -320,6 +320,9 @@ export class SampleTasks {
                 .description('#task Remove completed instance of this recurring task when done')
                 .onCompletion(OnCompletion.Delete)
                 .recurrence(everyDay),
+            new TaskBuilder()
+                .description('#task Move this task to the archive file when done')
+                .onCompletion(OnCompletion.ToFile),
         ].map((builder) => builder.build());
     }
 }

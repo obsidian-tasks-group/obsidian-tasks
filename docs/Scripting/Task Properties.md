@@ -179,6 +179,7 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `task.onCompletion` (added in Tasks 7.8.0) will have one of these values:
     - `delete`
     - `keep`
+    - `to_file` (added in Tasks X.Y.Z)
     - `` (empty string), which is the default, when the task has no [[On Completion]] action specified.
 1. Note that if there is a [[Global Filter]] enabled in settings, and the filter is a tag, it will be removed from `task.tags`.
 1. `task.lineNumber` values begin at `0`, for the first line in the file.

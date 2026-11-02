@@ -26,16 +26,21 @@ This feature is enabled by adding (*after* the description within a task) a fiel
 
 At present, these "On Completion" ***actions*** are supported:
 
-| Action     | Behaviour                                                                         |
-| ---------- | --------------------------------------------------------------------------------- |
-| **Keep**   | Nothing will be done with the just-completed task.  (This is the default action.) |
-| **Delete** | Removes the completed instance of the task.                                       |
+| Action      | Behaviour                                                                                                      |
+| ----------- | -------------------------------------------------------------------------------------------------------------- |
+| **Keep**    | Nothing will be done with the just-completed task.  (This is the default action.)                              |
+| **Delete**  | Removes the completed instance of the task.                                                                    |
+| **To file** | Moves the completed instance of the task to the end of the [[#Settings\|archive file]]. Write it as `to_file`. |
+
+> [!released]
+> The **To file** action was introduced in Tasks X.Y.Z.
+
+> [!warning]
+> Update Tasks on every device that edits your vault before you use `🏁 to_file`. An older Tasks can't read the action, so it treats the fields before it as plain text, and completing a recurring task there creates no next occurrence.
 
 > [!tip]
 > Several additional ***actions*** are being considered for future implementation, namely moving a just-completed task to:
 >
-> - a separate "completed tasks archive" note,
->   - see [issue #2855](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2855)
 > - a "completed tasks list" within the original host note,
 >   - see [issue #2856](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2856)
 > - the end of the list.
@@ -56,6 +61,7 @@ At present, these "On Completion" ***actions*** are supported:
 > - [ ] Leave me alone too! 🏁 keep
 > - [ ] Delete me upon completion 🏁 delete
 > - [ ] Delete my completed instance, leave my next instance 📅 2021-05-20 🔁 every day when done 🏁 delete
+> - [ ] Move me to the archive file upon completion 🏁 to_file
 > ```
 
 > [!success] Using the plugin's default settings, after *using Tasks* to mark each task as "done", your `My Project` note file will contain:
@@ -66,15 +72,22 @@ At present, these "On Completion" ***actions*** are supported:
 > - [x] Leave me alone too! 🏁 keep
 > - [ ] Delete my completed instance, leave my next instance 📅 2021-05-21 🔁 every day when done 🏁 delete
 > ```
+>
+> And Tasks will have created the archive file, `Completed Tasks.md`, containing:
+>
+> ```text
+> - [x] Move me to the archive file upon completion 🏁 to_file
+> ```
 
 > [!note] Note that
 >
-> - The task assigned the `keep` action is treated the same as one that has no onCompletion field at all, and
-> - The next instance of the recurring task has replaced the original, completed instance.
+> - The task assigned the `keep` action is treated the same as one that has no onCompletion field at all,
+> - The next instance of the recurring task has replaced the original, completed instance, and
+> - The task assigned the `to_file` action has moved to the end of the archive file.
 
 ### Do not break your nested tasks
 
-> [!warning] ***Never, ever*** put `🏁 delete` on a task that has [nested tasks or list items](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Nesting+lists), also known as child items, or sub-items.
+> [!warning] ***Never, ever*** put `🏁 delete` or `🏁 to_file` on a task that has [nested tasks or list items](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Nesting+lists), also known as child items, or sub-items.
 >
 > Don't do this:
 >
@@ -104,6 +117,20 @@ At present, these "On Completion" ***actions*** are supported:
 The "On Completion" signifier and desired **Action** identifier can be added with [[Auto-Suggest]], to save typing them manually.
 
 We will also eventually enable the [[Create or edit Task|'Create or Edit Task' modal dialog]] to edit the "On Completion" **Action**. We are tracking this in [issue #3222](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3222).
+
+## Settings
+
+> [!released]
+> The **Archive file** setting was introduced in Tasks X.Y.Z.
+
+The **To file** action moves tasks to the file named in the **Archive file** setting, under **On completion** in the Tasks settings. By default, it's `Completed Tasks.md`, in the top folder of the vault.
+
+- The path is relative to the top folder of the vault, such as `Archive/Completed Tasks.md`, and must end in `.md`. No file or folder name in it can start with a dot, since Obsidian hides those.
+- If the file, or any of its folders, doesn't exist, Tasks creates it.
+- Tasks adds each task to the end of the file without its indentation, so a task that was nested, or inside a callout, becomes a top-level item.
+- A task completed inside the archive file stays where it is.
+- If Tasks can't write to the archive file, the completed task stays in its note, and Tasks shows a message.
+- After a move in the editor, undo brings back the task's line, but doesn't remove the task from the archive file.
 
 ## Support
 
