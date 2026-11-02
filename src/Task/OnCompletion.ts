@@ -40,6 +40,8 @@ export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[]
     if (
         originalTask.onCompletion === OnCompletion.Ignore ||
         originalTask.onCompletion === OnCompletion.Keep ||
+        // The code that writes these tasks moves the completed instance afterwards: see findTaskToArchive().
+        originalTask.onCompletion === OnCompletion.ToFile ||
         tasksArrayLength === 0
     ) {
         return newTasks;
@@ -61,4 +63,38 @@ export function handleOnCompletion(originalTask: Task, newTasks: Task[]): Task[]
     console.warn(`OnCompletion action ${ocAction as string} not yet implemented.`);
 
     return newTasks;
+}
+
+/**
+ * A completed {@link OnCompletion.ToFile} task, and its offset from the first line written in place of its own.
+ */
+export interface TaskToArchive {
+    task: Task;
+    lineOffset: number;
+}
+
+/**
+ * Find the completed instance that a status change on a {@link OnCompletion.ToFile} task produced,
+ * so that the caller can move it to the archive file once it has written `newTasks`.
+ *
+ * Returns undefined when the task stays where it is, under the same conditions as {@link OnCompletion.Delete}
+ * keeps one: the new status isn't DONE, or the task was already DONE.
+ *
+ * @param originalTask - the task before its status changed
+ * @param newTasks - the tasks that the status change returned, in the order they will be written
+ */
+export function findTaskToArchive(originalTask: Task, newTasks: Task[]): TaskToArchive | undefined {
+    // A next occurrence normally gets a TODO or IN_PROGRESS status, so the completed instance is the one DONE task.
+    const doneTasks = newTasks.filter((task) => task.status.type === StatusType.DONE);
+    if (doneTasks.length !== 1) {
+        return undefined;
+    }
+
+    // The completed instance holds any edit made to the action while completing the task.
+    const [task] = doneTasks;
+    if (task.onCompletion !== OnCompletion.ToFile || keepTasks(originalTask, task)) {
+        return undefined;
+    }
+
+    return { task, lineOffset: newTasks.indexOf(task) };
 }

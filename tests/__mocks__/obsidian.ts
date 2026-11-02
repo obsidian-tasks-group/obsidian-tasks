@@ -126,6 +126,17 @@ export function requireApiVersion(_version: string): boolean {
     return true;
 }
 
+/**
+ * The same steps as Obsidian's own normalizePath(), including turning an empty path into '/'.
+ */
+export function normalizePath(path: string): string {
+    let normalized = path.replace(/([\\/])+/g, '/').replace(/(^\/+|\/+$)/g, '');
+    if (normalized === '') {
+        normalized = '/';
+    }
+    return normalized.replace(/\u00A0|\u202F/g, ' ').normalize('NFC');
+}
+
 interface SearchResult {
     score: number;
     matches: number[][];

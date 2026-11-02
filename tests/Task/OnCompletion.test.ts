@@ -3,8 +3,14 @@ import { verifyAll } from '@approval-tests/approvals/lib/Providers/Vitest/Vitest
 import { Status } from '../../src/Statuses/Status';
 import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
 import { fromLine, toMarkdown } from '../TestingTools/TestHelpers';
-import type { Task } from '../../src/Task/Task';
-import { OnCompletion, handleOnCompletion, parseOnCompletionValue } from '../../src/Task/OnCompletion';
+import { Task } from '../../src/Task/Task';
+import {
+    OnCompletion,
+    findTaskToArchive,
+    handleOnCompletion,
+    parseOnCompletionValue,
+} from '../../src/Task/OnCompletion';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
 
@@ -15,7 +21,7 @@ beforeEach(() => {
 
 afterEach(() => {
     vi.useRealTimers();
-    // resetSettings();
+    resetSettings();
 });
 
 export function applyStatusAndOnCompletionAction(task: Task, newStatus: Status) {
@@ -168,6 +174,109 @@ describe('OnCompletion - "delete" action', () => {
 
         // Assert
         expect(tasks.length).toEqual(0);
+    });
+});
+
+describe('OnCompletion - "to_file" action', () => {
+    function changeStatusAndFindTaskToArchive(line: string, newStatus: Status) {
+        const task = makeTask(line);
+        const newTasks = task.handleNewStatusWithRecurrenceInUsersOrder(newStatus);
+        return { newTasks, toArchive: findTaskToArchive(task, newTasks) };
+    }
+
+    it('should retain a task with "to_file" Action upon completion, for the caller to move', () => {
+        // Arrange
+        const task = makeTask('- [ ] A non-recurring task with "to_file" Action 🏁 to_file');
+        const warn = vi.spyOn(console, 'warn');
+
+        // Act
+        const tasks = applyStatusAndOnCompletionAction(task, Status.DONE);
+
+        // Assert
+        expect(toMarkdown(tasks)).toEqual('- [x] A non-recurring task with "to_file" Action 🏁 to_file ✅ 2024-02-11');
+        expect(warn).not.toHaveBeenCalled();
+        warn.mockRestore();
+    });
+
+    it('should archive a completed non-recurring task', () => {
+        const { newTasks, toArchive } = changeStatusAndFindTaskToArchive(
+            '- [ ] A non-recurring task 🏁 to_file',
+            Status.DONE,
+        );
+
+        expect(newTasks.length).toEqual(1);
+        expect(toArchive?.task).toBe(newTasks[0]);
+        expect(toArchive?.lineOffset).toEqual(0);
+    });
+
+    it.each([
+        [false, 1],
+        [true, 0],
+    ])(
+        'should archive the completed instance of a recurring task, with recurrenceOnNextLine %s',
+        (recurrenceOnNextLine: boolean, completedIndex: number) => {
+            updateSettings({ recurrenceOnNextLine });
+
+            const { newTasks, toArchive } = changeStatusAndFindTaskToArchive(
+                '- [ ] A recurring task 🔁 every day 🏁 to_file 📅 2024-02-10',
+                Status.DONE,
+            );
+
+            expect(toMarkdown(newTasks)).toContain('- [ ] A recurring task 🔁 every day 🏁 to_file 📅 2024-02-11');
+            expect(toArchive?.task).toBe(newTasks[completedIndex]);
+            expect(toArchive?.lineOffset).toEqual(completedIndex);
+            expect(toArchive?.task.toFileLineString()).toEqual(
+                '- [x] A recurring task 🔁 every day 🏁 to_file 📅 2024-02-10 ✅ 2024-02-11',
+            );
+        },
+    );
+
+    it('should archive nothing when an already-DONE task changes to another DONE status', () => {
+        const done2 = new Status(new StatusConfiguration('X', 'DONE', ' ', true, StatusType.DONE));
+
+        const { toArchive } = changeStatusAndFindTaskToArchive(
+            '- [x] An already-done task 🏁 to_file ✅ 2024-02-10',
+            done2,
+        );
+
+        expect(toArchive).toBeUndefined();
+    });
+
+    it.each([
+        ['IN_PROGRESS', Status.IN_PROGRESS],
+        ['CANCELLED', Status.CANCELLED],
+    ])('should archive nothing when the new status is %s', (_statusName: string, newStatus: Status) => {
+        const { toArchive } = changeStatusAndFindTaskToArchive('- [ ] A task 🏁 to_file', newStatus);
+
+        expect(toArchive).toBeUndefined();
+    });
+
+    it.each(['- [ ] A task with no action', '- [ ] A task with "keep" Action 🏁 keep'])(
+        'should archive nothing for a completed task without "to_file" Action: "%s"',
+        (line: string) => {
+            const { toArchive } = changeStatusAndFindTaskToArchive(line, Status.DONE);
+
+            expect(toArchive).toBeUndefined();
+        },
+    );
+
+    it('should archive nothing when more than one task is DONE', () => {
+        const task = makeTask('- [ ] A task 🏁 to_file');
+        const [completed] = task.handleNewStatus(Status.DONE);
+
+        expect(findTaskToArchive(task, [completed, completed])).toBeUndefined();
+    });
+
+    it('should follow the action of the completed instance, which an edit can change while completing it', () => {
+        const toFileTask = makeTask('- [ ] A task 🏁 to_file');
+        const [completedToFile] = toFileTask.handleNewStatus(Status.DONE);
+        const editedToKeep = new Task({ ...completedToFile, onCompletion: OnCompletion.Keep });
+        expect(findTaskToArchive(toFileTask, [editedToKeep])).toBeUndefined();
+
+        const keepTask = makeTask('- [ ] A task 🏁 keep');
+        const [completedKeep] = keepTask.handleNewStatus(Status.DONE);
+        const editedToToFile = new Task({ ...completedKeep, onCompletion: OnCompletion.ToFile });
+        expect(findTaskToArchive(keepTask, [editedToToFile])?.task).toBe(editedToToFile);
     });
 });
 
