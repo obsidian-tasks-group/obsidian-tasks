@@ -420,10 +420,10 @@ function addOnCompletionOptionSuggestions(
     maxGenericSuggestions: number,
     parameters: SuggestorParameters,
 ) {
-    const genericSuggestions = ['delete', 'keep'];
+    const genericSuggestions = ['delete', 'keep', 'to_file'];
 
     const results: SuggestInfo[] = [];
-    const regex = new RegExp(`(${symbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const regex = new RegExp(`(${symbol})\\s*([0-9a-zA-Z_ ]*)`, 'ug');
     const match = matchIfCursorInRegex(regex, parameters);
     if (match && match.length >= 2) {
         const typedText = match[2];

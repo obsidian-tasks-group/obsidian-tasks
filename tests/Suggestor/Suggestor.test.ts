@@ -263,7 +263,13 @@ ${JSON.stringify(suggestions[0], null, 4)}
 
     it('offers OnCompletion completions', () => {
         const line = `- [ ] some task ${onCompletionSymbol}`;
-        shouldStartWithSuggestionsEqualling(line, ['delete', 'keep']);
+        shouldStartWithSuggestionsEqualling(line, ['delete', 'keep', 'to_file']);
+    });
+
+    it('offers the to_file OnCompletion completion after its underscore is typed', () => {
+        // The cursor is placed before the last character, so this puts it after the underscore.
+        const line = `- [ ] some task ${onCompletionSymbol} to_f`;
+        shouldStartWithSuggestionsEqualling(line, ['to_file']);
     });
 
     it('respects the minimal match setting', () => {
