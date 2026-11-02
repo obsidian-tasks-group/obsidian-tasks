@@ -5,6 +5,7 @@ export enum OnCompletion {
     Ignore = '',
     Keep = 'keep', // Like Ignore, but is visible on task lines
     Delete = 'delete',
+    ToFile = 'to_file',
 }
 
 export function parseOnCompletionValue(inputOnCompletionValue: string) {
@@ -13,6 +14,8 @@ export function parseOnCompletionValue(inputOnCompletionValue: string) {
         return OnCompletion.Delete;
     } else if (onCompletionString === 'keep') {
         return OnCompletion.Keep;
+    } else if (onCompletionString === 'to_file') {
+        return OnCompletion.ToFile;
     } else {
         return OnCompletion.Ignore;
     }

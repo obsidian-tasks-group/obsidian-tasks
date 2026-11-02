@@ -42,6 +42,11 @@ describe('OnCompletion - parsing', () => {
         checkParseOnCompletionValue(input, OnCompletion.Keep);
     });
 
+    const toFiles = ['to_file', 'TO_FILE', ' to_file '];
+    it.each(toFiles)('should parse "%s" as OnCompletion.ToFile', (input: string) => {
+        checkParseOnCompletionValue(input, OnCompletion.ToFile);
+    });
+
     const ignores = ['', 'unknown'];
     it.each(ignores)('should parse "%s" as OnCompletion.Ignore', (input: string) => {
         checkParseOnCompletionValue(input, OnCompletion.Ignore);

@@ -36,13 +36,13 @@ initial task:
 
 
 initial task:
-- [ ] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10
+- [ ] A non-recurring task with invalid OC trigger 📅 2024-02-10
 
 => advances to status [x] and type DONE:
-- [x] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10 ✅ 2024-02-11
+- [x] A non-recurring task with invalid OC trigger 📅 2024-02-10 ✅ 2024-02-11
 
 => which, after any on-completion action, results in:
-- [x] A non-recurring task with invalid OC trigger 🏁 INVALID_ACTION 📅 2024-02-10 ✅ 2024-02-11
+- [x] A non-recurring task with invalid OC trigger 📅 2024-02-10 ✅ 2024-02-11
 ----------------------------------------------
 
 

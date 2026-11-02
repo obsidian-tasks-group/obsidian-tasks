@@ -55,6 +55,12 @@ describe('DataviewTaskSerializer', () => {
                 const taskDetails = deserialize(onCompletion);
                 expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.Delete });
             });
+
+            it('should parse to_file action', () => {
+                const onCompletion = '[onCompletion:: to_file]';
+                const taskDetails = deserialize(onCompletion);
+                expect(taskDetails).toMatchTaskDetails({ onCompletion: OnCompletion.ToFile });
+            });
         });
 
         describe('should parse depends on', () => {
