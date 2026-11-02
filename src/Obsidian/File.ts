@@ -2,9 +2,11 @@ import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } fr
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from '../lib/MockDataCreator';
 import type { ListItem } from '../Task/ListItem';
+import { findTaskToArchive } from '../Task/OnCompletion';
 import type { Task } from '../Task/Task';
 import { logging } from '../lib/logging';
 import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
+import { fileLineDeleter, moveToArchiveFile } from './ArchiveFile';
 
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
@@ -174,6 +176,14 @@ Recommendations:
         ];
 
         await vault.modify(file, updatedFileLines.join('\n'));
+
+        // Move a completed to_file task here, once its line is written, because a retried write
+        // lands after replaceTaskWithTasks() has returned to its caller.
+        const toArchive = originalTask.isTask ? findTaskToArchive(originalTask as Task, newTasks as Task[]) : undefined;
+        if (toArchive) {
+            const deleteLine = fileLineDeleter(vault, file, taskLineNumber + toArchive.lineOffset);
+            await moveToArchiveFile(vault, file.path, toArchive.task, deleteLine);
+        }
     } catch (e) {
         if (e instanceof WarningWorthRetrying) {
             if (e.message) warnAndNotice(e.message);

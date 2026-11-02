@@ -29,6 +29,14 @@ export class FakeVault {
         return createTFile(path);
     }
 
+    public async read(file: TFile) {
+        return this.files.get(file.path) ?? '';
+    }
+
+    public async modify(file: TFile, data: string) {
+        this.files.set(file.path, data);
+    }
+
     public async process(file: TFile, fn: (data: string) => string) {
         if (this.processError) {
             throw this.processError;
