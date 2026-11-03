@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { defaultEditModalShowSettings } from '../Config/EditModalShowSettings';
+    import { defaultEditModalShowSettings, editModalFieldGroupsInOrder } from '../Config/EditModalShowSettings';
 
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
@@ -63,6 +63,7 @@
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     $: isShownInEditModal = { ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal };
+    $: fieldGroups = editModalFieldGroupsInOrder($settingsStore.editModalFieldOrder);
 
     onMount(() => {
         settingsStore.set(getSettings());
@@ -156,6 +157,14 @@ Availability of access keys:
         ></textarea>
     </section>
 
+    <!--
+    The groups below, and the fields within each group, are rendered in the order
+    chosen by the user in OptionsModal. Rendering them in that order (rather than
+    reordering them with CSS) keeps the Tab order the same as the visual order.
+    -->
+    {#each fieldGroups as group, groupIndex (group.name)}
+        {@const isLastGroup = groupIndex === fieldGroups.length - 1}
+        {#if group.name === 'priority'}
     <!-- --------------------------------------------------------------------------- -->
     <!--  Priority  -->
     <!-- --------------------------------------------------------------------------- -->
@@ -163,23 +172,26 @@ Availability of access keys:
         <section class="tasks-modal-priority-section">
             <PriorityEditor bind:priority={editableTask.priority} {withAccessKeys} />
         </section>
+                {#if !isLastGroup}
         <hr id="line-after-priority" />
     {/if}
-
+            {/if}
+        {:else if group.name === 'dates'}
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dates  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-dates-section">
+                {#each group.fields as field (field)}
+                    {#if isShownInEditModal[field]}
+                        {#if field === 'recurrence'}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Recurrence  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.recurrence}
             <RecurrenceEditor {editableTask} bind:isRecurrenceValid accesskey={accesskey('r')} />
-        {/if}
+                        {:else if field === 'due'}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Due Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.due}
             <DateEditor
                 id="due"
                 dateSymbol={dueDateSymbol}
@@ -188,12 +200,10 @@ Availability of access keys:
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('d')}
             />
-        {/if}
-
+                        {:else if field === 'scheduled'}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Scheduled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.scheduled}
             <DateEditor
                 id="scheduled"
                 dateSymbol={scheduledDateSymbol}
@@ -202,12 +212,10 @@ Availability of access keys:
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('s')}
             />
-        {/if}
-
+                        {:else if field === 'start'}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Start Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.start}
             <DateEditor
                 id="start"
                 dateSymbol={startDateSymbol}
@@ -217,6 +225,8 @@ Availability of access keys:
                 accesskey={accesskey('a')}
             />
         {/if}
+                    {/if}
+                {/each}
 
         <!-- --------------------------------------------------------------------------- -->
         <!--  Only future dates  -->
@@ -235,19 +245,21 @@ Availability of access keys:
             </div>
         {/if}
     </section>
-    {#if isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start}
+            {#if !isLastGroup && (isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start)}
         <hr id="line-after-happens-dates" />
     {/if}
-
+        {:else if group.name === 'dependencies'}
     <!-- --------------------------------------------------------------------------- -->
     <!--  Dependencies  -->
     <!-- --------------------------------------------------------------------------- -->
     <section class="tasks-modal-dependencies-section">
         {#if allTasks.length > 0 && mountComplete}
+                    {#each group.fields as field (field)}
+                        {#if isShownInEditModal[field]}
+                            {#if field === 'before_this'}
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocked By Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            {#if isShownInEditModal.before_this}
                 <Dependency
                     id="before_this"
                     type="blockedBy"
@@ -259,12 +271,10 @@ Availability of access keys:
                     accesskey={accesskey('b')}
                     placeholder="Search for tasks that the task being edited depends on..."
                 />
-            {/if}
-
+                            {:else if field === 'after_this'}
             <!-- --------------------------------------------------------------------------- -->
             <!--  Blocking Tasks  -->
             <!-- --------------------------------------------------------------------------- -->
-            {#if isShownInEditModal.after_this}
                 <Dependency
                     id="after_this"
                     type="blocking"
@@ -277,26 +287,28 @@ Availability of access keys:
                     placeholder="Search for tasks that depend on this task being done..."
                 />
             {/if}
+                        {/if}
+                    {/each}
         {:else}
             <div><i>Blocking and blocked by fields are disabled when vault tasks is empty</i></div>
         {/if}
     </section>
-    {#if isShownInEditModal.before_this || isShownInEditModal.after_this}
+            {#if !isLastGroup && (isShownInEditModal.before_this || isShownInEditModal.after_this)}
         <hr id="line-after-dependencies" />
     {/if}
-
+        {:else if group.name === 'statusAndDates'}
     <section class="tasks-modal-dates-section">
+                {#each group.fields as field (field)}
+                    {#if isShownInEditModal[field]}
+                        {#if field === 'status'}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.status}
             <StatusEditor {task} bind:editableTask {statusOptions} accesskey={accesskey('u')} />
-        {/if}
-
+                        {:else if field === 'created'}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Created Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.created}
             <DateEditor
                 id="created"
                 dateSymbol={createdDateSymbol}
@@ -305,12 +317,10 @@ Availability of access keys:
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('c')}
             />
-        {/if}
-
+                        {:else if field === 'done'}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Done Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.done}
             <DateEditor
                 id="done"
                 dateSymbol={doneDateSymbol}
@@ -319,12 +329,10 @@ Availability of access keys:
                 forwardOnly={editableTask.forwardOnly}
                 accesskey={accesskey('x')}
             />
-        {/if}
-
+                        {:else if field === 'cancelled'}
         <!-- --------------------------------------------------------------------------- -->
         <!--  Cancelled Date  -->
         <!-- --------------------------------------------------------------------------- -->
-        {#if isShownInEditModal.cancelled}
             <DateEditor
                 id="cancelled"
                 dateSymbol={cancelledDateSymbol}
@@ -334,7 +342,14 @@ Availability of access keys:
                 accesskey={accesskey('-')}
             />
         {/if}
+                    {/if}
+                {/each}
     </section>
+            {#if !isLastGroup && (isShownInEditModal.status || isShownInEditModal.created || isShownInEditModal.done || isShownInEditModal.cancelled)}
+                <hr id="line-after-status-and-dates" />
+            {/if}
+        {/if}
+    {/each}
 
     <!--
     The 'mousedown|preventDefault' below stops these buttons needing to be tapped
