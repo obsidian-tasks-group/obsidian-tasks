@@ -147,13 +147,18 @@
                     on:pointerdown={(event) => onHandlePointerDown(event, moveGroup)}
                     on:keydown={(event) => onHandleKeyDown(event, moveGroup)}
                 ></button>
-    <div class="tasks-options-modal-checkboxes">
+                <div class="tasks-options-modal-checkboxes">
                     {#each group.fields as fieldName (fieldName)}
                         <div class="tasks-options-modal-field" data-reorder-item>
-            <label>
-                <input type="checkbox" checked={options[fieldName]} id={fieldName} on:change={onChange(fieldName)} />
-                <span>{formatFieldName(fieldName)}</span>
-            </label>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={options[fieldName]}
+                                    id={fieldName}
+                                    on:change={onChange(fieldName)}
+                                />
+                                <span>{formatFieldName(fieldName)}</span>
+                            </label>
                             {#if group.fields.length > 1}
                                 <button
                                     type="button"
