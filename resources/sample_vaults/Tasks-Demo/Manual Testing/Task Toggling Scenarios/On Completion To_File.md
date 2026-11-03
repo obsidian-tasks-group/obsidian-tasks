@@ -2,72 +2,81 @@
 
 ## Context
 
-- Remove line when a `onCompletion:: delete` task is completed:
-  - <https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3342>
+- Optional automatic action upon task completion: move task to an archive file:
+  - <https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2855>
 
 ## Source Mode
 
 ### Complete in Source Mode with `Tasks: Toggle task done` command
 
 - Line before
-- [ ] #task Complete in **Source Mode** with `Tasks: Toggle task done` command 🏁 delete
+- [ ] #task Complete in **Source Mode** with `Tasks: Toggle task done` command 🏁 to_file
 - Line after
 
-✅ Whole line is removed.
+✅ Whole line is moved to the archive file.
+
+### Complete recurring task in Source Mode with `Tasks: Toggle task done` command
+
+- Line before
+- [ ] #task Complete in **Source Mode** with `Tasks: Toggle task done` command 🔁 every day 🏁 to_file ⏳ 2026-11-03
+- Line after
+
+✅ Completed task is moved to the archive file
+✅ Next recurrence is written here.
 
 ## Live Preview
 
 ### Complete in Live Preview with `Tasks: Toggle task done` command
 
 - Line before
-- [ ] #task Complete in **Live Preview** with `Tasks: Toggle task done` command 🏁 delete
+- [ ] #task Complete in **Live Preview** with `Tasks: Toggle task done` command 🏁 to_file
 - Line after
 
-✅ Whole line is removed.
+✅ Whole line is moved to the archive file.
 
 ### Complete in Live Preview clicking checkbox
 
 - Line before
-- [ ] #task Complete in **Live Preview** clicking checkbox 🏁 delete
+- [ ] #task Complete in **Live Preview** clicking checkbox 🏁 to_file
 - Line after
 
-✅ Whole line is removed.
+✅ Whole line is moved to the archive file.
 
 ## Reading Mode
 
 ### Complete in Reading Mode clicking checkbox
 
 - Line before
-- [ ] #task Complete in **Reading Mode** clicking checkbox 🏁 delete
+- [ ] #task Complete in **Reading Mode** clicking checkbox 🏁 to_file
 - Line after
 
-✅ Whole line is removed.
+✅ Whole line is moved to the archive file.
 
 ### Complete in Reading Mode right-clicking checkbox
 
 - Line before
-- [ ] #task Complete in **Reading Mode** right-clicking checkbox 🏁 delete
+- [ ] #task Complete in **Reading Mode** right-clicking checkbox 🏁 to_file
 - Line after
 
-✅ Whole line is removed.
+✅ Whole line is moved to the archive file.
 
 ## Search results
 
 ### Complete in Search results clicking checkbox
 
 - Line before
-- [ ] #task Complete in **Search result**s clicking checkbox 🏁 delete
+- [ ] #task Complete in **Search result**s clicking checkbox 🏁 to_file
 - Line after
 
-✅ Whole line is removed.
+✅ Whole line is moved to the archive file.
 
 ### Complete in Search results right-clicking checkbox
 
 - Line before
-- [ ] #task Complete in **Search result**s right-clicking checkbox 🏁 delete
+- [ ] #task Complete in **Search result**s right-clicking checkbox 🏁 to_file
 - Line after
 
-✅ Whole line is removed.
+✅ Whole line is moved to the archive file.
 
 ### Search
 
