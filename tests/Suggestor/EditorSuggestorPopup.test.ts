@@ -15,7 +15,12 @@ describe('EditorSuggestor responds to changed settings', () => {
 
     function createSuggestor() {
         const app = { scope: { register: () => {} } } as unknown as App;
-        const plugin = { getTasks: () => [] } as unknown as TasksPlugin;
+
+        const plugin = {
+            getTasks: () => [],
+            register: () => {},
+        } as unknown as TasksPlugin;
+
         return new EditorSuggestor(app, plugin);
     }
 
